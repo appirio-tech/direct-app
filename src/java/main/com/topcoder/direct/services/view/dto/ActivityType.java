@@ -42,6 +42,11 @@ public enum ActivityType {
     CONTEST_LAUNCH("Contest Launch", "contestLaunch", "Posted By"),
 
     /**
+     * <p>An <code>ActivityType</code> corresponding to <code>Contest Launched</code> activity type.</p>
+     */
+    CONTEST_LAUNCHED("Contest Launched", "contestLaunch", "Posted By"),
+
+    /**
      * <p>An <code>ActivityType</code> corresponding to <code>Spec Review</code> activity type.</p>
      */
     SPEC_REVIEW("Spec Review", "reviewPending", "Completed By");
@@ -107,5 +112,22 @@ public enum ActivityType {
      */
     public String getActionText() {
         return actionText;
+    }
+
+    /**
+     * <p>Gets the <code>ActivityType</code> instance matching the specified name.</p>
+     *
+     * @param name a <code>String</code> providing the name for requested activity type.
+     * @return an <code>ActivityType</code> matching the specified name or <code>null</code> if there is none.  
+     */
+    public static ActivityType forName(String name) {
+        ActivityType[] types = ActivityType.values();
+        for (int i = 0; i < types.length; i++) {
+            ActivityType type = types[i];
+            if (type.getName().equalsIgnoreCase(name)) {
+                return type;
+            }
+        }
+        return null;
     }
 }

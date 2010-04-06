@@ -3,12 +3,14 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.direct.services.view.dto.ActivityDTO;
+import com.topcoder.direct.services.view.dto.ActivityType;
 import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
 import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -26,9 +28,12 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -109,13 +114,61 @@ public class DataProvider {
      * latest activities. Current implementation uses mock data.</p>
      *
      * @param userId a <code>long</code> providing the user to get the latest activities on associated projects for.
+     * @param days an <code>int</code> providing the number of days from current time for selecting activities. 
      * @return an <code>LatestActivitiesDTO</code> providing the details on latest activities on projects associated
      *         with the specified user.
      * @throws Exception if an unexpected error occurs while communicating to persistent data store.
      */
-    public static LatestActivitiesDTO getLatestActivitiesForUserProjects(long userId) throws Exception {
+    public static LatestActivitiesDTO getLatestActivitiesForUserProjects(long userId, int days) throws Exception {
+        CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_latest_activities");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("days", String.valueOf(days));
+
+        final Map<ProjectBriefDTO, List<ActivityDTO>> activities = new HashMap<ProjectBriefDTO, List<ActivityDTO>>();
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+        final Map<Long, ContestBriefDTO> contests = new HashMap<Long, ContestBriefDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            String activityTypeText = resultContainer.getStringItem(i, "activity_type");
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            long contestId = resultContainer.getLongItem(i, "contest_id");
+            String contestName = resultContainer.getStringItem(i, "contest_name");
+            long originatorId = Long.parseLong(resultContainer.getStringItem(i, "user_id"));
+            String originatorHandle = resultContainer.getStringItem(i, "user");
+            Timestamp date = resultContainer.getTimestampItem(i, "activity_time");
+
+            final ProjectBriefDTO project;
+            final List<ActivityDTO> projectActivities;
+            if (!projects.containsKey(tcDirectProjectId)) {
+                projectActivities = new ArrayList<ActivityDTO>();
+                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                projects.put(tcDirectProjectId, project);
+                activities.put(project, projectActivities);
+            } else {
+                project = projects.get(tcDirectProjectId);
+                projectActivities = activities.get(project);
+            }
+
+            final ContestBriefDTO contest;
+            if (contests.containsKey(contestId)) {
+                contest = contests.get(contestId);
+            } else {
+                contest = createContest(contestId, contestName, project);
+                contests.put(contestId, contest);
+            }
+
+            ActivityType activityType = ActivityType.forName(activityTypeText);
+            ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
+            projectActivities.add(activity);
+        }
+
         LatestActivitiesDTO result = new LatestActivitiesDTO();
-        result.setActivities(MockData.getLatestProjectActivities(userId));
+        result.setActivities(activities);
         return result;
     }
 
@@ -126,13 +179,57 @@ public class DataProvider {
      * upcoming activities. Current implementation uses mock data.</p>
      *
      * @param userId a <code>long</code> providing the user to get the upcoming activities on associated projects for.
+     * @param days an <code>int</code> providing the number of days from current time for selecting activities.
      * @return an <code>UpcomingActivitiesDTO</code> providing the details on upcoming activities on projects associated
      *         with the specified user.
      * @throws Exception if an unexpected error occurs while communicating to persistent data store.
      */
-    public static UpcomingActivitiesDTO getUpcomingActivitiesForUserProjects(long userId) throws Exception {
+    public static UpcomingActivitiesDTO getUpcomingActivitiesForUserProjects(long userId, int days) throws Exception {
+        CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_upcoming_activities");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("days", String.valueOf(days));
+
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+        final Map<Long, ContestBriefDTO> contests = new HashMap<Long, ContestBriefDTO>();
+        final List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            String activityTypeText = resultContainer.getStringItem(i, "activity_type");
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            long contestId = resultContainer.getLongItem(i, "contest_id");
+            String contestName = resultContainer.getStringItem(i, "contest_name");
+            long originatorId = Long.parseLong(resultContainer.getStringItem(i, "user_id"));
+            String originatorHandle = resultContainer.getStringItem(i, "user");
+            Timestamp date = resultContainer.getTimestampItem(i, "activity_time");
+
+            final ProjectBriefDTO project;
+            if (!projects.containsKey(tcDirectProjectId)) {
+                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                projects.put(tcDirectProjectId, project);
+            } else {
+                project = projects.get(tcDirectProjectId);
+            }
+
+            ContestBriefDTO contest;
+            if (contests.containsKey(contestId)) {
+                contest = contests.get(contestId);
+            } else {
+                contest = createContest(contestId, contestName, project);
+                contests.put(contestId, contest);
+            }
+
+            ActivityType activityType = ActivityType.forName(activityTypeText);
+            ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
+            activities.add(activity);
+        }
+
         UpcomingActivitiesDTO result = new UpcomingActivitiesDTO();
-        result.setActivities(MockData.getUpcomingActivities(userId));
+        result.setActivities(activities);
         return result;
     }
 
@@ -196,9 +293,25 @@ public class DataProvider {
      *
      * @param userId a <code>long</code> providing the user ID.
      * @return a <code>List</code> listing the details for user projects.
+     * @throws Exception if an unexpected error occurs.
      */
-    public static List<ProjectBriefDTO> getUserProjects(long userId) {
-        return MockData.getUserProjects(userId);
+    public static List<ProjectBriefDTO> getUserProjects(long userId) throws Exception {
+        CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_projects");
+        request.setProperty("uid", String.valueOf(userId));
+
+        List<ProjectBriefDTO> projects = new ArrayList<ProjectBriefDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            projects.add(createProject(tcDirectProjectId, tcDirectProjectName));
+        }
+
+        return projects;
     }
 
     /**
@@ -317,5 +430,57 @@ public class DataProvider {
      */
     public static List<ContestRegistrantDTO> getContestRegistrants(long contestId) {
         return MockData.getContestRegistrants(contestId);
+    }
+
+    /**
+     * <p>Constructs new <code>ProjectBriefDTO</code> instance based on specified properties.</p>
+     *
+     * @param id a <code>long</code> providing the project ID.
+     * @param name a <code>String</code> providing the project name.
+     * @return an <code>ProjectBriefDTO</code> providing the details for a single project.
+     */
+    private static ProjectBriefDTO createProject(long id, String name) {
+        ProjectBriefDTO project = new ProjectBriefDTO();
+        project.setId(id);
+        project.setName(name);
+        return project;
+    }
+
+    /**
+     * <p>Constructs new <code>ContestBriefDTO</code> instance based on specified properties.</p>
+     *
+     * @param id a <code>long</code> providing the contest ID.
+     * @param name a <code>String</code> providing the contest name.
+     * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to. 
+     * @return an <code>ContestBriefDTO</code> providing the details for a single contest.
+     */
+    private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project) {
+        ContestBriefDTO contest = new ContestBriefDTO();
+        contest.setId(id);
+        contest.setTitle(name);
+        contest.setProject(project);
+        return contest;
+    }
+
+    /**
+     * <p>Constructs new <code>ActivityDTO</code> instance based on specified properties.</p>
+     *
+     * @param contest a <code>ContestBriefDTO</code> providing the details for the contest associated with activity.
+     * @param date a <code>Date</code> providing the timestamp for the activity.
+     * @param handle a <code>String</code> providing the handle for the user who is the originator of the activity.
+     * @param userId a <code>long</code> providing the
+     * @param type an <code>ActivityType</code> referencing the type of the activity.
+     * @return an <code>ActivityDTO</code> providing the details for a single activity.
+     */
+    private static ActivityDTO createActivity(ContestBriefDTO contest,
+                                              Date date, String handle, long userId,
+                                              ActivityType type) {
+        ActivityDTO activity = new ActivityDTO();
+        activity.setContest(contest);
+        activity.setDate(date);
+        activity.setOriginatorHandle(handle);
+        activity.setOriginatorId(userId);
+        activity.setType(type);
+        return activity;
     }
 }
