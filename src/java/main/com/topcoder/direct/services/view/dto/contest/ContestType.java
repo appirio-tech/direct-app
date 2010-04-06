@@ -201,4 +201,21 @@ public enum ContestType {
     public String getLetter() {
         return this.letter;
     }
+
+    /**
+     * <p>Gets the <code>ContestType</code> instance matching the specified name.</p>
+     *
+     * @param name a <code>String</code> providing the name for requested contest type.
+     * @return an <code>ContestType</code> matching the specified name or <code>null</code> if there is none.
+     */
+    public static ContestType forName(String name) {
+        ContestType[] types = ContestType.values();
+        for (int i = 0; i < types.length; i++) {
+            ContestType type = types[i];
+            if (type.getName().equalsIgnoreCase(name)) {
+                return type;
+            }
+        }
+        return WIREFRAME;
+    }
 }

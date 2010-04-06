@@ -128,6 +128,6 @@ public enum ActivityType {
                 return type;
             }
         }
-        return null;
+        return SPEC_POSTED;
     }
 }

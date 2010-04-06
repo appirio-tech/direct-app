@@ -11,6 +11,8 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -22,6 +24,7 @@ import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchRes
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
+import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
@@ -32,6 +35,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +124,7 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs while communicating to persistent data store.
      */
     public static LatestActivitiesDTO getLatestActivitiesForUserProjects(long userId, int days) throws Exception {
-        CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_latest_activities");
         request.setProperty("uid", String.valueOf(userId));
@@ -185,7 +189,7 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs while communicating to persistent data store.
      */
     public static UpcomingActivitiesDTO getUpcomingActivitiesForUserProjects(long userId, int days) throws Exception {
-        CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_upcoming_activities");
         request.setProperty("uid", String.valueOf(userId));
@@ -296,7 +300,7 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs.
      */
     public static List<ProjectBriefDTO> getUserProjects(long userId) throws Exception {
-        CachedDataAccess dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_my_projects");
         request.setProperty("uid", String.valueOf(userId));
@@ -322,7 +326,9 @@ public class DataProvider {
      */
     public static ProjectStatsDTO getProjectStats(long projectId) {
         ProjectStatsDTO stats = new ProjectStatsDTO();
-        ProjectBriefDTO project = MockData.getProject(projectId);
+        ProjectBriefDTO project = new ProjectBriefDTO();
+        project.setId(projectId);
+        project.setName("Project #" + projectId);
         stats.setDraftContestsNumber(1 + (int) projectId);
         stats.setFeesFinalized(10000 + projectId);
         stats.setFeesRunning(4563 + projectId);
@@ -342,57 +348,151 @@ public class DataProvider {
      * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
      * latest activities. Current implementation uses mock data.</p>
      *
+     * @param userId a <code>long</code> porividing the user ID.
      * @param projectId a <code>long</code> providing the ID for project to get the latest activities on associated
      *        contests for.
      * @return an <code>LatestProjectActivitiesDTO</code> providing the details on latest activities on contests
      *         associated with the specified project.
+     * @throws Exception if an unexpected error occurs.
      */
-    public static LatestProjectActivitiesDTO getLatestActivitiesForProject(long projectId) {
-        LatestProjectActivitiesDTO dto = new LatestProjectActivitiesDTO();
-        dto.setActivities(MockData.getLatestProjectContestActivities(projectId));
-        return dto;
-    }
-
-    /**
-     * <p>Gets the details on contests associated with the specified project.</p>
-     *
-     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
-     * project. Current implementation uses mock data.</p>
-     *
-     * @param projectId a <code>long</code> providing the ID for project to get the details for associated contests for.
-     * @return a <code>ProjectContestsListDTO</code> providing the details on contests associated with specified
-     *         project.
-     */
-    public static ProjectContestsListDTO getProjectContests(long projectId) {
-        ProjectContestsListDTO dto = new ProjectContestsListDTO();
-        dto.setContests(MockData.getProjectContests(projectId));
-        return dto;
-    }
-
-    /**
-     * <p>Gets the details on contests associated with the specified project.</p>
-     *
-     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
-     * project. Current implementation uses mock data.</p>
-     *
-     * @param projectId a <code>long</code> providing the ID for project to get the details for associated contests for.
-     * @return a <code>ProjectContestsListDTO</code> providing the details on contests associated with specified
-     *         project.
-     */
-    public static List<TypedContestBriefDTO> getProjectTypedContests(long projectId) {
-        List<TypedContestBriefDTO> data = new ArrayList<TypedContestBriefDTO>();
-        List<ProjectContestDTO> list = MockData.getProjectContests(projectId);
-        for (ProjectContestDTO p : list) {
-            TypedContestBriefDTO dto = new TypedContestBriefDTO();
-            dto.setContestType(p.getContestType());
-            dto.setId(p.getContest().getId());
-            dto.setProject(p.getContest().getProject());
-            dto.setTitle(p.getContest().getTitle());
-            dto.setStatus(p.getStatus());
-            data.add(dto);
+    public static LatestProjectActivitiesDTO getLatestActivitiesForProject(long userId, long projectId) 
+        throws Exception {
+        // TODO : this is temporary implementation
+        LatestActivitiesDTO data = getLatestActivitiesForUserProjects(userId, 60);
+        Map<ProjectBriefDTO, List<ActivityDTO>> map = data.getActivities();
+        Iterator<ProjectBriefDTO> dtoIterator = map.keySet().iterator();
+        Map<ContestBriefDTO, List<ActivityDTO>> activities = new HashMap<ContestBriefDTO, List<ActivityDTO>>();
+        while (dtoIterator.hasNext()) {
+            ProjectBriefDTO project = dtoIterator.next();
+            if (project.getId() == projectId) {
+                List<ActivityDTO> list = map.get(project);
+                for (ActivityDTO a : list) {
+                    List<ActivityDTO> d;
+                    ContestBriefDTO c = a.getContest();
+                    if (!activities.containsKey(c)) {
+                        d = new ArrayList<ActivityDTO>();
+                        activities.put(c, d);
+                    } else {
+                        d = activities.get(c);
+                    }
+                    d.add(a);
+                }
+            }
         }
 
-        return data;
+        LatestProjectActivitiesDTO dto = new LatestProjectActivitiesDTO();
+        dto.setActivities(activities);
+        return dto;
+    }
+
+    /**
+     * <p>Gets the details on contests associated with the specified project.</p>
+     *
+     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
+     * project. Current implementation uses mock data.</p>
+     *
+     * @param userId a <code>long</code> providing the ID of a user associated with project.
+     * @param projectId a <code>long</code> providing the ID for project to get the details for associated contests for.
+     * @return a <code>ProjectContestsListDTO</code> providing the details on contests associated with specified
+     *         project.
+     * @throws Exception if an unexpected error occurs.
+     */
+    public static ProjectContestsListDTO getProjectContests(long userId, long projectId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_contests");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+        final List<ProjectContestDTO> contests = new ArrayList<ProjectContestDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            long contestId = resultContainer.getLongItem(i, "contest_id");
+            String contestName = resultContainer.getStringItem(i, "contest_name");
+            String statusName = resultContainer.getStringItem(i, "status");
+            String typeName = resultContainer.getStringItem(i, "contest_type");
+            Timestamp startDate = resultContainer.getTimestampItem(i, "start_date");
+            Timestamp endDate = resultContainer.getTimestampItem(i, "end_date");
+            int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
+            int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
+            int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
+
+            final ProjectBriefDTO project;
+            if (!projects.containsKey(tcDirectProjectId)) {
+                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                projects.put(tcDirectProjectId, project);
+            } else {
+                project = projects.get(tcDirectProjectId);
+            }
+
+            ContestBriefDTO contestBrief = createContest(contestId, contestName, project);
+            ContestType type = ContestType.forName(typeName);
+            ContestStatus status = ContestStatus.forName(statusName);
+
+            ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
+                                                             forumPostsCount, registrantsCount, submissionsCount);
+            contests.add(contest);
+        }
+
+        ProjectContestsListDTO dto = new ProjectContestsListDTO();
+        dto.setContests(contests);
+        return dto;
+    }
+
+    /**
+     * <p>Gets the details on contests associated with the specified project.</p>
+     *
+     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
+     * project. Current implementation uses mock data.</p>
+     *
+     * @param userId a <code>long</code> providing the ID for user associated with project.
+     * @param projectId a <code>long</code> providing the ID for project to get the details for associated contests for.
+     * @return a <code>ProjectContestsListDTO</code> providing the details on contests associated with specified
+     *         project.
+     * @throws Exception if an unexpected error occurs.
+     */
+    public static List<TypedContestBriefDTO> getProjectTypedContests(long userId, long projectId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_contests");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+        final List<TypedContestBriefDTO> contests = new ArrayList<TypedContestBriefDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            long contestId = resultContainer.getLongItem(i, "contest_id");
+            String contestName = resultContainer.getStringItem(i, "contest_name");
+            String statusName = resultContainer.getStringItem(i, "status");
+            String typeName = resultContainer.getStringItem(i, "contest_type");
+
+            final ProjectBriefDTO project;
+            if (!projects.containsKey(tcDirectProjectId)) {
+                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                projects.put(tcDirectProjectId, project);
+            } else {
+                project = projects.get(tcDirectProjectId);
+            }
+
+            ContestType type = ContestType.forName(typeName);
+            ContestStatus status = ContestStatus.forName(statusName);
+
+            TypedContestBriefDTO contest;
+            contest = createTypedContest(contestId, contestName, project, type, status);
+            contests.add(contest);
+        }
+
+        return contests;
     }
 
     /**
@@ -463,6 +563,27 @@ public class DataProvider {
     }
 
     /**
+     * <p>Constructs new <code>TypedContestBriefDTO</code> instance based on specified properties.</p>
+     *
+     * @param id a <code>long</code> providing the contest ID.
+     * @param name a <code>String</code> providing the contest name.
+     * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to.
+     * @param type a <code>ContestType</code> providing the contest type.
+     * @param status a <code>ContestStatus</code> providing the contest status.
+     * @return an <code>TypedContestBriefDTO</code> providing the details for a single contest.
+     */
+    private static TypedContestBriefDTO createTypedContest(long id, String name, ProjectBriefDTO project,
+                                                           ContestType type, ContestStatus status) {
+        TypedContestBriefDTO contest = new TypedContestBriefDTO();
+        contest.setId(id);
+        contest.setTitle(name);
+        contest.setProject(project);
+        contest.setContestType(type);
+        contest.setStatus(status);
+        return contest;
+    }
+
+    /**
      * <p>Constructs new <code>ActivityDTO</code> instance based on specified properties.</p>
      *
      * @param contest a <code>ContestBriefDTO</code> providing the details for the contest associated with activity.
@@ -482,5 +603,31 @@ public class DataProvider {
         activity.setOriginatorId(userId);
         activity.setType(type);
         return activity;
+    }
+
+    /**
+     * <p>Constructs new <code>ProjectContestDTO</code> instance based on specified properties.</p>
+     *
+     * @param contest a <code>ContestBriefDTO</code> providing the details for the contest associated with activity.
+     * @param date a <code>Date</code> providing the timestamp for the activity.
+     * @param handle a <code>String</code> providing the handle for the user who is the originator of the activity.
+     * @param userId a <code>long</code> providing the
+     * @param type an <code>ActivityType</code> referencing the type of the activity.
+     * @return an <code>ProjectContestDTO</code> providing the details for a single project contest.
+     */
+    private static ProjectContestDTO createProjectContest(ContestBriefDTO contestBrief, ContestType type,
+                                                          ContestStatus status, Date startTime, Date endTime,
+                                                          int forumPostsCount, int registrantsCount,
+                                                          int submissionsCount) {
+        ProjectContestDTO dto = new ProjectContestDTO();
+        dto.setContestType(type);
+        dto.setContest(contestBrief);
+        dto.setEndTime(endTime);
+        dto.setForumPostsNumber(forumPostsCount);
+        dto.setRegistrantsNumber(registrantsCount);
+        dto.setStartTime(startTime);
+        dto.setStatus(status);
+        dto.setSubmissionsNumber(submissionsCount);
+        return dto;
     }
 }

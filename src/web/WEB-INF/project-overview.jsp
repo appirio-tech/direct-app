@@ -52,6 +52,7 @@
                                         <s:set value="originatorId" var="originatorId" scope="page"/>
                                         <s:set value="originatorHandle" var="originatorHandle" scope="page"/>
                                         <s:set value="contest" var="contest" scope="page"/>
+                                        <s:set value="date" var="date" scope="page"/>
                                         <tr <s:if test="#status.index == 4">class="hideStart"</s:if>>
                                             <td class="first <s:property value="type.shortName"/>"></td>
                                             <td class="second">
@@ -62,7 +63,9 @@
                                                 Link To <s:property value="type.name"/></a></td>
                                             <td class="posted"><s:property value="type.actionText"/> :
                                                 <link:user userId="${originatorId}" handle="${originatorHandle}"/></td>
-                                            <td class="date">Today</td>
+                                            <td class="date">
+                                                <c:out value="${tcdirect:getDateText(date, 'MM/dd/yyyy')}"/>
+                                            </td>
                                         </tr>
                                     </s:iterator>
                                     </tbody>

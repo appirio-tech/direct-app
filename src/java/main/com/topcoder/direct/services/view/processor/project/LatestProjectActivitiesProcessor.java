@@ -46,8 +46,10 @@ public class LatestProjectActivitiesProcessor implements RequestProcessor<FormAc
             Object data = viewAction.getViewData();
             if (data instanceof LatestProjectActivitiesDTO.Aware) {
                 long projectId = action.getFormData().getProjectId();
+                long currentUserId = action.getSessionData().getCurrentUserId();
                 try {
-                    LatestProjectActivitiesDTO latestActivities = DataProvider.getLatestActivitiesForProject(projectId);
+                    LatestProjectActivitiesDTO latestActivities
+                        = DataProvider.getLatestActivitiesForProject(currentUserId, projectId);
                     LatestProjectActivitiesDTO.Aware viewData = (LatestProjectActivitiesDTO.Aware) data;
                     viewData.setLatestProjectActivities(latestActivities);
                 } catch (Exception e) {

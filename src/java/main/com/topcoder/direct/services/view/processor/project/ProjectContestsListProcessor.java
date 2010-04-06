@@ -46,8 +46,9 @@ public class ProjectContestsListProcessor implements RequestProcessor<FormAction
             Object data = viewAction.getViewData();
             if (data instanceof ProjectContestsListDTO.Aware) {
                 long projectId = action.getFormData().getProjectId();
+                long currentUserId = action.getSessionData().getCurrentUserId();
                 try {
-                    ProjectContestsListDTO contests = DataProvider.getProjectContests(projectId);
+                    ProjectContestsListDTO contests = DataProvider.getProjectContests(currentUserId, projectId);
                     ProjectContestsListDTO.Aware viewData = (ProjectContestsListDTO.Aware) data;
                     viewData.setProjectContests(contests);
                 } catch (Exception e) {

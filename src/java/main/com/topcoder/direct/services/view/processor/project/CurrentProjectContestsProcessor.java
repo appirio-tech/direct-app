@@ -44,8 +44,9 @@ public class CurrentProjectContestsProcessor implements RequestProcessor<TopCode
         ProjectBriefDTO currentProject = action.getSessionData().getCurrentProjectContext();
         if (currentProject != null) {
             long projectId = currentProject.getId();
+            long currentUserId = action.getSessionData().getCurrentUserId();
             try {
-                List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(projectId);
+                List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(currentUserId, projectId);
                 action.getSessionData().setCurrentProjectContests(contests);
             } catch (Exception e) {
                 log.error("Failed to retrieve details on project contests for current project " + projectId, e);

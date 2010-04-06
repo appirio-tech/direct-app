@@ -22,6 +22,26 @@ public enum ContestStatus {
     RUNNING("Running", "running", "View"),
 
     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Submission</code> contest status.</p>
+     */
+    SUBMISSION("Submission", "running", "View"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Registration</code> contest status.</p>
+     */
+    REGISTRATION("Registration", "running", "View"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Active</code> contest status.</p>
+     */
+    INACTIVE("Inactive", "running", "View"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Deleted</code> contest status.</p>
+     */
+    DELETED("Deleted", "running", "View"),
+
+    /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Milestone</code> contest status.</p>
      */
     MILESTONE("Milestone", "milestone", "Milestone"),
@@ -55,7 +75,6 @@ public enum ContestStatus {
      * <p>A <code>ContestStatus</code> corresponding to <code>Scheduled</code> contest status.</p>
      */
     SCHEDULED("Scheduled", "Scheduled", "Scheduled"),
-    
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Scheduled</code> contest status.</p>
@@ -174,5 +193,22 @@ public enum ContestStatus {
      */
     public String getActionText() {
         return actionText;
+    }
+
+    /**
+     * <p>Gets the <code>ContestStatus</code> instance matching the specified name.</p>
+     *
+     * @param name a <code>String</code> providing the name for requested contest status.
+     * @return an <code>ContestStatus</code> matching the specified name or <code>null</code> if there is none.
+     */
+    public static ContestStatus forName(String name) {
+        ContestStatus[] statuses = ContestStatus.values();
+        for (int i = 0; i < statuses.length; i++) {
+            ContestStatus status = statuses[i];
+            if (status.getName().equalsIgnoreCase(name)) {
+                return status;
+            }
+        }
+        return DRAFT;
     }
 }
