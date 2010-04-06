@@ -19,13 +19,23 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
      */
-    WEB_DESIGN("Web Design", "Wd"),
+    WEB_DESIGN("Web Page Design", "Wd"),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
+     */
+    WEB_ELEMENTS("Web Elements", "We"),
 
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Logo Design</code> contest type.</p>
      */
     LOGO_DESIGN("Logo Design", "L"),
+
+   /**
+     * <p>A <code>ContestType</code> corresponding to <code>Icon</code> contest type.</p>
+     */
+    ICONS("Icon", "L"),
 
 
     /**
@@ -35,15 +45,20 @@ public enum ContestType {
 
 
     /**
-     * <p>A <code>ContestType</code> corresponding to <code>Print/Presentation</code> contest type.</p>
+     * <p>A <code>ContestType</code> corresponding to <code>Print Design</code> contest type.</p>
      */
-    PRINT_PRESENTATION("Print/Presentation", "Pr"),
+    PRINT_DESIGN("Print Design", "Pr"),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>PowerPoint Presentation</code> contest type.</p>
+     */
+    POWERPOINT_PRESENTATION("PowerPoint Presentation", "Pw"),
 
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
      */
-    APP_FRONT_END_DESIGN("Application Front-End Design", "Ad"),
+    APP_FRONT_END_DESIGN("Application Front End Design", "Ad"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
@@ -68,7 +83,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>
      */
-    UI_PROTOTYPE("UI Prototype", "P"),
+    UI_PROTOTYPE("UI Prototypes", "P"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Specification</code> contest type.</p>
@@ -93,7 +108,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Assembly</code> contest type.</p>
      */
-    ASSEMBLY("Assembly", "As"),
+    ASSEMBLY("Assembly Competition", "As"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Test Scenarios</code> contest type.</p>
@@ -128,7 +143,22 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Marathon</code> contest type.</p>
      */
-    MARATHON("Marathon", "M");
+    MARATHON("Marathon", "M"),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Design</code> contest type.</p>
+     */
+    DESIGN("Design", "Ds"),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Development</code> contest type.</p>
+     */
+    DEVELOPMENT("Development", "Dv"),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Marathon</code> contest type.</p>
+     */
+    CONCEPTUALIZATION("Conceptualization", "Cn");
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the
