@@ -1,0 +1,329 @@
+/* This file will contain css used in both the index and the other pages */
+
+/**/
+
+.details .caption{ /* help popup titles */
+		background: url(../images/title_bg.png) repeat-x;
+	}
+	
+		.details .caption .captionLeft{ 
+			background: url(../images/title_left.png) no-repeat left;
+		}
+		
+		.details .caption .captionRight{
+			background: url(../images/title_right.png) no-repeat right;
+		}
+		
+		.details .caption .captionInner{
+			height: 35px;
+		}
+		
+			.details .caption .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Verdana, Geneva, sans-serif;
+				font-size: 14px;
+				padding-top: 8px;
+				padding-left: 10px;
+			}
+
+/* popups */
+
+.deleteUserInner P{
+	text-align: center;
+	padding-bottom: 5px;
+}
+
+.deleteUserInner .button1{
+	float: right;
+	margin: 4px 4px 0 4px;
+}
+
+.popupButtons{
+	height: 100%;
+	overflow: hidden;
+	padding: 5px 0;
+}
+
+#TB_closeWindowButton{
+	width: 15px;
+	height: 15px;
+	background: url(../images/close_ico.png) no-repeat;
+	display: block;
+}
+
+/* Help modal window */
+
+
+.helpPopupInner .caption .captionInner H2{ /* title */
+	color: #333;
+}
+
+.helpPopupInner  .helpArea{
+	padding-bottom: 20px;
+}
+
+.helpPopupInner .logoArea{
+	padding: 20px 0;
+}
+
+.popupFooter{
+	padding: 20px 0 0 0;
+	margin: 0 auto;
+	font-size: 11px;
+	color: #333;
+	border-top: 1px solid #bdbdbd;
+	background-color: #f6f6f6;
+	text-align: center;
+}
+
+.popupFooter A{
+	text-decoration: none;
+	color: #333 !important;
+}
+
+.popupFooter H2{
+	font-family: Verdana, Helvetica, sans-serif;
+	margin: 0 0 5px 0;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.popupFooter P{
+	margin: 0;
+	font-size: 11px;
+}
+
+/*-----------
+	BUTTONS
+-------------*/
+
+
+
+A.button1{
+	float: left;
+	background: transparent url(../images/button_left.png) no-repeat left;
+	font-size: 12px;
+	font-weight: bold;
+	color: #362f2d;
+	text-decoration: none;
+}	
+
+	A.button1 SPAN{
+		float: left;
+		background: transparent url(../images/button_right.png) no-repeat right;
+		padding: 5px 10px 2px 10px;
+		cursor: pointer;
+		height: 20px;
+		overflow: hidden;
+	}	
+	
+	A.button1:hover{
+		color: #000;
+	}
+	
+A.button2{
+	display: block;
+	background: transparent url(../images/button.png) no-repeat top;
+	width: 253px;
+	height: 24px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #FFF;
+	text-decoration: none;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 6px;
+}
+
+	A.button2:hover{
+		background: transparent url(../images/button.png) no-repeat bottom;
+	}
+
+A.button3{
+	display: block;
+	text-align: center;
+	margin: 0 auto;
+	text-decoration: none;
+	background: url(../images/button2.png) no-repeat top;
+	width: 232px;
+	height: 25px;
+	color: #333333;
+	font-family: "Myriad pro", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	padding-top: 5px;
+}
+
+A.button3:hover{
+	background-position: bottom;
+}
+
+A.button4{
+	display: block;
+	background: transparent url(../images/button3.png) no-repeat top;
+	width: 144px;
+	height: 18px;
+	padding-top: 3px;
+	color: #FFF;
+	font-size: 11px;
+	font-weight: bold;
+	margin: 0 auto;
+	text-decoration: none;
+	margin-bottom: 5px;
+}
+
+A.button4:hover{
+	background-position: bottom;
+}
+
+A.button5{
+	display: block;
+	background: transparent url(../images/button4.png) no-repeat top;
+	width: 144px;
+	height: 18px;
+	padding-top: 3px;
+	color: #000;
+	font-size: 11px;
+	font-weight: bold;
+	margin: 0 auto;
+	text-decoration: none;
+}
+
+A.button5:hover{
+	background-position: bottom;
+}
+
+A.button6,
+A.button7,
+A.button8{
+	float: right;
+	background: url(../images/button5_left.png) no-repeat left top;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #FFF;
+	text-decoration: none;
+	margin: 0 3px;
+}
+
+	A.button6 SPAN,
+	A.button7 SPAN,
+	A.button8 SPAN{
+		display: block;
+		cursor: pointer;
+	}
+	
+	A.button7 SPAN.right{
+		padding: 4px 27px 0 27px; 
+		height: 20px;
+	}
+
+A.button7{
+	background: url(../images/button7_bg.png) repeat-x top;
+	color: #333;
+}
+
+	A.button7 SPAN.left{
+		display: block;
+		background: url(../images/button7_left.png) no-repeat left top;
+		padding: 0;
+	}
+	
+	A.button7 SPAN.right{
+		display: block;
+		background: url(../images/button7_right.png) no-repeat right top;
+	}
+
+A.button8{
+	background: url(../images/button8_bg.png) repeat-x top;
+	color: #FFF !important;
+}
+
+	A.button8 SPAN.left{
+		background: url(../images/button8_left.png) no-repeat left top;
+		padding: 0;
+	}
+	
+	A.button8 SPAN.right{
+		background: url(../images/button8_right.png) no-repeat right top;
+		padding: 5px 27px 0 27px;
+		height: 21px;
+	}
+
+A.button6{
+	background: url(../images/button5_bg.png) repeat-x top;
+}
+
+	A.button6 SPAN.left{
+		background: url(../images/button5_left.png) no-repeat left top;
+		padding: 0;
+	}
+	
+	A.button6 SPAN.right{
+		background: url(../images/button5_right.png) no-repeat right top;
+		padding: 4px 27px 0 27px;
+		height: 20px;
+	}
+
+A.button6:hover,
+A.button7:hover,
+A.button8:hover{
+	background-position: left bottom;
+	text-decoration: none !important;
+}
+
+	A.button6:hover SPAN,
+	A.button7:hover SPAN,
+	A.button8:hover SPAN{
+		background-position: right bottom;
+	}
+	
+	A.button7:hover SPAN.left{
+		background-position: left bottom;
+	}
+	
+	A.button7:hover SPAN.right{
+		background-position: right bottom;
+	}
+	
+	A.button8:hover SPAN.left{
+		background-position: left bottom;
+	}
+	
+	A.button8:hover SPAN.right{
+		background-position: right bottom;
+	}
+	
+	A.button6:hover SPAN.left{
+		background-position: left bottom;
+	}
+	
+	A.button6:hover SPAN.right{
+		background-position: right bottom;
+	}
+
+/*----------------
+	MISC
+----------------*/
+
+IMG{
+	border: none;
+}
+
+.hide{
+	display: none;
+}
+
+.fLeft{
+	float: left !important;
+}
+
+.fRight{
+	float: right !important;
+}
+
+.lastColumn{
+	text-align: left !important;
+	padding-left: 10px !important;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<projects>
+	<project
+		name="flex_widget_base_services"
+		svnbase="https://coder.topcoder.com/tcs/catalog/flex/flex_widget_base_services"
+		buildfile="build.xml">
+		<versions>
+			<version name="TRUNK" path="branches/software_contests"/>
+			<version name="RELEASE" path="release"/>
+		</versions>
+	</project>
+</projects>

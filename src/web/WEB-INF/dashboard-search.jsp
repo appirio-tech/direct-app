@@ -1,0 +1,103 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/WEB-INF/includes/taglibs.jsp" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <jsp:include page="includes/htmlhead.jsp"/>
+    <ui:dashboardPageType tab="search"/>
+    <jsp:include page="includes/paginationSetup.jsp"/>
+</head>
+
+<body id="page">
+<div id="wrapper">
+    <div id="wrapperInner">
+        <div id="container">
+            <div id="content">
+
+                <jsp:include page="includes/header.jsp"/>
+
+                <div id="mainContent">
+
+                    <jsp:include page="includes/right.jsp"/>
+
+                    <div id="area1"><!-- the main area -->
+                    <div class="area1Content">
+                    <div class="areaHeader">
+                        <h2 class="title">Search</h2>
+                    </div><!-- End .areaHeader -->
+
+                    <div class="search">
+                        <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
+                            <label class="fLeft" for="searchFor">Search For:</label>
+                            <s:textfield cssClass="fLeft" name="formData.searchFor" id="searchFor"/>
+                            <label class="fLeft" for="searchIn"> In</label>
+                            <s:select id="searchIn" list="requestData.dashboardSearchTypes" name="formData.searchIn"/>
+                            <a href="javascript:document.DashboardSearchForm.submit();" class="button1 fLeft">
+                                <span>Search</span></a>
+                        </s:form>
+                    </div>
+
+                    <s:if test="viewData.resultType != null">
+                        <div class="container2" id="resultsContainer">
+                            <div class="container2Left">
+                                <div class="container2Right">
+                                    <div class="container2Bottom">
+                                        <div class="container2BottomLeft">
+                                            <div class="container2BottomRight">
+                                                <div class="container2Content">
+                                                    <s:if test="viewData.resultType.name() == 'PROJECTS'">
+                                                        <s:include value="includes/dashboard/projectsSearchResults.jsp"/>
+                                                    </s:if>
+                                                    <s:if test="viewData.resultType.name() == 'CONTESTS'">
+                                                        <s:include value="includes/dashboard/contestsSearchResults.jsp"/>
+                                                    </s:if>
+                                                    <s:if test="viewData.resultType.name() == 'MEMBERS'">
+                                                        <s:include value="includes/dashboard/membersSearchResults.jsp"/>
+                                                    </s:if>
+                                                    <div class="panel">
+                                                        <!-- this area contains the print, export to excel, export to pdf links -->
+                                                        <a href="javascript:alert('To be implemented sub-sequent assemblies');"
+                                                           class="exportPdf">Export to <strong>PDF</strong></a>
+                                                        <span>|</span>
+                                                        <a href="javascript:alert('To be implemented sub-sequent assemblies');"
+                                                           class="exportExcel">Export to <strong>Excel</strong></a>
+                                                        <span>|</span>
+                                                        <a href="javascript:alert('To be implemented sub-sequent assemblies');"
+                                                           class="print">Print</a>
+                                                    </div>
+                                                    <!-- End .panel -->
+
+                                                </div>
+                                                <!-- End .container2Content -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End .container2 -->
+                    </s:if>
+                    </div>
+                    </div>
+
+                </div>
+                <!-- End #mainContent -->
+
+                <jsp:include page="includes/footer.jsp"/>
+
+            </div>
+            <!-- End #content -->
+        </div>
+        <!-- End #container -->
+    </div>
+</div>
+<!-- End #wrapper -->
+
+<jsp:include page="includes/popups.jsp"/>
+
+</body>
+<!-- End #page -->
+
+</html>

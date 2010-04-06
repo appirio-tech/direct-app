@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Dec 1, 2008 9:17:50 PM                                                        
+
+     Build Master
+                        
+     TCSDEVELOPER                                                                
+     ====================================================================== -->
+<project name="tools.master">
+    <description>
+        The master build scripts defines useful targets and tasks to manage multiple subprojects.
+    </description>
+
+    <dirname file="${ant.file.tools.master}" property="tools.master.basedir"/>
+
+    <!-- path to the property file containing subproject definitions, default to 'projects.properties' -->
+    <condition property="subprojects.conf" value="${basedir}/subprojects.xml">
+        <not>
+            <isset property="subprojects.conf"/>
+        </not>
+    </condition>
+
+    <path id="script.path">
+        <pathelement location="${tools.master.basedir}/lib/groovy-all-1.5.7.jar"/>
+    </path>
+
+    <path id="svn.path">
+        <fileset dir="${tools.master.basedir}/lib">
+            <include name="svn*.jar"/>
+        </fileset>
+    </path>
+
+    <import file="${tools.master.basedir}/build-master-tasks.xml"/>
+    <import file="${tools.master.basedir}/build-master-utils.xml"/>
+    <import file="${tools.master.basedir}/build-master-targets.xml"/>
+</project>

@@ -1,0 +1,41 @@
+<project name="Dependency Import" default="dist" basedir=".">
+	<!-- Properties used in compile_targets ANT target -->
+	<property name="component.target" value="1.5" />
+	<property name="component.bootclasspath" value="${java_1_5_bootclasspath}" />
+
+    <!-- TopCoder dependencies -->
+    <property name="base_exception.version" value="2.0.0"/>
+    <property name="base_exception.jar.name" value="base_exception.jar"/>
+    <property name="base_exception.path" value="base_exception/${base_exception.version}"/>
+    <property name="base_exception.jar" value="${tcs_libdir}/${base_exception.path}/${base_exception.jar.name}"/>
+    
+
+    <property name="shared.jar" value="${tcs_libdir}/shared.jar"/>
+    <property name="tcwebcommon.jar" value="${tcs_libdir}/tcwebcommon.jar"/>
+    <property name="security.jar" value="${tcs_libdir}/security/security.jar"/>
+
+	<!-- 3rd party dependencies -->
+    <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar"/>
+    <property name="ejb-api.jar" value="${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
+
+    <!-- Struts2 libraries -->
+    <path id="struts.libs">
+        <fileset dir="${ext_libdir}/struts">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+	<path id="component.tcs-dependencies">
+        <pathelement location="${shared.jar}"/>
+        <pathelement location="${tcwebcommon.jar}"/>
+        <pathelement location="${security.jar}"/>
+        <pathelement location="${base_exception.jar}"/>
+	</path>
+
+	<path id="component.3rdParty-dependencies">
+        <path refid="struts.libs"/>
+        <pathelement location="${servlet-api.jar}"/>
+        <pathelement location="${ejb-api.jar}"/>
+	</path>
+
+</project>

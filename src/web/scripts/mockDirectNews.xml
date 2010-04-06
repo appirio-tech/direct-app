@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+        >
+
+    <channel>
+        <title>TopCoder</title>
+        <atom:link href="http://topcoder.com/home/feed/" rel="self" type="application/rss+xml"/>
+        <link>http://topcoder.com/home</link>
+        <description>Let the world compete on your next application</description>
+        <lastBuildDate>Thu, 31 Dec 2009 00:55:29 +0000</lastBuildDate>
+        <generator>http://wordpress.org/?v=2.8.4</generator>
+        <language>en</language>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>1</sy:updateFrequency>
+        <item>
+            <title>TopCoder Cryptographers Test World War II Secret Code Machine</title>
+            <link>http://topcoder.com/home/blog/2009/12/topcoder-cryptographers-test-world-war-ii-secret-code-machine/
+            </link>
+            <comments>
+                http://topcoder.com/home/blog/2009/12/topcoder-cryptographers-test-world-war-ii-secret-code-machine/#comments
+            </comments>
+            <pubDate>Tue, 29 Dec 2009 00:55:01 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=1542</guid>
+            <description>
+                <![CDATA[TopCoder, Inc., announced the winning algorithm in a coding competition challenging competitors to crack the famous World War II Enigma encryption machine. Building on some of the ideas of his predecessors, TopCoder member Po-Ru Loh, aka ploh, a Ph.D. student in Mathematics at MIT, was able to partially defeat the machine with consistency. Although Loh’s [...]]]></description>
+            <content:encoded><![CDATA[<p>TopCoder, Inc., announced the winning algorithm in a coding competition challenging competitors to crack the famous World War II Enigma encryption machine. Building on some of the ideas of his predecessors, TopCoder member Po-Ru Loh, aka ploh, a Ph.D. student in Mathematics at MIT, was able to partially defeat the machine with consistency. Although Loh’s winning algorithm was unable to crack the complex code every time, he managed to successfully solve about 40% of the cases.</p>
+<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=pr_122209">read the full announcement</a></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                http://topcoder.com/home/blog/2009/12/topcoder-cryptographers-test-world-war-ii-secret-code-machine/feed/
+            </wfw:commentRss>
+            <slash:comments>2</slash:comments>
+        </item>
+        <item>
+            <title>Another TC Success Story: Best Buy Weekly Circular Advertises TopCoder-Built Flat Screen App</title>
+            <link>
+                http://topcoder.com/home/blog/2009/12/best-buy-weekly-circular-advertises-topcoder-built-flat-screen-app/
+            </link>
+            <comments>
+                http://topcoder.com/home/blog/2009/12/best-buy-weekly-circular-advertises-topcoder-built-flat-screen-app/#comments
+            </comments>
+            <pubDate>Wed, 02 Dec 2009 20:53:18 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=1407</guid>
+            <description>
+                <![CDATA[This week's Best Buy circular advertisement points directs customers to the new Flat Panel TV Finder App, built through competition on TopCoder as part of the Best Buy Remix Challenge.]]></description>
+            <content:encoded><![CDATA[<p>This week&#8217;s Best Buy circular advertisement highlights the new Flat Panel TV Finder App on <a href="http://bestbuy.com/tvfinder">BestBuy.com</a>, built through competition on TopCoder as part of the <a href="http://www.remixchallenge.com">Best Buy Remix Challenge</a>.</p>
+<blockquote><p>From <a href="http://topcoder.com/home/remixchallenge/2009/12/02/flat-panel-tv-finder-featured-in-the-weekly-ad/">bestbuyjoe</a>&#8230;</p>
+<p>Awesome news! Last week and this week the Flat-Panel TV Finder that was constructed with the help of the TopCoder community is featured in the Best Buy Weekly Ad. I took a picture with my phone, so sorry if the quality stinks.</p>
+<p style="text-align: center"><a href="http://bestbuy.com/tvfinder"><img class="aligncenter" src="http://farm3.static.flickr.com/2620/4153779658_da342d1df6.jpg" alt="" width="225" height="300" /></a></p>
+<p>This is great news for the community and shows off the awesome work you’ve all done. Hopefully we see more examples like this in the near future!</p></blockquote>
+<p>The <a href="http://www.remixchallenge.com">Remix Challenge</a> is an ongoing series of TopCoder competitions in which competitors are building quick &amp; lightweight apps using the Remix API of Best Buy. The challenge has enabled Best Buy to get apps built, tested, deployed and <a href="http://topcoder.com/home/remixchallenge/2009/11/12/great-results-of-all-the-hard-work/">making a significant impact</a> on bestbuy.com at dramatically lower costs and shorter timeframes.</p>
+]]></content:encoded>
+            <wfw:commentRss>
+                http://topcoder.com/home/blog/2009/12/best-buy-weekly-circular-advertises-topcoder-built-flat-screen-app/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>TopCoder Names Nicholas M. Donofrio to Company&#8217;s Board of Directors</title>
+            <link>
+                http://topcoder.com/home/blog/2009/12/topcoder-names-nicholas-m-donofrio-to-companys-board-of-directors/
+            </link>
+            <comments>
+                http://topcoder.com/home/blog/2009/12/topcoder-names-nicholas-m-donofrio-to-companys-board-of-directors/#comments
+            </comments>
+            <pubDate>Tue, 01 Dec 2009 23:38:32 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=1404</guid>
+            <description><![CDATA[Former IBM Technology Strategy Team Leader Joins Executive Roster of World&#8217;s Largest Competitive Software Development Community
+TopCoder, Inc., today announced that Nicholas M. Donofrio has been named to the company’s Board of Directors effective immediately. Donofrio spent 44 years at IBM Corp., starting as a logic and memory chip designer and rising to lead the company’s [...]]]></description>
+            <content:encoded><![CDATA[<p><strong>Former IBM Technology Strategy Team Leader Joins Executive Roster of World&#8217;s Largest Competitive Software Development Community</strong></p>
+<p>TopCoder, Inc., today announced that Nicholas M. Donofrio has been named to the company’s Board of Directors effective immediately. Donofrio spent 44 years at IBM Corp., starting as a logic and memory chip designer and rising to lead the company’s technology strategy as executive vice president of innovation and technology. He is also an IBM Fellow Emeritus, the highest honor a scientist, engineer or programmer at IBM can achieve.</p>
+<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=pr_113009">full article</a></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                http://topcoder.com/home/blog/2009/12/topcoder-names-nicholas-m-donofrio-to-companys-board-of-directors/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>TopCoder Inc. Wins Deloitte Fast 500 and Connecticut Technology Council Tech Top 40 Awards</title>
+            <link>
+                http://topcoder.com/home/blog/2009/11/topcoder-inc-wins-deloitte-fast-500-and-connecticut-technology-council-tech-top-40-awards/
+            </link>
+            <comments>
+                http://topcoder.com/home/blog/2009/11/topcoder-inc-wins-deloitte-fast-500-and-connecticut-technology-council-tech-top-40-awards/#comments
+            </comments>
+            <pubDate>Wed, 04 Nov 2009 15:09:43 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=1315</guid>
+            <description><![CDATA[Global Virtual Software Factory Connects Talent, Process &#38; Product Using Delivery-Based Engagement Model&#160;&#160;
+Glastonbury, CT &#8211; October 28, 2009 &#8211;  TopCoder®, Inc., announced today that it has been recognized with two prestigious industry awards for business growth and innovation Ð the Deloitte Technology Fast 500 and the UHY LLP Tech Top 40. This marks the [...]]]></description>
+            <content:encoded><![CDATA[<p><strong>Global Virtual Software Factory Connects Talent, Process &amp; Product Using Delivery-Based Engagement Model</strong>&nbsp;<br />&nbsp;<br />
+<strong>Glastonbury, CT &#8211; October 28, 2009</strong> &#8211;  <a href="http://www.topcoder.com/">TopCoder®, Inc.</a>, announced today that it has been recognized with two prestigious industry awards for business growth and innovation Ð the Deloitte <a href="http://www.deloitte.com/view/en_US/us/Industries/Technology/technologyfast500/index.htm">Technology Fast 500</a> and the <a href="http://www.ct.org/Tech_Top_40.asp">UHY LLP Tech Top 40</a>. This marks the third consecutive year TopCoder has achieved recognition from both programs.</p>
+<p>TopCoder ranked #151 on Deloitte&#8217;s Technology Fast 500, Deloitte LLP`s ranking of 500 of the fastest growing technology, media, telecommunications, life sciences and clean technology companies in North America. Rankings are based on percentage of fiscal year revenue growth during the five year period from 2004-2008. TopCoder ranked #43 in the Software category nationally, with growth of 990 percent during this period.</p>
+<p>TopCoder was also recognized by the Connecticut Technology Council and UHY LLP as a UHY LLP Tech Top 40 software company for 2009. The list of 40 Connecticut tech companies celebrates the fastest-growing technology companies in the state. TopCoder was recognized in the category reserved for Software companies. The Connecticut Technology Council and UHY LLP compile the winners list based on revenue growth over the last four years.</p>
+<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=pr_110209">[ full article ]</a></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                http://topcoder.com/home/blog/2009/11/topcoder-inc-wins-deloitte-fast-500-and-connecticut-technology-council-tech-top-40-awards/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>TopCoder Announces Experimental Crowdsourcing Competition to Benefit Human Space Flight</title>
+            <link>
+                http://topcoder.com/home/blog/2009/10/topcoder-announces-experimental-crowdsourcing-competition-to-benefit-human-space-flight/
+            </link>
+            <comments>
+                http://topcoder.com/home/blog/2009/10/topcoder-announces-experimental-crowdsourcing-competition-to-benefit-human-space-flight/#comments
+            </comments>
+            <pubDate>Wed, 21 Oct 2009 16:47:06 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=1278</guid>
+            <description>
+                <![CDATA[TopCoder, Inc., in cooperation with NASA Johnson Space Center's (JSC) Space Life Sciences Directorate (SLSD), today announced the opening of registration for the NASA-TopCoder Challenge, an experimental programming competition to develop algorithms which would help NASA's flight surgeons make better decisions on what might be included in the medical supplies kit of future long-term human space missions.]]></description>
+            <content:encoded><![CDATA[<p style="text-align: center"><a href="http://www.topcoder.com/tc?module=MatchDetails&amp;rd=13992"><img class="aligncenter" style="border: 0pt none" src="http://www.topcoder.com/i/srm/srm_banner/nasa_banner.jpg" alt="" width="340" height="96" /></a></p>
+<p>TopCoder, Inc., in cooperation with NASA Johnson Space Center&#8217;s (JSC) Space Life Sciences Directorate (SLSD), today announced the opening of registration for the NASA-TopCoder Challenge, an experimental programming competition to develop algorithms which would help NASA&#8217;s flight surgeons make better decisions on what might be included in the medical supplies kit of future long-term human space missions.</p>
+<p>The online competition runs November 4th &#8211; 14th, and is open to all TopCoder members, but is limited to only 480 registrants. More than $24,000 in total cash and prizes is at stake. For full registration information and rules, visit: <a href="http://www.topcoder.com/tc?module=MatchDetails&amp;rd=13992">www.topcoder.com/nasacontest </a></p>
+<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=pr_102109">Read the rest of the article.</a></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                http://topcoder.com/home/blog/2009/10/topcoder-announces-experimental-crowdsourcing-competition-to-benefit-human-space-flight/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Winners of the First CUDA Superhero Challenge Announced Today!</title>
+            <link>http://topcoder.com/home/blog/2009/10/winners-of-the-first-cuda-superhero-challenge-announced-today/
+            </link>
+            <comments>
+                http://topcoder.com/home/blog/2009/10/winners-of-the-first-cuda-superhero-challenge-announced-today/#comments
+            </comments>
+            <pubDate>Thu, 01 Oct 2009 16:49:49 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=1280</guid>
+            <description>
+                <![CDATA[The Challenge series of contests asks computer programmers to harness the parallel processing power of the NVIDIA(R) CUDA(TM) architecture to solve some of computing's biggest challenges]]></description>
+            <content:encoded><![CDATA[<p>NVIDIA Corporation and TopCoder, Inc., today announced the winners of the first CUDA Superhero Challenge at NVIDIA’s GPU Technology Conference. The Challenge series of contests asks computer programmers to harness the parallel processing power of the NVIDIA(R) CUDA(TM) architecture to solve some of computing&#8217;s biggest challenges. First place prize went to Micha Riser, of Zurich, Switzerland who earned a $2,500 prize for his winning solution, closely followed by runner up Hou Qiming of Beijing, China, who won $1,000 for his submission.</p>
+<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=pr_100109">Read full article.</a></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                http://topcoder.com/home/blog/2009/10/winners-of-the-first-cuda-superhero-challenge-announced-today/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>Online B2B Marketplaces: Should You Dive In?</title>
+            <link>http://topcoder.com/home/blog/2009/09/online-b2b-marketplaces-should-you-dive-in/</link>
+            <comments>http://topcoder.com/home/blog/2009/09/online-b2b-marketplaces-should-you-dive-in/#comments
+            </comments>
+            <pubDate>Wed, 02 Sep 2009 14:58:57 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=908</guid>
+            <description><![CDATA[Business-to-business marketplaces are proliferating on the Web. Here&#8217;s how to tell a site is right for you.
+Ron Burhkart was frustrated. His company, On Point Technology, Inc., provides software to help state unemployment insurance agencies weed out false claims, but getting the software written was proving to be a challenge. &#8220;We were dissatisfied with traditional [...]]]></description>
+            <content:encoded><![CDATA[<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=art_090209"><img class="alignleft" src="http://www.topcoder.com/i/pressroom/inc_com_logo.gif" alt="" width="125" height="42" /></a><strong>Business-to-business marketplaces are proliferating on the Web. Here&#8217;s how to tell a site is right for you. </strong></p>
+<p>Ron Burhkart was frustrated. His company, <a href="http://www.onpointtech.com/">On Point Technology, Inc.</a>, provides software to help state unemployment insurance agencies weed out false claims, but getting the software written was proving to be a challenge. &#8220;We were dissatisfied with traditional models,&#8221; says Burkhart, who is vice president of product development. &#8220;As a small company, there are times when we need variable resources. We tried the &#8216;body shop&#8217; approach, where we hired a programmer to come work in our office, and we also worked with an offshore development company. But neither met our expectations. In both cases, there were problems, not only with the quality of the code, but with the quality of the resource pool.&#8221; In other words, the coders themselves didn&#8217;t have a wide enough skill set to fill all of On Point&#8217;s needs.</p>
+<p>So Burkhart decided to try Topcoder, an online marketplace where 176,000 software developers compete to create software components and win prize money from customers, instead of traditional fees. (Developers who work on Topcoder projects full-time can earn up to $150,000 a year, and even those who never win a contest receive money in a complex point system that rewards both skill and participation.)</p>
+<p>That was three years ago, and Burkhart isn&#8217;t planning to go back to hiring developers the traditional way. &#8220;We&#8217;ve wound up with better, more stable code by leveraging their knowledge base,&#8221; he says. &#8220;It&#8217;s better than we could do internally, or that I could hire locally.&#8221; Three of On Point&#8217;s five products were built using Topcoder, he adds.</p>
+<p>- <a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=art_090209">full article</a> -</p>
+]]></content:encoded>
+            <wfw:commentRss>http://topcoder.com/home/blog/2009/09/online-b2b-marketplaces-should-you-dive-in/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+        <item>
+            <title>TopCoder and NVIDIA Announce Superhero Challenge</title>
+            <link>http://topcoder.com/home/blog/2009/08/topcoder-and-nvidia-announce-superhero-challenge/</link>
+            <comments>http://topcoder.com/home/blog/2009/08/topcoder-and-nvidia-announce-superhero-challenge/#comments
+            </comments>
+            <pubDate>Thu, 27 Aug 2009 20:00:29 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=866</guid>
+            <description><![CDATA[Developers Invited by NVIDIA and TopCoder to Tackle Parallel Computing with the NVIDIA CUDA Architecture
+NVIDIA Corporation today announced that it will be working with TopCoder, a competitive software development community, on the CUDA Superhero Challenge, a series of contests for computer programmers who will harness the parallel processing power of the NVIDIA(R) CUDA(TM) architecture to [...]]]></description>
+            <content:encoded><![CDATA[<p><a href="http://www.topcoder.com/tc?module=Static&amp;amp;d1=pressroom&amp;amp;d2=pr_082709"><img class="alignleft" src="http://www.topcoder.com/i/pressroom/nvidia-logo.jpg" alt="" width="135" height="75" /></a><strong>Developers Invited by NVIDIA and TopCoder to Tackle Parallel Computing with the NVIDIA CUDA Architecture</strong></p>
+<p>NVIDIA Corporation today announced that it will be working with TopCoder, a competitive software development community, on the CUDA Superhero Challenge, a series of contests for computer programmers who will harness the parallel processing power of the NVIDIA(R) CUDA(TM) architecture to solve some of computing&#8217;s biggest challenges.</p>
+<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=pr_082709">full article</a></p>
+]]></content:encoded>
+            <wfw:commentRss>http://topcoder.com/home/blog/2009/08/topcoder-and-nvidia-announce-superhero-challenge/feed/
+            </wfw:commentRss>
+            <slash:comments>1</slash:comments>
+        </item>
+        <item>
+            <title>Educating Our Own Computer Hackers</title>
+            <link>http://topcoder.com/home/blog/2009/08/educating-our-own-computer-hackers/</link>
+            <comments>http://topcoder.com/home/blog/2009/08/educating-our-own-computer-hackers/#comments</comments>
+            <pubDate>Wed, 05 Aug 2009 14:02:15 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=862</guid>
+            <description><![CDATA[The recent wave of cyber-attacks on American and South Korean websites raises a new kind of security issue: Do we have enough brainpower in the pipeline to counter such sabotage in the future?
+full article
+]]></description>
+            <content:encoded><![CDATA[<p><a href="http://www.huffingtonpost.com/tom-luce/educating-our-own-compute_b_242436.html"><img class="alignleft" src="http://www.topcoder.com/i/pressroom/huffington-post-logo.gif" alt="" width="135" height="47" /></a>The recent wave of cyber-attacks on American and South Korean websites raises a new kind of security issue: Do we have enough brainpower in the pipeline to counter such sabotage in the future?</p>
+<p><a href="http://www.huffingtonpost.com/tom-luce/educating-our-own-compute_b_242436.html">full article</a></p>
+]]></content:encoded>
+            <wfw:commentRss>http://topcoder.com/home/blog/2009/08/educating-our-own-computer-hackers/feed/
+            </wfw:commentRss>
+            <slash:comments>1</slash:comments>
+        </item>
+        <item>
+            <title>Chinese Search Engine Youdao Uses TopCoder Competition Platform to Find Technical Talent</title>
+            <link>
+                http://topcoder.com/home/blog/2009/07/chinese-search-engine-youdao-uses-topcoder-competition-platform-to-find-technical-talent/
+            </link>
+            <comments>
+                http://topcoder.com/home/blog/2009/07/chinese-search-engine-youdao-uses-topcoder-competition-platform-to-find-technical-talent/#comments
+            </comments>
+            <pubDate>Wed, 22 Jul 2009 19:16:14 +0000</pubDate>
+            <dc:creator>denis</dc:creator>
+            <category><![CDATA[News & Announcements]]></category>
+
+            <guid isPermaLink="false">http://topcoder.com/home/?p=851</guid>
+            <description><![CDATA[Search Engine Subsidiary of NetEase Attracts 17,000 Competitors in Algorithm Tournament for Cash and Jobs
+TopCoder®, Inc., today announced with China-based NetEase, (Nasdaq:NTES), and its independently developed search engine subsidiary, Youdao, the winners of the NetEase/Youdao programming competition, a multi stage computer programming challenge seeking the best and brightest algorithmists from across China. Yi Yang, [...]]]></description>
+            <content:encoded><![CDATA[<p><img class="alignleft" src="http://www.topcoder.com/i/pressroom/youdao-logo.gif" alt="" width="135" height="31" /><strong>Search Engine Subsidiary of NetEase Attracts 17,000 Competitors in Algorithm Tournament for Cash and Jobs </strong></p>
+<p>TopCoder®, Inc., today announced with China-based NetEase, (Nasdaq:NTES), and its independently developed search engine subsidiary, Youdao, the winners of the NetEase/Youdao programming competition, a multi stage computer programming challenge seeking the best and brightest algorithmists from across China. Yi Yang, (TopCoder handle: ahyangyi), was awarded first prize of $7,300 with a score of 2804. Yang successfully answered all six algorithmic problems. Second place and $4,300 went to Huacheng Yu, (yuhch123), with a score of 1984, and third place was taken by TianCheng Lou, (ACRush) who earned $1,400 with his score of 1583.</p>
+<p><a href="http://www.topcoder.com/tc?module=Static&amp;d1=pressroom&amp;d2=pr_072209">full article</a></p>
+]]></content:encoded>
+            <wfw:commentRss>
+                http://topcoder.com/home/blog/2009/07/chinese-search-engine-youdao-uses-topcoder-competition-platform-to-find-technical-talent/feed/
+            </wfw:commentRss>
+            <slash:comments>0</slash:comments>
+        </item>
+    </channel>
+</rss>

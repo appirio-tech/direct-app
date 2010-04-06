@@ -1,0 +1,27 @@
+/* CSS Document */
+
+#wrapper{
+	width: 100%;
+	min-width: 1000px;
+}
+
+#wrapperInner{
+	margin-left: 1000px;;
+	height: 1px;
+}
+
+#container{
+	margin-left: -1000px;
+	height: 1px;
+	position: relative;
+}
+
+#content{
+	height: 1px;
+}
+
+#area1 .area1Content{
+	height: 100%;
+	overflow: hidden;
+}
+

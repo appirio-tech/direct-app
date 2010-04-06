@@ -1,0 +1,9 @@
+# Property file defining the information for TC Direct application
+component.name=TC Direct System
+component.distfilename=tcdirect
+component.package=com.topcoder.direct
+component.packagedir=com/topcoder/direct
+component.version.major=1
+component.version.minor=0
+component.version.micro=0
+component.version.build=0

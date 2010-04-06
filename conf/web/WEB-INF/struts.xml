@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <!--
+        This is a configuration file for Struts2 context to be used by TC Direct application.
+    -->
+    <constant name="struts.objectFactory" value="struts"/>
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.locale" value="en_US"/>
+    <constant name="struts.custom.i18n.resources" value="Messages"/>
+    <constant name="struts.ui.theme" value="simple"/>
+    <constant name="struts.convention.exclude.parentClassLoader" value="true" />
+    <constant name="struts.convention.action.fileProtocols" value="jar,vfsfile,vfszip" />
+
+
+
+    <package name="default" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="preProcessor" class="com.topcoder.direct.services.view.interceptor.ActionPreProcessor"/>
+            <interceptor name="projectAccessGuard"
+                         class="com.topcoder.direct.services.view.interceptor.ProjectAccessInterceptor"/>
+            <interceptor name="contestAccessGuard"
+                         class="com.topcoder.direct.services.view.interceptor.ContestAccessInterceptor"/>
+            <interceptor name="authnInterceptor"
+                         class="com.topcoder.direct.services.view.interceptor.AuthenticationInterceptor"/>
+            <interceptor-stack name="preProcessorStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="preProcessor"/>
+            </interceptor-stack>
+            <interceptor-stack name="securedPreProcessorStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="preProcessor"/>
+            </interceptor-stack>
+            <interceptor-stack name="securedProjectPreProcessorStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="projectAccessGuard"/>
+                <interceptor-ref name="preProcessor"/>
+            </interceptor-stack>
+            <interceptor-stack name="securedContestPreProcessorStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="contestAccessGuard"/>
+                <interceptor-ref name="preProcessor"/>
+            </interceptor-stack>
+        </interceptors>
+        
+        <global-results>
+            <result name="error">/error.jsp</result>
+            <result name="permissionDenied">/error.jsp</result>
+            <result name="anonymous" type="redirectAction">
+                <param name="actionName">home</param>
+                <param name="namespace">/</param>
+            </result>
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping result="error" exception="java.lang.Exception"/>
+        </global-exception-mappings>
+
+        <action name="home" class="com.topcoder.direct.services.view.action.LandingPage">
+            <interceptor-ref name="preProcessorStack"/>
+            <result name="success">/WEB-INF/index.jsp</result>
+            <result name="input">/WEB-INF/index.jsp</result>
+        </action>
+        <action name="login" class="com.topcoder.direct.services.view.action.LoginAction">
+            <interceptor-ref name="preProcessorStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">dashboard</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="input">/WEB-INF/index.jsp</result>
+        </action>
+        <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">home</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
+        <action name="dashboard" class="com.topcoder.direct.services.view.action.dashboard.DashboardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard.jsp</result>
+        </action>
+        <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
+        </action>
+        <action name="createProject" class="com.topcoder.direct.services.view.action.project.CreateProjectAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">dashboard</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
+        <action name="dashboardSearchView" class="com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-search.jsp</result>
+        </action>
+        <action name="dashboardSearch" class="com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-search.jsp</result>
+        </action>
+        <action name="contestDetails" class="com.topcoder.direct.services.view.action.contest.ContestDetailsAction">
+            <interceptor-ref name="securedContestPreProcessorStack"/>
+            <result name="success">/WEB-INF/contest-details.jsp</result>
+        </action>
+        <action name="projectDetails" class="com.topcoder.direct.services.view.action.project.ProjectContestsAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/contest-view.jsp</result>
+        </action>
+        <action name="currentProjectDetails" class="com.topcoder.direct.services.view.action.project.CurrentProjectContestsAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/contest-view.jsp</result>
+        </action>
+        <action name="permissionsView" class="com.topcoder.direct.services.view.action.ForwardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/permissions.jsp</result>
+        </action>
+        <action name="currentProjectPermissionsView" class="com.topcoder.direct.services.view.action.ForwardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/permissions.jsp</result>
+        </action>
+        <action name="contestRegistrants" class="com.topcoder.direct.services.view.action.contest.ContestRegistrantsAction">
+            <interceptor-ref name="securedContestPreProcessorStack"/>
+            <result name="success">/WEB-INF/contest-registrants.jsp</result>
+        </action>
+        <action name="projectOverview" class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/project-overview.jsp</result>
+        </action>
+        <action name="currentProjectOverview"
+                class="com.topcoder.direct.services.view.action.project.CurrentProjectOverviewAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/project-overview.jsp</result>
+        </action>
+        <action name="calendar" class="com.topcoder.direct.services.view.action.dashboard.CalendarAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/calendar.jsp</result>
+        </action>
+
+    </package>
+</struts>

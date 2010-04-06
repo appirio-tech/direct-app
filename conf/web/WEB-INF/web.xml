@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <!--
+        This is standard deployment descriptor for Funktional Consultation Website application front-end module.
+    -->
+
+    <filter>
+        <filter-name>direct2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>direct2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/struts-tags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/struts-tags.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/tcdirect-functions</taglib-uri>
+            <taglib-location>/WEB-INF/tld/tcdirect-functions.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
+    
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

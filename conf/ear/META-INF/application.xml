@@ -1,0 +1,31 @@
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+        "http://java.sun.com/dtd/application_1_3.dtd">
+<application xmlns="http://java.sun.com/xml/ns/javaee"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd"
+             version="5">
+
+    <display-name>TC Direct</display-name>
+    
+    <!-- The datasource configuration -->
+<!--
+    <module>
+        <java>-ds.xml</java>
+    </module>
+-->
+
+    <!-- The dependency libraries -->
+
+    <!-- EJBs -->
+
+    <!-- WARs -->
+    <module>
+        <web>
+            <web-uri>tcdirect.war</web-uri>
+            <context-root>/directapp</context-root>
+        </web>
+    </module>
+    <!-- Security Domain -->
+
+    <!-- Mail Service -->
+</application>

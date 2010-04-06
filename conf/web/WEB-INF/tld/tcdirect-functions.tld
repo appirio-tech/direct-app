@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>TC Direct JSP Functions</description>
+    <display-name>TC Direct JSP Functions</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>tcdirect</short-name>
+    <uri>http://software.topcoder.com/taglibs/tcdirect_functions</uri>
+
+    <function>
+        <name>getDay</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>int getDay(java.util.Date)</function-signature>
+    </function>
+
+    <function>
+        <name>getMonth</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>int getMonth(java.util.Date)</function-signature>
+    </function>
+
+    <function>
+        <name>getYear</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>int getYear(java.util.Date)</function-signature>
+    </function>
+
+    <function>
+        <name>getDateText</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getDateText(java.util.Date,java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <name>getEndText</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getEndText(java.util.Date)</function-signature>
+    </function>
+</taglib>
