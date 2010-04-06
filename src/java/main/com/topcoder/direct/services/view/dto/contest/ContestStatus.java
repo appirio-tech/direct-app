@@ -37,6 +37,79 @@ public enum ContestStatus {
     REVIEW("Review", "review", "Review"),
 
     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Active</code> contest status.</p>
+     */
+    ACTIVE("Active", "Active", "Active"),
+
+     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Action Required</code> contest status.</p>
+     */
+    ACTION_REQUIRED("Action Required", "Action Required", "Action Required"),
+    
+     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Completed</code> contest status.</p>
+     */
+    COMPLETED("Completed", "Completed", "Completed"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Scheduled</code> contest status.</p>
+     */
+    SCHEDULED("Scheduled", "Scheduled", "Scheduled"),
+    
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Scheduled</code> contest status.</p>
+     */
+    IN_DANGER("In Danger", "In Danger", "In Danger"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>No Submissions - Repost</code> contest status.</p>
+     */
+    NO_SUBMISSIONS_REPOST("No Submissions - Repost", "No Submissions - Repost", "No Submissions - Repost"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Unactive - Not Yet Published</code> contest status.</p>
+     */
+    UNACTIVE("Unactive - Not Yet Published", "Unactive - Not Yet Published", "Unactive - Not Yet Published"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Active - Public</code> contest status.</p>
+     */
+    ACTIVE_PUBLIC("Active - Public", "Active - Public", "Active - Public"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>No Winner Chosen</code> contest status.</p>
+     */
+    NO_WINNER_CHOSEN("No Winner Chosen", "No Winner Chosen", "No Winner Chosen"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Insufficient Submissions - ReRun Possible</code> contest status.</p>
+     */
+    INSUFFICIENT_SUBMISSIONS("Insufficient Submissions - ReRun Possible", "Insufficient Submissions - ReRun Possible", "Insufficient Submissions - ReRun Possible"),
+
+     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Extended</code> contest status.</p>
+     */
+    EXTENDED("Extended", "Extended", "Extended"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Abandoned</code> contest status.</p>
+     */
+    ABANDONED("Abandoned", "Abandoned", "Abandoned"),
+   
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled</code> contest status.</p>
+     */
+    CANCELLED("Cancelled", "Cancelled", "Cancelled"),
+
+     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Terminated</code> contest status.</p>
+     */
+    TERMINATED("Terminated", "Terminated", "Terminated"),
+
+
+
+    /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Failed Review</code> contest status.</p>
      */
     FAILED_REVIEW("Failed Review", "failedReview", "Failed Review");
