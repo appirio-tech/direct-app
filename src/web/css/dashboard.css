@@ -1505,7 +1505,11 @@ TABLE.project{
 	TABLE.project TBODY TD.forumPost{
 		background-color: #17c000;
 	}
-	
+
+TABLE.project TBODY TD.contestLaunch{
+    background-color: #17c000;
+}
+
 	TABLE.project TBODY TD.task{
 		background-color: #0497ee;
 	}
