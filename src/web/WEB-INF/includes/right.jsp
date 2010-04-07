@@ -61,7 +61,7 @@
                     </div>
                     <!-- End .caption -->
                     <div class="contestsContent">
-                        <table id="contestsTable">
+                        <table id="contestsTable" width="100%">
                             <thead>
                             <tr class="hide"><!-- table header is necessary for the sorting functionality-->
                                 <th>c1</th>
@@ -72,13 +72,13 @@
                             <tbody>
                             <s:iterator value="sessionData.currentProjectContests" status="status" var="contest">
                                 <tr <s:if test="#status.even">class="even"</s:if>>
-                                    <td class="status">
+                                    <td class="status" width="15%">
                                         <span class="<s:property value="status.shortName"/>"><span>a</span></span>
                                     </td>
-                                    <td>
+                                    <td width="70%">
                                         <link:contestDetails contest="${contest}"/>
                                     </td>
-                                    <td class="type">
+                                    <td class="type" width="15%">
                                         <span class="<s:property value="contestType.letter"/>Type"><span>
                                             <s:property value="contestType.letter"/></span></span>
                                     </td>
