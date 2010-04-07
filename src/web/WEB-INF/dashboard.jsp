@@ -31,12 +31,16 @@
 
                             <s:iterator value="viewData.latestActivities.activities">
                                 <s:set value="date" var="date" scope="page"/>
+                                <s:set value="key" var="project" scope="page"/>
                                 <table class="project" width="100%" cellpadding="0" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th colspan="5">
                                             <span class="left"><span class="right">
-                                                <s:property value="key.name"/></span></span>
+                                                <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="key.id"/></s:url>">
+                                                    <s:property value="key.name"/>
+                                                </a>
+                                            </span></span>
                                         </th>
                                     </tr>
                                     </thead>
