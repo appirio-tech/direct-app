@@ -21,20 +21,11 @@ public enum ContestStatus {
      */
     RUNNING("Running", "running", "View"),
 
-    /**
-     * <p>A <code>ContestStatus</code> corresponding to <code>Submission</code> contest status.</p>
-     */
-    SUBMISSION("Submission", "running", "View"),
-
-    /**
-     * <p>A <code>ContestStatus</code> corresponding to <code>Registration</code> contest status.</p>
-     */
-    REGISTRATION("Registration", "running", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Active</code> contest status.</p>
      */
-    INACTIVE("Inactive", "running", "View"),
+    INACTIVE("Inactive", "inactive", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Deleted</code> contest status.</p>
@@ -171,12 +162,6 @@ public enum ContestStatus {
      * <p>A <code>ContestStatus</code> corresponding to <code>Approval</code> contest status.</p>
      */
     APPROVAL("Approval", "Approval", "Approval"),
-
-
-    /**
-     * <p>A <code>ContestStatus</code> corresponding to <code>Inactive</code> contest status.</p>
-     */
-    INACTIVE("Inactive", "Inactive", "Inactive"),
 
      /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Failed Review</code> contest status.</p>
