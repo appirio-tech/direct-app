@@ -23,21 +23,15 @@
 
             <div class="inputSelect">
                 <ui:isProjectContextSet>
-                    <ui:isProjectPage>
-                        <s:textfield name="sessionData.currentProjectContext.name"/>
-                    </ui:isProjectPage>
-                    <ui:isDashboardPage>
-                        <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideList();"/>
-                        <a href="javascript:;" onclick="showHideList();" class="selectIco"></a>
-                    </ui:isDashboardPage>
+                    <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideList();"/>
                 </ui:isProjectContextSet>
                 <ui:noProjectContextSet>
                     <s:textfield value="Select a Project" onfocus="showHideList();"/>
-                    <a href="javascript:;" onclick="showHideList();" class="selectIco"></a>
                 </ui:noProjectContextSet>
+                <a href="javascript:;" onclick="showHideList();" class="selectIco"></a>
             </div>
 
-            <div id="dropDown1" class="contestsDropDown">
+            <div id="dropDown1" class="contestsDropDown" style="height:200px;overflow:auto;">
                 <!-- when the user click the selectIco button we will show this dropdown list -->
                 <ul>
                     <s:iterator value="viewData.userProjects.projects" status="status" var="project">
