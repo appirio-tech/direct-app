@@ -6,8 +6,12 @@ package com.topcoder.direct.services.view.action.project;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
+
+import java.util.List;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Project Contests</code> page
@@ -66,7 +70,12 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
     public String execute() throws Exception {
         String result = super.execute();
         if (SUCCESS.equals(result)) {
-            getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
+            List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
+            if (contests.isEmpty()) {
+                getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
+            } else {
+                getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
+            }
             return SUCCESS;
         } else {
             return result;
