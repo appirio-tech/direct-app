@@ -28,10 +28,15 @@
     <script type="text/javascript" src="/scripts/AJAXProcessor.js"></script>
     <script type="text/javascript" src="/scripts/RSSProcessor.js"></script>
     <script type="text/javascript" src="/scripts/FeedLoader.js"></script>
-
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#LoginForm [name=formData.username]").focus();
+            loadHomePageFeeds();
+        });
+    </script>
 </head>
 
-<body id="page" onload="loadHomePageFeeds();">
+<body id="page">
 	<div id="landingPage">
 	
 		<!-- The header of the landing page -->
