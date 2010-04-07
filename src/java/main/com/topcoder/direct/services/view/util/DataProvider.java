@@ -508,7 +508,8 @@ public class DataProvider {
         dto.setSubmissionsNumber((int) contestId + 1);
         dto.setRegistrantsNumber((int) contestId + 7);
         dto.setForumPostsNumber((int) contestId + 17);
-        dto.setContest(MockData.getContest(contestId));
+//        dto.setContest(MockData.getContest(contestId));
+        dto.setContest(MockData.getContest(4));
         return dto;
     }
 
@@ -519,7 +520,8 @@ public class DataProvider {
      * @return a <code>ContestStatsDTO</code> providing the details on contest.
      */
     public static ContestDTO getContest(long contestId) {
-        return MockData.getContest(contestId);
+//        return MockData.getContest(contestId);
+        return MockData.getContest(4);
     }
 
     /**
@@ -529,7 +531,8 @@ public class DataProvider {
      * @return a <code>List</code> providing the details for contest registrants.
      */
     public static List<ContestRegistrantDTO> getContestRegistrants(long contestId) {
-        return MockData.getContestRegistrants(contestId);
+//        return MockData.getContestRegistrants(contestId);
+        return MockData.getContestRegistrants(4);
     }
 
     /**
