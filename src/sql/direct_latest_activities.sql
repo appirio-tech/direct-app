@@ -1,4 +1,4 @@
-select 'Contest Launched' as activity_type, p.tc_direct_project_id as tc_direct_project_id,
+select cast('Contest Launched' as varchar(64)) as activity_type, p.tc_direct_project_id as tc_direct_project_id,
 tdp.name as tc_direct_project_name, pi.value as contest_name, p.project_id as contest_id, 0 as is_studio, 
 p.create_user as user_id, u.handle as user, ph.actual_start_time as activity_time
 from project p, project_phase ph, project_info pi, user u, tc_direct_project tdp
@@ -16,7 +16,7 @@ and p.project_category_id != 27
 
 union
 
-select 'Contest Launched' as activit_type, p.tc_direct_project_id as tc_direct_project_id,
+select cast('Contest Launched' as varchar(64)) as activit_type, p.tc_direct_project_id as tc_direct_project_id,
 tdp.name as tc_direct_project_name, p.name as contest_name, p.contest_id as contest_id, 1 as is_studio, 
 cast(p.create_user_id as VARCHAR(64)) as user_id, u.handle as user, p.start_time as activity_time
 from studio_oltp:contest p, tc_direct_project tdp, user u
@@ -27,7 +27,7 @@ and p.create_user_id = @uid@
 
 union
 
-select 'Contest Completed' as activity_type, p.tc_direct_project_id as tc_direct_project_id,
+select cast('Contest Completed' as varchar(64)) as activity_type, p.tc_direct_project_id as tc_direct_project_id,
 tdp.name as tc_direct_project_name, pi.value as contest_name, p.project_id as contest_id, 0 as is_studio, 
 p.create_user as user_id, u.handle as user, 
 (select max(actual_end_time) from project_phase phh where phh.project_id=p.project_id) as activity_time
