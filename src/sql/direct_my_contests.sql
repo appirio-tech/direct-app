@@ -1,5 +1,5 @@
 select  tdp.project_id as tc_direct_project_id, tdp.name as tc_direct_project_name, 
-(select value from project_info where project_id = p.project_id and project_info_type_id =6) as contest_name,
+(select value from project_info where project_id = p.project_id and project_info_type_id =6) as contest_name, p.project_id as contest_id,
 pcl.name as contest_type,
 (select min(nvl(actual_start_time, scheduled_start_time)) from project_phase ph where ph.project_id=p.project_id) as start_date,
 (select max(nvl(actual_end_time, scheduled_end_time)) from project_phase ph where ph.project_id=p.project_id) as end_date,
@@ -33,7 +33,7 @@ and p.project_status_id != 3 and p.project_category_id != 27
 union
 
 select  tdp.project_id as tc_direct_project_id, tdp.name as tc_direct_project_name, 
-p.name as contest_name,
+p.name as contest_name, p.contest_id as contest_id,
 (select contest_type_desc from studio_oltp:contest_type_lu where contest_type_id = p.contest_type_id) as contest_type,
 
 p.start_time start_date, p.end_time as end_date,
