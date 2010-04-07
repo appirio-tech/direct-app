@@ -19,7 +19,7 @@ public enum ActivityType {
     /**
      * <p>An <code>ActivityType</code> corresponding to <code>Review Complete</code> activity type.</p>
      */
-    REVIEW_COMPLETE("Review Pending", "reviewComplete", "Posted By"),
+    REVIEW_COMPLETE("Review Complete", "reviewComplete", "Posted By"),
 
     /**
      * <p>An <code>ActivityType</code> corresponding to <code>Forum Post</code> activity type.</p>
@@ -45,6 +45,11 @@ public enum ActivityType {
      * <p>An <code>ActivityType</code> corresponding to <code>Contest Launched</code> activity type.</p>
      */
     CONTEST_LAUNCHED("Contest Launched", "contestLaunch", "Posted By"),
+
+    /**
+     * <p>An <code>ActivityType</code> corresponding to <code>Contest Launched</code> activity type.</p>
+     */
+    CONTEST_COMPLETED("Contest Completed", "contestLaunch", "Posted By"),
 
     /**
      * <p>An <code>ActivityType</code> corresponding to <code>Spec Review</code> activity type.</p>
