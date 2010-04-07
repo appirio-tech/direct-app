@@ -121,6 +121,101 @@ public enum ContestStatus {
      */
     CANCELLED("Cancelled", "Cancelled", "Cancelled"),
 
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Registration</code> contest status.</p>
+     */
+    REGISTRATION("Registration", "Registration", "Registration"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Submission</code> contest status.</p>
+     */
+    SUBMISSION("Submission", "Submission", "Submission"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Screening</code> contest status.</p>
+     */
+    SCREENING("Screening", "Screening", "Screening"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Appeals</code> contest status.</p>
+     */
+    APPEALS("Appeals", "Appeals", "Appeals"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Appeals Response</code> contest status.</p>
+     */
+    APPEALS_RESPONSE("Appeals Response", "Appeals Response", "Appeals Response"),
+    
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Aggregation</code> contest status.</p>
+     */
+    AGGREGATION("Aggregation", "Aggregation", "Aggregation"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Aggregation Review</code> contest status.</p>
+     */
+    AGGREGATION_REVIEW("Aggregation Review", "Aggregation Review", "Aggregation Review"),
+
+     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Final Fix</code> contest status.</p>
+     */
+    FINAL_FIX("Final Fix", "Final Fix", "Final Fix"),
+
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Final Review</code> contest status.</p>
+     */
+    FINAL_REVIEW("Final Review", "Final Review", "Final Review"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Approval</code> contest status.</p>
+     */
+    APPROVAL("Approval", "Approval", "Approval"),
+
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Inactive</code> contest status.</p>
+     */
+    INACTIVE("Inactive", "Inactive", "Inactive"),
+
+     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Failed Review</code> contest status.</p>
+     */
+    CANCELLED_FAILED_REVIEW("Cancelled - Failed Review", "Cancelled - Failed Review", "InCancelled - Failed Reviewactive"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Failed Screening</code> contest status.</p>
+     */
+    CANCELLED_FAILED_SCREENING("Cancelled - Failed Screening", "Cancelled - Failed Screening", "Cancelled - Failed Screening"),
+
+     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Zero Submissions</code> contest status.</p>
+     */
+    CANCELLED_ZERO_SUBMISSION("Cancelled - Zero Submissions", "Cancelled - Zero Submissions", "Cancelled - Zero Submissions"),
+
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Winner Unresponsive</code> contest status.</p>
+     */
+    CANCELLED_WINNER_UNRESPONSIVE("Cancelled - Winner Unresponsive", "Cancelled - Winner Unresponsive", "Cancelled - Winner Unresponsive"),
+
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Client Request</code> contest status.</p>
+     */
+    CANCELLED_CLIENT_REQUEST("Cancelled - Client Request", "Cancelled - Client Request", "Cancelled - Client Request"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Requirements Infeasible</code> contest status.</p>
+     */
+    CANCELLED_REQUIREMENTS_INFEASIBLE("Cancelled - Requirements Infeasible", "Cancelled - Requirements Infeasible", "Cancelled - Requirements Infeasible"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Zero Registrations</code> contest status.</p>
+     */
+    CANCELLED_ZERO_REGISTRATION("Cancelled - Zero Registrations", "Cancelled - Zero Registrations", "Cancelled - Zero Registrations"),
+
+
      /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Terminated</code> contest status.</p>
      */
