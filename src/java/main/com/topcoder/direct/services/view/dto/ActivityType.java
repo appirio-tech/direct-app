@@ -126,10 +126,11 @@ public enum ActivityType {
      * @return an <code>ActivityType</code> matching the specified name or <code>null</code> if there is none.  
      */
     public static ActivityType forName(String name) {
+        String value = (name == null) ? "" : name.trim();
         ActivityType[] types = ActivityType.values();
         for (int i = 0; i < types.length; i++) {
             ActivityType type = types[i];
-            if (type.getName().equalsIgnoreCase(name)) {
+            if (type.getName().equalsIgnoreCase(value)) {
                 return type;
             }
         }
