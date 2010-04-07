@@ -75,7 +75,7 @@ public enum ContestStatus {
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>No Submissions - Repost</code> contest status.</p>
      */
-    NO_SUBMISSIONS_REPOST("No Submissions - Repost", "No Submissions - Repost", "No Submissions - Repost"),
+    NO_SUBMISSIONS_REPOST("No Submissions - Repost", "No Submissions - Repost", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Unactive - Not Yet Published</code> contest status.</p>
@@ -166,52 +166,52 @@ public enum ContestStatus {
      /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Failed Review</code> contest status.</p>
      */
-    CANCELLED_FAILED_REVIEW("Cancelled - Failed Review", "Cancelled - Failed Review", "InCancelled - Failed Reviewactive"),
+    CANCELLED_FAILED_REVIEW("Cancelled - Failed Review", "Cancelled - Failed Review", "Repost"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Failed Screening</code> contest status.</p>
      */
-    CANCELLED_FAILED_SCREENING("Cancelled - Failed Screening", "Cancelled - Failed Screening", "Cancelled - Failed Screening"),
+    CANCELLED_FAILED_SCREENING("Cancelled - Failed Screening", "Cancelled - Failed Screening", "Repost"),
 
      /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Zero Submissions</code> contest status.</p>
      */
-    CANCELLED_ZERO_SUBMISSION("Cancelled - Zero Submissions", "Cancelled - Zero Submissions", "Cancelled - Zero Submissions"),
+    CANCELLED_ZERO_SUBMISSION("Cancelled - Zero Submissions", "Cancelled - Zero Submissions", "Repost"),
 
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Winner Unresponsive</code> contest status.</p>
      */
-    CANCELLED_WINNER_UNRESPONSIVE("Cancelled - Winner Unresponsive", "Cancelled - Winner Unresponsive", "Cancelled - Winner Unresponsive"),
+    CANCELLED_WINNER_UNRESPONSIVE("Cancelled - Winner Unresponsive", "Cancelled - Winner Unresponsive", "Repost"),
 
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Client Request</code> contest status.</p>
      */
-    CANCELLED_CLIENT_REQUEST("Cancelled - Client Request", "Cancelled - Client Request", "Cancelled - Client Request"),
+    CANCELLED_CLIENT_REQUEST("Cancelled - Client Request", "Cancelled - Client Request", "Repost"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Requirements Infeasible</code> contest status.</p>
      */
-    CANCELLED_REQUIREMENTS_INFEASIBLE("Cancelled - Requirements Infeasible", "Cancelled - Requirements Infeasible", "Cancelled - Requirements Infeasible"),
+    CANCELLED_REQUIREMENTS_INFEASIBLE("Cancelled - Requirements Infeasible", "Cancelled - Requirements Infeasible", "Repost"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Zero Registrations</code> contest status.</p>
      */
-    CANCELLED_ZERO_REGISTRATION("Cancelled - Zero Registrations", "Cancelled - Zero Registrations", "Cancelled - Zero Registrations"),
+    CANCELLED_ZERO_REGISTRATION("Cancelled - Zero Registrations", "Cancelled - Zero Registrations", "Repost"),
 
 
      /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Terminated</code> contest status.</p>
      */
-    TERMINATED("Terminated", "Terminated", "Terminated"),
+    TERMINATED("Terminated", "Terminated", "Repost"),
 
 
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Failed Review</code> contest status.</p>
      */
-    FAILED_REVIEW("Failed Review", "failedReview", "Failed Review");
+    FAILED_REVIEW("Failed Review", "failedReview", "Repost");
 
     /**
      * <p>A <code>String</code> providing the state name. Such a name serves as a textual presentation of the status.
