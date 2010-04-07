@@ -37,7 +37,8 @@
                                     <tr>
                                         <th colspan="5">
                                             <span class="left"><span class="right">
-                                                <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="key.id"/></s:url>">
+                                                <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="key.id"/></s:url>"
+                                                   style="text-decoration:none;">
                                                     <s:property value="key.name"/>
                                                 </a>
                                             </span></span>
