@@ -26,8 +26,8 @@
                     <div class="area1Content">
                     <div class="currentPage">
                         <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
-                        <a href="<s:url action="currentProjectDetails" namespace="/"/>">Contests</a> &gt;
-                        <strong>Contest Details : <s:property value="viewData.contestStats.contest.title"/></strong>
+                        <a href="<s:url action="currentProjectDetails" namespace="/"/>"><s:property value="sessionData.currentProjectContext.name"/></a> &gt;
+                        <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
                     <div class="areaHeader">
                         <h2 class="title contestTitle"><s:property value="viewData.contestStats.contest.title"/></h2>

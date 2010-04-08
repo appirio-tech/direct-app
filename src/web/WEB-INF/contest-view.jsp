@@ -26,7 +26,7 @@
                         <div class="area1Content">
                             <div class="currentPage">
                                 <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
-                                <strong>Contests</strong>
+                                <strong><s:property value="sessionData.currentProjectContext.name"/></strong>
                             </div>
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Contests</h2>
