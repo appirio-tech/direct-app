@@ -22,7 +22,7 @@
     <module>
         <web>
             <web-uri>tcdirect.war</web-uri>
-            <context-root>/directapp</context-root>
+            <context-root>/direct2</context-root>
         </web>
     </module>
     <!-- Security Domain -->
