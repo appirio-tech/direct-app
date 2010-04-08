@@ -1976,3 +1976,6 @@ A{
 		top: 0;
 		left: 0;
 	}
+.table-sidebar a{ font-weight: bold; color: #333333; text-decoration: none; }
+.table-sidebar a:hover{ color: #ec1c23; }
+.table-sidebar tr:hover td, .table-sidebar tr:hover td a{ background: #ffffcc!important; font-weight: bold!important; }

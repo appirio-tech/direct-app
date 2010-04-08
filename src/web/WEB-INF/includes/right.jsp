@@ -55,7 +55,7 @@
                     </div>
                     <!-- End .caption -->
                     <div class="contestsContent">
-                        <table id="contestsTable" width="100%">
+                        <table id="contestsTable" width="100%" class="table-sidebar">
                             <thead>
                             <tr class="hide"><!-- table header is necessary for the sorting functionality-->
                                 <th>c1</th>
