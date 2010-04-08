@@ -113,15 +113,6 @@
                                                     <strong><s:property value="activeProjectsNumber"/></strong>
                                                 </td>
 											</tr>
-											<tr class="even">
-												<td class="first">
-                                                    <strong>Completed Projects</strong> in Direct
-                                                    <a href="#" class="helpIco">&nbsp;</a>
-                                                </td>
-												<td class="last highLight">
-                                                    <strong><s:property value="completedProjectsNumber"/></strong>
-                                                </td>
-											</tr>
 											<tr>
 												<td class="first">
                                                     <strong>Active Contests</strong>
