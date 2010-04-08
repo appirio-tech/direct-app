@@ -55,9 +55,7 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
             action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
         } catch (Exception e) {
             log.debug("Failed to authenticate user due to unexpected error", e);
-            action.setResultCode(LoginAction.RC_UNEXPECTED_ERROR);
-            action.setErrorMessage(e.getMessage());
-            action.setError(e);
+            action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
         }
     }
 
