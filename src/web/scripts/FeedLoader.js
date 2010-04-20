@@ -38,7 +38,7 @@ function loadHomePageFeeds() {
 
     // NOTE: The following block is commented out for testing/review purposes only. It should be
     // uncommented when deploying to Production environment
-    loadFeed("/home/blog/category/platform-updates/feed/", "/scripts/DirectNewsTemplate.txt", "newsColumn", 
+    loadFeed("http://www.topcoder.com/news/rss2", "/scripts/DirectNewsTemplate.txt", "newsColumn", 
         "Error reading Direct News feed.");
 
     // NOTE: The following block is provided for testing/review purposes only. It should be
