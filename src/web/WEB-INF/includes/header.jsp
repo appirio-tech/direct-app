@@ -29,9 +29,8 @@
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
                     <a href="<s:url action="dashboard" namespace="/"/>"><span>Dashboard</span></a>
                 </li>
-                <li><a href="javascript:alert('To be implemented by sub-sequent assemblies');"><span>Tasks</span></a>
-                </li>
-                <li><a href="javascript:alert('To be implemented by sub-sequent assemblies');"><span>CoPilots</span></a>
+
+                <li><a href="#" onclick="return false;"><span>CoPilots</span></a>
                 </li>
             </ul>
         </ui:isDashboardPage>
@@ -40,9 +39,7 @@
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
                     <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
                 </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="on"</c:if>>
-                    <a href="javascript:alert('To be implemented by sub-sequent assemblies');"><span>Tasks</span></a>
-                </li>
+
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
                     <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Contests</span></a>
                 </li>
@@ -55,14 +52,12 @@
 
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
-            <li <c:if test="${requestScope.CURRENT_TAB eq 'pipeline'}">class="on"</c:if>>
-                <a href="javascript:alert('To be implemented by sub-sequent assemblies');"><span>Pipeline</span></a>
-            </li>
+          
             <li <c:if test="${requestScope.CURRENT_TAB eq 'search'}">class="on"</c:if>>
                 <a href="<s:url action="dashboardSearchView" namespace="/"/>"><span>Search</span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_TAB eq 'settings'}">class="on"</c:if>>
-                <a href="javascript:alert('To be implemented by sub-sequent assemblies');"><span>Settings</span></a>
+                <a href="" onclick="return false;"><span>Settings</span></a>
             </li>
         </ul>
     </div><!-- End #tabs2 -->

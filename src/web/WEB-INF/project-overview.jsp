@@ -58,7 +58,7 @@
                                                 <span class="ico <s:property value="type.shortName"/>">
                                                     <s:property value="type.name"/></span>
                                             </td>
-                                            <td><a href="javascript:alert('To be implemented by sub-sequent assemblies');">
+                                            <td><a href="" onclick="return false;">
                                                 Link To <s:property value="type.name"/></a></td>
                                             <td class="posted"><s:property value="type.actionText"/> :
                                                 <link:user userId="${originatorId}" handle="${originatorHandle}"/></td>

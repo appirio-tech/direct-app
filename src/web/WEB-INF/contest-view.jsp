@@ -47,7 +47,7 @@
                                                                cellspacing="0">
                                                         <thead>
                                                             <tr>
-                                                                <th>#</th>
+                                                        
                                                                 <th>Contest Type</th>
                                                                 <th>Contest Name</th>
                                                                 <th>Start/End</th>
@@ -66,18 +66,20 @@
                                                                 <s:set value="startTime" var="startTime" scope="page"/>
                                                                 <s:set value="endTime" var="endTime" scope="page"/>
                                                                 <tr>
-                                                                    <td><s:property value="#status.index + 1"/></td>
+                                                                 
                                                                     <td><s:property value="contestType.name"/></td>
                                                                     <td><link:contestDetails contest="${contest}"/></td>
                                                                     <td><fmt:formatDate value="${startTime}" pattern="MM/dd/yyyy HH:mm zzz"/>
                                                                         <c:out value="${tcdirect:getEndText(endTime)}"/></td>
-                                                                    <td><s:property value="registrantsNumber"/></td>
+                                                                    <td><a href="contestRegistrants.action?formData.contestId=4">
+                                                                    <s:property value="registrantsNumber"/>
+                                                                    </a> </td>
                                                                     <td><s:property value="submissionsNumber"/></td>
                                                                     <td><s:property value="forumPostsNumber"/></td>
                                                                     <td><span class="<s:property value="status.shortName"/>"><s:property value="status.name"/></span></td>
                                                                     <td>
-                                                                        <a href="javascript:alert('To be implemented by sub-sequent assemblies');"
-                                                                           class="button1 button"><span><s:property value="status.actionText"/></span></a>
+                                                                        <a href="contestDetails.action?formData.contestId=30007101"
+                                                                           class="button1 button"><span>View</span></a>
                                                                     </td>
                                                                 </tr>
                                                             </s:iterator>
@@ -88,13 +90,13 @@
 
                                                         <div class="panel">
                                                             <!-- this area contains the print, export to excel, export to pdf links -->
-                                                            <a href="javascript:alert('To be implemented by sub-sequent assemblies');"
+                                                            <a href="" onclick="return false;" 
                                                                class="exportPdf">Export to <strong>PDF</strong></a>
                                                             <span>|</span>
-                                                            <a href="javascript:alert('To be implemented by sub-sequent assemblies');"
+                                                            <a href="" onclick="return false;"
                                                                class="exportExcel">Export to <strong>Excel</strong></a>
                                                             <span>|</span>
-                                                            <a href="javascript:alert('To be implemented by sub-sequent assemblies');"
+                                                            <a href="" onclick="return false;"
                                                                class="print">Print</a>
                                                         </div>
                                                         <!-- End .panel -->

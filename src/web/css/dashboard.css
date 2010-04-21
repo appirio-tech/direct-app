@@ -848,12 +848,14 @@ P.projectArchive{
 	text-align: right;
 	padding-right: 10px;
 	display: block;
+	color: #FFF;
+	font-size: 11px;
+	background: transparent;
 }
 
 	P.projectArchive A{
-		color: #FFF;
-		font-size: 11px;
-		background: transparent;
+		
+		text-decoration: none;
 	}
 	
 	P.projectArchive A:hover{

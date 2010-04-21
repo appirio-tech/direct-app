@@ -12,10 +12,10 @@
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
             </li>
             <li>
-                <a href="javascript:alert('To be implemented by sub-sequent assemblies');">
+                <a href="" onclick="return false;">
                     <span class="left"><span class="right">Submissions (<s:property value="submissionsNumber"/>)</span></span></a></li>
             <li class="lastItem">
-                <a href="javascript:alert('To be implemented by sub-sequent assemblies');"
+                <a href="" onclick="return false;"
                    class="last"><span class="left"><span class="right">Milestone Feedback</span></span></a></li>
         </ul>
     </div>

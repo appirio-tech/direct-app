@@ -17,4 +17,4 @@
     <c:set var="styleClass" value="postedBy"/>
 </c:if>
 
-<a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="${styleClass}"><c:out value="${handle}"/></a>
+<a href="http://www.topcoder.com/tc?module=MemberProfile&cr=${userId}" class="${styleClass}" target="_blank"><c:out value="${handle}"/></a>

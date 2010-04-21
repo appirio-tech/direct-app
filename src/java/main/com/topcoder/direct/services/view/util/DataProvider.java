@@ -339,6 +339,9 @@ public class DataProvider {
         stats.setTaskedContestsNumber(5 + (int) projectId);
         stats.setStartDate(new Date(System.currentTimeMillis() + 24 * projectId * 3600 * 1000L));
 
+        stats.setFeesDraft(stats.getDraftContestsNumber() * 150);
+        stats.setFeesScheduled(stats.getPipelineContestsNumber() * 150);
+
         return stats;
     }
 
@@ -608,16 +611,8 @@ public class DataProvider {
         return activity;
     }
 
-    /**
-     * <p>Constructs new <code>ProjectContestDTO</code> instance based on specified properties.</p>
-     *
-     * @param contest a <code>ContestBriefDTO</code> providing the details for the contest associated with activity.
-     * @param date a <code>Date</code> providing the timestamp for the activity.
-     * @param handle a <code>String</code> providing the handle for the user who is the originator of the activity.
-     * @param userId a <code>long</code> providing the
-     * @param type an <code>ActivityType</code> referencing the type of the activity.
-     * @return an <code>ProjectContestDTO</code> providing the details for a single project contest.
-     */
+    
+ 
     private static ProjectContestDTO createProjectContest(ContestBriefDTO contestBrief, ContestType type,
                                                           ContestStatus status, Date startTime, Date endTime,
                                                           int forumPostsCount, int registrantsCount,

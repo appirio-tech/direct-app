@@ -27,9 +27,9 @@
             <td><s:property value="forumPostsNumber"/></td>
             <td class="fees">
                 <p>Milestone Feedback : <strong>Tomorrow</strong></p>
-                <a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="button4">
+                <a href="" onclick="return false;" class="button4">
                     Milestone Feedback</a>
-                <a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="button5">
+                <a href="" onclick="return false;" class="button5">
                     Notification Option</a>
             </td>
         </tr>

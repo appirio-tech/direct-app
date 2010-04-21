@@ -88,7 +88,7 @@
             </ui:isProjectContextSet>
 
             <p class="projectArchive">
-                <a href="javascript:alert('To be implemented by sub-sequent assemblies');">Projects Archive</a></p>
+                Projects Archive</p>
         </div>
         <!-- End .contestsContainer -->
 

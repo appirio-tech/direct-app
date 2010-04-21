@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/homepage-ie6.css"/>
     <![endif]-->
 
-    <!-- External javascript -->
+    <!-- External javascripts -->
     <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js"></script>
     <script type="text/javascript" src="/scripts/thickbox-compressed.js"></script>
@@ -69,16 +69,17 @@
 							<div class="carouselArea">
 								<div id="mycarousel" class="jcarousel-skin-topCoder">
 									<ul id="myCarouselUL">
-										<li><a href="#"><img src="/images/carousel_img1.png" alt="image1" /></a></li>
-										<li><a href="#"><img src="/images/carousel_img1.png" alt="image1" /></a></li>
-										<li><a href="#"><img src="/images/carousel_img1.png" alt="image1" /></a></li>
-										<li><a href="#"><img src="/images/carousel_img1.png" alt="image1" /></a></li>
+										<li><a href="#"><img src="/images/carousel_img1.jpg" alt="image1" /></a></li>
+										<li><a href="#"><img src="/images/carousel_img2.jpg" alt="image2" /></a></li>
+										<li><a href="#"><img src="/images/carousel_img3.jpg" alt="image3" /></a></li>
+										<li><a href="#"><img src="/images/carousel_img4.jpg" alt="image4" /></a></li>
+                                                                                <li><a href="#"><img src="/images/carousel_img5.jpg" alt="image5" /></a></li>
+                                                                                <li><a href="#"><img src="/images/carousel_img6.jpg" alt="image6" /></a></li>
 									</ul>
 								</div><!-- End #mycarousel -->
 								
 								<div class="jcarousel-control">
-									  <a href="javascript:alert('To be implemented by sub-sequent assemblies');">Active Contests</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-									  <a href="javascript:alert('To be implemented by sub-sequent assemblies');">Past Contests</a>
+									 
 									  
 									  <div class="jcarousel-pages">
 									  	<a href="javascript:;" class="nextCarousel"><img src="/images/arrow_next.png" alt="Next" /></a>
@@ -107,7 +108,7 @@
 											<tr>
 												<td class="first">
                                                     <strong>Active Projects</strong> in Direct
-                                                    <a href="#" class="helpIco">&nbsp;</a>
+                                                    <link:helpIcon/>
                                                 </td>
 												<td class="last highLight">
                                                     <strong><s:property value="activeProjectsNumber"/></strong>
@@ -116,7 +117,7 @@
 											<tr>
 												<td class="first">
                                                     <strong>Active Contests</strong>
-                                                    <a href="#" class="helpIco">&nbsp;</a>
+                                                    <link:helpIcon/>
                                                 </td>
 												<td class="last highLight">
                                                     <strong><s:property value="activeContestsNumber"/></strong>
@@ -125,7 +126,7 @@
 											<tr class="even">
 												<td class="first">
                                                     <strong>Prizes Purse</strong> in Running Contest
-                                                    <a href="#" class="helpIco">&nbsp;</a>
+                                                    <link:helpIcon/>
                                                 </td>
 												<td class="last highLight2">
                                                     <strong>$<s:property value="prizePurse"/></strong>
@@ -134,7 +135,7 @@
 											<tr>
 												<td class="first">
                                                     <strong>Active Members</strong> (Competing)
-                                                    <a href="#" class="helpIco">&nbsp;</a>
+                                                    <link:helpIcon/>
                                                 </td>
 												<td class="last highLight2">
                                                     <strong><s:property value="activeMembersNumber"/></strong>
@@ -149,20 +150,22 @@
 										<div class="title">
                                             <div class="titleLeft">
                                                 <div class="titleRight">
-                                                    <h2>CoPilots <a href="#" class="helpIco">&nbsp;</a></h2>
+                                                    <h2>CoPilots <link:helpIcon/></h2>
                                                 </div>
                                             </div>
                                         </div><!-- End .title -->
                                         <s:push value="viewData.coPilotStats">
                                         <table width="100%">
                                             <tr>
-                                                <td><strong>Available</strong> Co-Pilots</td>
+                                                <td><strong>Available</strong> CoPilots</td>
                                                 <td class="highLight2">
                                                     <strong><s:property value="availableCopilots"/></strong>
                                                 </td>
                                             </tr>
                                             <tr class="even">
-                                                <td><strong>Projects Available</strong> for Co-Pilots</td>
+                                                <td><a href="http://www.topcoder.com/wiki/display/tc/Active+Copilot+Opportunities" style="color:black;text-decoration: none;" target="_blank">
+                                                    <strong>Projects Available</strong> for CoPilots</a>
+                                                </td>
                                                 <td class="highLight2">
                                                     <strong><s:property value="availableCopilotProjects"/></strong>
                                                 </td>

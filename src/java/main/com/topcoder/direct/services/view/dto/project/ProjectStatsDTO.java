@@ -13,6 +13,24 @@ import java.util.Date;
  * @version 1.0
  */
 public class ProjectStatsDTO implements Serializable {
+    
+    public double getFeesDraft() {
+        return feesDraft;
+    }
+
+    public void setFeesDraft(double feesDraft) {
+        this.feesDraft = feesDraft;
+    }
+
+    public double getFeesScheduled() {
+        return feesScheduled;
+    }
+
+    public void setFeesScheduled(double feesScheduled) {
+        this.feesScheduled = feesScheduled;
+    }
+
+   
 
     /**
      * <p>An interface to be implemented by the parties interested in getting the stats on single requested project.</p>
@@ -71,6 +89,18 @@ public class ProjectStatsDTO implements Serializable {
      * <p>A <code>double</code> providing the total fees finalized for project.</p>
      */
     private double feesFinalized;
+
+    /**
+     * Draft contest fee
+     */
+    private double feesDraft;
+
+    /**
+     * Scheduled contest fee
+     */
+    private double feesScheduled;
+
+  
 
     /**
      * <p>Constructs new <code>ProjectStatsDTO</code> instance. This implementation does nothing.</p>

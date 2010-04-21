@@ -388,10 +388,10 @@
 
                                         </div><!-- End .details -->
 
-                                    <div class="panel"><!-- this area containt the print, export to excel, export to pdf links -->
-                                        <a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="exportPdf">Export to <strong>PDF</strong></a> <span>|</span>
-                                        <a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="exportExcel">Export to <strong>Excel</strong></a> <span>|</span>
-                                        <a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="print">Print</a>
+                                    <div class="panel"><!-- this area contain the print, export to excel, export to pdf links -->
+                                        <a href="" onclick="return false;" class="exportPdf">Export to <strong>PDF</strong></a> <span>|</span>
+                                        <a href=""  onclick="return false;" class="exportExcel">Export to <strong>Excel</strong></a> <span>|</span>
+                                        <a href="" onclick="return false;" class="print">Print</a>
                                     </div><!-- End .panel -->
 
                                 </div><!-- End .container2Content -->
