@@ -102,6 +102,12 @@
         <action name="dashboardSearch" class="com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-search.jsp</result>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=searchResult.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">viewData.inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
         </action>
         <action name="contestDetails" class="com.topcoder.direct.services.view.action.contest.ContestDetailsAction">
             <interceptor-ref name="securedContestPreProcessorStack"/>

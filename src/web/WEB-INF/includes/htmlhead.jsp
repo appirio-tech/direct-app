@@ -24,5 +24,8 @@
 <script type="text/javascript" src="/scripts/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="/scripts/jquery.em.js"></script>
 <script type="text/javascript" src="/scripts/jScrollPane.js"></script>
+<script type="text/javascript" src="/scripts/jquery.bgiframe.js"></script>
+<script type="text/javascript" src="/scripts/date.js"></script>
+<script type="text/javascript" src="/scripts/jquery.datePicker.js?v=2"></script>
 
 <script type="text/javascript" src="/scripts/dashboard.js"></script>

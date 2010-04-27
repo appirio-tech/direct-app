@@ -34,7 +34,12 @@
                             <s:textfield cssClass="fLeft" name="formData.searchFor" id="searchFor"/>
                             <label class="fLeft" for="searchIn"> In</label>
                             <s:select id="searchIn" list="requestData.dashboardSearchTypes" name="formData.searchIn"/>
-                            <a href="javascript:document.DashboardSearchForm.submit();" class="button1 fLeft">
+                            <div id="datefilter">
+                               <label for="startDate" class="fLeft">Start:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" name="formData.startDate" id="startDate" readonly="true"/>
+                               <label for="endDate" class="fLeft">End:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" name="formData.endDate" id="endDate" readonly="true"/>
+                            </div>    
+                            <s:hidden name="formData.excel" id="formDataExcel" value="false" />
+                            <a href="javascript:directSearch();" class="button1 fLeft">
                                 <span>Search</span></a>
                         </s:form>
                     </div>
@@ -58,13 +63,13 @@
                                                     </s:if>
                                                     <div class="panel">
                                                         <!-- this area contains the print, export to excel, export to pdf links -->
-                                                        <a href="" onclick="return false;" 
+                                                        <a href="javascript:alert('To be implemented sub-sequent assemblies');"
                                                            class="exportPdf">Export to <strong>PDF</strong></a>
                                                         <span>|</span>
-                                                        <a href="" onclick="return false;" 
+                                                        <a href="javascript:directExcel();"
                                                            class="exportExcel">Export to <strong>Excel</strong></a>
                                                         <span>|</span>
-                                                        <a href="" onclick="return false;" 
+                                                        <a href="javascript:alert('To be implemented sub-sequent assemblies');"
                                                            class="print">Print</a>
                                                     </div>
                                                     <!-- End .panel -->

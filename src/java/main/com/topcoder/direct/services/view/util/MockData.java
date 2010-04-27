@@ -3,20 +3,6 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import com.topcoder.direct.services.view.dto.ActivityDTO;
-import com.topcoder.direct.services.view.dto.ActivityType;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.PermissionType;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +11,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.topcoder.direct.services.view.dto.ActivityDTO;
+import com.topcoder.direct.services.view.dto.ActivityType;
+import com.topcoder.direct.services.view.dto.PermissionType;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+
 /**
  * <p>This class serves as a collection of mock data to be used for purposes of this <code>TopCoder Direct</code> system
  * assembly.</p>
@@ -32,8 +31,12 @@ import java.util.Random;
  * <p>Sub-sequent assemblies must remove this class and have the <code>DataProvider</code> to call respective services
  * for getting the necessary data.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 - Direct Search Assembly - remove or adjust some mock data implementation
+ * </p>
+ *
+ * @author isv, BeBetter
+ * @version 1.1
  */
 public class MockData {
 
@@ -192,28 +195,6 @@ public class MockData {
         return activity;
     }
 
-    public static List<DashboardProjectSearchResultDTO> searchUserProjects(long currentUserId, String searchFor) {
-        Random r = new Random(12121);
-        List<DashboardProjectSearchResultDTO> result = new ArrayList<DashboardProjectSearchResultDTO>();
-        List<ProjectBriefDTO> userProjects = projects.get(currentUserId);
-        if (userProjects != null) {
-            for (ProjectBriefDTO project : userProjects) {
-                DashboardProjectSearchResultDTO dto = new DashboardProjectSearchResultDTO();
-                dto.setProject(project);
-                dto.setDraftContestsNumber(r.nextInt(10));
-                dto.setFeesFinalized(r.nextInt(10));
-                dto.setFeesRunning(r.nextInt(10));
-                dto.setFinishedContestsNumber(r.nextInt(10));
-                dto.setPipelineContestsNumber(r.nextInt(10));
-                dto.setRunningContestsNumber(r.nextInt(10));
-                dto.setTaskedContestsNumber(r.nextInt(10));
-                dto.setUpcomingSchedule(new Date());
-                result.add(dto);
-            }
-        }
-        return result;
-    }
-
     public static List<DashboardContestSearchResultDTO> searchUserContests(long currentUserId, String searchFor) {
         Random r = new Random(12121);
         List<DashboardContestSearchResultDTO> result = new ArrayList<DashboardContestSearchResultDTO>();
@@ -229,7 +210,7 @@ public class MockData {
                         dto.setRegistrantsNumber(r.nextInt(10));
                         dto.setSubmissionsNumber(r.nextInt(10));
                         ContestType[] types = ContestType.values();
-                        dto.setContestType(types[r.nextInt(10000) % types.length]);
+                        dto.setContestType(types[r.nextInt(10000) % types.length].getName());
                         dto.setStartTime(new Date());
                         dto.setEndTime(new Date(System.currentTimeMillis() + r.nextInt(5) * 24 * 3600 * 1000L));
                         ContestStatus[] statuses = ContestStatus.values();

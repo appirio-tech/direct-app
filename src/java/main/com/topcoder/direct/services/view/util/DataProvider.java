@@ -3,34 +3,6 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import com.topcoder.direct.services.view.dto.ActivityDTO;
-import com.topcoder.direct.services.view.dto.ActivityType;
-import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
-import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
-import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.util.DBMS;
-import com.topcoder.web.common.CachedDataAccess;
-import com.topcoder.web.common.cache.MaxAge;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +10,42 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
+
+import com.topcoder.direct.services.view.dto.ActivityDTO;
+import com.topcoder.direct.services.view.dto.ActivityType;
+import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
+import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
+import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
+import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
+import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.CommonProjectContestData;
+import com.topcoder.service.facade.contest.ProjectSummaryData;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.MaxAge;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -47,8 +55,12 @@ import java.util.Map;
  * <p>Sub-sequent assemblies may expand this class with additional methods for calling other queries when there is a
  * need or they can fully re-work the concept of data provider.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 2.0 - Direct Search Assembly - add search and filtering for searchUserProjects,searchUserContests
+ * </p>
+ *
+ * @author isv, BeBetter
+ * @version 2.0
  */
 public class DataProvider {
 
@@ -257,11 +269,40 @@ public class DataProvider {
      * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the matching
      * records. Current implementation uses mock data.</p>
      *
-     * @param userId a <code>long</code> providing the user to get the list of matching projects for.
+     * @param tcSubject the <code>TCSubject</code> entity
+     * @param searchFor the value which will be searched against
      * @return a <code>List</code> providing the details on projects associated with the specified user.
+     *
+     * @throws exception if any error occurs
      */
-    public static List<DashboardProjectSearchResultDTO> searchUserProjects(long userId, String searchFor) {
-        return MockData.searchUserProjects(userId, searchFor);
+    public static List<DashboardProjectSearchResultDTO> searchUserProjects(TCSubject tcSubject, String searchFor)
+        throws Exception {
+        List<ProjectSummaryData> projects = DirectUtils.getContestServiceFacade().getProjectData(tcSubject);
+        List<ProjectSummaryData> filterdProjects;
+
+        if (StringUtils.isBlank(searchFor)) {
+            filterdProjects = projects;
+        } else {
+            final String searchForLowerCase = searchFor.toLowerCase();
+            filterdProjects = (List<ProjectSummaryData>) CollectionUtils.select(projects, new Predicate() {
+                //@Override
+                public boolean evaluate(Object data) {
+                    ProjectSummaryData project = (ProjectSummaryData) data;
+                    return project.getProjectName() != null
+                        && project.getProjectName().toLowerCase().contains(searchForLowerCase);
+                }
+            });
+        }
+
+        return (List<DashboardProjectSearchResultDTO>) CollectionUtils.collect(filterdProjects, new Transformer() {
+            //@Override
+            public Object transform(Object data) {
+                ProjectSummaryData project = (ProjectSummaryData) data;
+                DashboardProjectSearchResultDTO dto = new DashboardProjectSearchResultDTO();
+                dto.setData(project);
+                return dto;
+            }
+        });
     }
 
     /**
@@ -270,19 +311,97 @@ public class DataProvider {
      * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the matching
      * records. Current implementation uses mock data.</p>
      *
-     * @param userId a <code>long</code> providing the user to get the list of matching contests for.
+     * @param tcSubject the <code>TCSubject</code> entity
+     * @param searchFor the value which will be searched against
+     * @param begin the begin date for contest start date
+     * @param end the end date for contest start date
      * @return a <code>List</code> providing the details on contests associated with the specified user.
+     *
+     * @throws exception if any error occurs
      */
-    public static List<DashboardContestSearchResultDTO> searchUserContests(long userId, String searchFor) {
-        return MockData.searchUserContests(userId, searchFor);
+    public static List<DashboardContestSearchResultDTO> searchUserContests(TCSubject tcSubject, String searchFor,
+        final Date begin, final Date end) throws Exception {
+        List<CommonProjectContestData> contests = DirectUtils.getContestServiceFacade().getCommonProjectContestData(
+            tcSubject);
+        List<CommonProjectContestData> filteredContests;
+        if (StringUtils.isBlank(searchFor) && begin == null && end == null) {
+            filteredContests = contests;
+        } else {
+            final String searchForLowerCase = searchFor.toLowerCase();
+            filteredContests = (List<CommonProjectContestData>) CollectionUtils.select(contests, new Predicate() {
+                //@Override
+                public boolean evaluate(Object data) {
+                    CommonProjectContestData contest = (CommonProjectContestData) data;
+                    return isMatched(contest, searchForLowerCase, begin, end);
+                }
+            });
+        }
+
+        return (List<DashboardContestSearchResultDTO>) CollectionUtils.collect(filteredContests, new Transformer() {
+            //@Override
+            public Object transform(Object data) {
+                CommonProjectContestData contest = (CommonProjectContestData) data;
+                DashboardContestSearchResultDTO dto = new DashboardContestSearchResultDTO();
+
+                ContestBriefDTO brief = new ContestBriefDTO();
+                brief.setId(contest.getContestId());
+                brief.setTitle(contest.getCname());
+                dto.setContest(brief);
+
+                ProjectBriefDTO project = new ProjectBriefDTO();
+                project.setId(contest.getProjectId());
+                project.setName(contest.getPname());
+                brief.setProject(project);
+
+                dto.setContestType(contest.getType());
+                dto.setStartTime(DirectUtils.getDate(contest.getStartDate()));
+                dto.setEndTime(DirectUtils.getDate(contest.getEndDate()));
+                dto.setRegistrantsNumber(contest.getNum_reg());
+                dto.setSubmissionsNumber(contest.getNum_sub());
+                dto.setForumPostsNumber(contest.getNum_for());
+                dto.setStatus(ContestStatus.forName(contest.getSname()));
+                return dto;
+            }
+        });
     }
 
     /**
-     * <p>Gets the details on users assigned to projects associated with specified user and matching the specified
-     * criteria.</p>
+     * Tests to see if given contest is matched against all conditions.
      *
-     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the matching
-     * records. Current implementation uses mock data.</p>
+     * @param contest the contest object
+     * @param searchFor the search for string
+     * @param begin the beging date
+     * @param end the end date
+     * @return true if matched otherwise false
+     */
+    private static boolean isMatched(CommonProjectContestData contest, String searchFor, Date begin, Date end) {
+        if (!StringUtils.isBlank(searchFor) && contest.getCname() != null
+            && !contest.getCname().toLowerCase().contains(searchFor)) {
+            return false;
+        }
+
+        Date contestStartDate = DirectUtils.getDateWithoutTime((DirectUtils.getDate(contest.getStartDate())));
+        if (begin != null && contestStartDate != null && begin.compareTo(contestStartDate) > 0) {
+            return false;
+        }
+
+        if (end != null && contestStartDate != null && end.compareTo(contestStartDate) < 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * <p>
+     * Gets the details on users assigned to projects associated with specified user and matching the specified
+     * criteria.
+     * </p>
+     *
+     * <p>
+     * Sub-sequent assemblies must implement this method to use the appropriate logic for getting the matching
+     * records. Current implementation uses mock data.
+     * </p>
      *
      * @param userId a <code>long</code> providing the user to get the list of matching users for.
      * @return a <code>List</code> providing the details on users assigned to projects associated with the specified
@@ -319,7 +438,9 @@ public class DataProvider {
     }
 
     /**
-     * <p>Gets the stats on specified project.</p>
+     * <p>
+     * Gets the stats on specified project.
+     * </p>
      *
      * @param projectId a <code>long</code> providing the ID for requested project.
      * @return a <code>ProjectStatsDTO</code> providing the stats for requested project.
@@ -611,8 +732,18 @@ public class DataProvider {
         return activity;
     }
 
-    
- 
+    /**
+     * <p>
+     * Constructs new <code>ProjectContestDTO</code> instance based on specified properties.
+     * </p>
+     *
+     * @param contest a <code>ContestBriefDTO</code> providing the details for the contest associated with activity.
+     * @param date a <code>Date</code> providing the timestamp for the activity.
+     * @param handle a <code>String</code> providing the handle for the user who is the originator of the activity.
+     * @param userId a <code>long</code> providing the
+     * @param type an <code>ActivityType</code> referencing the type of the activity.
+     * @return an <code>ProjectContestDTO</code> providing the details for a single project contest.
+     */
     private static ProjectContestDTO createProjectContest(ContestBriefDTO contestBrief, ContestType type,
                                                           ContestStatus status, Date startTime, Date endTime,
                                                           int forumPostsCount, int registrantsCount,

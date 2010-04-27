@@ -19,6 +19,7 @@ cp -rv /tmp/lib .
 cp -rv /tmp/src .
 cp /tmp/*.properties .
 cp /tmp/*.xml .
+cp /tmp/*.version .
 
 echo ----------------------------------------
 echo Copying static resources to Apache HTTP
@@ -35,7 +36,8 @@ echo -----------------------------------------------
 echo Deploying Security EAR application
 echo -----------------------------------------------
 cd /home/cockpit/direct
-ant deploy-security
+#security.ear is deployed already on vm, skip this step
+#ant deploy-security
 
 echo -----------------------------------------------
 echo Building and deploying Cockpit web application

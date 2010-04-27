@@ -4,7 +4,7 @@
     <table class="projectStats contests paginatedDataTable" cellpadding="0" cellspacing="0">
         <thead>
         <tr>
-            <th>#</th>
+        	  <th>Project</th>
             <th>Contest Type</th>
             <th>Contest Name</th>
             <th>Start/End</th>
@@ -18,12 +18,15 @@
         <tbody>
 
         <s:iterator value="viewData.contests" status="status">
-            <s:set value="contest" var="contest" scope="page"/>
-            <s:set value="startTime" var="startTime" scope="page"/>
-            <s:set value="endTime" var="endTime" scope="page"/>
+            <s:set  var="contest" value="contest" scope="page"/>
+            <s:set  var="project" value="contest.project" scope="page"/>
+            <s:set  var="startTime" value="startTime"  scope="page"/>
+            <s:set  var="endTime" value="endTime"  scope="page"/>
             <tr>
-                <td><s:property value="#status.index + 1"/></td>
-                <td><s:property value="contestType.name"/></td>
+                <td>
+                    <link:projectDetails project="${project}"/>
+                </td>            	
+                <td><s:property value="contestType"/></td>
                 <td><link:contestDetails contest="${contest}"/></td>
                 <td><fmt:formatDate value="${startTime}" pattern="MM/dd/yyyy HH:mm zzz"/>
                     <c:out value="${tcdirect:getEndText(endTime)}"/></td>

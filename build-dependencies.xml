@@ -8,15 +8,19 @@
     <property name="base_exception.jar.name" value="base_exception.jar"/>
     <property name="base_exception.path" value="base_exception/${base_exception.version}"/>
     <property name="base_exception.jar" value="${tcs_libdir}/${base_exception.path}/${base_exception.jar.name}"/>
+    <property name="excel_utility.jar" value="${tcs_libdir}/excel_utility/2.0/excel_utility.jar"/>
+    <property name="typesafe_enum.jar" value="${tcs_libdir}/typesafe_enum/1.1/typesafe_enum.jar"/>
     
 
     <property name="shared.jar" value="${tcs_libdir}/shared.jar"/>
     <property name="tcwebcommon.jar" value="${tcs_libdir}/tcwebcommon.jar"/>
     <property name="security.jar" value="${tcs_libdir}/security/security.jar"/>
+    <property name="cockpitclient.jar" value="${tcs_libdir}/cockpit-client.jar"/>
 
 	<!-- 3rd party dependencies -->
     <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar"/>
     <property name="ejb-api.jar" value="${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
+    <property name="jboss-jaxws.jar" value="${ext_libdir}/jboss-jaxws.jar"/>
 
     <!-- Struts2 libraries -->
     <path id="struts.libs">
@@ -28,14 +32,18 @@
 	<path id="component.tcs-dependencies">
         <pathelement location="${shared.jar}"/>
         <pathelement location="${tcwebcommon.jar}"/>
+        <pathelement location="${cockpitclient.jar}"/>
         <pathelement location="${security.jar}"/>
         <pathelement location="${base_exception.jar}"/>
+        <pathelement location="${excel_utility.jar}"/>
+        <pathelement location="${typesafe_enum.jar}"/>
 	</path>
 
 	<path id="component.3rdParty-dependencies">
         <path refid="struts.libs"/>
         <pathelement location="${servlet-api.jar}"/>
         <pathelement location="${ejb-api.jar}"/>
+        <pathelement location="${jboss-jaxws.jar}"/>
 	</path>
 
 </project>

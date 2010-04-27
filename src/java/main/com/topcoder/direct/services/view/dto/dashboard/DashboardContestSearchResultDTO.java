@@ -3,12 +3,11 @@
  */
 package com.topcoder.direct.services.view.dto.dashboard;
 
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 
 /**
  * <p>A DTO class providing the results for contest search to be displayed by dashboard view.</p>
@@ -56,7 +55,7 @@ public class DashboardContestSearchResultDTO implements Serializable {
     /**
      * <p>A <code>ContestType</code> providing the contest type.</p>
      */
-    private ContestType contestType;
+    private String contestType;
 
     /**
      * <p>Constructs new <code>DashboardContestSearchResultDTO</code> instance. This implementation does nothing.</p>
@@ -193,9 +192,9 @@ public class DashboardContestSearchResultDTO implements Serializable {
     /**
      * <p>Gets the contest type.</p>
      *
-     * @return a <code>ContestType</code> providing the contest type.
+     * @return a string value providing the contest type.
      */
-    public ContestType getContestType() {
+    public String getContestType() {
         return contestType;
     }
 
@@ -204,7 +203,7 @@ public class DashboardContestSearchResultDTO implements Serializable {
      *
      * @param contestType a <code>ContestType</code> providing the contest type.
      */
-    public void setContestType(ContestType contestType) {
+    public void setContestType(String contestType) {
         this.contestType = contestType;
     }
 }

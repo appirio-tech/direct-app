@@ -3,12 +3,13 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.security.TCSubject;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * <p>A helper class to be used for wrapping the current HTTP session associated with the incoming request. This class
@@ -16,10 +17,12 @@ import java.util.List;
  * processors do not have to deal with concrete session attribute names and thus are provided with consistent API for
  * managing the user session state.</p>
  *
- * <p>Sub-sequent assemblies may expand this class with new methods as necessary.</p>
+ * <p>
+ * Version 1.1 - Direct Search Assembly - add getCurrentUser method
+ * </p>
  *
- * @author isv
- * @version 1.0
+ * @author isv, BeBetter
+ * @version 1.1
  */
 public class SessionData {
 
@@ -97,6 +100,15 @@ public class SessionData {
         } else {
             this.session.setAttribute("user", tcSubject);
         }
+    }
+
+    /**
+     * Gets current user.
+     *
+     * @return the current user.
+     */
+    public TCSubject getCurrentUser() {
+        return (TCSubject)this.session.getAttribute("user");
     }
 
     /**

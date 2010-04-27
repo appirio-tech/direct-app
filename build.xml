@@ -184,9 +184,12 @@
         <copy file="${configdir}/DBMS.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/DataAccess.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/cache.properties" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/Direct.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/components/com/topcoder/security/Util.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${shared.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${tcwebcommon.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
+        <!-- Added in Direct Search Assebmly -->
+        <copy file="${cockpitclient.jar}" todir="${jboss.home}/server/${server.name}/lib"/>        
         <copy file="${ext_libdir}/informix/ifxjdbc.jar" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${ext_libdir}/jboss-cache/jboss-cache-jdk50.jar" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${ext_libdir}/jboss-cache/jgroups.jar" todir="${jboss.home}/server/${server.name}/lib"/>

@@ -14,10 +14,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Dashboard</code> page.</p>
+ * <p>
+ * A <code>Struts</code> action to be used for handling requests for viewing the <code>Dashboard</code> page.
+ * </p>
+ * <p>
+ * Version 2.0 - add result for excel download.
+ * </p>
  *
- * @author isv
- * @version 1.0
+ * @author isv, BeBetter
+ * @version 2.0
  */
 public class DashboardSearchAction extends AbstractAction implements ViewAction<DashboardSearchResultsDTO>,
                                                                      FormAction<DashboardSearchForm> {
@@ -82,5 +87,26 @@ public class DashboardSearchAction extends AbstractAction implements ViewAction<
      */
     public DashboardSearchForm getFormData() {
         return this.formData;
+    }
+
+    /**
+     * <p>
+     * In the case of excel download, forward to download result.
+     * </p>
+     *
+     * @return the result name
+     */
+    @Override
+    public String execute() throws Exception {
+        String result = super.execute();
+        if (SUCCESS.equals(result)) {
+            if (getFormData().isExcel()) {
+                return "download";
+            } else {
+                return SUCCESS;
+            }
+        } else {
+            return result;
+        }
     }
 }
