@@ -20,7 +20,7 @@
 	<!-- 3rd party dependencies -->
     <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar"/>
     <property name="ejb-api.jar" value="${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
-    <property name="jboss-jaxws.jar" value="${ext_libdir}/jboss-jaxws.jar"/>
+    <property name="jboss-jaxws.jar" value="${ext_libdir}/jboss/jboss-jaxws.jar"/>
 
     <!-- Struts2 libraries -->
     <path id="struts.libs">
