@@ -2,6 +2,8 @@
 <project name="TC Direct System Build" default="dist" basedir=".">
     <property file="${basedir}/build.version"/>
     <property file="topcoder_global.properties"/>
+    
+    <property name="prod_configdir" value="../../prod_conf"/>
 
     <!-- Override these in ../topcoder_global.properties -->
     <property name="javadoc.locale" value="en_US"/>
@@ -169,12 +171,17 @@
     <!-- ************************************************************************** -->
     <!-- ************ DEPLOYMENT RELATED TARGETS  ******************************* -->
     <!-- ************************************************************************** -->
+    <target name="deploy-prod" depends="deploy-internal">
+    </target>
 
-    <target name="deploy" depends="dist" description="deploy the ear to jboss">
+    <target name="deploy" depends="dist, deploy-internal" description="deploy the ear to jboss">
+    </target>
+    
+    <target name="deploy-internal">
         <delete file="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
         <delete dir="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
 
-        <unzip src="${component.ear}" dest="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
+        <unzip src="${component.ear}" dest="${jboss.home}/server/${server.name}/deploy/a${distfilename}.ear"/>
 <!--
         <copy file="${component.ear}" todir="${jboss.home}/server/${server.name}/deploy"/>
 -->
@@ -228,6 +235,23 @@
             <include name="**/*.mxml"/>
             <replacetoken>http://127.0.0.1:8003</replacetoken>
         </replace>
+    </target>
+    
+    <target name="package-direct" depends="ear">
+        <copy todir="${configdir}" overwrite="true">
+            <fileset dir="${prod_configdir}">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+        <jar destfile="direct.jar" basedir=".">
+            <include name="**/*.*"/>
+            <exclude name="**/.svn/**/*.*"/>
+            <exclude name="${srcdir}/**/*.*"/>
+            <exclude name="${docdir}/**/*.*"/>
+            <exclude name="${testlogdir}/**/*.*"/>
+            <exclude name="${testfiles}/**/*.*"/>
+            <exclude name="topcoder_global.properties"/>
+        </jar>
     </target>
 
     <!-- Builds the WAR file for web application module -->
