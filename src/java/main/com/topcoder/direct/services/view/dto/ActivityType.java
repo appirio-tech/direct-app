@@ -51,6 +51,11 @@ public enum ActivityType {
      */
     CONTEST_COMPLETED("Contest Completed", "contestLaunch", "Posted By"),
 
+     /**
+     * <p>An <code>ActivityType</code> corresponding to <code>Contest Launched</code> activity type.</p>
+     */
+    PICK_WINNER("Pick WInners", "task", "Completed By"),
+
     /**
      * <p>An <code>ActivityType</code> corresponding to <code>Spec Review</code> activity type.</p>
      */
