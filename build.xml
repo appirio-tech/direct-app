@@ -154,9 +154,8 @@
         <!-- Copy the libraries -->
         <mkdir dir="${build_distdir}"/>
         <ear basedir="${build_distdir}" destfile="${component.ear}" appxml="${configdir}/ear/META-INF/application.xml"
-             includes="**/*.jar">
+             includes="**/*.jar **/*.war">
             <metainf file="${configdir}/ear/META-INF/jboss-app.xml"/>
-            <include name="**/*.war/**"/>
         </ear>
     </target>
 
@@ -257,7 +256,7 @@
 
     <!-- Builds the WAR file for web application module -->
     <target name="war" depends="clean, init, compile">
-        <war warfile="temp.war" webxml="${builddir}/replace/web/WEB-INF/web.xml">
+        <war warfile="${component.war}" webxml="${builddir}/replace/web/WEB-INF/web.xml">
             <webinf dir="${builddir}/replace/web/WEB-INF" includes="applicationContext.xml"/>
             <webinf dir="${builddir}/replace/web/WEB-INF" includes="actions.xml"/>
             <webinf dir="${configdir}/web/WEB-INF" includes="tld/*.tld"/>
@@ -277,9 +276,6 @@
                 <include name="scripts/**/*"/>
             </fileset>
         </war>
-        
-        <unzip src="temp.war" dest="${component.war}"/>
-        <delete file="temp.war"/>
     </target>
 
     <!-- ************************************************************************** -->
