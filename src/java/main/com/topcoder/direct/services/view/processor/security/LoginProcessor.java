@@ -49,12 +49,12 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
             action.getSessionData().setCurrentUser(tcSubject);
             action.getSessionData().setCurrentUserHandle(username);
             action.setResultCode(LoginAction.RC_SUCCESS);
-            log.debug("User " + username + "  has been authenticated successfully");
+            log.info("User " + username + "  has been authenticated successfully");
         } catch (AuthenticationException e) {
-            log.debug("User " + username + " failed to authenticate successfully due to invalid credentials", e);
+            log.error("User " + username + " failed to authenticate successfully due to invalid credentials", e);
             action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
         } catch (Exception e) {
-            log.debug("Failed to authenticate user due to unexpected error", e);
+            log.error("Failed to authenticate user due to unexpected error", e);
             action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
         }
     }
