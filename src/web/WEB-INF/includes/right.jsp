@@ -73,8 +73,12 @@
                                         <link:contestDetails contest="${contest}"/>
                                     </td>
                                     <td class="type" width="15%">
-                                        <span class="<s:property value="contestType.letter"/>Type"><span>
-                                            <s:property value="contestType.letter"/></span></span>
+
+                                        <div style="display: table-cell; vertical-align: middle;">
+                                            <img src="/images/<s:property value="contestType.letter"/>_small.png"
+                                                 alt="<s:property value="contestType.letter"/>"/>
+
+                                        </div>
                                     </td>
                                 </tr>
                             </s:iterator>

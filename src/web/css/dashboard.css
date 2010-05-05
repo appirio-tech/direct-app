@@ -476,7 +476,11 @@ BODY#page{
 }
 
 #area1 H2.contestTitle{
-	background: url(../images/contest_ico.png) no-repeat left center;
+	background: no-repeat left center;
+}
+
+#area1 H2.contestTitle img{
+	vertical-align:middle;
 }
 
 .areaHeader A.button1{

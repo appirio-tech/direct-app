@@ -10,45 +10,6 @@
 
 
 <datasources>
-    <local-tx-datasource>
-        <jndi-name>InformixDS</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp
-        </connection-url>
-        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
-
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <metadata>
-            <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </local-tx-datasource>
-
-    <no-tx-datasource>
-      <jndi-name>OLTP</jndi-name>
-      <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
-      <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-      <user-name>coder</user-name>
-      <password>c0d3r4T</password>
-          <!-- sql to call when connection is created
-          <new-connection-sql>some arbitrary sql</new-connection-sql>
-          -->
-
-          <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-          <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <metadata>
-           <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </no-tx-datasource>
-
     <no-tx-datasource>
         <jndi-name>DW</jndi-name>
         <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/topcoder_dw:INFORMIXSERVER=informixoltp_tcp
@@ -88,25 +49,5 @@
             <type-mapping>InformixDB</type-mapping>
         </metadata>
     </no-tx-datasource>
-
-    <local-tx-datasource>
-        <jndi-name>JTS_OLTP</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp
-        </connection-url>
-        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
-
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <metadata>
-            <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </local-tx-datasource>
 
 </datasources>
