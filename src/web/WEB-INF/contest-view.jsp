@@ -43,12 +43,11 @@
                                                 <div class="container2BottomRight">
                                                     <div class="container2Content">
 
-                                                        <table class="projectStats contests paginatedDataTable"
-                                                               cellpadding="0"
+                                                        <table class="projectStats contests paginatedDataTable" cellpadding="0"
                                                                cellspacing="0">
-                                                            <thead>
+                                                        <thead>
                                                             <tr>
-
+                                                        
                                                                 <th>Contest Type</th>
                                                                 <th>Contest Name</th>
                                                                 <th>Start/End</th>
@@ -66,34 +65,18 @@
                                                                 <s:set value="contest" var="contest" scope="page"/>
                                                                 <s:set value="startTime" var="startTime" scope="page"/>
                                                                 <s:set value="endTime" var="endTime" scope="page"/>
-                                                                <s:set value="contestType" var="contestType"
-                                                                       scope="page"/>
                                                                 <tr>
-
+                                                                 
                                                                     <td><s:property value="contestType.name"/></td>
-                                                                    <td>
-                                                                        <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
-                                                                            <img src="/images/<s:property value="contestType.letter"/>_small.png"
-                                                                                 alt="<s:property value="contestType.letter"/>"/>
-
-                                                                        </div>
-                                                                        <div style="display:table-cell;text-align:left">
-                                                                            <link:contestDetails contest="${contest}"
-                                                                                    />
-                                                                        </div>
-                                                                    </td>
-                                                                    <td><fmt:formatDate value="${startTime}"
-                                                                                        pattern="MM/dd/yyyy HH:mm zzz"/>
+                                                                    <td><link:contestDetails contest="${contest}"/></td>
+                                                                    <td><fmt:formatDate value="${startTime}" pattern="MM/dd/yyyy HH:mm zzz"/>
                                                                         <c:out value="${tcdirect:getEndText(endTime)}"/></td>
-                                                                    <td>
-                                                                        <a href="contestRegistrants.action?formData.contestId=4">
-                                                                            <s:property value="registrantsNumber"/>
-                                                                        </a></td>
+                                                                    <td><a href="contestRegistrants.action?formData.contestId=4">
+                                                                    <s:property value="registrantsNumber"/>
+                                                                    </a> </td>
                                                                     <td><s:property value="submissionsNumber"/></td>
                                                                     <td><s:property value="forumPostsNumber"/></td>
-                                                                    <td><span
-                                                                            class="<s:property value="status.shortName"/>"><s:property
-                                                                            value="status.name"/></span></td>
+                                                                    <td><span class="<s:property value="status.shortName"/>"><s:property value="status.name"/></span></td>
                                                                     <td>
                                                                         <a href="contestDetails.action?formData.contestId=30007101"
                                                                            class="button1 button"><span>View</span></a>
@@ -107,7 +90,7 @@
 
                                                         <div class="panel">
                                                             <!-- this area contains the print, export to excel, export to pdf links -->
-                                                            <a href="" onclick="return false;"
+                                                            <a href="" onclick="return false;" 
                                                                class="exportPdf">Export to <strong>PDF</strong></a>
                                                             <span>|</span>
                                                             <a href="" onclick="return false;"

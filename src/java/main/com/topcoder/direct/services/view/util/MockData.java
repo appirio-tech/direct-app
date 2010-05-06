@@ -181,8 +181,6 @@ public class MockData {
         contest.setId(contestId);
         contest.setProject(project);
         contest.setTitle(title);
-
-        contest.setContestType(ContestType.values()[(int) ((ContestType.values().length - 1 )* Math.random())]);
         return contest;
     }
 

@@ -11,7 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.topcoder.service.studio.PersistenceException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -155,10 +154,6 @@ public class DataProvider {
             String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
             long contestId = resultContainer.getLongItem(i, "contest_id");
             String contestName = resultContainer.getStringItem(i, "contest_name");
-            // String contestType = resultContainer.getStringItem(i, "contest_type");
-
-            // System.out.println("#############contestType:"+contestType);
-
             long originatorId = Long.parseLong(resultContainer.getStringItem(i, "user_id"));
             String originatorHandle = resultContainer.getStringItem(i, "user");
             Timestamp date = resultContainer.getTimestampItem(i, "activity_time");
@@ -278,7 +273,7 @@ public class DataProvider {
      * @param searchFor the value which will be searched against
      * @return a <code>List</code> providing the details on projects associated with the specified user.
      *
-     * @throws Exception if any error occurs
+     * @throws exception if any error occurs
      */
     public static List<DashboardProjectSearchResultDTO> searchUserProjects(TCSubject tcSubject, String searchFor)
         throws Exception {
@@ -322,7 +317,7 @@ public class DataProvider {
      * @param end the end date for contest start date
      * @return a <code>List</code> providing the details on contests associated with the specified user.
      *
-     * @throws Exception if any error occurs
+     * @throws exception if any error occurs
      */
     public static List<DashboardContestSearchResultDTO> searchUserContests(TCSubject tcSubject, String searchFor,
         final Date begin, final Date end) throws Exception {
@@ -683,7 +678,7 @@ public class DataProvider {
      *
      * @param id a <code>long</code> providing the contest ID.
      * @param name a <code>String</code> providing the contest name.
-     * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to.
+     * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to. 
      * @return an <code>ContestBriefDTO</code> providing the details for a single contest.
      */
     private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project) {
@@ -691,25 +686,6 @@ public class DataProvider {
         contest.setId(id);
         contest.setTitle(name);
         contest.setProject(project);
-        return contest;
-    }
-
-     /**
-     * <p>Constructs new <code>ContestBriefDTO</code> instance based on specified properties.</p>
-     *
-     * @param id a <code>long</code> providing the contest ID.
-     * @param name a <code>String</code> providing the contest name.
-     * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to.
-     * @return an <code>ContestBriefDTO</code> providing the details for a single contest.
-     */
-    private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project, String contestType) {
-        TypedContestBriefDTO contest = new TypedContestBriefDTO();
-        contest.setId(id);
-        contest.setTitle(name);
-        contest.setProject(project);
-
-        contest.setContestType(ContestType.forName(contestType));
-
         return contest;
     }
 
@@ -761,11 +737,11 @@ public class DataProvider {
      * Constructs new <code>ProjectContestDTO</code> instance based on specified properties.
      * </p>
      *
-     * @param contestBrief a <code>ContestBriefDTO</code> providing the details for the contest associated with activity.
-     * @param type a <code>Date</code> providing the timestamp for the activity.
-     * @param status a <code>String</code> providing the handle for the user who is the originator of the activity.
-     * @param startTime a <code>long</code> providing the
-     * @param endTime an <code>ActivityType</code> referencing the type of the activity.
+     * @param contest a <code>ContestBriefDTO</code> providing the details for the contest associated with activity.
+     * @param date a <code>Date</code> providing the timestamp for the activity.
+     * @param handle a <code>String</code> providing the handle for the user who is the originator of the activity.
+     * @param userId a <code>long</code> providing the
+     * @param type an <code>ActivityType</code> referencing the type of the activity.
      * @return an <code>ProjectContestDTO</code> providing the details for a single project contest.
      */
     private static ProjectContestDTO createProjectContest(ContestBriefDTO contestBrief, ContestType type,

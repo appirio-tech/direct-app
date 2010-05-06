@@ -52,8 +52,6 @@ public class LatestActivitiesDTO implements Serializable {
      *         those projects.
      */
     public Map<ProjectBriefDTO, List<ActivityDTO>> getActivities() {
-        
-
         return activities;
     }
 

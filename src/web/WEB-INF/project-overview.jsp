@@ -58,18 +58,8 @@
                                                 <span class="ico <s:property value="type.shortName"/>">
                                                     <s:property value="type.name"/></span>
                                             </td>
-                                            <td>
-                                                <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
-                                                    <img src="/images/cd_small.png"
-                                                         alt="cd"/>
-
-                                                </div>
-                                                <div style="display:table-cell;text-align:left">
-                                                    <a href="" onclick="return false;">
-                                                        Link To <s:property value="contest.title"/>
-                                                    </a>
-                                                </div>
-                                            </td>
+                                            <td><a href="" onclick="return false;">
+                                                Link To <s:property value="type.name"/></a></td>
                                             <td class="posted"><s:property value="type.actionText"/> :
                                                 <link:user userId="${originatorId}" handle="${originatorHandle}"/></td>
                                             <td class="date">

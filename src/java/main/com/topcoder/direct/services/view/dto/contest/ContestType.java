@@ -14,12 +14,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Wireframe</code> contest type.</p>
      */
-    WIREFRAME("Wireframe", "wf"),
+    WIREFRAME("Wireframe", "W"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
      */
-    WEB_DESIGN("Web Page Design", "w"),
+    WEB_DESIGN("Web Page Design", "Wd"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
@@ -35,12 +35,13 @@ public enum ContestType {
    /**
      * <p>A <code>ContestType</code> corresponding to <code>Icon</code> contest type.</p>
      */
-    ICONS("Icon", "ic"),
+    ICONS("Icon", "L"),
+
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Idea Generation</code> contest type.</p>
      */
-    IDEA_GENERATION("Idea Generation", "ig"),
+    IDEA_GENERATION("Idea Generation", "I"),
 
 
     /**
@@ -57,7 +58,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
      */
-    APP_FRONT_END_DESIGN("Application Front End Design", "ap"),
+    APP_FRONT_END_DESIGN("Application Front End Design", "Ad"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
@@ -67,12 +68,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Banners/Icons</code> contest type.</p>
      */
-    BANNERS_ICONS("Banners/Icons", "bi"),
+    BANNERS_ICONS("Banners/Icons", "B"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Widget or Mobile Screen Design</code> contest type.</p>
      */
-    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "wi"),
+    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "Md"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Other</code> contest type.</p>
@@ -82,17 +83,17 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>
      */
-    UI_PROTOTYPE("UI Prototypes", "ui"),
+    UI_PROTOTYPE("UI Prototypes", "P"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Specification</code> contest type.</p>
      */
-    SPECIFICATION("Specification", "S"),
+    SPECIFICATION("Specification", "Sp"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Architecture</code> contest type.</p>
      */
-    ARCHITECTURE("Architecture", "ar"),
+    ARCHITECTURE("Architecture", "Ar"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Component Design</code> contest type.</p>
@@ -112,12 +113,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Test Scenarios</code> contest type.</p>
      */
-    TEST_SCENARIOS("Test Scenarios", "Ts"),
+    TEST_SCENARIOS("Test Scenarios", "T"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Test Suites</code> contest type.</p>
      */
-    TEST_SUITES("Test Suites", "Tu"),
+    TEST_SUITES("Test Suites", "Ts"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>RIA Build</code> contest type.</p>
@@ -132,12 +133,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Bug Races</code> contest type.</p>
      */
-    BUG_RACES("Bug Races", "Br"),
+    BUG_RACES("Bug Races", "B"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Algorithm</code> contest type.</p>
      */
-    ALGORITHM("Algorithm", "al"),
+    ALGORITHM("Algorithm", "Ag"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Marathon</code> contest type.</p>
@@ -157,7 +158,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Marathon</code> contest type.</p>
      */
-    CONCEPTUALIZATION("Conceptualization", "c");
+    CONCEPTUALIZATION("Conceptualization", "Cn");
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the
@@ -198,7 +199,7 @@ public enum ContestType {
      * @return a <code>String</code> providing the type letter. Such a name serves as a identifier of the type.
      */
     public String getLetter() {
-        return this.letter.toLowerCase();
+        return this.letter;
     }
 
     /**

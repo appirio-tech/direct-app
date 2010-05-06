@@ -56,10 +56,7 @@
                                                 <span class="ico <s:property value="type.shortName"/>">
                                                     <s:property value="type.name"/></span>
                                             </td>
-                                            <td><div style="display:table-cell; vertical-align: middle; padding-right: 5px;">
-                                                <img src="/images/dvSmall.png" style="vertical-align:middle"/> </div>
-                                                <div style="display: table-cell;"> <link:contestDetails contest="${contest}"/> </div>
-                                            </td>
+                                            <td><link:contestDetails contest="${contest}"/></td>
                                             <td class="posted"><s:property value="type.actionText"/> :
                                                 <link:user userId="${originatorId}" handle="${originatorHandle}"/></td>
                                             <td class="date">

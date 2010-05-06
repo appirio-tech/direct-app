@@ -11,9 +11,5 @@
 
 <%@ attribute name="contest" required="true" type="com.topcoder.direct.services.view.dto.contest.ContestBriefDTO" %>
 
-
 <a href="<s:url action="contestDetails" namespace="/"><s:param name="formData.contestId" value="%{#attr['contest'].id}"/></s:url>">
     <c:out value="${contest.title}"/></a>
-
-
-

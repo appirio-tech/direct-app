@@ -3,7 +3,7 @@
     <property file="${basedir}/build.version"/>
     <property file="topcoder_global.properties"/>
     
-    <property name="prod_configdir" value="../../prod_conf"/>
+    <property name="prod_configdir" value="../prod_conf"/>
 
     <!-- Override these in ../topcoder_global.properties -->
     <property name="javadoc.locale" value="en_US"/>
