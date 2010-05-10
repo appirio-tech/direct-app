@@ -8,6 +8,7 @@
     </div>
 
     <ul class="links">
+        <li><a href="http://forums.topcoder.com/?module=ThreadList&forumID=535887">Get Help</a></li>
         <li><a href="http://topcoder.com/home/contact-us">Contact Us</a></li>
         <li><link:help/></li>
         <li><a href="javascript:alert('To be implemented by sub-sequent assemblies');">Video Tutorials</a></li>
