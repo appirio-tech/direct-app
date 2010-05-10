@@ -71,7 +71,7 @@
 
     <no-tx-datasource>
         <jndi-name>TCS_CATALOG</jndi-name>
-        <connection-url>jdbc:informix-sqli://72.44.43.50:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
         <user-name>coder</user-name>
