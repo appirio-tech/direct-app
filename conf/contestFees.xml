@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- since BUGR-1737 -->
+<contestTypes>
+	<contestType id="STUDIO">
+		<subType id="1">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="3">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="4">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="5">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="6">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>		
+		<subType id="8">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="12">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="18">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="25">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>
+		<subType id="26">
+			<contestFee>2000</contestFee>
+            <firstPlaceCost>1250</firstPlaceCost>
+            <secondPlaceCost>250</secondPlaceCost>
+		</subType>			
+	</contestType>
+	<contestType id="DESIGN">
+		<contestFee>1500</contestFee>
+        <specReviewCost>30</specReviewCost>
+		<contestCost>
+            	<billingLevel id="low">
+                <firstPlaceCost>425</firstPlaceCost>
+                <secondPlaceCost>212.50</secondPlaceCost>
+                <reviewBoardCost>446</reviewBoardCost>
+                <reliabilityBonusCost>127.5</reliabilityBonusCost>
+                <drCost>191</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>525</reviewBoardCost>
+                <reliabilityBonusCost>150</reliabilityBonusCost>
+                <drCost>225</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>575</firstPlaceCost>
+                <secondPlaceCost>287.50</secondPlaceCost>
+                <reviewBoardCost>604</reviewBoardCost>
+                <reliabilityBonusCost>172.5</reliabilityBonusCost>
+                <drCost>259</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="CONCEPTUALIZATION">
+		<contestFee>2000</contestFee>
+        <specReviewCost>30</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>403</reviewBoardCost>
+                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <drCost>360</drCost>
+                <milestoneBonusCost>600</milestoneBonusCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>455</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>450</drCost>
+                <milestoneBonusCost>600</milestoneBonusCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>507</reviewBoardCost>
+                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <drCost>540</drCost>
+                <milestoneBonusCost>600</milestoneBonusCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="SPECIFICATION">
+		<contestFee>2000</contestFee>
+        <specReviewCost>40</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>403</reviewBoardCost>
+                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <drCost>360</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>455</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>450</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>507</reviewBoardCost>
+                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <drCost>540</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="ARCHITECTURE">
+		<contestFee>2000</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>604.5</reviewBoardCost>
+                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <drCost>360</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>682.5</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>450</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>760.5</reviewBoardCost>
+                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <drCost>540</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="DEVELOPMENT">
+		<contestFee>1500</contestFee>
+        <specReviewCost>30</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>325</firstPlaceCost>
+                <secondPlaceCost>162.5</secondPlaceCost>
+                <reviewBoardCost>341</reviewBoardCost>
+                <reliabilityBonusCost>195</reliabilityBonusCost>
+                <drCost>171</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>525</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>263</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>750</firstPlaceCost>
+                <secondPlaceCost>375</secondPlaceCost>
+                <reviewBoardCost>787.5</reviewBoardCost>
+                <reliabilityBonusCost>450</reliabilityBonusCost>
+                <drCost>394</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="ASSEMBLY">
+		<contestFee>3000</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>604.5</reviewBoardCost>
+                <reliabilityBonusCost>480</reliabilityBonusCost>
+                <drCost>420</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>682.5</reviewBoardCost>
+                <reliabilityBonusCost>600</reliabilityBonusCost>
+                <drCost>525</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>760.5</reviewBoardCost>
+                <reliabilityBonusCost>720</reliabilityBonusCost>
+                <drCost>630</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="TESTSUITES">
+		<contestFee>2000</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>175</secondPlaceCost>
+                <reviewBoardCost>286</reviewBoardCost>
+                <reliabilityBonusCost>210</reliabilityBonusCost>
+                <drCost>184</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>325</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>263</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>750</firstPlaceCost>
+                <secondPlaceCost>375</secondPlaceCost>
+                <reviewBoardCost>390</reviewBoardCost>
+                <reliabilityBonusCost>450</reliabilityBonusCost>
+                <drCost>394</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="TESTSCENARIOS">
+		<contestFee>2000</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>350</firstPlaceCost>
+                <secondPlaceCost>175</secondPlaceCost>
+                <reviewBoardCost>286</reviewBoardCost>
+                <reliabilityBonusCost>210</reliabilityBonusCost>
+                <drCost>184</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>325</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>263</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>750</firstPlaceCost>
+                <secondPlaceCost>375</secondPlaceCost>
+                <reviewBoardCost>390</reviewBoardCost>
+                <reliabilityBonusCost>450</reliabilityBonusCost>
+                <drCost>394</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="RIACOMPONENT">
+		<contestFee>2000</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>403</reviewBoardCost>
+                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <drCost>360</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>455</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>450</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>507</reviewBoardCost>
+                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <drCost>540</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="RIABUILD">
+		<contestFee>2000</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>403</reviewBoardCost>
+                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <drCost>360</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>455</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>450</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>507</reviewBoardCost>
+                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <drCost>540</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType id="UIPROTOTYPE">
+		<contestFee>2000</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>403</reviewBoardCost>
+                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <drCost>360</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>455</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>450</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>507</reviewBoardCost>
+                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <drCost>540</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+</contestTypes>
+	

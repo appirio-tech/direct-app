@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<subTypes>
+    <contestType id="STUDIO">
+    	<subType id="1">	
+    		<description><![CDATA[Use this contest type to receive static (non-coded) screens for your website. These mock-ups of your web site determine the look and feel of your design. You can hold contests for your home page, splash screens, or new sections of your web site. It’s best to ask the members to design no more than 5-8 screens at one time. Your prizes and timelines should be tailored to the amount of work involved. 
+
+			TIP! You don’t need every page of your site designed because when you run a contest to have it coded, the developer carries the design elements from this contest across all of your pages.
+			]]>
+			</description>
+    		<example1>
+    			<name>$1000 AOL/TopCoder Sensations Developer Challenge Storyboards</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_web_design_AOL.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/web_design_AOL.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2467</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2467</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2467</winnersLink>
+    			<prizes>$1000</prizes>
+    			<duration>5 days</duration>
+    			<registrants>25</registrants>
+    			<submissions>9</submissions>
+    		</example1>
+    		<example2>
+    			<name>Kids Savings Account Storyboard</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_web_design_KIDS.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/web_design_KIDS.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2240</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2240</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2240</winnersLink>
+    			<prizes>$1600</prizes>
+    			<duration>5 days</duration>
+    			<registrants>41</registrants>
+    			<submissions>11</submissions>
+    		</example2>
+    		<minPrize>$450</minPrize>
+    		<averagePrize>$1000</averagePrize>
+    		<maxExposure>$2000</maxExposure>
+    	</subType>
+    	<subType id="4">	
+    		<description><![CDATA[Web elements include banner designs, promos, buttons, navigational pieces, masthead designs and other small elements. For banner designs, it’s best to ask for no more than 3-4 banner sizes in one contest.
+
+			TIP! You can ask for different web elements within the same contest, such as a banner and three promotional buttons for your Facebook page. These kinds of "sets" increase your branding.
+			]]>
+			</description>
+    		<example1>
+    			<name>1 Day Contest - Promo Banner for $100,000 Ribbit Killer App Challenge</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_web_element_design_RIBBIT.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/web_web_element_design_RIBBIT.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=1000315</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=1000315</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=1000315</winnersLink>
+    			<prizes>$200</prizes>
+    			<duration>1 day</duration>
+    			<registrants>10</registrants>
+    			<submissions>9</submissions>
+    		</example1>
+    		<example2>
+    			<name>LendingTree 'Join the Network' Banner Contest</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_web_element_design_LENDINGTREE.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/web_element_design_LENDINGTREE.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=1000362</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=1000362</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=1000362</winnersLink>
+    			<prizes>$1200</prizes>
+    			<duration>5 days</duration>
+    			<registrants>31</registrants>
+    			<submissions>24</submissions>
+    		</example2>
+    		<minPrize>$200</minPrize>
+    		<averagePrize>$350</averagePrize>
+    		<maxExposure>$1000</maxExposure>
+    	</subType>	
+    	<subType id="3">	
+    		<description><![CDATA[Your logo is the most important design you’ll use to brand your business. Higher prize amounts will generally give you more quality logos to choose from. You should also set prizes higher if you are asking for more than one logo.
+
+			TIP! You can also use this category to get logos for products or services. For example, if your company is launching a series of new applications, run a contest to get a cohesive set of logos.
+			]]>
+			</description>
+    		<example1>
+    			<name>Bandwagon Trivia Game Logo</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_logo_design_BANDWAGON.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/logo_design_BANDWAGON.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=1000131</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=1000131</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=1000131</winnersLink>
+    			<prizes>$300</prizes>
+    			<duration>7 days</duration>
+    			<registrants>19</registrants>
+    			<submissions>17</submissions>
+    		</example1>
+    		<example2>
+    			<name>2009 TopCoder High School Logo</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_logo_design_TCHS.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/logo_design_TCHS.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=1000146</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=1000146</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=1000146</winnersLink>
+    			<prizes>$500</prizes>
+    			<duration>4 days</duration>
+    			<registrants>45</registrants>
+    			<submissions>36</submissions>
+    		</example2>
+    		<minPrize>$150</minPrize>
+    		<averagePrize>$300</averagePrize>
+    		<maxExposure>$1000</maxExposure>
+    	</subType>	
+    	<subType id="12">	
+    		<description><![CDATA[Print contests include brochures, flyers, business cards, magazine ads, and all other designs meant to be printed. Prizes widely vary due to project complexity.
+
+			TIP! You can group simple projects together, such as a business card and letterhead. However, large projects such as a brochure or magazine ad should be held as single contests.
+			]]>
+			</description>
+    		<example1>
+    			<name>Equitrader Mailing Insert</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_print_design_EQUITRADER.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/print_design_EQUITRADER.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2254</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2254</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2254</winnersLink>
+    			<prizes>$600</prizes>
+    			<duration>2 days</duration>
+    			<registrants>21</registrants>
+    			<submissions>8</submissions>
+    		</example1>
+    		<example2>
+    			<name>TopCoder Global Platform Brochure Cover</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_print_design_TCBROCHURE.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/print_design_TCBROCHURE.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2262</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2262</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2262</winnersLink>
+    			<prizes>$1750</prizes>
+    			<duration>7 days</duration>
+    			<registrants>50</registrants>
+    			<submissions>21</submissions>
+    		</example2>
+    		<minPrize>$400</minPrize>
+    		<averagePrize>$750</averagePrize>
+    		<maxExposure>$2000</maxExposure>
+    	</subType>
+    	<subType id="5">	
+    		<description><![CDATA[Use this category for any static design that will act as the user interface for desktop applications, flash games, mobile apps, and any other front end designs that do not fall under the Web Design category. It’s best to ask the members to design no more than 5-8 screens at one time. Your prizes and timelines should be tailored to the amount of work involved.
+
+			TIP! You don’t need every page of your application designed because when you run a contest to have it coded, the developer carries the design elements from this contest across all of your screens.
+			]]>
+			</description>
+    		<example1>
+    			<name>RadioTAGr iPhone Application Storyboards</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_app_design_RADIO.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/app_design_RADIO.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=1000062</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=1000062</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=1000062</winnersLink>
+    			<prizes>$600</prizes>
+    			<duration>2 days</duration>
+    			<registrants>21</registrants>
+    			<submissions>8</submissions>
+    		</example1>
+    		<example2>
+    			<name>$1250 Sun Examination Interface Design</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_app_design_SUN.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/app_design_SUN.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2490</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2490</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2490</winnersLink>
+    			<prizes>$1250</prizes>
+    			<duration>6 days</duration>
+    			<registrants>44</registrants>
+    			<submissions>19</submissions>
+    		</example2>
+    		<minPrize>$450</minPrize>
+    		<averagePrize>$1000</averagePrize>
+    		<maxExposure>$2000</maxExposure>
+    	</subType>
+    	<subType id="8">	
+    		<description><![CDATA[This contest type is for all PPT contests. You can ask for a blank template, a redesign of a current PPT or any charts or other graphics that will be used in your presentation.
+
+			TIP! If your PPT design includes a large amount of design elements, such as charts and graphs, your prizes and timelines should be tailored to the amount of work involved.
+			]]>
+			</description>
+    		<example1>
+    			<name>Studio PPT Slide Background Template and Pie Graphic Design</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_ppt_design_STUDIO.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/ppt_design_STUDIO.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=1000087</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=1000087</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=1000087</winnersLink>
+    			<prizes>$200</prizes>
+    			<duration>4 days</duration>
+    			<registrants>16</registrants>
+    			<submissions>4</submissions>
+    		</example1>
+    		<example2>
+    			<name>PowerPoint Redesign</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_ppt_design_REDESIGN.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/ppt_design_REDESIGN.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2227</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2227</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2227</winnersLink>
+    			<prizes>$500</prizes>
+    			<duration>6 days</duration>
+    			<registrants>74</registrants>
+    			<submissions>6</submissions>
+    		</example2>
+    		<minPrize>$200</minPrize>
+    		<averagePrize>$500</averagePrize>
+    		<maxExposure>$1200</maxExposure>
+    	</subType>
+    	<subType id="6">	
+    		<description><![CDATA[Get icon designs for print, web, mobile or desktop applications. It’s best to ask the members to design no more than 10-15 icons at one time unless the icons are extremely simple. 
+
+			TIP! If you need vector (scalable) icons, you may need to ask for several sizes, which require more detail work from the designer. Your prizes and timelines should be tailored to the amount of work involved.
+			]]>
+			</description>
+    		<example1>
+    			<name>AOL Product Portal Icons</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_icon_design_AOL.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/icon_design_AOL.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2372</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2372</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2372</winnersLink>
+    			<prizes>$450</prizes>
+    			<duration>4 days</duration>
+    			<registrants>19</registrants>
+    			<submissions>15</submissions>
+    		</example1>
+    		<example2>
+    			<name>Wivo Media Center Persona Icons</name>
+    			<thumbImage>./assets/overviewImages/thumbs/t_icon_design_WIVO.jpg</thumbImage>
+    			<fullsizeImage>assets/overviewImages/fullsize_images/icon_design_WIVO.jpg</fullsizeImage>
+    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2468</contestLink>
+    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2468</submissionsLink>
+    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2468</winnersLink>
+    			<prizes>$600</prizes>
+    			<duration>3 days</duration>
+    			<registrants>24</registrants>
+    			<submissions>5</submissions>
+    		</example2>
+    		<minPrize>$150</minPrize>
+    		<averagePrize>$350</averagePrize>
+    		<maxExposure>$1000</maxExposure>
+    	</subType>
+    	<subType id="18">	
+    		<description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
+    		<minPrize>$300</minPrize>
+    	</subType>
+		<subType id="25">	
+    		<description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
+    		<minPrize>$300</minPrize>
+    	</subType>
+    	<subType id="26">	
+    		<description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
+    		<minPrize>$300</minPrize>
+    	</subType>
+		</contestType>
+    <contestType id="DESIGN">	
+        <description><![CDATA[Component Design contests produce a detailed technical design of a component.  Typical applications are comprised of many components.  The components are identified during the architecture process.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/Component+Production+Competitions" target="_blank"><b><u>Component Production Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ViewActiveContests&ph=112" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+    </contestType>
+    <contestType id="CONCEPTUALIZATION">
+		<description><![CDATA[In Conceptualization contests, competitors collaborate with clients in the project forums to help identify, organize, and document their needs and ideas, and produce a high-level Business Requirements Document. The Business Requirements Document identifies and describes the workflows that the client follows, or intends to follow, to accomplish one or more business goals. Competitors compete to concisely document who does what, how they do it, and how they should do it.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/Conceptualization+Competitions" target="_blank"><b><u>Conceptualization Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ActiveContests&pt=23" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="SPECIFICATION">
+		<description><![CDATA[In Specification Contests, the application requirements are documented in as much detail as necessary in order to accomplish the goals for the implementation of an application or application module. Whereas the high-level use cases were identified during Conceptualization contests, and assigned to modules during System Architecture, it is in Specification that you break out all the individual scenarios that make up those use cases, both in text form and graphical form using UML Activity Diagrams. Using these forms, you detail both the basic success scenarios and all alternate scenarios resulting from error conditions or other ways of accomplishing subgoals within the main use cases.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/Specification+Competitions" target="_blank"><b><u>Specification Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ActiveContests&pt=6" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="ARCHITECTURE">
+		<description><![CDATA[There are 2 types of architecture contests TopCoder runs.  The System Level Architecture competition defines the overall technical approach to meet the requirements of the project. It defines the application-wide concerns, the technologies and patterns used throughout the application, the modules of the application, and the probably most importantly the strategy and common functionality required to build and deploy these modules. The output from this competition is a complete plan on how to build the application, and an integration plan for the modules as they complete.  Each module may require a more detailed architecture to be run.  This is the Module Architecture contest and is used to futher define the specific architecture of part of an application, or a module.  The Module Architecture defines the components, interactions between components, integration of the UI, etc.  It also defines the specific implementation plan for the module, including all contests that will be required to complete and deliver the module.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/System+Level+Architecture+Competitions" target="_blank"><b><u>System Architecture Guide</u></b></a> and the <a href="http://www.topcoder.com/wiki/display/tc/Module+Level+Architecture+Competitions" target="_blank"><b><u>Module Architecture Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ActiveContests&pt=7" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="DEVELOPMENT">
+		<description><![CDATA[Component Development contests produce a discrete functional unit of code (a component) based on a detailed technical design of a component produced in a Component Design contest.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/Component+Production+Competitions" target="_blank"><b><u>Component Production Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ViewActiveContests&ph=113" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="ASSEMBLY">
+		<description><![CDATA[You can run several types of assemblies.  System Assemblies are intended to implement any common application/system level functionality/frameworks/standards/etc.  This is a good way to get a baseline running application built that you can add on to as you complete each new piece.  Prototype Conversion Assemblies focus on the implementation of the UI.  Typically you start with wireframes and/or storyboards and are looking to convert them into your technology of choice (JSP, ASP, Flex, Flash, PHP, etc.).  Module Assemblies are used to complete coding/integration tasks that implement particular application modules or part of modules.  These typically deal with wiring components together and connecting them to the UI.  You will typically have several assemblies to complete a module unless the module is very trivial, like a registration form.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/System+Assembly+Competitions" target="_blank"><b><u>System Assembly Guide</u></b></a>, <a href="http://www.topcoder.com/wiki/display/tc/Prototype+Assembly+Competitions" target="_blank"><b><u>Prototype Assembly Guide</u></b></a> and <a href="http://www.topcoder.com/wiki/display/tc/Module+Assembly+Competitions" target="_blank"><b><u>Module Assembly Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ViewAssemblyActiveContests" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="TESTSUITES">
+		<description><![CDATA[Test Suite contests are used to produce automated test cases.  The goal of these is to have a set of scripted test cases that tests as much of the application as possible automatically.  These can be used during initial system testing and for regression testing.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/Testing+Competitions" target="_blank"><b><u>Testing Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ActiveContests&pt=13" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="TESTSCENARIOS">
+		<description><![CDATA[Test Scenarios contests are used to produce written steps that can be used to test a particular set of requirements.  These are often referred to as test plans, QA plans, etc.  These are used as inputs to the Test Suites contests or used independently by a QA team.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/Testing+Competitions" target="_blank"><b><u>Testing Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ActiveContests&pt=26" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="UICOMPONENT">
+		<description><![CDATA[Description for contest type: UICOMPONENT]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="UIBUILD">
+		<description><![CDATA[Description for contest type: UIBUILD]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+	<contestType id="UIPROTOTYPE">
+		<description><![CDATA[UI Prototype competitions are designed to take the graphics (UI storyboards) and information architecture (IA wireframes) of a web site or application and create a demonstration of the working application. Storyboards and wireframes are developed in TopCoder Studio. Prototypes in this type of competition are created in HTML/CSS and are generally used as the input of the next phase of development, although some prototypes move directly into production (simple web sites, for example).<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/UI+Prototype+Competitions" target="_blank"><b><u>UI Prototype Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ActiveContests&pt=19" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+    <contestType id="RIACOMPONENT">
+		<description><![CDATA[Description for contest type: RIACOMPONENT]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+    <contestType id="RIABUILD">
+		<description><![CDATA[Rich Internet Application (RIA) Build Competitions provide the build of small applications used both on the Internet and on the desktop. Most of the competitions here are for Flash/Flex designers and developers. The competitions take the graphics (UI storyboards) and information archetecture (IA wireframes) of the app to be built and create the working application. Storyboards and wireframes are developed in TopCoder Studio.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/RIA+Build+Competitions" target="_blank"><b><u>RIA Build Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ActiveContests&pt=24" target="_blank"><b><u>here</u></b></a>.]]></description>
+        <minPrize>$300</minPrize>
+        <averagePrize>$500</averagePrize>
+    	<maxExposure>$1000</maxExposure>
+	</contestType>
+</subTypes>

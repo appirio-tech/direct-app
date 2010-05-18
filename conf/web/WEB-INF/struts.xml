@@ -6,7 +6,7 @@
     <!--
         This is a configuration file for Struts2 context to be used by TC Direct application.
     -->
-    <constant name="struts.objectFactory" value="struts"/>
+    <constant name="struts.objectFactory" value="spring"/>
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.locale" value="en_US"/>
     <constant name="struts.custom.i18n.resources" value="Messages"/>
@@ -17,6 +17,11 @@
 
 
     <package name="default" extends="struts-default" namespace="/">
+        <result-types>
+            <result-type name="json" class="com.topcoder.service.actions.ajax.CustomFormatAJAXResult">
+            </result-type>
+        </result-types>
+
         <interceptors>
             <interceptor name="preProcessor" class="com.topcoder.direct.services.view.interceptor.ActionPreProcessor"/>
             <interceptor name="projectAccessGuard"
@@ -24,7 +29,9 @@
             <interceptor name="contestAccessGuard"
                          class="com.topcoder.direct.services.view.interceptor.ContestAccessInterceptor"/>
             <interceptor name="authnInterceptor"
-                         class="com.topcoder.direct.services.view.interceptor.AuthenticationInterceptor"/>
+                         class="authenticationInterceptor"/>
+            <interceptor name="loggingInterceptor"
+                         class="loggingInterceptor"/>
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="preProcessor"/>
@@ -147,5 +154,64 @@
             <result name="success">/WEB-INF/calendar.jsp</result>
         </action>
 
+    </package>
+
+    <package name="launch" namespace="/launch" extends="default">
+        <interceptors>
+            <interceptor-stack name="defaultDirectStack">
+                <interceptor-ref name="exception">
+                    <param name="logEnabled">true</param>
+                    <param name="logLevel">ERROR</param>
+                </interceptor-ref>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+
+            <!-- base stack -->
+            <interceptor-stack name="baseStack">
+                <interceptor-ref name="defaultDirectStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="loggingInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="baseStack"/>
+
+        <action name="home" class="launchContestAction">
+            <result>/WEB-INF/launch-contest.jsp</result>
+        </action>
+
+        <action name="createProject" class="createProjectAction">
+            <result type="json" />
+        </action>
+
+        <action name="saveDraftContest" class="saveDraftContestAction">
+            <result type="json" />
+        </action>
+
+        <action name="getStudioConfigs" method="getStudioConfigs" class="commonAction">
+            <result type="json" />
+        </action>
     </package>
 </struts>

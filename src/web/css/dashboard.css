@@ -1004,7 +1004,7 @@ table.fc-header { /* calendar header */
 
 .tooltipContainer{
 	position: absolute;
-	width: 182px;
+	width: 500px;
 	padding-left: 4px;
 	z-index: 999;
 	display: none;

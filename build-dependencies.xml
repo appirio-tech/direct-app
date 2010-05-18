@@ -10,7 +10,8 @@
     <property name="base_exception.jar" value="${tcs_libdir}/${base_exception.path}/${base_exception.jar.name}"/>
     <property name="excel_utility.jar" value="${tcs_libdir}/excel_utility/2.0/excel_utility.jar"/>
     <property name="typesafe_enum.jar" value="${tcs_libdir}/typesafe_enum/1.1/typesafe_enum.jar"/>
-    
+    <property name="object_formatter.jar" value="${tcs_libdir}/object_formatter/1.0/object_formatter.jar"/>
+    <property name="logging_wrapper.jar" value="${tcs_libdir}/logging_wrapper/2.0/logging_wrapper.jar"/>
 
     <property name="shared.jar" value="${tcs_libdir}/shared.jar"/>
     <property name="tcwebcommon.jar" value="${tcs_libdir}/tcwebcommon.jar"/>
@@ -21,6 +22,15 @@
     <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar"/>
     <property name="ejb-api.jar" value="${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
     <property name="jboss-jaxws.jar" value="${ext_libdir}/jboss/jboss-jaxws.jar"/>
+    <property name="javaee.jar" value="${ext_libdir}/j2ee/javaee.jar"/>
+
+    
+  <!-- EJB/Persistence libraries -->
+  <path id="ejb.libs">
+      <fileset dir="${ext_libdir}/ejb-api">
+          <include name="*.jar"/>
+      </fileset>
+  </path>
 
     <!-- Struts2 libraries -->
     <path id="struts.libs">
@@ -28,6 +38,20 @@
             <include name="*.jar"/>
         </fileset>
     </path>
+
+  <!-- Spring libraries -->
+  <path id="spring.libs">
+      <fileset dir="${ext_libdir}/spring">
+          <include name="*.jar"/>
+      </fileset>
+  </path>
+
+  <!-- JBoss libraries -->
+  <path id="jboss.libs">
+      <fileset dir="${ext_libdir}/jboss">
+          <include name="*.jar"/>
+      </fileset>
+  </path>
 
 	<path id="component.tcs-dependencies">
         <pathelement location="${shared.jar}"/>
@@ -37,13 +61,20 @@
         <pathelement location="${base_exception.jar}"/>
         <pathelement location="${excel_utility.jar}"/>
         <pathelement location="${typesafe_enum.jar}"/>
+        <pathelement location="${object_formatter.jar}" />  
+        <pathelement location="${logging_wrapper.jar}" />  
+        <pathelement location="${base_exception.jar}" />          
 	</path>
 
 	<path id="component.3rdParty-dependencies">
         <path refid="struts.libs"/>
+        <path refid="spring.libs"/>
+        <path refid="ejb.libs"/>
+        <path refid="jboss.libs"/>
         <pathelement location="${servlet-api.jar}"/>
         <pathelement location="${ejb-api.jar}"/>
         <pathelement location="${jboss-jaxws.jar}"/>
+        <pathelement location="${javaee.jar}"/>
 	</path>
 
 </project>

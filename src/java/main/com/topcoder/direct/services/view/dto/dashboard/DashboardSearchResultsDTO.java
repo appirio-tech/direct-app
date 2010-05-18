@@ -46,33 +46,45 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     final static String DATE_FORMAT = "MM/dd/yyyy HH:mm zzz";
 
     /**
-     * <p>A <code>List</code> listing the details for found projects.</p>
+     * <p>
+     * A <code>List</code> listing the details for found projects.
+     * </p>
      */
     private List<DashboardProjectSearchResultDTO> projects;
 
     /**
-     * <p>A <code>List</code> listing the details for found contests.</p>
+     * <p>
+     * A <code>List</code> listing the details for found contests.
+     * </p>
      */
     private List<DashboardContestSearchResultDTO> contests;
 
     /**
-     * <p>A <code>List</code> listing the details for found members.</p>
+     * <p>
+     * A <code>List</code> listing the details for found members.
+     * </p>
      */
     private List<DashboardMemberSearchResultDTO> members;
 
     /**
-     * <p>A <code>DashboardSearchCriteriaType</code> referencing the type of the results.</p>
+     * <p>
+     * A <code>DashboardSearchCriteriaType</code> referencing the type of the results.
+     * </p>
      */
     private DashboardSearchCriteriaType resultType;
 
     /**
-     * <p>Constructs new <code>DashboardSearchResultsDTO</code> instance. This implementation does nothing.</p>
+     * <p>
+     * Constructs new <code>DashboardSearchResultsDTO</code> instance. This implementation does nothing.
+     * </p>
      */
     public DashboardSearchResultsDTO() {
     }
 
     /**
-     * <p>Gets the list of found projects.</p>
+     * <p>
+     * Gets the list of found projects.
+     * </p>
      *
      * @return a <code>List</code> listing the details for found projects.
      */
@@ -81,7 +93,9 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     }
 
     /**
-     * <p>Sets the list of found projects.</p>
+     * <p>
+     * Sets the list of found projects.
+     * </p>
      *
      * @param projects a <code>List</code> listing the details for found projects.
      */
@@ -90,7 +104,9 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     }
 
     /**
-     * <p>Gets the list of found contests.</p>
+     * <p>
+     * Gets the list of found contests.
+     * </p>
      *
      * @return a <code>List</code> listing the details for found contests.
      */
@@ -99,7 +115,9 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     }
 
     /**
-     * <p>Sets the list of found contests.</p>
+     * <p>
+     * Sets the list of found contests.
+     * </p>
      *
      * @param contests a <code>List</code> listing the details for found contests.
      */
@@ -108,7 +126,9 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     }
 
     /**
-     * <p>Gets the list of found members.</p>
+     * <p>
+     * Gets the list of found members.
+     * </p>
      *
      * @return a <code>List</code> listing the details for found members.
      */
@@ -117,7 +137,9 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     }
 
     /**
-     * <p>Sets the list of found members.</p>
+     * <p>
+     * Sets the list of found members.
+     * </p>
      *
      * @param members a <code>List</code> listing the details for found members.
      */
@@ -126,7 +148,9 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     }
 
     /**
-     * <p>Gets the results type.</p>
+     * <p>
+     * Gets the results type.
+     * </p>
      *
      * @return a <code>DashboardSearchCriteriaType</code> referencing the type of the results.
      */
@@ -135,7 +159,9 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     }
 
     /**
-     * <p>Sets the results type.</p>
+     * <p>
+     * Sets the results type.
+     * </p>
      *
      * @param resultType a <code>DashboardSearchCriteriaType</code> referencing the type of the results.
      */

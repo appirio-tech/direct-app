@@ -147,7 +147,7 @@ public class DashboardContestSearchResultDTO implements Serializable {
     /**
      * <p>Sets current contest status.</p>
      *
-     * @param status a <code>ContestStatus</code> providing current contest status. 
+     * @param status a <code>ContestStatus</code> providing current contest status.
      */
     public void setStatus(ContestStatus status) {
         this.status = status;

@@ -9,8 +9,7 @@
     </c:if>
 
     <div class="box">
-        <a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="button2">Launch New
-            Contest</a>
+        <a href="${ctx}/launch/home" class="button2">Launch New Contest</a>
     </div>
     <!-- End .box -->
     <div class="box">

@@ -64,7 +64,9 @@ public class DashboardSearchForm implements Serializable {
     }
 
     /**
-     * <p>Gets the text for search criteria.</p>
+     * <p>
+     * Gets the text for search criteria.
+     * </p>
      *
      * @return a <code>String</code> providing the text for search criteria.</p>
      */
@@ -73,7 +75,9 @@ public class DashboardSearchForm implements Serializable {
     }
 
     /**
-     * <p>Sets the text for search criteria.</p>
+     * <p>
+     * Sets the text for search criteria.
+     * </p>
      *
      * @param searchFor a <code>String</code> providing the text for search criteria.</p>
      */

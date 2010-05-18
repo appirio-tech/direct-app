@@ -14,3 +14,5 @@
 <%@ taglib prefix="ui" tagdir="/WEB-INF/tags/ui" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/struts-tags.tld" %>
 <%@ taglib prefix="tcdirect" uri="/tcdirect-functions" %>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}" scope="page"/>

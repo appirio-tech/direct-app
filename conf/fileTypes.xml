@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contestTypes>
+  <contestType id="1">
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ico</value>
+      <description>.ICO (For specific icon contests…not always needed)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="4">
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="3">
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="12">
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>indd</value>
+      <description>.INDD (Adobe InDesign graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ico</value>
+      <description>.ICO (For specific icon contests…not always needed)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>pdf</value>
+      <description>.PDF (Some print shops require a PDF file for proofing)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="5">
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ico</value>
+      <description>.ICO (For specific icon contests…not always needed)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="25">
+	<fileFormat>
+      <value>ico</value>
+      <description>.ICO (For specific icon contests…not always needed)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="18">
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="26">
+	<fileFormat>
+      <value>ppt</value>
+      <description>.PPT (Microsoft PowerPoint)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+  </contestType>
+  <contestType id="6">
+	<fileFormat>
+      <value>ppt</value>
+      <description>.PPT (Microsoft PowerPoint)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+  </contestType>
+    <contestType id="8">
+	<fileFormat>
+      <value>ppt</value>
+      <description>.PPT (Microsoft PowerPoint)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>psd</value>
+      <description>.PSD (Photoshop layered graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>ai</value>
+      <description>.AI (Adobe Illustrator vector graphic file)</description>
+    </fileFormat>
+    <fileFormat>
+      <value>eps</value>
+      <description>.EPS (Vector graphic file)</description>
+    </fileFormat>
+  </contestType>
+</contestTypes>

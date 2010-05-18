@@ -71,8 +71,8 @@
 									<ul id="myCarouselUL">
 										<li><a href="#"><img src="/images/carousel_img1.jpg" alt="image1" /></a></li>
 										<li><a href="#"><img src="/images/carousel_img4.jpg" alt="image4" /></a></li>
-                                        <li><a href="#"><img src="/images/carousel_img5.jpg" alt="image5" /></a></li>
-                                        <li><a href="#"><img src="/images/carousel_img6.jpg" alt="image6" /></a></li>
+                                                                                <li><a href="#"><img src="/images/carousel_img5.jpg" alt="image5" /></a></li>
+                                                                                <li><a href="#"><img src="/images/carousel_img6.jpg" alt="image6" /></a></li>
 									</ul>
 								</div><!-- End #mycarousel -->
 								

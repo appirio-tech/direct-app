@@ -10,8 +10,12 @@ import java.util.Date;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.shared.common.TCContext;
 
@@ -25,7 +29,7 @@ public final class DirectUtils {
     /**
      * Constant for date format.
      */
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String DATE_FORMAT = "MM/dd/yyyy";
 
     /**
      * Gets date from date string.
@@ -85,4 +89,9 @@ public final class DirectUtils {
             DirectProperties.CONTEST_SERVICE_FACADE_PROVIDER_URL);
         return (ContestServiceFacade) context.lookup(DirectProperties.CONTEST_SERVICE_FACADE_JNDI_NAME);
     }
+
+    public static HttpServletRequest getServletRequest() {
+        return (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+    }
+
 }

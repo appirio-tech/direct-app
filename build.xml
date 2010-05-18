@@ -127,6 +127,7 @@
                 <exclude name="jstl/**/*.jar"/>
                 <exclude name="servlet-api/**/*.jar"/>
                 <exclude name="ejb-api/**/*.jar"/>
+                <exclude name="jboss/**/*.jar"/>
             </fileset>
         </copy>
     </target>
@@ -193,6 +194,11 @@
         <copy file="${configdir}/DataAccess.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/cache.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/Direct.properties" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/app.properties" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/contestFees.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/contestTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/fileTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/overview.xml" todir="${jboss.home}/server/${server.name}/conf"/>        
         <copy file="${configdir}/components/com/topcoder/security/Util.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${shared.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${tcwebcommon.jar}" todir="${jboss.home}/server/${server.name}/lib"/>

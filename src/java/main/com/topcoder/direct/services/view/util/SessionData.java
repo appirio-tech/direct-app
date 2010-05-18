@@ -169,7 +169,7 @@ public class SessionData {
     /**
      * <p>Gets the list of contests for current project.</p>
      *
-     * @return a <code>List</code> listing the contests for current project. 
+     * @return a <code>List</code> listing the contests for current project.
      */
     public List<TypedContestBriefDTO> getCurrentProjectContests() {
         return (List<TypedContestBriefDTO>) this.session.getAttribute("currentProjectContests");

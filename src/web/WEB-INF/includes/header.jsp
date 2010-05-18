@@ -6,6 +6,10 @@
             <a href="<s:url action="dashboard" namespace="/"/>" class="logo">
                 <img src="/images/dashboard_logo.png" alt="Direct Dashboard" /></a>
         </c:when>
+        <c:when test="${requestScope.PAGE_TYPE eq 'launch'}">
+            <a href="javascript:;" class="logo">
+                <img src="/images/launghContent_logo.png" alt="Launch Contest" /></a>
+        </c:when>
         <c:otherwise>
             <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo projectLogo">
                 <s:property value="sessionData.currentProjectContext.name"/>
@@ -48,6 +52,25 @@
                 </li>
             </ul>
         </ui:isProjectPage>
+        <c:if test="${requestScope.PAGE_TYPE eq 'launch'}">
+            <ul>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
+                </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="on"</c:if>>
+                    <a href="javascript:;"><span>Tasks</span></a>
+                </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Contests</span></a>
+                </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'copilots'}">class="on"</c:if>>
+                    <a href="javascript:;"><span>CoPilots</span></a>
+                </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectPermissionsView" namespace="/"/>"><span>Permissions</span></a>
+                </li>
+            </ul>
+        </c:if>
     </div><!-- End #tabs1 -->
 
     <div id="tabs2"><!-- tabs on the right side-->

@@ -25,15 +25,19 @@ import java.util.Map;
  * @version 2.0
  */
 public class DashboardSearchAction extends AbstractAction implements ViewAction<DashboardSearchResultsDTO>,
-                                                                     FormAction<DashboardSearchForm> {
+    FormAction<DashboardSearchForm> {
 
     /**
-     * <p>A static <code>Map</code> mapping the existing search criteria types to their textual presentations.</p>
+     * <p>
+     * A static <code>Map</code> mapping the existing search criteria types to their textual presentations.
+     * </p>
      */
     private static final Map<DashboardSearchCriteriaType, String> SEARCH_CRITERIA_TYPES;
 
     /**
-     * <p>This static initializer initializes the <code>SEARCH_CRITERIA_TYPES</code> map.</p>
+     * <p>
+     * This static initializer initializes the <code>SEARCH_CRITERIA_TYPES</code> map.
+     * </p>
      */
     static {
         SEARCH_CRITERIA_TYPES = new LinkedHashMap<DashboardSearchCriteriaType, String>();
@@ -43,24 +47,31 @@ public class DashboardSearchAction extends AbstractAction implements ViewAction<
     }
 
     /**
-     * <p>A <DashboardSearchResultsDTO>DashboardDTO</code> providing the viewData for displaying by
-     * <code>Dashboard Search Results</code> view.</p>
+     * <p>
+     * A <DashboardSearchResultsDTO>DashboardDTO</code> providing the viewData for displaying by
+     * <code>Dashboard Search Results</code> view.
+     * </p>
      */
     private DashboardSearchResultsDTO viewData = new DashboardSearchResultsDTO();
 
     /**
-     * <p>A <code>DashboardSearchForm</code> providing the input parameters submitted by user.</p>
+     * <p>
+     * A <code>DashboardSearchForm</code> providing the input parameters submitted by user.
+     * </p>
      */
     private DashboardSearchForm formData = new DashboardSearchForm();
 
     /**
-     * <p>Constructs new <code>DashboardSearchAction</code> instance. This implementation does nothing.</p>
+     * <p>
+     * Constructs new <code>DashboardSearchAction</code> instance. This implementation does nothing.
+     * </p>
      */
     public DashboardSearchAction() {
     }
 
     /**
-     * <p>Prepares this action for execution. This implementation sets the session and request contexts for this action.
+     * <p>
+     * Prepares this action for execution. This implementation sets the session and request contexts for this action.
      * </p>
      *
      * @throws Exception if an unexpected error occurs.
@@ -72,16 +83,21 @@ public class DashboardSearchAction extends AbstractAction implements ViewAction<
     }
 
     /**
-     * <p>Gets the data to be displayed by view mapped to this action.</p>
+     * <p>
+     * Gets the data to be displayed by view mapped to this action.
+     * </p>
      *
-     * @return an <code>Object</code> providing the collector for data to be rendered by the view mapped to this action.
+     * @return an <code>Object</code> providing the collector for data to be rendered by the view mapped to this
+     *         action.
      */
     public DashboardSearchResultsDTO getViewData() {
         return this.viewData;
     }
 
     /**
-     * <p>Gets the form data.</p>
+     * <p>
+     * Gets the form data.
+     * </p>
      *
      * @return an <code>Object</code> providing the data for form submitted by user..
      */

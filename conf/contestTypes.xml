@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<types>
+<type contestTypeId="1" description="Web Design"/>
+<type contestTypeId="3" description="Logo Design"/>
+<type contestTypeId="4" description="Banners/Icons"/>
+<type contestTypeId="5" description="Application Front-End Design"/>
+<type contestTypeId="6" description="Widget or Mobile Screen Design"/>
+<type contestTypeId="8" description="Front-End Flash"/>
+<type contestTypeId="12" description="Print/Presentation"/>
+<type contestTypeId="18" description="Other"/>
+<type contestTypeId="25" description="Wireframes"/>
+<type contestTypeId="26" description="Idea Generation"/>
+</types>
