@@ -12,7 +12,7 @@
         <filter-name>direct2</filter-name>
         <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
     </filter>
-    
+
     <filter-mapping>
         <filter-name>direct2</filter-name>
         <url-pattern>/*</url-pattern>
@@ -33,7 +33,7 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/error.jsp</location>
     </error-page>
-    
+
     <session-config>
         <session-timeout>1440</session-timeout>
     </session-config>

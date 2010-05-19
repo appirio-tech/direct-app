@@ -18,10 +18,9 @@
 
     <package name="default" extends="struts-default" namespace="/">
         <result-types>
-            <result-type name="json" class="com.topcoder.service.actions.ajax.CustomFormatAJAXResult">
+            <result-type name="json" class="com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult">
             </result-type>
         </result-types>
-
         <interceptors>
             <interceptor name="preProcessor" class="com.topcoder.direct.services.view.interceptor.ActionPreProcessor"/>
             <interceptor name="projectAccessGuard"
