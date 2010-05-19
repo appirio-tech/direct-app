@@ -70,8 +70,6 @@
 								<div id="mycarousel" class="jcarousel-skin-topCoder">
 									<ul id="myCarouselUL">
 										<li><a href="#"><img src="/images/carousel_img1.jpg" alt="image1" /></a></li>
-										<li><a href="#"><img src="/images/carousel_img2.jpg" alt="image2" /></a></li>
-										<li><a href="#"><img src="/images/carousel_img3.jpg" alt="image3" /></a></li>
 										<li><a href="#"><img src="/images/carousel_img4.jpg" alt="image4" /></a></li>
                                                                                 <li><a href="#"><img src="/images/carousel_img5.jpg" alt="image5" /></a></li>
                                                                                 <li><a href="#"><img src="/images/carousel_img6.jpg" alt="image6" /></a></li>

@@ -4,7 +4,6 @@ echo ------------------------------
 echo Stopping Cockpit JBoss server
 echo Press y to confirm stopping
 echo ------------------------------
-cd /tmp
 ./kill.sh
 
 echo delete old json jar
