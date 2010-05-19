@@ -48,11 +48,11 @@
 <!-- contentList -->
 <div class="contentList">
 	<dl>
-		<dt>Contest Description :</dt>
-		<dd><span id="rContestDescription"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
-
 		<dt>Contest Introduction :</dt>
 		<dd><span id="rContestIntroduction"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+
+		<dt>Contest Description :</dt>
+		<dd><span id="rContestDescription"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
 
 		<dt class="rMultiInfo">Round One Information :</dt>
 		<dd class="rMultiInfo"><span id="rRound1Info"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		

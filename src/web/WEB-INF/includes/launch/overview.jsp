@@ -5,20 +5,20 @@
 
   <!-- Contest Description -->
 	<div class="description">    
-        <h3><span class="icon">Contest Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        
+        <h3>Contest Introduction</h3>
         <div class="textarea">
-            <textarea id="contestDescription" rows="" cols=""></textarea>
-        </div>        
+            <textarea id="contestIntroduction" rows="" cols=""></textarea>
+        </div>
   </div>
   <!-- end .description -->
 
 
   <!-- Contest Introduction -->
 	<div class="goals">    
-        <h3>Contest Introduction</h3>
+        <h3><span class="icon">Contest Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        
         <div class="textarea">
-            <textarea id="contestIntroduction" rows="" cols=""></textarea>
-        </div>
+            <textarea id="contestDescription" rows="" cols=""></textarea>
+        </div>        
   </div>
   <!-- end contest introduction -->
         
