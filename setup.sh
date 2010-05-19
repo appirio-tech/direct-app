@@ -7,6 +7,9 @@ echo ------------------------------
 cd /tmp
 ./kill.sh
 
+echo delete old json jar
+rm -v /tmp/lib/third_party/struts/json-lib-2.1.jar
+
 echo -------------------------------------------------------
 echo Creating development distribution environment for
 echo TC Direct System application
@@ -20,6 +23,7 @@ cp -rv /tmp/src .
 cp /tmp/*.properties .
 cp /tmp/*.xml .
 cp /tmp/*.version .
+
 
 echo ----------------------------------------
 echo Copying static resources to Apache HTTP
@@ -50,3 +54,4 @@ echo Starting Cockpit JBoss server
 echo ------------------------------
 cd /home/cockpit/jboss-4.2.3.GA/bin
 ./start.sh
+
