@@ -9,7 +9,7 @@
 [% foreach item limit 3 %]
 <div class="news">
     <h3>[%= title %]</h3><!-- news title -->
-    <p><strong>[%= pubDate format:MM D, Y%]</strong></p><!-- news date -->
+    <p><strong>[%= pubDate format:M D, Y%]</strong></p><!-- news date -->
     <p>[%= description %]</p>
 
     <p><a href="[%= link %]" class="readmore">Read more</a></p>
