@@ -27,7 +27,7 @@
 <script type="text/javascript" src="/scripts/jquery.bgiframe.js"></script>
 <script type="text/javascript" src="/scripts/date.prev.js"></script>
 <script type="text/javascript" src="/scripts/date.js?v=2"></script>
-<script type="text/javascript" src="/scripts/common.js?v=<%=new java.util.Date().getTime()%>"></script>
+<script type="text/javascript" src="/scripts/common.js?v=11"></script>
 <script type="text/javascript" src="/scripts/jquery.datePicker.js?v=2"></script>
 <script type="text/javascript" src="/scripts/jquery.stylish-select.js?v=4"></script>
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js"></script>
