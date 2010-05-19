@@ -15,31 +15,31 @@
 	<table class="overviewData" cellpadding="0" cellspacing="0">
 		<tr>
 			<th>Contest Name :</th>
-			<td><span id="rContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Project Name :</th>
-			<td><span id="rProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Billing Account :</th>
-			<td><span id="rBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Round Type :</th>
-			<td><span id="rRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>Start :</th>
-			<td><span id="rStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr id="rMileStoneTR">
 			<th>Milestone :</th>
-			<td><span id="rMilestoneDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rMilestoneDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr>
 			<th>End :</th>
-			<td><span id="rEndDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a></td>
+			<td><span id="rEndDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 	</table>
 </div>
@@ -49,7 +49,16 @@
 <div class="contentList">
 	<dl>
 		<dt>Contest Description :</dt>
-		<dd><span id="rContestDescription"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a> </dd>		
+		<dd><span id="rContestDescription"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+
+		<dt>Contest Introduction :</dt>
+		<dd><span id="rContestIntroduction"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+
+		<dt class="rMultiInfo">Round One Information :</dt>
+		<dd class="rMultiInfo"><span id="rRound1Info"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
+
+		<dt class="rMultiInfo">Round Two Information :</dt>
+		<dd class="rMultiInfo"><span id="rRound2Info"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		
 	</dl>
 </div>
 <!-- end .contentList -->
@@ -61,14 +70,9 @@
                   
   <!-- cboxFiles -->
 	<div class="cbox" id="cboxFiles">		
-		<dl>
-			<dt>Uploaded_File_Name.doc</dt>
-			<dd>File Description</dd>
-			
-			<dt>File_Name.jpg</dt>
-			<dd>File Description</dd>
+		<dl id="docUploadList">
 		</dl>                      
-    <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a>		
+    <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>		
 </div>
 <!-- end #cboxFiles -->
                   
@@ -81,7 +85,7 @@
     <div class="prizesInner">
         <div  id="rPrizes">
         </div>
-        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a>        
+        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>        
     </div>    
 </div>
 <!-- end .prizes -->
@@ -97,7 +101,7 @@
         <strong>for each submission up to</strong>
         <span class="numberDor" id="rMPrizesNumberOfSubmissions"></span>
         
-        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a>
+        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>
         
     </div>
     
@@ -113,7 +117,7 @@
         <div class="checkInput" id="rFinalDeliveries" >
         </div>
         
-        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="${ctx}/images/penicon.gif" alt="Edit"/></a>
+        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>
         
         <div class="clear"></div>
         

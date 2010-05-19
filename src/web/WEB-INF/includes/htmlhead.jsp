@@ -32,6 +32,8 @@
 <script type="text/javascript" src="/scripts/jquery.stylish-select.js?v=4"></script>
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js"></script>
 <script type="text/javascript" src="/scripts/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/scripts/ajaxupload2.js?v=2"></script>
+<script type="text/javascript" src="/scripts/jquery.validate.js"></script>
 
 
 <script type="text/javascript" src="/scripts/dashboard.js"></script>

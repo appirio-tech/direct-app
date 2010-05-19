@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "subType")
 public class StudioSubtypeContestFee {
-    @XmlAttribute
+    @XmlAttribute(name="contestTypeId")
     private long id;
 
     @XmlElement

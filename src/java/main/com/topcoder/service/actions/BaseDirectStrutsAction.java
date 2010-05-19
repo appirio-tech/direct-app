@@ -12,7 +12,9 @@ import com.opensymphony.xwork2.Preparable;
 import com.topcoder.clients.model.Project;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
+import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.studio.contest.ContestManager;
 
 /**
  * <p>
@@ -79,6 +81,23 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * </p>
      */
     private ContestServiceFacade contestServiceFacade;
+
+    /**
+     * <p>
+     * It's used to retrieve the capacity full dates.
+     * </p>
+     * <p>
+     * It will be not null because it will be injected. It can't be null.
+     * </p>
+     */
+    private PipelineServiceFacade pipelineServiceFacade;
+
+    /**
+     * <p>
+     * Contest manager interface.
+     * </p>
+     */
+    private ContestManager contestManager;
 
     /**
      * <p>
@@ -213,6 +232,40 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
 
         this.contestServiceFacade = contestServiceFacade;
     }
+
+    /**
+     * <p>
+     * Gets the pipeline service facade.
+     * </p>
+     *
+     * @return the pipeline service facade
+     */
+    public PipelineServiceFacade getPipelineServiceFacade() {
+        return pipelineServiceFacade;
+    }
+
+    /**
+     * <p>
+     * Set the pipeline Service facade.
+     * </p>
+     *
+     * @param pipelineServiceFacade the pipeline service facade to set
+     * @throws IllegalArgumentException if <b>pipelineServiceFacade</b> is <code>null</code>
+     */
+    public void setPipelineServiceFacade(PipelineServiceFacade pipelineServiceFacade) {
+        DirectStrutsActionsHelper.checkNull(pipelineServiceFacade, "pipelineServiceFacade");
+
+        this.pipelineServiceFacade = pipelineServiceFacade;
+    }
+
+    public ContestManager getContestManager() {
+        return contestManager;
+    }
+
+    public void setContestManager(ContestManager contestManager) {
+        this.contestManager = contestManager;
+    }
+
 
     public List<ProjectData> getProjects() throws Exception {
         if (null == projectServiceFacade) {

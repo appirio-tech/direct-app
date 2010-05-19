@@ -27,7 +27,7 @@
                     <div class="area1Content">
 
                             <div class="currentPage">
-                                <a href="{ctx}/dashboard" class="home">Dashboard</a> &gt;
+                                <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
                                 <strong>Launch New Contest</strong>
                             </div> <!-- End .currentPage -->
 
@@ -72,11 +72,11 @@
 			<div id="addProjectForm">
 				<div class="fi">
 					 <label for="projectName">Name:</label>
-					 <input name="projectName" type="text" width="30" maxlength="255" />
+					 <input id="projectName" name="projectName" type="text" width="30" maxlength="255" />
 				</div>
 				<div class="fi">
 					 <label for="projectDescription">Description:</label>
-					 <textarea name="projectDescription" rows="5" cols="30" ></textarea>
+					 <textarea id="projectDescription" name="projectDescription" rows="5" cols="30" ></textarea>
 				</div>
 				<div class="popupButtons">
 					<a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>

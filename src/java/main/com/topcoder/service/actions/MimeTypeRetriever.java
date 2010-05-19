@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.activation.MimetypesFileTypeMap;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.topcoder.util.errorhandling.ExceptionUtils;
 
 /**
@@ -26,6 +28,12 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * @version 1.0
  */
 public class MimeTypeRetriever {
+    /**
+     * <p>
+     * Default mime type.
+     * </p>
+     */
+    private static final String DEFAULT_MIME_TYPE = "application/octet-stream";
 
     /**
      * <p>
@@ -67,8 +75,8 @@ public class MimeTypeRetriever {
     }
 
     /**
-     * Static initialization block used to initialize the static members of this class. It initializes
-     * all the MIME maps used by the class.
+     * Static initialization block used to initialize the static members of this class. It initializes all the MIME
+     * maps used by the class.
      */
     static {
         initMimeTypeIdByMimeType();
@@ -109,7 +117,16 @@ public class MimeTypeRetriever {
         mimeTypeIdByMimeType.put("audio/mpeg", id++);
         mimeTypeIdByMimeType.put("audio/mp3", id++);
         mimeTypeIdByMimeType.put("application/java-archive", id++);
+        mimeTypeIdByMimeType.put("application/x-java-archive", id++);
         mimeTypeIdByMimeType.put("application/vnd.ms-powerpoint", id++);
+        mimeTypeIdByMimeType.put("image/photoshop", id++);
+        mimeTypeIdByMimeType.put("image/x-photoshop", id++);
+        mimeTypeIdByMimeType.put("image/psd", id++);
+        mimeTypeIdByMimeType.put("application/psd", id++);
+        mimeTypeIdByMimeType.put("zz-application/zz-winassoc-psd", id++);
+        mimeTypeIdByMimeType.put("image/ico", id++);
+        mimeTypeIdByMimeType.put("image/x-ico", id++);
+        mimeTypeIdByMimeType.put("application/octet-stream", id++);
     }
 
     /**
@@ -139,6 +156,8 @@ public class MimeTypeRetriever {
         mimeTypesFileTypeMap.addMimeTypes("audio/mp3 mp3");
         mimeTypesFileTypeMap.addMimeTypes("application/java-archive jar");
         mimeTypesFileTypeMap.addMimeTypes("application/vnd.ms-powerpoint ppt pps");
+
+        mimeTypesFileTypeMap.addMimeTypes("application/psd psd");
     }
 
     /**
@@ -167,7 +186,7 @@ public class MimeTypeRetriever {
     public long getMimeTypeIdFromFileName(String fileName) {
         ExceptionUtils.checkNullOrEmpty(fileName, null, null, "fileName cannot be null or empty");
         String mimeType = mimeTypesFileTypeMap.getContentType(fileName);
-        return !mimeTypeIdByMimeType.containsKey(mimeType) ? -1 : mimeTypeIdByMimeType.get(mimeType);
+        return getMimeTypeIdFromMimeType(mimeType);
     }
 
     /**
@@ -180,8 +199,11 @@ public class MimeTypeRetriever {
      * @throws IllegalArgumentException if the MIME type is null or empty
      */
     public long getMimeTypeIdFromMimeType(String mimeType) {
-        ExceptionUtils.checkNullOrEmpty(mimeType, null, null, "mimeType cannot be null or empty");
-        return !mimeTypeIdByMimeType.containsKey(mimeType) ? -1 : mimeTypeIdByMimeType.get(mimeType);
+        if(StringUtils.isBlank(mimeType)) {
+            mimeType = DEFAULT_MIME_TYPE;
+        }
+        return !mimeTypeIdByMimeType.containsKey(mimeType) ? mimeTypeIdByMimeType.get(DEFAULT_MIME_TYPE)
+            : mimeTypeIdByMimeType.get(mimeType);
     }
 
     /**

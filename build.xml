@@ -277,11 +277,11 @@
                 <include name="**/*.jsp"/>
             </fileset>
             <lib dir="${ext_libdir}/jstl" includes="*.jar"/>
-            <fileset dir="${webdir}">
+           <!-- <fileset dir="${webdir}">
                 <include name="css/**/*"/>
                 <include name="images/**/*"/>
                 <include name="scripts/**/*"/>
-            </fileset>
+            </fileset>-->
         </war>
         
         <unzip src="temp.war" dest="${component.war}"/>

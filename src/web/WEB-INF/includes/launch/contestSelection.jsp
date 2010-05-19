@@ -64,7 +64,7 @@ cus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim.</p>
       <!-- Contest Name -->
       <div class="row">
           <label>Contest Name :</label>
-          <input id="contestName" name="contestName" type="text" class="text" />
+          <input id="contestName" name="contestName" type="text" class="text" maxlength="254"/>
       </div>
       
       <!-- Project Name -->
@@ -118,9 +118,6 @@ cus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim.</p>
       <!-- Start -->
       <div class="row">
       	<label>Start:</label>
-          <div class="startSelect">
-          	<select><option>The day after tomorrow</option><option>tomorrow</option></select>
-          </div>
           <input id="startDate" name="startDate" type="text"  class="text date-pick" readonly="true"/>
           <div class="startEtSelect">
           	<select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
@@ -131,9 +128,6 @@ cus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim.</p>
       <!-- Milestone -->
       <div class="row hide" id="mileStoneDiv">
       	<label>Milestone:</label>
-          <div class="milestoneSelect">
-          	<select><option>48 hours (2 days) after Start Time</option><option>24 hours (1 days) after Start Time</option></select>
-          </div>
           <input  id="milestoneDate" name="milestoneDate"  type="text" class="text date-pick" readonly="true"/>
           <div class="milestoneEtSelect">
           	<select id="milestoneTime" name="milestoneTime"><jsp:include page="../common/timeOptions.jsp"/></select>
@@ -144,9 +138,6 @@ cus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim.</p>
       <!-- End -->
       <div class="row">
       	<label>End:</label>
-          <div class="endSelect">
-          	<select><option>2 days</option><option>1 days</option></select>
-          </div>
           <input id="endDate" name="endDate" type="text" class="text date-pick" readonly="true"/>
           <div class="endEtSelect">
           	<select id="endTime" name="endTime"><jsp:include page="../common/timeOptions.jsp"/></select>

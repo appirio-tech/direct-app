@@ -23,8 +23,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "contestType")
 public class ContestFee {
-    @XmlAttribute(required=true)
+    @XmlAttribute
     private String id;
+
+    @XmlAttribute(required = true)
+    private long contestTypeId;
 
     @XmlElement(name = "subType")
     private List<StudioSubtypeContestFee> studioSubtypeContestFees;
@@ -37,8 +40,16 @@ public class ContestFee {
         this.id = id;
     }
 
+    public long getContestTypeId() {
+        return contestTypeId;
+    }
+
+    public void setContestTypeId(long contestTypeId) {
+        this.contestTypeId = contestTypeId;
+    }
+
     public List<StudioSubtypeContestFee> getStudioSubtypeContestFees() {
-        if(studioSubtypeContestFees == null) {
+        if (studioSubtypeContestFees == null) {
             studioSubtypeContestFees = new ArrayList<StudioSubtypeContestFee>();
         }
         return studioSubtypeContestFees;

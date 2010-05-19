@@ -22,7 +22,9 @@ import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.pipeline.CapacityData;
 import com.topcoder.service.pipeline.CompetitionType;
+import com.topcoder.service.pipeline.ContestPipelineServiceException;
 import com.topcoder.service.project.CompetionType;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.SoftwareCompetition;
@@ -61,9 +63,8 @@ import com.topcoder.service.studio.PrizeData;
  *
  * </p>
  * <p>
- * Change note for 1.1 Direct Launch Contest Studio Assembly 1.0:
- *     1. Add some fields for holding parameters for contest create/update
- *     2. Adjust some of methods such as XML date conversion.
+ * Change note for 1.1 Direct Launch Contest Studio Assembly 1.0: 1. Add some fields for holding parameters for
+ * contest create/update 2. Adjust some of methods such as XML date conversion.
  * </p>
  * <p>
  * <b>Thread Safety</b>: In <b>Struts 2</b> framework, the action is constructed for every request so the thread
@@ -287,6 +288,13 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * Id list for document uploads.
+     * </p>
+     */
+    private List<String> docUploadIds;
+
+    /**
+     * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
      * </p>
      */
@@ -338,10 +346,9 @@ public class SaveDraftContestAction extends ContestAction {
                 studioCompetition = getContestServiceFacade().getContest(tcSubject, contestId);
             }
 
-            populateStudioCompetition(studioCompetition);
-
             studioCompetition.setStartTime(startTime);
             studioCompetition.setEndTime(endTime);
+            populateStudioCompetition(studioCompetition);
 
             contestServiceFacade.updateContest(tcSubject, studioCompetition);
             setResult(getStudioResult(studioCompetition));
@@ -354,12 +361,20 @@ public class SaveDraftContestAction extends ContestAction {
                 // creation of the studio competition
                 StudioCompetition studioCompetition = new StudioCompetition(contestData);
 
-                populateStudioCompetition(studioCompetition);
                 studioCompetition.setStartTime(startTime);
                 studioCompetition.setEndTime(endTime);
+                populateStudioCompetition(studioCompetition);
 
                 studioCompetition = contestServiceFacade.createContest(tcSubject, studioCompetition,
                     tcDirectProjectId);
+
+                // add preloaded documents
+                if (docUploadIds != null && docUploadIds.size() > 0) {
+                    for (String docUploadId : docUploadIds) {
+                        contestServiceFacade.addDocumentToContest(tcSubject, Long.parseLong(docUploadId),
+                            studioCompetition.getContestData().getContestId());
+                    }
+                }
 
                 setResult(getStudioResult(studioCompetition));
             } else if (competitionType == CompetitionType.SOFTWARE) {
@@ -1454,6 +1469,14 @@ public class SaveDraftContestAction extends ContestAction {
         this.milestonePrizeNumberOfSubmissions = milestonePrizeNumberOfSubmissions;
     }
 
+    public List<String> getDocUploadIds() {
+        return docUploadIds;
+    }
+
+    public void setDocUploadIds(List<String> docUploadIds) {
+        this.docUploadIds = docUploadIds;
+    }
+
     /**
      * <p>
      * Creates the <code>XMLGregorianCalendar</code> from the given date.
@@ -1507,8 +1530,30 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      *
      * @param studioCompetition the StudioCompetition object
+     * @throws Exception if any error occurs
      */
-    private void populateStudioCompetition(StudioCompetition studioCompetition) throws DatatypeConfigurationException {
+    private void populateStudioCompetition(StudioCompetition studioCompetition)
+        throws Exception {
+        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
+
+        // validate to make sure the start time is not full
+        boolean startTimeOk = true;
+        // validate startTime for capacity
+        List<CapacityData> capacityDataList = getPipelineServiceFacade().getCapacityFullDates(tcSubject,
+            (int) studioCompetition.getContestData().getContestTypeId(), true);
+        capacityDataList = (capacityDataList == null)?new ArrayList<CapacityData>():capacityDataList;
+        for (CapacityData capacity : capacityDataList) {
+            if (isSameDay(studioCompetition.getStartTime(), capacity.getDate())) {
+                //capacity contests is an int list
+               if(!capacity.getContests().contains((int)contestId)) {
+                   startTimeOk = false;
+               }
+            }
+        }
+        if(!startTimeOk) {
+            throw new Exception("You must change your start date since it's full.");
+        }
+
         studioCompetition.setCategory(category);
         studioCompetition.setReviewPayment(reviewPayment);
         studioCompetition.setSpecificationReviewPayment(specificationReviewPayment);
@@ -1525,8 +1570,7 @@ public class SaveDraftContestAction extends ContestAction {
         // milestone date
         ContestData contestData = studioCompetition.getContestData();
         if (contestData.getMultiRound()) {
-            contestData.getMultiRoundData().setMilestoneDate(
-                newXMLGregorianCalendar(milestoneDate));
+            contestData.getMultiRoundData().setMilestoneDate(newXMLGregorianCalendar(milestoneDate));
 
             MilestonePrizeData milestonePrizeData = new MilestonePrizeData();
             milestonePrizeData.setAmount(milestonePrizeAmount);
@@ -1536,9 +1580,14 @@ public class SaveDraftContestAction extends ContestAction {
             contestData.setMilestonePrizeData(null);
         }
 
-        if(contestData.getFinalFileFormat()!=null) {
+        if (contestData.getFinalFileFormat() != null) {
             contestData.setFinalFileFormat(contestData.getFinalFileFormat().toLowerCase());
         }
+    }
+
+    private boolean isSameDay(XMLGregorianCalendar day1, XMLGregorianCalendar day2) {
+        return (day1.getYear() == day2.getYear()) && (day1.getMonth() == day2.getMonth())
+            && (day1.getDay() == day2.getDay());
     }
 
     /**

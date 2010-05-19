@@ -2,6 +2,7 @@
 
 <div class="contestDetail">
 
+
   <!-- Contest Description -->
 	<div class="description">    
         <h3><span class="icon">Contest Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        
@@ -11,22 +12,59 @@
   </div>
   <!-- end .description -->
 
-        
-  <!-- upload -->
-	<div class="upload">
-    
-        <h3>File Upload:</h3>
-        
-        <div class="uploadInner">
-        	<input type="text" class="text uploadInput" value="File Name" />
-            <a href="javascript:;" class="button6"><span class="left"><span class="right">CHOOSE...</span></span></a><input type="file" class="fileIn hide" />
-            <input type="text" class="text fileInput" value="File Description" />
-            <a href="javascript:;" class="removeButton"><span class="hide">REMOVE</span></a>
-            <a href="javascript:;" class="addButton"><span class="hide">ADD</span></a>
+
+  <!-- Contest Introduction -->
+	<div class="goals">    
+        <h3>Contest Introduction</h3>
+        <div class="textarea">
+            <textarea id="contestIntroduction" rows="" cols=""></textarea>
         </div>
+  </div>
+  <!-- end contest introduction -->
         
-    </div>
-    <!-- end .upload -->
+  <!-- Round 1 information -->
+	<div class="target hide" id="round1InfoDiv" >    
+        <h3>Round 1 Information</h3>
+        <div class="textarea">
+            <textarea id="round1Info" rows="" cols=""></textarea>
+        </div>
+  </div>
+  <!-- end round 1 information -->
+
+  <!-- Round 2 information -->
+	<div class="designs hide" id="round2InfoDiv">    
+        <h3>Round 2 Information</h3>
+        <div class="textarea">
+            <textarea id="round2Info" rows="" cols=""></textarea>
+        </div>
+  </div>
+  <!-- end round 2 information -->
+
+  <!-- upload -->
+	<div id="uploadSection">
+    
+        <h3>File Upload:</h3>       
+        <div class="uploadInner">
+            <div id="documentList">
+            </div>
+            <div>
+               File to Upload: <span id="uploadButtonDiv"><input name="document" type="file" > </span> <br/>
+               File Description:
+               <textarea id="fileDescription" rows="5" cols="50"></textarea>               
+               <input id="fileUploadBtn"  type="button" value="Upload File -->"/>	
+            </div>
+        </div> <!-- end .uploadInner -->
+
+        <div id="fileTemplte" class="hide">
+         <div id="doc{0}" class="document">
+           <span class="fileInput">{1}</span>
+           <a href='${ctx}/launch/downloadDocument?documentId={0}' target="_blank" >download</a>            	  
+           <a href="javascript:removeDocument({0});" >remove</a>            
+         </div>
+       </div>  
+        
+ </div>
+ <!-- end #uploadSection -->
     
     <!-- prizes -->
 	<div class="prizes">

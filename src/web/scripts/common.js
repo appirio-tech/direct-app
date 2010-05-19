@@ -53,7 +53,7 @@ jQuery.extend({
 						// a server error. Possible fixes are to modify rack's
 						// deserialization algorithm or to provide an option or flag
 						// to force array serialization to be shallow.
-						buildParams( prefix + "[" + ( typeof v === "object" || jQuery.isArray(v) ? i : "" ) + "]", v );
+						buildParams( prefix  + ( typeof v === "object" || jQuery.isArray(v) ? "["+ i +"]" : "" ) , v );
 						//keep adding
 						//add( prefix, v );
 					}

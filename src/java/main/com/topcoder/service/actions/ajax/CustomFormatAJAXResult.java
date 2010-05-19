@@ -156,8 +156,11 @@ public class CustomFormatAJAXResult implements Result {
      * <p>
      * Represents the content type of response. Defaults to "application/json". Can not be set to null/empty.
      * </p>
+     * <p>
+     * Not using "application/json" to avoid prompt window.
+     * </p>
      */
-    private String contentType = "application/json";
+    private String contentType = "text/plain";
 
     /**
      * <p>
