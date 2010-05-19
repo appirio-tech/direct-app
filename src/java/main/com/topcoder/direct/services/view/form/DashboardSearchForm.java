@@ -12,7 +12,7 @@ import java.io.Serializable;
  * A form bean providing the data submitted by user for searching the dashboard projects/contests/members.
  * </p>
  * <p>
- * Version 1.1 - Direct Search Assembly - add search fields: startDate,endDate,excel
+ * Version 1.1 - Direct Search Assembly - add search fields: startDate,endDate,excel.
  * </p>
  *
  * @author isv, BeBetter
