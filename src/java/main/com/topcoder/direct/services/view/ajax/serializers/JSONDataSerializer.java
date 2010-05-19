@@ -127,7 +127,6 @@ public class JSONDataSerializer implements AJAXDataSerializer {
             try {
                 JsonConfig config = new JsonConfig();
                 config.setJavaPropertyFilter(new PropertyFilter() {
-                    @Override
                     public boolean apply(Object source, String name, Object value) {
                         System.out.println(source.getClass()+" " +name);
                         return XMLGregorianCalendar.class.isAssignableFrom(source.getClass());
