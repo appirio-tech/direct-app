@@ -25,6 +25,9 @@
 
     <property name="ejb-api.jar" value="${ext_libdir}/ejb-api/ejb-api-3.0.jar"/>
 
+    <property name="javaee.jar" value="${ext_libdir}/j2ee/javaee.jar"/>
+    <property name="jaxb.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar"/>
+
   <!-- EJB/Persistence libraries -->
   <path id="ejb.libs">
       <fileset dir="${ext_libdir}/ejb-api">
@@ -73,6 +76,9 @@
         <path refid="ejb.libs"/>
         <path refid="jboss.libs"/>
         <pathelement location="${servlet-api.jar}"/>
+        <pathelement location="${jaxb.jar}"/>
+        <pathelement location="${javaee.jar}"/>
+
   </path>
 
 </project>
