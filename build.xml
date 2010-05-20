@@ -245,14 +245,18 @@
         </replace>
     </target>
 
-    <target name="package-direct" depends="ear">
+    <target name="package-direct">
         <copy todir="${configdir}" overwrite="true">
             <fileset dir="${prod_configdir}">
                 <include name="**/*.*"/>
             </fileset>
         </copy>
+	<antcall target="ear"/>
         <jar destfile="direct.jar" basedir=".">
             <include name="**/*.*"/>
+            <include name="src/web/css/**/*.*"/>
+            <include name="src/web/scripts/**/*.*"/>
+            <include name="src/web/images/**/*.*"/>
             <exclude name="**/.svn/**/*.*"/>
             <exclude name="${srcdir}/**/*.*"/>
             <exclude name="${docdir}/**/*.*"/>
