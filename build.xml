@@ -127,6 +127,8 @@
                 <exclude name="jstl/**/*.jar"/>
                 <exclude name="servlet-api/**/*.jar"/>
                 <exclude name="ejb-api/**/*.jar"/>
+                <exclude name="jboss/**/*.jar"/>
+                <exclude name="j2ee/**/*.jar"/>
             </fileset>
         </copy>
     </target>
@@ -182,7 +184,7 @@
         <delete file="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
         <delete dir="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
 
-        <unzip src="${component.ear}" dest="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
+        <unzip src="${component.ear}" dest="${jboss.home}/server/${server.name}/deploy/a${distfilename}.ear"/>
 <!--
         <copy file="${component.ear}" todir="${jboss.home}/server/${server.name}/deploy"/>
 -->
@@ -193,6 +195,11 @@
         <copy file="${configdir}/DataAccess.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/cache.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/Direct.properties" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/app.properties" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/contestFees.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/contestTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/fileTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/overview.xml" todir="${jboss.home}/server/${server.name}/conf"/>        
         <copy file="${configdir}/components/com/topcoder/security/Util.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${shared.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${tcwebcommon.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
@@ -271,11 +278,11 @@
                 <include name="**/*.jsp"/>
             </fileset>
             <lib dir="${ext_libdir}/jstl" includes="*.jar"/>
-            <fileset dir="${webdir}">
+           <!-- <fileset dir="${webdir}">
                 <include name="css/**/*"/>
                 <include name="images/**/*"/>
                 <include name="scripts/**/*"/>
-            </fileset>
+            </fileset>-->
         </war>
         
         <unzip src="temp.war" dest="${component.war}"/>
