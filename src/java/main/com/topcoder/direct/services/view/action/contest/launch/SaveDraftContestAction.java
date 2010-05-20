@@ -24,7 +24,6 @@ import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.pipeline.CapacityData;
 import com.topcoder.service.pipeline.CompetitionType;
-import com.topcoder.service.pipeline.ContestPipelineServiceException;
 import com.topcoder.service.project.CompetionType;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.SoftwareCompetition;
@@ -206,16 +205,6 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private double drPoints;
-
-    /**
-     * <p>
-     * This is the short summary of competition.
-     * </p>
-     * <p>
-     * It's changed by the setter and returned by the getter. It can be null or empty.
-     * </p>
-     */
-    private String shortSummary;
 
     /**
      * <p>
@@ -836,31 +825,6 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setPrizes(List<CompetitionPrize> prizes) {
         this.prizes = prizes;
-    }
-
-    /**
-     * <p>
-     * Gets the short summary of the competition.
-     * </p>
-     *
-     * @return the short summary of the competition.
-     */
-    public String getShortSummary() {
-        return shortSummary;
-    }
-
-    /**
-     * <p>
-     * Sets the short summary of the competition.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param shortSummary the short summary of the competition.
-     */
-    public void setShortSummary(String shortSummary) {
-        this.shortSummary = shortSummary;
     }
 
     /**
@@ -1560,7 +1524,7 @@ public class SaveDraftContestAction extends ContestAction {
         studioCompetition.setHasWikiSpecification(hasWikiSpecification);
         studioCompetition.setNotes(notes);
         studioCompetition.setDrPoints(drPoints);
-        studioCompetition.setShortSummary(StringUtils.isBlank(shortSummary) ? "" : shortSummary);
+
         // can not set directly through contestData, it always return copy
         if (prizes != null) {
             studioCompetition.setPrizes(prizes);
@@ -1569,6 +1533,12 @@ public class SaveDraftContestAction extends ContestAction {
 
         // milestone date
         ContestData contestData = studioCompetition.getContestData();
+
+        // make sure the short summary is not null
+        if(StringUtils.isBlank(studioCompetition.getShortSummary())){
+            studioCompetition.setShortSummary("");
+        }
+
         if (contestData.getMultiRound()) {
             contestData.getMultiRoundData().setMilestoneDate(newXMLGregorianCalendar(milestoneDate));
 
@@ -1603,7 +1573,6 @@ public class SaveDraftContestAction extends ContestAction {
         softwareCompetition.setHasWikiSpecification(hasWikiSpecification);
         softwareCompetition.setNotes(notes);
         softwareCompetition.setDrPoints(drPoints);
-        softwareCompetition.setShortSummary(shortSummary);
     }
 
     /**
