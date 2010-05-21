@@ -229,5 +229,9 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+
+        <action name="getCapacityFullDates" class="getCapacityFullDatesAction">
+            <result type="json" />
+        </action>
     </package>
 </struts>

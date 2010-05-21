@@ -3,13 +3,16 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.service.pipeline.CapacityData;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
 
@@ -39,14 +42,14 @@ public class GetCapacityFullDatesAction extends BaseDirectStrutsAction {
      * This parameter indicates if the client wants the capacity full dates of studio competitions.
      * </p>
      */
-    private boolean isStudio;
+    private boolean studio;
 
     /**
      * <p>
      * Represents the contest id.
      * </p>
      */
-    private long contestId;
+    private long contestTypeId;
 
     /**
      * <p>
@@ -75,40 +78,69 @@ public class GetCapacityFullDatesAction extends BaseDirectStrutsAction {
 
         // get capacity full dates.
         List<CapacityData> capacityDatas = getPipelineServiceFacade().getCapacityFullDates(
-            DirectStrutsActionsHelper.getTCSubjectFromSession(), (int) contestId, isStudio);
+            DirectStrutsActionsHelper.getTCSubjectFromSession(), (int) contestTypeId, studio);
 
         // set as result
-        setResult(capacityDatas);
-
-    }
-
-    public long getContestId() {
-        return contestId;
-    }
-
-    public void setContestId(long contestId) {
-        this.contestId = contestId;
+        setResult(getCapacityResult(contestTypeId, capacityDatas));
     }
 
     /**
      * <p>
-     * Gets whether the client wants the capacity full dates of studio competitions.
+     * Gets the capacity full dates for return.
      * </p>
      *
-     * @return whether the client wants the capacity full dates of studio competitions.
+     * @param capacityDatas capacityDatas object
+     * @return the map which will be returned
      */
+    private Map<String, Object> getCapacityResult(long contestTypeId, List<CapacityData> capacityDatas) {
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        List<String> dates = new ArrayList<String>();
+
+        if (capacityDatas == null) {
+            capacityDatas = new ArrayList<CapacityData>();
+        }
+
+        for (CapacityData capacityData : capacityDatas) {
+            //System.out.println("get date string: " + getDateString(capacityData.getDate()) + " for : "
+            //    + contestTypeId);
+            dates.add(getDateString(capacityData.getDate()));
+        }
+
+        result.put("contestTypeId", contestTypeId);
+        result.put("fullDates", dates);
+        result.put("studio", studio);
+
+        return result;
+    }
+
+    /**
+     * <p>
+     * Gets the date string.
+     * </p>
+     *
+     * @param date the xml date
+     * @return the date string in the format of 'MM/dd/yyyy'
+     * @see DirectUtils
+     */
+    private String getDateString(XMLGregorianCalendar date) {
+        DateFormat formatter = new SimpleDateFormat(DirectUtils.DATE_FORMAT);
+        return formatter.format(DirectUtils.getDate(date));
+    }
+
     public boolean isStudio() {
-        return isStudio;
+        return studio;
     }
 
-    /**
-     * <p>
-     * Sets whether the client wants the capacity full dates of studio competitions.
-     * </p>
-     *
-     * @param isStudio the flag whether the client wants the capacity full dates of studio competitions.
-     */
-    public void setStudio(boolean isStudio) {
-        this.isStudio = isStudio;
+    public void setStudio(boolean studio) {
+        this.studio = studio;
+    }
+
+    public long getContestTypeId() {
+        return contestTypeId;
+    }
+
+    public void setContestTypeId(long contestTypeId) {
+        this.contestTypeId = contestTypeId;
     }
 }

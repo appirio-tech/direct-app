@@ -143,4 +143,8 @@
   <bean id="downloadDocumentAction" class="com.topcoder.direct.services.view.action.contest.launch.DownloadDocumentAction"
     parent="contestAction" scope="prototype">
   </bean>
+
+  <bean id="getCapacityFullDatesAction" class="com.topcoder.direct.services.view.action.contest.launch.GetCapacityFullDatesAction"
+    parent="baseDirectStrutsAction" scope="prototype">
+  </bean>
 </beans>

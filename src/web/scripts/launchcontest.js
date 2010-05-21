@@ -392,6 +392,8 @@ $(document).ready(function(){
       });
 
       resetFileTypes(getContestType(true)[1]);
+      
+      getCapacityDatesForStudioSubType(getContestType(true)[1]);
    });
 
    // add project
@@ -431,9 +433,29 @@ $(document).ready(function(){
     $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
   }
 
+  $('#startDate').dpSetRenderCallback(function($td, thisDate, month, year) {
+  	   var studioSubTypeId = getContestType(true)[1];
+       var fullDates = capacityFullDates[studioSubTypeId];
+       
+       if(fullDates != null) {
+       	   $.each(fullDates, function(i, fullDate) {
+       	   	  if(thisDate.toString("MM/dd/yyyy") == fullDate) {
+       	   	  	 $td.addClass('disabled');
+       	   	  }
+       	   });
+       }
+  });
+
   /*****************************
    *   Overview page
    ****************************/
+  /* 
+  tinyMCE.init({
+  	mode : "textareas",
+  	theme : "simple"
+  });
+  */
+   
   $('.prizesInner .addButton').click(function(){
     if($('#extraPrizes').is( ":hidden ")){
       $('#extraPrizes input').val('');
@@ -521,6 +543,9 @@ var studioSubtypeOverviews = [];
 var studioSubtypeFees = [];
 var fileTypes = [];
 
+//capacity dates
+var capacityFullDates = {};
+
 function getStudioFileTypes(studioSubtypeId) {
   var types = [];
 
@@ -546,6 +571,37 @@ function resetFileTypes(studioSubtypeId) {
 
    $('#deliverablesCheckboxs').html(html);
 }
+
+function getCapacityDatesForStudioSubType(studioSubtypeId) {
+	 if(capacityFullDates[studioSubtypeId] == null) {
+	 	   var request = {
+	 	   	  studio : true,
+	 	   	  contestTypeId : studioSubtypeId
+	 	   };
+       $.ajax({
+          type: 'GET',
+          url:  ctx + "/launch/getCapacityFullDates",
+          data: request,
+          cache: false,
+          dataType: 'json',
+          success: handleGetCapacityResult
+       });	 	   
+	 }
+}
+
+function handleGetCapacityResult(jsonResult) {
+    handleJsonResult(jsonResult,
+    function(result) {
+    	  var contestTypeId = result.contestTypeId;
+    	  var fullDates = result.fullDates;
+    	  capacityFullDates[contestTypeId] = fullDates;
+    	  
+    },
+    function(errorMessage) {
+        showErrors(errorMessage);
+    });
+}
+
 
 /**
  * Contest Selection Page
