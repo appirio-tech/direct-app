@@ -1496,8 +1496,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @param studioCompetition the StudioCompetition object
      * @throws Exception if any error occurs
      */
-    private void populateStudioCompetition(StudioCompetition studioCompetition)
-        throws Exception {
+    private void populateStudioCompetition(StudioCompetition studioCompetition) throws Exception {
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
 
         // validate to make sure the start time is not full
@@ -1505,16 +1504,16 @@ public class SaveDraftContestAction extends ContestAction {
         // validate startTime for capacity
         List<CapacityData> capacityDataList = getPipelineServiceFacade().getCapacityFullDates(tcSubject,
             (int) studioCompetition.getContestData().getContestTypeId(), true);
-        capacityDataList = (capacityDataList == null)?new ArrayList<CapacityData>():capacityDataList;
+        capacityDataList = (capacityDataList == null) ? new ArrayList<CapacityData>() : capacityDataList;
         for (CapacityData capacity : capacityDataList) {
             if (isSameDay(studioCompetition.getStartTime(), capacity.getDate())) {
-                //capacity contests is an int list
-               if(!capacity.getContests().contains((int)contestId)) {
-                   startTimeOk = false;
-               }
+                // capacity contests is an int list
+                if (!capacity.getContests().contains((int) contestId)) {
+                    startTimeOk = false;
+                }
             }
         }
-        if(!startTimeOk) {
+        if (!startTimeOk) {
             throw new Exception("You must change your start date since it's full.");
         }
 
@@ -1523,7 +1522,7 @@ public class SaveDraftContestAction extends ContestAction {
         studioCompetition.setSpecificationReviewPayment(specificationReviewPayment);
         studioCompetition.setHasWikiSpecification(hasWikiSpecification);
         studioCompetition.setNotes(notes);
-        studioCompetition.setDrPoints(drPoints);
+        // studioCompetition.setDrPoints(drPoints);
 
         // can not set directly through contestData, it always return copy
         if (prizes != null) {
@@ -1535,7 +1534,7 @@ public class SaveDraftContestAction extends ContestAction {
         ContestData contestData = studioCompetition.getContestData();
 
         // make sure the short summary is not null
-        if(StringUtils.isBlank(studioCompetition.getShortSummary())){
+        if (StringUtils.isBlank(studioCompetition.getShortSummary())) {
             studioCompetition.setShortSummary("");
         }
 
@@ -1553,8 +1552,51 @@ public class SaveDraftContestAction extends ContestAction {
         if (contestData.getFinalFileFormat() != null) {
             contestData.setFinalFileFormat(contestData.getFinalFileFormat().toLowerCase());
         }
+
+        // set dr point in the end. it is a derivative number before all other prizes/amount are decided.
+        studioCompetition.setDrPoints(getDrPoint(studioCompetition));
     }
 
+    /**
+     * <p>
+     * Calculates the dr point and set it up.
+     * </p>
+     *
+     * @param studioCompetition studio competition
+     * @return the DR point
+     */
+    private double getDrPoint(StudioCompetition studioCompetition) {
+        // prizes not set yet
+        if (studioCompetition.getPrizes().size() == 0) {
+            return 0;
+        }
+
+        double sum = 0;
+
+        ContestData contestData = studioCompetition.getContestData();
+
+        // add all prizes up
+        for (PrizeData prizeData : contestData.getPrizes()) {
+            sum += prizeData.getAmount();
+        }
+
+        if (contestData.getMultiRound()) {
+            sum += contestData.getMilestonePrizeData().getAmount()
+                * contestData.getMilestonePrizeData().getNumberOfSubmissions();
+        }
+
+        return sum * 0.25;
+    }
+
+    /**
+     * <p>
+     * Determine if it is the same day.
+     * </p>
+     *
+     * @param day1 the day 1
+     * @param day2 the day 2
+     * @return true if the same day
+     */
     private boolean isSameDay(XMLGregorianCalendar day1, XMLGregorianCalendar day2) {
         return (day1.getYear() == day2.getYear()) && (day1.getMonth() == day2.getMonth())
             && (day1.getDay() == day2.getDay());
