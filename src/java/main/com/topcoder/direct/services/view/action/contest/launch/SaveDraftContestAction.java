@@ -413,9 +413,6 @@ public class SaveDraftContestAction extends ContestAction {
      * @throws IllegalStateException if the contest service facade is not set yet
      * @throws Exception if any problem occurs.
      */
-    // @ExpressionValidator(message = "Only one of projectId and contestId should be set", key =
-    // "i18n.GetContestAction.projectIdOrContestIdRequiredSet", expression =
-    // "(projectId == 0 && contestId >= 1) || (projectId >= 1 && contestId == 0)")
     @Override
     public void prepare() throws Exception {
         // call super
