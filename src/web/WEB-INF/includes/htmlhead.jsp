@@ -5,7 +5,7 @@
 
 <!-- External CSS -->
 <link rel="stylesheet" href="/css/screen.css?v=3" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/launchcontest.css?v=2" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/launchcontest.css?v=3" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/dashboard.css?v=3" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/thickbox.css" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/jScrollPane.css" media="all" type="text/css"/>
@@ -34,6 +34,7 @@
 <script type="text/javascript" src="/scripts/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/scripts/ajaxupload2.js?v=2"></script>
 <script type="text/javascript" src="/scripts/jquery.validate.js"></script>
+<script type="text/javascript" src="/scripts/tiny_mce/tiny_mce.js"></script>
 
 
 <script type="text/javascript" src="/scripts/dashboard.js"></script>

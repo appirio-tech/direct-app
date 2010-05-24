@@ -1090,9 +1090,9 @@
 	
 	/** textarea **/
 	#launchContestOut .contestDetail .textarea{
-		height:47px;
-		padding-left:10px;
-		border:#c4c4c4 solid 1px;
+		/* height:47px;
+		padding-left:10px; */
+		border:#c4c4c4 solid 0px;
 		}
 		
 		#launchContestOut .contestDetail .textarea textarea{

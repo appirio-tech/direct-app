@@ -8,7 +8,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
     	
-    <script type="text/javascript" src="/scripts/launchcontest.js?v=11"></script>    	
+    <script type="text/javascript" src="/scripts/launchcontest.js?v=16"></script>    	
 </head>
 
 <body id="page">

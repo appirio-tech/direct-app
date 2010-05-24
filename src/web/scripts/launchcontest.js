@@ -449,12 +449,11 @@ $(document).ready(function(){
   /*****************************
    *   Overview page
    ****************************/
-  /* 
   tinyMCE.init({
-  	mode : "textareas",
-  	theme : "simple"
+  	mode : "exact",
+  	elements : "contestDescription,contestIntroduction,round1Info,round2Info"
   });
-  */
+  
    
   $('.prizesInner .addButton').click(function(){
     if($('#extraPrizes').is( ":hidden ")){
@@ -794,10 +793,10 @@ function getDocumentIds() {
 } 
  
 function validateFieldsOverview() {
-   var contestDescription = $('#contestDescription').val();
-   var contestIntroduction = $('#contestIntroduction').val();
-   var round1Info = $('#round1Info').val();
-   var round2Info = $('#round2Info').val();
+   var contestDescription = tinyMCE.get('contestDescription').getContent();
+   var contestIntroduction = tinyMCE.get('contestIntroduction').getContent(); 
+   var round1Info = tinyMCE.get('round1Info').getContent(); 
+   var round2Info = tinyMCE.get('round2Info').getContent(); 
 
    var prizeInputs = [];
    var lastPrizeIndex = -1;
@@ -1133,7 +1132,11 @@ function showPage(pageId) {
       updateReview();
    }
 
-   $('#'+pageId).show();
+   if(pageId == "overviewPage") {
+      $('table.mceLayout').css('width','100%');
+   }
+
+   $('#'+pageId).show();      
 }
 
 /**
