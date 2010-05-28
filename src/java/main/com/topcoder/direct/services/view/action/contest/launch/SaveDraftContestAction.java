@@ -20,7 +20,9 @@ import org.apache.commons.lang.StringUtils;
 import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
+import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.admin.AdminServiceFacadeException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.pipeline.CapacityData;
 import com.topcoder.service.pipeline.CompetitionType;
@@ -81,6 +83,26 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private static final long serialVersionUID = -2592669182689444374L;
+
+    /**
+     * <p>
+     * Default prizes to be used if they are not provided.
+     * </p>
+     */
+    private static final List<CompetitionPrize> DEFAULT_STUDIO_PRIZES = new ArrayList<CompetitionPrize>();
+
+    static {
+        CompetitionPrize prize1 = new CompetitionPrize();
+        prize1.setPlace(1);
+        prize1.setAmount(350);
+
+        CompetitionPrize prize2 = new CompetitionPrize();
+        prize2.setPlace(2);
+        prize2.setAmount(70);
+
+        DEFAULT_STUDIO_PRIZES.add(prize1);
+        DEFAULT_STUDIO_PRIZES.add(prize2);
+    }
 
     /**
      * <p>
@@ -1522,13 +1544,22 @@ public class SaveDraftContestAction extends ContestAction {
         // studioCompetition.setDrPoints(drPoints);
 
         // can not set directly through contestData, it always return copy
-        if (prizes != null) {
+        if (prizes != null && prizes.size() >= 2) {
             studioCompetition.setPrizes(prizes);
+        } else {
+            studioCompetition.setPrizes(DEFAULT_STUDIO_PRIZES);
         }
         studioCompetition.setType(CompetionType.STUDIO);
 
+
         // milestone date
         ContestData contestData = studioCompetition.getContestData();
+
+        // adjust administration fee
+        double contestFee = getProjectStudioContestFee(contestData.getBillingProject(),contestData.getContestTypeId());
+        if(contestFee > 0 ) {
+            contestData.setContestAdministrationFee(contestFee);
+        }
 
         // make sure the short summary is not null
         if (StringUtils.isBlank(studioCompetition.getShortSummary())) {
@@ -1597,6 +1628,35 @@ public class SaveDraftContestAction extends ContestAction {
     private boolean isSameDay(XMLGregorianCalendar day1, XMLGregorianCalendar day2) {
         return (day1.getYear() == day2.getYear()) && (day1.getMonth() == day2.getMonth())
             && (day1.getDay() == day2.getDay());
+    }
+
+    /**
+     * <p>
+     * Gets project studio contest fee.
+     * </p>
+     *
+     * @param billingProjectId the billing project id
+     * @param studioSubTypeId studio sub type id
+     * @return contest fee &gt;0 if it exists
+     * @throws AdminServiceFacadeException if any error occurs
+     */
+    private double getProjectStudioContestFee(long billingProjectId, long studioSubTypeId)
+        throws AdminServiceFacadeException {
+        if (billingProjectId <= 0) {
+            return -1;
+        }
+
+        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
+
+        List<ProjectContestFee> contestFees = getAdminServiceFacade().getContestFeesByProject(tcSubject,
+            billingProjectId);
+        for (ProjectContestFee contestFee : contestFees) {
+            if (contestFee.isStudio() && contestFee.getContestTypeId() == studioSubTypeId) {
+                return contestFee.getContestFee();
+            }
+        }
+
+        return -1;
     }
 
     /**

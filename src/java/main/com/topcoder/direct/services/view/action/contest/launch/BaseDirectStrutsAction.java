@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.opensymphony.xwork2.Preparable;
 import com.topcoder.clients.model.Project;
+import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
@@ -98,6 +99,8 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * </p>
      */
     private ContestManager contestManager;
+
+    private AdminServiceFacade adminServiceFacade;
 
     /**
      * <p>
@@ -266,6 +269,13 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
         this.contestManager = contestManager;
     }
 
+    public AdminServiceFacade getAdminServiceFacade() {
+        return adminServiceFacade;
+    }
+
+    public void setAdminServiceFacade(AdminServiceFacade adminServiceFacade) {
+        this.adminServiceFacade = adminServiceFacade;
+    }
 
     public List<ProjectData> getProjects() throws Exception {
         if (null == projectServiceFacade) {
