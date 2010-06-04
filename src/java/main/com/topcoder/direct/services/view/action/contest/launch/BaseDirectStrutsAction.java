@@ -3,14 +3,17 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.Preparable;
 import com.topcoder.clients.model.Project;
 import com.topcoder.service.facade.admin.AdminServiceFacade;
+import com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult;
+import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
@@ -32,9 +35,13 @@ import com.topcoder.service.studio.contest.ContestManager;
  * safety is not required (instead in Struts 1 the thread safety is required because the action instances are reused).
  * This class is mutable and stateful: it's not thread safe.
  * </p>
+ * <p>
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
+ * - It will throw out exception when it is not in json request
+ * </p>
  *
  * @author fabrizyo, FireIce
- * @version 1.0
+ * @version 1.1
  */
 public abstract class BaseDirectStrutsAction extends AbstractAction implements Preparable {
     /**
@@ -139,12 +146,16 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * @return <code>SUCCESS</code> always
      */
     @Override
-    public String execute() {
+    public String execute() throws Exception {
         try {
             executeAction();
         } catch (Exception e) {
             logger.error("Error when executing action : " + getAction() + " : " + e.getMessage(), e);
-            setResult(e);
+            if (isJsonRequest()) {
+                setResult(e);
+            } else {
+                throw e;
+            }
         }
         return SUCCESS;
     }
@@ -157,6 +168,18 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * @throws Exception if any error occurs
      */
     protected abstract void executeAction() throws Exception;
+
+    /**
+     * <p>
+     * Determine if it is json request or not.
+     * </p>
+     *
+     * @return true if it is json request
+     * @throws Exception
+     */
+    protected boolean isJsonRequest() throws Exception {
+        return ActionContext.getContext().getActionInvocation().getResult() instanceof CustomFormatAJAXResult;
+    }
 
     /**
      * <p>
@@ -310,5 +333,14 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
         }
 
         return projectDatas;
+    }
+
+    /**
+     * Gets the current user of <code>TCSubject</code>.
+     *
+     * @return the current user of <code>TCSubject</code>
+     */
+    public TCSubject getCurrentUser() {
+        return DirectStrutsActionsHelper.getTCSubjectFromSession();
     }
 }

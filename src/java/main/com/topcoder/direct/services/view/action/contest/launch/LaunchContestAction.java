@@ -10,8 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.configs.StudioContestType;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -22,11 +20,15 @@ import com.topcoder.direct.services.view.util.SessionData;
  * <p>
  * The launch contest action. It will trigger to load the launch contest page and provide getters for some data.
  * </p>
+ * <p>
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
+ * - remove useless imports
+ * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.0
+ * @author BeBetter,TCSDEVELOPER
+ * @version 1.1
  */
-public class LaunchContestAction extends BaseDirectStrutsAction {
+public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
 
     private SessionData sessionData;
@@ -51,17 +53,6 @@ public class LaunchContestAction extends BaseDirectStrutsAction {
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
         userProjectsDTO.setProjects(projects);
         viewData.setUserProjects(userProjectsDTO);
-    }
-
-    /**
-     * <p>
-     * Gets a list of studio contest types.
-     * </p>
-     *
-     * @return the list of studio contest types.
-     */
-    public List<StudioContestType> getStudioContestTypes() {
-        return ConfigUtils.getStudioContestTypes();
     }
 
     public CommonDTO getViewData() {

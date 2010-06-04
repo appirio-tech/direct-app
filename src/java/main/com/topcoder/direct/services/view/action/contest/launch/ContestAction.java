@@ -3,7 +3,11 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import com.topcoder.service.facade.contest.ContestServiceFacade;
+import java.util.List;
+
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.configs.StudioContestType;
+
 
 /**
  * <p>
@@ -15,9 +19,15 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
  * is not required (instead in Struts 1 the thread safety is required because the action instances are reused). This
  * class is mutable and stateful: it's not thread safe.
  * </p>
+ * <p>
+ * Change Note for 1.1 : Direct - View Edit Activate Studio Contests Assembly
+ * <ul>
+ *   <li>Adds getStudioContestTypes method.</li>
+ * </ul>
+ * </p>
  *
- * @author fabrizyo, FireIce
- * @version 1.0
+ * @author fabrizyo, FireIce, TCSDEVELOPER
+ * @version 1.1
  */
 public abstract class ContestAction extends BaseDirectStrutsAction {
     /**
@@ -33,5 +43,17 @@ public abstract class ContestAction extends BaseDirectStrutsAction {
      * </p>
      */
     protected ContestAction() {
+    }
+
+    /**
+     * <p>
+     * Gets a list of studio contest types.
+     * </p>
+     *
+     * @return the list of studio contest types.
+     * @since 1.1
+     */
+    public List<StudioContestType> getStudioContestTypes() {
+        return ConfigUtils.getStudioContestTypes();
     }
 }

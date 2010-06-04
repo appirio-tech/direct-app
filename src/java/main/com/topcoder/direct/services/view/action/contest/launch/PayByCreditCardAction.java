@@ -53,8 +53,14 @@ import com.topcoder.service.project.StudioCompetition;
  * (different from Struts 1) are created for every request.
  * </p>
  *
+ * <p>
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
+ * -  Adjust the execute to throw <code>Exception</code>
+ * </p>
+ *
  * @author fabrizyo, TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
+ * @since 1.0
  */
 public class PayByCreditCardAction extends PayContestAction {
 
@@ -155,9 +161,10 @@ public class PayByCreditCardAction extends PayContestAction {
      * </ul>
      *
      * @return SUCCESS if there are validation errors, or the result of parent <code>execute</code> method otherwise
+     * @throws Exception if any error occurs
      */
     @Override
-    public String execute() {
+    public String execute() throws Exception {
         // if country is US, then state is required and must be 2 characters
         if (getCountry().trim().equalsIgnoreCase("US")) {
             // make sure state is 2 characters

@@ -110,6 +110,12 @@
 			border-left:0;
 			}
 			
+    #launchContestOut .tabContest1 {
+         border:medium none;
+         height:35px;
+    }
+		
+
 			#launchContestOut .selectX{
 				height:28px;
 				}
@@ -144,6 +150,11 @@
 				background: url(/images/launchContest_tabOut_tab.gif) no-repeat 0px 0px;
 				}
 				
+        #launchContestOut .selectDesing1 {
+           background:transparent none repeat scroll 0 0;
+           padding-left:0;
+        }
+				
 				/** select **/
 				#launchContestOut .selectDesing .selectOut,#launchContestOut .selectSoftware .selectOut{
 					width:auto;
@@ -175,6 +186,32 @@
 				#launchContestOut .selectDesing .moreLink:hover,#launchContestOut .selectSoftware .moreLink:hover{
 					text-decoration:underline;
 					}			
+					
+        #launchContestOut .schedule .name_label {
+           color:#3B3B3B;
+           display:inline;
+           float:left;
+           font-family:Arial,Helvetica,sans-serif;
+           font-size:14px;
+           line-height:28px;
+           margin-left:14px;
+           width:118px;
+        }					
+
+        #launchContestOut .contestDetail .textarea1 {
+           border:1px solid #C4C4C4;
+           height:150px;
+           padding-left:10px;
+        }  
+        
+       #launchContestOut .contestDetail .textarea1 textarea {  
+          border:0 none;
+          color:#333333;
+          font-size:14px;
+          height:130px;
+          padding:5px 0;
+          width:100%;
+       }
 	/** end .tabOut **/
 					
 	

@@ -311,13 +311,6 @@ $(document).ready(function(){
     }
   });
 
-  $('.fileType').click(function(){
-    if($('.deliverablesInner .fileInput').length < 3){
-      $('.checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
-    }
-  });
-
-
   /* bigframe */
   $('#TB_overlay').bgiframe();
 
@@ -328,41 +321,6 @@ $(document).ready(function(){
   /********************************
    *   Launch Contest Main Widget
    ********************************/
-  jQuery.ajaxSetup({
-     timeout: 60000
-  });
-
-   $(document).ajaxStart(function(){$.blockUI({ message: '<div id=loading> loading.... </div>' });}).ajaxStop($.unblockUI);
-   $(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions, thrownError){
-       showGeneralError();
-   });
-
-   // loading some configuration data
-   $.ajax({
-      type: 'GET',
-      url:  "getStudioConfigs",
-      data: {},
-      cache: false,
-      dataType: 'json',
-      async : false,
-      success: function (jsonResult) {
-          handleJsonResult(jsonResult,
-          function(result) {
-            studioSubtypeOverviews = result.overview;
-            studioSubtypeFees = result.fees;
-            fileTypes = result.fileTypes;
-          },
-          function(errorMessage) {
-              showErrors(errorMessage);
-          })
-      }
-   });
-
-
-   initDialog('msgDialog', 500);
-   initDialog('errorDialog', 500);
-
-
   /*****************************
    *   Select Contest Type
    ****************************/   
@@ -536,7 +494,9 @@ $(document).ready(function(){
 }); // end of jQuery onload
 
 /**
- * Configurations
+ * Resets file types.
+ *
+ * @param studioSubtypeId studio sub type id
  */
 var studioSubtypeOverviews = [];
 var studioSubtypeFees = [];
@@ -668,39 +628,6 @@ function validateFieldsContestSelection() {
    return true;
 }
 
-/**
- * Gets the date object using id prefix.
- *
- * @param idPrefix the id prefix
- * @return Date object
- */
-function getDateByIdPrefix(idPrefix) {
-  return getDate($('#'+idPrefix+'Date').val(),$('#'+idPrefix+'Time').val());
-}
-
-/**
- * Gets the Date object.
- *
- * @param datePart the format of MM/dd/yyyy
- * @param timePart  the format of HH:mm
- * @return Date object
- */
-function getDate(datePart, timePart) {
-   return Date.parse(datePart+' '+timePart +' EST','MM/dd/yyyy HH:mm EST');
-}
-
-function formatDateForRequest(d) {
-   //rfc3399 format
-   return d.toString("yyyy-MM-ddTHH:mm:00");
-}
-
-function formatDateForReview(d) {
-   if(d == null) {
-      return null;
-   }
-   return d.toString("MM/dd/yyyy T HH:mm ET (GMT-4)").replace('T ','at ').replace('G5T','GMT');
-}
-
 function continueContestSelection() {
    if(!validateFieldsContestSelection()) {
        return;
@@ -735,141 +662,32 @@ function saveAsDraftContestSelection() {
 
 /**
  * Overview Page
- */
-//documents
-var currentDocument = {};
-var documents = [];
-
-
-function removeDocument(documentId) {
-   $.ajax({
-      type: 'POST',
-      url:  "removeDocument",
-      data: {
-      	documentId: documentId,
-      	contestId:mainWidget.competition.contestData.contestId
-      },
-      cache: false,
-      dataType: 'json',
-      success: handleRemoveDocumentResult
-   });
-	
-}
-
-function handleRemoveDocumentResult(jsonResult) {
-    handleJsonResult(jsonResult,
-    function(result) {
-    	var documentId = result.documentId;
-    	
-	    $.each(documents, function(i,doc) {
-	    	  if(doc.documentId == documentId) {
-	    	  	documents.splice(i,1);
-	    	  }
-	    });	 	 
-	    
-	    refreshDocuments();    	
-    },
-    function(errorMessage) {
-        showErrors(errorMessage);
-    });	
-}
-
-function refreshDocuments() {
-	 $('#documentList').html('');
-	 
-	 var html = "";
-	 var template = unescape($('#fileTemplte').html());
-	 $.each(documents, function(i,doc) {
-	 	  html += $.validator.format(template, doc.documentId,doc.fileName);
-	 });
-	 
-	 $('#documentList').html(html);
-}
- 
-function getDocumentIds() {
-	 return $.map(documents, function(doc, i){
-      return doc.documentId;
-    });
-} 
- 
+ */ 
 function validateFieldsOverview() {
    var contestDescription = tinyMCE.get('contestDescription').getContent();
    var contestIntroduction = tinyMCE.get('contestIntroduction').getContent(); 
    var round1Info = tinyMCE.get('round1Info').getContent(); 
    var round2Info = tinyMCE.get('round2Info').getContent(); 
 
-   var prizeInputs = [];
-   var lastPrizeIndex = -1;
-   $.each($('div.prizes .prizesInput'),function(i, element) {
-        var value = $.trim($(this).val());
-        prizeInputs.push(value);
-        if(isNotEmpty(value)) {
-            lastPrizeIndex = i;
-        }
-    });
-    prizeInputs.splice(lastPrizeIndex+1,5);
-
     //milestone prize and submission numbers
     var milestonePrizeInput = $('#milestonePrize').val();
 
-    //file deliverables
-    var fileTypes = [];
-    $.each($('#deliverablesCheckboxs input.defaultFileType'),function(i, element) {
-       if($(this).is(':checked')) {
-           fileTypes.push($(this).val());
-       }
-    });
-
-    var otherFileTypes = [];
-    $.each($('#deliverablesCheckboxs input.fileInput'),function(i, element) {
-       var value = $.trim($(this).val());
-       if($(this).prev().is(':checked') && isNotEmpty(value)) {
-           otherFileTypes.push(value);
-       }
-    });
-
-
    //validation
    var errors = [];
-
-   if(!checkRequired(contestDescription)) {
-       errors.push('Contest description is empty.');
-   }
 
    if(!checkRequired(contestIntroduction)) {
        errors.push('Contest introduction is empty.');
    }
 
-   //prizes
-
-   if(prizeInputs.length < 2) {
-       errors.push('At least first & second place prizes should be set!');
+   if(!checkRequired(contestDescription)) {
+       errors.push('Contest description is empty.');
    }
 
-   var prizes = [];
-   $.each(prizeInputs, function(i, value) {
-        if(!checkRequired(value) || !checkNumber(value)) {
-            errors.push('Prize '+ (i+1) + ' is invalid.');
-        } else {
-            prizes.push(new com.topcoder.direct.PrizeData((i+1),parseFloat(value)));
-        }
-    });
-
-   //check prize order
-   if(errors.length ==0 ) {
-      var prevPrize = -1;
-     $.each(prizes, function(i, value) {
-          if(i != 0 && value.amount > prevPrize) {
-              errors.push('Prize '+ (i+1) + ' is too large.');
-          }
-
-          prevPrize = value.amount;
-      });
-
-      if(prizes[1].amount < 0.2 * prizes[0].amount) {
-          errors.push('Second place prize should at least be 20% of first place prize!');
-      }
-   }
+   var prizes = validatePrizes(errors);
+   
+   var fileTypesResult = validateFileTypes(errors);
+   var fileTypes = fileTypesResult[0];
+   var otherFileTypes = fileTypesResult[1];
 
    var milestonePrize;
    if(mainWidget.competition.contestData.multiRound) {
@@ -887,15 +705,6 @@ function validateFieldsOverview() {
       }       
    }
 
-   if(fileTypes.length ==0 && otherFileTypes.length == 0 ) {
-       errors.push("No file deliverable type is selected.");
-   }
-
-    $.each(otherFileTypes,function(i, value) {
-       if(!checkFileType(value)) {
-            errors.push("File type "+ value +" is invalid.");
-       }
-    });
 
    if(errors.length > 0) {
        showErrors(errors);
@@ -903,18 +712,20 @@ function validateFieldsOverview() {
    }
 
    //update
-   mainWidget.competition.contestData.contestDescriptionAndRequirements = contestDescription;
    mainWidget.competition.contestData.prizes = prizes;
-   mainWidget.milestonePrizeData.amount = milestonePrize;
-   mainWidget.milestonePrizeData.numberOfSubmissions = parseInt($('#milestoneSubmissionNumber').val());
    mainWidget.competition.contestData.finalFileFormat = fileTypes.join(',');
    mainWidget.competition.contestData.otherFileFormats = otherFileTypes.join(',');
    mainWidget.competition.contestData.shortSummary = contestIntroduction;
+   mainWidget.competition.contestData.contestDescriptionAndRequirements = contestDescription;   
+   
+   mainWidget.milestonePrizeData.amount = milestonePrize;
+   mainWidget.milestonePrizeData.numberOfSubmissions = parseInt($('#milestoneSubmissionNumber').val());
    mainWidget.competition.contestData.multiRoundData.roundOneIntroduction = round1Info;
    mainWidget.competition.contestData.multiRoundData.roundTwoIntroduction = round2Info;
    
    return true;
 }
+
 
 function backOverview() {
    showPage('contestSelectionPage');
@@ -1201,151 +1012,3 @@ function addNewProject() {
       }
    });
 }
-
-function handleJsonResult(jsonResult, successCallBack, failureCallBack) {
-   if(jsonResult.result) {
-       successCallBack(jsonResult.result['return']);
-   } else {
-       failureCallBack(jsonResult.error.errorMessage);
-   }
-}
-
-
-function showMessage(message) {
-   $('#msgDialog p').html(message);
-   $('#msgDialog').dialog('open');
-}
-
-function showGeneralError() {
-   showErrors("Error occurred! Please retry it later.");
-}
-
-function showErrors(errors) {
-   if(typeof errors == 'string') {
-       var singleError = errors;
-       errors = new Array();
-       errors.push(singleError);
-   }
-
-   $('#errorDialog p').html('<ul></ul>');
-   $.each(errors,function(i, error) {
-        $('#errorDialog ul').append('<li>' + error + '</li>');
-   });
-   $('#errorDialog').dialog('open');
-}
-
-
-/**
- * Contest JS Classes
- */
-if(!com) {
-   var com = {};
-}
-
-if(!com.topcoder) {
-   com.topcoder = {};
-}
-
-if(!com.topcoder.direct) {
-   com.topcoder.direct = {};
-}
-
-com.topcoder.direct.StudioCompetition = function() {
-   this.id = -1;
-
-   this.type = null;
-
-   this.contestData = new com.topcoder.direct.ContestData();
-
-   //Dates
-   this.startDate = null;
-
-   this.endDate	= null;
-
-   this.milestoneDate = null;
-
-}
-
-
-com.topcoder.direct.ContestData = function() {
-   this.contestId = -1;
-
-   this.name = null;
-
-   this.projectId = -1;
-
-   this.tcDirectProjectId = -1;
-
-   this.tcDirectProjectName = null;
-
-   this.billingProject = -1;
-
-   this.multiRound = false;
-
-   this.contestDescriptionAndRequirements = null;
-
-   this.prizes = [];
-
-   this.multiRoundData = 	new com.topcoder.direct.ContestMultiRoundInformationData();
-
-   this.finalFileFormat = '';
-
-   this.otherFileFormats = '';
-
-   this.statusId=CONTEST_STATUS_UNACTIVE_NOT_YET_PUBLISHED;
-
-   this.detailedStatusId=CONTEST_DETAILED_STATUS_DRAFT;
-}
-
-com.topcoder.direct.ContestMultiRoundInformationData = function() {
-   this.id = -1;
-
-   //this.milestoneDate = null;
-   
-   this.roundOneIntroduction = null;
-   
-   this.roundTwoIntroduction = null;
-}
-
-com.topcoder.direct.MilestonePrizeData = function() {
-   this.id = -1;
-
-   this.amount = 0;
-
-   this.numberOfSubmissions = 0;
-}
-
-com.topcoder.direct.PrizeData = function(place, amount) {
-   this.place = place;
-
-   this.amount = amount;
-}
-
-
-com.topcoder.direct.MainWidget = function() {
-  //'STUDIO' or 'SOFTWARE'
-  this.competitionType = null;
-
-  // studio competition
-  this.competition = new com.topcoder.direct.StudioCompetition();
-
-  // holding the mileston prize information
-  this.milestonePrizeData = new com.topcoder.direct.MilestonePrizeData();
-}
-
-
-/**
- * Constants
- */
-var CONTEST_STATUS_UNACTIVE_NOT_YET_PUBLISHED = 1;
-var CONTEST_STATUS_ACTIVE_PUBLIC = 2 ;
-var CONTEST_DETAILED_STATUS_DRAFT =15 ;
-var CONTEST_DETAILED_STATUS_ACTIVE_PUBLIC =2 ;
-var CONTEST_DETAILED_STATUS_SCHEDULED =9 ;
-
-
-/**
- * Lanuch Contest Objects
- */
-var mainWidget = new com.topcoder.direct.MainWidget();
-

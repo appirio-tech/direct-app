@@ -1271,6 +1271,11 @@ table.fc-header { /* calendar header */
 	.container2Content{
 		padding: 10px 10px 0 10px;
 	}
+	
+	.container2Content_det{
+		padding: 10px 1px 0 1px;
+	}
+	
 
 /*-- Panel --*/
 .panel{
@@ -1325,9 +1330,8 @@ table.fc-header { /* calendar header */
 	}
 	
 /*----- Details ----*/
-
-.details{
-	margin-bottom: 20px;
+.no_details{
+	/*margin-bottom: 20px;*/
 }
 
 .detailsContent{
@@ -1336,6 +1340,84 @@ table.fc-header { /* calendar header */
 	border-top: none;
 }
 
+.detailsContent_det_type{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	background-color:#F5F5F5;
+}
+
+.detailsContent_det_type_edit{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+
+}
+
+
+.detailsContent_det_prize{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	background-color:#F5F5F5;
+}
+.detailsContent_det_files{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	background-color:#F5F5F5;
+}
+
+.detailsContent_det_round{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	
+}
+
+.detailsContent_det_spec{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+	
+}
+
+.detailsContent_det_round_edit{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+
+}
+
+.detailsContent_det_spec_edit{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+
+}
+.detailsContent_det_files_edit{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+
+}
+
+.detailsContent_det_prize_edit{
+	padding-left:40px;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:20px;
+
+}
 /*-- Messages --*/
 
 .message{ /* the message container */

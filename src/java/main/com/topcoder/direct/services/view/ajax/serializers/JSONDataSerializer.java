@@ -12,11 +12,14 @@ import net.sf.json.JSON;
 import net.sf.json.JSONException;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
-import net.sf.json.util.PropertyFilter;
 
 import com.topcoder.direct.services.view.ajax.AJAXDataSerializationException;
 import com.topcoder.direct.services.view.ajax.AJAXDataSerializer;
+import com.topcoder.direct.services.view.ajax.DirectJsonBeanProcessorMatcher;
 import com.topcoder.direct.services.view.ajax.Helper;
+import com.topcoder.direct.services.view.ajax.StudioCompetitionBeanProcessor;
+import com.topcoder.direct.services.view.ajax.XMLGregorianCalendarBeanProcessor;
+import com.topcoder.service.project.StudioCompetition;
 
 /**
  * <p>
@@ -28,8 +31,14 @@ import com.topcoder.direct.services.view.ajax.Helper;
  * <Strong>Thread-Safety:</Strong> This class is mutable and thus NOT thread safe.
  * </p>
  *
+ * <p>
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
+ * - add JSON serialization configuration.
+ * </p>
+ *
  * @author AleaActaEst, TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
+ * @since 1.0
  */
 public class JSONDataSerializer implements AJAXDataSerializer {
     /**
@@ -126,12 +135,9 @@ public class JSONDataSerializer implements AJAXDataSerializer {
             // other cases
             try {
                 JsonConfig config = new JsonConfig();
-                config.setJavaPropertyFilter(new PropertyFilter() {
-                    public boolean apply(Object source, String name, Object value) {
-                        System.out.println(source.getClass()+" " +name);
-                        return XMLGregorianCalendar.class.isAssignableFrom(source.getClass());
-                    }
-                });
+                config.setJsonBeanProcessorMatcher(new DirectJsonBeanProcessorMatcher());
+                config.registerJsonBeanProcessor(XMLGregorianCalendar.class, new XMLGregorianCalendarBeanProcessor());
+                config.registerJsonBeanProcessor(StudioCompetition.class, new StudioCompetitionBeanProcessor());
                 JSON json = JSONSerializer.toJSON(data, config);
                 jsonReturnString = jsonResultTemplate.replace(RESULT_TOKEN_REG, json.toString());
             } catch (JSONException e) {

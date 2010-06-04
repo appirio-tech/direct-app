@@ -10,16 +10,25 @@ import com.topcoder.service.studio.UploadedDocument;
 
 /**
  * <p>
- * Remove document.
+ * Removes document.
+ * </p>
+ * <p>
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note - Adds current user into the call
  * </p>
  *
  * @author BeBetter
+ * @version 1.1
  */
 public class RemoveDocumentAction extends ContestAction {
     private long contestId;
 
     private long documentId;
 
+    /**
+     * <p>
+     * Executes the action to remove the document.
+     * </p>
+     */
     @Override
     protected void executeAction() throws Exception {
         if (documentId <= 0) {
@@ -32,7 +41,7 @@ public class RemoveDocumentAction extends ContestAction {
             UploadedDocument document = new UploadedDocument();
             document.setContestId(contestId);
             document.setDocumentId(documentId);
-            getContestServiceFacade().removeDocumentFromContest(null, document);
+            getContestServiceFacade().removeDocumentFromContest(getCurrentUser(), document);
         }
 
         setResult(getDocumentResult(documentId));
@@ -51,7 +60,6 @@ public class RemoveDocumentAction extends ContestAction {
         result.put("documentId", documentId);
         return result;
     }
-
 
     public long getContestId() {
         return contestId;

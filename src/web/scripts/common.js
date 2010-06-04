@@ -31,7 +31,7 @@ jQuery.extend({
 			// If traditional, encode the "old" way (the way 1.3.2 or older
 			// did it), otherwise encode params recursively.
 			for ( var prefix in a ) {
-				buildParams( prefix, a[prefix] );
+				   buildParams( prefix, a[prefix] );
 			}
 		}
 
@@ -39,6 +39,10 @@ jQuery.extend({
 		return s.join("&").replace(/%20/g, "+");
 
 		function buildParams( prefix, obj ) {
+			if(typeof obj == 'function') {
+				  return;
+			}
+			
 			if ( jQuery.isArray(obj) ) {
 				// Serialize array item.
 				jQuery.each( obj, function( i, v ) {
@@ -153,3 +157,15 @@ function isEmpty(value) {
 function isDev() {
 	return window.location.href.indexOf('cloud.topcoder.com') > -1;
 }
+
+/**
+ * Formats the number in the money format.
+ */
+Number.prototype.formatMoney = function(c){
+//for decimals
+var d = '.';
+//for thousands
+var t = ',';
+var n = this, c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};

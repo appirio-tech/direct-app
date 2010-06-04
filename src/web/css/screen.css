@@ -1,10 +1,320 @@
 /* This file will contain css used in both the index and the other pages */
 
-/**/
+	/* Remove Firefox button outline */
+	a:hover, a:active, a:focus, a:active{
+	    outline: none;
+	    -moz-outline-style: none; 
+	} 
+	:focus {outline: none;}
+	.clear{
+		clear:both;
+		}
+	/**/
+	
+	/***new_updates**/
+	.status{
+		font-family:Arial, Helvetica, sans-serif;
+		font-weight:bold;
+		font-size:16px;
+		color:#F00;
+		padding-left:10px;
+	}
+	
+	.edit_type{
+		
+		float:right;
+		padding-right:5px;
+	}
+	.edit_prize{
+		
+		float:right;
+		padding-right:5px;
+	}
+	
+	.edit_round{
+		
+		float:right;
+		padding-right:5px;
+	}
+	
+	.edit_spec{
+		
+		float:right;
+		padding-right:5px;
+	}
+	
+	.edit_files{
+		
+		float:right;
+		padding-right:5px;
+	}
+	.det_font{
+		font-size:14px;
+		font-family:Arial, Helvetica, sans-serif;
+		color:#3B3B3B;
+	}
+	
+	.det_font_tab{
+		font-size:12px;
+		font-family:Arial, Helvetica, sans-serif;
+		color:#3B3B3B;
+	}
+	
+	.small_info{
+		padding-left:125px;
+		font-size:12px;
+		font-weight:bold;
+	}
+	
+	.small_info_spec{
+		
+		font-size:12px;
+		
+	}
+	.small_info_spec_last{
+		
+		font-size:12px;
+		
+		
+	}
+	
+	.bottom_spec{
+		height:20px;
+		margin-bottom:10px;
+		border-bottom:#999 solid 1px;
+		width:100%;
+	}
+	.mylist{
+		font-size:12px;
+		margin-top:10px;
+		margin-bottom:10px;
+		margin-left:15px;
+	}
+	.name{
+	
+		padding-right:20px;
+		float:left;
+		
+	}
+	.gray_name{
+	
+		padding-right:20px;
+		float:left;
+		color:#666;
+		font-size:12px;
+		
+	}
+	.name2{
+	
+		padding-right:15px;
+		
+	}
+	.bigin{
+		width:370px;
+		height:25px;
+	}
+	.contest_type{
+		margin-top:10px;
+	}
+	
+	.left_align{
+		float:left;
+	color:#000;
+	font-size:12px;
+}
+
+.contest_type_edit{
+	border:#F00 solid 1px;
+	/*margin-top:10px;*/
+}
+
+.contest_files{
+	/*margin-top:10px;*/
+}
+
+
+.contest_files_edit{
+	border:#F00 solid 1px;
+	/*margin-top:10px;*/
+}
+
+.contest_prize{
+	/*margin-top:10px;*/
+}
+
+
+.contest_prize_edit{
+	border:#F00 solid 1px;
+	/*margin-top:10px;*/
+}
+
+.contest_round{
+	/*margin-top:10px;*/
+}
+
+.contest_spec{
+	/*margin-top:10px;*/
+}
+
+.contest_round_edit{
+	border:#F00 solid 1px;
+	/*margin-top:10px;*/
+}
+
+.contest_spec_edit{
+	border:#F00 solid 1px;
+	/*margin-top:10px;*/
+}
+
+
+
+.save{
+	
+	height:10px;
+	padding-top:10px;
+}
+.save a img{
+	border:none;
+	float:right;
+}
+
+.save a{
+	font-size:12px;
+	font-weight:bold;
+	font-family:Verdana, Geneva, sans-serif;
+}
+.cancel_text{
+	color:#616161;
+	text-decoration:underline;
+	padding-left:10px;
+	float:right;
+	
+}
+
+.cancel_text_prize{
+	color:#616161;
+	text-decoration:underline;
+	padding-left:10px;
+	float:right;
+	
+}
+.cancel_text_round{
+	color:#616161;
+	text-decoration:underline;
+	padding-left:10px;
+	float:right;
+	
+}
+
+.cancel_text_spec{
+	color:#616161;
+	text-decoration:underline;
+	padding-left:10px;
+	float:right;
+	
+}
+
+.cancel_text_files{
+	color:#616161;
+	text-decoration:underline;
+	padding-left:10px;
+	float:right;
+	
+}
+
+
+#resubmit{
+	text-align:center;
+	margin-top:20px;
+}
+
+.deleteImg{
+	margin-left:10px;
+	padding-top:5px;
+}
+
+A.delete{
+	color:#F00;
+	margin-left:5px;
+	font-size:13px;
+}
+
+#resubmit .bottom_text{
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	color:#999;
+	
+	
+}
+
+.ip{
+	float:left;
+	background-color:#009;
+	width:100px;
+	height:50px;
+}
+
+.op{
+	float:left;
+	background-color:#999;
+	width:100px;
+	height:50px;
+}
+
+.first_tab{
+	width:250px;
+}
+.first_tab_prize{
+	width:350px;
+}
+
+.sec_tab{
+	width:70px;
+}
+
+.sec_tab_prize{
+	width:180px;
+}
+.sec_tab_files{
+	width:480px;
+}
+
 
 .details .caption{ /* help popup titles */
 		background: url(../images/title_bg.png) repeat-x;
 	}
+
+.no_details .caption_det_type{ /* help popup titles */
+		/*background: url(../images/title_bg.png) repeat-x;*/
+		
+		background-color:#F5F5F5;
+		
+	}
+	
+	.no_details .caption_det_prize{ /* help popup titles */
+		/*background: url(../images/title_bg.png) repeat-x;*/
+		
+		background-color:#F5F5F5;
+		
+	}
+	.no_details .caption_det_files{ /* help popup titles */
+		/*background: url(../images/title_bg.png) repeat-x;*/
+		
+		background-color:#F5F5F5;
+		
+	}
+	
+	.no_details .caption_det_round{ /* help popup titles */
+		/*background: url(../images/title_bg.png) repeat-x;*/
+		
+
+		
+	}
+	.no_details .caption_det_spec{ /* help popup titles */
+		/*background: url(../images/title_bg.png) repeat-x;*/			
+	}
+
+
 	
 		.details .caption .captionLeft{ 
 			background: url(../images/title_left.png) no-repeat left;
@@ -18,6 +328,43 @@
 			height: 35px;
 		}
 		
+		.no_details .caption .captionInner{
+			height: 35px;
+		}
+		
+		.no_details .caption_det_type .captionInner{
+			height: 35px;
+		}
+		.no_details .caption_det_prize .captionInner{
+			height: 35px;
+		}
+		.no_details .caption_det_type_edit .captionInner{
+			height: 35px;
+		}
+		.no_details .caption_det_prize_edit .captionInner{
+			height: 35px;
+		}
+		.no_details .caption_det_round .captionInner{
+			height: 35px;
+		}
+		.no_details .caption_det_round_edit .captionInner{
+			height: 35px;
+		}
+		
+		.no_details .caption_det_spec .captionInner{
+			height: 35px;
+		}
+		.no_details .caption_det_spec_edit .captionInner{
+			height: 35px;
+		}
+		
+		.no_details .caption_det_files .captionInner{
+			height: 35px;
+		}
+		.no_details .caption_det_files_edit .captionInner{
+			height: 35px;
+		}
+		
 			.details .caption .captionInner H2{
 				margin: 0;
 				padding: 0;
@@ -26,6 +373,99 @@
 				padding-top: 8px;
 				padding-left: 10px;
 			}
+			
+			.no_details .caption_det_type .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			
+			.no_details .caption_det_prize .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			.no_details .caption_det_round .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			.no_details .caption_det_spec .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			.no_details .caption_det_files .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			.no_details .caption_det_type_edit .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			.no_details .caption_det_prize_edit .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			
+			.no_details .caption_det_round_edit .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+				
+			}
+			.no_details .caption_det_spec_edit .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;
+								
+			}
+			.no_details .caption_det_files_edit .captionInner H2{
+				margin: 0;
+				padding: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 16px;
+				padding-top: 8px;
+				padding-left:10px;				
+				
+			}			
 
 /* popups */
 

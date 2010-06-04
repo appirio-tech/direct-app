@@ -3,9 +3,24 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
-import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
+import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.StudioCompetition;
 
 /**
  * <p>
@@ -13,13 +28,17 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
  * <code>contestId</code> parameter (mutual exclusive) be present for each call.
  * </p>
  * <p>
- * <b>Thread Safety</b>: In <b>Struts 2</b> framework, the action is constructed for every request so the thread safety
- * is not required (instead in Struts 1 the thread safety is required because the action instances are reused). This
- * class is mutable and stateful: it's not thread safe.
+ * <b>Thread Safety</b>: In <b>Struts 2</b> framework, the action is constructed for every request so the thread
+ * safety is not required (instead in Struts 1 the thread safety is required because the action instances are reused).
+ * This class is mutable and stateful: it's not thread safe.
+ * </p>
+ * <p>
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note - Adds the legacy code to show other
+ * parts of the contest detail page - Preserves the studio competition to fill the details later
  * </p>
  *
- * @author fabrizyo, FireIce
- * @version 1.0
+ * @author fabrizyo, FireIce, TCSDEVELOPER
+ * @version 1.1
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -53,6 +72,27 @@ public class GetContestAction extends ContestAction {
 
     /**
      * <p>
+     * view data. It is copied from old details page to preserve some portion of the existing page.
+     * </p>
+     */
+    private ContestDetailsDTO viewData;
+
+    /**
+     * <p>
+     * Session data. It is copied from old details page to preserve some portion of the existing page.
+     * </p>
+     */
+    private SessionData sessionData;
+
+    /**
+     * <p>
+     * Preserve the retrieved contest.
+     * </p>
+     */
+    private StudioCompetition studioCompetition;
+
+    /**
+     * <p>
      * Creates a <code>GetContestAction</code> instance.
      * </p>
      */
@@ -67,16 +107,12 @@ public class GetContestAction extends ContestAction {
      * The returned software or studio contest will be available as result.
      * </p>
      *
-     * @throws IllegalStateException
-     *             if the contest service facade is not set.
-     * @throws Exception
-     *             if any other error occurs
+     * @throws IllegalStateException if the contest service facade is not set.
+     * @throws Exception if any other error occurs
      * @see ContestServiceFacade#getContest(com.topcoder.security.TCSubject, long)
      * @see ContestServiceFacade#getSoftwareContestByProjectId(com.topcoder.security.TCSubject, long)
      */
-    @ExpressionValidator(message = "Only one of projectId and contestId should be set",
-            key = "i18n.GetContestAction.projectIdOrContestIdRequiredSet",
-            expression = "(projectId == 0 && contestId >= 1) || (projectId >= 1 && contestId == 0)")
+    @ExpressionValidator(message = "Only one of projectId and contestId should be set", key = "i18n.GetContestAction.projectIdOrContestIdRequiredSet", expression = "(projectId == 0 && contestId >= 1) || (projectId >= 1 && contestId == 0)")
     protected void executeAction() throws Exception {
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
 
@@ -84,12 +120,13 @@ public class GetContestAction extends ContestAction {
             throw new IllegalStateException("The contest service facade is not initialized.");
         }
 
-        // with validator there is exactly on contestId or projectId present
-        if (0 != contestId) {
-            setResult(contestServiceFacade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(), contestId));
+        if (contestId > 0) {
+            studioCompetition = contestServiceFacade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
+                contestId);
+            setResult(studioCompetition);
         } else {
             setResult(contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
-                    .getTCSubjectFromSession(), projectId));
+                .getTCSubjectFromSession(), projectId));
         }
     }
 
@@ -112,12 +149,8 @@ public class GetContestAction extends ContestAction {
      * Don't perform argument checking by the usual exception.
      * </p>
      *
-     * @param projectId
-     *            the project id to set
+     * @param projectId the project id to set
      */
-    @FieldExpressionValidator(message = "The projectId should be positive",
-            key = "i18n.GetContestAction.projectIdRequiredPositive",
-            expression="projectId >= 0")
     public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
@@ -141,13 +174,68 @@ public class GetContestAction extends ContestAction {
      * Don't perform argument checking by the usual exception.
      * </p>
      *
-     * @param contestId
-     *            the contest id to set
+     * @param contestId the contest id to set
      */
-    @FieldExpressionValidator(message = "The contestId should be positive",
-            key = "i18n.GetContestAction.contestIdRequiredPositive",
-            expression="contestId >= 0")
     public void setContestId(long contestId) {
         this.contestId = contestId;
+    }
+
+    /**
+     * <p>
+     * Gets the view data.
+     * </p>
+     *
+     * @return the view data
+     * @throws Exception
+     */
+    public ContestDetailsDTO getViewData() throws Exception {
+        if (viewData == null) {
+            viewData = new ContestDetailsDTO();
+
+            ContestStatsDTO contestStats = new ContestStatsDTO();
+            ContestBriefDTO contest = new ContestBriefDTO();
+            contest.setId(studioCompetition.getContestData().getContestId());
+            contest.setTitle(studioCompetition.getContestData().getName());
+            contestStats.setContest(contest);
+            viewData.setContestStats(contestStats);
+
+            ContestDTO contestDTO = DataProvider.getContest(4);
+            viewData.setContest(contestDTO);
+
+            // project
+
+            // right side
+            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getSessionData().getCurrentUserId());
+
+            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
+            userProjectsDTO.setProjects(projects);
+            viewData.setUserProjects(userProjectsDTO);
+        }
+        return viewData;
+    }
+
+    /**
+     * <p>
+     * Gets the session data.
+     * </p>
+     *
+     * @return the session data
+     */
+    public SessionData getSessionData() {
+        if (sessionData == null) {
+            HttpServletRequest request = ServletActionContext.getRequest();
+
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                sessionData = new SessionData(session);
+                if (studioCompetition != null) {
+                    ProjectBriefDTO project = new ProjectBriefDTO();
+                    project.setId(studioCompetition.getContestData().getTcDirectProjectId());
+                    project.setName(studioCompetition.getContestData().getTcDirectProjectName());
+                    sessionData.setCurrentProjectContext(project);
+                }
+            }
+        }
+        return sessionData;
     }
 }

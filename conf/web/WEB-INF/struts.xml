@@ -155,7 +155,7 @@
 
     </package>
 
-    <package name="launch" namespace="/launch" extends="default">
+    <package name="base" namespace="/base" extends="default">
         <interceptors>
             <interceptor-stack name="defaultDirectStack">
                 <interceptor-ref name="exception">
@@ -165,6 +165,10 @@
                 <interceptor-ref name="alias"/>
                 <interceptor-ref name="servletConfig"/>
                 <interceptor-ref name="i18n"/>
+                <interceptor-ref name="params">
+                  <param name="acceptParamNames">contestId</param>
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
                 <interceptor-ref name="debugging"/>
@@ -196,7 +200,9 @@
         </interceptors>
 
         <default-interceptor-ref name="baseStack"/>
+    </package>
 
+    <package name="launch" namespace="/launch" extends="base">
         <action name="home" class="launchContestAction">
             <result>/WEB-INF/launch-contest.jsp</result>
         </action>
@@ -231,6 +237,16 @@
         </action>
 
         <action name="getCapacityFullDates" class="getCapacityFullDatesAction">
+            <result type="json" />
+        </action>
+    </package>
+
+    <package name="contest" namespace="/contest" extends="base">
+        <action name="detail" class="getContestAction">
+            <result>/WEB-INF/contest-details2.jsp</result>
+        </action>
+
+        <action name="detailJson" class="getContestAction">
             <result type="json" />
         </action>
     </package>

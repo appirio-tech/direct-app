@@ -51,7 +51,12 @@
                                             <b><span style="color:red;">ERROR</span></b>
                                             <br/>
                                             <br/>
-                                            <b>An error has occurred when attempting to process your request.</b>
+                                            <s:if test="exception.class.simpleName == 'PermissionServiceException'">
+                                            	 <b>Sorry, you do not have permission to view the requested page.</b>
+                                            </s:if>
+                                            <s:else>
+                                            	<b>An error has occurred when attempting to process your request.</b>
+                                            </s:else>                                            	                                            
                                             <br/>
                                             <br/>
                                             You may click <a href="javascript:history.back();">here</a> to return to
@@ -63,20 +68,6 @@
                                             <%=new Date()%>
                                             <br/>
                                             <br/>
-                                            <%
-                                                if (exception != null) {
-//                                                    out.print(exception.getMessage() + "<br/><br/>");
-//                                                    exception.printStackTrace(new PrintWriter(out));
-                                                    exception.printStackTrace(System.err);
-                                                } else {
-                                                    Throwable error = (Throwable) request.getAttribute("error");
-                                                    if (error != null) {
-//                                                        out.print(error.getMessage() + "<br/><br/>");
-//                                                        error.printStackTrace(new PrintWriter(out));
-                                                        error.printStackTrace(System.err);
-                                                    }
-                                                }
-                                            %>
                                         </div>
                                         <!-- End .area1content -->
 

@@ -164,4 +164,7 @@
   <bean id="getCapacityFullDatesAction" class="com.topcoder.direct.services.view.action.contest.launch.GetCapacityFullDatesAction"
     parent="baseDirectStrutsAction" scope="prototype">
   </bean>
+  <bean id="getContestAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
+    parent="contestAction" scope="prototype">
+  </bean>
 </beans>

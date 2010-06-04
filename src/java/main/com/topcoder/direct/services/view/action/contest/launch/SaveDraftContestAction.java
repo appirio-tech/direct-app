@@ -21,9 +21,15 @@ import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
 import com.topcoder.clients.model.ProjectContestFee;
+import com.topcoder.clients.model.Project;
+import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.admin.AdminServiceFacadeException;
+import com.topcoder.service.facade.contest.ContestPaymentResult;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.payment.PaymentType;
+import com.topcoder.service.payment.TCPurhcaseOrderPaymentData;
+import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.pipeline.CapacityData;
 import com.topcoder.service.pipeline.CompetitionType;
 import com.topcoder.service.project.CompetionType;
@@ -64,17 +70,21 @@ import com.topcoder.service.studio.PrizeData;
  *
  * </p>
  * <p>
- * Change note for 1.1 Direct Launch Contest Studio Assembly 1.0: 1. Add some fields for holding parameters for
- * contest create/update 2. Adjust some of methods such as XML date conversion.
- * </p>
- * <p>
  * <b>Thread Safety</b>: In <b>Struts 2</b> framework, the action is constructed for every request so the thread
  * safety is not required (instead in Struts 1 the thread safety is required because the action instances are reused).
  * This class is mutable and stateful: it's not thread safe.
  * </p>
+ * <p>
+ * Change note for 1.1 Direct Launch Contest Studio Assembly 1.0: 1. Add some fields for holding parameters for
+ * contest create/update 2. Adjust some of methods such as XML date conversion.
+ * </p>
+ * <p>
+ * Version 1.2 - Direct - View/Edit/Activate Studio Contests Assembly Change Note - Adds studio contest activation
+ * function
+ * </p>
  *
  * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.1
+ * @version 1.2
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -306,6 +316,13 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * The flag to mark it is intended to be activated.
+     * </p>
+     */
+    private boolean activationFlag;
+
+    /**
+     * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
      * </p>
      */
@@ -361,7 +378,11 @@ public class SaveDraftContestAction extends ContestAction {
             studioCompetition.setEndTime(endTime);
             populateStudioCompetition(studioCompetition);
 
-            contestServiceFacade.updateContest(tcSubject, studioCompetition);
+            if (isActivation(studioCompetition)) {
+                studioCompetition = activateStudioCompeition(studioCompetition);
+            } else {
+                contestServiceFacade.updateContest(tcSubject, studioCompetition);
+            }
             setResult(getStudioResult(studioCompetition));
         } else {
             if (competitionType == CompetitionType.STUDIO) {
@@ -376,8 +397,12 @@ public class SaveDraftContestAction extends ContestAction {
                 studioCompetition.setEndTime(endTime);
                 populateStudioCompetition(studioCompetition);
 
-                studioCompetition = contestServiceFacade.createContest(tcSubject, studioCompetition,
-                    tcDirectProjectId);
+                if (isActivation(studioCompetition)) {
+                    studioCompetition = activateStudioCompeition(studioCompetition);
+                } else {
+                    studioCompetition = contestServiceFacade.createContest(tcSubject, studioCompetition,
+                        tcDirectProjectId);
+                }
 
                 // add preloaded documents
                 if (docUploadIds != null && docUploadIds.size() > 0) {
@@ -408,6 +433,74 @@ public class SaveDraftContestAction extends ContestAction {
                 addFieldError("competitionType", "The competition type is uknown");
             }
         }
+    }
+
+    /**
+     * <p>
+     * Activates the studio competition.
+     * </p>
+     *
+     * @param studioCompetition the studio competition data
+     * @return the studio competition. it will contain contest id if it is newly created
+     * @throws PermissionServiceException if any permission error
+     * @throws Exception if any error occurs
+     */
+    private StudioCompetition activateStudioCompeition(StudioCompetition studioCompetition)
+        throws PermissionServiceException, Exception {
+        ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(getCurrentUser(),
+            studioCompetition, getPaymentData(studioCompetition));
+        return new StudioCompetition(result.getContestData());
+    }
+
+    /**
+     * <p>
+     * Determines if it is activation request.
+     * </p>
+     *
+     * @param studioCompetition the studio competition
+     * @return true if it is activation request
+     * @throws DirectException if no billing project is defined
+     */
+    private boolean isActivation(StudioCompetition studioCompetition) throws DirectException {
+        if (activationFlag && studioCompetition.getContestData().getBillingProject() <= 0) {
+            throw new DirectException("no billing project is selected.");
+        }
+
+        return activationFlag;
+    }
+
+    /**
+     * <p>
+     * Gets the payment data for purchase/activation.
+     * </p>
+     *
+     * @param studioCompetition the studio competition
+     * @return the payment data
+     * @throws Exception if any error occurs when do purchasing
+     */
+    private TCPurhcaseOrderPaymentData getPaymentData(StudioCompetition studioCompetition) throws Exception {
+        TCPurhcaseOrderPaymentData paymentData = new TCPurhcaseOrderPaymentData();
+
+        // retrieve all client projects with the current user
+        List<Project> projects = getProjectServiceFacade().getClientProjectsByUser(
+            DirectStrutsActionsHelper.getTCSubjectFromSession());
+        long billingProjectId = studioCompetition.getContestData().getBillingProject();
+        for (Project project : projects) {
+            if (project.getId() == billingProjectId) {
+                paymentData.setProjectId(project.getId());
+                paymentData.setProjectName(project.getName());
+                paymentData.setClientId(project.getClient().getId());
+                paymentData.setClientName(project.getClient().getName());
+                paymentData.setPoNumber(project.getPOBoxNumber());
+                paymentData.setType(PaymentType.TCPurchaseOrder);
+            }
+        }
+
+        if (paymentData.getProjectId() <= 0) {
+            throw new DirectException("no project is found for billing project id : " + billingProjectId);
+        }
+
+        return paymentData;
     }
 
     /**
@@ -494,8 +587,6 @@ public class SaveDraftContestAction extends ContestAction {
      *
      * @param competitionType the competition type to set, can't be null considering the validation.
      */
-    // @RequiredFieldValidator(message = "The competitionType can not be null", key =
-    // "i18n.SaveDraftContestAction.competitionTypeRequired")
     public void setCompetitionType(CompetitionType competitionType) {
         this.competitionType = competitionType;
     }
@@ -1440,24 +1531,81 @@ public class SaveDraftContestAction extends ContestAction {
         return milestonePrizeAmount;
     }
 
+    /**
+     * <p>
+     * Sets the milestone prize amount.
+     * </p>
+     *
+     * @param milestonePrizeAmount the prize amount
+     */
     public void setMilestonePrizeAmount(double milestonePrizeAmount) {
         this.milestonePrizeAmount = milestonePrizeAmount;
     }
 
+    /**
+     * <p>
+     * Gets milestone prize number of submissions.
+     * </p>
+     *
+     * @return the number of submissions for milestone prize
+     */
     public int getMilestonePrizeNumberOfSubmissions() {
         return milestonePrizeNumberOfSubmissions;
     }
 
+    /**
+     * <p>
+     * Sets the milestone prize number of submissions.
+     * </p>
+     *
+     * @param milestonePrizeNumberOfSubmissions the number of submissions for given
+     */
     public void setMilestonePrizeNumberOfSubmissions(int milestonePrizeNumberOfSubmissions) {
         this.milestonePrizeNumberOfSubmissions = milestonePrizeNumberOfSubmissions;
     }
 
+    /**
+     * <p>
+     * Gets the doc upload ids.
+     * </p>
+     *
+     * @return the list of upload ids for docs
+     */
     public List<String> getDocUploadIds() {
         return docUploadIds;
     }
 
+    /**
+     * <p>
+     * Sets the doc upload ids.
+     * </p>
+     *
+     * @param docUploadIds upload ids for documents
+     */
     public void setDocUploadIds(List<String> docUploadIds) {
         this.docUploadIds = docUploadIds;
+    }
+
+    /**
+     * <p>
+     * Returns the activation flag.
+     * </p>
+     *
+     * @return the activation flag
+     */
+    public boolean isActivationFlag() {
+        return activationFlag;
+    }
+
+    /**
+     * <p>
+     * Sets the activation flag.
+     * </p>
+     *
+     * @param activationFlag the activation flag
+     */
+    public void setActivationFlag(boolean activationFlag) {
+        this.activationFlag = activationFlag;
     }
 
     /**

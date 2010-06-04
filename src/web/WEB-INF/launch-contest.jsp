@@ -7,8 +7,11 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
-    	
-    <script type="text/javascript" src="/scripts/launchcontest.js?v=16"></script>    	
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=20"></script>	
+    <script type="text/javascript" src="/scripts/launch/main.js?v=20"></script>	
+    <script type="text/javascript" src="/scripts/launchcontest.js?v=20"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/review.js?v=20"></script>	
+    <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=20"></script>	
 </head>
 
 <body id="page">
@@ -45,6 +48,10 @@
                                <jsp:include page="includes/launch/review.jsp"/>
                              </div>                                
                              
+                             <div id="orderReviewPage" class="launchpage hide">                            
+                               <jsp:include page="includes/launch/orderReview.jsp"/>
+                             </div>                                
+
                             </div>
                             <!-- end #launchContestOut -->
 
@@ -90,27 +97,7 @@
 					<a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Close</span></a>
 				</div>
 			</div><!-- End #addProjectResult -->			 
-		</div><!-- End #addProjectDialog -->	
-		
-	  <!-- Message Dialog-->
-		<div id="msgDialog" title="Message"  class="dialog-box hide">
-        <p>        	
-        </p>
-
-				<div class="popupButtons">
-					<a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>OK</span></a>
-				</div>
-    </div>		 
-
-	  <!-- Error Dialog-->
-		<div id="errorDialog" title="Errors"  class="dialog-box hide">
-        <p>        	
-        </p>
-
-				<div class="popupButtons">
-					<a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>OK</span></a>
-				</div>
-    </div>		 
+		</div><!-- End #addProjectDialog -->			
 </div>
 <!-- End .popups -->	
 
