@@ -41,7 +41,7 @@
         <ui:isProjectPage>
             <ul>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-                    <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
+                    <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Overview</span></a>
                 </li>
 
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
@@ -57,18 +57,18 @@
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
                     <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
                 </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="on"</c:if>>
-                    <a href="javascript:;"><span>Tasks</span></a>
+               <!-- <li <c:if test="${requestScope.CURRENT_TAB eq 'tasks'}">class="on"</c:if>>
+                    <a href="javascript:;"><span>Tasks</span></a>-->
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
                     <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Contests</span></a>
                 </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'copilots'}">class="on"</c:if>>
+            <!--    <li <c:if test="${requestScope.CURRENT_TAB eq 'copilots'}">class="on"</c:if>>
                     <a href="javascript:;"><span>CoPilots</span></a>
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
                     <a href="<s:url action="currentProjectPermissionsView" namespace="/"/>"><span>Permissions</span></a>
-                </li>
+                </li> -->
             </ul>
         </c:if>
     </div><!-- End #tabs1 -->
