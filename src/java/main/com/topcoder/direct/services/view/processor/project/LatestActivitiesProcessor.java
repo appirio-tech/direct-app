@@ -43,7 +43,7 @@ public class LatestActivitiesProcessor implements RequestProcessor<ViewAction> {
             Object data = action.getViewData();
             if (data instanceof LatestActivitiesDTO.Aware) {
                 LatestActivitiesDTO latestActivities
-                    = DataProvider.getLatestActivitiesForUserProjects(currentUserId, 60);
+                    = DataProvider.getLatestActivitiesForUserProjects(currentUserId, 15);
                 LatestActivitiesDTO.Aware viewData = (LatestActivitiesDTO.Aware) data;
                 viewData.setLatestActivities(latestActivities);
             }

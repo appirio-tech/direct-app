@@ -44,7 +44,7 @@ public class UpcomingActivitiesProcessor implements RequestProcessor<ViewAction>
             Object data = action.getViewData();
             if (data instanceof UpcomingActivitiesDTO.Aware) {
                 UpcomingActivitiesDTO latestActivities
-                    = DataProvider.getUpcomingActivitiesForUserProjects(currentUserId, 60);
+                    = DataProvider.getUpcomingActivitiesForUserProjects(currentUserId, 15);
                 UpcomingActivitiesDTO.Aware viewData = (UpcomingActivitiesDTO.Aware) data;
                 viewData.setUpcomingActivities(latestActivities);
             }
