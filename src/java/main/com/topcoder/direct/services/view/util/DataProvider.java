@@ -148,7 +148,11 @@ public class DataProvider {
         final Map<Long, ContestBriefDTO> contests = new HashMap<Long, ContestBriefDTO>();
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities");
-        final int recordNum = resultContainer.size();
+        int recordNum = resultContainer.size();
+        if (recordNum > 30)
+        {
+            recordNum = 30;
+        }
         for (int i = 0; i < recordNum; i++) {
             String activityTypeText = resultContainer.getStringItem(i, "activity_type");
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -217,7 +221,11 @@ public class DataProvider {
         final List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities");
-        final int recordNum = resultContainer.size();
+        int recordNum = resultContainer.size();
+        if (recordNum > 30)
+        {
+            recordNum = 30;
+        }
         for (int i = 0; i < recordNum; i++) {
             String activityTypeText = resultContainer.getStringItem(i, "activity_type");
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -487,7 +495,7 @@ public class DataProvider {
     public static LatestProjectActivitiesDTO getLatestActivitiesForProject(long userId, long projectId) 
         throws Exception {
         // TODO : this is temporary implementation
-        LatestActivitiesDTO data = getLatestActivitiesForUserProjects(userId, 60);
+        LatestActivitiesDTO data = getLatestActivitiesForUserProjects(userId, 15);
         Map<ProjectBriefDTO, List<ActivityDTO>> map = data.getActivities();
         Iterator<ProjectBriefDTO> dtoIterator = map.keySet().iterator();
         Map<ContestBriefDTO, List<ActivityDTO>> activities = new HashMap<ContestBriefDTO, List<ActivityDTO>>();
