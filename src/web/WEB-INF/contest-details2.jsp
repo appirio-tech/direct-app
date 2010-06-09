@@ -15,7 +15,7 @@
     //]]>
     </script>    
     <script type="text/javascript" src="/scripts/launch/entity.js?v=20"></script>	
-    <script type="text/javascript" src="/scripts/launch/main.js?v=20"></script>		
+    <script type="text/javascript" src="/scripts/launch/main.js?v=21"></script>		
     <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=22"></script>		
 </head>
 
@@ -39,9 +39,10 @@
                         <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
                     <div class="areaHeader">
-                        <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
-                       
-                            <s:property value="viewData.contestStats.contest.title"/></h2>
+                        <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">                       
+                        <s:property value="viewData.contestStats.contest.title"/>
+                        <a href="javascript:previewContest();" class="button5" style="float:right;text-align:center;">View Contest</a>    	
+                        </h2>                        
                     </div><!-- End .areaHeader -->
 
                     <jsp:include page="includes/contest/contestStats.jsp"/>

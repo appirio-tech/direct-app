@@ -160,6 +160,7 @@ function previewContest() {
   if(!isContestSaved()) {
      showErrors("You must 'Save as Draft' before you can preview your contest.");
   } else {
+  	  var contestId = mainWidget.competition.contestData.contestId;
       window.open('http://studio.topcoder.com/?module=ViewContestDetails&ct='+contestId);
   }
 }
