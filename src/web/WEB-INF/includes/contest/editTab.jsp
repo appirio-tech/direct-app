@@ -548,7 +548,7 @@
 <!-- End Document Upload -->
 
 <div id="resubmit" class="hide">
-	  <a href="javascript:activateContestEdit();">Activate</a>
+	  <a href="javascript:activateContestEdit();" class="button4">Activate</a>
 </div>
 										
 <div class="panel"><!-- this area containt the print, export to excel, export to pdf links -->
