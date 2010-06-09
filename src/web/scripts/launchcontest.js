@@ -414,7 +414,10 @@ $(document).ready(function(){
   	theme : "advanced",  	
 	  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist",
 	  theme_advanced_buttons2 : "",
-	  theme_advanced_buttons3 : ""
+	  theme_advanced_buttons3 : "",
+	  init_instance_callback : function() {
+	  	  $('table.mceLayout').css('width','100%');
+	  }
   });
   
    
@@ -941,19 +944,6 @@ function handleSaveAsDraftContestResult(jsonResult) {
     });
 }
 
-function showPage(pageId) {
-   $('.launchpage').hide();
-
-   if(pageId == "reviewPage") {
-      updateReview();
-   }
-
-   if(pageId == "overviewPage") {
-      $('table.mceLayout').css('width','100%');
-   }
-
-   $('#'+pageId).show();      
-}
 
 /**
  * Gets contest type.
