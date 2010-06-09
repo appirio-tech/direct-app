@@ -95,8 +95,8 @@
                                                                             class="<s:property value="status.shortName"/>"><s:property
                                                                             value="status.name"/></span></td>
                                                                     <td>
-                                                                        <a href="contestDetails.action?formData.contestId=30007101"
-                                                                           class="button1 button"><span>View</span></a>
+                                                                        <a href="contest/detail?contestId=${contest.id}"
+                                                                           class="button1 button"><span>View/Edit</span></a>
                                                                     </td>
                                                                 </tr>
                                                             </s:iterator>
