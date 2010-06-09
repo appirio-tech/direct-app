@@ -496,6 +496,13 @@ public class SaveDraftContestAction extends ContestAction {
             }
         }
 
+        
+        if (paymentData.getProjectId() <= 0 && billingProjectId > 0)
+        {
+                paymentData.setProjectId(billingProjectId);
+                paymentData.setType(PaymentType.TCPurchaseOrder);
+        }
+
         if (paymentData.getProjectId() <= 0) {
             throw new DirectException("no project is found for billing project id : " + billingProjectId);
         }
