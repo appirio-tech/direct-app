@@ -199,9 +199,7 @@
         }					
 
         #launchContestOut .contestDetail .textarea1 {
-           border:1px solid #C4C4C4;
            height:150px;
-           padding-left:10px;
         }  
         
        #launchContestOut .contestDetail .textarea1 textarea {  
@@ -1144,9 +1142,9 @@
 	/** textarea bottom **/	
 	#launchContestOut .contestDetail .bottomTextarea{
 		height:22px;
-		border:#dddddd solid 1px;
+		/* border:#dddddd solid 1px; */
 		position:relative;
-		background:url(/images/textarea_bottom_bg.gif) repeat-x;
+		/* background:url(/images/textarea_bottom_bg.gif) repeat-x; */
 		}
 		
 		#launchContestOut .contestDetail .bottomTextarea p{

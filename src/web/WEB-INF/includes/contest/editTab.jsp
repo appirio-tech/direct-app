@@ -16,6 +16,9 @@
          <br /> <br />
          <span class="name2"><strong>Contest Name</strong></span>
          <span class="value"><strong>: <span id="rContestName"></span></strong></span>
+         <br /> <br />
+         <span class="name2 billingdisplay"><strong>Billing Account</strong></span>
+         <span class="value billingdisplay"><strong>: <span id="rBillingAccount"></span></strong></span>
       </p>
     </div><!-- End .detailsContent -->												
 </div><!-- End .details -->
@@ -30,7 +33,7 @@
 		  </div><!-- End .caption -->												
 		  
       <div class="detailsContent_det_type_edit">
-					<p class="det_font">                                                
+					<div class="det_font" style="border:1px solid #BDBDBD; height:165px;">                                                
          	<div id="launchContestOut">                                                        	
 						 <div class="tabOut">                                    
                  <!-- tab contest -->
@@ -78,7 +81,22 @@
                  <br /><br />
                  <span class="name2"><strong>Contest Name</strong></span>
                  <span class="value"><input type="text" class="bigin"  id="contestName" /></span>
-                 </p>
+                                  
+                 <!-- Billing Account -->
+                 <div id="billingAccountDivEdit">
+                 <br /><br />
+                     <span class="name"><strong>Billing Account </strong></span>
+                     <div class="billingSelect" style="float:left" >
+                         <select id="billingProjects" name="billingProject">
+                         	<option value="-1">Please select an existing account</option>
+                           <s:iterator value="billingProjects">
+                           <option value='<s:property value="projectId" />'><s:property value="name" /></option>
+                           </s:iterator>
+                        </select>
+                     </div>
+                 </div>
+                 
+                 </div>
                  <p class="save">                 	
                      <a href="javascript:;" class="cancel_text">cancel</a>
                      <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn" /></a>
@@ -426,8 +444,7 @@
                       </div>
                       
                       <div class="bottomTextarea">
-                      	<p>Describe your project and your project goals.</p>
-                      	<span class="icon"></span>                                        
+                      	<p>Describe your project and your project goals.</p>                      	
                       </div>                    
                 </div>
                 <!-- end .description -->
@@ -442,7 +459,6 @@
                       
                       <div class="bottomTextarea">
                       	<p>Size, Colors, Fonts? Target Audience? Reference Designs? </p>
-                      	<span class="icon"></span>                                        
                       </div>                    
                 </div>
                 <!-- end .guidelines -->

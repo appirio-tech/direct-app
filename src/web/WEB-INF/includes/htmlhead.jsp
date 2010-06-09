@@ -5,7 +5,7 @@
 
 <!-- External CSS -->
 <link rel="stylesheet" href="/css/screen.css?v=20" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/launchcontest.css?v=20" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/launchcontest.css?v=22" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/dashboard.css?v=20" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/thickbox.css" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/jScrollPane.css" media="all" type="text/css"/>

@@ -16,7 +16,7 @@
     </script>    
     <script type="text/javascript" src="/scripts/launch/entity.js?v=20"></script>	
     <script type="text/javascript" src="/scripts/launch/main.js?v=20"></script>		
-    <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=21"></script>		
+    <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=22"></script>		
 </head>
 
 <body id="page">

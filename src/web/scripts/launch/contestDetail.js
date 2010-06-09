@@ -145,7 +145,21 @@ $(document).ready(function(){
            $('#rMultiRoundInfoDiv').show();                 
         }
    });
-   $('#roundTypes').trigger("change");         			      	
+   $('#roundTypes').trigger("change");      
+  
+  //tiny mce BUGR 3813 
+  tinyMCE.init({
+  	mode : "exact",
+  	elements : "contestDescription,contestIntroduction,round1Info,round2Info",
+  	plugins : "paste",
+  	theme : "advanced",  	
+	  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist",
+	  theme_advanced_buttons2 : "",
+	  theme_advanced_buttons3 : "",
+	  init_instance_callback : function() {
+	  	  $('table.mceLayout').css('width','100%');
+	  }
+  });
 });
 
 
@@ -204,6 +218,13 @@ function initContest(contestJson) {
    	  $('#resubmit').show(); 
    }
    
+   //BUGR-3812: only show edit buttons if it is in draft or scheduled status
+   if(CONTEST_DETAILED_STATUS_DRAFT != mainWidget.competition.contestData.detailedStatusId &&
+      CONTEST_DETAILED_STATUS_SCHEDULED != mainWidget.competition.contestData.detailedStatusId) {
+       $('img[alt="edit"]').parent().hide()   
+    }   
+   
+   
    function parseDate(dateObj) {
    	   if(dateObj == null) {
    	   	  return null;
@@ -220,12 +241,36 @@ function populateTypeSection() {
 	//edit
 	$('#contestTypes').getSetSSValue(mainWidget.competition.contestData.contestTypeId);
 	$('#contestName').val(mainWidget.competition.contestData.name);
-	
+	if(isBillingEditable()) {		
+		$('#billingAccountDivEdit').show(); 
+	  $('#billingProjects').getSetSSValue(mainWidget.competition.contestData.billingProject);
+  } else {
+  	$('#billingAccountDivEdit').hide(); 
+  }
 	
 	//display
 	$('#rContestTypeName').html($("#contestTypes option[value=STUDIO"+ mainWidget.competition.contestData.contestTypeId +"]").text());
 	$('#rTypeIntroduction').html(mainWidget.competition.contestData.shortSummary);
 	$('#rContestName').html(mainWidget.competition.contestData.name);
+	
+	if(isBillingViewable()) {
+	   $('.billingdisplay').show(); 
+     var billingProjectId = mainWidget.competition.contestData.billingProject;
+     $('#rBillingAccount').html((billingProjectId <= 0)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());	
+  } else {
+  	 $('.billingdisplay').hide();   	 
+  }
+}
+
+function isBillingViewable() {
+	// billing can not be found, meaning is not eligible, don't show/edit
+	var billingProjectId = mainWidget.competition.contestData.billingProject;
+	return billingProjectId <=0 || $("#billingProjects option[value="+ billingProjectId +"]").length == 1;
+}
+
+function isBillingEditable() {
+	 var editableStatus = (CONTEST_DETAILED_STATUS_DRAFT == mainWidget.competition.contestData.detailedStatusId);
+	 return isBillingViewable() && editableStatus;
 }
 
 function saveTypeSection() {
@@ -272,7 +317,7 @@ function validateFieldsTypeSection() {
    if(!checkRequired(contestName)) {
        errors.push('Contest name is empty.');
    }
-
+   
 
    if(errors.length > 0) {
        showErrors(errors);
@@ -280,7 +325,12 @@ function validateFieldsTypeSection() {
    }
    
    mainWidget.competition.contestData.contestTypeId = contestTypeId;
-   mainWidget.competition.contestData.name = contestName;
+   mainWidget.competition.contestData.name = contestName;   
+   if(isBillingEditable()) {		
+   	 var billingProjectId = $('select#billingProjects').val();
+   	 mainWidget.competition.contestData.billingProject = billingProjectId;
+   }
+      
    return true;	
 }
 
@@ -386,8 +436,8 @@ function validateFieldsRoundSection() {
    var endDate = getDateByIdPrefix('end');
    var milestoneDate = getDateByIdPrefix('milestone');
    
-   var round1Info = $('#round1Info').val();
-   var round2Info = $('#round2Info').val();
+   var round1Info = tinyMCE.get('round1Info').getContent(); 
+   var round2Info = tinyMCE.get('round2Info').getContent(); 
    //milestone prize and submission numbers
    var milestonePrizeInput = $('#milestonePrize').val();
    
@@ -592,8 +642,8 @@ function saveSpecSection() {
 }
 
 function validateFieldsSpecSection() {
-   var contestDescription = $('#contestDescription').val();
-   var contestIntroduction = $('#contestIntroduction').val();
+   var contestDescription = tinyMCE.get('contestDescription').getContent();
+   var contestIntroduction = tinyMCE.get('contestIntroduction').getContent(); 
 	
    //validation
    var errors = [];

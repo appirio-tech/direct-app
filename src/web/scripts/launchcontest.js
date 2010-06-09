@@ -409,7 +409,12 @@ $(document).ready(function(){
    ****************************/
   tinyMCE.init({
   	mode : "exact",
-  	elements : "contestDescription,contestIntroduction,round1Info,round2Info"
+  	elements : "contestDescription,contestIntroduction,round1Info,round2Info",
+  	plugins : "paste",
+  	theme : "advanced",  	
+	  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist",
+	  theme_advanced_buttons2 : "",
+	  theme_advanced_buttons3 : ""
   });
   
    
