@@ -41,7 +41,7 @@
         <ui:isProjectPage>
             <ul>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-                    <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Overview</span></a>
+                    <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
                 </li>
 
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
