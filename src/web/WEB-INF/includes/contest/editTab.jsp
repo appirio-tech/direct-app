@@ -501,7 +501,7 @@
 	       <div id="documentTemplate" class='hide'>
 	       	    <table><tbody>
                	<tr class="rightbor">
-                   	<td class="first_tab"  align="left"><strong>{0}. <a href="#">{1}</a></strong></td>
+                   	<td class="first_tab"  align="left"><strong>{0}. <a href="${ctx}/launch/downloadDocument?documentId={3}" target="_blank">{1}</a></strong></td>
                     <td class="sec_tab_files">{2}</td>
                 </tr>
               </tbody></table>  

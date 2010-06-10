@@ -66,7 +66,7 @@ function updateReview() {
    html = "";
    $.each(documents, function(i, doc) {
        html = html + 
-			 "<dt>" + doc.fileName + "</dt>" +
+			 "<dt>" + '<a href="'+ctx+'/launch/downloadDocument?documentId='+ doc.documentId +'" target="_blank">'+ doc.fileName + "</a></dt>" +
 			 "<dd>" + doc.description + "</dd>";
    });
    $('#docUploadList').html(html);

@@ -1,3 +1,3 @@
 <%@ tag language="java" body-content="empty" pageEncoding="UTF-8" %>
-<%@ taglib prefix="s" uri="/WEB-INF/tld/struts-tags.tld" %>
-<a href="<s:url value="help.jsp?height=400&amp;width=800&amp;inlineId=helpPopup"/>" class="thickbox">Help</a>
+<%@ include file="/WEB-INF/includes/taglibs.jsp" %>
+<a href="${ctx}/help.jsp?height=400&amp;width=800&amp;inlineId=helpPopup" class="thickbox">Help</a>

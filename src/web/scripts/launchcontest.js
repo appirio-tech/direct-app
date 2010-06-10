@@ -273,7 +273,7 @@ $(document).ready(function(){
   $('#TB_HideSelect').css("opacity", "0");
   $('#TB_overlay').hide();
   /* init help */
-  $('.helloUser .help,.tabContest .moreLink,.help .helpIcon').click(function(){
+  $('.helloUser .help,.tabContest .moreLink,.help .helpIcon,.conditions').click(function(){
     $('#TB_overlay').show();
     $('#TB_window').show();
     $('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
@@ -282,17 +282,6 @@ $(document).ready(function(){
         });
     $('#placeHolder').hide();
     $('#TB_ajaxContent').show();
-  });
-
-  $('.conditions').click(function(){
-    $('#TB_overlay').show();
-    $('#TB_window').show();
-    $('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
-    $('#TB_window').css({
-            'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window").width() / 2)) + 'px'
-        });
-    $('#placeHolder').show();
-    $('#TB_ajaxContent').hide();
   });
 
   $('#TB_closeWindowButton').click(function(){
@@ -1006,4 +995,9 @@ function addNewProject() {
           });
       }
    });
+}
+
+function closeTBBox() {
+		$('#TB_overlay').hide();
+		$('#TB_window').hide();
 }

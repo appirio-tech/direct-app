@@ -16,10 +16,11 @@
     </script>    
     <script type="text/javascript" src="/scripts/launch/entity.js?v=20"></script>	
     <script type="text/javascript" src="/scripts/launch/main.js?v=21"></script>		
-    <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=22"></script>		
+    <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=22<%=new java.util.Date().getTime()%>"></script>		
 </head>
 
 <body id="page">
+<a name="top" style="width:0px;height:0px;"></a>
 <div id="wrapper">
     <div id="wrapperInner">
         <div id="container">
@@ -44,7 +45,7 @@
                         <a href="javascript:previewContest();" class="button5" style="float:right;text-align:center;">View Contest</a>    	
                         </h2>                        
                     </div><!-- End .areaHeader -->
-
+                                        
                     <jsp:include page="includes/contest/contestStats.jsp"/>
 
                     <div class="container2 tabs3Container">
@@ -62,7 +63,7 @@
                         </div></div></div>
                     </div><!-- End .container2 -->
 
-                    <a href="javascript:;" class="button1 backToTop"><span>Back To Top</span></a>
+                    <a href="#top" class="button1 backToTop"><span>Back To Top</span></a>
                     </div>
                     </div>
 

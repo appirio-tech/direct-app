@@ -8,7 +8,6 @@
         <th>Registrants</th>
         <th>Submissions</th>
         <th>Forums</th>
-        <th>Next Action</th>
     </tr>
     </thead>
     <s:push value="viewData.contestStats">
@@ -25,13 +24,6 @@
             <td><s:property value="registrantsNumber"/></td>
             <td><s:property value="submissionsNumber"/></td>
             <td><s:property value="forumPostsNumber"/></td>
-            <td class="fees">
-                <p>Milestone Feedback : <strong>Tomorrow</strong></p>
-                <a href="" onclick="return false;" class="button4">
-                    Milestone Feedback</a>
-                <a href="" onclick="return false;" class="button5">
-                    Notification Option</a>
-            </td>
         </tr>
         </tbody>
     </s:push>

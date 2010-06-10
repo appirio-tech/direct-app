@@ -683,7 +683,7 @@ function showSpecSectionEdit() {
 }
 
 /**
- * Document Section Functions
+ * Document/Upload Section Functions
  */
 function populateDocumentSection() {
 	//edit
@@ -691,9 +691,9 @@ function populateDocumentSection() {
 	
 	//display
 	var html = "";
-	var template = $('#documentTemplate tbody').html();
-	$.each(documents, function(i,document) {
-		 html += $.validator.format(template,(i+1),document['fileName'],document['description']);
+	var template = unescape($('#documentTemplate tbody').html());
+	$.each(documents, function(i,doc) {
+		 html += $.validator.format(template,(i+1),doc['fileName'],doc['description'],doc['documentId']);
 	});
 	$('#documentTable').html(html);
 }

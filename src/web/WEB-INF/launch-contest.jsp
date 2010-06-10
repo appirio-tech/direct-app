@@ -9,8 +9,8 @@
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=20"></script>	
     <script type="text/javascript" src="/scripts/launch/main.js?v=21"></script>	
-    <script type="text/javascript" src="/scripts/launchcontest.js?v=22"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/review.js?v=20"></script>	
+    <script type="text/javascript" src="/scripts/launchcontest.js?v=22<%=new java.util.Date().getTime()%>"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/review.js?v=20<%=new java.util.Date().getTime()%>"></script>	
     <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=20"></script>	
 </head>
 

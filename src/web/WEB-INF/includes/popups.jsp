@@ -5,6 +5,7 @@
             
         </div><!-- End .helpPopupInner -->
     </div><!-- End #helpPopup -->
+    
 	  <!-- Message Dialog-->
 		<div id="msgDialog" title="Message"  class="dialog-box hide">
         <p>        	
