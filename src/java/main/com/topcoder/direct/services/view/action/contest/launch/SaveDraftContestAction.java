@@ -1738,6 +1738,12 @@ public class SaveDraftContestAction extends ContestAction {
 
         // set dr point in the end. it is a derivative number before all other prizes/amount are decided.
         studioCompetition.setDrPoints(getDrPoint(studioCompetition));
+
+        // set channel id to 2
+        contestData.setContestChannelId(2);
+        contestData.setMaximumSubmissions(3);
+        contestData.setRequiresPreviewImage(true);
+        contestData.setRequiresPreviewFile(false);
     }
 
     /**
