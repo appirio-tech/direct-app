@@ -1741,7 +1741,7 @@ public class SaveDraftContestAction extends ContestAction {
 
         // set channel id to 2
         contestData.setContestChannelId(2);
-        contestData.setMaximumSubmissions(3);
+        contestData.setMaximumSubmissions(5);
         contestData.setRequiresPreviewImage(true);
         contestData.setRequiresPreviewFile(false);
     }
