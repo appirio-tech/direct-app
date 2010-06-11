@@ -21,14 +21,14 @@ BODY#page{
 ---------------*/
 
 #header{
-	height: 90px;
+	height: 120px;
 	background: url(../images/header_dash_bg.png) repeat-x;
 	position: relative;
 }
 
 #header .logo{
 	position: absolute;
-	top: 14px;
+	top: 44px;
 	left: 21px;
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	color: #333;
@@ -45,8 +45,8 @@ BODY#page{
 
 #header .helloUser{ /* this area will contain the logout, help links*/
 	position: absolute;
-	right: 21px;
-	top: 10px;
+	right: 30px;
+	top: 8px;
 	font-size: 12px;
 }
 
@@ -58,10 +58,15 @@ BODY#page{
 	
 	#header .helloUser LI{
 		float: left;
+		color: #444;
 	}
 	
+		#header .helloUser LI strong{
+			color: #FFF;
+		}
+	
 	#header .helloUser A{
-		color: #333;
+		color: #FFF;
 		padding: 0 5px;
 		text-decoration: none;
 	}
@@ -75,27 +80,91 @@ BODY#page{
 		font-weight: bold;
 		padding-left: 0;
 	}
-	
+		
 	#header .helloUser A.help{
-		background: url(../images/help_ico4.png) no-repeat right top;
-		padding-right: 22px;
+		background: url(../images/help_ico6.png) no-repeat right 0;
+		padding-right: 20px;
 		padding-top: 2px;
 		font-weight: bold;
 	}
 	
+	
+	
 	#header .helloUser A.help:hover{
-		background: url(../images/help_ico4.png) no-repeat right bottom;
+		background: url(../images/help_ico6.png) no-repeat right -17px;
 	}
 
 /*-----------------
 	TABS 
 ------------------*/
 
+/* tabs0 ( the header tabs )*/
+#tabs0{
+	background: #362f2b;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 33px;
+	width: 100%;
+}
 
+#tabs0 UL{
+	list-style: none;
+	padding: 0;
+	margin: 6px 0 6px 25px;
+	height: 21px;
+}
+
+#tabs0 UL LI{
+	float: left;
+	margin-right: 15px;
+}
+
+	#tabs0 UL LI A{
+		color: #FFF;
+		font-size: 12px;
+		font-weight: bold;
+		text-decoration: none;
+		height: 21px;
+		line-height: 21px;
+		float: left;
+	}
+	
+	#tabs0 UL LI A SPAN{
+		height: 21px;
+		float: left;
+		display: inline-block;
+		padding: 0 17px 0 13px;
+		margin-left: 4px;
+		text-align: center;
+		cursor: pointer;
+	}
+	
+	
+	#tabs0 UL LI.on A{
+		color: #262626;
+		background: url(../images/top_nav_button_left.png) left top no-repeat;
+	}
+	
+	#tabs0 UL LI.on A:hover {
+	}
+
+	#tabs0 UL LI.on A SPAN{
+		background: url(../images/top_nav_button.png) right top no-repeat;
+	}
+
+	#tabs0 UL LI A:hover{
+		color: #262626;
+		background: url(../images/top_nav_button_left.png) 0 -21px no-repeat;
+	}
+	
+	#tabs0 UL LI A:hover SPAN{
+		background: url(../images/top_nav_button.png) right -21px no-repeat;
+	}
 /* tabs1 ( the main tabs )*/
 #tabs1{
 	position: absolute;
-	top: 62px;
+	top: 92px;
 	left: 21px;
 }
 
@@ -151,7 +220,7 @@ BODY#page{
 
 #tabs2{
 	position: absolute;
-	top: 62px;
+	top: 92px;
 	right: 21px;
 }
 
@@ -165,6 +234,10 @@ BODY#page{
 	float: left;
 	margin: 0 3px;
 }
+
+#tabs2 UL LI.last{
+	margin-right:100px;
+	}
 
 	#tabs2 UL LI A{
 		color: #FFF;
@@ -234,8 +307,13 @@ BODY#page{
 		margin: 0;
 		padding: 0;
 		height: 40px;
-		width: 25%;
+		width: 20%;
 		overflow: hidden;
+	}
+	
+	#tabs3 UL LI.lastItem{
+		float: none; 
+		width: auto;
 	}
 	
 		#tabs3 UL LI A{
@@ -288,9 +366,12 @@ BODY#page{
 		#tabs3 UL LI.on A{ /* tabs on the active state */
 			background: transparent url(../images/tabs3_on.png) repeat-x top !important;
 			color: #FFF;
-			font-size: 14px;
+			/*font-size: 14px;*/
 			font-family: Verdana, Geneva, sans-serif;
 		}
+			#tabs3 UL LI.off A SPAN.right {
+				color: #a9a9a9;
+			}
 		
 			#tabs3 UL LI.on A SPAN.right{
 				height: 32px;
