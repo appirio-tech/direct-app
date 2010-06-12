@@ -180,6 +180,7 @@ function initContest(contestJson) {
    mainWidget.competition.contestData.otherFileFormats = contestJson.otherFileFormats || '';
    mainWidget.competition.contestData.statusId=contestJson.statusId;
    mainWidget.competition.contestData.detailedStatusId=contestJson.detailedStatusId;
+   mainWidget.competition.contestData.contestAdministrationFee = contestJson.contestAdministrationFee;
    
    
    //multi round
@@ -214,7 +215,7 @@ function initContest(contestJson) {
    });
    
    //show activate button if it is still in draft
-   if(CONTEST_DETAILED_STATUS_DRAFT == mainWidget.competition.contestData.detailedStatusId) {
+   if(isDraft()) {
    	  $('#resubmit').show(); 
    }
    
@@ -232,6 +233,10 @@ function initContest(contestJson) {
    	   
    	   return Date.parse(dateObj.date,'MM/dd/yyyy HH:mm');
    }	 
+}
+
+function isDraft() {
+	return CONTEST_DETAILED_STATUS_DRAFT == mainWidget.competition.contestData.detailedStatusId;
 }
 
 /**
@@ -258,7 +263,13 @@ function populateTypeSection() {
      var billingProjectId = mainWidget.competition.contestData.billingProject;
      $('#rBillingAccount').html((billingProjectId <= 0)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());	
   } else {
-  	 $('.billingdisplay').hide();   	 
+  	 $('.billingdisplay').hide();   	   	 
+  }
+  if(isDraft()) {
+  	 $('.adminFeeDisplay').show();
+  	 $('#rAdminFee').html(mainWidget.competition.contestData.contestAdministrationFee.formatMoney(2));  	 
+  } else {
+  	 $('.adminFeeDisplay').hide();
   }
 }
 

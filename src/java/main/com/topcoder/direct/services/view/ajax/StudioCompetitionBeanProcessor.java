@@ -73,6 +73,7 @@ public class StudioCompetitionBeanProcessor implements JsonBeanProcessor {
             .getOtherFileFormats().toUpperCase());
         result.put("statusId", contestData.getStatusId());
         result.put("detailedStatusId", contestData.getDetailedStatusId());
+        result.put("contestAdministrationFee", contestData.getContestAdministrationFee());
 
         result.put("multiRound", contestData.isMultiRound());
         result.put("multiRoundData", contestData.getMultiRoundData());

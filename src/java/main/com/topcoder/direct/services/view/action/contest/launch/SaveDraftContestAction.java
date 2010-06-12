@@ -496,7 +496,7 @@ public class SaveDraftContestAction extends ContestAction {
             }
         }
 
-        
+
         if (paymentData.getProjectId() <= 0 && billingProjectId > 0)
         {
                 paymentData.setProjectId(billingProjectId);
@@ -521,6 +521,7 @@ public class SaveDraftContestAction extends ContestAction {
     private Map<String, Object> getStudioResult(StudioCompetition studioCompetition) {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("contestId", studioCompetition.getContestData().getContestId());
+        result.put("contestAdministrationFee", studioCompetition.getContestData().getContestAdministrationFee());
         return result;
     }
 

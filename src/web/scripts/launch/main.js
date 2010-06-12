@@ -215,6 +215,9 @@ function handleSaveAsDraftContestResult(jsonResult) {
         } else {
           showMessage("Contest " + contestName +" has been updated successfully!");
         }
+        
+        //update admin fee
+        mainWidget.competition.contestData.contestAdministrationFee = result.contestAdministrationFee;
     },
     function(errorMessage) {
         showErrors(errorMessage);

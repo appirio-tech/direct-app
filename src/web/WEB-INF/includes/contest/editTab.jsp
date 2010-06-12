@@ -19,6 +19,9 @@
          <br /> <br />
          <span class="name2 billingdisplay"><strong>Billing Account</strong></span>
          <span class="value billingdisplay"><strong>: <span id="rBillingAccount"></span></strong></span>
+         <br /> <br />
+         <span class="name2 adminFeeDisplay"><strong>Admin Fee</strong></span>
+         <span class="value adminFeeDisplay"><strong>: $<span id="rAdminFee"></span></strong></span>
       </p>
     </div><!-- End .detailsContent -->												
 </div><!-- End .details -->
