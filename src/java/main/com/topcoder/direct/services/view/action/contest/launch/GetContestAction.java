@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
+import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDTO;
@@ -21,6 +22,12 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.StudioCompetition;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.MaxAge;
 
 /**
  * <p>
@@ -192,11 +199,13 @@ public class GetContestAction extends ContestAction {
         if (viewData == null) {
             viewData = new ContestDetailsDTO();
 
+            //real data
             ContestStatsDTO contestStats = new ContestStatsDTO();
             ContestBriefDTO contest = new ContestBriefDTO();
             contest.setId(studioCompetition.getContestData().getContestId());
             contest.setTitle(studioCompetition.getContestData().getName());
             contestStats.setContest(contest);
+            fillContestStats(contestStats);
             viewData.setContestStats(contestStats);
 
             ContestDTO contestDTO = DataProvider.getContest(4);
@@ -212,6 +221,18 @@ public class GetContestAction extends ContestAction {
             viewData.setUserProjects(userProjectsDTO);
         }
         return viewData;
+    }
+
+    private void fillContestStats(ContestStatsDTO contestStats) throws Exception {
+        DataAccess dao = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_studio_contest_stats");
+        request.setProperty("ct", String.valueOf(studioCompetition.getContestData().getContestId()));
+
+        ResultSetContainer result = dao.getData(request).get("direct_studio_contest_stats");
+        contestStats.setRegistrantsNumber(result.getIntItem(0, "number_of_registration"));
+        contestStats.setSubmissionsNumber(result.getIntItem(0, "number_of_submission"));
+        contestStats.setForumPostsNumber(result.getIntItem(0, "number_of_forum"));
     }
 
     /**
