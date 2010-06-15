@@ -25,7 +25,7 @@
                 </li>
 
 				<li <c:if test="${requestScope.CURRENT_TAB eq 'search'}">class="on"</c:if>>
-                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
+                    <a href="#"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -41,7 +41,7 @@
                 </li>
 
 				<li class="on">
-                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
+                     <a href="#"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -57,7 +57,7 @@
                 </li>
 
 				<li>
-                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
+                     <a href="#"><span>Projects</span></a>
                 </li>
 
 				<!--
