@@ -67,6 +67,8 @@
             </ul>
         </c:if>
     </div><!-- End #tabs0 -->
+
+
 	
 	<div class="helloUser">
         <ul>
@@ -78,6 +80,24 @@
         </ul>
     </div><!-- End .helloUSer -->
 
+    <ui:isProjectPage>
+        <div id="tabs1">
+             <ul>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
+                </li>
+
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Contests</span></a>
+                </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectPermissionsView" namespace="/"/>"><span>Permissions</span></a>
+                </li>
+            </ul>
+        </div>
+    </ui:isProjectPage>
+
+    
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
           
