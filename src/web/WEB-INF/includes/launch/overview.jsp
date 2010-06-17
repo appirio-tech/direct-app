@@ -109,7 +109,13 @@
             <input type="text" id="milestonePrize" class="prizesInput" value="" />
             <strong>for each submission up to</strong>
             <div class="numSelect">
-            	<select id="milestoneSubmissionNumber" ><option>2</option><option>5</option><option>10</option></select>
+            	<select id="milestoneSubmissionNumber" >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                </select>
             </div>
         </div>
         
