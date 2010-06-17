@@ -25,7 +25,7 @@
                 </li>
 
 				<li <c:if test="${requestScope.CURRENT_TAB eq 'search'}">class="on"</c:if>>
-                    <a href="#"><span>Projects</span></a>
+                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -41,7 +41,7 @@
                 </li>
 
 				<li class="on">
-                     <a href="#"><span>Projects</span></a>
+                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -57,7 +57,7 @@
                 </li>
 
 				<li>
-                     <a href="#"><span>Projects</span></a>
+                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -67,8 +67,6 @@
             </ul>
         </c:if>
     </div><!-- End #tabs0 -->
-
-
 	
 	<div class="helloUser">
         <ul>
@@ -80,23 +78,6 @@
         </ul>
     </div><!-- End .helloUSer -->
 
-    <ui:isProjectPage>
-        <div id="tabs1">
-             <ul>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-                    <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
-                </li>
-
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
-                    <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Contests</span></a>
-                </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
-                    <a href="<s:url action="currentProjectPermissionsView" namespace="/"/>"><span>Permissions</span></a>
-                </li>
-            </ul>
-        </div>
-    </ui:isProjectPage>
-
     
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
@@ -105,7 +86,7 @@
                 <a href="<s:url action="dashboardSearchView" namespace="/"/>"><span>Search</span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_TAB eq 'settings'}">class="on"</c:if>>
-                <a href="" onclick="return false;"><span>Settings</span></a>
+                <a href="<s:url action="dashboardNotifications" namespace="/"/>"><span>Settings</span></a>
             </li>
         </ul>
     </div><!-- End #tabs2 -->

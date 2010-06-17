@@ -170,6 +170,13 @@
         <delete dir="${builddir}"/>
         <delete dir="${testlogdir}"/>
     </target>
+    <target name="clean-jboss">
+        <delete dir="${jboss.home}/server/${server.name}/tmp"/>
+        <delete dir="${jboss.home}/server/${server.name}/work"/>
+        <delete dir="${jboss.home}/server/${server.name}/deploy/tcdirect.ear"/>
+        <delete file="${jboss.home}/server/${server.name}/deploy/tcdirect.ear"/>
+    </target>
+
 
     <!-- ************************************************************************** -->
     <!-- ************ DEPLOYMENT RELATED TARGETS  ******************************* -->

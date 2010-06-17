@@ -564,6 +564,10 @@ BODY#page{
 	vertical-align:middle;
 }
 
+#area1 H2.notificationTitle{
+	background: url(../images/notification_ico.png) no-repeat left center;
+}
+
 .areaHeader A.button1{
 	position: absolute;
 	right: 0;
@@ -1909,6 +1913,97 @@ TABLE.contests TBODY.checkPermissions LABEL{
 TABLE.contests TH.permCol{
 	width: 19%;
 }
+TABLE.notifications{
+	border: 1px solid #a8abad;
+}
+
+TABLE.notifications TR.applyForAll{
+	background-color: #ffffcc;
+}
+
+TABLE.notifications TR.applyForAll TD.markRed{
+	font-size:12px;
+	color:red;
+	font-weight:bold;
+}
+
+TABLE.notifications TR.alternate{
+	background-color: #f3f3f3;
+}
+
+TABLE.notifications TD{
+	font-size: 11px;
+	font-weight: normal;
+	text-align: left;
+	padding-left: 10px;
+	color: #333;
+	line-height: 18px;
+}
+
+	TABLE.notifications TD SPAN{ /* contest status */
+		font-weight: bold;
+		padding-left: 14px;
+	}
+
+	TABLE.notifications TD.checkbox{
+	font-size: 11px;
+	font-weight: normal;
+	text-align: center;
+	color: #333;
+}
+
+TABLE.notifications A.button{
+	margin: 0 3px;
+}
+
+	TABLE.notifications A.button SPAN{
+		width: 60px;
+		text-align: center;
+	}
+
+TABLE.notifications A.group{ /* group name link */
+	padding-left: 22px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+TABLE.notifications A.subgroup{ /* group name link */
+	padding-left: 32px;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+TABLE.notifications A.expand{
+	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+}
+
+TABLE.notifications A.collapse{
+	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+}
+
+TABLE.notifications .group{
+	padding-left: 22px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+TABLE.notifications .expand{
+	text-decoration: none;
+	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+}
+
+TABLE.notifications .collapse{
+	text-decoration: none;
+	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+}
+
+TABLE.notifications TH.permCol{
+	width: 19%;
+}
+
+TABLE.notifications TH.permCol2{
+	width: 5%;
+}
 	
 /* Tables pagination */
 
@@ -1918,6 +2013,7 @@ TABLE.contests TH.permCol{
 	height: 20px;
 	font-size: 12px;
 	background-color: transparent;
+    padding-top:7px;
 }
 
 	.pagination A{
@@ -1946,6 +2042,11 @@ TABLE.contests TH.permCol{
 		padding-left: 10px;
 	}
 	 
+	.pagination SPAN.next{
+		background: url(../images/page_next_nactive.png) no-repeat right;
+		padding-right: 10px;
+	}
+	
 	 .pagination .pages{
 	 	float: right;
 	 	padding-top: 2px;
@@ -1957,6 +2058,10 @@ TABLE.contests TH.permCol{
 		left: 0;
 	}
 
+.pagination .showPages .normalOption{
+  font-size: 12px;
+  font-weight: normal;
+}
 /*-------------
 	FORMS
 ---------------*/

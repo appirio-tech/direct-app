@@ -16,9 +16,13 @@
     <c:set var="styleClass" value="user"/>
 </c:if>
 
+<%--
 <s:if test="sessionData != null">
     <s:push value="sessionData">
         <a href="javascript:alert('To be implemented by sub-sequent assemblies');"
-           class="${styleClass}"><s:property value="currentUserHandle"/></a>
+           class="${styleClass}"><s:property value="currentUserHandle"/>||<c:out value="${currentUserHandle}"/>||<c:out value="${userHandle}"/></a>
     </s:push>
 </s:if>
+--%>
+<%--The above code didn't work for me, so I refer user name directly in session --%>
+<a href="javascript:alert('To be implemented by sub-sequent assemblies');" class="${styleClass}"><c:out value="${userHandle}"/></a>

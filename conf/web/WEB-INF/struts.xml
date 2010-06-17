@@ -52,8 +52,16 @@
                 <interceptor-ref name="contestAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
+            <!-- base stack -->
+            <interceptor-stack name="baseStack">
+                <interceptor-ref name="exception">
+                    <param name="logEnabled">true</param>
+                    <param name="logLevel">ERROR</param>
+                </interceptor-ref>
+            </interceptor-stack>
         </interceptors>
 
+        <default-interceptor-ref name="baseStack"/>
         <global-results>
             <result name="error">/error.jsp</result>
             <result name="permissionDenied">/error.jsp</result>
@@ -153,6 +161,19 @@
             <result name="success">/WEB-INF/calendar.jsp</result>
         </action>
 
+        <action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction">
+            <!--<interceptor-ref name="securedPreProcessorStack"/>-->
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <!--<interceptor-ref name="preProcessor"/>-->
+            <result name="success">/WEB-INF/notification/dashboard-notifications.jsp</result>
+        </action>
+
+        <action name="updateNotifications" class="com.topcoder.direct.services.view.action.notification.UpdateNotificationsAction">
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json" />
+        </action>
     </package>
 
     <package name="base" namespace="/base" extends="default">
@@ -251,3 +272,4 @@
         </action>
     </package>
 </struts>
+
