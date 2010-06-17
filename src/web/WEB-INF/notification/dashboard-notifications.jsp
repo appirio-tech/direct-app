@@ -49,7 +49,7 @@
                             </div>
 
 							<div class="areaHeader">
-								<h2 class="title notificationTitle">Notification Setting</h2>
+								<h2 class="title notificationTitle">Notifications Setting</h2>
 							</div><!-- End .areaHeader -->
 
 							<div class="container2">
