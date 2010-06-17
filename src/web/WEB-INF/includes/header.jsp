@@ -25,7 +25,7 @@
                 </li>
 
 				<li <c:if test="${requestScope.CURRENT_TAB eq 'search'}">class="on"</c:if>>
-                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
+                    <a href="#"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -41,7 +41,7 @@
                 </li>
 
 				<li class="on">
-                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
+                     <a href="#"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -57,7 +57,7 @@
                 </li>
 
 				<li>
-                    <a href="<s:url action="projectOverview" namespace="/"/>"><span>Projects</span></a>
+                     <a href="#"><span>Projects</span></a>
                 </li>
 
 				<!--
@@ -77,6 +77,23 @@
             <li><link:help/></li>
         </ul>
     </div><!-- End .helloUSer -->
+
+    <ui:isProjectPage>
+        <div id="tabs1">
+             <ul>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
+                </li>
+
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Contests</span></a>
+                </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectPermissionsView" namespace="/"/>"><span>Permissions</span></a>
+                </li>
+            </ul>
+        </div>
+    </ui:isProjectPage>
 
     
     <div id="tabs2"><!-- tabs on the right side-->
