@@ -35,8 +35,8 @@
                 <td><s:property value="forumPostsNumber"/></td>
                 <td><span class="<s:property value="status.shortName"/>"><s:property value="status.name"/></span></td>
                 <td>
-                    <a href="javascript:alert('To be implemented by sub-sequent assemblies');"
-                       class="button1 button"><span><s:property value="status.actionText"/></span></a>
+                    <a href="contest/detail?contestId=${contest.id}"
+                       class="button1 button"><span>View/Edit</span></a>
                 </td>
             </tr>
         </s:iterator>
