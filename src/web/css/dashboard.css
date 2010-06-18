@@ -1413,7 +1413,27 @@ table.fc-header { /* calendar header */
 	.panel A.deleteUser{ /* delete user/group icon */
 		background: url(../images/delete_user_ico.png) no-repeat 5px 0;
 	}
+.panel2{
+	text-align: right;
+	font-size: 12px;
+	padding: 14px 0 6px 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+.panel2  A{
+		float: left;
+		text-decoration: none;
+		height: 19px;
+		padding-top: 2px;
+	}
+
+	.panel2  A:hover{
+
+	}
+
 	
+
 /*----- Details ----*/
 .no_details{
 	/*margin-bottom: 20px;*/
