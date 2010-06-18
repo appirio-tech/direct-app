@@ -4,6 +4,8 @@
 package com.topcoder.direct.services.view.dto;
 
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+
 
 import java.io.Serializable;
 import java.util.Date;
@@ -31,7 +33,7 @@ public class ActivityDTO implements Serializable {
     /**
      * <p>A <code>ContestBriefDTO</code> providing the details on contest associated with this activity.</p>
      */
-    private ContestBriefDTO contest;
+    private TypedContestBriefDTO contest;
 
     /**
      * <p>A <code>Date</code> providing the timestamp for the activity.</p>
@@ -94,7 +96,7 @@ public class ActivityDTO implements Serializable {
      *
      * @return a <code>ContestBriefDTO</code> providing the details on contest associated with this activity.
      */
-    public ContestBriefDTO getContest() {
+    public TypedContestBriefDTO getContest() {
         return contest;
     }
 
@@ -103,7 +105,7 @@ public class ActivityDTO implements Serializable {
      *
      * @param contest a <code>ContestBriefDTO</code> providing the details on contest associated with this activity.
      */
-    public void setContest(ContestBriefDTO contest) {
+    public void setContest(TypedContestBriefDTO contest) {
         this.contest = contest;
     }
 

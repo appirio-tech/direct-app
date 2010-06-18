@@ -57,7 +57,9 @@
                                                     <s:property value="type.name"/></span>
                                             </td>
                                             <td><div style="display:table-cell; vertical-align: middle; padding-right: 5px;">
-                                                <img src="/images/dv_small.png" style="vertical-align:middle"/> </div>
+                                                <img src="/images/<s:property value="contest.contestType.letter"/>_small.png"
+                                                                                 alt="<s:property value="contest.contestType.letter"/>"/> 
+															</div>
                                                 <div style="display: table-cell;"> <link:contestDetails contest="${contest}"/> </div>
                                             </td>
                                             <td class="posted"><s:property value="type.actionText"/> :

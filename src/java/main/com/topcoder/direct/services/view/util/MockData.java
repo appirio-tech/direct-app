@@ -23,6 +23,7 @@ import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchRes
 import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 
 /**
  * <p>This class serves as a collection of mock data to be used for purposes of this <code>TopCoder Direct</code> system
@@ -101,7 +102,7 @@ public class MockData {
                 List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
                 List<ContestDTO> userContests = contests.get(project.getId());
                 if (userContests != null) {
-                    for (ContestBriefDTO contest : userContests) {
+                    for (TypedContestBriefDTO contest : userContests) {
                         Date date = new Date(System.currentTimeMillis() - contest.getId() * 12 * 3600 * 1000L);
                         long originatorId = userIds[r.nextInt(10000) % userIds.length];
                         activities.add(createActivity(contest, date, users.get(originatorId), originatorId,
@@ -124,7 +125,7 @@ public class MockData {
             List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
             List<ContestDTO> userContests = contests.get(project.getId());
             if (userContests != null) {
-                for (ContestBriefDTO contest : userContests) {
+                for (TypedContestBriefDTO contest : userContests) {
                     Date date = new Date(System.currentTimeMillis() - contest.getId() * 12 * 3600 * 1000L);
                     long originatorId = userIds[r.nextInt(10000) % userIds.length];
                     activities.add(createActivity(contest, date, users.get(originatorId), originatorId,
@@ -145,7 +146,7 @@ public class MockData {
             for (ProjectBriefDTO project : userProjects) {
                 List<ContestDTO> userContests = contests.get(project.getId());
                 if (userContests != null) {
-                    for (ContestBriefDTO contest : userContests) {
+                    for (TypedContestBriefDTO contest : userContests) {
                         Date date = new Date(System.currentTimeMillis() + contest.getId() * 12 * 3600 * 1000L);
                         long originatorId = userIds[r.nextInt(10000) % userIds.length];
                         data.add(createActivity(contest, date, users.get(originatorId), originatorId,
@@ -186,7 +187,7 @@ public class MockData {
         return contest;
     }
 
-    private static ActivityDTO createActivity(ContestBriefDTO contest, Date date, String handle, long userId,
+    private static ActivityDTO createActivity(TypedContestBriefDTO contest, Date date, String handle, long userId,
                                               ActivityType type) {
         ActivityDTO activity = new ActivityDTO();
         activity.setContest(contest);
@@ -205,7 +206,7 @@ public class MockData {
             for (ProjectBriefDTO project : userProjects) {
                 List<ContestDTO> userContests = contests.get(project.getId());
                 if (userContests != null) {
-                    for (ContestBriefDTO contest : userContests) {
+                    for (TypedContestBriefDTO contest : userContests) {
                         DashboardContestSearchResultDTO dto = new DashboardContestSearchResultDTO();
                         dto.setContest(contest);
                         dto.setForumPostsNumber(r.nextInt(10));
@@ -233,7 +234,7 @@ public class MockData {
             for (ProjectBriefDTO project : userProjects) {
                 List<ContestDTO> userContests = contests.get(project.getId());
                 if (userContests != null) {
-                    for (ContestBriefDTO contest : userContests) {
+                    for (TypedContestBriefDTO contest : userContests) {
                         for (int i = 0; i < userIds.length; i++) {
                             long userId = userIds[i];
                             DashboardMemberSearchResultDTO dto = new DashboardMemberSearchResultDTO();
@@ -283,7 +284,7 @@ public class MockData {
         if (project != null) {
             List<ContestDTO> userContests = contests.get(project.getId());
             if (userContests != null) {
-                for (ContestBriefDTO contest : userContests) {
+                for (TypedContestBriefDTO contest : userContests) {
                     ProjectContestDTO dto = new ProjectContestDTO();
                     dto.setContest(contest);
                     dto.setForumPostsNumber(r.nextInt(10));

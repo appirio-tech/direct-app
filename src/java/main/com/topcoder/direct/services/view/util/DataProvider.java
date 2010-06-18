@@ -145,7 +145,7 @@ public class DataProvider {
 
         final Map<ProjectBriefDTO, List<ActivityDTO>> activities = new HashMap<ProjectBriefDTO, List<ActivityDTO>>();
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
-        final Map<Long, ContestBriefDTO> contests = new HashMap<Long, ContestBriefDTO>();
+        final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();//here
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities");
         final int recordNum = resultContainer.size();
@@ -155,7 +155,7 @@ public class DataProvider {
             String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
             long contestId = resultContainer.getLongItem(i, "contest_id");
             String contestName = resultContainer.getStringItem(i, "contest_name");
-            // String contestType = resultContainer.getStringItem(i, "contest_type");
+	    String contestType = resultContainer.getStringItem(i, "contest_type");
 
             // System.out.println("#############contestType:"+contestType);
 
@@ -175,11 +175,11 @@ public class DataProvider {
                 projectActivities = activities.get(project);
             }
 
-            final ContestBriefDTO contest;
+            final TypedContestBriefDTO contest;
             if (contests.containsKey(contestId)) {
                 contest = contests.get(contestId);
             } else {
-                contest = createContest(contestId, contestName, project);
+                contest = createTypedContest(contestId, contestName, project, ContestType.forName(contestType), null);//here
                 contests.put(contestId, contest);
             }
 
@@ -213,7 +213,7 @@ public class DataProvider {
         request.setProperty("days", String.valueOf(days));
 
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
-        final Map<Long, ContestBriefDTO> contests = new HashMap<Long, ContestBriefDTO>();
+        final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();//here
         final List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities");
@@ -236,11 +236,12 @@ public class DataProvider {
                 project = projects.get(tcDirectProjectId);
             }
 
-            ContestBriefDTO contest;
+	    
+            TypedContestBriefDTO contest;
             if (contests.containsKey(contestId)) {
                 contest = contests.get(contestId);
             } else {
-                contest = createContest(contestId, contestName, project);
+                contest = createTypedContest(contestId, contestName, project, null, null);
                 contests.put(contestId, contest);
             }
 
@@ -744,7 +745,7 @@ public class DataProvider {
      * @param type an <code>ActivityType</code> referencing the type of the activity.
      * @return an <code>ActivityDTO</code> providing the details for a single activity.
      */
-    private static ActivityDTO createActivity(ContestBriefDTO contest,
+    private static ActivityDTO createActivity(TypedContestBriefDTO contest,
                                               Date date, String handle, long userId,
                                               ActivityType type) {
         ActivityDTO activity = new ActivityDTO();
