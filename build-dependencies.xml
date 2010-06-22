@@ -13,8 +13,6 @@
     <property name="object_formatter.jar" value="${tcs_libdir}/object_formatter/1.0/object_formatter.jar"/>
     <property name="logging_wrapper.jar" value="${tcs_libdir}/logging_wrapper/2.0/logging_wrapper.jar"/>
     <property name="search_builder.jar" value="${tcs_libdir}/search_builder/1.4.0/search_builder_1.4_modified.jar"/>
-    <property name="contest_service_facade.jar" value="${tcs_libdir}/contest_service_facade/1.1.0/contest_service_facade.jar"/>
-
 
     <property name="shared.jar" value="${tcs_libdir}/shared.jar"/>
     <property name="tcwebcommon.jar" value="${tcs_libdir}/tcwebcommon.jar"/>
@@ -70,7 +68,6 @@
         <pathelement location="${logging_wrapper.jar}" />
         <pathelement location="${base_exception.jar}" />
         <pathelement location="${search_builder.jar}" />
-        <pathelement location="${contest_service_facade.jar}" />
   </path>
 
   <path id="component.3rdParty-dependencies">
