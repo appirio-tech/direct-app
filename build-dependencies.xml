@@ -13,6 +13,7 @@
     <property name="object_formatter.jar" value="${tcs_libdir}/object_formatter/1.0/object_formatter.jar"/>
     <property name="logging_wrapper.jar" value="${tcs_libdir}/logging_wrapper/2.0/logging_wrapper.jar"/>
     <property name="search_builder.jar" value="${tcs_libdir}/search_builder/1.4.0/search_builder_1.4_modified.jar"/>
+    <property name="contest_service_facade.jar" value="${tcs_libdir}/contest_service_facade/1.1.0/contest_service_facade.jar"/>
 
 
     <property name="shared.jar" value="${tcs_libdir}/shared.jar"/>
@@ -27,6 +28,7 @@
 
     <property name="javaee.jar" value="${ext_libdir}/j2ee/javaee.jar"/>
     <property name="jaxb.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar"/>
+    <property name="aws-java" value="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar"/>
 
   <!-- EJB/Persistence libraries -->
   <path id="ejb.libs">
@@ -68,6 +70,7 @@
         <pathelement location="${logging_wrapper.jar}" />
         <pathelement location="${base_exception.jar}" />
         <pathelement location="${search_builder.jar}" />
+        <pathelement location="${contest_service_facade.jar}" />
   </path>
 
   <path id="component.3rdParty-dependencies">
@@ -78,6 +81,7 @@
         <pathelement location="${servlet-api.jar}"/>
         <pathelement location="${jaxb.jar}"/>
         <pathelement location="${javaee.jar}"/>
+        <pathelement location="${aws-java}"/>
 
   </path>
 

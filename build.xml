@@ -2,7 +2,7 @@
 <project name="TC Direct System Build" default="dist" basedir=".">
     <property file="${basedir}/build.version"/>
     <property file="topcoder_global.properties"/>
-
+    
     <property name="prod_configdir" value="../prod_conf"/>
 
     <!-- Override these in ../topcoder_global.properties -->
@@ -101,7 +101,7 @@
         <path refid="component.tcs-dependencies"/>
         <path refid="component.3rdParty-dependencies"/>
     </path>
-
+    
     <!-- Initializes the environment necessary for building and deploying the TC Direct application -->
     <target name="init">
         <mkdir dir="${builddir}"/>
@@ -170,13 +170,13 @@
         <delete dir="${builddir}"/>
         <delete dir="${testlogdir}"/>
     </target>
+
     <target name="clean-jboss">
         <delete dir="${jboss.home}/server/${server.name}/tmp"/>
         <delete dir="${jboss.home}/server/${server.name}/work"/>
         <delete dir="${jboss.home}/server/${server.name}/deploy/tcdirect.ear"/>
         <delete file="${jboss.home}/server/${server.name}/deploy/tcdirect.ear"/>
     </target>
-
 
     <!-- ************************************************************************** -->
     <!-- ************ DEPLOYMENT RELATED TARGETS  ******************************* -->
@@ -186,7 +186,7 @@
 
     <target name="deploy" depends="dist, deploy-internal" description="deploy the ear to jboss">
     </target>
-
+    
     <target name="deploy-internal">
         <delete file="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
         <delete dir="${jboss.home}/server/${server.name}/deploy/${distfilename}.ear"/>
@@ -206,12 +206,15 @@
         <copy file="${configdir}/contestFees.xml" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/contestTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/fileTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
-        <copy file="${configdir}/overview.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/overview.xml" todir="${jboss.home}/server/${server.name}/conf"/>        
         <copy file="${configdir}/components/com/topcoder/security/Util.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${shared.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${tcwebcommon.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
         <!-- Added in Direct Search Assebmly -->
-        <copy file="${cockpitclient.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
+        <copy file="${cockpitclient.jar}" todir="${jboss.home}/server/${server.name}/lib"/>        
+        <!--<copy file="${tcs_libdir}/user_service.jar" todir="${jboss.home}/server/${server.name}/lib"/>-->
+        <!--<copy file="${aws-java}" todir="${jboss.home}/server/${server.name}/lib"/>-->
+        <copy file="${ext_libdir}/aws-java-sdk/aws-java-sdk-1.0.004.jar" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${ext_libdir}/informix/ifxjdbc.jar" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${ext_libdir}/jboss-cache/jboss-cache-jdk50.jar" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${ext_libdir}/jboss-cache/jgroups.jar" todir="${jboss.home}/server/${server.name}/lib"/>
@@ -251,7 +254,7 @@
             <replacetoken>http://127.0.0.1:8003</replacetoken>
         </replace>
     </target>
-
+    
     <target name="package-direct">
         <copy todir="${configdir}" overwrite="true">
             <fileset dir="${prod_configdir}">
@@ -295,7 +298,7 @@
                 <include name="scripts/**/*"/>
             </fileset>-->
         </war>
-
+        
         <unzip src="temp.war" dest="${component.war}"/>
         <delete file="temp.war"/>
     </target>

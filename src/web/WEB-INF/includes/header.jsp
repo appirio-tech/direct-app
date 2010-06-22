@@ -1,3 +1,4 @@
+<%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div id="header">
@@ -105,6 +106,16 @@
             <li <c:if test="${requestScope.CURRENT_TAB eq 'settings'}">class="on"</c:if>>
                 <a href="<s:url action="dashboardNotifications" namespace="/"/>"><span>Settings</span></a>
             </li>
+            
+            <%
+                if (DashboardVMAction.isApplicable()) {
+            %>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'VM Management'}">class="on"</c:if>>
+                    <a href="<s:url action="dashboardVMAction" namespace="/"/>"><span>VM Management</span></a>
+                </li>
+            <%
+                }
+            %>
         </ul>
     </div><!-- End #tabs2 -->
 </div><!-- End #header -->
