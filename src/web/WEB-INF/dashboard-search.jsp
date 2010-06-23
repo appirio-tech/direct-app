@@ -23,11 +23,16 @@
                     <jsp:include page="includes/right.jsp"/>
 
                     <div id="area1"><!-- the main area -->
+					
                     <div class="area1Content">
-                    <div class="areaHeader">
-                        <h2 class="title">Search</h2>
+					<div class="areaHeader">
+                        <h2 class="title">
+						<s:if test="viewData.isAllProjectsPage == false">Search</s:if>
+						<s:if test="viewData.isAllProjectsPage == true">Projects</s:if>
+						</h2>
                     </div><!-- End .areaHeader -->
-
+					
+					<s:if test="viewData.isAllProjectsPage == false">
                     <div class="search">
                         <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
                             <label class="fLeft" for="searchFor">Search For:</label>
@@ -43,6 +48,7 @@
                                 <span>Search</span></a>
                         </s:form>
                     </div>
+					</s:if>
 
                     <s:if test="viewData.resultType != null">
                         <div class="container2" id="resultsContainer">

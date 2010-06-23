@@ -80,13 +80,21 @@ public class DashboardSearchProcessor implements RequestProcessor<DashboardSearc
             if (DashboardSearchCriteriaType.PROJECTS == criteriaType) {
                 viewData.setProjects(DataProvider.searchUserProjects(tcSubject, searchFor));
                 viewData.setResultType(DashboardSearchCriteriaType.PROJECTS);
+				viewData.setIsAllProjectsPage(false);
             } else if (DashboardSearchCriteriaType.CONTESTS == criteriaType) {
                 viewData.setContests(DataProvider.searchUserContests(tcSubject, searchFor, start, end));
                 viewData.setResultType(DashboardSearchCriteriaType.CONTESTS);
+				viewData.setIsAllProjectsPage(false);
             } else if (DashboardSearchCriteriaType.MEMBERS == criteriaType) {
                 viewData.setMembers(DataProvider.searchUserProjectMembers(currentUserId, searchFor));
                 viewData.setResultType(DashboardSearchCriteriaType.MEMBERS);
-            }
+				viewData.setIsAllProjectsPage(false);
+            } else if(action.getRequestData().getRequest().getRequestURI().endsWith("allProjects") 
+			|| action.getRequestData().getRequest().getRequestURI().endsWith("allProjects.action")) {
+				viewData.setProjects(DataProvider.searchUserProjects(tcSubject, ""));
+                viewData.setResultType(DashboardSearchCriteriaType.PROJECTS);
+				viewData.setIsAllProjectsPage(true);
+			}
         } catch (Exception e) {
             log.error("Failed to perform dashboard search due to unexpected error", e);
             action.setResultCode(DashboardSearchAction.RC_UNEXPECTED_ERROR);

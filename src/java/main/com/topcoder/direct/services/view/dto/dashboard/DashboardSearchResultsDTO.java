@@ -73,12 +73,20 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
      */
     private DashboardSearchCriteriaType resultType;
 
+	/**
+     * <p>
+     * A <code>Boolean</code> a flag that is set in case that this results are used to show the All Projects page.
+     * </p>
+     */
+    private Boolean isAllProjectsPage;
+	
     /**
      * <p>
-     * Constructs new <code>DashboardSearchResultsDTO</code> instance. This implementation does nothing.
+     * Constructs new <code>DashboardSearchResultsDTO</code> instance. It initialize isAllProjectsPage to false.
      * </p>
      */
     public DashboardSearchResultsDTO() {
+		isAllProjectsPage = false;
     }
 
     /**
@@ -168,7 +176,28 @@ public class DashboardSearchResultsDTO extends CommonDTO implements Serializable
     public void setResultType(DashboardSearchCriteriaType resultType) {
         this.resultType = resultType;
     }
-
+	
+	/**
+     * <p>
+     * Gets the flag that shows if this is all projects page.
+     * </p>
+     *
+     * @return a <code>Boolean</code> true if it's the all projects page and false otherwise.
+     */
+	public Boolean getIsAllProjectsPage() {
+		return isAllProjectsPage;
+	}
+	
+	/**
+     * <p>
+     * Sets the flag that shows if this is all projects page.
+     * </p>
+     *
+     * @param isAllProjectsPage a <code>Boolean</code> true if it's the all projects page and false otherwise.
+     */
+	public void setIsAllProjectsPage(Boolean isAllProjectsPage) {
+		this.isAllProjectsPage = isAllProjectsPage;
+	}
     /**
      * <p>
      * Gets the workbook download stream.

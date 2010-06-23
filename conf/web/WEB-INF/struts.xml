@@ -116,6 +116,10 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-search.jsp</result>
         </action>
+		<action name="allProjects" class="com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-search.jsp</result>
+        </action>
         <action name="dashboardSearch" class="com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-search.jsp</result>
