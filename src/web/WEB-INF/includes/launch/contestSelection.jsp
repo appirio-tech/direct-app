@@ -1,8 +1,6 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <h2>Please Select your Contest Type</h2>
-<p class="intro">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida, orci magna rhon
-cus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim.</p>
 
 <div class="tabOut">									                                    
       <!-- tab contest -->
@@ -41,8 +39,6 @@ cus neque, id pulvinar odio lorem non turpis. Nullam sit amet enim.</p>
                   
                   <div class="help">Contest Type Information</div>
               </div>
-              
-              <a href="javascript:;" class="moreLink">Learn more about Studio Contest Type</a>
               
         	</div>
           <!-- end .selectDesing -->
