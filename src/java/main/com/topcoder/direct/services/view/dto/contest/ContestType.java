@@ -57,7 +57,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
      */
-    APP_FRONT_END_DESIGN("Application Front End Design", "ap"),
+    APP_FRONT_END_DESIGN("Application Front-End Design", "ap"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
