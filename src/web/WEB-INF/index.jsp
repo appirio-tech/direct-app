@@ -228,8 +228,7 @@
 											<div class="needHelpContent">
 												<div>
 													<h3>Need Help?</h3>
-													<p><strong>1-866-TOPCODER</strong> or</p>
-													<p><link:mailToDirectAssist/></p>
+													<p><a href="http://www.topcoder.com/home/contact-us/" target="_blank">Contact Us</a> and a member of the team will be happy to assist you.</p>
                                                 </div>
                                                 <div class="faq">
 													<div class="faqHelp">
