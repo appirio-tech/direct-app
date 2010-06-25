@@ -15,7 +15,7 @@
 
   <!-- Contest Introduction -->
 	<div class="goals">    
-        <h3><span class="icon">Contest Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        
+        <h3><span class="icon">Contest Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>        
         <div class="textarea">
             <textarea id="contestDescription" rows="" cols=""></textarea>
         </div>        
@@ -24,7 +24,7 @@
         
   <!-- Round 1 information -->
 	<div class="target hide" id="round1InfoDiv" >    
-        <h3>Round 1 Information</h3>
+        <h3><span class="icon">Round 1 Information</span><div id="Round1HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
         <div class="textarea">
             <textarea id="round1Info" rows="" cols=""></textarea>
         </div>
@@ -33,7 +33,7 @@
 
   <!-- Round 2 information -->
 	<div class="designs hide" id="round2InfoDiv">    
-        <h3>Round 2 Information</h3>
+        <h3><span class="icon">Round 2 Information</span><div id="Round2HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
         <div class="textarea">
             <textarea id="round2Info" rows="" cols=""></textarea>
         </div>

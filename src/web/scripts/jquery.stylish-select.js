@@ -51,7 +51,8 @@ Dual licensed under the MIT and GPL licenses.
             var defaults = {
                 defaultText: 'Please select',
                 animationSpeed: 0, //set speed of dropdown
-                ddMaxHeight: '' //set css max-height value of dropdown
+                ddMaxHeight: '', //set css max-height value of dropdown
+				yscroll: false
             };
 
             //initial variables
@@ -151,14 +152,28 @@ Dual licensed under the MIT and GPL licenses.
                 if (containerPosY+newUlHeight >= docHeight){
                     $newUl.css({
                         top: '-'+newUlHeight+'px',
-                        height: newUlHeight
+                        height: newUlHeight,
+						'z-index': '200'
                     });
+					if(opts.yscroll == true)
+					{
+						$newUl.css({
+						'overflow-y': 'scroll'
+						});
+					}
                     $input.onTop = true;
                 } else {
                     $newUl.css({
                         top: containerHeight+'px',
-                        height: newUlHeight
+                        height: newUlHeight,
+						'z-index': '200'
                     });
+					if(opts.yscroll == true)
+					{
+						$newUl.css({
+						'overflow-y': 'scroll'
+						});
+					}
                     $input.onTop = false;
                 }
             }

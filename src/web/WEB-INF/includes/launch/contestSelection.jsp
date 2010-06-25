@@ -95,7 +95,7 @@
   </div>
   <!-- end .addNewContest -->
   
-  <h3>Contest Schedule:</h3>
+  <h3><span class="icon">Contest Schedule:</span><div id="ContestScheduleHelpIcon"><a class="helpIcon" href="javascript:;"><span class="hide">Help</span></a></div></h3>
  	
   <!-- Contest Schedule --> 
   <div class="schedule">

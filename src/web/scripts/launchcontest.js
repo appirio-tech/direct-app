@@ -145,8 +145,12 @@ $(document).ready(function(){
 
     /* initialize selects */
     if($('select').length > 0){
-      $('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
-
+      $('.selectSoftware select,.selectDesing select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
+	  var projectSelectOptions = {
+                ddMaxHeight: '220',
+				yscroll: true
+            };
+	  $('.projectSelect select').sSelect(projectSelectOptions);
       $('.selectDesing div.selectedTxt').html('Select Contest Type');
     }
 
@@ -245,12 +249,30 @@ $(document).ready(function(){
 
   }
 
-  $('.description .helpIcon').hover(function(){
-    showPopup(this,'contestLaunch1');
+  $('#ContestScheduleHelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestScheduleToolTip');
   },function(){
-    $('#contestLaunch1').hide();
+    $('#contestScheduleToolTip').hide();
   });
-
+  
+  $('#ContestDescriptionHelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestDescriptionToolTip');
+  },function(){
+    $('#contestDescriptionToolTip').hide();
+  });
+  
+  $('#Round1HelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestRound1ToolTip');
+  },function(){
+    $('#contestRound1ToolTip').hide();
+  });
+  
+  $('#Round2HelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestRound2ToolTip');
+  },function(){
+    $('#contestRound2ToolTip').hide();
+  });
+  
   $('.selectDesing .help,.selectSoftware .help').hover(function(){
     showPopups(this,'contestLaunch1');
   },function(){

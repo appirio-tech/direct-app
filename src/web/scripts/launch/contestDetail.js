@@ -147,6 +147,57 @@ $(document).ready(function(){
    });
    $('#roundTypes').trigger("change");      
   
+    /* init pop */
+  var prevPopup = null;
+  showPopup = function(myLink,myPopupId){
+    var myLinkLeft = myLinkTop  = 0;
+
+    /* hide the previous popup */
+    if( prevPopup )
+      $(prevPopup).css("display","none");
+
+    prevPopup = $('#'+myPopupId);
+
+    /* get the position of the current link */
+    do{
+      myLinkLeft += myLink.offsetLeft;
+      myLinkTop += myLink.offsetTop;
+    }while( myLink = myLink.offsetParent );
+
+    /* set the position of the popup */
+    var popUpHeight2 = $('#'+myPopupId).height()/2;
+
+    myLinkTop -= popUpHeight2;
+
+    $('#'+myPopupId).css("top",(myLinkTop+4)+'px');
+    $('#'+myPopupId).css("left",( myLinkLeft+22 )+'px');
+
+    /* set the positio of the arrow inside the popup */
+    $(".tooltipContainer SPAN.arrow").css("top",popUpHeight2+'px');
+
+    /* show the popup */
+    $('#'+myPopupId).css("display","block");
+
+  }
+  
+  $('#ContestDescriptionHelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestDescriptionToolTip');
+  },function(){
+    $('#contestDescriptionToolTip').hide();
+  });
+  
+  $('#Round1HelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestRound1ToolTip');
+  },function(){
+    $('#contestRound1ToolTip').hide();
+  });
+  
+  $('#Round2HelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestRound2ToolTip');
+  },function(){
+    $('#contestRound2ToolTip').hide();
+  });
+  
   //tiny mce BUGR 3813 
   tinyMCE.init({
   	mode : "exact",

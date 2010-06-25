@@ -176,6 +176,107 @@
   <!-- End .tooltipContainer -->
 </div>
 
+
+<div class="tooltipArea">
+    <div id="contestScheduleToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+        
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>                            
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+                
+                <div class="tooltipContent">
+                    <p>Not sure what to require in each round? Please visit the Contest Holder Guide where you will find more information about multi-round contests. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                </div><!-- End .tooltipContent -->
+                
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
+<div class="tooltipArea">
+    <div id="contestDescriptionToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+        
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>                            
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+                
+                <div class="tooltipContent">
+                    <p>Need help writing a great contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                </div><!-- End .tooltipContent -->
+                
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
+<div class="tooltipArea">
+    <div id="contestRound1ToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+        
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>                            
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+                
+                <div class="tooltipContent">
+                    <p>Enter any specific requirements for round 1 submissions.</p>
+                </div><!-- End .tooltipContent -->
+                
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
+<div class="tooltipArea">
+    <div id="contestRound2ToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+        
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>                            
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+                
+                <div class="tooltipContent">
+                    <p>Enter any specific requirements for round 2 submissions.</p>
+                </div><!-- End .tooltipContent -->
+                
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
+
+
+
+
 <jsp:include page="includes/popups.jsp"/>
 
 </body>

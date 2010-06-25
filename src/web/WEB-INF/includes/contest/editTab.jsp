@@ -260,7 +260,7 @@
             <div class="contestDetail" id="roundInfoDiv">        		
                 <!-- Round one information -->
             	  <div class="description">                
-                      <h3><span class="icon">Round One Information</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
+                      <h3><span class="icon">Round One Information</span><div id="Round1HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>                    
                       <div class="textarea1">
                           <textarea id="round1Info" rows="" cols=""></textarea>
                       </div>
@@ -274,7 +274,7 @@
                 
                 <!-- Round two information -->
             	  <div class="guidelines">                  
-                      <h3><span class="icon">Round Two Information</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>               
+                      <h3><span class="icon">Round Two Information</span><div id="Round2HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>               
                       
                       <div class="textarea1">
                           <textarea id="round2Info" rows="" cols=""></textarea>
@@ -460,7 +460,7 @@
                 
                 <!-- Contest Description -->
             	  <div class="guidelines">                  
-                      <h3><span class="icon">Contest Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>               
+                      <h3><span class="icon">Contest Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>               
                       
                       <div class="textarea1">
                           <textarea id="contestDescription" rows="" cols=""></textarea>
@@ -566,3 +566,75 @@
 	<a href="javascript:alert('to be implemented in next assembly');" class="print">Print</a>  
 </div><!-- End .panel -->
 										
+<div class="tooltipArea">
+    <div id="contestDescriptionToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+        
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>                            
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+                
+                <div class="tooltipContent">
+                    <p>Need help writing a great contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                </div><!-- End .tooltipContent -->
+                
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
+<div class="tooltipArea">
+    <div id="contestRound1ToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+        
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>                            
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+                
+                <div class="tooltipContent">
+                    <p>Enter any specific requirements for round 1 submissions.</p>
+                </div><!-- End .tooltipContent -->
+                
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
+<div class="tooltipArea">
+    <div id="contestRound2ToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+        
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>                            
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+                
+                <div class="tooltipContent">
+                    <p>Enter any specific requirements for round 2 submissions.</p>
+                </div><!-- End .tooltipContent -->
+                
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
