@@ -58,7 +58,12 @@ public class ProjectContestDTO implements Serializable {
      * <p>A <code>ContestType</code> providing the contest type.</p>
      */
     private ContestType contestType;
-
+	
+	/**
+     * <p>A <code>int</code> providing the id of the contest forum.</p> 
+     */
+    private int forumId;
+	
     /**
      * <p>Constructs new <code>ProjectContestDTO</code> instance. This implementation does nothing.</p>
      */
@@ -136,7 +141,25 @@ public class ProjectContestDTO implements Serializable {
     public void setForumPostsNumber(int forumPostsNumber) {
         this.forumPostsNumber = forumPostsNumber;
     }
+	
+	/**
+     * <p>Gets the id of forum for contest.</p>
+     *
+     * @return a <code>int</code> providing the id of forum for contest.
+     */
+    public int getForumId() {
+        return this.forumId;
+    }
 
+    /**
+     * <p>Sets the id of forum for contest.</p>
+     *
+     * @param forumId a <code>int</code> providing the id of forum for contest.
+     */
+    public void setForumId(int forumId) {
+        this.forumId = forumId;
+    }
+	
     /**
      * <p>Gets current contest status.</p>
      *

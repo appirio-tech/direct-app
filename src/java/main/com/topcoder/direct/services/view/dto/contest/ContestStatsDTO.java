@@ -64,7 +64,12 @@ public class ContestStatsDTO implements Serializable {
      * <p>A <code>int</code> providing the number of forum posts for contest.</p> 
      */
     private int forumPostsNumber;
-
+	
+	/**
+     * <p>A <code>long</code> providing the id of the contest forum.</p> 
+     */
+    private long forumId;
+	
     /**
      * <p>Constructs new <code>ContestStatsDTO</code> instance. This implementation does nothing.</p>
      */
@@ -124,7 +129,25 @@ public class ContestStatsDTO implements Serializable {
     public void setForumPostsNumber(int forumPostsNumber) {
         this.forumPostsNumber = forumPostsNumber;
     }
+	
+	/**
+     * <p>Gets the id of forum for contest.</p>
+     *
+     * @return a <code>long</code> providing the id of forum for contest.
+     */
+    public long getForumId() {
+        return this.forumId;
+    }
 
+    /**
+     * <p>Sets the id of forum for contest.</p>
+     *
+     * @param forumId a <code>long</code> providing the id of forum for contest.
+     */
+    public void setForumId(long forumId) {
+        this.forumId = forumId;
+    }
+	
     /**
      * <p>Gets the end date and time for contest.</p>
      *

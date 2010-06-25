@@ -13,6 +13,7 @@
     <s:push value="viewData.contestStats">
         <s:set var="contestStartDate" value="startTime" scope="page"/>
         <s:set var="contestEndDate" value="endTime" scope="page"/>
+		<s:set value="contest" var="contest" scope="page"/>
         <tbody>
         <tr>
             <td class="date">
@@ -23,7 +24,11 @@
             </td>
             <td><s:property value="registrantsNumber"/></td>
             <td><s:property value="submissionsNumber"/></td>
-            <td><s:property value="forumPostsNumber"/></td>
+            <td>
+				<s:if test="forumId != -1"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+				<s:property value="forumPostsNumber"/>
+				<s:if test="forumId != -1"></a></s:if>
+			</td>
         </tr>
         </tbody>
     </s:push>

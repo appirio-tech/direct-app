@@ -233,6 +233,7 @@ public class GetContestAction extends ContestAction {
         contestStats.setRegistrantsNumber(result.getIntItem(0, "number_of_registration"));
         contestStats.setSubmissionsNumber(result.getIntItem(0, "number_of_submission"));
         contestStats.setForumPostsNumber(result.getIntItem(0, "number_of_forum"));
+	contestStats.setForumId(studioCompetition.getContestData().getForumId());
     }
 
     /**

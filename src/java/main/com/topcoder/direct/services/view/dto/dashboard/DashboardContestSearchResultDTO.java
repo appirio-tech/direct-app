@@ -57,6 +57,11 @@ public class DashboardContestSearchResultDTO implements Serializable {
      */
     private String contestType;
 
+	/**
+     * <p>A <code>int</code> providing the id of the contest forum.</p> 
+     */
+    private int forumId;
+	
     /**
      * <p>Constructs new <code>DashboardContestSearchResultDTO</code> instance. This implementation does nothing.</p>
      */
@@ -205,5 +210,23 @@ public class DashboardContestSearchResultDTO implements Serializable {
      */
     public void setContestType(String contestType) {
         this.contestType = contestType;
+    }
+	
+	/**
+     * <p>Gets the id of forum for contest.</p>
+     *
+     * @return a <code>int</code> providing the id of forum for contest.
+     */
+    public int getForumId() {
+        return this.forumId;
+    }
+
+    /**
+     * <p>Sets the id of forum for contest.</p>
+     *
+     * @param forumId a <code>int</code> providing the id of forum for contest.
+     */
+    public void setForumId(int forumId) {
+        this.forumId = forumId;
     }
 }

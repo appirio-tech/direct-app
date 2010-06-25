@@ -365,6 +365,14 @@ public class DataProvider {
                 dto.setRegistrantsNumber(contest.getNum_reg());
                 dto.setSubmissionsNumber(contest.getNum_sub());
                 dto.setForumPostsNumber(contest.getNum_for());
+                if (contest.getForumId() != null)
+                {
+                    dto.setForumId(contest.getForumId());
+                }
+                else
+                {
+                    dto.setForumId(-1);
+                }
                 dto.setStatus(ContestStatus.forName(contest.getSname()));
                 return dto;
             }
@@ -551,7 +559,19 @@ public class DataProvider {
             int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
             int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
-
+	    int forumId = -1;
+	    try
+            {
+		if (resultContainer.getStringItem(i, "forum_id") != null
+                    && !resultContainer.getStringItem(i, "forum_id").equals(""))
+			forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
+	    }
+	    catch (NumberFormatException ne)
+            {
+		// ignore
+            }
+				
+			
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
                 project = createProject(tcDirectProjectId, tcDirectProjectName);
@@ -565,7 +585,7 @@ public class DataProvider {
             ContestStatus status = ContestStatus.forName(statusName);
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
-                                                             forumPostsCount, registrantsCount, submissionsCount);
+                                                             forumPostsCount, registrantsCount, submissionsCount, forumId);
             contests.add(contest);
         }
 
@@ -772,7 +792,7 @@ public class DataProvider {
     private static ProjectContestDTO createProjectContest(ContestBriefDTO contestBrief, ContestType type,
                                                           ContestStatus status, Date startTime, Date endTime,
                                                           int forumPostsCount, int registrantsCount,
-                                                          int submissionsCount) {
+                                                          int submissionsCount, int forumId) {
         ProjectContestDTO dto = new ProjectContestDTO();
         dto.setContestType(type);
         dto.setContest(contestBrief);
@@ -782,6 +802,7 @@ public class DataProvider {
         dto.setStartTime(startTime);
         dto.setStatus(status);
         dto.setSubmissionsNumber(submissionsCount);
+	dto.setForumId(forumId);
         return dto;
     }
 }
