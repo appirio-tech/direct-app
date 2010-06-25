@@ -145,12 +145,12 @@ $(document).ready(function(){
 
     /* initialize selects */
     if($('select').length > 0){
-      $('.selectSoftware select,.selectDesing select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
-	  var projectSelectOptions = {
+      $('.selectSoftware select,.selectDesing select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
+	  var SelectOptions = {
                 ddMaxHeight: '220',
 				yscroll: true
             };
-	  $('.projectSelect select').sSelect(projectSelectOptions);
+	  $('.projectSelect select,.billingSelect select').sSelect(SelectOptions);
       $('.selectDesing div.selectedTxt').html('Select Contest Type');
     }
 
