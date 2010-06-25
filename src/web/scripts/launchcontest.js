@@ -326,10 +326,10 @@ $(document).ready(function(){
           }
       });
 
+      updateContestFee();
+
       $.each(studioSubtypeFees, function(i, fee) {
           if(fee.id == getContestType(true)[1]) {
-             // update contest fees
-             mainWidget.competition.contestData.contestAdministrationFee = fee.contestFee;
              // not set yet, auto fill
              if(isEmpty($('#prize3').val())) {
                  $('#prize1').val(fee.firstPlaceCost)
@@ -338,9 +338,15 @@ $(document).ready(function(){
           }
       });
 
+
       resetFileTypes(getContestType(true)[1]);
       
       getCapacityDatesForStudioSubType(getContestType(true)[1]);
+   });
+   
+
+   $('#billingProjects').bind("change", function() {
+   	  updateContestFee();
    });
 
    // add project
@@ -438,6 +444,51 @@ function resetFileTypes(studioSubtypeId) {
 
    $('#deliverablesCheckboxs').html(html);
 }
+
+/**
+ * <p>
+ * Update contest administration fee when billing project or studio sub type is changed.
+ * </p>
+ */
+function updateContestFee( ) {
+	  var billingProjectId = $('select#billingProjects').val();
+	  var studioSubtypeId = getContestType(true)[1];
+	  
+   $.each(studioSubtypeFees, function(i, fee) {
+       if(fee.id == studioSubtypeId) {
+          // update contest fees
+          mainWidget.competition.contestData.contestAdministrationFee = fee.contestFee;
+       }
+   });
+	   
+	  if(billingProjectId <=0 ) {
+	  	 return;
+	  }
+	  
+	 	var request = {
+	 		  billingProjectId : billingProjectId,
+	 		  studioSubTypeId : studioSubtypeId
+	 	};
+    $.ajax({
+       type: 'GET',
+       url:  ctx + "/launch/getProjectStudioContestFee",
+       data: request,
+       cache: false,
+       dataType: 'json',
+       success: function(jsonResult) {
+           handleJsonResult(jsonResult,
+           function(result) {
+           	  if(result.fee > 0 ) {
+           	  	 mainWidget.competition.contestData.contestAdministrationFee = result.fee;
+           	  }
+           },
+           function(errorMessage) {
+               showErrors(errorMessage);
+           });       	
+       }
+    });	 	   	  
+}
+
 
 function getCapacityDatesForStudioSubType(studioSubtypeId) {
 	 if(capacityFullDates[studioSubtypeId] == null) {
