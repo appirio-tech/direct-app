@@ -32,7 +32,7 @@ $(document).ready(function() {
      timeout: 90000
   });
 
-   $(document).ajaxStart(function(){$.blockUI({ message: '<div id=loading> loading.... </div>' });}).ajaxStop($.unblockUI);
+   //$(document).ajaxStart(function(){$.blockUI({ message: '<div id=loading> loading.... </div>' });}).ajaxStop($.unblockUI);
    $(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions, thrownError){
        showGeneralError();
    });
