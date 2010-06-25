@@ -64,12 +64,12 @@
                             </thead>
                             <tbody>
                             <s:iterator value="sessionData.currentProjectContests" status="status" var="contest">
-                                <tr <s:if test="#status.even">class="even"</s:if>>
+                                <tr <s:if test="#status.even">class="even"</s:if> onclick="document.location.href = '<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].id}"/></s:url>'; this.style.cursor='pointer';">
                                     <td class="status" width="15%">
                                         <span class="<s:property value="status.shortName"/>"><span>a</span></span>
                                     </td>
                                     <td width="70%">
-                                        <link:contestDetails contest="${contest}"/>
+                                        ${contest.title}
                                     </td>
                                     <td class="type" width="15%">
 
