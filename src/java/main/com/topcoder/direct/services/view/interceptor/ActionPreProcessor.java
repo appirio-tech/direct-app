@@ -7,7 +7,6 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.contest.ContestDetailsAction;
-import com.topcoder.direct.services.view.action.contest.ContestRegistrantsAction;
 import com.topcoder.direct.services.view.action.dashboard.CalendarAction;
 import com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction;
 import com.topcoder.direct.services.view.action.project.CreateProjectAction;
@@ -23,7 +22,6 @@ import com.topcoder.direct.services.view.processor.ProcessorsGroup;
 import com.topcoder.direct.services.view.processor.RequestProcessor;
 import com.topcoder.direct.services.view.processor.UserProjectsProcessor;
 import com.topcoder.direct.services.view.processor.contest.ContestDetailsProcessor;
-import com.topcoder.direct.services.view.processor.contest.ContestRegistrantsProcessor;
 import com.topcoder.direct.services.view.processor.contest.ContestStatsProcessor;
 import com.topcoder.direct.services.view.processor.dashboard.DashboardSearchProcessor;
 import com.topcoder.direct.services.view.processor.project.CreateProjectProcessor;
@@ -46,8 +44,14 @@ import com.topcoder.direct.services.view.processor.stats.TopCoderDirectFactsProc
  * For instance, this may mean that validation of the user input must be performed prior to calling this interceptor and
  * if validation fails then this interceptor must not get called.</p>
  *
+ * <p>Version 1.1 (Direct Registrants List assembly) change notes:
+ *   <ul>
+ *     <li>Removed <code>ContestRegistrantsAction</code> from the interception by this processor.</li>
+ *   </ul>
+ * </p>
+ *
  * @author isv
- * @version 1.0
+ * @version 1.1
  */
 public class ActionPreProcessor implements Interceptor {
 
@@ -149,10 +153,6 @@ public class ActionPreProcessor implements Interceptor {
             return new ProcessorsGroup(new RequestProcessor[] {new ContestDetailsProcessor(),
                                                                new ContestStatsProcessor(),
                                                                new UserProjectsProcessor()});
-        } else if (action instanceof ContestRegistrantsAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new ContestRegistrantsProcessor(),
-                                                               new ContestStatsProcessor(),
-                                                               new UserProjectsProcessor()});
         } else {
             return null;
         }
@@ -188,8 +188,6 @@ public class ActionPreProcessor implements Interceptor {
         } else if (action instanceof ProjectContestsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
         } else if (action instanceof ContestDetailsAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
-        } else if (action instanceof ContestRegistrantsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new CurrentProjectContestsProcessor()});
         } else {
             return null;

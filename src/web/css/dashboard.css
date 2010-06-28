@@ -1369,6 +1369,7 @@ table.fc-header { /* calendar header */
 	padding: 14px 0 8px 0;
 	height: 100%;
 	overflow: hidden;
+    width:auto;
 }
 	
 	.panel SPAN{
@@ -2036,7 +2037,7 @@ TABLE.notifications TH.permCol2{
     padding-top:7px;
 }
 
-	.pagination A{
+	.pagination SPAN{
 		text-decoration: none;
 		padding: 0 3px;
 		color: #000;
@@ -2047,23 +2048,13 @@ TABLE.notifications TH.permCol2{
 		font-weight: bold;
 	}
 	
-	.pagination A.prev{
+	.pagination SPAN.prev{
 		background: url(../images/page_prev.png) no-repeat left;
 		padding-left: 10px;
 	}
 	
-	.pagination A.next{
-		background: url(../images/page_next.png) no-repeat right;
-		padding-right: 10px;
-	}
-	
-	.pagination SPAN.prev{
-		background: url(../images/page_prev_nactive.png) no-repeat left;
-		padding-left: 10px;
-	}
-	 
 	.pagination SPAN.next{
-		background: url(../images/page_next_nactive.png) no-repeat right;
+		background: url(../images/page_next.png) no-repeat right;
 		padding-right: 10px;
 	}
 	
@@ -2243,8 +2234,12 @@ A{
 
 	.paginate_active { /* the current page */
 		font-weight: bold;
+        cursor: pointer;
 	}
 
+.paginate_button {
+    cursor: pointer;
+}
 	.previous {
 		background: url(../images/page_prev.png) no-repeat left;
 		padding-left: 10px;
@@ -2273,3 +2268,34 @@ A{
 .table-sidebar a{ font-weight: bold; color: #333333; text-decoration: none; }
 .table-sidebar a:hover{ color: #ec1c23; }
 .table-sidebar tr:hover td, .table-sidebar tr:hover td a{ background: #ffffcc!important; font-weight: bold!important; }
+.bottom1 {
+    float:right;
+    font-size: 12px;
+    /*left: -115px;*/
+    right: 135px;
+    position:relative;
+    width:auto;
+}
+
+.bottom2 {
+    float:right;
+    font-size: 12px;
+    left: 90px;
+    position:relative;
+    margin-top: 15px;
+    margin-left: 15px;
+    width:15%;
+}
+
+
+.showPages select {
+    margin-top: 11px;
+}
+
+#showText {
+    float:right;
+    height:15px;
+    padding-right:4px;
+    padding-top:2px;
+    text-decoration:none;
+}

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,6 +8,25 @@
     <jsp:include page="includes/paginationSetup.jsp"/>
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="registrants"/>
+<%--
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".paginatedDataTable").dataTable({
+                "bFilter": false,
+                "bSort": false,
+                "sPaginationType": "full_numbers"
+//                "sDom": 't<"pagination"prfl>'
+
+            });
+//            $(".dataTables_info").addClass("hide");
+//            $(".dataTables_paginate .last").addClass("hide");
+//            $(".dataTables_paginate .first").addClass("hide");
+//            $(".previous").html("&nbsp;Prev&nbsp;");
+//            $(".next").html("&nbsp;Next&nbsp;");
+//            $(".dataTables_length").addClass("showPages");
+        });
+    </script>
+--%>
 </head>
 
 <body id="page">
@@ -60,7 +78,7 @@
                                                             <tbody>
                                                             <s:iterator value="viewData.contestRegistrants">
                                                                 <s:set var="userId" value="userId" scope="page"/>
-                                                                <s:set var="handle" value="username" scope="page"/>
+                                                                <s:set var="handle" value="handle" scope="page"/>
                                                                 <s:set var="registrationDate" value="registrationDate"
                                                                        scope="page"/>
                                                                 <s:set var="submissionDate" value="submissionDate"
@@ -70,16 +88,30 @@
                                                                         <link:user userId="${userId}" handle="${handle}"/>
                                                                     </td>
                                                                     <td>
-                                                                        <s:if test="rated == false">Not</s:if>
-                                                                        Rated
+                                                                        <s:if test="rating == null">Not Rated</s:if>
+                                                                        <s:if test="rating != null">
+                                                                            <s:set var="rating" value="rating" scope="page"/>
+                                                                            <fmt:formatNumber value="${rating}"
+                                                                                              pattern="########0"/>
+                                                                        </s:if>
+                                                                     </td>
+                                                                    <td>
+                                                                        <c:choose>
+                                                                            <c:when test="${registrationDate ne null}">
+                                                                                <fmt:formatDate value="${registrationDate}"
+                                                                                                pattern="MM/dd/yyyy HH:mm"/>
+                                                                            </c:when>
+                                                                            <c:otherwise>&minus;</c:otherwise>
+                                                                        </c:choose>
                                                                     </td>
                                                                     <td>
-                                                                        <fmt:formatDate value="${registrationDate}"
-                                                                                        pattern="MM/dd/yyyy HH:mm"/>
-                                                                    </td>
-                                                                    <td>
-                                                                        <fmt:formatDate value="${submissionDate}" 
-                                                                                        pattern="MM/dd/yyyy HH:mm"/>
+                                                                        <c:choose>
+                                                                            <c:when test="${submissionDate ne null}">
+                                                                                <fmt:formatDate value="${submissionDate}"
+                                                                                                pattern="MM/dd/yyyy HH:mm"/>
+                                                                            </c:when>
+                                                                            <c:otherwise>&minus;</c:otherwise>
+                                                                        </c:choose>
                                                                     </td>
                                                                 </tr>
                                                             </s:iterator>
@@ -88,10 +120,11 @@
 
                                                         <div class="panel">
                                                             <!-- this area contains the print, export to excel, export to pdf links -->
+                                                            <strong id="showText">Show:</strong>
                                                             <a href="" onclick="return false;" 
                                                                class="exportPdf">Export to <strong>PDF</strong></a>
                                                             <span>|</span>
-                                                            <a href="" onclick="return false;" 
+                                                            <a href="javascript:exportContestRegistrantsToExcel();"
                                                                class="exportExcel">Export to <strong>Excel</strong></a>
                                                             <span>|</span>
                                                             <a href="" onclick="return false;"
@@ -127,6 +160,13 @@
 
 <jsp:include page="includes/popups.jsp"/>
 
+<s:form action="contestRegistrants" namespace="/"
+        cssStyle="visibility:hidden;display:none;" id="ContestRegistrantsForm" method="get">
+    <s:hidden name="formData.excel" id="formDataExcel" value="false" />
+    <s:hidden name="formData.contestId"/>
+    <s:hidden name="contestId"/>
+    <s:hidden name="projectId"/>
+</s:form>
 </body>
 <!-- End #page -->
 

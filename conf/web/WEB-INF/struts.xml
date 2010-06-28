@@ -52,7 +52,11 @@
                 <interceptor-ref name="contestAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
-
+            <interceptor-stack name="securedContestStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="contestAccessGuard"/>
+            </interceptor-stack>
             <!-- base stack -->
             <interceptor-stack name="baseStack">
                 <interceptor-ref name="exception">
@@ -151,8 +155,14 @@
             <result name="success">/WEB-INF/permissions.jsp</result>
         </action>
         <action name="contestRegistrants" class="com.topcoder.direct.services.view.action.contest.ContestRegistrantsAction">
-            <interceptor-ref name="securedContestPreProcessorStack"/>
+            <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-registrants.jsp</result>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=contest-registrants.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">viewData.inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
         </action>
         <action name="projectOverview" class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>

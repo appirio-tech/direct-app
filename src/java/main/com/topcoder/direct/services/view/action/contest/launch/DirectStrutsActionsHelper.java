@@ -19,10 +19,12 @@ import com.topcoder.security.TCSubject;
  * <b>Thread Safety: </b> This class has no state, and thus it is thread safe.
  * </p>
  *
- * @author FireIce
- * @version 1.0
+ * <p>As of version 1.1 the class is declared public.</p>
+ *
+ * @author FireIce, isv
+ * @version 1.1
  */
-final class DirectStrutsActionsHelper {
+public final class DirectStrutsActionsHelper {
     /**
      * <p>
      * Prevents to create a new instance.
@@ -44,7 +46,7 @@ final class DirectStrutsActionsHelper {
      * @throws IllegalArgumentException
      *             if the value of the variable is <code>null</code>.
      */
-    static void checkNull(Object value, String name) {
+    public static void checkNull(Object value, String name) {
         if (value == null) {
             throw new IllegalArgumentException(MessageFormat.format("The [{0}] argument should not be null.", name));
         }
@@ -57,7 +59,7 @@ final class DirectStrutsActionsHelper {
      *
      * @return the TCSubject instance from session
      */
-    static TCSubject getTCSubjectFromSession() {
+    public static TCSubject getTCSubjectFromSession() {
         HttpServletRequest request = DirectUtils.getServletRequest();
         if(request == null) {
             return null;

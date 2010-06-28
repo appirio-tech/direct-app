@@ -326,4 +326,8 @@ $(document).ready(function(){
 });
 
 
+function exportContestRegistrantsToExcel() {
+    $('#formDataExcel').val("true");
+    document.ContestRegistrantsForm.submit();
+}
 
