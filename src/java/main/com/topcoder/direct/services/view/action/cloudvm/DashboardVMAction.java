@@ -5,12 +5,20 @@ package com.topcoder.direct.services.view.action.cloudvm;
 
 import com.topcoder.direct.cloudvm.service.CloudVMService;
 import com.topcoder.direct.services.view.action.contest.launch.AbstractAction;
+import com.topcoder.direct.services.view.dto.CommonDTO;
+import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.cloudvm.VMContestType;
 import com.topcoder.direct.services.view.dto.cloudvm.VMImage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCSubject;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +29,11 @@ import java.util.Set;
  * @version 1.0
  */
 public class DashboardVMAction extends AbstractAction {
+
+    private CommonDTO viewData =  new CommonDTO();
+
+    private SessionData sessionData;
+
     /**
      * Represents the CloudVMService to manage the VM. It has getter & setter. Can be any value.
      */
@@ -58,6 +71,20 @@ public class DashboardVMAction extends AbstractAction {
         vmContestTypes = getCloudVMService().getVMContestTypes(user);
         vmInstances = getCloudVMService().getVMInstances(user);
         admin = inRole(user, "Administrator");
+
+        HttpServletRequest request = DirectUtils.getServletRequest();
+
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            sessionData = new SessionData(session);
+        }
+
+        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
+
+        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
+        userProjectsDTO.setProjects(projects);
+        viewData.setUserProjects(userProjectsDTO);
 
         return SUCCESS;
     }
@@ -139,5 +166,13 @@ public class DashboardVMAction extends AbstractAction {
     public static boolean isApplicable() {
         TCSubject user = AbstractVMAction.getUser();
         return inRole(user, "Administrator") || inRole(user, "VMManager");
+    }
+
+     public CommonDTO getViewData() {
+        return viewData;
+    }
+
+    public SessionData getSessionData() {
+        return sessionData;
     }
 }
