@@ -186,10 +186,46 @@ public class DataProvider {
             ActivityType activityType = ActivityType.forName(activityTypeText);
             ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
             projectActivities.add(activity);
+            
         }
 
         LatestActivitiesDTO result = new LatestActivitiesDTO();
-        result.setActivities(activities);
+
+
+        // start bugr-3901
+        // sort the activities via activity date
+        for (List<ActivityDTO> la : activities.values()) {
+            Collections.sort(la, new Comparator<ActivityDTO>() {
+                public int compare(ActivityDTO e1, ActivityDTO e2) {
+                    return -e1.getDate().compareTo(e2.getDate());
+                }
+            });
+        }
+
+        // sort the map by project's latest activity date
+        List<Map.Entry<ProjectBriefDTO, List<ActivityDTO>>> list =
+                new LinkedList<Map.Entry<ProjectBriefDTO, List<ActivityDTO>>>(activities.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<ProjectBriefDTO, List<ActivityDTO>>>() {
+            public int compare(Map.Entry<ProjectBriefDTO, List<ActivityDTO>> o1, Map.Entry<ProjectBriefDTO, List<ActivityDTO>> o2) {
+                ActivityDTO a1 = o1.getValue().get(0);
+                ActivityDTO a2 = o2.getValue().get(0);
+
+                if (a1 == null || a2 == null) return 0;
+                else {
+                    return -a1.getDate().compareTo(a2.getDate());
+                }
+
+            }
+        });
+
+        Map<ProjectBriefDTO, List<ActivityDTO>> sortedActivities = new LinkedHashMap<ProjectBriefDTO, List<ActivityDTO>>();
+
+        for(Map.Entry<ProjectBriefDTO, List<ActivityDTO>> e : list) {
+            sortedActivities.put(e.getKey(),e.getValue());
+        }
+        // end bugr-3901
+
+        result.setActivities(sortedActivities);
         return result;
     }
 
