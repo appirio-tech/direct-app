@@ -7,7 +7,7 @@
         <thead>
         <tr>
             <th colspan="5">
-                <span class="left"><span class="right">Upcoming Activity</span></span>
+                <span class="left"><span class="right"></span></span>
             </th>
         </tr>
         </thead>

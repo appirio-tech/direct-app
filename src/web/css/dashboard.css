@@ -453,6 +453,8 @@ BODY#page{
 	.tabs4Content .message P{
 		font-size: 11px;
 	}
+
+#tabs1 ul li a span.dashboardSpan { width: 130px; }
 	
 .details TABLE.projectStats{
 	margin-top: 5px;

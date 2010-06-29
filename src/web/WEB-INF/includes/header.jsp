@@ -96,6 +96,24 @@
         </div>
     </ui:isProjectPage>
 
+    <ui:isDashboardPage>
+        <div id="tabs1">
+             <ul>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
+                    <a href="<s:url action="dashboard" namespace="/"/>"><span class="dashboardSpan">Upcoming Activities</span></a>
+                </li>
+
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
+                    <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
+                </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'active'}">class="on"</c:if>>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
+                </li>
+            </ul>
+        </div>
+            
+     </ui:isDashboardPage>
+
     
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
