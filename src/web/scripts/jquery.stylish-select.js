@@ -158,7 +158,7 @@ Dual licensed under the MIT and GPL licenses.
 					if(opts.yscroll == true)
 					{
 						$newUl.css({
-						'overflow-y': 'scroll'
+						'overflow-y': 'auto'
 						});
 					}
                     $input.onTop = true;
@@ -171,7 +171,7 @@ Dual licensed under the MIT and GPL licenses.
 					if(opts.yscroll == true)
 					{
 						$newUl.css({
-						'overflow-y': 'scroll'
+						'overflow-y': 'auto'
 						});
 					}
                     $input.onTop = false;
