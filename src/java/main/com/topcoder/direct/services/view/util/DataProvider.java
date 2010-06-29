@@ -600,16 +600,16 @@ public class DataProvider {
             int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
             Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
-	    int forumId = -1;
-	    try
+            int forumId = -1;
+            try
+                {
+            if (resultContainer.getStringItem(i, "forum_id") != null
+                        && !resultContainer.getStringItem(i, "forum_id").equals(""))
+                forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
+            }
+            catch (NumberFormatException ne)
             {
-		if (resultContainer.getStringItem(i, "forum_id") != null
-                    && !resultContainer.getStringItem(i, "forum_id").equals(""))
-			forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
-	    }
-	    catch (NumberFormatException ne)
-            {
-		// ignore
+		    // ignore
             }
 				
 			
