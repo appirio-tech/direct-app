@@ -105,6 +105,15 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard.jsp</result>
         </action>
+        <action name="dashboardLatest" class="com.topcoder.direct.services.view.action.dashboard.DashboardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-latest.jsp</result>
+        </action>
+        <action name="dashboardActive" class="com.topcoder.direct.services.view.action.dashboard.DashboardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-active.jsp</result>
+        </action>
+
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
