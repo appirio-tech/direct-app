@@ -6,14 +6,6 @@
  * @version 1.0
  */
 $(document).ready(function(){
-	  //general initialization
-	  /* init select */
-	  if($('select').length > 0){
-	  	$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
-	  	
-	  	$('.selectDesing div.selectedTxt').html('Select Contest Type');
-	  }
-	  
     /* init date-pack */
     if($('.date-pick').length > 0){
       $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
@@ -197,7 +189,13 @@ $(document).ready(function(){
   },function(){
     $('#contestRound2ToolTip').hide();
   });
-  
+  //general initialization
+  /* init select */
+  if($('select').length > 0){
+	$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
+	
+	$('.selectDesing div.selectedTxt').html('Select Contest Type');
+  }
   //tiny mce BUGR 3813 
   tinyMCE.init({
   	mode : "exact",
@@ -419,7 +417,7 @@ function populateRoundSection() {
 	$('#startDate').datePicker().val(getDatePart(mainWidget.competition.startDate)).trigger('change');
 	$('#startTime').val(getTimePart(mainWidget.competition.startDate));
 	$('#endDate').datePicker().val(getDatePart(mainWidget.competition.endDate)).trigger('change');
-	$('#endTime').val(getTimePart(mainWidget.competition.startDate));
+	$('#endTime').val(getTimePart(mainWidget.competition.endDate));
 	
    if(!isMultiRound) {	
       $('#mileStoneEditDiv').hide();  		     
