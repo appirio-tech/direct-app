@@ -64,6 +64,8 @@ public class ProjectContestDTO implements Serializable {
      */
     private int forumId;
 	
+	private Boolean isStudio;
+	
     /**
      * <p>Constructs new <code>ProjectContestDTO</code> instance. This implementation does nothing.</p>
      */
@@ -231,4 +233,12 @@ public class ProjectContestDTO implements Serializable {
     public void setContestType(ContestType contestType) {
         this.contestType = contestType;
     }
+	
+	public Boolean getIsStudio() {
+		return isStudio;
+	}
+	
+	public void setIsStudio(Boolean isStudio) {
+		this.isStudio = isStudio;
+	}
 }

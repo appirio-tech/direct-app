@@ -34,9 +34,12 @@
                     <s:property value="registrantsNumber"/></a></td>
                 <td><s:property value="submissionsNumber"/></td>
                 <td>
-					<s:if test="forumId != null && forumId != -1"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+					<s:if test="forumId != -1">
+						<s:if test="contestType == 'Studio'"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+						<s:if test="contestType != 'Studio'"><a href="http://forums.topcoder.com/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
+					</s:if>
 					<s:property value="forumPostsNumber"/>
-					<s:if test="forumId != null && forumId != -1"></a></s:if>
+					<s:if test="forumId != -1"></a></s:if>
 				</td>
                 <td><span class="<s:property value="status.shortName"/>"><s:property value="status.name"/></span></td>
                 <td>

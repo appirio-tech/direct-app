@@ -599,6 +599,7 @@ public class DataProvider {
             int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
             int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
+            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
 	    int forumId = -1;
 	    try
             {
@@ -625,7 +626,7 @@ public class DataProvider {
             ContestStatus status = ContestStatus.forName(statusName);
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
-                                                             forumPostsCount, registrantsCount, submissionsCount, forumId);
+                                                             forumPostsCount, registrantsCount, submissionsCount, forumId, isStudio);
             contests.add(contest);
         }
 
@@ -832,7 +833,8 @@ public class DataProvider {
     private static ProjectContestDTO createProjectContest(ContestBriefDTO contestBrief, ContestType type,
                                                           ContestStatus status, Date startTime, Date endTime,
                                                           int forumPostsCount, int registrantsCount,
-                                                          int submissionsCount, int forumId) {
+                                                          int submissionsCount, int forumId,
+														  Boolean isStudio) {
         ProjectContestDTO dto = new ProjectContestDTO();
         dto.setContestType(type);
         dto.setContest(contestBrief);
@@ -842,7 +844,8 @@ public class DataProvider {
         dto.setStartTime(startTime);
         dto.setStatus(status);
         dto.setSubmissionsNumber(submissionsCount);
-	dto.setForumId(forumId);
+		dto.setForumId(forumId);
+		dto.setIsStudio(isStudio);
         return dto;
     }
 }

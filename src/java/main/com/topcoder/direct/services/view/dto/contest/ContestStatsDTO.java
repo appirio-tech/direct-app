@@ -70,10 +70,13 @@ public class ContestStatsDTO implements Serializable {
      */
     private long forumId;
 	
+	private Boolean isStudio;
+	
     /**
      * <p>Constructs new <code>ContestStatsDTO</code> instance. This implementation does nothing.</p>
      */
     public ContestStatsDTO() {
+		this.isStudio = true;
     }
 
     /**
@@ -202,4 +205,12 @@ public class ContestStatsDTO implements Serializable {
     public void setContest(ContestBriefDTO contest) {
         this.contest = contest;
     }
+	
+	public Boolean getIsStudio() {
+		return isStudio;
+	}
+	
+	public void setIsStudio(Boolean isStudio) {
+		this.isStudio = isStudio;
+	}
 }
