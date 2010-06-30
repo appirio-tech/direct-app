@@ -33,6 +33,7 @@ function updateOrderReview() {
        html +=
        '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';       
    });
+   html +=   '<td>' +'Studio cup pionts : ' + calculateStudioCupPoints() + '</td>';
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
    $('#orPrizesTR').html(html);
    
@@ -60,6 +61,30 @@ function updateOrderReview() {
    
    var total = contestPrizesTotal + milestonePrizesTotal + adminFee;
    $('#orTotal').html('$' + total.formatMoney(0));
+}
+
+function calculateStudioCupPoints() {
+    var isMultiRound = mainWidget.competition.contestData.multiRound;
+    var milestoneAmount = mainWidget.milestonePrizeData.amount;
+    var milestoneTotal = 0;
+
+    if (isMultiRound) {
+
+        for (var i = 1; i <= mainWidget.milestonePrizeData.numberOfSubmissions; i++) {
+            milestoneTotal += milestoneAmount;
+        }
+    }
+
+
+    var contestPrizeTotal = 0;
+
+    $.each(mainWidget.competition.contestData.prizes, function(i, prize) {
+        var amount = prize.amount;
+        contestPrizeTotal += amount;
+    });
+
+    return (milestoneTotal + contestPrizeTotal) * 0.25;
+
 }
 
 function validateFieldsOrderReview() {

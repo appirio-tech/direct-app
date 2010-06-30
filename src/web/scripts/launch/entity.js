@@ -71,6 +71,8 @@ com.topcoder.direct.ContestData = function() {
    this.statusId=CONTEST_STATUS_UNACTIVE_NOT_YET_PUBLISHED;
 
    this.detailedStatusId=CONTEST_DETAILED_STATUS_DRAFT;
+
+   this.drpoints = 0;
    
    ////////// Functions/Methods ///////////////
    /**
