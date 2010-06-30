@@ -630,7 +630,7 @@ BODY#page{
 .box{
 	background: url(../images/box_top2.png) no-repeat top;
 	padding: 15px 0 15px 9px;
-	position: relative;
+	position: static;
 }
 
 .box H2{ /*My Projects title*/
