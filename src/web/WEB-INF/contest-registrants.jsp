@@ -70,9 +70,9 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Handle</th>
-                                                                <th>Rated</th>
-                                                                <th>Register By</th>
-                                                                <th>Submitted By</th>
+                                                                <th>Rating</th>
+                                                                <th>Registration Date</th>
+                                                                <th>Submission Date</th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
