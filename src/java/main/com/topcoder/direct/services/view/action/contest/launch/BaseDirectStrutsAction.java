@@ -149,12 +149,12 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
     public String execute() throws Exception {
         try {
             executeAction();
-        } catch (Exception e) {
+        } catch (Throwable  e) {
             logger.error("Error when executing action : " + getAction() + " : " + e.getMessage(), e);
             if (isJsonRequest()) {
                 setResult(e);
             } else {
-                throw e;
+                throw new Exception(e);
             }
         }
         return SUCCESS;
