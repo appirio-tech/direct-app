@@ -30,8 +30,16 @@
                 <td><link:contestDetails contest="${contest}"/></td>
                 <td><fmt:formatDate value="${startTime}" pattern="MM/dd/yyyy HH:mm zzz"/>
                     <c:out value="${tcdirect:getEndText(endTime)}"/></td>
-                <td><a href="<s:url action="contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
-                    <s:property value="registrantsNumber"/></a></td>
+                <td>
+                 <s:if test="contestType == 'Studio'">
+                    <a href="<s:url action="contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
+                    <s:property value="registrantsNumber"/></a>
+                 </s:if>
+                 <s:if test="contestType != 'Studio'">
+                    <a href="<s:url action="contestRegistrants" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
+                    <s:property value="registrantsNumber"/></a>
+                 </s:if>
+                </td>
                 <td><s:property value="submissionsNumber"/></td>
                 <td>
 					<s:if test="forumId != -1">
