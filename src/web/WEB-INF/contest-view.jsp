@@ -86,7 +86,12 @@
                                                                                         pattern="MM/dd/yyyy HH:mm zzz"/>
                                                                         <c:out value="${tcdirect:getEndText(endTime)}"/></td>
                                                                     <td>
-                                                                        <a href="contestRegistrants.action?formData.contestId=4">
+                                                                        <s:if test="isStudio == true">
+                                                                        <a href="contest/contestRegistrants.action?contestId=${contest.id}">
+                                                                        </s:if>
+                                                                        <s:if test="isStudio == false">
+                                                                        <a href="contest/contestRegistrants.action?projectId=${contest.id}">
+                                                                        </s:if>
                                                                     <s:property value="registrantsNumber"/>
                                                                         </a></td>
                                                                     <td><s:property value="submissionsNumber"/></td>
