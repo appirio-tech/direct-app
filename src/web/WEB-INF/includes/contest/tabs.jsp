@@ -8,7 +8,7 @@
                     <span class="left"><span class="right">Details</span></span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'registrants'}">class="on"</c:if>>
-                <a href="<s:url action="contestRegistrants" namespace="/"><s:param name="formData.contestId" value="contest.id"/></s:url>">
+                <a href="<s:url action="contest/contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
             </li>
             <li>
