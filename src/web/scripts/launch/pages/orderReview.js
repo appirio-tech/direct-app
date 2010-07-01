@@ -33,7 +33,7 @@ function updateOrderReview() {
        html +=
        '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';       
    });
-   html +=   '<td>' +'Studio cup pionts : ' + calculateStudioCupPoints() + '</td>';
+   html +=   '<td>' +'Studio Cup points : ' + calculateStudioCupPoints() + '</td>';
    html += '<td class="last">$'+ contestPrizesTotal.formatMoney(0) +'</td>';
    $('#orPrizesTR').html(html);
    

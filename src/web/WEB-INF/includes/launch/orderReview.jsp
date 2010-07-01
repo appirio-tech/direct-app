@@ -58,7 +58,7 @@
 	<h3>Administration</h3>
 	<table class="prizesTable">
 		<tr>
-			<td class="large">Administration Fee : <span id="orAdminFee1"></span> <a href="javascript:showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td class="large">Administration Fee : <span id="orAdminFee1"></span></td>
 			<td class="last"><span id="orAdminFee2"></span></td>
 		</tr>
 	</table>
