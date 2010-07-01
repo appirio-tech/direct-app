@@ -499,23 +499,71 @@ public class DataProvider {
      * @param projectId a <code>long</code> providing the ID for requested project.
      * @return a <code>ProjectStatsDTO</code> providing the stats for requested project.
      */
-    public static ProjectStatsDTO getProjectStats(long projectId) {
+    public static ProjectStatsDTO getProjectStats(TCSubject tcSubject, long projectId) throws Exception {
+
         ProjectStatsDTO stats = new ProjectStatsDTO();
         ProjectBriefDTO project = new ProjectBriefDTO();
-        project.setId(projectId);
-        project.setName("Project #" + projectId);
-        stats.setDraftContestsNumber(1 + (int) projectId);
-        stats.setFeesFinalized(10000 + projectId);
-        stats.setFeesRunning(4563 + projectId);
-        stats.setFinishedContestsNumber(2 + (int) projectId);
-        stats.setPipelineContestsNumber(3 + (int) projectId);
-        stats.setProject(project);
-        stats.setRunningContestsNumber(4 + (int) projectId);
-        stats.setTaskedContestsNumber(5 + (int) projectId);
-        stats.setStartDate(new Date(System.currentTimeMillis() + 24 * projectId * 3600 * 1000L));
 
-        stats.setFeesDraft(stats.getDraftContestsNumber() * 150);
-        stats.setFeesScheduled(stats.getPipelineContestsNumber() * 150);
+        double draftFee = 0, activeFee = 0, scheduledFee = 0, finishedFee = 0;
+        int draftNum = 0, activeNum = 0, scheduledNum = 0, finishedNum = 0;
+    
+        String tcDirectProjectName = "";
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_contests");
+        request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+             String statusName = resultContainer.getStringItem(i, "status");
+
+             long fee = 0;
+
+             try {
+                fee = resultContainer.getLongItem(i, "contest_payment");
+             } catch(IllegalArgumentException ex) {
+                 // ignore the IllegalArgumentException if query result does not have contest_payment column
+             }
+            
+             tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            
+             if(DirectUtils.ACTIVE_STATUS.contains(statusName)) {
+                 activeNum++;
+                 activeFee += fee;
+             } else if (DirectUtils.DRAFT_STATUS.contains(statusName)) {
+                 draftNum++;
+                 draftFee += fee;
+             } else if (DirectUtils.SCHEDULED_STATUS.contains(statusName)) {
+                 scheduledNum++;
+                 scheduledFee += fee;
+             } else if (DirectUtils.FINISHED_STATUS.contains(statusName)) {
+                 finishedNum++;
+                 finishedFee += fee;
+             }
+
+        }
+        
+        // direct project info
+        project.setId(projectId);
+        project.setName(tcDirectProjectName);
+
+        // contests numbers
+        stats.setDraftContestsNumber(draftNum);
+        stats.setRunningContestsNumber(activeNum);
+        stats.setPipelineContestsNumber(scheduledNum);
+        stats.setFinishedContestsNumber(finishedNum);
+
+        // contests fees
+        stats.setFeesFinalized(finishedFee);
+        stats.setFeesRunning(activeFee);
+        stats.setFeesDraft(draftFee);
+        stats.setFeesScheduled(scheduledFee);
+        
+
+        stats.setProject(project);
 
         return stats;
     }

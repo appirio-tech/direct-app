@@ -47,7 +47,7 @@ public class ProjectStatsProcessor implements RequestProcessor<FormAction<Projec
             if (data instanceof ProjectStatsDTO.Aware) {
                 long projectId = action.getFormData().getProjectId();
                 try {
-                    ProjectStatsDTO projectStats = DataProvider.getProjectStats(projectId);
+                    ProjectStatsDTO projectStats = DataProvider.getProjectStats(action.getSessionData().getCurrentUser(), projectId);
                     ProjectStatsDTO.Aware viewData = (ProjectStatsDTO.Aware) data;
                     viewData.setProjectStats(projectStats);
                 } catch (Exception e) {

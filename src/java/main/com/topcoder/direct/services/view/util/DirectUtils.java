@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,31 @@ public final class DirectUtils {
      * Constant for date format.
      */
     public static final String DATE_FORMAT = "MM/dd/yyyy";
+
+    /**
+     * Draft status list.
+     */
+    public final static List<String> DRAFT_STATUS = Arrays.asList("Draft", "Unactive - Not Yet Published", "Inactive");
+
+    /**
+     * Scheduled status list.
+     */
+    public final static List<String> SCHEDULED_STATUS = Arrays.asList("Scheduled");
+
+    /**
+     * Active status list.
+     */
+    public final static List<String> ACTIVE_STATUS = Arrays.asList("Active - Public", "Active", "Registration",
+            "Submission", "Screening", "Review", "Appeals", "Appeals Response", "Aggregation", "Aggregation Review",
+            "Final Fix", "Final Review", "Approval", "Action Required", "In Danger", "Extended");
+
+    /**
+     * Finished status list.
+     */
+    public final static List<String> FINISHED_STATUS = Arrays.asList("Completed", "No Winner Chosen",
+            "Insufficient Submissions - ReRun Possible", "Insufficient Submissions", "Abandoned", "Inactive - Removed", "Cancelled - Failed Review",
+            "Cancelled - Failed Screening", "Cancelled - Zero Submissions", "Cancelled - Winner Unresponsive", "Cancelled - Client Request",
+            "Cancelled - Requirements Infeasible", "Cancelled - Zero Registrations");
 
     /**
      * Gets date from date string.
