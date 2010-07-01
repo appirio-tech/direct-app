@@ -520,10 +520,10 @@ public class DataProvider {
         for (int i = 0; i < recordNum; i++) {
              String statusName = resultContainer.getStringItem(i, "status");
 
-             long fee = 0;
+             double fee = 0;
 
              try {
-                fee = resultContainer.getLongItem(i, "contest_payment");
+                fee = resultContainer.getDoubleItem(i, "contest_payment");
              } catch(IllegalArgumentException ex) {
                  // ignore the IllegalArgumentException if query result does not have contest_payment column
              }

@@ -22,7 +22,18 @@
             <td class="date">
                 <fmt:formatDate value="${contestEndDate}" pattern="MM/dd/yyyy HH:mm zzz"/>
             </td>
-            <td><s:property value="registrantsNumber"/></td>
+            <td>
+                <s:if test="isStudio == true">
+                    <a href="<s:url action="contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
+                        <s:property value="registrantsNumber"/>
+                    </a>
+                </s:if>
+                <s:if test="isStudio == false">
+                    <a href="<s:url action="contestRegistrants" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
+                        <s:property value="registrantsNumber"/>
+                    </a>
+                </s:if>
+            </td>
             <td><s:property value="submissionsNumber"/></td>
             <td>
 				<s:if test="forumId != -1">
