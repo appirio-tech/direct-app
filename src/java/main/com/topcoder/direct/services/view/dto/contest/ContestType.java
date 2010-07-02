@@ -14,12 +14,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Wireframe</code> contest type.</p>
      */
-    WIREFRAME("Wireframe", "wf"),
+    WIREFRAME("Wireframes", "wf"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
      */
-    WEB_DESIGN("Web Page Design", "w"),
+    WEB_DESIGN("Web Design", "w"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
@@ -82,7 +82,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>
      */
-    UI_PROTOTYPE("UI Prototypes", "ui"),
+    UI_PROTOTYPE("UI Prototype Competition", "ui"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Specification</code> contest type.</p>
@@ -97,12 +97,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Component Design</code> contest type.</p>
      */
-    COMPONENT_DESIGN("Component Design", "Cd"),
+    COMPONENT_DESIGN("Design", "Cd"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Component Dev</code> contest type.</p>
      */
-    COMPONENT_DEVELOPMENT("Component Dev", "Cv"),
+    COMPONENT_DEVELOPMENT("Development", "Cv"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Assembly</code> contest type.</p>
@@ -122,12 +122,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>RIA Build</code> contest type.</p>
      */
-    RIA_BUILD("RIA Build", "Rb"),
+    RIA_BUILD("RIA Build Competition", "Rb"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>RIA Component</code> contest type.</p>
      */
-    RIA_COMPONENT("RIA Component", "Rc"),
+    RIA_COMPONENT("RIA Component Competition", "Rc"),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Bug Races</code> contest type.</p>
