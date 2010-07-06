@@ -128,6 +128,22 @@
       <property name="proxyInterface" value="com.topcoder.service.user.UserService" />
     </bean>
 
+   <bean id="gamePlanService" class="org.springframework.jndi.JndiObjectFactoryBean">
+      <property name="jndiName" value="GamePlanServiceBean/remote" />
+      <property name="cache" value="true" />
+      <property name="lookupOnStartup" value="false" />
+      <property name="jndiEnvironment">
+        <props>
+          <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+          </prop>
+          <prop key="java.naming.provider.url">${service.provder.url}</prop>
+          <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+          </prop>
+        </props>
+      </property>
+      <property name="proxyInterface" value="com.topcoder.service.gameplan.GamePlanService" />
+    </bean>
+
   <!-- AuthenticationInterceptor -->
   <bean id="authenticationInterceptor"
     class="com.topcoder.direct.services.view.interceptors.AuthenticationInterceptor">
@@ -233,5 +249,10 @@
   <bean id="dashboardVMAction" class="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction"
      scope="prototype">
       <property name="cloudVMService" ref="cloudVMService" />
+  </bean>
+
+  <bean id="projectGamePlanAction" class="com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction"
+     scope="prototype">
+      <property name="gamePlanService" ref="gamePlanService" />
   </bean>
 </beans>

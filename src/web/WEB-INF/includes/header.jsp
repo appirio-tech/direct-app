@@ -92,6 +92,9 @@
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
                     <a href="<s:url action="currentProjectPermissionsView" namespace="/"/>"><span>Permissions</span></a>
                 </li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
+                    <a href="<s:url action="currentProjectGamePlanView" namespace="/"/>"><span>Game Plan</span></a>
+                </li>
             </ul>
         </div>
     </ui:isProjectPage>
