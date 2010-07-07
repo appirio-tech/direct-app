@@ -72,7 +72,6 @@ com.topcoder.direct.ContestData = function() {
 
    this.detailedStatusId=CONTEST_DETAILED_STATUS_DRAFT;
 
-   this.drpoints = 0;
    
    ////////// Functions/Methods ///////////////
    /**

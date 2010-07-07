@@ -219,8 +219,6 @@ function handleSaveAsDraftContestResult(jsonResult) {
         //update admin fee
         mainWidget.competition.contestData.contestAdministrationFee = result.contestAdministrationFee;
 
-        // update dr points
-        mainWidget.competition.contestData.drpoints = result.drpoints;
     },
     function(errorMessage) {
         showErrors(errorMessage);
