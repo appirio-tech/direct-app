@@ -43,7 +43,7 @@
                                                 <div class="container2BottomRight">
                                                     <div class="container2Content">
 
-                                                        <table class="projectStats contests paginatedDataTable"
+                                                        <table id="ProjectContests" class="projectStats contests paginatedDataTable"
                                                                cellpadding="0"
                                                                cellspacing="0">
                                                         <thead>

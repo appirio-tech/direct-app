@@ -2301,3 +2301,13 @@ A{
     padding-top:2px;
     text-decoration:none;
 }
+
+.sorting {
+cursor: pointer;
+}
+.sorting_desc {
+cursor: pointer;
+}
+.sorting_asc {
+cursor: pointer;
+}
