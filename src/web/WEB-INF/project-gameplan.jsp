@@ -36,7 +36,7 @@
                         <h2 class="title">Game Plan Gantt Chart</h2>
                     </div><!-- End .areaHeader -->
 
-                    <table class="projectStats" cellpadding="0" cellspacing="0">
+      <!--              <table class="projectStats" cellpadding="0" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Start Date</th>
