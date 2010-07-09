@@ -292,14 +292,17 @@ function GanttProject(Chart,projectInfo)
  */
 GanttProject.prototype.checkWidthProjectNameItem = function()
 {
+    var pName = this.Project.Name;
+    
     if (this.projectNameItem.offsetWidth + this.projectNameItem.offsetLeft > this.Chart.maxWidthPanelNames)
     {
         var width = this.projectNameItem.offsetWidth + this.projectNameItem.offsetLeft - this.Chart.maxWidthPanelNames;
         var countChar = Math.round(width / (this.projectNameItem.offsetWidth / this.projectNameItem.firstChild.length));
-        var pName = this.Project.Name.substring(0, this.projectNameItem.firstChild.length - countChar - 3);
+        pName = this.Project.Name.substring(0, this.projectNameItem.firstChild.length - countChar - 3);
         pName += "...";
-        this.projectNameItem.innerHTML = pName;
     }
+    
+     this.projectNameItem.innerHTML = "<a href=\"" + ganttProjectUrl + "\">" + pName + "</a>";;
 }
 /**
  *  @desc: create GanttProject.
@@ -4236,7 +4239,7 @@ GanttProject.prototype.createProjectNameItem = function()
 	var self = this;
     var divName = document.createElement("div");
     divName.style.cssText = "cursor:pointer;color: #000000;font-weight: bold;font-size: 12px;font-family: Tahoma, Arial;white-space:nowrap;height:15px;z-index:1;position: absolute;left:" + 5 + "px;top: " + this.posY + "px;";
-    divName.innerHTML = "<a href=\"" + ganttProjectUrl + "\">" + this.Project.Name + "</a>";
+    divName.innerHTML = this.Project.Name;
     divName.title = this.Project.Name;
     if(this.Chart.isShowConMenu)
     {
@@ -4927,7 +4930,7 @@ GanttTask.prototype.createTaskNameItem = function()
     divName.style.cssText = "cursor:pointer;white-space:nowrap;height:15px;z-index:1;position: absolute;left:20px;top: " + this.posY + "px;";
     divName.className = "taskNameItem";
     divName.title = this.TaskInfo.Name;
-    divName.innerHTML = "<a href=\"" + ganttContestUrl + this.TaskInfo.Id + "\">" + "<font color=\"#7D7D7D\">" + this.TaskInfo.Name + "</font></a>";
+    divName.innerHTML = this.TaskInfo.Name;
     if(this.Chart.isShowConMenu)
     {
     var showContMenu = function(event){
@@ -5023,15 +5026,22 @@ GanttTask.prototype.createTaskDescItem = function()
  * @topic: 4
  */
 GanttTask.prototype.checkWidthTaskNameItem = function()
-{
+{   
+	  var tName = this.TaskInfo.Name;
+    
     if (this.cTaskNameItem[0].offsetWidth + this.cTaskNameItem[0].offsetLeft > this.Chart.maxWidthPanelNames)
     {
         var width = this.cTaskNameItem[0].offsetWidth + this.cTaskNameItem[0].offsetLeft - this.Chart.maxWidthPanelNames;
+      
         var countChar = Math.round(width / (this.cTaskNameItem[0].offsetWidth / this.cTaskNameItem[0].firstChild.length));
+      
         var tName = this.TaskInfo.Name.substring(0, this.cTaskNameItem[0].firstChild.length - countChar - 3);
+    
         tName += "...";
-        this.cTaskNameItem[0].innerHTML = tName;
+        
     }
+    
+    this.cTaskNameItem[0].innerHTML = "<a href=\"" + ganttContestUrl + this.TaskInfo.Id + "\">" + "<font color=\"#7D7D7D\">" + tName + "</font></a>";
 
 }
 /**
