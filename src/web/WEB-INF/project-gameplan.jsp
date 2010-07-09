@@ -61,7 +61,7 @@
                                 <td class="date fees">$ 00,000 / $ 00,000</td>
                             </tr>
                         </tbody>
-                    </table><!-- End .projectsStats -->
+                    </table> End .projectsStats -->
 
                     <div class="container2">
                         <!-- error information container -->
