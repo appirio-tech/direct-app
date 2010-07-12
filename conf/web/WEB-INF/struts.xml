@@ -13,6 +13,7 @@
     <constant name="struts.ui.theme" value="simple"/>
     <constant name="struts.convention.exclude.parentClassLoader" value="true" />
     <constant name="struts.convention.action.fileProtocols" value="jar,vfsfile,vfszip" />
+    <constant name="struts.multipart.maxSize" value="10485760" />
 
 
 
