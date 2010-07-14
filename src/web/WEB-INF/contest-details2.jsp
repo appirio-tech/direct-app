@@ -20,7 +20,7 @@
     //]]>
     </script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=38"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=38"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=40"></script>
     <s:if test="software">
         <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=38"></script>
     </s:if>

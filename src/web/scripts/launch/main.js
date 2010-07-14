@@ -559,7 +559,7 @@ function formatDateForReview(d) {
    if(d == null) {
       return null;
    }
-   return d.toString("MM/dd/yyyy T HH:mm EST (GMT-4)").replace('T ','at ').replace('G5T','GMT').replace('G6T','GMT');
+   return d.toString("MM/dd/yyyy T HH:mm EST ").replace('T ','at ').replace('EST','EST (GMT-4)');
 }
 
 function getDatePart(d) {
