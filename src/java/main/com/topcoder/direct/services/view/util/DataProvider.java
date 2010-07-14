@@ -672,7 +672,7 @@ public class DataProvider {
                 project = projects.get(tcDirectProjectId);
             }
 
-            ContestBriefDTO contestBrief = createContest(contestId, contestName, project);
+            ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
             ContestType type = ContestType.forName(typeName);
             ContestStatus status = ContestStatus.forName(statusName);
 
@@ -823,6 +823,23 @@ public class DataProvider {
 
         contest.setContestType(ContestType.forName(contestType));
 
+        return contest;
+    }
+
+    /**
+     * <p>Constructs new <code>ContestBriefDTO</code> instance based on specified properties.</p>
+     *
+     * @param id a <code>long</code> providing the contest ID.
+     * @param name a <code>String</code> providing the contest name.
+     * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to.
+     * @return an <code>ContestBriefDTO</code> providing the details for a single contest.
+     */
+    private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project, Boolean isSoftware) {
+        ContestBriefDTO contest = new ContestBriefDTO();
+        contest.setId(id);
+        contest.setTitle(name);
+        contest.setProject(project);
+        contest.setSoftware(isSoftware);
         return contest;
     }
 
