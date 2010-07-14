@@ -161,7 +161,8 @@ public class DataProvider {
             String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
             long contestId = resultContainer.getLongItem(i, "contest_id");
             String contestName = resultContainer.getStringItem(i, "contest_name");
-	    String contestType = resultContainer.getStringItem(i, "contest_type");
+	        String contestType = resultContainer.getStringItem(i, "contest_type");
+            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
 
             // System.out.println("#############contestType:"+contestType);
 
@@ -185,7 +186,7 @@ public class DataProvider {
             if (contests.containsKey(contestId)) {
                 contest = contests.get(contestId);
             } else {
-                contest = createTypedContest(contestId, contestName, project, ContestType.forName(contestType), null);//here
+                contest = createTypedContest(contestId, contestName, project, ContestType.forName(contestType), null, !isStudio);//here
                 contests.put(contestId, contest);
             }
 
@@ -269,6 +270,7 @@ public class DataProvider {
             long originatorId = Long.parseLong(resultContainer.getStringItem(i, "user_id"));
             String originatorHandle = resultContainer.getStringItem(i, "user");
             Timestamp date = resultContainer.getTimestampItem(i, "activity_time");
+            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
 
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
@@ -283,7 +285,7 @@ public class DataProvider {
             if (contests.containsKey(contestId)) {
                 contest = contests.get(contestId);
             } else {
-                contest = createTypedContest(contestId, contestName, project, null, null);
+                contest = createTypedContest(contestId, contestName, project, null, null, !isStudio);
                 contests.put(contestId, contest);
             }
 
@@ -717,6 +719,7 @@ public class DataProvider {
             String contestName = resultContainer.getStringItem(i, "contest_name");
             String statusName = resultContainer.getStringItem(i, "status");
             String typeName = resultContainer.getStringItem(i, "contest_type");
+            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
 
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
@@ -730,7 +733,7 @@ public class DataProvider {
             ContestStatus status = ContestStatus.forName(statusName);
 
             TypedContestBriefDTO contest;
-            contest = createTypedContest(contestId, contestName, project, type, status);
+            contest = createTypedContest(contestId, contestName, project, type, status, !isStudio);
             contests.add(contest);
         }
 
@@ -854,13 +857,14 @@ public class DataProvider {
      * @return an <code>TypedContestBriefDTO</code> providing the details for a single contest.
      */
     private static TypedContestBriefDTO createTypedContest(long id, String name, ProjectBriefDTO project,
-                                                           ContestType type, ContestStatus status) {
+                                                           ContestType type, ContestStatus status, Boolean isSoftware) {
         TypedContestBriefDTO contest = new TypedContestBriefDTO();
         contest.setId(id);
         contest.setTitle(name);
         contest.setProject(project);
         contest.setContestType(type);
         contest.setStatus(status);
+        contest.setSoftware(isSoftware);
         return contest;
     }
 
