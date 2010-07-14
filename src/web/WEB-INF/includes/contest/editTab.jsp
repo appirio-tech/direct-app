@@ -47,29 +47,9 @@
                           		<span class="name"><strong>Contest Type</strong></span>
                                 <div class="selectOut">                                	
                                     <select id="contestTypes">
-                                         <optgroup label="Studio">
                                          	<s:iterator value="studioContestTypes">
                                          	<option value='STUDIO<s:property value="contestTypeId" />'><s:property value="description" /></option>
                                           </s:iterator>
-                                         </optgroup>														                            
-                                         <optgroup label="Software">
-                                         	<option value="SOFTWARE1">Algoritgm</option>
-                                         	<option value="SOFTWARE1">Conceptualization</option>
-                                         	<option value="SOFTWARE1">Specification</option>
-                                         	<option value="SOFTWARE1">Architecture</option>
-                                         	<option value="SOFTWARE1">Design</option>
-                                         	<option value="SOFTWARE1">Development</option>
-                                         	<option value="SOFTWARE1">Assembly</option>
-                                         	<option value="SOFTWARE1">Test Scenarios</option>
-                                         	<option value="SOFTWARE1">Test Suites</option>
-                                         	<option value="SOFTWARE1">UI Prototype</option>
-                                         	<option value="SOFTWARE1">RIA Build</option>
-                                         	<option value="SOFTWARE1">Bug Races</option>
-                                         	<option value="SOFTWARE1">High School</option>
-                                         	<option value="SOFTWARE1">Marathon Matches</option>
-                                         	<option value="SOFTWARE1">Tournaments</option>
-                                         	<option value="SOFTWARE1">Others</option>
-                                         </optgroup>														                             
                                      </select>
                                   </div>                                                
                            </div> <!-- End of .selectX -->                                                                                        

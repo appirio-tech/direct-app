@@ -10,23 +10,7 @@ $(document).ready(function(){
     if($('.date-pick').length > 0){
       $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
     }
-	  
-	  
-	  /* Optgroup 2 columns fix */
-	  if($('.selectDesing optgroup, .selectDesign .newListOptionTitle').length > 0){
-	  	var optgroupMaxHeight = 0, num;
-	  	
-	  	$('.selectDesing optgroup').each(function(){
-	  		num = $(this).children().length + 1;
-	  		optgroupMaxHeight = num * 22 > optgroupMaxHeight ? num * 22 : optgroupMaxHeight;
-	  	});
-	  	
-	  	$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');
-	  	
-	  	$(window).resize(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
-	  	$(window).scroll(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
-	  }
-		
+	  	  
     //contest type
 		$("#editTypeButton").click(function(){			
 			showTypeSectionEdit();
@@ -104,6 +88,7 @@ $(document).ready(function(){
           handleJsonResult(jsonResult,
           function(result) {
             initContest(result);
+            initSelect();
             
             //render values
             populateTypeSection();
@@ -189,13 +174,7 @@ $(document).ready(function(){
   },function(){
     $('#contestRound2ToolTip').hide();
   });
-  //general initialization
-  /* init select */
-  if($('select').length > 0){
-	$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
-	
-	$('.selectDesing div.selectedTxt').html('Select Contest Type');
-  }
+  
   //tiny mce BUGR 3813 
   tinyMCE.init({
   	mode : "exact",
@@ -211,6 +190,14 @@ $(document).ready(function(){
   });
 });
 
+function initSelect() {
+  /* init select */
+  if($('select').length > 0){
+	$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
+	
+	$('.selectDesing div.selectedTxt').html('Select Contest Type');
+  }	
+}
 
 function initContest(contestJson) {
    mainWidget.competitionType = 'STUDIO';
@@ -293,7 +280,7 @@ function isDraft() {
  */
 function populateTypeSection() {
 	//edit
-	$('#contestTypes').getSetSSValue(mainWidget.competition.contestData.contestTypeId);
+	$('#contestTypes').getSetSSValue("STUDIO"+mainWidget.competition.contestData.contestTypeId);
 	$('#contestName').val(mainWidget.competition.contestData.name);
 	if(isBillingEditable()) {		
 		$('#billingAccountDivEdit').show(); 
