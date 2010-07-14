@@ -19,6 +19,7 @@ import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.ProjectData;
@@ -30,6 +31,7 @@ import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
+import com.topcoder.security.TCSubject;
 
 /**
  * <p>
@@ -148,14 +150,25 @@ public class GetContestAction extends ContestAction {
             throw new DirectException("contestId and projectId both less than 0 or not defined.");
         }
 
+        TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
+
         if (contestId > 0) {
             studioCompetition = contestServiceFacade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
                 contestId);
             setResult(studioCompetition);
+
+            // Set contest stats
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+            getViewData().setContestStats(contestStats);
+
         } else {
             softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
                 .getTCSubjectFromSession(), projectId);
             setResult(softwareCompetition);
+
+            // Set contest stats
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, projectId);
+            getViewData().setContestStats(contestStats);
         }
     }
 
