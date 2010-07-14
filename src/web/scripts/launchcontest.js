@@ -396,7 +396,7 @@ $(document).ready(function(){
    ****************************/
   tinyMCE.init({
     mode : "exact",
-    elements : "contestDescription,contestIntroduction,round1Info,round2Info",
+    elements : "contestDescription,contestIntroduction,round1Info,round2Info,swDetailedRequirements,swGuidelines",
     plugins : "paste",
     theme : "advanced",
     theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist",

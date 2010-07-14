@@ -6,12 +6,8 @@
 	<div class="description">    
         <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
         
-        <div class="textarea2">
+        <div class="textarea">
             <textarea id="swDetailedRequirements" rows="" cols=""></textarea>
-        </div>        
-        <div class="bottomTextarea">
-        	<p>Describe what you want to accomplish.</p>
-        	<span class="icon"></span>                                        
         </div>        
   </div>
     
@@ -19,15 +15,9 @@
 	<div class="guidelines">    
         <h3><span class="icon">Software Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
         
-        <div class="textarea2">
+        <div class="textarea">
             <textarea id="swGuidelines" rows="" cols=""></textarea>
-        </div>
-        
-        <div class="bottomTextarea">
-        	<p>Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</p>
-        	<span class="icon"></span>                                        
-        </div>
-        
+        </div>        
   </div>
   <!-- end .guidelines -->
         

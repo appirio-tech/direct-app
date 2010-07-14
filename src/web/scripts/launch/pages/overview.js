@@ -53,8 +53,8 @@ function validateFieldsOverview() {
 }
 
 function validateFieldsOverviewSoftware() {
-   var detailedRequirements = $('#swDetailedRequirements').val();
-   var softwareGuidelines = $('#swGuidelines').val();
+   var detailedRequirements = tinyMCE.get('swDetailedRequirements').getContent();
+   var softwareGuidelines = tinyMCE.get('swGuidelines').getContent();	
    var rootCategoryId = $('#catalogSelect').val();
 
 

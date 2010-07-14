@@ -179,6 +179,20 @@ $(document).ready(function(){
    $('#swFirstPlace').bind('change',function() {
    	  onFirstPlaceChange();
     });   
+    
+  tinyMCE.init({
+  	mode : "exact",
+  	elements : "swDetailedRequirements,swGuidelines",
+  	plugins : "paste",
+  	theme : "advanced",  	
+	  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist",
+	  theme_advanced_buttons2 : "",
+	  theme_advanced_buttons3 : "",
+	  init_instance_callback : function() {
+	  	  $('table.mceLayout').css('width','100%');
+	  }
+  });
+      
 });
 
 /**
@@ -588,8 +602,9 @@ function saveSpecSection() {
 }
 
 function validateFieldsSpecSection() {
-   var detailedRequirements = $('#swDetailedRequirements').val();
-   var softwareGuidelines = $('#swGuidelines').val();
+   var detailedRequirements = tinyMCE.get('swDetailedRequirements').getContent();
+   var softwareGuidelines = tinyMCE.get('swGuidelines').getContent(); 
+   
    var rootCategoryId = $('#catalogSelect').val();
 	
    //validation
