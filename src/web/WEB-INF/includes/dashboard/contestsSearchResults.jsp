@@ -51,8 +51,13 @@
 				</td>
                 <td><span class="<s:property value="status.shortName"/>"><s:property value="status.name"/></span></td>
                 <td>
-                    <a href="contest/detail?contestId=${contest.id}"
-                       class="button1 button"><span>View/Edit</span></a>
+                   <s:if test="contestType == 'Studio'">
+                    <a href="contest/detail?contestId=${contest.id}" class="button1 button"><span>View/Edit</span></a>
+                 </s:if>
+                 <s:if test="contestType != 'Studio'">
+                    <a href="contest/detail?projectId=${contest.id}" class="button1 button"><span>View/Edit</span></a>
+                 </s:if>
+                    
                 </td>
             </tr>
         </s:iterator>
