@@ -3,13 +3,11 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.struts2.util.StrutsTypeConverter;
@@ -17,6 +15,7 @@ import org.apache.struts2.util.StrutsTypeConverter;
 import com.opensymphony.xwork2.XWorkException;
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 import com.opensymphony.xwork2.conversion.impl.XWorkBasicConverter;
+import com.topcoder.direct.services.view.util.DirectUtils;
 
 /**
  * <p>
@@ -26,9 +25,15 @@ import com.opensymphony.xwork2.conversion.impl.XWorkBasicConverter;
  * <p>
  * <code>Thread Safety</code>: this class is thread safe because it's stateless and the parent class is thread safe.
  * </p>
+ * <p>
+ * Version 1.1 - Direct Launch Software Contests Assembly Change Note
+ * <ul>
+ * <li>Uses DirectUtils to convert the util date to xml date.</li>
+ * </ul>
+ * </p>
  *
  * @author fabrizyo, FireIce
- * @version 1.0
+ * @version 1.1
  */
 public class XMLGregorianCalendarTypeConverter extends StrutsTypeConverter {
 
@@ -59,15 +64,11 @@ public class XMLGregorianCalendarTypeConverter extends StrutsTypeConverter {
      * Convert the string to a {@link XMLGregorianCalendar}.
      * </p>
      *
-     * @param context
-     *            the context
-     * @param values
-     *            the values
-     * @param clazz
-     *            the class used to convert to
+     * @param context the context
+     * @param values the values
+     * @param clazz the class used to convert to
      * @return the converted object
-     * @throws TypeConversionException
-     *             if any error occurs
+     * @throws TypeConversionException if any error occurs
      */
     @SuppressWarnings("unchecked")
     public Object convertFromString(Map context, String[] values, Class clazz) {
@@ -85,17 +86,8 @@ public class XMLGregorianCalendarTypeConverter extends StrutsTypeConverter {
             if (null == date) {
                 throw new TypeConversionException("Can not convert \'" + values[0] + "' to Date type");
             }
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(date);
-            int month = calendar.get(Calendar.MONTH) + 1;
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int year = calendar.get(Calendar.YEAR);
 
-            DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
-
-            XMLGregorianCalendar xmlGregorianCalendar = datatypeFactory.newXMLGregorianCalendarDate(year, month, day,
-                    calendar.getTimeZone().getOffset(date.getTime()) / MINUTE_FACTOR);
-            return xmlGregorianCalendar;
+            return DirectUtils.newXMLGregorianCalendar(date);
         } catch (XWorkException e) {
             throw new TypeConversionException("Fail to convert the string to date type.", e);
         } catch (DatatypeConfigurationException e) {
@@ -108,13 +100,10 @@ public class XMLGregorianCalendarTypeConverter extends StrutsTypeConverter {
      * Convert the {@link XMLGregorianCalendarTypeConverter} to a string representation.
      * </p>
      *
-     * @param context
-     *            the context
-     * @param object
-     *            the object value to convert
+     * @param context the context
+     * @param object the object value to convert
      * @return the string representation
-     * @throws TypeConversionException
-     *             if any error occurs
+     * @throws TypeConversionException if any error occurs
      */
     @SuppressWarnings("unchecked")
     public String convertToString(Map context, Object object) {

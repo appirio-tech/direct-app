@@ -79,7 +79,7 @@
     </property>
     <property name="proxyInterface" value="com.topcoder.service.studio.contest.ContestManager" />
   </bean>
-  
+
   <bean id="adminServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
     <property name="jndiName" value="remote/AdminServiceFacadeBean" />
     <property name="cache" value="true" />
@@ -158,6 +158,10 @@
     </constructor-arg>
   </bean>
 
+  <bean id="referenceDataBean" class="com.topcoder.direct.services.configs.ReferenceDataBean">
+     <property name="contestServiceFacade" ref="contestServiceFacade" />
+  </bean>
+
   <bean id="mimeTypeRetriever" class="com.topcoder.direct.services.view.action.contest.launch.MimeTypeRetriever" />
 
   <!-- Actions -->
@@ -168,6 +172,7 @@
     <property name="pipelineServiceFacade" ref="pipelineServiceFacade" />
     <property name="contestManager" ref="contestManager" />
     <property name="adminServiceFacade" ref="adminServiceFacade" />
+    <property name="referenceDataBean" ref="referenceDataBean" />
   </bean>
 
   <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
@@ -208,7 +213,7 @@
   <bean id="downloadDocumentAction" class="com.topcoder.direct.services.view.action.contest.launch.DownloadDocumentAction"
     parent="contestAction" scope="prototype">
   </bean>
-  
+
   <bean id="getCapacityFullDatesAction" class="com.topcoder.direct.services.view.action.contest.launch.GetCapacityFullDatesAction"
     parent="baseDirectStrutsAction" scope="prototype">
   </bean>

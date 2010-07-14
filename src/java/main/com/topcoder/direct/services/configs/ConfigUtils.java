@@ -3,7 +3,9 @@
  */
 package com.topcoder.direct.services.configs;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
@@ -12,21 +14,58 @@ import javax.xml.bind.JAXBContext;
  * Utils class for handling various configuration files.
  * </p>
  *
- * @author TCSDEVELOPER
+ * @author BeBetter
  * @version 1.0
  */
 public final class ConfigUtils {
+    /**
+     * <p>
+     * studio contest types.
+     * </p>
+     */
     private static StudioContestTypes studioContestTypes;
 
+    /**
+     * <p>
+     * Overview object to hold studio overview information.
+     * </P>
+     */
     private static Overview overview;
 
+    /**
+     * <p>
+     * studio subtype overview information.
+     * </p>
+     */
     private static List<StudioSubtypeOverview> studioOverviews;
 
+    /**
+     * <p>
+     * Contest fees.
+     * </p>
+     */
     private static ContestFees contestFees;
 
+    /**
+     * <p>
+     * Studio subtype contest fees.
+     * </p>
+     */
     private static List<StudioSubtypeContestFee> studioSubtypeContestFees;
 
+    /**
+     * <p>
+     * File types.
+     * </p>
+     */
     private static FileTypes fileTypes;
+
+    /**
+     * <p>
+     * Software contest fees.
+     * </p>
+     */
+    private static Map<String, ContestFee> softwareContestFees;
 
     static {
         try {
@@ -36,10 +75,20 @@ public final class ConfigUtils {
         }
     }
 
+    /**
+     * <p>
+     * Private ctor. Does nothing.
+     * </p>
+     */
     private ConfigUtils() {
-        //do nothing
+        // do nothing
     }
 
+    /**
+     * <p>
+     * Initialize the configuration objects.
+     * </p>
+     */
     private static void init() throws Exception {
         JAXBContext studioTypesJaxbContext = JAXBContext.newInstance(StudioContestTypes.class);
 
@@ -64,9 +113,12 @@ public final class ConfigUtils {
         contestFees = (ContestFees) contestFeesJaxbContext.createUnmarshaller().unmarshal(
             ConfigUtils.class.getResourceAsStream("/contestFees.xml"));
 
+        softwareContestFees = new HashMap<String, ContestFee>();
         for (ContestFee contestFee : contestFees.getContestFees()) {
-            if ("STUDIO".equals(contestFee.getId())) {
+            if (contestFee.isStudioFee()) {
                 studioSubtypeContestFees = contestFee.getStudioSubtypeContestFees();
+            } else {
+                softwareContestFees.put(contestFee.getContestTypeId() + "", contestFee);
             }
         }
 
@@ -79,18 +131,46 @@ public final class ConfigUtils {
             ConfigUtils.class.getResourceAsStream("/fileTypes.xml"));
     }
 
+    /**
+     * <p>
+     * Gets studio contest types.
+     * </p>
+     *
+     * @return studio contest types
+     */
     public static List<StudioContestType> getStudioContestTypes() {
         return studioContestTypes.getContestTypes();
     }
 
+    /**
+     * <p>
+     * Gets overview information.
+     * </p>
+     *
+     * @return overview
+     */
     public static Overview getOverview() {
         return overview;
     }
 
+    /**
+     * <p>
+     * Get studio overviews.
+     * </p>
+     *
+     * @return studio overviews
+     */
     public static List<StudioSubtypeOverview> getStudioOverviews() {
         return studioOverviews;
     }
 
+    /**
+     * <p>
+     * Get studio overview.
+     * </p>
+     *
+     * @return studio subtype overview
+     */
     public static StudioSubtypeOverview getStudioOverview(long contestTypeId) {
         for (StudioSubtypeOverview overview : getStudioOverviews()) {
             if (overview.getId() == contestTypeId) {
@@ -101,15 +181,47 @@ public final class ConfigUtils {
         return null;
     }
 
+    /**
+     * <p>
+     * Gets contest fees.
+     * </p>
+     *
+     * @return contest fees
+     */
     public static ContestFees getContestFees() {
         return contestFees;
     }
 
+    /**
+     * <p>
+     * Gets studio subtype contest fees.
+     * </p>
+     *
+     * @return studio subtype contest fees
+     */
     public static List<StudioSubtypeContestFee> getStudioContestFees() {
         return studioSubtypeContestFees;
     }
 
+    /**
+     * <p>
+     * Gets file types.
+     * </p>
+     *
+     * @return file types
+     */
     public static FileTypes getFileTypes() {
         return fileTypes;
+    }
+
+    /**
+     * <p>
+     * Gets software contest fees.
+     * </p>
+     *
+     * @return software contest fees
+     */
+    public static Map<String, ContestFee> getSoftwareContestFees() {
+        return softwareContestFees;
     }
 }

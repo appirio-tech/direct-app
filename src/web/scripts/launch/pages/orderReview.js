@@ -4,7 +4,26 @@
 /**
  * Rerender the order review page.
  */ 
-function updateOrderReview() {
+function updateOrderReviewSoftware() {
+   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
+   if(billingProjectId > 0) {
+   	 $('#swOrderReview_activateButton').show();     
+   } else {
+   	 $('#swOrderReview_activateButton').hide();
+   }   
+
+   $('#sworDate').html(formatDateForReview(new Date()));   
+   $('#sworContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+   $('#sworBillingAccount').html($("#billingProjects option[value="+ billingProjectId +"]").text());
+   $('#sworStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
+   
+   $('#sworFirstPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(2));   
+   $('#sworSecondPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(2));	 
+   $('#sworAdminFee').html(mainWidget.softwareCompetition.projectHeader.getAdminFee().formatMoney(2));
+   $('#sworTotal').html(getCurrentContestTotal().formatMoney(2));
+}
+ 
+function updateOrderReviewStudio() {
    var competition = mainWidget.competition;
 
    if(competition.contestData.isBillingSelected()) {
@@ -92,10 +111,43 @@ function validateFieldsOrderReview() {
 }
 
 function backOrderReview() {
-   showPage('reviewPage');
+   if(mainWidget.isSoftwareContest()) {
+   	  showPage('reviewSoftwarePage');
+   } else {
+   	  showPage('reviewPage');
+   }	   
 }
 
 function activateContest() {	
+   if(mainWidget.isSoftwareContest()) {
+   	  activateContestSoftware();
+   } else {
+   	  activateContestStudio();
+   }	   	
+}
+
+function activateContestSoftware() {	
+   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
+   if(billingProjectId < 0) {
+   	  showErrors("no billing project is selected.");
+   	  return;
+   }   
+
+   //construct request data
+   var request = saveAsDraftRequest();
+   request['activationFlag'] = true;
+
+   $.ajax({
+      type: 'POST',
+      url:  "saveDraftContest",
+      data: request,
+      cache: false,
+      dataType: 'json',
+      success: handleActivationResult
+   });   
+}
+
+function activateContestStudio() {	
    if(!validateFieldsOrderReview()) {
        return;
    }
@@ -129,23 +181,31 @@ function activateContest() {
 function handleActivationResult(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
-        var contestName = mainWidget.competition.contestData.name;
-        if(mainWidget.competition.contestData.contestId < 0 ) {
-          mainWidget.competition.contestData.contestId = result.contestId;
-          //there is already some information on the page. might not need it
-          //showMessage("Contest " + contestName +" has been activated successfully!");
-        } else {
-        	//there is already some information on the page. might not need it
-          //showMessage("Contest " + contestName +" has been activated successfully!");
+       if(mainWidget.isSoftwareContest()) {
+        if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
+          mainWidget.softwareCompetition.projectHeader.id = result.projectId;
         }
-        
-        //show as receipt
-        $('#orderReview_title').text('Receipt');
-        $('#receiptAlert').show();
-        $('#orderReview_buttonBox').hide();        
-        $('#orderReview_buttonBox2').show();   
-        //remove all edit icons
-        $('#orderReviewPage a.tipLink').hide();    
+         
+         //show as receipt
+         $('#swOrderReview_title').text('Receipt');
+         $('#swReceiptAlert').show();
+         $('#swOrderReview_buttonBox').hide();        
+         $('#swOrderReview_buttonBox2').show();   
+         //remove all edit icons
+         $('#orderReviewSoftwarePage a.tipLink').hide();    
+       } else {
+         if(mainWidget.competition.contestData.contestId < 0 ) {
+           mainWidget.competition.contestData.contestId = result.contestId;
+         } 
+         
+         //show as receipt
+         $('#orderReview_title').text('Receipt');
+         $('#receiptAlert').show();
+         $('#orderReview_buttonBox').hide();        
+         $('#orderReview_buttonBox2').show();   
+         //remove all edit icons
+         $('#orderReviewPage a.tipLink').hide();    
+       }	   	    	
     },
     function(errorMessage) {
         showErrors(errorMessage);
@@ -172,6 +232,11 @@ function saveAsDraftOrderReview() {
 }
 
 function editContest() {
-	 var contestId = mainWidget.competition.contestData.contestId;
-	 location.replace(ctx+'/contest/detail?contestId='+contestId);
+   if(mainWidget.isSoftwareContest()) {
+	   var contestId = mainWidget.softwareCompetition.projectHeader.id
+	   location.replace(ctx+'/contest/detail?projectId='+contestId);
+   } else {
+	   var contestId = mainWidget.competition.contestData.contestId;
+	   location.replace(ctx+'/contest/detail?contestId='+contestId);
+   }	   		
 }

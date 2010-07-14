@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.opensymphony.xwork2.validator.annotations.ExpressionValidator;
+import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
@@ -21,6 +21,8 @@ import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
@@ -40,12 +42,21 @@ import com.topcoder.web.common.cache.MaxAge;
  * This class is mutable and stateful: it's not thread safe.
  * </p>
  * <p>
- * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note - Adds the legacy code to show other
- * parts of the contest detail page - Preserves the studio competition to fill the details later
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
+ * <ul>
+ * <li>Adds the legacy code to show other parts of the contest detail page.</li>
+ * <li>Preserves the studio competition to fill the details later.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Version 1.2 - View/Edit/Activate Software Contests v1.0 Assembly Change Note
+ * <ul>
+ * <li>Preserves the software competition to fill the details later.</li>
+ * </ul>
  * </p>
  *
  * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.1
+ * @version 1.2
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -100,6 +111,13 @@ public class GetContestAction extends ContestAction {
 
     /**
      * <p>
+     * <code>softwareCompetition</code> to hold the software competition.
+     * </p>
+     */
+    private SoftwareCompetition softwareCompetition;
+
+    /**
+     * <p>
      * Creates a <code>GetContestAction</code> instance.
      * </p>
      */
@@ -119,7 +137,6 @@ public class GetContestAction extends ContestAction {
      * @see ContestServiceFacade#getContest(com.topcoder.security.TCSubject, long)
      * @see ContestServiceFacade#getSoftwareContestByProjectId(com.topcoder.security.TCSubject, long)
      */
-    @ExpressionValidator(message = "Only one of projectId and contestId should be set", key = "i18n.GetContestAction.projectIdOrContestIdRequiredSet", expression = "(projectId == 0 && contestId >= 1) || (projectId >= 1 && contestId == 0)")
     protected void executeAction() throws Exception {
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
 
@@ -127,13 +144,18 @@ public class GetContestAction extends ContestAction {
             throw new IllegalStateException("The contest service facade is not initialized.");
         }
 
+        if (contestId <= 0 && projectId <= 0) {
+            throw new DirectException("contestId and projectId both less than 0 or not defined.");
+        }
+
         if (contestId > 0) {
             studioCompetition = contestServiceFacade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
                 contestId);
             setResult(studioCompetition);
         } else {
-            setResult(contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
-                .getTCSubjectFromSession(), projectId));
+            softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
+                .getTCSubjectFromSession(), projectId);
+            setResult(softwareCompetition);
         }
     }
 
@@ -189,33 +211,50 @@ public class GetContestAction extends ContestAction {
 
     /**
      * <p>
+     * Determines if it is software contest or not.
+     * </p>
+     *
+     * @return true if it is software contest
+     */
+    public boolean isSoftware() {
+        return (softwareCompetition != null);
+    }
+
+    /**
+     * <p>
      * Gets the view data.
      * </p>
      *
      * @return the view data
-     * @throws Exception
+     * @throws Exception if any error occurs
      */
     public ContestDetailsDTO getViewData() throws Exception {
         if (viewData == null) {
             viewData = new ContestDetailsDTO();
 
-            //real data
+            // real data
             ContestStatsDTO contestStats = new ContestStatsDTO();
             ContestBriefDTO contest = new ContestBriefDTO();
-            contest.setId(studioCompetition.getContestData().getContestId());
-            contest.setTitle(studioCompetition.getContestData().getName());
+            if (studioCompetition != null) {
+                contest.setId(studioCompetition.getContestData().getContestId());
+                contest.setTitle(studioCompetition.getContestData().getName());
+            }
+            if (softwareCompetition != null) {
+                contest.setId(softwareCompetition.getProjectHeader().getId());
+                contest.setTitle(softwareCompetition.getProjectHeader().getProperty("Project Name"));
+            }
             contestStats.setContest(contest);
             fillContestStats(contestStats);
             viewData.setContestStats(contestStats);
 
-            ContestDTO contestDTO = DataProvider.getContest(4);
+            final long testContestId = 4;
+            ContestDTO contestDTO = DataProvider.getContest(testContestId);
             viewData.setContest(contestDTO);
 
             // project
 
             // right side
             List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getSessionData().getCurrentUserId());
-
             UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
             userProjectsDTO.setProjects(projects);
             viewData.setUserProjects(userProjectsDTO);
@@ -224,6 +263,10 @@ public class GetContestAction extends ContestAction {
     }
 
     private void fillContestStats(ContestStatsDTO contestStats) throws Exception {
+        // TODO: fill software stats
+        if (studioCompetition == null) {
+            return;
+        }
         DataAccess dao = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_studio_contest_stats");
@@ -233,7 +276,7 @@ public class GetContestAction extends ContestAction {
         contestStats.setRegistrantsNumber(result.getIntItem(0, "number_of_registration"));
         contestStats.setSubmissionsNumber(result.getIntItem(0, "number_of_submission"));
         contestStats.setForumPostsNumber(result.getIntItem(0, "number_of_forum"));
-	contestStats.setForumId(studioCompetition.getContestData().getForumId());
+        contestStats.setForumId(studioCompetition.getContestData().getForumId());
     }
 
     /**
@@ -242,22 +285,52 @@ public class GetContestAction extends ContestAction {
      * </p>
      *
      * @return the session data
+     * @throws Exception if any error occurs
      */
-    public SessionData getSessionData() {
+    public SessionData getSessionData() throws Exception {
         if (sessionData == null) {
             HttpServletRequest request = ServletActionContext.getRequest();
 
             HttpSession session = request.getSession(false);
             if (session != null) {
                 sessionData = new SessionData(session);
+                ProjectBriefDTO project = new ProjectBriefDTO();
                 if (studioCompetition != null) {
-                    ProjectBriefDTO project = new ProjectBriefDTO();
-                    project.setId(studioCompetition.getContestData().getTcDirectProjectId());
+                    project.setId(studioCompetition.getContestData().getContestId());
                     project.setName(studioCompetition.getContestData().getTcDirectProjectName());
-                    sessionData.setCurrentProjectContext(project);
                 }
+                if (softwareCompetition != null) {
+                    project.setId(softwareCompetition.getProjectHeader().getId());
+                    project.setName(getProjectName(softwareCompetition.getProjectHeader().getTcDirectProjectId()));
+
+                }
+                sessionData.setCurrentProjectContext(project);
             }
         }
         return sessionData;
+    }
+
+    /**
+     * <p>
+     * Gets project name. NOTE: it is fixing some bug which software competition project header is missing project
+     * name population.
+     * </p>
+     *
+     * @param projectId client project id
+     * @return the project name. It could be null if no match is found.
+     * @throws Exception if any error occurs
+     */
+    private String getProjectName(long projectId) throws Exception {
+        try {
+            for (ProjectData project : getProjects()) {
+                if (projectId == project.getProjectId()) {
+                    return project.getName();
+                }
+            }
+
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

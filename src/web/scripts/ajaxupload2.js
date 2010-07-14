@@ -224,8 +224,12 @@
     }
 
     // direct extension
-    function getFileInput() {
-    	return $("#uploadButtonDiv input[type='file']").get(0);
+    function getFileInput(studio) {
+    	if(studio) {
+    	   return $("#uploadButtonDiv input[type='file']").get(0);
+    	} else {
+    		 return $("#swUploadButtonDiv input[type='file']").get(0);
+    	}
     }
 
     /**
@@ -235,7 +239,7 @@
      * upload button. Tested dimentions up to 500x500px
      * @param {Object} options See defaults below.
      */
-    window.AjaxUpload = function(button, options){
+    window.AjaxUpload = function(button, options, studio){
         this._settings = {
             // Location of the server-side upload script
             action: 'upload.php',
@@ -276,6 +280,9 @@
         }
          
         // extension
+        // indicates it is upload for studio or software
+        // default it is for studio
+        this.studio = studio;
         
         if(button) {                 
            // button isn't necessary a dom element
@@ -319,7 +326,7 @@
            this._rerouteClicks();
         } else {           
           // DOM element                 
-          this._input = getFileInput();
+          this._input = getFileInput(this.studio);
           
           this._button = null;    
           //this._disabled = true;              
@@ -688,8 +695,12 @@
             // get ready for next request            
             // this._createInput();
             
-            $('#uploadButtonDiv').html('<input name="document" type="file" />');
-            this._input = getFileInput();
+            if(this.studio) {
+              $('#uploadButtonDiv').html('<input name="document" type="file" />');
+            } else {
+            	$('#swUploadButtonDiv').html('<input name="document" type="file" />'); 
+            }
+            this._input = getFileInput(this.studio);
         }
     };
 })(); 

@@ -3,14 +3,17 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.admin.AdminServiceFacadeException;
+import com.topcoder.service.facade.project.DAOFault;
 
 /**
  * <p>
@@ -24,6 +27,16 @@ public class CommonAction extends BaseDirectStrutsAction {
     private long billingProjectId;
 
     private long studioSubTypeId;
+
+    private long catalogId = -1;
+
+    public long getCatalogId() {
+        return catalogId;
+    }
+
+    public void setCatalogId(long catalogId) {
+        this.catalogId = catalogId;
+    }
 
     /**
      * <p>
@@ -41,12 +54,15 @@ public class CommonAction extends BaseDirectStrutsAction {
      * </p>
      *
      * @return the success page
+     * @throws Exception if any error occurs
      */
-    public String getStudioConfigs() {
+    public String getStudioConfigs() throws Exception {
         Map<String, Object> configs = new HashMap<String, Object>();
         configs.put("overview", ConfigUtils.getStudioOverviews());
         configs.put("fees", ConfigUtils.getStudioContestFees());
         configs.put("fileTypes", ConfigUtils.getFileTypes().getFileTypes());
+        configs.put("softwareContestFees", ConfigUtils.getSoftwareContestFees());
+        configs.put("billingInfos", getBillingProjectInfos());
         setResult(configs);
         return SUCCESS;
     }
@@ -123,5 +139,39 @@ public class CommonAction extends BaseDirectStrutsAction {
      */
     public void setStudioSubTypeId(long studioSubTypeId) {
         this.studioSubTypeId = studioSubTypeId;
+    }
+
+    /**
+     * <p>
+     * Gets the billing project information.
+     * </p>
+     *
+     * @return the billing project information. each project is represented in a map object.
+     * @throws DAOFault if a DAO error occurs
+     */
+    private List<Map<String, Object>> getBillingProjectInfos() throws DAOFault {
+        List<Map<String, Object>> billings = new ArrayList<Map<String, Object>>();
+
+        for (Project project : getProjectServiceFacade().getClientProjectsByUser(
+            DirectStrutsActionsHelper.getTCSubjectFromSession())) {
+            Map<String, Object> projectInfo = new HashMap<String, Object>();
+            projectInfo.put("id", project.getId());
+            projectInfo.put("manualPrizeSetting", project.isManualPrizeSetting());
+            billings.add(projectInfo);
+        }
+
+        return billings;
+    }
+
+    /**
+     * <p>
+     * Gets the categories.
+     * </p>
+     *
+     * @return the categories
+     */
+    public String getCategories() {
+        setResult(getReferenceDataBean().getCatalogToCategoriesMap().get(catalogId));
+        return SUCCESS;
     }
 }

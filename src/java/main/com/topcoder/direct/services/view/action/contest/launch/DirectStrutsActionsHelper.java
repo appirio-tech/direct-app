@@ -18,6 +18,12 @@ import com.topcoder.security.TCSubject;
  * <p>
  * <b>Thread Safety: </b> This class has no state, and thus it is thread safe.
  * </p>
+ * <p>
+ * Version 1. - Direct Launch Software Contests Assembly Change Note
+ * <ul>
+ * <li>Adds a util function to return user handle.</li>
+ * </ul>
+ * </p>
  *
  * <p>As of version 1.1 the class is declared public.</p>
  *
@@ -39,12 +45,9 @@ public final class DirectStrutsActionsHelper {
      * Validates the value of a variable. The value can not be <code>null</code>.
      * </p>
      *
-     * @param value
-     *            the value of the variable to be validated.
-     * @param name
-     *            the name of the variable to be validated.
-     * @throws IllegalArgumentException
-     *             if the value of the variable is <code>null</code>.
+     * @param value the value of the variable to be validated.
+     * @param name the name of the variable to be validated.
+     * @throws IllegalArgumentException if the value of the variable is <code>null</code>.
      */
     public static void checkNull(Object value, String name) {
         if (value == null) {
@@ -61,9 +64,25 @@ public final class DirectStrutsActionsHelper {
      */
     public static TCSubject getTCSubjectFromSession() {
         HttpServletRequest request = DirectUtils.getServletRequest();
-        if(request == null) {
+        if (request == null) {
             return null;
         }
         return new SessionData(request.getSession()).getCurrentUser();
+    }
+
+    /**
+     * <p>
+     * Gets the tc handle from session.
+     * </p>
+     *
+     * @return the TCSubject instance from session
+     * @since Direct Launch Software Contests Assembly
+     */
+    static String getUserHandle() {
+        HttpServletRequest request = DirectUtils.getServletRequest();
+        if (request == null) {
+            return null;
+        }
+        return new SessionData(request.getSession()).getCurrentUserHandle();
     }
 }

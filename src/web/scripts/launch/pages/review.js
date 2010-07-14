@@ -4,7 +4,33 @@
 /**
  * Rerender the review page.
  */ 
-function updateReview() {
+function updateReviewSoftware() {
+   $('#rswContestTypeName').html($("#contestTypes option[value=SOFTWARE"+ mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
+   $('#rswContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+   $('#rswProjectName').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
+
+   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+   $('#rswBillingAccount').html((billingProjectId == -1)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());
+   
+   $('#rswStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
+   
+   $('#rswDetailedRequirements').html(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
+   $('#rswSoftwareGuidelines').html(mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines);
+   
+   $('#rswFirstPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(2));
+   $('#rswSecondPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(2));
+   
+   // uploads
+   html = "";
+   $.each(swDocuments, function(i, doc) {
+       html = html + 
+			 "<dt>" + doc.fileName + "</dt>" +
+			 "<dd>" + doc.description + "</dd>";
+   });
+   $('#swDocUploadList').html(html);   
+}
+ 
+function updateReviewStudio() {
    $('#rContestTypeName').html($("#contestTypes option[value=STUDIO"+ mainWidget.competition.contestData.contestTypeId +"]").text());
    $('#rContestName').html(mainWidget.competition.contestData.name);
    $('#rProjectName').html($("#projects option[value="+ mainWidget.competition.contestData.tcDirectProjectId +"]").text());
@@ -69,8 +95,7 @@ function updateReview() {
 			 "<dt>" + '<a href="'+ctx+'/launch/downloadDocument?documentId='+ doc.documentId +'" target="_blank">'+ doc.fileName + "</a></dt>" +
 			 "<dd>" + doc.description + "</dd>";
    });
-   $('#docUploadList').html(html);
-   
+   $('#docUploadList').html(html);   
 }
 
 function validateFieldsReview() {
@@ -78,7 +103,11 @@ function validateFieldsReview() {
 }
 
 function backReview() {
-   showPage('overviewPage');
+   if(mainWidget.isSoftwareContest()) {
+   	  showPage('overviewSoftwarePage');
+   } else {
+   	  showPage('overviewPage');
+   }
 }
 
 function continueReview() {
@@ -86,7 +115,13 @@ function continueReview() {
        return;
    }
 
-   showPage('orderReviewPage');
+   if(mainWidget.isSoftwareContest()) {
+   	  showPage('orderReviewSoftwarePage');
+   } else {
+   	  showPage('orderReviewPage');
+   }
+
+   
 }
 
 

@@ -7,6 +7,9 @@
   -
   - Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
   - - change contest edit link
+  -
+  - Version 1.2 - Direct - Edit Software Contests Assembly Change Note
+  - - change contest edit link to support software details
 --%>
 <%@ tag language="java" body-content="empty" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/WEB-INF/tld/struts-tags.tld" %>
@@ -14,9 +17,14 @@
 
 <%@ attribute name="contest" required="true" type="com.topcoder.direct.services.view.dto.contest.ContestBriefDTO" %>
 
-
+<s:if test="%{#attr['contest'].software}" >
+<a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
+    <c:out value="${contest.title}"/></a>
+</s:if>
+<s:else>
 <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].id}"/></s:url>">
     <c:out value="${contest.title}"/></a>
+</s:else>
 
 
 

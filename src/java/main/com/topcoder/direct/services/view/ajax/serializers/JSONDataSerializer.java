@@ -17,8 +17,10 @@ import com.topcoder.direct.services.view.ajax.AJAXDataSerializationException;
 import com.topcoder.direct.services.view.ajax.AJAXDataSerializer;
 import com.topcoder.direct.services.view.ajax.DirectJsonBeanProcessorMatcher;
 import com.topcoder.direct.services.view.ajax.Helper;
+import com.topcoder.direct.services.view.ajax.SoftwareCompetitionBeanProcessor;
 import com.topcoder.direct.services.view.ajax.StudioCompetitionBeanProcessor;
 import com.topcoder.direct.services.view.ajax.XMLGregorianCalendarBeanProcessor;
+import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
 
 /**
@@ -138,6 +140,7 @@ public class JSONDataSerializer implements AJAXDataSerializer {
                 config.setJsonBeanProcessorMatcher(new DirectJsonBeanProcessorMatcher());
                 config.registerJsonBeanProcessor(XMLGregorianCalendar.class, new XMLGregorianCalendarBeanProcessor());
                 config.registerJsonBeanProcessor(StudioCompetition.class, new StudioCompetitionBeanProcessor());
+                config.registerJsonBeanProcessor(SoftwareCompetition.class, new SoftwareCompetitionBeanProcessor());
                 JSON json = JSONSerializer.toJSON(data, config);
                 jsonReturnString = jsonResultTemplate.replace(RESULT_TOKEN_REG, json.toString());
             } catch (JSONException e) {

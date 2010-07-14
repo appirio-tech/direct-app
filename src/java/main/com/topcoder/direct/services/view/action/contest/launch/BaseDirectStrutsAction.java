@@ -11,9 +11,10 @@ import org.apache.log4j.Logger;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.Preparable;
 import com.topcoder.clients.model.Project;
-import com.topcoder.service.facade.admin.AdminServiceFacade;
+import com.topcoder.direct.services.configs.ReferenceDataBean;
 import com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
@@ -36,12 +37,18 @@ import com.topcoder.service.studio.contest.ContestManager;
  * This class is mutable and stateful: it's not thread safe.
  * </p>
  * <p>
- * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
- * - It will throw out exception when it is not in json request
+ * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note - It will throw out exception when
+ * it is not in json request
+ * </p>
+ * <p>
+ * Version 1.2 - Direct Launch Software Contests Assembly Change Note
+ * <ul>
+ * <li>Add the <code>getReferenceDataBean</code>.</li>
+ * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce
- * @version 1.1
+ * @author fabrizyo, FireIce, TCSDEVELOPER
+ * @version 1.2
  */
 public abstract class BaseDirectStrutsAction extends AbstractAction implements Preparable {
     /**
@@ -111,6 +118,13 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
 
     /**
      * <p>
+     * Bean which holds the reference data.
+     * </p>
+     */
+    private ReferenceDataBean referenceDataBean;
+
+    /**
+     * <p>
      * Creates a <code>BaseDirectStrutsAction</code> instance.
      * </p>
      */
@@ -149,7 +163,7 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
     public String execute() throws Exception {
         try {
             executeAction();
-        } catch (Throwable  e) {
+        } catch (Throwable e) {
             logger.error("Error when executing action : " + getAction() + " : " + e.getMessage(), e);
             if (isJsonRequest()) {
                 setResult(e);
@@ -284,10 +298,24 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
         this.pipelineServiceFacade = pipelineServiceFacade;
     }
 
+    /**
+     * <p>
+     * Gets the contest manager.
+     * </p>
+     *
+     * @return the contest manager
+     */
     public ContestManager getContestManager() {
         return contestManager;
     }
 
+    /**
+     * <p>
+     * Sets the contest manager.
+     * </p>
+     *
+     * @param contestManager the contest manager
+     */
     public void setContestManager(ContestManager contestManager) {
         this.contestManager = contestManager;
     }
@@ -300,6 +328,14 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
         this.adminServiceFacade = adminServiceFacade;
     }
 
+    /**
+     * <p>
+     * Gets all projects.
+     * </p>
+     *
+     * @return all projects
+     * @throws Exception if any error occurs
+     */
     public List<ProjectData> getProjects() throws Exception {
         if (null == projectServiceFacade) {
             throw new IllegalStateException("The project service facade is not initialized.");
@@ -312,6 +348,14 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
         return projects;
     }
 
+    /**
+     * <p>
+     * Gets all billing projects.
+     * </p>
+     *
+     * @return a list of billing projects
+     * @throws Exception if any error occurs
+     */
     public List<ProjectData> getBillingProjects() throws Exception {
         if (null == projectServiceFacade) {
             throw new IllegalStateException("The project service facade is not initialized");
@@ -342,5 +386,28 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      */
     public TCSubject getCurrentUser() {
         return DirectStrutsActionsHelper.getTCSubjectFromSession();
+    }
+
+    /**
+     * <p>
+     * Sets the reference data bean.
+     * </p>
+     *
+     * @param referenceDataBean the reference data bean
+     */
+    public void setReferenceDataBean(ReferenceDataBean referenceDataBean) {
+        this.referenceDataBean = referenceDataBean;
+    }
+
+    /**
+     * <p>
+     * Gets reference data bean.
+     * </p>
+     *
+     * @return the reference data bean
+     * @since Direct Launch Software Contests Assembly
+     */
+    public ReferenceDataBean getReferenceDataBean() {
+        return this.referenceDataBean;
     }
 }

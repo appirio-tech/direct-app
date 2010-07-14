@@ -26,6 +26,11 @@ public class ContestBriefDTO implements Serializable {
     private String title;
 
     /**
+     * <p>Indicates if it is software or not.</p>
+     */
+    private boolean software;
+
+    /**
      * <p>A <code>ProjectBriefDTO</code> providing details on project which this contest belongs to.</p>
      */
     private ProjectBriefDTO project;
@@ -55,6 +60,24 @@ public class ContestBriefDTO implements Serializable {
     }
 
     /**
+     * <p>Return the software flag.</p>
+     *
+     * @return the software
+     */
+    public boolean isSoftware() {
+        return software;
+    }
+
+    /**
+     * <p>Sets the software flag.</p>
+     *
+     * @param software the software to set
+     */
+    public void setSoftware(boolean software) {
+        this.software = software;
+    }
+
+    /**
      * <p>Gets the title of this contest.</p>
      *
      * @return a <code>String</code> providing the title of this contest.
@@ -75,7 +98,7 @@ public class ContestBriefDTO implements Serializable {
     /**
      * <p>Gets the details on project this contest belongs to.</p>
      *
-     * @return a <code>ProjectBriefDTO</code> providing details on project which this contest belongs to.</p>
+     * @return a <code>ProjectBriefDTO</code> providing details on project which this contest belongs to.
      */
     public ProjectBriefDTO getProject() {
         return project;
@@ -84,7 +107,7 @@ public class ContestBriefDTO implements Serializable {
     /**
      * <p>Sets the details on project this contest belongs to.</p>
      *
-     * @param project a <code>ProjectBriefDTO</code> providing details on project which this contest belongs to.</p>
+     * @param project a <code>ProjectBriefDTO</code> providing details on project which this contest belongs to.
      */
     public void setProject(ProjectBriefDTO project) {
         this.project = project;

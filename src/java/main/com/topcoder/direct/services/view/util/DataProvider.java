@@ -15,7 +15,6 @@ import java.util.LinkedHashMap;
 import java.util.Collections;
 import java.util.Comparator;
 
-import com.topcoder.service.studio.PersistenceException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -63,9 +62,12 @@ import com.topcoder.web.common.cache.MaxAge;
  * <p>
  * Version 2.0 - Direct Search Assembly - add search and filtering for searchUserProjects,searchUserContests
  * </p>
+ * <p>
+ * Version 2.1 - Edit Software Contests Assembly - identify if it is software or studio in search contest result
+ * </p>
  *
- * @author isv, BeBetter
- * @version 2.0
+ * @author isv, BeBetter, TCSDEVELOPER
+ * @version 2.1
  */
 public class DataProvider {
 
@@ -78,7 +80,7 @@ public class DataProvider {
     /**
      * <p>Gets the current number of registered <code>TopCoder</code> members.</p>
      *
-     * @return an <code>int</code> providing the current number of registered <code>TopCoder</code> members.  
+     * @return an <code>int</code> providing the current number of registered <code>TopCoder</code> members.
      * @throws Exception if an unexpected error occurs while communicating to persistent data store.
      */
     public static int getMemberCount() throws Exception {
@@ -135,7 +137,7 @@ public class DataProvider {
      * latest activities. Current implementation uses mock data.</p>
      *
      * @param userId a <code>long</code> providing the user to get the latest activities on associated projects for.
-     * @param days an <code>int</code> providing the number of days from current time for selecting activities. 
+     * @param days an <code>int</code> providing the number of days from current time for selecting activities.
      * @return an <code>LatestActivitiesDTO</code> providing the details on latest activities on projects associated
      *         with the specified user.
      * @throws Exception if an unexpected error occurs while communicating to persistent data store.
@@ -392,6 +394,7 @@ public class DataProvider {
                 ContestBriefDTO brief = new ContestBriefDTO();
                 brief.setId(contest.getContestId());
                 brief.setTitle(contest.getCname());
+                brief.setSoftware(!"Studio".equals(contest.getType()));
                 dto.setContest(brief);
 
                 ProjectBriefDTO project = new ProjectBriefDTO();
@@ -581,7 +584,7 @@ public class DataProvider {
      *         associated with the specified project.
      * @throws Exception if an unexpected error occurs.
      */
-    public static LatestProjectActivitiesDTO getLatestActivitiesForProject(long userId, long projectId) 
+    public static LatestProjectActivitiesDTO getLatestActivitiesForProject(long userId, long projectId)
         throws Exception {
         // TODO : this is temporary implementation
         LatestActivitiesDTO data = getLatestActivitiesForUserProjects(userId, 15);
@@ -736,7 +739,7 @@ public class DataProvider {
 
     /**
      * <p>Gets the statistics on specified contest.</p>
-     * 
+     *
      * @param contestId a <code>long</code> providing the ID of a contest.
      * @return a <code>ContestStatsDTO</code> providing the statistics on contest.
      */

@@ -9,6 +9,32 @@
 	line-height:36px;
 	}
 
+
+#launchContestOut .lcc{
+	font-family:Arial, Helvetica, sans-serif;
+	
+	font-size:12px;
+	padding-right:5px;
+	vertical-align:baseline;
+	
+	color:#333333;
+	}
+
+
+#launchContestOut .lcc_chk{
+					width:120px;
+					height:28px;
+					float:left;
+					display:inline;
+					padding-left:24px;
+					
+	padding-top:5px;
+	}
+
+#launchContestOut .hide{
+	display:none;
+}
+
 /** intro **/	
 #launchContestOut .intro{
 	font-family:Arial, Helvetica, sans-serif;
@@ -174,6 +200,10 @@
 					background:url(/images/iconI.png) no-repeat left center;
 					}
 					
+					#launchContestOut .selectDesing .new_style{
+						font-weight:bold;																		
+					}
+
 				#launchContestOut .selectDesing .moreLink,#launchContestOut .selectSoftware .moreLink{
 					height:28px;
 					padding-left:10px;
@@ -812,11 +842,175 @@
 				}
 		
 		/** prizesInner **/
+		/** prizesInner **/
+		
+		#button_tech{
+		height:90px;
+		padding-top:40px;
+		padding-bottom:20px;
+		padding-left:15px;
+		
+		width:45px;
+		float:left;
+		margin-left:20px;
+		margin-right:20px;
+		}
+		
+		#add{
+			cursor:pointer;
+		}
+		
+		#remove{
+			cursor:pointer;
+		}
+		.head_font{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:12px;
+			color:#333;
+			font-weight:bold;
+		}
+		.head_font_space{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:12px;
+			color:#333;
+			font-weight:bold;
+			padding-left:260px;
+		}
+		#masterTechnologiesSelect{
+			overflow:scroll; height:150px; width:285px; float:left;
+		}
+		#masterTechnologiesChoosenSelect{
+			overflow:scroll; height:150px; width:285px; float:left;
+		}
+
+    /* catalog/categoires select */		
+		#addCategories{
+			cursor:pointer;
+		}
+		
+		#removeCategories{
+			cursor:pointer;
+		}
+		.head_font{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:12px;
+			color:#333;
+			font-weight:bold;
+		}
+		.head_font_space{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:12px;
+			color:#333;
+			font-weight:bold;
+			padding-left:260px;
+		}
+		.head_font_space_categories{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:12px;
+			color:#333;
+			font-weight:bold;
+			padding-left:275px;
+		}
+		#select1, #select1_categories{
+			overflow:scroll; height:150px; width:285px; float:left;
+		}
+		#select2, #select2_categories{
+			overflow:scroll; height:150px; width:285px; float:left;
+		}		
+		
 		.prizesInner{
 			height:28px;
 			padding:5px 0;
 			border:#c1c1c1 solid 1px;
 			}
+			
+			.prizesInner1{
+			padding:0px 0;
+			border:none;
+			}
+			.prizesInner_software{
+			height:180px;
+			padding:5px;
+			
+			}
+			
+			.prizesInner_tech{
+			height:180px;
+			padding:5px;
+			
+			}
+			.mid_info{
+				margin-left:7px;
+			}
+			
+			.last_info{
+				float:right;
+				padding-top:3px;
+			}
+			
+			.head{
+				font-family:Arial, Helvetica, sans-serif;
+				font-size:12px;
+				
+			}
+			
+			.radio_font{
+				font-family:Arial, Helvetica, sans-serif;
+				font-size:12px;
+				color:#666;
+				font-weight:bold;
+				
+			}
+			
+			.place{
+				font-family:Arial, Helvetica, sans-serif;
+				font-size:12px;
+				font-weight:bold;
+				
+			}
+			.details{
+				font-family:Arial, Helvetica, sans-serif;
+				font-size:12px;
+				font-weight:bold;
+				padding-left:20px;
+				padding-top:25px;
+				
+				
+			}
+			IMG.new_cur{
+				cursor:pointer;
+			}
+			.place_info{
+				padding-left:200px;
+			}
+			
+			.place_par{
+				margin-top:10px;
+			}
+			.prizesInner_software .placeInput{
+				width:150px;
+				height:17px;
+				margin-left:5px;
+				display:inline;
+				text-align:right;
+				padding:3px 5px;
+				color:#c4c4c4;
+				border:#a8abad solid 1px;
+				}
+			
+			
+			.space_radio{
+				
+				margin-left:20px;
+			}
+			
+			.extra_info{
+				margin-top:10px;
+				
+				height:120px;
+				background-color:#DDD;
+			}
+			
 			
 			/** label **/
 			.prizesInner label{
@@ -1139,6 +1333,20 @@
 			color:#333;
 			}
 	
+    #launchContestOut .contestDetail .textarea2 {
+       border:1px solid #C4C4C4;
+       height:250px;
+       padding-left:10px;
+    }	
+    #launchContestOut .contestDetail .textarea2 textarea {
+       border:0 none;
+       color:#333333;
+       font-size:14px;
+       height:239px;
+       padding:5px 0;
+       width:100%;
+    }	
+    
 	/** textarea bottom **/	
 	#launchContestOut .contestDetail .bottomTextarea{
 		height:22px;
@@ -1163,7 +1371,33 @@
 			overflow:hidden;
 			background:url(/images/textarea_bottom.gif) no-repeat;
 			}
-			
+
+    /* launch software catalog select */
+    #launchContestOut .contestDetail .prizes .catalogSelect {
+     display:block;
+     float:left;
+     margin:10px 0;
+     width:100%;
+    }
+    
+    #launchContestOut .contestDetail .prizes .catalogSelect label {
+      display:block;
+      float:left;
+      font-family:Geneva,Arial,Helvetica,sans-serif;
+      font-size:14px;
+      font-weight:bold;
+      line-height:28px;
+      margin-left:3px;
+    }    			
+    
+		/** input **/
+		#launchContestOut .contestDetail .prizes .catalogSelect .newListSelected{
+			float: left;
+			display: block;
+			margin-left: 10px;
+			height:28px;
+			}
+    
 /*content page styes*/
 .tabHead{
 	height:34px;
@@ -1178,7 +1412,7 @@
 		}
 	
 	.tabHead li{
-		width:111px;
+		width:150px;
 		height:34px;
 		line-height:34px;
 		float:left;
@@ -1286,30 +1520,32 @@
 	}
 	
 	/** file box **/
-	#cboxFiles{
+	#cboxFiles, #swCboxFiles {
 		height:48px;
 		padding-right:0;
+	}
+		
+	/** tip link **/
+	#cboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink,
+	#swCboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
+		width:auto;
+		float:right;
+		display:inline;
+		margin-right:12px;
+		margin-top:18px;
 		}
 		
-		/** tip link **/
-		#cboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
-			width:auto;
-			float:right;
-			display:inline;
-			margin-right:12px;
-			margin-top:18px;
-			}
-			
-		.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
-			margin-top:6px;
-			}
+	.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
+		margin-top:6px;
+	}
 	
-	#cboxFiles dl{
+	#cboxFiles dl, #swCboxFiles dl{
 		width:90%;
 		float:left;
 		display:inline;
-		}
-	#cboxFiles dt,#cboxFiles dd{
+	}
+	
+	#cboxFiles dt,#cboxFiles dd,#swCboxFiles dt,#swCboxFiles dd{
 		width:45%;
 		float:left;
 		display:inline;
@@ -1317,7 +1553,7 @@
 		margin-left:0px;
 		font-size:14px;
 		line-height:24px;
-		}
+	}
 	
 .buttonBox .launchContest{
 	width:150px;
@@ -1514,6 +1750,33 @@
 			text-indent:19px;
 			color:#6c6c6c;
 			}
+
+/** catalogselect **/
+.catalogSelect .newListSelected{
+	width:300px;
+	height:28px;
+	padding:0 5px;
+	border:0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#333;
+	line-height:28px;
+	cursor:pointer;
+	background:url(/images/tabCatalog_select.gif) no-repeat;
+	}
+	
+	.catalogSelect .selectedTxt{
+		width:298px;
+		}
+	
+	.catalogSelect .newList{
+		width:298px !important;
+		border:#ccc solid 1px;
+		background:#fff;
+		position:absolute !important;
+		margin-top:-3px !important;
+		}
+
 
 /** select li **/		
 .newList li{

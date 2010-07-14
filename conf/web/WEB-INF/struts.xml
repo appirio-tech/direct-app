@@ -242,8 +242,8 @@
                 <interceptor-ref name="servletConfig"/>
                 <interceptor-ref name="i18n"/>
                 <interceptor-ref name="params">
-                  <param name="acceptParamNames">contestId</param>
-                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                  <param name="acceptParamNames">contestId,projectId</param>
+                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="chain"/>
@@ -256,7 +256,7 @@
                 <interceptor-ref name="staticParams"/>
                 <interceptor-ref name="actionMappingParams"/>
                 <interceptor-ref name="params">
-                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
                 </interceptor-ref>
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="validation">
@@ -310,6 +310,10 @@
                 <param name="inputName">inputStream</param>
                 <param name="bufferSize">1024</param>
             </result>
+        </action>
+
+        <action name="getCategories" method="getCategories" class="commonAction">
+            <result type="json" />
         </action>
 
         <action name="getCapacityFullDates" class="getCapacityFullDatesAction">

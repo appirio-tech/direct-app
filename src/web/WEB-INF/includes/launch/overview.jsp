@@ -1,8 +1,6 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
-<div class="contestDetail">
-
-
+<div class="contestDetail">	
   <!-- Contest Description -->
 	<div class="description">    
         <h3>Contest Introduction</h3>

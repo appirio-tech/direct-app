@@ -11,12 +11,22 @@
 
     <script type="text/javascript">
     //<![CDATA[
-        var paramContestId = ${param.contestId};
+        <s:if test="software">
+          var paramContestId = ${param.projectId};
+        </s:if>
+        <s:else>
+           var paramContestId = ${param.contestId};
+        </s:else>
     //]]>
-    </script>    
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=20"></script>	
-    <script type="text/javascript" src="/scripts/launch/main.js?v=21"></script>		
-    <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=23"></script>		
+    </script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=35"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=35"></script>
+    <s:if test="software">
+        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=35"></script>
+    </s:if>
+    <s:else>
+        <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=35"></script>
+    </s:else>
 </head>
 
 <body id="page">
@@ -40,12 +50,12 @@
                         <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
                     <div class="areaHeader">
-                        <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">                       
+                        <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>
-                        <a href="javascript:previewContest();" class="button5" style="float:right;text-align:center;">View Contest</a>    	
-                        </h2>                        
+                        <a href="javascript:previewContest();" class="button5" style="float:right;text-align:center;">View Contest</a>
+                        </h2>
                     </div><!-- End .areaHeader -->
-                                        
+
                     <jsp:include page="includes/contest/contestStats.jsp"/>
 
                     <div class="container2 tabs3Container">
@@ -54,11 +64,18 @@
 
                         <div class="container2Left"><div class="container2Right"><div class="container2Bottom">
                             <div class="container2BottomLeft"><div class="container2BottomRight">
-                            	
+
                             <div class="container2Content_det">
-                               <jsp:include page="includes/contest/editTab.jsp"/>	
-									          </div><!-- End .container2Content_det -->
-	
+
+                            <s:if test="software">
+                               <jsp:include page="includes/contest/editTabSoftware.jsp"/>
+                            </s:if>
+                            <s:else>
+                               <jsp:include page="includes/contest/editTab.jsp"/>
+                            </s:else>
+
+                            </div><!-- End .container2Content_det -->
+
                             </div></div>
                         </div></div></div>
                     </div><!-- End .container2 -->

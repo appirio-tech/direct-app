@@ -11,6 +11,9 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 
+import com.topcoder.catalog.entity.CompUploadedFile;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.studio.UploadedDocument;
 import com.topcoder.util.errorhandling.ExceptionUtils;
@@ -122,7 +125,7 @@ public class DocumentUploadAction extends ContestAction {
      * It must be greater than or equal to 0 and less than 25. It's changed by the setter and returned by the getter.
      * </p>
      */
-    private int documentTypeId;
+    private long documentTypeId;
 
     /**
      * <p>
@@ -134,6 +137,13 @@ public class DocumentUploadAction extends ContestAction {
      * </p>
      */
     private MimeTypeRetriever mimeTypeRetriever;
+
+    /**
+     * <p>
+     * Indicates if it is studio document or software document. The default value is true.
+     * </p>
+     */
+    private boolean studio = true;
 
     /**
      * Default constructor, creates new instance.
@@ -149,6 +159,64 @@ public class DocumentUploadAction extends ContestAction {
      *             been injected
      */
     public void executeAction() throws Exception {
+        if(studio){
+            executeActionStudio();
+        } else {
+            executeActionSoftware();
+        }
+    }
+
+
+    /**
+     * Executes the action. Saves the uploaded file to the file store.
+     *
+     * @throws Exception if some error occurs during method execution
+     */
+    private void executeActionSoftware() throws Exception {
+        //Gets session file store
+        SessionFileStore fileStore = new SessionFileStore(DirectUtils.getServletRequest().getSession(true));
+
+        // populate the document information
+        CompUploadedFile uploadedFile = new CompUploadedFile();
+        uploadedFile.setUploadedFileDesc(contestFileDescription);
+        uploadedFile.setUploadedFileName(documentFileName);
+        //0 requirement document or 24 supporting document
+        uploadedFile.setUploadedFileType(documentTypeId);
+
+        // get the file contents as byte array and load them to the uploadedDocument
+        InputStream stream = null;
+        try {
+            stream = new FileInputStream(document);
+            uploadedFile.setFileData(IOUtils.toByteArray(stream));
+        } finally {
+            IOUtils.closeQuietly(stream);
+        }
+
+        setResult(getFileResult(fileStore.addFile(uploadedFile)));
+    }
+
+    /**
+     * <p>
+     * Creates a result map so it could be serialized by JSON serializer.
+     * </p>
+     *
+     * @param document uploaded document
+     * @return the result map
+     */
+    private Map<String, Object> getFileResult(long fileId) {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("documentId", fileId);
+        return result;
+    }
+
+    /**
+     * Executes the action. Saves the document and attaches it to the contest.
+     *
+     * @throws Exception if some error occurs during method execution
+     * @throws IllegalStateException if <code>contestServiceFacade</code> or <code>mimeTypeRetriever</code> haven't
+     *             been injected
+     */
+    private void executeActionStudio() throws Exception {
         ActionHelper.checkInjectedFieldNull(getContestServiceFacade(), "contestServiceFacade");
         ActionHelper.checkInjectedFieldNull(mimeTypeRetriever, "mimeTypeRetriever");
 
@@ -196,6 +264,27 @@ public class DocumentUploadAction extends ContestAction {
         return result;
     }
 
+    /**
+     * <p>
+     * Gets the studio.
+     * </p>
+     *
+     * @return the studio
+     */
+    public boolean isStudio() {
+        return studio;
+    }
+
+    /**
+     * <p>
+     * Sets the studio value.
+     * </p>
+     *
+     * @param studio the studio to set
+     */
+    public void setStudio(boolean studio) {
+        this.studio = studio;
+    }
 
     /**
      * Getter for the contest ID.
@@ -263,7 +352,7 @@ public class DocumentUploadAction extends ContestAction {
      *
      * @return the document type ID
      */
-    public int getDocumentTypeId() {
+    public long getDocumentTypeId() {
         return documentTypeId;
     }
 
@@ -273,7 +362,7 @@ public class DocumentUploadAction extends ContestAction {
      *
      * @param documentTypeId the document type ID
      */
-    public void setDocumentTypeId(int documentTypeId) {
+    public void setDocumentTypeId(long documentTypeId) {
         this.documentTypeId = documentTypeId;
     }
 
