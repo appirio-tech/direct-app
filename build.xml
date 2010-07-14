@@ -288,6 +288,7 @@
             <classes dir="${builddir}/replace" includes="META-INF/**/*"/>
             <classes dir="${builddir}/replace/web" includes="Messages.properties"/>
             <classes dir="${builddir}/replace/components" includes="**/*"/>
+            <classes dir="${configdir}" includes="xwork-conversion.properties"/>
             <fileset dir="${webdir}">
                 <include name="**/*.jsp"/>
             </fileset>
