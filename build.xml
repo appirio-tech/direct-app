@@ -163,6 +163,20 @@
     </target>
 
 
+    <target name="package-static" >
+
+        <zip destfile="direct-static.jar">
+            <fileset dir="${srcdir}/web">
+                <include name="css/*.css"/>
+                <exclude name="scripts/tiny_mce/**/*.*"/>
+                <include name="scripts/*.*"/>
+                <include name="scripts/launch/**/*.*"/>
+                
+            </fileset>
+        </zip>
+    </target>
+
+
     <target name="dist" depends="ear">
     </target>
 
