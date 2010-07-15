@@ -153,6 +153,8 @@ function saveAsDraftContestSelection() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: handleSaveAsDraftContestResult
+      success: handleSaveAsDraftContestResult,
+      beforeSend: beforeAjax,
+      complete: afterAjax 
    });
 }

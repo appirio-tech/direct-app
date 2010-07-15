@@ -49,6 +49,20 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
     /**
      * <p>
+     * The constant for concept category.
+     * </p>
+     */
+    private static final long CATEGORY_CONCEPT = 23;
+
+    /**
+     * <p>
+     * The constant for spec category.
+     * </p>
+     */
+    private static final long CATEGORY_SPEC = 6;
+
+    /**
+     * <p>
      * Processes the bean.
      * </p>
      *
@@ -95,15 +109,18 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("softwareGuidelines", project.getProjectSpec().getFinalSubmissionGuidelines());
         // technologies/categories for development/design
         if (isDevOrDesign(bean)) {
-            result.put("technologyIds", CollectionUtils.collect(assetDTO.getTechnologies(), new Transformer() {
-                public Object transform(Object object) {
-                    return ((Technology) object).getId() + "";
-                }
-            }));
             result.put("rootCategoryId", assetDTO.getRootCategory().getId());
             result.put("categoryIds", CollectionUtils.collect(assetDTO.getCategories(), new Transformer() {
                 public Object transform(Object object) {
                     return ((Category) object).getId() + "";
+                }
+            }));
+        }
+
+        if(isTechnologyContest(bean)) {
+            result.put("technologyIds", CollectionUtils.collect(assetDTO.getTechnologies(), new Transformer() {
+                public Object transform(Object object) {
+                    return ((Technology) object).getId() + "";
                 }
             }));
         }
@@ -144,5 +161,18 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
     private boolean isDevOrDesign(SoftwareCompetition bean) {
         long categoryId = bean.getProjectHeader().getProjectCategory().getId();
         return (CATEGORY_DESIGN == categoryId || CATEGORY_DEV == categoryId);
+    }
+
+    /**
+     * <p>
+     * Determines if it needs technology.
+     * </p>
+     *
+     * @param bean the software competition
+     * @return true if it needs technology
+     */
+    private boolean isTechnologyContest(SoftwareCompetition bean) {
+        long categoryId = bean.getProjectHeader().getProjectCategory().getId();
+        return !(CATEGORY_CONCEPT == categoryId || CATEGORY_SPEC == categoryId);
     }
 }

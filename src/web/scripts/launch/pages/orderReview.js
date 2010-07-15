@@ -143,7 +143,9 @@ function activateContestSoftware() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: handleActivationResult
+      success: handleActivationResult,
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });   
 }
 
@@ -173,7 +175,9 @@ function activateContestStudio() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: handleActivationResult
+      success: handleActivationResult,
+      beforeSend: beforeAjax,
+      complete: afterAjax       
    });   
 }
 
@@ -227,7 +231,9 @@ function saveAsDraftOrderReview() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: handleSaveAsDraftContestResult
+      success: handleSaveAsDraftContestResult,
+      beforeSend: beforeAjax,
+      complete: afterAjax      
    });
 }
 

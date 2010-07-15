@@ -250,7 +250,7 @@
                <div class="bottom_spec">
                </div>     
                
-               <div class="component">                         
+               <div class="technology">                         
                    <p class="det_font">
                    <span class="name"><strong>Current Project Technologies</strong></span>
                    
@@ -261,7 +261,8 @@
                    
                     <div class="bottom_spec">
                    </div>     
-                   
+               </div> <!-- End of .technology -->
+               <div class="component">    
                    <p class="det_font">
                    <span class="name"><strong>Catalog Name</strong></span>
                    
@@ -283,7 +284,7 @@
                    
                     <div class="bottom_spec">
                    </div>     
-                </div> <!-- End .component -->
+               </div> <!-- End .component -->
 					</div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -328,7 +329,7 @@
                 </div>
                 <!-- end .guidelines -->
                             
-                <div class="prizes component" id="swTechnologyDiv">    
+                <div class="prizes technology" id="swTechnologyDiv">    
                       <h3>Choose Your Technology:</h3>
                       
                       <div class="prizesInner_tech">

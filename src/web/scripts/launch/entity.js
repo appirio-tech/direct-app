@@ -127,18 +127,23 @@ for(var radioValue in RADIOVALUE_COSTLEVEL_MAP) {
 	COSTLEVEL_RADIOVALUE_MAP[RADIOVALUE_COSTLEVEL_MAP[radioValue]] = radioValue;
 }
  
+var SOFTWARE_CATEGORY_ID_DESIGN = 1;
+var SOFTWARE_CATEGORY_ID_DEVELOPMENT = 2;
+var SOFTWARE_CATEGORY_ID_CONCEPT = 23;
+var SOFTWARE_CATEGORY_ID_SPEC = 6;
+ 
 var projectCategoryArray = [
-{id:23, name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application'},
-{id:6,  name:'SPECIFICATION',     label:'Software Specification',     typeId:2, typeName:'Application'},
-{id:7,  name:'ARCHITECTURE',      label:'Architecture',               typeId:2, typeName:'Application'},
-{id:1,  name:'DESIGN',            label:'Component Design',           typeId:1, typeName:'Component'},
-{id:2,  name:'DEVELOPMENT',       label:'Component Development',      typeId:1, typeName:'Component'},
-{id:25, name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application'},
-{id:24, name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application'},
-{id:19, name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application'},
-{id:14, name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application'},
-{id:13, name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application'},
-{id:26, name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application'}
+{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application'},
+{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',     label:'Software Specification',     typeId:2, typeName:'Application'},
+{id:7,                                 name:'ARCHITECTURE',      label:'Architecture',               typeId:2, typeName:'Application'},
+{id:SOFTWARE_CATEGORY_ID_DESIGN,       name:'DESIGN',            label:'Component Design',           typeId:1, typeName:'Component'},
+{id:SOFTWARE_CATEGORY_ID_DEVELOPMENT,  name:'DEVELOPMENT',       label:'Component Development',      typeId:1, typeName:'Component'},
+{id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application'},
+{id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application'},
+{id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application'},
+{id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application'},
+{id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application'},
+{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application'}
 ];
 
 function getProjectCategoryById(id) {

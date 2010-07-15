@@ -69,13 +69,16 @@ function validateFieldsOverviewSoftware() {
        errors.push('Software guidelines is empty.');
    }
 
+
+   if(isTechnologyContest()) {
+      if($('#masterTechnologiesChoosenSelect option').length == 0) {
+           errors.push('No technology is selected.');
+      }
+   }
+
    if(isDevOrDesign()) {
       if( rootCategoryId <= 0 ) {
            errors.push('No catalog is selected.');
-      }
-
-      if($('#masterTechnologiesChoosenSelect option').length == 0) {
-           errors.push('No technology is selected.');
       }
 
       if($('#select2_categories option').length == 0) {
@@ -100,13 +103,16 @@ function validateFieldsOverviewSoftware() {
    mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
 
    if(isDevOrDesign()) {
-     mainWidget.softwareCompetition.assetDTO.directjsTechnologies =
-      $.map($('#masterTechnologiesChoosenSelect option'), function(option,i){
-          return option.value;
-     });
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories =
       $.map($('#select2_categories option'), function(option,i){
+          return option.value;
+     });
+   }
+   
+   if(isTechnologyContest()) {
+     mainWidget.softwareCompetition.assetDTO.directjsTechnologies =
+      $.map($('#masterTechnologiesChoosenSelect option'), function(option,i){
           return option.value;
      });
    }
@@ -213,6 +219,8 @@ function saveAsDraftOverview() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: handleSaveAsDraftContestResult
+      success: handleSaveAsDraftContestResult,
+      beforeSend: beforeAjax,
+      complete: afterAjax      
    });
 }

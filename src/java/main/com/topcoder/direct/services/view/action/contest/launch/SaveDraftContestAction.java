@@ -185,6 +185,20 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * The constant for concept category.
+     * </p>
+     */
+    private static final long PROJECT_CATEGORY_CONCEPT = 23;
+
+    /**
+     * <p>
+     * The constant for spec category.
+     * </p>
+     */
+    private static final long PROJECT_CATEGORY_SPEC = 6;
+
+    /**
+     * <p>
      * Constant for billing project id key.
      * </p>
      *
@@ -641,6 +655,19 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * Determines if it needs technology.
+     * </p>
+     *
+     * @param projectHeader the software competition project
+     * @return true if it needs technology
+     */
+    private boolean isTechnologyContest(com.topcoder.management.project.Project projectHeader) {
+        long projectCategoryId = projectHeader.getProjectCategory().getId();
+        return !(PROJECT_CATEGORY_CONCEPT == projectCategoryId || PROJECT_CATEGORY_SPEC == projectCategoryId);
+    }
+
+    /**
+     * <p>
      * Creates the user resource.
      * </p>
      *
@@ -666,8 +693,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @throws PermissionServiceException if any permission error
      * @throws Exception if any error occurs
      */
-    private StudioCompetition activateStudioCompeition(StudioCompetition studioCompetition)
-        throws Exception {
+    private StudioCompetition activateStudioCompeition(StudioCompetition studioCompetition) throws Exception {
         ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(getCurrentUser(),
             studioCompetition, getPaymentData(studioCompetition));
         return new StudioCompetition(result.getContestData());
@@ -683,13 +709,16 @@ public class SaveDraftContestAction extends ContestAction {
      * @throws PermissionServiceException if any permission error
      * @throws Exception if any error occurs
      */
-    private SoftwareCompetition activateSoftwareCompeition(SoftwareCompetition softwareCompetition)
-        throws Exception {
+    private SoftwareCompetition activateSoftwareCompeition(SoftwareCompetition softwareCompetition) throws Exception {
         softwareCompetition.getAssetDTO().setCompComments(getCurrentUser().getUserId() + "");
 
         SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(
             getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition));
-        return result.getSoftwareCompetition();
+
+        // return result.getSoftwareCompetition();
+        // retrieve the software contest again, seems the contest sale is  not updated
+        return getContestServiceFacade().getSoftwareContestByProjectId(DirectStrutsActionsHelper
+            .getTCSubjectFromSession(), result.getSoftwareCompetition().getProjectHeader().getId());
     }
 
     /**
@@ -783,11 +812,9 @@ public class SaveDraftContestAction extends ContestAction {
             }
         }
 
-
-        if (paymentData.getProjectId() <= 0 && billingProjectId > 0)
-        {
-                paymentData.setProjectId(billingProjectId);
-                paymentData.setType(PaymentType.TCPurchaseOrder);
+        if (paymentData.getProjectId() <= 0 && billingProjectId > 0) {
+            paymentData.setProjectId(billingProjectId);
+            paymentData.setType(PaymentType.TCPurchaseOrder);
         }
 
         if (paymentData.getProjectId() <= 0) {
@@ -2081,13 +2108,13 @@ public class SaveDraftContestAction extends ContestAction {
         }
         studioCompetition.setType(CompetionType.STUDIO);
 
-
         // milestone date
         ContestData contestData = studioCompetition.getContestData();
 
         // adjust administration fee
-        double contestFee = getProjectStudioContestFee(contestData.getBillingProject(),contestData.getContestTypeId());
-        if(contestFee > 0 ) {
+        double contestFee = getProjectStudioContestFee(contestData.getBillingProject(), contestData
+            .getContestTypeId());
+        if (contestFee > 0) {
             contestData.setContestAdministrationFee(contestFee);
         }
 
@@ -2214,15 +2241,6 @@ public class SaveDraftContestAction extends ContestAction {
         projectHeader.getProperties().put("Root Catalog ID", assetDTO.getRootCategory().getId() + "");
 
         if (isDevOrDesign(projectHeader)) {
-            // refresh technologies
-            if (technologies != null && technologies.size() > 0) {
-                List<Technology> dtoTechs = new ArrayList<Technology>();
-                for (String techId : technologies) {
-                    dtoTechs.add(getReferenceDataBean().getTechnologyMap().get(Long.parseLong(techId)));
-                }
-                assetDTO.setTechnologies(dtoTechs);
-            }
-
             // refresh categories
             if (rootCategoryId > 0 && getReferenceDataBean().getCategoryMap().get(rootCategoryId) != null) {
                 assetDTO.setRootCategory(getReferenceDataBean().getCategoryMap().get(rootCategoryId));
@@ -2234,6 +2252,17 @@ public class SaveDraftContestAction extends ContestAction {
                     dtoCategories.add(getReferenceDataBean().getCategoryMap().get(Long.parseLong(categoryId)));
                 }
                 assetDTO.setCategories(dtoCategories);
+            }
+        }
+
+        if (isTechnologyContest(projectHeader)) {
+            // refresh technologies
+            if (technologies != null && technologies.size() > 0) {
+                List<Technology> dtoTechs = new ArrayList<Technology>();
+                for (String techId : technologies) {
+                    dtoTechs.add(getReferenceDataBean().getTechnologyMap().get(Long.parseLong(techId)));
+                }
+                assetDTO.setTechnologies(dtoTechs);
             }
         }
 

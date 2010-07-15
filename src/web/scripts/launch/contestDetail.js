@@ -344,7 +344,9 @@ function saveTypeSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populateTypeSection();  
          showTypeSectionDisplay();         			
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax      
    });	 
 }
 
@@ -471,7 +473,9 @@ function saveRoundSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populateRoundSection();  
          showRoundSectionDisplay();                  
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	    
 }
 
@@ -585,7 +589,9 @@ function savePrizeSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populatePrizeSection();  
          showPrizeSectionDisplay();         			
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	 
 }
 
@@ -684,7 +690,9 @@ function saveSpecSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populateSpecSection();  
          showSpecSectionDisplay();         			
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	 
 }
 
@@ -779,7 +787,9 @@ function activateContestEdit() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: handleActivationResultEdit
+      success: handleActivationResultEdit,
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });   
 }
 

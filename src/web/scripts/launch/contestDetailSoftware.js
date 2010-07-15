@@ -246,9 +246,12 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
    
    if(isDevOrDesign()) {
-     mainWidget.softwareCompetition.assetDTO.directjsTechnologies = contestJson.technologyIds;
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = contestJson.rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories = contestJson.categoryIds;
+   }
+   
+   if(isTechnologyContest()) {
+     mainWidget.softwareCompetition.assetDTO.directjsTechnologies = contestJson.technologyIds;
    }
    
    var projectHeader = mainWidget.softwareCompetition.projectHeader;   
@@ -295,6 +298,12 @@ function initContest(contestJson) {
    } else {
    	 $('.component').hide();
    }
+
+   if(isTechnologyContest()) {
+   	 $('.technology').show();
+   } else {
+     $('.technology').hide();
+   }            
 }
 
 
@@ -331,7 +340,9 @@ function saveTypeSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populateTypeSection();  
          showTypeSectionDisplay();         			
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	 
 }
 
@@ -411,7 +422,9 @@ function saveRoundSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populateRoundSection();  
          showRoundSectionDisplay();                  
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	    
 }
 
@@ -482,7 +495,9 @@ function savePrizeSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populatePrizeSection();  
          showPrizeSectionDisplay();         			
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	 
 }
 
@@ -540,11 +555,6 @@ function populateSpecSection(initFlag) {
 	$('#swDetailedRequirements').val(detailedRequirements);
 	$('#swGuidelines').val(guidelines);		
   if(isDevOrDesign()) {  	   
-  	   //technlogies
-  	   $('#masterTechnologiesSelect').val(mainWidget.softwareCompetition.assetDTO.directjsTechnologies);
-       $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
-       sortTechnologySelects();   	 
-              
        if(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId != $('#catalogSelect').val() || initFlag){ 
           $('#catalogSelect').val(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId);
           updateCategories(fillCategories);
@@ -552,24 +562,33 @@ function populateSpecSection(initFlag) {
        	  fillCategories();
        }       
   } 
+
+  if(isTechnologyContest()) {
+  	   //technlogies
+  	   $('#masterTechnologiesSelect').val(mainWidget.softwareCompetition.assetDTO.directjsTechnologies);
+       $('#masterTechnologiesSelect option:selected').appendTo('#masterTechnologiesChoosenSelect');
+       sortTechnologySelects();                	
+  }
 		
 	//display
   $('#rswDetailedRequirements').html(detailedRequirements);   
   $('#rswGuidelines').html(guidelines);   
   if(isDevOrDesign()) {
-  	 var html = "";
-     $.each($('#masterTechnologiesChoosenSelect option'),function(i,option){     	  
-     	  html += option.text +"<br/>";
-     });
-     $('#rswTechnologies').html(html);
-     
      $('#rswRootCatalog').html($("#catalogSelect option[value="+ mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId +"]").text());
      
-     html = "";
+     var html = "";
      $.each($('#select2_categories option'),function(i,option){
      	  html += option.text +"<br/>";
      });
      $('#rswCategories').html(html);     
+  } 
+
+  if(isTechnologyContest()) {
+  	 var html = "";
+     $.each($('#masterTechnologiesChoosenSelect option'),function(i,option){     	  
+     	  html += option.text +"<br/>";
+     });
+     $('#rswTechnologies').html(html);     
   } 
 }
 
@@ -597,7 +616,9 @@ function saveSpecSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populateSpecSection();  
          showSpecSectionDisplay();         			
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	 
 }
 
@@ -623,15 +644,17 @@ function validateFieldsSpecSection() {
       	   errors.push('No catalog is selected.');
       }
       
-      if($('#masterTechnologiesChoosenSelect option').length == 0) {
-      	   errors.push('No technology is selected.');
-      }
-      
       if($('#select2_categories option').length == 0) {
       	   errors.push('No category is selected.');
       }
    }
 
+  if(isTechnologyContest()) {
+      if($('#masterTechnologiesChoosenSelect option').length == 0) {
+      	   errors.push('No technology is selected.');
+      }      
+	 }
+	
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -641,13 +664,16 @@ function validateFieldsSpecSection() {
    mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
    
    if(isDevOrDesign()) {
-     mainWidget.softwareCompetition.assetDTO.directjsTechnologies =
-      $.map($('#masterTechnologiesChoosenSelect option'), function(option,i){
-     	   return option.value;
-     });   
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories =
       $.map($('#select2_categories option'), function(option,i){
+     	   return option.value;
+     });   
+   }
+   
+   if(isTechnologyContest()) {
+     mainWidget.softwareCompetition.assetDTO.directjsTechnologies =
+      $.map($('#masterTechnologiesChoosenSelect option'), function(option,i){
      	   return option.value;
      });   
    }
@@ -726,7 +752,9 @@ function saveDocumentSection() {
          handleSaveAsDraftContestResult(jsonResult);
          populateDocumentSection();  
          showDocumentSectionDisplay();         			
-      }
+      },
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });	 
 }
 
@@ -753,7 +781,9 @@ function activateContestEdit() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: handleActivationResultEdit
+      success: handleActivationResultEdit,
+      beforeSend: beforeAjax,
+      complete: afterAjax            
    });   
 }
 

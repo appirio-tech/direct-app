@@ -45,7 +45,6 @@ $(document).ready(function() {
      timeout: 90000
   });
 
-   //$(document).ajaxStart(function(){$.blockUI({ message: '<div id=loading> loading.... </div>' });}).ajaxStop($.unblockUI);
    $(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions, thrownError){
        showGeneralError();
    });
@@ -298,10 +297,13 @@ function saveAsDraftRequestSoftware() {
           }
       }
 
+      request['rootCategoryId'] = mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId;
+      request['categories'] = mainWidget.softwareCompetition.assetDTO.directjsCategories;
+   }
+
      // update technologies
-     request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
-     request['rootCategoryId'] = mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId;
-     request['categories'] = mainWidget.softwareCompetition.assetDTO.directjsCategories;
+   if(isTechnologyContest()) {
+      request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
    }
 
    // the first page also gets some data
@@ -393,11 +395,15 @@ function showPage(pageId) {
    $('.launchpage').hide();
 
    if(pageId == "overviewSoftwarePage") {
-      if(isDevOrDesign()) {
-         $('#swTechnologyDiv').show();
-         $('#swCatalogDiv').show();
+      if(isTechnologyContest()) {
+      	 $('#swTechnologyDiv').show();
       } else {
          $('#swTechnologyDiv').hide();
+      }
+      
+      if(isDevOrDesign()) {         
+         $('#swCatalogDiv').show();
+      } else {
          $('#swCatalogDiv').hide();
       }
    }
@@ -1136,12 +1142,26 @@ function validateFileTypes(errors) {
    return [fileTypes,otherFileTypes];
 }
 
+/**
+ * Checks to see if the technology is needed for the contest
+ */
+function isTechnologyContest() {
+   if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
+       return false;
+   } else {
+       var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+       //all except for concept and spec.
+       return !((categoryId == SOFTWARE_CATEGORY_ID_CONCEPT) || (categoryId == SOFTWARE_CATEGORY_ID_SPEC));
+   }	
+}
+
+
 function isDevOrDesign() {
    if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
        return false;
    } else {
        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
-       return (categoryId == 1) || (categoryId == 2);
+       return (categoryId == SOFTWARE_CATEGORY_ID_DESIGN) || (categoryId == SOFTWARE_CATEGORY_ID_DEVELOPMENT);
    }
 }
 
@@ -1152,4 +1172,12 @@ function isDesign() {
        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
        return (categoryId == 1);
    }
+}
+
+function beforeAjax() {
+	 $.blockUI({ message: '<div id=loading> loading.... </div>' });
+}
+
+function afterAjax() {
+	 $.unblockUI();
 }

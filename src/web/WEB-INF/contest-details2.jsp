@@ -19,13 +19,13 @@
         </s:else>
     //]]>
     </script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=38"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=40"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=39"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=39"></script>
     <s:if test="software">
-        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=38"></script>
+        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=39"></script>
     </s:if>
     <s:else>
-        <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=38"></script>
+        <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=39"></script>
     </s:else>
 </head>
 
