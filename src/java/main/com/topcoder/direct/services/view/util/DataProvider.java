@@ -162,7 +162,8 @@ public class DataProvider {
             String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
             long contestId = resultContainer.getLongItem(i, "contest_id");
             String contestName = resultContainer.getStringItem(i, "contest_name");
-	        String contestType = resultContainer.getStringItem(i, "contest_type");
+            String contestType = resultContainer.getStringItem(i, "contest_type");
+            long contestTypeId = resultContainer.getLongItem(i, "contest_type_id"); // BUGR-3913
             Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
 
             // System.out.println("#############contestType:"+contestType);
@@ -187,7 +188,7 @@ public class DataProvider {
             if (contests.containsKey(contestId)) {
                 contest = contests.get(contestId);
             } else {
-                contest = createTypedContest(contestId, contestName, project, ContestType.forName(contestType), null, !isStudio);//here
+                contest = createTypedContest(contestId, contestName, project, ContestType.forIdAndFlag(contestTypeId, isStudio), null, !isStudio);//here
                 contests.put(contestId, contest);
             }
 
@@ -648,6 +649,17 @@ public class DataProvider {
             String contestName = resultContainer.getStringItem(i, "contest_name");
             String statusName = resultContainer.getStringItem(i, "status");
             String typeName = resultContainer.getStringItem(i, "contest_type");
+
+            //TODO, this is to not affecting existing VMs, will change later
+            long contestTypeId = 1;
+            try
+            {
+                contestTypeId = resultContainer.getLongItem(i, "contest_type_id"); // BUGR-3913
+            }
+            catch (Exception e)
+            {
+            }
+
             Timestamp startDate = resultContainer.getTimestampItem(i, "start_date");
             Timestamp endDate = resultContainer.getTimestampItem(i, "end_date");
             int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
@@ -676,7 +688,7 @@ public class DataProvider {
             }
 
             ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
-            ContestType type = ContestType.forName(typeName);
+            ContestType type = ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
@@ -707,6 +719,7 @@ public class DataProvider {
             String contestName = resultContainer.getStringItem(i, "contest_name");
             String statusName = resultContainer.getStringItem(i, "status");
             String typeName = resultContainer.getStringItem(i, "contest_type");
+            long contestTypeId = resultContainer.getLongItem(i, "contest_type_id"); // BUGR-3913
             Timestamp startDate = resultContainer.getTimestampItem(i, "start_date");
             Timestamp endDate = resultContainer.getTimestampItem(i, "end_date");
             int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
@@ -735,7 +748,7 @@ public class DataProvider {
             }
 
             ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
-            ContestType type = ContestType.forName(typeName);
+            ContestType type =  ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
             ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
@@ -779,7 +792,17 @@ public class DataProvider {
             String contestName = resultContainer.getStringItem(i, "contest_name");
             String statusName = resultContainer.getStringItem(i, "status");
             String typeName = resultContainer.getStringItem(i, "contest_type");
-            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+
+            //TODO, this is to not affecting existing VMs, will change later
+            long contestTypeId = 1;
+            try
+            {
+                contestTypeId = resultContainer.getLongItem(i, "contest_type_id"); // BUGR-3913
+            }
+            catch (Exception e)
+            {
+            }
+            
 
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
@@ -789,7 +812,8 @@ public class DataProvider {
                 project = projects.get(tcDirectProjectId);
             }
 
-            ContestType type = ContestType.forName(typeName);
+	        Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+            ContestType type = ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
             TypedContestBriefDTO contest;
@@ -878,13 +902,13 @@ public class DataProvider {
      * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to.
      * @return an <code>ContestBriefDTO</code> providing the details for a single contest.
      */
-    private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project, String contestType) {
+    private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project, ContestType contestType) {
         TypedContestBriefDTO contest = new TypedContestBriefDTO();
         contest.setId(id);
         contest.setTitle(name);
         contest.setProject(project);
 
-        contest.setContestType(ContestType.forName(contestType));
+        contest.setContestType(contestType);
 
         return contest;
     }
