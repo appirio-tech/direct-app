@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.topcoder.service.studio.PersistenceException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -639,6 +640,65 @@ public class DataProvider {
         final List<ProjectContestDTO> contests = new ArrayList<ProjectContestDTO>();
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            long contestId = resultContainer.getLongItem(i, "contest_id");
+            String contestName = resultContainer.getStringItem(i, "contest_name");
+            String statusName = resultContainer.getStringItem(i, "status");
+            String typeName = resultContainer.getStringItem(i, "contest_type");
+            Timestamp startDate = resultContainer.getTimestampItem(i, "start_date");
+            Timestamp endDate = resultContainer.getTimestampItem(i, "end_date");
+            int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
+            int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
+            int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
+            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+            int forumId = -1;
+            try
+                {
+            if (resultContainer.getStringItem(i, "forum_id") != null
+                        && !resultContainer.getStringItem(i, "forum_id").equals(""))
+                forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
+            }
+            catch (NumberFormatException ne)
+            {
+		    // ignore
+            }
+				
+			
+            final ProjectBriefDTO project;
+            if (!projects.containsKey(tcDirectProjectId)) {
+                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                projects.put(tcDirectProjectId, project);
+            } else {
+                project = projects.get(tcDirectProjectId);
+            }
+
+            ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
+            ContestType type = ContestType.forName(typeName);
+            ContestStatus status = ContestStatus.forName(statusName);
+
+            ProjectContestDTO contest = createProjectContest(contestBrief, type, status, startDate, endDate,
+                                                             forumPostsCount, registrantsCount, submissionsCount, forumId, isStudio);
+            contests.add(contest);
+        }
+
+        ProjectContestsListDTO dto = new ProjectContestsListDTO();
+        dto.setContests(contests);
+        return dto;
+    }
+
+    public static ProjectContestsListDTO getActiveContests(long userId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_active_contests");
+        request.setProperty("uid", String.valueOf(userId));
+
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+        final List<ProjectContestDTO> contests = new ArrayList<ProjectContestDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_active_contests");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");

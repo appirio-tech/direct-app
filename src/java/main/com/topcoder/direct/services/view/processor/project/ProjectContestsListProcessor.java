@@ -5,6 +5,8 @@ package com.topcoder.direct.services.view.processor.project;
 
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.action.dashboard.ActiveContestsAction;
+import com.topcoder.direct.services.view.action.project.ProjectContestsAction;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.processor.RequestProcessor;
@@ -48,7 +50,15 @@ public class ProjectContestsListProcessor implements RequestProcessor<FormAction
                 long projectId = action.getFormData().getProjectId();
                 long currentUserId = action.getSessionData().getCurrentUserId();
                 try {
-                    ProjectContestsListDTO contests = DataProvider.getProjectContests(currentUserId, projectId);
+                    ProjectContestsListDTO contests = null;
+					if (action instanceof ActiveContestsAction)
+					{
+						contests = DataProvider.getActiveContests(currentUserId);
+					}
+					else if (action instanceof ProjectContestsAction)
+					{
+						contests = DataProvider.getProjectContests(currentUserId, projectId);	
+					}
                     ProjectContestsListDTO.Aware viewData = (ProjectContestsListDTO.Aware) data;
                     viewData.setProjectContests(contests);
                 } catch (Exception e) {

@@ -170,6 +170,11 @@ public enum ContestStatus {
     APPROVAL("Approval", "running", "View"),
 
      /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Approval</code> contest status.</p>
+     */
+    POST_MORTEM("Post-Mortem", "running", "View"),
+
+     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Cancelled - Failed Review</code> contest status.</p>
      */
     CANCELLED_FAILED_REVIEW("Cancelled - Failed Review", "cancelled", "View"),
