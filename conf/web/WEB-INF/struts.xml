@@ -319,7 +319,8 @@
         <action name="getCapacityFullDates" class="getCapacityFullDatesAction">
             <result type="json" />
         </action>
-        <action name="getProjectStudioContestFee" method="getProjectStudioContestFee" class="commonAction">
+
+        <action name="getBillingProjectContestFees" method="getBillingProjectContestFees" class="commonAction">
             <result type="json" />
         </action>
     </package>

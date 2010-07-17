@@ -12,7 +12,6 @@ import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.admin.AdminServiceFacadeException;
 import com.topcoder.service.facade.project.DAOFault;
 
 /**
@@ -24,19 +23,19 @@ import com.topcoder.service.facade.project.DAOFault;
  * @version 1.0
  */
 public class CommonAction extends BaseDirectStrutsAction {
+    /**
+     * <p>
+     * Billing project id field.
+     * </p>
+     */
     private long billingProjectId;
 
-    private long studioSubTypeId;
-
+    /**
+     * <p>
+     * Software catalog id.
+     * </p>
+     */
     private long catalogId = -1;
-
-    public long getCatalogId() {
-        return catalogId;
-    }
-
-    public void setCatalogId(long catalogId) {
-        this.catalogId = catalogId;
-    }
 
     /**
      * <p>
@@ -77,68 +76,15 @@ public class CommonAction extends BaseDirectStrutsAction {
      * @return the success page
      * @throws Exception if any error occurs
      */
-    public String getProjectStudioContestFee() throws Exception {
-        Map<String, Double> result = new HashMap<String, Double>();
-        result.put("fee", getProjectStudioContestFeeInternal(billingProjectId, studioSubTypeId));
-        setResult(result);
-        return SUCCESS;
-    }
-
-    /**
-     * <p>
-     * Gets project studio contest fee. It is the internal handling function.
-     * </p>
-     *
-     * @param billingProjectId the billing project id
-     * @param studioSubTypeId studio sub type id
-     * @return contest fee &gt;0 if it exists
-     * @throws AdminServiceFacadeException if any error occurs
-     */
-    private double getProjectStudioContestFeeInternal(long billingProjectId, long studioSubTypeId)
-        throws AdminServiceFacadeException {
-        if (billingProjectId <= 0) {
-            return -1;
-        }
-
+    public String getBillingProjectContestFees() throws Exception {
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-
         List<ProjectContestFee> contestFees = getAdminServiceFacade().getContestFeesByProject(tcSubject,
             billingProjectId);
-        for (ProjectContestFee contestFee : contestFees) {
-            if (contestFee.isStudio() && contestFee.getContestTypeId() == studioSubTypeId) {
-                return contestFee.getContestFee();
-            }
-        }
 
-        return -1;
-    }
-
-    /**
-     * @return the billingProjectId
-     */
-    public long getBillingProjectId() {
-        return billingProjectId;
-    }
-
-    /**
-     * @param billingProjectId the billingProjectId to set
-     */
-    public void setBillingProjectId(long billingProjectId) {
-        this.billingProjectId = billingProjectId;
-    }
-
-    /**
-     * @return the studioSubTypeId
-     */
-    public long getStudioSubTypeId() {
-        return studioSubTypeId;
-    }
-
-    /**
-     * @param studioSubTypeId the studioSubTypeId to set
-     */
-    public void setStudioSubTypeId(long studioSubTypeId) {
-        this.studioSubTypeId = studioSubTypeId;
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("fees", contestFees);
+        setResult(result);
+        return SUCCESS;
     }
 
     /**
@@ -173,5 +119,37 @@ public class CommonAction extends BaseDirectStrutsAction {
     public String getCategories() {
         setResult(getReferenceDataBean().getCatalogToCategoriesMap().get(catalogId));
         return SUCCESS;
+    }
+
+    /**
+     * @return the billingProjectId
+     */
+    public long getBillingProjectId() {
+        return billingProjectId;
+    }
+
+    /**
+     * @param billingProjectId the billingProjectId to set
+     */
+    public void setBillingProjectId(long billingProjectId) {
+        this.billingProjectId = billingProjectId;
+    }
+
+    /**
+     * Gets the catalog id.
+     *
+     * @return the catalog id
+     */
+    public long getCatalogId() {
+        return catalogId;
+    }
+
+    /**
+     * Sets the catalog id.
+     *
+     * @param catalogId the catalog id
+     */
+    public void setCatalogId(long catalogId) {
+        this.catalogId = catalogId;
     }
 }

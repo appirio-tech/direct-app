@@ -188,6 +188,16 @@ $(document).ready(function(){
 	  	  $('table.mceLayout').css('width','100%');
 	  }
   });
+  
+   //contest type
+   $('#contestTypes').bind("change", function() {
+        updateContestFee();
+   });
+   
+   // billing projects
+   $('#billingProjects').bind("change", function() {
+       updateContestFee();
+   });  
 });
 
 function initSelect() {
@@ -282,12 +292,17 @@ function populateTypeSection() {
 	//edit
 	$('#contestTypes').getSetSSValue("STUDIO"+mainWidget.competition.contestData.contestTypeId);
 	$('#contestName').val(mainWidget.competition.contestData.name);
+
 	if(isBillingEditable()) {		
 		$('#billingAccountDivEdit').show(); 
-	  $('#billingProjects').getSetSSValue(mainWidget.competition.contestData.billingProject);
   } else {
   	$('#billingAccountDivEdit').hide(); 
   }
+	$('#billingProjects').getSetSSValue(mainWidget.competition.contestData.billingProject);
+	
+  //potential rollback
+	$('#billingProjects').trigger("change");
+
 	
 	//display
 	$('#rContestTypeName').html($("#contestTypes option[value=STUDIO"+ mainWidget.competition.contestData.contestTypeId +"]").text());
@@ -296,21 +311,23 @@ function populateTypeSection() {
 	
 	if(isBillingViewable()) {
 	   $('.billingdisplay').show(); 
-     var billingProjectId = mainWidget.competition.contestData.billingProject;
-     $('#rBillingAccount').html((billingProjectId <= 0)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());	
   } else {
   	 $('.billingdisplay').hide();   	   	 
   }
+  var billingProjectId = mainWidget.competition.contestData.billingProject;
+  $('#rBillingAccount').html((billingProjectId <= 0)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());	  
+  
   if(isDraft()) {
-  	 $('.adminFeeDisplay').show();
-  	 $('#rAdminFee').html(mainWidget.competition.contestData.contestAdministrationFee.formatMoney(2));  	 
+  	 $('.adminFeeDisplay').show();  	 
   } else {
   	 $('.adminFeeDisplay').hide();
   }
+  $('#rAdminFee').html(mainWidget.competition.contestData.contestAdministrationFee.formatMoney(2));  	 
 }
 
 function isBillingViewable() {
 	// billing can not be found, meaning is not eligible, don't show/edit
+	// or not set yet, allow edit
 	var billingProjectId = mainWidget.competition.contestData.billingProject;
 	return billingProjectId <=0 || $("#billingProjects option[value="+ billingProjectId +"]").length == 1;
 }

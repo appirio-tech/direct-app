@@ -285,6 +285,8 @@ function initContest(contestJson) {
 
    //it ensures the data is here so we could show prize data
    softwareContestFees = contestJson.softwareContestFees;  
+   //billing information
+   initContestFeeForEdit(false, mainWidget.softwareCompetition.projectHeader.projectCategory.id, projectHeader.getBillingProject());      
    
 	 if(isPrizeEditable(contestJson.billingProjectId)) {
 	 	  $('.customRadio').show();
@@ -303,7 +305,12 @@ function initContest(contestJson) {
    	 $('.technology').show();
    } else {
      $('.technology').hide();
-   }            
+   }         
+   
+   // billing projects
+   $('#billingProjects').bind("change", function() {
+       updateContestFee();
+   });     
 }
 
 
@@ -461,11 +468,30 @@ function showRoundSectionEdit() {
  * Prize Section Functions
  */
 function populatePrizeSection(initFlag) {
+  //billing account
+  var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject(); 
+  $('#billingProjects').getSetSSValue(billingProjectId);
+  //potential rollback
+	$('#billingProjects').trigger("change");
+	if(isBillingEditable()) {		
+		$('#billingAccountDivEdit').show(); 	  
+  } else {
+  	$('#billingAccountDivEdit').hide(); 
+  }
+
+	if(isBillingViewable()) {
+	   $('.billingdisplay').show(); 
+     $('#rBillingAccount').html((billingProjectId <= 0)?"&nbsp;":$("#billingProjects option[value="+ billingProjectId +"]").text());	
+  } else {
+  	 $('.billingdisplay').hide();   	   	 
+  }
+
 	//edit
+	//display
 	//set radio button
 	var radioButtonValue = (COSTLEVEL_RADIOVALUE_MAP[mainWidget.softwareCompetition.projectHeader.getCostLevel()]) || "medium";	
 	$('input[name="prizeRadio"][value="' + radioButtonValue + '"]').attr("checked","checked");
-	//display
+	
 	fillPrizes();	
 	
    
@@ -475,6 +501,21 @@ function populatePrizeSection(initFlag) {
     	  $('#resubmit').show(); 
     }         
   }	
+
+
+  
+}
+
+function isBillingViewable() {
+	// billing can not be found, meaning is not eligible, don't show/edit
+	// or not set yet, allow edit
+	var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();  
+	return billingProjectId <=0 || $("#billingProjects option[value="+ billingProjectId +"]").length == 1;
+}
+
+function isBillingEditable() {
+	 var notePaid = (mainWidget.softwareCompetition.paidFee == 0);
+	 return isBillingViewable() && notePaid;
 }
 
 function savePrizeSection() {
@@ -520,6 +561,11 @@ function validateFieldsPrizeSection() {
    if(errors.length > 0) {
        showErrors(errors);
        return false;
+   }
+   
+   if(isBillingEditable()) {		
+   	 var billingProjectId = $('select#billingProjects').val();
+   	mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
    }
    
    updateSoftwarePrizes();

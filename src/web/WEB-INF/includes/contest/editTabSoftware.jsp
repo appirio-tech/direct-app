@@ -137,6 +137,10 @@
 					</div>				
 			</div><!-- End .caption -->												
 	     <div class="detailsContent_det_prize">
+			        <p class="det_font">
+                 <span class="name billingdisplay"><strong>Billing Account</strong></span>
+                 <span class="value billingdisplay"><strong>: <span id="rBillingAccount"></span></strong></span>
+              </p>	     	
 							<table cellspacing="10" class="det_font_tab">
                    <tr class="rightbor">
                      	<td class="first_tab"  align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"></span></td>
@@ -165,6 +169,19 @@
 				</div><!-- End .caption -->
 																
 				<div class="detailsContent_det_prize_edit">
+                 <div id="billingAccountDivEdit">
+                     <span class="name"><strong>Billing Account </strong></span>
+                     <div class="billingSelect" style="float:left" >
+                         <select id="billingProjects" name="billingProject">
+                         	<option value="-1">Please select an existing account</option>
+                           <s:iterator value="billingProjects">
+                           <option value='<s:property value="projectId" />'><s:property value="name" /></option>
+                           </s:iterator>
+                        </select>
+                     </div>
+                   <br/><br/>  
+                  </div>
+                
                <div class="prizes">  
                      <div class="prizesInner_software">
                      	<span class="head"><p>Please Select the prize structure for your contest by choosing one of the options 

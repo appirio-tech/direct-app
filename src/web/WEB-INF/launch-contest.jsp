@@ -7,13 +7,13 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=43"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=43"></script>
-    <script type="text/javascript" src="/scripts/launchcontest.js?v=43"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/selection.js?v=43"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/overview.js?v=43"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/review.js?v=43"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=43"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launchcontest.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/selection.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/overview.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/review.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=45"></script>
 </head>
 
 <body id="page">

@@ -25,6 +25,14 @@ var fileTypes = [];
 var billingInfos = [];
 //software
 var softwareContestFees = {};
+var originalSoftwareContestFees = {};
+
+/**
+ * Local cache for fees for certain billing project.
+ *
+ * The object key is the billing project id, the value is fee object array.
+ */
+var billingFees = {};
 
 /**
  * software documents
@@ -67,6 +75,7 @@ $(document).ready(function() {
             studioSubtypeFees = result.fees;
             fileTypes = result.fileTypes;
             softwareContestFees = result.softwareContestFees;
+            originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
             billingInfos = result.billingInfos;
           },
           function(errorMessage) {
@@ -238,6 +247,133 @@ $(document).ready(function() {
 
 
 }); // end of initiation
+
+
+/**
+ * <p>
+ * Update contest administration fee when billing project or studio sub type is changed.
+ * </p>
+ */
+function updateContestFee( ) {
+    var isStudio = ('STUDIO' == getContestType(true)[0]);    
+    var contestTypeId = getContestType(true)[1];	
+    var billingProjectId = $('select#billingProjects').val();
+    
+    var billingContestFee = getBillingContestFee(billingProjectId, isStudio, contestTypeId);
+    
+    if(isStudio) {    	
+    	  //for studio        
+        if(billingContestFee > 0) {
+        	 mainWidget.competition.contestData.contestAdministrationFee = billingContestFee;
+        } else {
+           $.each(studioSubtypeFees, function(i, feeItem) {
+               if(feeItem.id == contestTypeId) {
+                  // update contest fees
+                  mainWidget.competition.contestData.contestAdministrationFee = feeItem.contestFee;
+               }
+           });        	
+        }        
+    } else {
+    	  //for software
+    	  var feeObject = softwareContestFees[contestTypeId];
+        if(billingContestFee > 0) {
+        	 //update corresponding contest fee        	 
+        	 if(feeObject) {
+        	 	  feeObject.contestFee = billingContestFee;
+        	 }
+        } else {
+        	 //rollback
+        	 if(feeObject) {
+        	 	  feeObject.contestFee = originalSoftwareContestFees[contestTypeId].contestFee;
+        	 }
+        }   	  
+    	  
+    	  resetSoftwarePrizes();
+    	  fillPrizes();
+    }
+}
+
+/**
+ * initiate contest fee in edit page
+ */
+function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {    
+    var billingContestFee = getBillingContestFee(billingProjectId, isStudio, contestTypeId);
+
+    if(isStudio) {    	
+    	  //for studio        
+    	  //nothing
+    } else {
+    	  //for software
+        if(billingContestFee > 0) {
+        	 //update corresponding contest fee
+        	 var feeObject = softwareContestFees[contestTypeId];
+        	 if(feeObject) {
+        	 	  feeObject.contestFee = billingContestFee;
+        	 }
+        }    	  
+    }
+}
+
+function getBillingContestFee(billingProjectId,isStudio, contestTypeId) {
+    if(billingProjectId <=0 ) {
+       return -1;
+    }
+	
+	  var fee = -1;
+	  
+	  var fees = getContestFeesForBillingProject(billingProjectId);
+	  
+	  $.each(fees, function(i,feeItem){
+	  	 if(isStudio && feeItem.studio && feeItem.contestTypeId == contestTypeId) {
+	  	 	   fee = feeItem.contestFee;
+	  	 } 
+	  	 
+	  	 if(!isStudio && !feeItem.studio && feeItem.contestTypeId == contestTypeId) {
+	  	 	   fee = feeItem.contestFee;
+	  	 } 	  	 
+	  });
+	  
+	  return fee;
+}
+
+/**
+ * Gets contest fees for billing project.
+ *
+ * @param billingProjectId billing project id
+ */
+function getContestFeesForBillingProject(billingProjectId) {
+	  if(billingFees[billingProjectId] != null) {
+	  	 return billingFees[billingProjectId];
+	  }
+	  
+	  var fees = [];
+	  
+	  var request = {billingProjectId:billingProjectId};
+	  
+    $.ajax({
+       type: 'GET',
+       url:  ctx + "/launch/getBillingProjectContestFees",
+       data: request,
+       cache: false,
+       async: false,
+       dataType: 'json',
+       success: function(jsonResult) {
+           handleJsonResult(jsonResult,
+           function(result) {
+               if(result.fees) {
+                  fees = result.fees;
+               }
+           },
+           function(errorMessage) {
+               showErrors(errorMessage);
+           });
+       }
+    });
+    
+    billingFees[billingProjectId] = fees;
+    return fees;
+}
+
 
 /**
  * Handles preview contest.

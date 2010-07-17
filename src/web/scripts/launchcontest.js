@@ -452,8 +452,6 @@ function onContestTypeChange() {
          $('.studio').hide();
          $(".schedule").css("height","70px");
          $(".schedule").css("margin-bottom","105px");
-
-         resetSoftwarePrizes();
       }
 
       if(mainWidget.isStudioContest()) {
@@ -467,8 +465,6 @@ function onContestTypeChange() {
                  $('#contestDescriptionTooltip').html(overview.description);
               }
           });
-
-          updateContestFee();
 
           $.each(studioSubtypeFees, function(i, fee) {
               if(fee.id == typeId) {
@@ -486,6 +482,8 @@ function onContestTypeChange() {
 
           getCapacityDatesForStudioSubType(getContestType(true)[1]);
       }
+      
+      updateContestFee();      
 }
 
 /**
@@ -552,52 +550,6 @@ function addNewProject() {
       }
    });
 }
-
-
-/**
- * <p>
- * Update contest administration fee when billing project or studio sub type is changed.
- * </p>
- */
-function updateContestFee( ) {
-    var billingProjectId = $('select#billingProjects').val();
-    var studioSubtypeId = getContestType(true)[1];
-
-   $.each(studioSubtypeFees, function(i, fee) {
-       if(fee.id == studioSubtypeId) {
-          // update contest fees
-          mainWidget.competition.contestData.contestAdministrationFee = fee.contestFee;
-       }
-   });
-
-    if(billingProjectId <=0 ) {
-       return;
-    }
-
-     var request = {
-         billingProjectId : billingProjectId,
-         studioSubTypeId : studioSubtypeId
-     };
-    $.ajax({
-       type: 'GET',
-       url:  ctx + "/launch/getProjectStudioContestFee",
-       data: request,
-       cache: false,
-       dataType: 'json',
-       success: function(jsonResult) {
-           handleJsonResult(jsonResult,
-           function(result) {
-               if(result.fee > 0 ) {
-                  mainWidget.competition.contestData.contestAdministrationFee = result.fee;
-               }
-           },
-           function(errorMessage) {
-               showErrors(errorMessage);
-           });
-       }
-    });
-}
-
 
 function getCapacityDatesForStudioSubType(studioSubtypeId) {
    if(capacityFullDates[studioSubtypeId] == null) {
