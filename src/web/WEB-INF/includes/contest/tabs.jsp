@@ -4,12 +4,26 @@
     <div id="tabs3">
         <ul>
             <li class="firstItem <c:if test="${requestScope.CURRENT_SUB_TAB eq 'details'}">on</c:if>">
-                <a href="<s:url action="contest/detail" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>" class="first">
+                
+                <s:if test="isStudio == true">
+                    <a href="<s:url action="contest/detail" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>" class="first">
                     <span class="left"><span class="right">Details</span></span></a>
+                </s:if>
+                <s:if test="isStudio == false">
+                    <a href="<s:url action="contest/detail" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>" class="first">
+                    <span class="left"><span class="right">Details</span></span></a>
+                </s:if>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'registrants'}">class="on"</c:if>>
-                <a href="<s:url action="contest/contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
+                
+                 <s:if test="isStudio == true">
+                    <a href="<s:url action="contest/contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
+                </s:if>
+                <s:if test="isStudio == false">
+                    <a href="<s:url action="contest/contestRegistrants" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
+                    <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
+                </s:if>
             </li>
             <li>
                 <a href="" onclick="return false;">
