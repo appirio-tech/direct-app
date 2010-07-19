@@ -67,12 +67,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Banners/Icons</code> contest type.</p>
      */
-    BANNERS_ICONS("Banners/Icons", "bi", 0, true), // TODO can't find correspondent id
+    BANNERS_ICONS("Banners/Icons", "bi", 4, true), 
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Widget or Mobile Screen Design</code> contest type.</p>
      */
-    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "wi", 6, true), // 6 or 9
+    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "wi", 6, true), 
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Other</code> contest type.</p>
