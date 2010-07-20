@@ -263,7 +263,7 @@ function updateContestFee( ) {
     
     if(isStudio) {    	
     	  //for studio        
-        if(billingContestFee > 0) {
+        if(billingContestFee >= 0) {
         	 mainWidget.competition.contestData.contestAdministrationFee = billingContestFee;
         } else {
            $.each(studioSubtypeFees, function(i, feeItem) {
@@ -276,7 +276,7 @@ function updateContestFee( ) {
     } else {
     	  //for software
     	  var feeObject = softwareContestFees[contestTypeId];
-        if(billingContestFee > 0) {
+        if(billingContestFee >= 0) {
         	 //update corresponding contest fee        	 
         	 if(feeObject) {
         	 	  feeObject.contestFee = billingContestFee;
