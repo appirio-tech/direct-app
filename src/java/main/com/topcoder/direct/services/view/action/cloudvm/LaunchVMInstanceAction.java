@@ -83,6 +83,7 @@ public class LaunchVMInstanceAction extends AbstractVMAction {
         instance.setContestTypeId(fetchId(request, "vmContestTypeId", errors));
         instance.setSvnBranch(fetchString(request, "svnBranch", errors));
         instance.setTcMemberHandle(fetchString(request, "tcHandle", errors));
+        instance.setUserData(fetchNullIfEmptyString(request, "userData")); // BUGR-3931
 
         // validate contest id, if present
         if (!errors.containsKey("contestId")) {
@@ -109,17 +110,39 @@ public class LaunchVMInstanceAction extends AbstractVMAction {
 
         // check member handle
         if (!errors.containsKey("tcHandle")) {
+            String userName = "";
             try {
-                userService.getUserId(instance.getTcMemberHandle());
+                String[] userNames = instance.getTcMemberHandle().split(";");
+                for(int i = 0; i < userNames.length; i++) {
+                    userName = userNames[i];
+                    userService.getUserId(userName);
+                }
             } catch (UserServiceException ex) {
-                errors.put("tcHandle", "Unable to find such member.");
+                errors.put("tcHandle", "Unable to find such member: " + userName);
+            }
+        }
+        
+        if (!errors.containsKey("userData")) { // BUGR-3931
+            if(instance.getUserData() != null) {
+                String[] userDataLines = instance.getUserData().split("\n");
+                int i = 0;
+                for(String userDataLine : userDataLines) {
+                    ++i;
+                    userDataLine = userDataLine.trim();
+                    if(userDataLine.length() == 0) continue;
+                    int idx = userDataLine.indexOf('=');
+                    if(idx == -1 || idx == 0 || idx == userDataLine.length() - 1) {
+                        errors.put("userData", "Line " + i + " should be in key=value format");
+                        break;
+                    }
+                }
             }
         }
 
         if (!errors.containsKey("tcHandle")) {
             // verify that user has security key
         }
-
+        
         // let's call cloud service
         if (errors.isEmpty()) {
             try {
@@ -166,6 +189,22 @@ public class LaunchVMInstanceAction extends AbstractVMAction {
         String value = request.getParameter(key);
         if (value == null || value.trim().length() == 0) {
             errors.put(key, "This value is required.");
+        }
+        return value;
+    }
+
+    /**
+     * Returns null if string is null or empty
+     *
+     * @param request servlet request
+     * @param key     parameter key
+     * @return parameter value
+     * @since BUGR-3931
+     */
+    private static String fetchNullIfEmptyString(HttpServletRequest request, String key) {
+        String value = request.getParameter(key);
+        if(value != null && value.trim().length() == 0) {
+            value = null;
         }
         return value;
     }

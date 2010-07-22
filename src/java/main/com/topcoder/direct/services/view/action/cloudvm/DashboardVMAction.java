@@ -19,6 +19,9 @@ import com.topcoder.security.TCSubject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -65,15 +68,22 @@ public class DashboardVMAction extends AbstractAction {
      * @throws Exception if any error occurs
      */
     public String execute() throws Exception {
+        String messages = "";
+        
         TCSubject user = AbstractVMAction.getUser();
         AbstractVMAction.authorize(user);
         vmImages = getCloudVMService().getVMImages(user);
         vmContestTypes = getCloudVMService().getVMContestTypes(user);
-        vmInstances = getCloudVMService().getVMInstances(user);
+        
+        // try {
+            vmInstances = getCloudVMService().getVMInstances(user);
+        // } catch (Exception ex) { 
+        //     vmInstances = new ArrayList<VMInstanceData>(); // BUGR-3930
+        // }
         admin = inRole(user, "Administrator");
 
         HttpServletRequest request = DirectUtils.getServletRequest();
-
+        request.setAttribute("messages", messages);
         HttpSession session = request.getSession(false);
 
         if (session != null) {

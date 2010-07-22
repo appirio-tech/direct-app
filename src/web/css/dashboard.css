@@ -2311,3 +2311,77 @@ cursor: pointer;
 .sorting_asc {
 cursor: pointer;
 }
+
+#vmLaunch {
+	width: 100%;
+	display: inline;
+}
+
+
+
+#vmLaunch .col2 {
+line-height: 23px;
+
+}
+
+#vm_image_id {
+width: 290px;
+}
+
+
+#user_data {
+	width: 287px;
+}
+
+.subm {
+	width: 100px;
+	display: block;
+	vertical-align:bottom;
+	float: left;
+}
+p.msg {
+	margin-left: 10px;
+}
+.line {
+	margin-bottom: 5px;
+}
+.line label {
+	width: 170px;
+}
+div.submLine {
+	
+	display: inline;
+}
+#userDataError {
+vertical-align: top;
+}
+.line input {
+	display: inline;
+	width: 287px;
+	
+}
+.submBtn {
+	left: 0;
+	vertical-align:bottom;
+}
+hr.plain {
+ background-color: black;
+ margin-bottom:5px;
+}
+
+#launchVM {
+	float:left;
+	left: 5px;
+	bottom: 5px;
+	margin: 10px;
+}
+
+#refreshBtn {
+	float: right; 
+	display: block; 
+}
+
+.term1 {
+	width: 115px; 
+	margin: auto;
+}

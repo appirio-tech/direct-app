@@ -23,7 +23,10 @@ if (!window.vmService) var vmService = {
                         $('#' + errors[p].propertyName + 'Error').html(errors[p].messages[0]);
                     }
                 } else {
-                    $('.vm_instances_body').prepend(vmService.vmToHtml(r));
+					          var container = $('.vm_instances_body');
+					          for (var i in r) { // is able to launch multiple VMs at once
+                        container.prepend(vmService.vmToHtml(r[i]));
+                    }
                 }
             }
         });
@@ -81,9 +84,12 @@ if (!window.vmService) var vmService = {
         html = html.replace(/#instance.tcMemberHandle#/g, vm.instance.tcMemberHandle);
         html = html.replace(/#managerHandle#/g, vm.managerHandle);
         html = html.replace(/#status#/g, vm.status);
+        html = html.replace(/#contestName#/g, vm.contestName);
+        html = html.replace(/#vmImageTcName#/g, vm.vmImageTcName);
+        html = html.replace(/#instance.publicIP#/g, vm.instance.publicIP);
         var action = '';
         if (vm.status == 'RUNNING') {
-            action = '<button type="button" value="Terminate" onclick="vmService.terminate(' + vm.instance.id + ');">Terminate</button>';
+           	action = '<a href="javascript:vmService.terminate(' + vm.instance.id + ');" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>';
         }
         html = html.replace(/#action#/g, action);
         return html;
