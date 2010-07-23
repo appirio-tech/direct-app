@@ -11,7 +11,9 @@ import java.util.Map;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.management.project.DesignComponents;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
 
 /**
@@ -107,6 +109,22 @@ public class CommonAction extends BaseDirectStrutsAction {
         }
 
         return billings;
+    }
+
+
+    /**
+     * <p>
+     * Gets a list of design components for the given user.
+     * </p>
+     *
+     * @return a list of design components.
+     * @throws ContestServiceException if contest service exception occurs
+     */
+    public String getDesignComponents() throws ContestServiceException {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("designs", getContestServiceFacade().getDesignComponents(getCurrentUser()));
+        setResult(result);
+        return SUCCESS;
     }
 
     /**

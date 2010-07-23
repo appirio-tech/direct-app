@@ -24,8 +24,8 @@ import com.topcoder.catalog.entity.CompDocumentation;
 import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
-import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.clients.model.Project;
+import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
@@ -466,6 +466,14 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * For development software contest. It might indicate the design component which the current design component
+     * will be derived from.
+     * </p>
+     */
+    private long selectedDesignId = -1;
+
+    /**
+     * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
      * </p>
      */
@@ -552,8 +560,7 @@ public class SaveDraftContestAction extends ContestAction {
             } else if (competitionType == CompetitionType.SOFTWARE) {
                 // creation of the software competition
                 softwareCompetition = new SoftwareCompetition();
-                softwareCompetition.setAssetDTO(assetDTO);
-                System.out.println(assetDTO.getName());
+                softwareCompetition.setAssetDTO(getAssetDTOForNewSoftware());
                 softwareCompetition.setProjectHeader(projectHeader);
 
                 initializeSoftwareCompetition(softwareCompetition);
@@ -577,6 +584,26 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * Gets assetDTO for new software contest.
+     * </p>
+     *
+     * @return the assetDTO for new software contest
+     * @throws Exception if any error occurs
+     */
+    private AssetDTO getAssetDTOForNewSoftware() throws Exception {
+        if (selectedDesignId <= 0) {
+            return assetDTO;
+        } else {
+            SoftwareCompetition designCompetition = getContestServiceFacade().getSoftwareContestByProjectId(
+                DirectStrutsActionsHelper.getTCSubjectFromSession(), selectedDesignId);
+            AssetDTO designAssetDTO = designCompetition.getAssetDTO();
+            designAssetDTO.setProductionDate(assetDTO.getProductionDate());
+            return designAssetDTO;
+        }
+    }
+
+    /**
+     * <p>
      * Initializes the software competition object.
      * </p>
      *
@@ -586,12 +613,14 @@ public class SaveDraftContestAction extends ContestAction {
     private void initializeSoftwareCompetition(SoftwareCompetition softwareCompetition) {
         // asset DTO
         AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
-        assetDTOTemp.setVersionNumber(1L);
-        assetDTOTemp.setVersionText("1.0");
-        assetDTOTemp.setDocumentation(new ArrayList<CompDocumentation>());
-        assetDTOTemp.setDependencies(new ArrayList<Long>());
-        assetDTOTemp.setShortDescription("NA");
-        assetDTOTemp.setTechnologies(new ArrayList<Technology>());
+        if (assetDTOTemp.getVersionNumber() == null) {
+            assetDTOTemp.setVersionNumber(1L);
+            assetDTOTemp.setVersionText("1.0");
+            assetDTOTemp.setDocumentation(new ArrayList<CompDocumentation>());
+            assetDTOTemp.setDependencies(new ArrayList<Long>());
+            assetDTOTemp.setShortDescription("NA");
+            assetDTOTemp.setTechnologies(new ArrayList<Technology>());
+        }
 
         // project header
         com.topcoder.management.project.Project projectHeaderTemp = softwareCompetition.getProjectHeader();
@@ -716,9 +745,10 @@ public class SaveDraftContestAction extends ContestAction {
             getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition));
 
         // return result.getSoftwareCompetition();
-        // retrieve the software contest again, seems the contest sale is  not updated
-        return getContestServiceFacade().getSoftwareContestByProjectId(DirectStrutsActionsHelper
-            .getTCSubjectFromSession(), result.getSoftwareCompetition().getProjectHeader().getId());
+        // retrieve the software contest again, seems the contest sale is not updated
+        return getContestServiceFacade().getSoftwareContestByProjectId(
+            DirectStrutsActionsHelper.getTCSubjectFromSession(),
+            result.getSoftwareCompetition().getProjectHeader().getId());
     }
 
     /**
@@ -2023,6 +2053,28 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setAutoCreateDev(boolean autoCreateDev) {
         this.autoCreateDev = autoCreateDev;
+    }
+
+    /**
+     * <p>
+     * Gets the selectedDesignId value.
+     * </p>
+     *
+     * @return the selectedDesignId
+     */
+    public long getSelectedDesignId() {
+        return selectedDesignId;
+    }
+
+    /**
+     * <p>
+     * Sets the selectedDesignId value.
+     * </p>
+     *
+     * @param selectedDesignId the selectedDesignId to set
+     */
+    public void setSelectedDesignId(long selectedDesignId) {
+        this.selectedDesignId = selectedDesignId;
     }
 
     /**

@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- External CSS -->
-<link rel="stylesheet" href="/css/screen.css?v=41" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/launchcontest.css?v=41" media="all" type="text/css"/>
-<link rel="stylesheet" href="/css/dashboard.css?v=41" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/screen.css?v=45" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/launchcontest.css?v=45" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/dashboard.css?v=45" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/thickbox.css" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/jScrollPane.css" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/jquery-ui-1.7.2.custom.css" media="all" type="text/css"/>
@@ -35,5 +35,6 @@
 <script type="text/javascript" src="/scripts/ajaxupload2.js?v=5"></script>
 <script type="text/javascript" src="/scripts/jquery.validate.js"></script>
 <script type="text/javascript" src="/scripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="/scripts/jquery.autocomplete.js"></script>
 
 <script type="text/javascript" src="/scripts/dashboard.js"></script>

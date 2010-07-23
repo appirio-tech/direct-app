@@ -638,12 +638,6 @@ function populateSpecSection(initFlag) {
   } 
 }
 
-function fillCategories() {
-	     $('#select1_categories').val(mainWidget.softwareCompetition.assetDTO.directjsCategories);
-       $('#select1_categories option:selected').appendTo('#select2_categories');
-       sortCategorySelects();   	 	 
-}
-
 function saveSpecSection() {
    if(!validateFieldsSpecSection()) {
        return;

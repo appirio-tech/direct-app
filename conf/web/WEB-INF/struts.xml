@@ -323,6 +323,10 @@
         <action name="getBillingProjectContestFees" method="getBillingProjectContestFees" class="commonAction">
             <result type="json" />
         </action>
+
+        <action name="getDesignComponents" method="getDesignComponents" class="commonAction">
+            <result type="json" />
+        </action>
     </package>
 
     <package name="contest" namespace="/contest" extends="base">

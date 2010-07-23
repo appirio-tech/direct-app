@@ -50,6 +50,12 @@
       <div class="row">
           <label>Contest Name :</label>
           <input id="contestName" name="contestName" type="text" class="text" maxlength="254"/>
+          <input id="contestNameFromDesign" name="contestNameFromDesign" type="text" class="text hide" maxlength="300" />          
+          <input id="contestIdFromDesign" name="contestIdFromDesign" type="hidden" />
+          <div id="devOnlyDiv" class="lcc_chk hide" style="float:none;">
+            <input id="devOnlyCheckBox" type="checkbox" />
+            <span class="lcc">Dev Only</span>
+          </div>          
       </div>
 
       <!-- Project Name -->

@@ -2027,3 +2027,9 @@ div.dp-popup td.disabled {
   top:4px;
   width:120px;
 }
+
+/* autocomplete styles */
+div.ac_results { background-color: white; border: 2px solid yellow; border-top: none; z-index: 2000 }
+div.ac_results ul {  padding-left: 0px; }
+div.ac_results li { list-style-type: none; padding-left: 5px; }
+div.ac_results li.ac_over { background-color: yellow; color: black; cursor: pointer; }

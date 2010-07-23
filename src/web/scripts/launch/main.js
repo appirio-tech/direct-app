@@ -437,11 +437,16 @@ function saveAsDraftRequestSoftware() {
       request['categories'] = mainWidget.softwareCompetition.assetDTO.directjsCategories;
    }
 
-     // update technologies
+   // update technologies
    if(isTechnologyContest()) {
       request['technologies'] = mainWidget.softwareCompetition.assetDTO.directjsTechnologies;
    }
 
+   // if dev is derived from selected design
+   if(mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded) {
+   	  request['selectedDesignId'] = mainWidget.softwareCompetition.assetDTO.directjsDesignId;   	  
+   }
+   
    // the first page also gets some data
    updateSoftwarePrizes();
 
@@ -1188,6 +1193,13 @@ function updateCategories(callback) {
    });
 }
 
+function fillCategories() {
+	     $('#select1_categories').val(mainWidget.softwareCompetition.assetDTO.directjsCategories);
+       $('#select1_categories option:selected').appendTo('#select2_categories');
+       sortCategorySelects();   	 	 
+}
+
+
 /**
  * Shared validation functions
  */
@@ -1301,14 +1313,24 @@ function isDevOrDesign() {
    }
 }
 
+function isDev() {
+   if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
+       return false;
+   } else {
+       var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+       return (categoryId == SOFTWARE_CATEGORY_ID_DEVELOPMENT);
+   }
+}
+
 function isDesign() {
    if(!mainWidget.softwareCompetition.projectHeader.projectCategory) {
        return false;
    } else {
        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
-       return (categoryId == 1);
+       return (categoryId == SOFTWARE_CATEGORY_ID_DESIGN);
    }
 }
+
 
 function beforeAjax() {
 	 $.blockUI({ message: '<div id=loading> loading.... </div>' });

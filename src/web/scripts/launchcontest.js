@@ -452,6 +452,21 @@ function onContestTypeChange() {
          $('.studio').hide();
          $(".schedule").css("height","70px");
          $(".schedule").css("margin-bottom","105px");
+         
+         if(typeId == SOFTWARE_CATEGORY_ID_DEVELOPMENT) {
+         	  $('#contestName').hide();
+         	  $('#contestNameFromDesign').show();
+         	  $('#contestNameFromDesign').val("");
+         	  $('#contestIdFromDesign').val("");
+         	  $('#devOnlyDiv').show();
+         	  $('#devOnlyDiv').css("display","inline");
+         	  $('#devOnlyCheckBox').attr('checked', false);         	           	  
+         } else {
+         	  $('#contestName').show();
+         	  $('#contestNameFromDesign').hide();
+         	  $('#devOnlyDiv').hide();
+         	  $('#devOnlyCheckBox').attr('checked', false);         	  
+         }
       }
 
       if(mainWidget.isStudioContest()) {
