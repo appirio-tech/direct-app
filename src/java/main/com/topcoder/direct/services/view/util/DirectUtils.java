@@ -209,6 +209,7 @@ public final class DirectUtils {
                 dto.setSubmissionsNumber(contestData.getNum_sub());
                 dto.setRegistrantsNumber(contestData.getNum_reg());
                 dto.setForumPostsNumber(contestData.getNum_for());
+                dto.setForumId(contestData.getForumId());
                 dto.setContest(contest);
                 dto.setIsStudio("Studio".equals(contestData.getType()));
                 return dto;
