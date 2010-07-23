@@ -126,6 +126,13 @@
                 <param name="namespace">/</param>
             </result>
         </action>
+        <action name="createProjectAndContest" class="com.topcoder.direct.services.view.action.project.CreateProjectAndAddContestAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">home</param>
+                <param name="namespace">/launch</param>
+            </result>
+        </action>
         <action name="dashboardSearchView" class="com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-search.jsp</result>

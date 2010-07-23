@@ -64,8 +64,8 @@
           <div class="projectSelect">
               <select id="projects" name="tcProject">
                 <option value="-1">Please select an existing project</option>
-                <s:iterator value="projects">
-                <option value='<s:property value="projectId" />'><s:property value="name" /></option>
+                <s:iterator value="projects" var="proj">
+                <option value='<s:property value="projectId" />'  <s:if test="%{#proj.projectId==#session.currentProject.id}">selected="selected"</s:if> ><s:property value="name" /></option>
                 </s:iterator>
               </select>
           </div>
