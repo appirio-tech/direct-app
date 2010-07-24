@@ -399,7 +399,7 @@ $(document).ready(function(){
     elements : "contestDescription,contestIntroduction,round1Info,round2Info,swDetailedRequirements,swGuidelines",
     plugins : "paste",
     theme : "advanced",
-    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist",
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
     theme_advanced_buttons2 : "",
     theme_advanced_buttons3 : "",
     init_instance_callback : function() {
