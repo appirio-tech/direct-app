@@ -316,7 +316,7 @@ $(document).ready(function(){
 	}
 	
 	
-	fixTabs3Width();
+	//fixTabs3Width();
 	
 	$("#tabs3").resize(function(){
 		/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/	
