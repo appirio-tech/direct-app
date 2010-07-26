@@ -28,9 +28,16 @@
             <li>
                 <a href="" onclick="return false;">
                     <span class="left"><span class="right">Submissions (<s:property value="submissionsNumber"/>)</span></span></a></li>
-            <li class="lastItem">
-                <a href="" onclick="return false;"
-                   class="last"><span class="left"><span class="right">Milestone Feedback</span></span></a></li>
+            <li>
+                <a href="" onclick="return false;">
+					<span class="left"><span class="right">Milestone Feedback</span></span></a>
+            </li>
+			<li id="rReceiptTab" class="lastItem <c:choose> 
+                <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>
+                </c:choose>">
+                <a href="<s:url action="contest/receipt" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>" >
+                <span class="left"><span class="right">Receipt</span></span></a>
+			</li>
         </ul>
     </div>
     <!-- End #tabs3 -->

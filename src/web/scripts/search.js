@@ -143,7 +143,29 @@ $(document).ready(function() {
 			]
 
 	});
-	$("#ProjectContests").dataTable({
+	$("#ProjectContests .paginatedDataTable").dataTable({
+		"iDisplayLength": 10,
+        "bFilter": false,
+        "bSort": true,
+			  "oLanguage": {
+ 			  	"sLengthMenu": sStdMenu + " per page"
+ 			  },            
+        "sPaginationType": "full_numbers",
+        "sDom": 'rt<"bottom1"il><"bottom2"fp',
+		"aaSorting": [[0,'asc']],
+		"aoColumns": [
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "date-direct" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+				null
+			]
+
+	});
+	$("#activeContests .paginatedDataTable").dataTable({
 		"iDisplayLength": 10,
         "bFilter": false,
         "bSort": true,

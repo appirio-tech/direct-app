@@ -4,6 +4,8 @@
 package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,8 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -32,6 +36,8 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.project.CompetitionPrize;
+import com.topcoder.service.studio.ContestStatusData;
 
 /**
  * <p>
@@ -159,6 +165,21 @@ public class GetContestAction extends ContestAction {
 
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+			List<CompetitionPrize> coll = studioCompetition.getPrizes();
+			Collections.sort(coll, new PrizeSortByPlace());
+			contestStats.setPrizes(coll);
+			contestStats.setAdminFees(studioCompetition.getAdminFee());
+            if (studioCompetition.getContestData().getMilestonePrizeData() != null)
+            {
+                contestStats.setMilestonePrizes(studioCompetition.getContestData().getMilestonePrizeData());
+            }
+			
+            if (studioCompetition.getContestData().getPayments() != null && studioCompetition.getContestData().getPayments().size() > 0)
+            {
+                contestStats.setPaymentReferenceId(studioCompetition.getContestData().getPayments().get(0).getPaymentReferenceId());
+            }
+			
+			contestStats.setForumId(studioCompetition.getContestData().getForumId());
             getViewData().setContestStats(contestStats);
 
         } else {
@@ -248,9 +269,13 @@ public class GetContestAction extends ContestAction {
             // real data
             ContestStatsDTO contestStats = new ContestStatsDTO();
             ContestBriefDTO contest = new ContestBriefDTO();
+            ProjectBriefDTO contestProject = new ProjectBriefDTO();
+			
             if (studioCompetition != null) {
+                contestProject.setName(studioCompetition.getContestData().getTcDirectProjectName());
                 contest.setId(studioCompetition.getContestData().getContestId());
                 contest.setTitle(studioCompetition.getContestData().getName());
+				contest.setProject(contestProject);
             }
             if (softwareCompetition != null) {
                 contest.setId(softwareCompetition.getProjectHeader().getId());
@@ -262,6 +287,9 @@ public class GetContestAction extends ContestAction {
 
             final long testContestId = 4;
             ContestDTO contestDTO = DataProvider.getContest(testContestId);
+			if (studioCompetition != null) {
+				contestDTO.setContestType(ContestType.forIdAndFlag(studioCompetition.getContestData().getContestTypeId(),true));
+			}
             viewData.setContest(contestDTO);
 
             // project
@@ -274,7 +302,16 @@ public class GetContestAction extends ContestAction {
         }
         return viewData;
     }
-
+	public class PrizeSortByPlace implements Comparator<CompetitionPrize>{
+		public int compare(CompetitionPrize o1, CompetitionPrize o2) {
+			if (o1.getPlace() > o2.getPlace())
+				return 1;
+			else if(o1.getPlace() < o2.getPlace())
+				return -1;
+			else
+				return 0;
+		}
+	}
     private void fillContestStats(ContestStatsDTO contestStats) throws Exception {
         // TODO: fill software stats
         if (studioCompetition == null) {
@@ -290,6 +327,10 @@ public class GetContestAction extends ContestAction {
         contestStats.setSubmissionsNumber(result.getIntItem(0, "number_of_submission"));
         contestStats.setForumPostsNumber(result.getIntItem(0, "number_of_forum"));
         contestStats.setForumId(studioCompetition.getContestData().getForumId());
+		
+		contestStats.setStartTime(studioCompetition.getStartTime().toGregorianCalendar().getTime());
+		contestStats.setEndTime(studioCompetition.getEndTime().toGregorianCalendar().getTime());
+		
     }
 
     /**

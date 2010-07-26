@@ -306,6 +306,11 @@ function populateTypeSection() {
 	
 	//display
 	$('#rContestTypeName').html($("#contestTypes option[value=STUDIO"+ mainWidget.competition.contestData.contestTypeId +"]").text());
+	if(!mainWidget.competition.contestData || mainWidget.competition.contestData.statusId != CONTEST_STATUS_ACTIVE_PUBLIC)
+	{
+		$('#rReceiptTab').addClass("off");
+		$('#rReceiptTab').html("<a><span class=\"left\"><span class=\"right\">Receipt</span></span></a>");
+	}
 	$('#rTypeIntroduction').html(mainWidget.competition.contestData.shortSummary);
 	$('#rContestName').html(mainWidget.competition.contestData.name);
 	

@@ -91,7 +91,7 @@
         <action name="login" class="com.topcoder.direct.services.view.action.LoginAction">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboard</param>
+                <param name="actionName">dashboardActive</param>
                 <param name="namespace">/</param>
             </result>
             <result name="input">/WEB-INF/index.jsp</result>
@@ -340,7 +340,11 @@
         <action name="detail" class="getContestAction">
             <result>/WEB-INF/contest-details2.jsp</result>
         </action>
-
+		
+		<action name="receipt" class="getContestAction">
+            <result>/WEB-INF/contest-receipt.jsp</result>
+        </action>
+		
         <action name="detailJson" class="getContestAction">
             <result type="json" />
         </action>

@@ -4,7 +4,7 @@
 <div id="header">
     <c:choose>
         <c:when test="${requestScope.PAGE_TYPE eq 'dashboard'}">
-            <a href="<s:url action="dashboard" namespace="/"/>" class="logo">
+            <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
                 <img src="/images/dashboard_logo.png" alt="Direct Dashboard" /></a>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'launch'}">
@@ -22,7 +22,7 @@
         <ui:isDashboardPage>
             <ul>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
-                    <a href="<s:url action="dashboard" namespace="/"/>"><span>Dashboard</span></a>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                 </li>
 
 				<li <c:if test="${requestScope.CURRENT_TAB eq 'search'}">class="on"</c:if>>
@@ -38,7 +38,7 @@
         <ui:isProjectPage>
             <ul>
                 <li>
-                    <a href="<s:url action="dashboard" namespace="/"/>"><span>Dashboard</span></a>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                 </li>
 
 				<li class="on">
@@ -102,6 +102,9 @@
     <ui:isDashboardPage>
         <div id="tabs1">
              <ul>
+				<li <c:if test="${requestScope.CURRENT_TAB eq 'active'}">class="on"</c:if>>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
+                </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
                     <a href="<s:url action="dashboard" namespace="/"/>"><span class="dashboardSpan">Upcoming Activities</span></a>
                 </li>
@@ -109,10 +112,7 @@
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
                     <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
                 </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'active'}">class="on"</c:if>>
-                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
-                </li>
-            </ul>
+             </ul>
         </div>
             
      </ui:isDashboardPage>

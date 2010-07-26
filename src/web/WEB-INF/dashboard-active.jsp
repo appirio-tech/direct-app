@@ -7,6 +7,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="active"/>
+	<jsp:include page="includes/paginationSetup.jsp"/>
 </head>
 
 <body id="page">
@@ -32,7 +33,7 @@
                             </div>
                             <!-- End .areaHeader -->
 
-                            <div class="container2">
+                            <div class="container2" id="activeContests">
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">
@@ -40,7 +41,7 @@
                                                 <div class="container2BottomRight">
                                                     <div class="container2Content">
 
-                                                        <table class="projectStats contests paginatedDataTable"
+                                                        <table id="activeContests" class="projectStats contests paginatedDataTable"
                                                                cellpadding="0"
                                                                cellspacing="0">
                                                         <thead>
