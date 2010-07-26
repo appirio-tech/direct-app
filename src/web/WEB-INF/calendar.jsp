@@ -58,7 +58,7 @@
                         <div class="area1Content">
                         <div class="areaHeader">
                             <h2 class="title">Latest / Upcoming Activities</h2>
-                            <a href="<s:url action="dashboard" namespace="/"/>" class="button1"><span>Regular view</span></a>
+                            <a href="<s:url action="dashboardActive" namespace="/"/>" class="button1"><span>Regular view</span></a>
                         </div><!-- End .areaHeader -->
 
                         <div id="calendar"></div>

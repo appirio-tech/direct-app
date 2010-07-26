@@ -44,7 +44,7 @@
                     <div id="area1"><!-- the main area -->
                         <div class="area1Content">
                             <div class="currentPage">
-                                <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
+                                <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <a href="<s:url action="currentProjectDetails" namespace="/"/>"><s:property value="sessionData.currentProjectContext.name"/></a> &gt;
                                 <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                             </div>

@@ -3,7 +3,7 @@
 <div id="area2"><!-- the right column -->
     <c:if test="${requestScope.PAGE_TYPE ne 'dashboard'}">
         <div class="box">
-            <a href="<s:url action="dashboard" namespace="/" />" class="button3">Back to Dashboard</a>
+            <a href="<s:url action="dashboardActive" namespace="/" />" class="button3">Back to Dashboard</a>
         </div>
         <!-- End .box -->
     </c:if>
