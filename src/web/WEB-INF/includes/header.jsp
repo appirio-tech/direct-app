@@ -79,15 +79,26 @@
         </ul>
     </div><!-- End .helloUSer -->
 
+	<c:if test="${requestScope.CURRENT_TAB eq 'overview'}">
+		<s:set name="projId" value="viewData.projectStats.project.id"/>  
+	</c:if>
+	<c:if test="${requestScope.CURRENT_TAB eq 'contests'}">
+		<s:set name="projId" value="viewData.contestStats.contest.project.id"/>  
+	</c:if>	
+	
     <ui:isProjectPage>
         <div id="tabs1">
              <ul>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-                    <a href="<s:url action="currentProjectOverview" namespace="/"/>"><span>Overview</span></a>
+            		<a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="projId"/></s:url>">
+						<span>Overview</span>
+					</a>
                 </li>
 
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
-                    <a href="<s:url action="currentProjectDetails" namespace="/"/>"><span>Contests</span></a>
+           			<a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="projId"/></s:url>">
+						<span>Contests</span>
+					</a>
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
                     <a href="<s:url action="currentProjectGamePlanView" namespace="/"/>"><span>Game Plan</span></a>
