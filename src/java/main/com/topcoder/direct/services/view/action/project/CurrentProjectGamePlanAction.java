@@ -202,7 +202,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             // generate studio contests data
             for (StudioProjectData sc : gamePlan.getStudioProjects()) {
                 long id = sc.getContestId();
-                String name = sc.getContestName();
+                String name = sc.getContestName() + " (" + sc.getContestType() + ")";
                 String startTime = GAME_PLAN_DATE_FORMAT.format(sc.getStartDate());
                 // calculate the duration in hours
                 long duration = calculateDuration(sc.getStartDate(), sc.getEndDate());
@@ -214,7 +214,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             // generate software contest data
             for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
                 long id = swc.getProjectId();
-                String name = swc.getProjectName();
+                String name = swc.getProjectName() + " (" + swc.getProjectType() + ")";
                 String startTime = GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
                 // calculate the duration in hours
                 long duration = calculateDuration(swc.getStartDate(), swc.getEndDate());

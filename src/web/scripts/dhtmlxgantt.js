@@ -1,6 +1,7 @@
 //v.1.2.2 build 9647
 
 var ganttContestUrl = "./contest/detail.action?contestId=";
+var ganttSoftwareContestUrl = "./contest/detail.action?projectId=";
 var ganttProjectUrl = "./currentProjectOverview.action";
 
 
@@ -5040,8 +5041,10 @@ GanttTask.prototype.checkWidthTaskNameItem = function()
         tName += "...";
         
     }
+
+    var urlTemplate = this.TaskInfo.Id > 30000000 ? ganttSoftwareContestUrl : ganttContestUrl;
     
-    this.cTaskNameItem[0].innerHTML = "<a href=\"" + ganttContestUrl + this.TaskInfo.Id + "\">" + "<font color=\"#7D7D7D\">" + tName + "</font></a>";
+    this.cTaskNameItem[0].innerHTML = "<a href=\"" + urlTemplate + this.TaskInfo.Id + "\">" + "<font color=\"#7D7D7D\">" + tName + "</font></a>";
 
 }
 /**

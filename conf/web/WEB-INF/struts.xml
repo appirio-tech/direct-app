@@ -171,7 +171,7 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/permissions.jsp</result>
         </action>
-        <action name="currentProjectGamePlanView" class="com.topcoder.direct.services.view.action.ForwardAction">
+        <action name="ProjectGamePlanView" class="com.topcoder.direct.services.view.action.project.ProjectGamePlanAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/project-gameplan.jsp</result>
         </action>
