@@ -176,9 +176,9 @@ $(document).ready(function(){
    	  fillPrizes();
    });
    
-   $('#swFirstPlace').bind('change',function() {
-   	  onFirstPlaceChange();
-    });   
+   $('#swFirstPlace').bind('keyup',function() {
+       onFirstPlaceChangeKeyUp();
+    });
     
   tinyMCE.init({
   	mode : "exact",

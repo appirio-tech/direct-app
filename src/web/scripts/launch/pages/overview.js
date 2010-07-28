@@ -37,8 +37,8 @@ $(document).ready(function() {
    });
    $('input[name="prizeRadio"]:nth(1)').attr('checked','checked');
 
-   $('#swFirstPlace').bind('change',function() {
-       onFirstPlaceChange();
+   $('#swFirstPlace').bind('keyup',function() {
+       onFirstPlaceChangeKeyUp();
     });
 }); // end of initiation
 

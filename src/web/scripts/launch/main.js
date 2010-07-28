@@ -912,7 +912,7 @@ function resetSoftwarePrizes() {
      $('input[name="prizeRadio"]:nth(1)').attr('checked','checked');
 
      //reset custom costs
-     customCosts = null;
+     //customCosts = null;
 
      if(isPrizeEditable(billingProjectId)) {
          $('.customRadio').show();
@@ -1025,6 +1025,16 @@ function isPrizeEditable(billingProjectId) {
 
     return editable;
 }
+
+function onFirstPlaceChangeKeyUp() {
+   var value = $('#swFirstPlace').val();
+   if(!checkRequired(value) || !checkNumber(value)) {
+        return;
+   }
+   
+   onFirstPlaceChange();
+}
+
 
 function onFirstPlaceChange() {
    var prizeType = $('input[name="prizeRadio"]:checked').val();
