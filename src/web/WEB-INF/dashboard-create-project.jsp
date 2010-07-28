@@ -57,7 +57,7 @@
                             <!-- End .message -->
 
                             <div class="form">
-                                <s:form action="createProject" namespace="/" method="post" name="CreateProjectForm">
+                                <s:form action="createProjectAndContest" namespace="/" method="post" name="CreateProjectForm">
                                 <p>
                                     <label for="projectName">Project Name:</label>
                                     <s:textfield name="formData.name" id="projectName"/>
@@ -70,7 +70,7 @@
 
                                 <div class="buttons">
                                     <link:cancelDashboardOperation/>
-                                    <a href="javascript:document.CreateProjectForm.action='createProjectAndContest';document.CreateProjectForm.submit();"
+                                    <a href="javascript:document.CreateProjectForm.submit();"
                                        class="button6 middleButton">
                                         <span class="left"><span class="right">Add A Contest to This Project</span></span></a>
                                     <a href="javascript:document.CreateProjectForm.submit();"

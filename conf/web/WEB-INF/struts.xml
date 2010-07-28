@@ -122,7 +122,7 @@
         <action name="createProject" class="com.topcoder.direct.services.view.action.project.CreateProjectAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboard</param>
+                <param name="actionName">createProjectView</param>
                 <param name="namespace">/</param>
             </result>
         </action>
