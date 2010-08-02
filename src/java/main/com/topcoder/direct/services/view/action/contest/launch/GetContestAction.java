@@ -164,7 +164,7 @@ public class GetContestAction extends ContestAction {
             setResult(studioCompetition);
 
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
 			List<CompetitionPrize> coll = studioCompetition.getPrizes();
 			Collections.sort(coll, new PrizeSortByPlace());
 			contestStats.setPrizes(coll);
@@ -188,7 +188,7 @@ public class GetContestAction extends ContestAction {
             setResult(softwareCompetition);
 
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, projectId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
             getViewData().setContestStats(contestStats);
         }
     }
@@ -263,6 +263,7 @@ public class GetContestAction extends ContestAction {
      * @throws Exception if any error occurs
      */
     public ContestDetailsDTO getViewData() throws Exception {
+
         if (viewData == null) {
             viewData = new ContestDetailsDTO();
 
@@ -300,6 +301,7 @@ public class GetContestAction extends ContestAction {
             userProjectsDTO.setProjects(projects);
             viewData.setUserProjects(userProjectsDTO);
         }
+
         return viewData;
     }
 	public class PrizeSortByPlace implements Comparator<CompetitionPrize>{
@@ -312,25 +314,49 @@ public class GetContestAction extends ContestAction {
 				return 0;
 		}
 	}
-    private void fillContestStats(ContestStatsDTO contestStats) throws Exception {
-        // TODO: fill software stats
-        if (studioCompetition == null) {
-            return;
-        }
-        DataAccess dao = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        Request request = new Request();
-        request.setContentHandle("direct_studio_contest_stats");
-        request.setProperty("ct", String.valueOf(studioCompetition.getContestData().getContestId()));
 
-        ResultSetContainer result = dao.getData(request).get("direct_studio_contest_stats");
-        contestStats.setRegistrantsNumber(result.getIntItem(0, "number_of_registration"));
-        contestStats.setSubmissionsNumber(result.getIntItem(0, "number_of_submission"));
-        contestStats.setForumPostsNumber(result.getIntItem(0, "number_of_forum"));
-        contestStats.setForumId(studioCompetition.getContestData().getForumId());
+    private void fillContestStats(ContestStatsDTO contestStats) throws Exception {
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_contest_stats");
+        request.setProperty("ct", String.valueOf(contestStats.getContest().getId()));
+        request.setProperty("uid", String.valueOf(getSessionData().getCurrentUserId()));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_contest_stats");
+        final int recordNum = resultContainer.size();
+
+        int recordIndex = 0;
+
+        if (recordNum == 0) {
+            // no record, directly return
+            return;
+        } else if (recordNum == 2) {
+            // two records, this indicates there is one studio record and one sw record for the same contest id
+            // and the first record is studio, the second is sw
+            recordIndex = this.studioCompetition == null ? 1 : 0;
+        }
+
+
+        contestStats.setRegistrantsNumber(resultContainer.getIntItem(recordIndex, "number_of_registration"));
+        contestStats.setSubmissionsNumber(resultContainer.getIntItem(recordIndex, "number_of_submission"));
+        contestStats.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
+        long forumId = -1;
+        try
+            {
+        if (resultContainer.getStringItem(recordIndex, "forum_id") != null
+                    && !resultContainer.getStringItem(recordIndex, "forum_id").equals(""))
+            forumId = Long.parseLong(resultContainer.getStringItem(recordIndex, "forum_id"));
+            contestStats.setForumId(forumId);
+        }
+        catch (NumberFormatException ne)
+        {
+        // ignore
+        }
 		
-		contestStats.setStartTime(studioCompetition.getStartTime().toGregorianCalendar().getTime());
-		contestStats.setEndTime(studioCompetition.getEndTime().toGregorianCalendar().getTime());
-		
+		contestStats.setStartTime(resultContainer.getTimestampItem(recordIndex, "start_date"));
+		contestStats.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));
+
     }
 
     /**

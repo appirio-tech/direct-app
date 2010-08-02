@@ -18,6 +18,10 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.DBMS;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -40,7 +44,7 @@ import com.topcoder.shared.common.TCContext;
  * <p>
  * Version 1.1 (Direct Registrants List assembly) change notes:
  * <ul>
- * <li>Added {@link #getContestStats(ContestServiceFacade, TCSubject, long)} method.</li>
+ * <li>Added {@link #getContestStats(TCSubject, long, boolean)} method.</li>
  * <li>Added {@link #getTCSubjectFromSession()} method.</li>
  * </ul>
  * </p>
@@ -180,45 +184,92 @@ public final class DirectUtils {
      * Gets the statistics for the specified contest.
      * </p>
      *
-     * @param contestServiceFacade a <code>ContestServiceFacade</code> to be used for communicating to backend
-     *            services.
      * @param currentUser a <code>TCSubject</code> representing the current user.
      * @param contestId a <code>long</code> providing the ID of a contest.
+     * @param isStudio a flag indicates whether the contest to get is a studio contest.
      * @return a <code>ContestStatsDTO</code> providing the statistics for specified contest.
-     * @throws PersistenceException if an unexpected error occurs while accessing the persistent data store.
+     * @throws Exception if an unexpected error occurs while accessing the persistent data store.
      * @since 1.1
      */
-    public static ContestStatsDTO getContestStats(ContestServiceFacade contestServiceFacade, TCSubject currentUser,
-        long contestId) throws PersistenceException {
+    public static ContestStatsDTO getContestStats(TCSubject currentUser,
+                                                  long contestId, boolean isStudio) throws Exception {
 
-        List<CommonProjectContestData> userContests = contestServiceFacade.getCommonProjectContestData(currentUser);
-        for (CommonProjectContestData contestData : userContests) {
-            if (contestData.getContestId() == contestId) {
-                ProjectBriefDTO project = new ProjectBriefDTO();
-                project.setId(contestData.getProjectId());
-                project.setName(contestData.getPname());
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_contest_stats");
+        request.setProperty("ct", String.valueOf(contestId));
+        request.setProperty("uid", String.valueOf(currentUser.getUserId()));
 
-                ContestBriefDTO contest = new ContestBriefDTO();
-                contest.setId(contestData.getContestId());
-                contest.setTitle(contestData.getCname());
-                contest.setProject(project);
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_contest_stats");
+        final int recordNum = resultContainer.size();
 
-                ContestStatsDTO dto = new ContestStatsDTO();
-                dto.setEndTime(DirectUtils.getDate(contestData.getEndDate()));
-                dto.setStartTime(DirectUtils.getDate(contestData.getStartDate()));
-                dto.setSubmissionsNumber(contestData.getNum_sub());
-                dto.setRegistrantsNumber(contestData.getNum_reg());
-                dto.setForumPostsNumber(contestData.getNum_for());
-                if (contestData.getForumId() != null)
-                {
-                    dto.setForumId(contestData.getForumId());
-                }
-                dto.setContest(contest);
-                dto.setIsStudio("Studio".equals(contestData.getType()));
-                return dto;
+        if (recordNum == 0) {
+            // return null, if no record is found
+            return null;
+        }
+
+        int recordIndex = 0;
+
+        if (recordNum > 1) {
+            // there are two records, find out the correct one
+            String[] types = new String[2];
+            types[0] = resultContainer.getStringItem(0, "type").trim();
+            types[1] = resultContainer.getStringItem(1, "type").trim();
+
+            if (isStudio) {
+                recordIndex = types[0].equals("Studio") ? 0 : 1;
+            } else {
+                recordIndex = types[0].equals("Studio") ? 1 : 0;
+            }
+
+        } else if (recordNum == 1) {
+
+            // get the contest type first
+            String contestType = resultContainer.getStringItem(0, "type").trim();
+
+            if (isStudio && (!contestType.equals("Studio"))) {
+                // contest type is not studio when param indicates the studio, return null
+                return null;
+            }
+
+            if (!isStudio && contestType.equals("Studio")) {
+                // contest type is studio when param indicate sw, return null
+                return null;
             }
         }
-        return null;
+
+        ProjectBriefDTO project = new ProjectBriefDTO();
+        project.setId(resultContainer.getLongItem(recordIndex, "project_id"));
+        project.setName(resultContainer.getStringItem(recordIndex, "project_name"));
+
+        ContestBriefDTO contest = new ContestBriefDTO();
+        contest.setId(resultContainer.getLongItem(recordIndex, "contest_id"));
+        contest.setTitle(resultContainer.getStringItem(recordIndex, "contest_name"));
+        contest.setProject(project);
+
+        ContestStatsDTO dto = new ContestStatsDTO();
+        dto.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));
+        dto.setStartTime(resultContainer.getTimestampItem(recordIndex, "start_date"));
+        dto.setSubmissionsNumber(resultContainer.getIntItem(recordIndex, "number_of_submission"));
+        dto.setRegistrantsNumber(resultContainer.getIntItem(recordIndex, "number_of_registration"));
+        dto.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
+        long forumId = -1;
+        try
+            {
+        if (resultContainer.getStringItem(recordIndex, "forum_id") != null
+                    && !resultContainer.getStringItem(recordIndex, "forum_id").equals(""))
+            forumId = Long.parseLong(resultContainer.getStringItem(recordIndex, "forum_id"));
+            dto.setForumId(forumId);
+        }
+        catch (NumberFormatException ne)
+        {
+        // ignore
+        }
+        
+
+        dto.setContest(contest);
+        dto.setIsStudio(isStudio);
+        return dto;
     }
 
     /**

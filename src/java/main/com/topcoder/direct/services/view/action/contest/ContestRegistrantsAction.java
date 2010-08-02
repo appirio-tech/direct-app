@@ -130,7 +130,7 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
         // For normal request flow prepare various data to be displayed to user
         if (!getFormData().isExcel()) {
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, isStudioCompetition());
             getViewData().setContestStats(contestStats);
 
             // Set projects data
