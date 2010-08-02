@@ -19,12 +19,12 @@ if (!window.vmService) var vmService = {
                 r = r.result['return'];
                 var errors = r.errors;
                 if (errors) {
-                    for (p in errors) {
+                    for (var p=0; p<errors.length; p++) {
                         $('#' + errors[p].propertyName + 'Error').html(errors[p].messages[0]);
                     }
                 } else {
 					          var container = $('.vm_instances_body');
-					          for (var i in r) { // is able to launch multiple VMs at once
+					          for (var i=0; i<r.length; i++) { // is able to launch multiple VMs at once
                         container.prepend(vmService.vmToHtml(r[i]));
                     }
                 }
@@ -50,7 +50,7 @@ if (!window.vmService) var vmService = {
                 } else {
                     var container = $('.vm_instances_body');
                     container.html('');
-                    for (var i in r) {
+                    for (var i=0; i<r.length; i++) {
                         container.append(vmService.vmToHtml(r[i]));
                     }
                 }
