@@ -35,7 +35,7 @@
 
                             <jsp:include page="includes/project/projectStats.jsp"/>
 
-                            <div class="container2">
+                            <div class="container2"  id="ProjectContests">
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">

@@ -86,6 +86,7 @@ $(document).ready(function() {
 		"iDisplayLength": 10,
         "bFilter": false,
         "bSort": true,
+		"bAutoWidth": false,
 			  "oLanguage": {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
@@ -105,6 +106,7 @@ $(document).ready(function() {
 		"iDisplayLength": 10,
         "bFilter": false,
         "bSort": true,
+		"bAutoWidth": false,
 			  "oLanguage": {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
@@ -124,6 +126,7 @@ $(document).ready(function() {
 		"iDisplayLength": 10,
         "bFilter": false,
         "bSort": true,
+		"bAutoWidth": false,
 			  "oLanguage": {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
@@ -147,6 +150,7 @@ $(document).ready(function() {
 		"iDisplayLength": 10,
         "bFilter": false,
         "bSort": true,
+		"bAutoWidth": false,
 			  "oLanguage": {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
@@ -169,6 +173,7 @@ $(document).ready(function() {
 		"iDisplayLength": 10,
         "bFilter": false,
         "bSort": true,
+		"bAutoWidth": false,
 			  "oLanguage": {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
