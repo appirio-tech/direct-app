@@ -333,6 +333,11 @@ function initContest(contestJson) {
    	      $('#newVersionDialog').dialog('open');	 
    	  });
    }
+   
+   //if any phase is open, no edit
+   if(contestJson.phaseOpen) {
+       $('img[alt="edit"]').parent().hide()   
+   }
 }
 
 

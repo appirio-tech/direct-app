@@ -18,10 +18,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.util.DBMS;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -29,13 +25,16 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.project.phases.Phase;
+import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.service.ContestSaleData;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.studio.PersistenceException;
 import com.topcoder.shared.common.TCContext;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.DBMS;
 
 /**
  * <p>
@@ -191,8 +190,8 @@ public final class DirectUtils {
      * @throws Exception if an unexpected error occurs while accessing the persistent data store.
      * @since 1.1
      */
-    public static ContestStatsDTO getContestStats(TCSubject currentUser,
-                                                  long contestId, boolean isStudio) throws Exception {
+    public static ContestStatsDTO getContestStats(TCSubject currentUser, long contestId, boolean isStudio)
+        throws Exception {
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
@@ -254,18 +253,14 @@ public final class DirectUtils {
         dto.setRegistrantsNumber(resultContainer.getIntItem(recordIndex, "number_of_registration"));
         dto.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
         long forumId = -1;
-        try
-            {
-        if (resultContainer.getStringItem(recordIndex, "forum_id") != null
-                    && !resultContainer.getStringItem(recordIndex, "forum_id").equals(""))
-            forumId = Long.parseLong(resultContainer.getStringItem(recordIndex, "forum_id"));
+        try {
+            if (resultContainer.getStringItem(recordIndex, "forum_id") != null
+                && !resultContainer.getStringItem(recordIndex, "forum_id").equals(""))
+                forumId = Long.parseLong(resultContainer.getStringItem(recordIndex, "forum_id"));
             dto.setForumId(forumId);
+        } catch (NumberFormatException ne) {
+            // ignore
         }
-        catch (NumberFormatException ne)
-        {
-        // ignore
-        }
-        
 
         dto.setContest(contest);
         dto.setIsStudio(isStudio);
@@ -331,6 +326,27 @@ public final class DirectUtils {
             }
         }
         return endDate;
+    }
+
+    /**
+     * <p>
+     * Determines if any of the phase is open or not.
+     * </p>
+     *
+     * @param softwareCompetition the software competition
+     * @return true if any phase is open; false if none is open
+     */
+    public static boolean isPhaseOpen(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (PhaseStatus.OPEN.equals(phase.getPhaseStatus())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

@@ -153,6 +153,8 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(bean)));
         result.put("paidFee", DirectUtils.getPaidFee(bean));
 
+        result.put("phaseOpen", DirectUtils.isPhaseOpen(bean));
+
         return result;
     }
 

@@ -33,7 +33,7 @@
     <script type="text/javascript" src="/scripts/launch/entity.js?v=45"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=45"></script>
     <s:if test="software">
-        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=45"></script>
+        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=46"></script>
         <script type="text/javascript" src="/scripts/repostcontest.js?v=45"></script> 	        	
     </s:if>
     <s:else>
