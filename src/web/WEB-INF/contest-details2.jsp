@@ -1,3 +1,14 @@
+<%--
+  - Author: BeBetter, TCSDEVELOPER
+  - Version: 1.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: Contest Detail page
+  -
+  - Version 1.1 - Direct - Repost and New Version Assembly Change Note
+  - - add repost and new version buttons and assoicated js file.
+  -
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -19,13 +30,14 @@
         </s:else>
     //]]>
     </script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=43"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=43"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=45"></script>
     <s:if test="software">
-        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=43"></script>
+        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=45"></script>
+        <script type="text/javascript" src="/scripts/repostcontest.js?v=45"></script> 	        	
     </s:if>
     <s:else>
-        <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=43"></script>
+        <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=45"></script>
     </s:else>
 </head>
 
@@ -45,15 +57,16 @@
                     <div id="area1"><!-- the main area -->
                     <div class="area1Content">
                     <div class="currentPage">
-                        <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
-						<s:set name="projDetails" value="viewData.contestStats.contest.project"/> 
-						<link:projectDetails project="${projDetails}"/> &gt;
+                        <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
+                        <a href="<s:url action="currentProjectDetails" namespace="/"/>"><s:property value="sessionData.currentProjectContext.name"/></a> &gt;
                         <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>
                         <a href="javascript:previewContest();" class="button5" style="float:right;text-align:center;">View Contest</a>
+                        <a href="javascript:;" id="repostButton" class="button5" style="float:right;text-align:center;display:none;">Repost</a>
+                        <a href="javascript:;" id="newVersionButton" class="button5" style="float:right;text-align:center;display:none;">New Version</a>
                         </h2>
                     </div><!-- End .areaHeader -->
 

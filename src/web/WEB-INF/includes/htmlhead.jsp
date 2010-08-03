@@ -1,3 +1,14 @@
+<%--
+  - Author: TCSDEVELOPER
+  - Version: 1.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: Contest Detail page
+  -
+  - Version 1.1 - Direct - Repost and New Version Assembly Change Note
+  - - bump common.js version .
+  -
+--%>
 <title>TopCoder Direct</title>
 
 <!-- Meta Tags -->
@@ -27,7 +38,7 @@
 <script type="text/javascript" src="/scripts/jquery.bgiframe.js"></script>
 <script type="text/javascript" src="/scripts/date.prev.js"></script>
 <script type="text/javascript" src="/scripts/date.js?v=2"></script>
-<script type="text/javascript" src="/scripts/common.js?v=30"></script>
+<script type="text/javascript" src="/scripts/common.js?v=32"></script>
 <script type="text/javascript" src="/scripts/jquery.datePicker.js?v=2"></script>
 <script type="text/javascript" src="/scripts/jquery.stylish-select.js?v=4"></script>
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js"></script>

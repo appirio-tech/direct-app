@@ -1,8 +1,11 @@
 /**
  * Common JS Script
  *
+ * Version 1.1 Direct - Repost and New Version Assembly change note
+ * - Add some functions for modal pop ups
+ *
  * @author TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
  * @since Launch Contest Assembly - Studio
  */
 
@@ -189,3 +192,42 @@ function sortSelectOptions(selectId) {
    });
    $("#"+selectId).empty().append( allOptions );	
 }
+
+/**
+ * Common function to handle JSON result.
+ */
+function handleJsonResult(jsonResult, successCallBack, failureCallBack) {
+   if(jsonResult.result) {
+       successCallBack(jsonResult.result['return']);
+   } else {
+       failureCallBack(jsonResult.error.errorMessage);
+   }
+}	
+
+/**
+ * Functions to hanle message/error messages.
+ */
+function showMessage(message) {
+   $('#msgDialog p').html(message);
+   $('#msgDialog').dialog('open');
+}
+
+function showGeneralError() {
+   showErrors("Error occurred! Please retry it later.");
+}
+
+function showErrors(errors) {
+   if(typeof errors == 'string') {
+       var singleError = errors;
+       errors = new Array();
+       errors.push(singleError);
+   }
+
+   $('#errorDialog p').html('<ul></ul>');
+   $.each(errors,function(i, error) {
+        $('#errorDialog ul').append('<li>' + error + '</li>');
+   });
+   $('#errorDialog').dialog('open');
+}
+
+

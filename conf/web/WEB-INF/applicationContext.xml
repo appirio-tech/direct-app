@@ -217,6 +217,15 @@
   <bean id="getCapacityFullDatesAction" class="com.topcoder.direct.services.view.action.contest.launch.GetCapacityFullDatesAction"
     parent="baseDirectStrutsAction" scope="prototype">
   </bean>
+
+  <bean id="repostAction" class="com.topcoder.direct.services.view.action.contest.RepostAction"
+    parent="baseDirectStrutsAction" scope="prototype">
+  </bean>
+
+  <bean id="newVersionAction" class="com.topcoder.direct.services.view.action.contest.NewVersionAction"
+    parent="baseDirectStrutsAction" scope="prototype">
+  </bean>
+
   <bean id="dashboardNotificationsAction" class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction"
     parent="baseDirectStrutsAction" scope="prototype">
   </bean>

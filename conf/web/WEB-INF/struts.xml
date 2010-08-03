@@ -348,5 +348,13 @@
         <action name="detailJson" class="getContestAction">
             <result type="json" />
         </action>
+
+        <action name="repostContest" class="repostAction">
+            <result name="success" type="json" />
+        </action>
+
+        <action name="newVersion" class="newVersionAction">
+            <result type="json" />
+        </action>
     </package>
 </struts>

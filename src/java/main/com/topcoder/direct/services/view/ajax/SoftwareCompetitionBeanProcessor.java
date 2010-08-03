@@ -27,9 +27,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <p>
  * Bean processor for <code>SoftwareCompetition</code>.
  * </p>
+ * <p>
+ * Version 1.1 - Direct - Repost and New Version v1.0 Assembly Change Note
+ * <li>
+ * add project status in the response.</li>
+ * <ul>
+ * </ul>
+ * </p>
  *
  * @author BeBetter, TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -94,6 +101,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         AssetDTO assetDTO = bean.getAssetDTO();
 
         result.put("contestId", project.getId());
+        result.put("projectStatus", project.getProjectStatus());
         result.put("projectCategory", project.getProjectCategory());
         result.put("contestName", assetDTO.getName());
         result.put("startDate", assetDTO.getProductionDate());
@@ -117,7 +125,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
             }));
         }
 
-        if(isTechnologyContest(bean)) {
+        if (isTechnologyContest(bean)) {
             result.put("technologyIds", CollectionUtils.collect(assetDTO.getTechnologies(), new Transformer() {
                 public Object transform(Object object) {
                     return ((Technology) object).getId() + "";
@@ -147,8 +155,6 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
 
         return result;
     }
-
-
 
     /**
      * <p>

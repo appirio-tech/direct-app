@@ -1,9 +1,11 @@
 /**
  * Contest Detail Javascript
  *
- *
+ * Version 1.1 Direct - Repost and New Version Assembly change note
+ * - Add repost and new version function on details page.
+ * 
  * @author TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
  */
 $(document).ready(function(){
 	  //general initialization
@@ -305,12 +307,32 @@ function initContest(contestJson) {
    	 $('.technology').show();
    } else {
      $('.technology').hide();
-   }         
+   }      
    
-   // billing projects
-   $('#billingProjects').bind("change", function() {
-       updateContestFee();
-   });     
+   //repost and new version
+   var statusName = contestJson.projectStatus.name;    
+   if(statusName.indexOf('Cancelled') != -1) {
+    	 repostProjectId = contestJson.contestId;
+	     repostTcProjectId = contestJson.tcDirectProjectId;
+   	  
+   	  $('#repostButton').show();
+   	  $('#repostButton').click(function(){
+   	      $('#repostDialog').dialog('open');	 
+   	  });
+   }
+
+   if(statusName.indexOf('Completed') != -1) {
+	     newVersionProjectId = contestJson.contestId;
+	     newVersionTcProjectId = contestJson.tcDirectProjectId;
+	     newVersionDevCreation = isDesign();
+	     newVersionIsDesign = isDesign();
+	     newVersionMinorVersion = false;
+   	  
+   	  $('#newVersionButton').show();
+   	  $('#newVersionButton').click(function(){
+   	      $('#newVersionDialog').dialog('open');	 
+   	  });
+   }
 }
 
 
