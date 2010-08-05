@@ -1,5 +1,16 @@
+<%--
+  - Author: isv
+  - Version: 1.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page fragment renders the tabs for dashboard and contest pages.
+  -
+  - Version 1.1 (Submission Viewer Release 1 assembly) changes: linked Submissions tab to submission pages
+  - for Studio contests.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
+<s:set var="contestStats" value="viewData.contestStats" scope="page"/>
 <s:push value="viewData.contestStats">
     <div id="tabs3">
         <ul>
@@ -25,19 +36,24 @@
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
                 </s:if>
             </li>
-            <li>
-                <a href="" onclick="return false;">
-                    <span class="left"><span class="right">Submissions (<s:property value="submissionsNumber"/>)</span></span></a></li>
-            <li>
-                <a href="" onclick="return false;">
-					<span class="left"><span class="right">Milestone Feedback</span></span></a>
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if>>
+                <if:isStudioContest contestStats="${contestStats}">
+                    <link:studioSubmissionsGrid contestId="${contestStats.contest.id}">
+                        <span class="left">
+                            <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
+                        </span>
+                    </link:studioSubmissionsGrid>
+                </if:isStudioContest>
+                <if:isStudioContest contestStats="${contestStats}" negate="true">
+                    <a href="javascript:;">
+                        <span class="left">
+                            <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
+                        </span></a>
+                </if:isStudioContest>
             </li>
-			<li id="rReceiptTab" class="lastItem <c:choose> 
-                <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>
-                </c:choose>">
-                <a href="<s:url action="contest/receipt" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>" >
-                <span class="left"><span class="right">Receipt</span></span></a>
-			</li>
+            <li class="lastItem">
+                <a href="" onclick="return false;"
+                   class="last"><span class="left"><span class="right">Milestone Feedback</span></span></a></li>
         </ul>
     </div>
     <!-- End #tabs3 -->

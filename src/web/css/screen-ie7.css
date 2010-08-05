@@ -1,0 +1,21 @@
+.add_comment_cancel_text{
+	margin-right: 22px;
+}
+
+.spec_review_odd_question{
+	margin-top:10px;
+	padding-bottom: 10px;
+	background-color:#F5F5F5;
+}
+
+.no_details .add_your_comment {
+	padding: 0px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+.no_details .add_your_comment .textarea1{
+	height:90px;
+	margin-left: 25px;
+	margin-right: 70px;
+}

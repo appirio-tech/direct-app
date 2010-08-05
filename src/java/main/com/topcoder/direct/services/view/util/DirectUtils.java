@@ -18,6 +18,10 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
+import com.topcoder.service.permission.PermissionServiceException;
+import com.topcoder.service.studio.ContestNotFoundException;
+import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -28,8 +32,10 @@ import com.topcoder.project.phases.Phase;
 import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.service.ContestSaleData;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.service.studio.PersistenceException;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
@@ -63,8 +69,16 @@ import com.topcoder.shared.util.DBMS;
  * </ul>
  * </p>
  *
- * @author BeBetter, TCSDEVELOPER
- * @version 1.3
+ * <p>
+ * Version 1.4 (Submission Viewer Release 1 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} method.
+ *     </li>
+ *   </ol>
+ * </p>
+
+ * @author BeBetter, isv
+ * @version 1.4
  */
 public final class DirectUtils {
     /**
@@ -388,5 +402,36 @@ public final class DirectUtils {
         }
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         return dateFormat.format(date);
+    }
+
+    /**
+     * <p>Gets the submissions for specified round of specified <code>Studio</code> contest.</p>
+     *
+     * @param contestId a <code>long</code> providing the ID of a contest.
+     * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
+     * @param currentUser a <code>TCSubject</code> representing the current user.
+     * @param contestServiceFacade a <code>ContestServiceFacade</code> to be used for accessing the service layer for
+     *        data retrieval.
+     * @return a <code>List</code> listing the submissions for specified round of specified <code>Studio</code> contest.
+     * @throws PersistenceException if an unexpected error occurs.
+     * @throws ContestNotFoundException if an unexpected error occurs.
+     * @throws PermissionServiceException if an unexpected error occurs.
+     * @since 1.4
+     */
+    public static List<SubmissionData> getStudioContestSubmissions(long contestId, ContestRoundType roundType,
+                                                                   TCSubject currentUser,
+                                                                   ContestServiceFacade contestServiceFacade)
+        throws PersistenceException, ContestNotFoundException, PermissionServiceException {
+
+        List<SubmissionData> submissions;
+        if (roundType == ContestRoundType.MILESTONE) {
+            // TODO : Sub-sequent assemblies must implement logic for retrieving the submissions for miliestone
+            // round
+            submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contestId);
+        } else {
+            // TODO : Sub-sequent assemblies must implement logic for retrieving the submissions for final round
+            submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contestId);
+        }
+        return submissions;
     }
 }

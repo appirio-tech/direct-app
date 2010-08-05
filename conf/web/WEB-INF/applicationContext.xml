@@ -269,4 +269,14 @@
      scope="prototype">
       <property name="gamePlanService" ref="gamePlanService" />
   </bean>
+
+    <bean id="contestSubmissionsAction"
+          class="com.topcoder.direct.services.view.action.contest.ContestSubmissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="studioSubmissionAction"
+          class="com.topcoder.direct.services.view.action.contest.StudioSubmissionAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
 </beans>

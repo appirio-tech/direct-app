@@ -1,3 +1,13 @@
+<%--
+  - Author: isv
+  - Version: 1.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page fragment renders the tabs for dashboard and contest pages.
+  -
+  - Version 1.1 (Submission Viewer Release 1 assembly) changes: linked Submissions tab to submission pages
+  - for Studio contests.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <table class="projectStats" cellpadding="0" cellspacing="0">
@@ -10,6 +20,7 @@
         <th>Forums</th>
     </tr>
     </thead>
+    <s:set value="viewData.contestStats" var="contestStats" scope="page"/>
     <s:push value="viewData.contestStats">
         <s:set var="contestStartDate" value="startTime" scope="page"/>
         <s:set var="contestEndDate" value="endTime" scope="page"/>
@@ -34,7 +45,16 @@
                     </a>
                 </s:if>
             </td>
-            <td><s:property value="submissionsNumber"/></td>
+            <td>
+                <if:isStudioContest contestStats="${contestStats}">
+                    <link:studioSubmissionsGrid contestId="${contestStats.contest.id}">
+                        <s:property value="submissionsNumber"/>
+                    </link:studioSubmissionsGrid>
+                </if:isStudioContest>
+                <if:isStudioContest contestStats="${contestStats}" negate="true">
+                    <s:property value="submissionsNumber"/>
+                </if:isStudioContest>
+            </td>
             <td>
 				<s:if test="forumId != -1">
 					<s:if test="isStudio == true"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>

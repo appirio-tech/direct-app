@@ -340,11 +340,11 @@
         <action name="detail" class="getContestAction">
             <result>/WEB-INF/contest-details2.jsp</result>
         </action>
-		
+
 		<action name="receipt" class="getContestAction">
             <result>/WEB-INF/contest-receipt.jsp</result>
         </action>
-		
+
         <action name="detailJson" class="getContestAction">
             <result type="json" />
         </action>
@@ -355,6 +355,15 @@
 
         <action name="newVersion" class="newVersionAction">
             <result type="json" />
+        </action>
+        
+        <action name="submissions" class="contestSubmissionsAction">
+            <result name="grid">/WEB-INF/studio-submissions-grid.jsp</result>
+            <result name="list">/WEB-INF/studio-submissions-list.jsp</result>
+        </action>
+
+        <action name="studioSubmission" class="studioSubmissionAction">
+            <result>/WEB-INF/studio-submissions-single.jsp</result>
         </action>
     </package>
 </struts>

@@ -1,3 +1,13 @@
+<%--
+  - Author: isv
+  - Version: 1.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page renders the list of contests matching the search criteria.
+  -
+  - Version 1.1 (Submission Viewer Release 1 assembly) changes: linked submission numbers for each contest
+  - to respective submission pages for Studio contests.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div id="contestsResult">
@@ -18,10 +28,10 @@
         <tbody>
 
         <s:iterator value="viewData.contests" status="status">
-            <s:set  var="contest" value="contest" scope="page"/>
-            <s:set  var="project" value="contest.project" scope="page"/>
-            <s:set  var="startTime" value="startTime"  scope="page"/>
-            <s:set  var="endTime" value="endTime"  scope="page"/>
+            <s:set var="contest" value="contest" scope="page"/>
+            <s:set var="project" value="contest.project" scope="page"/>
+            <s:set var="startTime" value="startTime"  scope="page"/>
+            <s:set var="endTime" value="endTime"  scope="page"/>
             <tr>
                 <td>
                     <link:projectDetails project="${project}"/>
@@ -40,7 +50,16 @@
                     <s:property value="registrantsNumber"/></a>
                  </s:if>
                 </td>
-                <td><s:property value="submissionsNumber"/></td>
+                <td>
+                    <if:isStudioContest contestBrief="${contest}">
+                        <link:studioSubmissionsGrid contestId="${contest.id}">
+                            <s:property value="submissionsNumber"/>
+                        </link:studioSubmissionsGrid>
+                    </if:isStudioContest>
+                    <if:isStudioContest negate="true" contestBrief="${contest}">
+                        <s:property value="submissionsNumber"/>
+                    </if:isStudioContest>
+                </td>
                 <td>
 					<s:if test="forumId != -1">
 						<s:if test="contestType == 'Studio'"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>

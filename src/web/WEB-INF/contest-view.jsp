@@ -1,13 +1,15 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.1
+  - Author: BeBetter, isv
+  - Version: 1.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
-  - Description: Contest list page
+  - Description: This page renders the list of contests for a single selected project.
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - add repost and new version buttons and assoicated js file.
   -
+  - Version 1.2 (Submission Viewer Release 1 assembly) changes: linked submission numbers for each contest
+  - to respective submission pages for Studio contests.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -19,7 +21,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="contests"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
-    <script type="text/javascript" src="/scripts/repostcontest.js?v=4"></script> 	
+    <script type="text/javascript" src="/scripts/repostcontest.js?v=4"></script>
 </head>
 
 <body id="page">
@@ -106,7 +108,16 @@
                                                                         </s:if>
                                                                     <s:property value="registrantsNumber"/>
                                                                         </a></td>
-                                                                    <td><s:property value="submissionsNumber"/></td>
+                                                                    <td>
+                                                                        <if:isStudioContest contestBrief="${contest}">
+                                                                            <link:studioSubmissionsGrid contestId="${contest.id}">
+                                                                                <s:property value="submissionsNumber"/>
+                                                                            </link:studioSubmissionsGrid>
+                                                                        </if:isStudioContest>
+                                                                        <if:isStudioContest negate="true" contestBrief="${contest}">
+                                                                            <s:property value="submissionsNumber"/>
+                                                                        </if:isStudioContest>
+                                                                    </td>
                                                                     <td>
 																	<s:if test="forumId != -1">
 																		<s:if test="isStudio == true"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>

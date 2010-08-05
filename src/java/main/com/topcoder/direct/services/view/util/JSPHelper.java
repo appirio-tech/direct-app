@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,8 +11,17 @@ import java.util.Date;
 /**
  * <p>This class provides the set of static functions for use by JSP views.</p>
  *
+ *
+ * <p>
+ * Version 1.1 (Submission Viewer Release 1 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getSubmissionPreviewImageURL(long, String, int, javax.servlet.http.HttpServletRequest)}
+ *     method.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv
- * @version 1.0
+ * @version 1.1
  */
 public class JSPHelper {
 
@@ -117,6 +127,30 @@ public class JSPHelper {
                     return "Ends in " + seconds + " seconds";
                 }
             }
+        }
+    }
+
+    /**
+     * <p>Gets the XHTML URL-encoded string for URL for preview image of specified type for specified submission.</p>
+     *
+     * @param submissionId a <code>long</code> providing the submission ID.
+     * @param previewType a <code>String</code> providing the preview image type. The value for this parameter is
+     *        expected to be conformant to XHTML standard specification for HTML attribute values. 
+     * @param artifactNum an <code>int</code> providing the artifact number.
+     * @param request an <code>HttpServletRequest</code> representing incoming request.
+     * @return a <code>String</code> providing the XHTML URL-encoded string for URL for retrieving the preview image of
+     *         specified type for specified submission.
+     * @since 1.1
+     */
+    public static String getSubmissionPreviewImageURL(long submissionId, String previewType, int artifactNum,
+                                                      HttpServletRequest request) {
+        String protocol = request.isSecure() ? "https" : "http";
+        if (artifactNum <= 0) {
+            return protocol + "://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&amp;sbmid="
+                   + submissionId + "&amp;sbt=" + previewType;
+        } else {
+            return protocol + "://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&amp;sbmid="
+                   + submissionId + "&amp;sbt=" + previewType + "&amp;sfi=" + artifactNum;
         }
     }
 
