@@ -54,7 +54,7 @@ $(document).ready(function(){
 		$(".contestsContent").height(rows_height);
 		$(".contestsContent TABLE").css("width","232px");
 	}
-
+	
 	/* Stylished scrollbar*/
 	$('.contestsContent').jScrollPane({
 		scrollbarWidth: 17,
@@ -66,7 +66,7 @@ $(document).ready(function(){
 	$(".contestsContent TD").click(function(){
 		document.location.href='contest-details.html';
 	});
-
+	
 	/*-------------------------- Show/hide the dropdown list --*/
 	
 	showHideList = function(){
@@ -269,58 +269,6 @@ $(document).ready(function(){
 		$("."+rowClass).toggle();
 	}
 	
-	/*--------------------------------------- Show/Hide group users (the table on the permissions tab ) --*/
-	showHideGroup2 = function(myLink, rowClass){
-		/*  myLink: the clicked link
-			rowClass: the class name of the group */
-		
-		/* change the link ico */
-		var $kid = $(myLink).children();
-		if( $kid.hasClass("expand")){
-			$kid.removeClass("expand");
-			$kid.addClass("collapse");
-		}else{
-			$kid.removeClass("collapse");
-			$kid.addClass("expand");
-		}
-				
-		$("."+rowClass).toggle();
-	}
-	
-	/*--------------------------------------- Show/Hide spec review question (on the spec review tab ) --*/
-	showHideDiv = function(div_to_show, div_to_hide){
-		$('#'+div_to_show).show();
-		$('#'+div_to_hide).hide();
-	}
-
-	/*--------------------------------------- Change the comment according to the input text --*/
-	displayComment = function(commentId, inputId){
-		$('#'+commentId).html($('#'+inputId+' textarea').val());
-	}
-	
-	$('.textarea1 textarea').click(function(){
-		if ($(this).val() == 'Input your comment...') {
-			$(this).html('');
-		}
-	}).blur(function() {
-		if ($(this).val() == '') {
-			$(this).html('Input your comment...');
-		}
-	});
-	
-	/*--------------------------------------- Image button hover effect --*/
-	$("div.comment_specreview a").hover(function(){
-		$("img.sr_editcomment", this).attr("src", "images/edit_red.png");
-	}, function() {
-		$("img.sr_editcomment", this).attr("src", "images/edit.png");
-	});
-	
-	$("div.to_add_your_comment a").hover(function(){
-		$("img.sr_addcomment", this).attr("src", "images/add_your_comment_hover.png");
-	}, function() {
-		$("img.sr_addcomment", this).attr("src", "images/add_your_comment.png");
-	});
-	
 	/*-------------------------------------- Check/uncheck all checkboxes functionnality --*/
 	checkAll = function(myCheckbox, myContainerId){
 		/* myCheckbox: the "select all" check box
@@ -353,25 +301,25 @@ $(document).ready(function(){
 	/*-------------------------------------------------------------------------*/
 	/* add zebra stripping for projectStats tables */
 	$('table.contests tbody tr:odd').addClass('even');
-
-	/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/
+	
+	/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/	
 
 	fixTabs3Width = function(){
 
 		var myLastLIWidth = $("#tabs3 UL LI.lastItem").width();
 		var myFirstLIWidth = $("#tabs3 UL LI.firstItem").width();
-
-		var addit_pixels = eval( myFirstLIWidth ) * 4 - eval( $("#tabs3 UL").width() );
-
+	
+		var addit_pixels = eval( myFirstLIWidth ) * 4 - eval( $("#tabs3 UL").width() ); 
+		
 		if( $.browser.safari || ($.browser.msie && $.browser.version <= 7.0 ) )
 			$("#tabs3 UL LI.lastItem").css("width", (myLastLIWidth - addit_pixels)+"px");
 	}
-
-
+	
+	
 	//fixTabs3Width();
-
+	
 	$("#tabs3").resize(function(){
-		/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/
+		/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/	
 		if( $.browser.msie || $.browser.safari )
 			document.location.reload();
 	});

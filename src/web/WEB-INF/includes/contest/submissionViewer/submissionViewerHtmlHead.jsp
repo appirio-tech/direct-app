@@ -39,7 +39,6 @@
 <script type="text/javascript" src="/scripts/jquery.datePicker.js"></script>
 <script type="text/javascript" src="/scripts/jquery.bgiframe.js"></script>
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js"></script>
-<script type="text/javascript" src="/scripts/launchcontest.js"></script>
 
 <script type="text/javascript" src="/scripts/jquery.select.js"></script>
 <script type="text/javascript" src="/scripts/studio.js"></script>

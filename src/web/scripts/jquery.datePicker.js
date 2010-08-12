@@ -839,7 +839,7 @@
 													return c._displayNewMonth.call(c, this, 0, -1);
 												}
 											),
-										$('<a class="dp-nav-prev-month" href="javascript:;" title="' + $.dpText.TEXT_PREV_MONTH + '"><img src="images/perMoon.gif" /></a>')
+										$('<a class="dp-nav-prev-month" href="javascript:;" title="' + $.dpText.TEXT_PREV_MONTH + '"><img src="/images/perMoon.gif" /></a>')
 											.bind(
 												'click',
 												function()
@@ -858,7 +858,7 @@
 													return c._displayNewMonth.call(c, this, 0, 1);
 												}
 											),
-										$('<a class="dp-nav-next-month" href="javascript:;" title="' + $.dpText.TEXT_NEXT_MONTH + '"><img src="images/nextMoon.gif" /></a>')
+										$('<a class="dp-nav-next-month" href="javascript:;" title="' + $.dpText.TEXT_NEXT_MONTH + '"><img src="/images/nextMoon.gif" /></a>')
 											.bind(
 												'click',
 												function()

@@ -1,19 +1,123 @@
-.taskPanelBorder{border-width: 2px 2px 2px 2px;border-style:solid;border-color: #737373;}
-.taskName{font-family: Arial,Helvetica,sans-serif; font-weight: bold;font-size: 11px;color: #FFFFFF;cursor: pointer;white-space: nowrap;}
-.moveInfo{font-family: Arial,Helvetica,sans-serif;font-size: 11px;color:#006600;white-space: nowrap;}
-.descTask{font-family: Arial,Helvetica,sans-serif;font-size: 11px;color:#000000;cursor: default;white-space: nowrap;}
-.descProject{font-family: Arial,Helvetica,sans-serif;font-size: 11px;color:#000000;cursor: default;white-space: nowrap;}
-.dayNumber{font-family: Arial,Helvetica,sans-serif;font-weight: bold;font-size: 9px;color: #858585;}
-.poPupInfo{background: #FFFFFF;width  : 170px;border: 1px dotted #EC1C23;padding: 4px 6px 4px 6px;float: left;}
-.poPupTime{background: #FFFFFF;border: 1px dotted #279e00;height : 25px;width  : 70px;position: absolute;z-index:2;}
-.contextMenu{z-index:10;width:150px;cursor:pointer;font-family: Tahoma, Arial;font-size:12px;color:#7D7D7D;border: 1px solid #808080;}
-.taskNameItem{font-family: Arial,Helvetica,sans-serif;font-size: 11px;font-weight: bold;color: #7D7D7D;}
-.panelErrors{;padding: 4px 6px 4px 6px;font-family: Arial,Helvetica,sans-serif;font-size: 12px;color: red;white-space: nowrap;}
-.st {font-family: Arial, Helvetica, Sans-serif; font-size: 10px; font-weight: normal; color: #688060;}
-.ut {font-family: Arial, Helvetica, Sans-serif; font-size: 11px; font-weight: normal; color: #323232;}
-.lt {font-family: Arial, Helvetica, Sans-serif; font-size: 11px; font-weight: normal; color: #323232; padding: 0px 0px 0px 14px; margin: 0px; display: block;}
+.taskPanelBorder {
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    border-color: #737373;
+}
 
-#ganttChartDiv{
-	min-height:550px;
-	position:relative;
+.taskName {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 11px;
+    color: #FFFFFF;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.moveInfo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #006600;
+    white-space: nowrap;
+}
+
+.descTask {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    cursor: default;
+    white-space: nowrap;
+}
+
+.descProject {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    cursor: default;
+    white-space: nowrap;
+}
+
+.dayNumber {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 9px;
+    color: #858585;
+}
+
+.poPupInfo {
+    background: #FFFFFF;
+    width: 170px;
+    border: 1px dotted #EC1C23;
+    padding: 4px 6px 4px 6px;
+    float: left;
+}
+
+.poPupTime {
+    background: #FFFFFF;
+    border: 1px dotted #279e00;
+    height: 25px;
+    width: 70px;
+    position: absolute;
+    z-index: 2;
+}
+
+.contextMenu {
+    z-index: 10;
+    width: 150px;
+    cursor: pointer;
+    font-family: Tahoma, Arial;
+    font-size: 12px;
+    color: #7D7D7D;
+    border: 1px solid #808080;
+}
+
+.taskNameItem {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #7D7D7D;
+}
+
+.panelErrors {;
+    padding: 4px 6px 4px 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: red;
+    white-space: nowrap;
+}
+
+.st {
+    font-family: Arial, Helvetica, Sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    color: #688060;
+}
+
+.ut {
+    font-family: Arial, Helvetica, Sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    color: #323232;
+}
+
+.lt {
+    font-family: Arial, Helvetica, Sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    color: #323232;
+    padding: 0px 0px 0px 14px;
+    margin: 0px;
+    display: block;
+}
+
+#ganttChartDiv {
+    min-height: 550px;
+    position: relative;
+}
+
+#ganttChartError {
+    color: #EC1C23;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 30px;
+    text-align:center;
 }

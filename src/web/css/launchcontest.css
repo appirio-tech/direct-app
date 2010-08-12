@@ -9,13 +9,7 @@
 	line-height:36px;
 	}
 
-/** intro **/	
-#launchContestOut .intro{
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
-	line-height:14px;
-	color:#999999;
-	}
+
 #launchContestOut .lcc{
 	font-family:Arial, Helvetica, sans-serif;
 	
@@ -41,7 +35,14 @@
 	display:none;
 }
 
-
+/** intro **/	
+#launchContestOut .intro{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:14px;
+	color:#999999;
+	}
+	
 	/** tab **/
 	#launchContestOut .tabOut{
 		padding-top:10px;
@@ -93,7 +94,7 @@
 					line-height:34px;
 					font-weight:bold;
 					text-decoration:none;
-					background:url(../images/tabTop.gif) no-repeat;
+					background:url(/images/tabTop.gif) no-repeat;
 					}
 					
 				#launchContestOut .tabOut li.bottom a{
@@ -105,7 +106,7 @@
 					line-height:33px;
 					font-weight:bold;
 					text-decoration:none;
-					background:url(../images/tabBottom.gif) no-repeat;
+					background:url(/images/tabBottom.gif) no-repeat;
 					}
 				
 				/** current status **/	
@@ -113,14 +114,14 @@
 					width:111px;
 					font-size:14px;
 					color:#fffffe;
-					background:url(../images/tabTop_current.gif) no-repeat;
+					background:url(/images/tabTop_current.gif) no-repeat;
 					}
 				
 				#launchContestOut .tabOut li.bottom a.current{
 					width:111px;
 					font-size:14px;
 					color:#fffffe;
-					background:url(../images/tabBottom_current.gif) no-repeat;
+					background:url(/images/tabBottom_current.gif) no-repeat;
 					}
 				/** end current status **/	
 				
@@ -134,14 +135,14 @@
 			border:#bdbdbd solid 1px;
 			border-left:0;
 			}
-			#launchContestOut .tabContest1{
-			height:35px;
-			border:none;
-			}
 			
+    #launchContestOut .tabContest1 {
+         border:medium none;
+         height:35px;
+    }
+		
+
 			#launchContestOut .selectX{
-				padding-top:10px;
-				
 				height:28px;
 				}
 			
@@ -152,7 +153,7 @@
 				position:absolute;
 				top:-1px;
 				right:-1px;
-				background:url(../images/launchContest_corcen_tr.gif) no-repeat;
+				background:url(/images/launchContest_corcen_tr.gif) no-repeat;
 				}
 				
 			#launchContestOut .tabContest .br{
@@ -161,10 +162,10 @@
 				position:absolute;
 				bottom:-1px;
 				right:-1px;
-				background:url(../images/launchContest_corcen_br.gif) no-repeat;
+				background:url(/images/launchContest_corcen_br.gif) no-repeat;
 				}
 				
-			#launchContestOut .selectDesign,#launchContestOut .selectSoftware{
+			#launchContestOut .selectDesing,#launchContestOut .selectSoftware{
 				width: 100%;
 				height: 100%;
 				margin-top: -1px;
@@ -172,54 +173,73 @@
 				padding-left: 29px;
 				position:absolute;
 				overflow: visible;
-				background: url(../images/launchContest_tabOut_tab.gif) no-repeat 0px 0px;
+				background: url(/images/launchContest_tabOut_tab.gif) no-repeat 0px 0px;
 				}
 				
-				#launchContestOut .selectDesign1{
-			
-				padding-left: 0px;
-				
-				background: none;
-				}
+        #launchContestOut .selectDesing1 {
+           background:transparent none repeat scroll 0 0;
+           padding-left:0;
+        }
 				
 				/** select **/
-				#launchContestOut .selectDesign .selectOut,#launchContestOut .selectSoftware .selectOut{
+				#launchContestOut .selectDesing .selectOut,#launchContestOut .selectSoftware .selectOut{
 					width:auto;
 					float:left;
 					display:inline;
-					margin-right:10px;
+					margin-right:30px;
 					}
 					
 				/** tip link **/
-				#launchContestOut .selectDesign .help,#launchContestOut .selectSoftware .help{
+				#launchContestOut .selectDesing .help,#launchContestOut .selectSoftware .help{
 					width:108px;
 					height:28px;
 					float:right;
+					display:inline;
 					padding-left:34px;
-					padding-right:10px;
 					font-size:11px;
-					
-					background:url(../images/iconI.png) no-repeat left center;
-					}
-					#launchContestOut .selectDesign .new_style{
-						font-weight:bold;
-						
-						
-						
+					background:url(/images/iconI.png) no-repeat left center;
 					}
 					
-				#launchContestOut .selectDesign .moreLink,#launchContestOut .selectSoftware .moreLink{
+					#launchContestOut .selectDesing .new_style{
+						font-weight:bold;																		
+					}
+
+				#launchContestOut .selectDesing .moreLink,#launchContestOut .selectSoftware .moreLink{
 					height:28px;
 					padding-left:10px;
 					font-size:11px;
 					line-height:28px;
 					text-decoration:none;
-					background:url(../images/moreLink_icon.gif) no-repeat left center;
+					background:url(/images/moreLink_icon.gif) no-repeat left center;
 					}
 					
-				#launchContestOut .selectDesign .moreLink:hover,#launchContestOut .selectSoftware .moreLink:hover{
+				#launchContestOut .selectDesing .moreLink:hover,#launchContestOut .selectSoftware .moreLink:hover{
 					text-decoration:underline;
 					}			
+					
+        #launchContestOut .schedule .name_label {
+           color:#3B3B3B;
+           display:inline;
+           float:left;
+           font-family:Arial,Helvetica,sans-serif;
+           font-size:14px;
+           line-height:28px;
+           margin-left:14px;
+           width:118px;
+        }					
+
+        #launchContestOut .contestDetail .textarea1 {
+           height:150px;
+        }  
+        
+       #launchContestOut .contestDetail .textarea1 textarea {  
+          border:0 none;
+          color:#333333;
+          font-size:14px;
+          height:130px;
+          padding:5px 0;
+          width:100%;
+       }
 	/** end .tabOut **/
 					
 	
@@ -258,7 +278,7 @@
 				padding:0 5px;
 				line-height:25px;
 				border:0;
-				background:url(../images/addNew_input.gif) no-repeat;
+				background:url(/images/addNew_input.gif) no-repeat;
 				}
 				
 			#launchContestOut .addNewContest .projectSelect .text{
@@ -267,7 +287,7 @@
 				padding:0 5px;
 				line-height:25px;
 				border:0;
-				background:url(../images/tabContest_input.gif) no-repeat;
+				background:url(/images/tabContest_input.gif) no-repeat;
 				}
 				
 			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect{
@@ -320,7 +340,7 @@
 			float: right;
 			width: 200px;
 			height: 60px;
-			background: url(../images/horizontal_solution_PPeCheck_tc.png) no-repeat left top;
+			background: url(/images/horizontal_solution_PPeCheck_tc.png) no-repeat left top;
 			}
 
 		#area1 .paymentMethod .message{
@@ -381,17 +401,17 @@
 			padding:0 0 0 5px;
 			line-height:25px;
 			border:0;
-			background:url(../images/paymentMethod_input.gif) no-repeat;
+			background:url(/images/paymentMethod_input.gif) no-repeat;
 			}
 			
 			#launchContestOut.paymentMethod .text.medium{
 				width:160px;
-				background:url(../images/paymentMethod_input_medium.gif) no-repeat;
+				background:url(/images/paymentMethod_input_medium.gif) no-repeat;
 				}
 			
 			#launchContestOut.paymentMethod .text.small{
 				width:65px;
-				background:url(../images/paymentMethod_input_small.gif) no-repeat;
+				background:url(/images/paymentMethod_input_small.gif) no-repeat;
 				}
 				
 		#launchContestOut.paymentMethod .redTip{
@@ -443,15 +463,15 @@
 			
 		.cardSelect .newListSelected{
 			width:324px;
-			background:url(../images/cardSelect_select.gif) no-repeat;
+			background:url(/images/cardSelect_select.gif) no-repeat;
 			}
 		.selectMonth .newListSelected{
 			width:48px;
-			background:url(../images/selectMonth_select.gif) no-repeat;
+			background:url(/images/selectMonth_select.gif) no-repeat;
 			}
 		.selectYear .newListSelected{
 			width:70px;
-			background:url(../images/selectYear_select.gif) no-repeat;
+			background:url(/images/selectYear_select.gif) no-repeat;
 			}
 	
 	
@@ -524,7 +544,8 @@
 	/* end .orderReview*/
 	
 	
-	/** contestDetails and related **/	
+	/** contestDetails and related **/
+	
 	#launchContestOut .contestDetails .sectionHead{
 		padding:10px 0 0 0;
 	}
@@ -562,7 +583,7 @@
 				height: 57px;
 				padding: 0;
 				margin: 0;
-				background: url(../images/table_last_cell_background.gif) repeat-x;
+				background: url(/images/table_last_cell_background.gif) repeat-x;
 				}
 				
 	hr.dualDivider{
@@ -633,7 +654,7 @@
 	
 	/** tiile **/			
 	#launchContestOut h3{
-		height:26px;
+		height:16px;
 		margin-top:34px;
 		margin-bottom:2px;
 		font-size:14px;
@@ -650,11 +671,6 @@
 	#launchContestOut .schedule{
 		height:165px;
 		border:#bdbdbd solid 1px;
-		}
-		
-		#launchContestOut .schedule1{
-		
-		border:none;
 		}
 			
 		/** row **/
@@ -678,17 +694,6 @@
 				font-size:14px;
 				line-height:28px;
 				}
-				
-				#launchContestOut .schedule .name_label{
-				width:118px;
-				float:left;
-				display:inline;
-				margin-left:14px;
-				font-size:14px;
-	font-family:Arial, Helvetica, sans-serif;
-	color:#3B3B3B;
-				line-height:28px;
-				}
 			
 			/** select **/	
 			#launchContestOut .schedule .startSelect,#launchContestOut .schedule .milestoneSelect,#launchContestOut .schedule .endSelect{
@@ -708,7 +713,7 @@
 				line-height:22px;
 				border:0;
 				color:#6c6c6c;
-				background:url(../images/date_input.gif) no-repeat;
+				background:url(/images/date_input.gif) no-repeat;
 				}
 				
 			#launchContestOut .schedule .startEtSelect,#launchContestOut .schedule .milestoneEtSelect,#launchContestOut .schedule .endEtSelect{
@@ -740,9 +745,6 @@
 				}
 				
 		/** upload **/
-		.upload {
-			padding:10px 0px;
-			}
 		.upload .uploadInner{
 			height:25px;
 			}
@@ -770,32 +772,32 @@
 				float:left;
 				display:inline;
 				margin-right:14px;
-				background: url(../images/grey_button_bg.gif) repeat-x top;
+				background: url(/images/grey_button_bg.gif) repeat-x top;
 				}
 				
 				.upload a.button6 span.left{
 					width:auto;
 					float:left;
 					display:inline;
-					background: url(../images/grey_button_left.gif) no-repeat left top;
+					background: url(/images/grey_button_left.gif) no-repeat left top;
 					padding: 0;
 					}
 					
 				.upload a.button6:hover span.left{
-					background: url(../images/grey_button_left.gif) no-repeat left bottom;
+					background: url(/images/grey_button_left.gif) no-repeat left bottom;
 					}
 					
 				.upload a.button6 span.right{
 					width:auto;
 					float:left;
 					display:inline;
-					background: url(../images/grey_button_right.gif) no-repeat right top;
+					background: url(/images/grey_button_right.gif) no-repeat right top;
 					padding: 4px 13px 0 10px;
 					height: 20px;
 					}
 				
 				.upload a.button6:hover span.right{
-					background: url(../images/grey_button_right.gif) no-repeat right bottom;
+					background: url(/images/grey_button_right.gif) no-repeat right bottom;
 					}
 			
 			/** file input **/	
@@ -817,11 +819,11 @@
 				display:inline;
 				margin-top:2px;
 				margin-left:7px;
-				background:url(../images/removeButton.gif) no-repeat;
+				background:url(/images/removeButton.gif) no-repeat;
 				}
 				
 			.upload .removeButton:hover{
-				background:url(../images/removeButton_hover.gif) no-repeat;
+				background:url(/images/removeButton_hover.gif) no-repeat;
 				}
 			
 			/** add button **/	
@@ -832,44 +834,14 @@
 				display:inline;
 				margin-top:2px;
 				margin-left:7px;
-				background:url(../images/addButton.gif) no-repeat;
+				background:url(/images/addButton.gif) no-repeat;
 				}
 				
 			.upload .addButton:hover{
-				background:url(../images/addButton_hover.gif) no-repeat;
+				background:url(/images/addButton_hover.gif) no-repeat;
 				}
 		
-		
-		
-			.removeButton{
-				width:22px;
-				height:21px;
-				float:left;
-				display:inline;
-				margin-top:10px;
-				margin-left:15px;
-				background:url(../images/removeButton.gif) no-repeat;
-				}
-				
-			.removeButton:hover{
-				background:url(../images/removeButton_hover.gif) no-repeat;
-				}
-			
-			/** add button **/	
-			.addButton{
-				width:22px;
-				height:21px;
-				float:left;
-				display:inline;
-				margin-top:10px;
-				margin-left:10px;
-				background:url(../images/addButton.gif) no-repeat;
-				}
-				
-			.addButton:hover{
-				background:url(../images/addButton_hover.gif) no-repeat;
-				}
-		
+		/** prizesInner **/
 		/** prizesInner **/
 		
 		#button_tech{
@@ -891,12 +863,32 @@
 		#remove{
 			cursor:pointer;
 		}
-		
-		#add_categories{
+		.head_font{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:12px;
+			color:#333;
+			font-weight:bold;
+		}
+		.head_font_space{
+			font-family:Arial, Helvetica, sans-serif;
+			font-size:12px;
+			color:#333;
+			font-weight:bold;
+			padding-left:260px;
+		}
+		#masterTechnologiesSelect{
+			overflow:scroll; height:150px; width:285px; float:left;
+		}
+		#masterTechnologiesChoosenSelect{
+			overflow:scroll; height:150px; width:285px; float:left;
+		}
+
+    /* catalog/categoires select */		
+		#addCategories{
 			cursor:pointer;
 		}
 		
-		#remove_categories{
+		#removeCategories{
 			cursor:pointer;
 		}
 		.head_font{
@@ -925,11 +917,13 @@
 		#select2, #select2_categories{
 			overflow:scroll; height:150px; width:285px; float:left;
 		}		
+		
 		.prizesInner{
 			height:28px;
 			padding:5px 0;
 			border:#c1c1c1 solid 1px;
 			}
+			
 			.prizesInner1{
 			padding:0px 0;
 			border:none;
@@ -1016,6 +1010,8 @@
 				height:120px;
 				background-color:#DDD;
 			}
+			
+			
 			/** label **/
 			.prizesInner label{
 				width:auto;
@@ -1074,7 +1070,7 @@
 				font-weight:bold;
 				text-align:right;
 				color:#6c6c6c;
-				background:url(../images/prizesInput.gif) no-repeat;
+				background:url(/images/prizesInput.gif) no-repeat;
 				}
 			
 			/** button **/	
@@ -1084,11 +1080,11 @@
 				float:left;
 				display:inline;
 				margin-left:77px;
-				background:url(../images/addButton.gif) no-repeat;
+				background:url(/images/addButton.gif) no-repeat;
 				}
 				
 			.prizesInner .addButton:hover{
-				background:url(../images/addButton_hover.gif) no-repeat;
+				background:url(/images/addButton_hover.gif) no-repeat;
 				}
 				
 			.prizesInner .removeButton{
@@ -1097,11 +1093,11 @@
 				float:left;
 				display:inline;
 				margin-left:77px;
-				background:url(../images/removeButton.gif) no-repeat;
+				background:url(/images/removeButton.gif) no-repeat;
 				}
 				
 			.prizesInner .removeButton:hover{
-				background:url(../images/removeButton_hover.gif) no-repeat;
+				background:url(/images/removeButton_hover.gif) no-repeat;
 				}
 		/** end .prizesInner **/
 		
@@ -1164,7 +1160,7 @@
 				font-weight:bold;
 				text-align:right;
 				color:#6c6c6c;
-				background:url(../images/prizesInput.gif) no-repeat;
+				background:url(/images/prizesInput.gif) no-repeat;
 				}
 				
 			.mPrizesInner strong{
@@ -1180,21 +1176,12 @@
 				}
 		/** end .mPrizesInner **/
 		
-		A.link{
-			font-family:Arial, Helvetica, sans-serif;
-			font-size:12px;
-		}
+				
 		/** mPrizesInner **/
 		.deliverablesInner{
-			padding:5px 0px;
+			padding:5px 26px;
 			padding-right:0;
 			border:#c1c1c1 solid 1px;
-			}
-			
-		.deliverablesInner1{
-			
-			
-			border:none;
 			}
 			
 			/** input **/
@@ -1222,7 +1209,7 @@
 					font-weight:bold;
 					color:#6c6c6c;
 					margin-right:30px;
-					background:url(../images/prizesInput.gif) no-repeat;
+					background:url(/images/prizesInput.gif) no-repeat;
 					}
 			
 			/** file button **/		
@@ -1237,12 +1224,12 @@
 				color:#ab0000;
 				line-height:22px;
 				text-decoration:underline;
-				background:url(../images/addButton.gif) no-repeat left center;
+				background:url(/images/addButton.gif) no-repeat left center;
 				}
 				
 			.deliverablesInner .fileType:hover{
 				text-decoration:none;
-				background:url(../images/addButton_hover.gif) no-repeat left center;
+				background:url(/images/addButton_hover.gif) no-repeat left center;
 				}
 				
 	
@@ -1271,7 +1258,7 @@
 			
 			a.draft, a.preview{
 				margin-right:24px;
-				background:url(../images/grey_button_bg.gif) repeat-x left top;
+				background:url(/images/grey_button_bg.gif) repeat-x left top;
 				}
 				
 			.tabHead a.draft, .tabHead a.draft{
@@ -1280,18 +1267,18 @@
 				}
 				
 			a.draft:hover, a.preview:hover{
-				background:url(../images/grey_button_bg.gif) repeat-x left bottom;
+				background:url(/images/grey_button_bg.gif) repeat-x left bottom;
 				}
 				
 				a.draft span.left, a.preview span.left{
 					width:auto;
 					float:left;
 					display:inline;
-					background:url(../images/grey_button_left.gif) no-repeat left top;
+					background:url(/images/grey_button_left.gif) no-repeat left top;
 					}
 					
 				a.draft:hover span.left, a.preview:hover span.left{
-					background:url(../images/grey_button_left.gif) no-repeat left bottom;
+					background:url(/images/grey_button_left.gif) no-repeat left bottom;
 					}
 					
 					.tabHead a.draft span.right, .tabHead a.preview span.right{
@@ -1303,11 +1290,11 @@
 						float:left;
 						display:inline;
 						padding:4px 19px 0 15px;
-						background:url(../images/grey_button_right.gif) no-repeat right top;
+						background:url(/images/grey_button_right.gif) no-repeat right top;
 						}
 						
 					a.draft:hover span.right, a.preview:hover span.right{
-						background:url(../images/grey_button_right.gif) no-repeat right bottom;
+						background:url(/images/grey_button_right.gif) no-repeat right bottom;
 						}
 						
 	
@@ -1323,96 +1310,49 @@
 		float:left;
 		display:inline;
 		margin-left:6px;
-		background:url(../images/help_ico4.gif) no-repeat;
+		background:url(/images/help_ico4.gif) no-repeat;
 		}
 		
 	#launchContestOut .helpIcon:hover{
-		background:url(../images/help_ico4.gif) no-repeat left bottom;
+		background:url(/images/help_ico4.gif) no-repeat left bottom;
 		}
-		
-		/** label **/
-		#launchContestOut .contestDetail .prizes .catalogSelect {
-			float: left;
-			display: block;
-			margin: 10px 0px;
-			width: 100%;
-			}
-		
-		/** label **/
-		#launchContestOut .contestDetail .prizes .catalogSelect label{
-			float: left;
-			display: block;
-			margin-left:3px;
-			font-family:Geneva, Arial, Helvetica, sans-serif;
-			font-size:14px;
-			font-weight: bold;
-			line-height:28px;
-			}
-			
-		/** input **/
-		#launchContestOut .contestDetail .prizes .catalogSelect .newListSelected{
-			float: left;
-			display: block;
-			margin-left: 10px;
-			height:28px;
-			}
 	
 	/** textarea **/
 	#launchContestOut .contestDetail .textarea{
-		height:250px;
-		padding-left:10px;
-		border:#c4c4c4 solid 1px;
-		}
-		
-		#launchContestOut .contestDetail .textarea1{
-		height:150px;
-		padding-left:10px;
-		border:#c4c4c4 solid 1px;
-		}
-		#launchContestOut .editor{
-			float:right;
-			background-color:#DDD;
-			font-family:Arial, Helvetica, sans-serif;
-			font-size:12px;
-			color:#333;
-			padding-top:3px;
-			padding-bottom:3px;
-			padding-left:10px;
-			padding-right:10px;
-			border: #666 solid 1px;
-			
-		}
-		#launchContestOut .editor A{
-			padding-left:5px;
-			
+		/* height:47px;
+		padding-left:10px; */
+		border:#c4c4c4 solid 0px;
 		}
 		
 		#launchContestOut .contestDetail .textarea textarea{
 			width:100%;
-			height:239px;
+			height:36px;
 			border:0;
 			padding:5px 0;
 			font-size:14px;
 			color:#333;
-			
 			}
 	
-			#launchContestOut .contestDetail .textarea1 textarea{
-			width:100%;
-			height:130px;
-			border:0;
-			padding:5px 0;
-			font-size:14px;
-			color:#333;
-			
-			}
-	
+    #launchContestOut .contestDetail .textarea2 {
+       border:1px solid #C4C4C4;
+       height:250px;
+       padding-left:10px;
+    }	
+    #launchContestOut .contestDetail .textarea2 textarea {
+       border:0 none;
+       color:#333333;
+       font-size:14px;
+       height:239px;
+       padding:5px 0;
+       width:100%;
+    }	
+    
 	/** textarea bottom **/	
 	#launchContestOut .contestDetail .bottomTextarea{
 		height:22px;
-		border:#dddddd solid 1px;
+		/* border:#dddddd solid 1px; */
 		position:relative;
-		background:url(../images/textarea_bottom_bg.gif) repeat-x;
+		/* background:url(/images/textarea_bottom_bg.gif) repeat-x; */
 		}
 		
 		#launchContestOut .contestDetail .bottomTextarea p{
@@ -1429,14 +1369,40 @@
 			right:1px;
 			bottom:1px;
 			overflow:hidden;
-			background:url(../images/textarea_bottom.gif) no-repeat;
+			background:url(/images/textarea_bottom.gif) no-repeat;
 			}
-			
+
+    /* launch software catalog select */
+    #launchContestOut .contestDetail .prizes .catalogSelect {
+     display:block;
+     float:left;
+     margin:10px 0;
+     width:100%;
+    }
+    
+    #launchContestOut .contestDetail .prizes .catalogSelect label {
+      display:block;
+      float:left;
+      font-family:Geneva,Arial,Helvetica,sans-serif;
+      font-size:14px;
+      font-weight:bold;
+      line-height:28px;
+      margin-left:3px;
+    }    			
+    
+		/** input **/
+		#launchContestOut .contestDetail .prizes .catalogSelect .newListSelected{
+			float: left;
+			display: block;
+			margin-left: 10px;
+			height:28px;
+			}
+    
 /*content page styes*/
 .tabHead{
 	height:34px;
 	margin-top:25px;
-	background:url(../images/tabHead.gif) 0 0 repeat-x;
+	background:url(/images/tabHead.gif) 0 0 repeat-x;
 	position:relative;
 	}
 	
@@ -1446,7 +1412,7 @@
 		}
 	
 	.tabHead li{
-		width:250px;
+		width:150px;
 		height:34px;
 		line-height:34px;
 		float:left;
@@ -1462,7 +1428,7 @@
 			width:111px;
 			font-weight:700;
 			font-size:14px;
-			background:url(../images/tabTop_current.gif) 0 0 no-repeat;
+			background:url(/images/tabTop_current.gif) 0 0 no-repeat;
 			color:#fffffe;
 			}
 	
@@ -1473,7 +1439,7 @@
 		position:absolute;
 		top:0;
 		right:0px;
-		background:url(../images/tabHead-tr.gif) no-repeat;
+		background:url(/images/tabHead-tr.gif) no-repeat;
 		}
 		
 	/** edit button **/	
@@ -1488,11 +1454,11 @@
 		text-decoration:none;
 		color:#fffffe;
 		text-align:center;
-		background:url(../images/editButton.gif) 0 0 no-repeat;
+		background:url(/images/editButton.gif) 0 0 no-repeat;
 		}
 		
 		.tabHead .editButton:hover{
-			background:url(../images/editButton.gif) 0 -24px no-repeat;
+			background:url(/images/editButton.gif) 0 -24px no-repeat;
 			}
 
 /** over view **/	
@@ -1554,30 +1520,32 @@
 	}
 	
 	/** file box **/
-	#cboxFiles{
+	#cboxFiles, #swCboxFiles {
 		height:48px;
 		padding-right:0;
+	}
+		
+	/** tip link **/
+	#cboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink,
+	#swCboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
+		width:auto;
+		float:right;
+		display:inline;
+		margin-right:12px;
+		margin-top:18px;
 		}
 		
-		/** tip link **/
-		#cboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
-			width:auto;
-			float:right;
-			display:inline;
-			margin-right:12px;
-			margin-top:18px;
-			}
-			
-		.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
-			margin-top:6px;
-			}
+	.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
+		margin-top:6px;
+	}
 	
-	#cboxFiles dl{
+	#cboxFiles dl, #swCboxFiles dl{
 		width:90%;
 		float:left;
 		display:inline;
-		}
-	#cboxFiles dt,#cboxFiles dd{
+	}
+	
+	#cboxFiles dt,#cboxFiles dd,#swCboxFiles dt,#swCboxFiles dd{
 		width:45%;
 		float:left;
 		display:inline;
@@ -1585,7 +1553,7 @@
 		margin-left:0px;
 		font-size:14px;
 		line-height:24px;
-		}
+	}
 	
 .buttonBox .launchContest{
 	width:150px;
@@ -1604,11 +1572,11 @@
 	text-decoration:none;
 	color:#fffffe;
 	text-align:center;
-	background:url(../images/saveButton.gif) 0 0 no-repeat;
+	background:url(/images/saveButton.gif) 0 0 no-repeat;
 	margin-right:20px;
 	}
 	.saveButton a:hover{
-		background:url(../images/saveButton.gif) 0 -24px no-repeat;
+		background:url(/images/saveButton.gif) 0 -24px no-repeat;
 		}
 		
 .tipLink{
@@ -1638,7 +1606,7 @@
 	color:#333;
 	line-height:28px;
 	cursor:pointer;
-	background:url(../images/tabContest_select.gif) no-repeat;
+	background:url(/images/tabContest_select.gif) no-repeat;
 	}
 	
 	.tabContest .selectedTxt,.projectSelect .selectedTxt{
@@ -1650,18 +1618,8 @@
 		border:#ccc solid 1px;
 		background:#fff;
 		position:absolute !important;
-		z-index: 999 !important;
+		margin-top:-3px !important;
 		}
-		
-	.projectSelect .newList{
-		overflow-x: hidden !important;
-		overflow-y: scroll !important;
-	}
-	
-/*** Fix A underline in jQuery stylish select 0.4.1 ***/
-div.newListSelected ul.newList a{
-	text-decoration: none;
-}
 
 /** billing  and round select **/
 .billingSelect .newListSelected,.roundelect .newListSelected{
@@ -1674,7 +1632,7 @@ div.newListSelected ul.newList a{
 	color:#333;
 	line-height:28px;
 	cursor:pointer;
-	background:url(../images/billing_select.gif) no-repeat;
+	background:url(/images/billing_select.gif) no-repeat;
 	}
 	
 	.roundelect .newListSelected{
@@ -1691,15 +1649,8 @@ div.newListSelected ul.newList a{
 		border:#ccc solid 1px;
 		background:#fff;
 		position:absolute;
-		z-index: 999 !important;
+		margin-top:-3px;
 		}
-	.roundelect .newList{
-		overflow: hidden;
-	}
-	.billingSelect .newList{
-		overflow-x: hidden !important;
-		overflow-y: scroll !important;
-	}
 
 /** date select **/		
 .startSelect .newListSelected,.milestoneSelect .newListSelected,.endSelect .newListSelected{
@@ -1712,7 +1663,7 @@ div.newListSelected ul.newList a{
 	color:#6c6c6c;
 	line-height:22px;
 	cursor:pointer;
-	background:url(../images/startSelect.gif) no-repeat;
+	background:url(/images/startSelect.gif) no-repeat;
 	}
 	
 	.startSelect .selectedTxt,.milestoneSelect .selectedTxt,.endSelect .selectedTxt{
@@ -1739,8 +1690,8 @@ div.newListSelected ul.newList a{
 	line-height:22px;
 	cursor:pointer;
 	position:relative;
-	z-index:100 !important;
-	background:url(../images/timeSelect.gif) no-repeat;
+	z-index:100;
+	background:url(/images/timeSelect.gif) no-repeat;
 	}
 	
 	.startEtSelect .selectedTxt,.milestoneEtSelect .selectedTxt,.endEtSelect .selectedTxt{
@@ -1772,7 +1723,7 @@ div.newListSelected ul.newList a{
 	color:#545b66;
 	line-height:22px;
 	cursor:pointer;
-	background:url(../images/numSelect.gif) no-repeat;
+	background:url(/images/numSelect.gif) no-repeat;
 	}
 	
 	.numSelect .selectedTxt{
@@ -1799,7 +1750,7 @@ div.newListSelected ul.newList a{
 			text-indent:19px;
 			color:#6c6c6c;
 			}
-			
+
 /** catalogselect **/
 .catalogSelect .newListSelected{
 	width:300px;
@@ -1811,7 +1762,7 @@ div.newListSelected ul.newList a{
 	color:#333;
 	line-height:28px;
 	cursor:pointer;
-	background:url(../images/tabCatalog_select.gif) no-repeat;
+	background:url(/images/tabCatalog_select.gif) no-repeat;
 	}
 	
 	.catalogSelect .selectedTxt{
@@ -1826,11 +1777,12 @@ div.newListSelected ul.newList a{
 		margin-top:-3px !important;
 		}
 
+
 /** select li **/		
 .newList li{
 	width:100%;
-	height:22px;
-	line-height:22px;
+	height:20px;
+	line-height:20px;
 	overflow:hidden;
 	text-indent:5px;
 	text-align:left;
@@ -1855,7 +1807,7 @@ a.dp-choose-date {
 	margin-right:22px;
 	overflow:hidden;
 	text-indent:-2000px;
-	background:url(../images/date_icon.gif) no-repeat;
+	background:url(/images/date_icon.gif) no-repeat;
 }
 
 .dp-choose-date{
@@ -2043,23 +1995,41 @@ div.dp-popup td.disabled {
 
 
 /** stylish select additional styles (payment-method.html) **/
-.selectDesign .newList {
-	background: white url(../images/list_vert_line.gif) no-repeat 184px 0px;
+.selectDesing .newList {
+	background: white url(/images/list_vert_line.gif) no-repeat 184px 0px;
 	}
 	
-.selectDesign li.newListOptionTitle {
+.selectDesing li.newListOptionTitle {
 	font-weight:bold;
 	width: 185px;
 	float: left;
-	display: block;
 	}
 
-.selectDesign .newListOptionTitle li {
+.selectDesing .newListOptionTitle li {
 	font-weight:normal;
 	width: 185px;
 
 	}
 	
-.selectDesign .moreLink {
+.selectDesing .moreLink {
 	float: left;
 	}
+
+
+.fi label {
+  color:#666666;
+  display:block;
+  float:left;
+  font-size:11px;
+  padding-right:5px;
+  position:relative;
+  text-align:right;
+  top:4px;
+  width:120px;
+}
+
+/* autocomplete styles */
+div.ac_results { background-color: white; border: 2px solid yellow; border-top: none; z-index: 2000 }
+div.ac_results ul {  padding-left: 0px; }
+div.ac_results li { list-style-type: none; padding-left: 5px; }
+div.ac_results li.ac_over { background-color: yellow; color: black; cursor: pointer; }

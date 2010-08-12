@@ -1,610 +1,602 @@
-// JavaScript Document
+/**
+ * Launch Contest Javascript
+ *
+ *
+ * @author TCSDEVELOPER
+ * @version 1.0
+ */
 $(document).ready(function(){
-						 
-		$("#software").change(function(){
-			var value = $(this).val();
-			if(value == "Software Conceptualization" || value=="Software Specification" || value=="Architecture" || value=="Component Design"||value==
-			   "Component Development" || value=="RIA Component"||value=="RIA Build"||value=="UI Prototype"||value=="Software Assembly"||
-			   value=="Test Suites"||value=="Test Scenarios")
-			{
-				$("#milestone").css("display","none");
-				$("#end").css("display","none");
-				$("#type").css("display","none");
-				$(".schedule").css("height","70px");
-				$(".schedule").css("margin-bottom","105px");
-			}
-			else{
-				$("#milestone").css("display","block");
-				$("#end").css("display","block");
-				$("#type").css("display","block");
-				$(".schedule").css("height","165px");
-				$(".schedule").css("margin-bottom","0px");
-			}
-								
-		});
-		
-		$("#software").change(function(){
-			var value = $(this).val();
-			if(value == "Software Conceptualization" || value=="Software Specification" || value=="Architecture" || value=="Component Design"||value==
-			   "Component Development" || value=="RIA Component"||value=="RIA Build"||value=="UI Prototype"||value=="Software Assembly"||
-			   value=="Test Suites"||value=="Test Scenarios")
-			{
-				$("#cca").css("display","block");
-			}
-			else{
-				$("#cca").css("display","none");
-			}
-		});
-		
-		$("#hide").click(function(){
-			
-			$("#info").css("display","none");
-			$(".prizesInner_software").css("height","150px");
-			
-		});
-		
-		$('#add').click(function() {  
-    		return !$('#select1 option:selected').remove().appendTo('#select2');  
-    	});
-		
-		$('#remove').click(function() {  
- 		return !$('#select2 option:selected').remove().appendTo('#select1');  
-    	});
-		
-		$('#add_categories').click(function() {  
-    		return !$('#select1_categories option:selected').remove().appendTo('#select2_categories');
-    	});
-		
-		$('#remove_categories').click(function() {  
- 		return !$('#select2_categories option:selected').remove().appendTo('#select1_categories');
-    	});
+    // Drop Down Select Project
+    $(".dropdown dt a").click(function() {
+      $(".dropdown dd ul").toggle();
+      return false;
+    });
 
-		$('#catalogSelect').change(function() {
-			if ($(this).val() == 'Net') {
-				$('#select1_categories').children().remove().end().append('<option value="1">Analysis</option><option value="2">Application Management</option><option value="3">Communication</option><option value="4">Web</option><option value="5">Work Flow </option><option value="6">Other</option>');
-				$('#select2_categories').children().remove();
-			} else if ($(this).val() == 'Java') {
-				$('#select1_categories').children().remove().end().append('<option value="1">Data Management</option><option value="2">Developer Tools</option><option value="3">Document Management</option><option value="4">Web</option><option value="5">Work Flow </option><option value="6">Other</option>');
-				$('#select2_categories').children().remove();
-			} else if ($(this).val() == 'Flex') {
-				$('#select1_categories').children().remove().end().append('<option value="1">Financial</option><option value="2">Foundation</option><option value="3">Imaging</option><option value="4">Web</option><option value="5">Work Flow </option><option value="6">Other</option>');
-				$('#select2_categories').children().remove();
-			} else if ($(this).val() == 'C++') {
-				$('#select1_categories').children().remove().end().append('<option value="1">Reporting</option><option value="2">Security</option><option value="4">Web</option><option value="5">Work Flow </option><option value="6">Other</option>');
-				$('#select2_categories').children().remove();
-			}
-    	});
-		
-		$("#continue").click(function(){
-			var value = $("#software").val();
-			if(value == "Software Conceptualization" || value=="Software Specification" || value=="Architecture" || value=="Component Design"||value==
-			   "Component Development" || value=="RIA Component"||value=="RIA Build"||value=="UI Prototype"||value=="Software Assembly"||
-			   value=="Test Suites"||value=="Test Scenarios")
-			{
-				window.location = 'launch-contest-details-software.html';
-			}
-			else{
-				window.location = 'launch-contest-details.html';
-				
-				
-			}
-								
-		});			
-		
-		$(".contest_type_edit").css("display","none");
-		$(".edit_type").click(function(){
-			$(".contest_type").css("display","none");
-			$(".contest_type_edit").css("display","block");							
-		});
-		
-		$(".save_btn").click(function(){
-			
-			$(".contest_type").css("display","block");
-			$(".contest_type_edit").css("display","none");
-												
-		});
-		$(".cancel_text").click(function(){
-			
-			$(".contest_type").css("display","block");
-			$(".contest_type_edit").css("display","none");
-												
-		});
-		
-		
-		
-		$(".contest_prize_edit").css("display","none");
-		$(".edit_prize").click(function(){
-			
-			$(".contest_prize").css("display","none");
-			$(".contest_prize_edit").css("display","block");
-												
-		});
-		
-		$(".save_btn_prize").click(function(){
-			
-			$(".contest_prize").css("display","block");
-			$(".contest_prize_edit").css("display","none");
-												
-		});
-		$(".cancel_text_prize").click(function(){
-			
-			$(".contest_prize").css("display","block");
-			$(".contest_prize_edit").css("display","none");
-												
-		});
-		
-		
-		
-		$(".contest_round_edit").css("display","none");
-		$(".edit_round").click(function(){
-			
-			$(".contest_round").css("display","none");
-			$(".contest_round_edit").css("display","block");
-												
-		});
-		
-		$(".save_btn_round").click(function(){
-			
-			$(".contest_round").css("display","block");
-			$(".contest_round_edit").css("display","none");
-												
-		});
-		$(".cancel_text_round").click(function(){
-			
-			$(".contest_round").css("display","block");
-			$(".contest_round_edit").css("display","none");
-												
-		});
-		
-		
-		
-		$(".contest_spec_edit").css("display","none");
-		$(".edit_spec").click(function(){
-			
-			$(".contest_spec").css("display","none");
-			$(".contest_spec_edit").css("display","block");
-												
-		});
-		
-		$(".save_btn_spec").click(function(){
-			
-			$(".contest_spec").css("display","block");
-			$(".contest_spec_edit").css("display","none");
-												
-		});
-		$(".cancel_text_spec").click(function(){
-			
-			$(".contest_spec").css("display","block");
-			$(".contest_spec_edit").css("display","none");
-												
-		});
-		
-		
-		$(".contest_files_edit").css("display","none");
-		$(".edit_files").click(function(){
-			
-			$(".contest_files").css("display","none");
-			$(".contest_files_edit").css("display","block");
-												
-		});
-		
-		$(".save_btn_files").click(function(){
-			
-			$(".contest_files").css("display","block");
-			$(".contest_files_edit").css("display","none");
-												
-		});
-		$(".cancel_text_files").click(function(){
-			
-			$(".contest_files").css("display","block");
-			$(".contest_files_edit").css("display","none");
-												
-		});
-		
+    $(".dropdown dd ul li a").click(function() {
+      var text = $(this).html();
+      $(".dropdown dt a span").html(text);
+      $(".dropdown dd ul").hide();
+      $("#result").html("Selected value is: " + getSelectedValue("sample"));
+      return false;
+    });
+
+    function getSelectedValue(id) {
+      return $("#" + id).find("dt a span.value").html();
+    }
+
+    $(document).bind('click', function(e) {
+      var $clicked = $(e.target);
+      if (! $clicked.parents().hasClass("dropdown"))
+        $(".dropdown dd ul").hide();
+    });
+
+    // Drop Down Sort Contests
+    $(".dropdown2 dt a").click(function() {
+      $(".dropdown2 dd ul").toggle();
+      return false;
+    });
+
+    $(".dropdown2 dd ul li a").click(function() {
+      var text = $(this).html();
+      $(".dropdown2 dt a span").html(text);
+      $(".dropdown2 dd ul").hide();
+      $("#result").html("Selected value is: " + getSelectedValue("sample2"));
+      $('#scrollbar-wrapper').jScrollPane({showArrows:true, scrollbarWidth: 17});
+      return false;
+    });
+
+    function getSelectedValue(id) {
+      return $("#" + id).find("dt a span.value2").html();
+    }
+
+    $(document).bind('click', function(e) {
+      var $clicked = $(e.target);
+      if (! $clicked.parents().hasClass("dropdown2"))
+        $(".dropdown2 dd ul").hide();
+    });
+
+    // Drop Down Search
+    $(".dropdown3 dt a").click(function() {
+      $(".dropdown3 dd ul").toggle();
+      return false;
+    });
+
+    $(".dropdown3 dd ul li a").click(function() {
+      var text = $(this).html();
+      $(".dropdown3 dt a span").html(text);
+      $(".dropdown3 dd ul").hide();
+      $("#result").html("Selected value is: " + getSelectedValue("sample"));
+      return false;
+    });
+
+    function getSelectedValue(id) {
+      return $("#" + id).find("dt a span.value3").html();
+    }
+
+    $(document).bind('click', function(e) {
+      var $clicked = $(e.target);
+      if (! $clicked.parents().hasClass("dropdown3"))
+        $(".dropdown3 dd ul").hide();
+    });
+
+    $("a.link-sort").click(function() {
+      var toLoad = $(this).attr('href');
+      $('#scrollbar-wrapper div').hide('fast',loadContent);
+      $('#load').remove();
+      $('#scrollbar-wrapper div').append('<div id="load"></div>');
+      $('#load').fadeIn('slow');
+      window.location.hash = $(this).attr('href').substr(0,$(this).attr('href').length-5);
+      function loadContent() {
+        $('#scrollbar-wrapper div').load(toLoad,'',showNewContent());
+      }
+      function showNewContent() {
+        $('#scrollbar-wrapper div').show(0.001,hideLoader());
+      }
+      function hideLoader() {
+        $('#load').fadeOut('slow');
+      }
+    });
 
 
-		$("#single-multi").change(function(){
-			var value=$(this).val();
-			if(value == "Contest will be run in single-rounds")
-			{
-				$("#milestone").css("display","none");
-				$(".schedule").css("height","150px");
-			}
-			else {
-				$("#milestone").css("display","block");
-				$(".schedule").css("height","165px");
-			}
-								
-		});
-		
-		
-						   // Drop Down Select Project
-		$(".dropdown dt a").click(function() {
-			$(".dropdown dd ul").toggle();
-			return false;
-		});
-					
-		$(".dropdown dd ul li a").click(function() {
-			var text = $(this).html();
-			$(".dropdown dt a span").html(text);
-			$(".dropdown dd ul").hide();
-			$("#result").html("Selected value is: " + getSelectedValue("sample"));
-			return false;
-		});
-					
-		function getSelectedValue(id) {
-			return $("#" + id).find("dt a span.value").html();
-		}
+  $("#expand-table").click(function() {
+      $("#collapse-table").show();
+      $(".row-hide").slideDown(0.0001);
+      $(this).hide();
+      return false;
+    });
 
-		$(document).bind('click', function(e) {
-			var $clicked = $(e.target);
-			if (! $clicked.parents().hasClass("dropdown"))
-				$(".dropdown dd ul").hide();
-		}); 
-		
-		// Drop Down Sort Contests
-		$(".dropdown2 dt a").click(function() {
-			$(".dropdown2 dd ul").toggle();
-			return false;
-		}); 
-		
-		$(".dropdown2 dd ul li a").click(function() {
-			var text = $(this).html();
-			$(".dropdown2 dt a span").html(text);
-			$(".dropdown2 dd ul").hide();
-			$("#result").html("Selected value is: " + getSelectedValue("sample2")); 
-			$('#scrollbar-wrapper').jScrollPane({showArrows:true, scrollbarWidth: 17});  
-			return false;
-		}); 
-		
-		function getSelectedValue(id) {
-			return $("#" + id).find("dt a span.value2").html();
-		}
+  $("#collapse-table").click(function() {
+      $("#expand-table").show();
+      $(".row-hide").slideToggle(0.0001);
+      $(this).hide();
+      return false;
+    });
 
-		$(document).bind('click', function(e) {
-			var $clicked = $(e.target);
-			if (! $clicked.parents().hasClass("dropdown2"))
-				$(".dropdown2 dd ul").hide();
-		});  
-		
-		// Drop Down Search
-		$(".dropdown3 dt a").click(function() {
-			$(".dropdown3 dd ul").toggle();
-			return false;
-		});
-					
-		$(".dropdown3 dd ul li a").click(function() {
-			var text = $(this).html();
-			$(".dropdown3 dt a span").html(text);
-			$(".dropdown3 dd ul").hide();
-			$("#result").html("Selected value is: " + getSelectedValue("sample"));
-			return false;
-		});
-					
-		function getSelectedValue(id) {
-			return $("#" + id).find("dt a span.value3").html();
-		}
+  $('#scrollbar-wrapper').jScrollPane({showArrows:true, scrollbarWidth: 17});
+  $(".table-sidebar tr:odd").addClass("alt");
+  $(".table-summary-content tr:even").addClass("alt");
+  $("#collapse-table").hide();
+  $(".row-hide").slideToggle(0.0001);
+  $("#wb-1").hide();
+  $("#wb-2").hide();
 
-		$(document).bind('click', function(e) {
-			var $clicked = $(e.target);
-			if (! $clicked.parents().hasClass("dropdown3"))
-				$(".dropdown3 dd ul").hide();
-		}); 
-		
-		$("a.link-sort").click(function() { 
-			var toLoad = $(this).attr('href'); 
-			$('#scrollbar-wrapper div').hide('fast',loadContent);
-			$('#load').remove();
-			$('#scrollbar-wrapper div').append('<div id="load"></div>');
-			$('#load').fadeIn('slow');
-			window.location.hash = $(this).attr('href').substr(0,$(this).attr('href').length-5);
-			function loadContent() {
-				$('#scrollbar-wrapper div').load(toLoad,'',showNewContent()); 
-			}
-			function showNewContent() { 
-				$('#scrollbar-wrapper div').show(0.001,hideLoader()); 
-			}
-			function hideLoader() {
-				$('#load').fadeOut('slow');
-			} 
-		});  
-			
-	
-	$("#expand-table").click(function() { 
-			$("#collapse-table").show();  
-			$(".row-hide").slideDown(0.0001);
-			$(this).hide();  
-			return false;
-		}); 
-	
-	$("#collapse-table").click(function() { 
-			$("#expand-table").show(); 
-			$(".row-hide").slideToggle(0.0001);
-			$(this).hide();
-			return false;
-		});
-						   
-	$('#scrollbar-wrapper').jScrollPane({showArrows:true, scrollbarWidth: 17}); 
-	$(".table-sidebar tr:odd").addClass("alt");
-	$(".table-summary-content tr:even").addClass("alt");
-	$("#collapse-table").hide();
-	$(".row-hide").slideToggle(0.0001); 
-	$("#wb-1").hide();
-	$("#wb-2").hide();  
-	
-	$(".greentext").click(function() {
-			$("#wb-1").fadeTo("slow", 1.0);
-			return false;
-		}); 
-	
-	$(".redtext").click(function() {
-			$("#wb-2").fadeTo("slow", 1.0);
-			return false;
-		}); 
-	
-	$("a.btn-list").hover(function() {
-			var $next = $(this).next(".dialog-mini-wrapper");								   
-			$next.css("display", "block");
-			$next.hover(function() {
-				$next.css("display", "block");
-				},function() {
-				$next.css("display", "none");
-			}); 
-			},function() {
-			var $next = $(this).next(".dialog-mini-wrapper");			
-			$next.css("display", "none"); 
-		}); 
-	/* init select */
-	if($('select').length > 0){
-		$('.selectSoftware select,.selectDesign select,.catalogSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
-		
-		$('.projectSelect select').sSelect({ddMaxHeight: '200px'});
-		
-		$('.billingSelect select').sSelect({ddMaxHeight: '200px'});
-		
-		$('.selectDesign div.selectedTxt').html('Select Contest Type');
-		
-		$('.startEtSelect select').focus();
-	}
-	
-	/* Optgroup 2 columns fix */
-	if($('.selectDesign optgroup, .selectDesign .newListOptionTitle').length > 0){
-		var optgroupMaxHeight = 0, num;
-		
-		$('.selectDesign optgroup').each(function(){
-			num = $(this).children().length + 1;
-			optgroupMaxHeight = num * 22 > optgroupMaxHeight ? num * 22 : optgroupMaxHeight;
-		});
-		
-		$('.selectDesign .newList').css('height', optgroupMaxHeight + 'px');
-		
-		$(window).resize(function(){$('.selectDesign .newList').css('height', optgroupMaxHeight + 'px');});
-		$(window).scroll(function(){$('.selectDesign .newList').css('height', optgroupMaxHeight + 'px');});
-	}
-	
-	/* init date-pack */
-	if($('.date-pick').length > 0){
-		$(".date-pick").datePicker().val(new Date().asString()).trigger('change');
-	}
-	
-	/* init tab **/
-	$('#tab li').click(function(){
-		
-		$('#tab li a').removeClass('current');
-		$(this).find('a').addClass('current');
-		if($(this).attr('class') == 'top'){
-			$('.selectDesign').show();
-			$('.selectSoftware').addClass('visibility');
-		}else{
-			$('.selectDesign').hide();
-			$('.selectSoftware').removeClass('visibility');	
-		}
-		
-	});
-	
-	/* init pop */
-	var prevPopup = null;
-	showPopup = function(myLink,myPopupId){
-		var myLinkLeft = myLinkTop  = 0;
-		
-		/* hide the previous popup */
-		if( prevPopup )
-			$(prevPopup).css("display","none");
-			
-		prevPopup = $('#'+myPopupId);
-		
-		/* get the position of the current link */
-		do{
-			myLinkLeft += myLink.offsetLeft;
-			myLinkTop += myLink.offsetTop;
-		}while( myLink = myLink.offsetParent );
-		
-		/* set the position of the popup */
-		var popUpHeight2 = $('#'+myPopupId).height()/2;
-		
-		myLinkTop -= popUpHeight2;
-	
-		$('#'+myPopupId).css("top",(myLinkTop+4)+'px');
-		$('#'+myPopupId).css("left",( myLinkLeft+22 )+'px');
-		
-		/* set the positio of the arrow inside the popup */
-		$(".tooltipContainer SPAN.arrow").css("top",popUpHeight2+'px');
-		
-		/* show the popup */
-		$('#'+myPopupId).css("display","block");
-		
-	}
-	
-	var prevPopups = null;
-	showPopups = function(myLinks,myPopupIds){
-		var myLinkLefts = myLinkTops  = 0;
-		
-		/* hide the previous popup */
-		if( prevPopups )
-			$(prevPopups).css("display","none");
-			
-		prevPopups = $('#'+myPopupIds);
-		
-		/* get the position of the current link */
-		do{
-			myLinkLefts += myLinks.offsetLeft;
-			myLinkTops += myLinks.offsetTop;
-		}while( myLinks = myLinks.offsetParent );
-		
-		/* set the position of the popup */
-		var popUpHeight2s = $('#'+myPopupIds).height()/2;
-		
-		myLinkTops -= popUpHeight2s;
-	
-		$('#'+myPopupIds).css("top",(myLinkTops+4)+'px');
-		$('#'+myPopupIds).css("left",( myLinkLefts+104 )+'px');
-		
-		/* set the positio of the arrow inside the popup */
-		$(".tooltipContainer SPAN.arrow").css("top",popUpHeight2s+'px');
-		
-		/* show the popup */
-		$('#'+myPopupIds).css("display","block");
-		
-	}
-	
-	$('.description .helpIcon').hover(function(){
-		showPopup(this,'contestLaunch1');
-	},function(){
-		$('#contestLaunch1').hide();
-	});
-	
+  $(".greentext").click(function() {
+      $("#wb-1").fadeTo("slow", 1.0);
+      return false;
+    });
 
+  $(".redtext").click(function() {
+      $("#wb-2").fadeTo("slow", 1.0);
+      return false;
+    });
 
-	$('.selectDesign .help,.selectSoftware .help').hover(function(){
-		showPopups(this,'contestLaunch1');									
-	},function(){
-		$('#contestLaunch1').hide();
-	});
-	
-	$('.mPrizes .helpIcon').hover(function(){
-		showPopup(this,'contestLaunch2');
-	},function(){
-		$('#contestLaunch2').hide();	
-	});
-	
-	$('.deliverables .helpIcon').hover(function(){
-		showPopup(this,'contestLaunch3');
-	},function(){
-		$('#contestLaunch3').hide();	
-	});
-	
-	$('.TB_overlayBG').css("opacity", "0.6");
-	$('#TB_HideSelect').css("opacity", "0");
-	$('#TB_overlay').hide();
-	/* init help */
-	$('.helloUser .help,.tabContest .moreLink,.help .helpIcon, .helpme').click(function(){
-		$('#TB_overlay').show();
-		$('#TB_window').show();
-		$('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
-		$('#TB_window').css({
+  $("a.btn-list").hover(function() {
+      var $next = $(this).next(".dialog-mini-wrapper");
+      $next.css("display", "block");
+      $next.hover(function() {
+        $next.css("display", "block");
+        },function() {
+        $next.css("display", "none");
+      });
+      },function() {
+      var $next = $(this).next(".dialog-mini-wrapper");
+      $next.css("display", "none");
+    });
+
+  /* init tab **/
+  $('#tab li').click(function(){
+
+    $('#tab li a').removeClass('current');
+    $(this).find('a').addClass('current');
+    if($(this).attr('class') == 'top'){
+      $('.selectDesing').show();
+      $('.selectSoftware').addClass('visibility');
+    }else{
+      $('.selectDesing').hide();
+      $('.selectSoftware').removeClass('visibility');
+    }
+
+  });
+
+  /* init pop */
+  var prevPopup = null;
+  showPopup = function(myLink,myPopupId){
+    var myLinkLeft = myLinkTop  = 0;
+
+    /* hide the previous popup */
+    if( prevPopup )
+      $(prevPopup).css("display","none");
+
+    prevPopup = $('#'+myPopupId);
+
+    /* get the position of the current link */
+    do{
+      myLinkLeft += myLink.offsetLeft;
+      myLinkTop += myLink.offsetTop;
+    }while( myLink = myLink.offsetParent );
+
+    /* set the position of the popup */
+    var popUpHeight2 = $('#'+myPopupId).height()/2;
+
+    myLinkTop -= popUpHeight2;
+
+    $('#'+myPopupId).css("top",(myLinkTop+4)+'px');
+    $('#'+myPopupId).css("left",( myLinkLeft+22 )+'px');
+
+    /* set the positio of the arrow inside the popup */
+    $(".tooltipContainer SPAN.arrow").css("top",popUpHeight2+'px');
+
+    /* show the popup */
+    $('#'+myPopupId).css("display","block");
+
+  }
+
+  var prevPopups = null;
+  showPopups = function(myLinks,myPopupIds){
+    var myLinkLefts = myLinkTops  = 0;
+
+    /* hide the previous popup */
+    if( prevPopups )
+      $(prevPopups).css("display","none");
+
+    prevPopups = $('#'+myPopupIds);
+
+    /* get the position of the current link */
+    do{
+      myLinkLefts += myLinks.offsetLeft;
+      myLinkTops += myLinks.offsetTop;
+    }while( myLinks = myLinks.offsetParent );
+
+    /* set the position of the popup */
+    var popUpHeight2s = $('#'+myPopupIds).height()/2;
+
+    myLinkTops -= popUpHeight2s;
+
+    $('#'+myPopupIds).css("top",(myLinkTops+4)+'px');
+    $('#'+myPopupIds).css("left",( myLinkLefts+104 )+'px');
+
+    /* set the positio of the arrow inside the popup */
+    $(".tooltipContainer SPAN.arrow").css("top",popUpHeight2s+'px');
+
+    /* show the popup */
+    $('#'+myPopupIds).css("display","block");
+
+  }
+
+  $('#ContestScheduleHelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestScheduleToolTip');
+  },function(){
+    $('#contestScheduleToolTip').hide();
+  });
+
+  $('#ContestDescriptionHelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestDescriptionToolTip');
+  },function(){
+    $('#contestDescriptionToolTip').hide();
+  });
+
+  $('#Round1HelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestRound1ToolTip');
+  },function(){
+    $('#contestRound1ToolTip').hide();
+  });
+
+  $('#Round2HelpIcon .helpIcon').hover(function(){
+    showPopup(this,'contestRound2ToolTip');
+  },function(){
+    $('#contestRound2ToolTip').hide();
+  });
+
+  $('.selectDesing .help,.selectSoftware .help').hover(function(){
+    showPopups(this,'contestLaunch1');
+  },function(){
+    $('#contestLaunch1').hide();
+  });
+
+  $('.mPrizes .helpIcon').hover(function(){
+    showPopup(this,'contestLaunch2');
+  },function(){
+    $('#contestLaunch2').hide();
+  });
+
+  $('.deliverables .helpIcon').hover(function(){
+    showPopup(this,'contestLaunch3');
+  },function(){
+    $('#contestLaunch3').hide();
+  });
+
+  $('.TB_overlayBG').css("opacity", "0.6");
+  $('#TB_HideSelect').css("opacity", "0");
+  $('#TB_overlay').hide();
+  /* init help */
+  $('.helloUser .help,.tabContest .moreLink,.help .helpIcon,.conditions').click(function(){
+    $('#TB_overlay').show();
+    $('#TB_window').show();
+    $('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
+    $('#TB_window').css({
             'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window").width() / 2)) + 'px'
         });
-		$('#placeHolder').hide();
-		$('#TB_ajaxContent').show();
-	});
-	
-	$('.specrev-goto').click(function(){
-		$('#TB_overlay').show();
-		$('#TB_window_custom').show();
-		$('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
-		$('#TB_window_custom').css({
-            //'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window_custom").width() / 2)) + 'px'
-			'left' : $(window).width() / 2-$('#TB_window_custom').width() / 2,
-			'top' : ($(window).height() / 2-$('#TB_window_custom').height() / 2) + $(window).scrollTop()
-        });
-	});
-	$('#TB_window_custom').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window_custom").css('height')) / 2))});
-	
-	$('.conditions').click(function(){
-		$('#TB_overlay').show();
-		$('#TB_window').show();
-		$('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
-		$('#TB_window').css({
-            'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window").width() / 2)) + 'px'
-        });
-		$('#placeHolder').show();
-		$('#TB_ajaxContent').hide();
-	});
-	
-	$('#TB_closeWindowButton').click(function(){
-		$('#TB_overlay').hide();
-		$('#TB_window').hide();										  
-	});
-	
-	$('#addNewProject').click(function(){
-		if($("#.projectSelect .newListSelected").is( ":hidden ")){
-			$('.projectSelect .newListSelected').show();
-			$('.projectSelect .text').hide();
-			$(this).find('.right').text('ADD NEW');
-		}else{
-			$('.projectSelect .newListSelected').hide();
-			$('.projectSelect .text').show();	
-			$(this).find('.right').text('SELECT EXISTING');
-		}
-	});
-	
-	/* add button */
-	$('.uploadInner .addButton').click(function(){
-		
-		$(this).parent().after('<div class="uploadInner" style="margin-top:12px;"><input type="text" class="text uploadInput" value="File Name" /><a href="javascript:;" class="button6"><span class="left"><span class="right">CHOOSE...</span></span></a><input type="text" class="text fileInput" value="File Description" /><a href="javascript:;" class="removeButton"><span class="hide">REMOVE</span></a><a href="javascript:;" class="addButton"><span class="hide">ADD</span></a></div>');						
-	});
-	
-	$('.addButton').click(function(){
-		var a = $(this).parent().parent().find('.uploadInner').length;
-		a=a+1;
-		
-			
-		$('<div class="uploadInner" style="margin-top:12px;"><strong class="left_align">'+a+'.&nbsp;&nbsp;&nbsp;</strong><input type="text" class="text uploadInput" value="File Name" /><a href="javascript:;" class="button6"><span class="left"><span class="right">CHOOSE...</span></span></a><input type="text" class="text fileInput" value="File Description" /> <img src="images/delete.png" alt="delete" class="deleteImg"  /><a class="delete" href="javascrip:;">Delete</a></div>').appendTo('.upload');						
-	});
-	
-	$('.uploadInner .removeButton').click(function(){
-		if($(this).parent().parent().find('.uploadInner').length > 1){
-			$(this).parent().parent().find('.uploadInner:last').remove();
-		}
-	});
-	
-	$('.removeButton').click(function(){
-		if($(this).parent().parent().find('.uploadInner').length > 1){
-			$(this).parent().parent().find('.uploadInner:last').remove();
-		}
-	});
-	
-	$('.prizesInner .addButton').click(function(){
-		if($(this).parent().parent().find('.prizesInner').eq(1).is( ":hidden ")){
-			$(this).parent().parent().find('.prizesInner').eq(1).show();
-			$(this).parent().parent().find('.prizesInner').eq(1).css('margin-top','12px');
-		}else{
-			$(this).parent().parent().find('.prizesInner').eq(2).show();
-			$(this).parent().parent().find('.prizesInner').eq(2).css('margin-top','12px');
-		}
-	});
-	
-	
-	$('.prizesInner .removeButton').click(function(){
-		if($(this).parent().parent().find('.prizesInner').length > 0){
-			$(this).parent().parent().find('.prizesInner:last').remove();
-		}
-	});
-	
-	$('.fileType').click(function(){
-		if($('.deliverablesInner .fileInput').length < 3){
-			$('.checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
-		}
-	});
+    $('#placeHolder').hide();
+    $('#TB_ajaxContent').show();
+  });
 
-	
-	/* bigframe */
-	$('#TB_overlay').bgiframe();
-	
-	$('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
-	
-	$(".uploadInner .button6").click(function(){$(".uploadInner .fileIn").trigger("click")})
-});
+  $('#TB_closeWindowButton').click(function(){
+    $('#TB_overlay').hide();
+    $('#TB_window').hide();
+  });
 
-	
-	 
+  /* add button */
+  $('.uploadInner .addButton').click(function(){
+    $(this).parent().after('<div class="uploadInner" style="margin-top:12px;"><input type="text" class="text uploadInput" value="File Name" /><a href="javascript:;" class="button6"><span class="left"><span class="right">CHOOSE...</span></span></a><input type="text" class="text fileInput" value="File Description" /><a href="javascript:;" class="removeButton"><span class="hide">REMOVE</span></a><a href="javascript:;" class="addButton"><span class="hide">ADD</span></a></div>');
+  });
+
+  $('.uploadInner .removeButton').click(function(){
+    if($(this).parent().parent().find('.uploadInner').length > 1){
+      $(this).parent().parent().find('.uploadInner:last').remove();
+    }
+  });
+
+  /* bigframe */
+  $('#TB_overlay').bgiframe();
+
+  $('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
+
+  $(".uploadInner .button6").click(function(){$(".uploadInner .fileIn").trigger("click")})
+
+  /********************************
+   *   Launch Contest Main Widget
+   ********************************/
+    // initialize selects
+    // populate the select option for software group
+    $.each(projectCategoryArray,function(i, projectCategory) {
+        $("<option/>").val("SOFTWARE"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
+    });
+
+    if($('select').length > 0){
+      $('.selectSoftware select,.selectDesing select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
+               var SelectOptions = {
+                    ddMaxHeight: '220',
+                    yscroll: true
+                };
+      $('.projectSelect select,.billingSelect select').sSelect(SelectOptions);
+      $('#catalogSelect').sSelect();
+      $('.selectDesing div.selectedTxt').html('Select Contest Type');
+    }
+
+    /* Optgroup 2 columns fix */
+    if($('.selectDesing optgroup, .selectDesign .newListOptionTitle').length > 0){
+      var optgroupMaxHeight = 0, num;
+
+      $('.selectDesing optgroup').each(function(){
+        num = $(this).children().length + 1;
+        optgroupMaxHeight = num * 22 > optgroupMaxHeight ? num * 22 : optgroupMaxHeight;
+      });
+
+      $('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');
+
+      $(window).resize(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
+      $(window).scroll(function(){$('.selectDesing .newList').css('height', optgroupMaxHeight + 'px');});
+    }
+
+
+  /*****************************
+   *   Select Contest Type
+   ****************************/
+
+   // choose contest type
+   $('#contestTypes').bind("change", function() {
+        onContestTypeChange();
+   });
+   onContestTypeChange();
+
+
+   $('#billingProjects').bind("change", function() {
+       updateContestFee();
+   });
+
+   // add project
+   initDialog('addProjectDialog', 500);
+
+   $('#addProjectDialog').bind('dialogopen', function(event,ui) {
+     $('#addProjectForm').show();
+     clearDialog('addProjectForm');
+
+     $('#addProjectResult').hide();
+     $('#addProjectResult').find('p').html('');
+   });
+
+   $('#addNewProject').click(function(){
+      $('#addProjectDialog').dialog('open');
+   });
+
+   // round types
+   $('#roundTypes').bind("change", function() {
+        var roundType = $('#roundTypes').val();
+        if(roundType == 'single') {
+           $('#mileStoneDiv').hide();
+           $('#milestonePrizeDiv').hide();
+           $('#round1InfoDiv').hide();
+           $('#round2InfoDiv').hide();
+        } else {
+           $('#mileStoneDiv').show();
+           $('#milestonePrizeDiv').show();
+           $('#round1InfoDiv').show();
+           $('#round2InfoDiv').show();
+        }
+   });
+   $('#roundTypes').trigger("change");
+
+  /* init date-pack */
+  if($('.date-pick').length > 0){
+    $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
+  }
+
+  /*****************************
+   *   Overview page
+   ****************************/
+  tinyMCE.init({
+    mode : "exact",
+    elements : "contestDescription,contestIntroduction,round1Info,round2Info,swDetailedRequirements,swGuidelines",
+    plugins : "paste",
+    theme : "advanced",
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+    theme_advanced_buttons2 : "",
+    theme_advanced_buttons3 : "",
+    init_instance_callback : function() {
+        $('table.mceLayout').css('width','100%');
+    }
+  });
+
+}); // end of jQuery onload
+
+//capacity dates
+var capacityFullDates = {};
+
+
+/**
+ * event handler function when contest type is changed.
+ */
+function onContestTypeChange() {
+       var contestType = getContestType(true)[0];
+       var typeId = getContestType(true)[1];
+       var currentTypeId = -1;
+       if(isContestSaved()) {
+          currentTypeId = mainWidget.isSoftwareContest()? mainWidget.softwareCompetition.projectHeader.projectCategory.id:mainWidget.competition.contestData.contestTypeId;
+       }
+
+       if(isContestSaved() && mainWidget.competitionType != contestType) {
+            alert("You can not switch between studio and software after it is saved.");
+            //reset
+            window.setTimeout(function() {
+               $("#contestTypes").getSetSSValue(mainWidget.competitionType+currentTypeId);
+            }, 1000);
+            return;
+       }
+
+       mainWidget.competitionType = contestType;
+
+       if(typeId == currentTypeId) {
+          // it is a revert, nothing to do here
+          return;
+       }
+
+      $('.software').hide();
+      $('.studio').hide();
+      $(".schedule").css("height","70px");
+      $(".schedule").css("margin-bottom","105px");
+
+      /// Studio Contest
+      if(mainWidget.isSoftwareContest()) {
+         //Software Contest
+         $('.software').show();
+         $('.studio').hide();
+         $(".schedule").css("height","70px");
+         $(".schedule").css("margin-bottom","105px");
+         
+         if(typeId == SOFTWARE_CATEGORY_ID_DEVELOPMENT) {
+         	  $('#contestName').hide();
+         	  $('#contestNameFromDesign').show();
+         	  $('#contestNameFromDesign').val("");
+         	  $('#contestIdFromDesign').val("");
+         	  $('#devOnlyDiv').show();
+         	  $('#devOnlyDiv').css("display","inline");
+         	  $('#devOnlyCheckBox').attr('checked', false);         	           	  
+         } else {
+         	  $('#contestName').show();
+         	  $('#contestNameFromDesign').hide();
+         	  $('#devOnlyDiv').hide();
+         	  $('#devOnlyCheckBox').attr('checked', false);         	  
+         }
+      }
+
+      if(mainWidget.isStudioContest()) {
+          $('.software').hide();
+          $('.studio').show();
+          $('#roundTypes').trigger('change');
+
+          $.each(studioSubtypeOverviews, function(i, overview) {
+              if(overview.id == typeId) {
+                 // update overview description
+                 $('#contestDescriptionTooltip').html(overview.description);
+              }
+          });
+
+          $.each(studioSubtypeFees, function(i, fee) {
+              if(fee.id == typeId) {
+                 // not set yet, auto fill
+                 if(isEmpty($('#prize3').val())) {
+                     $('#prize1').val(fee.firstPlaceCost)
+                     $('#prize2').val(fee.secondPlaceCost)
+                 }
+              }
+          });
+
+          resetFileTypes(typeId);
+          $(".schedule").css("height","165px");
+          $(".schedule").css("margin-bottom","0px");
+
+          getCapacityDatesForStudioSubType(getContestType(true)[1]);
+      }
+      
+      updateContestFee();      
+}
+
+/**
+ * Resets file types.
+ *
+ * @param studioSubtypeId studio sub type id
+ */
+function resetFileTypes(studioSubtypeId) {
+   $('#deliverablesCheckboxs').html('');
+
+   var types = getStudioFileTypes(studioSubtypeId);
+   var html = "";
+   $.each(types, function(i, type) {
+        html += '<input type="checkbox" checked="checked" value="' + type +'" class="defaultFileType" /> <label>' + type + '</label>';
+   });
+
+   $('#deliverablesCheckboxs').html(html);
+}
+
+/**
+ * Adds a new project.
+ */
+function addNewProject() {
+   var projectName = $('#addProjectForm').find('input[name="projectName"]').val();
+   var projectDescription =  $('#addProjectForm').find('input[name="projectDescription"]').val();
+
+   var errors = [];
+
+   if(!checkRequired(projectName)) {
+       errors.push('project name is empty.');
+   }
+
+   if(errors.length > 0) {
+       showErrors(errors);
+       return;
+   }
+
+
+   $.ajax({
+      type: 'POST',
+      url:  "createProject",
+      data: {'projectName':projectName,
+             'projectDescription':projectDescription},
+      cache: false,
+      dataType: 'json',
+      success: function(jsonResult) {
+          handleJsonResult(jsonResult,
+          function(result) {
+             var projectData = result;
+             $("<option/>").val(projectData.projectId).text(projectData.name).appendTo("#projects");
+             $('#projects').resetSS();
+             $('#projects').getSetSSValue(projectData.projectId);
+
+              $('#addProjectForm').hide();
+              $('#addProjectResult').show();
+              $('#addProjectResult').find('p').html('Project is created successfully.');
+
+          },
+          function(errorMessage) {
+              $('#addProjectForm').hide();
+              $('#addProjectResult').show();
+              $('#addProjectResult').find('p').html(errorMessage);
+          });
+      }
+   });
+}
+
+function getCapacityDatesForStudioSubType(studioSubtypeId) {
+   if(capacityFullDates[studioSubtypeId] == null) {
+        var request = {
+            studio : true,
+            contestTypeId : studioSubtypeId
+        };
+       $.ajax({
+          type: 'GET',
+          url:  ctx + "/launch/getCapacityFullDates",
+          data: request,
+          cache: false,
+          dataType: 'json',
+          success: handleGetCapacityResult
+       });
+   }
+}
+
+function handleGetCapacityResult(jsonResult) {
+    handleJsonResult(jsonResult,
+    function(result) {
+        var contestTypeId = result.contestTypeId;
+        var fullDates = result.fullDates;
+        capacityFullDates[contestTypeId] = fullDates;
+
+    },
+    function(errorMessage) {
+        showErrors(errorMessage);
+    });
+}
+
+function closeTBBox() {
+    $('#TB_overlay').hide();
+    $('#TB_window').hide();
+}

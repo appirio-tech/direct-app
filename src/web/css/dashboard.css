@@ -121,7 +121,7 @@ BODY#page{
 }
 
 	#tabs0 UL LI A{
-		color: #FFFFFE;
+		color: #FFF;
 		font-size: 12px;
 		font-weight: bold;
 		text-decoration: none;
@@ -559,7 +559,7 @@ BODY#page{
 }
 
 #area1 H2.contestTitle{
-	background: url(../images/contest_ico.png) no-repeat left center;
+	background: no-repeat left center;
 }
 
 #area1 H2.contestTitle img{
@@ -1134,7 +1134,7 @@ P.projectArchive{
 
 table.fc-header { /* calendar header */
 	width: 100%;
-	background: #37302e url(../images/calendar_header.png) repeat-x left top;
+	background: transparent url(../images/calendar_header.png) repeat-x;
 	height: 33px !important;
 	color: #FFF;
 	font-size: 14px !important;
@@ -1161,6 +1161,12 @@ table.fc-header { /* calendar header */
 		color: #ff0000;
 	}
 	
+.fc-event a.contestLaunch{ /* style for contest launch,spec post, review complete and review pending */
+    background-image: url(../images/event_launch_ico.png);
+    background-color: transparent;
+    color: #ff0000;
+}
+
 	.fc-event a.task{ /* style for Task */
 		background-image: url(../images/event_task_ico.png);
 		background-color: transparent;
@@ -1173,6 +1179,17 @@ table.fc-header { /* calendar header */
 		color: #17c000;
 	}
 	
+.fc-event a.forumPost{ /* style for forum post */
+    background-image: url(../images/event_forum_ico.png);
+    background-color: transparent;
+    color: #17c000;
+}
+
+.fc-event a.reviewComplete{ /* style for forum post */
+    background-image: url(../images/event_launch_ico.png);
+    background-color: transparent;
+    color: #ff0000;
+}
 	.fc-event a.milestone{ /* style for milstone feed back */
 		background-image: url(../images/event_milestone_ico.png);
 		background-color: transparent;
@@ -1185,6 +1202,11 @@ table.fc-header { /* calendar header */
 		color: #ff6600;
 	}
 
+.fc-event a.reviewPending{ /* style for winner announcement */
+    background-image: url(../images/event_launch_ico.png);
+    background-color: transparent;
+    color: #ff0000;
+}
 /*---- Notification Setting ---*/
 
 SPAN.notif-text{
@@ -1281,6 +1303,18 @@ DIV.notif-div{
 	background: url(../images/tooltip_caption_right_forum.png) no-repeat right;
 }
 
+.tooltipforumPost .tooltipCaption{
+	background: url(../images/tooltip_bg_forum.png) repeat-x;
+}
+
+.tooltipforumPost .tooltipCaptionLeft{
+	background: url(../images/tooltip_caption_left_forum.png) no-repeat left;
+}
+
+.tooltipforumPost .tooltipCaptionRight{
+	background: url(../images/tooltip_caption_right_forum.png) no-repeat right;
+}
+
 /* Orange Caption */
 
 .tooltipWinner .tooltipCaption{
@@ -1353,15 +1387,29 @@ DIV.notif-div{
 		background-color: transparent;
 	}
 	
+.tooltiptask H3{
+    color: #0497ee;
+    background-color: transparent;
+}
+
 	.tooltipForum H3{
 		color: #17c000;
 		background-color: transparent;
 	}
 	
+.tooltipforumPost H3{
+    color: #17c000;
+    background-color: transparent;
+}
+
 	.tooltipMilestone H3{
 		color: #bdbdbd;
 	}
 	
+.tooltipmilestone H3{
+    color: #bdbdbd;
+}
+
 	.tooltipWinner H3{
 		color: #ff6600;
 	}
@@ -1420,6 +1468,7 @@ DIV.notif-div{
 		padding: 10px 10px 0 10px;
 		overflow:hidden;
 	}
+
 	.container2Content_det{
 		padding: 10px 1px 0 1px;
 	} 
@@ -1830,6 +1879,10 @@ TABLE.project{
 		background-color: #17c000;
 	}
 	
+TABLE.project TBODY TD.contestLaunch{
+    background-color: #17c000;
+}
+
 	TABLE.project TBODY TD.task{
 		background-color: #0497ee;
 	}
@@ -1940,7 +1993,7 @@ TABLE.projectStats{
 		color: #FFF;
 		font-size: 11px;
 		height: 33px;
-		background: #37302e url(../images/calendar_header.png) repeat-x left top;
+		background: transparent url(../images/calendar_header.png) repeat-x;
 	}
 	
 	TABLE.projectStats TH.first{
@@ -2024,12 +2077,17 @@ TABLE.contests TD{
 		background: url(../images/milestone_ico.png) no-repeat left;
 	}
 
+TABLE.contests TD SPAN.failedReview{
+    color: #dc0000;
+    background: url(../images/milestone_ico.png) no-repeat left;
+}
+
 TABLE.contests A.button{
 	margin: 0 3px;
 }
 	
 	TABLE.contests A.button SPAN{
-		width: 60px;
+		width: 100px;
 		text-align: center;
 	}
 
@@ -2343,12 +2401,7 @@ A{
 	display: none;
 }
 
-
-
-
-
-
-
+/* Tables pagination */
 
 .dataTables_paginate{
 	color: #000;
@@ -4100,4 +4153,77 @@ html>body #sortable li { height: 1.5em; line-height: 1.2em; }
 .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
 
 .labelPerPageClear{ margin: 0 0 0 65px; color: #999999; }
- 
+
+#vmLaunch {
+	width: 100%;
+	display: inline;
+}
+
+
+
+#vmLaunch .col2 {
+line-height: 23px;
+
+}
+
+#vm_image_id {
+width: 290px;
+}
+
+
+#user_data {
+	width: 287px;
+}
+
+.subm {
+	width: 100px;
+	display: block;
+	vertical-align:bottom;
+	float: left;
+}
+p.msg {
+	margin-left: 10px;
+}
+.line {
+	margin-bottom: 5px;
+}
+.line label {
+	width: 170px;
+}
+div.submLine {
+
+	display: inline;
+}
+#userDataError {
+vertical-align: top;
+}
+.line input {
+	display: inline;
+	width: 287px;
+
+}
+.submBtn {
+	left: 0;
+	vertical-align:bottom;
+}
+hr.plain {
+ background-color: black;
+ margin-bottom:5px;
+}
+
+#launchVM {
+	float:left;
+	left: 5px;
+	bottom: 5px;
+	margin: 10px;
+}
+
+#refreshBtn {
+	float: right;
+	display: block;
+}
+
+.term1 {
+	width: 115px;
+	margin: auto;
+}
