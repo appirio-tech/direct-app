@@ -1089,6 +1089,22 @@ function getApplicationReviewCost(firstPlacePrize, submissionCount, passedScreen
     return screeningCost + 3 * reviewCost + aggregationCost + finalReviewerCost;
 }
 
+function getArchitectureReviewCost(firstPlacePrize, submissionCount, passedScreeningCount) {
+
+        var multiplier = 1.5;
+        var standardPrize = 750;
+        var calculatedBaseRate=15 + (firstPlacePrize - standardPrize) * 0.01;
+        var actualBaseRate=calculatedBaseRate;
+        var calculatedReviewCost=26 * calculatedBaseRate;
+        
+        var screeningCost=actualBaseRate * 0.5 * submissionCount;
+        var reviewCost=(Math.max(0, submissionCount + 1 - passedScreeningCount) * 1.5 + 2 * passedScreeningCount) * actualBaseRate;
+        var aggregationCost=2 * actualBaseRate * 0.25;
+        var finalReviewerCost=2 * actualBaseRate * 0.75;
+        
+        return screeningCost * multiplier + 3 * reviewCost * multiplier + aggregationCost * multiplier + finalReviewerCost * multiplier;
+}
+
 
 function calculateReliabilityPrize(firstPlacePrize, secondPlacePrize, categoryId) {
     return (firstPlacePrize + secondPlacePrize) * 0.2;
