@@ -1,8 +1,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-  xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-  xmlns:sec="http://www.springframework.org/schema/security"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
   http://www.springframework.org/schema/aop
   http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
@@ -13,262 +13,271 @@
   http://www.springframework.org/schema/security
   http://www.springframework.org/schema/security/spring-security-2.0.xsd">
 
-  <context:property-placeholder location="classpath:app.properties" />
+    <context:property-placeholder location="classpath:app.properties"/>
 
-  <!-- Services -->
-  <bean id="projectServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <property name="jndiName" value="remote/ProjectServiceFacadeBean" />
-    <property name="cache" value="true" />
-    <property name="lookupOnStartup" value="false" />
-    <property name="jndiEnvironment">
-      <props>
-        <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-        </prop>
-        <prop key="java.naming.provider.url">${service.provder.url}</prop>
-        <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-        </prop>
-      </props>
-    </property>
-    <property name="proxyInterface" value="com.topcoder.service.facade.project.ProjectServiceFacade" />
-  </bean>
+    <!-- Services -->
+    <bean id="projectServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="remote/ProjectServiceFacadeBean"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.facade.project.ProjectServiceFacade"/>
+    </bean>
 
-  <bean id="contestServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <property name="jndiName" value="ContestServiceFacadeBean/remote" />
-    <property name="cache" value="true" />
-    <property name="lookupOnStartup" value="false" />
-    <property name="jndiEnvironment">
-      <props>
-        <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-        </prop>
-        <prop key="java.naming.provider.url">${service.provder.url}</prop>
-        <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-        </prop>
-      </props>
-    </property>
-    <property name="proxyInterface" value="com.topcoder.service.facade.contest.ContestServiceFacade" />
-  </bean>
+    <bean id="contestServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ContestServiceFacadeBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.facade.contest.ContestServiceFacade"/>
+    </bean>
 
-  <bean id="pipelineServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <property name="jndiName" value="remote/PipelineServiceFacadeBean" />
-    <property name="cache" value="true" />
-    <property name="lookupOnStartup" value="false" />
-    <property name="jndiEnvironment">
-      <props>
-        <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-        </prop>
-        <prop key="java.naming.provider.url">${service.provder.url}</prop>
-        <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-        </prop>
-      </props>
-    </property>
-    <property name="proxyInterface" value="com.topcoder.service.pipeline.PipelineServiceFacade" />
-  </bean>
+    <bean id="pipelineServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="remote/PipelineServiceFacadeBean"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.pipeline.PipelineServiceFacade"/>
+    </bean>
 
-  <bean id="contestManager" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <property name="jndiName" value="ContestManagerBean" />
-    <property name="cache" value="true" />
-    <property name="lookupOnStartup" value="false" />
-    <property name="jndiEnvironment">
-      <props>
-        <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-        </prop>
-        <prop key="java.naming.provider.url">${service.provder.url}</prop>
-        <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-        </prop>
-      </props>
-    </property>
-    <property name="proxyInterface" value="com.topcoder.service.studio.contest.ContestManager" />
-  </bean>
+    <bean id="contestManager" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ContestManagerBean"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.studio.contest.ContestManager"/>
+    </bean>
 
-  <bean id="adminServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <property name="jndiName" value="remote/AdminServiceFacadeBean" />
-    <property name="cache" value="true" />
-    <property name="lookupOnStartup" value="false" />
-    <property name="jndiEnvironment">
-      <props>
-        <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-        </prop>
-        <prop key="java.naming.provider.url">${service.provder.url}</prop>
-        <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-        </prop>
-      </props>
-    </property>
-    <property name="proxyInterface" value="com.topcoder.service.facade.admin.AdminServiceFacade" />
-  </bean>
+    <bean id="adminServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="remote/AdminServiceFacadeBean"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.facade.admin.AdminServiceFacade"/>
+    </bean>
 
-  <bean id="cloudVMService" class="org.springframework.jndi.JndiObjectFactoryBean">
-    <property name="jndiName" value="CloudVMServiceBean/remote" />
-    <property name="cache" value="true" />
-    <property name="lookupOnStartup" value="false" />
-    <property name="jndiEnvironment">
-      <props>
-        <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-        </prop>
-        <prop key="java.naming.provider.url">${service.provder.url}</prop>
-        <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-        </prop>
-      </props>
-    </property>
-    <property name="proxyInterface" value="com.topcoder.direct.cloudvm.service.CloudVMService" />
-  </bean>
+    <bean id="cloudVMService" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="CloudVMServiceBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.direct.cloudvm.service.CloudVMService"/>
+    </bean>
 
     <bean id="userService" class="org.springframework.jndi.JndiObjectFactoryBean">
-      <property name="jndiName" value="UserServiceBean/remote" />
-      <property name="cache" value="true" />
-      <property name="lookupOnStartup" value="false" />
-      <property name="jndiEnvironment">
-        <props>
-          <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-          </prop>
-          <prop key="java.naming.provider.url">${service.provder.url}</prop>
-          <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-          </prop>
-        </props>
-      </property>
-      <property name="proxyInterface" value="com.topcoder.service.user.UserService" />
+        <property name="jndiName" value="UserServiceBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.user.UserService"/>
     </bean>
 
-   <bean id="gamePlanService" class="org.springframework.jndi.JndiObjectFactoryBean">
-      <property name="jndiName" value="GamePlanServiceBean/remote" />
-      <property name="cache" value="true" />
-      <property name="lookupOnStartup" value="false" />
-      <property name="jndiEnvironment">
-        <props>
-          <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-          </prop>
-          <prop key="java.naming.provider.url">${service.provder.url}</prop>
-          <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-          </prop>
-        </props>
-      </property>
-      <property name="proxyInterface" value="com.topcoder.service.gameplan.GamePlanService" />
+    <bean id="gamePlanService" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="GamePlanServiceBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.gameplan.GamePlanService"/>
     </bean>
 
-  <!-- AuthenticationInterceptor -->
-  <bean id="authenticationInterceptor"
-    class="com.topcoder.direct.services.view.interceptors.AuthenticationInterceptor">
-    <property name="loginPageName" value="anonymous" />
-    <property name="userSessionIdentityKey" value="user" />
-  </bean>
+    <!-- AuthenticationInterceptor -->
+    <bean id="authenticationInterceptor"
+          class="com.topcoder.direct.services.view.interceptors.AuthenticationInterceptor">
+        <property name="loginPageName" value="anonymous"/>
+        <property name="userSessionIdentityKey" value="user"/>
+    </bean>
 
-  <!-- LoggingInterceptor -->
-  <bean id="loggingInterceptor" class="com.topcoder.direct.services.view.interceptors.LoggingInterceptor">
-    <constructor-arg index="0">
-      <value>directLogger</value>
-    </constructor-arg>
-  </bean>
+    <!-- LoggingInterceptor -->
+    <bean id="loggingInterceptor" class="com.topcoder.direct.services.view.interceptors.LoggingInterceptor">
+        <constructor-arg index="0">
+            <value>directLogger</value>
+        </constructor-arg>
+    </bean>
 
-  <bean id="referenceDataBean" class="com.topcoder.direct.services.configs.ReferenceDataBean">
-     <property name="contestServiceFacade" ref="contestServiceFacade" />
-  </bean>
+    <bean id="referenceDataBean" class="com.topcoder.direct.services.configs.ReferenceDataBean">
+        <property name="contestServiceFacade" ref="contestServiceFacade"/>
+    </bean>
 
-  <bean id="mimeTypeRetriever" class="com.topcoder.direct.services.view.action.contest.launch.MimeTypeRetriever" />
+    <bean id="mimeTypeRetriever" class="com.topcoder.direct.services.view.action.contest.launch.MimeTypeRetriever"/>
 
-  <!-- Actions -->
-  <bean id="baseDirectStrutsAction" class="com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction"
-    abstract="true">
-    <property name="projectServiceFacade" ref="projectServiceFacade" />
-    <property name="contestServiceFacade" ref="contestServiceFacade" />
-    <property name="pipelineServiceFacade" ref="pipelineServiceFacade" />
-    <property name="contestManager" ref="contestManager" />
-    <property name="adminServiceFacade" ref="adminServiceFacade" />
-    <property name="referenceDataBean" ref="referenceDataBean" />
-  </bean>
+    <!-- Actions -->
+    <bean id="baseDirectStrutsAction"
+          class="com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction"
+          abstract="true">
+        <property name="projectServiceFacade" ref="projectServiceFacade"/>
+        <property name="contestServiceFacade" ref="contestServiceFacade"/>
+        <property name="pipelineServiceFacade" ref="pipelineServiceFacade"/>
+        <property name="contestManager" ref="contestManager"/>
+        <property name="adminServiceFacade" ref="adminServiceFacade"/>
+        <property name="referenceDataBean" ref="referenceDataBean"/>
+    </bean>
 
-  <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
-    parent="baseDirectStrutsAction">
-  </bean>
+    <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
+          parent="baseDirectStrutsAction">
+    </bean>
 
-  <bean id="projectAction" class="com.topcoder.direct.services.view.action.contest.launch.ProjectAction"
-    parent="baseDirectStrutsAction"
-    abstract="true">
-  </bean>
+    <bean id="projectAction" class="com.topcoder.direct.services.view.action.contest.launch.ProjectAction"
+          parent="baseDirectStrutsAction"
+          abstract="true">
+    </bean>
 
-  <bean id="contestAction" class="com.topcoder.direct.services.view.action.contest.launch.ContestAction"
-    parent="baseDirectStrutsAction"
-    abstract="true">
-  </bean>
+    <bean id="contestAction" class="com.topcoder.direct.services.view.action.contest.launch.ContestAction"
+          parent="baseDirectStrutsAction"
+          abstract="true">
+    </bean>
 
-  <bean id="launchContestAction" class="com.topcoder.direct.services.view.action.contest.launch.LaunchContestAction"
-    parent="baseDirectStrutsAction" scope="prototype">
-  </bean>
+    <bean id="launchContestAction" class="com.topcoder.direct.services.view.action.contest.launch.LaunchContestAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
 
-  <bean id="createProjectAction" class="com.topcoder.direct.services.view.action.contest.launch.CreateProjectAction"
-    parent="projectAction" scope="prototype">
-  </bean>
+    <bean id="createProjectAction" class="com.topcoder.direct.services.view.action.contest.launch.CreateProjectAction"
+          parent="projectAction" scope="prototype">
+    </bean>
 
-  <bean id="saveDraftContestAction" class="com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestAction"
-    parent="contestAction" scope="prototype">
-  </bean>
+    <bean id="saveDraftContestAction"
+          class="com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestAction"
+          parent="contestAction" scope="prototype">
+    </bean>
 
-  <bean id="documentUploadAction" class="com.topcoder.direct.services.view.action.contest.launch.DocumentUploadAction"
-    parent="contestAction" scope="prototype">
-    <property name="mimeTypeRetriever" ref="mimeTypeRetriever" />
-  </bean>
+    <bean id="documentUploadAction" class="com.topcoder.direct.services.view.action.contest.launch.DocumentUploadAction"
+          parent="contestAction" scope="prototype">
+        <property name="mimeTypeRetriever" ref="mimeTypeRetriever"/>
+    </bean>
 
-  <bean id="removeDocumentAction" class="com.topcoder.direct.services.view.action.contest.launch.RemoveDocumentAction"
-    parent="contestAction" scope="prototype">
-  </bean>
+    <bean id="removeDocumentAction" class="com.topcoder.direct.services.view.action.contest.launch.RemoveDocumentAction"
+          parent="contestAction" scope="prototype">
+    </bean>
 
-  <bean id="downloadDocumentAction" class="com.topcoder.direct.services.view.action.contest.launch.DownloadDocumentAction"
-    parent="contestAction" scope="prototype">
-  </bean>
+    <bean id="downloadDocumentAction"
+          class="com.topcoder.direct.services.view.action.contest.launch.DownloadDocumentAction"
+          parent="contestAction" scope="prototype">
+    </bean>
 
-  <bean id="getCapacityFullDatesAction" class="com.topcoder.direct.services.view.action.contest.launch.GetCapacityFullDatesAction"
-    parent="baseDirectStrutsAction" scope="prototype">
-  </bean>
+    <bean id="getCapacityFullDatesAction"
+          class="com.topcoder.direct.services.view.action.contest.launch.GetCapacityFullDatesAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
 
-  <bean id="repostAction" class="com.topcoder.direct.services.view.action.contest.RepostAction"
-    parent="baseDirectStrutsAction" scope="prototype">
-  </bean>
+    <bean id="repostAction" class="com.topcoder.direct.services.view.action.contest.RepostAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
 
-  <bean id="newVersionAction" class="com.topcoder.direct.services.view.action.contest.NewVersionAction"
-    parent="baseDirectStrutsAction" scope="prototype">
-  </bean>
+    <bean id="newVersionAction" class="com.topcoder.direct.services.view.action.contest.NewVersionAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
 
-  <bean id="dashboardNotificationsAction" class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction"
-    parent="baseDirectStrutsAction" scope="prototype">
-  </bean>
+    <bean id="dashboardNotificationsAction"
+          class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
 
-  <bean id="updateNotificationsAction" class="com.topcoder.direct.services.view.action.notification.UpdateNotificationsAction"
-    parent="baseDirectStrutsAction" scope="prototype">
-  </bean>
-  <bean id="getContestAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
-    parent="contestAction" scope="prototype">
-  </bean>
+    <bean id="updateNotificationsAction"
+          class="com.topcoder.direct.services.view.action.notification.UpdateNotificationsAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
+    <bean id="getContestAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
+          parent="contestAction" scope="prototype">
+    </bean>
 
-  <bean id="abstractVMAction" class="com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction"
-    parent="baseDirectStrutsAction" scope="prototype" abstract="true">
-      <property name="cloudVMService" ref="cloudVMService" />
-  </bean>
+    <bean id="abstractVMAction" class="com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction"
+          parent="baseDirectStrutsAction" scope="prototype" abstract="true">
+        <property name="cloudVMService" ref="cloudVMService"/>
+    </bean>
 
-  <bean id="launchVMInstanceAction" class="com.topcoder.direct.services.view.action.cloudvm.LaunchVMInstanceAction"
-    parent="abstractVMAction" scope="prototype">
-      <property name="contestServiceFacade" ref="contestServiceFacade"/>
-      <property name="userService" ref="userService"/>
-      <property name="softwareContestTypeId" value="1"/>
-      <property name="studioContestTypeId" value="2"/>
-      <property name="bugRaceContestTypeId" value="3"/>
-      <property name="userSecurityKeyCheckUrl" value="http://66.37.210.86/tc?module=BasicRSS&amp;c=rss_get_key&amp;dsid=30&amp;hn={handle}"/>
-  </bean>
+    <bean id="launchVMInstanceAction" class="com.topcoder.direct.services.view.action.cloudvm.LaunchVMInstanceAction"
+          parent="abstractVMAction" scope="prototype">
+        <property name="contestServiceFacade" ref="contestServiceFacade"/>
+        <property name="userService" ref="userService"/>
+        <property name="softwareContestTypeId" value="1"/>
+        <property name="studioContestTypeId" value="2"/>
+        <property name="bugRaceContestTypeId" value="3"/>
+        <property name="userSecurityKeyCheckUrl"
+                  value="http://66.37.210.86/tc?module=BasicRSS&amp;c=rss_get_key&amp;dsid=30&amp;hn={handle}"/>
+    </bean>
 
-  <bean id="terminateVMInstanceAction" class="com.topcoder.direct.services.view.action.cloudvm.TerminateVMInstanceAction"
-    parent="abstractVMAction" scope="prototype">
-  </bean>
+    <bean id="terminateVMInstanceAction"
+          class="com.topcoder.direct.services.view.action.cloudvm.TerminateVMInstanceAction"
+          parent="abstractVMAction" scope="prototype">
+    </bean>
 
-  <bean id="showVMInstancesAction" class="com.topcoder.direct.services.view.action.cloudvm.ShowVMInstancesAction"
-    parent="abstractVMAction" scope="prototype">
-  </bean>
+    <bean id="showVMInstancesAction" class="com.topcoder.direct.services.view.action.cloudvm.ShowVMInstancesAction"
+          parent="abstractVMAction" scope="prototype">
+    </bean>
 
-  <bean id="dashboardVMAction" class="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction"
-     scope="prototype">
-      <property name="cloudVMService" ref="cloudVMService" />
-  </bean>
+    <bean id="dashboardVMAction" class="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction"
+          scope="prototype">
+        <property name="cloudVMService" ref="cloudVMService"/>
+    </bean>
 
-  <bean id="projectGamePlanAction" class="com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction"
-     scope="prototype">
-      <property name="gamePlanService" ref="gamePlanService" />
-  </bean>
+    <bean id="projectGamePlanAction"
+          class="com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction"
+          scope="prototype">
+        <property name="gamePlanService" ref="gamePlanService"/>
+    </bean>
 
     <bean id="contestSubmissionsAction"
           class="com.topcoder.direct.services.view.action.contest.ContestSubmissionsAction"
@@ -279,4 +288,29 @@
           class="com.topcoder.direct.services.view.action.contest.StudioSubmissionAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+
+    <bean id="getProjectPermissionsAction"
+          class="com.topcoder.direct.services.view.action.dashboard.GetProjectPermissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="searchUserAction"
+          class="com.topcoder.direct.services.view.action.dashboard.SearchUserAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="updateProjectPermissionsAction"
+          class="com.topcoder.direct.services.view.action.dashboard.UpdateProjectPermissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="permissionsUpdateSuccessAction" class="com.topcoder.direct.services.view.action.ForwardAction"
+          scope="prototype">
+        <property name="actionMessages">
+            <list>
+                <value>Permissions have been updated successfully</value>
+            </list>
+        </property>
+    </bean>
+    
 </beans>

@@ -206,6 +206,40 @@
             <result name="success">/WEB-INF/calendar.jsp</result>
         </action>
 
+        <action name="permissionsView" class="com.topcoder.direct.services.view.action.ForwardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/project-permissions.jsp</result>
+        </action>
+
+        <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/project-permissions.jsp</result>
+        </action>
+
+        <action name="getProjectPermissions" class="getProjectPermissionsAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json" />
+        </action>
+
+        <action name="getUser" class="searchUserAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json" />
+        </action>
+
+        <action name="updateProjectPermissions" class="updateProjectPermissionsAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">permissionsUpdateSuccess</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
+
         <action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction">
             <!--<interceptor-ref name="securedPreProcessorStack"/>-->
             <interceptor-ref name="baseStack"/>
@@ -356,7 +390,7 @@
         <action name="newVersion" class="newVersionAction">
             <result type="json" />
         </action>
-        
+
         <action name="submissions" class="contestSubmissionsAction">
             <result name="grid">/WEB-INF/studio-submissions-grid.jsp</result>
             <result name="list">/WEB-INF/studio-submissions-list.jsp</result>

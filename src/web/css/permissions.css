@@ -1,52 +1,52 @@
 /* css for permissions.html */
 
 .b{
-	font-weight: bold;	
-}	
+	font-weight: bold;
+}
 .permissions{
-	border-bottom: 1px solid #A8ABAD;	
-}	 
+	border-bottom: 1px solid #A8ABAD;
+}
 #users{
-	display: none;	
-}                      
+	display: none;
+}
 .permissions #tabs3 ul li{
 	width:50%;
 }
 .permissions .container2Content{
-	padding:20px 0px 40px 1px;	
+	padding:20px 0px 40px 1px;
 }
 
 .permissions table.notifications{
 	border-left:0px solid #FFFFFF;
-}	
+}
 
 .permissions  table tr.subTr td{
 	border:0px solid #FFFFFF;
-	padding:3px 0px 3px 10px;	
+	padding:3px 0px 3px 10px;
 	font-size: 10px;
 	background: transparent url(../images/dot.png) repeat-x scroll bottom center;
 }
 .permissions table th.permCol{
-	width:30%;	
-}	
+	width:30%;
+}
 .permissions table th.permCol2{
-	width:8%;	
+	width:8%;
 }
 .permissions table td.permCol input{
-	float:left;	
+	float:left;
 	margin-top:2px;
 	margin-right:5px;
 }
 .permissions table td.permCol .group{
-	float:left;	
+	float:left;
 }
 .permissions table td.permCol{
 	border-left: 0px solid #FFFFFF;
 }
 
 .permissions table tr.applyForAll a.button1{
-	margin-right:10px;	
-}	
+	margin-right:10px;
+}
 .permissions table td a.addUser{
 	background: transparent url(../images/user.png) no-repeat;
 	display: block;
@@ -74,7 +74,7 @@
 	background: transparent url(../images/delete1.png) no-repeat;
 	display: block;
 	height:23px;
-	width:23px; 
+	width:23px;
 	float:left;
 }
 
@@ -83,29 +83,29 @@
 }
 .permissionsButtons{
 	overflow: hidden;
-	margin-top:20px; 	
+	margin-top:20px;
 }
 
 .permissions table.notifications .collapse{
 	background: transparent url(../images/minimize.png) no-repeat;
-}	
+}
 
 /* customized dialog css */
 .ui-dialog {
-	padding:0px;	
+	padding:0px;
 }
 .ui-widget-overlay{
 	background: #000000 none repeat scroll 0 0;
 	opacity:0.6;
     filter:alpha(opacity=60);
-}	
+}
 .ui-dialog .ui-dialog-titlebar{
-	display: none;	
+	display: none;
 }
 .ui-dialog .header{
 	height:27px;
-	background-color:#E8E8E8; 
-	overflow: hidden;	
+	background-color:#E8E8E8;
+	overflow: hidden;
 }
 .ui-dialog .header .title{
 	float:left;
@@ -128,16 +128,15 @@
 	height:300px;
 }
 .ui-dialog .body .middle{
-	margin-top:150px;		
-}	
+	margin-top:150px;
+}
 .ui-dialog .body .middle a{
-	display: block;	
-	*margin-bottom: 10px;
+	display: block;
 }
 
 
 .ui-dialog .body .list{
-	overflow: auto;	
+	overflow: auto;
 	height:220px;
 	border-top:1px solid #CCCCCC;
 }
@@ -177,29 +176,24 @@
 	margin-right:5px;
 }
 .ui-dialog .body .searchBox {
-	padding:10px 0px 10px 10px;	
-	overflow: hidden;
+	padding:10px 0px 10px 10px;
 }
-.ui-dialog .body .searchBox a.button1{
-	display: block;
-}
-.ui-dialog .body .searchBox .searchTxt{
-	float:left;
-	margin-right:10px;
-}	
-.ui-dialog .body .searchBox .searchTxt input{
+.ui-dialog .body .searchBox input.searchTxt{
 	width: 110px;
 	height:20px;
-	font-size: 11px; 
+	float:left;
+	display: block;
+	margin-right:10px;
+	font-size: 11px;
 }
 .ui-dialog .foot .buttons{
-	padding-left:150px;	
-}	
+	padding-left:150px;
+}
 .ui-dialog .foot .buttons a.button6{
-	float:left;	
+	float:left;
 	color:#FFFFFF;
 	text-align: center;
-}	
+}
 
 .ui-dialog a.dialogClose{
 	background: transparent url(../images/close_ico.png) no-repeat scroll 0 0;
@@ -208,17 +202,17 @@
 	display: block;
 	margin-top:5px;
 	margin-right:10px;
-	float:right;	  	
+	float:right;
 }
 #addUserDialog,#manageUserDialog,#addProjectDialog{
-	padding:0px;	
-}	
+	padding:0px;
+}
 
 
 .pagination-info{
-	margin:0px 20px;	
-}	
-	
+	margin:0px 20px;
+}
+
 .display-perpage .selectedTxt{
 	width:32px;
 	padding-left:5px;
@@ -232,14 +226,14 @@
 	text-align: center;
 }
 
-.display-perpage .newList a{ 
-	text-decoration: none;	
-}	
+.display-perpage .newList a{
+	text-decoration: none;
+}
 .display-perpage .newList{
 	overflow: hidden scroll!important;
 	overflow-y: scroll !important;
 }
-.display-perpage .newListSelected { 
+.display-perpage .newListSelected {
 	background:transparent url(../images/pagination-select.png) no-repeat scroll 0 0;
 	border:0 none;
 	color:#333333;
@@ -248,21 +242,29 @@
 	font-size:11px;
 	height:17px;
 	line-height:15px;
-	padding:0 5px; 
+	padding:0 5px;
 	float:left;
 }
 .display-perpage .label{
-	padding-top:2px;	
+	padding-top:2px;
 }
 
-.separator{ 
+.separator{
 	border-bottom:1px solid #CCCCCC;
 	height:10px;
 	margin-bottom:20px;
 	margin-top:10px;
-	width:100%; 
+	width:100%;
 }
 #notificationSetting .pagination{
-	width:250px;	
-}	
+	width:250px;
+}
 
+
+.actionMessage {
+    color:red;
+}
+
+.actionMessage {
+    list-style:none;
+}

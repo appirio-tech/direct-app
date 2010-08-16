@@ -566,6 +566,10 @@ BODY#page{
 	vertical-align:middle;
 }
 
+#area1 H2.contestTitle{
+	background: url(../images/contest_ico.png) no-repeat left center;
+}
+
 #area1 H2.notificationTitle{
 	background: url(../images/notification_ico.png) no-repeat left center;
 }

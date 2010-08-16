@@ -1,3 +1,14 @@
+<%--
+  - Author: isv
+  - Version: 1.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page fragment is to be included to all pages from TC Direct application.
+  - It renders the common page headers.
+  -
+  - Version 1.1 (Direct Permissions Setting Back-end and Integration Assembly 1.0) changes: added Permissions tab for
+  - dahsboard pages.
+--%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -21,11 +32,10 @@
     <div id="tabs0"><!-- the left tabs -->
         <ui:isDashboardPage>
             <ul>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
+                <li class="on">
                     <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                 </li>
-
-				<li <c:if test="${requestScope.CURRENT_TAB eq 'search'}">class="on"</c:if>>
+				<li>
                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
@@ -123,6 +133,10 @@
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
                     <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
                 </li>
+
+                 <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
+                     <a href="<s:url action="permissionsView" namespace="/"/>"><span class="dashboardSpan">Permissions</span></a>
+                 </li>
              </ul>
         </div>
             
