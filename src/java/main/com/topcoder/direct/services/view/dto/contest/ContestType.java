@@ -82,7 +82,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>
      */
-    UI_PROTOTYPE("UI Prototype Competition", "ui", 2, true),
+    UI_PROTOTYPE("UI Prototype Competition", "ui", 19, true),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Specification</code> contest type.</p>
