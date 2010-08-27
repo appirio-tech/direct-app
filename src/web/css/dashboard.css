@@ -3278,7 +3278,7 @@ a.downloadFile:hover{ background:url(../images/ico_big_download_zip_hover.png) n
 #bankSelection{
 	margin: 20px 0 0 0;
 }
-
+#bankSelectionItemList .sortableItem { height:100px;}
 #bankSelectionHead{
 		color: #cacaca;
 		font-size: 11px;
@@ -3442,7 +3442,22 @@ A.buttonBankSelection:hover {
 --------------------------*/
 
 #bankSelectionSlots{ display:block; width: 100%; }
-#bankSelectionItem{ float:left; height: 85px; background:url(../images/bank_selection_bg.png) no-repeat left top; }
+#bankSelectionItem{ float:left; height: 85px; }
+.bankSelectionItemSize1 {
+     background:url(../images/bank_selection_bg1.png) no-repeat left top;
+}
+.bankSelectionItemSize2 {
+     background:url(../images/bank_selection_bg2.png) no-repeat left top;
+}
+.bankSelectionItemSize3 {
+     background:url(../images/bank_selection_bg3.png) no-repeat left top;
+}
+.bankSelectionItemSize4 {
+     background:url(../images/bank_selection_bg4.png) no-repeat left top;
+}
+.bankSelectionItemSize5 {
+     background:url(../images/bank_selection_bg.png) no-repeat left top;
+}
 #bankSelectionItem li{ 
 	float:left; 
 	width: 66px; 

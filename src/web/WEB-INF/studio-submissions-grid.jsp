@@ -1,6 +1,9 @@
 <%--
-  - Author: isv
-  - Version: 1.0 (Submission Viewer Release 1 assembly)
+  - Author: isv, flexme
+  - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: include the contestVars.jsp.
+  -
+  - Version: 1.1
+  - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Studio contest in a grid view.
@@ -102,7 +105,7 @@
 </div>
 <!-- End #wrapper -->
 
-
+<jsp:include page="includes/contest/submissionViewer/contestVars.jsp"/>
 <jsp:include page="includes/popups.jsp"/>
 </body>
 <!-- End #page -->

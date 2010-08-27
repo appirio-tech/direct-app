@@ -289,6 +289,23 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="updateStudioSubmissionFeedbackAction"
+          class="com.topcoder.direct.services.view.action.contest.UpdateContestSubmissionFeedbackAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="studioSubmissionCheckoutAction"
+        class="com.topcoder.direct.services.view.action.contest.ContestSubmissionsCheckoutAction"
+        scope="prototype" parent="baseDirectStrutsAction"></bean>
+
+    <bean id="saveMilestoneAction"
+        class="com.topcoder.direct.services.view.action.contest.SaveMilestoneAction"
+        scope="prototype" parent="baseDirectStrutsAction"></bean>
+
+    <bean id="checkoutFinalAction"
+        class="com.topcoder.direct.services.view.action.contest.CheckoutFinalAction"
+        scope="prototype" parent="baseDirectStrutsAction"></bean>
+
     <bean id="getProjectPermissionsAction"
           class="com.topcoder.direct.services.view.action.dashboard.GetProjectPermissionsAction"
           scope="prototype" parent="baseDirectStrutsAction">

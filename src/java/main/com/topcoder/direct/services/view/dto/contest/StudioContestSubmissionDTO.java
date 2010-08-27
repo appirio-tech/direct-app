@@ -10,8 +10,16 @@ import com.topcoder.service.studio.SubmissionData;
 /**
  * <p>A <code>DTO</code> class providing the data for displaying by <code>Studio Contest Submission</code> view.</p>
  *
- * @author isv
- * @version 1.0 (Submission Viewer Release 1 assembly)
+ * <p>
+ * Version 1.1 (Direct Submission Viewer Release 2) change notes:
+ * <ul>
+ * <li>Added {@link #prizeNumber} private field and getter/setter for it.</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, flexme
+ * @since Submission Viewer Release 1 assembly
+ * @version 1.1
  */
 public class StudioContestSubmissionDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -51,6 +59,11 @@ public class StudioContestSubmissionDTO extends CommonDTO implements ContestStat
      * list of submissions for requested contest.</p>
      */
     private long nextSubmissionId;
+
+    /**
+     * <p>An <code>int</code> providing the number of the prize slots.</p> 
+     */
+    private int prizeNumber;
 
     /**
      * <p>Constructs new <code>StudioContestSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -192,5 +205,25 @@ public class StudioContestSubmissionDTO extends CommonDTO implements ContestStat
      */
     public void setNextSubmissionId(long nextSubmissionId) {
         this.nextSubmissionId = nextSubmissionId;
+    }
+
+    /**
+     * <p>Gets the number of the prize slots.</p>
+     *
+     * @return An <code>int</code> providing the number of the prize slots
+     * @since 1.1
+     */
+    public int getPrizeNumber() {
+        return prizeNumber;
+    }
+
+    /**
+     * <p>Sets the number of the prize slots.</p>
+     * 
+     * @param prizeNumber An <code>int</code> providing the number of the prize slots
+     * @since 1.1
+     */
+    public void setPrizeNumber(int prizeNumber) {
+        this.prizeNumber = prizeNumber;
     }
 }

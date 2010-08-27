@@ -399,5 +399,30 @@
         <action name="studioSubmission" class="studioSubmissionAction">
             <result>/WEB-INF/studio-submissions-single.jsp</result>
         </action>
+
+        <action name="updateSubmissionFeedback" class="updateStudioSubmissionFeedbackAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json" />
+        </action>
+
+        <action name="checkout" class="studioSubmissionCheckoutAction">
+            <result>/WEB-INF/studio-submissions-checkout.jsp</result>
+        </action>
+        
+        <action name="saveMilestone" class="saveMilestoneAction">
+            <result type="redirectAction">
+                <param name="actionName">submissions</param>
+                <param name="namespace">/contest</param>
+                <param name="contestId">${contestId}</param>
+                <param name="formData.viewType">GRID</param>
+                <param name="formData.roundType">FINAL</param>
+            </result>
+        </action>
+        
+        <action name="checkoutFinal" class="checkoutFinalAction">
+            <result>/WEB-INF/studio-final-checkout-confirmation.jsp</result>
+        </action>
     </package>
 </struts>

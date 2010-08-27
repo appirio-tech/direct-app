@@ -27,8 +27,18 @@ import java.util.List;
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a single submission for
  * <code>Studio</code> contest.</p>
  *
- * @author isv
- * @version 1.0 (Submission Viewer Release 1 assembly)
+ * <p>
+ * Version 1.1 (Direct Submission Viewer Release 2) change notes:
+ * <ul>
+ * <li>
+ * Update {@link #executeAction()} method to set prize number to the view data.
+ * </li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, flexme
+ * @since Submission Viewer Release 1 assembly
+ * @version 1.1
  */
 public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
 
@@ -136,9 +146,13 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
             getViewData().setContestStats(contestStats);
 
+             // set the number of prizes
+            int prizeNumber = DirectUtils.getContestPrizeNumber(studioCompetition, roundType);
+            getViewData().setPrizeNumber(prizeNumber);
+            
             // Set projects data
             List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
             UserProjectsDTO userProjectsDTO = new UserProjectsDTO();

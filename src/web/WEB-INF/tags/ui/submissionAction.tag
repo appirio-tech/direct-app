@@ -1,6 +1,9 @@
 <%--
-  - Author: isv
-  - Version: 1.0 (Submission Viewer Release 1 assembly)
+  - Author: isv, flexme
+  - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: remove firstSlots class on single page.
+  -
+  - Version: 1.1
+  - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This tag renders the HTML markup for a collection of buttons used for ranking, viewing,
@@ -22,7 +25,7 @@
 
 <div class="${divStyleClass}">
     <c:if test="${viewType eq 'SINGLE'}">
-        <span class="icoSingleSubmissionBankLocation firstSlots"></span>
+        <span class="icoSingleSubmissionBankLocation"></span>
     </c:if>
     <ul>
         <li>
@@ -35,7 +38,7 @@
                         <div class="dialog-mini-outside">
                             Add to <strong>Like</strong> Bank?
                             <span class="question"><a href="javascript:;" class="greentext likeSubmission " rel="${submissionId}">Yes</a> | <a
-                                    href="javascript:;">No</a></span>
+                                    href="javascript:;" class="noLikeSubmission" rel="${submissionId}">No</a></span>
                         </div>
                     </div>
                 </div>
@@ -51,7 +54,7 @@
                         <div class="dialog-mini-outside">
                             Add to <strong>Dislike</strong> Bank?
                             <span class="question"><a href="javascript:;" class="redtext dislikeSubmission " rel="${submissionId}">Yes</a> | <a
-                                    href="javascript:;">No</a></span>
+                                    href="javascript:;" class="noDislikeSubmission" rel="${submissionId}">No</a></span>
                         </div>
                     </div>
                 </div>
@@ -88,7 +91,7 @@
                             <span class="question">
                                 <a href="javascript:;" class="extraSlot greenDarktext"
                                    title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">Yes</a> |
-                                <a href="javascript:;">No</a></span>
+                                <a href="javascript:;" class="noExtraSlot" rel="${submissionId}">No</a></span>
                         </div>
                     </div>
                 </div>
@@ -103,12 +106,10 @@
                     <div class="dialog-mini-inside">
                         <div class="dialog-mini-outside">
                             Add to Bank Number?
-                            <span class="question">
-                                <a href="javascript:;" class="firstSlot blackLink" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">1</a>
-                                <a href="javascript:;" class="secondSlot blackLink" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">2</a>
-                                <a href="javascript:;" class="thirdSlot blackLink" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">3</a>
-                                <a href="javascript:;" class="fourthSlot blackLink" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">4</a>
-                                <a href="javascript:;" class="fifthSlot blackLink" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">5</a>
+                            <span class="question addToBank">
+                                <c:forEach var="ind" begin="1" end="${viewData.prizeNumber}">
+                                <a href="javascript:;" class="blackLink" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">${ind}</a>
+                                </c:forEach>
                                 |
                                 <a href="javascript:;" class="extraSlot" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">Xtra</a>
                             </span>

@@ -60,11 +60,13 @@ $("a.thumbGrid").hover(function() {
 
 	$("#checkAll").click(function() {   
 			$(".selectThumb").attr('checked' , true); 
+			updateSummary();
 			return false;			  
 		}); 
 
 	$("#checkNone").click(function() {   
 			$(".selectThumb").attr('checked' , false); 
+			updateSummary();
 			return false;			  
 		}); 
   

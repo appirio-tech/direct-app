@@ -270,10 +270,10 @@ $(document).ready(function(){
 	}
 	
 	/*-------------------------------------- Check/uncheck all checkboxes functionnality --*/
+	/* myCheckbox: the "select all" check box
+	   myContainerId: the id of the container of the checkboxes */
+	/*
 	checkAll = function(myCheckbox, myContainerId){
-		/* myCheckbox: the "select all" check box
-		   myContainerId: the id of the container of the checkboxes */
-	
 		$("#"+myContainerId+" input.selectUser").each(function(){
 				if( myCheckbox.checked )
 					this.checked = true;
@@ -281,7 +281,8 @@ $(document).ready(function(){
 					this.checked = false;
 		});
 	}
-	
+	*/
+
 	/*------------------------------ w/search ---*/
 	var prev_result = null;
 	showResults = function(mySelect, containerId){

@@ -25,7 +25,7 @@
         </a>
 
     </td>
-    <td class="submissionID">${submissionId}</td>
+    <td class="submissionID">${submissionId}(<a href="http://studio.topcoder.com/?module=DownloadSubmission&sbmid=${submissionId}">Download</a>)</td>
     <td><span class="icoBankLocation"></span></td>
     <td>
         <ui:submissionAction contestId="${contestId}" submissionId="${submissionId}"/>

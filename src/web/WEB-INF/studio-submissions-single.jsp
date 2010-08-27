@@ -1,6 +1,13 @@
 <%--
-  - Author: isv
-  - Version: 1.0 (Submission Viewer Release 1 assembly)
+  - Author: isv, flexme
+  - Version 1.1 (Direct Submission Viewer Release 2 ) change notes:
+  - 1.Remove "bank:" row.
+  - 2.Hide "Submitter Notes:" row.
+  - 3.Display Feedback when feedback text is not null or empty.
+  - 4.include the contestVars.jsp.
+  -
+  - Version: 1.1
+  - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the single submission for Studio contest.
@@ -129,11 +136,8 @@
                                                                                         pattern="MMM dd, yyyy, hh:mm:ss aa"/>
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td class="label">Bank:</td>
-                                                                    <td>1</td>
-                                                                </tr>
-                                                                <tr>
+                                                                <!-- TODO: It will be used later. -->
+                                                                <tr style="display:none;">
                                                                     <td class="label">Submitter Notes:</td>
                                                                     <td>This is my submission, if you’re reading this,
                                                                         this have passed
@@ -141,6 +145,10 @@
                                                                         was Arial and Tahoma.
                                                                     </td>
                                                                 </tr>
+                                                                <s:if test="viewData.submission.feedbackText != null && viewData.submission.feedbackText.length() > 0">
+                                                                    <td class="label">Feedback:</td>
+                                                                    <td>${viewData.submission.feedbackText}</td>
+                                                                </s:if>
                                                             </table>
                                                         </div>
                                                         <!-- End #submissionData -->
@@ -178,7 +186,8 @@
 </div>
 <!-- End #wrapper -->
 
-
+<jsp:include page="includes/contest/submissionViewer/contestVars.jsp"/>
+<input type="hidden" id="submissionId" value="${formData.submissionId}"/>
 <jsp:include page="includes/popups.jsp"/>
 
 </body>

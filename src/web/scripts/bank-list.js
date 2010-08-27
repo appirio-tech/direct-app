@@ -3,6 +3,10 @@ var listDislikes = new Array();
 var listExtra = new Array();
 var arrPrize = ["firstPrize","secondPrize","thirdPrize","fourthPrize","fifthPrize"];
 var arrSlot = ["firstSlots","secondSlots","thirdSlots","fourthSlots","fifthSlots"];
+var cookieOptions = { path: '/', expires: 1 };
+var COOKIE_NAME = "bankSelection";
+var contestId;
+var roundType;
 
 // Array Remove - By John Resig (MIT Licensed)
 Array.prototype.remove = function(from, to) {
@@ -51,8 +55,20 @@ $(document).ready(function(){
 		listLikes.push($item);
 		$("#likeCount").html(listLikes.length);
 		$("#submission-"+$item).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("likeSlots");
+		getBankData();
 		return false;
 	}); 
+
+	//remove from like bank
+	$(".noLikeSubmission").click(function() {
+		var $item = $(this).attr("rel"); 
+		if (arrayRemove(listLikes, $item) != -1) {
+			$("#likeCount").html(listLikes.length);
+			$("#submission-"+$item).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			updateNullSlots();
+			getBankData();
+		}
+	});
 	
 	//dislike bank
 	$(".dislikeSubmission").click(function() { 
@@ -61,9 +77,21 @@ $(document).ready(function(){
 		listDislikes.push($item);
 		$("#dislikeCount").html(listDislikes.length);
 		$("#submission-"+$item).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("dislikeSlots");
+		getBankData();
 		return false;
 	}); 
 	
+	//remove from dislike bank
+	$(".noDislikeSubmission").click(function() {
+		var $item = $(this).attr("rel"); 
+		if (arrayRemove(listDislikes, $item) != -1) {
+			$("#dislikeCount").html(listDislikes.length);
+			$("#submission-"+$item).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			updateNullSlots();
+			getBankData();
+		}
+	});
+
 	//if submission id already exist in the list than remove it
 	function removeIfExist(id)
 	{
@@ -116,6 +144,16 @@ $(document).ready(function(){
 			} 
 	}); 
 	
+	// contest id
+	contestId = $("#contestId").val();
+	// round type
+	roundType = $("#roundType").val();
+	// get the url of a sumbission's single page
+	function getSinglePage(submissionId) {
+		return "studioSubmission?contestId=" + contestId + "&formData.submissionId=" + submissionId + "&formData.roundType=" + roundType;
+	}
+
+	// update the order of the bank slots
 	function updateSortable()
 	{
 		var result = $("#bankSelectionItemList").sortable('toArray');
@@ -132,29 +170,92 @@ $(document).ready(function(){
 				var $itemlabel = $(this).children("label").text();
 				var $slotId = arrPrize[index];
 				var $slotName = arrSlot[index];
-				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="studio-final-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 				$(".statusSubmission").removeClass($slotName);
 				$('#submission-'+$itemlabel).children("td").children("span.icoBankLocation").removeClass().addClass("icoBankLocation").addClass($slotName);
-				
+				getBankData();
+
 				$('#remove' + $slotId).click(function() { 
 					$("#" + $slotId).html('<a href="#" class="thumb"><span></span></a>');
-					$('#submission-'+$itemlabel).children("td").children("span.icoBankLocation").removeClass($slotName);
+					$('#submission-'+$itemlabel).children("td").children("span.icoBankLocation").removeClass().addClass("icoBankLocation");
+					updateNullSlots();
+					getBankData();
 					return false;
 				});
 			}
 		});
 	}
 	
+	// update the bank data to cookie
+	function getBankData() {
+		var jsonData = {};
+		$("#bankSelectionItemList li:not(:last-child)").each(function() {
+			jsonData[this.id] = $(this).children("label").eq(0).html();
+		});
+		jsonData["listLikes"] = listLikes;
+		jsonData["listDislikes"] = listDislikes;
+		jsonData["listExtra"] = listExtra;
+		var cdata = $.cookie(COOKIE_NAME);
+		if (!cdata) {
+			cdata = {};
+			cdata[contestId] = {};
+		} else {
+			cdata = jQuery.parseJSON(cdata);
+			if (!cdata[contestId]) {
+				cdata[contestId] = {};
+				cdata[contestId][roundType] = {};
+			}
+		}
+		cdata[contestId][roundType] = jsonData;
+		$.cookie(COOKIE_NAME, JSON.stringify(cdata), cookieOptions);
+		if ($("#subFilterText").html() == "Submissions You Liked") {
+			$("#likeSubmissionBtn").click();
+		}
+		if ($("#subFilterText").html() == "Submissions You Disliked") {
+			$("#dislikeSubmissionBtn").click();
+		}
+	}
+
+	// set id to bankSelectionItemList's children
+	$("#bankSelectionItemList").children().each(function(index) {
+		if(!this.id) {
+			this.id = arrPrize[index];
+		}
+	});
+
+	// set class name to addToBank's children
+	$(".addToBank").each(function() {
+		$(this).children("a:not(:last-child)").each(function(index) {
+			$(this).addClass(arrSlot[index]);
+		});
+	});
+
 	$("#bankSelectionItemList").sortable({
 			items: 'li:not(#extraPrize)',
 			update:updateSortable
 		});
 	$("#bankSelectionItemList").disableSelection(); 
 	
+	// update the icon status of submissions.
+	function updateNullSlots() {
+		$(".icoBankLocation").each(function() {
+			var obj = $(this);
+			var classes = ["firstSlots","secondSlots","thirdSlots","fourthSlots","fifthSlots","dollarSlots","likeSlots","dislikeSlots"];
+			for (var i = 0; i < classes.length; i++) {
+				if (obj.hasClass(classes[i])) {
+					return;
+				}
+			}
+			obj.removeClass().addClass("icoBankLocation").addClass("nullSlots");
+		});
+	}
+	updateNullSlots();
 	// #clearSlots click function to clear all slots
 	$("#clearSlots").click(function() {  
 			$("#bankSelectionItemList li:not(:last-child)").html('<a href="#" class="thumb"><span></span></a>');
 			listExtra = new Array();
+			listLikes = new Array();
+			listDislikes = new Array();
 			$("#numExtra").html("(0)");
 			$("#likeCount").html("0");
 			$("#dislikeCount").html("0");
@@ -163,7 +264,11 @@ $(document).ready(function(){
 			$(".icoBankLocation").removeClass("thirdSlots");
 			$(".icoBankLocation").removeClass("fourthSlots");
 			$(".icoBankLocation").removeClass("fifthSlots");
-			$(".icoBankLocation").removeClass("dollarSlots");  
+			$(".icoBankLocation").removeClass("dollarSlots");
+			$(".icoBankLocation").removeClass("likeSlots");  
+			$(".icoBankLocation").removeClass("dislikeSlots");  
+			$(".icoBankLocation").addClass("nullSlots");
+			getBankData();
 			return false;
 	}); 
 	
@@ -179,6 +284,7 @@ $(document).ready(function(){
 					listLikes.push($itemlabel);
 					$("#likeCount").html(listLikes.length);
 					$("#submission-"+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("likeSlots");
+					getBankData();
 				},
 				over: function(){
 					$(this).addClass('drophover');
@@ -202,6 +308,7 @@ $(document).ready(function(){
 					listDislikes.push($itemlabel);
 					$("#dislikeCount").html(listDislikes.length);
 					$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("dislikeSlots"); 
+					getBankData();
 				},
 				over: function(){
 					$(this).addClass('drophover');
@@ -225,15 +332,18 @@ $(document).ready(function(){
 				removeIfExist($itemlabel);
 				var $slotId = $(this).attr('id');
 				var $slotName = arrSlot[arrPrize.indexOf($slotId)];
-				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 				$(".statusSubmission").removeClass($slotName);
 				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass($slotName);
 				
 				$('#remove' + $slotId).click(function() { 
 					$("#" + $slotId).html('<a href="#" class="thumb"><span></span></a>');
-					$('#submission-'+$itemlabel).children(".statusSubmission").removeClass($slotName);
+					$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+					updateNullSlots();
+					getBankData();
 					return false;
 				});
+				getBankData();
 			}
 		}).sortable({
 				items: 'li:not(#extraPrize)'
@@ -255,86 +365,113 @@ $(document).ready(function(){
 			$('#removeExtraPrize').click(function() { 
 				 $("#extraPrize").html('<a href="#" class="thumb"><span></span></a>');
 				 $('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass("dollarSlots");
+				 updateNullSlots();
+				 getBankData();
 				return false;
 			});
-			
+			getBankData();
 			
 		}
 	});   
 	
 	//Add to Bank number 1st
-	$(".firstSlot").click(function() { 					
+	$(".firstSlots").click(function() { 	
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$("#firstPrize").html('<a href="#" id="removeFirstPrize" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			updateNullSlots();
+			$("#firstPrize").html('<a href="#" id="removeFirstPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("firstSlots");
 			$('#removeFirstPrize').click(function() { 
 				$("#firstPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass("firstSlots");
+				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+				updateNullSlots();
+				getBankData();
 				return false;
 			});
+			getBankData();
 			return false;
 	}); 
 	
 	
 	//Add to Bank number 2nd
-	$(".secondSlot").click(function() { 					
+	$(".secondSlots").click(function() { 					
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$("#secondPrize").html('<a href="#" id="removeSecondPrize" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			updateNullSlots();
+			$("#secondPrize").html('<a href="#" id="removeSecondPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("secondSlots");
 			$('#removeSecondPrize').click(function() { 
 				$("#secondPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass("secondSlots");
+				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+				updateNullSlots();
+				getBankData();
 				return false;
 			});
+			getBankData();
 			return false;
 	}); 
 	
 	//Add to Bank number 3rd
-	$(".thirdSlot").click(function() { 					
+	$(".thirdSlots").click(function() { 					
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$("#thirdPrize").html('<a href="#" id="removeThirdPrize" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			updateNullSlots();
+			$("#thirdPrize").html('<a href="#" id="removeThirdPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("thirdSlots");
 			$('#removeThirdPrize').click(function() { 
 				$("#thirdPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass("thirdSlots");
+				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+				updateNullSlots();
+				getBankData();
 				return false;
 			});
+			getBankData();
 			return false;
 	}); 
 	
 	//Add to Bank number 4th
-	$(".fourthSlot").click(function() { 					
+	$(".fourthSlots").click(function() { 					
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$("#fourthPrize").html('<a href="#" id="removeFourthPrize" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			updateNullSlots();
+			$("#fourthPrize").html('<a href="#" id="removeFourthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("fourthSlots");
 			$('#removeFourthPrize').click(function() { 
 				$("#fourthPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass("fourthSlots");
+				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+				updateNullSlots();
+				getBankData();
 				return false;
 			});
+			getBankData();
 			return false;
 	}); 
 	
 	//Add to Bank number 5th
-	$(".fifthSlot").click(function() { 					
+	$(".fifthSlots").click(function() { 					
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$("#fifthPrize").html('<a href="#" id="removeFifthPrize" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			updateNullSlots();
+			$("#fifthPrize").html('<a href="#" id="removeFifthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("fifthSlots");
 			$('#removeFifthPrize').click(function() { 
 				$("#fifthPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass("fifthSlots");
+				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+				updateNullSlots();
+				getBankData();
 				return false;
 			});
+			getBankData();
 			return false;
 	}); 
 	
@@ -345,18 +482,113 @@ $(document).ready(function(){
 			removeIfExist($itemlabel); 
 			listExtra.push($itemlabel);
 			$("#numExtra").html("(" + listExtra.length + ")");
-			//$("#extraPrize").html('<a href="#" id="removeExtraPrize" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-			$("#submission-"+$itemlabel).children("td").children(".icoBankLocation").addClass("dollarSlots");
+			//$("#extraPrize").html('<a href="#" id="removeExtraPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+			$("#submission-"+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("dollarSlots");
 			$('#removeExtraPrize').click(function() { 
 				$("#extraPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass("dollarSlots");
+				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+				updateNullSlots();
+				getBankData();
 				return false;
 			});
-			
+			getBankData();
 			return false;
 	}); 
-	
-	
+
+	// remove an element obj from array, if no element was removed, -1 would be returned
+	function arrayRemove(array, obj) {
+			var index = -1;
+			for (var i = 0; i < array.length; i++) {
+				if (obj == array[i]) {
+					index = i;
+					break;
+				}
+			}
+			if (index == -1) {
+				// not found
+				return index;
+			}
+			array.splice(index, 1);
+			return index;
+	}
+	//Remove From Extra Purchase
+	$(".noExtraSlot").click(function() {
+			var $itemlabel = $(this).attr("rel");
+			if (arrayRemove(listExtra, $itemlabel) != -1) {
+				$("#numExtra").html("(" + listExtra.length + ")");
+				$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation");
+				updateNullSlots();
+				getBankData();
+			}
+	});
+
+	// show all submissions
+	$("#allSubmissionBtn").click(function() {
+		$("#subFilterText").html("All Submissions");
+		$("#submissionList").find("tr").show();
+		return false;
+	});
+
+	// show like submissions
+	$("#likeSubmissionBtn").click(function() {
+		$("#subFilterText").html("Submissions You Liked");
+		$("#submissionList").find("tr").show();
+		$("#submissionList").find("tr").each(function() {
+			var cld = $(this).find(".icoBankLocation");
+			if(cld.size() > 0 && !cld.eq(0).hasClass("likeSlots")) {
+				$(this).hide();
+			}
+		});
+		return false;
+	});
+
+	// show dislike submissions
+	$("#dislikeSubmissionBtn").click(function() {
+		$("#subFilterText").html("Submissions You Disliked");
+		$("#submissionList").find("tr").show();
+		$("#submissionList").find("tr").each(function() {
+			var cld = $(this).find(".icoBankLocation");
+			if(cld.size() > 0 && !cld.eq(0).hasClass("dislikeSlots")) {
+				$(this).hide();
+			}
+		});
+		return false;
+	});
+
+	// get bank data from cookie
+	var bankData = $.cookie(COOKIE_NAME);
+	if (bankData) {
+		bankData = jQuery.parseJSON(bankData);
+		if (bankData && bankData[contestId]) {
+			bankData = bankData[contestId][roundType];
+		} else {
+			bankData = null;
+		}
+	}
+	if (bankData) {
+		// set prize bank data from cookie
+		$("#bankSelectionItemList li:not(:last-child)").each(function(index) {
+			var label = bankData[arrPrize[index]];
+			if (label) {
+				$("#submission-" + label).find("." + arrSlot[index]).click();
+			}
+		});
+		// set like submissions from cookie
+		for (var i = 0; i < bankData.listLikes.length; i++) {
+			var label = bankData.listLikes[i];
+			$("#submission-" + label).find(".likeSubmission").click();
+		}
+		// set dislike submissions from cookie
+		for (var i = 0; i < bankData.listDislikes.length; i++) {
+			var label = bankData.listDislikes[i];
+			$("#submission-" + label).find(".dislikeSubmission").click();
+		}
+		// set extra purchase from cookie
+		for (var i = 0; i < bankData.listExtra.length; i++) {
+			var label = bankData.listExtra[i];
+			$("#submission-" + label).find(".extraSlot").click();
+		}
+	}
 	 
 	 
 }); 

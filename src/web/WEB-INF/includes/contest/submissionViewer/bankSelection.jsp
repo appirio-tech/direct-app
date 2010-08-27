@@ -1,6 +1,10 @@
 <%--
-  - Author: isv
-  - Version: 1.0 (Submission Viewer Release 1 assembly)
+  - Author: isv, flexme
+  - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Add link for checkout button.
+  - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Create dynamic prize slots depends on the prize number.
+  -
+  - Version: 1.2
+  - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders Bank Selection area to be displayed on Studio Submissions Grid, List and
@@ -45,46 +49,20 @@
 
         <div id="bankSelectionSlotsContainer">
             <div id="bankSelectionSlots">
-                <div id="bankSelectionItem">
+                <div id="bankSelectionItem" class="bankSelectionItemSize${viewData.prizeNumber}">
                     <ul id="bankSelectionItemList">
-                        <li id="firstPrize" class="sortableItem">
+                        <c:forEach var="ind" begin="1" end="${viewData.prizeNumber}">
+                        <li class="sortableItem">
                             <!-- <a href="#" class="btn_remove"></a>-->
-                            <a href="bankSelection.jsp#" class="thumb"><span></span>
+                            <a href="javascript:;" class="thumb"><span></span>
                                 <!--<img src="/images/submission/thumb_slot_5.png" alt="" />-->
                             </a>
                             <!--<label>270008</label>-->
                         </li>
-                        <li id="secondPrize" class="sortableItem">
-                            <!-- <a href="#" class="btn_remove"></a>-->
-                            <a href="bankSelection.jsp#" class="thumb"><span></span>
-                                <!--<img src="/images/submission/thumb_slot_5.png" alt="" />-->
-                            </a>
-                            <!--<label>270008</label>-->
-                        </li>
-                        <li id="thirdPrize" class="sortableItem">
-                            <!-- <a href="#" class="btn_remove"></a>-->
-                            <a href="bankSelection.jsp#" class="thumb"><span></span>
-                                <!--<img src="/images/submission/thumb_slot_5.png" alt="" />-->
-                            </a>
-                            <!--<label>270008</label>-->
-                        </li>
-                        <li id="fourthPrize" class="sortableItem">
-                            <!-- <a href="#" class="btn_remove"></a>-->
-                            <a href="bankSelection.jsp#" class="thumb"><span></span>
-                                <!--<img src="/images/submission/thumb_slot_5.png" alt="" />-->
-                            </a>
-                            <!--<label>270008</label>-->
-                        </li>
-                        <li id="fifthPrize" class="sortableItem">
-                            <!-- <a href="#" class="btn_remove"></a>-->
-                            <a href="bankSelection.jsp#" class="thumb"><span></span>
-                                <!--<img src="/images/submission/thumb_slot_5.png" alt="" />-->
-                            </a>
-                            <!--<label>270008</label>-->
-                        </li>
+                        </c:forEach>
 
                         <li id="extraPrize">
-                            <a href="bankSelection.jsp#" class="thumb"><span id="numExtra"></span></a>
+                            <a href="javascript:;" class="thumb"><span id="numExtra"></span></a>
                         </li>
                     </ul>
                 </div>
@@ -92,13 +70,13 @@
                 <div id="bankSelectionFolder">
                     <ul>
                         <li>
-                            <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${isMilestoneRound}">
+                            <a href="#" id="allSubmissionBtn">
                                 All Submissions (<s:property value="viewData.submissionsCount"/>)
-                            </link:studioSubmissionsGrid>
+                            </a>
                         </li>
-                        <li id="likeFolder"><a href="studio-final-like.html">Submission You Like (<span
+                        <li id="likeFolder"><a href="#" id="likeSubmissionBtn">Submission You Like (<span
                                 id="likeCount">0</span>)</a></li>
-                        <li id="dislikeFolder"><a href="studio-final-dislike.html">Submission You Don't Like (<span
+                        <li id="dislikeFolder"><a href="#" id="dislikeSubmissionBtn">Submission You Don't Like (<span
                                 id="dislikeCount">0</span>)</a></li>
                     </ul>
                 </div>
@@ -110,8 +88,17 @@
 
 
         <div id="bankSelectionButton">
-            <a href="studio-final-checkout.html" class="buttonBankSelection"><span class="left"><span class="right">Lock-in Winners</span></span></a>
-            <a href="bankSelection.jsp#" id="clearSlots" class="buttonBankSelection"><span class="left"><span
+            <s:if test="formData.roundType.toString() == 'MILESTONE'">
+            <link:studioCheckout contestId="${contestId}" milestoneRound="${true}" styleClass="buttonBankSelection">
+                <span class="left"><span class="right">Confirm Milestone</span></span>
+            </link:studioCheckout>
+            </s:if>
+            <s:else>
+            <link:studioCheckout contestId="${contestId}" milestoneRound="${false}" styleClass="buttonBankSelection">
+                <span class="left"><span class="right">Lock-in Winners</span></span>
+            </link:studioCheckout>
+            </s:else>
+            <a href="javascript:;" id="clearSlots" class="buttonBankSelection"><span class="left"><span
                     class="right">Clear Slots</span></span></a>
         </div>
 

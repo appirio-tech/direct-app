@@ -13,17 +13,17 @@
 
 <div class="SubmissionSlotTitle">
     <s:if test="formData.viewType.toString() == 'GRID'">
-        <h3>All Submissions</h3>
+        <h3 id="subFilterText">All Submissions</h3>
         <link:studioSubmissionsList contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
                                     styleClass="toggleViewList">Switch to List View</link:studioSubmissionsList>
     </s:if>
     <s:if test="formData.viewType.toString() == 'LIST'">
-        <h3>All Submissions</h3>
+        <h3 id="subFilterText">All Submissions</h3>
         <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
                                     styleClass="toggleViewList">Switch to Grid View</link:studioSubmissionsGrid>
     </s:if>
     <s:if test="formData.viewType.toString() == 'SINGLE'">
-        <h3>Submission ID: <s:property value="formData.submissionId"/></h3>
+        <h3>Submission ID: <s:property value="formData.submissionId"/>(<a href="http://studio.topcoder.com/?module=DownloadSubmission&sbmid=<s:property value="formData.submissionId"/>">Download</a>)</h3>
         <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
                                     styleClass="toggleViewList">See More Submissions</link:studioSubmissionsGrid>
     </s:if>

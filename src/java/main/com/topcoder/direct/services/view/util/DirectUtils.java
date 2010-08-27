@@ -20,7 +20,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.service.studio.ContestNotFoundException;
+import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
 
@@ -33,9 +33,12 @@ import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.service.ContestSaleData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
+import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.service.studio.PersistenceException;
+import com.topcoder.service.studio.SubmissionData;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
@@ -76,9 +79,29 @@ import com.topcoder.shared.util.DBMS;
  *     </li>
  *   </ol>
  * </p>
-
- * @author BeBetter, isv
- * @version 1.4
+ *
+ * <p>
+ * Version 1.5 (Direct Submission Viewer Release 2) Change notes:
+ * <ul>
+ * <li>Update {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} method
+ * to use getMilestoneSubmissionsForContest and getFinalSubmissionsForContest methods to retrieve submissions.
+ * </li>
+ * <li>Add {@link #getContestPrizeNumber(StudioCompetition, ContestRoundType)} method
+ * to get the number of a contest's prizes.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 1.6 (Direct Submission Viewer Release 3) Change notes:
+ * <ul>
+ * <li>Added {@link #getSubmissionsCheckout(List, ContestRoundType)} method to check whether submissions have already been
+ * checked out.</li>
+ * <li>Added {@link #getAdditionalPrize(StudioCompetition)} method to get the additional prize.</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme
+ * @version 1.6
  */
 public final class DirectUtils {
     /**
@@ -283,6 +306,48 @@ public final class DirectUtils {
 
     /**
      * <p>
+     * Gets the statistics for the specified contest.
+     * </p>
+     *
+     * @param contestServiceFacade a <code>ContestServiceFacade</code> to be used for communicating to backend
+     *            services.
+     * @param currentUser a <code>TCSubject</code> representing the current user.
+     * @param contestId a <code>long</code> providing the ID of a contest.
+     * @return a <code>ContestStatsDTO</code> providing the statistics for specified contest.
+     * @throws PersistenceException if an unexpected error occurs while accessing the persistent data store.
+     * @since 1.1
+     */
+    public static ContestStatsDTO getContestStats(ContestServiceFacade contestServiceFacade, TCSubject currentUser,
+        long contestId) throws PersistenceException {
+
+        List<CommonProjectContestData> userContests = contestServiceFacade.getCommonProjectContestData(currentUser);
+        for (CommonProjectContestData contestData : userContests) {
+            if (contestData.getContestId() == contestId) {
+                ProjectBriefDTO project = new ProjectBriefDTO();
+                project.setId(contestData.getProjectId());
+                project.setName(contestData.getPname());
+
+                ContestBriefDTO contest = new ContestBriefDTO();
+                contest.setId(contestData.getContestId());
+                contest.setTitle(contestData.getCname());
+                contest.setProject(project);
+
+                ContestStatsDTO dto = new ContestStatsDTO();
+                dto.setEndTime(DirectUtils.getDate(contestData.getEndDate()));
+                dto.setStartTime(DirectUtils.getDate(contestData.getStartDate()));
+                dto.setSubmissionsNumber(contestData.getNum_sub());
+                dto.setRegistrantsNumber(contestData.getNum_reg());
+                dto.setForumPostsNumber(contestData.getNum_for());
+                dto.setContest(contest);
+                dto.setIsStudio("Studio".equals(contestData.getType()));
+                return dto;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * <p>
      * Gets the TCSubject instance from session.
      * </p>
      *
@@ -413,25 +478,79 @@ public final class DirectUtils {
      * @param contestServiceFacade a <code>ContestServiceFacade</code> to be used for accessing the service layer for
      *        data retrieval.
      * @return a <code>List</code> listing the submissions for specified round of specified <code>Studio</code> contest.
-     * @throws PersistenceException if an unexpected error occurs.
-     * @throws ContestNotFoundException if an unexpected error occurs.
      * @throws PermissionServiceException if an unexpected error occurs.
+	 * @throws ContestServiceException if an unexpected error occurs.
      * @since 1.4
      */
     public static List<SubmissionData> getStudioContestSubmissions(long contestId, ContestRoundType roundType,
                                                                    TCSubject currentUser,
                                                                    ContestServiceFacade contestServiceFacade)
-        throws PersistenceException, ContestNotFoundException, PermissionServiceException {
+        throws PermissionServiceException, ContestServiceException {
 
         List<SubmissionData> submissions;
         if (roundType == ContestRoundType.MILESTONE) {
-            // TODO : Sub-sequent assemblies must implement logic for retrieving the submissions for miliestone
-            // round
-            submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contestId);
+            submissions = contestServiceFacade.getMilestoneSubmissionsForContest(currentUser, contestId);
         } else {
-            // TODO : Sub-sequent assemblies must implement logic for retrieving the submissions for final round
-            submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contestId);
+            submissions = contestServiceFacade.getFinalSubmissionsForContest(currentUser, contestId);
         }
         return submissions;
+    }
+
+    /**
+     * <p>Gets the number of prizes for specified round of specified <code>Studio</code> contest.</p>
+     *
+     * @param studioCompetition a <code>StudioCompetition</code> providing the studio contest.
+     * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
+     * @return an <code>int</code> providing the number of the prize for specified round of specified <code>Studio</code> contest.
+     * @since 1.5
+     */
+    public static int getContestPrizeNumber(StudioCompetition studioCompetition, ContestRoundType roundType) {
+        if (roundType == ContestRoundType.MILESTONE) {
+            return studioCompetition.getContestData().getMilestonePrizeData().getNumberOfSubmissions();
+        } else {
+            return studioCompetition.getPrizes().size();
+        }
+    }
+
+    /**
+     * <p>Gets a flag indicating whether the submissions have already been checked out.</p>
+     * 
+     * @param submissions the submissions to check.
+     * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
+     * @return a flag indicating whether the submissions have already been checked out.
+     * @since 1.6
+     */
+    public static boolean getSubmissionsCheckout(List<SubmissionData> submissions, ContestRoundType roundType) {
+        for (SubmissionData submission : submissions) {
+            if (roundType == ContestRoundType.MILESTONE) {
+                if (submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize()) {
+                    return true;
+                }
+            } else {
+                if (submission.getUserRank() > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * <p>Gets the additional prize for a studio competition.</p>
+     *
+     * @param studioCompetition the studio competition
+     * @return the additional prize for the studio competition
+	 * @since 1.6
+     */
+    public static double getAdditionalPrize(StudioCompetition studioCompetition) {
+        List<CompetitionPrize> prizes = studioCompetition.getPrizes();
+        if (prizes.size() == 0) {
+            return 0.0;
+        }
+        double prize = prizes.get(0).getAmount();
+        for (int i = 1; i < prizes.size(); i++) {
+            prize = Math.min(prize, prizes.get(i).getAmount());
+        }
+        return prize;
     }
 }

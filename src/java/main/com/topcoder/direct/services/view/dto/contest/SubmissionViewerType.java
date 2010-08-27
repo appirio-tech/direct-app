@@ -6,8 +6,15 @@ package com.topcoder.direct.services.view.dto.contest;
 /**
  * <p>An enumeration over submission viewer types (grid, list, single).</p>
  *
- * @author isv
- * @version 1.0 (Submission Viewer Release 1 assembly)
+ * <p>
+ * Version 1.1 (Direct Submission Viewer Release 3) change notes:
+ * <ul>
+ * <li>Added CHECKOUT type.</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, flexme
+ * @version 1.1
  */
 public enum SubmissionViewerType {
 
@@ -24,5 +31,11 @@ public enum SubmissionViewerType {
     /**
      * <p>A <code>SubmissionViewerType</code> corresponding to <code>Single</code> view of submissions.</p>
      */
-    SINGLE
+    SINGLE,
+    
+    /**
+     * <p>A <code>SubmissionViewerType</code> corresponding to <code>checkout</code> view of submissions.</p>
+     * @since 1.1
+     */
+    CHECKOUT
 }
