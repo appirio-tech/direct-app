@@ -548,7 +548,8 @@ if($.browser.msie && $.browser.version == 6.0){
 	// update feedback text through ajax call
 	$("#updateFeedback").click(function() {
 		var feedback = $("#feedback").val();
-		if (feedback.trim().length == 0) {
+		feedback = $.trim(feedback);
+		if (feedback.length == 0) {
 			$('#msgDialog p').html("Feedback content can't be empty.");
 			$('#msgDialog').dialog('open');
 			return false;
