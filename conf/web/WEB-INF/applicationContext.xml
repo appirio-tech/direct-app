@@ -329,5 +329,10 @@
             </list>
         </property>
     </bean>
-    
+
+    <bean id="softwareContestSubmissionsAction"
+          class="com.topcoder.direct.services.view.action.contest.SoftwareContestSubmissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
 </beans>

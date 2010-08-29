@@ -1,0 +1,280 @@
+/*
+ * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ */
+package com.topcoder.direct.services.view.dto.contest;
+
+import com.topcoder.direct.services.view.dto.UserDTO;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * <p>A <code>DTO</code> class providing the data for single software contest submission.</p>
+ *
+ * @author TCSDEVELOPER
+ * @version 1.0 (Direct Software Submission Viewer assembly)
+ */
+public class SoftwareSubmissionDTO implements Serializable {
+
+    /**
+     * <p>A <code>long</code> providing the ID for submission.</p>
+     */
+    private long submissionId;
+
+    /**
+     * <p>A <code>Date</code> providing the submission date.</p>
+     */
+    private Date submissionDate;
+
+    /**
+     * <p>A <code>Float</code> providing the screening score for submission.</p>
+     */
+    private Float screeningScore;
+
+    /**
+     * <p>A <code>Float</code> providing the initial score for submission.</p>
+     */
+    private Float initialScore;
+
+    /**
+     * <p>A <code>Float</code> providing the final score for submission.</p>
+     */
+    private Float finalScore;
+
+    /**
+     * <p>A <code>UserDTO</code> providing the details for the submitter.</p>
+     */
+    private UserDTO submitter;
+
+    /**
+     * <p>A <code>List</code> providing the details for reviews for submission.</p>
+     */
+    private List<SoftwareSubmissionReviewDTO> reviews;
+
+    /**
+     * <p>A <code>Boolean</code> providing the flag indicating whether the submission passed screening or not.</p>
+     */
+    private Boolean passedScreening;
+
+    /**
+     * <p>A <code>Boolean</code> providing the flag indicating whether the submission passed review or not.</p>
+     */
+    private Boolean passedReview;
+
+    /**
+     * <p>A <code>Integer</code> providing the submission placement based on review scores.</p>
+     */
+    private Integer placement;
+
+    /**
+     * <p>A <code>SoftwareSubmissionReviewDTO</code> providing the details for screening review.</p>
+     */
+    private SoftwareSubmissionReviewDTO screeningReview;
+
+    /**
+     * <p>Constructs new <code>SoftwareSubmissionDTO</code> instance. This implementation does nothing.</p>
+     */
+    public SoftwareSubmissionDTO() {
+    }
+
+    /**
+     * <p>Gets the flag indicating whether the submission passed review or not.</p>
+     *
+     * @return a <code>Boolean</code> providing the flag indicating whether the submission passed review or not.
+     */
+    public Boolean getPassedReview() {
+        return this.passedReview;
+    }
+
+    /**
+     * <p>Sets the flag indicating whether the submission passed review or not.</p>
+     *
+     * @param passedReview a <code>Boolean</code> providing the flag indicating whether the submission passed review or
+     *                     not.
+     */
+    public void setPassedReview(Boolean passedReview) {
+        this.passedReview = passedReview;
+    }
+
+    /**
+     * <p>Gets the flag indicating whether the submission passed screening or not.</p>
+     *
+     * @return a <code>Boolean</code> providing the flag indicating whether the submission passed screening or not.
+     */
+    public Boolean getPassedScreening() {
+        return this.passedScreening;
+    }
+
+    /**
+     * <p>Sets the flag indicating whether the submission passed screening or not.</p>
+     *
+     * @param passedScreening a <code>Boolean</code> providing the flag indicating whether the submission passed
+     *                        screening or not.
+     */
+    public void setPassedScreening(Boolean passedScreening) {
+        this.passedScreening = passedScreening;
+    }
+
+    /**
+     * <p>Gets the details for reviews for submission.</p>
+     *
+     * @return a <code>List</code> providing the details for reviews for submission.
+     */
+    public List<SoftwareSubmissionReviewDTO> getReviews() {
+        return this.reviews;
+    }
+
+    /**
+     * <p>Sets the details for reviews for submission.</p>
+     *
+     * @param reviews a <code>List</code> providing the details for reviews for submission.
+     */
+    public void setReviews(List<SoftwareSubmissionReviewDTO> reviews) {
+        this.reviews = reviews;
+    }
+
+    /**
+     * <p>Gets the details for the submitter.</p>
+     *
+     * @return a <code>UserDTO</code> providing the details for the submitter.
+     */
+    public UserDTO getSubmitter() {
+        return this.submitter;
+    }
+
+    /**
+     * <p>Sets the details for the submitter.</p>
+     *
+     * @param submitter a <code>UserDTO</code> providing the details for the submitter.
+     */
+    public void setSubmitter(UserDTO submitter) {
+        this.submitter = submitter;
+    }
+
+    /**
+     * <p>Gets the final score for submission.</p>
+     *
+     * @return a <code>Float</code> providing the final score for submission.
+     */
+    public Float getFinalScore() {
+        return this.finalScore;
+    }
+
+    /**
+     * <p>Sets the final score for submission.</p>
+     *
+     * @param finalScore a <code>Float</code> providing the final score for submission.
+     */
+    public void setFinalScore(Float finalScore) {
+        this.finalScore = finalScore;
+    }
+
+    /**
+     * <p>Gets the initial score for submission.</p>
+     *
+     * @return a <code>Float</code> providing the initial score for submission.
+     */
+    public Float getInitialScore() {
+        return this.initialScore;
+    }
+
+    /**
+     * <p>Sets the initial score for submission.</p>
+     *
+     * @param initialScore a <code>Float</code> providing the initial score for submission.
+     */
+    public void setInitialScore(Float initialScore) {
+        this.initialScore = initialScore;
+    }
+
+    /**
+     * <p>Gets the screening score for submission.</p>
+     *
+     * @return a <code>Float</code> providing the screening score for submission.
+     */
+    public Float getScreeningScore() {
+        return this.screeningScore;
+    }
+
+    /**
+     * <p>Sets the screening score for submission.</p>
+     *
+     * @param screeningScore a <code>Float</code> providing the screening score for submission.
+     */
+    public void setScreeningScore(Float screeningScore) {
+        this.screeningScore = screeningScore;
+    }
+
+    /**
+     * <p>Gets the submission date.</p>
+     *
+     * @return a <code>Date</code> providing the submission date.
+     */
+    public Date getSubmissionDate() {
+        return this.submissionDate;
+    }
+
+    /**
+     * <p>Sets the submission date.</p>
+     *
+     * @param submissionDate a <code>Date</code> providing the submission date.
+     */
+    public void setSubmissionDate(Date submissionDate) {
+        this.submissionDate = submissionDate;
+    }
+
+    /**
+     * <p>Gets the ID for submission.</p>
+     *
+     * @return a <code>long</code> providing the ID for submission.
+     */
+    public long getSubmissionId() {
+        return this.submissionId;
+    }
+
+    /**
+     * <p>Sets the ID for submission.</p>
+     *
+     * @param submissionId a <code>long</code> providing the ID for submission.
+     */
+    public void setSubmissionId(long submissionId) {
+        this.submissionId = submissionId;
+    }
+
+    /**
+     * <p>Gets the submission placement based on review scores.</p>
+     *
+     * @return a <code>Integer</code> providing the submission placement based on review scores.
+     */
+    public Integer getPlacement() {
+        return this.placement;
+    }
+
+    /**
+     * <p>Sets the submission placement based on review scores.</p>
+     *
+     * @param placement a <code>Integer</code> providing the submission placement based on review scores.
+     */
+    public void setPlacement(Integer placement) {
+        this.placement = placement;
+    }
+
+    /**
+     * <p>Gets the details for screening review.</p>
+     *
+     * @return a <code>SoftwareSubmissionReviewDTO</code> providing the details for screening review.
+     */
+    public SoftwareSubmissionReviewDTO getScreeningReview() {
+        return this.screeningReview;
+    }
+
+    /**
+     * <p>Sets the details for screening review.</p>
+     *
+     * @param screeningReview a <code>SoftwareSubmissionReviewDTO</code> providing the details for screening review.
+     */
+    public void setScreeningReview(SoftwareSubmissionReviewDTO screeningReview) {
+        this.screeningReview = screeningReview;
+    }
+}

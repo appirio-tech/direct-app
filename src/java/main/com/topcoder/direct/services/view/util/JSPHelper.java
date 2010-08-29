@@ -3,10 +3,14 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>This class provides the set of static functions for use by JSP views.</p>
@@ -20,8 +24,15 @@ import java.util.Date;
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.1
+ * <p>
+ * Version 1.1.1 (Direct Software Submission Viewer Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getReview(SoftwareSubmissionDTO, long)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, TCSDEVELOPER
+ * @version 1.1.1
  */
 public class JSPHelper {
 
@@ -152,6 +163,27 @@ public class JSPHelper {
             return protocol + "://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&amp;sbmid="
                    + submissionId + "&amp;sbt=" + previewType + "&amp;sfi=" + artifactNum;
         }
+    }
+
+    /**
+     * <p>Gets the review from specified reviewer for specified submission.</p>
+     *
+     * @param submission a <code>SoftwareSubmissionDTO</code> providing the details for submission.
+     * @param reviewerId a <code>long</code> providing the reviewer ID.
+     * @return a <code>SoftwareSubmissionReviewDTO</code> providing the review or <code>null</code> if there is no such
+     *         review.
+     * @since 1.1.1 
+     */
+    public static SoftwareSubmissionReviewDTO getReview(SoftwareSubmissionDTO submission, long reviewerId) {
+        List<SoftwareSubmissionReviewDTO> reviews = submission.getReviews();
+        if (reviews != null) {
+            for (SoftwareSubmissionReviewDTO review : reviews) {
+                if (review.getReviewer().getId() == reviewerId) {
+                    return review;
+                }
+            }
+        }
+        return null;
     }
 
     /**

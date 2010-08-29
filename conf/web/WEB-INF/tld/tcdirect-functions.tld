@@ -46,4 +46,10 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>java.lang.String getSubmissionPreviewImageURL(long,java.lang.String,int,javax.servlet.http.HttpServletRequest)</function-signature>
     </function>
+
+    <function>
+        <name>getReview</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO getReview(com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO,long) </function-signature>
+    </function>
 </taglib>

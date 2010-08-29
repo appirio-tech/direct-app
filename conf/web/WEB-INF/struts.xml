@@ -424,5 +424,10 @@
         <action name="checkoutFinal" class="checkoutFinalAction">
             <result>/WEB-INF/studio-final-checkout-confirmation.jsp</result>
         </action>
+
+        <action name="softwareSubmissions" class="softwareContestSubmissionsAction">
+            <result>/WEB-INF/software-submissions-list.jsp</result>
+        </action>
+        
     </package>
 </struts>

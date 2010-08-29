@@ -52,7 +52,9 @@
                     </link:studioSubmissionsGrid>
                 </if:isStudioContest>
                 <if:isStudioContest contestStats="${contestStats}" negate="true">
-                    <s:property value="submissionsNumber"/>
+                    <link:softwareSubmissionsList contestId="${contestStats.contest.id}">
+                        <s:property value="submissionsNumber"/>
+                    </link:softwareSubmissionsList>
                 </if:isStudioContest>
             </td>
             <td>

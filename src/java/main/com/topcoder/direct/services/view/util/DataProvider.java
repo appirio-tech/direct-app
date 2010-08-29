@@ -15,7 +15,11 @@ import java.util.LinkedHashMap;
 import java.util.Collections;
 import java.util.Comparator;
 
-import com.topcoder.service.studio.PersistenceException;
+import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
+import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -67,8 +71,16 @@ import com.topcoder.web.common.cache.MaxAge;
  * Version 2.1 - Edit Software Contests Assembly - identify if it is software or studio in search contest result
  * </p>
  *
+ * <p>
+ * Version 2.1.1 (Direct Software Submisison Viewer Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #setSoftwareSubmissionsData(SoftwareContestSubmissionsDTO)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ *
  * @author isv, BeBetter, TCSDEVELOPER
- * @version 2.1
+ * @version 2.1.1
  */
 public class DataProvider {
 
@@ -862,6 +874,110 @@ public class DataProvider {
     public static List<ContestRegistrantDTO> getContestRegistrants(long contestId) {
 //        return MockData.getContestRegistrants(contestId);
         return MockData.getContestRegistrants(4);
+    }
+
+    /**
+     * <p>Sets the specified DTO with data for requested project submissions.</p>
+     *
+     * @param dto a <code>SoftwareContestSubmissionsDTO</code> to be set with data for project submissions.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.2.1
+     */
+    public static void setSoftwareSubmissionsData(SoftwareContestSubmissionsDTO dto) throws Exception {
+        final String queryName = "direct_software_submissions_view";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("pj", String.valueOf(dto.getProjectId()));
+
+        // Set reviewers for project and collect them to map for faster lookup on sub-sequent steps
+        Map<Long, UserDTO> reviewersMap = new HashMap<Long, UserDTO>();
+        final ResultSetContainer reviewersContainer
+            = dataAccessor.getData(request).get("direct_software_project_reviewers");
+        List<UserDTO> reviewers = new ArrayList<UserDTO>();
+        for (ResultSetContainer.ResultSetRow reviewerRow : reviewersContainer) {
+            UserDTO reviewer = new UserDTO();
+            reviewer.setId(Long.parseLong(reviewerRow.getStringItem("reviewer_id")));
+            reviewer.setHandle(reviewerRow.getStringItem("reviewer_handle"));
+            long reviewerResourceId = reviewerRow.getLongItem("reviewer_resource_id");
+            reviewersMap.put(reviewerResourceId, reviewer);
+            reviewers.add(reviewer);
+        }
+        dto.setReviewers(reviewers);
+
+        // Get the reviews for project submissions and collect them to map for faster lookup on sub-sequent steps
+        final ResultSetContainer reviewsContainer
+            = dataAccessor.getData(request).get("direct_software_project_reviews");
+        Map<Long, List<SoftwareSubmissionReviewDTO>> reviewsMap
+            = new HashMap<Long, List<SoftwareSubmissionReviewDTO>>();
+        Map<Long, SoftwareSubmissionReviewDTO> screeningReviewsMap = new HashMap<Long, SoftwareSubmissionReviewDTO>();
+        for (ResultSetContainer.ResultSetRow reviewRow : reviewsContainer) {
+            SoftwareSubmissionReviewDTO review = new SoftwareSubmissionReviewDTO();
+            review.setReviewer(reviewersMap.get(reviewRow.getLongItem("resource_id")));
+            review.setSubmissionId(reviewRow.getLongItem("submission_id"));
+            review.setFinalScore(reviewRow.getFloatItem("final_score"));
+            review.setInitialScore(reviewRow.getFloatItem("initial_score"));
+            review.setReviewId(reviewRow.getLongItem("review_id"));
+            review.setCommitted(reviewRow.getBooleanItem("is_committed"));
+            long reviewerRoleId = reviewRow.getLongItem("reviewer_role_id");
+
+            long submissionId = review.getSubmissionId();
+            if (reviewerRoleId != 2) { // Not screening review
+                List<SoftwareSubmissionReviewDTO> submissionReviews;
+                if (reviewsMap.containsKey(submissionId)) {
+                    submissionReviews = reviewsMap.get(submissionId);
+                } else {
+                    submissionReviews = new ArrayList<SoftwareSubmissionReviewDTO>();
+                    reviewsMap.put(submissionId, submissionReviews);
+                }
+                submissionReviews.add(review);
+            } else {
+                screeningReviewsMap.put(submissionId, review);
+            }
+        }
+
+        // Set submissions
+        final ResultSetContainer submissionsContainer
+            = dataAccessor.getData(request).get("direct_software_project_submissions");
+        List<SoftwareSubmissionDTO> submissions = new ArrayList<SoftwareSubmissionDTO>();
+        for (ResultSetContainer.ResultSetRow submissionRow : submissionsContainer) {
+            UserDTO submitter = new UserDTO();
+            submitter.setId(Long.parseLong(submissionRow.getStringItem("submitter_id")));
+            submitter.setHandle(submissionRow.getStringItem("submitter_handle"));
+
+            SoftwareSubmissionDTO submission = new SoftwareSubmissionDTO();
+            submission.setSubmissionId(submissionRow.getLongItem("submission_id"));
+            submission.setSubmissionDate(submissionRow.getTimestampItem("create_date"));
+            submission.setScreeningScore((Float) submissionRow.getItem("screening_score").getResultData());
+            submission.setInitialScore((Float) submissionRow.getItem("initial_score").getResultData());
+            submission.setFinalScore((Float) submissionRow.getItem("final_score").getResultData());
+            submission.setPlacement((Integer) submissionRow.getItem("placement").getResultData());
+            submission.setPassedScreening(!submissionRow.getBooleanItem("failed_screening"));
+            submission.setPassedReview(!submissionRow.getBooleanItem("failed_review"));
+            submission.setSubmitter(submitter);
+
+            submission.setReviews(reviewsMap.get(submission.getSubmissionId()));
+            submission.setScreeningReview(screeningReviewsMap.get(submission.getSubmissionId()));
+            
+            submissions.add(submission);
+
+            Integer placement = submission.getPlacement();
+            if (placement != null && placement < 3) {
+                SoftwareContestWinnerDTO winner = new SoftwareContestWinnerDTO();
+                winner.setFinalScore(submission.getFinalScore());
+                winner.setHandle(submitter.getHandle());
+                winner.setId(submitter.getId());
+                winner.setPlacement(placement);
+                winner.setProjectId(dto.getProjectId());
+                if (placement == 1) {
+                    dto.setFirstPlaceWinner(winner);
+                } else if (winner.getPlacement() == 2) {
+                    dto.setSecondPlaceWinner(winner);
+                }
+            }
+
+        }
+        dto.setSubmissions(submissions);
     }
 
     /**

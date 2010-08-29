@@ -3110,7 +3110,6 @@ cursor: pointer;
 TABLE.softwareStats{
 	width: 100%;
 	border-collapse: collapse;
-	margin-bottom: 15px;
 	border: 1px solid #bdbdbd;
 }
 
@@ -4246,3 +4245,17 @@ hr.plain {
 	width: 115px;
 	margin: auto;
 }
+
+/* Added by Direct Software Submission Viewer assembly */
+TABLE.softwareStats .reviewerScoreBg th a {
+    color: #cacaca;
+    font-size: 11px;
+    height: 22px;
+    text-decoration:none;
+}
+
+TABLE.softwareStats .reviewerScoreBg th a:hover{
+	text-decoration: underline;
+}
+/* End of Added by Direct Software Submission Viewer assembly */
+

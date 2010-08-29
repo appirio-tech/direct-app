@@ -1,6 +1,6 @@
 <%--
   - Author: BeBetter, isv
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of contests for a single selected project.
@@ -10,6 +10,9 @@
   -
   - Version 1.2 (Submission Viewer Release 1 assembly) changes: linked submission numbers for each contest
   - to respective submission pages for Studio contests.
+  -
+  - Version 1.3 (Software Submission Viewer assembly) changes: linked submission numbers for each contest
+  - to respective submission pages for Software contests.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -115,7 +118,9 @@
                                                                             </link:studioSubmissionsGrid>
                                                                         </if:isStudioContest>
                                                                         <if:isStudioContest negate="true" contestBrief="${contest}">
-                                                                            <s:property value="submissionsNumber"/>
+                                                                            <link:softwareSubmissionsList contestId="${contest.id}">
+                                                                                <s:property value="submissionsNumber"/>
+                                                                            </link:softwareSubmissionsList>
                                                                         </if:isStudioContest>
                                                                     </td>
                                                                     <td>
