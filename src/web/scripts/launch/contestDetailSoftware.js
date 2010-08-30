@@ -242,6 +242,7 @@ function initContest(contestJson) {
    mainWidget.softwareCompetition.assetDTO.name = contestJson.contestName;
    mainWidget.softwareCompetition.endDate = parseDate(contestJson.endDate);
    mainWidget.softwareCompetition.paidFee = contestJson.paidFee;
+   mainWidget.softwareCompetition.adminFee = contestJson.adminFee;
 
    var startDate =  parseDate(contestJson.startDate);  
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;

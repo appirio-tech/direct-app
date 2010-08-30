@@ -108,6 +108,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("tcDirectProjectId", project.getTcDirectProjectId());
         result.put("tcDirectProjectName", project.getTcDirectProjectName());
         result.put("billingProjectId", project.getProperties().get("Billing Project"));
+        result.put("adminFee", project.getProperties().get("Admin Fee"));
 
         // project info properties map
         result.put("properties", project.getProperties());
