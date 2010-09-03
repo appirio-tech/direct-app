@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -39,6 +40,7 @@ import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.service.studio.PersistenceException;
 import com.topcoder.service.studio.SubmissionData;
+import com.topcoder.service.studio.ContestNotFoundException;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
@@ -485,13 +487,25 @@ public final class DirectUtils {
     public static List<SubmissionData> getStudioContestSubmissions(long contestId, ContestRoundType roundType,
                                                                    TCSubject currentUser,
                                                                    ContestServiceFacade contestServiceFacade)
-        throws PermissionServiceException, ContestServiceException {
+        throws PermissionServiceException, ContestServiceException, PersistenceException, ContestNotFoundException {
 
-        List<SubmissionData> submissions;
-        if (roundType == ContestRoundType.MILESTONE) {
-            submissions = contestServiceFacade.getMilestoneSubmissionsForContest(currentUser, contestId);
-        } else {
-            submissions = contestServiceFacade.getFinalSubmissionsForContest(currentUser, contestId);
+        List<SubmissionData> submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contestId);
+		StudioCompetition studioCompetition = contestServiceFacade.getContest(currentUser, contestId);
+        if (studioCompetition.getContestData().getMultiRound()) {
+			XMLGregorianCalendar milestoneDate = studioCompetition.getContestData().getMultiRoundData().getMilestoneDate();
+			List<SubmissionData> filteredSubmissions = new ArrayList<SubmissionData>();
+			for (SubmissionData submission : submissions) {
+				if (roundType == ContestRoundType.MILESTONE) {
+					if (submission.getSubmittedDate().compare(milestoneDate) == -1) {
+						filteredSubmissions.add(submission);
+					}
+				} else {
+					if (submission.getSubmittedDate().compare(milestoneDate) == 1) {
+						filteredSubmissions.add(submission);
+					}
+				}
+			}
+			return filteredSubmissions;
         }
         return submissions;
     }
