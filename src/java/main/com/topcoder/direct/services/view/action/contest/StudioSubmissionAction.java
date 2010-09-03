@@ -118,7 +118,7 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
 
             // Set submissions count
             ContestRoundType roundType = getFormData().getRoundType();
-            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(contestId, roundType,
+            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(), roundType,
                                                                                        currentUser,
                                                                                        contestServiceFacade);
             int submissionsCount = submissions.size();

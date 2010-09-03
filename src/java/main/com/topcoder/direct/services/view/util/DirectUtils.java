@@ -40,6 +40,7 @@ import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.service.studio.PersistenceException;
 import com.topcoder.service.studio.SubmissionData;
+import com.topcoder.service.studio.ContestData;
 import com.topcoder.service.studio.ContestNotFoundException;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
@@ -484,30 +485,36 @@ public final class DirectUtils {
 	 * @throws ContestServiceException if an unexpected error occurs.
      * @since 1.4
      */
-    public static List<SubmissionData> getStudioContestSubmissions(long contestId, ContestRoundType roundType,
+    public static List<SubmissionData> getStudioContestSubmissions(ContestData contest, ContestRoundType roundType,
                                                                    TCSubject currentUser,
                                                                    ContestServiceFacade contestServiceFacade)
-        throws PermissionServiceException, ContestServiceException, PersistenceException, ContestNotFoundException {
+        throws PermissionServiceException, ContestServiceException,  PersistenceException, ContestNotFoundException  {
 
-        List<SubmissionData> submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contestId);
-		StudioCompetition studioCompetition = contestServiceFacade.getContest(currentUser, contestId);
-        if (studioCompetition.getContestData().getMultiRound()) {
-			XMLGregorianCalendar milestoneDate = studioCompetition.getContestData().getMultiRoundData().getMilestoneDate();
-			List<SubmissionData> filteredSubmissions = new ArrayList<SubmissionData>();
-			for (SubmissionData submission : submissions) {
-				if (roundType == ContestRoundType.MILESTONE) {
-					if (submission.getSubmittedDate().compare(milestoneDate) == -1) {
-						filteredSubmissions.add(submission);
-					}
-				} else {
-					if (submission.getSubmittedDate().compare(milestoneDate) == 1) {
-						filteredSubmissions.add(submission);
-					}
-				}
-			}
-			return filteredSubmissions;
+        List<SubmissionData> submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contest.getContestId());
+
+        if (roundType == ContestRoundType.MILESTONE) {
+            List<SubmissionData> milestones = new ArrayList<SubmissionData>();
+
+            if (contest.getMultiRoundData() == null)
+            {
+                return milestones;
+            }
+
+            Date milestoneDate = getDate(contest.getMultiRoundData().getMilestoneDate());
+            for (SubmissionData sub : submissions)
+            {
+                Date subDate = getDate(sub.getSubmittedDate());
+                if (subDate.before(milestoneDate))
+                {
+                    milestones.add(sub);
+                }
+            }
+
+            return milestones;
+        } else {
+            return submissions;
         }
-        return submissions;
+      
     }
 
     /**
@@ -567,4 +574,5 @@ public final class DirectUtils {
         }
         return prize;
     }
+
 }

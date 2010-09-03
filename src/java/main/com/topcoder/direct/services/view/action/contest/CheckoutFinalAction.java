@@ -286,7 +286,7 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
         long contestId = getContestId();
         StudioCompetition studioCompetition = contestServiceFacade.getContest(currentUser, contestId);
 
-        List<SubmissionData> subs = DirectUtils.getStudioContestSubmissions(contestId, ContestRoundType.FINAL,
+        List<SubmissionData> subs = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(), ContestRoundType.FINAL,
                 currentUser, contestServiceFacade);
         boolean hasCheckout = DirectUtils.getSubmissionsCheckout(subs, ContestRoundType.FINAL);
 
@@ -299,7 +299,7 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
         for (SubmissionData sub : subs) {
             submissions.put(sub.getSubmissionId(), sub);
         }
-        List<SubmissionData> mileSubmissions = DirectUtils.getStudioContestSubmissions(contestId,
+        List<SubmissionData> mileSubmissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(),
                 ContestRoundType.MILESTONE, currentUser, contestServiceFacade);
         for (SubmissionData sub : mileSubmissions) {
             submissions.put(sub.getSubmissionId(), sub);

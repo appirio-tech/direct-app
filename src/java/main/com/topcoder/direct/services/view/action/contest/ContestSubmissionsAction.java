@@ -140,7 +140,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
             // Set submissions data
             ContestRoundType roundType = getFormData().getRoundType();
-            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(contestId, roundType,
+            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(), roundType,
                                                                                        currentUser,
                                                                                        contestServiceFacade);
             getViewData().setContestSubmissions(submissions);

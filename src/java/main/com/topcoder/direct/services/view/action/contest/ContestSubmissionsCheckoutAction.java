@@ -138,7 +138,7 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
 
             // Set submissions data
             ContestRoundType roundType = getFormData().getRoundType();
-            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(contestId, roundType,
+            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(), roundType,
                     currentUser, contestServiceFacade);
             getViewData().setContestSubmissions(submissions);
             if (roundType == ContestRoundType.FINAL) {
@@ -148,7 +148,7 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
                         paidSubmissions.append(sub.getSubmissionId()).append(",");
                     }
                 }
-                List<SubmissionData> mileSubmissions = DirectUtils.getStudioContestSubmissions(contestId,
+                List<SubmissionData> mileSubmissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(),
                         ContestRoundType.MILESTONE, currentUser, contestServiceFacade);
                 int total = 0;
                 for (SubmissionData submission : mileSubmissions) {
