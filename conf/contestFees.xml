@@ -3,59 +3,59 @@
 <contestTypes>
 	<contestType id="STUDIO" contestTypeId="-999">
 		<subType contestTypeId="1"> <!-- Web Page Design -->
-			<contestFee>2000</contestFee>
+			<contestFee>3000</contestFee>
             <firstPlaceCost>1250</firstPlaceCost>
             <secondPlaceCost>250</secondPlaceCost>
 		</subType>
 		<subType contestTypeId="5"> <!-- Application Front End Design -->
-			<contestFee>2000</contestFee>
+			<contestFee>3000</contestFee>
             <firstPlaceCost>1250</firstPlaceCost>
             <secondPlaceCost>250</secondPlaceCost>
 		</subType>
 		<subType contestTypeId="4">  <!-- Web Elements -->
-			<contestFee>250</contestFee>
+			<contestFee>375</contestFee>
             <firstPlaceCost>350</firstPlaceCost>
             <secondPlaceCost>70</secondPlaceCost>
 		</subType>
 		<subType contestTypeId="3"> <!-- Logo Design -->
-			<contestFee>250</contestFee>
+			<contestFee>375</contestFee>
             <firstPlaceCost>350</firstPlaceCost>
             <secondPlaceCost>70</secondPlaceCost>
 		</subType>
 		<subType contestTypeId="12"> <!-- Print/Presentation -->
-          <contestFee>250</contestFee>
+          <contestFee>375</contestFee>
                 <firstPlaceCost>750</firstPlaceCost>
                 <secondPlaceCost>150</secondPlaceCost>
         </subType>
         <subType contestTypeId="18"> <!-- Other -->
-          <contestFee>2000</contestFee>
+          <contestFee>3000</contestFee>
                 <firstPlaceCost>750</firstPlaceCost>
                 <secondPlaceCost>150</secondPlaceCost>
         </subType>
         <subType contestTypeId="25"> <!-- Other -->
-          <contestFee>2000</contestFee>
+          <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
         </subType>
         <subType contestTypeId="26"> <!-- Other -->
-          <contestFee>2000</contestFee>
+          <contestFee>3000</contestFee>
                 <firstPlaceCost>750</firstPlaceCost>
                 <secondPlaceCost>150</secondPlaceCost>
         </subType>
         <subType contestTypeId="8"> <!-- Flash Animation -->
-          <contestFee>2000</contestFee>
+          <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
         </subType>
         <subType contestTypeId="6"> <!-- Flash Animation -->
-          <contestFee>2000</contestFee>
+          <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
         </subType>
 	</contestType>
 	
 	<contestType contestTypeId="1"><!-- design -->
-		<contestFee>1500</contestFee>
+		<contestFee>2250</contestFee>
         <specReviewCost>30</specReviewCost>
 		<contestCost>
             	<billingLevel id="low">
@@ -81,8 +81,9 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="23"> <!-- CONCEPTUALIZATION-->
-		<contestFee>2000</contestFee>
+	<contestType contestTypeId="23"> 
+<!-- CONCEPTUALIZATION -->
+		<contestFee>3000</contestFee>
         <specReviewCost>30</specReviewCost>
 		<contestCost>
             <billingLevel id="low">
@@ -111,8 +112,9 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="6"> <!-- SPECIFICATION -->
-		<contestFee>2000</contestFee>
+	<contestType contestTypeId="6"> 
+<!-- SPECIFICATION -->
+		<contestFee>3000</contestFee>
         <specReviewCost>40</specReviewCost>
 		<contestCost>
             <billingLevel id="low">
@@ -138,61 +140,8 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="7"> <!-- ARCHITECTURE -->
-		<contestFee>2000</contestFee>
-        <specReviewCost>50</specReviewCost>
-		<contestCost>
-            <billingLevel id="low">
-                <firstPlaceCost>800</firstPlaceCost>
-                <secondPlaceCost>400</secondPlaceCost>
-                <reviewBoardCost>604.5</reviewBoardCost>
-                <reliabilityBonusCost>240</reliabilityBonusCost>
-                <drCost>360</drCost>
-            </billingLevel>
-            <billingLevel id="medium">
-                <firstPlaceCost>1000</firstPlaceCost>
-                <secondPlaceCost>500</secondPlaceCost>
-                <reviewBoardCost>682.5</reviewBoardCost>
-                <reliabilityBonusCost>300</reliabilityBonusCost>
-                <drCost>450</drCost>
-            </billingLevel>
-            <billingLevel id="high">
-                <firstPlaceCost>1200</firstPlaceCost>
-                <secondPlaceCost>600</secondPlaceCost>
-                <reviewBoardCost>760.5</reviewBoardCost>
-                <reliabilityBonusCost>360</reliabilityBonusCost>
-                <drCost>540</drCost>
-            </billingLevel>
-        </contestCost>
-	</contestType>
-	<contestType contestTypeId="2"> <!-- DEVELOPMENT -->
-		<contestFee>1500</contestFee>
-        <specReviewCost>30</specReviewCost>
-		<contestCost>
-            <billingLevel id="low">
-                <firstPlaceCost>325</firstPlaceCost>
-                <secondPlaceCost>162.5</secondPlaceCost>
-                <reviewBoardCost>341</reviewBoardCost>
-                <reliabilityBonusCost>97.5</reliabilityBonusCost>
-                <drCost>146</drCost>
-            </billingLevel>
-            <billingLevel id="medium">
-                <firstPlaceCost>500</firstPlaceCost>
-                <secondPlaceCost>250</secondPlaceCost>
-                <reviewBoardCost>525</reviewBoardCost>
-                <reliabilityBonusCost>150</reliabilityBonusCost>
-                <drCost>225</drCost>
-            </billingLevel>
-            <billingLevel id="high">
-                <firstPlaceCost>750</firstPlaceCost>
-                <secondPlaceCost>375</secondPlaceCost>
-                <reviewBoardCost>787.5</reviewBoardCost>
-                <reliabilityBonusCost>225</reliabilityBonusCost>
-                <drCost>338</drCost>
-            </billingLevel>
-        </contestCost>
-	</contestType>
-	<contestType contestTypeId="14"> <!-- ASSEMBLY -->
+	<contestType contestTypeId="7"> 
+<!-- ARCHITECTURE -->
 		<contestFee>3000</contestFee>
         <specReviewCost>50</specReviewCost>
 		<contestCost>
@@ -219,8 +168,65 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="13"> <!-- Test Suites -->
-		<contestFee>2000</contestFee>
+	<contestType contestTypeId="2"> 
+<!-- DEVELOPMENT -->
+		<contestFee>2250</contestFee>
+        <specReviewCost>30</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>325</firstPlaceCost>
+                <secondPlaceCost>162.5</secondPlaceCost>
+                <reviewBoardCost>341</reviewBoardCost>
+                <reliabilityBonusCost>97.5</reliabilityBonusCost>
+                <drCost>146</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>500</firstPlaceCost>
+                <secondPlaceCost>250</secondPlaceCost>
+                <reviewBoardCost>525</reviewBoardCost>
+                <reliabilityBonusCost>150</reliabilityBonusCost>
+                <drCost>225</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>750</firstPlaceCost>
+                <secondPlaceCost>375</secondPlaceCost>
+                <reviewBoardCost>787.5</reviewBoardCost>
+                <reliabilityBonusCost>225</reliabilityBonusCost>
+                <drCost>338</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType contestTypeId="14"> 
+<!-- ASSEMBLY -->
+		<contestFee>4500</contestFee>
+        <specReviewCost>50</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>800</firstPlaceCost>
+                <secondPlaceCost>400</secondPlaceCost>
+                <reviewBoardCost>604.5</reviewBoardCost>
+                <reliabilityBonusCost>240</reliabilityBonusCost>
+                <drCost>360</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>1000</firstPlaceCost>
+                <secondPlaceCost>500</secondPlaceCost>
+                <reviewBoardCost>682.5</reviewBoardCost>
+                <reliabilityBonusCost>300</reliabilityBonusCost>
+                <drCost>450</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>1200</firstPlaceCost>
+                <secondPlaceCost>600</secondPlaceCost>
+                <reviewBoardCost>760.5</reviewBoardCost>
+                <reliabilityBonusCost>360</reliabilityBonusCost>
+                <drCost>540</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>
+	<contestType contestTypeId="13"> 
+<!-- Test Suites -->
+		<contestFee>3000</contestFee>
         <specReviewCost>50</specReviewCost>
 		<contestCost>
             <billingLevel id="low">
@@ -246,8 +252,9 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="26"> <!-- TESTSCENARIOS-->
-		<contestFee>2000</contestFee>
+	<contestType contestTypeId="26"> 
+<!-- TESTSCENARIOS -->
+		<contestFee>3000</contestFee>
         <specReviewCost>50</specReviewCost>
 		<contestCost>
             <billingLevel id="low">
@@ -273,8 +280,9 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="25"> <!-- RIACOMPONENT -->
-		<contestFee>2000</contestFee>
+	<contestType contestTypeId="25"> 
+<!-- RIACOMPONENT -->
+		<contestFee>3000</contestFee>
         <specReviewCost>50</specReviewCost>
 		<contestCost>
             <billingLevel id="low">
@@ -300,8 +308,9 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="24"> <!-- RIABUILD -->
-		<contestFee>2000</contestFee>
+	<contestType contestTypeId="24"> 
+<!-- RIABUILD -->
+		<contestFee>3000</contestFee>
         <specReviewCost>50</specReviewCost>
 		<contestCost>
             <billingLevel id="low">
@@ -327,8 +336,9 @@
             </billingLevel>
         </contestCost>
 	</contestType>
-	<contestType contestTypeId="19"> <!-- UIPROTOTYPE -->
-		<contestFee>2000</contestFee>
+	<contestType contestTypeId="19"> 
+<!-- UIPROTOTYPE -->
+		<contestFee>3000</contestFee>
         <specReviewCost>50</specReviewCost>
 		<contestCost>
             <billingLevel id="low">
