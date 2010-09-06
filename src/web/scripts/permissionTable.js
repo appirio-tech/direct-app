@@ -8,7 +8,7 @@
  * @author TCSASSEMBLER
  * @version 1.0
  */
-$(function() {
+//$(function() {
 	/**
 	 * Represents the URL to get project permission.
 	 */
@@ -20,8 +20,20 @@ $(function() {
 	var UPDATE_PROJECT_PERMISSION_URL = "updateProjectPermissions";
 
 	/**
+	 * Comparator of two div objects.
+	 */
+	$.fn.dataTableExt.afnSortData['dom-text'] = function ( oSettings, iColumn ){
+		var aData = [];
+		$('td:eq('+iColumn+') div', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
+			aData.push( $(this).html() );
+		});
+		return aData;
+	}
+	
+	/**
 	 * Create the ajax processor.
 	 */
+	function requestPermissions () {
 	var processor = new js.topcoder.ajax.BufferedAjaxProcessor( {
 		method : "get",
 		url : GET_PROJECT_PERMISSIONS_URL,
@@ -31,6 +43,7 @@ $(function() {
 			handleJsonResult(JSON.parse(processor.getResponseText()));
 		}
 	});
+	}
 
 	/**
 	 * Handle json result, render it to the page.
@@ -66,8 +79,8 @@ $(function() {
 	/**
 	 * Submit the form.
 	 */
-	$("#permission_submit").click(
-			function() {
+//	$("#permission_submit").click(
+			function pbutton_submit() {
 				if (!$.permission.tableCreateComplete) {
 					$.permission.showErrors("fail to load data");
 					return;
@@ -90,7 +103,8 @@ $(function() {
 				$("#permissionHiddenInput").val(result);
 				$("#permissionForm").attr("action", UPDATE_PROJECT_PERMISSION_URL);
 				document.forms['permissionForm'].submit();
-			});
+			}
+//);
 
 	/**
 	 * The permission object, used to store information and handle event.
@@ -285,12 +299,10 @@ $(function() {
 				if (fperm) {
 					pperm = "full";
 				} else {
-					if (wperm && rperm) {
-						pperm = "full";
+					if (wperm) {
+						pperm = "write";
 					} else if (rperm) {
 						pperm = "read";
-					} else if (wperm) {
-						pperm = "write";
 					} else {
 						pperm = "";
 					}
@@ -346,7 +358,7 @@ $(function() {
 						+ this.userId;
 				html += ","
 						+ projectId
-						+ ")' class='subgroup'><img src='/images/remove.png' alt='' />";
+						+ ");pbutton_submit();' class='subgroup'><img src='/images/remove.png' alt='' />";
 				html += " &nbsp;" + this.handle + "</a></td>\n";
 
 				html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
@@ -439,7 +451,7 @@ $(function() {
 						+ userId;
 				html += ","
 						+ this.projectId
-						+ ")' class='subgroup'><img src='/images/remove.png' alt='' />";
+						+ ");pbutton_submit();' class='subgroup'><img src='/images/remove.png' alt='' />";
 				html += " &nbsp;" + this.projectName + "</a></td>\n";
 
 				html += p.getCheckboxString(p.TABLE_TYPE_USERS,
@@ -737,7 +749,7 @@ $(function() {
 				html += "<a href='javascript:$.permission.handleAssignProjectClick(";
 				html += this.userId + ")' class='addProject'></a>";
 				html += "<a href='javascript:$.permission.removeSingleUser(";
-				html += this.userId + ")' class='removeProject'></a>";
+				html += this.userId + ");pbutton_submit();' class='removeProject'></a>";
 				html += "</tr>";
 
 				html += "</tr>\n";
@@ -1168,8 +1180,23 @@ $(function() {
 										"mu_r_");
 								var handle = $(this).attr("name");
 
+								var newUser = false;
+								var uP = project.userPermissions[userId];
+								if (uP == null || typeof(uP) == "undefined"){
+									newUser = true;
+								}
 								$.permission.addUserProjectPair(userId, handle,
 										project.projectId);
+								if (newUser){
+									var JSON = new Object();
+									JSON['userId'] = userId;
+									JSON['handle'] = handle;
+									JSON['rperm'] = true;
+									JSON['wperm'] = false;
+									JSON['fperm'] = false;
+									uPermission = new $.permission.userPermission(JSON);
+									project.addUserPermissions(uPermission);
+								}
 							});
 							
             
@@ -1188,7 +1215,23 @@ $(function() {
 				var pId = $.permission.retrieveId(this, "ap_r_");
 
 				$.each($.permission.currentUserMap, function(uId, handle) {
+					var newUser = false;
+					var project = $.permission.projects[pId];
+					var uP = project.userPermissions[uId];
+					if (uP == null || typeof(uP) == "undefined"){
+						newUser = true;
+					}
 					$.permission.addUserProjectPair(uId, handle, pId);
+					if (newUser){
+						var JSON = new Object();
+						JSON['userId'] = uId;
+						JSON['handle'] = handle;
+						JSON['rperm'] = true;
+						JSON['wperm'] = false;
+						JSON['fperm'] = false;
+						uPermission = new $.permission.userPermission(JSON);
+						project.addUserPermissions(uPermission);
+					}
 				});
 			});
 			
@@ -1295,12 +1338,12 @@ $(function() {
 			var pDiv = $("#p_project" + projectId);
 			project.toHtml();
 			if (project.groupState == 0) {
-				$("#notifications tr.group" + projectId).each(function() {
+				$("#permissions tr.group" + projectId).each(function() {
 					$(this).remove();
 				});
 			} else {
 				$.permission.changePermissionHideGroup(pDiv, projectId);
-				$("#notifications tr.group" + projectId).each(function() {
+				$("#permissions tr.group" + projectId).each(function() {
 					$(this).remove();
 				});
 				$.permission.changePermissionHideGroup(pDiv, projectId);
@@ -1363,19 +1406,27 @@ $(function() {
 			for ( var projectId in this.projects) {
 				html += this.projects[projectId].toHtml();
 			}
-			$("#notifications tbody").append(html);
-			this.oProjectTable = $("#notifications")
+			$("#permissions tbody").html(html);
+			this.oProjectTable = $("#permissions")
 					.dataTable(
 							{
 								"bFilter" : false,
-								"bSort" : false,
+								"bSort" : true,
+								"asSorting": [ "asc" ],
 								"bInfo" : false,
 								"oLanguage" : {
 									"sLengthMenu" : "_MENU_ Per page"
 								},
 								"sPaginationType" : "permission_button",
 								"bAutoWidth" : false,
-								"sDom" : '"bottom"<"pagination-info"<"pagination"p><"display-perpage"l>>'
+								"sDom" : '"bottom"<"pagination-info"<"pagination"p><"display-perpage"l>>',
+								"aoColumns" : [
+									{ "sSortDataType": "dom-text" },
+									{"bSortable" : false},
+									{"bSortable" : false},
+									{"bSortable" : false},
+									{"bSortable" : false}
+									]
 							});
 
 			// render to user table
@@ -1384,12 +1435,13 @@ $(function() {
 			for ( var userId in this.users) {
 				html += this.users[userId].toHtml();
 			}
-			$("#userTable tbody").append(html);
+			$("#userTable tbody").html(html);
 			this.oUserTable = $("#userTable")
 					.dataTable(
 							{
 								"bFilter" : false,
 								"bSort" : true,
+								"asSorting": [ "asc" ],
 								"bInfo" : false,
 								"oLanguage" : {
 									"sLengthMenu" : "_MENU_ Per page page"
@@ -1454,6 +1506,7 @@ $(function() {
 			});
 			$("#u_deleteUsersA").click(function() {
 				$.permission.removeUsers();
+				pbutton_submit();
 			});
 
 			// handle user list click event
@@ -1648,4 +1701,4 @@ $(function() {
 			}
 		}
 	};
-});
+//});

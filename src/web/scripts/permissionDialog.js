@@ -222,6 +222,7 @@ $(function() {
 	$("#mu_save").click(function() {
 		$("#manageUserDialog").dialog("close");
 		$.permission.processAddUsersToProject();
+		pbutton_submit();
 	});
 
 	/**
@@ -238,6 +239,7 @@ $(function() {
 	$("#ap_save").click(function() {
 		$("#addProjectDialog").dialog("close");
 		$.permission.processAssignProjects();
+		pbutton_submit();
 	});
 
 	/**
@@ -274,6 +276,7 @@ $(function() {
 			addProjectsToAssignProjectsDialog(projects, projectName);
 		}
 	});
+	
 
 	/**
 	 * Add users for projects assign.

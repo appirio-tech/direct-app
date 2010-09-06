@@ -211,9 +211,13 @@
             <result name="success">/WEB-INF/project-permissions.jsp</result>
         </action>
 
-        <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction">
-            <interceptor-ref name="securedPreProcessorStack"/>
-            <result name="success">/WEB-INF/project-permissions.jsp</result>
+        <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction">	
+            <result name="success" type="redirectAction">
+                <param name="actionName">dashboardNotifications</param>
+                <param name="pn">perm</param>
+            </result>
+            <!--<interceptor-ref name="preProcessor"/>-->
+            <!-- <result name="success">/WEB-INF/notification/dashboard-notifications.jsp?pn=perm</result>-->
         </action>
 
         <action name="getProjectPermissions" class="getProjectPermissionsAction">
@@ -399,7 +403,7 @@
         <action name="studioSubmission" class="studioSubmissionAction">
             <result>/WEB-INF/studio-submissions-single.jsp</result>
         </action>
-
+        
         <action name="updateSubmissionFeedback" class="updateStudioSubmissionFeedbackAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
