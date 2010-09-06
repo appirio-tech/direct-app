@@ -130,10 +130,6 @@
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
                     <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
                 </li>
-
-                 <li <c:if test="${requestScope.CURRENT_TAB eq 'permissions'}">class="on"</c:if>>
-                     <a href="<s:url action="permissionsView" namespace="/"/>"><span class="dashboardSpan">Permissions</span></a>
-                 </li>
              </ul>
         </div>
             
