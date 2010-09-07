@@ -183,6 +183,7 @@ $(document).ready(function() {
 		"aoColumns": [
 				{ "sType": "html" },
 				{ "sType": "html" },
+                { "sType": "html" },
 				{ "sType": "date-direct" },
 				{ "sType": "html" },
 				{ "sType": "html" },

@@ -49,6 +49,7 @@
 
                                                                 <th>Contest Type</th>
                                                                 <th>Contest Name</th>
+                                                                <th>Project Name</th>
                                                                 <th>Start/End</th>
                                                                 <th>Registrants</th>
                                                                 <th>Submissions</th>
@@ -80,6 +81,11 @@
                                                                                     />
                                                                         </div>
                                                                     </td>
+                                                                    <td>
+                                                                        <div style="display:table-cell;text-align:left">
+																	        <s:property value="contest.project.name"/>
+                                                                        </div>
+																	</td>
                                                                     <td><fmt:formatDate value="${startTime}"
                                                                                         pattern="MM/dd/yyyy HH:mm zzz"/>
                                                                         <c:out value="${tcdirect:getEndText(endTime)}"/></td>
