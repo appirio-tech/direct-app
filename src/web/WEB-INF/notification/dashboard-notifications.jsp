@@ -63,12 +63,14 @@
 				document.getElementById("area2-noti").innerHTML = document.getElementById("area1").innerHTML;
 				document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
 				document.getElementById("area2-perm").innerHTML = "";
+                        $("#area1 .areaHeader select").val("perm");
 			}
 			else
 			{
 				document.getElementById("area2-perm").innerHTML = document.getElementById("area1").innerHTML;
 			    	document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
 				document.getElementById("area2-noti").innerHTML = "";
+                $("#area1 .areaHeader select").val("noti");
 			}
 		}
 		
@@ -116,21 +118,24 @@
                     <div id="area1"><!-- the main area -->
                     </div>
                     <div id="area2-noti" style="display:none">
-                    <div id="area1"><!-- the main area -->
+                    <div><!-- the main area -->
                         <div class="area1Content">
 							<div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <strong>Notifications</strong>
                             </div>
-                             <div align="right">
-                                 <select id="selector-n" onchange="changepn(this.value)">
-                                  	  <option value="noti">Notifications</option> 	
-                                      <option value="perm">Permissions</option>
-                                 </select>
-                             </div>
 							<div class="areaHeader">
 								<h2 class="title notificationTitle">Notifications Setting</h2>
-							</div><!-- End .areaHeader -->
+                                                        <div class="select">
+                                                            Select a Setting Panel:
+                                                            <span name="settingPanel">
+                                                                <select name="select" onchange="changepn(this.value)">
+                                                    <option value="noti">Notifications</option>
+                                                                    <option value="perm">Permissions</option>
+                                                            </select>
+                                                        </span>
+                                                        </div>
+                                                </div><!-- End .areaHeader -->
 
 							<div class="container2">
 							<div class="container2Left"><div class="container2Right"><div class="container2Bottom">
@@ -226,7 +231,7 @@
 
 
 
-					</div>
+					</div> 
                     </div>
 
 
@@ -237,16 +242,18 @@
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <strong>Permissions</strong>
                             </div>
-                            
-                             <div align="right">
-                                 <select id="selector-n" onchange="changepn(this.value)">
-                                 	  <option value="perm">Permissions</option>
-                                  	  <option value="noti">Notifications</option> 	
-                                 </select>
-                             </div>
                              
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Permissions</h2>
+                                <div class="select">
+                                        Select a Setting Panel:
+                                        <span name="settingPanel">
+                                        <select name="select" onchange="changepn(this.value)">
+                                <option value="noti">Notifications</option>
+                                                <option value="perm" selected>Permissions</option>
+                                        </select>
+                                    </span>
+                                    </div>
                                 <span class="actionMessage"><s:actionmessage/></span>
 
                             </div>
@@ -395,8 +402,8 @@
             </div>
             <div class="middle">
                 <a class="addItem" href="javascript:void(0)">
-                    <img src="/images/add_tech.png" alt=""/></a> <a class="removeItem" href="javascript:void(0)">
-                <img src="/images/remove_tech.png" alt=""/></a></div>
+                    <img src="/images/add_tech.png" title="Add User"/></a> <a class="removeItem" href="javascript:void(0)">
+                <img src="/images/remove_tech.png" title="Remove User"/></a></div>
             <div class="right">
                 <div class="subtitle">
                     <a href="javascript:void(0)" class="leftTxt">Chosen Users</a> <a href="javascript:void(0)"
@@ -436,8 +443,8 @@
             </div>
             <div class="middle">
                 <a class="addItem" href="javascript:void(0)">
-                    <img src="/images/add_tech.png" alt=""/></a> <a class="removeItem" href="javascript:void(0)">
-                <img src="/images/remove_tech.png" alt=""/></a></div>
+                    <img src="/images/add_tech.png" title="Add User"/></a> <a class="removeItem" href="javascript:void(0)">
+                <img src="/images/remove_tech.png" title="Remove User"/></a></div>
             <div class="right">
                 <div class="subtitle">
                     <a href="javascript:void(0)" class="leftTxt">Chosen Users</a> <a href="javascript:void(0)"
@@ -478,8 +485,8 @@
             </div>
             <div class="middle">
                 <a class="addItem" href="javascript:void(0)">
-                    <img src="/images/add_tech.png" alt=""/></a> <a class="removeItem" href="javascript:void(0)">
-                <img src="/images/remove_tech.png" alt=""/></a></div>
+                    <img src="/images/add_tech.png" title="Add Project"/></a> <a class="removeItem" href="javascript:void(0)">
+                <img src="/images/remove_tech.png" title="Remove Project"/></a></div>
             <div class="right">
                 <div class="subtitle">
                     <a href="javascript:void(0)" class="leftTxt">Chosen Projects</a> <a href="javascript:void(0)"
