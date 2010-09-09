@@ -492,27 +492,33 @@ public final class DirectUtils {
 
         List<SubmissionData> submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contest.getContestId());
 
-        if (roundType == ContestRoundType.MILESTONE) {
-            List<SubmissionData> milestones = new ArrayList<SubmissionData>();
-
-            if (contest.getMultiRoundData() == null)
-            {
-                return milestones;
-            }
+        if (contest.getMultiRound()) {
 
             Date milestoneDate = getDate(contest.getMultiRoundData().getMilestoneDate());
+            List<SubmissionData> filteredSubmissions = new ArrayList<SubmissionData>();
+
             for (SubmissionData sub : submissions)
             {
                 Date subDate = getDate(sub.getSubmittedDate());
-                if (subDate.before(milestoneDate))
-                {
-                    milestones.add(sub);
+
+                if (roundType == ContestRoundType.MILESTONE) {
+                    if (subDate.before(milestoneDate))
+                    {
+                        filteredSubmissions.add(sub);
+                    }
+                } else {
+                    if (subDate.after(milestoneDate))
+                    {
+                        filteredSubmissions.add(sub);
+                    }
+
                 }
             }
 
-            return milestones;
+            return filteredSubmissions;
+             
         } else {
-            return submissions;
+                return submissions;
         }
       
     }
