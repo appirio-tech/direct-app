@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
+import javax.transaction.UserTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -482,7 +483,7 @@ public final class DirectUtils {
      *        data retrieval.
      * @return a <code>List</code> listing the submissions for specified round of specified <code>Studio</code> contest.
      * @throws PermissionServiceException if an unexpected error occurs.
-	 * @throws ContestServiceException if an unexpected error occurs.
+     * @throws ContestServiceException if an unexpected error occurs.
      * @since 1.4
      */
     public static List<SubmissionData> getStudioContestSubmissions(ContestData contest, ContestRoundType roundType,
@@ -567,7 +568,7 @@ public final class DirectUtils {
      *
      * @param studioCompetition the studio competition
      * @return the additional prize for the studio competition
-	 * @since 1.6
+     * @since 1.6
      */
     public static double getAdditionalPrize(StudioCompetition studioCompetition) {
         List<CompetitionPrize> prizes = studioCompetition.getPrizes();
@@ -581,4 +582,15 @@ public final class DirectUtils {
         return prize;
     }
 
+     /**
+     * Gets <code>UserTransaction</code> bean.
+     *
+     * @return the <code>UserTransaction</code> bean
+     * @throws NamingException if any naming exception occurs
+     */
+    public static UserTransaction getUserTransaction() throws NamingException {
+        Context context = TCContext.getContext(DirectProperties.CONTEST_SERVICE_FACADE_CONTEXT_FACTORY,
+            DirectProperties.CONTEST_SERVICE_FACADE_PROVIDER_URL);
+        return (UserTransaction) context.lookup("UserTransaction");
+    }    
 }

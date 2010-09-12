@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.UserTransaction;
 import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.clients.model.Project;
@@ -304,97 +305,103 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
         for (SubmissionData sub : mileSubmissions) {
             submissions.put(sub.getSubmissionId(), sub);
         }
-
-        if (!hasCheckout) {
-            // only save rank and process payment for placement and milestone when has not been checked out
-            // save rank
-            if (ranks.length() > 0) {
-                for (int i = 0; i < rankingSubmissions.length; i++) {
-                    contestServiceFacade.updateSubmissionUserRank(currentUser, Long.parseLong(rankingSubmissions[i]),
-                            i + 1, false);
+        UserTransaction ut = DirectUtils.getUserTransaction();
+     
+        try {
+            ut.begin();
+            if (!hasCheckout) {
+                // only save rank and process payment for placement and milestone when has not been checked out
+                // save rank
+                if (ranks.length() > 0) {
+                    for (int i = 0; i < rankingSubmissions.length; i++) {
+                        contestServiceFacade.updateSubmissionUserRank(currentUser, Long.parseLong(rankingSubmissions[i]),
+                                i + 1, false);
+                    }
                 }
-            }
 
-            double[] placePayments = new double[studioCompetition.getPrizes().size()];
-            for (CompetitionPrize prize : studioCompetition.getPrizes()) {
-                placePayments[prize.getPlace() - 1] = prize.getAmount();
-            }
-
-            // place payments
-            if (ranks.length() > 0) {
-                for (int i = 0; i < rankingSubmissions.length; i++) {
-                    SubmissionPaymentData payment = new SubmissionPaymentData();
-                    payment.setAmount(placePayments[i]);
-                    payment.setAwardMilestonePrize(false);
-                    payment.setRank(i + 1);
-                    payment.setId(Long.parseLong(rankingSubmissions[i]));
-                    paymentData.add(payment);
-                    this.placePayments.add(submissions.get(payment.getId()));
-                    this.placePrizes.add(payment.getAmount());
-                    totalPayments += payment.getAmount();
+                double[] placePayments = new double[studioCompetition.getPrizes().size()];
+                for (CompetitionPrize prize : studioCompetition.getPrizes()) {
+                    placePayments[prize.getPlace() - 1] = prize.getAmount();
                 }
-            }
 
-            // milestone payments
-            int milestoneNumber = 0;
-            if (studioCompetition.getContestData().getMultiRound()) {
-                for (SubmissionData submission : mileSubmissions) {
-                    if (submission.isAwardMilestonePrize()) {
+                // place payments
+                if (ranks.length() > 0) {
+                    for (int i = 0; i < rankingSubmissions.length; i++) {
                         SubmissionPaymentData payment = new SubmissionPaymentData();
-                        payment.setAmount(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
-                        payment.setAwardMilestonePrize(true);
-                        payment.setRank(0);
-                        payment.setId(submission.getSubmissionId());
+                        payment.setAmount(placePayments[i]);
+                        payment.setAwardMilestonePrize(false);
+                        payment.setRank(i + 1);
+                        payment.setId(Long.parseLong(rankingSubmissions[i]));
                         paymentData.add(payment);
-                        milestoneNumber++;
+                        this.placePayments.add(submissions.get(payment.getId()));
+                        this.placePrizes.add(payment.getAmount());
                         totalPayments += payment.getAmount();
                     }
                 }
-                getViewData().setMilestonePrize(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
-            }
-            getViewData().setMilestoneAwardNumber(milestoneNumber);
-        } else {
-            getViewData().setMilestoneAwardNumber(0);
-        }
 
-        // Additional Purchases
-        double additionalPrize = DirectUtils.getAdditionalPrize(studioCompetition);
-        if (additionalPurchases.length() > 0) {
-            for (int i = 0; i < additionalSubmissions.length; i++) {
-                SubmissionPaymentData payment = new SubmissionPaymentData();
-                payment.setAmount(additionalPrize);
-                payment.setAwardMilestonePrize(false);
-                payment.setRank(0);
-                payment.setId(Long.parseLong(additionalSubmissions[i]));
-                paymentData.add(payment);
-                totalPayments += payment.getAmount();
-                this.additionalPayments.add(submissions.get(payment.getId()));
+                // milestone payments
+                int milestoneNumber = 0;
+                if (studioCompetition.getContestData().getMultiRound()) {
+                    for (SubmissionData submission : mileSubmissions) {
+                        if (submission.isAwardMilestonePrize()) {
+                            SubmissionPaymentData payment = new SubmissionPaymentData();
+                            payment.setAmount(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
+                            payment.setAwardMilestonePrize(true);
+                            payment.setRank(0);
+                            payment.setId(submission.getSubmissionId());
+                            paymentData.add(payment);
+                            milestoneNumber++;
+                            totalPayments += payment.getAmount();
+                        }
+                    }
+                    getViewData().setMilestonePrize(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
+                }
+                getViewData().setMilestoneAwardNumber(milestoneNumber);
+            } else {
+                getViewData().setMilestoneAwardNumber(0);
             }
-        }
-        contestData.setSubmissions(paymentData.toArray(new SubmissionPaymentData[0]));
-        getViewData().setAdditionalPrize(additionalPrize);
 
-        List<Project> billingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
-        Project billingAccount = null;
-        for (Project project : billingProjects) {
-            if (project.getId() == billingProjectId) {
-                billingAccount = project;
-                break;
+            // Additional Purchases
+            double additionalPrize = DirectUtils.getAdditionalPrize(studioCompetition);
+            if (additionalPurchases.length() > 0) {
+                for (int i = 0; i < additionalSubmissions.length; i++) {
+                    SubmissionPaymentData payment = new SubmissionPaymentData();
+                    payment.setAmount(additionalPrize);
+                    payment.setAwardMilestonePrize(false);
+                    payment.setRank(0);
+                    payment.setId(Long.parseLong(additionalSubmissions[i]));
+                    paymentData.add(payment);
+                    totalPayments += payment.getAmount();
+                    this.additionalPayments.add(submissions.get(payment.getId()));
+                }
             }
-        }
-        if (billingAccount == null) {
-            throw new Exception("Can't find billing project for id:[" + billingProjectId + "].");
-        }
-        TCPurhcaseOrderPaymentData orderPaymentData = new TCPurhcaseOrderPaymentData();
-        orderPaymentData.setClientId(billingAccount.getClient().getId());
-        orderPaymentData.setClientName(billingAccount.getClient().getName());
-        orderPaymentData.setProjectId(billingAccount.getId());
-        orderPaymentData.setProjectName(billingAccount.getName());
-        orderPaymentData.setType(PaymentType.TCPurchaseOrder);
-        orderPaymentData.setPoNumber(billingAccount.getPOBoxNumber());
+            contestData.setSubmissions(paymentData.toArray(new SubmissionPaymentData[0]));
+            getViewData().setAdditionalPrize(additionalPrize);
 
-        // process payment
-        contestServiceFacade.processSubmissionPurchaseOrderPayment(currentUser, contestData, orderPaymentData);
+            List<Project> billingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
+            Project billingAccount = null;
+            for (Project project : billingProjects) {
+                if (project.getId() == billingProjectId) {
+                    billingAccount = project;
+                    break;
+                }
+            }
+            if (billingAccount == null) {
+                throw new Exception("Can't find billing project for id:[" + billingProjectId + "].");
+            }
+            TCPurhcaseOrderPaymentData orderPaymentData = new TCPurhcaseOrderPaymentData();
+            orderPaymentData.setClientId(billingAccount.getClient().getId());
+            orderPaymentData.setClientName(billingAccount.getClient().getName());
+            orderPaymentData.setProjectId(billingAccount.getId());
+            orderPaymentData.setProjectName(billingAccount.getName());
+            orderPaymentData.setType(PaymentType.TCPurchaseOrder);
+            orderPaymentData.setPoNumber(billingAccount.getPOBoxNumber());
+
+            // process payment
+            contestServiceFacade.processSubmissionPurchaseOrderPayment(currentUser, contestData, orderPaymentData);
+        } catch(Exception e) {
+           ut.rollback();
+        }            
 
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
