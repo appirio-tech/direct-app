@@ -307,7 +307,7 @@ function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {
     	  //nothing
     } else {
     	  //for software
-        if(billingContestFee > 0) {
+        if(billingContestFee >= 0) {
         	 //update corresponding contest fee
         	 var feeObject = softwareContestFees[contestTypeId];
         	 if(feeObject) {
@@ -916,7 +916,7 @@ function fillPrizes() {
    $('#swReviewCost,#rswReviewCost').html(contestCost.reviewBoardCost.formatMoney(2));
    $('#swReliabilityBonus,#rswReliabilityBonus').html(contestCost.reliabilityBonusCost.formatMoney(2));
    $('#swDigitalRun,#rswDigitalRun').html(contestCost.drCost.formatMoney(2));
-   //$('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
+   $('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
    $('#swTotal,#rswTotal').html(getContestTotal(feeObject, prizeType).formatMoney(2));
 
    //totals
