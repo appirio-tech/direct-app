@@ -97,36 +97,42 @@ public class MimeTypeRetriever {
         // ID with 1
         mimeTypeIdByMimeType = new HashMap<String, Long>();
 
-        Long id = new Long(1);
-        mimeTypeIdByMimeType.put("application/msword", id++);
-        mimeTypeIdByMimeType.put("application/rtf", id++);
-        mimeTypeIdByMimeType.put("text/plain", id++);
-        mimeTypeIdByMimeType.put("application/pdf", id++);
-        mimeTypeIdByMimeType.put("application/postscript", id++);
+        mimeTypeIdByMimeType.put("application/msword", 1);
+        mimeTypeIdByMimeType.put("application/rtf", 2);
+        mimeTypeIdByMimeType.put("text/plain", 3);
+        mimeTypeIdByMimeType.put("application/pdf", 4);
+        mimeTypeIdByMimeType.put("application/postscript", 5);
 
-        mimeTypeIdByMimeType.put("text/html", id++);
-        mimeTypeIdByMimeType.put("image/jpeg", id++);
-        mimeTypeIdByMimeType.put("image/gif", id++);
-        mimeTypeIdByMimeType.put("image/png", id++);
+        mimeTypeIdByMimeType.put("text/html", 6);
+        mimeTypeIdByMimeType.put("text/rtf", 7);
+        mimeTypeIdByMimeType.put("image/jpeg", 8);
+        mimeTypeIdByMimeType.put("image/gif", 9);
+        mimeTypeIdByMimeType.put("image/png", 10);
 
-        mimeTypeIdByMimeType.put("image/bmp", id++);
-        mimeTypeIdByMimeType.put("application/vnd.ms-excel", id++);
-        mimeTypeIdByMimeType.put("application/zip", id++);
+        mimeTypeIdByMimeType.put("image/bmp", 11);
+        mimeTypeIdByMimeType.put("application/vnd.ms-excel", 12);
+        mimeTypeIdByMimeType.put("image/pjpeg", 13);
+        mimeTypeIdByMimeType.put("image/x-png", 14);
+        mimeTypeIdByMimeType.put("application/zip", 15);
 
-        mimeTypeIdByMimeType.put("application/x-zip-compressed", id++);
-        mimeTypeIdByMimeType.put("audio/mpeg", id++);
-        mimeTypeIdByMimeType.put("audio/mp3", id++);
-        mimeTypeIdByMimeType.put("application/java-archive", id++);
-        mimeTypeIdByMimeType.put("application/x-java-archive", id++);
-        mimeTypeIdByMimeType.put("application/vnd.ms-powerpoint", id++);
-        mimeTypeIdByMimeType.put("image/photoshop", id++);
-        mimeTypeIdByMimeType.put("image/x-photoshop", id++);
-        mimeTypeIdByMimeType.put("image/psd", id++);
-        mimeTypeIdByMimeType.put("application/psd", id++);
-        mimeTypeIdByMimeType.put("zz-application/zz-winassoc-psd", id++);
-        mimeTypeIdByMimeType.put("image/ico", id++);
-        mimeTypeIdByMimeType.put("image/x-ico", id++);
-        mimeTypeIdByMimeType.put("application/octet-stream", id++);
+        mimeTypeIdByMimeType.put("application/x-zip-compressed", 16);
+        mimeTypeIdByMimeType.put("audio/mpeg", 17);
+        mimeTypeIdByMimeType.put("audio/mp3", 18);
+        mimeTypeIdByMimeType.put("application/x-zip", 19);
+        mimeTypeIdByMimeType.put("application/java-archive", 20);
+
+        mimeTypeIdByMimeType.put("application/x-java-archive", 21);
+        mimeTypeIdByMimeType.put("application/vnd.ms-powerpoint", 22);
+        mimeTypeIdByMimeType.put("image/photoshop", 23);
+        mimeTypeIdByMimeType.put("image/x-photoshop", 24);
+        mimeTypeIdByMimeType.put("image/psd", 25);
+
+        mimeTypeIdByMimeType.put("application/photoshop", 26);
+        mimeTypeIdByMimeType.put("application/psd", 27);
+        mimeTypeIdByMimeType.put("zz-application/zz-winassoc-psd", 28);
+        mimeTypeIdByMimeType.put("image/ico", 29);
+        mimeTypeIdByMimeType.put("image/x-ico", 30);
+        mimeTypeIdByMimeType.put("application/octet-stream", 31);
     }
 
     /**
