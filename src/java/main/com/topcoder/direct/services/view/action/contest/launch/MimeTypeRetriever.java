@@ -97,42 +97,42 @@ public class MimeTypeRetriever {
         // ID with 1
         mimeTypeIdByMimeType = new HashMap<String, Long>();
 
-        mimeTypeIdByMimeType.put("application/msword", 1);
-        mimeTypeIdByMimeType.put("application/rtf", 2);
-        mimeTypeIdByMimeType.put("text/plain", 3);
-        mimeTypeIdByMimeType.put("application/pdf", 4);
-        mimeTypeIdByMimeType.put("application/postscript", 5);
+        mimeTypeIdByMimeType.put("application/msword", new Long(1));
+        mimeTypeIdByMimeType.put("application/rtf", new Long(2));
+        mimeTypeIdByMimeType.put("text/plain", new Long(3));
+        mimeTypeIdByMimeType.put("application/pdf", new Long(4));
+        mimeTypeIdByMimeType.put("application/postscript", new Long(5));
 
-        mimeTypeIdByMimeType.put("text/html", 6);
-        mimeTypeIdByMimeType.put("text/rtf", 7);
-        mimeTypeIdByMimeType.put("image/jpeg", 8);
-        mimeTypeIdByMimeType.put("image/gif", 9);
-        mimeTypeIdByMimeType.put("image/png", 10);
+        mimeTypeIdByMimeType.put("text/html", new Long(6));
+        mimeTypeIdByMimeType.put("text/rtf", new Long(7));
+        mimeTypeIdByMimeType.put("image/jpeg", new Long(8));
+        mimeTypeIdByMimeType.put("image/gif", new Long(9));
+        mimeTypeIdByMimeType.put("image/png", new Long(10));
 
-        mimeTypeIdByMimeType.put("image/bmp", 11);
-        mimeTypeIdByMimeType.put("application/vnd.ms-excel", 12);
-        mimeTypeIdByMimeType.put("image/pjpeg", 13);
-        mimeTypeIdByMimeType.put("image/x-png", 14);
-        mimeTypeIdByMimeType.put("application/zip", 15);
+        mimeTypeIdByMimeType.put("image/bmp", new Long(11));
+        mimeTypeIdByMimeType.put("application/vnd.ms-excel", new Long(12));
+        mimeTypeIdByMimeType.put("image/pjpeg", new Long(13));
+        mimeTypeIdByMimeType.put("image/x-png", new Long(14));
+        mimeTypeIdByMimeType.put("application/zip", new Long(15));
 
-        mimeTypeIdByMimeType.put("application/x-zip-compressed", 16);
-        mimeTypeIdByMimeType.put("audio/mpeg", 17);
-        mimeTypeIdByMimeType.put("audio/mp3", 18);
-        mimeTypeIdByMimeType.put("application/x-zip", 19);
-        mimeTypeIdByMimeType.put("application/java-archive", 20);
+        mimeTypeIdByMimeType.put("application/x-zip-compressed", new Long(16));
+        mimeTypeIdByMimeType.put("audio/mpeg", new Long(17));
+        mimeTypeIdByMimeType.put("audio/mp3", new Long(18));
+        mimeTypeIdByMimeType.put("application/x-zip", new Long(19));
+        mimeTypeIdByMimeType.put("application/java-archive", new Long(20));
 
-        mimeTypeIdByMimeType.put("application/x-java-archive", 21);
-        mimeTypeIdByMimeType.put("application/vnd.ms-powerpoint", 22);
-        mimeTypeIdByMimeType.put("image/photoshop", 23);
-        mimeTypeIdByMimeType.put("image/x-photoshop", 24);
-        mimeTypeIdByMimeType.put("image/psd", 25);
+        mimeTypeIdByMimeType.put("application/x-java-archive", new Long(21));
+        mimeTypeIdByMimeType.put("application/vnd.ms-powerpoint", new Long(22));
+        mimeTypeIdByMimeType.put("image/photoshop", new Long(23));
+        mimeTypeIdByMimeType.put("image/x-photoshop", new Long(24));
+        mimeTypeIdByMimeType.put("image/psd", new Long(25));
 
-        mimeTypeIdByMimeType.put("application/photoshop", 26);
-        mimeTypeIdByMimeType.put("application/psd", 27);
-        mimeTypeIdByMimeType.put("zz-application/zz-winassoc-psd", 28);
-        mimeTypeIdByMimeType.put("image/ico", 29);
-        mimeTypeIdByMimeType.put("image/x-ico", 30);
-        mimeTypeIdByMimeType.put("application/octet-stream", 31);
+        mimeTypeIdByMimeType.put("application/photoshop", new Long(26));
+        mimeTypeIdByMimeType.put("application/psd", new Long(27));
+        mimeTypeIdByMimeType.put("zz-application/zz-winassoc-psd", new Long(28));
+        mimeTypeIdByMimeType.put("image/ico", new Long(29));
+        mimeTypeIdByMimeType.put("image/x-ico", new Long(30));
+        mimeTypeIdByMimeType.put("application/octet-stream", new Long(31));
     }
 
     /**
