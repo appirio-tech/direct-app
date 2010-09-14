@@ -145,7 +145,7 @@
                    <tr class="rightbor">
                      	<td class="first_tab"  align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"></span></td>
                       <td class="sec_tab_prize"><strong>Review Cost:</strong> $<span id="rswReviewCost"></span></td>
-                      <td class="sec_tab_prize"><strong>Reliability Bouns:</strong> $<span id="rswReliabilityBonus"></span></td>
+                      <td class="sec_tab_prize"><strong>Reliability Bonus:</strong> $<span id="rswReliabilityBonus"></span></td>
                       <td class="sec_tab_prize"><strong>Contest Fee:</strong> $<span id="rswContestFee"></span></td>
                    </tr>
                    <tr class="rightbor">
