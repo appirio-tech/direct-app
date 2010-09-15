@@ -345,7 +345,7 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
                     for (SubmissionData submission : mileSubmissions) {
                         if (submission.isAwardMilestonePrize()) {
                             SubmissionPaymentData payment = new SubmissionPaymentData();
-                            payment.setAmount(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
+                            payment.setAmount(0);
                             payment.setAwardMilestonePrize(true);
                             payment.setRank(0);
                             payment.setId(submission.getSubmissionId());
