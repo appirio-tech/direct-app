@@ -35,7 +35,9 @@
                         <div class="area1Content">
                             <div class="currentPage">
                                 <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
-                                <a href="<s:url action="currentProjectDetails" namespace="/"/>"><s:property
+                                <a href="<s:url action="currentProjectDetails" namespace="/">
+                                    <s:param name="formData.projectId" value="sessionData.currentProjectContext.id"/>
+                                </s:url>"><s:property
                                         value="sessionData.currentProjectContext.name"/></a> &gt;
                                 <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                             </div>

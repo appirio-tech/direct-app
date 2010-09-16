@@ -385,6 +385,11 @@ public class GetContestAction extends ContestAction {
 
                 }
                 sessionData.setCurrentProjectContext(project);
+
+                 long directProjectId = (studioCompetition == null ? softwareCompetition.getProjectHeader().getTcDirectProjectId()
+                        : studioCompetition.getContestData().getTcDirectProjectId());
+
+                sessionData.setCurrentSelectDirectProjectID(directProjectId);
             }
         }
         return sessionData;

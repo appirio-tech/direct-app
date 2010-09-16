@@ -174,4 +174,24 @@ public class SessionData {
     public List<TypedContestBriefDTO> getCurrentProjectContests() {
         return (List<TypedContestBriefDTO>) this.session.getAttribute("currentProjectContests");
     }
+
+      /**
+     * Sets the current direct project the user is viewing.
+     *
+     * @param directProjectID the id of the direct project.
+     */
+    public void setCurrentSelectDirectProjectID(Long directProjectID) {
+        if (directProjectID != null) {
+            this.session.setAttribute("currentSelectDirectProjectID", directProjectID);
+        }
+    }
+
+    /**
+     * Gets the current direct project id the user is viewing.
+     *
+     * @return  the direct project id.
+     */
+    public Long getCurrentSelectDirectProjectID() {
+        return (Long) this.session.getAttribute("currentSelectDirectProjectID");
+    }
 }

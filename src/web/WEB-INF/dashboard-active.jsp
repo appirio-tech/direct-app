@@ -96,9 +96,19 @@
                                                                         <s:if test="isStudio == false">
                                                                         <a href="contest/contestRegistrants.action?projectId=${contest.id}">
                                                                         </s:if>
-                                                                    <s:property value="registrantsNumber"/>
+                                                                        <s:property value="registrantsNumber"/>
                                                                         </a></td>
-                                                                    <td><s:property value="submissionsNumber"/></td>
+                                                                    <td><s:if test="isStudio == true">
+                                                                        <link:studioSubmissionsGrid contestId="${contest.id}">
+                                                                                <s:property value="submissionsNumber"/>
+                                                                        </link:studioSubmissionsGrid>
+                                                                        </s:if>
+                                                                        <s:if test="isStudio == false">
+                                                                        <link:softwareSubmissionsList contestId="${contest.id}">
+                                                                                <s:property value="submissionsNumber"/>
+                                                                        </link:softwareSubmissionsList>
+                                                                        </s:if>
+                                                                    </td>
                                                                     <td>
 																	<s:if test="forumId != -1">
 																		<s:if test="isStudio == true"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>

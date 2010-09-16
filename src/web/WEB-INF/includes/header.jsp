@@ -100,18 +100,18 @@
         <div id="tabs1">
              <ul>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-            		<a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentProject.id}"/></s:url>">
+            		<a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
 						<span>Overview</span>
 					</a>
                 </li>
 
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
-           			<a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentProject.id}"/></s:url>">
+           			<a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
 						<span>Contests</span>
 					</a>
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
-                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentProject.id}" /></s:url>"><span>Game Plan</span></a>
+                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
                 </li>
             </ul>
         </div>

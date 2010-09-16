@@ -76,6 +76,12 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
             } else {
                 getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
             }
+
+            // set the current direct project id in session, the contest details codes incorrectly
+            // use setCurrentProjectContext to override the current chosen direct project with current
+            // chosen contest, for the safe, we put the direct project id into session separately again
+            getSessionData().setCurrentSelectDirectProjectID(getSessionData().getCurrentProjectContext().getId());
+
             return SUCCESS;
         } else {
             return result;
