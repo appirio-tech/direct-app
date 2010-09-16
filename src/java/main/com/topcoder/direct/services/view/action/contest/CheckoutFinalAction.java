@@ -342,6 +342,7 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
                 // milestone payments
                 int milestoneNumber = 0;
                 if (studioCompetition.getContestData().getMultiRound()) {
+                    double milestonePrize = studioCompetition.getContestData().getMilestonePrizeData().getAmount();
                     for (SubmissionData submission : mileSubmissions) {
                         if (submission.isAwardMilestonePrize()) {
                             SubmissionPaymentData payment = new SubmissionPaymentData();
@@ -351,10 +352,10 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
                             payment.setId(submission.getSubmissionId());
                             paymentData.add(payment);
                             milestoneNumber++;
-                            totalPayments += payment.getAmount();
+                            totalPayments += milestonePrize;
                         }
                     }
-                    getViewData().setMilestonePrize(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
+                    getViewData().setMilestonePrize(milestonePrize);
                 }
                 getViewData().setMilestoneAwardNumber(milestoneNumber);
             } else {
