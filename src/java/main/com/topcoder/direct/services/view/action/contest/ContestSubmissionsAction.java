@@ -168,6 +168,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+            getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
         }
     }
 }
