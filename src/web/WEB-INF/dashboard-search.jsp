@@ -33,7 +33,7 @@
                     </div><!-- End .areaHeader -->
 					
 					<s:if test="viewData.isAllProjectsPage == false">
-                    div class="search" style="height:auto;overflow:hidden">
+                    <div class="search" style="height:auto;overflow:hidden">
                         <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
                             <label class="fLeft" for="searchFor">Search For:</label>
                             <s:textfield cssClass="fLeft" name="formData.searchFor" id="searchFor"/>
