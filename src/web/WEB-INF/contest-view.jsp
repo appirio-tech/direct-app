@@ -157,6 +157,8 @@
                                                         </table>
                                                         <!-- End .projectsStats -->
                                                         
+                                                        <div class="panel"></div>
+
                                                     </div>
                                                     <!-- End .container2Content -->
                                                 </div>

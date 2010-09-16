@@ -120,6 +120,8 @@
                                                             </tbody>
                                                         </table>
 
+                                                        <div class="panel"></div>
+
                                                     </div>
                                                     <!-- End .container2Content -->
                                                 </div>

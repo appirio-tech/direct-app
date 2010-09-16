@@ -390,6 +390,8 @@
 
                                         </div><!-- End .details -->
 
+                                        <div class="panel"></div>
+
                                 </div><!-- End .container2Content -->
                             </div></div>
                         </div></div></div>

@@ -68,6 +68,8 @@
                                                         <s:include value="includes/dashboard/membersSearchResults.jsp"/>
                                                     </s:if>
 
+                                                    <div class="panel"></div>
+
                                                 </div>
                                                 <!-- End .container2Content -->
                                             </div>
