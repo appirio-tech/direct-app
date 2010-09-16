@@ -18,11 +18,11 @@
 <%@ attribute name="contest" required="true" type="com.topcoder.direct.services.view.dto.contest.ContestBriefDTO" %>
 
 <s:if test="%{#attr['contest'].software}" >
-<a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
+<a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
     <c:out value="${contest.title}"/></a>
 </s:if>
 <s:else>
-<a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].id}"/></s:url>">
+<a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].id}"/></s:url>">
     <c:out value="${contest.title}"/></a>
 </s:else>
 

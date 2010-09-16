@@ -12,6 +12,6 @@
 <%@ attribute name="project" required="true" type="com.topcoder.direct.services.view.dto.project.ProjectBriefDTO" %>
 
 
-<a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#attr['project'].id}"/></s:url>">
+<a class="longWordsBreak" href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#attr['project'].id}"/></s:url>">
     <c:out value="${project.name}"/>
 </a>

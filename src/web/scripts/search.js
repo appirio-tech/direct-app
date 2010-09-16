@@ -6,7 +6,7 @@
  */
 $(document).ready(function() {
 		var sStdMenu =
-			'<select id=size="1" name="dataTableLength">'+
+			'<strong>show:  </strong><select id=size="1" name="dataTableLength">'+
 				'<option value="5">5</option>'+
 				'<option value="10">10</option>'+
 				'<option value="25">25</option>'+
@@ -166,6 +166,25 @@ $(document).ready(function() {
 				{ "sType": "html" },
 				{ "sType": "html" },
 				null
+			]
+
+	});
+	$("#ProjectRegistrants .paginatedDataTable").dataTable({
+		"iDisplayLength": 10,
+        "bFilter": false,
+        "bSort": true,
+		"bAutoWidth": false,
+			  "oLanguage": {
+ 			  	"sLengthMenu": sStdMenu + " per page"
+ 			  },            
+        "sPaginationType": "full_numbers",
+        "sDom": 'rt<"bottom1"il><"bottom2"fp',
+		"aaSorting": [[0,'asc']],
+		"aoColumns": [
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "date-direct" }, 
+				{ "sType": "date-direct" }
 			]
 
 	});

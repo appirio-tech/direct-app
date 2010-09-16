@@ -569,6 +569,7 @@ BODY#page{
 
 #area1 H2.contestTitle{
 	background: no-repeat left center;
+	word-wrap:break-word;
 }
 
 #area1 H2.contestTitle img{
@@ -2473,16 +2474,19 @@ A{
     right: 135px;
     position:relative;
     width:auto;
+	  *top:10px;
 }
 
 .bottom2 {
     float:right;
     font-size: 12px;
-    left: 90px;
+    left: 120px;
     position:relative;
     margin-top: 15px;
     margin-left: 15px;
     width:15%;
+    *margin-top: 0px;
+    *top:25px;
 }
 
 
@@ -4238,4 +4242,33 @@ hr.plain {
 .term1 {
 	width: 115px;
 	margin: auto;
+}
+.longWordsBreak{
+   width:90px;
+   display:inline-block;
+   word-wrap:break-word;
+   overflow:hidden;
+}
+#swUploadButtonDiv,#uploadButtonDiv{
+	padding-left:10px;
+}
+#swUploadButtonDiv input,#uploadButtonDiv input{
+	border:1px solid #C1C1C1;
+}
+#rContestName{
+   word-wrap:break-word;	
+}
+#swUploadSection, #uploadSection{
+	font-size:13px;
+}
+#swUploadSection textarea, #uploadSection textarea{
+	border:1px solid #C1C1C1;
+}
+#swUploadSection a.button6, #uploadSection a.button6{
+	float:none;
+	display:inline-block;
+}
+#swUploadSection #swDocumentList,#uploadSection #documentList{
+	margin-bottom:10px;
+	font-size:12px;
 }

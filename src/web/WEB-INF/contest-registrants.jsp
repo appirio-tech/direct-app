@@ -57,7 +57,7 @@
 
                             <jsp:include page="includes/contest/contestStats.jsp"/>
 
-                            <div class="container2 tabs3Container">
+                            <div class="container2 tabs3Container" id="ProjectRegistrants" >
 
                                 <jsp:include page="includes/contest/tabs.jsp"/>
 
@@ -119,20 +119,6 @@
                                                             </s:iterator>
                                                             </tbody>
                                                         </table>
-
-                                                        <div class="panel">
-                                                            <!-- this area contains the print, export to excel, export to pdf links -->
-                                                            <strong id="showText">Show:</strong>
-                                                            <a href="" onclick="return false;" 
-                                                               class="exportPdf">Export to <strong>PDF</strong></a>
-                                                            <span>|</span>
-                                                            <a href="javascript:exportContestRegistrantsToExcel();"
-                                                               class="exportExcel">Export to <strong>Excel</strong></a>
-                                                            <span>|</span>
-                                                            <a href="" onclick="return false;"
-                                                               class="print">Print</a>
-                                                        </div>
-                                                        <!-- End .panel -->
 
                                                     </div>
                                                     <!-- End .container2Content -->

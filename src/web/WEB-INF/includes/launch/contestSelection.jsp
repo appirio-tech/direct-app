@@ -7,7 +7,7 @@
       <div class="tabContest">
 
           <!-- selectDesing -->
-         <div class="selectDesing">
+         <div class="selectDesing" style="padding-left:14px;">
               <div class="selectX">
                   <div class="selectOut">
                       <select id="contestTypes">
@@ -96,7 +96,7 @@
   <div class="schedule">
 
       <!-- Round Type -->
-      <div class="row hide studio" id="roundTypeDiv">
+      <div class="row studio" id="roundTypeDiv">
         <label>Round Type:</label>
           <div class="roundelect">
               <select id="roundTypes">
@@ -117,7 +117,7 @@
       </div>
 
       <!-- Milestone -->
-      <div class="row hide studio" id="mileStoneDiv">
+      <div class="row studio" id="mileStoneDiv">
         <label>Milestone:</label>
           <input  id="milestoneDate" name="milestoneDate"  type="text" class="text date-pick" readonly="true"/>
           <div class="milestoneEtSelect">
@@ -127,7 +127,7 @@
       </div>
 
       <!-- End -->
-      <div class="row hide studio">
+      <div class="row studio">
         <label>End:</label>
           <input id="endDate" name="endDate" type="text" class="text date-pick" readonly="true"/>
           <div class="endEtSelect">

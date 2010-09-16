@@ -16,9 +16,9 @@ $(document).ready(function(){
 
 	  /* init select */
 	  if($('select').length > 0){
-	  	$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
+	  	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
 	  	
-	  	$('.selectDesing div.selectedTxt').html('Select Contest Type');
+	  	//$('.selectDesing div.selectedTxt').html('Select Contest Type');
 	  }
 	  
     /* init date-pack */
@@ -417,7 +417,12 @@ function showTypeSectionDisplay() {
 
 function showTypeSectionEdit() {
 	 $(".contest_type").css("display","none");
-	 $(".contest_type_edit").css("display","block");												         	
+	 $(".contest_type_edit").css("display","block");
+	 if(!$(".selectDesing select").data('customized')){
+		$(".selectDesing select").data('customized',true);
+      	$(".selectDesing select").sSelect();
+		$('.selectDesing div.selectedTxt').html('Select Contest Type');
+    }	
 }
 
 
@@ -490,6 +495,10 @@ function showRoundSectionDisplay() {
 function showRoundSectionEdit() {
 	$(".contest_round").css("display","none");
 	$(".contest_round_edit").css("display","block");
+	if(!$(".startEtSelect select").data('customized')){
+		$(".startEtSelect select").data('customized',true);
+      	$(".startEtSelect select").sSelect({ddMaxHeight: '220',yscroll: true});
+    }
 }
 
 /**
@@ -609,6 +618,10 @@ function showPrizeSectionDisplay() {
 function showPrizeSectionEdit() {
 	$(".contest_prize").css("display","none");
 	$(".contest_prize_edit").css("display","block");
+	if(!$(".prizeBillingSelect select").data('customized')){
+		$(".prizeBillingSelect select").data('customized',true);
+      	$(".prizeBillingSelect select").sSelect({ddMaxHeight: '220',yscroll: true});
+    }
 }
 
 

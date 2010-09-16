@@ -55,7 +55,7 @@
                        <li id="rReceiptTab" class="lastItem <c:choose>
                 <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>
                 </c:choose>">
-                <a href="<s:url action="contest/receipt" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>" >
+                <a class="last" href="<s:url action="contest/receipt" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
                 <span class="left"><span class="right">Receipt</span></span></a>
                        </li>
 

@@ -175,7 +175,7 @@
 
                                                     <c:forEach items="${projectNotifications.contestNotifications}" var="contestNotifications" varStatus="j">
                                                         <tr class="alternate ${projectClass} hide">
-                                                            <td><a class="subgroup shorten" href="contestDetails.action?formData.contestId=${contestNotifications.contestId}">${contestNotifications.name} (${contestNotifications.type})</a></td>
+                                                            <td><a class="subgroup shorten" href="contest/detail?projectId=${contestNotifications.contestId}">${contestNotifications.name} (${contestNotifications.type})</a></td>
                                                             <td class="checkbox">
                                                                 <input name="timeline" value="${contestNotifications.contestId}"
                                                                        class="selectUser select_timeline" type="checkbox"

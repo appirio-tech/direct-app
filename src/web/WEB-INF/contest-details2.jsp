@@ -59,7 +59,7 @@
                     <div class="currentPage">
                         <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
                         <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/></a> &gt;
-                        <strong><s:property value="viewData.contestStats.contest.title"/></strong>
+                        <strong style="word-wrap:break-word;"><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">

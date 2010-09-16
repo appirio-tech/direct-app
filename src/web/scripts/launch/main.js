@@ -569,6 +569,13 @@ function showPage(pageId) {
    }
 
    $('#'+pageId).show();
+   
+   if(pageId == "overviewPage" && !$(".numSelect select").data('customized')){
+		$(".numSelect select").data('customized',true);
+      	$(".numSelect select").sSelect();
+   }
+   
+   $('html, body').animate({scrollTop:0}, 'fast');
 }
 
 function isExtraPrizesEmpty() {

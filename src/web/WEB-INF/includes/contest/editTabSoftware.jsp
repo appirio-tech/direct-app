@@ -25,7 +25,7 @@
 <div class="no_details contest_type_edit hide">											
 			<div class="caption_det_type_edit">													
 					<div class="captionInner">
-							<h2>Contest Type <a href="javascript:;"><img src="/images/edit_red.png" alt="edit" class="edit_type" /></a></h2>                                                                                                                        
+							<h2>Contest Type</h2>                                                                                                                          
           </div>													
 		  </div><!-- End .caption -->												
 		  
@@ -96,7 +96,7 @@
 <div class="no_details contest_round_edit hide">											
 		<div class="caption_det_round_edit">													
 				<div class="captionInner">
-					<h2>Schedule <a href="javascript:;"><img src="/images/edit_red.png" alt="edit" class="edit_round" /></a></h2>
+					<h2>Schedule <a href="javascript:;"></h2>
 				</div>													
 		</div><!-- End .caption -->
 										
@@ -163,15 +163,14 @@
 <div class="no_details contest_prize_edit hide">											
 			 <div class="caption_det_prize_edit">													
 					<div class="captionInner">
-						<h2>Prizes
-            <a href="javascript:;"><img src="/images/edit_red.png" alt="edit" class="edit_prize" /></a></h2>
+						<h2>Prizes</h2>
 					</div>													
 				</div><!-- End .caption -->
 																
 				<div class="detailsContent_det_prize_edit">
                  <div id="billingAccountDivEdit">
                      <span class="name"><strong>Billing Account </strong></span>
-                     <div class="billingSelect" style="float:left" >
+                     <div class="prizeBillingSelect" style="float:left" >
                          <select id="billingProjects" name="billingProject">
                          	<option value="-1">Please select an existing account</option>
                            <s:iterator value="billingProjects">
@@ -203,7 +202,7 @@
                          <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" />
                          <label class="second">2nd Place</label>
                          <span class="dw">$</span>
-                         <span id="swSecondPlace" class="mid_info"></span>
+                         <span id="swSecondPlace" class="mid_info" style="line-height:30px;"></span>
                          
                      	</div>
                          <br />
@@ -310,7 +309,7 @@
 <div class="no_details contest_spec_edit hide">											
 		<div class="caption_det_spec_edit">			
 				<div class="captionInner">
-					<h2>Specfication <a href="javascript:;"><img src="/images/edit_red.png" alt="edit" class="edit_spec" /></a></h2>                                                                                                                        
+					<h2>Specfication</h2>                                                                                                                         
 				</div>			
 		</div><!-- End .caption -->
 
@@ -439,7 +438,7 @@
 <div class="no_details contest_files_edit hide">											
 				 <div class="caption_det_files_edit">				 	
 				 		<div class="captionInner">
-				 			<h2>Files <a href="javascript:;"><img src="/images/edit_red.png" alt="edit" class="edit_files" /></a></h2>
+				 			<h2>Files</h2>
 				 		</div>				 	
 				 </div><!-- End .caption -->
 												
@@ -480,9 +479,7 @@
 	  <a href="javascript:activateContestEdit();" class="button4">Activate</a>
 </div>
 										
-<div class="panel"><!-- this area containt the print, export to excel, export to pdf links -->
-	<a href="javascript:alert('to be implemented in next assembly');" class="exportPdf">Export to <strong>PDF</strong></a> <span>|</span>
-	<a href="javascript:alert('to be implemented in next assembly');" class="exportExcel">Export to <strong>Excel</strong></a> <span>|</span>
-	<a href="javascript:alert('to be implemented in next assembly');" class="print">Print</a>  
+<div class="panel"> 
+	&nbsp;
 </div><!-- End .panel -->
 										

@@ -99,7 +99,7 @@ Dual licensed under the MIT and GPL licenses.
                 $input.children('optgroup').each(function(){
 				
                     var optionTitle = $(this).attr('label'),
-                    $optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>');
+                    $optGroup = $('<li class="newListOptionTitle"><span class="newListOptGroup">'+optionTitle+'</span></li>');
 						
                     $optGroup.appendTo($newUl);
 

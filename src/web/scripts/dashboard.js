@@ -319,11 +319,11 @@ $(document).ready(function(){
 	
 	//fixTabs3Width();
 	
-	$("#tabs3").resize(function(){
+	//$("#tabs3").resize(function(){
 		/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/	
-		if( $.browser.msie || $.browser.safari )
-			document.location.reload();
-	});
+	//	if( $.browser.msie || $.browser.safari )
+	//		document.location.reload();
+	//});
 });
 
 

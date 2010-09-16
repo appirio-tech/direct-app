@@ -120,9 +120,15 @@ $(document).ready(function(){
            $('#roundInfoDiv').show();	     
            $('#rMileStoneTR').show();
            $('#rMultiRoundInfoDiv').show();                 
+		   $(".milestoneEtSelect select,.numSelect select").each(function(index){
+				if(!$(this).is(":hidden") && !$(this).data('customized')){
+					$(this).data('customized',true);
+					$(this).sSelect({ddMaxHeight: '220',yscroll: true});
+				}
+			}); 	
         }
    });
-   $('#roundTypes').trigger("change");      
+   $('#roundTypes').trigger("change");    
   
     /* init pop */
   var prevPopup = null;
@@ -203,9 +209,9 @@ $(document).ready(function(){
 function initSelect() {
   /* init select */
   if($('select').length > 0){
-	$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
+	//$('.selectSoftware select,.selectDesing select,.projectSelect select,.billingSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
 	
-	$('.selectDesing div.selectedTxt').html('Select Contest Type');
+	//$('.selectDesing div.selectedTxt').html('Select Contest Type');
   }	
 }
 
@@ -310,7 +316,7 @@ function populateTypeSection() {
                           && mainWidget.competition.contestData.detailedStatusId != CONTEST_DETAILED_STATUS_SCHEDULED))
 	{
 		$('#rReceiptTab').addClass("off");
-		$('#rReceiptTab').html("<a><span class=\"left\"><span class=\"right\">Receipt</span></span></a>");
+		$('#rReceiptTab').html("<a class=\"last\"><span class=\"left\"><span class=\"right\">Receipt</span></span></a>");
 	}
 	$('#rTypeIntroduction').html(mainWidget.competition.contestData.shortSummary);
 	$('#rContestName').html(mainWidget.competition.contestData.name);
@@ -413,7 +419,17 @@ function showTypeSectionDisplay() {
 
 function showTypeSectionEdit() {
 	 $(".contest_type").css("display","none");
-	 $(".contest_type_edit").css("display","block");												         	
+	 $(".contest_type_edit").css("display","block");
+	 if(!$(".selectDesing select").data('customized')){
+		$(".selectDesing select").data('customized',true);
+      	$(".selectDesing select").sSelect();
+		$('.selectDesing div.selectedTxt').html('Select Contest Type');
+     }
+	 if(!$(".billingSelect select").data('customized')){
+		$(".billingSelect select").data('customized',true);
+      	$(".billingSelect select").sSelect();
+     }
+	
 }
 
 
@@ -574,6 +590,13 @@ function showRoundSectionDisplay() {
 function showRoundSectionEdit() {
 	$(".contest_round").css("display","none");
 	$(".contest_round_edit").css("display","block");
+	$(".roundelect select,.startEtSelect select,.milestoneEtSelect select,.numSelect select,.endEtSelect select").each(function(index){
+		if(!$(this).is(":hidden") && !$(this).data('customized')){
+			$(this).data('customized',true);
+			$(this).sSelect({ddMaxHeight: '220',yscroll: true});
+		}
+	}); 
+	
 }
 
 /**

@@ -313,14 +313,15 @@ $(document).ready(function(){
     });
 
     if($('select').length > 0){
-      $('.selectSoftware select,.selectDesing select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
+      $('.selectSoftware select,.selectDesing select,.startSelect select,.milestoneSelect select,.endSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
                var SelectOptions = {
-                    ddMaxHeight: '220',
+                    ddMaxHeight: '220px',
                     yscroll: true
                 };
-      $('.projectSelect select,.billingSelect select').sSelect(SelectOptions);
+      $('.projectSelect select,.billingSelect select,.roundelect select,.startEtSelect select,.milestoneEtSelect select,.endEtSelect select').sSelect(SelectOptions);
       $('#catalogSelect').sSelect();
       $('.selectDesing div.selectedTxt').html('Select Contest Type');
+	    $("#mileStoneDiv").hide();
     }
 
     /* Optgroup 2 columns fix */

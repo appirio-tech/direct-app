@@ -495,9 +495,10 @@ A.allVideos{ /* all videos link */
 		font-family: Verdana, Geneva, sans-serif;
 	}
 	
-	.needHelpContent H3{
+	.needHelpContent H3 a{
 		margin: 0;
 		color: #ec1c23;
+		text-decoration: none;
 	}
 	
 	.needHelpContent P{
@@ -517,6 +518,7 @@ A.allVideos{ /* all videos link */
 	
 	.needHelpContent .faq{
 		background: url(../images/border.png) repeat-x 0 7px;
+		margin-top:10px;
 	}
 	
 		.needHelpContent .faq .faqHelp{

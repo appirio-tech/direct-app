@@ -144,6 +144,13 @@
 												</c:if></td>
                                             </tr>
                                         </c:forEach>
+										<c:if test="${fn:length(vmInstances) == 0 }">
+											<tr>
+												<td colspan="9">
+													No matching records found
+												</td>
+											</tr>
+										</c:if>
                                     </tbody>
                                 </table>
 

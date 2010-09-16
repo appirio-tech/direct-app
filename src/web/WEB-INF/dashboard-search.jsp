@@ -33,15 +33,15 @@
                     </div><!-- End .areaHeader -->
 					
 					<s:if test="viewData.isAllProjectsPage == false">
-                    <div class="search">
+                    div class="search" style="height:auto;overflow:hidden">
                         <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
                             <label class="fLeft" for="searchFor">Search For:</label>
                             <s:textfield cssClass="fLeft" name="formData.searchFor" id="searchFor"/>
                             <label class="fLeft" for="searchIn"> In</label>
                             <s:select id="searchIn" list="requestData.dashboardSearchTypes" name="formData.searchIn"/>
-                            <div id="datefilter">
-                               <label for="startDate" class="fLeft">Start:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" name="formData.startDate" id="startDate" readonly="true"/>
-                               <label for="endDate" class="fLeft">End:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" name="formData.endDate" id="endDate" readonly="true"/>
+                            <div id="datefilter" style="float:left;">
+                               <label for="startDate" class="fLeft">Start:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" style="width:80px;" name="formData.startDate" id="startDate" readonly="true"/>
+                               <label for="endDate" class="fLeft">End:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" name="formData.endDate" style="width:80px;" id="endDate" readonly="true"/>
                             </div>    
                             <s:hidden name="formData.excel" id="formDataExcel" value="false" />
                             <a href="javascript:directSearch();" class="button1 fLeft">
@@ -67,18 +67,6 @@
                                                     <s:if test="viewData.resultType.name() == 'MEMBERS'">
                                                         <s:include value="includes/dashboard/membersSearchResults.jsp"/>
                                                     </s:if>
-                                                    <div class="panel">
-                                                        <!-- this area contains the print, export to excel, export to pdf links -->
-                                                        <a href="javascript:alert('To be implemented sub-sequent assemblies');"
-                                                           class="exportPdf">Export to <strong>PDF</strong></a>
-                                                        <span>|</span>
-                                                        <a href="javascript:directExcel();"
-                                                           class="exportExcel">Export to <strong>Excel</strong></a>
-                                                        <span>|</span>
-                                                        <a href="javascript:alert('To be implemented sub-sequent assemblies');"
-                                                           class="print">Print</a>
-                                                    </div>
-                                                    <!-- End .panel -->
 
                                                 </div>
                                                 <!-- End .container2Content -->

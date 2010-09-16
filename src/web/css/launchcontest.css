@@ -939,6 +939,9 @@
 			padding:5px;
 			
 			}
+			#swSecondPlace{
+				line-height:30px;	
+			}
 			.mid_info{
 				margin-left:7px;
 			}
@@ -1611,6 +1614,7 @@
 	
 	.tabContest .selectedTxt,.projectSelect .selectedTxt{
 		width:359px;
+		overflow:hidden;
 		}
 	
 	.tabContest .newList,.projectSelect .newList{
@@ -1622,7 +1626,7 @@
 		}
 
 /** billing  and round select **/
-.billingSelect .newListSelected,.roundelect .newListSelected{
+.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected{
 	width:283px;
 	height:28px;
 	padding:0 5px;
@@ -1640,11 +1644,11 @@
 		color:#6c6c6c;
 		}
 	
-	.billingSelect .selectedTxt,.roundelect .selectedTxt{
+	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt{
 		width:281px;
 		}
 	
-	.billingSelect .newList,.roundelect .newList{
+	.billingSelect .newList,.prizeBillingSelect .newList,.roundelect .newList{
 		width:290px;
 		border:#ccc solid 1px;
 		background:#fff;
@@ -2004,6 +2008,10 @@ div.dp-popup td.disabled {
 	width: 185px;
 	float: left;
 	}
+	
+.newListOptGroup{
+	display:block;
+  }
 
 .selectDesing .newListOptionTitle li {
 	font-weight:normal;

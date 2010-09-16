@@ -227,8 +227,8 @@
 										<div class="needHelpLeft"><div class="needHelpRight">
 											<div class="needHelpContent">
 												<div>
-													<h3>Need Help?</h3>
-													<p><a href="http://www.topcoder.com/home/contact-us/" target="_blank">Contact Us</a> and a member of the team will be happy to assist you.</p>
+													<h3><a href="http://topcoder.com/home/help-form/" target="_blank">Need Help?</a></h3>
+													<p><a href="http://topcoder.com/home/lets-talk/" target="_blank">Contact Us</a></p>
                                                 </div>
                                                 <div class="faq">
 													<div class="faqHelp">

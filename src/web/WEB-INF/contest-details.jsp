@@ -390,12 +390,6 @@
 
                                         </div><!-- End .details -->
 
-                                    <div class="panel"><!-- this area contain the print, export to excel, export to pdf links -->
-                                        <a href="" onclick="return false;" class="exportPdf">Export to <strong>PDF</strong></a> <span>|</span>
-                                        <a href=""  onclick="return false;" class="exportExcel">Export to <strong>Excel</strong></a> <span>|</span>
-                                        <a href="" onclick="return false;" class="print">Print</a>
-                                    </div><!-- End .panel -->
-
                                 </div><!-- End .container2Content -->
                             </div></div>
                         </div></div></div>
