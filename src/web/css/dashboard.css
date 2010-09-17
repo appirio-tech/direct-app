@@ -4244,10 +4244,12 @@ hr.plain {
 	margin: auto;
 }
 .longWordsBreak{
-   width:90px;
    display:inline-block;
+   /*
+   width:90px;
    word-wrap:break-word;
    overflow:hidden;
+   */
 }
 #swUploadButtonDiv,#uploadButtonDiv{
 	padding-left:10px;

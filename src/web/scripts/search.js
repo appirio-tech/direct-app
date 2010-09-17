@@ -6,7 +6,7 @@
  */
 $(document).ready(function() {
 		var sStdMenu =
-			'<strong>show:  </strong><select id=size="1" name="dataTableLength">'+
+			'<strong>Show:  </strong><select size="1" name="dataTableLength">'+
 				'<option value="5">5</option>'+
 				'<option value="10">10</option>'+
 				'<option value="25">25</option>'+
