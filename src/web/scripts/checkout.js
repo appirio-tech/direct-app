@@ -210,17 +210,21 @@ $(document).ready(function(){
 		var number = Math.min(submissionsNumber, prizeNumber);
 		var ranks = "";
 		
+		var hasSelectedMilestone = false;
+		
 		for (var i = 0; i < number; i++) {
-			if (!bankData || !bankData[arrPrize[i]]) {
-				$('#msgDialog p').html("Prize slots must be filled.");
-				$('#msgDialog').dialog('open');
-				return false;
-			}
+		    if (bankData && bankData[arrPrize[i]])
+			    hasSelectedMilestone = true;
 			if (i > 0) {
 				ranks += ",";
 			}
 			ranks += bankData[arrPrize[i]];
 		}
+		if (!hasSelectedMilestone) {
+			$('#msgDialog p').html("At least one submissions should be filled.");
+			$('#msgDialog').dialog('open');
+			return false;
+		}		
 		$("#ranks").val(ranks);
 		$("#checkoutForm").submit();
 		return false;
