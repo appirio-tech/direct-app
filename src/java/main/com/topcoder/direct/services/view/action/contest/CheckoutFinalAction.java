@@ -273,7 +273,6 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
         if (!isStudioCompetition()) {
             return;
         }
-
         // Get current session
         HttpServletRequest request = DirectUtils.getServletRequest();
         this.sessionData = new SessionData(request.getSession());
@@ -340,11 +339,11 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
                 }
 
                 // milestone payments
-                int milestoneNumber = 0;
+                int milestoneNumber = 0; 
                 if (studioCompetition.getContestData().getMultiRound()) {
                     double milestonePrize = studioCompetition.getContestData().getMilestonePrizeData().getAmount();
                     for (SubmissionData submission : mileSubmissions) {
-                        if (submission.isAwardMilestonePrize()) {
+                        if (submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize()) {
                             SubmissionPaymentData payment = new SubmissionPaymentData();
                             payment.setAmount(0);
                             payment.setAwardMilestonePrize(true);
@@ -400,8 +399,10 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
 
             // process payment
             contestServiceFacade.processSubmissionPurchaseOrderPayment(currentUser, contestData, orderPaymentData);
-        } catch(Exception e) {
+        } catch(Exception e) { 
+           System.out.println("-----------------------------"+e);
            ut.rollback();
+           throw e;
         }            
 
         // Set contest stats
