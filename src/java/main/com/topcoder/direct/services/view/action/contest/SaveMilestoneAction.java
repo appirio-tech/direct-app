@@ -83,7 +83,9 @@ public class SaveMilestoneAction extends StudioOrSoftwareContestAction {
             TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
 
             for (String submissionId : rankingSubmissions) {
-                contestServiceFacade.updateSubmissionUserRank(currentUser, Long.parseLong(submissionId), 1, true);
+                if (!"null".equals(submissionId)) {
+                    contestServiceFacade.updateSubmissionUserRank(currentUser, Long.parseLong(submissionId), 1, true);
+                }
             }
         }
     }

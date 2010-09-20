@@ -195,7 +195,7 @@ $(document).ready(function(){
 		var number = Math.min(submissionsNumber, prizeNumber);
 		for (var i = 0; i < number; i++) {
 			var label = bankData ? bankData[arrPrize[i]] : null;
-			if (label) {
+			if (label || (roundType == "MILESTONE")) {
 				$("#submission-" + label).find(".icoBankLocation").addClass(arrSlot[i]);
 				$("#submission-" + label).appendTo($("#submissionList tbody")).show();
 			} else {
