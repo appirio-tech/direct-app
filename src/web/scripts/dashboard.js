@@ -301,7 +301,8 @@ $(document).ready(function(){
 	
 	/*-------------------------------------------------------------------------*/
 	/* add zebra stripping for projectStats tables */
-	$('table.contests tbody tr:odd').addClass('even');
+	/* Uncommented since zebra style is looking weird */
+	// $('table.contests tbody tr:odd').addClass('even');
 	
 	/*-------------------------------------------------- fix the width of the tabs3 items ----------------------*/	
 
