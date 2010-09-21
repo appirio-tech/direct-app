@@ -64,7 +64,7 @@
                                             <br/>
                                             <br/>
                                             If you have a question or comment, please email
-                                            <link:mailToDirectAssist/> and be sure to include this timestamp:<br/>
+                                            <link:mailToDirectAssist/><br/>and be sure to include this timestamp:<br/>
                                             <%=new Date()%>
                                             <br/>
                                             <br/>
