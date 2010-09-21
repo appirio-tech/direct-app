@@ -96,7 +96,7 @@
 <div class="no_details contest_round_edit hide">											
 		<div class="caption_det_round_edit">													
 				<div class="captionInner">
-					<h2>Schedule <a href="javascript:;"></h2>
+					<h2>Schedule</h2>
 				</div>													
 		</div><!-- End .caption -->
 										
