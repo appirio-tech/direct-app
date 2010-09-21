@@ -101,19 +101,6 @@
         
  </div>
  <!-- end #uploadSection -->
-
-<!-- Add Links -->
-<div class="upload">                                    
-    <h3>Add Links:</h3>
-    
-    <div class="uploadInner">
-    	<input type="text" class="text uploadInput" value="Link Name" />
-        <input type="file" class="fileIn hide" />
-        
-        <a href="javascript:alert('it will be done in next assembly');" class="removeButton"><span class="hide">REMOVE</span></a>
-        <a href="javascript:alert('it will be done in next assembly');" class="addButton"><span class="hide">ADD</span></a>
-    </div>    
-</div>
                                     
 <!-- prizes -->
 <div class="prizes">  

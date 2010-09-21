@@ -76,25 +76,6 @@
 </div>
 <!-- end .prizes -->
 
-
-<!-- Final Deliverables -->
-<div class="deliverables">
-
-    <h3>Links:</h3>
-    
-    <div class="deliverablesInner">
-        <div class="checkInput" id="rswLinks" >
-        </div>
-        
-        <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>
-        
-        <div class="clear"></div>
-        
-    </div>
-    
-</div>
-<!-- end .deliverables -->
-
 <div class="buttonBox">	
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
     <a href="javascript:saveAsDraftReview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
