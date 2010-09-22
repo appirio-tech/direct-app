@@ -821,7 +821,7 @@ function activateContestEdit() {
    }
    
    competition.contestData.statusId=CONTEST_STATUS_ACTIVE_PUBLIC;
-   competition.contestData.detailedStatusId=CONTEST_DETAILED_STATUS_ACTIVE_PUBLIC;
+   competition.contestData.detailedStatusId=CONTEST_DETAILED_STATUS_SCHEDULED;
 
    //construct request data
    var request = saveAsDraftRequest();
