@@ -108,7 +108,7 @@ Date.format = 'mm/dd/yyyy';
 /*
  * context path
  */ 
-var ctx = "/direct2";
+var ctx = "/direct";
  
 /*
  * Initiate a dialog box using jQuery dialog.

@@ -12,7 +12,7 @@
         <filter-name>direct2</filter-name>
         <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
     </filter>
-    
+
     <filter-mapping>
         <filter-name>direct2</filter-name>
         <url-pattern>/*</url-pattern>
@@ -33,12 +33,16 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/error.jsp</location>
     </error-page>
-    
+
     <session-config>
-        <session-timeout>30</session-timeout>
+        <session-timeout>1440</session-timeout>
     </session-config>
 
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
 </web-app>
