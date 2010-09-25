@@ -207,13 +207,10 @@ function onContestTypeChange() {
    	  if(isContestSaved()) {
    	  	 currentTypeId = mainWidget.isSoftwareContest()? mainWidget.softwareCompetition.projectHeader.projectCategory.id:mainWidget.competition.contestData.contestTypeId;
    	  }   	  
-   	  
+ 
    	  if(isContestSaved() && mainWidget.competitionType != contestType) {   	  	
    	  	   alert("You can not switch between studio and software after it is saved.");   	  	   
-   	  	   //reset
-            window.setTimeout(function() {
-               $("#contestTypes").getSetSSValue(mainWidget.competitionType+currentTypeId);	   
-            }, 500);
+   	  	 
    	  	   return;
    	  }
    	  
@@ -382,7 +379,7 @@ function saveTypeSection() {
 }
 
 function validateFieldsTypeSection() {
-   var categoryId = getContestType()[1];
+   var categoryId = getContestType(true)[1];
    var contestName = $('input#contestName').val();
 
 
