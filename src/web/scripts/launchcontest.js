@@ -427,10 +427,7 @@ function onContestTypeChange() {
 
        if(isContestSaved() && mainWidget.competitionType != contestType) {
             alert("You can not switch between studio and software after it is saved.");
-            //reset
-            window.setTimeout(function() {
-               $("#contestTypes").getSetSSValue(mainWidget.competitionType+currentTypeId);
-            }, 1000);
+          
             return;
        }
 
