@@ -16,6 +16,9 @@
          <br /> <br />
          <span class="name2"><strong>Contest Name</strong></span>
          <span class="value"><strong>: <span id="rContestName"></span></strong></span>
+         <br /> <br />
+         <span class="name3"><strong>CCA is</strong></span>
+         <span class="value"><strong>: <span id="rCCA"></span></strong></span>		 
       </p>
     </div><!-- End .detailsContent -->												
 </div><!-- End .details -->
@@ -61,6 +64,8 @@
                                                                                                 
                  <span class="name2"><strong>Contest Name</strong></span>
                  <span class="value"><input type="text" class="bigin"  id="contestName" /></span>
+				 <br /><br />
+                 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
                  </p>
                  <p class="save">                 	
                      <a href="javascript:;" class="cancel_text">cancel</a>

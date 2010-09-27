@@ -347,11 +347,13 @@ function populateTypeSection() {
 	//edit
 	$('#contestTypes').getSetSSValue("SOFTWARE"+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
+	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 	
 	
 	//display
 	$('#rContestTypeName').html($("#contestTypes option[value=SOFTWARE"+ mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
 	$('#rContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+	$('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
 }
 
 function saveTypeSection() {
@@ -394,6 +396,11 @@ function validateFieldsTypeSection() {
    }
    
    var projectCategory = getProjectCategoryById(categoryId);
+   if ($('input#chkboxCCA').attr('checked')) {
+       mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+   } else {
+       mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
+   }
    mainWidget.softwareCompetition.projectHeader.projectCategory={};
    mainWidget.softwareCompetition.projectHeader.projectCategory.id = projectCategory.id;
    mainWidget.softwareCompetition.projectHeader.projectCategory.name = projectCategory.name;
