@@ -212,6 +212,25 @@ $(document).ready(function() {
 			]
 
 	});
+	
+	$("#notificationsContent .paginatedDataTable").dataTable({
+		"iDisplayLength": 10,
+        "bFilter": false,
+        "bSort": false,
+		"bAutoWidth": false,
+			  "oLanguage": {
+ 			  	"sLengthMenu": sStdMenu + " per page"
+ 			  },            
+        "sPaginationType": "full_numbers",
+        "sDom": 'rt<"bottom1"il><"bottom2"fp',
+		"aaSorting": [[0,'asc']],
+		"aoColumns": [
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" }
+			] 
+	});
+	
     $(".dataTables_info").addClass("hide");
     $(".dataTables_paginate .last").addClass("hide");
     $(".dataTables_paginate .first").addClass("hide");
