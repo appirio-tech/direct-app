@@ -98,7 +98,7 @@
 									<div>
 										<div class="title">
 											<div class="titleLeft"><div class="titleRight">
-												<h2>Did you know some facts about TC Direct?</h2>
+												<h2>Some facts about the TopCoder Platform</h2>
 											</div></div>
 										</div><!-- End .title -->
                                         <s:push value="viewData.topcoderDirectFacts">
