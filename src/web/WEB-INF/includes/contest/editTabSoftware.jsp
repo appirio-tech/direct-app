@@ -487,4 +487,11 @@
 <div class="panel"> 
 	&nbsp;
 </div><!-- End .panel -->
+
+<div class="bottom-review" style="display:none" id="swEdit_bottom_review">
+    <a href="javascript:;" class="specrev-goto button"></a>
+    <a href="javascript:;" class="specrev-goto">Go to my Spec Review</a>
+    <p></p>
+    <br /><br /><br />
+</div>
 										

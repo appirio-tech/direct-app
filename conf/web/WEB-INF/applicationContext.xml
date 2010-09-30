@@ -352,4 +352,56 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+
+     <!-- Since specification review assembly -->
+    <bean id="specificationReviewService" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="SpecificationReviewServiceBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.review.specification.SpecificationReviewService"/>
+    </bean>
+    
+    <bean id="specReviewCommentService"
+          class="com.topcoder.direct.specreview.services.impl.MockSpecReviewCommentServiceImpl">
+    </bean>
+    
+    <bean id="specificationReviewAction"
+          class="com.topcoder.direct.services.view.action.specreview.SpecificationReviewAction"
+          abstract="true">
+    </bean>
+    
+    <bean id="startSpecificationReviewAction"
+          class="com.topcoder.direct.services.view.action.specreview.StartSpecificationReviewAction"
+          scope="prototype" parent="specificationReviewAction">
+        <property name="specificationReviewService" ref="specificationReviewService"/>
+        <property name="contestServiceFacade" ref="contestServiceFacade"/>
+    </bean>
+
+    <bean id="viewSpecReviewAction"
+          class="com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewAction"
+          scope="prototype" parent="specificationReviewAction">
+        <property name="specificationReviewService" ref="specificationReviewService"/>
+        <property name="specReviewCommentService" ref="specReviewCommentService"/>
+    </bean>
+    
+    <bean id="saveSpecReviewCommentAction"
+          class="com.topcoder.direct.services.view.action.specreview.SaveSpecificationReviewCommentAction"
+          scope="prototype" parent="specificationReviewAction">
+        <property name="specReviewCommentService" ref="specReviewCommentService"/>
+    </bean>
+
+    <bean id="resubmitSpecReviewAction"
+          class="com.topcoder.direct.services.view.action.specreview.ResubmitSpecificationReviewAction"
+          scope="prototype" parent="specificationReviewAction">
+        <property name="specificationReviewService" ref="specificationReviewService"/>
+    </bean>    
 </beans>

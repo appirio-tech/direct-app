@@ -336,6 +336,8 @@ function initContest(contestJson) {
    if(contestJson.phaseOpen) {
        $('img[alt="edit"]').parent().hide()   
    }
+
+    showSpecReview(contestJson);
 }
 
 
@@ -869,7 +871,8 @@ function activateContestEdit() {
       success: handleActivationResultEdit,
       beforeSend: beforeAjax,
       complete: afterAjax            
-   });   
+   });  
+      
 }
 
 
@@ -882,6 +885,7 @@ function handleActivationResultEdit(jsonResult) {
         } else {                 
             $('#resubmit').hide();
         }
+        showSpecReview(result);
 
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         showMessage("Contest " + contestName +" has been activated successfully!");
@@ -890,4 +894,37 @@ function handleActivationResultEdit(jsonResult) {
         showErrors(errorMessage);
     });
 }
- 
+
+$(function() {
+    /**
+     * Show spec review pop window.
+     */
+    $('.specrev-goto').click(function(){
+        $('#TB_overlay').show();
+        $('#TB_window_custom').show();
+        $('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
+        $('#TB_window_custom').css({
+            //'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window_custom").width() / 2)) + 'px'
+            'left' : $(window).width() / 2-$('#TB_window_custom').width() / 2,
+            'top' : ($(window).height() / 2-$('#TB_window_custom').height() / 2) + $(window).scrollTop()
+        });
+    });
+    //$('#TB_window_custom').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window_custom").css('height')) / 2))});
+});
+
+
+function showSpecReview(contestJson) {
+
+   var startSpecReviewUrl = "../contest/startSpecReview.action?contestId=";
+   var PROJECT_STATUS_ACTIVE = 1;
+
+   // only if contest is active (activated), has spec review phases, and sepc review phaase have not started
+   if(contestJson.hasSpecReview && !contestJson.isSpecReviewStarted 
+          && contestJson.projectStatus.id == PROJECT_STATUS_ACTIVE) {
+       $('#swEdit_bottom_review').show();
+       startSpecReviewUrl += contestJson.contestId + "&studio=false&";
+   }
+   $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
+   $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
+
+}

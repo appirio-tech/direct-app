@@ -161,3 +161,52 @@ margin-top: expression(0 - parseInt(this.offsetHeight / 2) + (TBWindowMargin = d
 	margin-top:1px;
 	_margin-bottom:1px;
 }
+
+/* OVERRIDE! */
+#TB_window_custom {
+	position:absolute;
+	z-index: 102;
+	color:#000000;
+	display:none;
+	top:0;
+	left:0;
+	overflow:hidden;
+}
+
+* html #TB_window_custom { /* ie6 hack */
+position: absolute;
+}
+.specrev-window {
+    width:360px !important;
+    height:211px !important;
+    border: none !important;
+    background: transparent url(../images/specplan_window.gif) no-repeat top left !important;
+    text-align:center !important;
+    position:absolute;
+    overflow:hidden;
+}
+.specrev-window a {
+    display: block;
+    margin: auto;
+    width: 191px;
+    height: 25px;
+}
+.specrev-window a.review-now { background: url(../images/specplan_btn_now.gif) no-repeat top left; }
+.specrev-window a.review-later { background: url(../images/specplan_btn_l8r.gif) no-repeat top left; }
+.specrev-window a:hover {
+    background-position: 0 -25px;
+}
+.specrev-window h1 {
+    font-size: 19px !important;
+    margin: 25px 0 20px 0;
+}
+.specrev-window p {
+    font-size: 12px;
+    color: #747474;
+}
+.specrev-window p.or {
+    margin: 10px 0;
+}
+.specrev-window p.note {
+    margin: 5px 0 0 0;
+}

@@ -155,6 +155,10 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("paidFee", DirectUtils.getPaidFee(bean));
 
         result.put("phaseOpen", DirectUtils.isPhaseOpen(bean));
+        result.put("hasSpecReview", DirectUtils.hasSpecReview(bean));
+        result.put("isSpecReviewStarted", DirectUtils.isSpecReviewStarted(bean));
+
+
 
         return result;
     }

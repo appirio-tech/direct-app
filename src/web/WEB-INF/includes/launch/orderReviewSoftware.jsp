@@ -74,3 +74,10 @@
 <div class="buttonBox, hide" id="swOrderReview_buttonBox2">
 	<a href="javascript:editContest();" class="button6 contiune"><span class="left"><span class="right">Edit</span></span></a>
 </div>
+
+<div class="bottom-review" style="display:none" id="swOrderReview_bottom_review">
+    <a href="javascript:;" class="specrev-goto button"></a>
+    <a href="javascript:;" class="specrev-goto">Go to my Spec Review</a>
+    <p></p>
+    <br /><br /><br />
+</div>

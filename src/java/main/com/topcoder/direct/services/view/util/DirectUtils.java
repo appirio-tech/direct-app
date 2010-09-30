@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -32,6 +33,7 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.project.phases.Phase;
+import com.topcoder.project.phases.PhaseType;
 import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.service.ContestSaleData;
 import com.topcoder.security.TCSubject;
@@ -147,6 +149,18 @@ public final class DirectUtils {
         "Cancelled - Failed Review", "Cancelled - Failed Screening", "Cancelled - Zero Submissions",
         "Cancelled - Winner Unresponsive", "Cancelled - Client Request", "Cancelled - Requirements Infeasible",
         "Cancelled - Zero Registrations");
+
+     /**
+     * Represents the &quot;Specification Submission&quot; phase type.
+     */
+    private static final String SPECIFICATION_SUBMISSION = "Specification Submission";
+
+    /**
+     * Represents the &quot;Specification Review&quot; phase type.
+     */
+    private static final String SPECIFICATION_REVIEW = "Specification Review";
+
+
 
     /**
      * <p>
@@ -421,7 +435,7 @@ public final class DirectUtils {
 
     /**
      * <p>
-     * Determines if any of the phase is open or not.
+     * Determines if any of the phase (ignore spec review/submission) is open or not.
      * </p>
      *
      * @param softwareCompetition the software competition
@@ -433,10 +447,89 @@ public final class DirectUtils {
         }
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
-            if (PhaseStatus.OPEN.equals(phase.getPhaseStatus())) {
+            if (PhaseStatus.OPEN.equals(phase.getPhaseStatus()) 
+                && !SPECIFICATION_SUBMISSION.equals(phase.getPhaseType().getName())
+                && !SPECIFICATION_REVIEW.equals(phase.getPhaseType().getName())) {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * <p>
+     * Determines if any of the phase (ignore spec review/submission) is open or not.
+     * </p>
+     *
+     * @param softwareCompetition the software competition
+     * @return true if any phase is open; false if none is open
+     */
+    public static boolean isSpecReviewStarted(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+
+        Phase specificationReviewPhase = null;
+        Phase specificationSubmissionPhase = null;
+
+        Set<Phase> allPhases = softwareCompetition.getProjectPhases().getPhases();
+        for (Phase phase : allPhases) {
+            PhaseType phaseType = phase.getPhaseType();
+            if (SPECIFICATION_SUBMISSION.equals(phaseType.getName())) {
+                specificationSubmissionPhase = phase;
+                break;
+            }
+        }
+        for (Phase phase : allPhases) {
+            PhaseType phaseType = phase.getPhaseType();
+            if (SPECIFICATION_REVIEW.equals(phaseType.getName())) {
+                specificationReviewPhase = phase;
+                break;
+            }
+        }
+
+        if (specificationReviewPhase != null 
+             && (PhaseStatus.OPEN.getName().equals(specificationReviewPhase.getPhaseStatus().getName())
+                  || PhaseStatus.CLOSED.getName().equals(specificationReviewPhase.getPhaseStatus().getName())))
+        { 
+            return true;
+        }
+
+        if (specificationSubmissionPhase != null 
+             && (PhaseStatus.OPEN.getName().equals(specificationSubmissionPhase.getPhaseStatus().getName())
+                  || PhaseStatus.CLOSED.getName().equals(specificationSubmissionPhase.getPhaseStatus().getName())))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * <p>
+     * Determines if any of the phase (ignore spec review/submission) is open or not.
+     * </p>
+     *
+     * @param softwareCompetition the software competition
+     * @return true if any phase is open; false if none is open
+     */
+    public static boolean hasSpecReview(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+
+        Set<Phase> allPhases = softwareCompetition.getProjectPhases().getPhases();
+        for (Phase phase : allPhases) {
+            PhaseType phaseType = phase.getPhaseType();
+            if (SPECIFICATION_SUBMISSION.equals(phaseType.getName())) {
+                return true;
+            }
+            if (SPECIFICATION_REVIEW.equals(phaseType.getName())) {
+                return true;
+            }
+        }
+
         return false;
     }
 

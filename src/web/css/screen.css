@@ -19,6 +19,22 @@
 		color:#F00;
 		padding-left:10px;
 	}
+.reviewer_text{
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:0.9em;
+	color: #000;
+	float: right;
+	padding-right:10px;
+}
+.reviewer_handle_text{
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:0.9em;
+	color:#666;
+	float: right;
+	padding-right:10px;
+}
 	
 	.edit_type{
 		
@@ -48,6 +64,23 @@
 		float:right;
 		padding-right:5px;
 	}
+.sr_question_showdetail {	
+	float:right;
+	margin-top: 6px;
+	padding-right:10px;
+}
+
+.sr_addcomment {	
+	float:right;
+	padding: 5px;
+	padding-right: 10px;
+}
+
+.sr_editcomment {
+	float:right;
+	margin-top: 5px;	
+	margin-right: -5px;
+}
 	.det_font{
 		font-size:14px;
 		font-family:Arial, Helvetica, sans-serif;
@@ -60,6 +93,20 @@
 		color:#3B3B3B;
 	}
 	
+.srquestion_detail_font{
+	font-size:0.8em;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#3B3B3B;
+	margin-bottom: 8px;	
+}
+	.srquestion_detail_font .index{	
+		padding-left: 40px;
+		padding-right: 30px;
+		float:left;
+		font-weight: bold;
+	}
+	.srquestion_detail_font .option{	
+	}
 	.small_info{
 		padding-left:125px;
 		font-size:12px;
@@ -166,7 +213,36 @@
 	/*margin-top:10px;*/
 }
 
+.spec_review_question{
+	margin-top:10px;
+}
 
+.spec_review_odd_question{
+	margin-top:10px;
+	padding-bottom: 10px;
+	background-color:#F5F5F5;
+}
+
+.add_comment{
+	height:10px;
+	padding-top:10px;
+}
+.add_comment a img{
+	border:none;
+	float:right;
+}
+.add_comment a{
+	font-size:12px;
+	font-weight:bold;
+	font-family:Verdana, Geneva, sans-serif;
+}
+.add_comment_cancel_text{
+	color:#616161;
+	text-decoration:underline;
+	padding-left:10px;
+	margin-right: 12px;
+	float:right;
+}
 
 .save{
 	
@@ -465,7 +541,92 @@ A.delete{
 				padding-top: 8px;
 				padding-left:10px;				
 				
+			}
+			
+		.no_details .caption_specreview {
+			padding:10px;
+		}
+		.no_details .det_specreview {
+			padding:10px;
+		}
+		.no_details .comment_specreview {
+			padding:0px 10px 1px 10px;
+		}
+			.no_details .comment_specreview .old_comment{
+				margin-left: 40px;
+				margin-right: 12px;
+				/*height:70px;*/
+				padding: 10px 20px 10px 20px;
+				font-size:0.75em;
+				background: #ffc;
+				color: #777;
+				border:#fc0 solid 1px;
+			}
+			.no_details .comment_specreview .old_comment p{
+				margin-bottom: 7px;
+			}
+			.no_details .comment_specreview .old_comment .text_comment{
+				font-size:1em;
+				font-weight: bold;
+				color: #444;
+				margin-bottom: 10px;
+			}
+			.no_details .comment_specreview .old_comment span.text_reviewer_handle{
+				font-size:1em;
+				font-weight: bold;
+				color: #ca0;
+			}
+		.no_details .to_add_your_comment {
+			padding:10px;
+			padding-bottom:0px;
+		}
+		.no_details .add_your_comment {
+			padding:10px;
+			padding-bottom: 25px;
+		}
+		.no_details .add_your_comment .textarea1{
+			height:90px;
+			margin-left: 40px;
+			margin-right: 35px;
+		}
+			.no_details .add_your_comment .textarea1 textarea{
+				width:100%;
+				height:70px;
+				padding: 10px;
+				font-size: 12px;
+				background: #fff;
+				color:#999;
+				border:#c4c4c4 solid 1px;
+				overflow: hidden;
+			}
+			
+		.no_details .captionInner{
+			padding: 5px 0px 10px 0px;
+		}
+			.no_details .captionInner H2 {
+				margin: 0px;
+				padding: 0px;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 0.9em;
+				font-weight: bold;
+			}
+			.no_details .captionInner H2 span {
+				margin-top: -19px;
+				margin-left: 35px;
+				margin-right: 80px;
+				line-height: 1.3em;
+			}
+			.no_details .captionInner H2 span span.normal_text{
+				font-weight: normal;
+			}
+			.no_details .captionInner H2.red {
+				color: red;
 			}			
+			.no_details .captionInner H2 img.icon_status{
+				top: 5px;
+				position: relative;
+				margin-right: 10px;
+			}
 
 /* popups */
 

@@ -459,5 +459,26 @@
             <result type="json" />
         </action>
 
+        <action name="startSpecReview" class="startSpecificationReviewAction">
+            <result type="redirectAction">
+                <param name="actionName">detail</param>
+                <param name="namespace">/contest</param>
+                <param name="projectId">${contestId}</param>
+            </result>
+        </action>
+
+        <action name="viewSpecReview" class="viewSpecReviewAction">
+            <result>/WEB-INF/software-specification-review.jsp</result>
+        </action>
+    </package>
+    
+    <package name="ajax" namespace="/ajax" extends="base">
+        <action name="saveSpecReviewComment" class="saveSpecReviewCommentAction">
+            <result type="json"/>
+        </action>
+        
+        <action name="resubmitSpecReview" class="resubmitSpecReviewAction">
+            <result type="json"/>
+        </action>
     </package>
 </struts>

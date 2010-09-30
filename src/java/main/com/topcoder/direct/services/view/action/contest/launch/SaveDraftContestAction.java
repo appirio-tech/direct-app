@@ -882,6 +882,10 @@ public class SaveDraftContestAction extends ContestAction {
         result.put("projectId", softwareCompetition.getProjectHeader().getId());
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition)));
         result.put("paidFee", DirectUtils.getPaidFee(softwareCompetition));
+        result.put("projectStatus", softwareCompetition.getProjectHeader().getProjectStatus());
+        result.put("hasSpecReview", DirectUtils.hasSpecReview(softwareCompetition));
+        result.put("isSpecReviewStarted", DirectUtils.isSpecReviewStarted(softwareCompetition));
+        result.put("contestId", softwareCompetition.getProjectHeader().getId());
         return result;
     }
 

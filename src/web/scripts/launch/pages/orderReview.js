@@ -1,9 +1,15 @@
-/**
- * Order Review Page
+/*
+ * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Rerender the order review page.
- */ 
+ * 
+ * @author TCSASSEMBLER
+ * @version 1.0
+ */
+/**
+ * Update order review page of software contest.
+ */
 function updateOrderReviewSoftware() {
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
    if(billingProjectId > 0) {
@@ -22,7 +28,10 @@ function updateOrderReviewSoftware() {
    $('#sworAdminFee').html(mainWidget.softwareCompetition.projectHeader.getAdminFee().formatMoney(2));
    $('#sworTotal').html(getCurrentContestTotal().formatMoney(2));
 }
- 
+
+/**
+ * Update order review page of studio contest.
+ */
 function updateOrderReviewStudio() {
    var competition = mainWidget.competition;
 
@@ -82,6 +91,11 @@ function updateOrderReviewStudio() {
    $('#orTotal').html('$' + total.formatMoney(0));
 }
 
+/**
+ * Calculate studio cup points.
+ * 
+ * @return points
+ */
 function calculateStudioCupPoints() {
     var isMultiRound = mainWidget.competition.contestData.multiRound;
     var milestoneAmount = mainWidget.milestonePrizeData.amount;
@@ -94,7 +108,6 @@ function calculateStudioCupPoints() {
         }
     }
 
-
     var contestPrizeTotal = 0;
 
     $.each(mainWidget.competition.contestData.prizes, function(i, prize) {
@@ -106,10 +119,18 @@ function calculateStudioCupPoints() {
 
 }
 
+/**
+ * Validate fields in order review page.
+ * 
+ * @return true always
+ */
 function validateFieldsOrderReview() {
    return true;
 }
 
+/**
+ * Show review page.
+ */
 function backOrderReview() {
    if(mainWidget.isSoftwareContest()) {
    	  showPage('reviewSoftwarePage');
@@ -118,6 +139,9 @@ function backOrderReview() {
    }	   
 }
 
+/**
+ * Activate contest.
+ */
 function activateContest() {	
    if(mainWidget.isSoftwareContest()) {
    	  activateContestSoftware();
@@ -126,6 +150,9 @@ function activateContest() {
    }	   	
 }
 
+/**
+ * Activate software contest.
+ */
 function activateContestSoftware() {	
    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
    if(billingProjectId < 0) {
@@ -149,6 +176,9 @@ function activateContestSoftware() {
    });   
 }
 
+/**
+ * Activate studio contest.
+ */
 function activateContestStudio() {	
    if(!validateFieldsOrderReview()) {
        return;
@@ -181,10 +211,15 @@ function activateContestStudio() {
    });   
 }
 
-
+/**
+ * Handle contest activation result.
+ * 
+ * @param jsonResult the json result
+ */
 function handleActivationResult(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
+       var startSpecReviewUrl = "../contest/startSpecReview.action?contestId=";
        if(mainWidget.isSoftwareContest()) {
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
           mainWidget.softwareCompetition.projectHeader.id = result.projectId;
@@ -196,7 +231,12 @@ function handleActivationResult(jsonResult) {
          $('#swOrderReview_buttonBox').hide();        
          $('#swOrderReview_buttonBox2').show();   
          //remove all edit icons
-         $('#orderReviewSoftwarePage a.tipLink').hide();    
+         $('#orderReviewSoftwarePage a.tipLink').hide();
+         // show go to my spec review pop div
+         if (result.hasSpecReview && !result.isSpecReviewStarted) {
+             $('#swOrderReview_bottom_review').show();
+         }
+         startSpecReviewUrl += result.projectId + "&";
        } else {
          if(mainWidget.competition.contestData.contestId < 0 ) {
            mainWidget.competition.contestData.contestId = result.contestId;
@@ -208,15 +248,19 @@ function handleActivationResult(jsonResult) {
          $('#orderReview_buttonBox').hide();        
          $('#orderReview_buttonBox2').show();   
          //remove all edit icons
-         $('#orderReviewPage a.tipLink').hide();    
-       }	   	    	
+         $('#orderReviewPage a.tipLink').hide();
+       }
+        $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
+        $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
     },
     function(errorMessage) {
         showErrors(errorMessage);
     });
 }
 
-
+/**
+ * Save as draft order review.
+ */
 function saveAsDraftOrderReview() {
    if(!validateFieldsOrderReview()) {
        return;
@@ -237,6 +281,9 @@ function saveAsDraftOrderReview() {
    });
 }
 
+/**
+ * Edit contest.
+ */
 function editContest() {
    if(mainWidget.isSoftwareContest()) {
 	   var contestId = mainWidget.softwareCompetition.projectHeader.id
@@ -246,3 +293,20 @@ function editContest() {
 	   location.replace(ctx+'/contest/detail?contestId='+contestId);
    }	   		
 }
+
+$(function() {
+    /**
+     * Show spec review pop window.
+     */
+    $('.specrev-goto').click(function(){
+        $('#TB_overlay').show();
+        $('#TB_window_custom').show();
+        $('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
+        $('#TB_window_custom').css({
+            //'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window_custom").width() / 2)) + 'px'
+            'left' : $(window).width() / 2-$('#TB_window_custom').width() / 2,
+            'top' : ($(window).height() / 2-$('#TB_window_custom').height() / 2) + $(window).scrollTop()
+        });
+    });
+    //$('#TB_window_custom').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window_custom").css('height')) / 2))});
+});
