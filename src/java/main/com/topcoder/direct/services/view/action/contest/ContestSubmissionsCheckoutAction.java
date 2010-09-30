@@ -135,6 +135,10 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
                 getViewData().setMilestonePrize(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
             }
             getViewData().setAdditionalPrize(DirectUtils.getAdditionalPrize(studioCompetition));
+            if (getFormData().getRoundType() == ContestRoundType.MILESTONE) {
+                getViewData().setMilestoneRoundFeedbackText(
+                    studioCompetition.getContestData().getMultiRoundData().getGeneralFeedbackText());
+            }
 
             // Set submissions data
             ContestRoundType roundType = getFormData().getRoundType();

@@ -3464,8 +3464,13 @@ A.buttonBankSelection:hover {
 --------------------------*/
 
 #bankSelectionSlots{ display:block; width: 100%; }
-#bankSelectionItem{ float:left; height: 85px; background:url(../images/bank_selection_bg.png) no-repeat left top; }
-#bankSelectionItem li{ 
+#bankSelectionItem{ float:left; height: 85px;}
+.bankSelectionItemSize1{background:url(../images/bank_selection_bg1.png) no-repeat left top; }
+.bankSelectionItemSize2{background:url(../images/bank_selection_bg2.png) no-repeat left top; }
+.bankSelectionItemSize3{background:url(../images/bank_selection_bg3.png) no-repeat left top; }
+.bankSelectionItemSize4{background:url(../images/bank_selection_bg4.png) no-repeat left top; }
+.bankSelectionItemSize5{background:url(../images/bank_selection_bg.png) no-repeat left top; }
+#bankSelectionItem li{
 	float:left; 
 	width: 66px; 
 	position:relative; 
@@ -4268,7 +4273,7 @@ hr.plain {
 	border:1px solid #C1C1C1;
 }
 #rContestName{
-   word-wrap:break-word;	
+   word-wrap:break-word;
 }
 #swUploadSection, #uploadSection{
 	font-size:13px;
@@ -4283,4 +4288,63 @@ hr.plain {
 #swUploadSection #swDocumentList,#uploadSection #documentList{
 	margin-bottom:10px;
 	font-size:12px;
+}
+
+
+/* Milestone round feedback area */
+#milestoneRoundComment {
+	float:left;
+	clear:both;
+	width: 100%;
+	margin: 20px 0;
+}
+
+#milestoneRoundComment table{ border-collapse: collapse; width: 98%; margin: 0 1%; }
+
+#milestoneRoundComment table th{
+	text-align: center;
+	height: 29px;
+	line-height: 29px;
+	font-size: 12px;
+	color: #FFFFFE;
+	font-weight: normal;
+	background:url(../images/submission_list_th.png) repeat-x left -29px;
+}
+#milestoneRoundComment table th.first{
+	width: 4px;
+	background: url(../images/submission_list_th.png) no-repeat left 0!important;
+}
+#milestoneRoundComment table th.last{
+	width: 6px;
+	background: url(../images/submission_list_th.png) no-repeat right -58px!important;
+}
+#milestoneRoundComment table .left{ text-align: left; }
+
+#milestoneRoundComment table td{
+	text-align: center;
+	font-size: 12px;
+	color: #333333;
+	font-weight: normal;
+	padding: 10px 0;
+	vertical-align: middle;
+}
+
+#milestoneRoundComment td a.button6{
+	float:left;
+	margin:5px 0;
+}
+
+#milestoneRoundComment td  .button6 span.left, #milestoneRoundComment td  .button6 span.right{ float:left!important; }
+
+#milestoneRoundComment textarea.txtFeedback{
+	clear:both;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color: #686868;
+	width: 98%;
+	height: 80px;
+	display:block;
+	padding: 4px;
+	border: 1px solid  #979797;
+	background: url(../images/single_submission_textarea.png) repeat-x left top;
 }

@@ -1,8 +1,9 @@
 <%--
-  - Author: isv, flexme
+  - Author: isv, flexme, TCSDEVELOPER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: remove firstSlots class on single page.
+  - Version 1.2 (Direct Submission Viewer Release 4) change notes: Replaced "submissionId" with "submission" attribute.
   -
-  - Version: 1.1
+  - Version: 1.2
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -15,13 +16,17 @@
 <%@ taglib prefix="tcdirect" uri="/tcdirect-functions" %>
 
 <%@ attribute name="contestId" required="true" type="java.lang.Long" %>
-<%@ attribute name="submissionId" required="true" type="java.lang.Long" %>
+<%@ attribute name="submission" required="false" type="com.topcoder.service.studio.SubmissionData" %>
 
+<c:set var="submissionId" value="${submission.submissionId}"/>
 <s:set var="viewType" value="formData.viewType.toString()" scope="page"/>
 <c:set var="divStyleClass" value="submissionAction" scope="page"/>
 <c:if test="${viewType eq 'LIST'}">
     <c:set var="divStyleClass" value="submissionListAction" scope="page"/>
 </c:if>
+
+<c:set var="isPrizedSubmission" value="${tcdirect:isCheckedOut(formData.roundType, submission)}"/>
+<c:set var="isContestCheckedOut" value="${viewData.hasCheckout}"/>
 
 <div class="${divStyleClass}">
     <c:if test="${viewType eq 'SINGLE'}">
@@ -37,8 +42,11 @@
                     <div class="dialog-mini-inside">
                         <div class="dialog-mini-outside">
                             Add to <strong>Like</strong> Bank?
-                            <span class="question"><a href="javascript:;" class="greentext likeSubmission " rel="${submissionId}">Yes</a> | <a
-                                    href="javascript:;" class="noLikeSubmission" rel="${submissionId}">No</a></span>
+                            <span class="question"><a href="javascript:;"
+                                                      class="${isPrizedSubmission or isContestCheckedOut ? '' : 'greentext likeSubmission'}"
+                                                      rel="${submissionId}">Yes</a> | <a
+                                    href="javascript:;" class="${isPrizedSubmission or isContestCheckedOut ? '' : 'noLikeSubmission'}"
+                                    rel="${submissionId}">No</a></span>
                         </div>
                     </div>
                 </div>
@@ -53,8 +61,11 @@
                     <div class="dialog-mini-inside">
                         <div class="dialog-mini-outside">
                             Add to <strong>Dislike</strong> Bank?
-                            <span class="question"><a href="javascript:;" class="redtext dislikeSubmission " rel="${submissionId}">Yes</a> | <a
-                                    href="javascript:;" class="noDislikeSubmission" rel="${submissionId}">No</a></span>
+                            <span class="question"><a href="javascript:;"
+                                                      class="${isPrizedSubmission or isContestCheckedOut  ? '' : 'redtext dislikeSubmission '}"
+                                                      rel="${submissionId}">Yes</a> | <a
+                                    href="javascript:;" class="${isPrizedSubmission or isContestCheckedOut  ? '' : 'noDislikeSubmission'}"
+                                    rel="${submissionId}">No</a></span>
                         </div>
                     </div>
                 </div>
@@ -89,9 +100,13 @@
                         <div class="dialog-mini-outside">
                             Extra <strong>Purchase?</strong>
                             <span class="question">
-                                <a href="javascript:;" class="extraSlot greenDarktext"
-                                   title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">Yes</a> |
-                                <a href="javascript:;" class="noExtraSlot" rel="${submissionId}">No</a></span>
+                                <a href="javascript:;"
+                                   class="${isPrizedSubmission ? '' : 'extraSlot greenDarktext'}"
+                                   title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}"
+                                   rel="${submissionId}">Yes</a> |
+                                <a href="javascript:;"
+                                   class="${isPrizedSubmission ? '' : 'noExtraSlot'}"
+                                   rel="${submissionId}">No</a></span>
                         </div>
                     </div>
                 </div>
@@ -108,10 +123,16 @@
                             Add to Bank Number?
                             <span class="question addToBank">
                                 <c:forEach var="ind" begin="1" end="${viewData.prizeNumber}">
-                                <a href="javascript:;" class="blackLink" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">${ind}</a>
+                                <a href="javascript:;"
+                                   ${isPrizedSubmission or isContestCheckedOut ? 'class="disabledControl"' : 'class="blackLink"'}
+                                   title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}"
+                                   rel="${submissionId}">${ind}</a>
                                 </c:forEach>
                                 |
-                                <a href="javascript:;" class="extraSlot" title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}" rel="${submissionId}">Xtra</a>
+                                <a href="javascript:;"
+                                   ${isPrizedSubmission ? '' : 'class="extraSlot"'}
+                                   title="${tcdirect:getSubmissionPreviewImageURL(submissionId, "thumb", 0, pageContext.request)}"
+                                   rel="${submissionId}">Xtra</a>
                             </span>
                         </div>
                     </div>

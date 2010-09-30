@@ -1,12 +1,15 @@
 <%--
-  - Author: isv, flexme
+  - Author: isv, flexme, TCSDEVELOPER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes:
   - 1.Remove "bank:" row.
   - 2.Hide "Submitter Notes:" row.
   - 3.Display Feedback when feedback text is not null or empty.
   - 4.include the contestVars.jsp.
   -
-  - Version: 1.1
+  - Version 1.2 (Direct Submission Viewer Release 4 ) change notes:
+  - 1.Display Feedback as text only when submission is "Confirmed"
+  -
+  - Version: 1.2
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -105,18 +108,32 @@
                                                            class="navSingleSubmissionSlideNext"></a>
 
                                                         <ul id="carouselSingle">
-                                                            <ui:studioCarouselSubmission
-                                                                    contestId="${submission.contestId}"
-                                                                    submissionId="${submission.submissionId}"
-                                                                    artifactNum="1"/>
-                                                            <!-- Carousel images -->
-                                                            <c:forEach begin="2" end="${submission.artifactCount}"
-                                                                       varStatus="status">
-                                                                <ui:studioCarouselSubmission
-                                                                        contestId="${submission.contestId}"
-                                                                        submissionId="${submission.submissionId}"
-                                                                        artifactNum="${status.index}"/>
-                                                            </c:forEach>
+                                                            <%--
+                                                            For Wireframe contests only preview image is shown;
+                                                            For other contests images carousel is shown
+                                                            --%>
+                                                            <c:choose>
+                                                                <c:when test="${viewData.currentContest.contestType.id eq 25}">
+                                                                    <ui:studioCarouselSubmission
+                                                                            contestId="${submission.contestId}"
+                                                                            submission="${submission}"
+                                                                            artifactNum="0"/>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <ui:studioCarouselSubmission
+                                                                            contestId="${submission.contestId}"
+                                                                            submission="${submission}"
+                                                                            artifactNum="1"/>
+                                                                    <!-- Carousel images -->
+                                                                    <c:forEach begin="2" end="${submission.artifactCount}"
+                                                                               varStatus="status">
+                                                                        <ui:studioCarouselSubmission
+                                                                                contestId="${submission.contestId}"
+                                                                                submission="${submission}"
+                                                                                artifactNum="${status.index}"/>
+                                                                    </c:forEach>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </ul>
                                                     </div>
                                                     <!-- End #singleSubmissionSlide -->
@@ -148,8 +165,11 @@
                                                                     </td>
                                                                 </tr>
                                                                 <s:if test="viewData.submission.feedbackText != null && viewData.submission.feedbackText.length() > 0">
-                                                                    <td class="label">Feedback:</td>
-                                                                    <td>${viewData.submission.feedbackText}</td>
+                                                                    <if:isConfirmedStudioSubmission
+                                                                            submission="${viewData.submission}">
+                                                                        <td class="label">Feedback:</td>
+                                                                        <td>${viewData.submission.feedbackText}</td>
+                                                                    </if:isConfirmedStudioSubmission>
                                                                 </s:if>
                                                             </table>
                                                         </div>

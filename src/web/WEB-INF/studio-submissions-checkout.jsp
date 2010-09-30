@@ -1,7 +1,9 @@
 <%--
-  - Author: flexme
+  - Author: flexme, TCSDEVELOPER
   -
-  - Version: 1.0 (Submission Viewer Release 3 assembly)
+  - Version 1.1 (Direct Submission Viewer Release 4 ) change notes: Added logic for handling "Confirmed" submissions.
+  -
+  - Version: 1.1 (Submission Viewer Release 3 assembly)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Studio contest for checking out.
@@ -86,10 +88,13 @@
                                                             <s:set var="contestId" value="contestId" scope="page"/>
                                                             <s:set var="submissionId" value="submissionId" scope="page"/>
                                                             <s:set var="feedbackText" value="feedbackText" scope="page"/>
+                                                            <s:set var="userRank" value="userRank" scope="page"/>
+                                                            <s:set var="awardMilestonePrize" value="awardMilestonePrize" scope="page"/>
                                                             <s:if test="(viewData.hasCheckout == false) || (formData.roundType.toString() == 'MILESTONE' && top.isAwardMilestonePrize()) || (formData.roundType.toString() == 'FINAL' && top.userRank > 0)">
-                                                            <ui:studioCheckoutSubmissionItem contestId="${contestId}" 
-                                                                                         submissionId="${submissionId}"
-                                                                                         feedbackText="${feedbackText}"/>
+                                                            <ui:studioCheckoutSubmissionItem contestId="${contestId}"
+                                                                                             isConfirmed="${viewData.hasCheckout}"
+                                                                                             submissionId="${submissionId}"
+                                                                                             feedbackText="${feedbackText}"/>
                                                             </s:if>
                                                         </s:iterator>
                                                         </tbody>
@@ -133,7 +138,41 @@
                                                      <table id="summary"></table>
                                                  </div><!-- End #purchaseSummary -->
                                                 </s:if>
-                                                
+
+                                                <s:if test="formData.roundType.toString() == 'MILESTONE'">
+                                                <div id="milestoneRoundComment">
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="first"></th>
+                                                                <th>Overall comments for all members competing in this contest</th>
+                                                                <th class="last"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${viewData.hasCheckout}">
+                                                                        ${viewData.milestoneRoundFeedbackText}
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <textarea class="txtFeedback" cols="10" rows="5"
+                                                                                  id="feedbackTextMilestoneRound">${viewData.milestoneRoundFeedbackText}</textarea>
+                                                                        <a href="javascript:" class="button6" rel="${contestId}"
+                                                                           id="saveGeneralFeedback">
+                                                                            <span class="left"><span class="right">Save Feedback</span></span></a>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                            <td></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                </s:if>
+
                                                 <div class="bankSelectionButtonBottom">
                                                     <jsp:include page="includes/contest/submissionViewer/checkoutButtons.jsp"/>
                                                 </div>

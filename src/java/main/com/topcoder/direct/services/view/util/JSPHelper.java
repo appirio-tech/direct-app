@@ -3,8 +3,10 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+import com.topcoder.service.studio.SubmissionData;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -31,8 +33,15 @@ import java.util.List;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.1.2 (Direct Software Submission Viewer 4 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #isCheckedOut(ContestRoundType, SubmissionData)} method.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, TCSDEVELOPER
- * @version 1.1.1
+ * @version 1.1.2
  */
 public class JSPHelper {
 
@@ -184,6 +193,29 @@ public class JSPHelper {
             }
         }
         return null;
+    }
+
+    /**
+     * <p>Checks if specified submission is checked out.</p>
+     *
+     * @param roundType a <code>ContestRoundType</code> referencing the round type.
+     * @param submission a <code>SubmissionData</code> providing details for submission.
+     * @return <code>true</code> if submission is checked out; <code>false</code> otherwise.
+     * @since 1.1.2
+     */
+    public static boolean isCheckedOut(ContestRoundType roundType, SubmissionData submission) {
+        boolean submissionCheckedOut = false;
+        if (roundType == ContestRoundType.MILESTONE) {
+            if (submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize()
+                || submission.isPaidFor()) {
+                submissionCheckedOut = true;
+            }
+        } else {
+            if (submission.getUserRank() > 0) {
+                submissionCheckedOut = true;
+            }
+        }
+        return submissionCheckedOut;
     }
 
     /**

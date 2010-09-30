@@ -398,6 +398,13 @@
         <action name="submissions" class="contestSubmissionsAction">
             <result name="grid">/WEB-INF/studio-submissions-grid.jsp</result>
             <result name="list">/WEB-INF/studio-submissions-list.jsp</result>
+            <result name="milestone" type="redirectAction">
+                <param name="actionName">submissions</param>
+                <param name="namespace">/contest</param>
+                <param name="contestId">${contestId}</param>
+                <param name="formData.viewType">GRID</param>
+                <param name="formData.roundType">MILESTONE</param>
+            </result>
         </action>
 
         <action name="studioSubmission" class="studioSubmissionAction">
@@ -432,6 +439,25 @@
         <action name="softwareSubmissions" class="softwareContestSubmissionsAction">
             <result>/WEB-INF/software-submissions-list.jsp</result>
         </action>
-        
+
+        <action name="studioNoWinner" class="studioNoWinnerAction">
+            <result>/WEB-INF/studio-nowinner.jsp</result>
+        </action>
+
+        <action name="studioNoWinnerDecide" class="studioNoWinnerAction">
+            <result>/WEB-INF/studio-nowinner-decide.jsp</result>
+        </action>
+
+        <action name="studioNoWinnerAbandoned" class="studioAbandonContestAction">
+            <result>/WEB-INF/studio-nowinner-abandoned.jsp</result>
+        </action>
+
+        <action name="updateGeneralSubmissionsFeedback" class="updateStudioGeneralFeedbackAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json" />
+        </action>
+
     </package>
 </struts>

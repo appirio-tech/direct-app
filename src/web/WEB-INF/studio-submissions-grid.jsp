@@ -1,8 +1,9 @@
 <%--
   - Author: isv, flexme
+  - Version 1.2 (Direct Submission Viewer Release 4 ) change notes: added Winners section.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: include the contestVars.jsp.
   -
-  - Version: 1.1
+  - Version: 1.2
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -60,6 +61,8 @@
                                         <div class="container2BottomClear">
                                             <div class="containerNoPadding">
 
+                                                <jsp:include page="includes/contest/submissionViewer/winners.jsp"/>
+
                                                 <jsp:include page="includes/contest/submissionViewer/bankSelection.jsp"/>
 
                                                 <jsp:include page="includes/contest/submissionViewer/slotTitle.jsp"/>
@@ -70,9 +73,10 @@
                                                                     status="status">
                                                             <s:set var="contestId" value="contestId" scope="page"/>
                                                             <s:set var="submissionId" value="submissionId" scope="page"/>
+                                                            <s:set var="submission" value="top" scope="page"/>
                                                             <s:set var="index" value="#status2.index" scope="page"/>
                                                             <ui:studioSubmissionGridItem contestId="${contestId}"
-                                                                                         submissionId="${submissionId}"
+                                                                                         submission="${submission}"
                                                                                          last="${(index + 1) mod 3 == 0}"/>
                                                         </s:iterator>
                                                     </ul>

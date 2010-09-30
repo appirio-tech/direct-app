@@ -17,9 +17,17 @@ import com.topcoder.service.studio.SubmissionData;
  * </ul>
  * </p>
  *
- * @author isv, flexme
+ * <p>
+ * Version 1.2 (Direct Submission Viewer Release 4) change notes:
+ * <ul>
+ * <li>Added {@link #currentContest} private field and getter/setter for it.</li>
+ * <li>Added {@link #hasCheckout} private field and getter/setter for it.</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, flexme, TCSDEVELOPER
  * @since Submission Viewer Release 1 assembly
- * @version 1.1
+ * @version 1.2
  */
 public class StudioContestSubmissionDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -64,6 +72,21 @@ public class StudioContestSubmissionDTO extends CommonDTO implements ContestStat
      * <p>An <code>int</code> providing the number of the prize slots.</p> 
      */
     private int prizeNumber;
+
+    /**
+     * <p>A <code>TypedContestBriefDTO</code> providing the details for current contest.</p>
+     *
+     * @since 1.3
+     */
+    private TypedContestBriefDTO currentContest;
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether the submissions have already been checked out.
+     * </p>
+     *
+     * @since 1.3
+     */
+    private boolean hasCheckout;
 
     /**
      * <p>Constructs new <code>StudioContestSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -225,5 +248,47 @@ public class StudioContestSubmissionDTO extends CommonDTO implements ContestStat
      */
     public void setPrizeNumber(int prizeNumber) {
         this.prizeNumber = prizeNumber;
+    }
+
+    /**
+     * <p>Gets the details for current contest.</p>
+     *
+     * @return a <code>TypedContestBriefDTO</code> providing the details for current contest.
+     * @since 1.3
+     */
+    public TypedContestBriefDTO getCurrentContest() {
+        return this.currentContest;
+    }
+
+    /**
+     * <p>Sets the details for current contest.</p>
+     *
+     * @param currentContest a <code>TypedContestBriefDTO</code> providing the details for current contest.
+     * @since 1.3
+     */
+    public void setCurrentContest(TypedContestBriefDTO currentContest) {
+        this.currentContest = currentContest;
+    }
+
+    /**
+     * <p>Gets the flag indicating whether the submissions have already been checked out.</p>
+     *
+     * @return a <code>boolean</code> providing the flag indicating whether the submissions have already been checked
+     *         out.
+     * @since 1.3
+     */
+    public boolean getHasCheckout() {
+        return hasCheckout;
+    }
+
+    /**
+     * <p>Sets the flag indicating whether the submissions have already been checked out.</p>
+     *
+     * @param hasCheckout a <code>boolean</code> providing the flag indicating whether the submissions have already been
+     *        checked out.
+     * @since 1.3
+     */
+    public void setHasCheckout(boolean hasCheckout) {
+        this.hasCheckout = hasCheckout;
     }
 }

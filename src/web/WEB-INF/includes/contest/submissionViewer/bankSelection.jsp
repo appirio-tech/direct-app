@@ -1,9 +1,10 @@
 <%--
-  - Author: isv, flexme
+  - Author: isv, flexme, TCSDEVELOPER
+  - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: Added "I can not choose a winner" button.
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Add link for checkout button.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Create dynamic prize slots depends on the prize number.
   -
-  - Version: 1.2
+  - Version: 1.3
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -17,20 +18,32 @@
         <ul id="bankSelectionTab">
             <s:set var="contestId" value="viewData.contestStats.contest.id" scope="page"/>
             <s:if test="viewData.hasMilestoneRound">
-                <s:set var="isMilestoneRound" value="formData.roundType.toString() == 'MILESTONE'" scope="page"/>
                 <li <s:if test="formData.roundType.toString() != 'MILESTONE'">class="off"</s:if>>
                     <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${true}">
                         <span>Milestone (R1)</span>
                     </link:studioSubmissionsGrid>
                 </li>
-                <li <s:if test="formData.roundType.toString() != 'FINAL'">class="off"</s:if>>
-                    <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}">
-                        <span>Final (R2)</span>
-                    </link:studioSubmissionsGrid>
-                </li>
+
+                <s:if test="formData.roundType.toString() == 'FINAL'">
+                    <li>
+                        <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}">
+                            <span>Final (R2)</span>
+                        </link:studioSubmissionsGrid>
+                    </li>
+                </s:if>
+                <s:else>
+                    <li class="off">
+                        <s:if test="viewData.hasCheckout">
+                            <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}">
+                                <span>Final (R2)</span>
+                            </link:studioSubmissionsGrid>
+                        </s:if>
+                        <s:else><a href="javascript:"><span>Final (R2)</span></a></s:else>
+                    </li>
+                </s:else>
+                
             </s:if>
             <s:else>
-                <s:set var="isMilestoneRound" value="false" scope="page"/>
                 <li>
                     <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${false}">
                         <span>Final (R1)</span>
@@ -53,11 +66,7 @@
                     <ul id="bankSelectionItemList">
                         <c:forEach var="ind" begin="1" end="${viewData.prizeNumber}">
                         <li class="sortableItem">
-                            <!-- <a href="#" class="btn_remove"></a>-->
-                            <a href="javascript:;" class="thumb"><span></span>
-                                <!--<img src="/images/submission/thumb_slot_5.png" alt="" />-->
-                            </a>
-                            <!--<label>270008</label>-->
+                            <a href="javascript:;" class="thumb"><span></span></a>
                         </li>
                         </c:forEach>
 
@@ -89,15 +98,23 @@
 
         <div id="bankSelectionButton">
             <s:if test="formData.roundType.toString() == 'MILESTONE'">
-            <link:studioCheckout contestId="${contestId}" milestoneRound="${true}" styleClass="buttonBankSelection">
-                <span class="left"><span class="right">Confirm Milestone</span></span>
-            </link:studioCheckout>
+                <link:studioCheckout contestId="${contestId}" milestoneRound="${true}" styleClass="buttonBankSelection">
+                    <span class="left"><span class="right">Confirm Milestone</span></span>
+                </link:studioCheckout>
             </s:if>
             <s:else>
-            <link:studioCheckout contestId="${contestId}" milestoneRound="${false}" styleClass="buttonBankSelection">
-                <span class="left"><span class="right">Lock-in Winners</span></span>
-            </link:studioCheckout>
+                <link:studioCheckout contestId="${contestId}" milestoneRound="${false}"
+                                     styleClass="buttonBankSelection">
+                    <span class="left"><span class="right">Lock-in Winners</span></span>
+                </link:studioCheckout>
             </s:else>
+            <s:if test="!viewData.hasCheckout">
+            <a href="<s:url action="studioNoWinner" namespace="/contest">
+                         <s:param name="contestId" value="viewData.contestStats.contest.id"/>
+                         <s:param name="formData.roundType" value="formData.roundType"/>
+                     </s:url>" class="buttonBankSelection">
+                <span class="left"><span class="right">I cannot choose a winner</span></span></a>
+            </s:if>
             <a href="javascript:;" id="clearSlots" class="buttonBankSelection"><span class="left"><span
                     class="right">Clear Slots</span></span></a>
         </div>

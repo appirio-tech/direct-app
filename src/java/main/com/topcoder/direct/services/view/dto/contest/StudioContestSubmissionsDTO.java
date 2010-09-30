@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.dto.contest;
 
 import java.util.List;
+import java.util.Map;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.dto.CommonDTO;
@@ -35,10 +36,17 @@ import com.topcoder.service.studio.SubmissionData;
  * <li>Added {@link #paidSubmissions} private field and getter/setter for it.</li>
  * </ul>
  * </p>
- * 
- * @author isv, flexme
+ *
+ * <p>
+ * Version 1.4 (Direct Submission Viewer Release 4) change notes:
+ * <ul>
+ * <li>Added {@link #milestoneRoundFeedbackText} private field and getter/setter for it.</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, flexme, TCSDEVELOPER
  * @since Submission Viewer Release 1 assembly
- * @version 1.2
+ * @version 1.4
  */
 public class StudioContestSubmissionsDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -124,6 +132,20 @@ public class StudioContestSubmissionsDTO extends CommonDTO implements ContestSta
      * A <code>String</code> providing the submissions id which have been already paid.
      */
     private String paidSubmissions;
+
+    /**
+     * <p>A <code>String</code> providing the text for milestone round overall feedback.</p>
+     *
+     * @since 1.4
+     */
+    private String milestoneRoundFeedbackText;
+
+    /**
+     * <p>A <code>Map</code> providing the handles for submitters.</p>
+     *
+     * @since 1.4
+     */
+    private Map<Long, String> submitterHandles;
 
     /**
      * <p>
@@ -417,5 +439,45 @@ public class StudioContestSubmissionsDTO extends CommonDTO implements ContestSta
      */
     public void setPaidSubmissions(String paidSubmissions) {
         this.paidSubmissions = paidSubmissions;
+    }
+
+    /**
+     * <p>Gets the text for milestone round overall feedback.</p>
+     *
+     * @return a <code>String</code> providing the text for milestone round overall feedback.
+     * @since 1.4
+     */
+    public String getMilestoneRoundFeedbackText() {
+        return this.milestoneRoundFeedbackText;
+    }
+
+    /**
+     * <p>Sets the text for milestone round overall feedback.</p>
+     *
+     * @param milestoneRoundFeedbackText a <code>String</code> providing the text for milestone round overall feedback.
+     * @since 1.4
+     */
+    public void setMilestoneRoundFeedbackText(String milestoneRoundFeedbackText) {
+        this.milestoneRoundFeedbackText = milestoneRoundFeedbackText;
+    }
+
+    /**
+     * <p>Gets the handles for submitters.</p>
+     *
+     * @return a <code>Map</code> providing the handles for submitters.
+     * @since 1.4
+     */
+    public Map<Long, String> getSubmitterHandles() {
+        return this.submitterHandles;
+    }
+
+    /**
+     * <p>Sets the handles for submitters.</p>
+     *
+     * @param submitterHandles a <code>Map</code> providing the handles for submitters.
+     * @since 1.4
+     */
+    public void setSubmitterHandles(Map<Long, String> submitterHandles) {
+        this.submitterHandles = submitterHandles;
     }
 }

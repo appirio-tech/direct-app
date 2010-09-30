@@ -174,6 +174,7 @@
         <property name="contestManager" ref="contestManager"/>
         <property name="adminServiceFacade" ref="adminServiceFacade"/>
         <property name="referenceDataBean" ref="referenceDataBean"/>
+        <property name="userService" ref="userService"/>
     </bean>
 
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
@@ -332,6 +333,22 @@
 
     <bean id="softwareContestSubmissionsAction"
           class="com.topcoder.direct.services.view.action.contest.SoftwareContestSubmissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="studioNoWinnerAction"
+          class="com.topcoder.direct.services.view.action.contest.StudioNoWinnerAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="studioAbandonContestAction"
+          class="com.topcoder.direct.services.view.action.contest.StudioNoWinnerAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="abandonContest" value="true"/>
+    </bean>
+
+    <bean id="updateStudioGeneralFeedbackAction"
+          class="com.topcoder.direct.services.view.action.contest.UpdateGeneralSubmissionsFeedbackAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 

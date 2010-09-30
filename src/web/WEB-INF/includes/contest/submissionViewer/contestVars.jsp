@@ -9,3 +9,4 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <input type="hidden" id="contestId" value="${contestId}" />
 <input type="hidden" id="roundType" value="${formData.roundType}" />
+<input type="hidden" id="hasCheckout" value="${viewData.hasCheckout}" />

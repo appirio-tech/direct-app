@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.topcoder.service.user.UserService;
 import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -46,9 +47,15 @@ import com.topcoder.service.studio.contest.ContestManager;
  * <li>Add the <code>getReferenceDataBean</code>.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.2.1 - Direct Submission Viewer Release 4 Assembly Change Note
+ * <ul>
+ * <li>Add the <code>userService</code>.</li>
+ * </ul>
+ * </p>
  *
  * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.2
+ * @version 1.2.1
  */
 public abstract class BaseDirectStrutsAction extends AbstractAction implements Preparable {
     /**
@@ -115,6 +122,13 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
     private ContestManager contestManager;
 
     private AdminServiceFacade adminServiceFacade;
+
+    /**
+     * Represents the UserService object. It has getter & setter. Can be any value.
+     *
+     * @since 1.2.1
+     */
+    private UserService userService;
 
     /**
      * <p>
@@ -409,5 +423,25 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      */
     public ReferenceDataBean getReferenceDataBean() {
         return this.referenceDataBean;
+    }
+
+    /**
+     * Getter for the namesake instance variable. Simply return the namesake instance variable.
+     *
+     * @return user service
+     * @since 1.2.1
+     */
+    public UserService getUserService() {
+        return userService;
+    }
+
+    /**
+     * Setter for the namesake instance variable. Simply set the value to the namesake instance variable.
+     *
+     * @param userService user service
+     * @since 1.2.1
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

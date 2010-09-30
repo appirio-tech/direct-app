@@ -115,12 +115,40 @@ $(document).ready(function(){
 			dataType: 'json',
 			async : false,
 			success: function (jsonResult) {
-				$("#submission-" + submissionId).find(".left").html(jsonResult.result['return'].feedbackText);
+//				$("#submission-" + submissionId).find(".left").html(jsonResult.result['return'].feedbackText);
 			},
 			beforeSend: beforeAjax,
 			complete: afterAjax
 		});
 	});
+
+    // save general feedback text
+    $("#saveGeneralFeedback").click(function() {
+        var contestId = $(this).attr("rel");
+        var feedback = $("#feedbackTextMilestoneRound").val();
+        feedback = $.trim(feedback);
+        if (feedback.length == 0) {
+            $('#msgDialog p').html("Feedback content can't be empty.");
+            $('#msgDialog').dialog('open');
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url:  ctx + "/contest/updateGeneralSubmissionsFeedback",
+            data: {contestId : contestId, feedbackText : feedback},
+            cache: false,
+            dataType: 'json',
+            async : false,
+            success: function (jsonResult) {
+            },
+            error: function (jsonResult) {
+                alert('Yo');
+            },
+            beforeSend: beforeAjax,
+            complete: afterAjax
+        });
+        return false;
+    });
 
 	// contest id
 	contestId = $("#contestId").val();
@@ -211,7 +239,7 @@ $(document).ready(function(){
 		var ranks = "";
 		
 		var hasSelectedMilestone = false;
-		
+
 		for (var i = 0; i < number; i++) {
 		    if (bankData && bankData[arrPrize[i]])
 			    hasSelectedMilestone = true;
@@ -224,7 +252,7 @@ $(document).ready(function(){
 			$('#msgDialog p').html("At least one submissions should be filled.");
 			$('#msgDialog').dialog('open');
 			return false;
-		}		
+		}
 		$("#ranks").val(ranks);
 		$("#checkoutForm").submit();
 		return false;

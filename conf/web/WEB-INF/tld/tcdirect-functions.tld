@@ -52,4 +52,10 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO getReview(com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO,long) </function-signature>
     </function>
+
+    <function>
+        <name>isCheckedOut</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isCheckedOut(com.topcoder.direct.services.view.dto.contest.ContestRoundType,com.topcoder.service.studio.SubmissionData)</function-signature>
+    </function>
 </taglib>

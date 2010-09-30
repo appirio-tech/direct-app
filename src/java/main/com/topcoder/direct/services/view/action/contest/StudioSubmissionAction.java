@@ -36,9 +36,17 @@ import java.util.List;
  * </ul>
  * </p>
  *
+ * <p>
+ *   Version 1.2 (Direct Submission Viewer Release 4) change notes:
+ *   <ul>
+ *     <li>Updated {@link #executeAction()} method to set currentContest property to the view data.</li>
+ *     <li>Updated {@link #executeAction()} method to set hasCheckout property to the view data.</li>
+ *   </ul>
+ * </p>
+ *
  * @author isv, flexme
  * @since Submission Viewer Release 1 assembly
- * @version 1.1
+ * @version 1.2
  */
 public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
 
@@ -123,6 +131,7 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
                                                                                        contestServiceFacade);
             int submissionsCount = submissions.size();
             getViewData().setSubmissionsCount(submissionsCount);
+            getViewData().setHasCheckout(DirectUtils.getSubmissionsCheckout(submissions, roundType));
 
             // Set submission data
             long submissionId = getFormData().getSubmissionId();
@@ -163,6 +172,12 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
             List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
                     currentUser.getUserId(), contestStats.getContest().getProject().getId());
             getSessionData().setCurrentProjectContests(contests);
+            for (TypedContestBriefDTO contest : contests) {
+                if (contest.getId() == contestId) {
+                    getViewData().setCurrentContest(contest);
+                    break;
+                }
+            }
 
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());

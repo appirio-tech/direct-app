@@ -13,8 +13,15 @@ package com.topcoder.direct.services.view.dto.contest;
  * </ul>
  * </p>
  *
- * @author isv, flexme
- * @version 1.1
+ * <p>
+ *   Version 1.2 (Direct Submission Viewer Release 4) change notes:
+ *   <ul>
+ *     <li>Added {@link #NOWINNER} type.</li>
+ *   </ul>
+ * </p>
+ *
+ * @author isv, flexme, TCSDEVELOPER
+ * @version 1.2
  */
 public enum SubmissionViewerType {
 
@@ -37,5 +44,13 @@ public enum SubmissionViewerType {
      * <p>A <code>SubmissionViewerType</code> corresponding to <code>checkout</code> view of submissions.</p>
      * @since 1.1
      */
-    CHECKOUT
+    CHECKOUT,
+
+    /**
+     * <p>A <code>SubmissionViewerType</code> corresponding to <code>Can't Choose a Winner</code> views of submissions.
+     * </p>
+     *
+     * @since 1.2
+     */
+    NOWINNER
 }

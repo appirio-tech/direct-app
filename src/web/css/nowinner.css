@@ -1,0 +1,58 @@
+/*main no winner suggestion block*/
+.noWinnerSuggestion {
+    margin: 15px 20px 30px 20px;
+}
+
+    .noWinnerSuggestion a {
+        font-weight: bold;
+        color: #ff0002;
+    }
+
+    /*Title*/
+    .noWinnerSuggestion h3 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    .noWinnerSuggestion .content {
+        margin: 15px 20px 0 20px;
+    }
+
+        /*sub title*/
+        .noWinnerSuggestion .content h4 {
+            margin: 25px 0 10px 0;
+        }
+
+        .noWinnerSuggestion .content p {
+            text-align: left;
+            line-height: 150%;
+            font-size: 12px;
+            font-weight: normal;
+            margin:12px 0;
+        }
+
+        .noWinnerSuggestion .content textarea{
+            width: 99%;
+            height: 239px;            
+        }
+
+    /*buttons*/
+    #bankSelectionButtonBottom{
+        margin-bottom:100px !important;
+        margin-right:20px;
+    }
+    #bankSelectionButtonBottom .btnSelectAWinner{
+        width:145px;
+    }
+    #bankSelectionButtonBottom .btnDoNotChooseAWinner{
+        width:195px;
+    }
+    #bankSelectionButtonBottom .btnContinue{
+        width:100px;
+    }
+    #bankSelectionButtonBottom .btnNoThankYou{
+        width:140px;
+    }
+    #bankSelectionButtonBottom .btnRunAgian{
+        width:190px;
+    }

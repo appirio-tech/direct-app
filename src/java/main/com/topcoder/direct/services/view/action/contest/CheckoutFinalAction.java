@@ -38,10 +38,16 @@ import com.topcoder.service.studio.SubmissionPaymentData;
  * A <code>Struts</code> action to be used for handling requests for save rank of final submissions for
  * <code>Studio</code> contest and process payment.
  * </p>
- * 
- * @author flexme
+ * <p>
+ * Version 1.1 (Direct Submission Viewer Release 4 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Fixed bug with analyzing milestone prize awarding for submission.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author flexme, isv
  * @since Submission Viewer Release 3 assembly
- * @version 1.0
+ * @version 1.1
  */
 public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
     /**
@@ -305,7 +311,7 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
             submissions.put(sub.getSubmissionId(), sub);
         }
         UserTransaction ut = DirectUtils.getUserTransaction();
-     
+
         try {
             ut.begin();
             if (!hasCheckout) {
@@ -339,11 +345,12 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
                 }
 
                 // milestone payments
-                int milestoneNumber = 0; 
+                int milestoneNumber = 0;
                 if (studioCompetition.getContestData().getMultiRound()) {
                     double milestonePrize = studioCompetition.getContestData().getMilestonePrizeData().getAmount();
                     for (SubmissionData submission : mileSubmissions) {
-                        if (submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize()) {
+                        Boolean milestonePrizeAwarded = submission.isAwardMilestonePrize();
+                        if ((milestonePrizeAwarded != null) && (milestonePrizeAwarded)) {
                             SubmissionPaymentData payment = new SubmissionPaymentData();
                             payment.setAmount(0);
                             payment.setAwardMilestonePrize(true);
@@ -399,11 +406,11 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
 
             // process payment
             contestServiceFacade.processSubmissionPurchaseOrderPayment(currentUser, contestData, orderPaymentData);
-        } catch(Exception e) { 
+        } catch(Exception e) {
            System.out.println("-----------------------------"+e);
            ut.rollback();
            throw e;
-        }            
+        }
 
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);

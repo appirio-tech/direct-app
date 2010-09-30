@@ -174,14 +174,19 @@ $(document).ready(function(){
 			$(this).addClass(arrSlot[index]);
 		});
 	});
-	$("#bankSelectionItemList").sortable({
-			items: 'li:not(#extraPrize)',
-			update:updateSortable
-		});
-	$("#bankSelectionItemList").disableSelection(); 
+
+    var hasCheckout = $('#hasCheckout').val() == 'true';
+
+    if (!hasCheckout) {
+        $("#bankSelectionItemList").sortable({
+                items: 'li:not(#extraPrize)',
+                update:updateSortable
+            });
+    }
+	$("#bankSelectionItemList").disableSelection();
 	
 	// submission li init draggable
-	$("#submissionGrid li").draggable({
+	$("#submissionGrid li:not(.prizedSubmission)").draggable({
 		revert: true, 
 		cursor: 'move',  
 		cursorAt: { top: 0, left: 35 },
@@ -191,19 +196,25 @@ $(document).ready(function(){
 	}); 
 
 	// #clearSlots click function to clear all slots
-	$("#clearSlots").click(function() {  
-			$("#bankSelectionItemList li:not(:last-child)").html('<a href="#" class="thumb"><span></span></a>');
+	$("#clearSlots").click(function() {
+        if (!hasCheckout) {
+            $("#bankSelectionItemList li:not(:last-child)").html('<a href="#" class="thumb"><span></span></a>');
+        }
 			listExtra = new Array();
 			listLikes = new Array();
 			listDislikes = new Array();
 			$("#numExtra").html("(0)");
 			$("#likeCount").html("0");
 			$("#dislikeCount").html("0");
-			$(".statusSubmission").removeClass("firstSlot");
-			$(".statusSubmission").removeClass("secondSlot");
-			$(".statusSubmission").removeClass("thirdSlot");
-			$(".statusSubmission").removeClass("fourthSlot");
-			$(".statusSubmission").removeClass("fifthSlot");
+
+        if (!hasCheckout) {
+            $(".statusSubmission").removeClass("firstSlot");
+            $(".statusSubmission").removeClass("secondSlot");
+            $(".statusSubmission").removeClass("thirdSlot");
+            $(".statusSubmission").removeClass("fourthSlot");
+            $(".statusSubmission").removeClass("fifthSlot");
+        }
+
 			$(".statusSubmission").removeClass("dollarSlot");
 			$(".statusSubmission").removeClass("likeSlot");
 			$(".statusSubmission").removeClass("dislikeSlot");
@@ -258,37 +269,36 @@ $(document).ready(function(){
 				tolerance:"pointer"
 	});
 	
-	
-	// #firstPrize init droppable
-	//$("#firstPrize").droppable({
-	//$($("#bankSelectionItemList").children()[0]).droppable({
-	$("#bankSelectionItemList").children().each(function(index){
-		$(this).droppable({
-			accept: '#submissionGrid li',							   
-			hoverClass: 'drophover', 
-			drop: function(event, ui) {
-				var $item = ui.draggable.children(".statusSubmissionWrap").children("div").children("img.submissionIMG").attr("src");
-				var $itemlabel = ui.draggable.children(".statusSubmissionWrap").children("label").children(".submissionID").text();
-				removeIfExist($itemlabel);
-				var $slotId = $(this).attr('id');
-				var $slotName = arrSlot[arrPrize.indexOf($slotId)];
-				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-				$(".statusSubmission").removeClass($slotName);
-				$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass($slotName);
-				
-				$('#remove' + $slotId).click(function() { 
-					$("#" + $slotId).html('<a href="#" class="thumb"><span></span></a>');
-					$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission");
-					getBankData();
-					return false;
-				});
-				getBankData();
-			}
-		}).sortable({
-				items: 'li:not(#extraPrize)'
-			});
-	});
-	
+
+    if (!hasCheckout) {
+        $("#bankSelectionItemList").children().each(function(index){
+            $(this).droppable({
+                accept: '#submissionGrid li',
+                hoverClass: 'drophover',
+                drop: function(event, ui) {
+                    var $item = ui.draggable.children(".statusSubmissionWrap").children("div").children("img.submissionIMG").attr("src");
+                    var $itemlabel = ui.draggable.children(".statusSubmissionWrap").children("label").children(".submissionID").text();
+                    removeIfExist($itemlabel);
+                    var $slotId = $(this).attr('id');
+                    var $slotName = arrSlot[arrPrize.indexOf($slotId)];
+                    $(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
+                    $(".statusSubmission").removeClass($slotName);
+                    $('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass($slotName);
+
+                    $('#remove' + $slotId).click(function() {
+                        $("#" + $slotId).html('<a href="#" class="thumb"><span></span></a>');
+                        $('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission");
+                        getBankData();
+                        return false;
+                    });
+                    getBankData();
+                }
+            }).sortable({
+                    items: 'li:not(#extraPrize)'
+                });
+        });
+    }
+
 	// #extraPrize init droppable
 	$("#extraPrize").droppable({
 		hoverClass: 'drophover', 
@@ -313,14 +323,14 @@ $(document).ready(function(){
 	});  
 	
 	//Add to Bank number 1st
-	$(".firstSlot").click(function() { 					
-			var $item = $(this).attr("title"); 
-			var $itemlabel = $(this).attr("rel"); 
+	$(".firstSlot:not(.disabledControl)").click(function() {
+ 			var $item = $(this).attr("title");
+			var $itemlabel = $(this).attr("rel");
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("firstSlot");
 			$("#firstPrize").html('<a href="#" id="removeFirstPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("firstSlot");
-			$('#removeFirstPrize').click(function() { 
+			$('#removeFirstPrize').click(function() {
 				$("#firstPrize").html('<a href="#" class="thumb"><span></span></a>');
 				$('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission");
 				getBankData();
@@ -328,12 +338,11 @@ $(document).ready(function(){
 			});
 			getBankData();
 			return false;
-	}); 
-	
-	
+	});
+
 	//Add to Bank number 2nd
-	$(".secondSlot").click(function() { 					
-			var $item = $(this).attr("title"); 
+	$(".secondSlot:not(.disabledControl)").click(function() {
+			var $item = $(this).attr("title");
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("secondSlot");
@@ -350,8 +359,8 @@ $(document).ready(function(){
 	}); 
 	
 	//Add to Bank number 3rd
-	$(".thirdSlot").click(function() { 					
-			var $item = $(this).attr("title"); 
+	$(".thirdSlot:not(.disabledControl)").click(function() {
+			var $item = $(this).attr("title");
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("thirdSlot");
@@ -368,8 +377,8 @@ $(document).ready(function(){
 	}); 
 	
 	//Add to Bank number 4th
-	$(".fourthSlot").click(function() {
-			var $item = $(this).attr("title"); 
+	$(".fourthSlot:not(.disabledControl)").click(function() {
+			var $item = $(this).attr("title");
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("fourthSlot");
@@ -386,8 +395,8 @@ $(document).ready(function(){
 	}); 
 	
 	//Add to Bank number 5th
-	$(".fifthSlot").click(function() { 					
-			var $item = $(this).attr("title"); 
+	$(".fifthSlot:not(.disabledControl)").click(function() {
+			var $item = $(this).attr("title");
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
 			$(".statusSubmission").removeClass("fifthSlot");
@@ -410,7 +419,6 @@ $(document).ready(function(){
 			removeIfExist($itemlabel); 
 			listExtra.push($itemlabel);
 			$("#numExtra").html("(" + listExtra.length + ")");
-			//$("#extraPrize").html('<a href="#" id="removeExtraPrize" class="btn_remove"></a><a href="studio-milestone-single.html" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$("#submission-"+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("dollarSlot");
 			$('#removeExtraPrize').click(function() { 
 				$("#extraPrize").html('<a href="#" class="thumb"><span></span></a>');
@@ -527,6 +535,31 @@ $(document).ready(function(){
 		return false;
 	});
 
+    function initBanks(index, link) {
+        var $item = link.attr("title");
+        var $itemlabel = link.attr("rel");
+
+        var f = arrPrize[index];
+        var s = arrSlot[index];
+
+        $('#submission-'+$itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass(s);
+        if (link.hasClass('disabledControl')) {
+            $("#" + f).html('<a href="' +
+                            getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item +
+                            '" alt="" /></a><label>' + $itemlabel + '</label>');
+        } else {
+            $("#" + f).html('<a href="#" id="remove' + f + '" class="btn_remove"></a><a href="' +
+                            getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item +
+                            '" alt="" /></a><label>' + $itemlabel + '</label>');
+            $('#remove' + f).click(function() {
+                $("#" + f).html('<a href="#" class="thumb"><span></span></a>');
+                $('#submission-' + $itemlabel).children(".statusSubmission").removeClass().addClass("statusSubmission");
+                getBankData();
+                return false;
+            });
+        }
+    }
+
 	// get bank data from cookie
 	var bankData = $.cookie(COOKIE_NAME);
 	if (bankData) {
@@ -542,7 +575,7 @@ $(document).ready(function(){
 		$("#bankSelectionItemList li:not(:last-child)").each(function(index) {
 			var label = bankData[arrPrize[index]];
 			if (label) {
-				$("#submission-" + label).find("." + arrSlot[index]).click();
+				initBanks(index, $("#submission-" + label).find("." + arrSlot[index]));
 			}
 		});
 		// set like submissions from cookie
@@ -569,4 +602,6 @@ $(document).ready(function(){
 	if (window.location.hash == "#dislike") {
 		$("#dislikeSubmissionBtn").click();
 	}
+
+
 }); 

@@ -12,36 +12,39 @@ package com.topcoder.direct.services.view.dto.contest;
 public enum ContestType {
 
     /**
-     * <p>A <code>ContestType</code> corresponding to <code>Wireframe</code> contest type.</p>
-     */
-    WIREFRAME("Wireframes", "wf", 25, true),
-
-    /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
      */
-    WEB_DESIGN("Web Design", "w", 1, true),
+    WEB_DESIGN("Web Page Design", "w", 1, true),
 
     /**
-     * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
+     * <p>A <code>ContestType</code> corresponding to <code>Prototype</code> contest type.</p>
      */
-    WEB_ELEMENTS("Web Elements", "We", 4, true),
-
+    PROTOTYPE("Prototype", "pr", 2, true),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Logo Design</code> contest type.</p>
      */
     LOGO_DESIGN("Logo Design", "L", 3, true),
 
-   /**
-     * <p>A <code>ContestType</code> corresponding to <code>Icon</code> contest type.</p>
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
      */
-    ICONS("Icon", "ic", 14, true),
+    WEB_ELEMENTS("Web Elements", "We", 4, true),
 
     /**
-     * <p>A <code>ContestType</code> corresponding to <code>Idea Generation</code> contest type.</p>
+     * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
      */
-    IDEA_GENERATION("Idea Generation", "ig", 26, true),
+    APP_FRONT_END_DESIGN("Application Front End Design", "ap", 5, true),
 
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Widget or Mobile Screen Design</code> contest type.</p>
+     */
+    WIDGET_MOBILE_SCREEN_DESIGN("Mobile Screen", "wi", 6, true), 
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
+     */
+    FRONT_END_FLASH("FLASH", "F", 8, true),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Print Design</code> contest type.</p>
@@ -49,35 +52,34 @@ public enum ContestType {
     PRINT_DESIGN("Print Design", "Pr", 12, true),
 
     /**
-     * <p>A <code>ContestType</code> corresponding to <code>PowerPoint Presentation</code> contest type.</p>
+     * <p>A <code>ContestType</code> corresponding to <code>Icon</code> contest type.</p>
      */
-    POWERPOINT_PRESENTATION("PowerPoint Presentation", "Pw", 21, true),
-
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
-     */
-    APP_FRONT_END_DESIGN("Application Front-End Design", "ap", 5, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
-     */
-    FRONT_END_FLASH("Front-End Flash", "F", 8, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Banners/Icons</code> contest type.</p>
-     */
-    BANNERS_ICONS("Banners/Icons", "bi", 4, true), 
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Widget or Mobile Screen Design</code> contest type.</p>
-     */
-    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "wi", 6, true), 
+    ICONS("Icon", "ic", 14, true),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Other</code> contest type.</p>
      */
     OTHER("Other", "O", 18, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>PowerPoint Presentation</code> contest type.</p>
+     */
+    POWERPOINT_PRESENTATION("PowerPoint Presentation", "Pw", 21, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Idea Generation</code> contest type.</p>
+     */
+    IDEA_GENERATION("Idea Generation", "ig", 26, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Wireframe</code> contest type.</p>
+     */
+    WIREFRAME("Wireframes", "wf", 25, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Banners/Icons</code> contest type.</p>
+     */
+    BANNERS_ICONS("Banners/Icons", "bi", 4, true), 
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>

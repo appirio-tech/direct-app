@@ -1,9 +1,10 @@
 <%--
-  - Author: isv, flexme
+  - Author: isv, flexme, TCSDEVELOPER
+  - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: Added some JS, CSS files for NOWINNER pages.
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Added some JS, CSS files for CHECKOUT page.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Added some JS, CSS files for dialog, block UI.
   -
-  - Version: 1.2
+  - Version: 1.3
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -21,6 +22,7 @@
 <link rel="stylesheet" href="/css/dashboard.css" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/modal.css" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/jScrollPane.css" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/thickbox.css" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/jquery.selectbox.css"  type="text/css" />
 <s:if test="formData.viewType.toString() == 'SINGLE' || formData.viewType.toString() == 'CHECKOUT'">
 <link rel="stylesheet" href="/css/jquery-ui-1.7.2.custom.css"  type="text/css" />
@@ -28,6 +30,9 @@
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie6.css" />
 <![endif]-->
+<s:if test="formData.viewType.toString() == 'NOWINNER'">
+<link rel="stylesheet" href="/css/nowinner.css" media="all" type="text/css" />
+</s:if>
 
 <!-- External javascript -->
 <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js"></script> 
@@ -58,6 +63,9 @@
 <script type="text/javascript" src="/scripts/ui.draggable.js"></script>
 <script type="text/javascript" src="/scripts/ui.droppable.js"></script>
 <script type="text/javascript" src="/scripts/ui.accordion.js"></script>
+<script type="text/javascript" src="/scripts/thickbox-compressed.js"></script>
+
+
 <s:if test="formData.viewType.toString() == 'GRID'">
     <script type="text/javascript" src="/scripts/bank-grid.js"></script>
 </s:if>

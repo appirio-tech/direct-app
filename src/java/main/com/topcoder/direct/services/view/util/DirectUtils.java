@@ -16,6 +16,7 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.transaction.UserTransaction;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -104,8 +105,15 @@ import com.topcoder.shared.util.DBMS;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.6.1 (Direct Submission Viewer Release 4) Change notes:
+ * <ul>
+ * <li>Added {@link #getServletResponse()} method.</li>
+ * </ul>
+ * </p>
+ *
  * @author BeBetter, isv, flexme
- * @version 1.6
+ * @version 1.6.1
  */
 public final class DirectUtils {
     /**
@@ -592,5 +600,15 @@ public final class DirectUtils {
         Context context = TCContext.getContext(DirectProperties.CONTEST_SERVICE_FACADE_CONTEXT_FACTORY,
             DirectProperties.CONTEST_SERVICE_FACADE_PROVIDER_URL);
         return (UserTransaction) context.lookup("UserTransaction");
-    }    
+    }
+
+    /**
+     * <p>Gets the servlet response.</p>
+     *
+     * @return the servlet response.
+     * @since 1.6.1
+     */
+    public static HttpServletResponse getServletResponse() {
+        return (HttpServletResponse) ActionContext.getContext().get(ServletActionContext.HTTP_RESPONSE);
+    }
 }
