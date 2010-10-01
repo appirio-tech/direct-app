@@ -132,7 +132,7 @@ public final class DirectUtils {
     /**
      * Scheduled status list.
      */
-    public final static List<String> SCHEDULED_STATUS = Arrays.asList("Scheduled");
+    public final static List<String> SCHEDULED_STATUS = Arrays.asList("Scheduled", "Specification Submission", "Specification Review", "Passed Spec Review" );
 
     /**
      * Active status list.

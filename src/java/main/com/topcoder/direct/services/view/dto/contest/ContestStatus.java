@@ -175,6 +175,11 @@ public enum ContestStatus {
     SPECIFICATION_REVIEW("Specification Review", "running", "View"),
 
     /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Final Review</code> contest status.</p>
+     */
+    PASSED_SPEC_REVIEW("Passed Spec Review", "running", "View"),
+
+    /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Approval</code> contest status.</p>
      */
     APPROVAL("Approval", "running", "View"),
