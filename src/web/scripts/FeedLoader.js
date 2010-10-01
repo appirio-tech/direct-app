@@ -36,9 +36,9 @@ function loadFeed(rss, template, element, errorMessage) {
  */
 function loadHomePageFeeds() {
 
-    // This feed URL is a "fake" url that is setup in the apache config.  It points to 
-    // http://topcoder.com/home/blog/category/blog/feed/
-    loadFeed("http://www.topcoder.com/homeblogfeed/", "/scripts/DirectNewsTemplate.txt", "newsColumn", 
+    // NOTE: The following block is commented out for testing/review purposes only. It should be
+    // uncommented when deploying to Production environment
+    loadFeed("http://www.topcoder.com/news/rss2", "/scripts/DirectNewsTemplate.txt", "newsColumn", 
         "Error reading Direct News feed.");
 
     // NOTE: The following block is provided for testing/review purposes only. It should be
