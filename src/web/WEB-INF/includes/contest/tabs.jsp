@@ -27,7 +27,7 @@
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'specReview'}">class="on"</c:if>>
                 <s:if test="isStudio == false">
-                    <a href="https://software.topcoder.com/review/ViewProjectDetails.do?method=viewProjectDetails&pid=${contestStats.contest.id}">
+                    <a href="https://software.topcoder.com/review/actions/ViewProjectDetails.do?method=viewProjectDetails&pid=${contestStats.contest.id}">
                     <!--
                     <a href="<s:url action="contest/viewSpecReview" namespace="/">
                         <s:param name="contestId" value="contest.id"/>
