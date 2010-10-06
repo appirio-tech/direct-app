@@ -290,7 +290,11 @@ $(document).ready(function() {
 
     $('#scheduledContestsViewType').change(function() {
         $('.scData').hide();
-        $('.' + $(this).val() + 'ScheduledContests').show();
+	      if($(this).val() == 'Contest Type'){
+	          $('.ContestTypeScheduledContests').show();
+	      }else{
+            $('.' + $(this).val() + 'ScheduledContests').show();
+	      }
     });
 
 
@@ -310,7 +314,11 @@ $(document).ready(function() {
     $("#pipelineScheduledContests .expand").click(function(){
         $(this).blur();
         if($(this).hasClass("collapse")){
-            $('.' + $('#scheduledContestsViewType').val() + 'ScheduledContests').show();
+	      if($('#scheduledContestsViewType').val() == 'Contest Type'){
+	         $('.ContestTypeScheduledContests').show();
+            }else{
+                $('.' + $('#scheduledContestsViewType').val() + 'ScheduledContests').show();
+            }
             $('.viewType').show();
             $(this).removeClass("collapse");
         }else{

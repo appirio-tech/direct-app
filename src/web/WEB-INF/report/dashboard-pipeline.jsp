@@ -162,7 +162,7 @@
                                                 <option>Person</option>
                                                 <option>Copilot</option>
                                                 <option>Project</option>
-                                                <option>Category</option>
+                                                <option>Contest Type</option>
                                                 <option>Billing</option>
                                             </select>
                                         </th>
@@ -187,8 +187,8 @@
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
                                     </tr>
-                                    <tr class="CategoryScheduledContests scData hide">
-                                        <th class="tableColumn">Category</th>
+                                    <tr class="ContestTypeScheduledContests scData hide">
+                                        <th class="tableColumn">Contest Type</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
                                     </tr>
@@ -248,7 +248,7 @@
                                     <c:forEach items="${viewData.categoriesScheduledLaunchedContestStats}" var="stat"
                                                varStatus="loop">
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-                                        <tr class="CategoryScheduledContests scData hide ${rowStyle}">
+                                        <tr class="ContestTypeScheduledContests scData hide ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
@@ -283,7 +283,7 @@
                                         <th class="tableColumn">&nbsp;Date&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Member Costs&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Contest Fee&nbsp;</th>
-                                        <th class="tableColumn">&nbsp;Category&nbsp;</th>
+                                        <th class="tableColumn">&nbsp;Contest Type&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Client&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Copilot&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Billing&nbsp;</th>
