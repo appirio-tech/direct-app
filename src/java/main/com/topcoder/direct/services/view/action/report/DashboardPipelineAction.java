@@ -335,7 +335,8 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
         if ((contestTypes != null) && (contestTypes.length > 0)) {
             boolean matchesContestType = false;
             for (ContestType type : contestTypes) {
-                if (type.getName().equalsIgnoreCase(contest.getContestCategory())) {
+                if ((contest.isStudio() && type == ContestType.STUDIO)  
+                        || (!contest.isStudio() && !type.isStudio() && type.getId() == contest.getContestTypeId())) {
                     matchesContestType = true;
                     break;
                 }
