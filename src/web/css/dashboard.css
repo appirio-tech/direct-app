@@ -4348,3 +4348,251 @@ hr.plain {
 	border: 1px solid  #979797;
 	background: url(../images/single_submission_textarea.png) repeat-x left top;
 }
+
+/* Pipeline report */
+.pipelineSearch {
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+.pipelineSearch LABEL {
+    font-weight: bold;
+    padding-right: 6px;
+    padding-top: 2px;
+    font-size: 12px;
+}
+
+.pipelineSearch INPUT {
+    margin-right: 3px;
+    vertical-align: middle;
+}
+
+.pipelineSearch SELECT {
+    width: auto;
+    vertical-align: middle;
+}
+
+.pipelineSearch A.button1 {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.pipelineSearch FIELDSET {
+    border: 0;
+}
+
+#pipelineSummary th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+
+#pipelineScheduledContests th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+
+#pipelineDetails th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+
+#contestFilter {
+    margin-top: 20px;
+}
+
+#pipelineFilter {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    float: left;
+}
+
+TABLE.pipelineStats {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    border: 1px solid #bdbdbd;
+}
+
+TABLE.pipelineStats TH {
+    color: #FFF;
+    font-size: 11px;
+    height: 33px;
+}
+
+TABLE.pipelineStats TH.tableTitle {
+    background: transparent url(../images/calendar_header.png) repeat-x;
+}
+
+TABLE.pipelineStats TH.first {
+    border-left: 1px solid #37302d;
+}
+
+TABLE.pipelineStats TD {
+    font-size: 11px;
+    text-align: center;
+    padding: 5px 0;
+    border: 1px solid #a8abad;
+    width: 10%;
+}
+
+TABLE.pipelineStats TD.date {
+    font-size: 11px;
+    font-weight: normal;
+    width: 14%;
+}
+
+TABLE.pipelineStats TD.fees {
+    width: 20%;
+    font-size: 11px;
+}
+
+TABLE.pipelineStats TD.fees P {
+    margin: 0 0 4px 0;
+}
+
+TABLE.pipelineStats TR.even TD {
+    background-color: #F3F3F3;
+}
+
+TABLE.pipelineStats TR.noStrips TD {
+    background-color: #FFFFFF !important;
+}
+
+TABLE.pipelineStats TD.checkbox {
+    width: 4%;
+}
+
+TABLE.pipelineStats TH INPUT {
+    width: 13px;
+    height: 13px;
+}
+
+TABLE.pipelineStats TR.alt TD{
+	background-color: #F3F3F3;
+}
+
+TABLE.pipelineStats TR.total TD{
+	background-color: #CCC8C9;
+    font-weight: bold;
+}
+
+TABLE.pipelineStats TH.tableColumn {
+	background-color: #CCC8C9;
+	color: #000;
+}
+
+#pipelineReportArea {
+    background: url(../images/container2_bottom.png) repeat-x bottom;
+}
+
+#pipelineDetails {
+    margin-bottom: 0px;
+}
+
+#pipelineReportArea div.panel {
+    padding: 8px 0px 8px;
+}
+
+#pipelineDetails_length select {
+    margin-top: 6px;
+}
+
+#pipelineReportArea .bottom2 {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#pipelineScheduledContests th.viewType {
+    text-align: right;
+    padding-right: 5px;
+}
+
+TABLE.pipelineStats TH.tableTitle span {
+    vertical-align: middle;
+    padding-top: 12px;
+}
+
+
+#pipelineReportArea th.tableTitle a.expand{
+    background: url(../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+
+#pipelineReportArea th.tableTitle a.collapse{
+    background: url(../images/icon-collapse.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+
+th.pipelineData1 {
+    width: 10%;
+}
+
+th.pipelineData2 {
+    width: 10%;
+}
+
+th.pipelineData3 {
+    width: 10%;
+}
+
+th.pipelineData4 {
+    width: 10%;
+}
+
+th.pipelineData5 {
+    width: 10%;
+}
+
+th.pipelineData6 {
+    width: 10%;
+}
+
+th.pipelineData7 {
+    width: 10%;
+}
+
+th.pipelineData8 {
+    width: 10%;
+}
+
+th.pipelineData9 {
+    width: 10%;
+}
+
+th.pipelineData10 {
+    width: 10%;
+}
+
+th.pipelineData11 {
+    width: 10%;
+}
+
+th.pipelineData12 {
+    width: 10%;
+}
+
+th.pipelineData13 {
+    width: 10%;
+}
+
+th.pipelineData14 {
+    width: 10%;
+}
+
+#validationErrors {
+    color: red;
+}

@@ -6,70 +6,18 @@ package com.topcoder.direct.services.view.dto.contest;
 /**
  * <p>An enumeration over the possible contest types.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 (Direct Pipeline Integration Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Removed unused constructor.</li>
+ *     <li>Added grouping for contest types.</li>
+ *   </ol>
+ * </p>
+
+ * @author isv, TCSDEVELOPER
+ * @version 1.1
  */
 public enum ContestType {
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
-     */
-    WEB_DESIGN("Web Page Design", "w", 1, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Prototype</code> contest type.</p>
-     */
-    PROTOTYPE("Prototype", "pr", 2, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Logo Design</code> contest type.</p>
-     */
-    LOGO_DESIGN("Logo Design", "L", 3, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
-     */
-    WEB_ELEMENTS("Web Elements", "We", 4, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
-     */
-    APP_FRONT_END_DESIGN("Application Front End Design", "ap", 5, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Widget or Mobile Screen Design</code> contest type.</p>
-     */
-    WIDGET_MOBILE_SCREEN_DESIGN("Mobile Screen", "wi", 6, true), 
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
-     */
-    FRONT_END_FLASH("FLASH", "F", 8, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Print Design</code> contest type.</p>
-     */
-    PRINT_DESIGN("Print Design", "Pr", 12, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Icon</code> contest type.</p>
-     */
-    ICONS("Icon", "ic", 14, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Other</code> contest type.</p>
-     */
-    OTHER("Other", "O", 18, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>PowerPoint Presentation</code> contest type.</p>
-     */
-    POWERPOINT_PRESENTATION("PowerPoint Presentation", "Pw", 21, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>Idea Generation</code> contest type.</p>
-     */
-    IDEA_GENERATION("Idea Generation", "ig", 26, true),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Wireframe</code> contest type.</p>
@@ -77,9 +25,67 @@ public enum ContestType {
     WIREFRAME("Wireframes", "wf", 25, true),
 
     /**
+     * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
+     */
+    WEB_DESIGN("Web Design", "w", 1, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
+     */
+    WEB_ELEMENTS("Web Elements", "We", 4, true),
+
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Logo Design</code> contest type.</p>
+     */
+    LOGO_DESIGN("Logo Design", "L", 3, true),
+
+   /**
+     * <p>A <code>ContestType</code> corresponding to <code>Icon</code> contest type.</p>
+     */
+    ICONS("Icon", "ic", 14, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Idea Generation</code> contest type.</p>
+     */
+    IDEA_GENERATION("Idea Generation", "ig", 26, true),
+
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Print Design</code> contest type.</p>
+     */
+    PRINT_DESIGN("Print Design", "Pr", 12, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>PowerPoint Presentation</code> contest type.</p>
+     */
+    POWERPOINT_PRESENTATION("PowerPoint Presentation", "Pw", 21, true),
+
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
+     */
+    APP_FRONT_END_DESIGN("Application Front-End Design", "ap", 5, true),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
+     */
+    FRONT_END_FLASH("Front-End Flash", "F", 8, true),
+
+    /**
      * <p>A <code>ContestType</code> corresponding to <code>Banners/Icons</code> contest type.</p>
      */
     BANNERS_ICONS("Banners/Icons", "bi", 4, true), 
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Widget or Mobile Screen Design</code> contest type.</p>
+     */
+    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "wi", 6, true), 
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Other</code> contest type.</p>
+     */
+    OTHER("Other", "O", 18, true),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>
@@ -157,9 +163,16 @@ public enum ContestType {
     DEVELOPMENT("Development", "Dv", 2), // TODO duplicate
 
     /**
-     * <p>A <code>ContestType</code> corresponding to <code>Marathon</code> contest type.</p>
+     * <p>A <code>ContestType</code> corresponding to <code>Conceptualization</code> contest type.</p>
      */
-    CONCEPTUALIZATION("Conceptualization", "c", 23);
+    CONCEPTUALIZATION("Conceptualization", "c", 23),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to group of <code>Studio</code> contest type.</p>
+     *
+     * @since 1.1
+     */
+    STUDIO("Studio", true, new ContestType[] {WIREFRAME, WEB_DESIGN});
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the
@@ -183,19 +196,24 @@ public enum ContestType {
      * @since BUGR-3913
      */
     private boolean isStudio;
-    
+
+    /**
+     * <p>A <code>ContestType[]</code> providing the types grouped into a single group.</p>
+     *
+     * @since 1.1
+     */
+    private ContestType[] types;
+
     /**
      * <p>Constructs new <code>ContestType</code> instance with specified properties.</p>
      *
-     * @param name   a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
-     *               type.
+     * @param name a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
+     *             type.
      * @param letter a <code>String</code> providing the type letter. Such a name serves as a identifier of the type.
+     * @param id a <code>long</code> providing the ID of the type.
+     * @param isStudio <code>true</code> if this contest type is <code>Studio</code> contest type; <code>false</code>
+     *        otherwise.
      */
-    private ContestType(String name, String letter) {
-        this.name = name;
-        this.letter = letter;
-    }
-
     private ContestType(String name, String letter, long id, boolean isStudio) {
         this.name = name;
         this.letter = letter;
@@ -203,47 +221,33 @@ public enum ContestType {
         this.isStudio = isStudio;
     }
     
+    /**
+     * <p>Constructs new <code>ContestType</code> instance with specified properties.</p>
+     *
+     * @param name a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
+     *             type.
+     * @param letter a <code>String</code> providing the type letter. Such a name serves as a identifier of the type.
+     * @param id a <code>long</code> providing the ID of the type.
+     */
     private ContestType(String name, String letter, long id) {
         this(name, letter, id, false);
     }
-    
-    /**
-     * <p>Gets the name of this type.</p>
-     *
-     * @return a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
-     *         type.
-     */
-    public String getName() {
-        return this.name;
-    }
 
     /**
-     * <p>Gets the letter of this type.</p>
+     * <p>Constructs new <code>ContestType</code> instance with specified properties.</p>
      *
-     * @return a <code>String</code> providing the type letter. Such a name serves as a identifier of the type.
+     * @param name a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
+     *             type.
+     * @param isStudio <code>true</code> if this contest type is <code>Studio</code> contest type; <code>false</code>
+     *        otherwise.
+     * @param groupedTypes a <code>ContestType[]</code> providing the contest types grouped into a single group.
+     * @since 1.1
      */
-    public String getLetter() {
-        return this.letter.toLowerCase();
+    private ContestType(String name, boolean isStudio, ContestType[] groupedTypes) {
+        this(name, null, 0, isStudio);
+        this.types = groupedTypes;
     }
 
-    /**
-     * <p>Gets the <code>ContestType</code> instance matching the specified name.</p>
-     *
-     * @param name a <code>String</code> providing the name for requested contest type.
-     * @return an <code>ContestType</code> matching the specified name or <code>null</code> if there is none.
-     * @deprecated
-     */
-//    public static ContestType forName(String name) {
-//        ContestType[] types = ContestType.values();
-//        for (int i = 0; i < types.length; i++) {
-//            ContestType type = types[i];
-//            if (type.getName().equalsIgnoreCase(name)) {
-//                return type;
-//            }
-//        }
-//        return WIREFRAME;
-//    }
-    
     /**
      * <p>Gets the <code>ContestType</code> instance matching the specified name.</p>
      *
@@ -264,6 +268,25 @@ public enum ContestType {
     }
 
     /**
+     * <p>Gets the name of this type.</p>
+     *
+     * @return a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
+     *         type.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * <p>Gets the letter of this type.</p>
+     *
+     * @return a <code>String</code> providing the type letter. Such a name serves as a identifier of the type.
+     */
+    public String getLetter() {
+        return this.letter.toLowerCase();
+    }
+
+    /**
      * <p>Gets the id of this type.</p>
      *
      * @return a <code>long</code> providing the type id. 
@@ -281,5 +304,26 @@ public enum ContestType {
      */
     public boolean isStudio() {
         return isStudio;
+    }
+
+    /**
+     * <p>Gets the types grouped into a single group. This method should be called only if {@link #isGroup()} method
+     * returns <code>true</code>.</p>
+     *
+     * @return a <code>ContestType[]</code> providing the types grouped into a single group.
+     * @since 1.1
+     */
+    public ContestType[] getTypes() {
+        return this.types;
+    }
+
+    /**
+     * <p>Checks if this enum item represents rather a group of contest types instead of a single type. If this method
+     * returns <code>true</code> then {@link #getTypes()} will return the list of grouped types.</p>
+     *
+     * @return <code>true</code> if this enum item represents a group of contest types; <code>false</code> otherwise.
+     */
+    public boolean isGroup() {
+        return getTypes() != null;
     }
 }

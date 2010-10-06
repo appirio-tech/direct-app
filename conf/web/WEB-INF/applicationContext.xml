@@ -403,5 +403,16 @@
           class="com.topcoder.direct.services.view.action.specreview.ResubmitSpecificationReviewAction"
           scope="prototype" parent="specificationReviewAction">
         <property name="specificationReviewService" ref="specificationReviewService"/>
-    </bean>    
+    </bean> 
+     <bean id="dashboardReportsAction"
+          class="com.topcoder.direct.services.view.action.report.DashboardPipelineAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="viewData.showJustForm" value="true"/>
+    </bean>
+
+    <bean id="dashboardPipelineAction"
+          class="com.topcoder.direct.services.view.action.report.DashboardPipelineAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="viewData.showJustForm" value="false"/>
+    </bean>   
 </beans>

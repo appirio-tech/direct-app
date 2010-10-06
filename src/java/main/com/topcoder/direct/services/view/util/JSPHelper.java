@@ -7,8 +7,10 @@ import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
 import com.topcoder.service.studio.SubmissionData;
+import com.topcoder.service.pipeline.CommonPipelineData;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,6 +39,14 @@ import java.util.List;
  * Version 1.1.2 (Direct Software Submission Viewer 4 Assembly 1.0) Change notes:
  *   <ol>
  *     <li>Added {@link #isCheckedOut(ContestRoundType, SubmissionData)} method.</li>
+ *   </ol>
+ * </p>
+ *  * <p>
+ * Version 1.1.3 (Direct Pipeline Integration Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #toDate(XMLGregorianCalendar)} method.</li>
+ *     <li>Added {@link #getMemberCosts(CommonPipelineData)} method.</li>
+ *     <li>Added {@link #getPastTimeText(Date)} method.</li>
  *   </ol>
  * </p>
  *
@@ -216,6 +226,123 @@ public class JSPHelper {
             }
         }
         return submissionCheckedOut;
+    }
+     /**
+     * <p>Converts specified calendar to date.</p>
+     *
+     * @param calendar an <code>XMLGregorianCalendar</code> to be converted to date.
+     * @return a <code>Date</code> from the specified calendar.
+     * @since 1.1.2
+     */
+    public static Date toDate(XMLGregorianCalendar calendar) {
+        if (calendar == null) {
+            return null;
+        } else {
+            return calendar.toGregorianCalendar().getTime();
+        }
+    }
+
+    /**
+     * <p>Calculates the total member costs from the specified pipeline report data.</p>
+     *
+     * @param data an <code>CommonPipelineData</code> providing the data for calculation.
+     * @return a <code>double</code> providing the total member costs for contest.
+     * @since 1.1.2
+     */
+    public static double getMemberCosts(CommonPipelineData data) {
+        if (data == null) {
+            return 0;
+        } else {
+            double cost = 0;
+
+            Double specReviewPayment = data.getSpecReviewPayment();
+            if (specReviewPayment != null) {
+                cost += specReviewPayment;
+            }
+
+            Double drPayment = data.getDr();
+            if (drPayment != null) {
+                cost += drPayment;
+            }
+
+            Double reviewPayment = data.getReviewPayment();
+            if (reviewPayment != null) {
+                cost += reviewPayment;
+            }
+
+            Double totalPrize = data.getTotalPrize();
+            if (totalPrize != null) {
+                cost += totalPrize;
+            }
+            
+            return cost;
+        }
+    }
+
+    /**
+     * <p>Gets the textual description of the period in which the specified date (contest completion) will be reached.
+     * </p>
+     *
+     * @param date a <code>Date</code> providing the date of contest completion.
+     * @return a <code>String</code> providing the textual description of the period in which the specified date will
+     *         be reached.
+     * @since 1.1.2
+     */
+    public static String getPastTimeText(Date date) {
+        if (date == null) {
+            return "";
+        } else {
+            Date now = new Date();
+            long diff = (now.getTime() - date.getTime()) / 1000L;
+
+            long yearDuration = 365 * 24 * 3600L;
+            long monthDuration = 31 * 24 * 3600L;
+            long weekDuration = 7 * 24 * 3600L;
+            long dayDuration = 24 * 3600L;
+            long hourDuration = 3600L;
+            long minuteDuration = 60L;
+
+            long years = diff / yearDuration;
+            long months = (diff % yearDuration) / monthDuration;
+            long weeks = (diff % yearDuration % monthDuration) / weekDuration;
+            long days = (diff % yearDuration % monthDuration % weekDuration) / dayDuration;
+            long hours = (diff % yearDuration % monthDuration % weekDuration % dayDuration) / hourDuration;
+            long minutes
+                = (diff % yearDuration % monthDuration % weekDuration % dayDuration & hourDuration) / minuteDuration;
+
+            StringBuilder b = new StringBuilder();
+            addText(years, "year", b);
+            addText(months, "month", b);
+            addText(weeks, "week", b);
+            addText(days, "day", b);
+            addText(hours, "hour", b);
+            addText(minutes, "minute", b);
+            b.append(" ago");
+
+            return b.toString();
+        }
+    }
+
+    /**
+     * <p>Adds textual presentation of specified numeric value to text output.</p>
+     *
+     * @param value a <code>long</code> providing the value.
+     * @param title a <code>String</code> providing the title for value.
+     * @param b a <code>StringBuilder</code> collecting the output.
+     * @since 1.1.2
+     */
+    private static void addText(long value, String title, StringBuilder b) {
+        if (value > 0) {
+            if (b.length() > 0) {
+                b.append(", ");
+            }
+            b.append(value).append(" ");
+            if (value % 10 == 1 && value % 100 != 11) {
+                b.append(title);
+            } else {
+                b.append(title).append("s");
+            }
+        }
     }
 
     /**

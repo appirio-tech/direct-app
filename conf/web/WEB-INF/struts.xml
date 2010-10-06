@@ -274,6 +274,26 @@
             <interceptor-ref name="authnInterceptor"/>
             <result type="json" />
         </action>
+
+        <action name="dashboardReports" class="dashboardReportsAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-pipeline.jsp</result>
+        </action>
+
+        <action name="dashboardPipelineReport" class="dashboardPipelineAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-pipeline.jsp</result>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=pipeline-details.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">viewData.inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
     </package>
 
     <package name="base" namespace="/base" extends="default">

@@ -58,4 +58,21 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>boolean isCheckedOut(com.topcoder.direct.services.view.dto.contest.ContestRoundType,com.topcoder.service.studio.SubmissionData)</function-signature>
     </function>
+     <function>
+        <name>toDate</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.util.Date toDate(javax.xml.datatype.XMLGregorianCalendar)</function-signature>
+    </function>
+
+    <function>
+        <name>getMemberCosts</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>double getMemberCosts(com.topcoder.service.pipeline.CommonPipelineData)</function-signature>
+    </function>
+
+    <function>
+        <name>getPastTimeText</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getPastTimeText(java.util.Date)</function-signature>
+    </function>
 </taglib>

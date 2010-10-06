@@ -1,6 +1,6 @@
 <%--
-  - Author: isv
-  - Version: 1.1
+  - Author: isv, TCSDEVELOPER
+  - Version: 1.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -8,6 +8,8 @@
   -
   - Version 1.1 (Direct Permissions Setting Back-end and Integration Assembly 1.0) changes: added Permissions tab for
   - dahsboard pages.
+  -
+  - Version 1.2 (Direct Pipeline Integration Assembly 1.0) changes: added Reports tab.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -145,7 +147,10 @@
             <li <c:if test="${requestScope.CURRENT_TAB eq 'settings'}">class="on"</c:if>>
                 <a href="<s:url action="dashboardNotifications" namespace="/"/>"><span>Settings</span></a>
             </li>
-            
+            <li <c:if test="${requestScope.CURRENT_TAB eq 'reports'}">class="on"</c:if>>
+                <a href="<s:url action="dashboardReports" namespace="/"/>"><span>Reports</span></a>
+            </li>
+
             <%
                 if (DashboardVMAction.isApplicable()) {
             %>
