@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.util;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineNumericalFilterType;
 import com.topcoder.service.studio.SubmissionData;
 import com.topcoder.service.pipeline.CommonPipelineData;
 
@@ -47,6 +48,8 @@ import java.util.List;
  *     <li>Added {@link #toDate(XMLGregorianCalendar)} method.</li>
  *     <li>Added {@link #getMemberCosts(CommonPipelineData)} method.</li>
  *     <li>Added {@link #getPastTimeText(Date)} method.</li>
+ *     <li>Added {@link #getWeekOfDate(XMLGregorianCalendar)} method.</li>
+ *     <li>Added {@link #toString(PipelineNumericalFilterType)} method.</li>
  *   </ol>
  * </p>
  *
@@ -320,6 +323,51 @@ public class JSPHelper {
             b.append(" ago");
 
             return b.toString();
+        }
+    }
+
+    /**
+     * <p>Gets the date for nearest preceding Sunday which specified date corresponds to.</p>
+     *
+     * @param date an <code>XMLGregorianCalendar</code> providing the date.
+     * @return a <code>Date</code> providing the date for nearest preceding Sunday.
+     * @since 1.1.3
+     */
+    public static Date getWeekOfDate(XMLGregorianCalendar date) {
+        Calendar weekOf = Calendar.getInstance();
+        weekOf.setTime(date.toGregorianCalendar().getTime());
+        weekOf.set(Calendar.HOUR, 0);
+        weekOf.set(Calendar.MINUTE, 0);
+        weekOf.set(Calendar.SECOND, 0);
+        weekOf.set(Calendar.MILLISECOND, 0);
+        weekOf.set(Calendar.HOUR_OF_DAY, 0);
+        weekOf.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+        return weekOf.getTime();
+    }
+
+    /**
+     * <p>Gets the textual presentation of this item.</p>
+     *
+     * @param filterType a <code>PipelineNumericalFilterType</code> referencing the filter type. 
+     * @return a <code>String</code> providing the textual presentation of this enum item.
+     * @since 1.1.3
+     */
+    public static String toString(PipelineNumericalFilterType filterType) {
+        if (filterType == PipelineNumericalFilterType.PRIZE) {
+            return "Prize";
+        } else if (filterType == PipelineNumericalFilterType.DR_POINTS) {
+            return "DR Points";
+        } else if (filterType == PipelineNumericalFilterType.CONTEST_FEE) {
+            return "Contest Fee";
+        } else if (filterType == PipelineNumericalFilterType.REVIEW_COST) {
+            return "Review Cost";
+        } else if (filterType == PipelineNumericalFilterType.SPEC_REVIEW_COST) {
+            return "Specification Review Cost";
+        } else if (filterType == PipelineNumericalFilterType.DURATION) {
+            return "Duration";
+        } else  {
+            return "Second Place Prize";
         }
     }
 

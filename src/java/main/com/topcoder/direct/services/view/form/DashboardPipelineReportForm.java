@@ -8,6 +8,9 @@ import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineNumericalFilterType;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p>A form bean providing the data submitted by user for filtering the pipeline report records.</p>
@@ -65,6 +68,12 @@ public class DashboardPipelineReportForm implements Serializable {
     private String endDate;
 
     /**
+     * <p>A <code>boolean</code> providing the flag indicating whether reposted contests are to be included into report
+     * or not.</p>
+     */
+    private boolean showReposts = true;
+
+    /**
      * <p>A <code>Double</code> providing the minimum value for numerical filter.</p>
      */
     private Double numericalFilterMinValue;
@@ -75,16 +84,26 @@ public class DashboardPipelineReportForm implements Serializable {
     private Double numericalFilterMaxValue;
 
     /**
-     * <p>A <code>boolean</code> providing the flag indicating whether reposted contests are to be included into report
-     * or not.</p>
+     * <p>A <code>PipelineNumericalFilterType</code> providing the type of numerical filter to filter the pipeline data
+     * for.</p>
      */
-    private boolean showReposts = true;
+    private PipelineNumericalFilterType numericalFilterType;
+
+    /**
+     * <p>A <code>Double</code> providing the minimum value for numerical filter.</p>
+     */
+    private List<Double> numericalFilterMinValues = new ArrayList<Double>();
+
+    /**
+     * <p>A <code>Double</code> providing the maximum value for numerical filter.</p>
+     */
+    private List<Double> numericalFilterMaxValues = new ArrayList<Double>();
 
     /**
      * <p>A <code>PipelineNumericalFilterType</code> providing the type of numerical filter to filter the pipeline data
      * for.</p>
      */
-    private PipelineNumericalFilterType numericalFilterType;
+    private List<PipelineNumericalFilterType> numericalFilterTypes = new ArrayList<PipelineNumericalFilterType>();
 
     /**
      * <p>Constructs new <code>DashboardPipelineReportForm</code> instance. This implementation does nothing.</p>
@@ -280,5 +299,96 @@ public class DashboardPipelineReportForm implements Serializable {
      */
     public void setNumericalFilterType(PipelineNumericalFilterType numericalFilterType) {
         this.numericalFilterType = numericalFilterType;
+    }
+
+    /**
+     * <p>Gets the types of numerical filter to filter the pipeline data for.</p>
+     *
+     * @return a <code>PipelineNumericalFilterType</code> array providing the type of numerical filter to filter the
+     *         pipeline data for.
+     */
+    public PipelineNumericalFilterType[] getNumericalFilterTypes() {
+        return this.numericalFilterTypes.toArray(new PipelineNumericalFilterType[this.numericalFilterTypes.size()]);
+    }
+
+    /**
+     * <p>Sets the types of numerical filter to filter the pipeline data for.</p>
+     *
+     * @param numericalFilterTypes a <code>PipelineNumericalFilterType</code> array providing the types of numerical
+     *        filters to filter the pipeline data for.
+     */
+    public void setNumericalFilterTypes(PipelineNumericalFilterType[] numericalFilterTypes) {
+        this.numericalFilterTypes.clear();
+        if (numericalFilterTypes != null) {
+            this.numericalFilterTypes.addAll(Arrays.asList(numericalFilterTypes));
+        }
+    }
+
+    /**
+     * <p>Gets the maximum values for numerical filter.</p>
+     *
+     * @return a <code>Double</code> array providing the maximum values for numerical filter.
+     */
+    public Double[] getNumericalFilterMaxValues() {
+        return this.numericalFilterMaxValues.toArray(new Double[this.numericalFilterMaxValues.size()]);
+    }
+
+    /**
+     * <p>Sets the maximum values for numerical filter.</p>
+     *
+     * @param numericalFilterMaxValues a <code>Double</code> array providing the maximum values for numerical filter.
+     */
+    public void setNumericalFilterMaxValues(Double[] numericalFilterMaxValues) {
+        this.numericalFilterMaxValues.clear();
+        if (numericalFilterMaxValues != null) {
+            this.numericalFilterMaxValues.addAll(Arrays.asList(numericalFilterMaxValues));
+        }
+    }
+
+    /**
+     * <p>Gets the minimum values for numerical filter.</p>
+     *
+     * @return a <code>Double</code> array providing the minimum values for numerical filter.
+     */
+    public Double[] getNumericalFilterMinValues() {
+        return this.numericalFilterMinValues.toArray(new Double[this.numericalFilterMinValues.size()]);
+    }
+
+    /**
+     * <p>Sets the minimum valuse for numerical filter.</p>
+     *
+     * @param numericalFilterMinValues a <code>Double</code> array providing the minimum values for numerical filter.
+     */
+    public void setNumericalFilterMinValues(Double[] numericalFilterMinValues) {
+        this.numericalFilterMinValues.clear();
+        if (numericalFilterMinValues != null) {
+            this.numericalFilterMinValues.addAll(Arrays.asList(numericalFilterMinValues));
+        }
+    }
+
+    /**
+     * <p>Sets the specified numerical filter to specified values.</p>
+     * 
+     * @param filterType a <code>PipelineNumericalFilterType</code> referencing the filter type.
+     * @param minValue a <code>Double</code> providing the minimum value for filter.
+     * @param maxValue a <code>Double</code> providing the maximum value for filter.
+     */
+    public void setNumericalFilter(PipelineNumericalFilterType filterType, Double minValue, Double maxValue) {
+        boolean found = false;
+
+        for (int i = 0; (i < this.numericalFilterTypes.size()) && (!found); i++) {
+            PipelineNumericalFilterType type = this.numericalFilterTypes.get(i);
+            if (type == filterType) {
+                found = true;
+                this.numericalFilterMinValues.set(i, minValue);
+                this.numericalFilterMaxValues.set(i, maxValue);
+            }
+        }
+
+        if (!found) {
+            this.numericalFilterTypes.add(filterType);
+            this.numericalFilterMinValues.add(minValue);
+            this.numericalFilterMaxValues.add(maxValue);
+        }
     }
 }

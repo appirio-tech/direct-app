@@ -42,6 +42,8 @@
                                 <s:form method="get" action="dashboardPipelineReport" namespace="/"
                                         id="DashboardSearchForm">
                                     <fieldset>
+                                        <input type="hidden" name="ppp"
+                                               value="${empty param.ppp ? '1' : param.ppp}" id="pipelineDetailsPageNumber2"/>
                                         <s:hidden name="formData.excel" id="formDataExcel" value="false" />
                                         <div id="datefilter">
                                             <label for="startDate" class="fLeft">Start:</label>
@@ -78,10 +80,36 @@
                                             <s:textfield cssClass="text" name="formData.numericalFilterMaxValue"
                                                          size="10" maxlength="10" id="numericalFilterMaxValue"/>
                                         </div>
-                                        <a href="javascript:directSearch();" class="button1" id="submitPipelineForm">
+                                        <a href="javascript:" class="button1" id="submitPipelineForm">
                                             <span>Submit</span></a>
                                         <div class="clear"></div>
                                         <div id="validationErrors"></div>
+                                        <div>
+                                            <c:forEach items="${formData.numericalFilterTypes}" var="filterType"
+                                                       varStatus="loop">
+                                                <p>
+                                                    <c:out value="${tcdirect:numericalFilterTypeToString(filterType)}"/>
+                                                    Numeric Filter
+                                                    <fmt:formatNumber
+                                                               value="${formData.numericalFilterMinValues[loop.index]}"
+                                                               pattern="##0.##" />
+                                                    &lt;=
+                                                    &nbsp;
+                                                    <c:out value="${tcdirect:numericalFilterTypeToString(filterType)}"/>
+                                                    &nbsp;
+                                                    &lt;= <fmt:formatNumber
+                                                               value="${formData.numericalFilterMaxValues[loop.index]}"
+                                                               pattern="##0.##" />
+                                                    <a href="javascript:" class="removeNumericalFilter">remove filter</a>
+                                                    <input type="hidden" name="formData.numericalFilterTypes"
+                                                           value="${filterType}"/>
+                                                    <input type="hidden" name="formData.numericalFilterMinValues"
+                                                           value="${formData.numericalFilterMinValues[loop.index]}"/>
+                                                    <input type="hidden" name="formData.numericalFilterMaxValues"
+                                                           value="${formData.numericalFilterMaxValues[loop.index]}"/>
+                                                </p>
+                                            </c:forEach>
+                                        </div>
                                     </fieldset>
                                 </s:form>
                             </div>
@@ -126,8 +154,10 @@
                                                     <c:choose>
                                                         <c:when test="${summary.isTotal}">Totals</c:when>
                                                         <c:otherwise>
-                                                            <fmt:formatDate value="${summary.weekOf}"
-                                                                            pattern="yyyy-MM-dd"/>
+                                                            <a href="javascript:" class="summaryWeek"
+                                                               rel="${summary.weekOf.time}">
+                                                                <fmt:formatDate value="${summary.weekOf}"
+                                                                                pattern="yyyy-MM-dd"/></a>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
@@ -299,7 +329,7 @@
                                     <tbody>
                                     <c:forEach items="${viewData.contests}" var="contest" varStatus="loop">
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-                                    <tr class="${rowStyle}">
+                                    <tr class="${rowStyle} pipelineDetailsRow contestOfWeek${tcdirect:getWeekOfDate(contest.startDate).time}">
                                         <td>
                                             <fmt:formatDate value="${tcdirect:toDate(contest.startDate)}"
                                                             pattern="yyyy-MM-dd (EEE)"/>
@@ -317,8 +347,22 @@
                                             </c:forEach>
                                         </td>
                                         <td><c:out value="${contest.cpname}"/></td>
-                                        <td><c:out value="${contest.pname}"/></td>
-                                        <td><c:out value="${contest.cname}"/></td>
+                                        <td>
+                                            <a class="longWordsBreak"
+                                               href="<s:url action="projectDetails" namespace="/">
+                                                         <s:param name="formData.projectId" value="%{#attr['contest'].projectId}"/>
+                                                     </s:url>"><c:out value="${contest.pname}"/></a>
+                                        </td>
+                                        <td>
+                                            <s:if test="%{#attr['contest'].studio}" >
+                                                <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].contestId}"/></s:url>">
+                                                    <c:out value="${contest.cname}"/></a>
+                                            </s:if>
+                                            <s:else>
+                                                <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].contestId}"/></s:url>">
+                                                    <c:out value="${contest.cname}"/></a>
+                                            </s:else>
+                                        </td>
                                         <td><c:out value="${contest.sname}"/></td>
                                         <td>
                                             <c:choose>
@@ -330,11 +374,12 @@
                                             <c:if test="${not empty contest.manager}"><c:out value="${contest.manager}"/></c:if>
                                         </td>
                                         <td>
-                                            <fmt:formatDate value="${tcdirect:toDate(contest.createTime)}"
-                                                            pattern="yyyy-MM-dd"/>
+                                            &nbsp;<fmt:formatDate value="${tcdirect:toDate(contest.createTime)}"
+                                                            pattern="yyyy-MM-dd"/>&nbsp;
                                         </td>
                                         <td>
-                                            <c:out value="${tcdirect:getPastTimeText(tcdirect:toDate(contest.modifyTime))}"/>
+                                            &nbsp;<fmt:formatDate value="${tcdirect:toDate(contest.modifyTime)}"
+                                                                  pattern="yyyy-MM-dd"/>&nbsp;
                                         </td>
                                     </tr>
                                     </c:forEach>

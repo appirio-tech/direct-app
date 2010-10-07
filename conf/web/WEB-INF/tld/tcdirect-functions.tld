@@ -75,4 +75,16 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>java.lang.String getPastTimeText(java.util.Date)</function-signature>
     </function>
+
+    <function>
+        <name>getWeekOfDate</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.util.Date getWeekOfDate(javax.xml.datatype.XMLGregorianCalendar)</function-signature>
+    </function>
+
+    <function>
+        <name>numericalFilterTypeToString</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String toString(com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineNumericalFilterType)</function-signature>
+    </function>
 </taglib>

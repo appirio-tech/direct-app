@@ -143,6 +143,25 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                 form.setEndDate(dateFormat.format(endDate));
             }
 
+            // If numerical filter type was specified then add it to list of existing filters set so far
+            PipelineNumericalFilterType numericalFilterType = form.getNumericalFilterType();
+            if (numericalFilterType != null) {
+                Double minValue = form.getNumericalFilterMinValue();
+                Double maxValue = form.getNumericalFilterMaxValue();
+                if ((minValue != null) || (maxValue != null)) {
+                    if (minValue == null) {
+                        minValue = 0D;
+                    }
+                    if (maxValue == null) {
+                        maxValue = 1000000000D;
+                    }
+                    form.setNumericalFilter(numericalFilterType, minValue, maxValue);
+                    form.setNumericalFilterType(PipelineNumericalFilterType.PRIZE);
+                    form.setNumericalFilterMinValue(null);
+                    form.setNumericalFilterMaxValue(null);
+                }
+            }
+
             // Define the collections to aggregate various data from pipeline service
             Set<String> clients = new TreeSet<String>();
             Map<Date, PipelineSummaryDTO> summaries = new TreeMap<Date, PipelineSummaryDTO>();
@@ -395,41 +414,40 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             }
         }
 
-        // Check against numerical filter
+        // Check against numerical filters
         if (matches) {
-            PipelineNumericalFilterType numericalFilterType = form.getNumericalFilterType();
-            if (numericalFilterType != null) {
-                Double minValue = form.getNumericalFilterMinValue();
-                if (minValue == null) {
-                    minValue = 0D;
-                }
-
-                Double maxValue = form.getNumericalFilterMaxValue();
-                if (maxValue == null) {
-                    maxValue = Double.MAX_VALUE;
-                }
-
-                if (numericalFilterType == PipelineNumericalFilterType.CONTEST_FEE) {
-                    Double fee = contest.getContestFee();
-                    matches = (fee != null) && (minValue.compareTo(fee) <= 0) && (maxValue.compareTo(fee) >= 0);
-                } else if (numericalFilterType == PipelineNumericalFilterType.DR_POINTS) {
-                    Double dr = contest.getDr();
-                    matches = (dr != null) && minValue.compareTo(dr) <= 0 && (maxValue.compareTo(dr) >= 0);
-                } else if (numericalFilterType == PipelineNumericalFilterType.DURATION) {
-                    long hours = contest.getDurationInHrs();
-                    matches = (minValue.compareTo(hours * 1D) <= 0) && (maxValue.compareTo(hours * 1D) >= 0);
-                } else if (numericalFilterType == PipelineNumericalFilterType.PRIZE) {
-                    Double totalPrize = contest.getTotalPrize();
-                    matches = (totalPrize != null) && (minValue.compareTo(totalPrize) <= 0)
-                              && (maxValue.compareTo(totalPrize) >= 0);
-                } else if (numericalFilterType == PipelineNumericalFilterType.REVIEW_COST) {
-                    Double reviewPayment = contest.getReviewPayment();
-                    matches = (reviewPayment != null) && (minValue.compareTo(reviewPayment) <= 0)
-                              && (maxValue.compareTo(reviewPayment) >= 0);
-                } else if (numericalFilterType == PipelineNumericalFilterType.SPEC_REVIEW_COST) {
-                    Double specReviewPayment = contest.getSpecReviewPayment();
-                    matches = (specReviewPayment != null) && (minValue.compareTo(specReviewPayment) <= 0)
-                              && (maxValue.compareTo(specReviewPayment) >= 0);
+            PipelineNumericalFilterType[] numericalFilterTypes = form.getNumericalFilterTypes();
+            if (numericalFilterTypes != null) {
+                Double[] numericalFilterMinValues = form.getNumericalFilterMinValues();
+                Double[] numericalFilterMaxValues = form.getNumericalFilterMaxValues();
+                for (int i = 0; (matches) && (i < numericalFilterTypes.length); i++) {
+                    PipelineNumericalFilterType numericalFilterType = numericalFilterTypes[i];
+                    if (numericalFilterType != null) {
+                        Double minValue = numericalFilterMinValues[i];
+                        Double maxValue = numericalFilterMaxValues[i];
+                        if (numericalFilterType == PipelineNumericalFilterType.CONTEST_FEE) {
+                            Double fee = contest.getContestFee();
+                            matches = (fee != null) && (minValue.compareTo(fee) <= 0) && (maxValue.compareTo(fee) >= 0);
+                        } else if (numericalFilterType == PipelineNumericalFilterType.DR_POINTS) {
+                            Double dr = contest.getDr();
+                            matches = (dr != null) && minValue.compareTo(dr) <= 0 && (maxValue.compareTo(dr) >= 0);
+                        } else if (numericalFilterType == PipelineNumericalFilterType.DURATION) {
+                            long hours = contest.getDurationInHrs();
+                            matches = (minValue.compareTo(hours * 1D) <= 0) && (maxValue.compareTo(hours * 1D) >= 0);
+                        } else if (numericalFilterType == PipelineNumericalFilterType.PRIZE) {
+                            Double totalPrize = contest.getTotalPrize();
+                            matches = (totalPrize != null) && (minValue.compareTo(totalPrize) <= 0)
+                                      && (maxValue.compareTo(totalPrize) >= 0);
+                        } else if (numericalFilterType == PipelineNumericalFilterType.REVIEW_COST) {
+                            Double reviewPayment = contest.getReviewPayment();
+                            matches = (reviewPayment != null) && (minValue.compareTo(reviewPayment) <= 0)
+                                      && (maxValue.compareTo(reviewPayment) >= 0);
+                        } else if (numericalFilterType == PipelineNumericalFilterType.SPEC_REVIEW_COST) {
+                            Double specReviewPayment = contest.getSpecReviewPayment();
+                            matches = (specReviewPayment != null) && (minValue.compareTo(specReviewPayment) <= 0)
+                                      && (maxValue.compareTo(specReviewPayment) >= 0);
+                        }
+                    }
                 }
             }
         }

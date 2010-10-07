@@ -236,7 +236,8 @@ $(document).ready(function() {
 			] 
 	});
 
-        $("#pipelineReportArea .paginatedDataTable").dataTable({
+     var pipelineDataTable = $("#pipelineReportArea .paginatedDataTable").dataTable({
+        "iDisplayStart": parseInt($('#pipelineDetailsPageNumber2').val() - 1) * 5,
         "iDisplayLength": 5,
         "bFilter": false,
         "bSort": true,
@@ -266,6 +267,40 @@ $(document).ready(function() {
 
     });
 
+    function formatDate(d) {
+        var t1 = d.getDate();
+        if (t1 < 10) {
+            t1 = '0' + t1;
+        }
+
+        var t2 = d.getMonth() + 1;
+        if (t2 < 10) {
+            t2 = '0' + t2;
+        }
+
+        var t3 = d.getFullYear();
+
+        return t2 + "/" + t1 + "/" + t3;
+    }
+
+    $('.summaryWeek').click(function() {
+        var weekOf = $(this).attr('rel');
+
+        var d1 = new Date();
+        d1.setTime(parseInt(weekOf));
+        d1.setHours(0);
+        d1.setMinutes(0);
+        d1.setSeconds(0);
+        d1.setMilliseconds(0);
+
+        var d2 = new Date();
+        d2.setTime(d1.getTime() + 7 * 24 * 3600 * 1000 - 1000);
+
+        $('#DashboardSearchForm input[name=formData.startDate]').val(formatDate(d1));
+        $('#DashboardSearchForm input[name=formData.endDate]').val(formatDate(d2));
+        $('#DashboardSearchForm').submit();
+    });
+
     $(".dataTables_info").addClass("hide");
     $(".dataTables_paginate .last").addClass("hide");
     $(".dataTables_paginate .first").addClass("hide");
@@ -275,6 +310,7 @@ $(document).ready(function() {
     
     /* init date-pack */
     if($('.date-pick').length > 0){
+        Date.firstDayOfWeek = 0;
     	$(".date-pick").datePicker({startDate:'01/01/2001'});
     }
 
@@ -290,11 +326,7 @@ $(document).ready(function() {
 
     $('#scheduledContestsViewType').change(function() {
         $('.scData').hide();
-	      if($(this).val() == 'Contest Type'){
-	          $('.ContestTypeScheduledContests').show();
-	      }else{
-            $('.' + $(this).val() + 'ScheduledContests').show();
-	      }
+        $('.' + $(this).val() + 'ScheduledContests').show();
     });
 
 
@@ -314,11 +346,7 @@ $(document).ready(function() {
     $("#pipelineScheduledContests .expand").click(function(){
         $(this).blur();
         if($(this).hasClass("collapse")){
-	      if($('#scheduledContestsViewType').val() == 'Contest Type'){
-	         $('.ContestTypeScheduledContests').show();
-            }else{
-                $('.' + $('#scheduledContestsViewType').val() + 'ScheduledContests').show();
-            }
+            $('.' + $('#scheduledContestsViewType').val() + 'ScheduledContests').show();
             $('.viewType').show();
             $(this).removeClass("collapse");
         }else{
@@ -341,6 +369,10 @@ $(document).ready(function() {
         }
     });
 
+    $('.removeNumericalFilter').click(function() {
+        $(this).parent().remove();
+    });
+
     $('#submitPipelineForm').click(function() {
         var v1 = -1;
         var v2 = -1;
@@ -360,7 +392,13 @@ $(document).ready(function() {
                 $('#validationErrors').append('Numerical filter maximum value must not be less than minimum value');
             }
         }
-        return $('#validationErrors').html() == '';
+        if ($('#validationErrors').html() == '') {
+            var currentPage = $.trim($('.paginate_active').html());
+            $('#pipelineDetailsPageNumber2').val(currentPage);
+            $('#formDataExcel').val("false");
+            document.DashboardSearchForm.submit();
+        }
+        return false;
     });
 });
    
