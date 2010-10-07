@@ -273,8 +273,15 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                     clients.add(client.getName());
                 }
             }
+            // for contest without client
+            clients.add("One Off");
             getViewData().setClients(new ArrayList<String>(clients));
             getFormData().setClients(clients.toArray(new String[clients.size()]));
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DirectUtils.DATE_FORMAT);
+            Date nearestSunday = getSundayDate(new Date());
+            Date endDate = new Date(nearestSunday.getTime() + 4 * 7 * 24 * 3600 * 1000L);
+            getFormData().setStartDate(dateFormat.format(nearestSunday));
+            getFormData().setEndDate(dateFormat.format(endDate));
         }
 
         // For normal request flow prepare various data to be displayed to user
@@ -366,6 +373,12 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                 boolean matchesClient = false;
                 for (String client : clients) {
                     if (client.equalsIgnoreCase(contest.getClientName())) {
+                        matchesClient = true;
+                        break;
+                    }
+                    else if ((contest.getClientName() == null || contest.getClientName().equals("")) 
+                           && client.equals("One Off"))
+                    {
                         matchesClient = true;
                         break;
                     }
