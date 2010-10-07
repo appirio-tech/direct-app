@@ -159,10 +159,10 @@
                                             <label for="scheduledContestsViewType">View By:</label>
                                             <select id="scheduledContestsViewType">
                                                 <option>Client</option>
-                                                <option>Person</option>
+                                                <option>Manager</option>
                                                 <option>Copilot</option>
                                                 <option>Project</option>
-                                                <option>Contest Type</option>
+                                                <option value="ContestType">Contest Type</option>
                                                 <option>Billing</option>
                                             </select>
                                         </th>
@@ -172,8 +172,8 @@
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
                                     </tr>
-                                    <tr class="PersonScheduledContests scData hide">
-                                        <th class="tableColumn">Person</th>
+                                    <tr class="ManagerScheduledContests scData hide">
+                                        <th class="tableColumn">Manager</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
                                     </tr>
@@ -215,7 +215,7 @@
                                     <c:forEach items="${viewData.personScheduledLaunchedContestStats}" var="stat"
                                                varStatus="loop">
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-                                        <tr class="PersonScheduledContests scData hide ${rowStyle}">
+                                        <tr class="ManagerScheduledContests scData hide ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
@@ -291,7 +291,7 @@
                                         <th class="tableColumn">&nbsp;Name&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Status&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Repost&nbsp;</th>
-                                        <th class="tableColumn">&nbsp;Resources&nbsp;</th>
+                                        <th class="tableColumn">&nbsp;Manager&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Added&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Changed&nbsp;</th>
                                     </tr>
