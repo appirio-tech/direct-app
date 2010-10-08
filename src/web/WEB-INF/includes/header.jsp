@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, TCSDEVELOPER
-  - Version: 1.2
+  - Author: isv
+  - Version: 1.3
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -10,6 +10,7 @@
   - dahsboard pages.
   -
   - Version 1.2 (Direct Pipeline Integration Assembly 1.0) changes: added Reports tab.
+  - Version 1.3 (Direct Enterprise Dashboard Assembly 1.0) changes: added Overview tab for dashboard pages.  
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,8 +18,15 @@
 <div id="header">
     <c:choose>
         <c:when test="${requestScope.PAGE_TYPE eq 'dashboard'}">
-            <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
-                <img src="/images/dashboard_logo.png" alt="Direct Dashboard" /></a>
+            <c:choose>
+                <c:when test="${requestScope.CURRENT_TAB eq 'overview'}">
+                    <a href="javascript:;" class="logo overviewLogo">Enterprise Dashboard</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>" class="logo">
+                        <img src="/images/dashboard_logo.png" alt="Direct Dashboard" /></a>
+                </c:otherwise>
+            </c:choose>
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'launch'}">
             <a href="javascript:;" class="logo">
@@ -122,13 +130,15 @@
     <ui:isDashboardPage>
         <div id="tabs1">
              <ul>
+                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
+                     <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span class="dashboardSpan">Overview</span></a>
+                 </li>
 				<li <c:if test="${requestScope.CURRENT_TAB eq 'active'}">class="on"</c:if>>
                     <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
                     <a href="<s:url action="dashboard" namespace="/"/>"><span class="dashboardSpan">Upcoming Activities</span></a>
                 </li>
-
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
                     <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
                 </li>

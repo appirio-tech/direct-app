@@ -58,6 +58,10 @@
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
             </interceptor-stack>
+            <interceptor-stack name="securedDefaultStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+            </interceptor-stack>
             <!-- base stack -->
             <interceptor-stack name="baseStack">
                 <interceptor-ref name="exception">
@@ -91,7 +95,7 @@
         <action name="login" class="com.topcoder.direct.services.view.action.LoginAction">
             <interceptor-ref name="preProcessorStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">dashboardActive</param>
+                <param name="actionName">dashboardEnterprise</param>
                 <param name="namespace">/</param>
             </result>
             <result name="input">/WEB-INF/index.jsp</result>
@@ -113,6 +117,10 @@
         <action name="dashboardActive" class="com.topcoder.direct.services.view.action.dashboard.ActiveContestsAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-active.jsp</result>
+        </action>
+        <action name="dashboardEnterprise" class="enterpriseDashboardAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success">/WEB-INF/dashboard-enterprise.jsp</result>
         </action>
 
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">

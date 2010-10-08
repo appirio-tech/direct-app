@@ -1,0 +1,319 @@
+/* css for dashboard view */
+
+/* common css */
+.spaceWhite{
+    height:30px;
+}
+#area1 .padding20{
+    padding-top:20px;
+}
+#area1 .padding2{
+    padding-top:2px;
+}
+
+/* dashboardTable */
+.dashboardTable{
+    background: url(../images/dashboard-table-bg.png) repeat-x left top;
+    margin-bottom:20px;
+}
+.dashboardTableHeader{
+    padding-right:17px;   
+}
+.dashboardTableBody{
+    overflow-y:scroll;
+    height:140px;
+}
+.dashboardTable dt{
+    height:34px;
+    line-height:34px;
+    padding-left:8px;
+    position:relative;
+}
+.dashboardTable dt a.expand{
+    background: url(../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff; 
+    padding-left:30px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+}
+.dashboardTable dt a.collapse{
+    background: url(../images/icon-collapse.png) no-repeat left center; 
+}
+.dashboardTable dt span.viewall{
+    display:inline-block;
+    /*float:right;*/
+    color:#ffffff;
+    font-size:12px;
+    margin-right:10px;
+    position:absolute;
+    top:0px;
+    right:0px;
+}
+.dashboardTable dt span.viewall input{
+    vertical-align:middle;
+}
+.dashboardTable dt span.viewall label{
+    padding-left:5px;
+    vertical-align:middle;
+}
+.dashboardTable dd{
+    border-left:1px solid #a9acae;
+    border-right:1px solid #a9acae;
+    border-bottom:1px solid #a9acae;
+}
+.dashboardTable table{
+    width:100%;
+}
+.dashboardTable  th{
+    font-size:11px;
+    font-weight:bold;
+    color:#333333;
+    border-left:1px solid #d0d0d1;
+    height:28px;
+}
+.dashboardTable  td{
+    font-size:11px; 
+    color:#333333;
+    border-left:1px solid #d0d0d1;
+    border-top:1px solid #d0d0d1;
+    padding:5px 0px;
+    text-align:center;
+    background-color:#fffffe;
+}
+.dashboardTable tr.topRow td{
+    border-top:0px;   
+}
+.dashboardTable tr.even td{
+    background-color:#f5f5f5;
+}
+
+.dashboardTable  th.first,.dashboardTable  td.first{
+   border-left:0px;
+}
+.dashboardTable  td.first{
+    text-align:left;
+    padding-left:16px;
+    vertical-align:top;
+}
+
+.dashboardTable td  a.red,.dashboardTable td  label.red{
+   display:inline-block;
+   background: url(../images/red-icon.png) no-repeat left center;
+   padding-left:18px;
+}
+.dashboardTable td  a.orange,.dashboardTable td  label.orange{
+   display:inline-block;
+   background: url(../images/orange-icon.png) no-repeat left center;
+   padding-left:18px;
+}
+.dashboardTable.contestDashboard td{
+    padding-top:7px;
+    padding-bottom:7px;
+}
+.dashboardTable.contestDashboard{
+    margin-bottom:15px;
+}
+
+.dashboardTable td  a.green,.dashboardTable td  label.green{
+   display:inline-block;
+   background: url(../images/green-icon.png) no-repeat left center;
+   padding-left:18px;
+}
+
+
+.dashboardTable td span.red{
+    display:inline-block;
+    background: url(../images/red-icon.png) no-repeat left center;
+    height:12px;
+    width:12px;
+    margin-top:3px;
+}
+
+.dashboardTable td span.orange{
+    display:inline-block;
+    background: url(../images/orange-icon.png) no-repeat left center;
+    height:12px;
+    width:12px;
+    margin-top:3px;
+}
+
+.dashboardTable td span.green{
+    display:inline-block;
+    background: url(../images/green-icon.png) no-repeat left center;
+    height:12px;
+    width:12px; 
+}
+.dashboardTable td div.info{
+    overflow:hidden;
+    padding:0px 10px 0px 20px;
+}
+.dashboardTable td div.info .leftPart{
+    float:left;
+}
+.dashboardTable td div.info .rightPart{
+    float:right;
+}
+.dashboardTable td a.triggerDetail{
+    text-decoration:none;
+    color:#ff0000;
+}
+.dashboardTable td div.detail{
+    text-align:left;
+    padding:0px 10px 0px 20px;
+    display:none;
+}
+.dashboardTable td div.detail strong{
+   display:inline-block;
+    width:105px;
+}
+/* dashboardTable end */
+
+/* visualization chart */
+.chartCollapse{
+    background: url(../images/dashboard-table-bg.png) repeat-x left top;
+    height:34px;
+    padding-left:8px;
+}
+.chartCollapse a.expand{
+    background: url(../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff;
+    padding-left:30px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+}
+.chartCollapse a.collapse{
+    background: url(../images/icon-collapse.png) no-repeat left center;
+}
+.visualization{
+    border:1px solid #a9acae;
+    border-top:0px;
+    padding:15px 7px 20px 15px;
+}
+.visualization .top{
+    position:relative;
+    color:#333333;
+    font-size:12px;
+    
+}
+.visualization .top .projectNameSelect select{
+    width:270px;
+    font-size:11px;
+    color:#000000;
+    border:1px solid #a9acae; 
+}
+
+.visualization .top .displaying{
+    position:absolute;
+    right:0px;
+    top:0px;
+}
+.visualization .top .displaying input{
+    vertical-align:middle;
+}
+.visualization .top .displaying span{
+    padding:0px 8px 0px 3px;
+    vertical-align:middle;
+}
+.visualization .chart{
+    overflow:auto;
+}
+
+/* bottom */
+.visualization .bottom{
+    position:relative;
+    height:112px;
+    margin-top:10px;
+}
+.visualization .bottom .leftPanel{
+    width:220px;
+    display:inline-block;
+}
+.visualization .bottom .text {
+    background:url("../images/date_input.gif") no-repeat scroll 0 0 transparent;
+    border:0 none;
+    color:#6C6C6C;
+    display:inline;
+    float:left;
+    height:22px;
+    line-height:22px;
+    padding:0 5px;
+    width:80px;
+} 
+.visualization .bottom a.dp-choose-date {
+    background:url("../images/date_icon.gif") no-repeat scroll 0 0 transparent;
+    display:inline;
+    float:left;
+    height:19px;
+    margin-left:6px;
+    margin-right:22px;
+    margin-top:1px;
+    overflow:hidden;
+    text-indent:-2000px;
+    width:21px;
+}
+.visualization .bottom  label{
+    display:inline;
+    float:left; 
+    font-size:12px;
+    line-height:22px; 
+    font-weight:bold;
+    padding-right:5px;
+    text-align:right;
+    width:40px;
+}
+.visualization .bottom .leftPanel div{
+    height:36px;
+    width:200px;
+}
+
+.visualization .bottom .leftPanel select{
+    width:163px;
+    font-size:11px;
+    color:#000000;
+    border:1px solid #a9acae; 
+}
+.visualization .bottom  .rightPanel{
+    display:inline-block;
+    width:192px;
+    position:absolute;
+    top:0px;
+    left:215px; 
+}
+.visualization .bottom .rightPanel select{
+    width:190px;
+    font-size:11px;
+    color:#000000;
+    border:1px solid #a9acae; 
+}
+.visualization .bottom .rightPanel select option{
+    padding:1px 0px 1px 3px;
+}
+.visualization .bottom .rightPanel a{
+    display:block;
+    float:right;
+    margin-top:6px;
+    color:#000000;
+    font-size:11px;
+    margin-right:2px;
+}
+
+/* visualization chart end */
+
+#header a.overviewLogo{
+     background:url("../images/overview.png") no-repeat left center ;
+    display:inline-block;
+    height:32px;
+    line-height:32px;
+    padding-left:40px;
+}
+
+#validationErrors {
+    color: red;
+    font-size: 12px;
+}

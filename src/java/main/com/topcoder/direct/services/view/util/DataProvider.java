@@ -4,9 +4,12 @@
 package com.topcoder.direct.services.view.util;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +17,17 @@ import java.util.LinkedList;
 import java.util.LinkedHashMap;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Set;
 
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.service.project.ProjectData;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -78,9 +86,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 2.1.2 (Direct Enterprise Dashboard Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getEnterpriseProjectStats(List)} method.</li>
+ *     <li>Added {@link #getAllProjectCategories()} method.</li>
+ *   </ol>
+ * </p>
  *
- * @author isv, BeBetter, TCSDEVELOPER
- * @version 2.1.1
+ * @author isv, BeBetter
+ * @version 2.1.2
  */
 public class DataProvider {
 
@@ -139,7 +154,9 @@ public class DataProvider {
         result.setActiveMembersNumber(tcDirectFactsResult.getIntItem(0, "active_members_count"));
         result.setActiveProjectsNumber(tcDirectFactsResult.getIntItem(0, "active_projects_count"));
         result.setCompletedProjectsNumber(tcDirectFactsResult.getIntItem(0, "completed_projects_count"));
-        result.setPrizePurse(tcDirectFactsResult.getDoubleItem(0, "prize_purse"));
+        if (tcDirectFactsResult.getItem(0, "prize_purse").getResultData() != null) {
+            result.setPrizePurse(tcDirectFactsResult.getDoubleItem(0, "prize_purse"));
+        }
         return result;
     }
 
@@ -713,6 +730,13 @@ public class DataProvider {
         return dto;
     }
 
+    /**
+     * <p>Gets the details for active contests from the projects assigned to specified user.</p>
+     *
+     * @param userId a <code>long</code> providing the user ID.
+     * @return a <code>ProjectContestsListDTO</code> providing the details for active contests.
+     * @throws Exception if an unexpected error occurs.
+     */
     public static ProjectContestsListDTO getActiveContests(long userId) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
@@ -981,6 +1005,236 @@ public class DataProvider {
     }
 
     /**
+     * <p>Gets the enterprise level statistics for projects assigned to current user.</p>
+     *
+     * @param tcDirectProjects a <code>List</code> listing details for TC Direct projects accessible to user.
+     * @return a <code>List</code> providing the details for all projects accessible to current user.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.2
+     */
+    public static List<EnterpriseDashboardProjectStatDTO> getEnterpriseProjectStats(List<ProjectData> tcDirectProjects)
+        throws Exception {
+        List<EnterpriseDashboardProjectStatDTO> data = new ArrayList<EnterpriseDashboardProjectStatDTO>();
+        if ((tcDirectProjects == null) || (tcDirectProjects.isEmpty())) {
+            return data;
+        }
+
+        String projectIds = getConcatenatedIdsString(tcDirectProjects);
+        Set<Long> projectsWithStats = new HashSet<Long>();
+
+        final String queryName = "direct_dashboard_enterprise_health";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("tdpis", projectIds);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            long projectId = row.getLongItem("tc_direct_project_id");
+
+            ProjectBriefDTO project = new ProjectBriefDTO();
+            project.setId(projectId);
+            for (ProjectData tcDirectProject : tcDirectProjects) {
+                if (tcDirectProject.getProjectId() == projectId) {
+                    project.setName(tcDirectProject.getName());
+                    projectsWithStats.add(tcDirectProject.getProjectId());
+                    break;
+                }
+            }
+
+            EnterpriseDashboardProjectStatDTO projectStatDTO = new EnterpriseDashboardProjectStatDTO();
+            projectStatDTO.setProject(project);
+            projectStatDTO.setAverageContestDuration(row.getDoubleItem("average_duration"));
+            projectStatDTO.setAverageCostPerContest(row.getDoubleItem("average_cost_per_contest"));
+            projectStatDTO.setAverageFulfillment(row.getDoubleItem("average_fulfillment"));
+            projectStatDTO.setTotalProjectCost(row.getDoubleItem("total_cost"));
+
+            data.add(projectStatDTO);
+        }
+
+        for (ProjectData tcDirectProject : tcDirectProjects) {
+            if (!projectsWithStats.contains(tcDirectProject.getProjectId())) {
+                ProjectBriefDTO project = new ProjectBriefDTO();
+                project.setId(tcDirectProject.getProjectId());
+                project.setName(tcDirectProject.getName());
+
+                EnterpriseDashboardProjectStatDTO projectStatDTO = new EnterpriseDashboardProjectStatDTO();
+                projectStatDTO.setProject(project);
+                projectStatDTO.setAverageContestDuration(0);
+                projectStatDTO.setAverageCostPerContest(0);
+                projectStatDTO.setAverageFulfillment(0);
+                projectStatDTO.setTotalProjectCost(0);
+
+                data.add(projectStatDTO);
+            }
+        }
+
+        return data;
+    }
+
+    /**
+     * <p>Gets the mapping to be used for looking up the project categories by IDs.</p>
+     *
+     * @return a <code>Map</code> mapping the project category IDs to category names.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.2
+     */
+    public static Map<Long, String> getAllProjectCategories() throws Exception {
+        Map<Long, String> map = new LinkedHashMap<Long, String>();
+
+        final String queryName = "project_categories";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            map.put(row.getLongItem("project_category_id"), row.getStringItem("name"));
+        }
+
+        return map;
+    }
+
+    /**
+     * <p>Gets the enterprise-level statistics for specified client project for contests of specified categories
+     * completed within specified period of time.</p>
+     *
+     * @param projectId a <code>long</code> providing the ID of a project.
+     * @param projectCategoryIDs a <code>long</code> array providing the IDs for project categories.
+     * @param startDate a <code>Date</code> providing the beginning date for period.
+     * @param endDate a <code>Date</code> providing the ending date for period.
+     * @return a <code>List</code> of statistical data.
+     * @throws Exception if an unexpected error occurs.
+     * @throws IllegalArgumentException if specified <code>projectCategoryIDs</code> array is <code>null</code> or
+     *         empty.
+     * @since 2.1.2
+     */
+    public static List<EnterpriseDashboardDetailedProjectStatDTO> getEnterpriseStatsForProject(long projectId,
+        long[] projectCategoryIDs, Date startDate, Date endDate) throws Exception {
+
+        if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
+            throw new IllegalArgumentException("Project category IDs are not specified");
+        }
+
+        StringBuilder b = new StringBuilder();
+        for (Long id : projectCategoryIDs) {
+            if (b.length() > 0) {
+                b.append(", ");
+            }
+            b.append(id);
+        }
+
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        List<EnterpriseDashboardDetailedProjectStatDTO> data
+            = new ArrayList<EnterpriseDashboardDetailedProjectStatDTO>();
+
+        final String queryName = "direct_dashboard_enterprise_detailed_stats";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("pj", String.valueOf(projectId));
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", b.toString());
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+
+            EnterpriseDashboardDetailedProjectStatDTO costDTO = new EnterpriseDashboardDetailedProjectStatDTO();
+            costDTO.setDate(row.getTimestampItem("stat_date"));
+            costDTO.setValue(row.getDoubleItem("cost"));
+            costDTO.setContestsCount(row.getIntItem("total_project"));
+            costDTO.setStatsType(EnterpriseDashboardStatType.COST);
+
+            EnterpriseDashboardDetailedProjectStatDTO durationDTO = new EnterpriseDashboardDetailedProjectStatDTO();
+            durationDTO.setDate(row.getTimestampItem("stat_date"));
+            durationDTO.setValue(row.getDoubleItem("duration"));
+            durationDTO.setContestsCount(row.getIntItem("total_project"));
+            durationDTO.setStatsType(EnterpriseDashboardStatType.DURATION);
+
+            EnterpriseDashboardDetailedProjectStatDTO fulfillmentDTO = new EnterpriseDashboardDetailedProjectStatDTO();
+            fulfillmentDTO.setDate(row.getTimestampItem("stat_date"));
+            fulfillmentDTO.setValue(row.getDoubleItem("fulfillment"));
+            fulfillmentDTO.setContestsCount(row.getIntItem("total_project"));
+            fulfillmentDTO.setStatsType(EnterpriseDashboardStatType.FULFILLMENT);
+
+            data.add(costDTO);
+            data.add(durationDTO);
+            data.add(fulfillmentDTO);
+        }
+
+        return data;
+    }
+    /**
+     * <p>Gets the enterprise-level statistics for all contests of specified categories completed within specified
+     * period of time.</p>
+     *
+     * @param projectCategoryIDs a <code>long</code> array providing the IDs for project categories.
+     * @param startDate a <code>Date</code> providing the beginning date for period.
+     * @param endDate a <code>Date</code> providing the ending date for period.
+     * @return a <code>List</code> of statistical data.
+     * @throws Exception if an unexpected error occurs.
+     * @throws IllegalArgumentException if specified <code>projectCategoryIDs</code> array is <code>null</code> or
+     *         empty.
+     * @since 2.1.2
+     */
+    public static List<EnterpriseDashboardDetailedProjectStatDTO> getEnterpriseStatsForAllProjects(
+        long[] projectCategoryIDs, Date startDate, Date endDate) throws Exception {
+        
+        if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
+            throw new IllegalArgumentException("Project category IDs are not specified");
+        }
+
+        StringBuilder b = new StringBuilder();
+        for (Long id : projectCategoryIDs) {
+            if (b.length() > 0) {
+                b.append(", ");
+            }
+            b.append(id);
+        }
+
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        List<EnterpriseDashboardDetailedProjectStatDTO> data
+            = new ArrayList<EnterpriseDashboardDetailedProjectStatDTO>();
+
+        final String queryName = "direct_dashboard_enterprise_detailed_stats_overall";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", b.toString());
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+
+            EnterpriseDashboardDetailedProjectStatDTO costDTO = new EnterpriseDashboardDetailedProjectStatDTO();
+            costDTO.setDate(row.getTimestampItem("stat_date"));
+            costDTO.setValue(row.getDoubleItem("cost"));
+            costDTO.setContestsCount(row.getIntItem("total_project"));
+            costDTO.setStatsType(EnterpriseDashboardStatType.COST);
+
+            EnterpriseDashboardDetailedProjectStatDTO durationDTO = new EnterpriseDashboardDetailedProjectStatDTO();
+            durationDTO.setDate(row.getTimestampItem("stat_date"));
+            durationDTO.setValue(row.getDoubleItem("duration"));
+            durationDTO.setContestsCount(row.getIntItem("total_project"));
+            durationDTO.setStatsType(EnterpriseDashboardStatType.DURATION);
+
+            EnterpriseDashboardDetailedProjectStatDTO fulfillmentDTO = new EnterpriseDashboardDetailedProjectStatDTO();
+            fulfillmentDTO.setDate(row.getTimestampItem("stat_date"));
+            fulfillmentDTO.setValue(row.getDoubleItem("fulfillment"));
+            fulfillmentDTO.setContestsCount(row.getIntItem("total_project"));
+            fulfillmentDTO.setStatsType(EnterpriseDashboardStatType.FULFILLMENT);
+
+            data.add(costDTO);
+            data.add(durationDTO);
+            data.add(fulfillmentDTO);
+        }
+
+        return data;
+    }
+
+    /**
      * <p>Constructs new <code>ProjectBriefDTO</code> instance based on specified properties.</p>
      *
      * @param id a <code>long</code> providing the project ID.
@@ -1119,5 +1373,22 @@ public class DataProvider {
 		dto.setForumId(forumId);
 		dto.setIsStudio(isStudio);
         return dto;
+    }
+
+    /**
+     * <p>Concatenates the IDs for specified projects into a single string value.</p>
+     *
+     * @param tcDirectProjects a <code>List</code> providing the details for projects.
+     * @return a <code>String</code> providing the IDs for specified projects separated with commas.
+     */
+    private static String getConcatenatedIdsString(List<ProjectData> tcDirectProjects) {
+        StringBuilder b = new StringBuilder();
+        for (ProjectData project : tcDirectProjects) {
+            if (b.length() > 0) {
+                b.append(", ");
+            }
+            b.append(project.getProjectId());
+        }
+        return b.toString();
     }
 }
