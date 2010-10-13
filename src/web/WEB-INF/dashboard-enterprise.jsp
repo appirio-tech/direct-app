@@ -169,7 +169,7 @@
                                                 <c:forEach items="${viewData.projects}" var="project">
                                                     <tr>
                                                         <td class="first">
-                                                            <a href="#" class="green">
+                                                            <a href="projectDetails?formData.projectId=${project.project.id}" class="green">
                                                                 <c:out value="${project.project.name}"/></a>
                                                         </td>
                                                         <td><span class="">
