@@ -138,12 +138,12 @@
                                                         </div>
                                                 </div><!-- End .areaHeader -->
 
-							<div class="container2" id="notificationsContent">
+							<div class="container2">
 							<div class="container2Left"><div class="container2Right"><div class="container2Bottom">
 								<div class="container2BottomLeft"><div class="container2BottomRight">
 									<div class="container2Content">
                                         <form id="dashboard-notifications-form">
-										<table id="notifications" class="projectStats notifications paginatedDataTable" cellpadding="0" cellspacing="0">
+										<table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
 											<thead>
 												<tr>
 													<th class="permCol">Project / Contest</th>
@@ -201,6 +201,23 @@
 											</tbody>
 
 										</table><!-- End .projectsStats -->
+										<div class="pagination">
+											<div class="pages">
+                                            </div><!-- End .pages -->
+
+											<div class="showPages"><!-- number of rows that can be displayed on the same page -->
+												<label><strong>Show:</strong></label>
+												<select id="pageSize" class="normalOption" onchange="notifications.refreshTable();">
+													<option value="10">10</option>
+													<option value="25">25</option>
+													<option value="50">50</option>
+													<option value="1000000" selected="selected">All</option>
+												</select>
+												<span>per page</span>
+                                            </div>
+											<!-- End .showPages -->
+										</div>
+										<!-- End .pagination -->
 
 										<div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
 											<a class="button9" href="javascript:notifications.update();">Save Notifications</a>
