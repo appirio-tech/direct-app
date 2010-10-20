@@ -23,7 +23,7 @@
                     <a href="javascript:;" class="logo overviewLogo">Enterprise Dashboard</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="<s:url action="dashboardEnterprise" namespace="/"/>" class="logo">
+                    <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
                         <img src="/images/dashboard_logo.png" alt="Direct Dashboard" /></a>
                 </c:otherwise>
             </c:choose>
