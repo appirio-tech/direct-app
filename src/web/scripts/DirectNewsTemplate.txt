@@ -1,7 +1,7 @@
 <div class="title"><!-- columns title -->
     <div class="titleLeft">
         <div class="titleRight">
-            <h2>Direct News</h2>
+            <h2>Top News</h2>
         </div>
     </div>
 </div><!-- End .title -->
