@@ -20,7 +20,7 @@
         <c:when test="${requestScope.PAGE_TYPE eq 'dashboard'}">
             <c:choose>
                 <c:when test="${requestScope.CURRENT_TAB eq 'overview'}">
-                    <a href="javascript:;" class="logo overviewLogo">Enterprise Dashboard</a>
+                    <a href="javascript:;" class="logo overviewLogo">Dashboard</a>
                 </c:when>
                 <c:otherwise>
                     <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
