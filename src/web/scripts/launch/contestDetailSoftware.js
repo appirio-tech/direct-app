@@ -351,11 +351,13 @@ function populateTypeSection() {
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
 	$('#chkboxCCA').attr('checked', mainWidget.softwareCompetition.projectHeader.isLccchecked());
 	
-	
 	//display
 	$('#rContestTypeName').html($("#contestTypes option[value=SOFTWARE"+ mainWidget.softwareCompetition.projectHeader.projectCategory.id +"]").text());
 	$('#rContestName').html(mainWidget.softwareCompetition.assetDTO.name);
 	$('#rCCA').html(mainWidget.softwareCompetition.projectHeader.isLccchecked() ? "Required" : "Not Required");
+	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
+		$('#rProjectName').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
+	}
 }
 
 function saveTypeSection() {
@@ -385,13 +387,13 @@ function saveTypeSection() {
 function validateFieldsTypeSection() {
    var categoryId = getContestType(true)[1];
    var contestName = $('input#contestName').val();
-
+   var tcProjectId = parseInt($('select#projects').val());
 
    //validation
    var errors = [];
 
    validateContestName(contestName, errors);
-
+   validateTcProject(tcProjectId, errors);
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -412,6 +414,9 @@ function validateFieldsTypeSection() {
          
    mainWidget.softwareCompetition.assetDTO.name = contestName;         
    mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
+   
+   mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
+   mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $('select#projects option[value=' + tcProjectId + ']').html()
    
    return true;	
 }

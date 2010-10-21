@@ -19,6 +19,9 @@
          <br /> <br />
          <span class="name3"><strong>CCA is</strong></span>
          <span class="value"><strong>: <span id="rCCA"></span></strong></span>		 
+		 <br /> <br />
+		 <span class="name2"><strong>Project Name</strong></span>
+         <span class="value"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></span>
       </p>
     </div><!-- End .detailsContent -->												
 </div><!-- End .details -->
@@ -65,7 +68,22 @@
                  <span class="name2"><strong>Contest Name</strong></span>
                  <span class="value"><input type="text" class="bigin"  id="contestName" /></span>
 				 <br /><br />
-                 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
+                 
+				 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
+				 <br /> <br />
+				 
+				 <span class="name2"><strong>Project Name</strong></span>
+				 <span class="value">
+					  <select id="projects" name="tcProject" class="bigin">
+							<option value="-1">Please select an existing project</option>
+							<s:iterator value="projects" var="proj">
+							<option value='<s:property value="projectId" />'  <c:if test="${proj.projectId == sessionData.currentSelectDirectProjectID}">selected</c:if> >
+							<s:property value="name" />
+							</option>
+							</s:iterator>
+					  </select>
+				 </span>
+                 
                  </p>
                  <p class="save">                 	
                      <a href="javascript:;" class="cancel_text">cancel</a>

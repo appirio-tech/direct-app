@@ -19,6 +19,9 @@
          <br /> <br />
          <span class="name2 billingdisplay"><strong>Billing Account</strong></span>
          <span class="value billingdisplay"><strong>: <span id="rBillingAccount"></span></strong></span>
+		 <br /> <br />
+		 <span class="name2"><strong>Project Name</strong></span>
+         <span class="value"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></span>
          <br /> <br />
          <span class="name2 adminFeeDisplay"><strong>Admin Fee</strong></span>
          <span class="value adminFeeDisplay"><strong>: $<span id="rAdminFee"></span></strong></span>
@@ -36,7 +39,7 @@
 		  </div><!-- End .caption -->												
 		  
       <div class="detailsContent_det_type_edit">
-					<div class="det_font" style="border:1px solid #BDBDBD; height:165px;padding-left:10px;">                                              
+					<div class="det_font" style="border:1px solid #BDBDBD; height:auto;padding-left:10px;">                                              
          	<div id="launchContestOut">                                                        	
 						 <div class="tabOut">                                    
                  <!-- tab contest -->
@@ -78,6 +81,20 @@
                         </select>
                      </div>
                  </div>
+				 
+				 <br /><br />
+				 <span class="name2"><strong>Project Name</strong></span>
+				 <span class="value">
+					  <select id="projects" name="tcProject" class="bigin">
+							<option value="-1">Please select an existing project</option>
+							<s:iterator value="projects" var="proj">
+							<option value='<s:property value="projectId" />'  <c:if test="${proj.projectId == sessionData.currentSelectDirectProjectID}">selected</c:if> >
+							<s:property value="name" />
+							</option>
+							</s:iterator>
+					  </select>
+				 </span>
+                 <br /><br />
                  
                  </div>
                  <p class="save">                 	

@@ -335,6 +335,10 @@ function populateTypeSection() {
   	 $('.adminFeeDisplay').hide();
   }
   $('#rAdminFee').html(mainWidget.competition.contestData.contestAdministrationFee.formatMoney(2));  	 
+  
+  	if (mainWidget.competition.contestData.tcDirectProjectName != null) {
+		$('#rProjectName').html(mainWidget.competition.contestData.tcDirectProjectName);
+	}
 }
 
 function isBillingViewable() {
@@ -383,6 +387,7 @@ function validateFieldsTypeSection() {
    var competitionType = getContestType()[0];
    var contestTypeId = parseInt(getContestType()[1]);
    var contestName = $('input#contestName').val();
+   var tcProjectId = parseInt($('select#projects').val());
 
 
    //validation
@@ -396,7 +401,7 @@ function validateFieldsTypeSection() {
        errors.push('Contest name is empty.');
    }
    
-
+   validateTcProject(tcProjectId, errors);
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -408,7 +413,10 @@ function validateFieldsTypeSection() {
    	 var billingProjectId = $('select#billingProjects').val();
    	 mainWidget.competition.contestData.billingProject = billingProjectId;
    }
-      
+
+   mainWidget.competition.contestData.tcDirectProjectId = tcProjectId;
+   mainWidget.competition.contestData.tcDirectProjectName = $('select#projects option[value=' + tcProjectId + ']').html()
+   
    return true;	
 }
 
