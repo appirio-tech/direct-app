@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-    <title>TopCoder Direct</title>
+    <title>TopCoder Cockpit</title>
 
     <!-- Meta Tags -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -49,7 +49,7 @@
 				<!-- this will contain the welcome message and the help icon -->
 					<div class="help"><link:help/></div><!-- End .help -->
 					<div class="welcome">
-						<img src="/images/welcome.png" alt="Welcome To TopCoder Direct" />
+						<img src="/images/welcome.png" alt="Welcome To TopCoder Cockpit" />
 					</div><!-- end .welcome -->
 				</div><!-- End .welcomeHelp -->
 				
@@ -90,7 +90,7 @@
 							<!-- this area will contain two columns. The first one is the news column and the second will contain statistics about topcoder--> 
 							<div class="area1content">
 							
-								<!-- this area will contain the last news -->
+								<!-- this area will contain the news -->
 								<div class="newsColumn" id="newsColumn">
 								</div><!-- End .newsColumn -->
 								
@@ -105,7 +105,7 @@
 										<table width="100%">
 											<tr>
 												<td class="first">
-                                                    <strong>Active Projects</strong> in Direct
+                                                    <strong>Active Projects</strong>
                                                     <link:helpIcon/>
                                                 </td>
 												<td class="last highLight">
@@ -201,7 +201,7 @@
                                         </p>
 
                                         <div class="register">
-                                            <p class="registerLink">New to TC Direct? Please
+                                            <p class="registerLink">New to TopCoder? Please
                                                 <a href="http://www.topcoder.com/reg" target="_blank">Register</a>
                                             </p>
                                             <p class="registerLink">
