@@ -24,7 +24,7 @@
                 </c:when>
                 <c:otherwise>
                     <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
-                        <img src="/images/dashboard_logo.png" alt="Direct Dashboard" /></a>
+                        <img src="/images/dashboard_logo.png" alt="Dashboard" /></a>
                 </c:otherwise>
             </c:choose>
         </c:when>
