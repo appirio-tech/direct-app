@@ -130,7 +130,7 @@
     </no-tx-datasource>
 
     <no-tx-datasource>
-        <jndi-name>STUDIO_OLTP</jndi-name>
+        <jndi-name>JTS_STUDIO_OLTP</jndi-name>
         <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/studio_oltp:INFORMIXSERVER=informixoltp_tcp
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
