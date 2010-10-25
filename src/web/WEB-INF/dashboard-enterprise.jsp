@@ -28,25 +28,25 @@
                 week:[
                 <c:forEach items="${viewData.durationStats['WEEK']}" var="stat" varStatus="loop">
                     <c:if test="${loop.index > 0}">,</c:if>
-                    {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                    {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                 </c:forEach>
                 ],
                 month:[
                     <c:forEach items="${viewData.durationStats['MONTH']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 quarter:[
                     <c:forEach items="${viewData.durationStats['QUARTER']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 year:[
                     <c:forEach items="${viewData.durationStats['YEAR']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ]
             },
@@ -55,25 +55,25 @@
                 week:[
                     <c:forEach items="${viewData.costStats['WEEK']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 month:[
                     <c:forEach items="${viewData.costStats['MONTH']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 quarter:[
                     <c:forEach items="${viewData.costStats['QUARTER']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 year:[
                     <c:forEach items="${viewData.costStats['YEAR']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ]
             },
@@ -82,25 +82,25 @@
                 week:[
                     <c:forEach items="${viewData.fulfillmentStats['WEEK']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 month:[
                     <c:forEach items="${viewData.fulfillmentStats['MONTH']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 quarter:[
                     <c:forEach items="${viewData.fulfillmentStats['QUARTER']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 year:[
                     <c:forEach items="${viewData.fulfillmentStats['YEAR']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:${stat.clientValue},tc:${stat.overallValue}}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ]
             }
@@ -110,6 +110,7 @@
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
 </head>
 
 <body id="page">
@@ -134,8 +135,8 @@
                                         <a href="javascript:void(0)" class="expand">Enterprise Health</a>
                                     </dt>
                                     <dd>
-                                        <div class="dashboardTableHeader">
-                                            <table cellpadding="0" cellspacing="0">
+										<table cellpadding="0" cellspacing="0" id="enterpriseHealthTable">
+											<div class="dashboardTableHeader">
                                                 <colgroup>
                                                     <col width="32%"/>
                                                     <col width="17%"/>
@@ -153,10 +154,8 @@
                                                     <th>Average Fulfillment</th>
                                                 </tr>
                                                 </thead>
-                                            </table>
-                                        </div>
-                                        <div class="dashboardTableBody">
-                                            <table cellpadding="0" cellspacing="0" id="enterpriseHealthTable">
+											</div>
+											<div class="dashboardTableBody">
                                                 <colgroup>
                                                     <col width="32%"/>
                                                     <col width="17%"/>
@@ -187,8 +186,8 @@
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>
-                                            </table>
-                                        </div>
+											</div>
+										</table>
                                     </dd>
                                 </dl>
                             </div>

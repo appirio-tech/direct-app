@@ -245,6 +245,11 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         // For normal request flow prepare various data to be displayed to user
         // Set projects data
         List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
+		Collections.sort(projects, new Comparator<ProjectBriefDTO>() {
+			public int compare(ProjectBriefDTO e1, ProjectBriefDTO e2) {
+				return e1.getName().compareTo(e2.getName());
+			}
+		});		
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
         userProjectsDTO.setProjects(projects);
         getViewData().setUserProjects(userProjectsDTO);

@@ -19,10 +19,11 @@
 .dashboardTableHeader{
     padding-right:17px;   
 }
+/*
 .dashboardTableBody{
     overflow-y:scroll;
     height:140px;
-}
+}*/
 .dashboardTable dt{
     height:34px;
     line-height:34px;

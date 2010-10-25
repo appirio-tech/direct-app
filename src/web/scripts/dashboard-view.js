@@ -64,4 +64,33 @@ $(document).ready(function(){
             $(".dashboardTable a.triggerDetail").trigger("click");                
         }
     })
+	
+	var $select = $("#EnterpriseDashboardForm_formData_projectId");
+	if ($select.length > 0) {
+		var selectedVal = $select.val();
+		var $options = $('option', $select);
+		var arrVals = [];
+		$options.each(function(){
+			arrVals.push({
+				val: $(this).val(),
+				text: $(this).text()
+			});
+		});
+		arrVals.sort(function(a, b){
+			if(a.val > b.val){
+				return 1;
+			}
+			else if (a.val == b.val){
+				return 0;
+			}
+			else {
+				return -1;
+			}
+		});
+		for (var i = 0, l = arrVals.length; i < l; i++) {
+			$($options[i]).val(arrVals[i].val).text(arrVals[i].text);
+		}
+		$select.val(selectedVal);
+	}
+
 })
