@@ -1,12 +1,14 @@
 <%--
-  - Author: BeBetter, TCSDEVELOPER
-  - Version: 1.1
+  - Author: BeBetter, isv
+  - Version: 1.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - add repost and new version buttons and assoicated js file.
+  - Version 1.2 - Direct - Contest Dashboard Assembly Change Note
+  - - replaced contest stats area with contest dashboard area
   -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,6 +19,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
+    <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
+
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="details"/>
 
@@ -70,7 +75,7 @@
                         </h2>
                     </div><!-- End .areaHeader -->
 
-                    <jsp:include page="includes/contest/contestStats.jsp"/>
+                    <jsp:include page="includes/contest/dashboard.jsp"/>
 
                     <div class="container2 tabs3Container">
 

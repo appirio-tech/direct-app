@@ -21,6 +21,14 @@ import java.util.Set;
 
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
+import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
+import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
+import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
+import com.topcoder.direct.services.view.dto.contest.RunningPhaseStatus;
 import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
@@ -28,6 +36,7 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetail
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -94,8 +103,15 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 2.1.3 (Direct Contest Dashboard Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getContestDashboardData(long, boolean)} method.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter
- * @version 2.1.2
+ * @version 2.1.3
  */
 public class DataProvider {
 
@@ -1235,6 +1251,230 @@ public class DataProvider {
     }
 
     /**
+     * <p>Gets the dashboard data for specified contest.</p>
+     *
+     * @param contestId a <code>long</code> providing the ID of a contest to get dashboard data for.
+     * @param isStudio <code>true</code> if specified contest is <code>Studio</code> contest; <code>false</code>
+     *        otherwise.
+     * @return a <code>ContestDashboardDTO</code> providing the data for dashboard for specified contest. 
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.3
+     */
+    public static ContestDashboardDTO getContestDashboardData(long contestId, boolean isStudio) throws Exception {
+        if (isStudio) {
+            return getStudioContestDashboardData(contestId);
+        } else {
+            return getSoftwareContestDashboardData(contestId);
+        }
+    }
+
+    /**
+     * <p>Gets the dashboard data for specified software project.</p>
+     *
+     * @param projectId a <code>long</code> providing the ID of a software project to get dashboard data for.
+     * @return a <code>ContestDashboardDTO</code> providing the data for dashboard for specified contest.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.3
+     */
+    private static ContestDashboardDTO getSoftwareContestDashboardData(long projectId) throws Exception {
+        // Prepare request to database
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_software_contest_dashboard");
+        request.setProperty("pj", String.valueOf(projectId));
+
+        // Query database for contest dashboard data
+        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+        ContestDashboardDTO dto = new ContestDashboardDTO();
+
+        // Analyze current and next phases
+        final ResultSetContainer projectPhasesStats = results.get("project_phases_status");
+        if (!projectPhasesStats.isEmpty()) {
+            int currentPhaseStatusId = getInt(projectPhasesStats.getRow(0), "phase_status_id");
+            if (currentPhaseStatusId == 2) { // If current phase is already running
+                ProjectPhaseDTO currentPhase = new ProjectPhaseDTO();
+                currentPhase.setStartTime(projectPhasesStats.getTimestampItem(0, "start_time"));
+                currentPhase.setEndTime(projectPhasesStats.getTimestampItem(0, "end_time"));
+                currentPhase.setPhaseName(projectPhasesStats.getStringItem(0, "phase_name"));
+                dto.setCurrentPhase(currentPhase);
+                Date now = new Date();
+                Date currentPhaseEndTime = currentPhase.getEndTime();
+                if (now.compareTo(currentPhaseEndTime) > 0) {
+                    dto.setCurrentPhaseStatus(RunningPhaseStatus.LATE);
+                } else {
+                    long diff = currentPhaseEndTime.getTime() - now.getTime();
+                    long hoursLeft = diff / (3600 * 1000);
+                    if (hoursLeft < 2) {
+                        dto.setCurrentPhaseStatus(RunningPhaseStatus.CLOSING);
+                    } else {
+                        dto.setCurrentPhaseStatus(RunningPhaseStatus.RUNNING);
+                    }
+                }
+
+                if (projectPhasesStats.size() > 1) {
+                    ProjectPhaseDTO nextPhase = new ProjectPhaseDTO();
+                    nextPhase.setStartTime(projectPhasesStats.getTimestampItem(1, "start_time"));
+                    nextPhase.setEndTime(projectPhasesStats.getTimestampItem(1, "end_time"));
+                    nextPhase.setPhaseName(projectPhasesStats.getStringItem(1, "phase_name"));
+                    dto.setNextPhase(nextPhase);
+                }
+            }
+        }
+
+        // Analyze registration status
+        final ResultSetContainer registrationStats = results.get("registration_status");
+        if (!registrationStats.isEmpty()) {
+            ResultSetContainer.ResultSetRow row = registrationStats.getRow(0);
+            dto.setNumberOfRegistrants(getInt(row, "registrants_count"));
+            dto.setNumberOfSubmissions(getInt(row, "number_of_submissions"));
+            dto.setPredictedNumberOfSubmissions(getInt(row, "predicted_number_of_submissions"));
+
+            double reliabilityTotal = getDouble(row, "reliability_total");
+            long registrationPhaseStatus = getLong(row, "registration_phase_status");
+
+            if (registrationPhaseStatus == 2) {
+                if (reliabilityTotal >= 200) {
+                    dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                } else {
+                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_ACTIVE);
+                }
+            } else if (registrationPhaseStatus == 3) {
+                if (reliabilityTotal >= 200) {
+                    dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                } else if (reliabilityTotal >= 100) {
+                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_CLOSED);
+                } else {
+                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_POOR);
+                }
+            }
+        }
+
+        // TODO: Analyze the status of forum activity, use mock data for now
+        UserDTO latestForumPostAuthor = new UserDTO();
+        latestForumPostAuthor.setHandle("heffan");
+        latestForumPostAuthor.setId(132456);
+
+        ForumPostDTO latestForumPost = new ForumPostDTO();
+        latestForumPost.setAuthor(latestForumPostAuthor);
+        latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=690636");
+        latestForumPost.setTimestamp(new Date());
+        
+        dto.setLatestForumPost(latestForumPost);
+        dto.setForumURL("http://forums.topcoder.com/?module=ThreadList&forumID=205768");
+        dto.setTotalForumPostsCount(120);
+
+        // Analyze the status for reviewers signup and collect the list of reviewers
+        final ResultSetContainer reviewSignupStats = results.get("review_signup_stats");
+        if (reviewSignupStats.isEmpty()) {
+            dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
+        } else {
+            long hoursLeft = getLong(reviewSignupStats.getRow(0), "hours_left");
+            int requiredReviewersCount = getInt(reviewSignupStats.getRow(0), "required_reviewers_count");
+            List<UserDTO> reviewers = new ArrayList<UserDTO>();
+            for (ResultSetContainer.ResultSetRow row : reviewSignupStats) {
+                String reviewerHandle = row.getStringItem("reviewer_handle");
+                if (reviewerHandle != null) {
+                    UserDTO reviewer = new UserDTO();
+                    reviewer.setId(getLong(row, "reviewer_id"));
+                    reviewer.setHandle(reviewerHandle);
+                    reviewers.add(reviewer);
+                }
+            }
+            dto.setReviewers(reviewers);
+            dto.setRequiredReviewersNumber(requiredReviewersCount);
+            if (requiredReviewersCount > reviewers.size()) {
+                if (hoursLeft < 24) {
+                    dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_DANGER);
+                } else {
+                    dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_WARNING);
+                }
+            } else {
+                dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
+            }
+        }
+
+        // Analyze the overall status of dependencies for project
+        final ResultSetContainer projectDependenciesStatuses = results.get("project_dependencies_statuses");
+        if (projectDependenciesStatuses.isEmpty()) {
+            dto.setDependenciesStatus(DependenciesStatus.NO_DEPENDENCIES);
+        } else {
+            List<DependencyDTO> dependencies = new ArrayList<DependencyDTO>();
+            boolean thereAreIncompleteDependencies = false;
+            for (ResultSetContainer.ResultSetRow row : projectDependenciesStatuses) {
+                long parentProjectStatusId = getLong(row, "project_status_id");
+                if ((parentProjectStatusId == 1) || (parentProjectStatusId == 2)) {
+                    thereAreIncompleteDependencies = true;
+                }
+                ProjectBriefDTO dependencyProject = new ProjectBriefDTO();
+                dependencyProject.setId(getLong(row, "project_id"));
+                dependencyProject.setName(row.getStringItem("project_name"));
+
+                DependencyDTO dependency = new DependencyDTO();
+                dependency.setDependencyProject(dependencyProject);
+                dependency.setDependencyType(row.getStringItem("link_type_name"));
+
+                dependencies.add(dependency);
+            }
+            dto.setDependencies(dependencies);
+
+            if (thereAreIncompleteDependencies) {
+                dto.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_NON_SATISFIED);
+            } else {
+                dto.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_SATISFIED);
+            }
+        }
+
+        return dto;
+    }
+
+    /**
+     * <p>Gets the dashboard data for specified Studio contest.</p>
+     *
+     * @param contestId a <code>long</code> providing the ID of a Studio contest to get dashboard data for.
+     * @return a <code>ContestDashboardDTO</code> providing the data for dashboard for specified contest.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.3
+     */
+    private static ContestDashboardDTO getStudioContestDashboardData(long contestId) throws Exception {
+        // Prepare request to database
+        DataAccess dataAccessor = new DataAccess(DBMS.STUDIO_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_studio_contest_dashboard");
+        request.setProperty("ct", String.valueOf(contestId));
+
+        // Query database for contest dashboard data
+        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+        ContestDashboardDTO dto = new ContestDashboardDTO();
+
+        // Analyze registration status
+        // For now the registration status is always assumed to be Healthy for Studio contests
+        dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+        final ResultSetContainer registrationStats = results.get("studio_registration_status");
+        if (!registrationStats.isEmpty()) {
+            ResultSetContainer.ResultSetRow row = registrationStats.getRow(0);
+            dto.setNumberOfRegistrants(getInt(row, "registrants_count"));
+            dto.setNumberOfSubmissions(getInt(row, "number_of_submissions"));
+            dto.setPredictedNumberOfSubmissions(getInt(row, "predicted_number_of_submissions"));
+        }
+
+        // TODO: Analyze the status of forum activity, use mock data for now
+        UserDTO latestForumPostAuthor = new UserDTO();
+        latestForumPostAuthor.setHandle("heffan");
+        latestForumPostAuthor.setId(132456);
+
+        ForumPostDTO latestForumPost = new ForumPostDTO();
+        latestForumPost.setAuthor(latestForumPostAuthor);
+        latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=690636");
+        latestForumPost.setTimestamp(new Date());
+
+        dto.setLatestForumPost(latestForumPost);
+        dto.setForumURL("http://forums.topcoder.com/?module=ThreadList&forumID=205768");
+        dto.setTotalForumPostsCount(120);
+
+        return dto;
+    }
+
+    /**
      * <p>Constructs new <code>ProjectBriefDTO</code> instance based on specified properties.</p>
      *
      * @param id a <code>long</code> providing the project ID.
@@ -1390,5 +1630,56 @@ public class DataProvider {
             b.append(project.getProjectId());
         }
         return b.toString();
+    }
+
+    /**
+     * <p>Gets the <code>int</code> value for specified column from specified resultset row.</p>
+     *
+     * @param row a <code>ResultSetRow</code> providing the data.
+     * @param columnName a <code>String</code> providing the column name.
+     * @return an <code>int</code> providing tge value for specified column or 0 if the value is <code>null</code>.
+     */
+    private static int getInt(ResultSetContainer.ResultSetRow row, String columnName) {
+        TCResultItem resultItem = row.getItem(columnName);
+        boolean isNull = resultItem.getResultData() == null;
+        if (isNull) {
+            return 0;
+        } else {
+            return row.getIntItem(columnName);
+        }
+    }
+
+    /**
+     * <p>Gets the <code>long</code> value for specified column from specified resultset row.</p>
+     *
+     * @param row a <code>ResultSetRow</code> providing the data.
+     * @param columnName a <code>String</code> providing the column name.
+     * @return a <code>long</code> providing tge value for specified column or 0 if the value is <code>null</code>.
+     */
+    private static long getLong(ResultSetContainer.ResultSetRow row, String columnName) {
+        TCResultItem resultItem = row.getItem(columnName);
+        boolean isNull = resultItem.getResultData() == null;
+        if (isNull) {
+            return 0;
+        } else {
+            return row.getLongItem(columnName);
+        }
+    }
+
+    /**
+     * <p>Gets the <code>double</code> value for specified column from specified resultset row.</p>
+     *
+     * @param row a <code>ResultSetRow</code> providing the data.
+     * @param columnName a <code>String</code> providing the column name.
+     * @return a <code>double</code> providing tge value for specified column or 0 if the value is <code>null</code>.
+     */
+    private static double getDouble(ResultSetContainer.ResultSetRow row, String columnName) {
+        TCResultItem resultItem = row.getItem(columnName);
+        boolean isNull = resultItem.getResultData() == null;
+        if (isNull) {
+            return 0;
+        } else {
+            return row.getDoubleItem(columnName);
+        }
     }
 }

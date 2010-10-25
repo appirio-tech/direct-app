@@ -62,9 +62,15 @@ import com.topcoder.service.studio.ContestStatusData;
  * <li>Preserves the software competition to fill the details later.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.2.1 - Direct - Contest Dashboard Assembly Change Note
+ * <ul>
+ * <li>Updated {@link #executeAction()} method to retrieve data for contest dashboard section.</li>
+ * </ul>
+ * </p>
  *
- * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.2
+ * @author fabrizyo, FireIce, isv
+ * @version 1.2.1
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -165,22 +171,24 @@ public class GetContestAction extends ContestAction {
 
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
-			List<CompetitionPrize> coll = studioCompetition.getPrizes();
-			Collections.sort(coll, new PrizeSortByPlace());
-			contestStats.setPrizes(coll);
-			contestStats.setAdminFees(studioCompetition.getAdminFee());
+            List<CompetitionPrize> coll = studioCompetition.getPrizes();
+            Collections.sort(coll, new PrizeSortByPlace());
+            contestStats.setPrizes(coll);
+            contestStats.setAdminFees(studioCompetition.getAdminFee());
             if (studioCompetition.getContestData().getMilestonePrizeData() != null)
             {
                 contestStats.setMilestonePrizes(studioCompetition.getContestData().getMilestonePrizeData());
             }
-			
+            
             if (studioCompetition.getContestData().getPayments() != null && studioCompetition.getContestData().getPayments().size() > 0)
             {
                 contestStats.setPaymentReferenceId(studioCompetition.getContestData().getPayments().get(0).getPaymentReferenceId());
             }
-			
-			contestStats.setForumId(studioCompetition.getContestData().getForumId());
+            
+            contestStats.setForumId(studioCompetition.getContestData().getForumId());
             getViewData().setContestStats(contestStats);
+
+            getViewData().setDashboard(DataProvider.getContestDashboardData(contestId, true));
 
         } else {
             softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
@@ -190,6 +198,7 @@ public class GetContestAction extends ContestAction {
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
             getViewData().setContestStats(contestStats);
+            getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, false));
         }
     }
 
@@ -271,12 +280,12 @@ public class GetContestAction extends ContestAction {
             ContestStatsDTO contestStats = new ContestStatsDTO();
             ContestBriefDTO contest = new ContestBriefDTO();
             ProjectBriefDTO contestProject = new ProjectBriefDTO();
-			
+            
             if (studioCompetition != null) {
                 contestProject.setName(studioCompetition.getContestData().getTcDirectProjectName());
                 contest.setId(studioCompetition.getContestData().getContestId());
                 contest.setTitle(studioCompetition.getContestData().getName());
-				contest.setProject(contestProject);
+                contest.setProject(contestProject);
             }
             if (softwareCompetition != null) {
                 contest.setId(softwareCompetition.getProjectHeader().getId());
@@ -288,9 +297,9 @@ public class GetContestAction extends ContestAction {
 
             final long testContestId = 4;
             ContestDTO contestDTO = DataProvider.getContest(testContestId);
-			if (studioCompetition != null) {
-				contestDTO.setContestType(ContestType.forIdAndFlag(studioCompetition.getContestData().getContestTypeId(),true));
-			}
+            if (studioCompetition != null) {
+                contestDTO.setContestType(ContestType.forIdAndFlag(studioCompetition.getContestData().getContestTypeId(),true));
+            }
             viewData.setContest(contestDTO);
 
             // project
@@ -304,16 +313,16 @@ public class GetContestAction extends ContestAction {
 
         return viewData;
     }
-	public class PrizeSortByPlace implements Comparator<CompetitionPrize>{
-		public int compare(CompetitionPrize o1, CompetitionPrize o2) {
-			if (o1.getPlace() > o2.getPlace())
-				return 1;
-			else if(o1.getPlace() < o2.getPlace())
-				return -1;
-			else
-				return 0;
-		}
-	}
+    public class PrizeSortByPlace implements Comparator<CompetitionPrize>{
+        public int compare(CompetitionPrize o1, CompetitionPrize o2) {
+            if (o1.getPlace() > o2.getPlace())
+                return 1;
+            else if(o1.getPlace() < o2.getPlace())
+                return -1;
+            else
+                return 0;
+        }
+    }
 
     private void fillContestStats(ContestStatsDTO contestStats) throws Exception {
 
@@ -353,9 +362,9 @@ public class GetContestAction extends ContestAction {
         {
         // ignore
         }
-		
-		contestStats.setStartTime(resultContainer.getTimestampItem(recordIndex, "start_date"));
-		contestStats.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));
+        
+        contestStats.setStartTime(resultContainer.getTimestampItem(recordIndex, "start_date"));
+        contestStats.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));
 
     }
 

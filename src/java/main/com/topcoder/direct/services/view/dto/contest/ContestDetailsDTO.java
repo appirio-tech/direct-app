@@ -9,8 +9,15 @@ import com.topcoder.direct.services.view.form.ContestIdForm;
 /**
  * <p>A <code>DTO</code> class providing the data for displaying by <code>Contest Details</code> view.</p>
  *
+ * <p>
+ * Version 1.0.1 (Direct Contest Dashboard Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #dashboard} property with respective accessor/mutator methods.</li>
+ *   </ol>
+ * </p>
+
  * @author isv
- * @version 1.0
+ * @version 1.0.1
  */
 public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestDTO.Aware,
                                                             ContestIdForm.Aware {
@@ -29,6 +36,13 @@ public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Awar
      * <p>A <code>ContestDTO</code> providing the details on contest.</p>
      */
     private ContestDTO contest;
+
+    /**
+     * <p>A <code>ContestDashboardDTO</code> providing the details for contest dashboard.</p>
+     *
+     * @since 1.0.1
+     */
+    private ContestDashboardDTO dashboard;
 
     /**
      * <p>Constructs new <code>ContestDetailsDTO</code> instance. This implementation does nothing.</p>
@@ -88,5 +102,25 @@ public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Awar
      */
     public void setContest(ContestDTO contest) {
         this.contest = contest;
+    }
+
+    /**
+     * <p>Gets the details for contest dashboard.</p>
+     *
+     * @return a <code>ContestDashboardDTO</code> providing the details for contest dashboard.
+     * @since 1.0.1
+     */
+    public ContestDashboardDTO getDashboard() {
+        return this.dashboard;
+    }
+
+    /**
+     * <p>Sets the details for contest dashboard.</p>
+     *
+     * @param dashboard a <code>ContestDashboardDTO</code> providing the details for contest dashboard.
+     * @since 1.0.1
+     */
+    public void setDashboard(ContestDashboardDTO dashboard) {
+        this.dashboard = dashboard;
     }
 }
