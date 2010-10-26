@@ -92,20 +92,24 @@ $(document).ready(function(){
 		}
 		$select.val(selectedVal);
 	}
-	$("#enterpriseHealthTable").dataTable({
-		"bInfo": false,
-		"bPaginate": false,
-        "bFilter": false,
-        "bSort": true,           
-        "sDom": 'rt<"bottom1"il><"bottom2"fp',
-		"aaSorting": [[0,'asc']],
-		"aoColumns": [
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "html" }
-			]
+        if ($("#enterpriseHealthTable").length != 0) {
+            $("#enterpriseHealthTable").dataTable({
+                    "bInfo": false,
+                    "bPaginate": false,
+                    "bFilter": false,
+                    "bSort": true,
+                    "sDom": 'rt<"bottom1"il><"bottom2"fp',
+                    "aaSorting": [[0,'asc']],
+                    "aoColumns": [
+                                    { "sType": "html" },
+                                    { "sType": "html" },
+                                    { "sType": "html" },
+                                    { "sType": "html" },
+                                    { "sType": "html" }
+                            ]
 
-	});	
+            });
+        }
+
+
 })
