@@ -20,13 +20,30 @@ function updateOrderReviewSoftware() {
 
    $('#sworDate').html(formatDateForReview(new Date()));   
    $('#sworContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+   $('#sworProjectName').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
    $('#sworBillingAccount').html($("#billingProjects option[value="+ billingProjectId +"]").text());
    $('#sworStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
    
-   $('#sworFirstPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(2));   
-   $('#sworSecondPlaceCost').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(2));	 
-   $('#sworAdminFee').html(mainWidget.softwareCompetition.projectHeader.getAdminFee().formatMoney(2));
-   $('#sworTotal').html(getCurrentContestTotal().formatMoney(2));
+   var firstPrize = mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost();
+   $('#sworFirstPlaceCost').html(firstPrize.formatMoney(2));
+   var secondPrize = mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost();
+   $('#sworSecondPlaceCost').html(secondPrize.formatMoney(2));
+   var drPoints = mainWidget.softwareCompetition.projectHeader.getDRPoints();
+   $('#sworDRPoints').html(drPoints.formatMoney(2));
+   var reliabilityBonusCost = mainWidget.softwareCompetition.projectHeader.getReliabilityBonusCost();
+   $('#sworReliabilityBonusCost').html(reliabilityBonusCost.formatMoney(2));
+   var contestPrizeCost = firstPrize + secondPrize + drPoints + reliabilityBonusCost;
+   $('#sworContestPrizeCost').html(contestPrizeCost.formatMoney(2));
+
+   var specificationReviewPayment = mainWidget.softwareCompetition.projectHeader.getSpecReviewCost();
+   $('#sworSpecificationReviewPayment').html(specificationReviewPayment.formatMoney(2));
+   var reviewPayment = mainWidget.softwareCompetition.projectHeader.getReviewCost();
+   $('#sworReviewPayment').html(reviewPayment.formatMoney(2));
+   var contestFee = mainWidget.softwareCompetition.projectHeader.getAdminFee();
+   $('#sworAdminFee').html(contestFee.formatMoney(2));
+   var additionalFee = specificationReviewPayment + reviewPayment + contestFee;
+   $('#sworAdditionalCosts').html(additionalFee.formatMoney(2));
+   $('#sworTotal').html((contestPrizeCost + additionalFee).formatMoney(2));
 }
 
 /**

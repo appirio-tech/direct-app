@@ -74,6 +74,23 @@ $(document).ready(function(){
 		$("#sortTableBy").toggle();
 	}
 	
+	/*TCCC-2398*/
+	/*-------------------------- filter the project --*/
+	
+	filterProject = function(){
+		if ($("#dropDown1").attr("display") == "none") {
+			showHideList();
+		}
+        var typedText = $(".inputSelect>input")[0].value;
+        $("#dropDown1>ul>li").each(function() {
+            if ($(this).find("a")[0].innerHTML.toLowerCase().indexOf(typedText.toLowerCase()) == -1) {
+                $(this).css('display', 'none');
+            } else {
+                $(this).css('display', '');
+            }
+        });
+	}
+	
 	/*------------------------- hover state of the dropdown list  --*/
 	
 	$(".contestsDropDown UL LI").mouseover(function(){
@@ -325,6 +342,13 @@ $(document).ready(function(){
 	//	if( $.browser.msie || $.browser.safari )
 	//		document.location.reload();
 	//});
+	
+	$('#projectName').change(function() {
+		var projectName = jQuery.trim($("#projectName").val());
+		$("#projectName").val(projectName);
+		return true;
+	});
+	
 });
 
 

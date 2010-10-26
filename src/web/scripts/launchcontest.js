@@ -521,6 +521,7 @@ function resetFileTypes(studioSubtypeId) {
  */
 function addNewProject() {
    var projectName = $('#addProjectForm').find('input[name="projectName"]').val();
+   projectName = jQuery.trim(projectName);
    var projectDescription =  $('#addProjectForm').find('input[name="projectDescription"]').val();
 
    var errors = [];

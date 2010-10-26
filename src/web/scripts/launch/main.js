@@ -106,9 +106,10 @@ $(document).ready(function() {
 
    //file types
    $('.fileType').click(function(){
-     if($('.deliverablesInner .fileInput').length < 3){
+	   if ($("#deliverablesCheckboxs>input[type=checkbox]").size() % 6 == 0) {
+	       $('.checkInput').append('<br />');
+	   }
        $('.checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
-     }
    });
 
   // Document uploader set up

@@ -135,6 +135,7 @@
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </ul>
+														<ui:submissionAction contestId="${submission.contestId}" submission="${submission}"/>
                                                     </div>
                                                     <!-- End #singleSubmissionSlide -->
 

@@ -1,13 +1,6 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div id="area2"><!-- the right column -->
-    <c:if test="${requestScope.PAGE_TYPE ne 'dashboard'}">
-        <div class="box">
-            <a href="<s:url action="dashboardActive" namespace="/" />" class="button3">Back to Dashboard</a>
-        </div>
-        <!-- End .box -->
-    </c:if>
-
     <div class="box">
         <a href="${ctx}/launch/home" class="button2">Launch New Contest</a>
     </div>
@@ -21,11 +14,12 @@
             <p class="label">Select a Project</p>
 
             <div class="inputSelect">
+			    <!--TCCC-2398-->
                 <ui:isProjectContextSet>
-                    <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideList();"/>
+                    <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideList();" onkeyup="filterProject();" />
                 </ui:isProjectContextSet>
                 <ui:noProjectContextSet>
-                    <s:textfield value="Select a Project" onfocus="showHideList();"/>
+                    <s:textfield value="Select a Project" onfocus="showHideList();" onkeyup="filterProject();"/>
                 </ui:noProjectContextSet>
                 <a href="javascript:;" onclick="showHideList();" class="selectIco"></a>
             </div>

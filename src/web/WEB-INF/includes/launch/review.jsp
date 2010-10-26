@@ -114,7 +114,7 @@
     <h3>Final Deliverables:</h3>
     
     <div class="deliverablesInner">
-        <div class="checkInput" id="rFinalDeliveries" >
+        <div class="rCheckInput" id="rFinalDeliveries" >
         </div>
         
         <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>

@@ -73,6 +73,7 @@
                                                             <tr>
                                                                 <th>Handle</th>
                                                                 <th>Rating</th>
+                                                                <th>Reliability</th>
                                                                 <th>Registration Date</th>
                                                                 <th>Submission Date</th>
                                                             </tr>
@@ -95,6 +96,14 @@
                                                                             <s:set var="rating" value="rating" scope="page"/>
                                                                             <fmt:formatNumber value="${rating}"
                                                                                               pattern="########0"/>
+                                                                        </s:if>
+                                                                     </td>
+                                                                    <td>
+                                                                        <s:if test="reliability == null">n/a</s:if>
+                                                                        <s:if test="reliability != null">
+                                                                            <s:set var="reliability" value="reliability" scope="page"/>
+                                                                            <fmt:formatNumber value="${reliability}"
+                                                                                              pattern="0.00%" />
                                                                         </s:if>
                                                                      </td>
                                                                     <td>

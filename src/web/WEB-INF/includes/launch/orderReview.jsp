@@ -2,7 +2,7 @@
 
 <div class="orderReview">
 			<h2 class="sectionHead" id="orderReview_title">Order Review</h2>
-			<span class="redAlert hide" id="receiptAlert" >We have sheduled your competition and processed payment.</span>
+			<span class="redAlert hide" id="receiptAlert" >We have scheduled your competition and processed payment.</span>
 			 <!-- overviewBox -->
 			<div class="overviewBox">
 				<table class="overviewData" cellpadding="0" cellspacing="0">

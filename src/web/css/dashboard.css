@@ -2489,6 +2489,12 @@ A{
     *top:25px;
 }
 
+.dataTables_info {
+	float: left;
+	font-size: 12px;
+	padding: 15px 0px 0px;
+}
+
 #notificationsContent .bottom2 {
     margin-top: 18px;
     *margin-top: 0px;	
@@ -3927,7 +3933,7 @@ a.thumbList img{ margin: 3px; }
 	margin: 0 auto;
 }
 
-#singleSubmissionSlide ul{ height: 560px; }
+#singleSubmissionSlide ul.carouselSingle{ height: 600px; }
 #singleSubmissionSlide ul li{ float:left; list-style: none; }
 
 a.thumbSingle{

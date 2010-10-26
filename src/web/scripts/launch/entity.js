@@ -212,6 +212,10 @@ com.topcoder.direct.Project = function() {
 	  	  this.properties['Project Name'] = projectName;
 	  }
 	  
+	  this.getProjectName = function() {
+	  	  return this.properties['Project Name'];
+	  }	  
+	  
 	  this.setRootCatalogId = function(rootCatalogId) {
 	  	  this.properties['Root Catalog ID'] = rootCatalogId;
 	  }
@@ -292,6 +296,10 @@ com.topcoder.direct.Project = function() {
 
 	  this.setSpecReviewCost = function(specReviewCost) {
 	  	  this.properties['Spec Review Cost'] = specReviewCost;
+	  }
+
+	  this.getSpecReviewCost = function() {
+	  	  return this.properties['Spec Review Cost'];
 	  }
 
 	  this.setCostLevel = function(costLevel) {

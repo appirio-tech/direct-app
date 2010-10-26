@@ -199,6 +199,10 @@ public class GetContestAction extends ContestAction {
             ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
             getViewData().setContestStats(contestStats);
             getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, false));
+            if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
+            {
+                contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());
+            }
         }
     }
 

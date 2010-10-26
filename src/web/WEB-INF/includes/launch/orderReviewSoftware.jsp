@@ -2,7 +2,7 @@
 
 <div class="orderReview">
 			<h2 class="sectionHead" id="swOrderReview_title">Order Review</h2>
-			<span class="redAlert hide" id="swReceiptAlert" >We have sheduled your competition and processed payment.</span>
+			<span class="redAlert hide" id="swReceiptAlert" >We have scheduled your competition and processed payment.</span>
 			 <!-- overviewBox -->
 			<div class="overviewBox">
 				<table class="overviewData" cellpadding="0" cellspacing="0">
@@ -17,6 +17,10 @@
 					<tr>
 						<th>Competition Title :</th>
 						<td><span id="sworContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+					</tr>
+					<tr>
+						<th>Project :</th>
+						<td><span id="sworProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 					</tr>
 					<tr>
 			      <th>Billing Account :</th>
@@ -39,19 +43,21 @@
 	<h3>Contest Prizes</h3>
   <table class="prizesTable">
   		<tbody><tr>
-  			<td>1st Place : $<span id="sworFirstPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-  			<td>2nd Place : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
-  			<td>&nbsp;</td>
-  			<td>&nbsp;</td>
-  			<td>&nbsp;</td>
-  			<td>&nbsp;</td>
+  			<td>First Place Cost : $<span id="sworFirstPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td>Second Place Cost : $<span id="sworSecondPlaceCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td>DR points : $<span id="sworDRPoints"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td>Reliability Bonus Cost : $<span id="sworReliabilityBonusCost"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td class="last"><span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
   </table>	
-	<h3>Administration</h3>
+	<h3>Additional Costs:</h3>
 	<table class="prizesTable">
 		<tr>
-			<td class="large">Administration Fee : $<span id="sworAdminFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td>Contest Fee : $<span id="sworAdminFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td>Specification Review : $<span id="sworSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+  			<td>Review  : $<span id="sworReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 			<td>&nbsp;</td>
+  			<td class="last"><span id="sworAdditionalCosts"></span></td>
 		</tr>
 	</table>
 	<table class="total">

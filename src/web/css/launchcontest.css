@@ -1187,9 +1187,16 @@
 			border:#c1c1c1 solid 1px;
 			}
 			
+			/** input on review page **/
+			.deliverablesInner .rCheckInput{
+				display:block;
+				margin-top:4px;
+				}
+
+
 			/** input **/
 			.deliverablesInner .checkInput{
-				width:auto;
+			       width:auto;
 				float:left;
 				display:inline;
 				margin-top:4px;

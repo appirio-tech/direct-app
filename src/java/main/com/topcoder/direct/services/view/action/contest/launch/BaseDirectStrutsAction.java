@@ -5,6 +5,8 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.topcoder.service.user.UserService;
 import org.apache.log4j.Logger;
@@ -14,6 +16,8 @@ import com.opensymphony.xwork2.Preparable;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.configs.ReferenceDataBean;
 import com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
@@ -53,9 +57,15 @@ import com.topcoder.service.studio.contest.ContestManager;
  * <li>Add the <code>userService</code>.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.2.2 - Direct Release Assembly 5 (72 hrs) Change Note
+ * <ul>
+ * <li>Change <code>getProjects</code> to call the <code>DataProvider</code> instead of project service facade.</li>
+ * </ul>
+ * </p> 
  *
- * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.2.1
+ * @author fabrizyo, FireIce, murphydog
+ * @version 1.2.2
  */
 public abstract class BaseDirectStrutsAction extends AbstractAction implements Preparable {
     /**
@@ -351,14 +361,31 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * @throws Exception if any error occurs
      */
     public List<ProjectData> getProjects() throws Exception {
-        if (null == projectServiceFacade) {
-            throw new IllegalStateException("The project service facade is not initialized.");
-        }
+        List<DashboardProjectSearchResultDTO> searchUserProjects = DataProvider.searchUserProjects(DirectStrutsActionsHelper
+            .getTCSubjectFromSession(), "");
+			
+		List<ProjectData> projects = new ArrayList<ProjectData>();
+		
+		for (DashboardProjectSearchResultDTO dashboardProjectSearchResultDTO : searchUserProjects) {
+			ProjectData projectData = new ProjectData();
+			projectData.setName(dashboardProjectSearchResultDTO.getData().getProjectName());
+			projectData.setProjectId(dashboardProjectSearchResultDTO.getData().getProjectId());
+			projects.add(projectData);
+		}
 
-        // get all the projects through facade.
-        List<ProjectData> projects = projectServiceFacade.getAllProjects(DirectStrutsActionsHelper
-            .getTCSubjectFromSession());
-
+        Collections.sort(projects, new Comparator() {
+			public int compare(Object obj1, Object obj2) {
+				if (((ProjectData)obj1).getName() == null) {
+					return -1;
+				}
+				if (((ProjectData)obj2).getName() == null) {
+					return 1;
+				}
+				String name1 = ((ProjectData)obj1).getName().trim();
+				String name2 = ((ProjectData)obj2).getName().trim();
+				return name1.compareTo(name2);
+			}
+        });		
         return projects;
     }
 
