@@ -77,10 +77,10 @@ $(document).ready(function(){
 			});
 		});
 		arrVals.sort(function(a, b){
-			if(a.val > b.val){
+			if(a.text > b.text){
 				return 1;
 			}
-			else if (a.val == b.val){
+			else if (a.text == b.text){
 				return 0;
 			}
 			else {
