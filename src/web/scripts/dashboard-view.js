@@ -6,7 +6,7 @@ $(document).ready(function(){
 
     /* init date-pack */
     if($('.date-pick').length > 0){
-    	$(".date-pick").datePicker({startDate:'01/01/2001'});
+        $(".date-pick").datePicker({startDate:'01/01/2001'});
     }
     
     $('#enterpriseDashboardSubmit').click(function() {
@@ -64,52 +64,64 @@ $(document).ready(function(){
             $(".dashboardTable a.triggerDetail").trigger("click");                
         }
     })
-	
-	var $select = $("#EnterpriseDashboardForm_formData_projectId");
-	if ($select.length > 0) {
-		var selectedVal = $select.val();
-		var $options = $('option', $select);
-		var arrVals = [];
-		$options.each(function(){
-			arrVals.push({
-				val: $(this).val(),
-				text: $(this).text()
-			});
-		});
-		arrVals.sort(function(a, b){
-			if(a.text > b.text){
-				return 1;
-			}
-			else if (a.text == b.text){
-				return 0;
-			}
-			else {
-				return -1;
-			}
-		});
-		for (var i = 0, l = arrVals.length; i < l; i++) {
-			$($options[i]).val(arrVals[i].val).text(arrVals[i].text);
-		}
-		$select.val(selectedVal);
-	}
-        if ($("#enterpriseHealthTable").length != 0) {
-            $("#enterpriseHealthTable").dataTable({
-                    "bInfo": false,
-                    "bPaginate": false,
-                    "bFilter": false,
-                    "bSort": true,
-                    "sDom": 'rt<"bottom1"il><"bottom2"fp',
-                    "aaSorting": [[0,'asc']],
-                    "aoColumns": [
-                                    { "sType": "html" },
-                                    { "sType": "html" },
-                                    { "sType": "html" },
-                                    { "sType": "html" },
-                                    { "sType": "html" }
-                            ]
-
+    
+    var $select = $("#EnterpriseDashboardForm_formData_projectId");
+    if ($select.length > 0) {
+        var selectedVal = $select.val();
+        var $options = $('option', $select);
+        var arrVals = [];
+        $options.each(function(){
+            arrVals.push({
+                val: $(this).val(),
+                text: $(this).text()
             });
+        });
+        arrVals.sort(function(a, b){
+            if(a.text > b.text){
+                return 1;
+            }
+            else if (a.text == b.text){
+                return 0;
+            }
+            else {
+                return -1;
+            }
+        });
+        for (var i = 0, l = arrVals.length; i < l; i++) {
+            $($options[i]).val(arrVals[i].val).text(arrVals[i].text);
         }
+        $select.val(selectedVal);
+    }
 
+    function getNumber(s) {
+        var x = s.replace( /<.*?>/g, "" );
+        x = x.replace( /%/, "" );
+        x = x.replace( /\$/, "" );
+        x = x.replace( /,/, "");
+        return parseFloat( x );
+    }
+
+    jQuery.fn.dataTableExt.oSort['percent-asc']  = function(a,b) {
+        var x = getNumber( a );
+        var y = getNumber( b );
+        return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['percent-desc'] = function(a,b) {
+        var x = getNumber( a );
+        var y = getNumber( b );
+        return ((x < y) ?  1 : ((x > y) ? -1 : 0));
+    };
+    jQuery.fn.dataTableExt.oSort['money-asc']  = function(a,b) {
+        var x = getNumber( a );
+        var y = getNumber( b );
+        return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['money-desc'] = function(a,b) {
+        var x = getNumber( a );
+        var y = getNumber( b );
+        return ((x < y) ?  1 : ((x > y) ? -1 : 0));
+    };
 
 })

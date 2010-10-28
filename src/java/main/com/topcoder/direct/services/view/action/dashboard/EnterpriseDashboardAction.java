@@ -498,8 +498,9 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 return Integer.parseInt(yearLabel) * 1000
                        + Integer.parseInt(weekLabel.substring(0, weekLabel.length() - 2));
             } else if (this.type == EnterpriseDashboardStatPeriodType.MONTH) {
-                String monthName = label.split(" ")[0];
-                return this.monthNumbers.get(monthName);
+                String[] split = label.split(" ");
+                String monthName = split[0];
+                return this.monthNumbers.get(monthName) + 12 * Integer.parseInt(split[1]);
             } else if (this.type == EnterpriseDashboardStatPeriodType.QUARTER) {
                 String[] split = label.split(" ");
                 String quarterLabel = split[0];
