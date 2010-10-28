@@ -272,9 +272,23 @@
                </span>
               </p>
                                                 
-              <div class="bottom_spec">
-              </div>     
-              
+                <div class="bottom_spec">
+                </div>     
+
+                <p class="det_font">
+                <span class="name"><strong>Private Description</strong></span>
+                <br />
+                <span class="gray_name"><strong>A description that is only viewable to copilots that register for this posting.</strong>
+                </span>               
+                <br /><br />
+                <span class="small_info_spec" id="rswPrivateDescription">
+                ${result.projectHeader.projectSpec.privateDescription}
+                </span>
+                </p>
+                                                
+                <div class="bottom_spec">
+                </div>     
+                
                <p class="det_font">
                <span class="name"><strong>Software Guidelines</strong></span>
                <br />

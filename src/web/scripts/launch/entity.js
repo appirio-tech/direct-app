@@ -1,6 +1,17 @@
+/*
+ * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ */
 /**
- * Contest JS Classes
- */ 
+ * This javascript file defines classes to store informations about contest.
+ * 
+ * <p>
+ * Changes in v1.0.1 (TC Direct - Launch Copilot Selection Contest assembly): add private description field in project class,
+ * and copilot selection contest in project category array.
+ * </p>
+ * 
+ * @author TCSASSEMBLER
+ * @version 1.0.1
+ */
 if(!com) {
    var com = {};
 }
@@ -41,6 +52,9 @@ com.topcoder.direct.StudioCompetition = function() {
    this.milestoneDate = null;
 }
 
+/**
+ * Contest data class.
+ */
 com.topcoder.direct.ContestData = function() {
    this.contestId = -1;
    
@@ -82,10 +96,13 @@ com.topcoder.direct.ContestData = function() {
     * @return true if the billing project is selected. otherwise false.
     */
    this.isBillingSelected = function() {
-   	  return (this.billingProject > 0);
+         return (this.billingProject > 0);
    }
 }
 
+/**
+ * Contest multiple round information data.
+ */
 com.topcoder.direct.ContestMultiRoundInformationData = function() {
    this.id = -1;
 
@@ -96,6 +113,9 @@ com.topcoder.direct.ContestMultiRoundInformationData = function() {
    this.roundTwoIntroduction = null;
 }
 
+/**
+ * Milestone prize data class.
+ */
 com.topcoder.direct.MilestonePrizeData = function() {
    this.id = -1;
 
@@ -104,6 +124,12 @@ com.topcoder.direct.MilestonePrizeData = function() {
    this.numberOfSubmissions = 0;
 }
 
+/**
+ * Prize data class.
+ * 
+ * @param place the place
+ * @param amount the amount
+ */
 com.topcoder.direct.PrizeData = function(place, amount) {
    this.place = place;
 
@@ -143,15 +169,28 @@ var projectCategoryArray = [
 {id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application'},
 {id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application'},
 {id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application'},
-{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application'}
+{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application'},
+{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application'}
 ];
 
+/**
+ * Get project category by id.
+ * 
+ * @param id the id
+ * @return project category
+ */
 function getProjectCategoryById(id) {
-	 return $.grep(projectCategoryArray,function(element, i) {
-	 	  return element.id == id;
-	 }) [0];
+     return $.grep(projectCategoryArray,function(element, i) {
+           return element.id == id;
+     }) [0];
 }
 
+/**
+ * Get project category id by name.
+ * 
+ * @param name the name.
+ * @return project category id, or -1 if not found.
+ */
 function getProjectCategoryIdByName(name) {
 	 var category = $.grep(projectCategoryArray,function(element, i) {
 	 	  return element.name == name;
@@ -178,6 +217,9 @@ com.topcoder.direct.SoftwareCompetition = function() {
     this.paidFee = 0;
 } 
 
+/**
+ * Asset DTO classes.
+ */
 com.topcoder.direct.AssetDTO = function() {
 	  this.name = null;	  
 
@@ -191,6 +233,9 @@ com.topcoder.direct.AssetDTO = function() {
 	  this.productionDate = null;
 } 
 
+/**
+ * Project class.
+ */
 com.topcoder.direct.Project = function() {
 	  this.id = -1;
 	  
@@ -314,16 +359,26 @@ com.topcoder.direct.Project = function() {
 	  this.setBillingProject(0);
 }
 
+/**
+ * Project spec class.
+ */
 com.topcoder.direct.ProjectSpec = function() {
-	  this.projectSpecId = 0;
-	  
-	  this.detailedRequirements = "";
-	  
-	  this.submissionDeliverables = "";
-	  
-	  this.environmentSetupInstructions = "";
-	  
-	  this.finalSubmissionGuidelines = "";
+      this.projectSpecId = 0;
+      
+      this.detailedRequirements = "";
+      
+      this.submissionDeliverables = "";
+      
+      this.environmentSetupInstructions = "";
+      
+      this.finalSubmissionGuidelines = "";
+      
+      /**
+       * Represents private description field.
+       * 
+       * @since 1.0.1
+       */
+      this.privateDescription = "";
 }
 
 

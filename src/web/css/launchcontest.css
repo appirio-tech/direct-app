@@ -266,6 +266,9 @@
 				font-size:14px;
 				line-height:28px;
 				}
+		 #launchContestOut.launchCopilotContest .addNewContest label{
+                width:275px;
+            }
 				
 			/** input **/
 			#launchContestOut .addNewContest .projectSelect{
@@ -280,6 +283,11 @@
 				border:0;
 				background:url(/images/addNew_input.gif) no-repeat;
 				}
+			 #launchContestOut.launchCopilotContest .addNewContest .text{
+                		background:none;
+                		width:370px;
+                		border:1px solid #a8abad;
+            }
 				
 			#launchContestOut .addNewContest .projectSelect .text{
 				width:362px;
@@ -289,6 +297,11 @@
 				border:0;
 				background:url(/images/tabContest_input.gif) no-repeat;
 				}
+			#launchContestOut.launchCopilotContest .projectSelect .text{
+                		background:none;
+                		width:235px;
+                		border:1px solid #a8abad;
+            }             
 				
 			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect{
 				width:auto;
@@ -296,6 +309,9 @@
 				display:inline;
 				margin-right:26px;
 				}
+			#launchContestOut.launchCopilotContest .addNewContest .projectSelect{
+                		margin-right:5px; 
+             		}                
 				
 			/** button **/
 			#launchContestOut .addNewContest .button6{
@@ -585,6 +601,24 @@
 				margin: 0;
 				background: url(/images/table_last_cell_background.gif) repeat-x;
 				}
+			.launchCopilotContest .prizesTable td.prize{
+               	 		width:25%; 
+                		text-align:center;
+            		}
+            		.launchCopilotContest .prizesTable td.prize span{
+                		font-weight:normal;
+            		}
+            		.launchCopilotContest .prizesTable td.prize span.feeValue{
+                		width:auto;
+                		font-size: 14px;
+                		font-weight: bold;
+                	text-align:center;
+            	}
+            		.launchCopilotContest .prizesTable td.total{
+                		font-size: 20px;
+                		text-align:right;
+                		padding-right:20px;
+            	}                
 				
 	hr.dualDivider{
 		border:0;
@@ -672,6 +706,14 @@
 		height:165px;
 		border:#bdbdbd solid 1px;
 		}
+	 #launchContestOut.launchCopilotContest .schedule{
+         	height:auto;
+         	padding-bottom:20px;
+    	}
+    	.launchCopilotContest .description textarea{
+        	height:100%;
+        	width:100%;
+    	}    
 			
 		/** row **/
 		#launchContestOut .schedule .row{
@@ -727,6 +769,10 @@
 				font-size:12px;
 				color:#6c6c6c;
 				}
+			#launchContestOut.launchCopilotContest .schedule span {
+                		font-size:14px;
+                		color:#333333;
+            		}        
 	/**　end .schedule **/
 				
 		/** bottom button **/
@@ -2048,3 +2094,166 @@ div.ac_results { background-color: white; border: 2px solid yellow; border-top: 
 div.ac_results ul {  padding-left: 0px; }
 div.ac_results li { list-style-type: none; padding-left: 5px; }
 div.ac_results li.ac_over { background-color: yellow; color: black; cursor: pointer; }
+
+/* launchCopilotContest */
+#launchContestOut.launchCopilotContest .addNewContest .button6 span.right{
+    padding:4px 13px 0 16px;    
+} 
+ .launchCopilotContest .fileUpload {
+    overflow:hidden;
+}
+.launchCopilotContest .fileUpload dl {
+    padding-left:15px;
+}
+.launchCopilotContest .fileUpload dd.addFile{
+    overflow:hidden;
+}
+.launchCopilotContest .fileUpload .fileInput{
+    position:absolute;
+    height: 100%;
+    width: auto;
+    cursor:pointer;
+}
+.launchCopilotContest .fileUpload input{
+    height:22px;
+    line-height:22px;
+    border:1px solid #BDBDBD;
+    width:100%;
+}
+.launchCopilotContest .fileUpload .attachFile{
+    overflow:hidden;
+    display:inline-block;
+    position:relative;
+    float:left;
+    width:50%;
+}
+.launchCopilotContest .fileUpload .attachFile td.uploadBtn{
+    width:95px;
+}
+.launchCopilotContest .fileUpload .attachDesc{
+    display:inline-block;
+    float:right; 
+    width:48%;
+}
+.launchCopilotContest .fileUpload .attachDesc td.addDelBtn{
+    width:70px;
+}
+.launchCopilotContest .fileUpload table{
+    width:100%;
+}
+.launchCopilotContest .fileUpload .cloneit{
+    display:none;
+}
+.launchCopilotContest .fileUpload .addButton,.launchCopilotContest .fileUpload .removeButton{
+    margin-top:5px;
+    margin-left:10px;
+}
+.launchCopilotContest .infoPanel{
+    overflow:hidden; 
+    /*margin-top:10px;*/
+    padding:15px 5px;
+
+}
+.launchCopilotContest .infoPanel .infoPanelMask{
+   /* border:1px solid #BDBDBD;
+    padding:15px 0px;*/
+    overflow:hidden;
+}
+#launchContestOut.launchCopilotContest .infoPanel h3{
+    margin-top:0px;
+}
+#launchContestOut.launchCopilotContest .editPanel h3{
+    margin-top:0px;
+}
+.launchCopilotContest .infoPanel ul {
+    list-style-type:none;
+    float:left;
+    line-height:30px;
+}
+.launchCopilotContest .infoPanel ul li {
+    color:#333333;
+    font-family:Geneva,Arial,Helvetica,sans-serif;
+    font-size:13px;
+    padding-left:15px;
+    font-weight:bold;
+}
+.launchCopilotContest .infoPanel ul li label{
+    width:160px;
+    display:inline-block;
+    font-weight:normal;
+}
+.launchCopilotContest .infoPanel ul li label.textValue {
+    color:#333333;
+    font-family:Geneva,Arial,Helvetica,sans-serif;
+    font-size:13px;
+    padding-left: 0px;
+    font-weight:bold;
+    width: 600px;
+}
+#launchContestOut.launchCopilotContest .editPanel {
+    border:1px solid #FF0000;
+   /* margin-top:10px;*/
+    padding:15px 5px 0px;
+}
+#launchContestOut .editMask .addNewContest{
+    height:auto;
+    padding-bottom:0px;
+    margin-top:15px;
+    padding-top:0px;
+}
+.launchCopilotContest .editMask .description .textarea {
+    border:0px;
+    padding:0 10px 0 10px;
+}
+.launchCopilotContest .editMask.greybg .infoPanel{
+   background-color:#f5f5f5;
+}
+.launchCopilotContest .editMask .addNewContestInfo,.launchCopilotContest .editMask .addNewContest{
+    margin-top:15px;
+}
+#launchContestOut .editMask.costs{
+    margin-bottom:15px;
+}
+#launchContestOut .editMask.costs h3{
+    padding-left:5px;
+    margin-top:12px;
+}
+#launchContestOut.launchCopilotContest .editPanel .editPanelMask{ 
+    padding:15px 0px;
+    //overflow:hidden;
+}
+
+.launchCopilotContest .editPanel .edit_type{
+    margin-left:5px;
+} 
+.launchCopilotContest .editPanel p.save{
+    padding-right:10px;
+    height:15px;
+}
+.launchCopilotContest .fileuploadInfo table{
+    width:100%;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:12px;
+    color:#333333;
+}
+.launchCopilotContest .fileuploadInfo table td.fileName{
+    font-weight:bold;
+    width:40%;
+    padding:5px 0px 5px 10px;
+}
+.launchCopilotContest .fileuploadInfo table td.fileName a{
+    color:#333333;
+}
+.launchCopilotContest .descriptionInfo p{
+    padding:0 10px;
+    font-size:14px;
+}
+
+/** Hide the path in tinyMCE description in launch copilot contest page*/
+.launchCopilotContest #mce_0_path_row{
+    display:none;
+}
+
+.launchCopilotContest #mce_31_path_row{
+    display:none;
+}

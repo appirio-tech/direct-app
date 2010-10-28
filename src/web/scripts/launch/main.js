@@ -106,10 +106,9 @@ $(document).ready(function() {
 
    //file types
    $('.fileType').click(function(){
-	   if ($("#deliverablesCheckboxs>input[type=checkbox]").size() % 6 == 0) {
-	       $('.checkInput').append('<br />');
-	   }
+     if($('.deliverablesInner .fileInput').length < 3){
        $('.checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
+     }
    });
 
   // Document uploader set up
@@ -665,7 +664,7 @@ function getDocumentIds(docs) {
  * @return Date object
  */
 function getDate(datePart, timePart) {
-   return Date.parse(datePart+' '+timePart +' EST','MM/dd/yyyy HH:mm EST');
+   return Date.parse(datePart+' '+timePart,'MM/dd/yyyy HH:mm EST');
 }
 
 function formatDateForRequest(d) {
@@ -798,7 +797,7 @@ function swRefreshDocuments() {
    var html = "";
    var template = unescape($('#swFileTemplte').html());
    $.each(swDocuments, function(i,doc) {
-       html += $.validator.format(template, doc.documentId,doc.fileName);
+       html += $.validator.format(template, doc.documentId,doc.fileName, doc.description);
    });
 
    $('#swDocumentList').html(html);

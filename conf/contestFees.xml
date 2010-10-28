@@ -364,5 +364,33 @@
             </billingLevel>
         </contestCost>
 	</contestType>
+<contestType contestTypeId="29"> 
+<!-- COPILOT POSTING -->
+		<contestFee>0</contestFee>
+        <specReviewCost>0</specReviewCost>
+		<contestCost>
+            <billingLevel id="low">
+                <firstPlaceCost>50</firstPlaceCost>
+                <secondPlaceCost>25</secondPlaceCost>
+                <reviewBoardCost>0</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="medium">
+                <firstPlaceCost>100</firstPlaceCost>
+                <secondPlaceCost>50</secondPlaceCost>
+                <reviewBoardCost>0</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+            <billingLevel id="high">
+                <firstPlaceCost>150</firstPlaceCost>
+                <secondPlaceCost>75</secondPlaceCost>
+                <reviewBoardCost>0</reviewBoardCost>
+                <reliabilityBonusCost>0</reliabilityBonusCost>
+                <drCost>0</drCost>
+            </billingLevel>
+        </contestCost>
+	</contestType>       
 </contestTypes>
 	

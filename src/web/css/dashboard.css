@@ -198,6 +198,12 @@ BODY#page{
 		text-align: center;
 		cursor: pointer;
 	}
+
+	 #tabs1.copilotsTabs1 UL LI A SPAN{
+        width:auto;
+        padding-left:15px;
+        padding-right:15px;
+    }
 	
 	#tabs1 UL LI A:hover{
 		background-position: left bottom;
@@ -4602,3 +4608,65 @@ th.pipelineData14 {
 #validationErrors {
     color: red;
 }
+
+#header .logo img.copilotTitle{
+    vertical-align:bottom;
+}
+#header .logo span{
+    font-weight:bold;
+    line-height:39px;
+}
+
+/* Accept and Reject pop-up */
+.acceptRejectPopup{
+    display:none;
+    background:url("/images/review-dlg-top.png") no-repeat center top;
+    padding-top:8px;
+    width:360px;
+    color:#000000;
+}
+.acceptRejectPopup .popupMask{
+    background:url("/images/review-dlg-bot.png") no-repeat center bottom ;
+    width:100%;
+    padding-bottom:7px;
+}
+.acceptRejectPopup .popupWrap{
+    background:url("/images/review-dlg-mid.png") repeat-y;
+    padding:0 6px;
+}
+.acceptRejectPopup .popupContent{
+    background:url("/images/review-dlg-bg.png") repeat-x center bottom;
+    padding:28px 30px;
+}
+.acceptRejectPopup a.button6{
+    display:inline-block; 
+    float:none;
+}
+.acceptRejectPopup dt{
+    text-align:center;
+    font-size:14px;
+    padding:0 8px 20px;
+}
+.acceptRejectPopup dt span{
+    color:#b60000;
+    font-weight:bold;
+}
+.acceptRejectPopup dd{
+    font-size:12px;
+    color:#333333;
+}
+.acceptRejectPopup dd.yesno{
+    text-align:center;
+    margin-top:30px;
+}
+#rejectPopup dd.yesno{
+    margin-top:21px;
+}
+.acceptRejectPopup a.button6{
+    font-family:"Myriad Pro",Arial,Helvetica,sans-serif;
+    width:60px;
+}
+.acceptRejectPopup a.button6 span.right{
+    padding:4px 20px 0;
+}
+

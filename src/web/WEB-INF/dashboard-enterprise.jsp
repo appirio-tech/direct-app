@@ -148,7 +148,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="first">Project</th>
-                                                    <th>Average Contest Duration (hours)</th>
+                                                    <th>Average Contest Duration (Hours)</th>
                                                     <th>Average Cost per Contest</th>
                                                     <th>Total Project Cost</th>
                                                     <th>Average Fulfillment</th>

@@ -509,4 +509,11 @@
             <result type="json"/>
         </action>
     </package>
+    
+    <!-- -->
+    <package name="copilot" namespace="/copilot" extends="base">
+        <action name="launchCopilotContest" class="launchContestAction">
+            <result>/WEB-INF/launch-copilot-contest.jsp</result>
+        </action>
+    </package>
 </struts>

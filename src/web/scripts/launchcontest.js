@@ -309,7 +309,10 @@ $(document).ready(function(){
     // initialize selects
     // populate the select option for software group
     $.each(projectCategoryArray,function(i, projectCategory) {
-        $("<option/>").val("SOFTWARE"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
+        // not show copilot contest type
+        if (projectCategory.id != 29) {
+            $("<option/>").val("SOFTWARE"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
+        }
     });
 
     if($('select').length > 0){

@@ -11,6 +11,7 @@
   -
   - Version 1.2 (Direct Pipeline Integration Assembly 1.0) changes: added Reports tab.
   - Version 1.3 (Direct Enterprise Dashboard Assembly 1.0) changes: added Overview tab for dashboard pages.  
+  - Version 1.4 (TC Direct - Launch Copilot Selection Contest assembly) changes: add copilot tab.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -32,6 +33,12 @@
             <a href="javascript:;" class="logo">
                 <img src="/images/launghContent_logo.png" alt="Launch Contest" /></a>
         </c:when>
+        <c:when test="${requestScope.PAGE_TYPE eq 'copilot'}">
+            <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="logo">
+                <img src="/images/copilot_title.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
+                <span>TopCoder Copilots</span>
+            </a>
+        </c:when>
         <c:otherwise>
             <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo projectLogo">
                 <s:property value="sessionData.currentProjectContext.name"/>
@@ -49,10 +56,10 @@
                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
-				<!--
-                <li><a href="#" onclick="return false;"><span>CoPilots</span></a></li>
-				<li><a href="#"><span>Messages (0)</span></a></li>
-				-->
+                <li>
+                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                </li>
+               
             </ul>
         </ui:isDashboardPage>
         <ui:isProjectPage>
@@ -65,12 +72,30 @@
                      <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
-				<!--
-                <li><a href="#" onclick="return false;"><span>CoPilots</span></a></li>
-				<li><a href="#"><span>Messages (0)</span></a></li>
-				-->
+                <li>
+                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                </li>
+               
             </ul>
         </ui:isProjectPage>
+	<ui:isCopilotPage>
+            <ul>
+                <li>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
+                </li>
+
+                <li>
+                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
+                </li>
+
+                <li class="on">
+                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                </li>
+                <!--
+                <li><a href="#"><span>Messages (0)</span></a></li>
+                -->
+            </ul>
+        </ui:isCopilotPage>
         <c:if test="${requestScope.PAGE_TYPE eq 'launch'}">
             <ul>
                 <li class="on">
@@ -81,10 +106,10 @@
                      <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
-				<!--
-                <li><a href="#" onclick="return false;"><span>CoPilots</span></a></li>
-				<li><a href="#"><span>Messages (0)</span></a></li>
-				-->
+                <li>
+                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                </li>
+                
             </ul>
         </c:if>
     </div><!-- End #tabs0 -->
@@ -146,7 +171,17 @@
         </div>
             
      </ui:isDashboardPage>
-
+     
+     <ui:isCopilotPage>
+        <div id="tabs1" class="copilotsTabs1">
+            <ul>
+                <li ><a href="javascript:;"><span>Introduction To Copilots</span></a></li>
+                <li class="on"><a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Get a Copilot</span></a></li>
+                <li><a href="javascript:;"><span>My Copilot Selection Contests</span></a></li>
+                <li><a href="javascript:;"><span>Manage Copilots</span></a></li>
+            </ul>
+        </div>
+     </ui:isCopilotPage>
     
     <div id="tabs2"><!-- tabs on the right side-->
         <ul>
