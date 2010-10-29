@@ -2233,7 +2233,7 @@ TABLE.notifications TH.permCol2{
 	height: 20px;
 	font-size: 12px;
 	background-color: transparent;
-	padding-top:7px;
+	width:250px;
 }
 
 	.pagination A{
@@ -2264,7 +2264,7 @@ TABLE.notifications TH.permCol2{
 	 
 	 .pagination .pages{
 	 	float: right;
-	 	padding-top: 2px;
+	 	padding-top: 11px;
 	 }
 	
 	.pagination .showPages{

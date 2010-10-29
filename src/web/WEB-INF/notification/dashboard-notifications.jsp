@@ -366,11 +366,10 @@
                     
                 </div>
                 <!-- End #mainContent -->
-
-                <jsp:include page="/WEB-INF/includes/footer.jsp"/>
-
             </div>
             <!-- End #content -->
+            <jsp:include page="/WEB-INF/includes/footer.jsp"/>
+            	
         </div>
         <!-- End #container -->
     </div>
