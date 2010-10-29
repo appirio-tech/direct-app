@@ -14,8 +14,6 @@ $(document).ready(function(){
      */
     if($('select').length > 0){
         $('.selectSoftware select,.selectDesign select,.catalogSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.milestoneEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
-        $('.projectSelect select').sSelect({ddMaxHeight: '200px'});
-        $('.billingSelect select').sSelect({ddMaxHeight: '200px'});
         $('.selectDesign div.selectedTxt').html('Select Contest Type');
         $('.startEtSelect select').focus();
         
@@ -23,7 +21,7 @@ $(document).ready(function(){
             ddMaxHeight: '220px',
             yscroll: true
         };
-        $('.startEtSelect select, .endEtSelect select').sSelect(SelectOptions);
+        $('.startEtSelect select, .endEtSelect select, .projectSelect select, .billingSelect select').sSelect(SelectOptions);
     }
     
     /**

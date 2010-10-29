@@ -184,7 +184,7 @@ $(document).ready(function(){
     
   tinyMCE.init({
   	mode : "exact",
-  	elements : "swDetailedRequirements,swGuidelines",
+  	elements : "swDetailedRequirements,swGuidelines,swPrivateDescription",
   	plugins : "paste",
   	theme : "advanced",  	
 	  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link",
@@ -263,6 +263,7 @@ function initContest(contestJson) {
       
    projectHeader.projectSpec.detailedRequirements = contestJson.detailedRequirements;
    projectHeader.projectSpec.finalSubmissionGuidelines = contestJson.softwareGuidelines;
+   projectHeader.projectSpec.privateDescription = contestJson.privateDescription;
    
    //prizes: if custom level, initiate customCosts object so it is not derived from custom level any more   
    if(projectHeader.getCostLevel() == COST_LEVEL_CUSTOM) {
@@ -648,11 +649,14 @@ function showPrizeSectionEdit() {
 function populateSpecSection(initFlag) {	
    var detailedRequirements = mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements;
    var guidelines = mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines;
+   var privateDescription = mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription;
 	
 	//edit
 	$('#swDetailedRequirements').val(detailedRequirements);
 	$('#swGuidelines').val(guidelines);		
-  if(isDevOrDesign()) {  	   
+    $('#swPrivateDescription').val(privateDescription);
+    
+    if(isDevOrDesign()) {  	   
        if(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId != $('#catalogSelect').val() || initFlag){ 
           $('#catalogSelect').val(mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId);
           updateCategories(fillCategories);
@@ -671,6 +675,8 @@ function populateSpecSection(initFlag) {
 	//display
   $('#rswDetailedRequirements').html(detailedRequirements);   
   $('#rswGuidelines').html(guidelines);   
+  $('#rswPrivateDescription').html(privateDescription);
+  
   if(isDevOrDesign()) {
      $('#rswRootCatalog').html($("#catalogSelect option[value="+ mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId +"]").text());
      
@@ -717,15 +723,17 @@ function saveSpecSection() {
 function validateFieldsSpecSection() {
    var detailedRequirements = tinyMCE.get('swDetailedRequirements').getContent();
    var softwareGuidelines = tinyMCE.get('swGuidelines').getContent(); 
+   var privateDescription = tinyMCE.get('swPrivateDescription').getContent(); 
    
    var rootCategoryId = $('#catalogSelect').val();
 	
    //validation
    var errors = [];
 
-   if(!checkRequired(detailedRequirements)) {
-       errors.push('Detailed requirements is empty.');
-   }
+   if (mainWidget.softwareCompetition.projectHeader.projectCategory.id != 29 ) {
+       if(!checkRequired(detailedRequirements)) {
+           errors.push('Detailed requirements is empty.');
+       }
 
    if(!checkRequired(softwareGuidelines)) {
        errors.push('Software guidelines is empty.');
@@ -741,11 +749,12 @@ function validateFieldsSpecSection() {
       }
    }
 
-  if(isTechnologyContest()) {
-      if($('#masterTechnologiesChoosenSelect option').length == 0) {
-      	   errors.push('No technology is selected.');
-      }      
-	 }
+        if(isTechnologyContest()) {
+            if($('#masterTechnologiesChoosenSelect option').length == 0) {
+               errors.push('No technology is selected.');
+            }      
+        }
+    }
 	
    if(errors.length > 0) {
        showErrors(errors);
@@ -754,6 +763,7 @@ function validateFieldsSpecSection() {
    
    mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = detailedRequirements;
    mainWidget.softwareCompetition.projectHeader.projectSpec.finalSubmissionGuidelines = softwareGuidelines;
+   mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
    
    if(isDevOrDesign()) {
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = rootCategoryId;

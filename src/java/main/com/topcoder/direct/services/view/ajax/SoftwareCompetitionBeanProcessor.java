@@ -116,6 +116,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         // spec
         result.put("detailedRequirements", project.getProjectSpec().getDetailedRequirements());
         result.put("softwareGuidelines", project.getProjectSpec().getFinalSubmissionGuidelines());
+        result.put("privateDescription", project.getProjectSpec().getPrivateDescription());
         // technologies/categories for development/design
         if (isDevOrDesign(bean)) {
             result.put("rootCategoryId", assetDTO.getRootCategory().getId());

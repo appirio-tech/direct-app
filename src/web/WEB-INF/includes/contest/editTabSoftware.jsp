@@ -262,59 +262,71 @@
 				</div><!-- End .caption -->
 												
 		    <div class="detailsContent_det_spec">
-							<p class="det_font">
-               <span class="name"><strong>Detailed Requirements</strong></span>
-               <br />
-               <span class="gray_name"><strong>Describe what you want to accomplish.</strong>
-               </span>               
-               <br /><br />
-               <span class="small_info_spec" id="rswDetailedRequirements">
-               </span>
-              </p>
-                                                
-                <div class="bottom_spec">
-                </div>     
-
                 <p class="det_font">
-                <span class="name"><strong>Private Description</strong></span>
+                <span class="name"><strong>Detailed Requirements</strong></span>
                 <br />
-                <span class="gray_name"><strong>A description that is only viewable to copilots that register for this posting.</strong>
+                <span class="gray_name">
+                    <strong>
+                    <s:if test="result.projectHeader.projectCategory.id == 29">
+                        A description that you want everyone to see.
+                    </s:if>
+                    <s:else>
+                        Describe what you want to accomplish.
+                    </s:else>
+                    </strong>
                 </span>               
                 <br /><br />
-                <span class="small_info_spec" id="rswPrivateDescription">
-                ${result.projectHeader.projectSpec.privateDescription}
+                <span class="small_info_spec" id="rswDetailedRequirements">
                 </span>
                 </p>
                                                 
                 <div class="bottom_spec">
                 </div>     
+
+                <s:if test="result.projectHeader.projectCategory.id == 29">
+                    <p class="det_font">
+                    <span class="name"><strong>Private Description</strong></span>
+                    <br />
+                    <span class="gray_name"><strong>A description that is only viewable to copilots that register for this posting.</strong>
+                    </span>               
+                    <br /><br />
+                    <span class="small_info_spec" id="rswPrivateDescription">
+                    </span>
+                    </p>
+                                                    
+                    <div class="bottom_spec">
+                    </div>     
+                </s:if>
                 
-               <p class="det_font">
-               <span class="name"><strong>Software Guidelines</strong></span>
-               <br />
-               <span class="gray_name"><strong>Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</strong>
-               </span>
-               
-               <br /><br />
-               <span class="small_info_spec" id="rswGuidelines">
-               </span>
-               </p>
-               
-               <div class="bottom_spec">
-               </div>     
-               
-               <div class="technology">                         
+                <s:if test="result.projectHeader.projectCategory.id != 29">
                    <p class="det_font">
-                   <span class="name"><strong>Current Project Technologies</strong></span>
+                   <span class="name"><strong>Software Guidelines</strong></span>
+                   <br />
+                   <span class="gray_name"><strong>Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</strong>
+                   </span>
                    
                    <br /><br />
-                   <span class="small_info_spec" id="rswTechnologies">
+                   <span class="small_info_spec" id="rswGuidelines">
                    </span>
                    </p>
                    
-                    <div class="bottom_spec">
+                   <div class="bottom_spec">
                    </div>     
-               </div> <!-- End of .technology -->
+                   
+                   <div class="technology">                         
+                       <p class="det_font">
+                       <span class="name"><strong>Current Project Technologies</strong></span>
+                       
+                       <br /><br />
+                       <span class="small_info_spec" id="rswTechnologies">
+                       </span>
+                       </p>
+                       
+                        <div class="bottom_spec">
+                       </div>
+                    </div> <!-- End of .technology -->
+               </s:if>
+               
                <div class="component">    
                    <p class="det_font">
                    <span class="name"><strong>Catalog Name</strong></span>
@@ -354,21 +366,44 @@
     		<div id="launchContestOut">        	
             <div class="contestDetail">        		
                 <!-- Detailed Requirements -->
-            	  <div class="description">                
+            	<div class="description">                
                       <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
                       <div class="textarea1">
                           <textarea id="swDetailedRequirements" rows="" cols=""></textarea>
                       </div>
                       
                       <div class="bottomTextarea">
-                      	<p>Describe what you want to accomplish.</p>
+                      	<p>
+                            <s:if test="result.projectHeader.projectCategory.id == 29">
+                                A description that you want everyone to see.
+                            </s:if>
+                            <s:else>
+                                Describe what you want to accomplish.
+                            </s:else>
+                        </p>
                       	<span class="icon"></span>                                        
                       </div>                    
                 </div>
                 <!-- end .description -->
                 
+                <!-- Private Description -->
+            	<div class="description <s:if test='result.projectHeader.projectCategory.id != 29'>hide</s:if>">                
+                      <h3><span class="icon">Private Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
+                      <div class="textarea1">
+                          <textarea id="swPrivateDescription" rows="" cols=""></textarea>
+                      </div>
+                      
+                      <div class="bottomTextarea">
+                      	<p>
+                        A description that is only viewable to copilots that register for this posting.    
+                        </p>
+                      	<span class="icon"></span>                                        
+                      </div>                    
+                </div>
+                <!-- end .description -->                
+                
                 <!-- Contest Description -->
-            	  <div class="guidelines">                  
+                <div class="guidelines <s:if test='result.projectHeader.projectCategory.id == 29'>hide</s:if>">                  
                       <h3><span class="icon">Software Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>               
                       
                       <div class="textarea1">
@@ -382,40 +417,41 @@
                 </div>
                 <!-- end .guidelines -->
                             
-                <div class="prizes technology" id="swTechnologyDiv">    
-                      <h3>Choose Your Technology:</h3>
-                      
-                      <div class="prizesInner_tech">
-                      <span class="head_font">Master Technologies</span>
-                      <span class="head_font_space">Your Project Technologies</span>
-                      <br />	
-                      <select multiple id="masterTechnologiesSelect">  
-                          <s:iterator value="referenceDataBean.technologies">
-                             <option value='<s:property value="id" />'><s:property value="name" /></option>
-                          </s:iterator>                  	
-                 	    </select>  
-                 	    
-                      <div id="button_tech">
-                      	<img src="/images/add_tech.png" alt="add" id="addTechnologies" />
-                          <br /><br />
-                        <img src="/images/remove_tech.png" alt="remove" id="removeTechnologies" />
-                      </div>    
-                      
-                      <select multiple id="masterTechnologiesChoosenSelect">
-                      </select>   
+                <s:if test='result.projectHeader.projectCategory.id != 29'>
+                    <div class="prizes technology" id="swTechnologyDiv">    
+                        <h3>Choose Your Technology:</h3>
+                          
+                        <div class="prizesInner_tech">
+                            <span class="head_font">Master Technologies</span>
+                            <span class="head_font_space">Your Project Technologies</span>
+                            <br />	
+                            <select multiple id="masterTechnologiesSelect">  
+                                <s:iterator value="referenceDataBean.technologies">
+                                    <option value='<s:property value="id" />'><s:property value="name" /></option>
+                                </s:iterator>                  	
+                            </select>  
+                                
+                            <div id="button_tech">
+                                <img src="/images/add_tech.png" alt="add" id="addTechnologies" />
+                                <br /><br />
+                                <img src="/images/remove_tech.png" alt="remove" id="removeTechnologies" />
+                            </div>    
+                              
+                            <select multiple id="masterTechnologiesChoosenSelect">
+                            </select>   
+                        </div>
                     </div>
-                 </div>
-                       
-                 <div class="prizes component" id="swCatalogDiv">
-                   <div class="catalogSelect">
-	              			<label>Catalog Name:</label>
-                      <select id="catalogSelect">
-                      		<option value='-1'>&nbsp;</option>
-                      	<s:iterator value="referenceDataBean.catalogs"> 
-                      	  <option value='<s:property value="id" />'><s:property value="name" /></option>
-                      	</s:iterator>
-                      </select>	
-                   </div> <!-- end of catalogSelect -->
+                 
+                    <div class="prizes component" id="swCatalogDiv">
+                        <div class="catalogSelect">
+                                <label>Catalog Name:</label>
+                          <select id="catalogSelect">
+                                <option value='-1'>&nbsp;</option>
+                            <s:iterator value="referenceDataBean.catalogs"> 
+                              <option value='<s:property value="id" />'><s:property value="name" /></option>
+                            </s:iterator>
+                          </select>	
+                        </div> <!-- end of catalogSelect -->
 	              		<div class="prizesInner_tech">
 	              			<span class="head_font">Master Categories</span>
 	              			<span class="head_font_space_categories">Your Project Categories</span>
@@ -432,6 +468,7 @@
 	              			</select>
 	              		</div> <!-- end of prizesInner_tech -->
 	              	</div>
+                </s:if>
                 
             </div> <!-- end .contestDetail -->
 		    </div> <!-- End .launchContestOut -->
