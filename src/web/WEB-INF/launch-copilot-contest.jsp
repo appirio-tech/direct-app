@@ -148,7 +148,7 @@
                     </div></div>
                 </div><!-- End .tooltipCaption -->
                 <div class="tooltipContent">
-                    <p> placeholder info for cost information</p>
+                    <p> The Adminstration Fee is the cost to you for posting this Copilot Opportunity.  The 1st and 2nd prizes will be awarded to the top 2 Copilots based on their submissions and review of the game plans, historical performance, etc.  This is NOT the payment the Copilot will receive for managing your project.</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
