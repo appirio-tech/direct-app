@@ -24,7 +24,7 @@
         var chartData =
         {
             contest:{
-                column:["date", "Customer Avg Contest Duration", "TC Avg Contest Duration"],
+                column:["date", "Customer Avg Contest Duration", "Market Avg Contest Duration"],
                 week:[
                 <c:forEach items="${viewData.durationStats['WEEK']}" var="stat" varStatus="loop">
                     <c:if test="${loop.index > 0}">,</c:if>
@@ -51,7 +51,7 @@
                 ]
             },
             cost:{
-                column:["date", "Customer Avg Cost", "TC Avg Cost"],
+                column:["date", "Customer Avg Cost", "Market Avg Cost"],
                 week:[
                     <c:forEach items="${viewData.costStats['WEEK']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
@@ -78,7 +78,7 @@
                 ]
             },
             fulfill:{
-                column:["date", "Customer Avg Fulfillment", "TC Avg Fulfillment"],
+                column:["date", "Customer Avg Fulfillment", "Market Avg Fulfillment"],
                 week:[
                     <c:forEach items="${viewData.fulfillmentStats['WEEK']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
