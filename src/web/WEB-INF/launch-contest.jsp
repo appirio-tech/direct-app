@@ -181,7 +181,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Final Deliverables</p>
+                    <p>Select the type of file you would like for the final deliverale.  You can select multiple and/or add additional types.</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
@@ -207,7 +207,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Not sure what to require in each round? Please visit the Contest Holder Guide where you will find more information about multi-round contests. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                    <p>If you have selected a software contest, then simply set the date and time you would like the registration and submission phase to begin.  If you have selected a Studio contest, then please visit the Contest Holder Guide where you will find more information about multi-round contests. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
@@ -231,7 +231,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Need help writing a great contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                    <p>Need help writing a great Studio contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
