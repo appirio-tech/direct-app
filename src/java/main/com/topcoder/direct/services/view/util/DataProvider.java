@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.util;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -1349,19 +1350,53 @@ public class DataProvider {
             }
         }
 
-        // TODO: Analyze the status of forum activity, use mock data for now
+
+        String latestHandle = "";
+        long latestUserId = 0;
+        long latestThreadId = 0;
+        int totalForum = 0;
+        long forumId = 0;
+        int unansweredForumPostsNumber = 0;
+        Date latestTime = null;
+
+        final ResultSetContainer forumStats = results.get("contest_forum_stats");
+        if (!forumStats.isEmpty()) {
+            if (forumStats.getRow(0).getStringItem("latest_handle") != null)
+            {
+                latestHandle = forumStats.getRow(0).getStringItem("latest_handle");
+            }
+            latestUserId = getLong(forumStats.getRow(0), "latest_userid");
+            latestThreadId = getLong(forumStats.getRow(0), "latest_threadid");
+            if (forumStats.getRow(0).getStringItem("latest_handle") != null)
+            {
+                String frm = forumStats.getRow(0).getStringItem("forum_id");
+                forumId = new Long(frm);
+            }
+            
+            latestThreadId = getLong(forumStats.getRow(0), "unanswered_threads");
+            totalForum = getInt(forumStats.getRow(0), "number_of_forum");
+            unansweredForumPostsNumber = getInt(forumStats.getRow(0), "unanswered_threads");
+            latestTime = getDate(forumStats.getRow(0), "latest_time");
+        }
+
+
         UserDTO latestForumPostAuthor = new UserDTO();
-        latestForumPostAuthor.setHandle("heffan");
-        latestForumPostAuthor.setId(132456);
+        latestForumPostAuthor.setHandle(latestHandle);
+        latestForumPostAuthor.setId(latestUserId);
 
         ForumPostDTO latestForumPost = new ForumPostDTO();
         latestForumPost.setAuthor(latestForumPostAuthor);
-        latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=690636");
+        latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=" + latestThreadId);
         latestForumPost.setTimestamp(new Date());
         
-        dto.setLatestForumPost(latestForumPost);
-        dto.setForumURL("http://forums.topcoder.com/?module=ThreadList&forumID=205768");
-        dto.setTotalForumPostsCount(120);
+        if (latestUserId != 0)
+        {
+            dto.setLatestForumPost(latestForumPost);
+        }
+        
+        dto.setForumURL("http://forums.topcoder.com/?module=ThreadList&forumID=" + forumId);
+        dto.setTotalForumPostsCount(totalForum);
+        dto.setUnansweredForumPostsNumber(unansweredForumPostsNumber);
 
         // Analyze the status for reviewers signup and collect the list of reviewers
         final ResultSetContainer reviewSignupStats = results.get("review_signup_stats");
@@ -1680,6 +1715,26 @@ public class DataProvider {
             return 0;
         } else {
             return row.getDoubleItem(columnName);
+        }
+    }
+
+
+    /**
+     * <p>Gets the <code>Date</code> value for specified column from specified resultset row.</p>
+     *
+     * @param row a <code>ResultSetRow</code> providing the data.
+     * @param columnName a <code>String</code> providing the column name.
+     * @return a <code>Date</code> providing tge value for specified column or 0 if the value is <code>null</code>.
+     */
+    private static Date getDate(ResultSetContainer.ResultSetRow row, String columnName) throws  ParseException{
+        SimpleDateFormat myFmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        TCResultItem resultItem = row.getItem(columnName);
+        boolean isNull = resultItem.getResultData() == null;
+        if (isNull) {
+            return null;
+        } else {
+            String dt = row.getStringItem(columnName);
+            return myFmt.parse(dt);
         }
     }
 }

@@ -1030,6 +1030,10 @@ BODY#page{
 	background: url(../images/w_type.png) no-repeat;
 }
 
+.contestsContent .CpType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
 P.projectArchive{
 	margin: 4px 0;
 	text-align: right;
