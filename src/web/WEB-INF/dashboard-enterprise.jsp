@@ -1,10 +1,13 @@
 <%--
-  - Author: isv
+  - Author: isv, TCSASSEMBLER
   -
-  - Version: 1.0 (Direct Enterprise Dashboard Assembly 1.0)
+  - Version: 1.0.1 (Direct Enterprise Dashboard Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Enterprise Dashboard view.
+  -
+  - Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
+  - Show project status color in enterprise health table.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -168,7 +171,7 @@
                                                 <c:forEach items="${viewData.projects}" var="project">
                                                     <tr>
                                                         <td class="first">
-                                                            <a href="projectDetails?formData.projectId=${project.project.id}" class="green">
+                                                            <a class="longWordsBreak ${project.projectStatusColor.name}" href="projectDetails?formData.projectId=${project.project.id}">
                                                                 <c:out value="${project.project.name}"/></a>
                                                         </td>
                                                         <td><span class="">

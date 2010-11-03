@@ -68,9 +68,15 @@ import com.topcoder.service.studio.ContestStatusData;
  * <li>Updated {@link #executeAction()} method to retrieve data for contest dashboard section.</li>
  * </ul>
  * </p>
- *
- * @author fabrizyo, FireIce, isv
- * @version 1.2.1
+ * <p>
+ * Version 1.2.2 - Direct - Project Dashboard Assembly Change Note
+ * <ul>
+ * <li>Updated {@link #executeAction()} method to retrieve data for contest dashboard section use non-cached model.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author fabrizyo, FireIce, isv, TCSASSEMBLER
+ * @version 1.2.2
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -188,7 +194,7 @@ public class GetContestAction extends ContestAction {
             contestStats.setForumId(studioCompetition.getContestData().getForumId());
             getViewData().setContestStats(contestStats);
 
-            getViewData().setDashboard(DataProvider.getContestDashboardData(contestId, true));
+            getViewData().setDashboard(DataProvider.getContestDashboardData(contestId, true, false));
 
         } else {
             softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
@@ -198,7 +204,7 @@ public class GetContestAction extends ContestAction {
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
             getViewData().setContestStats(contestStats);
-            getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, false));
+            getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, false, false));
             if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
             {
                 contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());

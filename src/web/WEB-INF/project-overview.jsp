@@ -1,3 +1,14 @@
+<%--
+  - Author: TCSASSEMBLER
+  -
+  - Version: 1.0.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page renders the project overview view.
+  -
+  - Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
+  - Change to new UI.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -7,6 +18,8 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="overview"/>
+    <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
 </head>
 
 <body id="page">
@@ -26,62 +39,202 @@
 
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
+                                <a href="project-overview.html">Projects</a> &gt;
                                 <strong><s:property value="sessionData.currentProjectContext.name"/></strong>
                             </div>
 
-                            <div class="areaHeader">
-                                <h2 class="title">Latest Project Activities</h2>
+                            <div class="spaceWhite"></div> 
+                            <div class="dashboardTable">
+                                <dl>
+                                    <dt>
+                                        <a href="javascript:void(0)" class="expand">Project Health</a>
+                                    </dt>
+                                    <dd>
+                                        <div class="dashboardTableHeader">
+                                            <table  cellpadding="0" cellspacing="0">
+                                                <colgroup>
+                                                    <col width="50%" />
+                                                    <col width="10%" />
+                                                    <col width="10%" />
+                                                    <col width="10%" />
+                                                    <col width="10%" />
+                                                    <col />
+                                                </colgroup>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="first">Project</th>
+                                                        <th>Timeline</th>
+                                                        <th>Registration</th>
+                                                        <th>Review</th>
+                                                        <th>Forum</th>
+                                                        <th>Dependencies</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="dashboardTableBody">
+                                            <table  cellpadding="0" cellspacing="0">
+                                                <colgroup>
+                                                    <col width="50%" />
+                                                    <col width="10%" />
+                                                    <col width="10%" />
+                                                    <col width="10%" />
+                                                    <col width="10%" />
+                                                    <col  />
+                                                </colgroup>
+                                                <tbody>
+                                                    <!--
+                                                        <th>Timeline</th>
+                                                        <th>Registration</th>
+                                                        <th>Review</th>
+                                                        <th>Forum</th>
+                                                        <th>Dependencies</th>
+                                                    -->
+                                                        
+                                                    <s:iterator value="viewData.contests" status="sta">
+                                                        <tr <c:if test="${sta.even}">class='even'</c:if>>
+                                                            <td class="first">
+                                                                <s:if test="%{#attr['key'].software}" >
+                                                                <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <c:out value="${key.title}"/></a>
+                                                                </s:if>
+                                                                <s:else>
+                                                                <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <c:out value="${key.title}"/></a>
+                                                                </s:else>
+                                                            </td>
+                                                            <td>
+                                                                <span class="${value.phaseStatusColor.name}"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="${value.regStatusColor.name}"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="${value.reviewersSignupStatusColor.name}"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="${value.forumActivityStatusColor.name}"></span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="${value.dependenciesStatusColor.name}"></span>
+                                                            </td>
+                                                        </tr>
+                                                    </s:iterator>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </dd>
+                                </dl>
                             </div>
-                            <!-- End .areaHeader -->
+                            <!-- End .dashboardTable -->
 
-                            <jsp:include page="includes/project/projectStats.jsp"/>
 
-                            <s:iterator value="viewData.latestProjectActivities.activities">
-                                <table class="project" width="100%" cellpadding="0" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th colspan="5">
-                                            <span class="left"><span class="right">
-                                                <s:property value="key.title"/></span></span>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <s:iterator value="value" status="status">
-                                        <s:set value="originatorId" var="originatorId" scope="page"/>
-                                        <s:set value="originatorHandle" var="originatorHandle" scope="page"/>
-                                        <s:set value="contest" var="contest" scope="page"/>
-                                        <s:set value="date" var="date" scope="page"/>
-                                        <tr <s:if test="#status.index == 4">class="hideStart"</s:if>>
-                                            <td class="first <s:property value="type.shortName"/>"></td>
-                                            <td class="second">
-                                                <span class="ico <s:property value="type.shortName"/>">
-                                                    <s:property value="type.name"/></span>
-                                            </td>
-                                            <td>
-                                                <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
-                                                    <img src="/images/cd_small.png"
-                                                         alt="cd"/>
+                            <div class="leftColumn">
+                                <div class="areaHeader padding2">
+                                        <h2 class="title">Project Status</h2>
+                                </div><!-- End .areaHeader -->
+                                <table class="projectStats" cellpadding="0" cellspacing="0">
+                                    <s:push value="viewData.projectStats">
+                                        <tbody>
+                                            <tr>
+                                                <td class="statusName"># of Drafts</td>
+                                                <td><s:property value="draftContestsNumber"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName"># Scheduled</td>
+                                                <td><s:property value="pipelineContestsNumber"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName"># Active</td>
+                                                <td><s:property value="runningContestsNumber"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName"># Finished</td>
+                                                <td><s:property value="finishedContestsNumber"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Average Contest Duration</td>
+                                                <td>
+                                                    ${viewData.dashboardProjectStat.averageContestDurationText}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Average Cost per Contest </td>
+                                                <td>
+                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageCostPerContest}" pattern="$#,##0.00"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Total Project Cost</td>
+                                                <td>
+                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.totalProjectCost}" pattern="$#,##0.00"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Average Fulfillment</td>
+                                                <td>
+                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageFulfillment}" pattern="##0.##"/>%
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </s:push>
+                                </table><!-- End .projectsStats -->
+                            </div>
 
-                                                </div>
-                                                <div style="display:table-cell;text-align:left">
-                                                    <a href="" onclick="return false;">
-                                                        Link To <s:property value="contest.title"/>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td class="posted"><s:property value="type.actionText"/> :
-                                                <link:user userId="${originatorId}" handle="${originatorHandle}"/></td>
-                                            <td class="date">
-                                                <c:out value="${tcdirect:getDateText(date, 'MM/dd/yyyy')}"/>
-                                            </td>
-                                        </tr>
-                                    </s:iterator>
-                                    </tbody>
-                                </table>
-                            </s:iterator>
+                            <div class="rightColumn">
+                                <div class="areaHeader padding2">
+                                    <h2 class="title">Latest Project Activities</h2>
+                                </div><!-- End .areaHeader -->
 
-                            <jsp:include page="includes/upcomingActivities.jsp"/>
+                                <s:iterator value="viewData.latestProjectActivities.activities">
+                                    <table class="project" width="100%" cellpadding="0" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="5"><span class="left"><span class="right">
+                                                    <a href="javascript:;"><s:property value="key.title"/></a></span></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    
+                                        <tbody>
+                                        <s:iterator value="value" status="status">
+                                            <s:set value="originatorId" var="originatorId" scope="page"/>
+                                            <s:set value="originatorHandle" var="originatorHandle" scope="page"/>
+                                            <s:set value="contest" var="contest" scope="page"/>
+                                            <s:set value="date" var="date" scope="page"/>
+                                            
+                                            <tr class="<s:property value='type.shortName'/> <s:if test='#status.index == 4'>hideStart</s:if>">
+                                                <td class="first <s:property value="type.shortName"/>"></td>
+                                                <td class="second">
+                                                    <span class="ico <s:property value="type.shortName"/>">
+                                                        <s:property value="type.name"/></span>
+                                                </td>
+                                                <td>
+                                                    <s:if test="%{#attr['contest'].software}" >
+                                                    <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
+                                                        Link To <c:out value="${contest.title}"/></a>
+                                                    </s:if>
+                                                    <s:else>
+                                                    <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].id}"/></s:url>">
+                                                        Link To <c:out value="${contest.title}"/></a>
+                                                    </s:else>
+                                                </td>
+                                                <td class="posted">
+                                                    <s:property value="type.actionText"/> :
+                                                    <link:user userId="${originatorId}" handle="${originatorHandle}"/>
+                                                </td>                                                
+                                                <td class="date">
+                                                    <c:out value="${tcdirect:getDateText(date, 'MM/dd/yyyy')}"/>
+                                                </td>
+                                            </tr>
+                                            
+                                        </s:iterator>
+                                        </tbody>
+                                    </table>
+                                </s:iterator>
+                                
+                                <jsp:include page="includes/upcomingActivities.jsp"/>
+                            </div><!-- End .rightColumn -->
 
                         </div>
                     </div>

@@ -110,9 +110,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #getContestDashboardData(long, boolean)} method.</li>
  *   </ol>
  * </p>
- *
- * @author isv, BeBetter
- * @version 2.1.3
+ * <p>
+ * Version 2.1.4 (Direct Project Dashboard Assembly 1.0) Change notes:
+ * <ol>
+ * <li>Updated {@link #getContestDashboardData()}, {@link #getSoftwareContestDashboardData()} and
+ * {@link #getStudioContestDashboardData()} methods to add cached model.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author isv, BeBetter, TCSASSEMBLER
+ * @version 2.1.4
  */
 public class DataProvider {
 
@@ -1252,34 +1259,61 @@ public class DataProvider {
     }
 
     /**
-     * <p>Gets the dashboard data for specified contest.</p>
-     *
-     * @param contestId a <code>long</code> providing the ID of a contest to get dashboard data for.
-     * @param isStudio <code>true</code> if specified contest is <code>Studio</code> contest; <code>false</code>
-     *        otherwise.
-     * @return a <code>ContestDashboardDTO</code> providing the data for dashboard for specified contest. 
-     * @throws Exception if an unexpected error occurs.
+     * <p>
+     * Gets the dashboard data for specified contest.
+     * </p>
+     * 
+     * @param contestId
+     *            a <code>long</code> providing the ID of a contest to get
+     *            dashboard data for.
+     * @param isStudio
+     *            <code>true</code> if specified contest is <code>Studio</code>
+     *            contest; <code>false</code> otherwise.
+     * @return a <code>ContestDashboardDTO</code> providing the data for
+     *         dashboard for specified contest.
+     * @param cached
+     *            whether should apply to cached model
+     * @throws Exception
+     *             if an unexpected error occurs.
      * @since 2.1.3
      */
-    public static ContestDashboardDTO getContestDashboardData(long contestId, boolean isStudio) throws Exception {
+    public static ContestDashboardDTO getContestDashboardData(long contestId,
+            boolean isStudio, boolean cached) throws Exception {
         if (isStudio) {
-            return getStudioContestDashboardData(contestId);
+            return getStudioContestDashboardData(contestId, cached);
         } else {
-            return getSoftwareContestDashboardData(contestId);
+            return getSoftwareContestDashboardData(contestId, cached);
         }
     }
 
     /**
-     * <p>Gets the dashboard data for specified software project.</p>
-     *
-     * @param projectId a <code>long</code> providing the ID of a software project to get dashboard data for.
-     * @return a <code>ContestDashboardDTO</code> providing the data for dashboard for specified contest.
-     * @throws Exception if an unexpected error occurs.
+     * <p>
+     * Gets the dashboard data for specified software project.
+     * </p>
+     * 
+     * @param projectId
+     *            a <code>long</code> providing the ID of a software project to
+     *            get dashboard data for.
+     * @return a <code>ContestDashboardDTO</code> providing the data for
+     *         dashboard for specified contest.
+     * @param cached
+     *            whether should apply to cached model
+     * @throws Exception
+     *             if an unexpected error occurs.
      * @since 2.1.3
      */
-    private static ContestDashboardDTO getSoftwareContestDashboardData(long projectId) throws Exception {
+    private static ContestDashboardDTO getSoftwareContestDashboardData(
+            long projectId, boolean cached) throws Exception {
         // Prepare request to database
-        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        DataAccess dataAccessor;
+
+        if (cached) {
+            dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR,
+                    DBMS.TCS_OLTP_DATASOURCE_NAME);
+        } else {
+            dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        }
+
         Request request = new Request();
         request.setContentHandle("direct_software_contest_dashboard");
         request.setProperty("pj", String.valueOf(projectId));
@@ -1463,16 +1497,33 @@ public class DataProvider {
     }
 
     /**
-     * <p>Gets the dashboard data for specified Studio contest.</p>
-     *
-     * @param contestId a <code>long</code> providing the ID of a Studio contest to get dashboard data for.
-     * @return a <code>ContestDashboardDTO</code> providing the data for dashboard for specified contest.
-     * @throws Exception if an unexpected error occurs.
+     * <p>
+     * Gets the dashboard data for specified Studio contest.
+     * </p>
+     * 
+     * @param contestId
+     *            a <code>long</code> providing the ID of a Studio contest to
+     *            get dashboard data for.
+     * @param cached
+     *            whether should apply to cached model
+     * @return a <code>ContestDashboardDTO</code> providing the data for
+     *         dashboard for specified contest.
+     * @throws Exception
+     *             if an unexpected error occurs.
      * @since 2.1.3
      */
-    private static ContestDashboardDTO getStudioContestDashboardData(long contestId) throws Exception {
+    private static ContestDashboardDTO getStudioContestDashboardData(
+            long contestId, boolean cached) throws Exception {
         // Prepare request to database
-        DataAccess dataAccessor = new DataAccess(DBMS.STUDIO_DATASOURCE_NAME);
+        DataAccess dataAccessor;
+
+        if (cached) {
+            dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR,
+                    DBMS.STUDIO_DATASOURCE_NAME);
+        } else {
+            dataAccessor = new DataAccess(DBMS.STUDIO_DATASOURCE_NAME);
+        }
+
         Request request = new Request();
         request.setContentHandle("direct_studio_contest_dashboard");
         request.setProperty("ct", String.valueOf(contestId));

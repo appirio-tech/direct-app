@@ -4,16 +4,26 @@
 package com.topcoder.direct.services.view.dto.contest;
 
 import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardStatusColor;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * <p>A <code>DTO</code> providing the data to be displayed by <code>Contest Dashboard</code> section of <code>Contest
- * Details</code> page.</p>
- *
- * @author isv
- * @version 1.0 (Direct Contest Dashboard assembly)
+ * <p>
+ * A <code>DTO</code> providing the data to be displayed by
+ * <code>Contest Dashboard</code> section of <code>Contest
+ * Details</code> page.
+ * </p>
+ * <p>
+ * Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
+ * <ul>
+ * <li>Added colors for each status and the contest.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author isv, TCSASSEMBLER
+ * @version 1.0.1
  */
 public class ContestDashboardDTO implements Serializable {
 
@@ -98,7 +108,70 @@ public class ContestDashboardDTO implements Serializable {
     private RunningPhaseStatus currentPhaseStatus;
 
     /**
-     * <p>Constructs new <code>ContestDashboardDTO</code> instance. This implementation does nothing.</p>
+     * <p>
+     * A <code>DashboardStatusColor</code> presents which color should be used
+     * when render current phase status to page.
+     * </p>
+     * 
+     * @since 1.0.1
+     */
+    private DashboardStatusColor phaseStatusColor;
+
+    /**
+     * <p>
+     * A <code>DashboardStatusColor</code> presents which color should be used
+     * when render registration status to page.
+     * </p>
+     * 
+     * @since 1.0.1
+     */
+    private DashboardStatusColor regStatusColor;
+
+    /**
+     * <p>
+     * A <code>DashboardStatusColor</code> presents which color should be used
+     * when render forum activity status to page.
+     * </p>
+     * 
+     * @since 1.0.1
+     */
+    private DashboardStatusColor forumActivityStatusColor;
+
+    /**
+     * <p>
+     * A <code>DashboardStatusColor</code> presents which color should be used
+     * when render reviewers sign up status to page.
+     * </p>
+     * 
+     * @since 1.0.1
+     */
+    private DashboardStatusColor reviewersSignupStatusColor;
+
+    /**
+     * <p>
+     * A <code>DashboardStatusColor</code> presents which color should be used
+     * when render dependencies status to page.
+     * </p>
+     * 
+     * @since 1.0.1
+     */
+    private DashboardStatusColor dependenciesStatusColor;
+
+    /**
+     * <p>
+     * A <code>DashboardStatusColor</code> presents which color should be used
+     * when render whole contest status to page.
+     * </p>
+     * 
+     * @since 1.0.1
+     */
+    private DashboardStatusColor contestStatusColor;
+
+    /**
+     * <p>
+     * Constructs new <code>ContestDashboardDTO</code> instance. This
+     * implementation does nothing.
+     * </p>
      */
     public ContestDashboardDTO() {
     }
@@ -394,4 +467,134 @@ public class ContestDashboardDTO implements Serializable {
     public void setCurrentPhaseStatus(RunningPhaseStatus currentPhaseStatus) {
         this.currentPhaseStatus = currentPhaseStatus;
     }
+
+    /**
+     * Retrieves the phaseStatusColor field.
+     * 
+     * @return the phaseStatusColor
+     * @since 1.0.1
+     */
+    public DashboardStatusColor getPhaseStatusColor() {
+        return phaseStatusColor;
+    }
+
+    /**
+     * Sets the phaseStatusColor field.
+     * 
+     * @param phaseStatusColor
+     *            the phaseStatusColor to set
+     * @since 1.0.1
+     */
+    public void setPhaseStatusColor(DashboardStatusColor phaseStatusColor) {
+        this.phaseStatusColor = phaseStatusColor;
+    }
+
+    /**
+     * Retrieves the regStatusColor field.
+     * 
+     * @return the regStatusColor
+     * @since 1.0.1
+     */
+    public DashboardStatusColor getRegStatusColor() {
+        return regStatusColor;
+    }
+
+    /**
+     * Sets the regStatusColor field.
+     * 
+     * @param regStatusColor
+     *            the regStatusColor to set
+     * @since 1.0.1
+     */
+    public void setRegStatusColor(DashboardStatusColor regStatusColor) {
+        this.regStatusColor = regStatusColor;
+    }
+
+    /**
+     * Retrieves the forumActivityStatusColor field.
+     * 
+     * @return the forumActivityStatusColor
+     * @since 1.0.1
+     */
+    public DashboardStatusColor getForumActivityStatusColor() {
+        return forumActivityStatusColor;
+    }
+
+    /**
+     * Sets the forumActivityStatusColor field.
+     * 
+     * @param forumActivityStatusColor
+     *            the forumActivityStatusColor to set
+     * @since 1.0.1
+     */
+    public void setForumActivityStatusColor(
+            DashboardStatusColor forumActivityStatusColor) {
+        this.forumActivityStatusColor = forumActivityStatusColor;
+    }
+
+    /**
+     * Retrieves the reviewersSignupStatusColor field.
+     * 
+     * @return the reviewersSignupStatusColor
+     * @since 1.0.1
+     */
+    public DashboardStatusColor getReviewersSignupStatusColor() {
+        return reviewersSignupStatusColor;
+    }
+
+    /**
+     * Sets the reviewersSignupStatusColor field.
+     * 
+     * @param reviewersSignupStatusColor
+     *            the reviewersSignupStatusColor to set
+     * @since 1.0.1
+     */
+    public void setReviewersSignupStatusColor(
+            DashboardStatusColor reviewersSignupStatusColor) {
+        this.reviewersSignupStatusColor = reviewersSignupStatusColor;
+    }
+
+    /**
+     * Retrieves the dependenciesStatusColor field.
+     * 
+     * @return the dependenciesStatusColor
+     * @since 1.0.1
+     */
+    public DashboardStatusColor getDependenciesStatusColor() {
+        return dependenciesStatusColor;
+    }
+
+    /**
+     * Sets the dependenciesStatusColor field.
+     * 
+     * @param dependenciesStatusColor
+     *            the dependenciesStatusColor to set
+     * @since 1.0.1
+     */
+    public void setDependenciesStatusColor(
+            DashboardStatusColor dependenciesStatusColor) {
+        this.dependenciesStatusColor = dependenciesStatusColor;
+    }
+
+    /**
+     * Retrieves the contestStatusColor field.
+     * 
+     * @return the contestStatusColor
+     * @since 1.0.1
+     */
+    public DashboardStatusColor getContestStatusColor() {
+        return contestStatusColor;
+    }
+
+    /**
+     * Sets the contestStatusColor field.
+     * 
+     * @param contestStatusColor
+     *            the contestStatusColor to set
+     * @since 1.0.1
+     */
+    public void setContestStatusColor(DashboardStatusColor contestStatusColor) {
+        this.contestStatusColor = contestStatusColor;
+    }
+
 }

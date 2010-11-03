@@ -103,7 +103,7 @@
                                                                         <s:if test="reliability != null">
                                                                             <s:set var="reliability" value="reliability" scope="page"/>
                                                                             <fmt:formatNumber value="${reliability}"
-                                                                                              pattern="0.00%" />
+                                                                                              pattern="0.00" />
                                                                         </s:if>
                                                                      </td>
                                                                     <td>

@@ -4674,3 +4674,54 @@ th.pipelineData14 {
     padding:4px 20px 0;
 }
 
+/*BUGR-4230*/
+.leftColumn{
+    float:left;    
+    width:30%;
+}
+.rightColumn{
+    float:right;
+    width:68%;
+}
+.leftColumn .projectStats td{
+    font-size:11px;
+    font-weight:normal;
+    height:28px;
+    padding:0;
+}
+.leftColumn .projectStats td.statusName{
+    font-weight:bold;
+    background-color:#F5F5F5;
+    text-align:right;
+    padding:0 5px;
+    width:8%;
+}
+.nextAction{
+    height:60px !important;
+    background-color: #FFFF99;
+}
+.nextAction p{
+    margin-bottom:3px;
+}
+.rightColumn td{    
+    font-size:11px !important;
+    padding:7px 5px !important;
+}
+.rightColumn td.first{
+    padding:0 !important;
+    width:3px !important;
+}
+.rightColumn td.second{
+    width:25% !important;
+}
+.rightColumn td.posted{
+    width:31% !important;
+}
+.rightColumn .activity{
+    padding-top:0 !important;
+}
+.rightColumn .activity .posted{
+    width:40%;
+}
+
+

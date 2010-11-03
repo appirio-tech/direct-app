@@ -1,3 +1,14 @@
+<%--
+  - Author: TCSASSEMBLER
+  -
+  - Version: 1.0.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page renders the project overview view.
+  -
+  - Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
+  - Add 'Upcoming Activity' in the header of table.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="activity"><!-- Upcoming Activity -->
@@ -7,7 +18,7 @@
         <thead>
         <tr>
             <th colspan="5">
-                <span class="left"><span class="right"></span></span>
+                <span class="left"><span class="right">Upcoming Activity</span></span>
             </th>
         </tr>
         </thead>

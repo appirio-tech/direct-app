@@ -5,7 +5,9 @@ package com.topcoder.direct.services.view.action.dashboard;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardStatusColor;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardAggregatedStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
@@ -13,7 +15,10 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatPeriodType;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.EnterpriseDashboardForm;
+import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
@@ -35,11 +40,20 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Enterprise Dashboard</code>
- * page.</p>
+ * <p>
+ * A <code>Struts</code> action to be used for handling requests for viewing the
+ * <code>Enterprise Dashboard</code> page.
+ * </p>
+ * <p>
+ * Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
+ * <ul>
+ * <li>Added {@link #setProjectStatusColor()} method. Updated
+ * {@link #executeAction()} method to set project status color.</li>
+ * </ul>
+ * </p>
  * 
- * @author isv
- * @version 1.0 (Direct Enterprise Dashboard Assembly 1.0)
+ * @author isv, TCSASSEMBLER
+ * @version 1.0.1
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -261,6 +275,9 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
             this.sessionData.setCurrentProjectContests(contests);
         }
+
+        // set projects status color
+        setProjectStatusColor();
     }
 
 
@@ -508,6 +525,45 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 return Integer.parseInt(yearLabel) * 1000 + Integer.parseInt(quarterLabel.substring(1));
             } else {
                 return Integer.parseInt(label);
+            }
+        }
+    }
+
+    private void setProjectStatusColor() throws Exception {
+        for (EnterpriseDashboardProjectStatDTO project : viewData.getProjects()) {
+            ProjectContestsListDTO contests = DataProvider.getProjectContests(
+                    getSessionData().getCurrentUserId(), project.getProject()
+                            .getId());
+            boolean hasRed = false;
+            boolean hasOrange = false;
+
+            for (ProjectContestDTO projectContest : contests.getContests()) {
+                // just call all running and scheduled contest's query
+                if (DashboardHelper.SCHEDULED.equalsIgnoreCase(projectContest
+                        .getStatus().getShortName())
+                        || DashboardHelper.RUNNING
+                                .equalsIgnoreCase(projectContest.getStatus()
+                                        .getShortName())) {
+                    ContestDashboardDTO contest = DataProvider
+                            .getContestDashboardData(projectContest
+                                    .getContest().getId(), projectContest
+                                    .getIsStudio(), true);
+
+                    DashboardHelper.setContestStatusColor(contest);
+                    if (contest.getContestStatusColor() == DashboardStatusColor.RED) {
+                        hasRed = true;
+                        break;
+                    } else if (contest.getContestStatusColor() == DashboardStatusColor.ORANGE) {
+                        hasOrange = true;
+                    }
+                }
+            }
+            if (hasRed) {
+                project.setProjectStatusColor(DashboardStatusColor.RED);
+            } else if (hasOrange) {
+                project.setProjectStatusColor(DashboardStatusColor.ORANGE);
+            } else {
+                project.setProjectStatusColor(DashboardStatusColor.GREEN);
             }
         }
     }

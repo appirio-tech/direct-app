@@ -10,9 +10,15 @@ import java.io.Serializable;
 /**
  * <p>A DTO class providing the statistical data for a single project to be displayed in <code>Enterprise Health</code>
  * area on <code>Enterprise Dashboard</code> page view.</p>
+ * <p>
+ * Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
+ * <ul>
+ * <li>Added {@link #averageContestDurationText} and {@link #projectStatusColor} parameters. </li>
+ * </ul>
+ * </p>
  *
- * @author isv
- * @version 1.0 (Direct Enterprise Dashboard Assembly 1.0)
+ * @author isv, TCSASSEMBLER
+ * @version 1.0.1
  */
 public class EnterpriseDashboardProjectStatDTO implements Serializable {
 
@@ -40,6 +46,20 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      * <p>A <code>double</code> providing the average fulfillment for specified project.</p>
      */
     private double averageFulfillment;
+
+    /**
+     * <p>A <code>String</code> represents the average contest duration text.</p>
+     * 
+     * @since 1.0.1
+     */
+    private String averageContestDurationText;
+    
+    /**
+     * <p>A <code>DashboardStatusColor</code> represents the color of whole project.</p>
+     * 
+     * @since 1.0.1
+     */
+    private DashboardStatusColor projectStatusColor;
 
     /**
      * <p>Constructs new <code>EnterpriseDashboardProjectStatDTO</code> instance. This implementation does nothing.</p>
@@ -136,5 +156,45 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      */
     public void setAverageCostPerContest(double averageCostPerContest) {
         this.averageCostPerContest = averageCostPerContest;
+    }
+
+    /**
+     * Retrieves the averageContestDurationText field.
+     *
+     * @return the averageContestDurationText
+     * @since 1.0.1
+     */
+    public String getAverageContestDurationText() {
+        return averageContestDurationText;
+    }
+
+    /**
+     * Sets the averageContestDurationText field.
+     *
+     * @param averageContestDurationText the averageContestDurationText to set
+     * @since 1.0.1
+     */
+    public void setAverageContestDurationText(String averageContestDurationText) {
+        this.averageContestDurationText = averageContestDurationText;
+    }
+
+    /**
+     * Retrieves the projectStatusColor field.
+     *
+     * @return the projectStatusColor
+     * @since 1.0.1
+     */
+    public DashboardStatusColor getProjectStatusColor() {
+        return projectStatusColor;
+    }
+
+    /**
+     * Sets the projectStatusColor field.
+     *
+     * @param projectStatusColor the projectStatusColor to set
+     * @since 1.0.1
+     */
+    public void setProjectStatusColor(DashboardStatusColor projectStatusColor) {
+        this.projectStatusColor = projectStatusColor;
     }
 }
