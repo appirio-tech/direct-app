@@ -1401,7 +1401,7 @@ public class DataProvider {
             }
             latestUserId = getLong(forumStats.getRow(0), "latest_userid");
             latestThreadId = getLong(forumStats.getRow(0), "latest_threadid");
-            if (forumStats.getRow(0).getStringItem("latest_handle") != null)
+            if (forumStats.getRow(0).getStringItem("forum_id") != null)
             {
                 String frm = forumStats.getRow(0).getStringItem("forum_id");
                 forumId = new Long(frm);
@@ -1428,7 +1428,7 @@ public class DataProvider {
             dto.setLatestForumPost(latestForumPost);
         }
         
-        dto.setForumURL("http://forums.topcoder.com/?module=ThreadList&forumID=" + forumId);
+        dto.setForumURL("http://forums.topcoder.com/?module=Category&categoryID=" + forumId);
         dto.setTotalForumPostsCount(totalForum);
         dto.setUnansweredForumPostsNumber(unansweredForumPostsNumber);
 
@@ -1543,19 +1543,50 @@ public class DataProvider {
             dto.setPredictedNumberOfSubmissions(getInt(row, "predicted_number_of_submissions"));
         }
 
-        // TODO: Analyze the status of forum activity, use mock data for now
+        String latestHandle = "";
+        long latestUserId = 0;
+        long latestThreadId = 0;
+        int totalForum = 0;
+        long forumId = 0;
+        int unansweredForumPostsNumber = 0;
+        Date latestTime = null;
+
+        final ResultSetContainer forumStats = results.get("studio_contest_forum_stats");
+        if (!forumStats.isEmpty()) {
+            if (forumStats.getRow(0).getStringItem("latest_handle") != null)
+            {
+                latestHandle = forumStats.getRow(0).getStringItem("latest_handle");
+            }
+            latestUserId = getLong(forumStats.getRow(0), "latest_userid");
+            latestThreadId = getLong(forumStats.getRow(0), "latest_threadid");
+            if (forumStats.getRow(0).getStringItem("forum_id") != null)
+            {
+                String frm = forumStats.getRow(0).getStringItem("forum_id");
+                forumId = new Long(frm);
+            }
+            
+            totalForum = getInt(forumStats.getRow(0), "number_of_forum");
+            latestTime = getDate(forumStats.getRow(0), "latest_time");
+        }
+
+
         UserDTO latestForumPostAuthor = new UserDTO();
-        latestForumPostAuthor.setHandle("heffan");
-        latestForumPostAuthor.setId(132456);
+        latestForumPostAuthor.setHandle(latestHandle);
+        latestForumPostAuthor.setId(latestUserId);
 
         ForumPostDTO latestForumPost = new ForumPostDTO();
         latestForumPost.setAuthor(latestForumPostAuthor);
-        latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=690636");
+        latestForumPost.setUrl("http://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
         latestForumPost.setTimestamp(new Date());
+        
+        if (latestUserId != 0)
+        {
+            dto.setLatestForumPost(latestForumPost);
+        }
+        
+        dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
+        dto.setTotalForumPostsCount(totalForum);
 
-        dto.setLatestForumPost(latestForumPost);
-        dto.setForumURL("http://forums.topcoder.com/?module=ThreadList&forumID=205768");
-        dto.setTotalForumPostsCount(120);
 
         return dto;
     }

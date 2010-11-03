@@ -104,19 +104,54 @@
                                                                 </s:else>
                                                             </td>
                                                             <td>
-                                                                <span class="${value.phaseStatusColor.name}"></span>
+                                                                <s:if test="%{#attr['key'].software}" >
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.phaseStatusColor.name}"></span></a>
+                                                                </s:if>
+                                                                <s:else>
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.phaseStatusColor.name}"></span></a>
+                                                                </s:else>
                                                             </td>
                                                             <td>
-                                                                <span class="${value.regStatusColor.name}"></span>
+                                                                <s:if test="%{#attr['key'].software}" >
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.regStatusColor.name}"></span></a>
+                                                                </s:if>
+                                                                <s:else>
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.regStatusColor.name}"></span></a>
+                                                                </s:else>
                                                             </td>
                                                             <td>
-                                                                <span class="${value.reviewersSignupStatusColor.name}"></span>
+                                                                <s:if test="%{#attr['key'].software}" >
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.reviewersSignupStatusColor.name}"></span></a>
+                                                                </s:if>
+                                                                <s:else>
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.reviewersSignupStatusColor.name}"></span></a>
+                                                                </s:else>
                                                             </td>
                                                             <td>
-                                                                <span class="${value.forumActivityStatusColor.name}"></span>
+                                                                <s:if test="%{#attr['key'].software}" >
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.forumActivityStatusColor.name}"></span></a>
+                                                                </s:if>
+                                                                <s:else>
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.forumActivityStatusColor.name}"></span></a>
+                                                                </s:else>
                                                             </td>
                                                             <td>
-                                                                <span class="${value.dependenciesStatusColor.name}"></span>
+                                                                 <s:if test="%{#attr['key'].software}" >
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.dependenciesStatusColor.name}"></span></a>
+                                                                </s:if>
+                                                                <s:else>
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.dependenciesStatusColor.name}"></span></a>
+                                                                </s:else>
                                                             </td>
                                                         </tr>
                                                     </s:iterator>
@@ -183,7 +218,7 @@
 
                             <div class="rightColumn">
                                 <div class="areaHeader padding2">
-                                    <h2 class="title">Latest Project Activities</h2>
+                                    <h2 class="title">Project Activities</h2>
                                 </div><!-- End .areaHeader -->
 
                                 <s:iterator value="viewData.latestProjectActivities.activities">

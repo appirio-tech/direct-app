@@ -30,7 +30,6 @@
                 <td class="first <s:property value="type.shortName"/>"></td>
                 <td class="second"><span class="ico <s:property value="type.shortName"/>">
                     <s:property value="type.name"/></span></td>
-                <td><link:projectDetails project="${contest.project}"/></td>
                 <td class="posted"><link:contestDetails contest="${contest}"/></td>
                 <td class="date">
                     <c:out value="${tcdirect:getDateText(date, 'MM/dd/yyyy')}"/>
