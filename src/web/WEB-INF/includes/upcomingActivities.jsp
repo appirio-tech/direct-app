@@ -27,7 +27,7 @@
             <s:set value="contest" var="contest" scope="page"/>
             <s:set value="date" var="date" scope="page"/>
             <tr <s:if test="#status.index == 4">class="hideStart"</s:if>>
-                <td class="first <s:property value="type.shortName"/>"></td>
+
                 <td class="second"><span class="ico <s:property value="type.shortName"/>">
                     <s:property value="type.name"/></span></td>
                 <td class="posted"><link:contestDetails contest="${contest}"/></td>
