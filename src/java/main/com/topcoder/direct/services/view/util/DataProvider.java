@@ -1407,7 +1407,6 @@ public class DataProvider {
                 forumId = new Long(frm);
             }
             
-            latestThreadId = getLong(forumStats.getRow(0), "unanswered_threads");
             totalForum = getInt(forumStats.getRow(0), "number_of_forum");
             unansweredForumPostsNumber = getInt(forumStats.getRow(0), "unanswered_threads");
             latestTime = getDate(forumStats.getRow(0), "latest_time");
