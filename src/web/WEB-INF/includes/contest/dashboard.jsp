@@ -150,12 +150,12 @@
                                     ${viewData.dashboard.unansweredForumPostsNumber} unanswered threads.&nbsp;&nbsp;
                                 </span>
                                 <span class="rightPart">
-                                    All Posts : <a href="${viewData.dashboard.forumURL}">${viewData.dashboard.totalForumPostsCount}</a>
+                                    All Posts : <a href="${viewData.dashboard.forumURL}" target="_blank">${viewData.dashboard.totalForumPostsCount}</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <c:if test="${not empty latestForumPost}">
                                         Latest post by : <link:user userId="${author.id}" handle="${author.handle}"/> on
                                         <fmt:formatDate value="${latestForumPost.timestamp}" pattern="MM/dd/yyyy HH:mm:ss"/>
-                                        | <a href="${latestForumPost.url}">View Thread</a>
+                                        | <a href="${latestForumPost.url}" target="_blank">View Thread</a>
                                     </c:if>
                                 </span>
                         </div>
