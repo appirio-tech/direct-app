@@ -19,6 +19,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="overview"/>
     <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
 </head>
 
@@ -50,19 +51,19 @@
                                         <a href="javascript:void(0)" class="expand">Project Health</a>
                                     </dt>
                                     <dd>
-                                        <div class="dashboardTableHeader">
-                                            <table  cellpadding="0" cellspacing="0">
+                                        <table  cellpadding="0" cellspacing="0" id="projectHealthTable">
+                                            <div class="dashboardTableHeader">
                                                 <colgroup>
-                                                    <col width="50%" />
+                                                    <col width="40%" />
                                                     <col width="10%" />
                                                     <col width="10%" />
                                                     <col width="10%" />
                                                     <col width="10%" />
-                                                    <col />
+                                                    <col width="10%"/>
                                                 </colgroup>
                                                 <thead>
                                                     <tr>
-                                                        <th class="first">Project</th>
+                                                        <th class="first">Contest</th>
                                                         <th>Timeline</th>
                                                         <th>Registration</th>
                                                         <th>Review</th>
@@ -70,18 +71,18 @@
                                                         <th>Dependencies</th>
                                                     </tr>
                                                 </thead>
-                                            </table>
-                                        </div>
-                                        <div class="dashboardTableBody">
-                                            <table  cellpadding="0" cellspacing="0">
+                                            </div>
+                                            <div>
+                                                <!--
                                                 <colgroup>
-                                                    <col width="50%" />
+                                                    <col width="40%" />
                                                     <col width="10%" />
                                                     <col width="10%" />
                                                     <col width="10%" />
                                                     <col width="10%" />
-                                                    <col  />
+                                                    <col width="10%" />
                                                 </colgroup>
+                                                -->
                                                 <tbody>
                                                     <!--
                                                         <th>Timeline</th>
@@ -156,8 +157,8 @@
                                                         </tr>
                                                     </s:iterator>
                                                 </tbody>
-                                            </table>
-                                        </div>
+                                            </div>
+                                        </table>
                                     </dd>
                                 </dl>
                             </div>

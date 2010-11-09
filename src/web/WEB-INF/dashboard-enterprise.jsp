@@ -158,15 +158,7 @@
                                                 </tr>
                                                 </thead>
 											</div>
-											<div class="dashboardTableBody">
-                                                <colgroup>
-                                                    <col width="32%"/>
-                                                    <col width="17%"/>
-                                                    <col width="17%"/>
-                                                    <col width="17%"/>
-                                                    <col width="17%"/>
-                                                    <col/>
-                                                </colgroup>
+											<div>
                                                 <tbody>
                                                 <c:forEach items="${viewData.projects}" var="project">
                                                     <tr>
