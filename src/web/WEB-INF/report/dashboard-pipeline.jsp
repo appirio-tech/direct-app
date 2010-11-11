@@ -181,7 +181,7 @@
                                        cellpadding="0" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th class="tableTitle" colspan="2">
+                                        <th class="tableTitle" colspan="4">
                                             <a href="javascript:void(0)" class="expand">&nbsp;</a>
                                             <span>List of scheduled contests</span>
                                         </th>
@@ -199,33 +199,45 @@
                                     </tr>
                                     <tr class="ClientScheduledContests scData">
                                         <th class="tableColumn">Client</th>
+                                        <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
+                                        <th class="tableColumn">Launched / All</th>
                                     </tr>
                                     <tr class="ManagerScheduledContests scData hide">
                                         <th class="tableColumn">Manager</th>
+                                        <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
+                                        <th class="tableColumn">Launched / All</th>
                                     </tr>
                                     <tr class="CopilotScheduledContests scData hide">
                                         <th class="tableColumn">Copilot</th>
+                                        <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
+                                        <th class="tableColumn">Launched / All</th>
                                     </tr>
                                     <tr class="ProjectScheduledContests scData hide">
                                         <th class="tableColumn">Project</th>
+                                        <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
+                                        <th class="tableColumn">Launched / All</th>
                                     </tr>
                                     <tr class="ContestTypeScheduledContests scData hide">
                                         <th class="tableColumn">Contest Type</th>
+                                        <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
+                                        <th class="tableColumn">Launched / All</th>
                                     </tr>
                                     <tr class="BillingScheduledContests scData hide">
                                         <th class="tableColumn">Billing</th>
+                                        <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
+                                        <th class="tableColumn">Launched / All</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -236,8 +248,15 @@
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
                                         <tr class="ClientScheduledContests scData ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
+                                            <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
+                                            <td>
+                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
+                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
+                                                </c:if>
+                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
+                                            </td>
                                         </tr>
                                     </c:forEach>
 
@@ -247,8 +266,15 @@
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
                                         <tr class="ManagerScheduledContests scData hide ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
+                                            <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
+                                            <td>
+                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
+                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
+                                                </c:if>
+                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
+                                            </td>
                                         </tr>
                                     </c:forEach>
 
@@ -258,8 +284,15 @@
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
                                         <tr class="CopilotScheduledContests scData hide ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
+                                            <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
+                                            <td>
+                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
+                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
+                                                </c:if>
+                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
+                                            </td>
                                         </tr>
                                     </c:forEach>
 
@@ -269,8 +302,15 @@
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
                                         <tr class="ProjectScheduledContests scData hide ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
+                                            <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
+                                            <td>
+                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
+                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
+                                                </c:if>
+                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
+                                            </td>
                                         </tr>
                                     </c:forEach>
 
@@ -280,8 +320,15 @@
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
                                         <tr class="ContestTypeScheduledContests scData hide ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
+                                            <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
+                                            <td>
+                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
+                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
+                                                </c:if>
+                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
+                                            </td>
                                         </tr>
                                     </c:forEach>
 
@@ -291,8 +338,15 @@
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
                                         <tr class="BillingScheduledContests scData hide ${rowStyle}">
                                             <td><c:out value="${stat.source}"/></td>
+                                            <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
+                                            <td>
+                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
+                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
+                                                </c:if>
+                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
+                                            </td>
                                         </tr>
                                     </c:forEach>
 

@@ -27,6 +27,11 @@ public class PipelineLaunchedContestsDTO implements Serializable {
      * <p>A <code>int</code> providing the number of launched contests.</p>
      */
     private int launchedContestsCount;
+    
+    /**
+     * <p>A <code>int</code> providing the number of draft contests.</p>
+     */
+    private int draftContestsCount;
 
     /**
      * <p>Constructs new <code>PipelineLaunchedContestsDTO</code> instance. This implementation does nothing.</p>
@@ -86,5 +91,23 @@ public class PipelineLaunchedContestsDTO implements Serializable {
      */
     public void setSource(String source) {
         this.source = source;
+    }
+
+    /**
+     * Retrieves the draftContestsCount field.
+     *
+     * @return the draftContestsCount
+     */
+    public int getDraftContestsCount() {
+        return draftContestsCount;
+    }
+
+    /**
+     * Sets the draftContestsCount field.
+     *
+     * @param draftContestsCount the draftContestsCount to set
+     */
+    public void setDraftContestsCount(int draftContestsCount) {
+        this.draftContestsCount = draftContestsCount;
     }
 }

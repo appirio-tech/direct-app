@@ -15,7 +15,6 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
-    <link rel="stylesheet" href="/css/modal.css" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script> 
     <script type="text/javascript" src="/scripts/launch/entity.js?v=49"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=49"></script>
@@ -69,26 +68,6 @@
         </div>
     </div>
     <!-- End #wrapper -->
-
-    <div id="TB_overlay" class="TB_overlayBG"></div>
-    <div id="TB_window">
-        <div id="TB_title">
-            <div id="TB_ajaxWindowTitle"></div>
-            <div id="TB_closeAjaxWindow">
-                <a href="javascript:;" id="TB_closeWindowButton"></a>
-            </div>
-        </div>
-        <div id="TB_ajaxContent">
-            <div class="helpPopupInner details">
-                
-                <div class="logoArea">
-                    <a href="javascript:;"><img src="images/TopCoder_logo.png" alt="TopCoder" /></a>
-                </div>
-            </div><!-- End .helpPopupInner -->
-        </div>
-        <div id="placeHolder">PlaceHoldertest</div>
-    </div>
-        
     
     <div id="allDescriptionIcon_help" class="tooltipContainer">
         <span class="arrow11"></span>

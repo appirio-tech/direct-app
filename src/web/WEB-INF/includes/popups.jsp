@@ -108,6 +108,10 @@
     
     <div id="TB_overlay" class="TB_overlayBG" style="display:none"></div>
     
+    <div id="TB_window">
+        <div id="placeHolder">PlaceHoldertest</div>
+    </div>
+    
     <div id="TB_window_custom" class="specrev-window">
         <h1>Plan Specification Review</h1>
         <a class="review-now" href="../contest/startSpecReview.action?startMode=now"></a>

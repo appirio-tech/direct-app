@@ -254,7 +254,7 @@
 <!-- end #uploadSection -->
 
 <div class="bottomButton"> 
-        <a href="javascript:;" class="conditions">Terms and Conditions</a>
+        <a class="conditions thickbox" href="/direct/conditions.jsp?height=400&amp;width=800&amp;inlineId=helpPopup">Terms and Conditions</a>
         <a id="continue" href="javascript:;" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
         <a id="submitButton" href="javascript:;" class="button6 contiune hide"><span class="left"><span class="right">SUBMIT &amp; LAUNCH CONTEST</span></span></a>
         <a id="saveDraftButton" href="javascript:;" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>                           

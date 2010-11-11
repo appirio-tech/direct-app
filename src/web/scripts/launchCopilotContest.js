@@ -90,7 +90,7 @@ $(document).ready(function(){
     $('#TB_overlay').hide();
     $('#TB_window_custom').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window_custom").css('height')) / 2))});
     $('#TB_overlay').bgiframe();
-    $('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
+    //$('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
     
     /**
      * Show terms and conditions window when click.
@@ -102,8 +102,8 @@ $(document).ready(function(){
         $('#TB_window').css({
             'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window").width() / 2)) + 'px'
         });
-        $('#placeHolder').show();
-        $('#TB_ajaxContent').hide();
+        $('#placeHolder').hide();
+        $('#TB_ajaxContent').show();
     });
     
     /**

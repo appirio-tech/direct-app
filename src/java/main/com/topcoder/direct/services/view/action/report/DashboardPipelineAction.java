@@ -233,22 +233,22 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                     }
 
                     // Collect scheduled contests
-                    collectScheduledLaunchedContestStats(clientStats, isScheduled, isLaunched, data.getClientName());
-                    collectScheduledLaunchedContestStats(categoryStats, isScheduled, isLaunched,
+                    collectScheduledLaunchedContestStats(clientStats, isScheduled, isLaunched, isDraft, data.getClientName());
+                    collectScheduledLaunchedContestStats(categoryStats, isScheduled, isLaunched, isDraft,
                                                          data.getContestCategory());
-                    collectScheduledLaunchedContestStats(projectStats, isScheduled, isLaunched, data.getPname());
-                    collectScheduledLaunchedContestStats(billingStats, isScheduled, isLaunched, data.getCpname());
+                    collectScheduledLaunchedContestStats(projectStats, isScheduled, isLaunched, isDraft, data.getPname());
+                    collectScheduledLaunchedContestStats(billingStats, isScheduled, isLaunched, isDraft, data.getCpname());
 
                     String[] copilots = data.getCopilots();
                     if (copilots != null) {
                         for (String copilot : copilots) {
-                            collectScheduledLaunchedContestStats(copilotStats, isScheduled, isLaunched, copilot);
-                            collectScheduledLaunchedContestStats(personStats, isScheduled, isLaunched, copilot);
+                            collectScheduledLaunchedContestStats(copilotStats, isScheduled, isLaunched, isDraft, copilot);
+                            collectScheduledLaunchedContestStats(personStats, isScheduled, isLaunched, isDraft, copilot);
                         }
                     }
                     String manager = data.getManager();
                     if (manager != null && manager.trim().length() > 0) {
-                        collectScheduledLaunchedContestStats(personStats, isScheduled, isLaunched, manager);
+                        collectScheduledLaunchedContestStats(personStats, isScheduled, isLaunched, isDraft, manager);
                     }
                 }
             }
@@ -327,11 +327,12 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
      * @param stats a <code>Map</code> collecting the statistics on scheduled/launched contests.
      * @param scheduled <code>true</code> if contest is scheduled; <code>false</code> otherwise.
      * @param launched <code>true</code> if contest is launched; <code>false</code> otherwise.
+     * @param draft <code>true</code> if contest is draft; <code>false</code> otherwise.
      * @param source a <code>String</code> referencing the source for the statistics.
      */
     private void collectScheduledLaunchedContestStats(Map<String, PipelineLaunchedContestsDTO> stats,
-                                                      boolean scheduled, boolean launched, String source) {
-        if (scheduled || launched) {
+                                                      boolean scheduled, boolean launched, boolean draft, String source) {
+        if (scheduled || launched || draft) {
             if (!stats.containsKey(source)) {
                 PipelineLaunchedContestsDTO stat = new PipelineLaunchedContestsDTO();
                 stat.setSource(source);
@@ -340,8 +341,10 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             PipelineLaunchedContestsDTO stat = stats.get(source);
             if (scheduled) {
                 stat.setScheduledContestsCount(stat.getScheduledContestsCount() + 1);
-            } else {
+            } else if (launched) {
                 stat.setLaunchedContestsCount(stat.getLaunchedContestsCount() + 1);
+            } else {
+                stat.setDraftContestsCount(stat.getDraftContestsCount() + 1);
             }
         }
     }

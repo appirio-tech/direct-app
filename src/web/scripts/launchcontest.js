@@ -273,9 +273,9 @@ $(document).ready(function(){
     $('#TB_overlay').show();
     $('#TB_window').show();
     $('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
-    $('#TB_window').css({
-            'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window").width() / 2)) + 'px'
-        });
+    $('#TB_window').css('margin', '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window").width() / 2)) + 'px');
+    
+    
     $('#placeHolder').hide();
     $('#TB_ajaxContent').show();
   });
@@ -298,9 +298,8 @@ $(document).ready(function(){
 
   /* bigframe */
   $('#TB_overlay').bgiframe();
-
-  $('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
-
+  //$('#TB_window').scrollFollow({offset: parseInt((document.documentElement.scrollHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
+  
   $(".uploadInner .button6").click(function(){$(".uploadInner .fileIn").trigger("click")})
 
   /********************************
