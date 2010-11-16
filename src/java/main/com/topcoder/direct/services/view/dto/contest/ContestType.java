@@ -90,7 +90,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>
      */
-    UI_PROTOTYPE("UI Prototype Competition", "ui", 19),
+    UI_PROTOTYPE("UI Prototype", "ui", 19),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Specification</code> contest type.</p>
@@ -115,7 +115,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Assembly</code> contest type.</p>
      */
-    ASSEMBLY("Assembly Competition", "As", 14),
+    ASSEMBLY("Assembly", "As", 14),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Test Scenarios</code> contest type.</p>
@@ -130,12 +130,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>RIA Build</code> contest type.</p>
      */
-    RIA_BUILD("RIA Build Competition", "Rb", 24),
+    RIA_BUILD("RIA Build", "Rb", 24),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>RIA Component</code> contest type.</p>
      */
-    RIA_COMPONENT("RIA Component Competition", "Rc", 25),
+    RIA_COMPONENT("RIA Component", "Rc", 25),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Bug Races</code> contest type.</p>
