@@ -596,3 +596,9 @@ function handleCopilotContestActivateResult(jsonResult) {
         showErrors(errorMessage);
     });   
 };
+
+function closeTBBox() {
+    $('#TB_overlay').hide();
+    $('#TB_window').hide();
+	$('#TB_window div').remove();
+}
