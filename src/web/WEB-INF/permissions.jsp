@@ -81,7 +81,7 @@
                                             <tr>
                                                 <td class="checkbox"><input type="checkbox" class="selectUser"/></td>
                                                 <td><a href="javascript:;" class="group expand" onclick="showHideGroup(this,'group1');">Group Name</a></td>
-                                                <td><a href="<s:url action="projectDetails" namespace="/"/>">Contest Name</a></td>
+                                                <td><a href="<s:url action="projectOverview" namespace="/"/>">Contest Name</a></td>
                                                 <td></td>
                                             </tr>
                                             <tr class="group1 hide"><!-- this row belong to the group1 -->
@@ -127,7 +127,7 @@
                                             <tr>
                                                 <td class="checkbox"><input type="checkbox"  class="selectUser"/></td>
                                                 <td><a href="javascript:;" class="group expand" onclick="showHideGroup(this,'group2');">Group Name</a></td>
-                                                <td><a href="<s:url action="projectDetails" namespace="/"/>">Contest Name</a></td>
+                                                <td><a href="<s:url action="projectOverview" namespace="/"/>">Contest Name</a></td>
                                                 <td></td>
                                             </tr>
                                             <tr class="group2 hide"><!-- this row belong to the group2 -->
@@ -173,7 +173,7 @@
                                             <tr>
                                                 <td class="checkbox"><input type="checkbox"  class="selectUser"/></td>
                                                 <td><a href="javascript:;" class="group expand" onclick="showHideGroup(this,'group3');">Group Name</a></td>
-                                                <td><a href="<s:url action="projectDetails" namespace="/"/>">Contest Name</a></td>
+                                                <td><a href="<s:url action="projectOverview" namespace="/"/>">Contest Name</a></td>
                                                 <td></td>
                                             </tr>
                                             <tr class="group3 hide"><!-- this row belong to the group2 -->

@@ -19,7 +19,7 @@
 
             <tr>
                 <td><s:property value="#status.index + 1"/></td>
-                <td><link:projectDetails project="${contest.project}"/></td>
+                <td><link:projectOverview project="${contest.project}"/></td>
                 <td><link:contestDetails contest="${contest}"/></td>
                 <td><link:user userId="${userId}" handle="${handle}"/></td>
                 <td class="lastColumn">

@@ -18,7 +18,7 @@
             <s:set var="projectSummary" value="data"  scope="page"/>
             <tr>
                 <td>
-                    <link:projectDetails project="${project}"/>
+                    <link:projectOverview project="${project}"/>
                 </td>
                 <td>${projectSummary.draft.totalNumber}/<fmt:formatNumber value="${projectSummary.draft.totalPayment}" type="currency" /></td>
                 <td>${projectSummary.scheduled.totalNumber}/<fmt:formatNumber value="${projectSummary.scheduled.totalPayment}" type="currency" /></td>

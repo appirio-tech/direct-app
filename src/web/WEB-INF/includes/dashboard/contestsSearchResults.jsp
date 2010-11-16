@@ -34,7 +34,7 @@
             <s:set var="endTime" value="endTime"  scope="page"/>
             <tr>
                 <td>
-                    <link:projectDetails project="${project}"/>
+                    <link:projectOverview project="${project}"/>
                 </td>            	
                 <td><s:property value="contestType"/></td>
                 <td><link:contestDetails contest="${contest}"/></td>

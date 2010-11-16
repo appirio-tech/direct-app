@@ -403,7 +403,7 @@
                                         <td><c:out value="${contest.cpname}"/></td>
                                         <td>
                                             <a class="longWordsBreak"
-                                               href="<s:url action="projectDetails" namespace="/">
+                                               href="<s:url action="projectOverview" namespace="/">
                                                          <s:param name="formData.projectId" value="%{#attr['contest'].projectId}"/>
                                                      </s:url>"><c:out value="${contest.pname}"/></a>
                                         </td>

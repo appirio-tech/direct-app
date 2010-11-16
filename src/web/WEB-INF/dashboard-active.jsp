@@ -83,7 +83,7 @@
                                                                     </td>
                                                                     <td>
                                                                         <div style="display:table-cell;text-align:left">
-																	        <a href="projectDetails?formData.projectId=${contest.project.id}"><s:property value="contest.project.name"/></a>
+																	        <a href="projectOverview?formData.projectId=${contest.project.id}"><s:property value="contest.project.name"/></a>
                                                                         </div>
 																	</td>
                                                                     <td><fmt:formatDate value="${startTime}"

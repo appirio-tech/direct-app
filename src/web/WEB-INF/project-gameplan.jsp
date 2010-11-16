@@ -29,7 +29,7 @@
                     <div class="area1Content">
                     <div class="currentPage">
                         <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
-                        <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/>
+                        <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/>
                         </a> &gt;
                         <strong>Game Plan</strong>
                     </div>

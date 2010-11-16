@@ -163,7 +163,7 @@
                                                 <c:forEach items="${viewData.projects}" var="project">
                                                     <tr>
                                                         <td class="first">
-                                                            <a class="longWordsBreak ${project.projectStatusColor.name}" href="projectDetails?formData.projectId=${project.project.id}">
+                                                            <a class="longWordsBreak ${project.projectStatusColor.name}" href="projectOverview?formData.projectId=${project.project.id}">
                                                                 <c:out value="${project.project.name}"/></a>
                                                         </td>
                                                         <td><span class="">

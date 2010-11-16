@@ -29,7 +29,7 @@
                 <ul>
                     <s:iterator value="viewData.userProjects.projects" status="status" var="project">
                         <li <s:if test="#status.even">class="even"</s:if>>
-                            <link:projectDetails project="${project}"/>
+                            <link:projectOverview project="${project}"/>
                         </li>
                     </s:iterator>
                 </ul>

@@ -218,7 +218,7 @@
                             <div class="detail">
                                 <c:forEach items="${viewData.dashboard.dependencies}" var="dependency">
                                     '<c:out value="${dependency.dependencyType}"/>'
-                                    <link:projectDetails project="${dependency.dependencyProject}"/>
+                                    <link:projectOverview project="${dependency.dependencyProject}"/>
                                 </c:forEach>
                             </div>
                         </c:if>
