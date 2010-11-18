@@ -420,4 +420,9 @@
           class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>    
+
+    <bean id="dashboardPipelineDraftsRatioAction"
+          class="com.topcoder.direct.services.view.action.report.DashboardPipelineDraftsRatioAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
 </beans>

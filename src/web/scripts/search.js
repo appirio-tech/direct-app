@@ -5,9 +5,12 @@
  *  - Added onchange event listener to #scheduledContestsViewType drop-down
  *  - Added onclick event listeners to expand/collapse buttons on Pipeline Report screen
  *
+ *  Version 1.2 - Direct Pipeline Stats Update Assembly
+ *  - Moved onchange event listener to #scheduledContestsViewType drop-down to dashboard-pipeline.js
+ *  - Moved onclick event listeners to expand/collapse buttons on Pipeline Report screen to dashboard-pipeline.js
  *
  * @author BeBetter, isv
- * @version 1.1 (Direct Search Assembly)
+ * @version 1.2 (Direct Search Assembly)
  */
 $(document).ready(function() {
 		var sStdMenu =
@@ -338,82 +341,6 @@ $(document).ready(function() {
     });
     $('#searchIn').trigger("change");
 
-    $('#scheduledContestsViewType').change(function() {
-        $('.scData').hide();
-        $('.' + $(this).val() + 'ScheduledContests').show();
-    });
-
-
-    $("#pipelineSummary .expand").click(function(){
-        $(this).blur();
-        if($(this).hasClass("collapse")){
-            $(this).parent().parent().next().show();
-            $(this).parent().parent().parent().next().show();
-            $(this).removeClass("collapse");
-        }else{
-            $(this).parent().parent().next().hide();
-            $(this).parent().parent().parent().next().hide();
-            $(this).addClass("collapse");
-        }
-    });
-
-    $("#pipelineScheduledContests .expand").click(function(){
-        $(this).blur();
-        if($(this).hasClass("collapse")){
-            $('.' + $('#scheduledContestsViewType').val() + 'ScheduledContests').show();
-            $('.viewType').show();
-            $(this).removeClass("collapse");
-        }else{
-            $(".scData").hide();
-            $('.viewType').hide();
-            $(this).addClass("collapse");
-        }
-    });
-
-    $("#pipelineDetails .expand").click(function(){
-        $(this).blur();
-        if($(this).hasClass("collapse")){
-            $(this).parent().parent().next().show();
-            $(this).parent().parent().parent().next().show();
-            $(this).removeClass("collapse");
-        }else{
-            $(this).parent().parent().next().hide();
-            $(this).parent().parent().parent().next().hide();
-            $(this).addClass("collapse");
-        }
-    });
-
-    $('.removeNumericalFilter').click(function() {
-        $(this).parent().remove();
-    });
-
-    $('#submitPipelineForm').click(function() {
-        var v1 = -1;
-        var v2 = -1;
-        $('#validationErrors').html('');
-        if ($.trim($('#numericalFilterMinValue').val()) != '' && !isNumber($('#numericalFilterMinValue').val())) {
-            $('#validationErrors').append('Numerical filter minimum value must be non-negative number<br/>');
-        } else {
-            v1 = parseFloat($('#numericalFilterMinValue').val());
-        }
-        if ($.trim($('#numericalFilterMaxValue').val()) != '' && !isNumber($('#numericalFilterMaxValue').val())) {
-            $('#validationErrors').append('Numerical filter maximum value must be non-negative number');
-        } else {
-            v2 = parseFloat($('#numericalFilterMaxValue').val());
-        }
-        if (v1 > -1 && v2 > -1) {
-            if (v2 < v1) {
-                $('#validationErrors').append('Numerical filter maximum value must not be less than minimum value');
-            }
-        }
-        if ($('#validationErrors').html() == '') {
-            var currentPage = $.trim($('.paginate_active').html());
-            $('#pipelineDetailsPageNumber2').val(currentPage);
-            $('#formDataExcel').val("false");
-            document.DashboardSearchForm.submit();
-        }
-        return false;
-    });
 });
    
 /**

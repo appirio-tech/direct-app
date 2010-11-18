@@ -1,9 +1,12 @@
 <%--
   - Author: isv
-  - Version: 1.0 (Direct Pipeline Integration Assembly 1.0)
+  - Version: 1.1 (Direct Pipeline Integration Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
+  -
+  - Version 1.1 (Direct Pipeline Stats Update assembly) change notes: Added "Drafts To Lauched" column to "Launched
+  - Contests" section.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -15,6 +18,15 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
+    <script type="text/javascript" src="/scripts/dashboard-pipeline.js"></script>
+
+    <c:if test="${not viewData.showJustForm}">
+        <script type="text/javascript">
+            $(document).ready(function() {
+                getDraftsRatio($('#scheduledContestsViewType').val());
+            });
+        </script>
+    </c:if>
 </head>
 
 <body id="page">
@@ -202,42 +214,42 @@
                                         <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
-                                        <th class="tableColumn">Launched / All</th>
+                                        <th class="tableColumn">Draft to Launched ratio<br/>(last 90 days)</th>
                                     </tr>
                                     <tr class="ManagerScheduledContests scData hide">
                                         <th class="tableColumn">Manager</th>
                                         <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
-                                        <th class="tableColumn">Launched / All</th>
+                                        <th class="tableColumn">Draft to Launched ratio<br/>(last 90 days)</th>
                                     </tr>
                                     <tr class="CopilotScheduledContests scData hide">
                                         <th class="tableColumn">Copilot</th>
                                         <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
-                                        <th class="tableColumn">Launched / All</th>
+                                        <th class="tableColumn">Draft to Launched ratio<br/>(last 90 days)</th>
                                     </tr>
                                     <tr class="ProjectScheduledContests scData hide">
                                         <th class="tableColumn">Project</th>
                                         <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
-                                        <th class="tableColumn">Launched / All</th>
+                                        <th class="tableColumn">Draft to Launched ratio<br/>(last 90 days)</th>
                                     </tr>
                                     <tr class="ContestTypeScheduledContests scData hide">
                                         <th class="tableColumn">Contest Type</th>
                                         <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
-                                        <th class="tableColumn">Launched / All</th>
+                                        <th class="tableColumn">Draft to Launched ratio<br/>(last 90 days)</th>
                                     </tr>
                                     <tr class="BillingScheduledContests scData hide">
                                         <th class="tableColumn">Billing</th>
                                         <th class="tableColumn">Drafts</th>
                                         <th class="tableColumn">Scheduled</th>
                                         <th class="tableColumn">Launched</th>
-                                        <th class="tableColumn">Launched / All</th>
+                                        <th class="tableColumn">Draft to Launched ratio<br/>(last 90 days)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -251,12 +263,7 @@
                                             <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
-                                            <td>
-                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
-                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
-                                                </c:if>
-                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
-                                            </td>
+                                            <td class="draftsLaunchedRatio">Calculating...</td>
                                         </tr>
                                     </c:forEach>
 
@@ -269,12 +276,7 @@
                                             <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
-                                            <td>
-                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
-                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
-                                                </c:if>
-                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
-                                            </td>
+                                            <td class="draftsLaunchedRatio">Calculating...</td>
                                         </tr>
                                     </c:forEach>
 
@@ -287,12 +289,7 @@
                                             <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
-                                            <td>
-                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
-                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
-                                                </c:if>
-                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
-                                            </td>
+                                            <td class="draftsLaunchedRatio">Calculating...</td>
                                         </tr>
                                     </c:forEach>
 
@@ -305,12 +302,7 @@
                                             <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
-                                            <td>
-                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
-                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
-                                                </c:if>
-                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
-                                            </td>
+                                            <td class="draftsLaunchedRatio">Calculating...</td>
                                         </tr>
                                     </c:forEach>
 
@@ -323,12 +315,7 @@
                                             <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
-                                            <td>
-                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
-                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
-                                                </c:if>
-                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
-                                            </td>
+                                            <td class="draftsLaunchedRatio">Calculating...</td>
                                         </tr>
                                     </c:forEach>
 
@@ -341,12 +328,7 @@
                                             <td>${stat.draftContestsCount}</td>
                                             <td>${stat.scheduledContestsCount}</td>
                                             <td>${stat.launchedContestsCount}</td>
-                                            <td>
-                                                <c:if test="${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount != 0}">
-                                                    <fmt:formatNumber value="${stat.launchedContestsCount * 100.0 / (stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount)}" pattern="##0.##"/>%&nbsp;
-                                                </c:if>
-                                                (${stat.launchedContestsCount}/${stat.launchedContestsCount + stat.draftContestsCount + stat.scheduledContestsCount})
-                                            </td>
+                                            <td class="draftsLaunchedRatio">Calculating...</td>
                                         </tr>
                                     </c:forEach>
 

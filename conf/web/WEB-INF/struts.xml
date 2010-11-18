@@ -302,6 +302,13 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+
+        <action name="dashboardPipelineDraftsRatio" class="dashboardPipelineDraftsRatioAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json"/>
+        </action>
     </package>
 
     <package name="base" namespace="/base" extends="default">

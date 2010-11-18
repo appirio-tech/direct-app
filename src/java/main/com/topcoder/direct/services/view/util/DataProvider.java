@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,6 +37,8 @@ import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
+import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
 import org.apache.commons.collections.CollectionUtils;
@@ -107,19 +110,28 @@ import com.topcoder.web.common.cache.MaxAge;
  * <p>
  * Version 2.1.3 (Direct Contest Dashboard Assembly 1.0) Change notes:
  *   <ol>
- *     <li>Added {@link #getContestDashboardData(long, boolean)} method.</li>
+ *     <li>Added {@link #getContestDashboardData(long, boolean, boolean)} method.</li>
  *   </ol>
  * </p>
+ *
  * <p>
  * Version 2.1.4 (Direct Project Dashboard Assembly 1.0) Change notes:
- * <ol>
- * <li>Updated {@link #getContestDashboardData()}, {@link #getSoftwareContestDashboardData()} and
- * {@link #getStudioContestDashboardData()} methods to add cached model.</li>
- * </ol>
+ *   <ol>
+ *     <li>Updated {@link #getContestDashboardData(long, boolean, boolean)},
+ *     {@link #getSoftwareContestDashboardData(long, boolean)} and {@link #getStudioContestDashboardData(long, boolean)}
+ *     methods to add cached model.</li>
+ *   </ol>
  * </p>
- * 
- * @author isv, BeBetter, TCSASSEMBLER
- * @version 2.1.4
+ *
+ * <p>
+ * Version 2.1.5 (Direct Pipeline Stats Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getPipelineDraftsRatioStats(PipelineScheduledContestsViewType, long)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx
+ * @version 2.1.5
  */
 public class DataProvider {
 
@@ -1284,6 +1296,57 @@ public class DataProvider {
         } else {
             return getSoftwareContestDashboardData(contestId, cached);
         }
+    }
+
+    /**
+     * <p>Gets the statistics on drafts to launched contests ratio.</p>
+     *
+     * @param viewType a <code>PipelineScheduledContestsViewType</code> referencing the type of the pipeline report view
+     *        to get data for.
+     * @param userId a <code>long</code> providing the ID for the user to get data for.
+     * @return a <code>List</code> listing the drafts ratio for specified report view type.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.5
+     */
+    public static List<PipelineDraftsRatioDTO> getPipelineDraftsRatioStats(PipelineScheduledContestsViewType viewType,
+                                                                           long userId) throws Exception {
+        if (viewType == null) {
+            throw new IllegalArgumentException("The parameter [viewType] is NULL");
+        }
+
+        String queryName = "pipeline_drafts_ratio_" + viewType.toString().toLowerCase();
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("uid", String.valueOf(userId));
+
+        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+        ResultSetContainer statsResultContainer = results.get(queryName);
+
+        Map<String, PipelineDraftsRatioDTO> result = new HashMap<String, PipelineDraftsRatioDTO>();
+        for (ResultSetContainer.ResultSetRow row : statsResultContainer) {
+            PipelineDraftsRatioDTO dto;
+            String source = row.getStringItem("source");
+            if (!result.containsKey(source)) {
+                dto = new PipelineDraftsRatioDTO();
+                dto.setSource(source);
+                result.put(source, dto);
+            } else {
+                dto = result.get(source);
+            }
+
+            String status = row.getStringItem("status");
+            if (status != null) {
+                status = status.trim();
+            }
+            if ("Launched".equalsIgnoreCase(status)) {
+                dto.setLaunchedContestsCount(row.getIntItem("contests_count"));
+            } else {
+                dto.setDraftContestsCount(row.getIntItem("contests_count"));
+            }
+        }
+        return new ArrayList<PipelineDraftsRatioDTO>(result.values());
     }
 
     /**

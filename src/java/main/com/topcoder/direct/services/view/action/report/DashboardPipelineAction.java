@@ -39,8 +39,16 @@ import java.util.TreeSet;
 /**
  * <p>A <code>Struts</code> action to be used for handling the requests for viewing the Pipeline report.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (Direct Pipeline Integration Assembly)
+ *
+ * <p>
+ * Version 1.0.1 (Direct Pipeline Stats Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} not to include co-pilot stats into manager stats.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv
+ * @version 1.0.1 (Direct Pipeline Integration Assembly)
  */
 public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
@@ -167,7 +175,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             Map<Date, PipelineSummaryDTO> summaries = new TreeMap<Date, PipelineSummaryDTO>();
             List<CommonPipelineData> pipelineDetails = new ArrayList<CommonPipelineData>();
             Map<String, PipelineLaunchedContestsDTO> clientStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
-            Map<String, PipelineLaunchedContestsDTO> personStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
+            Map<String, PipelineLaunchedContestsDTO> managerStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
             Map<String, PipelineLaunchedContestsDTO> copilotStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
             Map<String, PipelineLaunchedContestsDTO> projectStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
             Map<String, PipelineLaunchedContestsDTO> categoryStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
@@ -243,12 +251,11 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                     if (copilots != null) {
                         for (String copilot : copilots) {
                             collectScheduledLaunchedContestStats(copilotStats, isScheduled, isLaunched, isDraft, copilot);
-                            collectScheduledLaunchedContestStats(personStats, isScheduled, isLaunched, isDraft, copilot);
                         }
                     }
                     String manager = data.getManager();
                     if (manager != null && manager.trim().length() > 0) {
-                        collectScheduledLaunchedContestStats(personStats, isScheduled, isLaunched, isDraft, manager);
+                        collectScheduledLaunchedContestStats(managerStats, isScheduled, isLaunched, isDraft, manager);
                     }
                 }
             }
@@ -273,7 +280,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             getViewData().setClientScheduledLaunchedContestStats(
                 new ArrayList<PipelineLaunchedContestsDTO>(clientStats.values()));
             getViewData().setPersonScheduledLaunchedContestStats(
-                new ArrayList<PipelineLaunchedContestsDTO>(personStats.values()));
+                new ArrayList<PipelineLaunchedContestsDTO>(managerStats.values()));
             getViewData().setCopilotScheduledLaunchedContestStats(
                 new ArrayList<PipelineLaunchedContestsDTO>(copilotStats.values()));
             getViewData().setProjectScheduledLaunchedContestStats(
