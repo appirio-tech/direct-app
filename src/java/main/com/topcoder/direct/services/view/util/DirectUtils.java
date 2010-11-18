@@ -147,8 +147,7 @@ public final class DirectUtils {
     public final static List<String> FINISHED_STATUS = Arrays.asList("Completed", "No Winner Chosen",
         "Insufficient Submissions - ReRun Possible", "Insufficient Submissions", "Abandoned", "Inactive - Removed",
         "Cancelled - Failed Review", "Cancelled - Failed Screening", "Cancelled - Zero Submissions",
-        "Cancelled - Winner Unresponsive", "Cancelled - Client Request", "Cancelled - Requirements Infeasible",
-        "Cancelled - Zero Registrations");
+        "Cancelled - Winner Unresponsive", "Cancelled - Zero Registrations");
 
      /**
      * Represents the &quot;Specification Submission&quot; phase type.
