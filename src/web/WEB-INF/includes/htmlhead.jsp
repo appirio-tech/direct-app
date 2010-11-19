@@ -9,7 +9,7 @@
   - - bump common.js version .
   -
 --%>
-<title>TopCoder Direct</title>
+<title>TopCoder Cockpit</title>
 
 <!-- Meta Tags -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

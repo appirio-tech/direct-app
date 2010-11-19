@@ -148,21 +148,21 @@
 										<div class="title">
                                             <div class="titleLeft">
                                                 <div class="titleRight">
-                                                    <h2>CoPilots <link:helpIcon/></h2>
+                                                    <h2>Copilots <link:helpIcon/></h2>
                                                 </div>
                                             </div>
                                         </div><!-- End .title -->
                                         <s:push value="viewData.coPilotStats">
                                         <table width="100%">
                                             <tr>
-                                                <td><strong>Available</strong> CoPilots</td>
+                                                <td><strong>Available</strong> Copilots</td>
                                                 <td class="highLight2">
                                                     <strong><s:property value="availableCopilots"/></strong>
                                                 </td>
                                             </tr>
                                             <tr class="even">
-                                                <td><a href="http://www.topcoder.com/wiki/display/tc/Active+Copilot+Opportunities" style="color:black;text-decoration: none;" target="_blank">
-                                                    <strong>Projects Available</strong> for CoPilots</a>
+                                                <td><a href="/tc?module=ActiveContests&pt=29" style="color:black;text-decoration: none;" target="_blank">
+                                                    <strong>Projects Available</strong> for Copilots</a>
                                                 </td>
                                                 <td class="highLight2">
                                                     <strong><s:property value="availableCopilotProjects"/></strong>
@@ -170,7 +170,7 @@
                                             </tr>
                                         </table>
                                         </s:push>
-                                        <button:hireCoPilot styleClass="fLeft"/>
+                                        <!--<button:hireCoPilot styleClass="fLeft"/>-->
 									</div>
 								</div><!-- End .newsColumn -->
 							</div><!-- End .area1content -->
