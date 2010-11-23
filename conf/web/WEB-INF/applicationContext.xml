@@ -425,4 +425,59 @@
           class="com.topcoder.direct.services.view.action.report.DashboardPipelineDraftsRatioAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+    
+        <!-- For Copilot Profile and Copilot Project DAO-->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:TCS_CATALOG</value>
+		</property>
+	</bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>mapping.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.InformixDialect
+                hibernate.show_sql=false                
+            </value>
+        </property>
+    </bean>
+        
+    <tx:annotation-driven transaction-manager="txManager" />
+    <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="copilotBaseDAO" abstract="true">
+        <property name="loggerName" value="copilotBaseDAO"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean name="copilotProfileDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProfileDAOImpl"
+          parent="copilotBaseDAO"/>
+
+    <bean name="copilotProjectDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProjectDAOImpl"
+          parent="copilotBaseDAO"/>
+          
+    <bean name="lookupDAO" class="com.topcoder.direct.services.copilot.dao.impl.LookupDAOImpl"
+          parent="copilotBaseDAO"/>          
+
+    <bean id="copilotManageAction"
+      class="com.topcoder.direct.services.view.action.copilot.CopilotManageAction"
+      scope="prototype" parent="baseDirectStrutsAction">
+        <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
+        <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
+    </bean>   
+    
+    <bean id="copilotProjectAction"
+      class="com.topcoder.direct.services.view.action.copilot.CopilotProjectAction"
+      scope="prototype" parent="baseDirectStrutsAction">
+        <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
+        <property name="lookupDAO" ref="lookupDAO"/>
+    </bean>
 </beans>

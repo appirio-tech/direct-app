@@ -921,7 +921,43 @@ A.button9{
 		background: transparent url(../images/button9.png) no-repeat bottom;
 	}
 
+A.button10{
+	float: left;
+	background: transparent url(../images/button10.png) no-repeat left top;
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: none;
+	padding-left:3px;
+	margin-left:10px;
+}	
 
+	A.button10 SPAN.left{
+		float: left;
+		background: transparent url(../images/button10.png) no-repeat right -48px;
+		padding-right:3px;;
+		cursor: pointer;
+		overflow: hidden;
+	}
+	A.button10 SPAN.right{
+		float: left;
+		background: transparent url(../images/button10.png) left -24px repeat-x;
+		cursor: pointer;
+		line-height:22px;
+		height: 24px;
+		padding:0 18px;
+		color: #FFFFFE;
+		overflow: hidden;
+	}
+	
+	A.button10:hover{
+		background-position:left -72px;
+	}
+	A.button10:hover SPAN.left{
+		background-position:right -120px;
+	}
+	A.button10:hover SPAN.right{
+		background-position:left -96px;
+	}
 /*----------------
 	MISC
 ----------------*/

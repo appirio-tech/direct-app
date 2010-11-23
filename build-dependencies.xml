@@ -14,6 +14,7 @@
     <property name="logging_wrapper.jar" value="${tcs_libdir}/logging_wrapper/2.0/logging_wrapper.jar"/>
     <property name="search_builder.jar" value="${tcs_libdir}/search_builder/1.4.0/search_builder_1.4_modified.jar"/>
     <property name="configuration_manager.jar" value="${tcs_libdir}/configuration_manager/2.1.5/configuration_manager.jar"/>
+    <property name="copilot_pool_and_profiles_dao.jar" value="${tcs_libdir}/copilot_pool_and_profiles_dao/1.0.0/copilot_pool_and_profiles_dao.jar"/>
 
     <property name="shared.jar" value="${tcs_libdir}/shared.jar"/>
     <property name="tcwebcommon.jar" value="${tcs_libdir}/tcwebcommon.jar"/>
@@ -56,6 +57,30 @@
           <include name="*.jar"/>
       </fileset>
   </path>
+  
+  <!-- Hibernate libraries -->
+  <path id="hibernate.libs">
+      <fileset dir="${ext_libdir}/hibernate">
+          <include name="*.jar"/>
+      </fileset>
+  </path>  
+  
+  <!-- Commons libraries -->
+  <path id="commons.libs">
+      <fileset dir="${ext_libdir}/commons-dbcp">
+          <include name="*.jar"/>
+      </fileset>
+      <fileset dir="${ext_libdir}/commons-pool">
+          <include name="*.jar"/>
+      </fileset>      
+  </path> 
+
+  <!-- Asm libraries -->
+  <path id="asm.libs">
+      <fileset dir="${ext_libdir}/asm">
+          <include name="*.jar"/>
+      </fileset>
+  </path>    
 
   <path id="component.tcs-dependencies">
         <pathelement location="${shared.jar}"/>
@@ -70,6 +95,7 @@
         <pathelement location="${base_exception.jar}" />
         <pathelement location="${search_builder.jar}" />
         <pathelement location="${configuration_manager.jar}" />        
+        <pathelement location="${copilot_pool_and_profiles_dao.jar}" />        
   </path>
 
   <path id="component.3rdParty-dependencies">
@@ -77,6 +103,9 @@
         <path refid="spring.libs"/>
         <path refid="ejb.libs"/>
         <path refid="jboss.libs"/>
+        <path refid="hibernate.libs"/>
+        <path refid="commons.libs"/>
+        <path refid="asm.libs"/>
         <pathelement location="${servlet-api.jar}"/>
         <pathelement location="${jaxb.jar}"/>
         <pathelement location="${javaee.jar}"/>

@@ -137,7 +137,7 @@
 
 .ui-dialog .body .list{
 	overflow: auto;
-	height:260px;
+	height:220px;
 	border-top:1px solid #CCCCCC;
 }
 
@@ -177,6 +177,7 @@
 }
 .ui-dialog .body .searchBox {
 	padding:10px 0px 10px 10px;
+    overflow: hidden;
 }
 .ui-dialog .body .searchBox input.searchTxt{
 	width: 110px;
@@ -185,6 +186,18 @@
 	display: block;
 	margin-right:10px;
 	font-size: 11px;
+}
+.ui-dialog .body .searchBox a.button1{
+	display: block;
+}
+.ui-dialog .body .searchBox .searchTxt{
+	float:left;
+	margin-right:10px;
+}	
+.ui-dialog .body .searchBox .searchTxt input{
+	width: 110px;
+	height:20px;
+	font-size: 11px; 
 }
 .ui-dialog .foot .buttons{
 	padding-left:150px;
@@ -204,8 +217,8 @@
 	margin-right:10px;
 	float:right;
 }
-#addUserDialog,#manageUserDialog,#addProjectDialog{
-	padding:0px;
+#addUserDialog,#manageUserDialog,#addProjectDialog,#removeProjectDialog,#modifyCopilotDialog,#makeSureDialog{
+	padding:0px;	
 }
 
 
@@ -267,4 +280,77 @@
 
 .actionMessage {
     list-style:none;
+}
+#manageUserDialog .foot .buttons a.button6{
+	margin-left:40px;
+}
+#manageUserDialog .foot .buttons a.button6{
+	margin-left:40px;
+}
+
+#removeProjectDialog .foot .buttons a.chooseConfirmationButton{
+	margin-left:100px;
+}
+#removeProjectDialog .foot .buttons a.removeProjectMakeSureButton{
+	margin-left:100px;
+}
+#removeProjectDialog .body{
+	font-size:12px;
+	margin:0;
+	font-family:Arial, Helvetica, sans-serif;
+	padding-left:70px;
+	padding-right:50px;
+	padding-top:31px;
+}
+#removeProjectDialog .foot .separator{
+	border-bottom:0;
+}
+
+#modifyCopilotDialog .foot .buttons a.okeyButton2{
+	margin-left:10px;
+}
+#modifyCopilotDialog .body{
+	font-size:12px;
+	margin:0;
+	font-family:Arial, Helvetica, sans-serif;
+	padding-left:70px;
+	padding-right:50px;
+	padding-top:31px;
+}
+#modifyCopilotDialog .specialBody{
+	height:48px;
+	overflow:auto;
+	}
+#modifyCopilotDialog .specialFoot .separator{
+	border-bottom:0;
+	margin:0;
+	margin-top:2px;
+}
+#modifyCopilotDialog .body .startContestSelect,#modifyCopilotDialog .body .specialBodyWords{
+	float:left;
+	width:auto;
+	display:inline;
+}
+#modifyCopilotDialog .body .specialBodyWords{
+	padding-top:4px;
+	padding-right:12px;
+}
+#modifyCopilotDialog .foot .separator,#makeSureDialog .foot .separator{
+	border-bottom:0;
+}
+#makeSureDialog .body{
+	font-size:12px;
+	margin:0;
+	font-family:Arial, Helvetica, sans-serif;
+	padding-left:50px;
+	padding-right:50px;
+	padding-top:31px;
+	text-align:center;
+}
+#makeSureDialog .foot .buttons a.okey2Button{
+	margin-left:100px;
+}
+
+#manageUserDialog .body .right .list{
+	height:270px;
 }

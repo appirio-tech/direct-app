@@ -1,6 +1,6 @@
 <%--
-  - Author: isv
-  - Version: 1.3
+  - Author: isv, TCSASSEMBLER
+  - Version: 1.5
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -12,6 +12,7 @@
   - Version 1.2 (Direct Pipeline Integration Assembly 1.0) changes: added Reports tab.
   - Version 1.3 (Direct Enterprise Dashboard Assembly 1.0) changes: added Overview tab for dashboard pages.  
   - Version 1.4 (TC Direct - Launch Copilot Selection Contest assembly) changes: add copilot tab.
+  - Version 1.5 (TC Direct Manage Copilots Assembly) changes: update copilot manage sub tab.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -35,8 +36,8 @@
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'copilot'}">
             <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="logo">
-                <img src="/images/copilot_title.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
-                <span>TopCoder Copilots</span>
+                <img src="/images/copilot_logo.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
+                <span>Copilots</span>
             </a>
         </c:when>
         <c:otherwise>
@@ -176,9 +177,9 @@
         <div id="tabs1" class="copilotsTabs1">
             <ul>
                 <li ><a href="javascript:;"><span>Introduction To Copilots</span></a></li>
-                <li class="on"><a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Get a Copilot</span></a></li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'launchCopilot'}">class="on"</c:if>><a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Get a Copilot</span></a></li>
                 <li><a href="javascript:;"><span>My Copilot Selection Contests</span></a></li>
-                <li><a href="javascript:;"><span>Manage Copilots</span></a></li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'manageCopilots'}">class="on"</c:if>><a href="<s:url action='manageCopilots' namespace='/copilot'/>"><span>Manage Copilots</span></a></li>
             </ul>
         </div>
      </ui:isCopilotPage>

@@ -392,6 +392,12 @@ BODY#page{
 			#tabs3 UL LI.on A.last SPAN.left{
 				background: url(../images/tabs3_right_on.png) no-repeat right;
 			}
+            .tabs3Special #tabs3 UL LI{
+                width:25%;
+			}
+            .tabs4Special #tabs3 UL LI{
+                width:50%;
+			}            
 		
 /* tabs4 */
 
@@ -2049,7 +2055,7 @@ TABLE.projectStats{
 
 
 	TABLE.projectStats TR.even TD{
-		background-color: #F3F3F3;
+		background-color: #F3F3F3 !important;
 	}
 	
 	TABLE.projectStats TR.noStrips TD{
@@ -4722,6 +4728,117 @@ th.pipelineData14 {
 }
 .rightColumn .activity .posted{
     width:40%;
+}
+
+TABLE.newContestsStatus TD,TABLE.newManageStatus TD{
+	font-size: 11px;
+	font-weight: normal;
+	color: #333;
+}
+TABLE.newManageStatus TR.trChild TD.copilotType{
+	text-align:left;
+	text-indent:20px;
+}
+TABLE.newManageStatus TR.trChild TD.copilotTitle{
+	text-align:left;
+	text-indent:46px;
+}
+TABLE.newManageStatus TR.trChild TD{
+	/*border:1px dashed #a8abad !important;
+	border-left:1px solid #a8abad !important;
+	border-right:1px solid #a8abad !important;*/
+	border-bottom:0;
+	border-top:0;
+	padding:2px 0 3px;
+	background:url(../images/table_bottom_border.png) left bottom repeat-x;
+}
+TABLE.newManageStatus TR.lastTr TD{
+	/*border-bottom:1px solid #a8abad !important;*/
+	background-image:none;
+}
+TABLE.newManageStatus TR.trChild TD.photo{
+	text-align:left;
+}
+TABLE.newManageStatus TR.trChild TD.photo img{
+	float:left;
+	width:auto;
+	display:inline;
+	margin:0 2px 0 24px;
+}
+TABLE.newManageContestsStatus TR.trChild TD.photo img{
+	margin-left:12px;
+}
+TABLE.newManageStatus TR.trChild TD.photo span{
+	float:left;
+	width:auto;
+	display:inline;
+	padding-top:3px;
+}
+TABLE.newManageContestsStatus TR.trChild TD.nobody span{
+	padding-left:32px;
+}
+TABLE.newManageStatus TR TD.tdTitle{
+	text-align:left;
+}
+TABLE.newManageStatus TR TD.tdTitle .expand{
+	float:left;
+	display:inline;
+	width:16px;
+	height:16px;
+	background:url(../images/button_expand.png) left top no-repeat;
+	text-indent:-9999px;
+	overflow:hidden;
+	margin:0 6px 0 10px;
+}
+	TABLE.newManageStatus TR TD.tdTitle .expand:hover{
+		background-position:-16px top;
+	}
+TABLE.newManageStatus TR TD.tdTitle .fold{
+	background-position:left -16px;
+}
+	TABLE.newManageStatus TR TD.tdTitle .fold:hover{
+		background-position:-16px -16px;
+	}
+TABLE.newManageStatus TR TD.tdTitle .listTitle{
+	float:left;
+	width:auto;
+	display:inline;
+	padding-top:1px;
+	font-weight:bold;
+	text-decoration:none;
+}
+	TABLE.newManageStatus TR TD.tdTitle .listTitle:hover{
+		text-decoration:underline;
+	}
+TABLE.newManageStatus TR TD .closeProjectCopilot{
+	display:block;
+	margin:0 auto;
+	width:20px;
+	height:18px;
+	text-indent:-9999px;
+	overflow:hidden;
+	text-decoration:none;
+	background:url(../images/button_close_project_copilot.png) left top no-repeat;
+}
+TABLE.newManageStatus TR TD .closeProjectCopilot:hover{
+	text-decoration:none;
+	background-position:left -18px;
+}
+
+TABLE.newManageStatus TH.thOne{
+	width:40%;
+}
+TABLE.newManageStatus TH.thTwo{
+	width:16%;
+}
+TABLE.newManageStatus TH.thThree{
+	width:18%;
+}
+TABLE.newManageStatus TH.thFour{
+	width:24%;
+}
+TABLE.projectStats.newManageStatus {
+	margin-bottom: 0px;
 }
 
 

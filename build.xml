@@ -221,6 +221,7 @@
         <copy file="${configdir}/contestTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/fileTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/overview.xml" todir="${jboss.home}/server/${server.name}/conf"/>        
+        <copy file="${configdir}/mapping.hbm.xml" todir="${jboss.home}/server/${server.name}/conf"/>        
         <copy file="${configdir}/components/com/topcoder/security/Util.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${shared.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
         <copy file="${tcwebcommon.jar}" todir="${jboss.home}/server/${server.name}/lib"/>
