@@ -4,32 +4,21 @@
 package com.topcoder.direct.services.view.action.copilot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.direct.services.copilot.dao.CopilotProfileDAO;
-import com.topcoder.direct.services.copilot.dao.CopilotProjectDAO;
 import com.topcoder.direct.services.copilot.model.CopilotProfile;
-import com.topcoder.direct.services.copilot.model.CopilotProject;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotManageDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
-import com.topcoder.management.resource.Resource;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>
@@ -66,11 +55,6 @@ public class CopilotManageAction extends BaseDirectStrutsAction {
      * The copilot profile DAO.
      */
     private CopilotProfileDAO copilotProfileDAO;
-
-    /**
-     * The copilot project DAO.
-     */
-    private CopilotProjectDAO copilotProjectDAO;
 
     /**
      * Retrieves the sessionData field.
@@ -130,25 +114,6 @@ public class CopilotManageAction extends BaseDirectStrutsAction {
     }
 
     /**
-     * Retrieves the copilotProjectDAO field.
-     * 
-     * @return the copilotProjectDAO
-     */
-    public CopilotProjectDAO getCopilotProjectDAO() {
-        return copilotProjectDAO;
-    }
-
-    /**
-     * Sets the copilotProjectDAO field.
-     * 
-     * @param copilotProjectDAO
-     *            the copilotProjectDAO to set
-     */
-    public void setCopilotProjectDAO(CopilotProjectDAO copilotProjectDAO) {
-        this.copilotProjectDAO = copilotProjectDAO;
-    }
-
-    /**
      * <p>
      * Handles the incoming request. Retrieve user projects and related copilot
      * information.
@@ -168,81 +133,13 @@ public class CopilotManageAction extends BaseDirectStrutsAction {
 
         // populate copilot values
         viewData = new CopilotManageDTO();
-        Map<Long, CopilotProjectDTO> copilotProjectMap = new HashMap<Long, CopilotProjectDTO>();
-
-        List<ProjectBriefDTO> projects = DataProvider
-                .getUserProjects(currentUser.getUserId());
 
         // set user projects
+        List<ProjectBriefDTO> projects = DataProvider
+                .getUserProjects(currentUser.getUserId());
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
         userProjectsDTO.setProjects(projects);
         viewData.setUserProjects(userProjectsDTO);
-
-        for (ProjectBriefDTO projectBriefDTO : projects) {
-            CopilotProjectDTO copilotProjectDTO = new CopilotProjectDTO();
-
-            // set project
-            copilotProjectDTO.setProject(projectBriefDTO);
-
-            // set project contests
-            List<CopilotContestDTO> contests = new ArrayList<CopilotContestDTO>();
-            ProjectContestsListDTO contestsListDTO = DataProvider
-                    .getProjectContests(currentUser.getUserId(),
-                            projectBriefDTO.getId());
-            for (ProjectContestDTO projectContest : contestsListDTO
-                    .getContests()) {
-                CopilotContestDTO contest = new CopilotContestDTO();
-                
-                contest.setContest(projectContest.getContest());
-                contest.setCopilots(new ArrayList<String>());
-                
-                // retrieve copilots
-                if (!projectContest.getIsStudio()) {
-                    SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(currentUser, projectContest.getContest().getId());
-                    
-                    for (Resource resource : softwareCompetition.getResources()) {
-                        if (resource.getResourceRole().getId() == 14L) {
-                            if (resource.getProperty("Handle") != null) {
-                                contest.getCopilots().add(resource.getProperty("Handle"));
-                            }
-                        }
-                    }
-                }
-                
-                contests.add(contest);
-            }
-            copilotProjectDTO.setContests(contests);
-
-            // initiate copilots
-            copilotProjectDTO.setCopilots(new ArrayList<CopilotBriefDTO>());
-
-            // add to copilot project map
-            copilotProjectMap.put(projectBriefDTO.getId(), copilotProjectDTO);
-        }
-
-        // retrieve copilot projects
-        List<CopilotProject> copilotProjects = copilotProjectDAO.retrieveAll();
-
-        // set copilot profile to copilot project
-        for (CopilotProject copilotProject : copilotProjects) {
-            if (copilotProjectMap.containsKey(copilotProject
-                    .getTcDirectProjectId())) {
-                // associate with user project
-                CopilotBriefDTO copilotBriefDTO = new CopilotBriefDTO();
-                copilotBriefDTO.setCopilotProfileId(copilotProject
-                        .getCopilotProfileId());
-
-                CopilotProfile copilotProfile = copilotProfileDAO
-                        .retrieve(copilotProject.getCopilotProfileId());
-                copilotBriefDTO.setHandle(getUserService().getUserHandle(
-                        copilotProfile.getUserId()));
-                copilotBriefDTO.setCopilotProjectId(copilotProject.getId());
-                copilotBriefDTO.setCopilotType(copilotProject.getCopilotType().getName());
-
-                copilotProjectMap.get(copilotProject.getTcDirectProjectId())
-                        .getCopilots().add(copilotBriefDTO);
-            }
-        }
 
         // set all copilots
         List<CopilotBriefDTO> copilots = new ArrayList<CopilotBriefDTO>();
@@ -259,7 +156,8 @@ public class CopilotManageAction extends BaseDirectStrutsAction {
         }
 
         // set view data
-        viewData.setCopilotProjects(copilotProjectMap);
+        viewData.setCopilotProjects(DataProvider.getCopilotProjects(currentUser
+                .getUserId()));
         viewData.setCopilots(copilots);
     }
 

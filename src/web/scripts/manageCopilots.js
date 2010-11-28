@@ -317,43 +317,69 @@ function hanldeCopilotProjectOperationsResult(jsonResult, isRemove) {
 		projectName = $('.trNormal[name=project_' + data[0].projectId + '] .tdTitle .longWordsBreak').html();
 		handle = $('#copilotsList input[name=copilot_' + data[0].copilotProfileId + ']').val();
 
+        $.each( ["makeSureDialog", "removeProjectDialog" ], function(index, item) {
+            $('#' + item + ' .closeDialog').unbind("click");
+            $('#' + item + ' .closeDialog').click(function() {
+                $('#' + item).dialog("close");
+                handleOperationsResult(data);
+                
+                return false;
+            });
+
+            $('#' + item + ' .foot .okey2Button').unbind("click");
+            $('#' + item + ' .foot .okey2Button').click(function() {
+                $('#' + item).dialog("close");
+                handleOperationsResult(data);
+                
+                return false;
+            });
+        });
+    
 		if (isRemove) {
             $('#removeProjectDialog .projectName').html(projectName);
             $('#removeProjectDialog .handle').html(handle);
-            $('#removeProjectDialog').dialog("open");		
+            $('#removeProjectDialog').dialog("open");	    
 		} else {
             $('#makeSureDialog .projectName').html(projectName);
             $('#makeSureDialog').dialog("open");
 		}
-
-        $.each(data, function(index, item) {
-            projectName = $('.trNormal[name=project_' + item.projectId + '] .tdTitle .longWordsBreak').html();
-            handle = $('#copilotsList input[name=copilot_' + item.copilotProfileId + ']').val();
-
-            if (item.operation == 'REMOVE') {
-                $('#project_' + item.projectId
-                    + "_copilot_"
-                    + item.copilotProfileId).parent().parent().remove();
-
-            } else {
-                var tr = $('.trNormal[name=project_' + item.projectId + ']');
-                var trToAdd = $('#trTemplate').html();
-
-                trToAdd = replaceAllWithString(trToAdd, '@projectId@', item.projectId);
-                trToAdd = replaceAllWithString(trToAdd, '@copilotProfileId@',
-                        item.copilotProfileId);
-                trToAdd = replaceAllWithString(trToAdd, '@copilotProjectId@', item.copilotProjectId);
-                trToAdd = replaceAllWithString(trToAdd, '@copilotType@', item.copilotType);
-                trToAdd = replaceAllWithString(trToAdd, '@handle@', $('#copilotsList input[name=copilot_' + item.copilotProfileId + ']').val());
-
-                $(trToAdd).insertAfter(tr);
-            }
-        });
-
-        updateRows();
     } else {
         alert("Error occurs when update copilot project.");
     }
+};
+
+/**
+ * Handle operations result.
+ *
+ * @param data 
+ *              the data result
+ */
+function handleOperationsResult(data) {
+    $.each(data, function(index, item) {
+        projectName = $('.trNormal[name=project_' + item.projectId + '] .tdTitle .longWordsBreak').html();
+        handle = $('#copilotsList input[name=copilot_' + item.copilotProfileId + ']').val();
+
+        if (item.operation == 'REMOVE') {
+            $('#project_' + item.projectId
+                + "_copilot_"
+                + item.copilotProfileId).parent().parent().remove();
+
+        } else {
+            var tr = $('.trNormal[name=project_' + item.projectId + ']');
+            var trToAdd = $('#trTemplate').html();
+
+            trToAdd = replaceAllWithString(trToAdd, '@projectId@', item.projectId);
+            trToAdd = replaceAllWithString(trToAdd, '@copilotProfileId@',
+                    item.copilotProfileId);
+            trToAdd = replaceAllWithString(trToAdd, '@copilotProjectId@', item.copilotProjectId);
+            trToAdd = replaceAllWithString(trToAdd, '@copilotType@', item.copilotType);
+            trToAdd = replaceAllWithString(trToAdd, '@handle@', $('#copilotsList input[name=copilot_' + item.copilotProfileId + ']').val());
+
+            $(trToAdd).insertAfter(tr);
+        }
+    });
+
+    updateRows();
 };
 
 /**

@@ -20,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
@@ -59,6 +60,9 @@ import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
@@ -129,9 +133,15 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #getPipelineDraftsRatioStats(PipelineScheduledContestsViewType, long)} method.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 2.1.6 (TC Direct Manage Copilots Assembly 1.0) Change notes:
+ * <ol>
+ * <li>Added getCopilotProjects method.</li>
+ * </ol>
+ * </p>
  *
  * @author isv, BeBetter, tangzx
- * @version 2.1.5
+ * @version 2.1.6
  */
 public class DataProvider {
 
@@ -1296,6 +1306,98 @@ public class DataProvider {
         } else {
             return getSoftwareContestDashboardData(contestId, cached);
         }
+    }
+    
+
+    /**
+     * Retrieve copilot project data.
+     * 
+     * @param userId the user id
+     * @return copilot projects
+     * @throws Exception if any exception occurs
+     */
+    public static Map<Long, CopilotProjectDTO> getCopilotProjects(long userId)
+            throws Exception {
+        Map<Long, CopilotProjectDTO> copilotProjects = new HashMap<Long, CopilotProjectDTO>();
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("tc_copilot_projects");
+        request.setProperty("uid", String.valueOf(userId));
+
+        // set copilot project
+        ResultSetContainer resultContainer = dataAccessor.getData(request).get(
+                "tc_copilot_projects");
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+            long tcDirectProjectId = row.getLongItem("tc_direct_project_id");
+            String tcDirectProjectName = row
+                    .getStringItem("tc_direct_project_name");
+            String handle = row.getStringItem("handle");
+            String copilotType = row.getStringItem("name");
+            String copilotProjectId = row.getStringItem("copilot_project_id");
+            String copilotProfileId = row.getStringItem("copilot_profile_id");
+
+            if (!copilotProjects.containsKey(tcDirectProjectId)) {
+                CopilotProjectDTO copilotProject = new CopilotProjectDTO();
+
+                ProjectBriefDTO project = new ProjectBriefDTO();
+                project.setId(tcDirectProjectId);
+                project.setName(tcDirectProjectName);
+                copilotProject.setProject(project);
+
+                copilotProject.setCopilots(new ArrayList<CopilotBriefDTO>());
+                copilotProject.setContests(new ArrayList<CopilotContestDTO>());
+
+                copilotProjects.put(tcDirectProjectId, copilotProject);
+            }
+
+            if (copilotType != null) {
+                CopilotBriefDTO copilot = new CopilotBriefDTO();
+                copilot.setCopilotProfileId(Long.parseLong(copilotProfileId.trim()));
+                copilot.setCopilotProjectId(Long.parseLong(copilotProjectId.trim()));
+                copilot.setCopilotType(copilotType);
+                copilot.setHandle(handle);
+
+                copilotProjects.get(tcDirectProjectId).getCopilots().add(
+                        copilot);
+            }
+        }
+
+        // set all contests
+        Map<Long, CopilotContestDTO> contests = new HashMap<Long, CopilotContestDTO>();
+        for (long projectId : copilotProjects.keySet()) {
+            ProjectContestsListDTO contestsListDTO = getProjectContests(userId,
+                    projectId);
+
+            for (ProjectContestDTO projectContest : contestsListDTO
+                    .getContests()) {
+                CopilotContestDTO contest = new CopilotContestDTO();
+                contest.setContest(projectContest.getContest());
+                contest.setCopilots(new ArrayList<String>());
+                
+                contests.put(contest.getContest().getId(), contest);
+            }
+
+        }
+
+        // set contest copilot
+        resultContainer = dataAccessor.getData(request).get(
+                "tc_copilot_contests");
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+            long contestId = row.getLongItem("contest_id");
+            String handle = row.getStringItem("copilot_handle");
+
+            contests.get(contestId).getCopilots().add(handle);
+        }
+
+        // set contests to project
+        for (Entry<Long, CopilotContestDTO> contest : contests.entrySet()) {
+            copilotProjects.get(
+                    contest.getValue().getContest().getProject().getId())
+                    .getContests().add(contest.getValue());
+        }
+
+        return copilotProjects;
     }
 
     /**

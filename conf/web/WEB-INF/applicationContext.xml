@@ -437,7 +437,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mappingResources">
             <list>
-                <value>mapping.hbm.xml</value>
+                <value>/META-INF/mapping.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -471,7 +471,6 @@
       class="com.topcoder.direct.services.view.action.copilot.CopilotManageAction"
       scope="prototype" parent="baseDirectStrutsAction">
         <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
-        <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
     </bean>   
     
     <bean id="copilotProjectAction"

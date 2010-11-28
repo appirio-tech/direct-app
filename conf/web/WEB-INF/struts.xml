@@ -517,7 +517,7 @@
         </action>
     </package>
     
-    <!-- -->
+    <!-- For Copilot Tab-->
     <package name="copilot" namespace="/copilot" extends="base">
         <action name="launchCopilotContest" class="launchContestAction">
             <result>/WEB-INF/launch-copilot-contest.jsp</result>

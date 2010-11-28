@@ -127,10 +127,8 @@ public class CopilotProjectAction extends BaseDirectStrutsAction {
         // populate actual values
         copilotProject.setTcDirectProjectId(operation.getProjectId());
         copilotProject.setCopilotProfileId(operation.getCopilotProfileId());
-        copilotProject.setCreateUser(getUserService()
-                .getUserHandle(
-                        DirectStrutsActionsHelper.getTCSubjectFromSession()
-                                .getUserId()));
+        copilotProject.setCreateUser("" + DirectStrutsActionsHelper.getTCSubjectFromSession()
+                .getUserId());
         copilotProject.setCreateDate(new Date());
         copilotProject.setModifyUser(copilotProject.getCreateUser());
         copilotProject.setModifyDate(new Date());
