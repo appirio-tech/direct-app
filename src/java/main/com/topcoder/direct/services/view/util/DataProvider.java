@@ -1387,7 +1387,11 @@ public class DataProvider {
             long contestId = row.getLongItem("contest_id");
             String handle = row.getStringItem("copilot_handle");
 
-            contests.get(contestId).getCopilots().add(handle);
+            // System.out.println("copilot contest: contestId:" + contestId + " copilot:" + handle);
+
+            if (handle != null) {
+                contests.get(contestId).getCopilots().add(handle);
+            }
         }
 
         // set contests to project
