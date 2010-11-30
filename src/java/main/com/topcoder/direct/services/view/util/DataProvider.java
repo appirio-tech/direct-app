@@ -1316,7 +1316,7 @@ public class DataProvider {
      * @return copilot projects
      * @throws Exception if any exception occurs
      */
-    public static Map<Long, CopilotProjectDTO> getCopilotProjects(long userId)
+    public static List<CopilotProjectDTO> getCopilotProjects(long userId)
             throws Exception {
         Map<Long, CopilotProjectDTO> copilotProjects = new HashMap<Long, CopilotProjectDTO>();
 
@@ -1401,7 +1401,7 @@ public class DataProvider {
                     .getContests().add(contest.getValue());
         }
 
-        return copilotProjects;
+        return new ArrayList<CopilotProjectDTO>(copilotProjects.values());
     }
 
     /**

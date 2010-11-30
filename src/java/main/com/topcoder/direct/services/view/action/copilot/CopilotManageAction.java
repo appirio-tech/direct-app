@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.action.copilot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -159,6 +160,9 @@ public class CopilotManageAction extends BaseDirectStrutsAction {
         viewData.setCopilotProjects(DataProvider.getCopilotProjects(currentUser
                 .getUserId()));
         viewData.setCopilots(copilots);
+        
+        Collections.sort(viewData.getCopilots());
+        Collections.sort(viewData.getCopilotProjects());
     }
 
 }

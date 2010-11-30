@@ -17,7 +17,7 @@ import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
  * @version 1.0
  * @since TC Direct Manage Copilots Assembly
  */
-public class CopilotProjectDTO implements Serializable {
+public class CopilotProjectDTO implements Serializable, Comparable<CopilotProjectDTO> {
     /**
      * Generated serial version UID.
      */
@@ -93,6 +93,15 @@ public class CopilotProjectDTO implements Serializable {
      */
     public void setProject(ProjectBriefDTO project) {
         this.project = project;
+    }
+
+    /**
+     * Compare to method.
+     * 
+     * @param CopilotProjectDTO the copilot project dto to compare
+     */
+    public int compareTo(CopilotProjectDTO o) {
+        return project.getName().compareTo(o.project.getName());
     }
 
 }

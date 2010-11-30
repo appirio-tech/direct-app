@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @version 1.0
  * @since TC Direct Manage Copilots Assembly
  */
-public class CopilotBriefDTO implements Serializable {
+public class CopilotBriefDTO implements Serializable, Comparable<CopilotBriefDTO> {
     /**
      * Generated serial version UID.
      */
@@ -113,6 +113,15 @@ public class CopilotBriefDTO implements Serializable {
      */
     public void setCopilotType(String copilotType) {
         this.copilotType = copilotType;
+    }
+
+    /**
+     * The compare to method.
+     * 
+     * @param CopilotBriefDTO the copilot brief dto to compare
+     */
+    public int compareTo(CopilotBriefDTO o) {
+        return handle.compareTo(o.handle);
     }
 
 }

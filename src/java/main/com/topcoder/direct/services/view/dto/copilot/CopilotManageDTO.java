@@ -5,7 +5,6 @@ package com.topcoder.direct.services.view.dto.copilot;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
 
@@ -27,7 +26,7 @@ public class CopilotManageDTO extends CommonDTO implements Serializable {
     /**
      * A map stores information of each project.
      */
-    private Map<Long, CopilotProjectDTO> copilotProjects;
+    private List<CopilotProjectDTO> copilotProjects;
 
     /**
      * A list stores all copilots' information.
@@ -39,7 +38,7 @@ public class CopilotManageDTO extends CommonDTO implements Serializable {
      * 
      * @return the copilotProjects
      */
-    public Map<Long, CopilotProjectDTO> getCopilotProjects() {
+    public List<CopilotProjectDTO> getCopilotProjects() {
         return copilotProjects;
     }
 
@@ -49,7 +48,7 @@ public class CopilotManageDTO extends CommonDTO implements Serializable {
      * @param copilotProjects
      *            the copilotProjects to set
      */
-    public void setCopilotProjects(Map<Long, CopilotProjectDTO> copilotProjects) {
+    public void setCopilotProjects(List<CopilotProjectDTO> copilotProjects) {
         this.copilotProjects = copilotProjects;
     }
 

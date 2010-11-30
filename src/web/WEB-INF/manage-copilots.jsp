@@ -72,27 +72,27 @@
                                                             </thead>
                                                             <tbody>
                                                                 <s:iterator value="viewData.copilotProjects">
-                                                                    <tr class="trNormal" name="project_${value.project.id}">
+                                                                    <tr class="trNormal" name="project_${project.id}">
                                                                         <td class="tdTitle"><a href="javascript:;" class="expand">Expand</a>
                                                                             <a class="longWordsBreak listTitle" href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#attr['value'].project.id}"/></s:url>">
-                                                                                ${value.project.name}
+                                                                                ${project.name}
                                                                             </a>
                                                                         </td>
-                                                                        <td>${fn:length(value.copilots)}</td>
+                                                                        <td>${fn:length(copilots)}</td>
                                                                         <td></td>
                                                                         <td><a href="javascript:;" class="downloadProfile addCopilotUsers"><span class="profileLeft">Add Copilot</span></a></td>
                                                                     </tr>
                                                                     
-                                                                    <s:iterator value="value.copilots" status="stat">
+                                                                    <s:iterator value="copilots" status="stat">
                                                                         <tr class="trChild hide <c:if test='${stat.last}'>lastTr</c:if>">
                                                                             <td class="photo"><img src="/images/photo_people_small.png" alt="photo" />
                                                                                 <span name="copilot_${copilotProfileId}">${handle}</span>
-                                                                                <input id="project_${value.project.id}_copilot_${copilotProfileId}" type="hidden" value="${copilotProjectId}">
+                                                                                <input id="project_${project.id}_copilot_${copilotProfileId}" type="hidden" value="${copilotProjectId}">
                                                                                 </input>
                                                                             </td>
                                                                             <td></td>
                                                                             <td class="copilotType">${copilotType}</td>
-                                                                            <td><a href="javascript:removeCopilotProject(${value.project.id}, ${copilotProfileId}, ${copilotProjectId});" class="closeProjectCopilot">close</a></td>
+                                                                            <td><a href="javascript:removeCopilotProject(${project.id}, ${copilotProfileId}, ${copilotProjectId});" class="closeProjectCopilot">close</a></td>
                                                                         </tr>
                                                                     </s:iterator>                                                                
                                                                 </s:iterator>                                                                
@@ -110,19 +110,31 @@
                                                             </thead>
                                                             <tbody>
                                                                 <s:iterator value="viewData.copilotProjects">
-                                                                    <tr class="trNormal copilot_project_${value.project.id}">
+                                                                    <tr class="trNormal copilot_project_${project.id}">
                                                                         <td class="tdTitle"><a href="javascript:;" class="expand">Expand</a>
                                                                             <a class="longWordsBreak listTitle" href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#attr['value'].project.id}"/></s:url>">
-                                                                                ${value.project.name}
+                                                                                ${project.name}
                                                                             </a>
                                                                         </td>
-                                                                        <td>${fn:length(value.contests)}</td>
+                                                                        <td>${fn:length(contests)}</td>
                                                                         <td></td>
                                                                     </tr>
 
-                                                                    <s:iterator value="value.contests">
+                                                                    <s:iterator value="contests">
                                                                         <tr class="trChild hide">
-                                                                            <td class="copilotTitle">${contest.title}</td>
+                                                                            <td class="copilotTitle">
+																				<c:choose>
+																					<c:when test="${contest.software}">
+																						<link:onlineReviewProjectDetails projectId="${contest.id}" styleClass="">
+																							${contest.title}
+																						</link:onlineReviewProjectDetails>
+																					</c:when>
+																					<c:otherwise>
+																						${contest.title}
+																					</c:otherwise>
+																				</c:choose>
+																				
+																			</td>
                                                                             <td></td>
                                                                             <td class="photo">
                                                                                 <s:iterator value="copilots" id="handle">
