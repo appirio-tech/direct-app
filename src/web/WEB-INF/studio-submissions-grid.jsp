@@ -1,9 +1,10 @@
 <%--
-  - Author: isv, flexme
+  - Author: isv, flexme, TCSDEVELOPER
+  - Version 1.2.1 (Direct Release 6) change notes: removed pagination controls.
   - Version 1.2 (Direct Submission Viewer Release 4 ) change notes: added Winners section.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: include the contestVars.jsp.
   -
-  - Version: 1.2
+  - Version: 1.2.1
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -82,7 +83,9 @@
                                                     </ul>
                                                 </div>
                                                 <!-- End #submissionGrid -->
+<%--
                                                 <jsp:include page="includes/contest/submissionViewer/pagination.jsp"/>
+--%>
                                             </div>
                                             <!-- End .container2Content -->
                                         </div>
@@ -91,9 +94,11 @@
                             </div>
                             <!-- End .container2 -->
 
+<%--
                             <jsp:include page="includes/contest/submissionViewer/paginationDropdown.jsp"/>
+--%>
 
-                            <a href="javascript:;" class="button1 backToTop"><span>Back To Top</span></a>
+                            <a href="#" class="button1 backToTop"><span>Back To Top</span></a>
                         </div>
                     </div>
 

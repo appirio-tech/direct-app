@@ -65,7 +65,7 @@ BODY#page{
 			color: #FFF;
 		}
 	
-	#header .helloUser A{
+	#header .helloUser LI.helloUserLink A{
 		color: #FFF;
 		padding: 0 5px;
 		text-decoration: none;
@@ -2055,7 +2055,7 @@ TABLE.projectStats{
 
 
 	TABLE.projectStats TR.even TD{
-		background-color: #F3F3F3 !important;
+		background-color: #F3F3F3;
 	}
 	
 	TABLE.projectStats TR.noStrips TD{
@@ -2491,6 +2491,7 @@ A{
     position:relative;
     width:auto;
 	  *top:10px;
+    margin-right: 10px;
 }
 
 .bottom2 {
@@ -4840,5 +4841,41 @@ TABLE.newManageStatus TH.thFour{
 TABLE.projectStats.newManageStatus {
 	margin-bottom: 0px;
 }
+
+.coderTextRed, .coderTextYellow, .coderTextBlue, .coderTextGreen, .coderTextGray, .coderTextOrange {
+font-weight: bold;
+background-color: transparent;
+}
+.coderTextRed:link, .coderTextYellow:link, .coderTextBlue:link, .coderTextGreen:link, .coderTextGray:link, .coderTextOrange:link, .coderTextWhite:link, .coderTextBlack:link {
+text-decoration: none;
+}
+.coderTextRed:visited, .coderTextYellow:visited, .coderTextBlue:visited, .coderTextGreen:visited, .coderTextGray:visited, .coderTextOrange:visited, .coderTextWhite:visited, .coderTextBlack:visited {
+text-decoration: none;
+}
+.coderTextRed:hover, .coderTextYellow:hover, .coderTextBlue:hover, .coderTextGreen:hover, .coderTextGray:hover, .coderTextOrange:hover, .coderTextWhite:hover, .coderTextBlack:hover {
+text-decoration: underline;
+}
+.coderTextRed:active, .coderTextYellow:active, .coderTextBlue:active, .coderTextGreen:active, .coderTextGray:active, .coderTextOrange:active, .coderTextWhite:active, .coderTextBlack:active {
+text-decoration: underline;
+}
+
+/* Orange */
+.coderTextOrange, .coderTextOrange:link, .coderTextOrange:visited, .coderTextOrange:hover, .coderTextOrange:active { color: #FF9900; }
+/* Red */
+.coderTextRed, .coderTextRed:link, .coderTextRed:visited, .coderTextRed:hover, .coderTextRed:active { color: #EE0000; }
+/* Yellow */
+.coderTextYellow, .coderTextYellow:link, .coderTextYellow:visited, .coderTextYellow:hover, .coderTextYellow:active { color: #DDCC00; }
+/* Blue */
+.coderTextBlue, .coderTextBlue:link, .coderTextBlue:visited, .coderTextBlue:hover, .coderTextBlue:active { color: #6666FF; }
+/* Green */
+.coderTextGreen, .coderTextGreen:link, .coderTextGreen:visited, .coderTextGreen:hover, .coderTextGreen:active { color: #00A900; }
+/* Gray */
+.coderTextGray, .coderTextGray:link, .coderTextGray:visited, .coderTextGray:hover, .coderTextGray:active { color: #999999; }
+/* White */
+.coderTextWhite, .coderTextWhite:link, .coderTextWhite:visited, .coderTextWhite:hover, .coderTextWhite:active { color: #FFFFFF; }
+/* Black */
+.coderTextBlack, .coderTextBlack:link, .coderTextBlack:visited, .coderTextBlack:hover, .coderTextBlack:active { color: #000000; }
+
+
 
 

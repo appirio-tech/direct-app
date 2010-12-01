@@ -22,8 +22,15 @@ import java.util.List;
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a list of submissions for
  * <code>Software</code> contest.</p>
  *
+ * <p>
+ * Version 1.0.1 (Direct Release 6 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to use appropriate method for calculating contest stats.</li>
+ *   </ol>
+ * </p>
+ *
  * @author TCSDEVELOPER
- * @version 1.0 (Direct Software Submission Viewer assembly)
+ * @version 1.0.1 (Direct Software Submission Viewer assembly)
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -99,7 +106,7 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
             // For normal request flow prepare various data to be displayed to user
             // Set contest stats
             ContestStatsDTO contestStats
-                = DirectUtils.getContestStats(getContestServiceFacade(), getCurrentUser(), getProjectId());
+                = DirectUtils.getContestStats(getCurrentUser(), getProjectId(), false);
             getViewData().setContestStats(contestStats);
 
             // Set projects data

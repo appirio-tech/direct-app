@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, TCSASSEMBLER
-  - Version: 1.5
+  - Author: isv, TCSDEVELOPER
+  - Version: 1.4.1
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -13,6 +13,7 @@
   - Version 1.3 (Direct Enterprise Dashboard Assembly 1.0) changes: added Overview tab for dashboard pages.  
   - Version 1.4 (TC Direct - Launch Copilot Selection Contest assembly) changes: add copilot tab.
   - Version 1.5 (TC Direct Manage Copilots Assembly) changes: update copilot manage sub tab.
+  - Version 1.5.1 (Direct Release 6 assembly) changes: fixed styles for Hello User handle.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -36,8 +37,8 @@
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'copilot'}">
             <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="logo">
-                <img src="/images/copilot_logo.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
-                <span>Copilots</span>
+                <img src="/images/copilot_title.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
+                <span>TopCoder Copilots</span>
             </a>
         </c:when>
         <c:otherwise>
@@ -120,8 +121,8 @@
             <li>
                 <strong>Hello</strong> <link:currentUser/>|
             </li>
-            <li><a href="<s:url action="logout" namespace="/"/>">Logout</a>|</li>
-            <li><link:help/></li>
+            <li class="helloUserLink"><a href="<s:url action="logout" namespace="/"/>">Logout</a>|</li>
+            <li class="helloUserLink"><link:help/></li>
         </ul>
     </div><!-- End .helloUSer -->
 

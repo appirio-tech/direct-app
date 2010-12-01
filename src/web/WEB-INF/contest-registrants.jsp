@@ -1,3 +1,12 @@
+<%--
+  - Author: isv, TCSDEVELOPER
+  - Version: 1.0.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page renders the Contest Registrants list.
+  -
+  - Version 1.0.1 (Direct Release 6 assembly) changes: fixed bug with displaying the reliability.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -8,25 +17,6 @@
     <jsp:include page="includes/paginationSetup.jsp"/>
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="registrants"/>
-<%--
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(".paginatedDataTable").dataTable({
-                "bFilter": false,
-                "bSort": false,
-                "sPaginationType": "full_numbers"
-//                "sDom": 't<"pagination"prfl>'
-
-            });
-//            $(".dataTables_info").addClass("hide");
-//            $(".dataTables_paginate .last").addClass("hide");
-//            $(".dataTables_paginate .first").addClass("hide");
-//            $(".previous").html("&nbsp;Prev&nbsp;");
-//            $(".next").html("&nbsp;Next&nbsp;");
-//            $(".dataTables_length").addClass("showPages");
-        });
-    </script>
---%>
 </head>
 
 <body id="page">
@@ -103,7 +93,7 @@
                                                                         <s:if test="reliability != null">
                                                                             <s:set var="reliability" value="reliability" scope="page"/>
                                                                             <fmt:formatNumber value="${reliability}"
-                                                                                              pattern="0.00" />
+                                                                                              pattern="######0.##" />%
                                                                         </s:if>
                                                                      </td>
                                                                     <td>

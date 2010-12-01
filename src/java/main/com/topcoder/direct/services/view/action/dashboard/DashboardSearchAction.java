@@ -21,8 +21,15 @@ import java.util.Map;
  * Version 2.0 - add result for excel download.
  * </p>
  *
- * @author isv, BeBetter
- * @version 2.0
+ * <p>
+ * Version 2.0.1 (Direct Release 6 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Excluded <code>Members/Admin</code> option from dashboard search criteria types.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, TCSDEVELOPER
+ * @version 2.0.1
  */
 public class DashboardSearchAction extends AbstractAction implements ViewAction<DashboardSearchResultsDTO>,
     FormAction<DashboardSearchForm> {
@@ -43,7 +50,6 @@ public class DashboardSearchAction extends AbstractAction implements ViewAction<
         SEARCH_CRITERIA_TYPES = new LinkedHashMap<DashboardSearchCriteriaType, String>();
         SEARCH_CRITERIA_TYPES.put(DashboardSearchCriteriaType.PROJECTS, "Project");
         SEARCH_CRITERIA_TYPES.put(DashboardSearchCriteriaType.CONTESTS, "Contest");
-        SEARCH_CRITERIA_TYPES.put(DashboardSearchCriteriaType.MEMBERS, "Member/Admin");
     }
 
     /**

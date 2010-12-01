@@ -140,8 +140,15 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ol>
  * </p>
  *
+ *  <p>
+ * Version 2.1.7 (Direct Release 6 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getTopCoderDirectFacts()} method to calculate stats for bug races.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx
- * @version 2.1.6
+ * @version 2.1.7
  */
 public class DataProvider {
 
@@ -203,6 +210,30 @@ public class DataProvider {
         if (tcDirectFactsResult.getItem(0, "prize_purse").getResultData() != null) {
             result.setPrizePurse(tcDirectFactsResult.getDoubleItem(0, "prize_purse"));
         }
+
+        CachedDataAccess dai = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.JIRA_DATASOURCE_NAME);
+        Request dataRequest = new Request();
+        dataRequest.setContentHandle("bug_race_active_contests_summary");
+
+        result.setBugRacesNumber(0);
+        result.setBugRacesPrizes(0);
+
+        try
+        {
+            ResultSetContainer rsc = dai.getData(dataRequest).get("bug_race_active_contests_summary");
+            if (!rsc.isEmpty()) {
+                result.setBugRacesNumber(rsc.get(0).getIntItem("total_contests"));
+                if (rsc.get(0).getItem("total_prizes").getResultData()!=null) {
+                    result.setBugRacesPrizes(rsc.get(0).getFloatItem("total_prizes"));
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            // ignore, if we dont have the query
+        }
+        
+
         return result;
     }
 
@@ -608,6 +639,8 @@ public class DataProvider {
                 fee = resultContainer.getDoubleItem(i, "contest_payment");
              } catch(IllegalArgumentException ex) {
                  // ignore the IllegalArgumentException if query result does not have contest_payment column
+             } catch(NullPointerException ex) {
+                 // ignore the NullPointerException if query result does not have contest_payment column
              }
             
              tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");

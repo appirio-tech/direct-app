@@ -1196,6 +1196,7 @@
 									JSON['fperm'] = false;
 									uPermission = new $.permission.userPermission(JSON);
 									project.addUserPermissions(uPermission);
+                                    					project.updateUserPermissions[uPermission.userId] = uPermission;
 								}
 							});
 							

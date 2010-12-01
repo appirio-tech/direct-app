@@ -12,6 +12,7 @@
 <%@ tag language="java" body-content="empty" pageEncoding="UTF-8" %>
 <%@ tag import="com.topcoder.shared.util.ApplicationServer" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tc-webtag" uri="/WEB-INF/tld/tc-webtags.tld" %>
 
 <%@ attribute name="userId" required="true" type="java.lang.Long" %>
 <%@ attribute name="handle" required="true" type="java.lang.String" %>
@@ -28,6 +29,6 @@
             <c:out value="${handle}"/></a>
     </c:when>
     <c:otherwise>
-        <a href="http://www.topcoder.com/tc?module=MemberProfile&cr=${userId}" class="${styleClass}" target="_blank"><c:out value="${handle}"/></a>
+        <tc-webtag:handle coderId="${userId}"/>
     </c:otherwise>
 </c:choose>

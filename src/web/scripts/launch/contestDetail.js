@@ -12,7 +12,7 @@ $(document).ready(function(){
     }
 	  	  
     //contest type
-		$("#editTypeButton").click(function(){			
+		$("#editTypeButton").click(function(){
 			showTypeSectionEdit();
 		});
 		
@@ -96,6 +96,10 @@ $(document).ready(function(){
             populatePrizeSection();
             populateSpecSection();
             populateDocumentSection();
+
+            showTypeSectionEdit();
+            populateTypeSection();
+            showTypeSectionDisplay();
           },
           function(errorMessage) {
               showErrors(errorMessage);

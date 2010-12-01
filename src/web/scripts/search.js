@@ -12,50 +12,55 @@
  * @author BeBetter, isv
  * @version 1.2 (Direct Search Assembly)
  */
+var cookieOptions = { path: '/', expires: 1 };
+var COOKIE_NAME = "pagination";
+
 $(document).ready(function() {
-		var sStdMenu =
-			'<strong>Show:  </strong><select size="1" name="dataTableLength">'+
-				'<option value="5">5</option>'+
-				'<option value="10">10</option>'+
-				'<option value="25">25</option>'+
-			'</select>';
-	
-	function trim(str) {
-	str = str.replace(/^\s+/, '');
-	for (var i = str.length - 1; i >= 0; i--) {
-		if (/\S/.test(str.charAt(i))) {
-			str = str.substring(0, i + 1);
-			break;
-		}
-	}
-	return str;
-}
-	jQuery.fn.dataTableExt.oSort['direct-projectNumber-asc'] = function(a, b) {
-		var num1 = a.split('/');
-		var num2 = b.split('/');
-		var x = num1[0] * 1;
-		var y = num2[0] * 1;
-		var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
-		return z;
-	};
-	
-	jQuery.fn.dataTableExt.oSort['direct-projectNumber-desc'] = function(a, b) {
-		var num1 = a.split('/');
-		var num2 = b.split('/');
-		var x = num1[0] * 1;
-		var y = num2[0] * 1;
-		var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));	
-		return z;
-	};
-	jQuery.fn.dataTableExt.oSort['date-direct-asc'] = function(a, b) {
-		if (trim(a) != '') {
-			var frDatea = trim(a).split(' ');
-			var frTimea = frDatea[1].split(':');
-			var frDatea2 = frDatea[0].split('/');
-			var x = (frDatea2[2] + frDatea2[0] + frDatea2[1] + frTimea[0] + frTimea[1]) * 1;
-		} else {
-			var x = 10000000000000; // = l'an 1000 ...
-		}
+    var sStdMenu =
+            '<strong>Show:  </strong><select size="1" name="dataTableLength" id="dataTableLength">' +
+            '<option value="5">5</option>' +
+            '<option value="10">10</option>' +
+            '<option value="25">25</option>' +
+            '<option value="-1">All</option>' +
+            '</select>';
+
+    function trim(str) {
+        str = str.replace(/^\s+/, '');
+        for (var i = str.length - 1; i >= 0; i--) {
+            if (/\S/.test(str.charAt(i))) {
+                str = str.substring(0, i + 1);
+                break;
+            }
+        }
+        return str;
+    }
+
+    jQuery.fn.dataTableExt.oSort['direct-projectNumber-asc'] = function(a, b) {
+        var num1 = a.split('/');
+        var num2 = b.split('/');
+        var x = num1[0] * 1;
+        var y = num2[0] * 1;
+        var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        return z;
+    };
+
+    jQuery.fn.dataTableExt.oSort['direct-projectNumber-desc'] = function(a, b) {
+        var num1 = a.split('/');
+        var num2 = b.split('/');
+        var x = num1[0] * 1;
+        var y = num2[0] * 1;
+        var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
+        return z;
+    };
+    jQuery.fn.dataTableExt.oSort['date-direct-asc'] = function(a, b) {
+        if (trim(a) != '') {
+            var frDatea = trim(a).split(' ');
+            var frTimea = frDatea[1].split(':');
+            var frDatea2 = frDatea[0].split('/');
+            var x = (frDatea2[2] + frDatea2[0] + frDatea2[1] + frTimea[0] + frTimea[1]) * 1;
+        } else {
+            var x = 10000000000000; // = l'an 1000 ...
+        }
 
 		if (trim(b) != '') {
 			var frDateb = trim(b).split(' ');
@@ -79,33 +84,60 @@ $(document).ready(function() {
 			var x = 10000000000000;		                
 		}
 
-		if (trim(b) != '') {
-			var frDateb = trim(b).split(' ');
-			var frTimeb = frDateb[1].split(':');
-			frDateb = frDateb[0].split('/');
-			var y = (frDateb[2] + frDateb[0] + frDateb[1] + frTimeb[0] + frTimeb[1]) * 1;		                
-		} else {
-			var y = 10000000000000;		                
-		}		            
-		var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));		            
-		return z;
-	};
-	
-	/***TCCC-2516*/
-	jQuery.fn.dataTableExt.oSort['html-trimmed-asc'] = function (a, b){
-		var x=trim(a.replace(/<.*?>/g,"").toLowerCase());
-		var y=trim(b.replace(/<.*?>/g,"").toLowerCase());
-		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-	};
-	
-	jQuery.fn.dataTableExt.oSort['html-trimmed-desc'] = function (a, b){
-		var x=trim(a.replace(/<.*?>/g,"").toLowerCase());
-		var y=trim(b.replace(/<.*?>/g,"").toLowerCase());
-		return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-	};	
-	
-	$("#projectsResult .paginatedDataTable").dataTable({
-		"iDisplayLength": 10,
+        if (trim(b) != '') {
+            var frDateb = trim(b).split(' ');
+            var frTimeb = frDateb[1].split(':');
+            frDateb = frDateb[0].split('/');
+            var y = (frDateb[2] + frDateb[0] + frDateb[1] + frTimeb[0] + frTimeb[1]) * 1;
+        } else {
+            var y = 10000000000000;
+        }
+        var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
+        return z;
+    };
+
+    /***TCCC-2516*/
+    jQuery.fn.dataTableExt.oSort['html-trimmed-asc'] = function (a, b) {
+        var x = trim(a.replace(/<.*?>/g, "").toLowerCase());
+        var y = trim(b.replace(/<.*?>/g, "").toLowerCase());
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['html-trimmed-desc'] = function (a, b) {
+        var x = trim(a.replace(/<.*?>/g, "").toLowerCase());
+        var y = trim(b.replace(/<.*?>/g, "").toLowerCase());
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
+
+    jQuery.fn.dataTableExt.oSort['reliability-asc'] = function (a, b) {
+        var x = getReliability(trim(a));
+        var y = getReliability(trim(b));
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['reliability-desc'] = function (a, b) {
+        var x = getReliability(trim(a));
+        var y = getReliability(trim(b));
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
+    function getReliability(text) {
+        if (text == null || text.length == 0) {
+            return 0;
+        }
+        text = text.replace(/,/g, '.');
+        var f = parseFloat(text.substring(0, text.length - 1));
+        if (isNaN(f)) {
+            return 0;
+        } else {
+            return f;
+        }
+    }
+
+    $("#projectsResult .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": true,
 		"bAutoWidth": false,
@@ -123,9 +155,10 @@ $(document).ready(function() {
 				{ "sType": "direct-projectNumber" }
 			]
 
-	});	
-	$("#membersResult .paginatedDataTable").dataTable({
-		"iDisplayLength": 10,
+    });
+    $("#membersResult .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": true,
 		"bAutoWidth": false,
@@ -143,9 +176,10 @@ $(document).ready(function() {
 				{ "sType": "html" }
 			]
 
-	});
-	$("#contestsResult .paginatedDataTable").dataTable({
-		"iDisplayLength": 10,
+    });
+    $("#contestsResult .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": true,
 		"bAutoWidth": false,
@@ -167,9 +201,10 @@ $(document).ready(function() {
 				null
 			]
 
-	});
-	$("#ProjectContests .paginatedDataTable").dataTable({
-		"iDisplayLength": 10,
+    });
+    $("#ProjectContests .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": true,
 		"bAutoWidth": false,
@@ -190,9 +225,10 @@ $(document).ready(function() {
 				null
 			]
 
-	});
-	$("#ProjectRegistrants .paginatedDataTable").dataTable({
-		"iDisplayLength": 10,
+    });
+    $("#ProjectRegistrants .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": true,
 		"bAutoWidth": false,
@@ -201,18 +237,21 @@ $(document).ready(function() {
  			  },            
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom1"l><"bottom2"fp',
-		"aaSorting": [[0,'asc']],
-		"aoColumns": [
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "date-direct" }, 
-				{ "sType": "date-direct" }
-			]
+        "aaSorting": [
+            [0,'asc']
+        ],
+        "aoColumns": [
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "reliability" },
+            { "sType": "date-direct" },
+            { "sType": "date-direct" }
+        ]
 
-	});
-	$("#activeContests .paginatedDataTable").dataTable({
-		"iDisplayLength": 10,
+    });
+    $("#activeContests .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": true,
 		"bAutoWidth": false,
@@ -234,10 +273,11 @@ $(document).ready(function() {
 				null
 			]
 
-	});
-	
-	$("#notificationsContent .paginatedDataTable").dataTable({
-		"iDisplayLength": 10,
+    });
+
+    $("#notificationsContent .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": false,
 		"bAutoWidth": false,
@@ -254,9 +294,9 @@ $(document).ready(function() {
 			] 
 	});
 
-     var pipelineDataTable = $("#pipelineReportArea .paginatedDataTable").dataTable({
-        "iDisplayStart": parseInt($('#pipelineDetailsPageNumber2').val() - 1) * 5,
+    var pipelineDataTable = $("#pipelineReportArea .paginatedDataTable").dataTable({
         "iDisplayLength": 5,
+        "bStateSave": true,
         "bFilter": false,
         "bSort": true,
         "bAutoWidth": false,
@@ -341,6 +381,82 @@ $(document).ready(function() {
     });
     $('#searchIn').trigger("change");
 
+    $('#scheduledContestsViewType').change(function() {
+        $('.scData').hide();
+        $('.' + $(this).val() + 'ScheduledContests').show();
+    });
+
+
+    $("#pipelineSummary .expand").click(function() {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $(this).parent().parent().next().show();
+            $(this).parent().parent().parent().next().show();
+            $(this).removeClass("collapse");
+        } else {
+            $(this).parent().parent().next().hide();
+            $(this).parent().parent().parent().next().hide();
+            $(this).addClass("collapse");
+        }
+    });
+
+    $("#pipelineScheduledContests .expand").click(function() {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $('.' + $('#scheduledContestsViewType').val() + 'ScheduledContests').show();
+            $('.viewType').show();
+            $(this).removeClass("collapse");
+        } else {
+            $(".scData").hide();
+            $('.viewType').hide();
+            $(this).addClass("collapse");
+        }
+    });
+
+    $("#pipelineDetails .expand").click(function() {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $(this).parent().parent().next().show();
+            $(this).parent().parent().parent().next().show();
+            $(this).removeClass("collapse");
+        } else {
+            $(this).parent().parent().next().hide();
+            $(this).parent().parent().parent().next().hide();
+            $(this).addClass("collapse");
+        }
+    });
+
+    $('.removeNumericalFilter').click(function() {
+        $(this).parent().remove();
+    });
+
+    $('#submitPipelineForm').click(function() {
+        var v1 = -1;
+        var v2 = -1;
+        $('#validationErrors').html('');
+        if ($.trim($('#numericalFilterMinValue').val()) != '' && !isNumber($('#numericalFilterMinValue').val())) {
+            $('#validationErrors').append('Numerical filter minimum value must be non-negative number<br/>');
+        } else {
+            v1 = parseFloat($('#numericalFilterMinValue').val());
+        }
+        if ($.trim($('#numericalFilterMaxValue').val()) != '' && !isNumber($('#numericalFilterMaxValue').val())) {
+            $('#validationErrors').append('Numerical filter maximum value must be non-negative number');
+        } else {
+            v2 = parseFloat($('#numericalFilterMaxValue').val());
+        }
+        if (v1 > -1 && v2 > -1) {
+            if (v2 < v1) {
+                $('#validationErrors').append('Numerical filter maximum value must not be less than minimum value');
+            }
+        }
+        if ($('#validationErrors').html() == '') {
+            var currentPage = $.trim($('.paginate_active').html());
+            $('#pipelineDetailsPageNumber2').val(currentPage);
+            $('#formDataExcel').val("false");
+            document.DashboardSearchForm.submit();
+        }
+        return false;
+    });
 });
    
 /**

@@ -1,3 +1,12 @@
+<%--
+  - Author: isv, TCSDEVELOPER
+  - Version: 1.0.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page renders the Landing page for TC Direct application.
+  -
+  - Version 1.0.1 (Direct Release 6 assembly) changes: pressing Enter on Login form input fields submits the form.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -33,6 +42,17 @@
             $("#LoginForm [name=formData.username]").focus();
             loadHomePageFeeds();
         });
+        function submitOnEnter(e) {
+            if (!isEnterKeyPressed(e)) return true;
+            $('#LoginForm').submit();
+            return false;
+        }
+
+        function isEnterKeyPressed(e) {
+            if (window.event) return (window.event.keyCode == 13);
+            if (e) return (e.which == 13);
+            return false;
+        }
     </script>
 </head>
 
@@ -130,6 +150,24 @@
                                                     <strong>$<s:property value="prizePurse"/></strong>
                                                 </td>
 											</tr>
+                                            <tr>
+                                                <td class="first">
+                                                    <strong>Bug Races</strong>
+                                                    <link:helpIcon/>
+                                                </td>
+                                                <td class="last highLight">
+                                                    <strong><s:property value="bugRacesNumber"/></strong>
+                                                </td>
+                                            </tr>
+                                            <tr class="even">
+                                                <td class="first">
+                                                    <strong>Prizes Purse</strong> in Running Bug Races
+                                                    <link:helpIcon/>
+                                                </td>
+                                                <td class="last highLight2">
+                                                    <strong>$<s:property value="bugRacesPrizes"/></strong>
+                                                </td>
+                                            </tr>
 											<tr>
 												<td class="first">
                                                     <strong>Active Members</strong> (Competing)
@@ -186,10 +224,12 @@
                                         <s:actionerror/>
                                         <h3>Please Login</h3>
                                         <p>
-                                            <s:textfield name="formData.username" value="" cssClass="text"/>
+                                            <s:textfield name="formData.username" value="" cssClass="text"
+                                                         onkeypress="submitOnEnter(event);"/>
                                         </p>
                                         <p>
-                                            <s:password name="formData.password" cssClass="text"/>
+                                            <s:password name="formData.password" cssClass="text"
+                                                        onkeypress="submitOnEnter(event);"/>
                                         </p>
                                         <p>
                                             <s:checkbox id="remember_me" cssClass="rememberMe"

@@ -15,8 +15,15 @@ import javax.servlet.http.HttpSession;
 /**
  * <p>A base class for all <code>Struts</code> actions defined in <code>TopCoder Direct</code> application.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.0.1 (Direct Release 6 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #prepare()} method to create session if it not exists yet.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, TCSDEVELOPER
+ * @version 1.0.1
  */
 public abstract class AbstractAction extends ActionSupport implements TopCoderDirectAction, Preparable {
 
@@ -157,8 +164,8 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
     public void prepare() throws Exception {
         HttpServletRequest request = ServletActionContext.getRequest();
 
-        HttpSession session = request.getSession(false);
-        if (session != null) {
+        if (getSessionData() == null) {
+            HttpSession session = request.getSession();
             SessionData sessionData = new SessionData(session);
             setSessionData(sessionData);
         }

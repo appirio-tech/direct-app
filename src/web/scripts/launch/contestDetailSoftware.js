@@ -288,8 +288,60 @@ function initContest(contestJson) {
    softwareContestFees = contestJson.softwareContestFees;  
    //billing information
    initContestFeeForEdit(false, mainWidget.softwareCompetition.projectHeader.projectCategory.id, projectHeader.getBillingProject());      
-   
-	 if(isPrizeEditable(contestJson.billingProjectId)) {
+
+    // Check if the prizes were updated manually in Online Review, if so then treat this as custom
+    // prize schema
+    var customPrizesUsed = false;
+    if (projectHeader.getCostLevel() != COST_LEVEL_CUSTOM) {
+        var prize1 = parseFloat(projectHeader.getFirstPlaceCost());
+        var prize2 = parseFloat(projectHeader.getSecondPlaceCost());
+        var reviewCost = parseFloat(projectHeader.getReviewCost());
+        var reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
+        var drPointsCost = parseFloat(projectHeader.getDRPoints());
+
+        // Iterate over billing schemas and try to find which matches the prizes exacly
+        // If no such schema found then this indicates that the prizes were updated in O/R
+        // manually and treat this as custom schema
+        var index;
+        if (projectHeader.getCostLevel() == 'A') {
+            index = 0;
+        }
+        if (projectHeader.getCostLevel() == 'B') {
+            index = 1;
+        } else {
+            index = 2;
+        }
+        var feesConfig = softwareContestFees[mainWidget.softwareCompetition.projectHeader.projectCategory.id + ''];
+        if (feesConfig) {
+            var c = feesConfig.contestCost.contestCostBillingLevels[index];
+            if (c) {
+                var s_prize1 = c.firstPlaceCost;
+                var s_prize2 = c.secondPlaceCost;
+                var s_reviewCost = c.reviewBoardCost;
+                var s_reliabilityBonusCost = c.reliabilityBonusCost;
+                var s_drPointsCost = c.drCost;
+
+                if ((prize1 != s_prize1) || (prize2 != s_prize2) || (reviewCost != s_reviewCost)
+                        || (reliabilityBonusCost != s_reliabilityBonusCost) || (drPointsCost != s_drPointsCost)) {
+                    customPrizesUsed = true;
+                }
+            }
+        }
+        if (customPrizesUsed) {
+            customCosts = {};
+            customCosts.firstPlaceCost = prize1;
+            customCosts.secondPlaceCost = prize2;
+            customCosts.reviewBoardCost = reviewCost;
+            customCosts.reliabilityBonusCost = reliabilityBonusCost;
+            customCosts.drCost = drPointsCost;
+            mainWidget.softwareCompetition.projectHeader.setCostLevel(COST_LEVEL_CUSTOM);
+        }
+    }
+
+
+
+	 if(isPrizeEditable(contestJson.billingProjectId) || projectHeader.getCostLevel() == COST_LEVEL_CUSTOM
+             || customPrizesUsed) {
 	 	  $('.customRadio').show();
 	 } else {
 	 	  $('.customRadio').hide();

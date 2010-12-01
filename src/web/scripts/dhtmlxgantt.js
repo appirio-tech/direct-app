@@ -4414,7 +4414,8 @@ GanttTask.prototype.getDescStr = function()
 				break;
 			case "Duration":
 				if(str != "")str += delim;
-				str += this.TaskInfo[this.Chart.paramShowTask[i]] + "h";
+                var c = parseFloat(this.TaskInfo[this.Chart.paramShowTask[i]]);
+				str += (c / 24) + "d";
 				break;
 			case "PercentCompleted":
 				if(str != "")str += delim;
