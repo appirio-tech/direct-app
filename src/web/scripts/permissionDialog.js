@@ -222,7 +222,6 @@ $(function() {
 	$("#mu_save").click(function() {
 		$("#manageUserDialog").dialog("close");
 		$.permission.processAddUsersToProject();
-		pbutton_submit();
 	});
 
 	/**
