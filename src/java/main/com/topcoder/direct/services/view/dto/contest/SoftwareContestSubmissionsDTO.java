@@ -13,8 +13,16 @@ import java.util.List;
 /**
  * <p>A <code>DTO</code> class providing the data for displaying by <code>Software Contest Submissions</code> view.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (Direct Software Submission Viewer assembly)
+ * <p>
+ * Version 1.0.1 (Manage Copilot Postings Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getCopilotPostingWinner()} method.</li>
+ *     <li>Added {@link #getCopilotPostingRunnerUp()} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv
+ * @version 1.0.1 (Direct Software Submission Viewer assembly)
  */
 public class SoftwareContestSubmissionsDTO extends CommonDTO implements ProjectIdForm.Aware, ContestStatsDTO.Aware {
 
@@ -197,5 +205,61 @@ public class SoftwareContestSubmissionsDTO extends CommonDTO implements ProjectI
             count = 1;
         }
         return 30 / count;
+    }
+
+    /**
+     * <p>Gets the winner of <code>Copilot Posting</code> contest. This method must be called only of the current
+     * contest is of <code>Copilot Posting</code> type.</p>
+     * 
+     * @return a <code>SoftwareContestWinnerDTO</code> providing the details for winner of <code>Copilot Posting</code>
+     *         contest.
+     * @since 1.0.1 
+     */
+    public SoftwareContestWinnerDTO getCopilotPostingWinner() {
+        List<SoftwareSubmissionDTO> copilotPostingSubmissions = getSubmissions();
+        for (SoftwareSubmissionDTO submission : copilotPostingSubmissions) {
+            List<SoftwareSubmissionReviewDTO> reviews = submission.getReviews();
+            if (reviews != null) {
+                for (SoftwareSubmissionReviewDTO review : reviews) {
+                    if (review.getFinalScore() == 100F) {
+                        SoftwareContestWinnerDTO winner = new SoftwareContestWinnerDTO();
+                        winner.setFinalScore(review.getFinalScore());
+                        winner.setPlacement(1);
+                        winner.setHandle(submission.getSubmitter().getHandle());
+                        winner.setId(submission.getSubmitter().getId());
+                        return winner; 
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * <p>Gets the runner-up of <code>Copilot Posting</code> contest. This method must be called only of the current
+     * contest is of <code>Copilot Posting</code> type.</p>
+     * 
+     * @return a <code>SoftwareContestWinnerDTO</code> providing the details for runner-up of 
+     *         <code>Copilot Posting</code> contest.
+     * @since 1.0.1 
+     */
+    public SoftwareContestWinnerDTO getCopilotPostingRunnerUp() {
+        List<SoftwareSubmissionDTO> copilotPostingSubmissions = getSubmissions();
+        for (SoftwareSubmissionDTO submission : copilotPostingSubmissions) {
+            List<SoftwareSubmissionReviewDTO> reviews = submission.getReviews();
+            if (reviews != null) {
+                for (SoftwareSubmissionReviewDTO review : reviews) {
+                    if (review.getFinalScore() == 80F) {
+                        SoftwareContestWinnerDTO winner = new SoftwareContestWinnerDTO();
+                        winner.setFinalScore(review.getFinalScore());
+                        winner.setPlacement(2);
+                        winner.setHandle(submission.getSubmitter().getHandle());
+                        winner.setId(submission.getSubmitter().getId());
+                        return winner; 
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

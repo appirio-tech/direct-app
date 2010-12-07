@@ -4876,6 +4876,100 @@ text-decoration: underline;
 /* Black */
 .coderTextBlack, .coderTextBlack:link, .coderTextBlack:visited, .coderTextBlack:hover, .coderTextBlack:active { color: #000000; }
 
+TABLE#tableSorterUsed TR.even TD {
+    background-color: #FFFFFF;
+}
+
+TABLE#tableSorterUsed TR.odd TD {
+    background-color: #F3F3F3;
+}
+
+TABLE#tableSorterUsed TH {
+    cursor: pointer;
+}
+
+TABLE.contests TH.copilotPosting {
+    text-align: center;
+}
+
+TABLE.contestsStatus TD, TABLE.contestsStatus TH {
+    text-align: left;
+}
+
+TABLE.contests TH.projectName {
+    text-indent: 20px;
+}
+
+TABLE.contests TH.projectStatus {
+    text-indent: 16px;
+}
+
+TABLE.contests TH.currentPhase {
+    text-indent: 24px;
+}
+
+TABLE.contests TH.copilotPosting {
+    text-align: center;
+}
+
+TABLE.contests TH.projectName {
+    text-indent: 20px;
+}
+
+TABLE.contests TH.projectStatus {
+    text-indent: 16px;
+}
+
+TABLE.contests TH.currentPhase {
+    text-indent: 24px;
+}
+
+TABLE.contests TD.copilotPosting {
+    width: 35%;
+    text-indent: 20px;
+}
+
+TABLE.contests TD.projectName {
+    width: 20%;
+    text-indent: 20px;
+}
+
+TABLE.contests TD.projectStatus {
+    width: 12%;
+    text-indent: 16px;
+}
+
+TABLE.contests TD.currentPhase {
+    width: 17%;
+    text-indent: 28px;
+}
+
+TABLE.contests TD.currentCommand {
+    width: 16%;
+}
+
+table.contests a.button1 {
+    margin-left: 13px;
+}
+
+table.contests a.button1 span {
+    text-align: center;
+    width: 60px;
+}
+
+.tabs3Special {
+    margin-top: 20px !important;
+}
+
+.copilotContestsContent {
+    overflow: hidden;
+    padding: 23px 10px 0;
+}
+
+.uploadedDocumentItem {
+    overflow: hidden;
+}
+
 
 
 

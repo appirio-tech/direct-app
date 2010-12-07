@@ -23,6 +23,8 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
+import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.studio.SubmissionData;
@@ -114,8 +116,16 @@ import com.topcoder.shared.util.DBMS;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme
- * @version 1.6.1
+ * <p>
+ * Version 1.6.2 (Direct Manage Copilot Postings Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getContestStats(TCSubject, long, boolean)} method to calculate stats for <code>Copilot
+ *     Posting</code> contests differently.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, TCSDEVELOPER
+ * @version 1.6.2
  */
 public final class DirectUtils {
     /**
@@ -271,6 +281,7 @@ public final class DirectUtils {
 
         int recordIndex = 0;
 
+        String contestType = null;
         if (recordNum > 1) {
             // there are two records, find out the correct one
             String[] types = new String[2];
@@ -286,7 +297,7 @@ public final class DirectUtils {
         } else if (recordNum == 1) {
 
             // get the contest type first
-            String contestType = resultContainer.getStringItem(0, "type").trim();
+            contestType = resultContainer.getStringItem(0, "type").trim();
 
             if (isStudio && (!contestType.equals("Studio"))) {
                 // contest type is not studio when param indicates the studio, return null
@@ -303,10 +314,26 @@ public final class DirectUtils {
         project.setId(resultContainer.getLongItem(recordIndex, "project_id"));
         project.setName(resultContainer.getStringItem(recordIndex, "project_name"));
 
-        ContestBriefDTO contest = new ContestBriefDTO();
+        ContestBriefDTO contest;
+        if (isStudio) {
+            contest = new ContestBriefDTO();
+        } else {
+            PhasedContestDTO phasedContest = new PhasedContestDTO();
+            phasedContest.setCurrentPhases(DataProvider.getCurrentPhases(contestId));
+            List<DashboardContestSearchResultDTO> contests =
+                DataProvider.searchUserContests(currentUser, null, null, null);
+            for (DashboardContestSearchResultDTO c : contests) {
+                if (c.getContest().getId() == contestId) {
+                    phasedContest.setStatus(c.getStatus());
+                    break;
+                }
+            }
+            contest = phasedContest;
+        }
         contest.setId(resultContainer.getLongItem(recordIndex, "contest_id"));
         contest.setTitle(resultContainer.getStringItem(recordIndex, "contest_name"));
         contest.setProject(project);
+        contest.setSoftware(!isStudio);
 
         ContestStatsDTO dto = new ContestStatsDTO();
         dto.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));

@@ -29,8 +29,16 @@ import java.util.List;
  *   </ol>
  * </p>
  *
+ *
+ * <p>
+ * Version 1.0.2 (Direct Manage Copilot Postings Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to user appropriate method for calculating contest stats.</li>
+ *   </ol>
+ * </p>
+ *
  * @author TCSDEVELOPER
- * @version 1.0.1 (Direct Software Submission Viewer assembly)
+ * @version 1.0.2 (Direct Software Submission Viewer assembly)
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -105,8 +113,7 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
             // For normal request flow prepare various data to be displayed to user
             // Set contest stats
-            ContestStatsDTO contestStats
-                = DirectUtils.getContestStats(getCurrentUser(), getProjectId(), false);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(getCurrentUser(), getProjectId(), false);
             getViewData().setContestStats(contestStats);
 
             // Set projects data

@@ -479,4 +479,26 @@
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
         <property name="lookupDAO" ref="lookupDAO"/>
     </bean>
+    
+    <bean id="listCopilotContestsAction"
+          class="com.topcoder.direct.services.view.action.copilot.ListCopilotContestsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="copilotContestsRegistrantsAction"
+          class="com.topcoder.direct.services.view.action.contest.ContestRegistrantsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="copilotPostingContestSubmissionsAction"
+          class="com.topcoder.direct.services.view.action.contest.SoftwareContestSubmissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="selectCopilotAction"
+          class="com.topcoder.direct.services.view.action.copilot.SelectCopilotAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
+        <property name="lookupDAO" ref="lookupDAO"/>
+    </bean>
 </beans>

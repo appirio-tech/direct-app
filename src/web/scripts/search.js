@@ -325,6 +325,68 @@ $(document).ready(function() {
 
     });
 
+    $("#MyCopilotPostings .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bFilter": false,
+        "bSort": true,
+        "bAutoWidth": false,
+              "oLanguage": {
+                   "sLengthMenu": sStdMenu + " per page"
+               },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                null
+            ]
+
+    });
+
+    $("#CopilotPostingRegistrants .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bFilter": false,
+        "bSort": true,
+        "bAutoWidth": false,
+              "oLanguage": {
+                   "sLengthMenu": sStdMenu + " per page"
+               },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+                { "sType": "html" },
+                null,
+                { "sType": "date-direct" },
+                { "sType": "date-direct" }
+            ]
+
+    });
+
+    $("#CopilotPostingSubmissions .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bFilter": false,
+        "bSort": true,
+        "bAutoWidth": false,
+              "oLanguage": {
+                   "sLengthMenu": sStdMenu + " per page"
+               },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+                { "sType": "html" },
+                null,
+                { "sType": "date-direct" },
+                null,
+                null
+            ]
+
+    });
+
     function formatDate(d) {
         var t1 = d.getDate();
         if (t1 < 10) {

@@ -530,5 +530,33 @@
         <action name="processCopilotProjects" class="copilotProjectAction">
             <result type="json"/>
         </action>
+        <action name="listCopilotPostings" class="listCopilotContestsAction">
+            <result>/WEB-INF/copilot-contests.jsp</result>
+        </action>
+        <action name="copilotContestDetails" class="getContestAction">
+            <result>/WEB-INF/copilot-contests-details.jsp</result>
+        </action>
+        <action name="listCopilotContestRegistrants" class="copilotContestsRegistrantsAction">
+            <result>/WEB-INF/copilot-contests-registrants.jsp</result>
+        </action>
+        <action name="listCopilotContestSubmissions" class="copilotPostingContestSubmissionsAction">
+            <result>/WEB-INF/copilot-contests-submissions.jsp</result>
+        </action>
+        <action name="selectCopilot" class="selectCopilotAction">
+            <result name="success" type="redirectAction">
+                <param name="actionName">listCopilotContestSubmissions</param>
+                <param name="namespace">/copilot</param>
+                <param name="projectId">${projectId}</param>
+            </result>
+        </action>
+        <action name="documentUpload" class="documentUploadAction">
+            <result type="json" />
+        </action>
+        <action name="saveDraftContest" class="saveDraftContestAction">
+            <result type="json" />
+        </action>
+        <action name="createProject" class="createProjectAction">
+            <result type="json" />
+        </action>
     </package>
 </struts>

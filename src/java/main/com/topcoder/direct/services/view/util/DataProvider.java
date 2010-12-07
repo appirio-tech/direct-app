@@ -28,6 +28,7 @@ import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
 import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
 import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
+import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
 import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
@@ -146,9 +147,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #getTopCoderDirectFacts()} method to calculate stats for bug races.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 2.1.8 (Direct Manage Copilot Postings Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getCopilotPostingContests(TCSubject)} method.</li>
+ *     <li>Added {@link #getCurrentPhases(long)} method.</li>
+ *   </ol>
+ * </p>
  *
  * @author isv, BeBetter, tangzx
- * @version 2.1.7
+ * @version 2.1.8
  */
 public class DataProvider {
 
@@ -1057,6 +1065,7 @@ public class DataProvider {
             submission.setPlacement((Integer) submissionRow.getItem("placement").getResultData());
             submission.setPassedScreening(!submissionRow.getBooleanItem("failed_screening"));
             submission.setPassedReview(!submissionRow.getBooleanItem("failed_review"));
+            submission.setUploadId(submissionRow.getLongItem("upload_id"));
             submission.setSubmitter(submitter);
 
             submission.setReviews(reviewsMap.get(submission.getSubmissionId()));
@@ -1486,6 +1495,98 @@ public class DataProvider {
             }
         }
         return new ArrayList<PipelineDraftsRatioDTO>(result.values());
+    }
+
+    /**
+     * <p>Gets the list of <code>Copilot Posting</code> </p>
+     *
+     * @param user a <code>TCSubject</code> referencing the user.
+     * @return a <code>List</code> of <code>Copilot Posting</code> contests accessible to specified user.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.7 
+     */
+    public static List<PhasedContestDTO> getCopilotPostingContests(TCSubject user) throws Exception {
+        StringBuilder contestIds = new StringBuilder();
+        List<PhasedContestDTO> result = new ArrayList<PhasedContestDTO>();
+        List<DashboardContestSearchResultDTO> contests = searchUserContests(user, null, null, null);
+        for (DashboardContestSearchResultDTO contest : contests) {
+            if (ContestType.COPILOT_POSTING.getName().equals(contest.getContestType())) {
+                PhasedContestDTO dto = new PhasedContestDTO();
+                dto.setId(contest.getContest().getId());
+                dto.setContestType(ContestType.COPILOT_POSTING);
+                dto.setProject(contest.getContest().getProject());
+                dto.setSoftware(true);
+                dto.setStatus(contest.getStatus());
+                dto.setTitle(contest.getContest().getTitle());
+
+                result.add(dto);
+                if (contestIds.length() > 0) {
+                    contestIds.append(", ");
+                }
+                contestIds.append(contest.getContest().getId());
+            }
+        }
+
+        // Get current phases for Copilot Posting contests
+        if (!result.isEmpty()) {
+            DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+            Request request = new Request();
+            request.setContentHandle("current_project_phases");
+            request.setProperty("pids", contestIds.toString());
+
+            Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+
+            // Analyze current and next phases
+            final ResultSetContainer projectPhases = results.get("current_project_phases");
+            for (ResultSetContainer.ResultSetRow row : projectPhases) {
+                long projectId = row.getLongItem("project_id");
+                String phaseTypeName = row.getStringItem("phase_type_name");
+                ProjectPhaseDTO phase = new ProjectPhaseDTO();
+                phase.setPhaseName(phaseTypeName);
+
+                for (PhasedContestDTO contest : result) {
+                    if (contest.getId() == projectId) {
+                        if (contest.getCurrentPhases() == null) {
+                            contest.setCurrentPhases(new ArrayList<ProjectPhaseDTO>());
+                        }
+                        contest.getCurrentPhases().add(phase);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * <p>Gets the currently open phases for specified project.</p>
+     *
+     * @param projectId a <code>long</code> providing the project ID.
+     * @return a <code>List</code> of current phases for specified project.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.7
+     */
+    public static List<ProjectPhaseDTO> getCurrentPhases(long projectId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+        Request request = new Request();
+        request.setContentHandle("current_project_phases");
+        request.setProperty("pids", String.valueOf(projectId));
+
+        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+
+        // Get current phases
+        List<ProjectPhaseDTO> result = new ArrayList<ProjectPhaseDTO>();
+        final ResultSetContainer projectPhases = results.get("current_project_phases");
+        for (ResultSetContainer.ResultSetRow row : projectPhases) {
+            String phaseTypeName = row.getStringItem("phase_type_name");
+            ProjectPhaseDTO phase = new ProjectPhaseDTO();
+            phase.setPhaseName(phaseTypeName);
+            result.add(phase);
+        }
+
+        return result;
     }
 
     /**

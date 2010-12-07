@@ -1,10 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: tangzx, TCSDEVELOPER
+  - Version: 1.0.1
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: Launch copilot selection contest receipt section page.
-  - Since: TC Direct - Launch Copilot Selection Contest assembly  
+  - Since: TC Direct - Launch Copilot Selection Contest assembly
+  -
+  - Version 1.0.1 (Manage Copilot Postings assembly) change notes: linked "Go to My Copilot Selection Contests" link
+  - to "Manage Copilot Postings" page. 
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -62,7 +65,7 @@
 
 <div class="bottom-review" id="contestDetailLinkDiv">
     <a href="#" class="button"></a>
-    <a href="javascript:;" >Go to My Copilot Selection Contests</a>
+    <a href="<s:url action='listCopilotPostings' namespace='/copilot'/>" >Go to My Copilot Selection Contests</a>
     <p>Go to My Copilot Selection Contests section to view your copilot posting.</p>
     <br /><br /><br />
 </div>

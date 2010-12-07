@@ -349,6 +349,29 @@ $(document).ready(function(){
 		return true;
 	});
 	
+    /* open link in new windows for .memberProfile and .copilotProfile */
+    $(".memberProfile[rel='_blank']").attr("target","_blank");
+    $(".copilotProfile[rel='_blank']").attr("target","_blank");
+
+    $('.selectWinnerCopilot').click(function() {
+        var data = $(this).data('rel');
+        $('#scpPlacement').val('1');
+        $('#scpSubmissionId').val($(this).data('sid'));
+        $('#scpProfileId').val($(this).data('pid'));
+        $('#scpTcdProjectId').val($(this).data('prid'));
+        $('#SelectCopilotForm').submit();
+        return false;
+    });
+
+    $('.selectRunnerUpCopilot').click(function() {
+        var data = $(this).data('rel');
+        $('#scpPlacement').val('2');
+        $('#scpSubmissionId').val($(this).data('sid'));
+        $('#scpProfileId').val($(this).data('pid'));
+        $('#scpTcdProjectId').val($(this).data('prid'));
+        $('#SelectCopilotForm').submit();
+        return false;
+    });
 });
 
 
@@ -357,3 +380,23 @@ function exportContestRegistrantsToExcel() {
     document.ContestRegistrantsForm.submit();
 }
 
+function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
+    if (place == 1) {
+        $('.selectWinnerCopilot').data('sid', sid);
+        $('.selectWinnerCopilot').data('pid', pid);
+        $('.selectWinnerCopilot').data('prid', prid);
+    } else {
+        $('.selectRunnerUpCopilot').data('sid', sid);
+        $('.selectRunnerUpCopilot').data('pid', pid);
+        $('.selectRunnerUpCopilot').data('prid', prid);
+    }
+    if (place == 1) {
+        $('#firstPlaceCopilot').html(handle);
+        $('#projectNameLabel').html(projectName);
+    } else {
+        $('#secondPlaceCopilot').html(handle);
+    }
+    
+    $('#removeProjectDialog').dialog("open");
+    return false;
+}

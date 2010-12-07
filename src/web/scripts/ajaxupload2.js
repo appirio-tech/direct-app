@@ -228,7 +228,11 @@
     	if(studio) {
     	   return $("#uploadButtonDiv input[type='file']").get(0);
     	} else {
-    		 return $("#swUploadButtonDiv input[type='file']").get(0);
+            if ($("#swUploadButtonDiv input[type='file']").length > 0) {
+                return $("#swUploadButtonDiv input[type='file']").get(0);
+            } else {
+                return $("#attachFileDiv2 input[type='file']").get(0);
+            }
     	}
     }
 
@@ -698,9 +702,15 @@
             if(this.studio) {
               $('#uploadButtonDiv').html('<input name="document" type="file" />');
             } else {
-            	$('#swUploadButtonDiv').html('<input name="document" type="file" />'); 
+                if ($("#swUploadButtonDiv input[type='file']").length > 0) {
+                    $('#swUploadButtonDiv').html('<input name="document" type="file" />');
+                    this._input = getFileInput(this.studio);
+                } else {
+                    $('<input name="document" type="file" class="fileInput"/>').insertBefore('#attachFileDiv2 table');
+                    $(".fileUpload .fileInput").styleingInputFile();
+                    this._input = getFileInput(this.studio);
+                }
             }
-            this._input = getFileInput(this.studio);
         }
     };
 })(); 

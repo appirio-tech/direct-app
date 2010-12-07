@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, TCSDEVELOPER
-  - Version: 1.4.1
+  - Author: isv, tangzx, TCSDEVELOPER
+  - Version: 1.5.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -14,6 +14,8 @@
   - Version 1.4 (TC Direct - Launch Copilot Selection Contest assembly) changes: add copilot tab.
   - Version 1.5 (TC Direct Manage Copilots Assembly) changes: update copilot manage sub tab.
   - Version 1.5.1 (Direct Release 6 assembly) changes: fixed styles for Hello User handle.
+  - Version 1.5.2 (Manage Copilot Postings assembly) change notes: linked "My Copilot Selection Contests" tab
+  - to "Manage Copilot Postings" page.
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -179,7 +181,9 @@
             <ul>
                 <li ><a href="javascript:;"><span>Introduction To Copilots</span></a></li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'launchCopilot'}">class="on"</c:if>><a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Get a Copilot</span></a></li>
-                <li><a href="javascript:;"><span>My Copilot Selection Contests</span></a></li>
+                <li <c:if test="${requestScope.CURRENT_TAB eq 'copilotPostings'}">class="on"</c:if>>
+                    <a href="<s:url action='listCopilotPostings' namespace='/copilot'/>"><span>My Copilot Postings</span></a>
+                </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'manageCopilots'}">class="on"</c:if>><a href="<s:url action='manageCopilots' namespace='/copilot'/>"><span>Manage Copilots</span></a></li>
             </ul>
         </div>

@@ -12,8 +12,15 @@ import java.util.List;
 /**
  * <p>A <code>DTO</code> class providing the data for single software contest submission.</p>
  *
+ * <p>
+ * Version 1.0.1 (Manage Copilot Postings Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #uploadId} property.</li>
+ *   </ol>
+ * </p>
+ *
  * @author TCSDEVELOPER
- * @version 1.0 (Direct Software Submission Viewer assembly)
+ * @version 1.0.1 (Direct Software Submission Viewer assembly)
  */
 public class SoftwareSubmissionDTO implements Serializable {
 
@@ -71,6 +78,13 @@ public class SoftwareSubmissionDTO implements Serializable {
      * <p>A <code>SoftwareSubmissionReviewDTO</code> providing the details for screening review.</p>
      */
     private SoftwareSubmissionReviewDTO screeningReview;
+
+    /**
+     * <p>A <code>long</code> providing the ID for the upload of submission.</p>
+     *
+     * @since 1.0.1
+     */
+    private long uploadId;
 
     /**
      * <p>Constructs new <code>SoftwareSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -277,4 +291,25 @@ public class SoftwareSubmissionDTO implements Serializable {
     public void setScreeningReview(SoftwareSubmissionReviewDTO screeningReview) {
         this.screeningReview = screeningReview;
     }
+
+    /**
+     * <p>Gets the ID for the upload of submission.</p>
+     *
+     * @return a <code>long</code> providing the ID for the upload of submission.
+     * @since 1.0.1
+     */
+    public long getUploadId() {
+        return this.uploadId;
+    }
+
+    /**
+     * <p>Sets the ID for the upload of submission.</p>
+     *
+     * @param uploadId a <code>long</code> providing the ID for the upload of submission.
+     * @since 1.0.1
+     */
+    public void setUploadId(long uploadId) {
+        this.uploadId = uploadId;
+    }
+
 }
