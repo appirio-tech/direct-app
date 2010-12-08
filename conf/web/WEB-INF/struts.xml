@@ -537,9 +537,21 @@
             <result>/WEB-INF/copilot-contests-details.jsp</result>
         </action>
         <action name="listCopilotContestRegistrants" class="copilotContestsRegistrantsAction">
-            <result>/WEB-INF/copilot-contests-registrants.jsp</result>
+            <result type="chain">
+                <param name="actionName">setCopilotContestRegistrantProfiles</param>
+                <param name="namespace">/copilot</param>
+            </result>
         </action>
         <action name="listCopilotContestSubmissions" class="copilotPostingContestSubmissionsAction">
+            <result type="chain">
+                <param name="actionName">setCopilotContestSubmissionProfiles</param>
+                <param name="namespace">/copilot</param>
+            </result>
+        </action>
+        <action name="setCopilotContestRegistrantProfiles" class="allCopilotsListAction">
+            <result>/WEB-INF/copilot-contests-registrants.jsp</result>
+        </action>
+        <action name="setCopilotContestSubmissionProfiles" class="allCopilotsListAction">
             <result>/WEB-INF/copilot-contests-submissions.jsp</result>
         </action>
         <action name="selectCopilot" class="selectCopilotAction">

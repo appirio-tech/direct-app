@@ -501,4 +501,10 @@
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
         <property name="lookupDAO" ref="lookupDAO"/>
     </bean>
+
+    <bean id="allCopilotsListAction"
+          class="com.topcoder.direct.services.view.action.copilot.AllCopilotsListAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
+    </bean>
 </beans>
