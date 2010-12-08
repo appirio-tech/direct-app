@@ -13,6 +13,7 @@
 <c:set var="CURRENT_TAB" value="copilotPostings" scope="request"/>
 <c:set var="CURRENT_SUB_TAB" value="copilotContestDetails" scope="request"/>
 
+<c:set var="contestDTO" value="${viewData.contestStats.contest}"/>
 <c:set var="contest" value="${result}"/>
 <c:set var="projectHeader" value="${contest.projectHeader}"/>
 <c:set var="assetDTO" value="${contest.assetDTO}"/>
@@ -99,8 +100,10 @@
 <div class="editMask">
     <div class="addNewContestInfo infoPanel ">
         <h3><span class="icon">General Information</span>
-            <a href="javascript:" class="editLink">
-                <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            <if:isDraft typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isDraft>
         </h3>
 
         <div class="infoPanelMask">
@@ -195,7 +198,10 @@
     <div class="infoPanel scheduleInfo ">
         <h3>
             <span class="icon">Contest Schedule</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <if:isDraft typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isDraft>
         </h3>
 
         <div class="infoPanelMask">
@@ -249,7 +255,10 @@
     <div class="infoPanel descriptionInfo ">
         <h3>
             <span class="icon">Description that you want everyone to see</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <if:isDraft typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isDraft>
         </h3>
 
         <div class="infoPanelMask">
@@ -282,7 +291,10 @@
     <div class="infoPanel descriptionInfo ">
         <h3>
             <span class="icon">Description that is only viewable to copilots that register for this posting</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <if:isDraft typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isDraft>
         </h3>
 
         <div class="infoPanelMask">
@@ -316,7 +328,10 @@
     <div class="infoPanel fileUploadInfo ">
         <h3>
             <span class="icon">Files</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <if:isDraft typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isDraft>
         </h3>
 
         <div class="infoPanelMask">
