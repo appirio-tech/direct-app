@@ -391,9 +391,14 @@
 </div>
 <!-- end .fileUpload -->
 
-
 </div>
 <!-- end #launchContestOut -->
+<if:isDraft typedContestBrief="${contestDTO}">
+    <div id="resubmit">
+          <a href="javascript:activateContestEdit();" class="button4">Activate</a>
+    </div>
+</if:isDraft>
+
 
 </div>
 </div>
@@ -439,6 +444,21 @@
                          
                     <dd class="yesno">
                          <a href="#" class="button6" id="saveAsDraftOK"><span class="left"><span class="right">OK</span></span></a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="savedAsDraftAndActivated" class="acceptRejectPopup hide">
+    <div class="popupMask">
+        <div class="popupWrap">
+            <div class="popupContent">
+                <dl>
+                    <dt>Your Copilot Selection Contest has been activated successfully</dt>
+                         
+                    <dd class="yesno">
+                         <a href="#" class="button6" id="saveAsDraftOK2"><span class="left"><span class="right">OK</span></span></a>
                     </dd>
                 </dl>
             </div>
