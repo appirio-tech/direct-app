@@ -498,8 +498,6 @@
     <bean id="selectCopilotAction"
           class="com.topcoder.direct.services.view.action.copilot.SelectCopilotAction"
           scope="prototype" parent="baseDirectStrutsAction">
-        <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
-        <property name="lookupDAO" ref="lookupDAO"/>
     </bean>
 
     <bean id="allCopilotsListAction"
