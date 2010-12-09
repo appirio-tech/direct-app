@@ -4,7 +4,7 @@
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This conditional tag renders it's body only if the contest represented by one of the specified
-  - attributes is of Draft status
+  - attributes is of Scheduled status
 --%>
 <%@ tag language="java" body-content="scriptless" pageEncoding="UTF-8" %>
 
@@ -18,7 +18,7 @@
 <c:set var="isScheduled" value="false"/>
 <c:choose>
     <c:when test="${typedContestBrief ne null}">
-        <c:if test="${typedContestBrief.software and statusName eq 'Draft'}">
+        <c:if test="${typedContestBrief.software and statusName eq 'Scheduled'}">
             <c:set var="isScheduled" value="true"/>
         </c:if>
     </c:when>

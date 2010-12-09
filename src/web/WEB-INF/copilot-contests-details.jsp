@@ -100,10 +100,10 @@
 <div class="editMask">
     <div class="addNewContestInfo infoPanel ">
         <h3><span class="icon">General Information</span>
-            <if:isDraft typedContestBrief="${contestDTO}">
+            <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isDraft>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -198,10 +198,10 @@
     <div class="infoPanel scheduleInfo ">
         <h3>
             <span class="icon">Contest Schedule</span>
-            <if:isDraft typedContestBrief="${contestDTO}">
+            <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isDraft>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -255,10 +255,10 @@
     <div class="infoPanel descriptionInfo ">
         <h3>
             <span class="icon">Description that you want everyone to see</span>
-            <if:isDraft typedContestBrief="${contestDTO}">
+            <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isDraft>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -291,10 +291,10 @@
     <div class="infoPanel descriptionInfo ">
         <h3>
             <span class="icon">Description that is only viewable to copilots that register for this posting</span>
-            <if:isDraft typedContestBrief="${contestDTO}">
+            <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isDraft>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -328,10 +328,10 @@
     <div class="infoPanel fileUploadInfo ">
         <h3>
             <span class="icon">Files</span>
-            <if:isDraft typedContestBrief="${contestDTO}">
+            <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isDraft>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">

@@ -97,13 +97,13 @@
                                                         </c:choose>
                                                     </td>
                                                     <td class="currentCommand">
-                                                        <if:isDraft typedContestBrief="${contest}">
+                                                        <if:isEditable typedContestBrief="${contest}">
                                                             <a href="<s:url namespace="/copilot" action="copilotContestDetails">
                                                                        <s:param name="projectId" value="%{#attr['contest'].id}"/>
                                                                      </s:url>"
                                                                class="button1"><span>View/Edit</span>
                                                             </a>
-                                                        </if:isDraft>
+                                                        </if:isEditable>
                                                         <if:isActive typedContestBrief="${contest}">
                                                             <if:isInRegistrationOrSubmissionPhase phasedContest="${contest}">
                                                                 <a href="<s:url namespace="/copilot" action="listCopilotContestRegistrants">
