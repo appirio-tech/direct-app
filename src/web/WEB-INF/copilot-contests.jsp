@@ -111,12 +111,12 @@
                                                                          </s:url>"
                                                                    class="button1"><span>View</span></a>
                                                             </if:isInRegistrationOrSubmissionPhase>
-                                                            <if:isInReviewPhase phasedContest="${contest}">
+                                                            <if:isInScreeningPhase phasedContest="${contest}">
                                                                 <a href="<s:url namespace="/copilot" action="listCopilotContestSubmissions">
                                                                              <s:param name="projectId" value="%{#attr['contest'].id}"/>
                                                                          </s:url>"
                                                                    class="button1"><span>Review</span>
-                                                            </if:isInReviewPhase>
+                                                            </if:isInScreeningPhase>
                                                         </if:isActive>
                                                     </td>
                                                 </tr>

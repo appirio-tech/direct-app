@@ -121,22 +121,22 @@
                                                                 <td>
                                                                         <c:choose>
                                                                             <c:when test="${firstPlaceWinner eq null}">
-                                                                                <if:isInReviewPhase phasedContest="${contestDTO}">
+                                                                                <if:isInScreeningPhase phasedContest="${contestDTO}">
                                                                                     <a href="#" 
                                                                                        onclick="setCopilotSelection(${submission.submissionId}, ${copilotProfilesMap[submitter.id].id}, 1, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
                                                                                        class="chooseCopilotButton"><span
                                                                                         class="profileLeft">Choose This Copilot</span></a>
-                                                                                </if:isInReviewPhase>
+                                                                                </if:isInScreeningPhase>
                                                                             </c:when>
                                                                             <c:when test="${submitter.id eq firstPlaceWinner.id}">
                                                                                 The Chosen Copilot
                                                                             </c:when>
                                                                             <c:when test="${secondPlaceWinner eq null}">
-                                                                                <if:isInReviewPhase phasedContest="${contestDTO}">
+                                                                                <if:isInScreeningPhase phasedContest="${contestDTO}">
                                                                                 <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
                                                                                    class="chooseCopilotButton"><span
                                                                                     class="profileLeft">Choose as 2nd place</span></a>
-                                                                                </if:isInReviewPhase>
+                                                                                </if:isInScreeningPhase>
                                                                             </c:when>
                                                                             <c:when test="${submitter.id eq secondPlaceWinner.id}">
                                                                                 The Runner-Up Copilot
