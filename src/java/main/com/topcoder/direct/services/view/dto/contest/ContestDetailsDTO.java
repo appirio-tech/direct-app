@@ -15,9 +15,16 @@ import com.topcoder.direct.services.view.form.ContestIdForm;
  *     <li>Added {@link #dashboard} property with respective accessor/mutator methods.</li>
  *   </ol>
  * </p>
-
- * @author isv
- * @version 1.0.1
+ * 
+ * <p>
+ * Version 1.0.2 (TC Direct Release Assembly 7) Change notes:
+ *   <ol>
+ *     <li>Added {@link #hasContestWritePermission} property with respective accessor/mutator methods.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author isv, TCSASSEMBLER
+ * @version 1.0.2
  */
 public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestDTO.Aware,
                                                             ContestIdForm.Aware {
@@ -43,6 +50,16 @@ public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Awar
      * @since 1.0.1
      */
     private ContestDashboardDTO dashboard;
+    
+    /**
+     * <p>
+     * A boolean used to represent whether user has write permission to this
+     * contest.
+     * </p>
+     *
+     * @since 1.0.2
+     */
+    private boolean hasContestWritePermission;
 
     /**
      * <p>Constructs new <code>ContestDetailsDTO</code> instance. This implementation does nothing.</p>
@@ -122,5 +139,26 @@ public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Awar
      */
     public void setDashboard(ContestDashboardDTO dashboard) {
         this.dashboard = dashboard;
+    }
+
+    /**
+     * Get hasContestWritePermission field.
+     * 
+     * @return the hasContestWritePermission
+     * @since 1.0.2
+     */
+    public boolean isHasContestWritePermission() {
+        return hasContestWritePermission;
+    }
+
+    /**
+     * Set hasContestWritePermission field.
+     * 
+     * @param hasContestWritePermission
+     *            the hasContestWritePermission to set
+     * @since 1.0.2
+     */
+    public void setHasContestWritePermission(boolean hasContestWritePermission) {
+        this.hasContestWritePermission = hasContestWritePermission;
     }
 }

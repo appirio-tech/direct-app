@@ -143,6 +143,38 @@
         </property>
         <property name="proxyInterface" value="com.topcoder.service.gameplan.GamePlanService"/>
     </bean>
+    
+    <bean id="studioService" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="StudioServiceBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.studio.StudioService"/>
+    </bean>
+    
+    <bean id="projectServices" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ProjectServicesBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.project.service.ProjectServices"/>
+    </bean>    
 
     <!-- AuthenticationInterceptor -->
     <bean id="authenticationInterceptor"
@@ -175,6 +207,8 @@
         <property name="adminServiceFacade" ref="adminServiceFacade"/>
         <property name="referenceDataBean" ref="referenceDataBean"/>
         <property name="userService" ref="userService"/>
+        <property name="studioService" ref="studioService"/>
+        <property name="projectServices" ref="projectServices"/>
     </bean>
 
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"

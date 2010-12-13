@@ -1,9 +1,10 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER
+  - Author: isv, flexme, TCSDEVELOPER, TCSASSEMBLER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: remove firstSlots class on single page.
   - Version 1.2 (Direct Submission Viewer Release 4) change notes: Replaced "submissionId" with "submission" attribute.
+  - Version 1.3 (TC Direct Release Assembly 7) change notes: not to show link if user has no write permission.
   -
-  - Version: 1.2
+  - Version: 1.3
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -34,8 +35,15 @@
     </c:if>
     <ul>
         <li>
-            <a href="javascript:;" class="actButtonlike"><span></span></a>
-
+            <c:choose>            
+                <c:when test="${viewData.hasContestWritePermission}">
+                    <a href="javascript:;" class="actButtonlike"><span></span></a>
+                </c:when>
+                <c:otherwise>
+                    <div class="actButtonlike"><span></span></div>                
+                </c:otherwise>
+            </c:choose>
+            
             <div class="dialog-mini-wrapper">
                 <div class="dialog-mini-arrow"></div>
                 <div class="dialog-mini">
@@ -53,8 +61,16 @@
             </div>
             <!-- End .dialog-mini-wrapper -->
         </li>
-        <li><a href="javascript:;" class="actButtondislike"><span></span></a>
-
+        <li>
+            <c:choose>            
+                <c:when test="${viewData.hasContestWritePermission}">
+                    <a href="javascript:;" class="actButtondislike"><span></span></a>
+                </c:when>
+                <c:otherwise>
+                    <div class="actButtondislike"><span></span></div>
+                </c:otherwise>
+            </c:choose>
+            
             <div class="dialog-mini-wrapper">
                 <div class="dialog-mini-arrow"></div>
                 <div class="dialog-mini">
@@ -91,8 +107,16 @@
                 </div>
             </div>
         </li>
-        <li><a href="javascript:;" class="actButtondollar"><span></span></a>
-
+        <li>
+            <c:choose>            
+                <c:when test="${viewData.hasContestWritePermission}">
+                    <a href="javascript:;" class="actButtondollar"><span></span></a>
+                </c:when>
+                <c:otherwise>
+                    <div class="actButtondollar"><span></span></div>
+                </c:otherwise>
+            </c:choose>
+            
             <div class="dialog-mini-wrapper">
                 <div class="dialog-mini-arrow"></div>
                 <div class="dialog-mini">
@@ -113,8 +137,16 @@
             </div>
             <!-- End .dialog-mini-wrapper -->
         </li>
-        <li><a href="javascript:;" class="actButtonstar"><span></span></a>
-
+        <li>
+            <c:choose>            
+                <c:when test="${viewData.hasContestWritePermission}">
+                    <a href="javascript:;" class="actButtonstar"><span></span></a>
+                </c:when>
+                <c:otherwise>
+                    <div class="actButtonstar"><span></span></div>
+                </c:otherwise>
+            </c:choose>
+            
             <div class="dialog-mini-wrapper">
                 <div class="dialog-mini-arrow"></div>
                 <div class="dialog-mini last">

@@ -25,9 +25,16 @@ import com.topcoder.service.studio.SubmissionData;
  * </ul>
  * </p>
  *
- * @author isv, flexme, TCSDEVELOPER
+ * <p>
+ * Version 1.3 (TC Direct Release Assembly 7) change notes:
+ * <ul>
+ * <li>Added {@link #hasContestWritePermission} property with respective accessor/mutator methods.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author isv, flexme, TCSDEVELOPER, TCSASSEMBLER
  * @since Submission Viewer Release 1 assembly
- * @version 1.2
+ * @version 1.3
  */
 public class StudioContestSubmissionDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -87,6 +94,16 @@ public class StudioContestSubmissionDTO extends CommonDTO implements ContestStat
      * @since 1.3
      */
     private boolean hasCheckout;
+    
+    /**
+     * <p>
+     * A boolean used to represent whether user has write permission to this
+     * contest.
+     * </p>
+     *
+     * @since 1.3
+     */
+    private boolean hasContestWritePermission;
 
     /**
      * <p>Constructs new <code>StudioContestSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -290,5 +307,26 @@ public class StudioContestSubmissionDTO extends CommonDTO implements ContestStat
      */
     public void setHasCheckout(boolean hasCheckout) {
         this.hasCheckout = hasCheckout;
+    }
+
+    /**
+     * Get hasContestWritePermission field.
+     * 
+     * @return the hasContestWritePermission
+     * @since 1.3
+     */
+    public boolean isHasContestWritePermission() {
+        return hasContestWritePermission;
+    }
+
+    /**
+     * Set hasContestWritePermission field.
+     * 
+     * @param hasContestWritePermission
+     *            the hasContestWritePermission to set
+     * @since 1.3
+     */
+    public void setHasContestWritePermission(boolean hasContestWritePermission) {
+        this.hasContestWritePermission = hasContestWritePermission;
     }
 }

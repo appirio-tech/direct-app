@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.topcoder.project.service.ProjectServices;
 import com.topcoder.service.user.UserService;
 import org.apache.log4j.Logger;
 
@@ -24,6 +25,7 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.studio.StudioService;
 import com.topcoder.service.studio.contest.ContestManager;
 
 /**
@@ -63,9 +65,15 @@ import com.topcoder.service.studio.contest.ContestManager;
  * <li>Change <code>getProjects</code> to call the <code>DataProvider</code> instead of project service facade.</li>
  * </ul>
  * </p> 
+ * <p>
+ * Version 1.2.3 - TC Direct Release Assembly 7 Change Note
+ * <ul>
+ * <li>Add studio service and project services field.</li>
+ * </ul>
+ * </p>
  *
- * @author fabrizyo, FireIce, murphydog
- * @version 1.2.2
+ * @author fabrizyo, FireIce, murphydog, TCSASSEMBLER
+ * @version 1.2.3
  */
 public abstract class BaseDirectStrutsAction extends AbstractAction implements Preparable {
     /**
@@ -139,6 +147,20 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * @since 1.2.1
      */
     private UserService userService;
+    
+    /**
+     * Represents the StudioService object. It has getter & setter. Can be any value.
+     *
+     * @since 1.2.3
+     */
+    private StudioService studioService;
+    
+    /**
+     * Represents the ProjectServices object. It has getter & setter. Can be any value.
+     *
+     * @since 1.2.3
+     */
+    private ProjectServices projectServices;
 
     /**
      * <p>
@@ -470,5 +492,45 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * Getter for the namesake instance variable. Simply return the namesake instance variable.
+     * 
+     * @return the studioService
+     * @since 1.2.3
+     */
+    public StudioService getStudioService() {
+        return studioService;
+    }
+
+    /**
+     * Setter for the namesake instance variable. Simply set the value to the namesake instance variable.
+     * 
+     * @param studioService the studioService to set
+     * @since 1.2.3
+     */
+    public void setStudioService(StudioService studioService) {
+        this.studioService = studioService;
+    }
+
+    /**
+     * Getter for the namesake instance variable. Simply return the namesake instance variable.
+     * 
+     * @return the projectServices
+     * @since 1.2.3
+     */
+    public ProjectServices getProjectServices() {
+        return projectServices;
+    }
+
+    /**
+     * Setter for the namesake instance variable. Simply set the value to the namesake instance variable.
+     * 
+     * @param projectServices the projectServices to set
+     * @since 1.2.3
+     */
+    public void setProjectServices(ProjectServices projectServices) {
+        this.projectServices = projectServices;
     }
 }

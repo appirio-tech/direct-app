@@ -1,11 +1,17 @@
+/*
+ * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ */
 /**
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
  * - move some functions for modal pop ups to main.js file
+ *
+ * Version 1.1.1 (TC Direct Release Assembly 7) Change notes:
+ * - Allow set digital run field manually.
  * 
- * @author TCSDEVELOPER
- * @version 1.1
+ * @author TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.1.1
  */
 
 /**
@@ -887,11 +893,14 @@ function resetSoftwarePrizes() {
      //reset custom costs
      //customCosts = null;
 
+     /*
      if(isPrizeEditable(billingProjectId)) {
          $('.customRadio').show();
      } else {
          $('.customRadio').hide();
      }
+     */
+     $('.customRadio').show();
 }
 
 /**
@@ -922,7 +931,9 @@ function fillPrizes() {
    $('#swSecondPlace,#rswSecondPlace').html(contestCost.secondPlaceCost.formatMoney(2));
    $('#swReviewCost,#rswReviewCost').html(contestCost.reviewBoardCost.formatMoney(2));
    $('#swReliabilityBonus,#rswReliabilityBonus').html(contestCost.reliabilityBonusCost.formatMoney(2));
-   $('#swDigitalRun,#rswDigitalRun').html(contestCost.drCost.formatMoney(2));
+   $('#rswDigitalRun').html(contestCost.drCost.formatMoney(2));
+   $('#swDigitalRun').val(contestCost.drCost.formatMoney(2));
+   
    $('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
    $('#swTotal,#rswTotal').html(getContestTotal(feeObject, prizeType).formatMoney(2));
 
@@ -935,8 +946,12 @@ function fillPrizes() {
    if(prizeType == 'custom') {
       $('#swFirstPlace').attr('readonly',false);
       $('#swFirstPlace').val(contestCost.firstPlaceCost);
+      
+      $('#swDigitalRun').attr('readonly',false);
+      $('#swDigitalRun').val(contestCost.drCost);
    } else {
-       $('#swFirstPlace').attr('readonly',true);
+      $('#swFirstPlace').attr('readonly',true);
+      $('#swDigitalRun').attr('readonly',true);
    }
 }
 
@@ -1008,6 +1023,17 @@ function onFirstPlaceChangeKeyUp() {
    onFirstPlaceChange();
 }
 
+/**
+ * Handle digital run field key up event.
+ */
+function onDigitalRunChangeKeyUp() {
+   var value = $('#swDigitalRun').val();
+   if(!checkRequired(value) || !checkNumber(value)) {
+        return;
+   }
+   
+   onDigitalRunChange();
+}
 
 function onFirstPlaceChange() {
    var prizeType = $('input[name="prizeRadio"]:checked').val();
@@ -1034,6 +1060,31 @@ function onFirstPlaceChange() {
    contestCost.reviewBoardCost = calculateReviewCost(contestCost.firstPlaceCost,categoryId);
    contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
    contestCost.drCost = calculateDRPoint(contestCost.firstPlaceCost, contestCost.secondPlaceCost, contestCost.reliabilityBonusCost);
+   fillPrizes();
+}
+
+/**
+ * Handle digital run field change event.
+ */
+function onDigitalRunChange() {
+   var prizeType = $('input[name="prizeRadio"]:checked').val();
+   if(prizeType != 'custom') {
+       return;
+   }
+
+   var value = $('#swDigitalRun').val();
+   if(!checkRequired(value) || !checkNumber(value)) {
+        showErrors('digital run value is invalid.');
+        return;
+   }
+
+   //fee object
+   var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+   var feeObject = softwareContestFees[projectCategoryId];
+
+   //update custom cost data
+   var contestCost = getContestCost(feeObject, 'custom');
+   contestCost.drCost = parseFloat(value);
    fillPrizes();
 }
 

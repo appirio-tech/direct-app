@@ -57,12 +57,19 @@ import java.util.Map;
  *     <li>Updated {@link #executeAction()} method to set hasCheckout flag to the view data.</li>
  *     <li>Updated {@link #executeAction()} and {@link #execute()} methods to redirect request to <code>Milestone</code>
  *     submissions view in case contest has milestone round which is not confirmed by client yet.</li>
+ *   </ul>   
+ * </p>
+ * 
+ * <p>
+ *   Version 1.3 (TC Direct Release Assembly 7) change notes:
+ *   <ul>
+ *     <li>Updated {@link #executeAction()} method to set hasContestWritePermission flag to the view data.</li>
  *   </ul>
  * </p>
  *
- * @author isv, flexme, TCSDEVELOPER
+ * @author isv, flexme, TCSDEVELOPER, TCSASSEMBLER
  * @since Submission Viewer Release 1 assembly
- * @version 1.2
+ * @version 1.3
  */
 public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -312,6 +319,10 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
             getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
+            
+            // set contest permission
+            viewData.setHasContestWritePermission(DirectUtils
+                    .hasWritePermission(this, currentUser, contestId, true));
         }
     }
 

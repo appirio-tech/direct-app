@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER
+  - Author: isv, flexme, TCSDEVELOPER, TCSASSEMBLER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes:
   - 1.Remove "bank:" row.
   - 2.Hide "Submitter Notes:" row.
@@ -9,7 +9,10 @@
   - Version 1.2 (Direct Submission Viewer Release 4 ) change notes:
   - 1.Display Feedback as text only when submission is "Confirmed"
   -
-  - Version: 1.2
+  - Version 1.3 (TC Direct Release Assembly 7) change Notes: 
+  - 1.Added hasContestWritePermission field.  
+  -
+  - Version: 1.3
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -24,6 +27,10 @@
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/contest/submissionViewer/submissionViewerHtmlHead.jsp"/>
+    
+    <script type="text/javascript">
+        var hasContestWritePermission = ${viewData.hasContestWritePermission};
+    </script>    
 </head>
 
 <s:set var="submission" value="viewData.submission" scope="page"/>

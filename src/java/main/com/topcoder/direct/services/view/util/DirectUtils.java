@@ -22,6 +22,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
@@ -38,6 +39,7 @@ import com.topcoder.project.phases.Phase;
 import com.topcoder.project.phases.PhaseType;
 import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.service.ContestSaleData;
+import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ContestServiceException;
@@ -123,9 +125,17 @@ import com.topcoder.shared.util.DBMS;
  *     Posting</code> contests differently.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 1.6.3 (TC Direct Release Assembly 7)) Change notes:
+ * <ul>
+ * <li>Added {@link #ADMIN_ROLE} field.</li>
+ * <li>Added {@link #hasWritePermission} method and {@link #isRole} method.</li>
+ * <li>Updated {@link #isPhaseOpen} method.</li>
+ * </ul>
+ * </p>
  *
  * @author BeBetter, isv, flexme, TCSDEVELOPER
- * @version 1.6.2
+ * @version 1.6.3
  */
 public final class DirectUtils {
     /**
@@ -169,7 +179,12 @@ public final class DirectUtils {
      */
     private static final String SPECIFICATION_REVIEW = "Specification Review";
 
-
+    /**
+     * Private constant specifying administrator role.
+     * 
+     * @since 1.6.2
+     */
+    private static final String ADMIN_ROLE = "Cockpit Administrator";
 
     /**
      * <p>
@@ -473,7 +488,7 @@ public final class DirectUtils {
         }
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
-            if (PhaseStatus.OPEN.equals(phase.getPhaseStatus()) 
+            if (PhaseStatus.OPEN.getId() == phase.getPhaseStatus().getId() 
                 && !SPECIFICATION_SUBMISSION.equals(phase.getPhaseType().getName())
                 && !SPECIFICATION_REVIEW.equals(phase.getPhaseType().getName())) {
                 return true;
@@ -729,5 +744,59 @@ public final class DirectUtils {
      */
     public static HttpServletResponse getServletResponse() {
         return (HttpServletResponse) ActionContext.getContext().get(ServletActionContext.HTTP_RESPONSE);
+    }
+    
+    /**
+     * Check whether user has permission to a specify contest.
+     * 
+     * @param action
+     *            the action
+     * @param tcSubject
+     *            the user to check
+     * @param contestId
+     *            the contest id
+     * @param isStudio
+     *            whether is studio contest
+     * @return has permission or not
+     * @throws PersistenceException
+     * @since 1.6.2
+     */
+    public static boolean hasWritePermission(BaseDirectStrutsAction action,
+            TCSubject tcSubject, long contestId, boolean isStudio)
+            throws PersistenceException {
+        if (!isRole(tcSubject, ADMIN_ROLE)) {
+            if (isStudio) {
+                return action.getStudioService().checkContestPermission(
+                        contestId, false, tcSubject.getUserId());
+            } else {
+                return action.getProjectServices().checkContestPermission(
+                        contestId, false, tcSubject.getUserId());
+            }
+        } else {
+            return true;
+        }
+
+    }
+
+    /**
+     * <p>
+     * Checks if the login user is of given role
+     * </p>
+     * 
+     * @param tcSubject
+     *            TCSubject instance for login user
+     * @return true if it is given role
+     * @since 1.6.2
+     */
+    private static boolean isRole(TCSubject tcSubject, String roleName) {
+        Set<RolePrincipal> roles = tcSubject.getPrincipals();
+        if (roles != null) {
+            for (RolePrincipal role : roles) {
+                if (role.getName().equalsIgnoreCase(roleName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

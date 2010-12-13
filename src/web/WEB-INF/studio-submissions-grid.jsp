@@ -1,10 +1,10 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER
-  - Version 1.2.1 (Direct Release 6) change notes: removed pagination controls.
-  - Version 1.2 (Direct Submission Viewer Release 4 ) change notes: added Winners section.
+  - Author: isv, flexme, TCSASSEMBLER
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: include the contestVars.jsp.
+  - Version 1.2 (Direct Submission Viewer Release 4 ) change notes: added Winners section.
+  - Version 1.3 (TC Direct Release Assembly 7) change Notes: added hasContestWritePermission field.
   -
-  - Version: 1.2.1
+  - Version: 1.3
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -19,6 +19,10 @@
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/contest/submissionViewer/submissionViewerHtmlHead.jsp"/>
+    
+    <script type="text/javascript">
+        var hasContestWritePermission = ${viewData.hasContestWritePermission};
+    </script>
 </head>
 
 <body id="page">
@@ -98,7 +102,7 @@
                             <jsp:include page="includes/contest/submissionViewer/paginationDropdown.jsp"/>
 --%>
 
-                            <a href="#" class="button1 backToTop"><span>Back To Top</span></a>
+                            <a href="javascript:;" class="button1 backToTop"><span>Back To Top</span></a>
                         </div>
                     </div>
 

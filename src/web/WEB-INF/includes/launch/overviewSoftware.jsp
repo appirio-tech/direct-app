@@ -1,3 +1,12 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Version: 1.0.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page fragment renders edit softeware contest page.
+  -
+  - Version 1.0.1 (TC Direct Release Assembly 7) changes: added digital run input field.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="contestDetail">
@@ -130,12 +139,15 @@
       	</div>
           <br />
           <span class="head">
-          <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
-          <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-          <span class="mid_info">Digital Run:&nbsp;&nbsp;$  <span id="swDigitalRun"></span></span>
-          <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
-          <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
-          </span>                                                                
+			  <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
+			  <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
+			  <span class="mid_info">
+				Digital Run:&nbsp;&nbsp;$
+			  </span>
+			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" />
+			  <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
+			  <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
+		  </span>                                                                
       </div>
   </div>
   <!-- end .prizes -->

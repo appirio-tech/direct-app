@@ -2685,3 +2685,18 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	padding-top:8px;
 	height:26px;
 }
+
+.mid_info .prizesInput{
+	width:46px;
+	height:16px;
+	//float:left;
+	display:inline;
+	margin-top:4px;
+	border:0;
+	padding:3px 9px;
+	font-weight:bold;
+	text-align:right;
+	color:#6c6c6c;
+	background:url(/images/prizesInput.gif) no-repeat;
+}
+

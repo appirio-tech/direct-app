@@ -1,9 +1,16 @@
+/*
+ * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ */
 /**
  * Contest Detail Javascript
  *
+ * <p>
+ * Version 1.0.1 (TC Direct Release Assembly 7) Change notes:
+ * - Hide edit button if user has no write permission.
+ * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.0
+ * @author TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.0.1
  */
 $(document).ready(function(){
     /* init date-pack */
@@ -271,14 +278,19 @@ function initContest(contestJson) {
    });
    
    //show activate button if it is still in draft
-   if(isDraft()) {
-   	  $('#resubmit').show(); 
+   if(hasContestWritePermission && isDraft()) {
+         $('#resubmit').show(); 
    }
    
-   //BUGR-3812: only show edit buttons if it is in draft or scheduled status
-   if(CONTEST_DETAILED_STATUS_DRAFT != mainWidget.competition.contestData.detailedStatusId &&
-      CONTEST_DETAILED_STATUS_SCHEDULED != mainWidget.competition.contestData.detailedStatusId) {
-       $('img[alt="edit"]').parent().hide()   
+    //BUGR-3812: only show edit buttons if it is in draft or scheduled status
+    // if has no write permission, no edit;
+    if (!hasContestWritePermission) {
+        $('img[alt="edit"]').parent().hide();
+        $("#resubmit").hide();
+        
+    } else if(CONTEST_DETAILED_STATUS_DRAFT != mainWidget.competition.contestData.detailedStatusId &&
+        CONTEST_DETAILED_STATUS_SCHEDULED != mainWidget.competition.contestData.detailedStatusId) {
+        $('img[alt="edit"]').parent().hide();   
     }   
    
    

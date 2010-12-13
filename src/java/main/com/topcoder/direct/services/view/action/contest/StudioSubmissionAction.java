@@ -44,9 +44,16 @@ import java.util.List;
  *   </ul>
  * </p>
  *
- * @author isv, flexme
+ * <p>
+ *   Version 1.3 (TC Direct Release Assembly 7) change notes:
+ *   <ul>
+ *     <li>Updated {@link #executeAction()} method to set hasContestWritePermission flag to the view data.</li>
+ *   </ul>
+ * </p>
+ *
+ * @author isv, flexme, TCSASSEMBLER
  * @since Submission Viewer Release 1 assembly
- * @version 1.2
+ * @version 1.3
  */
 public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
 
@@ -181,6 +188,10 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
 
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+            
+            // set contest permission
+            viewData.setHasContestWritePermission(DirectUtils
+                    .hasWritePermission(this, currentUser, contestId, true));
         }
     }
 }

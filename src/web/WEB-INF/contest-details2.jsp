@@ -1,6 +1,6 @@
 <%--
-  - Author: BeBetter, isv
-  - Version: 1.2
+  - Author: BeBetter, isv, TCSASSEMBLER
+  - Version: 1.3
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -9,6 +9,8 @@
   - - add repost and new version buttons and assoicated js file.
   - Version 1.2 - Direct - Contest Dashboard Assembly Change Note
   - - replaced contest stats area with contest dashboard area
+  - Version 1.3 - TC Direct Release Assembly 7 Change Note
+  - - added hasContestWritePermission field.
   -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -33,6 +35,8 @@
         <s:else>
            var paramContestId = ${param.contestId};
         </s:else>
+        
+        var hasContestWritePermission = ${viewData.hasContestWritePermission};
     //]]>
     </script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=45"></script>

@@ -3718,26 +3718,29 @@ a.toggleViewList:hover, a.toggleViewGrid:hover, a.toggleViewPrev:hover, a.toggle
 .submissionAction li{ float:left; width: 18px!important; list-style: none; margin: 0 10px 0 0!important; }
 a.actButton{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;  }
 
-a.actButtonlike{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtonlike span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_like.png) no-repeat left top; }
-a.actButtonlike span.hover{ background:url(../images/btn_legend_sm_like_hover.png) no-repeat left top; }
+.actButtonlike{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
+.actButtonlike span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_like.png) no-repeat left top; }
+a.actButtonlike span.hover{ cursor:pointer; background:url(../images/btn_legend_sm_like_hover.png) no-repeat left top; }
+.submissionListAction .actButtonlike span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_like_hover.png) no-repeat left top; }
 
-a.actButtondislike{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtondislike span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_dislike.png) no-repeat left top; }
-a.actButtondislike span.hover{ background:url(../images/btn_legend_sm_dislike_hover.png) no-repeat left top; }
+.actButtondislike{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
+.actButtondislike span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_dislike.png) no-repeat left top; }
+a.actButtondislike span.hover{ cursor:pointer; background:url(../images/btn_legend_sm_dislike_hover.png) no-repeat left top; }
+.submissionListAction .actButtondislike span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_dislike_hover.png) no-repeat left top; }
  
 a.actButtonzoom{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
 a.actButtonzoom span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_zoom.png) no-repeat left top; }
 a.actButtonzoom span.hover{ background:url(../images/btn_legend_sm_zoom_hover.png) no-repeat left top; } 
 
-a.actButtondollar{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtondollar span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_dollar.png) no-repeat left top; }
-a.actButtondollar span.hover{ background:url(../images/btn_legend_sm_dollar_hover.png) no-repeat left top; } 
+.actButtondollar{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
+.actButtondollar span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_dollar.png) no-repeat left top; }
+a.actButtondollar span.hover{ cursor:pointer; background:url(../images/btn_legend_sm_dollar_hover.png) no-repeat left top; } 
+.submissionListAction .actButtondollar span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_dollar_hover.png) no-repeat left top; }
   
-a.actButtonstar{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtonstar span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_star.png) no-repeat left top; }
-a.actButtonstar span.hover{ background:url(../images/btn_legend_sm_star_hover.png) no-repeat left top; } 
-   
+.actButtonstar{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
+.actButtonstar span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_star.png) no-repeat left top; }
+a.actButtonstar span.hover{ cursor:pointer; background:url(../images/btn_legend_sm_star_hover.png) no-repeat left top; } 
+.submissionListAction .actButtonstar span{ display:block; height: 17px; width: 18px;  background:url(../images/btn_legend_sm_star_hover.png) no-repeat left top; }   
 
 .submissionAction .dialog-mini-wrapper{ display:none; position:absolute; margin:  -22px -7px; z-index: 10; }
 	.submissionAction .dialog-mini.last{ left: -46px; }

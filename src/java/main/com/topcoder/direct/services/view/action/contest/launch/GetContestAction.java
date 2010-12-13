@@ -73,10 +73,21 @@ import com.topcoder.service.studio.ContestStatusData;
  * <ul>
  * <li>Updated {@link #executeAction()} method to retrieve data for contest dashboard section use non-cached model.</li>
  * </ul>
+ * <p>
+ * Version 1.2.3 - Direct - Project Dashboard Assembly Change Note
+ * <ul>
+ * <li>Updated {@link #executeAction()} method to retrieve data for contest dashboard section use non-cached model.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Version 1.2.4 - TC Direct Release Assembly 7 Change Note
+ * <ul>
+ * <li>Updated {@link #executeAction()} method to set hasContestWritePermission flag to the view data.</li>
+ * </ul>
  * </p>
  * 
  * @author fabrizyo, FireIce, isv, TCSASSEMBLER
- * @version 1.2.2
+ * @version 1.2.4
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -196,6 +207,9 @@ public class GetContestAction extends ContestAction {
 
             getViewData().setDashboard(DataProvider.getContestDashboardData(contestId, true, false));
 
+            // set contest permission
+            viewData.setHasContestWritePermission(DirectUtils
+                    .hasWritePermission(this, currentUser, contestId, true));
         } else {
             softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
                 .getTCSubjectFromSession(), projectId);
@@ -209,6 +223,10 @@ public class GetContestAction extends ContestAction {
             {
                 contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());
             }
+            
+            // set contest permission
+            viewData.setHasContestWritePermission(DirectUtils
+                    .hasWritePermission(this, currentUser, projectId, false));
         }
     }
 

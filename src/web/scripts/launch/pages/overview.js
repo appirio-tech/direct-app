@@ -1,5 +1,16 @@
+/*
+ * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ */
 /**
- * Overview Page
+ * Overview Page.
+ *
+ * <p>
+ * Version 1.0.1 (TC Direct Release Assembly 7) Change notes:
+ * - Bind digital run input field change event.
+ * </p>
+ *
+ * @author TCSASSEMBLER
+ * @version 1.0.1
  */
 $(document).ready(function() {
    //technologies
@@ -39,6 +50,10 @@ $(document).ready(function() {
 
    $('#swFirstPlace').bind('keyup',function() {
        onFirstPlaceChangeKeyUp();
+    });
+    
+    $('#swDigitalRun').bind('keyup',function() {
+       onDigitalRunChangeKeyUp();
     });
 }); // end of initiation
 
@@ -91,6 +106,11 @@ function validateFieldsOverviewSoftware() {
      var value = $('#swFirstPlace').val();
      if(!checkRequired(value) || !checkNumber(value)) {
           errors.push('first place value is invalid.');
+     }
+     
+     value = $('#swDigitalRun').val();
+     if(!checkRequired(value) || !checkNumber(value)) {
+        errors.push('digital run value is invalid.');
      }
    }
 

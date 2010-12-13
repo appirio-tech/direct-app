@@ -1,11 +1,18 @@
+/*
+ * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ */
 /**
- * Contest Detail Javascript
+ * Contest Detail Javascript.
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
  * - Add repost and new version function on details page.
+ *
+ * Version 1.1.1 (TC Direct Release Assembly 7) Change notes:
+ * - Hide edit button if user has no write permission.
+ * - Apply to new prize update logic.
  * 
- * @author TCSDEVELOPER
- * @version 1.1
+ * @author TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.1.1
  */
 $(document).ready(function(){
 	  //general initialization
@@ -182,6 +189,10 @@ $(document).ready(function(){
        onFirstPlaceChangeKeyUp();
     });
     
+    $('#swDigitalRun').bind('keyup',function() {
+       onDigitalRunChangeKeyUp();
+    });
+    
   tinyMCE.init({
   	mode : "exact",
   	elements : "swDetailedRequirements,swGuidelines,swPrivateDescription",
@@ -196,6 +207,11 @@ $(document).ready(function(){
   });
       
 });
+
+var ACTIVE_PROJECT_STATUS = 1;
+var isActiveContest = false;
+var startedContest = true;
+var preCost = 0;
 
 /**
  * event handler function when contest type is changed.
@@ -288,66 +304,17 @@ function initContest(contestJson) {
    softwareContestFees = contestJson.softwareContestFees;  
    //billing information
    initContestFeeForEdit(false, mainWidget.softwareCompetition.projectHeader.projectCategory.id, projectHeader.getBillingProject());      
-
-    // Check if the prizes were updated manually in Online Review, if so then treat this as custom
-    // prize schema
-    var customPrizesUsed = false;
-    if (projectHeader.getCostLevel() != COST_LEVEL_CUSTOM) {
-        var prize1 = parseFloat(projectHeader.getFirstPlaceCost());
-        var prize2 = parseFloat(projectHeader.getSecondPlaceCost());
-        var reviewCost = parseFloat(projectHeader.getReviewCost());
-        var reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
-        var drPointsCost = parseFloat(projectHeader.getDRPoints());
-
-        // Iterate over billing schemas and try to find which matches the prizes exacly
-        // If no such schema found then this indicates that the prizes were updated in O/R
-        // manually and treat this as custom schema
-        var index;
-        if (projectHeader.getCostLevel() == 'A') {
-            index = 0;
-        }
-        if (projectHeader.getCostLevel() == 'B') {
-            index = 1;
-        } else {
-            index = 2;
-        }
-        var feesConfig = softwareContestFees[mainWidget.softwareCompetition.projectHeader.projectCategory.id + ''];
-        if (feesConfig) {
-            var c = feesConfig.contestCost.contestCostBillingLevels[index];
-            if (c) {
-                var s_prize1 = c.firstPlaceCost;
-                var s_prize2 = c.secondPlaceCost;
-                var s_reviewCost = c.reviewBoardCost;
-                var s_reliabilityBonusCost = c.reliabilityBonusCost;
-                var s_drPointsCost = c.drCost;
-
-                if ((prize1 != s_prize1) || (prize2 != s_prize2) || (reviewCost != s_reviewCost)
-                        || (reliabilityBonusCost != s_reliabilityBonusCost) || (drPointsCost != s_drPointsCost)) {
-                    customPrizesUsed = true;
-                }
-            }
-        }
-        if (customPrizesUsed) {
-            customCosts = {};
-            customCosts.firstPlaceCost = prize1;
-            customCosts.secondPlaceCost = prize2;
-            customCosts.reviewBoardCost = reviewCost;
-            customCosts.reliabilityBonusCost = reliabilityBonusCost;
-            customCosts.drCost = drPointsCost;
-            mainWidget.softwareCompetition.projectHeader.setCostLevel(COST_LEVEL_CUSTOM);
-        }
-    }
-
-
-
-	 if(isPrizeEditable(contestJson.billingProjectId) || projectHeader.getCostLevel() == COST_LEVEL_CUSTOM
-             || customPrizesUsed) {
-	 	  $('.customRadio').show();
-	 } else {
-	 	  $('.customRadio').hide();
-	 }	     
-	 
-	 //it show/hide the component specific part
+   
+     /*
+     if(isPrizeEditable(contestJson.billingProjectId)) {
+           $('.customRadio').show();
+     } else {
+           $('.customRadio').hide();
+     }*/     
+     
+     $('.customRadio').show();
+     
+     //it show/hide the component specific part
    if(isDevOrDesign()) {
    	 $('.component').show();
    } else {
@@ -385,15 +352,33 @@ function initContest(contestJson) {
    	  });
    }
    
-   //if any phase is open, no edit
-   if(contestJson.phaseOpen) {
-       $('img[alt="edit"]').parent().hide()   
-   }
+    // if has no write permission, no edit; if any phase is open, no edit
+    if (!hasContestWritePermission) {
+        $('img[alt="edit"]').parent().hide();
+        $("#resubmit").hide();
+        $("#swEdit_bottom_review").hide();
+    } else if(contestJson.phaseOpen) {
+        $('img[alt="edit"]').parent().hide();
+        // open prize edit section if project is active
+        if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS) {
+            isActiveContest = true;
+            $(".edit_prize").parent().show();
+        }
+    }    
 
     showSpecReview(contestJson);
 }
 
-
+/**
+ * Retrieve contest cost without admin fee.
+ */
+function retrieveContestCostWithoutAdminFee() {
+    var prizeType = $('input[name="prizeRadio"]:checked').val();
+    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+    var feeObject = softwareContestFees[projectCategoryId];
+    
+    return getContestTotal(feeObject, prizeType) - mainWidget.softwareCompetition.adminFee;
+}
 
 /**
  * Type Section Functions
@@ -598,13 +583,13 @@ function populatePrizeSection(initFlag) {
    
   if(initFlag) {
     //show activate button if it needs to : the fee is not paied up fully
-    if(getCurrentContestTotal() > mainWidget.softwareCompetition.paidFee) {
-    	  $('#resubmit').show(); 
+    if(hasContestWritePermission  && getCurrentContestTotal() > mainWidget.softwareCompetition.paidFee) {
+        $('#resubmit').show(); 
+        startedContest = false;
     }         
-  }	
-
-
+  }      
   
+  preCost = retrieveContestCostWithoutAdminFee();
 }
 
 function isBillingViewable() {
@@ -627,42 +612,66 @@ function savePrizeSection() {
    //construct request data
    var request = saveAsDraftRequest();
 
-   $.ajax({
-      type: 'POST',
-      url: ctx + "/launch/saveDraftContest",
-      data: request,
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-         handleSaveAsDraftContestResult(jsonResult);
-         populatePrizeSection();  
-         showPrizeSectionDisplay();         			
-      },
-      beforeSend: beforeAjax,
-      complete: afterAjax            
-   });	 
+    if (startedContest) {
+        var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
+
+        if(billingProjectId <= 0) {
+            showErrors("no billing project is selected.");
+            return;
+        }
+        request['activationFlag'] = true;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: ctx + "/launch/saveDraftContest",
+        data: request,
+        cache: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleSaveAsDraftContestResult(jsonResult);
+            populatePrizeSection();  
+            showPrizeSectionDisplay();
+        },
+        beforeSend: beforeAjax,
+        complete: afterAjax            
+    });     
 }
 
 function validateFieldsPrizeSection() {
    //validation
    var errors = [];
 
-	 var prizeType = $('input[name="prizeRadio"]:checked').val();
-	 if(prizeType == 'custom') {
-	   var value = $('#swFirstPlace').val();
-	   if(!checkRequired(value) || !checkNumber(value)) {
-	   	   errors.push('first place value is invalid.');
-	   }
-	 }
-	 
-	 if(getCurrentContestTotal() < mainWidget.softwareCompetition.paidFee) {
-	 	  errors.push('Your payment can not be lower than paid amount.');
-	 }
-   
-   if(errors.length > 0) {
-       showErrors(errors);
-       return false;
-   }
+    var prizeType = $('input[name="prizeRadio"]:checked').val();
+    if(prizeType == 'custom') {
+        var value = $('#swFirstPlace').val();
+        if(!checkRequired(value) || !checkNumber(value)) {
+            errors.push('first place value is invalid.');
+        }
+       
+        value = $('#swDigitalRun').val();
+        if(!checkRequired(value) || !checkNumber(value)) {
+            errors.push('digital run value is invalid.');
+        }
+    }
+    
+    /*
+    if(getCurrentContestTotal() < mainWidget.softwareCompetition.paidFee) {
+        errors.push('Your payment can not be lower than paid amount.');
+    }
+    */
+    
+    if (isActiveContest) {
+        var totalCostWithoutAdminFee = retrieveContestCostWithoutAdminFee();
+        if (totalCostWithoutAdminFee < preCost) {
+            errors.push('The cost of active contest should not be decreased.');
+        }
+    }
+    
+    if(errors.length > 0) {
+        showErrors(errors);
+        return false;
+    }
    
    if(isBillingEditable()) {		
    	 var billingProjectId = $('select#billingProjects').val();
@@ -947,8 +956,8 @@ function handleActivationResultEdit(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         mainWidget.softwareCompetition.paidFee = result.paidFee;
-        if(getCurrentContestTotal() > mainWidget.softwareCompetition.paidFee) {
-        	  $('#resubmit').show(); 
+        if(hasContestWritePermission && getCurrentContestTotal() > mainWidget.softwareCompetition.paidFee) {
+            $('#resubmit').show(); 
         } else {                 
             $('#resubmit').hide();
         }
@@ -988,10 +997,12 @@ function showSpecReview(contestJson) {
    // only if contest is active (activated), has spec review phases, and sepc review phaase have not started
    if(contestJson.hasSpecReview && !contestJson.isSpecReviewStarted 
           && contestJson.projectStatus.id == PROJECT_STATUS_ACTIVE) {
-       $('#swEdit_bottom_review').show();
-       startSpecReviewUrl += contestJson.contestId + "&studio=false&";
-   }
-   $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
-   $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
+        if (hasContestWritePermission) {
+            $('#swEdit_bottom_review').show();
+        }
+        startSpecReviewUrl += contestJson.contestId + "&studio=false&";
+    }
+    $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
+    $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
 
 }
