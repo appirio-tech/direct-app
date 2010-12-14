@@ -1100,13 +1100,13 @@ function calculateReviewCost(firstPlacePrize, categoryId) {
               || categoryId == getProjectCategoryIdByName('DESIGN')) {
           // calculate as per component reviewer calculator.
           return getComponentReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT);
-      } else if (categoryId == getProjectCategoryIdByName('ASSEMBLY')) {
+      } else if (categoryId == getProjectCategoryIdByName('ASSEMBLY')
+                 || categoryId == getProjectCategoryIdByName('CONCEPTUALIZATION')) {
           // calculate as per assembly reviewer calculator.
           return getApplicationReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT) * 1.5;
       } else if (categoryId == getProjectCategoryIdByName('ARCHITECTURE')) {
           return getArchitectureReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT);
-      } else if (categoryId == getProjectCategoryIdByName('CONCEPTUALIZATION')
-                      || categoryId == getProjectCategoryIdByName('SPECIFICATION')
+      } else if (categoryId == getProjectCategoryIdByName('SPECIFICATION')
                       || categoryId == getProjectCategoryIdByName('TESTSUITES')
                       || categoryId == getProjectCategoryIdByName('TESTSCENARIOS')
                       || categoryId == getProjectCategoryIdByName('RIACOMPONENT')
