@@ -1191,7 +1191,7 @@
 									var JSON = new Object();
 									JSON['userId'] = userId;
 									JSON['handle'] = handle;
-									JSON['rperm'] = true;
+									JSON['rperm'] = false;
 									JSON['wperm'] = false;
 									JSON['fperm'] = false;
 									uPermission = new $.permission.userPermission(JSON);
