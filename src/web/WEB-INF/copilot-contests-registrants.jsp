@@ -39,7 +39,7 @@
                             <div class="currentPage">
                                 <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
                                 <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-                                <strong>My Copilot Selection Contests</strong>
+                                <strong>My Copilot Postings</strong>
                             </div>
                             <!-- End .currentPage -->
 
@@ -74,7 +74,7 @@
                                                                         <tr>
                                                                             <th>Copilot</th>
                                                                             <th>Profiles</th>
-                                                                            <th>Regisration Time</th>
+                                                                            <th>Registration Time</th>
                                                                             <th>Submission Time</th>
                                                                         </tr>
                                                                         </thead>
@@ -85,7 +85,7 @@
                                                                                 <td class="photo">
                                                                                     <img src="/images/photo_people.png"
                                                                                          alt="photo"/>
-                                                                                    <span><c:out value="${registrant.handle}"/></span>
+                                                                                    <span><link:user userId="${registrant.userId}" handle="${registrant.handle}"/></span>
                                                                                 </td>
                                                                                 <td>
                                                                                     <a rel="_blank"

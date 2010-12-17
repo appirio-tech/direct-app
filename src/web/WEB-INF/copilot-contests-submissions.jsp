@@ -44,7 +44,7 @@
                             <div class="currentPage">
                                 <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
                                 <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-                                <strong>My Copilot Selection Contests</strong>
+                                <strong>My Copilot Postings</strong>
                             </div>
                             <!-- End .currentPage -->
 
@@ -95,7 +95,7 @@
                                                             <tr>
                                                                 <td class="photo">
                                                                     <img src="/images/photo_people.png" alt="photo"/>
-                                                                    <span><c:out value="${submitter.handle}"/></span>
+                                                                    <span><link:user userId="${submitter.id}" handle="${submitter.handle}"/> </span>
                                                                 </td>
                                                                 <td>
                                                                     <a rel="_blank"

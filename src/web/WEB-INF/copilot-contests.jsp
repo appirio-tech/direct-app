@@ -38,7 +38,7 @@
                             <div class="currentPage">
                                 <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
                                 <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-                                <strong>My Copilot Selection Contests</strong>
+                                <strong>My Copilot Postings</strong>
                             </div>
                             <!-- End .currentPage -->
 
@@ -49,7 +49,7 @@
                                         <span class="introductionHeadIcon">
                                             <img src="/images/copilot_contests_icon.png" alt="copilot contests"/></span>
 
-                                        <h2 class="sectionHead">My Copilot Selection Contests</h2>
+                                        <h2 class="sectionHead">My Copilot Postings</h2>
                                     </div>
                                     <!-- end .getCopilots -->
 
@@ -101,7 +101,7 @@
                                                             <a href="<s:url namespace="/copilot" action="copilotContestDetails">
                                                                        <s:param name="projectId" value="%{#attr['contest'].id}"/>
                                                                      </s:url>"
-                                                               class="button1"><span>View/Edit</span>
+                                                               class="button1"><span>View / Edit</span>
                                                             </a>
                                                         </if:isEditable>
                                                         <if:isActive typedContestBrief="${contest}">

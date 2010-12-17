@@ -39,7 +39,7 @@
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'copilot'}">
             <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="logo">
-                <img src="/images/copilot_title.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
+                <img src="/images/copilot_logo.png" alt="Laungh Copilot Contest" class="copilotTitle"/>
                 <span>TopCoder Copilots</span>
             </a>
         </c:when>

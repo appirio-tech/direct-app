@@ -69,7 +69,7 @@
 <div class="currentPage">
     <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-    <strong>My Copilot Selection Contests</strong>
+    <strong>My Copilot Postings</strong>
 </div>
 <!-- End .currentPage -->
 
@@ -108,7 +108,7 @@
 
         <div class="infoPanelMask">
             <ul>
-                <li><label>Contest Name :</label>
+                <li><label>Copilot Posting Name :</label>
                     <strong id="contestNameTextLabel"><c:out value="${assetDTO.name}"/></strong>
                 </li>
                 <li>
@@ -197,7 +197,7 @@
 <div class="editMask greybg">
     <div class="infoPanel scheduleInfo ">
         <h3>
-            <span class="icon">Contest Schedule</span>
+            <span class="icon">Copilot Posting Schedule</span>
             <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
