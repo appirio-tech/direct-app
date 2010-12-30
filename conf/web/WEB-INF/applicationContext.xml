@@ -512,6 +512,7 @@
       scope="prototype" parent="baseDirectStrutsAction">
         <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
         <property name="lookupDAO" ref="lookupDAO"/>
+        <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
     </bean>
     
     <bean id="listCopilotContestsAction"

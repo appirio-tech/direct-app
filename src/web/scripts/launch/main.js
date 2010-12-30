@@ -942,6 +942,9 @@ function fillPrizes() {
    $('#swPrize_medium').html(getContestTotal(feeObject, 'medium').formatMoney(2));
    $('#swPrize_high').html(getContestTotal(feeObject, 'high').formatMoney(2));
 
+   // spec cost
+   $('#swSpecCost,#rswSpecCost').html(feeObject.specReviewCost.formatMoney(2));
+
    //if custom, make the first place editable
    if(prizeType == 'custom') {
       $('#swFirstPlace').attr('readonly',false);
@@ -1175,7 +1178,7 @@ function calculateDRPoint(firstPlacePrize, secondPlacePrize, reliabilityPrize) {
 function getContestTotal(feeObject, prizeType) {
     var contestCost = getContestCost(feeObject, prizeType);
     return contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
-    + contestCost.reliabilityBonusCost + contestCost.drCost + feeObject.contestFee;
+    + contestCost.reliabilityBonusCost + contestCost.drCost + feeObject.contestFee + feeObject.specReviewCost;
 
 }
 

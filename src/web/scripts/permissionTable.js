@@ -4,9 +4,17 @@
 /**
  * This javascript file is used to render permission data to page, and handle
  * event.
- * 
+ *
+ * <p>
+ * Version 1.0.1 (TC Direct - Permission Updates) Change notes:
+ *   <ol>
+ *     <li>Updated getReturnObj() method.</li>
+ *     <li>Updated addProject() method.</li>
+ *   </ol>
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.0.1
  */
 //$(function() {
 	/**
@@ -395,7 +403,8 @@
 					permission : pperm,
 					projectId : projectId,
 					projectName : projectName,
-                    studio : studio
+                    studio : studio,
+					userPermissionId : $.permission.projects[projectId].userPermissionIds[this.userId] ? $.permission.projects[projectId].userPermissionIds[this.userId] : -1
 				};
 			};
 		},
@@ -490,6 +499,8 @@
 			this.rperm = true;
 			this.wperm = true;
 			this.fperm = true;
+			
+			this.userPermissionIds = {};
 
 			/**
 			 * Add user permission.
@@ -1393,6 +1404,10 @@
 			}
 			this.projects[projectJson.projectId]
 					.addUserPermissions(uPermission);
+					
+			if (projectJson.userPermissionId) {
+				this.projects[projectJson.projectId].userPermissionIds[projectJson.userId] = projectJson.userPermissionId;
+			}
 		},
 
 		/**

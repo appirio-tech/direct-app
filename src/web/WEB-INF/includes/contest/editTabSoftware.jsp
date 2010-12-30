@@ -178,12 +178,12 @@
                      	<td class="first_tab"  align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"></span></td>
                       <td class="sec_tab_prize"><strong>Review Cost:</strong> $<span id="rswReviewCost"></span></td>
                       <td class="sec_tab_prize"><strong>Reliability Bonus:</strong> $<span id="rswReliabilityBonus"></span></td>
-                      <td class="sec_tab_prize"><strong>Contest Fee:</strong> $<span id="rswContestFee"></span></td>
+                      <td class="sec_tab_prize"><strong>Spec Review Fee:</strong> $<span id="rswSpecCost"></span></td>
                    </tr>
                    <tr class="rightbor">
                      	<td class="first_tab"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
                       <td class="sec_tab_prize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
-                      <td class="sec_tab_prize">&nbsp;</td>
+                       <td class="sec_tab_prize"><strong>Contest Fee:</strong> $<span id="rswContestFee"></span></td>
                       <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal"></span></td>
                    </tr>
               </table>
@@ -241,10 +241,10 @@
                          <span class="head">
                          <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
                          <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-                         <span class="mid_info">Digital Run:&nbsp;&nbsp;$  
-                            <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" />
-                         </span>
+                         <span class="mid_info">Digital Run:&nbsp;&nbsp;$</span>
+                         <span><input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" /></span>
                          <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
+                         <span class="mid_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
                          <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
                          </span>                                                                
                      </div>

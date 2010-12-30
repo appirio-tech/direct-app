@@ -9,6 +9,7 @@ import com.topcoder.direct.services.view.ajax.DirectJsonBeanProcessorMatcher;
 import com.topcoder.direct.services.view.ajax.SoftwareCompetitionBeanProcessor;
 import com.topcoder.direct.services.view.ajax.StudioCompetitionBeanProcessor;
 import com.topcoder.direct.services.view.ajax.XMLGregorianCalendarBeanProcessor;
+import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.permission.ProjectPermission;
@@ -27,9 +28,17 @@ import java.util.List;
 /**
  * <p>A <code>Struts</code> action for handling requests for updating the project level permissions for all projects
  * which current user is granted <code>Full Access</code> permission for.</p>
- *
- * @author isv
- * @version 1.0 (Direct Permissions Setting Back-end and Integration Assembly 1.0)
+ * 
+ * <p>
+ * Version 1.0.1 (TC Direct - Permission Updates) Change notes:
+ *   <ol>
+ *     <li>Updated executeAction() method.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author isv, TCSASSEMBLER
+ * @version 1.0.1 
+ * @since Direct Permissions Setting Back-end and Integration Assembly 1.0
  */
 public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
 
@@ -66,11 +75,12 @@ public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
             permission.setProjectName(jsonPermission.getString("projectName"));
             permission.setUserId(jsonPermission.getLong("userId"));
             permission.setStudio(jsonPermission.getBoolean("studio"));
+            permission.setUserPermissionId(jsonPermission.getLong("userPermissionId"));
             permissions.add(permission);
         }
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-        contestServiceFacade.updateProjectPermissions(tcSubject, permissions);
+        contestServiceFacade.updateProjectPermissions(tcSubject, permissions, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
     }
 
     /**

@@ -145,6 +145,7 @@
 				Digital Run:&nbsp;&nbsp;$
 			  </span>
 			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" />
+              <span class="mid_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
 			  <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
 			  <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
 		  </span>                                                                
