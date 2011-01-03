@@ -453,6 +453,7 @@
     <bean id="enterpriseDashboardAction"
           class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
           scope="prototype" parent="baseDirectStrutsAction">
+        <property name="isAJAX" value="false"/>
     </bean>    
 
     <bean id="dashboardPipelineDraftsRatioAction"
@@ -540,4 +541,16 @@
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
     </bean>
+    
+    <bean id="zoomEnterpriseDashboardAction"
+          class="com.topcoder.direct.services.view.action.dashboard.ZoomEnterpriseDashboardAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="isAJAX" value="true"/>
+    </bean>    
+    
+    <bean id="ajaxEnterpriseDashboardAction"
+          class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="isAJAX" value="true"/>
+    </bean>    
 </beans>

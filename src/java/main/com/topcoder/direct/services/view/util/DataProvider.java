@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -155,8 +154,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 2.1.9 (Cockpit - Enterprise Dashboard 2 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Renamed <code>getEnterpriseStatsForProject</code> method to <code>getEnterpriseStatsForProjects</code> and 
+ *     updated it to accept additional parameters for client and billing account IDs.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx
- * @version 2.1.8
+ * @version 2.1.9
  */
 public class DataProvider {
 
@@ -1187,30 +1194,36 @@ public class DataProvider {
      * <p>Gets the enterprise-level statistics for specified client project for contests of specified categories
      * completed within specified period of time.</p>
      *
-     * @param projectId a <code>long</code> providing the ID of a project.
+     *
+     * @param projectIds a <code>long</code> array providing the IDs for a project.
      * @param projectCategoryIDs a <code>long</code> array providing the IDs for project categories.
      * @param startDate a <code>Date</code> providing the beginning date for period.
      * @param endDate a <code>Date</code> providing the ending date for period.
+     * @param clientIds a <code>long</code> array listing the IDs for clients.
+     * @param billingAccountIds a <code>long</code> array listing the IDs for billing accounts.  
      * @return a <code>List</code> of statistical data.
      * @throws Exception if an unexpected error occurs.
-     * @throws IllegalArgumentException if specified <code>projectCategoryIDs</code> array is <code>null</code> or
-     *         empty.
+     * @throws IllegalArgumentException if any of specified arrays is <code>null</code> or empty.
      * @since 2.1.2
      */
-    public static List<EnterpriseDashboardDetailedProjectStatDTO> getEnterpriseStatsForProject(long projectId,
-        long[] projectCategoryIDs, Date startDate, Date endDate) throws Exception {
+    public static List<EnterpriseDashboardDetailedProjectStatDTO> getEnterpriseStatsForProject(long[] projectIds,
+        long[] projectCategoryIDs, Date startDate, Date endDate, long[] clientIds, long[] billingAccountIds)
+        throws Exception {
 
         if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
             throw new IllegalArgumentException("Project category IDs are not specified");
         }
-
-        StringBuilder b = new StringBuilder();
-        for (Long id : projectCategoryIDs) {
-            if (b.length() > 0) {
-                b.append(", ");
-            }
-            b.append(id);
+        if ((clientIds == null) || (clientIds.length == 0)) {
+            throw new IllegalArgumentException("Client IDs are not specified");
         }
+        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+            throw new IllegalArgumentException("Billing account IDs are not specified");
+        }
+
+        String projectIDsList = concatenate(projectIds, ", ");
+        String projectCategoryIDsList = concatenate(projectCategoryIDs, ", ");
+        String clientIdsList = concatenate(clientIds, ", ");
+        String billingAccountIdsList = concatenate(billingAccountIds, ", ");
 
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         List<EnterpriseDashboardDetailedProjectStatDTO> data
@@ -1220,10 +1233,12 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(queryName);
-        request.setProperty("pj", String.valueOf(projectId));
+        request.setProperty("tdpis", String.valueOf(projectIDsList));
         request.setProperty("sdt", dateFormatter.format(startDate));
         request.setProperty("edt", dateFormatter.format(endDate));
-        request.setProperty("pcids", b.toString());
+        request.setProperty("pcids", projectCategoryIDsList);
+        request.setProperty("clids", clientIdsList);
+        request.setProperty("bpids", billingAccountIdsList);
 
         final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
         for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
@@ -1253,6 +1268,7 @@ public class DataProvider {
 
         return data;
     }
+
     /**
      * <p>Gets the enterprise-level statistics for all contests of specified categories completed within specified
      * period of time.</p>
@@ -1273,13 +1289,7 @@ public class DataProvider {
             throw new IllegalArgumentException("Project category IDs are not specified");
         }
 
-        StringBuilder b = new StringBuilder();
-        for (Long id : projectCategoryIDs) {
-            if (b.length() > 0) {
-                b.append(", ");
-            }
-            b.append(id);
-        }
+        String projectCategoryIDsList = concatenate(projectCategoryIDs, ", ");
 
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         List<EnterpriseDashboardDetailedProjectStatDTO> data
@@ -1291,7 +1301,7 @@ public class DataProvider {
         request.setContentHandle(queryName);
         request.setProperty("sdt", dateFormatter.format(startDate));
         request.setProperty("edt", dateFormatter.format(endDate));
-        request.setProperty("pcids", b.toString());
+        request.setProperty("pcids", projectCategoryIDsList);
 
         final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
         for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
@@ -2120,5 +2130,24 @@ public class DataProvider {
             String dt = row.getStringItem(columnName);
             return myFmt.parse(dt);
         }
+    }
+
+    /**
+     * <p>Build a string concatenating the specified values separated with specified delimiter.</p>
+     *  
+     * @param items a <code>long</code> array providing the values to be concatenated. 
+     * @param delimiter a <code>String</code> providing the delimiter to be inserted between concatenated items.
+     * @return a <code>String</code> providing the concatenated item values.
+     * @since 2.1.9 
+     */
+    private static String concatenate(long[] items, String delimiter) {
+        StringBuilder b = new StringBuilder();
+        for (Long id : items) {
+            if (b.length() > 0) {
+                b.append(delimiter);
+            }
+            b.append(id);
+        }
+        return b.toString();
     }
 }

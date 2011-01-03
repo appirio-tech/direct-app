@@ -3,6 +3,9 @@
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
+import com.topcoder.clients.model.AuditableEntity;
+import com.topcoder.clients.model.Client;
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
@@ -25,9 +28,11 @@ import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.ProjectData;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,9 +56,17 @@ import javax.servlet.http.HttpServletRequest;
  * {@link #executeAction()} method to set project status color.</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.0.2 (Cockpit - Enterprise Dashboard 2 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated the stats calculation logic to collect stats per halves of the year slices.</li>
+ *     <li>Added logic for handling AJAX calls.</li>
+ *   </ol>
+ * </p>
  * 
  * @author isv, TCSASSEMBLER
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -86,11 +99,41 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
     private EnterpriseDashboardForm formData;
 
     /**
+     * <p>A <code>boolean</code> providing the flag indicating if this action instance is to handle AJAX calls or
+     * not.</p>
+     * 
+     * @since 1.0.2
+     */
+    private boolean isAJAX;
+
+    /**
      * <p>Constructs new <code>EnterpriseDashboardAction</code> instance. This implementation does nothing.</p>
      */
     public EnterpriseDashboardAction() {
         this.viewData = new EnterpriseDashboardDTO();
         this.formData = new EnterpriseDashboardForm();
+    }
+
+    /**
+     * <p>Gets the flag indicating if this action instance is to handle AJAX calls or not.</p>
+     *
+     * @return a <code>boolean</code> providing the flag indicating if this action instance is to handle AJAX calls or
+     *         not.
+     * @since 1.0.2
+     */
+    public boolean getIsAJAX() {
+        return this.isAJAX;
+    }
+
+    /**
+     * <p>Sets the flag indicating if this action instance is to handle AJAX calls or not.</p>
+     *
+     * @param isAJAX a <code>boolean</code> providing the flag indicating if this action instance is to handle AJAX
+     *               calls or not.
+     * @since 1.0.2
+     */
+    public void setIsAJAX(boolean isAJAX) {
+        this.isAJAX = isAJAX;
     }
 
     /**
@@ -144,11 +187,25 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats
             = DataProvider.getEnterpriseProjectStats(tcDirectProjects);
         getViewData().setProjects(enterpriseProjectStats);
+        
+        // Get the list of all available billing accounts for user
+        List<Project> clientBillingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
+        getViewData().setClientBillingProjects(convertToMap(clientBillingProjects));
+        
+        // Get the list of available client accounts
+        Map<Long, String> clientAccountsMap = new LinkedHashMap<Long, String>();
+        for (Project clientBillingAccount : clientBillingProjects) {
+            Client client = clientBillingAccount.getClient();
+            clientAccountsMap.put(client.getId(), client.getName());
+        }
+        getViewData().setClientAccounts(clientAccountsMap);
 
         // Analyze form parameters
         EnterpriseDashboardForm form = getFormData();
-        long projectId = form.getProjectId();
+        long[] projectIds = form.getProjectIds();
         long[] categoryIds = form.getProjectCategoryIds();
+        long[] billingAccountIds = form.getBillingAccountIds();
+        long[] customerIds = form.getCustomerIds();
         Date startDate = DirectUtils.getDate(form.getStartDate());
         Date endDate = DirectUtils.getDate(form.getEndDate());
 
@@ -162,12 +219,34 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             }
             form.setProjectCategoryIds(categoryIds);
         }
+        
+        // If billing account IDs are not specified then use all billing account Ids
+        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+            int index = 0;
+            billingAccountIds = new long[clientBillingProjects.size()];
+            for (Project clientBillingProject : clientBillingProjects) {
+                billingAccountIds[index++] = clientBillingProject.getId();
+            }
+            form.setBillingAccountIds(billingAccountIds);
+        }
+        
+        // If client account IDs are not specified then use all client account Ids
+        if ((customerIds == null) || (customerIds.length == 0)) {
+            int index = 0;
+            customerIds = new long[clientAccountsMap.size()];
+            for (long clientId : clientAccountsMap.keySet()) {
+                customerIds[index++] = clientId;
+            }
+            form.setCustomerIds(customerIds);
+        }
 
-        // If project is not specified then use the first available from the projects assigned to user
-        if (projectId <= 0) {
+        // If project IDs are not specified then use the first available from the projects assigned to user
+        boolean projectIdsAreSet = (projectIds != null) && (projectIds.length > 0); 
+        if (!projectIdsAreSet) {
             if (!enterpriseProjectStats.isEmpty()) {
-                projectId = enterpriseProjectStats.get(0).getProject().getId();
-                form.setProjectId(projectId);
+                projectIds = new long[] {enterpriseProjectStats.get(0).getProject().getId()};
+                form.setProjectIds(projectIds);
+                projectIdsAreSet = true;
             }
         }
 
@@ -192,14 +271,19 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         }
 
         // Get the detailed stats for specific project, categories and time frame (only if project is specified)
-        if (projectId > 0) {
+        if (projectIdsAreSet) {
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> costStats = createEmptyStats();
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> durationStats = createEmptyStats();
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> fulfillmentStats = createEmptyStats();
-
+            EnterpriseDashboardAggregatedStatDTO averageCustomerCost = new EnterpriseDashboardAggregatedStatDTO();
+            EnterpriseDashboardAggregatedStatDTO averageCustomerDuration = new EnterpriseDashboardAggregatedStatDTO();
+            EnterpriseDashboardAggregatedStatDTO averageCustomerFulfillment 
+                = new EnterpriseDashboardAggregatedStatDTO();
+            
             // Get and aggregate the average calculated values for client
             List<EnterpriseDashboardDetailedProjectStatDTO> clientStats
-                = DataProvider.getEnterpriseStatsForProject(projectId, categoryIds, startDate, endDate);
+                = DataProvider.getEnterpriseStatsForProject(projectIds, categoryIds, startDate, endDate, customerIds,
+                                                            billingAccountIds);
             for (EnterpriseDashboardDetailedProjectStatDTO stat : clientStats) {
                 Date statDate = stat.getDate();
                 EnterpriseDashboardStatType statType = stat.getStatsType();
@@ -207,10 +291,13 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 Map<String, List<EnterpriseDashboardAggregatedStatDTO>> targetStats;
                 if (statType == EnterpriseDashboardStatType.COST) {
                     targetStats = costStats;
+                    averageCustomerCost.aggregateClientValue(stat.getValue(), stat.getContestsCount());
                 } else if (statType == EnterpriseDashboardStatType.DURATION) {
                     targetStats = durationStats;
+                    averageCustomerDuration.aggregateClientValue(stat.getValue(), stat.getContestsCount());
                 } else {
                     targetStats = fulfillmentStats;
+                    averageCustomerFulfillment.aggregateClientValue(stat.getValue(), stat.getContestsCount());
                 }
 
                 aggregateClientStat(EnterpriseDashboardStatPeriodType.WEEK, getWeekLabel(statDate), stat, targetStats);
@@ -249,21 +336,30 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             sort(costStats);
             sort(durationStats);
             sort(fulfillmentStats);
+            
+            // Set 0 stats for empty stats
+            checkEmptyStats(costStats);
+            checkEmptyStats(durationStats);
+            checkEmptyStats(fulfillmentStats);
 
             // Set view data with aggregated stats
             getViewData().setCostStats(costStats);
             getViewData().setDurationStats(durationStats);
             getViewData().setFulfillmentStats(fulfillmentStats);
+            
+            getViewData().setAverageCost(averageCustomerCost.getClientValue());
+            getViewData().setAverageDuration(averageCustomerDuration.getClientValue() / 24);
+            getViewData().setAverageFulfillment(averageCustomerFulfillment.getClientValue());
         }
 
         // For normal request flow prepare various data to be displayed to user
         // Set projects data
         List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-		Collections.sort(projects, new Comparator<ProjectBriefDTO>() {
-			public int compare(ProjectBriefDTO e1, ProjectBriefDTO e2) {
-				return e1.getName().compareTo(e2.getName());
-			}
-		});		
+        Collections.sort(projects, new Comparator<ProjectBriefDTO>() {
+            public int compare(ProjectBriefDTO e1, ProjectBriefDTO e2) {
+                return e1.getName().compareTo(e2.getName());
+            }
+        });
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
         userProjectsDTO.setProjects(projects);
         getViewData().setUserProjects(userProjectsDTO);
@@ -278,6 +374,103 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
         // set projects status color
         setProjectStatusColor();
+        
+        // Build the result for consumption by JSON serializer in case of AJAX calls
+        if (getIsAJAX()) {
+            Map<String, Object> durations = buildStats(getViewData().getDurationStats(),
+                                                       new String[]{"date", "Customer Avg Contest Duration",
+                                                                    "Market Avg Contest Duration"});
+            Map<String, Object> costs = buildStats(getViewData().getCostStats(),
+                                                   new String[]{"date", "Customer Avg Cost", "Market Avg Cost"});
+            Map<String, Object> fulfillment = buildStats(getViewData().getFulfillmentStats(),
+                                                         new String[]{"date", "Customer Avg Fulfillment",
+                                                                      "Market Avg Fulfillment"});
+
+            Map<String, Object> result = new HashMap<String, Object>();
+
+            result.put("contest", durations);
+            result.put("cost", costs);
+            result.put("fulfill", fulfillment);
+
+            DateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat dateFormat2 = new SimpleDateFormat("MMM dd,yyyy");
+            result.put("periodStart", dateFormat2.format(startDate));
+            result.put("periodEnd", dateFormat2.format(endDate));
+            result.put("periodStartCalendar", dateFormat1.format(startDate));
+            result.put("periodEndCalendar", dateFormat1.format(endDate));
+
+            NumberFormat format1 = new DecimalFormat("##0.##");
+            NumberFormat format2 = new DecimalFormat("#,##0.00");
+            NumberFormat format3 = new DecimalFormat("##0.#");
+            result.put("avg1", format1.format(getViewData().getAverageFulfillment()));
+            result.put("avg2", format2.format(getViewData().getAverageCost()));
+            result.put("avg3", format3.format(getViewData().getAverageDuration()));
+
+            setResult(result);
+        }
+    }
+
+    /**
+     * <p>Builds the map providing the stats per various periods to be fed to JSON serializer.</p>
+     * 
+     * @param stats a <code>Map</code> mapping the period types to list of stats. 
+     * @param columnNames a <code>String</code> array listing the column names.
+     * @return a <code>Map</code> mapping the period types to stats. 
+     */
+    private Map<String, Object> buildStats(Map<String, List<EnterpriseDashboardAggregatedStatDTO>> stats,
+                                           String[] columnNames) {
+        Map<String, Object> statsResult = new HashMap<String, Object>();
+        statsResult.put("column", columnNames);
+        statsResult.put("week", buildStatResults(stats, EnterpriseDashboardStatPeriodType.WEEK));
+        statsResult.put("month", buildStatResults(stats, EnterpriseDashboardStatPeriodType.MONTH));
+        statsResult.put("quarter", buildStatResults(stats, EnterpriseDashboardStatPeriodType.QUARTER));
+        statsResult.put("year", buildStatResults(stats, EnterpriseDashboardStatPeriodType.YEAR));
+        return statsResult;
+    }
+
+    /**
+     * <p>Builds the list of stats for specified period type.</p>
+     * 
+     * @param stats a <code>Map</code> mapping the period types to list of stats. 
+     * @param periodType an <code>EnterpriseDashboardStatPeriodType</code> referencing the desired period type to get
+     *        stats for. 
+     * @return a <code>List</code> 
+     */
+    private List<Map<String, Object>> buildStatResults(Map<String, List<EnterpriseDashboardAggregatedStatDTO>> stats,
+                                                       EnterpriseDashboardStatPeriodType periodType) {
+        NumberFormat numberFormat = new DecimalFormat("0.##");
+        List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+        List<EnterpriseDashboardAggregatedStatDTO> periodStats = stats.get(periodType.toString());
+        for (EnterpriseDashboardAggregatedStatDTO stat : periodStats) {
+            Map<String, Object> statData = new HashMap<String, Object>();
+            statData.put("date", stat.getTimePeriodLabel());
+            statData.put("customer", new Double(numberFormat.format(stat.getClientValue())));
+            statData.put("tc", new Double(numberFormat.format(stat.getOverallValue())));
+            list.add(statData);
+        }
+        return list;
+    }
+
+    /**
+     * <p>Sets the specified stats with zero stats if there are no statistical records available.</p>
+     * 
+     * @param stats a <code>Map</code> providing the stats per period types. 
+     */
+    private void checkEmptyStats(Map<String, List<EnterpriseDashboardAggregatedStatDTO>> stats) {
+        for (EnterpriseDashboardStatPeriodType periodType : EnterpriseDashboardStatPeriodType.values()) {
+            String periodTypeName = periodType.toString();
+            if (!stats.containsKey(periodTypeName)) {
+                stats.put(periodTypeName, new ArrayList<EnterpriseDashboardAggregatedStatDTO>());
+            }
+            List<EnterpriseDashboardAggregatedStatDTO> periodStats = stats.get(periodTypeName);
+            if (periodStats.isEmpty()) {
+                EnterpriseDashboardAggregatedStatDTO zeroDTO = new EnterpriseDashboardAggregatedStatDTO();
+                zeroDTO.setClientValue(0);
+                zeroDTO.setOverallValue(0);
+                zeroDTO.setTimePeriodLabel("NO ENOUGH STATISTICS TO RENDER THE CHART");
+                periodStats.add(zeroDTO);
+            }
+        }
     }
 
 
@@ -500,7 +693,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         }
 
         /**
-         * <p>Parses the specified tim eperiod label into numeric value which could be used for compariosn.</p>
+         * <p>Parses the specified time period label into numeric value which could be used for comparison.</p>
          *
          * @param label a <code>String</code> providing the label.
          * @return an <code>int</code> providing the numeric value for label.
@@ -527,6 +720,20 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 return Integer.parseInt(label);
             }
         }
+    }
+
+    /**
+     * <p>Converts the specified list of audible entities to mappings from IDs to entity names.</p>
+     * 
+     * @param items a <code>List</code> providing the collection of data. 
+     * @return a <code>Map</code> mapping the IDs to names of specified items.  
+     */
+    private Map<Long, String> convertToMap(List<? extends AuditableEntity> items) {
+        Map<Long, String> map = new LinkedHashMap<Long, String>();
+        for (AuditableEntity item : items) {
+            map.put(item.getId(), item.getName());
+        }
+        return map;
     }
 
     private void setProjectStatusColor() throws Exception {

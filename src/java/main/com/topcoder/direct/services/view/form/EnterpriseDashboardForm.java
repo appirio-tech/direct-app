@@ -9,8 +9,18 @@ import java.io.Serializable;
  * <p>A form bean providing the data submitted by user for evaluating the data for <code>Enterprise Dashboard</code>
  * view.</p>
  *
+ * <p>
+ * Version 1.0.1 (Cockpit - Enterprise Dashboard 2 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #billingAccountIds} property with respective accessor/mutator methods.</li>
+ *     <li>Added {@link #customerIds} property with respective accessor/mutator methods.</li>
+ *     <li>Refactored existing <code>projectId</code> property into {@link #projectIds} property with respective 
+ *     accessor/mutator methods.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv
- * @version 1.0 (Direct Enterprise Dashboard Assembly 1.0)
+ * @version 1.0.1 (Direct Enterprise Dashboard Assembly 1.0)
  */
 public class EnterpriseDashboardForm implements Serializable {
 
@@ -30,9 +40,23 @@ public class EnterpriseDashboardForm implements Serializable {
     private String endDate;
 
     /**
-     * <p>A <code>long</code> providing the ID for project to get the statistics for.</p>
+     * <p>A <code>long</code> array providing the IDs for projects to get the statistics for.</p>
      */
-    private long projectId;
+    private long[] projectIds;
+
+    /**
+     * <p>A <code>long[]</code> providing the IDs for billing accounts to get statistics for.</p>
+     * 
+     * @since 1.0.1
+     */
+    private long[] billingAccountIds;
+
+    /**
+     * <p>A <code>long[]</code> providing the IDs for customer accounts to get statistics for.</p>
+     * 
+     * @since 1.0.1
+     */
+    private long[] customerIds;
 
     /**
      * <p>Constructs new <code>EnterpriseDashboardForm</code> instance. This implementation does nothing.</p>
@@ -96,20 +120,60 @@ public class EnterpriseDashboardForm implements Serializable {
     }
 
     /**
-     * <p>Gets the ID for project to get the statistics for.</p>
+     * <p>Gets the IDs for projects to get the statistics for.</p>
      *
-     * @return a <code>long</code> providing the ID for project to get the statistics for.
+     * @return a <code>long</code> array providing the IDs for projects to get the statistics for.
      */
-    public long getProjectId() {
-        return this.projectId;
+    public long[] getProjectIds() {
+        return this.projectIds;
     }
 
     /**
-     * <p>Sets the ID for project to get the statistics for.</p>
+     * <p>Sets the IDs for projects to get the statistics for.</p>
      *
-     * @param projectId a <code>long</code> providing the ID for project to get the statistics for.
+     * @param projectIds a <code>long</code> array providing the IDs for project to get the statistics for.
      */
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
+    public void setProjectIds(long[] projectIds) {
+        this.projectIds = projectIds;
+    }
+
+    /**
+     * <p>Gets the IDs for customer accounts to get statistics for.</p>
+     *
+     * @return a <code>long[]</code> providing the IDs for customer accounts to get statistics for.
+     * @since 1.0.1
+     */
+    public long[] getCustomerIds() {
+        return this.customerIds;
+    }
+
+    /**
+     * <p>Sets the IDs for customer accounts to get statistics for.</p>
+     *
+     * @param customerIds a <code>long[]</code> providing the IDs for customer accounts to get statistics for.
+     * @since 1.0.1
+     */
+    public void setCustomerIds(long[] customerIds) {
+        this.customerIds = customerIds;
+    }
+
+    /**
+     * <p>Gets the IDs for billing accounts to get statistics for.</p>
+     *
+     * @return a <code>long[]</code> providing the IDs for billing accounts to get statistics for.
+     * @since 1.0.1
+     */
+    public long[] getBillingAccountIds() {
+        return this.billingAccountIds;
+    }
+
+    /**
+     * <p>Sets the IDs for billing accounts to get statistics for.</p>
+     *
+     * @param billingAccountIds a <code>long[]</code> providing the IDs for billing accounts to get statistics for.
+     * @since 1.0.1
+     */
+    public void setBillingAccountIds(long[] billingAccountIds) {
+        this.billingAccountIds = billingAccountIds;
     }
 }

@@ -9,19 +9,6 @@ $(document).ready(function(){
         $(".date-pick").datePicker({startDate:'01/01/2001'});
     }
     
-    $('#enterpriseDashboardSubmit').click(function() {
-        // validate dates
-        $('#validationErrors').html('');
-        var d1 = new Date($('#startDateEnterprise').val());
-        var d2 = new Date($('#endDateEnterprise').val());
-        if (d1 > d2) {
-            $('#validationErrors').html('Start date must not be after end date');
-        } else {
-            $('#EnterpriseDashboardForm').submit();
-            return false;
-        }
-    });
-
     /* dashboard view Table expand/collapse function */
     $(".dashboardTable .expand").click(function(){
         $(this).blur();
@@ -93,25 +80,6 @@ $(document).ready(function(){
 		$select.val(selectedVal);
 	}
         
-    if ($("#enterpriseHealthTable").length != 0) {
-        $("#enterpriseHealthTable").dataTable({
-                "bInfo": false,
-                "bPaginate": false,
-                "bFilter": false,
-                "bSort": true,
-                "sDom": 'rt<"bottom1"il><"bottom2"fp',
-                "aaSorting": [[0,'asc']],
-                "aoColumns": [
-                                { "sType": "html" },
-                                { "sType": "html" },
-                                { "sType": "html" },
-                                { "sType": "html" },
-                                { "sType": "html" }
-                        ],
-                "sScrollY": "140px"
-
-        });
-    }
 
     if ($("#projectHealthTable").length != 0) {
         $("#projectHealthTable").dataTable({

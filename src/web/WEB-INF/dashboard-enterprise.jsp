@@ -1,17 +1,20 @@
 <%--
-  - Author: isv, TCSASSEMBLER
+  - Author: isv, tangzx, TCSDEVELOPER
   -
-  - Version: 1.0.1 (Direct Enterprise Dashboard Assembly 1.0)
+  - Version: 1.0.2 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Enterprise Dashboard view.
   -
   - Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
   - Show project status color in enterprise health table.
+  -
+  - Version 1.0.2 - Cockpit - Enterprise Dashboard 2 Assembly Change Note
+  - Implemented latest changes to UI according to requirements
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
-
+<fmt:setLocale value="en_US"/>
 <ui:dashboardPageType tab="overview"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -21,6 +24,8 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/datepicker.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/dashboard-enterprise.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/jquery.multiSelect.css" media="all" type="text/css"/>
 
     <!-- load the data for Charts -->
     <script type="text/javascript">
@@ -31,25 +36,33 @@
                 week:[
                 <c:forEach items="${viewData.durationStats['WEEK']}" var="stat" varStatus="loop">
                     <c:if test="${loop.index > 0}">,</c:if>
-                    {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                    {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                     customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                     tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                 </c:forEach>
                 ],
                 month:[
                     <c:forEach items="${viewData.durationStats['MONTH']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 quarter:[
                     <c:forEach items="${viewData.durationStats['QUARTER']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 year:[
                     <c:forEach items="${viewData.durationStats['YEAR']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ]
             },
@@ -58,25 +71,33 @@
                 week:[
                     <c:forEach items="${viewData.costStats['WEEK']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 month:[
                     <c:forEach items="${viewData.costStats['MONTH']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 quarter:[
                     <c:forEach items="${viewData.costStats['QUARTER']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 year:[
                     <c:forEach items="${viewData.costStats['YEAR']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ]
             },
@@ -85,25 +106,33 @@
                 week:[
                     <c:forEach items="${viewData.fulfillmentStats['WEEK']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 month:[
                     <c:forEach items="${viewData.fulfillmentStats['MONTH']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 quarter:[
                     <c:forEach items="${viewData.fulfillmentStats['QUARTER']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ],
                 year:[
                     <c:forEach items="${viewData.fulfillmentStats['YEAR']}" var="stat" varStatus="loop">
                         <c:if test="${loop.index > 0}">,</c:if>
-                        {date:"<c:out value='${stat.timePeriodLabel}'/>",customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
+                        {date:"<c:out value='${stat.timePeriodLabel}'/>",
+                         customer:<fmt:formatNumber value="${stat.clientValue}" pattern="0.##" />,
+                         tc:<fmt:formatNumber value="${stat.overallValue}" pattern="0.##" />}
                     </c:forEach>
                 ]
             }
@@ -113,7 +142,9 @@
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard-chart-range.js"></script>
     <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
 </head>
 
 <body id="page">
@@ -138,17 +169,15 @@
                                         <a href="javascript:void(0)" class="expand">Enterprise Health</a>
                                     </dt>
                                     <dd>
-										<table cellpadding="0" cellspacing="0" id="enterpriseHealthTable">
-											<div class="dashboardTableHeader">
+                                        <div class="dashboardTableBody">
+                                            <table cellpadding="0" cellspacing="0" id="enterpriseHealthTable">
                                                 <colgroup>
-                                                    <col width="32%"/>
-                                                    <col width="17%"/>
-                                                    <col width="17%"/>
-                                                    <col width="17%"/>
-                                                    <col width="17%"/>
                                                     <col/>
+                                                    <col width="17%"/>
+                                                    <col width="17%"/>
+                                                    <col width="17%"/>
+                                                    <col width="17%"/>
                                                 </colgroup>
-                                                <thead>
                                                 <tr>
                                                     <th class="first">Project</th>
                                                     <th>Average Contest Duration (Hours)</th>
@@ -156,47 +185,86 @@
                                                     <th>Total Project Cost</th>
                                                     <th>Average Fulfillment</th>
                                                 </tr>
-                                                </thead>
-											</div>
-											<div>
                                                 <tbody>
                                                 <c:forEach items="${viewData.projects}" var="project">
                                                     <tr>
                                                         <td class="first">
-                                                            <a class="longWordsBreak ${project.projectStatusColor.name}" href="projectOverview?formData.projectId=${project.project.id}">
+                                                            <a class="longWordsBreak ${project.projectStatusColor.name}"
+                                                               href="projectOverview?formData.projectId=${project.project.id}">
                                                                 <c:out value="${project.project.name}"/></a>
                                                         </td>
                                                         <td><span class="">
-                                                            <fmt:formatNumber value="${project.averageContestDuration}"
-                                                                              pattern="##0.##"/></span></td>
+                                                        <fmt:formatNumber value="${project.averageContestDuration}"
+                                                                          pattern="##0.##"/></span></td>
                                                         <td><span class="">
-                                                            <fmt:formatNumber value="${project.averageCostPerContest}"
-                                                                              pattern="$#,##0.00"/></span></td>
+                                                        <fmt:formatNumber value="${project.averageCostPerContest}"
+                                                                          pattern="$#,##0.00"/></span></td>
                                                         <td><span class="">
-                                                            <fmt:formatNumber value="${project.totalProjectCost}"
-                                                                              pattern="$#,##0.00"/></span></td>
+                                                        <fmt:formatNumber value="${project.totalProjectCost}"
+                                                                          pattern="$#,##0.00"/></span></td>
                                                         <td><span class="">
-                                                            <fmt:formatNumber value="${project.averageFulfillment}"
-                                                                              pattern="##0.##"/>%</span></td>
+                                                        <fmt:formatNumber value="${project.averageFulfillment}"
+                                                                          pattern="##0.##"/>%</span></td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>
-											</div>
-										</table>
+                                            </table>
+                                        </div>
                                     </dd>
                                 </dl>
                             </div>
                             <!-- End .dashboardTable -->
 
                             <div class="chartCollapse">
-                                <a class="expand" href="javascript:void(0)"></a>
+                                <a class="expand" href="javascript:void(0)">Chart View</a>
+                                <div class="btnArea">
+                                    <a href="javascript:" class="active btnGraph"></a>
+                                    <a href="javascript:" class="btnTable"></a>
+                                </div>
                             </div>
+                            
+                            <div class="chartSummary">
+                                <div class="summaryContent">
+                                   <span class="strongGreen">Summary</span>
+                                    <strong>:</strong>
+                                    Avg. Fulfillment : 
+                                    <span id="avg1">
+                                        <fmt:formatNumber value="${viewData.averageFulfillment}" pattern="##0.##"/>%
+                                    </span>&nbsp;&nbsp;&nbsp;
+                                    Avg. Cost : $ 
+                                    <span id="avg2">
+                                        <fmt:formatNumber value="${viewData.averageCost}" pattern="#,##0.00"/>
+                                    </span>&nbsp;&nbsp;&nbsp;
+                                    Avg. Duration : 
+                                    <span id="avg3">
+                                        <fmt:formatNumber value="${viewData.averageDuration}" pattern="##0.#"/> 
+                                    </span> Days
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span id="zoomMessage"></span>
+                                </div>
+                                <div class="summaryDate">
+                                    <strong>Date :</strong>
+                                    <fmt:parseDate value="${formData.startDate}" pattern="MM/dd/yyyy" var="startDate"/>
+                                    <fmt:parseDate value="${formData.endDate}" pattern="MM/dd/yyyy" var="endDate"/>
+                                    <span id="startDateLabel"><fmt:formatDate value="${startDate}" pattern="MMM dd,yyyy"/></span>
+                                    -
+                                    <span id="endDateLabel"><fmt:formatDate value="${endDate}" pattern="MMM dd,yyyy"/></span>
+                                </div>
+                            </div>
+                            
+                            <div class="graphArea">
                             <div class="visualization">
                                 <s:form action="dashboardEnterprise" namespace="/" id="EnterpriseDashboardForm"
                                         method="get">
+                                    <input type="hidden" name="zoomType" value="" id="zoomTypeInput"/>
                                     <div class="top">
-                                        <div class="projectNameSelect">
-                                            <s:select list="viewData.projectsLookupMap" name="formData.projectId"/>
+                                        <div class="dateRange">
+                                                <strong>Zoom</strong> :
+                                                   <a href="WEEK" class="zoomLink">1 Week</a> &nbsp;
+                                                   <a href="MONTH" class="zoomLink">1 Month</a>  &nbsp;
+                                                   <a href="QUARTER" class="zoomLink">3 Month</a>  &nbsp;
+                                                   <a href="HALF_OF_THE_YEAR" class="zoomLink">6 Month</a> &nbsp;
+                                                   <a href="YEAR" class="zoomLink">YTD</a> &nbsp;
                                         </div>
                                         <div class="displaying">
                                             <span>Displaying :</span>
@@ -210,43 +278,97 @@
                                     </div>
                                     <!-- top -->
 
-                                    <div class="chart"></div>
+                                    <div class="chartWrapper">
+                                        <div id="chart_div"></div>
+                                    </div>    
                                     <!-- chart container-->
 
-                                    <div class="bottom">
-                                        <div class="leftPanel">
-                                            <div>
-                                                <label>Start: </label>
-                                                <s:textfield name="formData.startDate" readonly="true" id="startDateEnterprise"
-                                                             cssClass="text date-pick"/>
-                                            </div>
-                                            <div>
-                                                <label>End: </label>
-                                                <s:textfield name="formData.endDate" readonly="true" id="endDateEnterprise"
-                                                             cssClass="text date-pick"/>
-                                            </div>
+                                    <div class="filterLinkArea">
+                                        <a class="fiterButton" href="javascript:">Filters</a>
 
-                                            <select id="timeDimension">
-                                                <option value="">Select Time Dimension</option>
-                                                <option value="week">Week</option>
-                                                <option value="month" selected="selected">Month</option>
-                                                <option value="quarter">Quarter</option>
-                                                <option value="year">Year</option>
-                                            </select>
+                                        <div class="filterArea">
 
+                                            <div class="filterProject">
+                                                <span class="label">Project Name </span>
+                                                <s:select list="viewData.projectsLookupMap" name="formData.projectIds" 
+                                                          cssClass="multiselect" multiple="true" 
+                                                          id="formData.projectIds"/>
+                                            </div>
+                                            
+                                            <div class="firstRow">
+                                                <div class="datePicker">
+                                                    <div>
+                                                        <span class="label">Start: </span>
+                                                        <s:textfield name="formData.startDate" readonly="true" 
+                                                                     id="startDateEnterprise" 
+                                                                     cssClass="text date-pick"/>
+                                                    </div>
+                                                    <div>
+                                                        <span class="label">End: </span>
+                                                        <s:textfield name="formData.endDate" readonly="true" 
+                                                                     id="endDateEnterprise" cssClass="text date-pick"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="timeDimension">
+                                                    <strong>Group By</strong><br/>
+                                                    <select id="timeDimension">
+                                                        <option value="">Select Time Dimension</option>
+                                                        <option value="week">Week</option>
+                                                        <option value="month" selected="selected">Month</option>
+                                                        <option value="quarter">Quarter</option>
+                                                        <option value="year">Year</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="spacer"></div>
+                                            <div class="secondRow">
+                                                <div class="filterContest">
+                                                    <div class="columns contestType">
+                                                        <strong>Contest Type</strong><br/>
+                                                        <s:select list="viewData.projectCategories" multiple="true"
+                                                                  cssClass="multiselect" 
+                                                                  id="formData.projectCategoryIds"
+                                                                  name="formData.projectCategoryIds" size="5"/>
+                                                    </div>
+
+                                                    <div class="columns" id="customerNameFilter">
+                                                        <strong>Customer Name</strong><br/>
+                                                        <s:select list="viewData.clientAccounts" multiple="true" 
+                                                                  cssClass="multiselect" id="formData.customerIds"
+                                                                  name="formData.customerIds" size="5"/>
+                                                    </div>
+
+                                                    <div class="columns">
+                                                        <strong>Billing Account</strong><br/>
+                                                        <s:select list="viewData.clientBillingProjects" multiple="true"
+                                                                  cssClass="multiselect" 
+                                                                  id="formData.billingAccountIds"
+                                                                  name="formData.billingAccountIds" size="5"/>
+                                                    </div>
+
+                                                    <div class="columns columnButton">
+                                                        <a class="button6 applyButton" href="javascript:" 
+                                                           id="enterpriseDashboardSubmit">
+                                                            <span class="left"><span class="right">Apply</span></span>
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="rightPanel">
-                                            <s:select list="viewData.projectCategories" multiple="true"
-                                                      name="formData.projectCategoryIds" size="5"/>
-                                            <a href="javascript:" id="enterpriseDashboardSubmit">Apply</a>
-                                        </div>
-                                        <div class="clear"></div>
-                                        <div id="validationErrors"></div>
+                                        <!-- End .filterArea -->
                                     </div>
-                                    <!-- bottom -->
+
+
+                                    <div id="filterResultContainer"></div>
+
+                                    <div id="validationErrors"></div>
+                                    
                                 </s:form>
                             </div>
                             <!-- End .visualization -->
+                            </div>
                         </div>
                     </div>
 

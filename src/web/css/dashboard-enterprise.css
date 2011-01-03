@@ -1,0 +1,351 @@
+
+.chartCollapse a.expand{
+  background-position:0px 5px;
+  padding-top:8px;
+  float:left;
+}
+
+.timeDimension,.displaying{
+	padding:8px 15px 0px 15px;
+}
+
+.timeDimension{
+	font-size:12px;
+	background:#F5F5F5 ;
+/*
+	width:10.5%;
+*/
+	float:left;
+	padding:5px 5px 5px 10px;
+	margin:10px 240px 10px 10px;
+	height:35px;
+}
+
+* +html .timeDimension {margin-bottom:0px;}
+* +html .timeDimension select {height:20px;}
+
+.visualization .top .displaying span{
+	padding-right:6px;
+}
+
+.graphArea .visualization{
+	padding:0px;
+	border:0px;
+}
+
+/* collapse */
+.chartCollapse a.collapse{
+ background:transparent url(../images/icon-collapse.png) no-repeat scroll;
+ background-position:0px 5px;
+}
+
+.chartSummary{
+ background:#efffca;
+ height:18px;
+ border-top:1px solid #c1e2af; 
+ border-bottom:1px solid #c1e2af;
+ border-right:1px solid #aaacae; 
+ border-left:1px solid #aaacae; 
+ font-size:12px;
+ padding:5px 15px;
+}
+/* Table Data Area */
+
+.tableDataArea{
+	margin-bottom:10px;
+}
+
+.tableDataArea .dashboardTable{
+ margin-bottom:0px;
+}
+
+.dashboardTableHeader{
+	padding-right:15px;
+}
+
+.tableDataArea .dashboardTable dd 
+{
+	border-width:0px;
+}
+.dashboardTable td.first{
+	padding-left:5px;
+}
+
+	.summaryContent{
+		float:left;
+	}
+	
+	.summaryDate{
+		float:right;
+		
+	}
+
+.chartSummary .timeDimension{
+	float:right;
+	width:100px;
+	background:red;
+}	
+	
+.chartSummary .displayingFilter{
+	float:left;
+}	
+
+/* General Style */
+.strongGreen{
+	font-weight:bold;
+	color:#008600;
+}
+
+.btnArea{
+	float:right;
+	margin:5px;
+	background:red;
+}	
+
+td.alignLeft{
+	text-align:left;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.noBorder{
+	border:0px;
+}
+
+/* Icon Graph */
+.btnArea a.btnGraph{
+	background:url(../images/btn-graph.png) top left no-repeat;
+	width:21px;
+	height:21px;
+	display:block;
+	float:left;
+}
+
+/* Icon Table */
+.btnArea a.btnTable{
+	background:url(../images/btn-table.png) top left no-repeat;
+	width:21px;
+	height:21px;
+	display:block;
+	float:left;
+}
+
+.btnArea a.active{ background-position:bottom left; }
+
+.chartWrapper{
+	border:1px solid red;
+	height:250px;
+}
+
+#chart_div{
+	height:230px;
+	padding-top:10px;
+	margin-bottom:10px;
+}
+
+a.fiterButton{
+	float:right;
+	padding-left:15px;
+	font-size:12px;
+	text-decoration:underline;
+	background:url(../images/arrow-2.png) top left no-repeat;
+	padding-right:15px;
+}
+
+.filterLinkArea,.tableDataArea .dashboardTableHeader,.tableDataArea .dashboardTableBody,.chartWrapper,.visualization .top{
+	border:1px solid #C6C7C8;
+	border-width:0px 1px;
+}
+
+
+.dateRange{
+	font-size:12px;
+	padding:8px 15px 0;
+}
+
+
+/* filter Area */
+.filterLinkArea{
+	border-width:0px 1px 1px;
+	padding-bottom:30px;
+	padding-top:20px;
+}
+
+.filterArea{
+	padding:20px 10px 10px 10px;
+}
+
+
+.filterProject{
+	background:#e1f2ff;
+	font-size:12px;
+	padding:12px 8px;
+	border-top:1px solid #cad9e5;
+	border-bottom:1px solid #cad9e5;
+}
+
+.filterProject span.label{
+	margin-top:3px;
+	padding-right:10px;
+	float:left;
+	font-weight:bold;
+	
+}
+
+.filterProject select{ 
+	width:350px;
+	font-size:12px;
+	border:1px solid #a9acae;
+}
+
+.filterContest{
+	width:100%;
+	padding:10px 0px;
+	height:70px;	
+}
+
+*+html .filterContest { height:15px;}
+.filterContest .multiSelect{
+	margin-top:3px;
+}
+
+.filterContest .columns{
+	width:25%;
+	float:left;
+	height:44px;
+	background:#f5f5f5;
+	margin-right:10px;
+	padding:5px;
+	padding-left:10px;
+	font-size:12px;
+}
+
+.filterContest .columns strongx{
+	width:100%;
+}
+
+a.button6 span.right{
+	padding:4px 20px 0px;
+}
+
+
+.filterArea .datePicker{
+  display:block;
+  height:25px;
+  width:39%;
+  min-width:300px;
+  background:#F5F5F5 ;
+  margin-top:10px;
+  padding:10px;
+  padding-right:0px;
+  float:left;
+}
+
+
+.filterArea .datePicker span.label,.filterArea .datePicker input{
+	font-size:12px;
+	float:left;
+	width:65px;
+}
+
+.filterArea .datePicker div{
+	margin-right:12px;
+	float:left;
+}
+
+.filterArea .datePicker span.label{
+	padding:2px 5px 0px 0px;
+	width:30px;
+	float:left;
+}
+
+.filterArea .spacer{
+	height:2px;
+	width:100%;
+	float:left;
+}
+
+a.dp-choose-date { margin-right:0px;}
+
+
+.filterContest .columnButton{
+	width:10%;
+	padding-top:16px;
+	height:33px;
+	background:none;
+	padding-left:0px;
+}
+
+.filterArea .firstRow,.filterArea .secondRow{
+	xfloat:left;
+}
+
+.filterContest select{ 
+	font-size:12px;
+	border:1px solid #a9acae;
+}
+
+/* Table Data */
+.tableDataArea .dashboardTable{
+	background:url(../images/dashboard-table-bg-2.png) repeat-x top left;	
+	border:1px solid #c6c7c8;
+	border-width:0px;
+}
+
+.tableDataArea .dashboardTableHeader{
+	font-size:12px;
+	border-top:0px;
+	background:url(../images/bg-head-rowspan.gif) top right no-repeat;
+}
+
+.tableDataArea  .dashboardTableHeader td.first{
+	vertical-align:middle;
+	text-align:center;
+}
+
+.dashboardTable tr.head{
+	border-top:0px;
+}
+
+
+.dashboardTable tr.head td{
+	background:none;
+	font-weight:normal;	
+}
+
+.dashboardTable tr.head td.noBT{
+ border-top:0px;
+}
+
+.dashboardTableFooter{
+	display:block;
+}
+
+.panel3{
+	padding:4px 0px 4px;
+    height:20px;
+}
+
+.pagination3{
+ margin-top:0px;
+ padding-top:3px;
+ float:right;
+ width:300px;
+}
+
+.pagination3 select{
+	height:18px;
+	font-size:12px;
+}
+
+td.fontGreen{
+ color:#6eaf0e;
+} 
+
+.tooltip{
+	position:absolute;
+}
+			
+#customerNameFilter select {
+    width: 170px;
+}
