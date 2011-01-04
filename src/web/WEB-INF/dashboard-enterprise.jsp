@@ -223,7 +223,7 @@
                                 </div>
                             </div>
                             
-                            <div class="chartSummary">
+                            <div class="chartSummary" style="text-align:center">
                                 <div class="summaryContent">
                                    <span class="strongGreen">Summary</span>
                                     <strong>:</strong>
@@ -239,9 +239,9 @@
                                     <span id="avg3">
                                         <fmt:formatNumber value="${viewData.averageDuration}" pattern="##0.#"/> 
                                     </span> Days
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span id="zoomMessage"></span>
+                               
                                 </div>
+                                <span id="zoomMessage"></span>
                                 <div class="summaryDate">
                                     <strong>Date :</strong>
                                     <fmt:parseDate value="${formData.startDate}" pattern="MM/dd/yyyy" var="startDate"/>

@@ -110,7 +110,7 @@ function drawChart() {
     }
 
     function loadStats(formData, formActionUrl) {
-        $('#zoomMessage').html('Loading...');
+        $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
         $.ajax({
                    type: 'get',
                    url:  formActionUrl,
@@ -137,9 +137,9 @@ function drawChart() {
                                             chartData['fulfill'] = result.fulfill;
                                             parseChartData();
                                             chart.draw(data, options);
-                                            $('.chartSummary').effect("highlight", {'color' : '#ff0000'}, 3000);
-                                            $('.graphArea').effect("highlight", {'color' : '#ff0000'}, 3000);
-                                            $('#chart_div iframe').effect("highlight", {'color' : '#ff0000'}, 3000);
+                                            $('.chartSummary').effect("highlight", {'color' : '#E1F2FF'}, 3000);
+                                            $('.chartWrapper,.graphArea .top').effect("highlight", {'color' : '#E1F2FF'}, 3000);
+                                            $('#chart_div iframe').effect("highlight", {'color' : '#E1F2FF'}, 3000);
                                         },
                                         function(errorMessage) {
                                             $('#zoomMessage').html(errorMessage);
