@@ -33,14 +33,14 @@ function drawChart() {
     $("#timeDimension").change(function(){ 
         timeDimension = $("#timeDimension").val()==""?"month":$("#timeDimension").val();
         parseChartData();
-        chart.draw(data,options);
+        renderChart();
     });
 
     //  cost, duration and fulfillment radio change
     $(".visualization .displaying input").change(function(){
         displaying = $(this).val();
         parseChartData(); 
-        chart.draw(data,options);
+        renderChart();
     });
 
     // window re-size - redraw the chart to adjust the page size
@@ -48,7 +48,7 @@ function drawChart() {
         width = $(".visualization").width();
         options.width = $(".visualization").width() - 5;
         parseChartData();
-        chart.draw(data,options);
+        renderChart();
     });
 
     $("#timeDimension").trigger("change");
@@ -93,7 +93,6 @@ function drawChart() {
     function parseChartData() {
         data = new google.visualization.DataTable();
         var columnData = chartData[displaying]["column"]; // chartData is defined as json format in data/dashboard-chart.json
-        var rowData = chartData[displaying][timeDimension];
         $.each(columnData, function(index, item) {
             if (index == 0) {
                 data.addColumn('string', item);
@@ -101,12 +100,26 @@ function drawChart() {
                 data.addColumn('number', item);
             }
         });
-        data.addRows(rowData.length);
-        $.each(rowData, function(index, item) {
-            data.setValue(index, 0, item["date"]);
-            data.setValue(index, 1, item["customer"]);
-            data.setValue(index, 2, item["tc"]);
-        })
+        if (chartData[displaying][timeDimension]) {
+            var rowData = chartData[displaying][timeDimension];
+            data.addRows(rowData.length);
+            $.each(rowData, function(index, item) {
+                data.setValue(index, 0, item["date"]);
+                data.setValue(index, 1, item["customer"]);
+                data.setValue(index, 2, item["tc"]);
+            })
+        }
+    }
+    
+    function renderChart() {
+        if (chartData['contest']['week'] && chartData['contest']['week'].length > 0) {
+            $('#NoEnoughStats').hide();
+            $('#chart_div').show();
+            chart.draw(data, options);
+        } else {
+            $('#chart_div').hide();
+            $('#NoEnoughStats').show();
+        }
     }
 
     function loadStats(formData, formActionUrl) {
@@ -136,7 +149,7 @@ function drawChart() {
                                             chartData['cost'] = result.cost;
                                             chartData['fulfill'] = result.fulfill;
                                             parseChartData();
-                                            chart.draw(data, options);
+                                            renderChart();
                                             $('.chartSummary').effect("highlight", {'color' : '#E1F2FF'}, 3000);
                                             $('.chartWrapper,.graphArea .top').effect("highlight", {'color' : '#E1F2FF'}, 3000);
                                             $('#chart_div iframe').effect("highlight", {'color' : '#E1F2FF'}, 3000);

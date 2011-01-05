@@ -349,3 +349,19 @@ td.fontGreen{
 #customerNameFilter select {
     width: 170px;
 }
+
+
+#NoEnoughStats {
+    text-align: center;
+    vertical-align: middle;
+    height: 250px;
+    width: 100%;
+
+}
+#NoEnoughStats p {
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+    padding-top: 100px;
+}

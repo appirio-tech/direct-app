@@ -280,6 +280,9 @@
 
                                     <div class="chartWrapper">
                                         <div id="chart_div"></div>
+                                        <div id="NoEnoughStats" class="hide">
+                                            <p>NO ENOUGH STATISTICS TO RENDER THE CHART</p>
+                                        </div>
                                     </div>    
                                     <!-- chart container-->
 

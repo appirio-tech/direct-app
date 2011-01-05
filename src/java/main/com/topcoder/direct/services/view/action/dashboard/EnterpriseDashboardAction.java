@@ -176,6 +176,9 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         this.sessionData = new SessionData(request.getSession());
         TCSubject currentUser = getCurrentUser();
 
+        boolean isAJAXCall = getIsAJAX();
+        boolean isFirstCall = !isAJAXCall;
+
         // Get the list of available project categories
         Map<Long, String> projectCategories = DataProvider.getAllProjectCategories();
         getViewData().setProjectCategories(projectCategories);
@@ -210,7 +213,8 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         Date endDate = DirectUtils.getDate(form.getEndDate());
 
         // If project category IDs are not specified then use all project category Ids
-        if ((categoryIds == null) || (categoryIds.length == 0)) {
+        boolean categoryIdsAreSet = (categoryIds != null) && (categoryIds.length > 0); 
+        if (isFirstCall && !categoryIdsAreSet) {
             Set<Long> keySet = projectCategories.keySet();
             int index = 0;
             categoryIds = new long[keySet.size()];
@@ -218,31 +222,36 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 categoryIds[index++] = id;
             }
             form.setProjectCategoryIds(categoryIds);
+            categoryIdsAreSet = true;
         }
         
         // If billing account IDs are not specified then use all billing account Ids
-        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+        boolean billingAccountIdsAreSet = (billingAccountIds != null) && (billingAccountIds.length > 0); 
+        if (isFirstCall && !billingAccountIdsAreSet) {
             int index = 0;
             billingAccountIds = new long[clientBillingProjects.size()];
             for (Project clientBillingProject : clientBillingProjects) {
                 billingAccountIds[index++] = clientBillingProject.getId();
             }
             form.setBillingAccountIds(billingAccountIds);
+            billingAccountIdsAreSet = true;
         }
         
         // If client account IDs are not specified then use all client account Ids
-        if ((customerIds == null) || (customerIds.length == 0)) {
+        boolean customerIdsAreSet = (customerIds != null) && (customerIds.length > 0); 
+        if (isFirstCall && !customerIdsAreSet) {
             int index = 0;
             customerIds = new long[clientAccountsMap.size()];
             for (long clientId : clientAccountsMap.keySet()) {
                 customerIds[index++] = clientId;
             }
             form.setCustomerIds(customerIds);
+            customerIdsAreSet = true;
         }
 
         // If project IDs are not specified then use the first available from the projects assigned to user
         boolean projectIdsAreSet = (projectIds != null) && (projectIds.length > 0); 
-        if (!projectIdsAreSet) {
+        if (isFirstCall && !projectIdsAreSet) {
             if (!enterpriseProjectStats.isEmpty()) {
                 projectIds = new long[] {enterpriseProjectStats.get(0).getProject().getId()};
                 form.setProjectIds(projectIds);
@@ -271,7 +280,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         }
 
         // Get the detailed stats for specific project, categories and time frame (only if project is specified)
-        if (projectIdsAreSet) {
+        if (projectIdsAreSet && categoryIdsAreSet && billingAccountIdsAreSet && customerIdsAreSet) {
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> costStats = createEmptyStats();
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> durationStats = createEmptyStats();
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> fulfillmentStats = createEmptyStats();
@@ -376,7 +385,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         setProjectStatusColor();
         
         // Build the result for consumption by JSON serializer in case of AJAX calls
-        if (getIsAJAX()) {
+        if (isAJAXCall) {
             Map<String, Object> durations = buildStats(getViewData().getDurationStats(),
                                                        new String[]{"date", "Customer Avg Contest Duration",
                                                                     "Market Avg Contest Duration"});
@@ -421,10 +430,12 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                                            String[] columnNames) {
         Map<String, Object> statsResult = new HashMap<String, Object>();
         statsResult.put("column", columnNames);
-        statsResult.put("week", buildStatResults(stats, EnterpriseDashboardStatPeriodType.WEEK));
-        statsResult.put("month", buildStatResults(stats, EnterpriseDashboardStatPeriodType.MONTH));
-        statsResult.put("quarter", buildStatResults(stats, EnterpriseDashboardStatPeriodType.QUARTER));
-        statsResult.put("year", buildStatResults(stats, EnterpriseDashboardStatPeriodType.YEAR));
+        if (stats != null) {
+            statsResult.put("week", buildStatResults(stats, EnterpriseDashboardStatPeriodType.WEEK));
+            statsResult.put("month", buildStatResults(stats, EnterpriseDashboardStatPeriodType.MONTH));
+            statsResult.put("quarter", buildStatResults(stats, EnterpriseDashboardStatPeriodType.QUARTER));
+            statsResult.put("year", buildStatResults(stats, EnterpriseDashboardStatPeriodType.YEAR));
+        }
         return statsResult;
     }
 

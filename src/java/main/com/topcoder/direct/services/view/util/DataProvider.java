@@ -1210,14 +1210,20 @@ public class DataProvider {
         long[] projectCategoryIDs, Date startDate, Date endDate, long[] clientIds, long[] billingAccountIds)
         throws Exception {
 
+        List<EnterpriseDashboardDetailedProjectStatDTO> data
+            = new ArrayList<EnterpriseDashboardDetailedProjectStatDTO>();
+
+        if ((projectIds == null) || (projectIds.length == 0)) {
+            return data;
+        }
         if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
-            throw new IllegalArgumentException("Project category IDs are not specified");
+            return data;
         }
         if ((clientIds == null) || (clientIds.length == 0)) {
-            throw new IllegalArgumentException("Client IDs are not specified");
+            return data;
         }
         if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
-            throw new IllegalArgumentException("Billing account IDs are not specified");
+            return data;
         }
 
         String projectIDsList = concatenate(projectIds, ", ");
@@ -1226,8 +1232,7 @@ public class DataProvider {
         String billingAccountIdsList = concatenate(billingAccountIds, ", ");
 
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        List<EnterpriseDashboardDetailedProjectStatDTO> data
-            = new ArrayList<EnterpriseDashboardDetailedProjectStatDTO>();
+        
 
         final String queryName = "direct_dashboard_enterprise_detailed_stats";
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
