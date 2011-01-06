@@ -478,7 +478,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 EnterpriseDashboardAggregatedStatDTO zeroDTO = new EnterpriseDashboardAggregatedStatDTO();
                 zeroDTO.setClientValue(0);
                 zeroDTO.setOverallValue(0);
-                zeroDTO.setTimePeriodLabel("NO ENOUGH STATISTICS TO RENDER THE CHART");
+                zeroDTO.setTimePeriodLabel("NOT ENOUGH STATISTICS TO RENDER THE CHART");
                 periodStats.add(zeroDTO);
             }
         }
