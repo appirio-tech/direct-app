@@ -189,16 +189,24 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         // Get the overall stats for user projects
         List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats
             = DataProvider.getEnterpriseProjectStats(tcDirectProjects);
+        sortEnterpriseDashboardProjectStatDTOByName(enterpriseProjectStats);
         getViewData().setProjects(enterpriseProjectStats);
         
         // Get the list of all available billing accounts for user
         List<Project> clientBillingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
+
+        // sort by client project name first
+        sortClientProjectByName(clientBillingProjects);
         getViewData().setClientBillingProjects(convertToMap(clientBillingProjects));
         
         // Get the list of available client accounts
         Map<Long, String> clientAccountsMap = new LinkedHashMap<Long, String>();
+
+        // sort by client name first
+        sortClientProjectByClientName(clientBillingProjects);
         for (Project clientBillingAccount : clientBillingProjects) {
             Client client = clientBillingAccount.getClient();
+
             clientAccountsMap.put(client.getId(), client.getName());
         }
         getViewData().setClientAccounts(clientAccountsMap);
@@ -784,5 +792,54 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 project.setProjectStatusColor(DashboardStatusColor.GREEN);
             }
         }
+    }
+
+
+    private void sortClientProjectByName(List<Project> projects) {
+        Collections.sort(projects, new Comparator() {
+			public int compare(Object obj1, Object obj2) {
+                Project p1 = (Project) obj1;
+                Project p2 = (Project) obj2;
+
+                if(p1.getName() == null) return -1;
+                if(p2.getName() == null) return 1;
+
+				String name1 = p1.getName().trim();
+				String name2 = p2.getName().trim();
+				return name1.compareTo(name2);
+			}
+        });
+    }
+
+    private void sortClientProjectByClientName(List<Project> projects) {
+        Collections.sort(projects, new Comparator() {
+			public int compare(Object obj1, Object obj2) {
+                Project p1 = (Project) obj1;
+                Project p2 = (Project) obj2;
+
+                if(p1.getClient().getName() == null) return -1;
+                if(p2.getClient().getName() == null) return 1;
+
+				String name1 = p1.getClient().getName().trim();
+				String name2 = p2.getClient().getName().trim();
+				return name1.compareTo(name2);
+			}
+        });
+    }
+
+    private void sortEnterpriseDashboardProjectStatDTOByName(List<EnterpriseDashboardProjectStatDTO> values) {
+         Collections.sort(values, new Comparator() {
+			public int compare(Object obj1, Object obj2) {
+                EnterpriseDashboardProjectStatDTO e1 = (EnterpriseDashboardProjectStatDTO) obj1;
+                EnterpriseDashboardProjectStatDTO e2 = (EnterpriseDashboardProjectStatDTO) obj2;
+
+                if(e1.getProject().getName() == null) return -1;
+                if(e2.getProject().getName() == null) return 1;
+
+				String name1 = e1.getProject().getName().trim().toLowerCase();
+				String name2 = e2.getProject().getName().trim().toLowerCase();
+				return name1.compareTo(name2);
+			}
+        });
     }
 }

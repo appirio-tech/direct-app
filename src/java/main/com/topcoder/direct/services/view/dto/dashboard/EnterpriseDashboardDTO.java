@@ -8,6 +8,7 @@ import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -122,7 +123,7 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      * @return a <code>Map</code> mapping the project IDs to project names.
      */
     public Map<Long, String> getProjectsLookupMap() {
-        Map<Long, String> map = new HashMap<Long, String>();
+        Map<Long, String> map = new LinkedHashMap<Long, String>();
         List<EnterpriseDashboardProjectStatDTO> projectStats = getProjects();
         if (projectStats != null) {
             for (EnterpriseDashboardProjectStatDTO projectStat : projectStats) {
