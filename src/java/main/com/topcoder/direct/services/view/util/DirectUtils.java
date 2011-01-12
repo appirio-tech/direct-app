@@ -186,6 +186,8 @@ public final class DirectUtils {
      */
     private static final String ADMIN_ROLE = "Cockpit Administrator";
 
+    private static final String TC_OPERATIONS_ROLE = "TC Operations";
+
     /**
      * <p>
      * Default Constructor.
@@ -788,6 +790,18 @@ public final class DirectUtils {
      */
     public static boolean isCockpitAdmin(TCSubject tcSubject) {
         return isRole(tcSubject, ADMIN_ROLE);
+    }
+
+    /**
+     * <p>
+     * Checks if the user is cockpit administrator.
+     * </p>
+     *
+     * @param tcSubject  TCSubject instance for login user
+     * @return true if the user is cockpit administrator and false otherwise.
+     */
+    public static boolean isTcOperations(TCSubject tcSubject) {
+        return isRole(tcSubject, TC_OPERATIONS_ROLE);
     }
 
 
