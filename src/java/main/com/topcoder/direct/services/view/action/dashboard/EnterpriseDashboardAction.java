@@ -32,16 +32,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -97,6 +88,8 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
      * <p>A <code>EnterpriseDashboardForm</code> providing the form parameters submitted by user.</p>
      */
     private EnterpriseDashboardForm formData;
+
+    private List<ProjectData> directProjectsData;
 
     /**
      * <p>A <code>boolean</code> providing the flag indicating if this action instance is to handle AJAX calls or
@@ -181,35 +174,25 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
         // Get the list of available project categories
         Map<Long, String> projectCategories = DataProvider.getAllProjectCategories();
+
+        // set all the project categories to view data to populate project category selection
         getViewData().setProjectCategories(projectCategories);
 
         // Get the list of TC Direct Projects accessible to current user
-        List<ProjectData> tcDirectProjects = getProjects();
+        List<ProjectData> tcDirectProjects = getDashboardDirectProjects();
 
+        List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats = new ArrayList<EnterpriseDashboardProjectStatDTO>();
+
+        if (!isAJAXCall) {
         // Get the overall stats for user projects
-        List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats
+            enterpriseProjectStats
             = DataProvider.getEnterpriseProjectStats(tcDirectProjects);
         sortEnterpriseDashboardProjectStatDTOByName(enterpriseProjectStats);
-        getViewData().setProjects(enterpriseProjectStats);
-        
-        // Get the list of all available billing accounts for user
-        List<Project> clientBillingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
-
-        // sort by client project name first
-        sortClientProjectByName(clientBillingProjects);
-        getViewData().setClientBillingProjects(convertToMap(clientBillingProjects));
-        
-        // Get the list of available client accounts
-        Map<Long, String> clientAccountsMap = new LinkedHashMap<Long, String>();
-
-        // sort by client name first
-        sortClientProjectByClientName(clientBillingProjects);
-        for (Project clientBillingAccount : clientBillingProjects) {
-            Client client = clientBillingAccount.getClient();
-
-            clientAccountsMap.put(client.getId(), client.getName());
         }
-        getViewData().setClientAccounts(clientAccountsMap);
+
+        getViewData().setProjects(enterpriseProjectStats);
+
+        Map<Long, String> customers = this.getAllClients(currentUser);
 
         // Analyze form parameters
         EnterpriseDashboardForm form = getFormData();
@@ -219,6 +202,18 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         long[] customerIds = form.getCustomerIds();
         Date startDate = DirectUtils.getDate(form.getStartDate());
         Date endDate = DirectUtils.getDate(form.getEndDate());
+
+         // If client account IDs are not specified then use the first client account id
+        boolean customerIdsAreSet = (customerIds != null) && (customerIds.length > 0);
+        if (isFirstCall && !customerIdsAreSet) {
+            customerIds = new long[1];
+            for (long clientId : customers.keySet()) {
+                customerIds[0] = clientId;
+                break;
+            }
+            form.setCustomerIds(customerIds);
+            customerIdsAreSet = true;
+        }
 
         // If project category IDs are not specified then use all project category Ids
         boolean categoryIdsAreSet = (categoryIds != null) && (categoryIds.length > 0); 
@@ -236,36 +231,56 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         // If billing account IDs are not specified then use all billing account Ids
         boolean billingAccountIdsAreSet = (billingAccountIds != null) && (billingAccountIds.length > 0); 
         if (isFirstCall && !billingAccountIdsAreSet) {
-            int index = 0;
-            billingAccountIds = new long[clientBillingProjects.size()];
-            for (Project clientBillingProject : clientBillingProjects) {
-                billingAccountIds[index++] = clientBillingProject.getId();
-            }
+            // set to all by default
+            billingAccountIds = new long[] {0};
             form.setBillingAccountIds(billingAccountIds);
             billingAccountIdsAreSet = true;
-        }
-        
-        // If client account IDs are not specified then use all client account Ids
-        boolean customerIdsAreSet = (customerIds != null) && (customerIds.length > 0); 
-        if (isFirstCall && !customerIdsAreSet) {
-            int index = 0;
-            customerIds = new long[clientAccountsMap.size()];
-            for (long clientId : clientAccountsMap.keySet()) {
-                customerIds[index++] = clientId;
-            }
-            form.setCustomerIds(customerIds);
-            customerIdsAreSet = true;
         }
 
         // If project IDs are not specified then use the first available from the projects assigned to user
         boolean projectIdsAreSet = (projectIds != null) && (projectIds.length > 0); 
         if (isFirstCall && !projectIdsAreSet) {
-            if (!enterpriseProjectStats.isEmpty()) {
-                projectIds = new long[] {enterpriseProjectStats.get(0).getProject().getId()};
+            // set to all by default
+            projectIds = new long[] {0};
                 form.setProjectIds(projectIds);
                 projectIdsAreSet = true;
             }
+
+        // set view data for clients
+        getViewData().setClientAccounts(customers);
+
+        // set view data for billings
+        if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
+            getViewData().setClientBillingProjects(getBillingsForClient(currentUser, getFormData().getCustomerIds()[0]));
+        } else {
+            getViewData().setClientBillingProjects(new HashMap<Long, String>());
         }
+
+        // add the default all for billings
+        getViewData().getClientBillingProjects().put(0L, "All Billing Accounts");
+
+        // set view data for projects
+        if (getFormData().getBillingAccountIds()[0] <= 0) {
+            if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
+                getViewData().setProjectsLookupMap(getProjectsForClient(currentUser, getFormData().getCustomerIds()[0]));
+            } else {
+                getViewData().setProjectsLookupMap(new HashMap<Long, String>());
+            }
+        } else {
+            getViewData().setProjectsLookupMap(getProjectsForBilling(currentUser, getFormData().getBillingAccountIds()[0]));
+        }
+
+        // add the default all for projects
+        getViewData().getProjectsLookupMap().put(0L, "All Projects");
+
+//        System.out.println("projectIds length:" + projectIds.length);
+//        System.out.println("categoryIds length:" + categoryIds.length);
+//        System.out.println("billingAccountIds length:" + billingAccountIds.length);
+//        System.out.println("customerIds length:" + customerIds.length);
+//
+//        System.out.println("projectIds:" + projectIds[0]);
+//        System.out.println("billingAccountsIds:" + billingAccountIds[0]);
+//        System.out.println("customerIds:" + customerIds[0]);
 
         // If start date is not set then use date for half of a year before current time
         SimpleDateFormat dateFormat = new SimpleDateFormat(DirectUtils.DATE_FORMAT);
@@ -425,6 +440,52 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
             setResult(result);
         }
+    }
+
+    /**
+     * Gets the billing and direct project dropdown options for the request client id.
+     *
+     * @return the result
+     * @throws Exception if any error occurs
+     */
+    public String getOptionsForClient() throws Exception {
+        TCSubject currentUser = getCurrentUser();
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        result.put("billings", convertMapKeyToString(getBillingsForClient(currentUser, getFormData().getCustomerIds()[0])));
+        result.put("projects", convertMapKeyToString(getProjectsForClient(currentUser, getFormData().getCustomerIds()[0])));
+        setResult(result);
+
+        return SUCCESS;
+    }
+
+    /**
+     * Gets the project dropdown options for the request billing id.
+     *
+     * @return the result
+     * @throws Exception if any error occurs.
+     */
+    public String getOptionsForBilling() throws Exception {
+        TCSubject currentUser = getCurrentUser();
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        result.put("projects", convertMapKeyToString(getProjectsForBilling(currentUser, getFormData().getBillingAccountIds()[0])));
+        setResult(result);
+
+        return SUCCESS;
+    }
+
+    /**
+     * Gets the direct project the user has access to.
+     *
+     * @return the list of project data
+     * @throws Exception if any error occurs.
+     */
+    public List<ProjectData> getDashboardDirectProjects() throws Exception {
+        if(this.directProjectsData == null) {
+            this.directProjectsData = getProjects();
+        }
+        return this.directProjectsData;
     }
 
     /**
@@ -842,4 +903,84 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 			}
         });
     }
+
+    private Map<String, Object> getDashboardClientBillingProjectMappings(TCSubject tcSubject) throws Exception {
+        Map<String, Object> result;
+        HttpServletRequest request = DirectUtils.getServletRequest();
+        Object value = request.getSession().getAttribute("clientBillingProjectMappings");
+
+        if (value == null) {
+            List<ProjectData> tcDirectProjects = getDashboardDirectProjects();
+            result = DataProvider.getDashboardClientBillingProjectMappingsForAdmin(tcSubject, tcDirectProjects);
+            request.getSession().setAttribute("clientBillingProjectMappings", result);
+        } else {
+            result = (Map<String, Object>) value;
+        }
+
+        return result;
+    }
+
+    private Map<Long, String> getBillingsForClient(TCSubject tcSubject, long clientId) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.billing");
+        Map<Long, String> result =  data.get(clientId);
+        if (result == null) {
+            return new HashMap<Long, String>();
+        } else {
+            return new HashMap<Long, String>(result);
+        }
+    }
+
+    private Map<Long, String> getProjectsForClient(TCSubject tcSubject, long clientId) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.project");
+        Map<Long, String> result =  data.get(clientId);
+        if (result == null) {
+            return new HashMap<Long, String>();
+        } else {
+
+
+
+            return new HashMap<Long, String>(result);
+        }
+    }
+
+    private Map<Long, String> getProjectsForBilling(TCSubject tcSubject, long billingId) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("billing.project");
+        Map<Long, String> result =  data.get(billingId);
+        if (result == null) {
+            return new HashMap<Long, String>();
+        } else {
+            return new HashMap<Long, String>(result);
+        }
+    }
+
+    private Map<Long, String> getAllClients(TCSubject tcSubject) throws Exception {
+        return  sortByValue((Map<Long, String>) getDashboardClientBillingProjectMappings(tcSubject).get("clients"));
+    }
+
+    static Map<Long, String> sortByValue(Map<Long, String> map) {
+        List list = new LinkedList<Map.Entry<Long, String>>(map.entrySet());
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o1)).getValue())
+                        .compareTo(((Map.Entry) (o2)).getValue());
+            }
+        });
+
+        Map<Long, String> result = new LinkedHashMap<Long, String>();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry<Long, String> entry = (Map.Entry<Long, String>) it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
+    static Map<String, String> convertMapKeyToString(Map<Long, String> toConvert) {
+        Map<String, String> result = new HashMap<String, String>();
+        for(Map.Entry<Long, String> e : toConvert.entrySet()) {
+            result.put(String.valueOf(e.getKey()), e.getValue());
+        }
+
+        return  result;
+    }
+
 }

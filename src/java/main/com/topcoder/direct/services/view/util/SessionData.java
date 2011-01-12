@@ -194,4 +194,13 @@ public class SessionData {
     public Long getCurrentSelectDirectProjectID() {
         return (Long) this.session.getAttribute("currentSelectDirectProjectID");
     }
+
+    /**
+     * Gets the inner session.
+     *
+     * @return the HTTP session.
+     */
+    public HttpSession getSession() {
+        return this.session;
+    }
 }

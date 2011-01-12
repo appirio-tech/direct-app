@@ -780,6 +780,19 @@ public final class DirectUtils {
 
     /**
      * <p>
+     * Checks if the user is cockpit administrator.
+     * </p>
+     *
+     * @param tcSubject  TCSubject instance for login user
+     * @return true if the user is cockpit administrator and false otherwise.
+     */
+    public static boolean isCockpitAdmin(TCSubject tcSubject) {
+        return isRole(tcSubject, ADMIN_ROLE);
+    }
+
+
+    /**
+     * <p>
      * Checks if the login user is of given role
      * </p>
      * 

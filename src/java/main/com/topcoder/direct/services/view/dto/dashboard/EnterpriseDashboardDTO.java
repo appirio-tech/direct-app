@@ -93,6 +93,8 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      */
     private double averageFulfillment;
 
+    private Map<Long, String> projectsLookupMap;
+
     /**
      * <p>Constructs new <code>EnterpriseDashboardDTO</code> instance. This implementation does nothing.</p>
      */
@@ -123,16 +125,12 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      * @return a <code>Map</code> mapping the project IDs to project names.
      */
     public Map<Long, String> getProjectsLookupMap() {
-        Map<Long, String> map = new LinkedHashMap<Long, String>();
-        List<EnterpriseDashboardProjectStatDTO> projectStats = getProjects();
-        if (projectStats != null) {
-            for (EnterpriseDashboardProjectStatDTO projectStat : projectStats) {
-                ProjectBriefDTO project = projectStat.getProject();
-                map.put(project.getId(), project.getName());
+        return this.projectsLookupMap;
             }
+
+    public void setProjectsLookupMap(Map<Long, String> value) {
+        this.projectsLookupMap = value;
         }
-        return map;
-    }
 
     /**
      * <p>Gets the mapping from project category IDs to names.</p>

@@ -21,6 +21,8 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import com.topcoder.clients.model.Client;
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
@@ -40,6 +42,8 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
+import com.topcoder.security.RolePrincipal;
+import com.topcoder.service.project.IllegalArgumentFault;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
 import org.apache.commons.collections.CollectionUtils;
@@ -166,6 +170,8 @@ import com.topcoder.web.common.cache.MaxAge;
  * @version 2.1.9
  */
 public class DataProvider {
+
+
 
     /**
      * <p>Constructs new <code>DataProvider</code> instance. This implementation does nothing.</p>
@@ -451,13 +457,13 @@ public class DataProvider {
     public static List<DashboardProjectSearchResultDTO> searchUserProjects(TCSubject tcSubject, String searchFor)
         throws Exception {
         List<ProjectSummaryData> projects = DirectUtils.getContestServiceFacade().getProjectData(tcSubject);
-        List<ProjectSummaryData> filterdProjects;
+        List<ProjectSummaryData> filteredProjects;
 
         if (StringUtils.isBlank(searchFor)) {
-            filterdProjects = projects;
+            filteredProjects = projects;
         } else {
             final String searchForLowerCase = searchFor.toLowerCase();
-            filterdProjects = (List<ProjectSummaryData>) CollectionUtils.select(projects, new Predicate() {
+            filteredProjects = (List<ProjectSummaryData>) CollectionUtils.select(projects, new Predicate() {
                 //@Override
                 public boolean evaluate(Object data) {
                     ProjectSummaryData project = (ProjectSummaryData) data;
@@ -467,7 +473,7 @@ public class DataProvider {
             });
         }
 
-        return (List<DashboardProjectSearchResultDTO>) CollectionUtils.collect(filterdProjects, new Transformer() {
+        return (List<DashboardProjectSearchResultDTO>) CollectionUtils.collect(filteredProjects, new Transformer() {
             //@Override
             public Object transform(Object data) {
                 ProjectSummaryData project = (ProjectSummaryData) data;
@@ -1226,24 +1232,34 @@ public class DataProvider {
             return data;
         }
 
+
         String projectIDsList = concatenate(projectIds, ", ");
         String projectCategoryIDsList = concatenate(projectCategoryIDs, ", ");
         String clientIdsList = concatenate(clientIds, ", ");
         String billingAccountIdsList = concatenate(billingAccountIds, ", ");
 
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        
-
-        final String queryName = "direct_dashboard_enterprise_detailed_stats";
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
         Request request = new Request();
+
+        String queryName;
+        if(projectIds[0] != 0) {
+            queryName = "direct_dashboard_enterprise_detailed_stats_project";
+            request.setProperty("tdpis", String.valueOf(projectIDsList));
+        } else if (billingAccountIds[0] != 0) {
+            queryName = "direct_dashboard_enterprise_detailed_stats_billing";
+            request.setProperty("bpids", billingAccountIdsList);
+        } else if (clientIds[0] != 0) {
+            queryName = "direct_dashboard_enterprise_detailed_stats_client";
+            request.setProperty("clids", clientIdsList);
+        } else {
+            return data;
+        }
+
         request.setContentHandle(queryName);
-        request.setProperty("tdpis", String.valueOf(projectIDsList));
         request.setProperty("sdt", dateFormatter.format(startDate));
         request.setProperty("edt", dateFormatter.format(endDate));
         request.setProperty("pcids", projectCategoryIDsList);
-        request.setProperty("clids", clientIdsList);
-        request.setProperty("bpids", billingAccountIdsList);
 
         final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
         for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
@@ -1600,6 +1616,106 @@ public class DataProvider {
             phase.setPhaseName(phaseTypeName);
             result.add(phase);
         }
+
+        return result;
+    }
+
+    /**
+     * Gets the clients and billing accounts for the admin user. All the clients and billing accounts
+     * in the tcs_dw:client_project_dim will be returned. This method is used by EnterpriseDashboardAction
+     * to populate the clients and customers dropdown for admin user. And it's a workaround for now and
+     * should be replaced with a more formal approach in the following assembly.
+     *
+     * @param tcSubject the tcSubject
+     * @param projects  the list of direct projects
+     * @return the list of billing projects.
+     * @throws Exception if any error occurs.
+     */
+    public static Map<String, Object> getDashboardClientBillingProjectMappingsForAdmin(TCSubject tcSubject, List<ProjectData> projects)
+            throws Exception {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        Map<Long, Map<Long, String>> clientBillingMap = new HashMap<Long, Map<Long, String>>();
+        Map<Long, Map<Long, String>> clientProjectMap = new HashMap<Long, Map<Long, String>>();
+        Map<Long, Map<Long, String>> billingProjectMap = new HashMap<Long, Map<Long, String>>();
+        Map<Long, String> clientsMap = new HashMap<Long, String>();
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+
+        Request request = new Request();
+
+        // set to null first
+        ResultSetContainer resultContainer = null;
+
+        if (DirectUtils.isCockpitAdmin(tcSubject)) {
+            System.out.println("query the cockpit admin...");
+            request.setContentHandle("admin_client_billing_accounts");
+            resultContainer = dataAccess.getData(request).get(
+                    "admin_client_billing_accounts");
+        } else {
+            System.out.println("query non admin...");
+            long[] projectIds = new long[projects.size()];
+            int index = 0;
+            for(ProjectData data : projects) {
+                projectIds[index] = data.getProjectId();
+                index++;
+            }
+            if (projects.size() > 0) {
+                request.setContentHandle("non_admin_client_billing_accounts");
+                request.setProperty("tdpis", concatenate(projectIds, ", "));
+                resultContainer = dataAccess.getData(request).get(
+                        "non_admin_client_billing_accounts");
+            }
+        }
+
+
+        if (resultContainer != null) {
+
+            for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+                long billingId = row.getLongItem("billing_account_id");
+                String billingName = row.getStringItem("billing_account_name");
+                long clientId = row.getLongItem("client_id");
+                String clientName = row.getStringItem("client_name");
+                long directProjectId = row.getLongItem("direct_project_id");
+                String directProjectName = row.getStringItem("direct_project_name");
+                // put into clients map
+                clientsMap.put(clientId, clientName);
+
+                // put into clientBillingMap
+                Map<Long, String> billingsForClient = clientBillingMap.get(clientId);
+                if (billingsForClient == null) {
+                    billingsForClient = new HashMap<Long, String>();
+                    clientBillingMap.put(clientId, billingsForClient);
+                }
+
+                billingsForClient.put(billingId, billingName);
+
+                // put into clientProjectMap
+                Map<Long, String> projectForClient = clientProjectMap.get(clientId);
+                if (projectForClient == null) {
+                    projectForClient = new HashMap<Long, String>();
+                    clientProjectMap.put(clientId, projectForClient);
+                }
+
+                projectForClient.put(directProjectId, directProjectName);
+
+                // put into billingProjectMap
+                Map<Long, String> projectForBilling = billingProjectMap.get(billingId);
+                if (projectForBilling == null) {
+                    projectForBilling = new HashMap<Long, String>();
+                    billingProjectMap.put(billingId, projectForBilling);
+                }
+
+                projectForBilling.put(directProjectId, directProjectName);
+            }
+
+        }
+
+        result.put("client.billing", clientBillingMap);
+        result.put("client.project", clientProjectMap);
+        result.put("billing.project", billingProjectMap);
+        result.put("clients", clientsMap);
 
         return result;
     }

@@ -294,7 +294,6 @@
                                             <div class="filterProject">
                                                 <span class="label">Project Name </span>
                                                 <s:select list="viewData.projectsLookupMap" name="formData.projectIds" 
-                                                          cssClass="multiselect" multiple="true" 
                                                           id="formData.projectIds"/>
                                             </div>
                                             
@@ -330,24 +329,22 @@
                                                     <div class="columns contestType">
                                                         <strong>Contest Type</strong><br/>
                                                         <s:select list="viewData.projectCategories" multiple="true"
-                                                                  cssClass="multiselect" 
+                                                                  cssClass="multiselect"
                                                                   id="formData.projectCategoryIds"
                                                                   name="formData.projectCategoryIds" size="5"/>
                                                     </div>
 
                                                     <div class="columns" id="customerNameFilter">
                                                         <strong>Customer Name</strong><br/>
-                                                        <s:select list="viewData.clientAccounts" multiple="true" 
-                                                                  cssClass="multiselect" id="formData.customerIds"
-                                                                  name="formData.customerIds" size="5"/>
+                                                        <s:select list="viewData.clientAccounts" id="formData.customerIds"
+                                                                  name="formData.customerIds" size="1"/>
                                                     </div>
 
                                                     <div class="columns">
                                                         <strong>Billing Account</strong><br/>
-                                                        <s:select list="viewData.clientBillingProjects" multiple="true"
-                                                                  cssClass="multiselect" 
+                                                        <s:select list="viewData.clientBillingProjects"
                                                                   id="formData.billingAccountIds"
-                                                                  name="formData.billingAccountIds" size="5"/>
+                                                                  name="formData.billingAccountIds" size="1"/>
                                                     </div>
 
                                                     <div class="columns columnButton">

@@ -283,6 +283,7 @@ a.dp-choose-date { margin-right:0px;}
 .filterContest select{ 
 	font-size:12px;
 	border:1px solid #a9acae;
+    width:200px;
 }
 
 /* Table Data */
