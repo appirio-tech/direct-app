@@ -1267,13 +1267,13 @@ public class DataProvider {
             EnterpriseDashboardDetailedProjectStatDTO costDTO = new EnterpriseDashboardDetailedProjectStatDTO();
             costDTO.setDate(row.getTimestampItem("stat_date"));
             costDTO.setValue(row.getDoubleItem("cost"));
-            costDTO.setContestsCount(row.getIntItem("total_project"));
+            costDTO.setContestsCount(row.getIntItem("total_completed_project"));
             costDTO.setStatsType(EnterpriseDashboardStatType.COST);
 
             EnterpriseDashboardDetailedProjectStatDTO durationDTO = new EnterpriseDashboardDetailedProjectStatDTO();
             durationDTO.setDate(row.getTimestampItem("stat_date"));
             durationDTO.setValue(row.getDoubleItem("duration"));
-            durationDTO.setContestsCount(row.getIntItem("total_project"));
+            durationDTO.setContestsCount(row.getIntItem("total_completed_project"));
             durationDTO.setStatsType(EnterpriseDashboardStatType.DURATION);
 
             EnterpriseDashboardDetailedProjectStatDTO fulfillmentDTO = new EnterpriseDashboardDetailedProjectStatDTO();
@@ -1330,13 +1330,13 @@ public class DataProvider {
             EnterpriseDashboardDetailedProjectStatDTO costDTO = new EnterpriseDashboardDetailedProjectStatDTO();
             costDTO.setDate(row.getTimestampItem("stat_date"));
             costDTO.setValue(row.getDoubleItem("cost"));
-            costDTO.setContestsCount(row.getIntItem("total_project"));
+            costDTO.setContestsCount(row.getIntItem("completed_project_count"));
             costDTO.setStatsType(EnterpriseDashboardStatType.COST);
 
             EnterpriseDashboardDetailedProjectStatDTO durationDTO = new EnterpriseDashboardDetailedProjectStatDTO();
             durationDTO.setDate(row.getTimestampItem("stat_date"));
             durationDTO.setValue(row.getDoubleItem("duration"));
-            durationDTO.setContestsCount(row.getIntItem("total_project"));
+            durationDTO.setContestsCount(row.getIntItem("completed_project_count"));
             durationDTO.setStatsType(EnterpriseDashboardStatType.DURATION);
 
             EnterpriseDashboardDetailedProjectStatDTO fulfillmentDTO = new EnterpriseDashboardDetailedProjectStatDTO();
