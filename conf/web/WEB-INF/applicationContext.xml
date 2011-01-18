@@ -511,9 +511,6 @@
     <bean id="copilotProjectAction"
       class="com.topcoder.direct.services.view.action.copilot.CopilotProjectAction"
       scope="prototype" parent="baseDirectStrutsAction">
-        <property name="copilotProjectDAO" ref="copilotProjectDAO"/>
-        <property name="lookupDAO" ref="lookupDAO"/>
-        <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
     </bean>
     
     <bean id="listCopilotContestsAction"
