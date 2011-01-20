@@ -96,6 +96,11 @@
 	color:#008600;
 }
 
+.strongBlue{
+	font-weight:bold;
+	color:#00aaff;
+}
+
 .btnArea{
 	float:right;
 	margin:5px;

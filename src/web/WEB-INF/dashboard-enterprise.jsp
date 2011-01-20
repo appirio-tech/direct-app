@@ -225,7 +225,7 @@
                             
                             <div class="chartSummary" style="text-align:center">
                                 <div class="summaryContent">
-                                   <span class="strongGreen">Summary</span>
+                                   <span class="strongBlue">Summary</span>
                                     <strong>:</strong>
                                     Avg. Fulfillment : 
                                     <span id="avg1">
@@ -281,7 +281,7 @@
                                     <div class="chartWrapper">
                                         <div id="chart_div"></div>
                                         <div id="NoEnoughStats" class="hide">
-                                            <p>NO ENOUGH STATISTICS TO RENDER THE CHART</p>
+                                            <p>NOT ENOUGH STATISTICS TO RENDER THE CHART</p>
                                         </div>
                                     </div>    
                                     <!-- chart container-->
