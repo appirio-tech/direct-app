@@ -157,6 +157,7 @@ var SOFTWARE_CATEGORY_ID_DESIGN = 1;
 var SOFTWARE_CATEGORY_ID_DEVELOPMENT = 2;
 var SOFTWARE_CATEGORY_ID_CONCEPT = 23;
 var SOFTWARE_CATEGORY_ID_SPEC = 6;
+var SOFTWARE_CATEGORY_ID_CONTENT = 35;
  
 var projectCategoryArray = [
 {id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application'},
@@ -170,7 +171,8 @@ var projectCategoryArray = [
 {id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application'},
 {id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application'},
 {id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application'},
-{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application'}
+{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application'},
+{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application'}
 ];
 
 /**

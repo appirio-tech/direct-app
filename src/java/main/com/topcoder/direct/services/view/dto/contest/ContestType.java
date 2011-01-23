@@ -171,6 +171,11 @@ public enum ContestType {
      * <p>A <code>ContestType</code> corresponding to <code>Conceptualization</code> contest type.</p>
      */
     COPILOT_POSTING("Copilot Posting", "Cp", 29),
+    
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Content Creation</code> contest type.</p>
+     */
+    CONTENT_CREATION("Content Creation", "c", 35),
 
     /**
      * <p>A <code>ContestType</code> corresponding to group of <code>Studio</code> contest type.</p>

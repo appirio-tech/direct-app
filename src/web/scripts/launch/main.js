@@ -1351,8 +1351,8 @@ function isTechnologyContest() {
        return false;
    } else {
        var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
-       //all except for concept and spec.
-       return !((categoryId == SOFTWARE_CATEGORY_ID_CONCEPT) || (categoryId == SOFTWARE_CATEGORY_ID_SPEC));
+       //all except for concept, spec and content creation.
+       return !((categoryId == SOFTWARE_CATEGORY_ID_CONCEPT) || (categoryId == SOFTWARE_CATEGORY_ID_SPEC) || (categoryId == SOFTWARE_CATEGORY_ID_CONTENT));
    }	
 }
 
