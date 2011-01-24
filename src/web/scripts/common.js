@@ -8,6 +8,11 @@
  * @version 1.1
  * @since Launch Contest Assembly - Studio
  */
+$(document).ready(function() {
+       /*BUGR-4512*/
+      adjustImageRatio();
+});
+
 
 /**
  * Modifies the jQuery param function so that it matches struts2 conversion.
@@ -228,6 +233,40 @@ function showErrors(errors) {
         $('#errorDialog ul').append('<li>' + error + '</li>');
    });
    $('#errorDialog').dialog('open');
+}
+
+/*BUGR-4512*/
+function adjustImageRatio() {
+    var oldWidth = $("a.thumbSingle img").width();
+    var oldHeight = $("a.thumbSingle img").height();
+    var image = new Image();
+    image.src = $("a.thumbSingle img").attr("src");
+    setTimeout(function() {
+        caculateImageRatio(image,oldWidth, oldHeight);
+    },1000);
+    //make sure the new width and new height is set
+    image.onload = function(){
+        if(parseInt($("a.thumbSingle img").width()) == 0 || parseInt($("a.thumbSingle img").height()) == 0) {
+            $("a.thumbSingle img").attr("width",oldWidth);
+            $("a.thumbSingle img").attr("height",oldHeight);
+            caculateImageRatio(image,oldWidth, oldHeight);
+        }
+    }
+}
+/*BUGR-4512*/
+function caculateImageRatio(image,oldWidth, oldHeight) {
+    var origWidth = image.width;
+    var origHeight = image.height;
+    var newWidth , newHeight;
+    if(origWidth/oldWidth >= origHeight/oldHeight) {
+        newHeight = (origHeight*oldWidth)/origWidth;
+        $("a.thumbSingle img").css("paddingTop", (oldHeight-newHeight)/2);
+        $("a.thumbSingle img").attr("height",newHeight);
+    } else {
+        newWidth = (origWidth*oldHeight)/origHeight;
+        $("a.thumbSingle img").css("paddingLeft", (oldWidth-newWidth)/2);
+        $("a.thumbSingle img").attr("width",newWidth);
+    }
 }
 
 
