@@ -138,6 +138,14 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result type="json"/>
         </action>
+        <action name="dashboardEnterpriseTableViewCall" class="enterpriseDashboardAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result type="json"/>
+        </action>
+        <action name="dashboardEnterpriseDrillTableCall" class="enterpriseDashboardAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result type="json"/>
+        </action>
 
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
             <interceptor-ref name="securedPreProcessorStack"/>

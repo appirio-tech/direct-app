@@ -26,8 +26,17 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.0.1 (Direct Enterprise Dashboard Assembly 1.0)
+ * <p>
+ * Version 1.0.2 (Cockpit - Enterprise Dashboard 3 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #contestStat} property with respective accessor/mutator methods.</li>
+ *     <li>Added {@link #allContestStat} property with respective accessor/mutator methods.</li>
+ *   </ol>
+ * </p>
+ *
+ *
+ * @author isv xjtufreeman
+ * @version 1.0.2 (Direct Enterprise Dashboard Assembly 1.0)
  */
 public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
 
@@ -94,6 +103,20 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
     private double averageFulfillment;
 
     private Map<Long, String> projectsLookupMap;
+
+    /**
+     * <p>A <code>List</code> providing the statistics for contests associated to current user.</p>
+     *
+     * @since 1.0.2
+     */
+    private List<EnterpriseDashboardContestStatDTO> contestStat;
+
+    /**
+     * <p>A <code>List</code> providing the statistics for all contests associated to current user.</p>
+     *
+     * @since 1.0.2
+     */
+    private List<EnterpriseDashboardContestStatDTO> allContestStat;
 
     /**
      * <p>Constructs new <code>EnterpriseDashboardDTO</code> instance. This implementation does nothing.</p>
@@ -311,5 +334,45 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      */
     public void setAverageCost(double averageCost) {
         this.averageCost = averageCost;
+    }
+
+    /**
+     * <p>Gets the statistics for contests associated to current user.</p>
+     *
+     * @return a <code>List</code> providing the statistics for contests associated to current user.
+     * @since 1.0.2
+     */
+    public List<EnterpriseDashboardContestStatDTO> getContestStat() {
+        return this.contestStat;
+    }
+
+    /**
+     * <p>Sets the statistics for contests associated to current user.</p>
+     *
+     * @param contestStat a <code>List</code> providing the statistics for contests associated to current user.
+     * @since 1.0.2
+     */
+    public void setContestStat(List<EnterpriseDashboardContestStatDTO> contestStat) {
+        this.contestStat = contestStat;
+    }
+
+    /**
+     * <p>Gets the statistics for all contests associated to current user.</p>
+     *
+     * @return a <code>List</code> providing the statistics for all contests associated to current user.
+     * @since 1.0.2
+     */
+    public List<EnterpriseDashboardContestStatDTO> getAllContestStat() {
+        return this.allContestStat;
+    }
+
+    /**
+     * <p>Sets the statistics for all contests associated to current user.</p>
+     *
+     * @param contestStat a <code>List</code> providing the statistics for all contests associated to current user.
+     * @since 1.0.2
+     */
+    public void setAllContestStat(List<EnterpriseDashboardContestStatDTO> contestStat) {
+        this.allContestStat = contestStat;
     }
 }

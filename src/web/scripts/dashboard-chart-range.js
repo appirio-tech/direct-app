@@ -5,6 +5,8 @@ $(document).ready(function() {
 
     /* Toggle Filter */
     $("a.fiterButton").click(function() {
+        $(".filterContest .contestType a span").css({"width": "165px"});
+        $(".filterContest .contestType div").css({"width": "188px"});
         if ($('.filterArea').css('display') == 'none') {
             showFilter();
         }
@@ -31,24 +33,14 @@ $(document).ready(function() {
         $('.chartCollapse a.expand').html('Chart View');
 
         $('a.fiterButton').css('background-position', 'bottom left');
-        $('.filterArea,.tableView').hide();
+        $('.filterArea,#firstTableDataArea').hide();
+        $("#dynamicTableView").addClass("hide");
         $('.top,.chartWrapper,a.fiterButton,.filterLinkArea').show();
     });
 
-    $('a.btnTable').click(function() {
-//        $('.btnArea a').removeClass('active');
-//        $(this).addClass('active');
-//        //	$('.visualization').addClass('noBorder');		
-//        $('.tableView').show();
-//        $('.chartCollapse a.expand').html('Table View');
-//        $('.top,.chartWrapper,a.fiterButton,.tableResultFilter,.filterArea,.filterLinkArea').hide();
-        alert('This is to be implemented in next assemblies');
-    });
 
     $('a.fiterButton').css('background-position', 'bottom left');
     $('.filterArea,.container2,.tableResultFilter').hide();
-
-    $('.dashboardTableBody table').css('width', $('.dashboardTableHeader table').width());
 
     hideFilter = function() {
         $('.filterArea').hide();

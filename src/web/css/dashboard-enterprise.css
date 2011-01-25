@@ -17,7 +17,7 @@
 */
 	float:left;
 	padding:5px 5px 5px 10px;
-	margin:10px 240px 10px 10px;
+	margin:10px 40px 10px 10px;
 	height:35px;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .dashboardTableHeader{
-	padding-right:15px;
+	padding-right:0px;
 }
 
 .tableDataArea .dashboardTable dd 
@@ -221,9 +221,29 @@ a.fiterButton{
 	background:#f5f5f5;
 	margin-right:10px;
 	padding:5px;
-	padding-left:10px;
 	font-size:12px;
 }
+
+.filterContest .contestType{
+    width: 190px;
+}
+
+#customerNameFilter{
+    width: 170px;
+}
+
+#clientBillingProjectsFilter{
+    width: 177px;
+    margin-right:0px;
+}
+
+.filterContest .columnButton{
+    float: right;
+    width: 67px;
+    margin-right:0px;
+    padding-right:0px;
+}
+
 
 .filterContest .columns strongx{
 	width:100%;
@@ -288,7 +308,7 @@ a.dp-choose-date { margin-right:0px;}
 .filterContest select{ 
 	font-size:12px;
 	border:1px solid #a9acae;
-    width:200px;
+    width:178px;
 }
 
 /* Table Data */
@@ -324,6 +344,7 @@ a.dp-choose-date { margin-right:0px;}
 }
 
 .dashboardTableFooter{
+    background-color:#BBBBBB;
 	display:block;
 }
 
@@ -336,13 +357,71 @@ a.dp-choose-date { margin-right:0px;}
  margin-top:0px;
  padding-top:3px;
  float:right;
- width:300px;
+ width:330px;
 }
 
 .pagination3 select{
 	height:18px;
 	font-size:12px;
 }
+
+.pagination3 .pages a:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+.pagination3 .pages .prevInactive{
+    background-image:url(../images/page_prev_nactive.png);
+}
+.pagination3 .pages .nextInactive{
+    background-image:url(../images/page_next_nactive.png);
+}
+
+.dashboardTableFooter .pagination3 .pages{
+    padding-top:4px;
+}
+
+.dashboardTableFooter .pagination3 .showPages select{
+    margin-top:3px;
+}
+
+.dashboardTableFooter .panel a{
+    padding-top:4px;
+}
+
+.dashboardTableFooter .allPages {
+    float: right;
+    padding-right:5px;
+    padding-top:4px;
+
+}
+
+.dashboardTableBody{
+    overflow-x:hidden;
+}
+
+#firstDashboardTableBody, #secondDashboardTableBody{
+    overflow-y:auto;
+}
+
+#firstDashboardTableBody table, #secondDashboardTableBody table{
+    border-bottom:1px solid #D0D0D1;
+}
+
+#firstDashboardTableBody , #secondDashboardTableBody {
+    height: 126px;
+}
+
+#firstTableDataArea {
+    display : none;
+}
+
+.dashboardTableBody th{
+    height:0px;
+    border-left:none;
+}
+
+
 
 td.fontGreen{
  color:#6eaf0e;

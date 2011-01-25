@@ -137,6 +137,9 @@
                 ]
             }
         }
+
+        var isAdmin = ${admin}; 
+        
     </script>
     <!-- google visualization -->
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -251,7 +254,123 @@
                                     <span id="endDateLabel"><fmt:formatDate value="${endDate}" pattern="MMM dd,yyyy"/></span>
                                 </div>
                             </div>
-                            
+                            <!-- start tableDataArea-->
+                            <div class="tableDataArea" id="firstTableDataArea">
+                                <!-- start dashboardTable-->
+							    <div class="dashboardTable">
+								    <dl>
+									    <dd>
+                                            <!-- start dashboardTableHeader-->
+										    <div class="dashboardTableHeader" id="firstDashboardTableHeader">
+                                                <table  cellpadding="0" cellspacing="0">
+                                                    <colgroup>
+                                                        <col width="8%" />
+                                                        <col width="10%" />
+                                                        <col width="10%" />
+                                                        <col/>
+                                                        <col width="9%" />
+                                                        <col width="8%" />
+                                                        <col width="8%" />
+                                                        <col width="8%" />
+                                                        <col width="8%" />
+                                                        <col width="8%" />
+                                                        <col width="8%" />
+                                                        <col />
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr class="head">
+                                                            <td class="first noBT" rowspan="2"><strong>Date</strong></td>
+                                                            <td class="noBT" rowspan="2"><strong>Customer</strong></td>
+                                                            <td class="noBT" rowspan="2"><strong>Project</strong></td>
+                                                            <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
+                                                            <td class="noBT" rowspan="2">Contest Type</td>
+                                                            <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
+                                                            <td class="noBT" colspan="2"><strong>Cost</strong></td>
+                                                            <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
+                                                        </tr>
+                                                        <tr class="head">
+                                                            <td>Contest</td>
+                                                            <td>Market Avg</td>
+                                                            <td>Contest</td>
+                                                            <td>Market Avg</td>
+                                                            <td>Contest</td>
+                                                            <td>Market Avg</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- end dashboardTableHeader-->
+                                            <!-- start dashboardTableBody-->
+                                            <div class="dashboardTableBody" id="firstDashboardTableBody">
+											    <table  cellpadding="0" cellspacing="0">
+                                                    <thead></thead>
+												    <colgroup>
+													    <col width="8%" />
+														<col width="10%" />
+														<col width="10%" />
+														<col/>
+														<col width="9%" />
+														<col width="8%" />
+														<col width="8%" />
+														<col width="8%" />
+														<col width="8%" />
+														<col width="8%" />
+														<col width="8%" />
+														<col />
+													</colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>                                                                                                                           
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                             <th></th>
+                                                        </tr>
+                                                    </thead>
+												<tbody>
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                          <!-- end dashboardTableBody-->
+
+                                          <div class="dashboardTableFooter" id="firstDashboardTableFooter">
+										        <div class="pagination pagination3">
+												    <div class="pages">
+													    <a class="prev prevInactive">Prev</a><!-- we are on the first page so the prev link must be deactive -->
+														<a class="current">1</a>
+														<a >2</a>
+														<a class="next">Next</a>
+													</div><!-- End .pages -->
+                                                    <div class="allPages"></div>
+													<div class="showPages"><!-- number of rows that can be displayed on the same page -->
+													    <label><strong>Show:</strong></label>
+														<select>
+														    <option>5</option>
+															<option>10</option>
+															<option>25</option>
+															<option>50</option>
+															<option>All</option>
+														</select>
+														<span>per page</span>
+													</div><!-- End .showPages -->
+												</div><!-- End .pagination -->
+												<div class="panel panel3">
+												</div><!-- End .panel -->
+											</div><!-- End .dashboardTableFooter-->
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <!-- end dashboardTable-->
+                            </div>
+                            <!-- end tableDataArea-->
                             <div class="graphArea">
                             <div class="visualization">
                                 <s:form action="dashboardEnterprise" namespace="/" id="EnterpriseDashboardForm"
@@ -340,7 +459,7 @@
                                                                   name="formData.customerIds" size="1"/>
                                                     </div>
 
-                                                    <div class="columns">
+                                                    <div class="columns" id="clientBillingProjectsFilter">
                                                         <strong>Billing Account</strong><br/>
                                                         <s:select list="viewData.clientBillingProjects"
                                                                   id="formData.billingAccountIds"
@@ -364,7 +483,120 @@
                                     <div id="filterResultContainer"></div>
 
                                     <div id="validationErrors"></div>
-                                    
+                                    <!-- start tableDataArea-->
+                                    <div class="tableDataArea hide" id="dynamicTableView">
+                                        <!-- start dashboardTable-->
+                                        <div class="dashboardTable">
+                                            <dl>
+                                                <dd>
+                                                    <!-- start dashboardTableHeader-->
+                                                    <div class="dashboardTableHeader" id="secondDashboardTableHeader">
+                                                        <table  cellpadding="0" cellspacing="0">
+                                                            <colgroup>
+                                                                <col width="8%" />
+                                                                <col width="10%" />
+                                                                <col width="10%" />
+                                                                <col/>
+                                                                <col width="9%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col />
+                                                            </colgroup>
+                                                            <tbody>
+                                                                <tr class="head">
+                                                                    <td class="first noBT" rowspan="2"><strong>Date</strong></td>
+                                                                    <td class="noBT" rowspan="2"><strong>Customer</strong></td>
+                                                                    <td class="noBT" rowspan="2"><strong>Project</strong></td>
+                                                                    <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
+                                                                    <td class="noBT" rowspan="2">Contest Type</td>
+                                                                    <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
+                                                                    <td class="noBT" colspan="2"><strong>Cost</strong></td>
+                                                                    <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
+                                                                </tr>
+                                                                <tr class="head">
+                                                                    <td>Contest</td>
+                                                                    <td>Market Avg</td>
+                                                                    <td>Contest</td>
+                                                                    <td>Market Avg</td>
+                                                                    <td>Contest</td>
+                                                                    <td>Market Avg</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- end dashboardTableHeader-->
+                                                    <!-- start dashboardTableBody-->
+                                                    <div class="dashboardTableBody tableViewChart" id="secondDashboardTableBody">
+                                                        <table  cellpadding="0" cellspacing="0">
+                                                            <colgroup>
+                                                                <col width="8%" />
+                                                                <col width="10%" />
+                                                                <col width="10%" />
+                                                                <col/>
+                                                                <col width="9%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col width="8%" />
+                                                                <col />
+                                                            </colgroup>
+                                                            <thead>
+                                                                <tr>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                     <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                
+                                                            </tbody>
+                                                         </table>
+                                                    </div>
+                                                    <!-- end dashboardTableBody-->
+                                                    <div class="dashboardTableFooter" id="secondDashboardTableFooter">
+                                                        <div class="pagination pagination3">
+                                                            <div class="pages">
+                                                                <a class="prev prevInactive">Prev</a><!-- we are on the first page so the prev link must be deactive -->
+                                                                <a class="current">1</a>
+                                                                <a >2</a>
+                                                                <a class="next">Next</a>
+                                                            </div><!-- End .pages -->
+                                                            <div class="allPages"></div>
+                                                            <div class="showPages"><!-- number of rows that can be displayed on the same page -->
+                                                                <label><strong>Show:</strong></label>
+                                                                <select>
+                                                                    <option>5</option>
+                                                                    <option>10</option>
+                                                                    <option>25</option>
+                                                                    <option>50</option>
+                                                                    <option>All</option>
+                                                                </select>
+                                                                <span>per page</span>
+                                                            </div><!-- End .showPages -->
+                                                        </div><!-- End .pagination -->
+                                                        <div class="panel panel3">
+                                                        </div><!-- End .panel -->
+                                                    </div><!-- End .dashboardTableFooter-->
+                                                </dd>
+                                             </dl>
+                                         </div>
+                                        <!-- end dashboardTable-->
+                                    </div>
+                                    <!-- end tableDataArea-->
                                 </s:form>
                             </div>
                             <!-- End .visualization -->

@@ -70,6 +70,7 @@ import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
 import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
@@ -166,8 +167,29 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx
- * @version 2.1.9
+ * <p>
+ * Version 2.2.0 (Cockpit - Enterprise Dashboard 3 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added <code>{@link #getEnterpriseStatsForContests(long[],long[], Date, Date, long[], long[])}</code> method </li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
+ * Version 2.2.0 (Cockpit - Enterprise Dashboard 3 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added <code>{@link #getEnterpriseStatsForAllContests(long[], Date, Date)}</code> method </li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
+ * Version 2.2.0 (Cockpit - Enterprise Dashboard 3 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added <code>{@link #getEnterpriseContestsAvgStatus(long[], Date, Date)}</code> method </li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman
+ * @version 2.2.0
  */
 public class DataProvider {
 
@@ -1197,6 +1219,179 @@ public class DataProvider {
     }
 
     /**
+     * <p>Gets the enterprise-level statistics of contests posted within specified period of time.</p>
+     *
+     *
+     * @param projectIds a <code>long</code> array providing the IDs for a project.
+     * @param projectCategoryIDs a <code>long</code> array providing the IDs for project categories.
+     * @param startDate a <code>Date</code> providing the beginning date for period.
+     * @param endDate a <code>Date</code> providing the ending date for period.
+     * @param clientIds a <code>long</code> array listing the IDs for clients.
+     * @param billingAccountIds a <code>long</code> array listing the IDs for billing accounts.
+     * @return a <code>List</code> of statistical data.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.2.0
+     */
+    public static List<EnterpriseDashboardContestStatDTO> getEnterpriseStatsForContests(long[] projectIds,
+        long[] projectCategoryIDs, Date startDate, Date endDate, long[] clientIds, long[] billingAccountIds)
+        throws Exception {
+        List<EnterpriseDashboardContestStatDTO> data
+            = new ArrayList<EnterpriseDashboardContestStatDTO>();
+        if ((projectIds == null) || (projectIds.length == 0)) {
+            return data;
+        }
+        if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
+            return data;
+        }
+        if ((clientIds == null) || (clientIds.length == 0)) {
+            return data;
+        }
+        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+            return data;
+        }
+
+        String projectIDsList = concatenate(projectIds, ", ");
+        String projectCategoryIDsList = concatenate(projectCategoryIDs, ", ");
+        String clientIdsList = concatenate(clientIds, ", ");
+        String billingAccountIdsList = concatenate(billingAccountIds, ", ");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        // query for contest status
+        String queryName;
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        if(projectIds[0] != 0) {
+            queryName = "direct_dashboard_enterprise_contest_stats_project";
+            request.setProperty("tdpis", String.valueOf(projectIDsList));
+        } else if (billingAccountIds[0] != 0) {
+            queryName = "direct_dashboard_enterprise_contest_stats_billing";
+            request.setProperty("bpids", billingAccountIdsList);
+        } else if (clientIds[0] != 0) {
+            queryName = "direct_dashboard_enterprise_contest_stats_client";
+            request.setProperty("clids", clientIdsList);
+        } else {
+            return data;
+        }
+        request.setContentHandle(queryName);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            EnterpriseDashboardContestStatDTO contestDTO = new EnterpriseDashboardContestStatDTO();
+            contestDTO.setPostingDate(row.getTimestampItem("posting_date"));
+            contestDTO.setDate(row.getTimestampItem("contest_date"));
+            contestDTO.setCustomerName(row.getStringItem("customer_name"));
+            contestDTO.setProjectName(row.getStringItem("project_name"));
+            contestDTO.setContestName(row.getStringItem("contest_name"));
+            contestDTO.setContestType(row.getStringItem("contest_type"));
+            contestDTO.setProjectCategoryId(row.getIntItem("project_category_id"));
+            contestDTO.setProjectId(row.getIntItem("project_id"));
+            contestDTO.setDirectProjectId(row.getIntItem("direct_project_id"));
+            contestDTO.setContestFullfilment(row.getDoubleItem("contest_fulfillment"));
+            contestDTO.setContestCost(row.getDoubleItem("contest_cost"));
+            contestDTO.setContestDuration(row.getDoubleItem("contest_duration"));
+            data.add(contestDTO);
+        }
+
+        return data;
+    }
+
+
+    /**
+     * <p>Gets the enterprise-level statistics of all contests posted within specified period of time.</p>
+     *
+     * @param projectCategoryIDs a <code>long</code> array providing the IDs for project categories.
+     * @param startDate a <code>Date</code> providing the beginning date for period.
+     * @param endDate a <code>Date</code> providing the ending date for period.
+     * @return a <code>List</code> of statistical data.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.2.0
+     */
+    public static List<EnterpriseDashboardContestStatDTO> getEnterpriseStatsForAllContests(long[] projectCategoryIDs,
+              Date startDate, Date endDate)
+        throws Exception {
+        List<EnterpriseDashboardContestStatDTO> data
+            = new ArrayList<EnterpriseDashboardContestStatDTO>();
+
+        if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
+            return data;
+        }
+
+        String projectCategoryIDsList = concatenate(projectCategoryIDs, ", ");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        // query for contest status
+        final String queryName = "direct_dashboard_enterprise_contest_stats_overall";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            EnterpriseDashboardContestStatDTO contestDTO = new EnterpriseDashboardContestStatDTO();
+            contestDTO.setPostingDate(row.getTimestampItem("posting_date"));
+            contestDTO.setDate(row.getTimestampItem("contest_date"));
+            contestDTO.setCustomerName(row.getStringItem("customer_name"));
+            contestDTO.setProjectName(row.getStringItem("project_name"));
+            contestDTO.setContestName(row.getStringItem("contest_name"));
+            contestDTO.setContestType(row.getStringItem("contest_type"));
+            contestDTO.setProjectCategoryId(row.getIntItem("project_category_id"));
+            contestDTO.setProjectId(row.getIntItem("project_id"));
+            contestDTO.setDirectProjectId(row.getIntItem("direct_project_id"));
+            contestDTO.setContestFullfilment(row.getDoubleItem("contest_fulfillment"));
+            contestDTO.setContestCost(row.getDoubleItem("contest_cost"));
+            contestDTO.setContestDuration(row.getDoubleItem("contest_duration"));
+            data.add(contestDTO);
+        }
+
+        return data;
+    }
+
+
+    /**
+     * <p>Gets the enterprise-level avarage statistics of all contests posted within specified period of time.</p>
+     *
+     * @param projectCategoryIDs a <code>long</code> array providing the IDs for project categories.
+     * @param startDate a <code>Date</code> providing the beginning date for period.
+     * @param endDate a <code>Date</code> providing the ending date for period.
+     * @return a <code>List</code> of statistical data.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.2.0
+     */
+     public static Map<Integer, List<Double>> getEnterpriseContestsAvgStatus(long[] projectCategoryIDs,
+              Date startDate, Date endDate)
+        throws Exception {
+
+        String projectCategoryIDsList = concatenate(projectCategoryIDs, ", ");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        // query for contest average status
+        Map<Integer, List<Double>> contestTypeAvgMap = new HashMap<Integer, List<Double>>();
+        final String contestAvgQuery = "direct_dashboard_enterprise_contest_avg";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(contestAvgQuery);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+
+        final ResultSetContainer avgResultSetContainer = dataAccessor.getData(request).get(contestAvgQuery);
+        for (ResultSetContainer.ResultSetRow row : avgResultSetContainer) {
+            List<Double> avgDataList = new ArrayList<Double>();
+            avgDataList.add(row.getDoubleItem("marketavg_fulfillment"));
+            avgDataList.add(row.getDoubleItem("marketavg_cost"));
+            avgDataList.add(row.getDoubleItem("marketavg_duration"));
+            contestTypeAvgMap.put(row.getIntItem("project_category_id"), avgDataList);
+        }
+
+        return contestTypeAvgMap;
+    }
+
+
+    /**
      * <p>Gets the enterprise-level statistics for specified client project for contests of specified categories
      * completed within specified period of time.</p>
      *
@@ -1206,7 +1401,7 @@ public class DataProvider {
      * @param startDate a <code>Date</code> providing the beginning date for period.
      * @param endDate a <code>Date</code> providing the ending date for period.
      * @param clientIds a <code>long</code> array listing the IDs for clients.
-     * @param billingAccountIds a <code>long</code> array listing the IDs for billing accounts.  
+     * @param billingAccountIds a <code>long</code> array listing the IDs for billing accounts.
      * @return a <code>List</code> of statistical data.
      * @throws Exception if an unexpected error occurs.
      * @throws IllegalArgumentException if any of specified arrays is <code>null</code> or empty.

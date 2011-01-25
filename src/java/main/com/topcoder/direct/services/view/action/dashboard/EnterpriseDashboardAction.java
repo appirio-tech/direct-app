@@ -7,6 +7,7 @@ import com.topcoder.clients.model.AuditableEntity;
 import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
@@ -17,6 +18,7 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetail
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatPeriodType;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
@@ -55,9 +57,17 @@ import javax.servlet.http.HttpServletRequest;
  *     <li>Added logic for handling AJAX calls.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.0.3 (Cockpit - Enterprise Dashboard 3 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Add the logic to get the coustomer contest status and all contest status</li>
+ *     <li>Added admin attribute.</li>
+ *   </ol>
+ * </p>
  * 
- * @author isv, TCSASSEMBLER
- * @version 1.0.2
+ * @author isv, TCSASSEMBLER, xjtufreeman
+ * @version 1.0.3
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -99,12 +109,30 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
      */
     private boolean isAJAX;
 
+
+    /**
+     * <p>Whether current user is admin or not.</p>
+     *
+     * @since 1.0.3
+     */
+    private boolean admin;
+
     /**
      * <p>Constructs new <code>EnterpriseDashboardAction</code> instance. This implementation does nothing.</p>
      */
     public EnterpriseDashboardAction() {
         this.viewData = new EnterpriseDashboardDTO();
         this.formData = new EnterpriseDashboardForm();
+    }
+
+    /**
+     * <p>Tells whether user is admin or not.</p>
+     *
+     * @return true if admin
+     * @since 1.0.3
+     */
+    public boolean isAdmin() {
+        return admin;
     }
 
     /**
@@ -172,6 +200,10 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         boolean isAJAXCall = getIsAJAX();
         boolean isFirstCall = !isAJAXCall;
 
+        boolean isTableViewCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseTableViewCall");
+        boolean isDrillTableCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseDrillTableCall");
+
+        admin = DirectUtils.isTcOperations(currentUser);
         // Get the list of available project categories
         Map<Long, String> projectCategories = DataProvider.getAllProjectCategories();
 
@@ -302,6 +334,8 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             return;
         }
 
+
+
         // Get the detailed stats for specific project, categories and time frame (only if project is specified)
         if (projectIdsAreSet && categoryIdsAreSet && billingAccountIdsAreSet && customerIdsAreSet) {
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> costStats = createEmptyStats();
@@ -311,7 +345,58 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             EnterpriseDashboardAggregatedStatDTO averageCustomerDuration = new EnterpriseDashboardAggregatedStatDTO();
             EnterpriseDashboardAggregatedStatDTO averageCustomerFulfillment 
                 = new EnterpriseDashboardAggregatedStatDTO();
-            
+
+            //Get contest avarage info
+            Map<Integer, List<Double>> contestTypeAvgMap = DataProvider.getEnterpriseContestsAvgStatus(categoryIds,
+                    startDate, endDate);
+            //Get the date info of the dirll in pointer
+            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+            Date drillStartDate = null;
+            Date drillEndDate = null;
+            if(request.getParameter("drillStartDate") != null) {
+                drillStartDate = df.parse(request.getParameter("drillStartDate"));
+            }
+            if(request.getParameter("drillEndDate") != null) {
+                drillEndDate = df.parse(request.getParameter("drillEndDate"));
+            }
+            if(isTableViewCall) {
+                Map<String, Object> contestResult = new HashMap<String, Object>();
+                if(drillStartDate != null && drillEndDate != null) {
+                    startDate = drillStartDate;
+                    endDate = drillEndDate;    
+                }
+                // Get the contest status info
+                List<EnterpriseDashboardContestStatDTO> contestStats = DataProvider.getEnterpriseStatsForContests(projectIds,
+                        categoryIds, startDate, endDate, customerIds,billingAccountIds);
+                // fill the average data for each contest
+                for(int i=0; i<contestStats.size(); i++){
+                    EnterpriseDashboardContestStatDTO contestDTO = contestStats.get(i);
+                    contestDTO.setMarketAvgFullfilment(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(0));
+                    contestDTO.setMarketAvgCost(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(1));
+                    contestDTO.setMarketAvgDuration(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(2));
+                }
+                contestResult.put("contestStatus",buildContestStatResults(contestStats));
+                setResult(contestResult);
+                return;
+            }
+            if(isDrillTableCall) {
+                Map<String, Object> allContestResult = new HashMap<String, Object>();
+                // Get all contest status info
+                List<EnterpriseDashboardContestStatDTO> allContestStats = DataProvider.getEnterpriseStatsForAllContests(categoryIds,
+                        drillStartDate, drillEndDate);
+                // fill the average data for each contest
+                for(int i=0; i<allContestStats.size(); i++){
+                    EnterpriseDashboardContestStatDTO contestDTO = allContestStats.get(i);
+                    contestDTO.setMarketAvgFullfilment(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(0));
+                    contestDTO.setMarketAvgCost(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(1));
+                    contestDTO.setMarketAvgDuration(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(2));
+                }
+                allContestResult.put("allContestStatus",buildContestStatResults(allContestStats));
+                setResult(allContestResult);
+                return;
+            }
+
+
             // Get and aggregate the average calculated values for client
             List<EnterpriseDashboardDetailedProjectStatDTO> clientStats
                 = DataProvider.getEnterpriseStatsForProject(projectIds, categoryIds, startDate, endDate, customerIds,
@@ -438,6 +523,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             result.put("avg2", format2.format(getViewData().getAverageCost()));
             result.put("avg3", format3.format(getViewData().getAverageDuration()));
 
+
             setResult(result);
         }
     }
@@ -507,6 +593,40 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         }
         return statsResult;
     }
+
+    /**
+     * <p>Builds the list of contest stats.</p>
+     *
+     * @param contestsStat a <code>List</code> list of the contest status results.
+     * @return a <code>List</code>
+     */
+    private List<Map<String, Object>> buildContestStatResults(List<EnterpriseDashboardContestStatDTO> contestsStat) {
+        NumberFormat numberFormat1 = new DecimalFormat("##0.##");
+        NumberFormat numberFormat2 = new DecimalFormat("#,##0.00");
+        NumberFormat numberFormat3 = new DecimalFormat("##0.#");
+        DateFormat dateFormat = new SimpleDateFormat("MMM dd,yyyy", Locale.ENGLISH);
+        List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+        for (EnterpriseDashboardContestStatDTO stat : contestsStat) {
+            Map<String, Object> statData = new HashMap<String, Object>();
+            statData.put("postingDate", dateFormat.format(stat.getPostingDate()));
+            statData.put("date", dateFormat.format(stat.getDate()));
+            statData.put("customerName", stat.getCustomerName());
+            statData.put("projectName", stat.getProjectName());
+            statData.put("contestType", stat.getContestType());
+            statData.put("contestName", stat.getContestName());
+            statData.put("projectId", stat.getProjectId());
+            statData.put("directProjectId", stat.getDirectProjectId());
+            statData.put("contestFullfilment", numberFormat1.format(stat.getContestFullfilment()));
+            statData.put("marketAvgFullfilment", numberFormat1.format(stat.getMarketAvgFullfilment()));
+            statData.put("contestCost", numberFormat2.format(stat.getContestCost()));
+            statData.put("marketAvgCost", numberFormat2.format(stat.getMarketAvgCost()));
+            statData.put("contestDuration", numberFormat3.format(stat.getContestDuration()));
+            statData.put("marketAvgDuration", numberFormat3.format(stat.getMarketAvgDuration()));
+            list.add(statData);
+        }
+        return list;
+    }
+
 
     /**
      * <p>Builds the list of stats for specified period type.</p>
