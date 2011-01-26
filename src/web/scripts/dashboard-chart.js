@@ -14,6 +14,7 @@ function drawChart() {
         height: 240,
         legend:'bottom',
         colors:["#00aaff","#8cd81b"],
+        pointSize: 7,
         vAxis:{
             minValue :0,
             textStyle : {color:"#333333",fontSize:11}
@@ -134,14 +135,36 @@ function drawChart() {
 
     // chart the normal table view when ajax call is returned
     function chartNormalTableView() {
+        var totalContestFullfilment = 0, totalMarketAvgFullfilment = 0;
+        var totalContestCost = 0, totalMarketAvgCost = 0;
+        var totalContestDuration = 0, totalMarketAvgDuration = 0;
+        var reg1 = /\$/g,reg2 = /\,/g;
         $("#firstDashboardTableBody table tbody tr").remove();
+        $("#firstDashboardTableBody table tfoot").remove();
         $(tableViewData).each(function(i){
+            totalContestFullfilment += parseFloat(this.contestFullfilment);
+            totalMarketAvgFullfilment += parseFloat(this.marketAvgFullfilment);
+            totalContestCost += parseFloat(this.contestCost.replace(reg1,"").replace(reg2,""));
+            totalMarketAvgCost += parseFloat(this.marketAvgCost.replace(reg1,"").replace(reg2,""));
+            totalContestDuration += parseFloat(this.contestDuration);
+            totalMarketAvgDuration += parseFloat(this.marketAvgDuration);
             $("#firstDashboardTableBody table tbody").append(getOneRow(i, this, ""));
         });
-        if($(tableViewData).length == 0){
-            var noNumTr = "<tr style=\"height:126px;\"><td colspan=13>NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>";
+        var totalNO = $(tableViewData).length;
+        if(totalNO > 0) {
+            var totalTr = "<tfoot><tr><td colspan=5 class=\"alignLeft\">Average</td>";
+            totalTr += "<td>"+ new Number(totalContestFullfilment/totalNO).toFixed(2) +"%</td>";
+            totalTr += "<td class=\"fontGreen\">"+ new Number(totalMarketAvgFullfilment/totalNO).toFixed(2) +"%</td>";
+            totalTr += "<td>$"+ new Number(totalContestCost/totalNO).toFixed(2) +"</td>";
+            totalTr += "<td class=\"fontGreen\">$"+ new Number(totalMarketAvgCost/totalNO).toFixed(2) +"</td>";
+            totalTr += "<td>"+ (totalContestDuration/totalNO).toFixed(2) +"</td>";
+            totalTr += "<td class=\"fontGreen\">"+ (totalMarketAvgDuration/totalNO).toFixed(2) +"</td></tr></tfoot>";
+            $("#firstDashboardTableBody table").append(totalTr);
+        } else {
+            var noNumTr = "<tr  style=\"height:378px;\"><td colspan=13>NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>";
             $("#firstDashboardTableBody table tbody").append(noNumTr);
         }
+        
         firstTablePagination.dataInit("#firstDashboardTableBody table", $("#firstDashboardTableFooter select").val(), "#firstDashboardTableFooter");
         $("#firstDashboardTableBody table").trigger("update");
     }
@@ -151,9 +174,9 @@ function drawChart() {
         var chartTableTbody = $(".tableViewChart table tbody");
         $(".tableViewChart table tbody tr").remove();
         $(".tableViewChart table tfoot").remove();
-        var totalContestFullfilment = 0;
-        var totalContestCost = 0;
-        var totalContestDuration = 0;
+        var totalContestFullfilment = 0, totalMarketAvgFullfilment = 0;
+        var totalContestCost = 0, totalMarketAvgCost = 0;
+        var totalContestDuration = 0, totalMarketAvgDuration = 0;
         var reg1 = /\$/g,reg2 = /\,/g;
         var rowsNo = 0, colspan = 5;
         // data to render the drill-in table
@@ -166,9 +189,9 @@ function drawChart() {
                     $($("#secondDashboardTableHeader table colgroup col")[1]).remove();
                     $($("#secondDashboardTableBody table colgroup col")[1]).remove();
                     $($("#secondDashboardTableBody table colgroup col")[1]).remove();
+                    $($("#secondDashboardTableHeader table tbody tr td")[1]).remove();
+                    $($("#secondDashboardTableHeader table tbody tr td")[1]).remove();
                 }
-                $($("#secondDashboardTableHeader table tbody tr td")[1]).addClass("hide");
-                $($("#secondDashboardTableHeader table tbody tr td")[2]).addClass("hide");
                 colspan = 3;
             }
         } else {
@@ -177,43 +200,46 @@ function drawChart() {
                 $($("#secondDashboardTableHeader table colgroup col")[1]).after("<col width=\"10%\">");
                 $($("#secondDashboardTableBody table colgroup col")[0]).after("<col width=\"10%\">");
                 $($("#secondDashboardTableBody table colgroup col")[1]).after("<col width=\"10%\">");
+                $($("#secondDashboardTableHeader table tbody tr td")[0]).after("<td class=\"noBT\" rowspan=\"2\"><strong>Customer</strong></td>");
+                $($("#secondDashboardTableHeader table tbody tr td")[1]).after("<td class=\"noBT\" rowspan=\"2\"><strong>Project</strong></td>");
             }
-            $($("#secondDashboardTableHeader table tbody tr td")[1]).removeClass("hide");
-            $($("#secondDashboardTableHeader table tbody tr td")[2]).removeClass("hide");
         }
 
         $(data).each(function(i){
             if(timeFilter(timeRange, this.postingDate, timeDim)) {
                 rowsNo++;
                 totalContestFullfilment += parseFloat(this.contestFullfilment);
+                totalMarketAvgFullfilment += parseFloat(this.marketAvgFullfilment);
                 totalContestCost += parseFloat(this.contestCost.replace(reg1,"").replace(reg2,""));
+                totalMarketAvgCost += parseFloat(this.marketAvgCost.replace(reg1,"").replace(reg2,""));
                 totalContestDuration += parseFloat(this.contestDuration);
+                totalMarketAvgDuration += parseFloat(this.marketAvgDuration);
                 $(chartTableTbody).append(getOneRow(i,this, type));
             }
         });
         if(rowsNo > 0) {
-                var totalTr = "<tfoot><tr><td colspan=" + colspan + " class=\"alignLeft\">Total</td>";
-                totalTr += "<td>"+ new Number(totalContestFullfilment).toFixed(2) +"%</td>";
-                totalTr += "<td></td>";
-                totalTr += "<td>$"+ new Number(totalContestCost).toFixed(2) +"</td>";
-                totalTr += "<td></td>";
-                totalTr += "<td>"+ totalContestDuration +"</td>";
-                totalTr += "<td></td></tr></tfoot>";
+                var totalTr = "<tfoot><tr><td colspan=" + colspan + " class=\"alignLeft\">Average</td>";
+                totalTr += "<td>"+ new Number(totalContestFullfilment/rowsNo).toFixed(2) +"%</td>";
+                totalTr += "<td class=\"fontGreen\">"+ new Number(totalMarketAvgFullfilment/rowsNo).toFixed(2) +"%</td>";
+                totalTr += "<td>$"+ new Number(totalContestCost/rowsNo).toFixed(2) +"</td>";
+                totalTr += "<td class=\"fontGreen\">$"+ new Number(totalMarketAvgCost/rowsNo).toFixed(2) +"</td>";
+                totalTr += "<td>"+ (totalContestDuration/rowsNo).toFixed(2) +"</td>";
+                totalTr += "<td class=\"fontGreen\">"+ (totalMarketAvgDuration/rowsNo).toFixed(2) +"</td></tr></tfoot>";
                 $(".tableViewChart table").append(totalTr);
         } else {
-            var noNumTr = "<tr  style=\"height:126px;\"><td colspan=13>NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>";
+            var noNumTr = "<tr  style=\"height:378px;\"><td colspan=13>NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>";
             $(chartTableTbody).append(noNumTr);
         }
     }
 
     function getOneRow(index, elem ,type){
         var display = true , colspan="";
-        var projectLink = "http://www.topcoder.com/direct/projectOverview.action?formData.projectId="+elem.directProjectId;
+        var projectLink = "/direct/projectOverview.action?formData.projectId="+elem.directProjectId;
         var contestLink = "";
         if(parseInt(elem.projectId) > 30000000) {
-            contestLink = "http://www.topcoder.com/direct/contest/detail.action?projectId="+elem.projectId;
+            contestLink = "/direct/contest/detail.action?projectId="+elem.projectId;
         } else {
-            contestLink = "http://www.topcoder.com/direct/contest/detail.action?contestId="+elem.projectId;
+            contestLink = "/direct/contest/detail.action?contestId="+elem.projectId;
         }
         if(type == "Market" && !isAdmin) {
             display = false;
@@ -294,6 +320,12 @@ function drawChart() {
             formData = formData.replace('&__multiselect_formData.billingAccountIds=', '');
         
             loadStats(formData, 'dashboardEnterpriseAJAX');
+
+            if($("a.btnTable").hasClass("active")){
+                loadNormalTableData("dashboardEnterpriseTableViewCall");
+                $("a.fiterButton,.filterArea,.filterLinkArea").show();
+            }
+
             return false;
         }
     });
@@ -337,7 +369,7 @@ function drawChart() {
        	$('.visualization').addClass('noBorder');
         $('#firstTableDataArea').show();
         $('.chartCollapse a.expand').html('Table View');
-        $('.top,.chartWrapper,a.fiterButton,.tableResultFilter,.filterArea,.filterLinkArea').hide();
+        $('.top,.chartWrapper,.tableResultFilter').hide();
         $("#dynamicTableView").addClass("hide");
         loadNormalTableData("dashboardEnterpriseTableViewCall");
         $('#firstDashboardTableBody table').css('width', $('#firstDashboardTableHeader table').width());
@@ -414,7 +446,7 @@ function drawChart() {
                             secondTablePagination.dataInit("#secondDashboardTableBody table", $("#secondDashboardTableFooter select").val(), "#secondDashboardTableFooter");
                             //clear the click event first
                             $("#secondDashboardTableHeader table tr td").unbind("click");
-                            attachTabeleSortEvent("second");
+                            attachTabeleSortEvent("second",type);
                             $("#secondDashboardTableBody table").trigger("update");
                         },
                         function(errorMessage) {
@@ -454,6 +486,9 @@ function drawChart() {
                                             $('.chartSummary').effect("highlight", {'color' : '#E1F2FF'}, 3000);
                                             $('.chartWrapper,.graphArea .top').effect("highlight", {'color' : '#E1F2FF'}, 3000);
                                             $('#chart_div iframe').effect("highlight", {'color' : '#E1F2FF'}, 3000);
+                                            if($("a.btnTable").hasClass("active")){
+                                                $(".top,.chartWrapper").hide();
+                                            }
                                         },
                                         function(errorMessage) {
                                             $('#zoomMessage').html(errorMessage);
@@ -468,8 +503,12 @@ function drawChart() {
 
 $(document).ready(function() {
     //add the table sort function
-    attachTabeleSortEvent = function (order) {
+    attachTabeleSortEvent = function (order,type) {
         var paginationObj = order == "first" ? firstTablePagination : secondTablePagination;
+        var endtd = 5;
+        if(!isAdmin && type == "Market") {
+            endtd = 3;
+        }
         var myTextExtraction = function(node)
         {
             return $.trim($(node).text());
@@ -485,7 +524,7 @@ $(document).ready(function() {
         });
 
         $("#"+order+"DashboardTableHeader table tr:first-child td").each(function(i){
-            if(i<5) {
+            if(i<endtd) {
                 var sortType = 0;
                 $(this).click(function() {
                     var sorting = [[i, (sortType++)%2]];
@@ -504,7 +543,7 @@ $(document).ready(function() {
         $("#"+order+"DashboardTableHeader table tr:last-child td").each(function(i){
             var sortType = 0;
             $(this).click(function() {
-                var sorting = [[i+5, (sortType++)%2]];
+                var sorting = [[i+endtd, (sortType++)%2]];
                 $("#"+order+"DashboardTableBody table").trigger("sorton", [sorting]);
                 var rows =  $("#"+order+"DashboardTableBody table tbody tr");
                 rows.removeClass("even");
@@ -538,6 +577,11 @@ $(document).ready(function() {
             }
         });
         this.curPage = index;
+        var tableSize = $(this.tableid + " tbody tr").length;
+        var showStart = (this.curPage-1) * this.pagesize + 1;
+        var showEnd = (showStart + this.pagesize -1 > tableSize)  ?  tableSize : (showStart + this.pagesize - 1);
+        $(this.paginationId + " .panel3").text("Showing " + showStart +" to " + showEnd + " of "  + (showEnd-showStart+1) +" entries");
+
     }
 
     paginationforContest.prototype.next = function() { // go to next page
@@ -574,15 +618,23 @@ $(document).ready(function() {
 
     paginationforContest.prototype.dataInit = function(tableid, pagesize, paginationId) {
         var thisObj = this;
+        var tableSize = $(tableid + " tbody tr").length;
         thisObj.tableid =  tableid; //the table which will add the pagination function
         if(pagesize == "All") {
-            thisObj.pagesize =  $(tableid + " tbody tr").length; //diaplay all result in one page
+            thisObj.pagesize =  tableSize; //diaplay all result in one page
             thisObj.maxPage = 1; // max page number is 1
         } else {
             thisObj.pagesize =  parseInt(pagesize);
             thisObj.maxPage = Math.ceil($(tableid + " tbody tr").length / this.pagesize);
         }
         $(paginationId + " .allPages").text(thisObj.maxPage + " Pages");
+        var showingNumber = thisObj.pagesize;
+        if(thisObj.pagesize > tableSize) {
+            showingNumber = tableSize;    
+        }
+        if(thisObj.pagesize != 0) {
+            $(paginationId + " .panel3").text("Showing 1 to " + showingNumber + " of "  + showingNumber +" entries");
+        }
         thisObj.curPage =  1; //the default current page is 0
         thisObj.paginationId = paginationId;
         // if page number is 1 , inactive next, remove the second page item
@@ -655,10 +707,10 @@ $(document).ready(function() {
 
 
 
-    firstTablePagination = new paginationforContest("#firstDashboardTableBody table", 5, "#firstDashboardTableFooter");
+    firstTablePagination = new paginationforContest("#firstDashboardTableBody table", "All", "#firstDashboardTableFooter");
     firstTablePagination.eventInit();
 
-    secondTablePagination = new paginationforContest("#secondDashboardTableBody table", 5, "#secondDashboardTableFooter");
+    secondTablePagination = new paginationforContest("#secondDashboardTableBody table", "All", "#secondDashboardTableFooter");
     secondTablePagination.eventInit();
 
     //page size change function
@@ -670,7 +722,7 @@ $(document).ready(function() {
         secondTablePagination.dataInit("#secondDashboardTableBody table",$(this).val(), "#secondDashboardTableFooter");
     });
 
-    attachTabeleSortEvent("first");
+    attachTabeleSortEvent("first","");
 
 
     $(window).resize(function(){

@@ -51,9 +51,6 @@
 }
 /* Table Data Area */
 
-.tableDataArea{
-	margin-bottom:10px;
-}
 
 .tableDataArea .dashboardTable{
  margin-bottom:0px;
@@ -349,8 +346,9 @@ a.dp-choose-date { margin-right:0px;}
 }
 
 .panel3{
-	padding:4px 0px 4px;
-    height:20px;
+	padding:8px 0px 4px 10px;
+    height:16px;
+    text-align: left;
 }
 
 .pagination3{
@@ -409,7 +407,11 @@ a.dp-choose-date { margin-right:0px;}
 }
 
 #firstDashboardTableBody , #secondDashboardTableBody {
-    height: 126px;
+    height: 378px;
+}
+
+#firstDashboardTableHeader table tr td , #secondDashboardTableHeader table tr td {
+    cursor: pointer;
 }
 
 #firstTableDataArea {

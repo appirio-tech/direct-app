@@ -465,7 +465,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             getViewData().setFulfillmentStats(fulfillmentStats);
             
             getViewData().setAverageCost(averageCustomerCost.getClientValue());
-            getViewData().setAverageDuration(averageCustomerDuration.getClientValue() / 24);
+            getViewData().setAverageDuration(averageCustomerDuration.getClientValue());
             getViewData().setAverageFulfillment(averageCustomerFulfillment.getClientValue());
         }
 

@@ -303,7 +303,6 @@
                                             <!-- start dashboardTableBody-->
                                             <div class="dashboardTableBody" id="firstDashboardTableBody">
 											    <table  cellpadding="0" cellspacing="0">
-                                                    <thead></thead>
 												    <colgroup>
 													    <col width="8%" />
 														<col width="10%" />
@@ -357,7 +356,7 @@
 															<option>10</option>
 															<option>25</option>
 															<option>50</option>
-															<option>All</option>
+															<option selected="true">All</option>
 														</select>
 														<span>per page</span>
 													</div><!-- End .showPages -->
@@ -400,7 +399,7 @@
                                     <div class="chartWrapper">
                                         <div id="chart_div"></div>
                                         <div id="NoEnoughStats" class="hide">
-                                            <p>NOT ENOUGH STATISTICS TO RENDER THE CHART</p>
+                                            <p>NO ENOUGH STATISTICS TO RENDER THE CHART</p>
                                         </div>
                                     </div>    
                                     <!-- chart container-->
@@ -583,7 +582,7 @@
                                                                     <option>10</option>
                                                                     <option>25</option>
                                                                     <option>50</option>
-                                                                    <option>All</option>
+                                                                    <option selected="true">All</option>
                                                                 </select>
                                                                 <span>per page</span>
                                                             </div><!-- End .showPages -->
