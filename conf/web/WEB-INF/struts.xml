@@ -428,6 +428,10 @@
             <result type="json" />
         </action>
 
+        <action name="getDirectProjectCopilots" method="getDirectProjectCopilots" class="commonAction">
+            <result type="json" />
+        </action>
+
         <action name="getDesignComponents" method="getDesignComponents" class="commonAction">
             <result type="json" />
         </action>

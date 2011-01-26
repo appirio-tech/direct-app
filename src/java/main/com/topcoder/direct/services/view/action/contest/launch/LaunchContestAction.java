@@ -3,11 +3,15 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
+import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
@@ -24,9 +28,13 @@ import com.topcoder.direct.services.view.util.SessionData;
  * Version 1.1 - Direct - View/Edit/Activate Studio Contests Assembly Change Note
  * - remove useless imports
  * </p>
+ * <p>
+ * Version 1.2 - TC Direct - Software Contest Creation Update Assembly Change Note
+ * - add method getCurrentProjectCopilots to return copilots of current selected project.
+ * </p>
  *
  * @author BeBetter,TCSDEVELOPER
- * @version 1.1
+ * @version 1.2
  */
 public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
@@ -61,5 +69,33 @@ public class LaunchContestAction extends ContestAction {
 
     public SessionData getSessionData() {
         return sessionData;
+    }
+
+    /**
+     * Gets the copilots assigned to current selected project.
+     *
+     * @return the copilots assigned to current selected project.
+     * @throws Exception if there is any error.
+     * @since  1.2
+     */
+    public List<ContestCopilotDTO> getCurrentProjectCopilots() throws Exception {
+        // get current selected project from session first
+        Long currentProjectId = sessionData.getCurrentSelectDirectProjectID();
+
+        if (currentProjectId == null) {
+            // check project context again
+            if (sessionData.getCurrentProjectContext() != null) {
+                currentProjectId = Long.valueOf(sessionData.getCurrentProjectContext().getId());
+            }
+        }
+
+        List<ContestCopilotDTO> result = new ArrayList();
+
+        if (currentProjectId != null) {
+            // get copilots of the project
+            result = DataProvider.getCopilotsForDirectProject(currentProjectId.longValue());
+        }
+
+        return result;
     }
 }

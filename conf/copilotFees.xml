@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- the cofiguration file for copilot fees -->
+<contestTypes>
+	<contestType contestTypeId="1"><!-- design -->
+      	<copilotFee>100</copilotFee>
+	</contestType>
+
+	<contestType contestTypeId="2"><!-- dev -->
+        <copilotFee>200</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="6"><!-- Specification -->
+        <copilotFee>600</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="7"><!-- Architecture -->
+        <copilotFee>700</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="13"><!-- Test suites -->
+        <copilotFee>1300</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="14"><!-- Assembly -->
+         <copilotFee>1400</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="23"><!-- conceptualization -->
+          <copilotFee>2300</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="24"><!-- RIA Build -->
+         <copilotFee>2400</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="25"><!-- RIA component -->
+        <copilotFee>2500</copilotFee>
+	</contestType>
+
+    <contestType contestTypeId="26"><!-- Test Scenarios -->
+        <copilotFee>2600</copilotFee>
+	</contestType>
+	
+	<contestType contestTypeId="19"><!-- UI Prototype -->
+        <copilotFee>600</copilotFee>
+	</contestType>
+
+</contestTypes>
+

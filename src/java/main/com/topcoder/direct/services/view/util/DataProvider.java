@@ -25,6 +25,7 @@ import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
 import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
@@ -187,9 +188,15 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added <code>{@link #getEnterpriseContestsAvgStatus(long[], Date, Date)}</code> method </li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 2.3.0 (TC Direct - Software Creation Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Add method getCopilotsForDirectProject to get copilots of the direct project</li>
+ *   </ol>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman
- * @version 2.2.0
+ * @version 2.3.0
  */
 public class DataProvider {
 
@@ -212,6 +219,49 @@ public class DataProvider {
         Request countReq = new Request();
         countReq.setContentHandle("member_count");
         return countDai.getData(countReq).get("member_count").getIntItem(0, "member_count");
+    }
+    
+     /**
+     * Gets the copilot user ids for the given direct project.
+     *
+     * @param directProjectId the direct project id.
+     * @return an array of copilot user ids of the given direct project.
+     * @throws Exception if an unexpected error occurs while communicating to persistence data store.
+     * @since 2.2.0
+     */
+    public static List<ContestCopilotDTO> getCopilotsForDirectProject(long directProjectId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_project_copilots");
+        request.setProperty("tcdirectid", String.valueOf(directProjectId));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_project_copilots");
+        List<ContestCopilotDTO> result = new ArrayList<ContestCopilotDTO>();
+
+        final int recordNum = resultContainer.size();
+
+        for (int i = 0; i < recordNum; i++) {
+            long copilotUserId = resultContainer.getLongItem(i, "copilot_user_id");
+            long copilotProfileId = resultContainer.getLongItem(i, "copilot_profile_id");
+            long projectId = resultContainer.getLongItem(i, "project_id");
+            String projectName = resultContainer.getStringItem(i, "project_name");
+            String handle = resultContainer.getStringItem(i, "handle");
+
+            ContestCopilotDTO copilot = new ContestCopilotDTO();
+            copilot.setUserId(copilotUserId);
+            copilot.setHandle(handle);
+            copilot.setCopilotProfileId(copilotProfileId);
+            ProjectBriefDTO project = new ProjectBriefDTO();
+            project.setId(projectId);
+            project.setName(projectName);
+
+            copilot.setCopilotProject(project);
+
+            // add to result
+            result.add(copilot);
+        }
+
+        return result;
     }
 
     /**

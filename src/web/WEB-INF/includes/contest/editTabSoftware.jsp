@@ -1,11 +1,12 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0.1
+  - Version: 1.0.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
   - Version 1.0.1 (TC Direct Release Assembly 7) changes: added digital run input field.
+  - Version 1.0.2 (TC Direct Software Creation Update) changes: add display of copilots.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -31,6 +32,9 @@
 		 <br /> <br />
 		 <span class="name2"><strong>Project Name</strong></span>
          <span class="value"><strong>: <span id="rProjectName">${sessionData.currentProjectContext.name}</span></strong></span>
+         <br/><br/>
+         <span class="name2"><strong>Copilot</strong></span>
+         <span class="value"><strong>: <span id="rCopilots"></span></strong></span>
       </p>
     </div><!-- End .detailsContent -->												
 </div><!-- End .details -->

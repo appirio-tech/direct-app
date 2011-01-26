@@ -10,9 +10,12 @@
  * Version 1.1.1 (TC Direct Release Assembly 7) Change notes:
  * - Hide edit button if user has no write permission.
  * - Apply to new prize update logic.
+ *
+ * Version 1.1.2 (TC Direct - Software Creation Update Assembly) Change notes:
+ * - Update method populateTypeSection to populate copilots data.
  * 
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1.1
+ * @version 1.1.2
  */
 $(document).ready(function(){
 	  //general initialization
@@ -134,7 +137,7 @@ $(document).ready(function(){
             initContest(result);
             
             //render values
-            populateTypeSection();
+            populateTypeSection(result);
             populateRoundSection();            
             populatePrizeSection(true);
             populateSpecSection(true);
@@ -260,6 +263,15 @@ function initContest(contestJson) {
    var startDate =  parseDate(contestJson.startDate);  
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
+
+    // copilots
+    var copilots = contestJson.copilots; // get copilots data from result
+    var hasCopilot = false;
+
+    $.each(copilots, function(k, v){
+        mainWidget.softwareCompetition.copilotUserId = k;
+        mainWidget.softwareCompetition.copilotUserName = v;
+    });
    
    if(isDevOrDesign()) {
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = contestJson.rootCategoryId;
@@ -383,7 +395,7 @@ function retrieveContestCostWithoutAdminFee() {
 /**
  * Type Section Functions
  */
-function populateTypeSection() {
+function populateTypeSection(result) {
 	//edit
 	$('#contestTypes').getSetSSValue("SOFTWARE"+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
@@ -396,6 +408,19 @@ function populateTypeSection() {
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
+    // copilots
+    var copilots = result.copilots; // get copilots data from result
+    var hasCopilot = false;
+
+    $.each(copilots, function(k, v){
+        $("#rCopilots").append((hasCopilot ? " , " : "") + '<a href=http://www.topcoder.com/tc?module=MemberProfile&cr=' + k + '>' + v + '</a>');
+        hasCopilot = true;
+    });
+
+    if (hasCopilot == false) {
+        // no copilots for this contest, display 'unassigned'
+        $("#rCopilots").html("Unassigned");
+    }
 }
 
 function saveTypeSection() {
@@ -932,7 +957,6 @@ function activateContestEdit() {
    	  showErrors("no billing project is selected.");
    	  return;
    }
-   
 
    //construct request data
    var request = saveAsDraftRequest();

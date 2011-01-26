@@ -218,6 +218,7 @@
         <copy file="${configdir}/Direct.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/app.properties" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/contestFees.xml" todir="${jboss.home}/server/${server.name}/conf"/>
+        <copy file="${configdir}/copilotFees.xml" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/contestTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/fileTypes.xml" todir="${jboss.home}/server/${server.name}/conf"/>
         <copy file="${configdir}/overview.xml" todir="${jboss.home}/server/${server.name}/conf"/>          

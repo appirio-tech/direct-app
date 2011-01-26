@@ -8,9 +8,12 @@
  * Changes in v1.0.1 (TC Direct - Launch Copilot Selection Contest assembly): add private description field in project class,
  * and copilot selection contest in project category array.
  * </p>
- * 
- * @author TCSASSEMBLER
- * @version 1.0.1
+ * <p>
+ * Changes in v1.0.2 (TC Direct - Software Creation Update assembly): 
+ *  - Add copilotUserId and copilotUserName to SoftwareCompetition
+ * </p>
+ * @author TCSASSEMBLER, TCSDEVELOPER
+ * @version 1.0.2
  */
 if(!com) {
    var com = {};
@@ -206,9 +209,11 @@ function getProjectCategoryIdByName(name) {
 
 /**
  * Software Competition Classes
+ *
+ * Version 1.0.2 Changes: add copilotUserId and copilotUserName
  */
 com.topcoder.direct.SoftwareCompetition = function() {	  
-	  this.assetDTO = new com.topcoder.direct.AssetDTO();
+	this.assetDTO = new com.topcoder.direct.AssetDTO();
 	
     this.projectHeader = new com.topcoder.direct.Project();    
     
@@ -217,6 +222,12 @@ com.topcoder.direct.SoftwareCompetition = function() {
     
     // holding the paid fee
     this.paidFee = 0;
+
+    // hold the copilot user id
+    this.copilotUserId = 0;
+
+    // hold the copilot user handle
+    this.copilotUserName = "";
 } 
 
 /**

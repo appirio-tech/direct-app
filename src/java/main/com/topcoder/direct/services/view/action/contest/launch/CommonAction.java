@@ -11,6 +11,8 @@ import java.util.Map;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.management.project.DesignComponents;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
@@ -21,8 +23,13 @@ import com.topcoder.service.facade.project.DAOFault;
  * Common action to handle some common requests.
  * </p>
  *
- * @author BeBetter
- * @version 1.0
+ * <p> Version 1.1 Changes:
+ * - New property directProjectId is added.
+ * - New method getDirectProjectCopilots to return copilots of direct project as JSON.
+ * </p>
+ *
+ * @author BeBetter, TCSDEVELOPER
+ * @version 1.1
  */
 public class CommonAction extends BaseDirectStrutsAction {
     /**
@@ -31,6 +38,15 @@ public class CommonAction extends BaseDirectStrutsAction {
      * </p>
      */
     private long billingProjectId;
+
+    /**
+     * <p>
+     * The direct project id field.
+     * </p>
+     *
+     * @since 1.1
+     */
+    private long directProjectId;
 
     /**
      * <p>
@@ -47,6 +63,39 @@ public class CommonAction extends BaseDirectStrutsAction {
     @Override
     protected void executeAction() throws Exception {
         // do nothing
+    }
+
+    /**
+     * <p>
+     * Gets the copilot user ids / copilot handle for the given direct project id.
+     * </p>
+     *
+     * @return the success result
+     * @throws Exception if any error occurs
+     * @since 1.1
+     */
+    public String getDirectProjectCopilots() throws Exception {
+        // get all the copilots for the given direct project
+        List<ContestCopilotDTO> copilots = DataProvider.getCopilotsForDirectProject(this.directProjectId);
+        long currentUserId = getCurrentUser().getUserId();
+        boolean isCurrentUser = false;
+
+        // use map to store the copilots result, key is copilot user id, value is copilot handle
+        Map<String, String> value = new HashMap<String, String>();
+        for (ContestCopilotDTO copilot : copilots) {
+            value.put(String.valueOf(copilot.getUserId()), copilot.getHandle());
+            
+            // current user is one of the copilots
+            if(currentUserId == copilot.getUserId()) {
+                isCurrentUser = true;
+            }
+        }
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("copilots", value);
+        result.put("selected", (isCurrentUser ? String.valueOf(currentUserId) : "0"));
+        setResult(result);
+        return SUCCESS;
     }
 
     /**
@@ -73,8 +122,6 @@ public class CommonAction extends BaseDirectStrutsAction {
      * Gets project studio contest fee.
      * </p>
      *
-     * @param billingProjectId the billing project id
-     * @param studioSubTypeId studio sub type id
      * @return the success page
      * @throws Exception if any error occurs
      */
@@ -169,5 +216,25 @@ public class CommonAction extends BaseDirectStrutsAction {
      */
     public void setCatalogId(long catalogId) {
         this.catalogId = catalogId;
+    }
+
+    /**
+     * Gets the direct project id.
+     *
+     * @return the direct project id.
+     * @since 1.1
+     */
+    public long getDirectProjectId() {
+        return directProjectId;
+    }
+
+    /**
+     * Sets the direct project id.
+     *
+     * @param directProjectId the direct project id to set.
+     * @since 1.1
+     */
+    public void setDirectProjectId(long directProjectId) {
+        this.directProjectId = directProjectId;
     }
 }

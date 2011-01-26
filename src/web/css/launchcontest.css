@@ -303,7 +303,7 @@
                 		border:1px solid #a8abad;
             }             
 				
-			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect{
+			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect, #launchContestOut .addNewContest .copilotSelect{
 				width:auto;
 				float:left;
 				display:inline;
@@ -1679,7 +1679,7 @@
 		}
 
 /** billing  and round select **/
-.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected{
+.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected {
 	width:283px;
 	height:28px;
 	padding:0 5px;
@@ -1697,11 +1697,11 @@
 		color:#6c6c6c;
 		}
 	
-	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt{
+	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt {
 		width:281px;
 		}
 	
-	.billingSelect .newList,.prizeBillingSelect .newList,.roundelect .newList{
+	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList, .copilotSelect .newList{
 		width:290px;
 		border:#ccc solid 1px;
 		background:#fff;

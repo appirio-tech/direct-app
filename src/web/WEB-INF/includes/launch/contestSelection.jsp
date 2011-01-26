@@ -1,3 +1,10 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Version: 1.0.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.0.1 (TC Direct Software Contest Creation Update Assembly) changes: add display of copilots of software contest.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <h2>Please Select your Contest Type</h2>
@@ -42,7 +49,8 @@
   </div>
   <!-- end .tabOut -->
 
-
+ <!-- this is a fake form which is used to reset onload to prevent firefox from caching local drop-down selection-->
+  <form id="fakeForm">
   <!-- add new contest -->
   <div class="addNewContest">
 
@@ -87,8 +95,22 @@
           </div>
       </div>
 
+      <!-- Copilot for Software Contest -->
+      <div class="row software hide">
+          <label>Copilot :</label>
+          <div class="copilotSelect">
+              <select id="contestCopilot" name="contestCopilot">
+                <option value="0">Unassigned</option>
+                <s:iterator value="currentProjectCopilots" var="copilot">
+                    <option value='<s:property value="userId"/>'  <s:if test="%{#copilot.userId==#session.user.userId}">selected='selected'</s:if> > <s:property value="handle" /></option>
+                </s:iterator>
+             </select>
+          </div>
+      </div>
+
   </div>
   <!-- end .addNewContest -->
+ </form>
 
   <h3><span class="icon">Contest Schedule:</span><div id="ContestScheduleHelpIcon"><a class="helpIcon" href="javascript:;"><span class="hide">Help</span></a></div></h3>
 

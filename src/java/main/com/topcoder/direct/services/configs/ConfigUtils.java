@@ -13,9 +13,13 @@ import javax.xml.bind.JAXBContext;
  * <p>
  * Utils class for handling various configuration files.
  * </p>
+ * <p>
+ * Version 1.1 - TC Direct - Software Contest Creation Update Assembly 1.0 change notes:
+ * - Add the logic to load copilot fees from the configuration file copilotFeeds.xml
+ * </p>
  *
- * @author BeBetter
- * @version 1.0
+ * @author BeBetter, TCSDEVELOPER
+ * @version 1.1
  */
 public final class ConfigUtils {
     /**
@@ -67,6 +71,16 @@ public final class ConfigUtils {
      */
     private static Map<String, ContestFee> softwareContestFees;
 
+    /**
+     * <p>
+     * Copilot fees.
+     * </p>
+     *
+     * @since 1.1
+     */
+    private static Map<String, CopilotFee> copilotFees;
+
+
     static {
         try {
             init();
@@ -88,16 +102,17 @@ public final class ConfigUtils {
      * <p>
      * Initialize the configuration objects.
      * </p>
+     * <p> version 1.1 changes - add load of copilot fees</p>
      */
     private static void init() throws Exception {
         JAXBContext studioTypesJaxbContext = JAXBContext.newInstance(StudioContestTypes.class);
 
         studioContestTypes = (StudioContestTypes) studioTypesJaxbContext.createUnmarshaller().unmarshal(
-            ConfigUtils.class.getResourceAsStream("/contestTypes.xml"));
+                ConfigUtils.class.getResourceAsStream("/contestTypes.xml"));
 
         JAXBContext overviewJaxbContext = JAXBContext.newInstance(Overview.class);
         overview = (Overview) overviewJaxbContext.createUnmarshaller().unmarshal(
-            ConfigUtils.class.getResourceAsStream("/overview.xml"));
+                ConfigUtils.class.getResourceAsStream("/overview.xml"));
 
         for (ContestOverview contestOverview : overview.getContestOverviews()) {
             if ("STUDIO".equals(contestOverview.getId())) {
@@ -111,7 +126,7 @@ public final class ConfigUtils {
 
         JAXBContext contestFeesJaxbContext = JAXBContext.newInstance(ContestFees.class);
         contestFees = (ContestFees) contestFeesJaxbContext.createUnmarshaller().unmarshal(
-            ConfigUtils.class.getResourceAsStream("/contestFees.xml"));
+                ConfigUtils.class.getResourceAsStream("/contestFees.xml"));
 
         softwareContestFees = new HashMap<String, ContestFee>();
         for (ContestFee contestFee : contestFees.getContestFees()) {
@@ -128,7 +143,17 @@ public final class ConfigUtils {
 
         JAXBContext fileTypesJaxbContext = JAXBContext.newInstance(FileTypes.class);
         fileTypes = (FileTypes) fileTypesJaxbContext.createUnmarshaller().unmarshal(
-            ConfigUtils.class.getResourceAsStream("/fileTypes.xml"));
+                ConfigUtils.class.getResourceAsStream("/fileTypes.xml"));
+
+        // load the copilot fees from the configuration copilotFees.xml
+        JAXBContext copilotFeesJaxbContext = JAXBContext.newInstance(CopilotFees.class);
+        CopilotFees parsedFees = (CopilotFees) copilotFeesJaxbContext.createUnmarshaller().unmarshal(
+                ConfigUtils.class.getResourceAsStream("/copilotFees.xml"));
+        copilotFees = new HashMap<String, CopilotFee>();
+        // put copilot fee into the map
+        for(CopilotFee copilotFee : parsedFees.getCopilotFees()) {
+            copilotFees.put(String.valueOf(copilotFee.getContestTypeId()), copilotFee);
+        }
     }
 
     /**
@@ -224,4 +249,17 @@ public final class ConfigUtils {
     public static Map<String, ContestFee> getSoftwareContestFees() {
         return softwareContestFees;
     }
+
+    /**
+     * <p>
+     * Gets copilot fees.
+     * </p>
+     *
+     * @return the copilot fees.
+     * @since 1.1
+     */
+    public static Map<String, CopilotFee> getCopilotFees() {
+        return copilotFees;
+    }
+
 }

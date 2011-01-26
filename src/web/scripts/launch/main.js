@@ -9,9 +9,13 @@
  *
  * Version 1.1.1 (TC Direct Release Assembly 7) Change notes:
  * - Allow set digital run field manually.
- * 
+ *
+ * Version 1.1.2 (TC Direct - Software Creation Update Assembly) Change notes:
+ * - Add method getCopilotsByDirectProjectId to get copilots info via Ajax.
+ * - Update method saveAsDraftRequestSoftware to add copilot id and name into request.
+ *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1.1
+ * @version 1.1.2
  */
 
 /**
@@ -42,6 +46,11 @@ var originalSoftwareContestFees = {};
  * The object key is the billing project id, the value is fee object array.
  */
 var billingFees = {};
+
+/**
+ * Local cache for copilots for direct project.
+ */
+var directProjectCopilots = {};
 
 /**
  * software documents
@@ -383,6 +392,43 @@ function getContestFeesForBillingProject(billingProjectId) {
     return fees;
 }
 
+/**
+ * Gets copilots for direct project.
+ *
+ * @param directProjectId the direct project id
+ */
+function getCopilotsByDirectProjectId(directProjectId) {
+    if(directProjectCopilots[directProjectId] != null) {
+        return directProjectCopilots[directProjectId];
+    }
+
+    var returnValue = {};
+
+    var request = {directProjectId:directProjectId};
+
+    $.ajax({
+       type: 'GET',
+       url:  ctx + "/launch/getDirectProjectCopilots",
+       data: request,
+       cache: false,
+       async: false,
+       dataType: 'json',
+       success: function(jsonResult) {
+           handleJsonResult(jsonResult,
+           function(result) {
+               returnValue.copilots = result.copilots;
+               returnValue.selected = result.selected;
+           },
+           function(errorMessage) {
+               showErrors(errorMessage);
+           });
+       }
+    });
+
+    directProjectCopilots[directProjectId] = returnValue;
+    return returnValue;
+}
+
 
 /**
  * Handles preview contest.
@@ -431,6 +477,8 @@ function saveAsDraftRequestSoftware() {
    request['competitionType'] = 'SOFTWARE';
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
+   request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
+   request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
 
    if(isDevOrDesign()) {
       //only check for design

@@ -1,5 +1,11 @@
 /**
  * Contest Selection Page
+ *
+ * Version 1.1 TC Direct- Software Creation Update Assembly changes notes
+ * - Update method validateFieldsContestSelectionSoftware to get copilotUserId and name from copilot dropdown
+ *
+ * @version 1.1
+ * @author TCSDEVELOPER
  */
 $(document).ready(function() {	 
 	 initContestNamesFromDesign();
@@ -47,12 +53,14 @@ function validateFieldsContestSelectionSoftware() {
    var tcProjectId = parseInt($('select#projects').val());
    var billingProjectId = parseInt($('select#billingProjects').val());
 
+   var copilotUserId = parseInt($('select#contestCopilot').val());
+   var copilotName = $('select#contestCopilot option:selected').text();
+
    var startDate = getDateByIdPrefix('start');
    
    //validation
    var errors = [];
 
- 
    //validate contest
 	 if(needsDesignSelected()) {
       if(!checkRequired(designContestId)) {
@@ -81,7 +89,11 @@ function validateFieldsContestSelectionSoftware() {
    
    mainWidget.softwareCompetition.assetDTO.name = contestName;      
    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
-   mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);   	  
+   mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
+
+   // set the copilot user id and user name
+   mainWidget.softwareCompetition.copilotUserId = copilotUserId;
+   mainWidget.softwareCompetition.copilotUserName = copilotName;
 
    if(needsDesignSelected()) {
    	  mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded = true;

@@ -3,18 +3,16 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.configs.CopilotFee;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
@@ -99,9 +97,16 @@ import com.topcoder.service.studio.PrizeData;
  * <li>Adds the functions for activating software contest</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.4 - TC Direct - Software Contest Creation Update Change Note
+ * <ul>
+ * <li>Adds the properties: contestCopilotId and contestCopilotName</li>
+ * <li>Adds the logic to put copilot resource data into software competition to create</li>
+ * </ul>
+ * </p>
  *
  * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.3
+ * @version 1.4
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -110,6 +115,13 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private static final long serialVersionUID = -2592669182689444374L;
+
+    /**
+     * Date format for resource creation date.
+     *
+     * @since 1.4
+     */
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("MM.dd.yyyy hh:mm a", Locale.US);
 
     /**
      * <p>
@@ -158,12 +170,52 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Constant for resource info type id of handle.
+     * Constant for key of resource info: handle.
      * </p>
      *
-     * @since Direct Launch Software Contests Assembly
+     * @since 1.4
      */
-    private static final long RESOURCE_INFO_TYPE_ID_HANDLE = 2;
+    private static final String RESOURCE_INFO_HANDLE = "Handle";
+
+    /**
+     * <p>
+     * Constant for key of resource info : payment.
+     * </p>
+     * @since 1.4
+     */
+    private static final String RESOURCE_INFO_PAYMENT = "Payment";
+
+    /**
+     * <p>
+     * Constant for key of resource info: payment status.
+     * </p>
+     * @since 1.4
+     */
+    private static final String RESOURCE_INFO_PAYMENT_STATUS = "Payment Status";
+
+    /**
+     * <p>
+     * Constant for key of resource info: user id.
+     * </p>
+     * @since 1.4
+     */
+    private static final String RESOURCE_INFO_USER_ID = "External Reference ID";
+
+    /**
+     * <p>
+     * Constant for key of resource info: registration date.
+     * </p>
+     * @since 1.4
+     */
+    private static final String RESOURCE_INFO_REGISTRATION_DATE = "Registration Date";
+
+    /**
+     * <p>
+     * Constant value for payment status "not paid".
+     * </p>
+     * @since  1.4
+     */
+    private static final String NOT_PAID_PAYMENT_STATUS_VALUE = "No";
 
     /**
      * <p>
@@ -205,6 +257,15 @@ public class SaveDraftContestAction extends ContestAction {
      * @since Direct Launch Software Contests Assembly
      */
     private static final String PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID = "Billing Project";
+
+    /**
+     * <p>
+     * The constant value to represents the id of resource is unset.
+     * </p>
+     *
+     * @since 1.4
+     */
+    private static final long UNSET_RESOURCE_ID = -1;
 
     /**
      * <p>
@@ -269,6 +330,23 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private long tcDirectProjectId;
+
+    /**
+     * <p>
+     * This is the copilot user id for the software contest.
+     * </p>
+     * @since 1.4
+     */
+    private long contestCopilotId;
+
+    /**
+     * <p>
+     * This is the copilot name for the software contest.
+     * <p>
+     *
+     * @since 1.4
+     */
+    private String contestCopilotName;
 
     /**
      * <p>
@@ -510,6 +588,9 @@ public class SaveDraftContestAction extends ContestAction {
             softwareCompetition.setProjectHeaderReason("user update");
             populateSoftwareCompetition(softwareCompetition);
 
+            // update the software competition copilot resource first
+            updateSoftwareCompetitionCopilotResource();
+
             if (isActivation(softwareCompetition)) {
                 softwareCompetition = activateSoftwareCompeition(softwareCompetition);
             } else {
@@ -577,8 +658,54 @@ public class SaveDraftContestAction extends ContestAction {
             } else {
                 // the competition type is unknown, add error field instead of exception
                 // to make the action robust.
-                addFieldError("competitionType", "The competition type is uknown");
+                addFieldError("competitionType", "The competition type is unknown");
             }
+        }
+    }
+
+    /**
+     * Updates the copilot resource during software competition update.
+     */
+    private void updateSoftwareCompetitionCopilotResource() {
+        // get the resources before updating
+        Resource[] rs = softwareCompetition.getProjectResources();
+
+        String currentCopilotId = null;
+        Resource currentCopilot = null;
+
+        // upload copilot if needed
+        if (getContestCopilotId() > 0 && getContestCopilotName() != null && getContestCopilotName().trim().length() != 0) {
+            // add copilot resource to project resources
+            currentCopilot = getCopilotResource();
+            // set project id
+            currentCopilot.setProject(projectId);
+            currentCopilotId = currentCopilot.getProperty(RESOURCE_INFO_USER_ID);
+        }
+
+        Map<String, Resource> oldCopilots = new HashMap<String, Resource>();
+        List<Resource> updatedResources = new ArrayList<Resource>();
+
+        for (Resource r : rs) {
+            if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
+                // the existing copilots before update
+                oldCopilots.put(r.getProperty(RESOURCE_INFO_USER_ID), r);
+            } else {
+                // put non-copilot into updatedResources first
+                updatedResources.add(r);
+            }
+        }
+
+        if (!oldCopilots.containsKey(currentCopilotId)) {
+            // copilot to update is not one of the old copilots
+            if (currentCopilot != null) {
+                updatedResources.add(currentCopilot);
+            }
+
+            softwareCompetition.setProjectResources(updatedResources.toArray(new Resource[updatedResources.size()]));
+        } else {
+            // copilot to update is one of the old copilots, update payment because the payment info could be changed
+            Resource r = oldCopilots.get(currentCopilotId);
+            r.setProperty(RESOURCE_INFO_PAYMENT, currentCopilot.getProperty(RESOURCE_INFO_PAYMENT));
         }
     }
 
@@ -607,6 +734,11 @@ public class SaveDraftContestAction extends ContestAction {
      * Initializes the software competition object.
      * </p>
      *
+     * <p>
+     * Version 1.4 change notes:
+     * Add the resource info for copilot if a copilot is selected.
+     * </p>
+     *
      * @param softwareCompetition software competition
      * @since Direct Launch Software Contests Assembly
      */
@@ -632,8 +764,15 @@ public class SaveDraftContestAction extends ContestAction {
         }
         projectHeaderTemp.setProjectStatus(PROJECT_STATUS_ACTIVE);
 
-        // project resources
-        softwareCompetition.setProjectResources(new Resource[] {getUserResource()});
+        // process project resources
+
+        // if has a valid copilot id and copilot name is not empty
+        if (getContestCopilotId() > 0 && getContestCopilotName() != null && getContestCopilotName().trim().length() != 0) {
+            // add copilot resource to project resources
+            softwareCompetition.setProjectResources(new Resource[] {getUserResource(), getCopilotResource()});
+        } else {
+            softwareCompetition.setProjectResources(new Resource[] {getUserResource()});
+        };
 
         // project phases
         softwareCompetition.setProjectPhases(new com.topcoder.project.phases.Project());
@@ -705,10 +844,46 @@ public class SaveDraftContestAction extends ContestAction {
     private Resource getUserResource() {
         Resource resource = new Resource();
         // unset id
-        resource.setId(-1);
+        resource.setId(UNSET_RESOURCE_ID);
         resource.setResourceRole(new ResourceRole(RESOURCE_ROLE_MANAGER));
-        resource.setProperty(RESOURCE_INFO_TYPE_ID_HANDLE + "", DirectStrutsActionsHelper.getUserHandle());
+        resource.setProperty(RESOURCE_INFO_HANDLE + "", DirectStrutsActionsHelper.getUserHandle());
         resource.setSubmissions(new Long[] {});
+        return resource;
+    }
+
+    /**
+     * <p>
+     * Creates the copilot resource. The copilot resource has the user id, handle, payment and payment status populated.
+     * </p>
+     *
+     * @return the resource copilot with user id, handle, payment and payment status populated.
+     * @since 1.4
+     */
+    private Resource getCopilotResource() {
+        Resource resource = new Resource();
+        // unset id
+        resource.setId(UNSET_RESOURCE_ID);
+        resource.setResourceRole(new ResourceRole(ResourceRole.RESOURCE_ROLE_COPILOT_ID));
+        resource.setProperty(String.valueOf(RESOURCE_INFO_HANDLE), getContestCopilotName());
+        resource.setProperty(String.valueOf(RESOURCE_INFO_USER_ID), String.valueOf(getContestCopilotId()));
+
+        // get the copilot fee from the configuration
+        CopilotFee copilotFee = ConfigUtils.getCopilotFees().get(String.valueOf(getProjectHeader().getProjectCategory().getId()));
+
+        // user zero by default in case there is no fee configured
+        double feeValue = 0.0;
+
+        if (copilotFee != null) {
+            feeValue = copilotFee.getCopilotFee();
+        }
+
+        // set payment information
+        resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT), String.valueOf(feeValue));
+        // set payment status to "not paid"
+        resource.setProperty(String.valueOf(RESOURCE_INFO_PAYMENT_STATUS), NOT_PAID_PAYMENT_STATUS_VALUE);
+        // set registration date to now
+        resource.setProperty(RESOURCE_INFO_REGISTRATION_DATE, DATE_FORMAT.format(new Date()));
+
         return resource;
     }
 
@@ -812,7 +987,7 @@ public class SaveDraftContestAction extends ContestAction {
      */
     private TCPurhcaseOrderPaymentData getPaymentData(SoftwareCompetition softwareCompetition) throws Exception {
         long billingProjectId = Long.parseLong(softwareCompetition.getProjectHeader().getProperties().get(
-            PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID));
+                PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID));
         return getPaymentData(billingProjectId);
     }
 
@@ -1154,6 +1329,49 @@ public class SaveDraftContestAction extends ContestAction {
      */
     public void setProjectId(long projectId) {
         this.projectId = projectId;
+    }
+
+    /**
+     * <P>
+     * Gets the software contest copilot id.
+     * </p>
+     * @return the user id of the copilot
+     * @since  1.4
+     */
+    public long getContestCopilotId() {
+        return contestCopilotId;
+    }
+
+    /**
+     * <p>
+     * Sets the copilot user id for the software contest.
+     * </p>
+     *
+     * @param contestCopilotId the copilot user id.
+     * @since 1.4
+     */
+    public void setContestCopilotId(long contestCopilotId) {
+        this.contestCopilotId = contestCopilotId;
+    }
+
+    /**
+     * Gets the contest copilot name.
+     *
+     * @return the contest copilot name.
+     * @since 1.4
+     */
+    public String getContestCopilotName() {
+        return contestCopilotName;
+    }
+
+    /**
+     * Sets the contest copilot name.
+     *
+     * @param contestCopilotName the contest copilot name
+     * @since 1.4
+     */
+    public void setContestCopilotName(String contestCopilotName) {
+        this.contestCopilotName = contestCopilotName;
     }
 
     /**

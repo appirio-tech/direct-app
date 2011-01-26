@@ -6,6 +6,8 @@ package com.topcoder.direct.services.view.ajax;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.resource.ResourceRole;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
@@ -33,10 +35,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * add project status in the response.</li>
  * <ul>
  * </ul>
+ * <p>
+ * Version 1.2 - TC Direct - Software Creation Update Assembly Change Note:
+ * - Add copilots of the software contest into the json result.
+ * </p>
  * </p>
  *
+ *
  * @author BeBetter, TCSDEVELOPER
- * @version 1.1
+ * @version 1.2
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -109,6 +116,23 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("tcDirectProjectName", project.getTcDirectProjectName());
         result.put("billingProjectId", project.getProperties().get("Billing Project"));
         result.put("adminFee", project.getProperties().get("Admin Fee"));
+
+        // get resources of project
+        Resource[] resources = bean.getResources();
+
+        // uses a map to store the copilots, key is the user id, value is the handle
+        Map<String, String> copilots = new HashMap<String, String>();
+
+        // Gets copilots from the resources of the contest
+        for (Resource r : resources) {
+            if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
+                // resource is of role Copilot, add the resource into the copilot map
+                copilots.put(String.valueOf(r.getProperty("External Reference ID")), r.getProperty("Handle"));
+            }
+        }
+
+        // put the copilots into the result
+        result.put("copilots", copilots);
 
         // project info properties map
         result.put("properties", project.getProperties());
