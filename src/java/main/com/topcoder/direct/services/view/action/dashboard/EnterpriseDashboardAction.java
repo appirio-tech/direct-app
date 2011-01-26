@@ -609,7 +609,15 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         for (EnterpriseDashboardContestStatDTO stat : contestsStat) {
             Map<String, Object> statData = new HashMap<String, Object>();
             statData.put("postingDate", dateFormat.format(stat.getPostingDate()));
-            statData.put("date", dateFormat.format(stat.getDate()));
+            if (stat.getDate() != null)
+            {
+                statData.put("date", dateFormat.format(stat.getDate()));
+            }
+            else
+            {
+                statData.put("date", "");
+            }
+            
             statData.put("customerName", stat.getCustomerName());
             statData.put("projectName", stat.getProjectName());
             statData.put("contestType", stat.getContestType());
