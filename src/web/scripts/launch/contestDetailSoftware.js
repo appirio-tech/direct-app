@@ -137,7 +137,7 @@ $(document).ready(function(){
             initContest(result);
             
             //render values
-            populateTypeSection(result);
+            populateTypeSection();
             populateRoundSection();            
             populatePrizeSection(true);
             populateSpecSection(true);
@@ -271,6 +271,7 @@ function initContest(contestJson) {
     $.each(copilots, function(k, v){
         mainWidget.softwareCompetition.copilotUserId = k;
         mainWidget.softwareCompetition.copilotUserName = v;
+        hasCopilot = true;
     });
    
    if(isDevOrDesign()) {
@@ -395,7 +396,7 @@ function retrieveContestCostWithoutAdminFee() {
 /**
  * Type Section Functions
  */
-function populateTypeSection(result) {
+function populateTypeSection() {
 	//edit
 	$('#contestTypes').getSetSSValue("SOFTWARE"+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
@@ -408,19 +409,12 @@ function populateTypeSection(result) {
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
-    // copilots
-    var copilots = result.copilots; // get copilots data from result
-    var hasCopilot = false;
-
-    $.each(copilots, function(k, v){
-        $("#rCopilots").append((hasCopilot ? " , " : "") + '<a href=http://www.topcoder.com/tc?module=MemberProfile&cr=' + k + '>' + v + '</a>');
-        hasCopilot = true;
-    });
-
-    if (hasCopilot == false) {
-        // no copilots for this contest, display 'unassigned'
-        $("#rCopilots").html("Unassigned");
-    }
+  
+  if (mainWidget.softwareCompetition.copilotUserId <=0) {
+  	 $("#rCopilots").html("Unassigned");
+  } else {
+  	 $("#rCopilots").html('<a href=http://www.topcoder.com/tc?module=MemberProfile&cr=' + mainWidget.softwareCompetition.copilotUserId + '>' + mainWidget.softwareCompetition.copilotUserName + '</a>');
+  }
 }
 
 function saveTypeSection() {
