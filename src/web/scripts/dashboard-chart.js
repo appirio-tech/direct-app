@@ -347,8 +347,14 @@ function drawChart() {
             data.addRows(rowData.length);
             $.each(rowData, function(index, item) {
                 data.setValue(index, 0, item["date"]);
-                data.setValue(index, 1, item["customer"]);
+               
+               if (item["customer"] != 0) { 
+                 data.setValue(index, 1, item["customer"]);
+               }
+               
+               if (item["tc"] != 0) {
                 data.setValue(index, 2, item["tc"]);
+               }
             })
         }
     }
