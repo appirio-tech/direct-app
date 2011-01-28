@@ -27,7 +27,8 @@ public class DashboardPipelineReportForm implements Serializable {
         = new ContestType[] {ContestType.STUDIO, ContestType.CONCEPTUALIZATION, ContestType.SPECIFICATION,
                              ContestType.ARCHITECTURE, ContestType.COMPONENT_DESIGN, ContestType.COMPONENT_DEVELOPMENT,
                              ContestType.RIA_COMPONENT, ContestType.RIA_BUILD, ContestType.UI_PROTOTYPE,
-                             ContestType.ASSEMBLY, ContestType.TEST_SUITES, ContestType.TEST_SCENARIOS};
+                             ContestType.ASSEMBLY, ContestType.TEST_SUITES, ContestType.TEST_SCENARIOS,
+                             ContestType.COPILOT_POSTING, ContestType.CONTENT_CREATION};
 
     /**
      * <p>A <code>ContestStatus</code> array listing the statuses types to be selected by default.</p>
