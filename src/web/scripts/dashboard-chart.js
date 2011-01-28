@@ -206,7 +206,7 @@ function drawChart() {
         }
 
         $(data).each(function(i){
-            if(timeFilter(timeRange, this.postingDate, timeDim)) {
+            if(timeFilter(timeRange, this.date, timeDim)) {
                 rowsNo++;
                 totalContestFullfilment += parseFloat(this.contestFullfilment);
                 totalMarketAvgFullfilment += parseFloat(this.marketAvgFullfilment);
