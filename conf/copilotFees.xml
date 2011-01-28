@@ -45,5 +45,10 @@
         <copilotFee>600</copilotFee>
 	</contestType>
 
+     <contestType contestTypeId="35"><!-- Content Creation -->
+        <copilotFee>600</copilotFee>
+	</contestType>
+
+
 </contestTypes>
 
