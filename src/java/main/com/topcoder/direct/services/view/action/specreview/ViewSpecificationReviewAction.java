@@ -4,20 +4,29 @@
 
 package com.topcoder.direct.services.view.action.specreview;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
-import com.topcoder.direct.specreview.services.SpecReviewComment;
-import com.topcoder.direct.specreview.services.SpecReviewCommentService;
+import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.service.review.comment.specification.SpecReviewComment;
+import com.topcoder.service.review.comment.specification.SpecReviewCommentService;
+import com.topcoder.service.review.comment.specification.UserComment;
 import com.topcoder.service.review.specification.SpecificationReview;
 import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.service.review.specification.SpecificationReviewStatus;
+import com.topcoder.service.user.UserService;
 import com.topcoder.util.errorhandling.ExceptionUtils;
 
 /**
@@ -93,11 +102,25 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
      * </p>
      */
     private ViewSpecificationReviewActionResultData viewData;
-    
+
     /**
-     * <p>A <code>SessionData</code> providing interface to current session.</p>
+     * <p>
+     * A <code>SessionData</code> providing interface to current session.
+     * </p>
      */
     private SessionData sessionData;
+
+    /**
+     * <p>
+     * Represents the user service used to retrieve the user handle.
+     * </p>
+     * 
+     * <p>
+     * Initially set to null, once set cannot be null. It set by setter and
+     * accessed by getter. Used in <code>execute</code> method.
+     * </p>
+     */
+    private UserService userService;
 
     /**
      * Default constructor, creates new instance.
@@ -150,9 +173,11 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             // fetch the specification review, status and comments
             SpecificationReview specificationReview = specificationReviewService
                     .getSpecificationReview(getTCSubject(), getContestId());
+            
             SpecificationReviewStatus specificationReviewStatus = specificationReviewService
                     .getSpecificationReviewStatus(getTCSubject(),
                             getContestId());
+            
             List<SpecReviewComment> specReviewComments = specReviewCommentService
                     .getSpecReviewComments(getTCSubject(), getContestId(),
                             isStudio());
@@ -160,28 +185,41 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             // load the specification review, status and comments to the model
             ViewSpecificationReviewActionResultData result = new ViewSpecificationReviewActionResultData();
             result.setSpecificationReview(specificationReview);
+            
+            if (specificationReviewStatus == null) {
+                specificationReviewStatus = SpecificationReviewStatus.PENDING_REVIEW;
+                result.setShowProgress(false);
+            } else {
+                result.setShowProgress(true);
+            }
             result.setSpecificationReviewStatus(specificationReviewStatus);
             result.setSpecReviewComments(specReviewComments);
-
+            
             // for normal request flow prepare various data to be displayed to
             // user
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(
                     getTCSubject(), getContestId(), isStudio());
             result.setContestStats(contestStats);
-            
+
             // Get current session
             HttpServletRequest request = DirectUtils.getServletRequest();
             sessionData = new SessionData(request.getSession());
             // Set current project contests
-            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                getTCSubject().getUserId(), contestStats.getContest().getProject().getId());
+            List<TypedContestBriefDTO> contests = DataProvider
+                    .getProjectTypedContests(getTCSubject().getUserId(),
+                            contestStats.getContest().getProject().getId());
             sessionData.setCurrentProjectContests(contests);
-
+            
+            // check whether spec review finished
+            result.setShowSpecReview(true);
+            
             setViewData(result);
-
+            
             return SUCCESS;
         } catch (Exception e) {
+            e.printStackTrace();
+
             return Helper
                     .handleActionError(
                             this,
@@ -241,7 +279,7 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
     /**
      * Retrieve the viewData field.
-     *
+     * 
      * @return the viewData
      */
     public ViewSpecificationReviewActionResultData getViewData() {
@@ -250,8 +288,9 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
     /**
      * Set the viewData field.
-     *
-     * @param viewData the viewData to set
+     * 
+     * @param viewData
+     *            the viewData to set
      */
     public void setViewData(ViewSpecificationReviewActionResultData viewData) {
         this.viewData = viewData;
@@ -259,7 +298,7 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
     /**
      * Retrieve the sessionData field.
-     *
+     * 
      * @return the sessionData
      */
     public SessionData getSessionData() {
@@ -268,10 +307,30 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
     /**
      * Set the sessionData field.
-     *
-     * @param sessionData the sessionData to set
+     * 
+     * @param sessionData
+     *            the sessionData to set
      */
     public void setSessionData(SessionData sessionData) {
         this.sessionData = sessionData;
+    }
+
+    /**
+     * Retrieve the user service field.
+     * 
+     * @return the user service
+     */
+    public UserService getUserService() {
+        return userService;
+    }
+
+    /**
+     * Set the user service field.
+     * 
+     * @param userService
+     *            the user service to set
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

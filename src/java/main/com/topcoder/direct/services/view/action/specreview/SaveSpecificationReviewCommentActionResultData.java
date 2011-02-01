@@ -4,7 +4,7 @@
 
 package com.topcoder.direct.services.view.action.specreview;
 
-import com.topcoder.direct.specreview.services.UserComment;
+import com.topcoder.service.review.comment.specification.UserComment;
 import com.topcoder.util.errorhandling.ExceptionUtils;
 
 /**

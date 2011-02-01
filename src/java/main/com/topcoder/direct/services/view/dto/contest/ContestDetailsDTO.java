@@ -60,6 +60,11 @@ public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Awar
      * @since 1.0.2
      */
     private boolean hasContestWritePermission;
+    
+    /**
+     * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
+     */
+    private boolean showSpecReview;
 
     /**
      * <p>Constructs new <code>ContestDetailsDTO</code> instance. This implementation does nothing.</p>
@@ -160,5 +165,23 @@ public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Awar
      */
     public void setHasContestWritePermission(boolean hasContestWritePermission) {
         this.hasContestWritePermission = hasContestWritePermission;
+    }
+
+    /**
+     * Get the showSpecReview field.
+     *
+     * @return the showSpecReview
+     */
+    public boolean isShowSpecReview() {
+        return showSpecReview;
+    }
+
+    /**
+     * Set the showSpecReview field.
+     *
+     * @param showSpecReview the showSpecReview to set
+     */
+    public void setShowSpecReview(boolean showSpecReview) {
+        this.showSpecReview = showSpecReview;
     }
 }

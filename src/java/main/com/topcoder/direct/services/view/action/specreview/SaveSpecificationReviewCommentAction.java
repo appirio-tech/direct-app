@@ -10,8 +10,8 @@ import net.sf.json.JSONSerializer;
 
 import org.springframework.web.util.HtmlUtils;
 
-import com.topcoder.direct.specreview.services.SpecReviewCommentService;
-import com.topcoder.direct.specreview.services.UserComment;
+import com.topcoder.service.review.comment.specification.SpecReviewCommentService;
+import com.topcoder.service.review.comment.specification.UserComment;
 import com.topcoder.util.errorhandling.ExceptionUtils;
 
 /**
@@ -106,6 +106,18 @@ public class SaveSpecificationReviewCommentAction extends SpecificationReviewAct
      * </p>
      */
     private String commentBy;
+    
+    /**
+     * <p>
+     * Represents the subject.
+     * </p>
+     *
+     * <p>
+     * Initially set to null, can be any value. It set by setter and accessed by getter. Used
+     * in <code>execute</code> method.
+     * </p>
+     */    
+    private String subject;
 
     /**
      * <p>
@@ -180,15 +192,20 @@ public class SaveSpecificationReviewCommentAction extends SpecificationReviewAct
                     "specReviewCommentService has not been injected."));
             }
 
+            // set comment by to current user id
+            //commentBy = "" + getTCSubject().;
+            
             // prepare the user comment
             UserComment userComment = new UserComment();
             userComment.setCommentDate(new Date());
             userComment.setCommentBy(commentBy);
+            userComment.setCommentQuestionName(subject);
             comment = HtmlUtils.htmlEscape(comment);
             
             if (action.equals(ACTION_ADD)) {
                 userComment.setComment(comment);
-
+                userComment.setCommentId(-1);
+                
                 // the SpecReviewCommentService is responsible for setting the remaining fields
                 // for the add operation
                 long newCommentId = specReviewCommentService.addSpecReviewComment(getTCSubject(),
@@ -324,5 +341,23 @@ public class SaveSpecificationReviewCommentAction extends SpecificationReviewAct
      */
     public void setCommentBy(String commentBy) {
         this.commentBy = commentBy;
+    }
+
+    /**
+     * Get the subject field.
+     *
+     * @return the subject
+     */
+    public String getSubject() {
+        return subject;
+    }
+
+    /**
+     * Set the subject field.
+     *
+     * @param subject the subject to set
+     */
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

@@ -16,10 +16,13 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <script type="text/javascript" src="/scripts/specReview.js"></script>
     <script type="text/javascript">
+        var questionNames = {};
+        
         $(function() {
             var items = {};
             var userComments = {};
             var guidelines = {};
+            
             var qId;
             var contestId = ${viewData.contestStats.contest.id};
             var userName = "<s:property value='currentUserHandle'/>" 
@@ -60,6 +63,7 @@
                 <s:iterator value="sections">
                     <s:iterator value="questions">
                         guidelines[${id}] = "${guideline}";
+                        questionNames[${id}] = "${description}";
                     </s:iterator>
                 </s:iterator>
             </s:iterator>
@@ -134,7 +138,7 @@
                                                             </c:if>
                                                         </span>
                                                         
-                                                        <span class="reviewer_handle_text"><s:property value="viewData.specificationReview.review.creationUser"/></span>
+                                                        <span class="reviewer_handle_text"><s:property value="viewData.specificationReview.creationUserHandle"/></span>
                                                         <span class="reviewer_text">Reviewer : </span>
 
                                                         <div class="clearForIE6">
@@ -178,7 +182,7 @@
                                                                             <div class="comment_specreview" id="reviewer_comment_specreview${id}">
                                                                                 <div class="old_comment">
                                                                                     <p class="text_comment">Comments</p>
-                                                                                    <p><span class="text_reviewer_handle"><s:property value="viewData.specificationReview.review.creationUser"/>: </span>(
+                                                                                    <p><span class="text_reviewer_handle"><s:property value="viewData.specificationReview.creationUserHandle"/>: </span>(
                                                                                     <c:choose>
                                                                                         <c:when test="${viewData.specificationReview.review.creationTimestamp ne null}">
                                                                                             <fmt:formatDate value="${viewData.specificationReview.review.creationTimestamp}" pattern="MM/dd/yyyy HH:mm"/>
@@ -217,7 +221,7 @@
                                                         </s:iterator>
                                                         
                                                         <div id="resubmit">
-                                                            <a href="javascript:;" class="resubmit"><img src="/images/resubmit.png" alt="resubmit" /></a>
+                                                            <a href="<s:url action="contest/detail" namespace="/"><s:param name="projectId" value="viewData.contestStats.contest.id"/></s:url>" class="resubmit"><img src="/images/resubmit.png" alt="resubmit" /></a>
                                                             <br />
                                                             <span class="bottom_text"></span>
                                                         </div>

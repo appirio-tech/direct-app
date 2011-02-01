@@ -55,6 +55,11 @@ public class SoftwareContestSubmissionsDTO extends CommonDTO implements ProjectI
      * <p>A <code>ContestStatsDTO </code> providing the statistics on contest.</p>
      */
     private ContestStatsDTO contestStats;
+    
+    /**
+     * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
+     */
+    private boolean showSpecReview;
 
     /**
      * <p>Constructs new <code>SoftwareContestSubmissionsDTO</code> instance. This implementation does nothing.</p>
@@ -261,5 +266,23 @@ public class SoftwareContestSubmissionsDTO extends CommonDTO implements ProjectI
             }
         }
         return null;
+    }
+
+    /**
+     * Get the showSpecReview field.
+     *
+     * @return the showSpecReview
+     */
+    public boolean isShowSpecReview() {
+        return showSpecReview;
+    }
+
+    /**
+     * Set the showSpecReview field.
+     *
+     * @param showSpecReview the showSpecReview to set
+     */
+    public void setShowSpecReview(boolean showSpecReview) {
+        this.showSpecReview = showSpecReview;
     }
 }

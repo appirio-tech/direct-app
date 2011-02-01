@@ -227,6 +227,10 @@ public class GetContestAction extends ContestAction {
             // set contest permission
             viewData.setHasContestWritePermission(DirectUtils
                     .hasWritePermission(this, currentUser, projectId, false));
+
+            // set whether to show spec review
+            viewData.setShowSpecReview(getSpecificationReviewService()
+                    .getSpecificationReview(currentUser, projectId) != null);
         }
     }
 

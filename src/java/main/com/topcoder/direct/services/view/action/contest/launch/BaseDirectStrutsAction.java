@@ -25,6 +25,7 @@ import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.service.studio.StudioService;
 import com.topcoder.service.studio.contest.ContestManager;
 
@@ -161,6 +162,11 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * @since 1.2.3
      */
     private ProjectServices projectServices;
+    
+    /**
+     * Represents the specification review service object. It has getter & setter. Can be any value.
+     */
+    private SpecificationReviewService specificationReviewService;
 
     /**
      * <p>
@@ -532,5 +538,24 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      */
     public void setProjectServices(ProjectServices projectServices) {
         this.projectServices = projectServices;
+    }
+
+    /**
+     * Get the specificationReviewService field.
+     *
+     * @return the specificationReviewService
+     */
+    public SpecificationReviewService getSpecificationReviewService() {
+        return specificationReviewService;
+    }
+
+    /**
+     * Set the specificationReviewService field.
+     *
+     * @param specificationReviewService the specificationReviewService to set
+     */
+    public void setSpecificationReviewService(
+            SpecificationReviewService specificationReviewService) {
+        this.specificationReviewService = specificationReviewService;
     }
 }

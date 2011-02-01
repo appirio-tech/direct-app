@@ -60,11 +60,13 @@ $(function() {
         $.each(items, function(qId, item) {
             // set error if reviewer's answer is not "yes"
             var imgSrc = "/images/ico-success2.png";
+            /*
             if (item.answer != "yes") {
                 imgSrc = "/images/ico-error2.png";
                 $("#caption_specreview" + qId).find("h2").addClass("red");
                 $("#det_specreview" + qId).find("h2").addClass("red");
             }
+            */
             $("#caption_specreview" + qId).find("img.icon_status").attr("src", imgSrc);
             $("#det_specreview" + qId).find("img.icon_status").attr("src", imgSrc);
             
@@ -101,6 +103,7 @@ $(function() {
         });
         
         // set resubmit click event
+        /*
         $("#resubmit a").click(function() {
             $.ajax({
                 type: 'post',
@@ -116,6 +119,7 @@ $(function() {
                 }
             });
         });
+        */
     };
     
     /**
@@ -155,7 +159,8 @@ $(function() {
             "contestId" : contestId,
             "commentBy" : userName,
             "action" : action,
-            "commentId" : commentId
+            "commentId" : commentId,
+            "subject" : questionNames[questionId]
         };
         
         request.comment = $("#add_your_comment" + questionId).find("textarea").val();

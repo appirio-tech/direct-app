@@ -148,6 +148,10 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
             this.sessionData.setCurrentProjectContext(contestStats.getContest().getProject());
             this.sessionData.setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
         }
+        
+        // set whether to show spec review
+        viewData.setShowSpecReview(getSpecificationReviewService()
+                .getSpecificationReview(currentUser, contestId) != null);
     }
 
     /**

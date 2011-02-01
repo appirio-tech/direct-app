@@ -209,6 +209,7 @@
         <property name="userService" ref="userService"/>
         <property name="studioService" ref="studioService"/>
         <property name="projectServices" ref="projectServices"/>
+        <property name="specificationReviewService" ref="specificationReviewService"/>
     </bean>
 
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
@@ -404,9 +405,21 @@
         <property name="proxyInterface" value="com.topcoder.service.review.specification.SpecificationReviewService"/>
     </bean>
     
-    <bean id="specReviewCommentService"
-          class="com.topcoder.direct.specreview.services.impl.MockSpecReviewCommentServiceImpl">
-    </bean>
+    <bean id="specReviewCommentService" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="SpecReviewCommentServiceBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.review.comment.specification.SpecReviewCommentService"/>
+    </bean>    
     
     <bean id="specificationReviewAction"
           class="com.topcoder.direct.services.view.action.specreview.SpecificationReviewAction"
@@ -425,6 +438,7 @@
           scope="prototype" parent="specificationReviewAction">
         <property name="specificationReviewService" ref="specificationReviewService"/>
         <property name="specReviewCommentService" ref="specReviewCommentService"/>
+        <property name="userService" ref="userService"/>
     </bean>
     
     <bean id="saveSpecReviewCommentAction"

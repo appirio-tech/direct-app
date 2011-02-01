@@ -7,7 +7,7 @@ package com.topcoder.direct.services.view.action.specreview;
 import java.util.List;
 
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.specreview.services.SpecReviewComment;
+import com.topcoder.service.review.comment.specification.SpecReviewComment;
 import com.topcoder.service.review.specification.SpecificationReview;
 import com.topcoder.service.review.specification.SpecificationReviewStatus;
 import com.topcoder.util.errorhandling.ExceptionUtils;
@@ -71,6 +71,16 @@ public class ViewSpecificationReviewActionResultData {
      * <p>A <code>ContestStatsDTO </code> providing the statistics on contest.</p>
      */
     private ContestStatsDTO contestStats;
+    
+    /**
+     * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
+     */
+    private boolean showSpecReview;
+    
+    /**
+     * <p>A <code>boolean </code> to indicate whether to show progress.</p>
+     */
+    private boolean showProgress;
     
     /**
      * Default constructor, creates new instance.
@@ -162,4 +172,41 @@ public class ViewSpecificationReviewActionResultData {
     public void setContestStats(ContestStatsDTO contestStats) {
         this.contestStats = contestStats;
     }
+
+    /**
+     * Get the showSpecReview field.
+     *
+     * @return the showSpecReview
+     */
+    public boolean isShowSpecReview() {
+        return showSpecReview;
+    }
+
+    /**
+     * Set the showSpecReview field.
+     *
+     * @param showSpecReview the showSpecReview to set
+     */
+    public void setShowSpecReview(boolean showSpecReview) {
+        this.showSpecReview = showSpecReview;
+    }
+
+    /**
+     * Get the showProgress field.
+     *
+     * @return the showProgress
+     */
+    public boolean isShowProgress() {
+        return showProgress;
+    }
+
+    /**
+     * Set the showProgress field.
+     *
+     * @param showProgress the showProgress to set
+     */
+    public void setShowProgress(boolean showProgress) {
+        this.showProgress = showProgress;
+    }
+
 }

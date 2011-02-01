@@ -56,6 +56,11 @@ public class ContestRegistrantsDTO extends CommonDTO implements ContestStatsDTO.
     private List<Registrant> contestRegistrants;
 
     /**
+     * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
+     */
+    private boolean showSpecReview;
+    
+    /**
      * <p>Constructs new <code>ContestRegistrantsDTO</code> instance. This implementation does nothing.</p>
      */
     public ContestRegistrantsDTO() {
@@ -162,5 +167,21 @@ public class ContestRegistrantsDTO extends CommonDTO implements ContestStatsDTO.
                 row.getCell(5).setStringValue(dateFormatter.format(registrant.getSubmissionDate()));
             }
         }
+    }
+    /**
+     * Get the showSpecReview field.
+     *
+     * @return the showSpecReview
+     */
+    public boolean isShowSpecReview() {
+        return showSpecReview;
+    }
+    /**
+     * Set the showSpecReview field.
+     *
+     * @param showSpecReview the showSpecReview to set
+     */
+    public void setShowSpecReview(boolean showSpecReview) {
+        this.showSpecReview = showSpecReview;
     }
 }
