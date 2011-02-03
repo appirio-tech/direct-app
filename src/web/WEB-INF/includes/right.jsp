@@ -2,6 +2,8 @@
 
 <div id="area2"><!-- the right column -->
     <div class="box">
+        <a href="${ctx}/copilot/launchCopilotContest" class="button2">Get A Copilot</a>
+        <br />
         <a href="${ctx}/launch/home" class="button2">Launch New Contest</a>
     </div>
     <!-- End .box -->
