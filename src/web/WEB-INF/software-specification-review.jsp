@@ -62,7 +62,6 @@
             <s:iterator value="viewData.specificationReview.scorecard.groups">
                 <s:iterator value="sections">
                     <s:iterator value="questions">
-                        guidelines[${id}] = "${guideline}";
                         questionNames[${id}] = "${description}";
                     </s:iterator>
                 </s:iterator>

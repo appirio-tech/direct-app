@@ -78,7 +78,7 @@ $(function() {
             $.each(item.comments, function(index, comment) {
                 var c = oldComment.clone();
                 c.find(".text_comment").html(comment.commentType);
-                c.append($("<p>").append(comment.comment));
+                c.append($("<p>").append(comment.comment.replace(/&lt\;br\/&gt\;/g, "<br/>")));
                 $("#reviewer_comment_specreview" + qId).append(c);
             });
         });

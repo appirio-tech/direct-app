@@ -18,6 +18,11 @@ import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.review.data.Comment;
+import com.topcoder.management.review.data.Item;
+import com.topcoder.management.scorecard.data.Group;
+import com.topcoder.management.scorecard.data.Question;
+import com.topcoder.management.scorecard.data.Section;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
@@ -28,6 +33,9 @@ import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.service.review.specification.SpecificationReviewStatus;
 import com.topcoder.service.user.UserService;
 import com.topcoder.util.errorhandling.ExceptionUtils;
+
+import org.springframework.web.util.HtmlUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * <p>
@@ -181,6 +189,26 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             List<SpecReviewComment> specReviewComments = specReviewCommentService
                     .getSpecReviewComments(getTCSubject(), getContestId(),
                             isStudio());
+
+            for (Item item : specificationReview.getReview().getItems()) {
+                for (Comment comment : item.getAllComments()) {
+                    comment.setComment(HtmlUtils.htmlEscape(StringUtils
+                            .replace(comment.getComment(), "\n", "<br/>")));
+                }
+            }
+            
+            for (Group group : specificationReview.getScorecard().getAllGroups()) {
+                for (Section section : group.getAllSections()) {
+                    for (Question question : section.getAllQuestions()) {
+                        question.setDescription(StringUtils.replaceChars(
+                                HtmlUtils.htmlEscape(question.getDescription()),
+                                '\n', ' '));
+                        question.setGuideline(StringUtils.replaceChars(
+                                HtmlUtils.htmlEscape(question.getGuideline()),
+                                '\n', ' '));  
+                    }
+                }
+            }
 
             // load the specification review, status and comments to the model
             ViewSpecificationReviewActionResultData result = new ViewSpecificationReviewActionResultData();
