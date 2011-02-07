@@ -192,8 +192,12 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
             for (Item item : specificationReview.getReview().getItems()) {
                 for (Comment comment : item.getAllComments()) {
-                    comment.setComment(HtmlUtils.htmlEscape(StringUtils
+                    if (comment.getComment() != null && !comment.getComment().equals(""))
+                    {
+                        comment.setComment(HtmlUtils.htmlEscape(StringUtils
                             .replace(comment.getComment(), "\n", "<br/>")));
+                    }
+                    
                 }
             }
             
