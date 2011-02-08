@@ -85,11 +85,8 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
         CONTEST_TYPES.put(ContestType.TEST_SCENARIOS, "Test Scenarios");
 
         NUMERICAL_FILTER_TYPES = new LinkedHashMap<PipelineNumericalFilterType, String>();
-        NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.PRIZE, "Total Prize");
-        NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.DR_POINTS, "DR Points");
+        NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.PRIZE, "Member Cost");
         NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.CONTEST_FEE, "Contest Fee");
-        NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.REVIEW_COST, "Review Cost");
-        NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.SPEC_REVIEW_COST, "Spec Review Cost");
         NUMERICAL_FILTER_TYPES.put(PipelineNumericalFilterType.DURATION, "Duration");
     }
 
@@ -467,27 +464,14 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
             row.getCell(11).setStringValue(contest.getWasReposted() ? "Yes" : "No");
 
             StringBuilder resourceBuilder = new StringBuilder();
-            if (contest.getArchitect() != null) {
-                resourceBuilder.append(contest.getArchitect());
-            }
-            if (contest.getReviewer() != null) {
-                if (resourceBuilder.length() > 0) {
-                    resourceBuilder.append(" ");
-                }
-                resourceBuilder.append(contest.getReviewer());
-            }
+            
             if (contest.getManager() != null) {
                 if (resourceBuilder.length() > 0) {
                     resourceBuilder.append(" ");
                 }
                 resourceBuilder.append(contest.getManager());
             }
-            if (contest.getSalesPerson() != null) {
-                if (resourceBuilder.length() > 0) {
-                    resourceBuilder.append(" ");
-                }
-                resourceBuilder.append(contest.getSalesPerson());
-            }
+           
 
             String resources = resourceBuilder.toString();
             if (resources.trim().length() > 0) {

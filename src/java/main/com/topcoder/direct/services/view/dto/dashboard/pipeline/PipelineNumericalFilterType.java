@@ -21,25 +21,12 @@ public enum PipelineNumericalFilterType {
      */
     SECOND_PLACE_PRIZE,
 
-    /**
-     * <p>An <code>PipelineNumericalFilterType</code> corresponding to search for contest DR points.</p>
-     */
-    DR_POINTS,
 
     /**
      * <p>An <code>PipelineNumericalFilterType</code> corresponding to search for contest fee.</p>
      */
     CONTEST_FEE,
 
-    /**
-     * <p>An <code>PipelineNumericalFilterType</code> corresponding to search for contest review cost.</p>
-     */
-    REVIEW_COST,
-
-    /**
-     * <p>An <code>PipelineNumericalFilterType</code> corresponding to search for contest specification review cost.</p>
-     */
-    SPEC_REVIEW_COST,
 
     /**
      * <p>An <code>PipelineNumericalFilterType</code> corresponding to search for contest duration.</p>

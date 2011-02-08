@@ -258,21 +258,6 @@ public class JSPHelper {
         } else {
             double cost = 0;
 
-            Double specReviewPayment = data.getSpecReviewPayment();
-            if (specReviewPayment != null) {
-                cost += specReviewPayment;
-            }
-
-            Double drPayment = data.getDr();
-            if (drPayment != null) {
-                cost += drPayment;
-            }
-
-            Double reviewPayment = data.getReviewPayment();
-            if (reviewPayment != null) {
-                cost += reviewPayment;
-            }
-
             Double totalPrize = data.getTotalPrize();
             if (totalPrize != null) {
                 cost += totalPrize;
@@ -355,15 +340,9 @@ public class JSPHelper {
      */
     public static String toString(PipelineNumericalFilterType filterType) {
         if (filterType == PipelineNumericalFilterType.PRIZE) {
-            return "Prize";
-        } else if (filterType == PipelineNumericalFilterType.DR_POINTS) {
-            return "DR Points";
-        } else if (filterType == PipelineNumericalFilterType.CONTEST_FEE) {
+            return "Member Cost";
+        }  else if (filterType == PipelineNumericalFilterType.CONTEST_FEE) {
             return "Contest Fee";
-        } else if (filterType == PipelineNumericalFilterType.REVIEW_COST) {
-            return "Review Cost";
-        } else if (filterType == PipelineNumericalFilterType.SPEC_REVIEW_COST) {
-            return "Specification Review Cost";
         } else if (filterType == PipelineNumericalFilterType.DURATION) {
             return "Duration";
         } else  {
