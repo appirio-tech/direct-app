@@ -139,25 +139,30 @@ function drawChart() {
         var totalContestCost = 0, totalMarketAvgCost = 0;
         var totalContestDuration = 0, totalMarketAvgDuration = 0;
         var reg1 = /\$/g,reg2 = /\,/g;
+        var totalCompleted = 0;
         $("#firstDashboardTableBody table tbody tr").remove();
         $("#firstDashboardTableBody table tfoot").remove();
         $(tableViewData).each(function(i){
             totalContestFullfilment += parseFloat(this.contestFullfilment);
             totalMarketAvgFullfilment += parseFloat(this.marketAvgFullfilment);
-            totalContestCost += parseFloat(this.contestCost.replace(reg1,"").replace(reg2,""));
+            if(parseFloat(this.contestFullfilment) != 0){
+                totalCompleted++;
+                totalContestCost += parseFloat(this.contestCost.replace(reg1,"").replace(reg2,""));
+                totalContestDuration += parseFloat(this.contestDuration);
+            }
             totalMarketAvgCost += parseFloat(this.marketAvgCost.replace(reg1,"").replace(reg2,""));
-            totalContestDuration += parseFloat(this.contestDuration);
             totalMarketAvgDuration += parseFloat(this.marketAvgDuration);
             $("#firstDashboardTableBody table tbody").append(getOneRow(i, this, ""));
         });
         var totalNO = $(tableViewData).length;
+        totalCompleted = totalCompleted == 0 ? 1: totalCompleted;
         if(totalNO > 0) {
             var totalTr = "<tfoot><tr><td colspan=5 class=\"alignLeft\">Average</td>";
             totalTr += "<td>"+ new Number(totalContestFullfilment/totalNO).toFixed(2) +"%</td>";
             totalTr += "<td class=\"fontGreen\">"+ new Number(totalMarketAvgFullfilment/totalNO).toFixed(2) +"%</td>";
-            totalTr += "<td>$"+ new Number(totalContestCost/totalNO).toFixed(2) +"</td>";
+            totalTr += "<td>$"+ new Number(totalContestCost/totalCompleted).toFixed(2) +"</td>";
             totalTr += "<td class=\"fontGreen\">$"+ new Number(totalMarketAvgCost/totalNO).toFixed(2) +"</td>";
-            totalTr += "<td>"+ (totalContestDuration/totalNO).toFixed(2) +"</td>";
+            totalTr += "<td>"+ (totalContestDuration/totalCompleted).toFixed(2) +"</td>";
             totalTr += "<td class=\"fontGreen\">"+ (totalMarketAvgDuration/totalNO).toFixed(2) +"</td></tr></tfoot>";
             $("#firstDashboardTableBody table").append(totalTr);
         } else {
@@ -178,7 +183,7 @@ function drawChart() {
         var totalContestCost = 0, totalMarketAvgCost = 0;
         var totalContestDuration = 0, totalMarketAvgDuration = 0;
         var reg1 = /\$/g,reg2 = /\,/g;
-        var rowsNo = 0, colspan = 5;
+        var rowsNo = 0, colspan = 5, totalCompleted = 0;
         // data to render the drill-in table
         var data = tableViewData;
         if (type == "Market") {
@@ -210,20 +215,24 @@ function drawChart() {
                 rowsNo++;
                 totalContestFullfilment += parseFloat(this.contestFullfilment);
                 totalMarketAvgFullfilment += parseFloat(this.marketAvgFullfilment);
-                totalContestCost += parseFloat(this.contestCost.replace(reg1,"").replace(reg2,""));
+                if(parseFloat(this.contestFullfilment) != 0 ) {
+                    totalCompleted++;
+                    totalContestCost += parseFloat(this.contestCost.replace(reg1,"").replace(reg2,""));
+                    totalContestDuration += parseFloat(this.contestDuration);
+                }
                 totalMarketAvgCost += parseFloat(this.marketAvgCost.replace(reg1,"").replace(reg2,""));
-                totalContestDuration += parseFloat(this.contestDuration);
                 totalMarketAvgDuration += parseFloat(this.marketAvgDuration);
                 $(chartTableTbody).append(getOneRow(i,this, type));
             }
         });
         if(rowsNo > 0) {
+                totalCompleted = totalCompleted == 0 ? 1: totalCompleted;
                 var totalTr = "<tfoot><tr><td colspan=" + colspan + " class=\"alignLeft\">Average</td>";
                 totalTr += "<td>"+ new Number(totalContestFullfilment/rowsNo).toFixed(2) +"%</td>";
                 totalTr += "<td class=\"fontGreen\">"+ new Number(totalMarketAvgFullfilment/rowsNo).toFixed(2) +"%</td>";
-                totalTr += "<td>$"+ new Number(totalContestCost/rowsNo).toFixed(2) +"</td>";
+                totalTr += "<td>$"+ new Number(totalContestCost/totalCompleted).toFixed(2) +"</td>";
                 totalTr += "<td class=\"fontGreen\">$"+ new Number(totalMarketAvgCost/rowsNo).toFixed(2) +"</td>";
-                totalTr += "<td>"+ (totalContestDuration/rowsNo).toFixed(2) +"</td>";
+                totalTr += "<td>"+ (totalContestDuration/totalCompleted).toFixed(2) +"</td>";
                 totalTr += "<td class=\"fontGreen\">"+ (totalMarketAvgDuration/rowsNo).toFixed(2) +"</td></tr></tfoot>";
                 $(".tableViewChart table").append(totalTr);
         } else {
