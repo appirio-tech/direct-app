@@ -41,7 +41,8 @@ function updateOrderReviewSoftware() {
    $('#sworReviewPayment').html(reviewPayment.formatMoney(2));
    var contestFee = mainWidget.softwareCompetition.projectHeader.getAdminFee();
    $('#sworAdminFee').html(contestFee.formatMoney(2));
-   var additionalFee = specificationReviewPayment + reviewPayment + contestFee;
+   $('#sworCopilotFee').html(parseFloat(mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+   var additionalFee = specificationReviewPayment + reviewPayment + contestFee + parseFloat(mainWidget.softwareCompetition.copilotCost);
    $('#sworAdditionalCosts').html(additionalFee.formatMoney(2));
    $('#sworTotal').html((contestPrizeCost + additionalFee).formatMoney(2));
 }

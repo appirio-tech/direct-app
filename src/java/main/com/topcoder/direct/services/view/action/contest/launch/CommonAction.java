@@ -113,6 +113,7 @@ public class CommonAction extends BaseDirectStrutsAction {
         configs.put("fileTypes", ConfigUtils.getFileTypes().getFileTypes());
         configs.put("softwareContestFees", ConfigUtils.getSoftwareContestFees());
         configs.put("billingInfos", getBillingProjectInfos());
+        configs.put("copilotFees", ConfigUtils.getCopilotFees());
         setResult(configs);
         return SUCCESS;
     }

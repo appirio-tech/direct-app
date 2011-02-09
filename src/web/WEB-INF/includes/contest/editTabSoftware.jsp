@@ -84,9 +84,9 @@
                  
 				 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
 				 <br /> <br />
-				 
-				 <span class="name2"><strong>Project Name</strong></span>
-				 <span class="value">
+				 <div id="projectEditDiv">
+				 <span class="name"><strong>Project Name</strong></span>
+				 <div class="projectsSelect" style="float:left">
 					  <select id="projects" name="tcProject" class="bigin">
 							<option value="-1">Please select an existing project</option>
 							<s:iterator value="projects" var="proj">
@@ -95,8 +95,22 @@
 							</option>
 							</s:iterator>
 					  </select>
-				 </span>
-                 
+				 </div>
+                 </div>
+                 <br /> <br />
+                 <div id="copilotEditDiv">
+                 <span class="name"><strong>Copilot</strong></span>
+                <div class="copilotsSelect" style="float:left">
+					  <select id="copilots" name="copilots" class="bigin">
+							<option value="0">Unassigned</option>
+							<s:iterator value="copilots" var="copilot">
+							    <option value='<s:property value="userId"/>'>
+                                    <s:property value="handle" />
+							    </option>
+							</s:iterator>
+					  </select>
+				 </div>
+                 </div>
                  </p>
                  <p class="save">                 	
                      <a href="javascript:;" class="cancel_text">cancel</a>
@@ -188,6 +202,7 @@
                      	<td class="first_tab"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
                       <td class="sec_tab_prize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
                        <td class="sec_tab_prize"><strong>Contest Fee:</strong> $<span id="rswContestFee"></span></td>
+                       <td class="sec_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
                       <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal"></span></td>
                    </tr>
               </table>
@@ -238,7 +253,7 @@
                          <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" />
                          <label class="second">2nd Place</label>
                          <span class="dw">$</span>
-                         <span id="swSecondPlace" class="mid_info" style="line-height:30px;"></span>
+                         <span id="swSecondPlace" class="prizeInfo" style="line-height:30px;"></span>
                          
                      	</div>
                          <br />
@@ -246,9 +261,10 @@
                          <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
                          <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
                          <span class="mid_info">Digital Run:&nbsp;&nbsp;$</span>
-                         <span><input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" /></span>
+                         <span><input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"/></span>
                          <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
                          <span class="mid_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
+                         <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
                          <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
                          </span>                                                                
                      </div>

@@ -36,6 +36,7 @@ var studioSubtypeOverviews = [];
 var studioSubtypeFees = [];
 var fileTypes = [];
 var billingInfos = [];
+var copilotFees = {};
 //software
 var softwareContestFees = {};
 var originalSoftwareContestFees = {};
@@ -95,6 +96,7 @@ $(document).ready(function() {
             softwareContestFees = result.softwareContestFees;
             originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
             billingInfos = result.billingInfos;
+            copilotFees = result.copilotFees;
           },
           function(errorMessage) {
               showErrors(errorMessage);
@@ -983,7 +985,10 @@ function fillPrizes() {
    $('#swDigitalRun').val(contestCost.drCost.formatMoney(2));
    
    $('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
-   $('#swTotal,#rswTotal').html(getContestTotal(feeObject, prizeType).formatMoney(2));
+
+   $('#swCopilotFee,#rswCopilotFee').html(mainWidget.softwareCompetition.copilotCost.formatMoney(2));
+
+   $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
 
    //totals
    $('#swPrize_low').html(getContestTotal(feeObject, 'low').formatMoney(2));
@@ -1227,7 +1232,6 @@ function getContestTotal(feeObject, prizeType) {
     var contestCost = getContestCost(feeObject, prizeType);
     return contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
     + contestCost.reliabilityBonusCost + contestCost.drCost + feeObject.contestFee + feeObject.specReviewCost;
-
 }
 
 function getContestCost(feeObject,prizeType) {

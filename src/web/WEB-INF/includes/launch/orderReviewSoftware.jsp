@@ -56,6 +56,7 @@
   			<td>Contest Fee : $<span id="sworAdminFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td>Specification Review : $<span id="sworSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
   			<td>Review  : $<span id="sworReviewPayment"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+            <td>Copilot Fee : $<span id="sworCopilotFee"></span> <a href="javascript:showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 			<td>&nbsp;</td>
   			<td class="last"><span id="sworAdditionalCosts"></span></td>
 		</tr>

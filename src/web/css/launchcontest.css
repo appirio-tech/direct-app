@@ -1107,18 +1107,19 @@
 				line-height:22px;
 				}
 			
-			/**　input **/	
+			/**prize input **/	
 			.prizesInner .prizesInput{
-				width:46px;
+				width:63px;
 				height:16px;
 				float:left;
 				display:inline;
 				margin-top:4px;
 				border:0;
-				padding:3px 9px;
+				padding:3px;
 				font-weight:bold;
-				text-align:right;
+				text-align:left;
 				color:#6c6c6c;
+                font-size:12px;
 				background:url(/images/prizesInput.gif) no-repeat;
 				}
 			
@@ -1679,7 +1680,7 @@
 		}
 
 /** billing  and round select **/
-.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected {
+.billingSelect .newListSelected,.prizeBillingSelect .newListSelected,.roundelect .newListSelected,.copilotSelect .newListSelected,.projectsSelect .newListSelected,.copilotsSelect .newListSelected {
 	width:283px;
 	height:28px;
 	padding:0 5px;
@@ -1697,11 +1698,11 @@
 		color:#6c6c6c;
 		}
 	
-	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt {
+	.billingSelect .selectedTxt,.prizeBillingSelect .selectedTxt,.roundelect .selectedTxt, .copilotSelect  .selectedTxt, .copilotsSelect  .selectedTxt, .projectsSelect  .selectedTxt {
 		width:281px;
 		}
 	
-	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList, .copilotSelect .newList{
+	.billingSelect  .newList,.prizeBillingSelect .newList,.roundelect .newList,.copilotSelect .newList, .copilotsSelect .newList, .projectsSelect .newList{
 		width:290px;
 		border:#ccc solid 1px;
 		background:#fff;
@@ -2698,5 +2699,11 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	text-align:right;
 	color:#6c6c6c;
 	background:url(/images/prizesInput.gif) no-repeat;
+}
+
+.prizeInfo {
+  font-weight:bold;
+  color:#6c6c6c;
+  font-Size:12px;
 }
 

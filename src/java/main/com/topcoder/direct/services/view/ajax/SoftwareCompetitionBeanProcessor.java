@@ -123,16 +123,31 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         // uses a map to store the copilots, key is the user id, value is the handle
         Map<String, String> copilots = new HashMap<String, String>();
 
+        double totalCopilots = 0;
+
         // Gets copilots from the resources of the contest
         for (Resource r : resources) {
             if(r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
                 // resource is of role Copilot, add the resource into the copilot map
                 copilots.put(String.valueOf(r.getProperty("External Reference ID")), r.getProperty("Handle"));
+
+                String copilotPaymentStr = r.getProperty("Payment");
+                double copilotFee = 0;
+
+                try {
+                    copilotFee = Double.valueOf(copilotPaymentStr);
+                } catch(Exception ex) {
+                    // ignore
+                }
+
+                totalCopilots += copilotFee;
             }
         }
 
         // put the copilots into the result
         result.put("copilots", copilots);
+
+        result.put("copilotsFee", String.valueOf(totalCopilots));
 
         // project info properties map
         result.put("properties", project.getProperties());

@@ -134,7 +134,7 @@
           <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" />
           <label class="second">2nd Place</label>
           <span class="dw">$</span>
-          <span id="swSecondPlace" class="mid_info"></span>
+          <span id="swSecondPlace" class="prizeInfo"></span>
           
       	</div>
           <br />
@@ -144,9 +144,10 @@
 			  <span class="mid_info">
 				Digital Run:&nbsp;&nbsp;$
 			  </span>
-			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" />
+			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"/>
               <span class="mid_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
 			  <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
+              <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
 			  <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
 		  </span>                                                                
       </div>

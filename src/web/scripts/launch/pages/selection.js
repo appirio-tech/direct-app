@@ -112,7 +112,13 @@ function validateFieldsContestSelectionSoftware() {
    mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $("#projects option[value="+ tcProjectId +"]").text();
    mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);   
    mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
-   
+
+   if(copilotUserId == 0) {
+       mainWidget.softwareCompetition.copilotCost = 0;
+   } else {
+       mainWidget.softwareCompetition.copilotCost = copilotFees[projectCategory.id].copilotFee;
+   }
+
    if($('#lccCheckBox').is(':checked')) {
    	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
    } else {

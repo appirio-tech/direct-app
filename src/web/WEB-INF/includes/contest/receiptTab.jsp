@@ -164,15 +164,15 @@
 															<td>Contest Fee : $${contestFee}</td>
 															<td>Specification Review : $${specificationReviewPayment}</td>
 															<td>Review  : $${reviewPayment}</td>
-															<td>&nbsp;</td>
-															<td class="last">$${contestFee + specificationReviewPayment + reviewPayment}</td>
+															<td>Copilot Fee  : $${copilotCost}</td>
+															<td class="last">$${contestFee + specificationReviewPayment + reviewPayment + copilotCost}</td>
 														</tr>
 													</tbody></table>
 													<table class="total">
 														<tbody><tr>
 															<td class="toLeft">Total:</td>
 															<td class="toRight">$${firstPrize + secondPrize + drPoints + reliabilityBonusCost
-															+ contestFee + specificationReviewPayment + reviewPayment}</td>
+															+ contestFee + specificationReviewPayment + reviewPayment + copilotCost}</td>
 															
 														</tr>
 													</tbody></table>													

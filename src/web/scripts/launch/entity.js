@@ -228,6 +228,9 @@ com.topcoder.direct.SoftwareCompetition = function() {
 
     // hold the copilot user handle
     this.copilotUserName = "";
+
+    // hold the copilot cost
+    this.copilotCost = 0.0;
 } 
 
 /**

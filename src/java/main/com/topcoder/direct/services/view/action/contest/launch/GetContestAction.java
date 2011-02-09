@@ -10,17 +10,14 @@ import java.util.Comparator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.resource.ResourceRole;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
@@ -148,6 +145,16 @@ public class GetContestAction extends ContestAction {
     private SoftwareCompetition softwareCompetition;
 
     /**
+     * <p>Copilots for this contest</p>
+     */
+    private List<ContestCopilotDTO> copilots;
+
+    /**
+     * <p>The copilot cost of the contest</p>
+     */
+    private double copilotCost;
+
+    /**
      * <p>
      * Creates a <code>GetContestAction</code> instance.
      * </p>
@@ -223,6 +230,11 @@ public class GetContestAction extends ContestAction {
             {
                 contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());
             }
+
+            // set copilots
+            this.copilots = DataProvider.getCopilotsForDirectProject(softwareCompetition.getProjectHeader().getTcDirectProjectId());
+
+            this.copilotCost = calculateCopilotCost(softwareCompetition.getResources());
             
             // set contest permission
             viewData.setHasContestWritePermission(DirectUtils
@@ -268,6 +280,24 @@ public class GetContestAction extends ContestAction {
      */
     public long getContestId() {
         return contestId;
+    }
+
+    /**
+     * <p>Gets the copilots of the software contest</p>
+     *
+     * @return the copilots of the software contest.
+     */
+    public List<ContestCopilotDTO> getCopilots() {
+        return copilots;
+    }
+
+    /**
+     * <p>Gets the copilot cost</p>
+     *
+     * @return the cost of the copilots.
+     */
+    public double getCopilotCost() {
+        return copilotCost;
     }
 
     /**
@@ -458,5 +488,30 @@ public class GetContestAction extends ContestAction {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Calculate the copilot cost by checking the contest resources payment.
+     *
+     * @param resources all the resources of the contest.
+     * @return the copilot cost.
+     */
+    private double calculateCopilotCost(Resource[] resources) {
+        double result = 0;
+
+        for (Resource r : resources) {
+            if (r.getResourceRole().getId() == ResourceRole.RESOURCE_ROLE_COPILOT_ID) {
+                String copilotPaymentStr = r.getProperty("Payment");
+                double copilotFee = 0;
+
+                try {
+                    copilotFee = Double.valueOf(copilotPaymentStr);
+                } catch (Exception ex) {
+                    // ignore
+                }
+                result += copilotFee;
+            }
+        }
+        return result;
     }
 }

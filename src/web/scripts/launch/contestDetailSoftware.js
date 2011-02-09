@@ -273,7 +273,9 @@ function initContest(contestJson) {
         mainWidget.softwareCompetition.copilotUserName = v;
         hasCopilot = true;
     });
-   
+
+    mainWidget.softwareCompetition.copilotCost = parseFloat(contestJson.copilotsFee);
+
    if(isDevOrDesign()) {
      mainWidget.softwareCompetition.assetDTO.directjsRootCategoryId = contestJson.rootCategoryId;
      mainWidget.softwareCompetition.assetDTO.directjsCategories = contestJson.categoryIds;
@@ -415,6 +417,9 @@ function populateTypeSection() {
   } else {
   	 $("#rCopilots").html('<a href=http://www.topcoder.com/tc?module=MemberProfile&cr=' + mainWidget.softwareCompetition.copilotUserId + '>' + mainWidget.softwareCompetition.copilotUserName + '</a>');
   }
+
+    // set copilot selection value in edit mode
+       $("#copilots").val(mainWidget.softwareCompetition.copilotUserId);
 }
 
 function saveTypeSection() {
@@ -445,6 +450,8 @@ function validateFieldsTypeSection() {
    var categoryId = getContestType(true)[1];
    var contestName = $('input#contestName').val();
    var tcProjectId = parseInt($('select#projects').val());
+   var copilotUserId = parseInt($('select#copilots').val());
+   var copilotName = $('select#copilots option:selected').text();
 
    //validation
    var errors = [];
@@ -471,6 +478,10 @@ function validateFieldsTypeSection() {
          
    mainWidget.softwareCompetition.assetDTO.name = contestName;         
    mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
+
+   // set the copilot user id and user name
+   mainWidget.softwareCompetition.copilotUserId = copilotUserId;
+   mainWidget.softwareCompetition.copilotUserName = copilotName;
    
    mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
    mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $('select#projects option[value=' + tcProjectId + ']').html()
@@ -490,7 +501,19 @@ function showTypeSectionEdit() {
 		$(".selectDesing select").data('customized',true);
       	$(".selectDesing select").sSelect();
 		$('.selectDesing div.selectedTxt').html('Select Contest Type');
-    }	
+    }
+
+    if(!$('#projects').data('customized')) {
+        $('#projects').sSelect({ddMaxHeight: '220',yscroll: true}).change(function() {
+              handleProjectDropDownChange();
+          });
+        $('#projects').data('customized',true);
+    }
+
+    if(!$('#copilots').data('customized')) {
+       $('#copilots').sSelect({ddMaxHeight: '220',yscroll: true});
+       $('#copilots').data('customized',true);
+    }
 }
 
 
@@ -1024,3 +1047,62 @@ function showSpecReview(contestJson) {
     $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
 
 }
+
+/**
+ * Gets copilots for direct project.
+ *
+ * @param directProjectId the direct project id
+ */
+function getCopilotsByDirectProjectId(directProjectId) {
+
+    var returnValue = {};
+
+    var request = {directProjectId:directProjectId};
+
+    $.ajax({
+       type: 'GET',
+       url:  ctx + "/launch/getDirectProjectCopilots",
+       data: request,
+       cache: false,
+       async: false,
+       dataType: 'json',
+       success: function(jsonResult) {
+           handleJsonResult(jsonResult,
+           function(result) {
+               returnValue.copilots = result.copilots;
+               returnValue.selected = result.selected;
+           },
+           function(errorMessage) {
+               showErrors(errorMessage);
+           });
+       }
+    });
+    return returnValue;
+}
+
+// method to populate copilots selection based on the project selection change
+function handleProjectDropDownChange() {
+    var value = $('#projects').getSetSSValue();
+
+    var result = getCopilotsByDirectProjectId(value);
+
+    var copilots = result.copilots;
+    var selected = result.selected;
+    var $contestCopilots = $("#copilots");
+
+    $contestCopilots.html("");
+
+    $contestCopilots.append($('<option></option>').val(0).html("Unassigned"));
+
+    $.each(copilots, function(key, value) {
+
+        $contestCopilots.append($('<option></option>').val(key).html(value));
+    });
+
+    // set the selection drop down value
+    $contestCopilots.val(selected);
+
+    $('#copilots').resetSS();
+    $('#copilots').getSetSSValue(selected);
+}
+
