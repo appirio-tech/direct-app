@@ -340,7 +340,7 @@ public class JSPHelper {
      */
     public static String toString(PipelineNumericalFilterType filterType) {
         if (filterType == PipelineNumericalFilterType.PRIZE) {
-            return "Member Cost";
+            return "Member Costs";
         }  else if (filterType == PipelineNumericalFilterType.CONTEST_FEE) {
             return "Contest Fee";
         } else if (filterType == PipelineNumericalFilterType.DURATION) {
