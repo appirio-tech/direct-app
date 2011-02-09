@@ -140,7 +140,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         tcDirectProjects.add(projectData);
 
         List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats = DataProvider
-                .getEnterpriseProjectStats(tcDirectProjects);
+                .getDirectProjectStats(tcDirectProjects, getSessionData().getCurrentUserId());
         viewData.setDashboardProjectStat(enterpriseProjectStats.get(0));
         DashboardHelper.setAverageConestDurationText(viewData.getDashboardProjectStat());
     }

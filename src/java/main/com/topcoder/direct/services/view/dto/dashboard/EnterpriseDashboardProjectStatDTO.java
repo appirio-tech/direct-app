@@ -37,6 +37,26 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      */
     private double averageCostPerContest;
 
+    /*
+    * <p>A <code>double</code> providing the average member cost per contest for specified project.</p>
+    */
+    private double averageMemberCostPerContest;
+
+    /*
+    * <p>A <code>double</code> providing the total member cost for specified project.</p>
+    */
+    private double totalMemberCost;
+
+    /*
+    * <p>A <code>double</code> providing the average contest fee per contest for specified project.</p>
+    */
+    private double averageContestFeePerContest;
+
+    /*
+    * <p>A <code>double</code> providing the total contest fee for specified project.</p>
+    */
+    private double totalContestFee;
+
     /**
      * <p>A <code>double</code> providing the total cost for specified project.</p>
      */
@@ -46,6 +66,11 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      * <p>A <code>double</code> providing the average fulfillment for specified project.</p>
      */
     private double averageFulfillment;
+
+    /**
+     * <p>A <code>double</code> providing the completed contests number for specified project.</p>
+     */
+    private int completedNumber;
 
     /**
      * <p>A <code>String</code> represents the average contest duration text.</p>
@@ -157,6 +182,97 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
     public void setAverageCostPerContest(double averageCostPerContest) {
         this.averageCostPerContest = averageCostPerContest;
     }
+
+     /**
+     * <p>Gets the average member cost per contest for specified project.</p>
+     *
+     * @return a <code>double</code> providing the average member cost per contest for specified project.
+     */
+    public double getAverageMemberCostPerContest() {
+        return this.averageMemberCostPerContest;
+    }
+
+    /**
+     * <p>Sets the average member cost per contest for specified project.</p>
+     *
+     * @param averageMemberCostPerContest a <code>double</code> providing the average member cost per contest for specified project.
+     */
+    public void setAverageMemberCostPerContest(double averageMemberCostPerContest) {
+        this.averageMemberCostPerContest = averageMemberCostPerContest;
+    }
+
+    /**
+     * <p>Gets the total member cost for specified project.</p>
+     *
+     * @return a <code>double</code> providing the total member cost for specified project.
+     */
+    public double getTotalMemberCost() {
+        return this.totalMemberCost;
+    }
+
+    /**
+     * <p>Sets the total member cost for specified project.</p>
+     *
+     * @param totalMemberCost a <code>double</code> providing the total member cost for specified project.
+     */
+    public void setTotalMemberCost(double totalMemberCost) {
+        this.totalMemberCost = totalMemberCost;
+    }
+
+    /**
+     * <p>Gets the average contest Fee per contest for specified project.</p>
+     *
+     * @return a <code>double</code> providing the average contest Fee per contest for specified project.
+     */
+    public double getAverageContestFeePerContest() {
+        return this.averageContestFeePerContest;
+    }
+
+    /**
+     * <p>Sets the average contest Fee per contest for specified project.</p>
+     *
+     * @param averageContestFeePerContest a <code>double</code> providing the average contest Fee per contest for specified project.
+     */
+    public void setAverageContestFeePerContest(double averageContestFeePerContest) {
+        this.averageContestFeePerContest = averageContestFeePerContest;
+    }
+
+    /**
+     * <p>Gets the total contest fee for specified project.</p>
+     *
+     * @return a <code>double</code> providing the total contest fee for specified project.
+     */
+    public double getTotalContestFee() {
+        return this.totalContestFee;
+    }
+
+    /**
+     * <p>Sets the total contest fee for specified project.</p>
+     *
+     * @param totalContestFee a <code>double</code> providing the total contest fee for specified project.
+     */
+    public void setTotalContestFee(double totalContestFee) {
+        this.totalContestFee = totalContestFee;
+    }
+
+     /**
+     * <p>Gets the completed contest number for specified project.</p>
+     *
+     * @return a <code>int</code> providing the completed contest number for specified project.
+     */
+    public int getCompletedNumber() {
+        return this.completedNumber;
+    }
+
+    /**
+     * <p>Sets the completed contest number for specified project.</p>
+     *
+     * @param completedNumber a <code>int</code> providing the completed contest number for specified project.
+     */
+    public void setCompletedNumber(int completedNumber) {
+        this.completedNumber = completedNumber;
+    }
+
 
     /**
      * Retrieves the averageContestDurationText field.

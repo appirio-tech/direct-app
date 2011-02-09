@@ -1245,6 +1245,83 @@ public class DataProvider {
         return data;
     }
 
+
+    /**
+     * <p>Gets the enterprise level statistics for projects assigned to current user.</p>
+     *
+     * @param tcDirectProjects a <code>List</code> listing details for TC Direct projects accessible to user.
+     * @param userId a <code>long</code> providing the ID for the user to get data for.
+     * @return a <code>List</code> providing the details for all projects accessible to current user.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.1.2
+     */
+    public static List<EnterpriseDashboardProjectStatDTO> getDirectProjectStats(List<ProjectData> tcDirectProjects,
+                                                                                           long userId)
+        throws Exception {
+        List<EnterpriseDashboardProjectStatDTO> data = new ArrayList<EnterpriseDashboardProjectStatDTO>();
+        if ((tcDirectProjects == null) || (tcDirectProjects.isEmpty())) {
+            return data;
+        }
+
+        String projectIds = getConcatenatedIdsString(tcDirectProjects);
+        Set<Long> projectsWithStats = new HashSet<Long>();
+
+        final String queryName = "direct_project_stat";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("tcdirectid", projectIds);
+        request.setProperty("uid", String.valueOf(userId));
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            long projectId = row.getLongItem("tc_direct_project_id");
+
+            ProjectBriefDTO project = new ProjectBriefDTO();
+            project.setId(projectId);
+            for (ProjectData tcDirectProject : tcDirectProjects) {
+                if (tcDirectProject.getProjectId() == projectId) {
+                    project.setName(tcDirectProject.getName());
+                    projectsWithStats.add(tcDirectProject.getProjectId());
+                    break;
+                }
+            }
+
+            EnterpriseDashboardProjectStatDTO projectStatDTO = new EnterpriseDashboardProjectStatDTO();
+            projectStatDTO.setProject(project);
+            projectStatDTO.setCompletedNumber(row.getIntItem("completed_number"));
+            projectStatDTO.setTotalMemberCost(row.getDoubleItem("total_member_cost"));
+            projectStatDTO.setAverageMemberCostPerContest(row.getDoubleItem("average_member_cost"));
+            projectStatDTO.setTotalContestFee(row.getDoubleItem("total_contest_fee"));
+            projectStatDTO.setAverageContestFeePerContest(row.getDoubleItem("average_contest_fee"));
+            projectStatDTO.setAverageFulfillment(row.getDoubleItem("fullfillment"));
+            projectStatDTO.setTotalProjectCost(row.getDoubleItem("total_cost"));
+
+            data.add(projectStatDTO);
+        }
+
+        for (ProjectData tcDirectProject : tcDirectProjects) {
+            if (!projectsWithStats.contains(tcDirectProject.getProjectId())) {
+                ProjectBriefDTO project = new ProjectBriefDTO();
+                project.setId(tcDirectProject.getProjectId());
+                project.setName(tcDirectProject.getName());
+
+                EnterpriseDashboardProjectStatDTO projectStatDTO = new EnterpriseDashboardProjectStatDTO();
+                projectStatDTO.setProject(project);
+                projectStatDTO.setTotalMemberCost(0);
+                projectStatDTO.setAverageCostPerContest(0);
+                projectStatDTO.setTotalContestFee(0);
+                projectStatDTO.setAverageContestFeePerContest(0);
+                projectStatDTO.setAverageFulfillment(0);
+                projectStatDTO.setTotalProjectCost(0);
+
+                data.add(projectStatDTO);
+            }
+        }
+
+        return data;
+    }
+
     /**
      * <p>Gets the mapping to be used for looking up the project categories by IDs.</p>
      *

@@ -185,19 +185,32 @@
                                                 <td><s:property value="runningContestsNumber"/></td>
                                             </tr>
                                             <tr>
-                                                <td class="statusName"># Finished</td>
-                                                <td><s:property value="finishedContestsNumber"/></td>
+                                                <td class="statusName">Finished(Completed/Failed)</td>
+                                                <td>${viewData.projectStats.finishedContestsNumber}(${viewData.dashboardProjectStat.completedNumber}/
+                                                    ${viewData.projectStats.finishedContestsNumber-viewData.dashboardProjectStat.completedNumber})</td>
                                             </tr>
                                             <tr>
-                                                <td class="statusName">Average Contest Duration</td>
+                                                <td class="statusName">Total Member Cost</td>
                                                 <td>
-                                                    ${viewData.dashboardProjectStat.averageContestDurationText}
+                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.totalMemberCost}" pattern="$#,##0.00"/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="statusName">Average Cost per Contest </td>
+                                                <td class="statusName">Average Member Cost</td>
                                                 <td>
-                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageCostPerContest}" pattern="$#,##0.00"/>
+                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageMemberCostPerContest}" pattern="$#,##0.00"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Total Contest Fee</td>
+                                                <td>
+                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.totalContestFee}" pattern="$#,##0.00"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Average Contest Fee</td>
+                                                <td>
+                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageContestFeePerContest}" pattern="$#,##0.00"/>
                                                 </td>
                                             </tr>
                                             <tr>
