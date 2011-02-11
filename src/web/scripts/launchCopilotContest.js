@@ -445,9 +445,6 @@ function validateFields() {
     if(!checkRequired(contestName)) {
         errors.push('Copilot posting name should not be empty.');
     } 
-    if (billingProjectId <= 0) {
-        errors.push('Billing account should be selected.');
-    }
     
     if(errors.length > 0) {
         showErrors(errors);
