@@ -9,8 +9,13 @@
  *  - Moved onchange event listener to #scheduledContestsViewType drop-down to dashboard-pipeline.js
  *  - Moved onclick event listeners to expand/collapse buttons on Pipeline Report screen to dashboard-pipeline.js
  *
- * @author BeBetter, isv
- * @version 1.2 (Direct Search Assembly)
+ *  Version 1.3 - (TopCoder Cockpit - Cost Report Assembly)
+ *  - Add DataTable pagination setting for aggregation cost report
+ *  - Add two custom DataTable comparator for money and simple data.
+ *  - Add collapse/expand event for aggregation cost report and cost details report.
+ *
+ * @author BeBetter, isv, TCSDEVELOPER
+ * @version 1.3
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -96,6 +101,43 @@ $(document).ready(function() {
         return z;
     };
 
+    /** sort comparator for simple date "yyyy-MM-DD" **/
+    jQuery.fn.dataTableExt.oSort['simple-date-asc'] = function(a, b) {
+        if (trim(a) != '') {
+            var frDatea = trim(a).split('-');
+            var x = (parseFloat(frDatea[2]) + parseFloat(frDatea[1]) * 30 + parseFloat(frDatea[0]) * 365) * 1;
+        } else {
+            var x = 10000000000000;
+        }
+
+		if (trim(b) != '') {
+			var frDateb = trim(b).split('-');
+            var y = (parseFloat(frDateb[2]) + parseFloat(frDateb[1]) * 30 + parseFloat(frDateb[0]) * 365) * 1;
+		} else {
+			var y = 10000000000000;
+		}
+		var z = ((x < y) ? -1 : ((x > y) ? 1 : 0));
+		return z;
+	};
+
+	jQuery.fn.dataTableExt.oSort['simple-date-desc'] = function(a, b) {
+		if (trim(a) != '') {
+            var frDatea = trim(a).split('-');
+            var x = (parseFloat(frDatea[2]) + parseFloat(frDatea[1]) * 30 + parseFloat(frDatea[0]) * 365) * 1;
+        } else {
+            var x = 10000000000000;
+        }
+
+		if (trim(b) != '') {
+			var frDateb = trim(b).split('-');
+            var y = (parseFloat(frDateb[2]) + parseFloat(frDateb[1]) * 30 + parseFloat(frDateb[0]) * 365) * 1;
+		} else {
+			var y = 10000000000000;
+		}
+        var z = ((x < y) ? 1 : ((x > y) ? -1 : 0));
+        return z;
+    };
+
     /***TCCC-2516*/
     jQuery.fn.dataTableExt.oSort['html-trimmed-asc'] = function (a, b) {
         var x = trim(a.replace(/<.*?>/g, "").toLowerCase());
@@ -106,6 +148,18 @@ $(document).ready(function() {
     jQuery.fn.dataTableExt.oSort['html-trimmed-desc'] = function (a, b) {
         var x = trim(a.replace(/<.*?>/g, "").toLowerCase());
         var y = trim(b.replace(/<.*?>/g, "").toLowerCase());
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['money-asc'] = function (a, b) {
+        var x = parseFloat(trim(a.replace(/[^\d]/g, "")));
+        var y = parseFloat(trim(b.replace(/[^\d]/g, "")));
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['money-desc'] = function (a, b) {
+        var x = parseFloat(trim(a.replace(/[^\d]/g, "")));
+        var y = parseFloat(trim(b.replace(/[^\d]/g, "")));
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
 
@@ -387,6 +441,35 @@ $(document).ready(function() {
 
     });
 
+    $("#costReportSection .paginatedDataTable").dataTable({
+        "iDisplayLength": 25,
+        "bFilter": false,
+        "bSort": true,
+        "bAutoWidth": false,
+              "oLanguage": {
+                   "sLengthMenu": sStdMenu + " per page"
+               },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+                { "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+                { "sType": "html" },
+                { "sType": "simple-date" },
+                { "sType": "money" },
+                { "sType": "money" },
+                { "sType": "money" },
+                { "sType": "money" }
+            ]
+
+    });
+
+
+
     function formatDate(d) {
         var t1 = d.getDate();
         if (t1 < 10) {
@@ -475,7 +558,33 @@ $(document).ready(function() {
         }
     });
 
+    $("#costReportAggregationArea .expand").click(function() {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $('.' + $('#aggregationCostReportType').val() + 'AggregationCostReport').show();
+            $('.viewType').show();
+            $(this).removeClass("collapse");
+        } else {
+            $(".scData").hide();
+            $('.viewType').hide();
+            $(this).addClass("collapse");
+        }
+    });
+
     $("#pipelineDetails .expand").click(function() {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $(this).parent().parent().next().show();
+            $(this).parent().parent().parent().next().show();
+            $(this).removeClass("collapse");
+        } else {
+            $(this).parent().parent().next().hide();
+            $(this).parent().parent().parent().next().hide();
+            $(this).addClass("collapse");
+        }
+    });
+
+    $("#costDetails .expand").click(function() {
         $(this).blur();
         if ($(this).hasClass("collapse")) {
             $(this).parent().parent().next().show();

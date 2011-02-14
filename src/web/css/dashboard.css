@@ -2487,7 +2487,7 @@ A{
     float:right;
     font-size: 12px;
     /*left: -115px;*/
-    right: 135px;
+    right: 180px;
     position:relative;
     width:auto;
 	  *top:10px;
@@ -4417,7 +4417,18 @@ hr.plain {
     font-size: 14px;
 }
 
+#costReportAggregationArea th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+
+
 #pipelineDetails th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+
+#costDetails th.tableTitle {
     text-align: left;
     font-size: 14px;
 }
@@ -4511,7 +4522,15 @@ TABLE.pipelineStats TH.tableColumn {
     background: url(../images/container2_bottom.png) repeat-x bottom;
 }
 
+#costReportSection {
+    background: url(../images/container2_bottom.png) repeat-x bottom;
+}
+
 #pipelineDetails {
+    margin-bottom: 0px;
+}
+
+#costDetails {
     margin-bottom: 0px;
 }
 
@@ -4519,16 +4538,29 @@ TABLE.pipelineStats TH.tableColumn {
     padding: 8px 0px 8px;
 }
 
+#costReportSection div.panel {
+    padding: 8px 50px 8px 0;
+}
+
 #pipelineDetails_length select {
     margin-top: 6px;
 }
 
-#pipelineReportArea .bottom2 {
+#costDetails select {
+    margin-top: 6px;
+}
+
+#costReportSection .bottom2 {
     margin-top: 10px;
     margin-right: 10px;
 }
 
 #pipelineScheduledContests th.viewType {
+    text-align: right;
+    padding-right: 5px;
+}
+
+#costReportAggregationArea th.viewType {
     text-align: right;
     padding-right: 5px;
 }
@@ -4552,6 +4584,30 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #pipelineReportArea th.tableTitle a.collapse{
+    background: url(../images/icon-collapse.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+
+#costReportSection th.tableTitle a.expand{
+    background: url(../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+
+#costReportSection th.tableTitle a.collapse{
     background: url(../images/icon-collapse.png) no-repeat left center;
     text-decoration:none;
     font-size:14px;

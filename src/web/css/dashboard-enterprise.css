@@ -452,3 +452,15 @@ td.fontGreen{
     width: 100%;
     padding-top: 100px;
 }
+#costReportFilters{
+		border-width:1px;
+    position:relative;
+}
+#costReportFilterShowControl{
+		float:right;
+    position:absolute;
+  	top:2;
+	  right:0;
+}
+
+

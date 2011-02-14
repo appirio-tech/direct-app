@@ -1,7 +1,9 @@
 <%--
   - Author: TCSDEVELOPER
-  - Version: 1.0 (Direct Pipeline Integration assembly)
+  - Version: 1.1
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 Changes: Add support for cost report.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application which provide views for
   - various reports.
@@ -22,6 +24,8 @@
             <select name="select" id="selectReport">
                 <option value="PIPELINE" <s:if test="viewData.reportType.toString() == 'PIPELINE'">selected="selected"</s:if>>
                     Pipeline</option>
+                <option value="COST" <s:if test="viewData.reportType.toString() == 'COST'">selected="selected"</s:if>>
+                    Cost</option>
             </select>
         </span>
     </div>

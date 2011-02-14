@@ -23,8 +23,7 @@ import java.util.Map.Entry;
 
 import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
-import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
-import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.*;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
@@ -41,6 +40,7 @@ import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.security.RolePrincipal;
@@ -194,9 +194,15 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Add method getCopilotsForDirectProject to get copilots of the direct project</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 2.4.0 (TC Cockpit - Cost Report Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Add method getDashboardCostReportDetails to get cost details of each contest with specified filters.</li>
+ *   </ol>
+ * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman
- * @version 2.3.0
+ * @author isv, BeBetter, tangzx, xjtufreeman, TCSDEVELOPER
+ * @version 2.4.0
  */
 public class DataProvider {
 
@@ -2040,6 +2046,189 @@ public class DataProvider {
         result.put("clients", clientsMap);
 
         return result;
+    }
+
+    /**
+     * Gets the cost report details with the given paramters. The method returns a list of CostDetailsDTO. Each
+     * CostDetailDTO represents cost details of one contest.
+     *
+     * @param projectIds the direct project ids.
+     * @param projectCategoryIds the software project category ides.
+     * @param studioProjectCategoryIds the studio project category ids.
+     * @param clientIds the client ids.
+     * @param billingAccountIds the billing accounts ids.
+     * @param projectStatusIds the project status ids.
+     * @param startDate the start date.
+     * @param endDate the end date.
+     * @return the generated cost report.
+     * @throws Exception if any error occurs.
+     * @since 2.4.0
+     */
+    public static List<CostDetailsDTO> getDashboardCostReportDetails(long[] projectIds, long[] projectCategoryIds, long[] studioProjectCategoryIds,
+                long[] clientIds, long[] billingAccountIds, long[] projectStatusIds,  Date startDate, Date endDate, Map<String, Long> statusMapping) throws Exception {
+        // create an empty list first to store the result data
+        List<CostDetailsDTO> data
+                = new ArrayList<CostDetailsDTO>();
+
+        if ((projectIds == null) || (projectIds.length == 0)) {
+            return data;
+        }
+        if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
+            return data;
+        }
+
+        if((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
+            return data;
+        }
+
+        if ((clientIds == null) || (clientIds.length == 0)) {
+            return data;
+        }
+        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+            return data;
+        }
+        if (projectStatusIds == null || (projectStatusIds.length == 0)) {
+            return data;
+        }
+
+        // concatenate the filters
+        String projectCategoryIDsList = "-1";
+        if (projectCategoryIds != null && projectCategoryIds.length > 0) {
+          projectCategoryIDsList = concatenate(projectCategoryIds, ", ");
+        }
+        String studioProjectCategoryIdsList = "-1";
+        if (studioProjectCategoryIds != null && studioProjectCategoryIds.length > 0) {
+           studioProjectCategoryIdsList = concatenate(studioProjectCategoryIds, ", ");
+        }
+
+
+        String clientIdsList = concatenate(clientIds, ", ");
+        String billingAccountIdsList = concatenate(billingAccountIds, ", ");
+        String projectIDsList = concatenate(projectIds, ", ");
+
+        // date format to prepare date for query input
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+
+        String queryName = "dashboard_cost_report";
+
+        if (projectIds[0] != 0) {
+
+            request.setProperty("tcdirectid", projectIDsList);
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+
+        } else if (billingAccountIds[0] != 0) {
+
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", billingAccountIdsList);
+            request.setProperty("clientid", "0");
+
+        } else if (clientIds[0] != 0) {
+
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", clientIdsList);
+
+        } else {
+            return data;
+        }
+
+        request.setContentHandle(queryName);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+        request.setProperty("scids", studioProjectCategoryIdsList);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+
+        // prepare status filter
+        Set<Long> statusFilter = new HashSet<Long>();
+        for(long statusId : projectStatusIds) {
+            statusFilter.add(statusId);
+        }
+
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+
+            CostDetailsDTO costDTO = new CostDetailsDTO();
+
+            // set status first
+            costDTO.setStatus(row.getStringItem("contest_status").trim());
+
+            // filter by status
+            if (!statusFilter.contains(statusMapping.get(costDTO.getStatus().toLowerCase()))) continue;
+
+            IdNamePair client = new IdNamePair();
+            IdNamePair billing = new IdNamePair();
+            IdNamePair directProject = new IdNamePair();
+            IdNamePair contest = new IdNamePair();
+            IdNamePair contestCategory = new IdNamePair();
+
+            if (row.getItem("client_id").getResultData() != null) {
+                client.setId(row.getLongItem("client_id"));
+            }
+            if (row.getItem("client").getResultData() != null) {
+                client.setName(row.getStringItem("client"));
+            }
+            if (row.getItem("billing_project_id").getResultData() != null) {
+                billing.setId(row.getLongItem("billing_project_id"));
+            }
+            if (row.getItem("billing_project_name").getResultData() != null) {
+                billing.setName(row.getStringItem("billing_project_name"));
+            }
+            if (row.getItem("direct_project_id").getResultData() != null) {
+                directProject.setId(row.getLongItem("direct_project_id"));
+            }
+            if (row.getItem("direct_project_name").getResultData() != null) {
+                directProject.setName(row.getStringItem("direct_project_name"));
+            }
+            if (row.getItem("project_id").getResultData() != null) {
+                 contest.setId(row.getLongItem("project_id"));
+            }
+            if (row.getItem("contest_name").getResultData() != null) {
+                contest.setName(row.getStringItem("contest_name"));
+            }
+            if (row.getItem("project_category_id").getResultData() != null) {
+                contestCategory.setId(row.getLongItem("project_category_id"));
+            }
+            if (row.getItem("category").getResultData() != null) {
+                contestCategory.setName(row.getStringItem("category"));
+            }
+            if (row.getItem("contest_fee").getResultData() != null) {
+                costDTO.setContestFee(row.getDoubleItem("contest_fee"));
+            }
+            if (row.getItem("estimated_member_costs").getResultData() != null) {
+                costDTO.setEstimatedCost(row.getDoubleItem("estimated_member_costs"));
+            }
+            if (row.getItem("actual_member_costs").getResultData() != null) {
+                costDTO.setActualCost(row.getDoubleItem("actual_member_costs"));
+            }
+            if (row.getItem("completion_date").getResultData() != null) {
+                costDTO.setCompletionDate(row.getTimestampItem("completion_date"));
+            }
+
+            costDTO.setStudio(row.getIntItem("is_studio") == 1);
+
+            costDTO.setClient(client);
+            costDTO.setBilling(billing);
+            costDTO.setProject(directProject);
+            costDTO.setContest(contest);
+            costDTO.setContestType(contestCategory);
+
+            if(costDTO.getStatus().equals("Finished")) {
+                // for finished contest, total cost = actual cost + contest fee
+                costDTO.setTotal(costDTO.getActualCost() + costDTO.getContestFee());
+            } else {
+                // for unfinished contest, total cost = estimated cost + contest fee
+                costDTO.setTotal(costDTO.getEstimatedCost() + costDTO.getContestFee());
+            }
+
+
+            data.add(costDTO);
+        }
+
+        return data;
     }
 
     /**
