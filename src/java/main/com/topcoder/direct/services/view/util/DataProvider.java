@@ -26,6 +26,7 @@ import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.dto.*;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
 import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
 import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
 import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
@@ -2229,6 +2230,47 @@ public class DataProvider {
         }
 
         return data;
+    }
+
+    /**
+     * Gets the contest receipt data for a contest.
+     * 
+     * @param contestId the contest id.
+     * @param isStudio true if the contest is a studio contest, false otherwise.
+     * @return a <code>ContestReceiptDTO</code> instance providing the contest receipt data.
+     * @throws Exception if any error occurs.
+     */
+    public static ContestReceiptDTO getContestReceipt(long contestId, boolean isStudio) throws Exception {
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        
+        Request request = new Request();
+        request.setContentHandle("direct_contest_receipt");
+        request.setProperty("pj", String.valueOf(contestId));
+
+        ResultSetContainer result = dataAccess.getData(request).get("direct_contest_receipt");
+        if (result.size() == 0) {
+            return null;
+        }
+        int row = 0;
+        
+        ContestReceiptDTO contestReceipt = new ContestReceiptDTO();
+        contestReceipt.setFirstPlacePrize(result.getDoubleItem(row, "first_place_prize"));
+        contestReceipt.setSecondPlacePrize(result.getDoubleItem(row, "second_place_prize"));
+        contestReceipt.setThirdPlacePrize(result.getDoubleItem(row, "third_place_prize"));
+        contestReceipt.setFourthPlacePrize(result.getDoubleItem(row, "fourth_place_prize"));
+        contestReceipt.setFifthPlacePrize(result.getDoubleItem(row, "fifth_place_prize"));
+        contestReceipt.setMilestonePrize(result.getDoubleItem(row, "milestone_prize"));
+        contestReceipt.setDrPoints(result.getDoubleItem(row, "dr_points"));
+        contestReceipt.setContestFee(result.getDoubleItem(row, "contest_fee"));
+        contestReceipt.setReliabilityBonus(result.getDoubleItem(row, "reliability_bonus"));
+        contestReceipt.setSpecReviewCost(result.getDoubleItem(row, "spec_review_cost"));
+        contestReceipt.setReviewCost(result.getDoubleItem(row, "review_cost"));
+        contestReceipt.setCopilotCost(result.getDoubleItem(row, "copilot_cost"));
+        contestReceipt.setBugFixCost(result.getDoubleItem(row, "bug_fix_cost"));
+        contestReceipt.setTotalCost(result.getDoubleItem(row, "total_cost"));
+        contestReceipt.setFinished(result.getStringItem(row, "status").equals("Finished"));
+        
+        return contestReceipt;
     }
 
     /**
