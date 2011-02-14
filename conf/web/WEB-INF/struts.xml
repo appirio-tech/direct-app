@@ -243,7 +243,7 @@
             <result name="success">/WEB-INF/project-permissions.jsp</result>
         </action>
 
-        <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction">	
+        <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction"> 
             <result name="success" type="redirectAction">
                 <param name="actionName">dashboardNotifications</param>
                 <param name="pn">perm</param>
@@ -462,7 +462,7 @@
             <result>/WEB-INF/contest-details2.jsp</result>
         </action>
 
-		<action name="receipt" class="getContestAction">
+        <action name="receipt" class="getContestReceiptAction">
             <result>/WEB-INF/contest-receipt.jsp</result>
         </action>
 

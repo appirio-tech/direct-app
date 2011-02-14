@@ -278,6 +278,9 @@
     <bean id="getContestAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
     </bean>
+    <bean id="getContestReceiptAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestReceiptAction"
+          parent="getContestAction" scope="prototype">
+    </bean>
 
     <bean id="abstractVMAction" class="com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction"
           parent="baseDirectStrutsAction" scope="prototype" abstract="true">
@@ -488,11 +491,11 @@
     </bean>
     
         <!-- For Copilot Profile and Copilot Project DAO-->
-	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName">
-			<value>java:TCS_CATALOG</value>
-		</property>
-	</bean>
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>java:TCS_CATALOG</value>
+        </property>
+    </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
