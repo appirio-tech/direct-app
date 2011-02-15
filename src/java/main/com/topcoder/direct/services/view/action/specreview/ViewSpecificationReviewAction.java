@@ -5,13 +5,17 @@
 package com.topcoder.direct.services.view.action.specreview;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.web.util.HtmlUtils;
 
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
@@ -23,8 +27,7 @@ import com.topcoder.management.review.data.Item;
 import com.topcoder.management.scorecard.data.Group;
 import com.topcoder.management.scorecard.data.Question;
 import com.topcoder.management.scorecard.data.Section;
-import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
 import com.topcoder.service.review.comment.specification.SpecReviewCommentService;
 import com.topcoder.service.review.comment.specification.UserComment;
@@ -33,9 +36,6 @@ import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.service.review.specification.SpecificationReviewStatus;
 import com.topcoder.service.user.UserService;
 import com.topcoder.util.errorhandling.ExceptionUtils;
-
-import org.springframework.web.util.HtmlUtils;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * <p>
@@ -179,9 +179,9 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             }
 
             // fetch the specification review, status and comments
-            SpecificationReview specificationReview = specificationReviewService
-                    .getSpecificationReview(getTCSubject(), getContestId());
-            
+            List<SpecificationReview> specificationReviews = specificationReviewService
+                    .getAllSpecificationReviews(getTCSubject(), getContestId());
+
             SpecificationReviewStatus specificationReviewStatus = specificationReviewService
                     .getSpecificationReviewStatus(getTCSubject(),
                             getContestId());
@@ -190,42 +190,75 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
                     .getSpecReviewComments(getTCSubject(), getContestId(),
                             isStudio());
 
-            for (Item item : specificationReview.getReview().getItems()) {
-                for (Comment comment : item.getAllComments()) {
-                    if (comment.getComment() != null && !comment.getComment().equals(""))
-                    {
-                        comment.setComment(HtmlUtils.htmlEscape(StringUtils
-                            .replace(comment.getComment(), "\n", "<br/>")));
+            Map<Long, List<SpecComment>> specComments = new HashMap<Long, List<SpecComment>>();
+            
+            for (SpecificationReview specificationReview : specificationReviews) {
+                for (Item item : specificationReview.getReview().getItems()) {
+                    if (!specComments.containsKey(item.getQuestion())) {
+                        specComments.put(item.getQuestion(),
+                                new ArrayList<SpecComment>());
                     }
                     
+                    for (Comment comment : item.getAllComments()) {
+                        SpecComment specComment = new SpecComment();
+                        
+                        specComment.setCommentType(SpecCommentType.REVIEWER_COMMENT);
+                        specComment.setComment(comment.getComment());
+                        specComment.setReviewerCommentType(comment.getCommentType().getName());
+                        specComment.setCommentDate(specificationReview.getReview().getCreationTimestamp());
+                        specComment.setCommentBy(specificationReview.getCreationUserHandle());
+                        
+                        specComments.get(item.getQuestion()).add(specComment);
+                    }
+                }                   
+            }
+            
+            SpecificationReview specificationReview = null;
+            if (!specificationReviews.isEmpty()) {
+                specificationReview = specificationReviews.get(specificationReviews.size() - 1);    
+            
+                for (Group group : specificationReview.getScorecard().getAllGroups()) {
+                    for (Section section : group.getAllSections()) {
+                        for (Question question : section.getAllQuestions()) {
+                            question.setDescription(StringUtils.replaceChars(
+                                    HtmlUtils.htmlEscape(question.getDescription()),
+                                    '\n', ' '));
+                            question.setGuideline(StringUtils.replaceChars(
+                                    HtmlUtils.htmlEscape(question.getGuideline()),
+                                    '\n', ' '));  
+                        }
+                    }
                 }
             }
             
-            for (Group group : specificationReview.getScorecard().getAllGroups()) {
-                for (Section section : group.getAllSections()) {
-                    for (Question question : section.getAllQuestions()) {
-                        question.setDescription(StringUtils.replaceChars(
-                                HtmlUtils.htmlEscape(question.getDescription()),
-                                '\n', ' '));
-                        question.setGuideline(StringUtils.replaceChars(
-                                HtmlUtils.htmlEscape(question.getGuideline()),
-                                '\n', ' '));  
+
+            if (specReviewComments != null) {
+                for (SpecReviewComment specReviewComment : specReviewComments) {
+                    for (UserComment userComment : specReviewComment.getComments()) {
+                        SpecComment specComment = new SpecComment();
+                        
+                        specComment.setCommentType(SpecCommentType.USER_COMMENT);
+                        specComment.setComment(userComment.getComment());
+                        specComment.setCommentDate(userComment.getCommentDate());
+                        specComment.setCommentBy(userComment.getCommentBy());
+                        specComment.setCommentId(userComment.getCommentId());
+                        
+                        specComments.get(specReviewComment.getQuestionId()).add(specComment);                
                     }
-                }
+                }    
+            }    
+            
+            for (Entry<Long, List<SpecComment>> comments : specComments.entrySet()) {
+                Collections.sort(comments.getValue());
             }
 
             // load the specification review, status and comments to the model
             ViewSpecificationReviewActionResultData result = new ViewSpecificationReviewActionResultData();
             result.setSpecificationReview(specificationReview);
-            
-            if (specificationReviewStatus == null) {
-                specificationReviewStatus = SpecificationReviewStatus.PENDING_REVIEW;
-                result.setShowProgress(false);
-            } else {
-                result.setShowProgress(true);
-            }
+            result.setShowProgress(true);
             result.setSpecificationReviewStatus(specificationReviewStatus);
             result.setSpecReviewComments(specReviewComments);
+            result.setSpecComments(specComments);
             
             // for normal request flow prepare various data to be displayed to
             // user

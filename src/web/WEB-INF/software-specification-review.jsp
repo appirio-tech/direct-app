@@ -17,6 +17,10 @@
     <script type="text/javascript" src="/scripts/specReview.js"></script>
     <script type="text/javascript">
         var questionNames = {};
+        var contestId = ${viewData.contestStats.contest.id};
+        var userName = "<s:property value='currentUserHandle'/>" 
+            || "<c:out value='${currentUserHandle}'/>" 
+            || "<c:out value='${userHandle}'/>";
         
         $(function() {
             var items = {};
@@ -24,41 +28,7 @@
             var guidelines = {};
             
             var qId;
-            var contestId = ${viewData.contestStats.contest.id};
-            var userName = "<s:property value='currentUserHandle'/>" 
-                || "<c:out value='${currentUserHandle}'/>" 
-                || "<c:out value='${userHandle}'/>";
             
-            <s:iterator value="viewData.specificationReview.review.items">
-                qId = ${question};
-                items[qId] = {
-                    "answer" : "${answer}",
-                    "comments" : []
-                };
-                <s:iterator value="comments">
-                    items[qId]['comments'][items[qId]['comments'].length] = {
-                        "comment" : "${comment}",
-                        "commentType" : "${commentType.name}"
-                    }
-                </s:iterator>
-            </s:iterator>
-            <s:iterator value="viewData.specReviewComments">
-                qId = ${questionId};
-                userComments[qId] = [];
-                <s:iterator value="comments">
-                    userComments[qId][userComments[qId].length] = {
-                        "commentBy" : "${commentBy}",
-                        "commentDate" : <c:choose>
-                                            <c:when test="${commentDate ne null}">
-                                                "(<fmt:formatDate value="${commentDate}" pattern="MM/dd/yyyy HH:mm"/>)"
-                                            </c:when>
-                                            <c:otherwise>"(00/00/0000 00.00)"</c:otherwise>
-                                        </c:choose>,
-                        "comment" : "${comment}",
-                        "commentId" : "${commentId}"
-                    };
-                </s:iterator>
-            </s:iterator>
             <s:iterator value="viewData.specificationReview.scorecard.groups">
                 <s:iterator value="sections">
                     <s:iterator value="questions">
@@ -67,16 +37,22 @@
                 </s:iterator>
             </s:iterator>
             
-            renderSpecReviewPage(items, userComments, guidelines, contestId, userName);
-            
             addComment = function(questionId) {
                 handleAddOrUpdateCommentEvent(questionId, contestId, userName, "add", "-1");
             };
             
-            <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
-                setPageWaitingForFixes();
+            <c:if test="${viewData.specificationReviewStatus eq 'FINISHED'}">
+                $(".comment_specreview a").hide();
+                $(".to_add_your_comment").hide();
             </c:if>
             
+            <c:if test="${viewData.specReviewComments eq null}">
+                $(".comment_specreview a").hide();
+                $(".to_add_your_comment").hide();
+            </c:if>            
+
+            $(".add_your_comment").hide();
+            registerEditEvent();
         });
     </script>
 </head>
@@ -135,10 +111,21 @@
                                                             <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
                                                                 Waiting For Fixes...
                                                             </c:if>
+                                                            <c:if test="${viewData.specificationReviewStatus eq 'NO_SPEC_REVIEW'}">
+                                                                No Spec Review Now...
+                                                            </c:if>    
+                                                            <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_SUBMIT'}">
+                                                                Waiting For Submit...
+                                                            </c:if>
+                                                            <c:if test="${viewData.specificationReviewStatus eq 'FINISHED'}">
+                                                                Spec Review is Complete
+                                                            </c:if>
                                                         </span>
                                                         
-                                                        <span class="reviewer_handle_text"><s:property value="viewData.specificationReview.creationUserHandle"/></span>
-                                                        <span class="reviewer_text">Reviewer : </span>
+                                                        <c:if test="${viewData.specificationReview ne null}">
+                                                            <span class="reviewer_handle_text"><s:property value="viewData.specificationReview.creationUserHandle"/></span>
+                                                            <span class="reviewer_text">Reviewer : </span>
+                                                        </c:if>
 
                                                         <div class="clearForIE6">
                                                         </div>
@@ -161,6 +148,7 @@
                                                                                     </h2>
                                                                                 </div>
                                                                             </div>
+                                                                            
                                                                             <!-- End .caption_specreview -->
                                                                             <div class="det_specreview" id="det_specreview${id}">
                                                                                 <a href="javascript:;" onclick="showHideDiv('caption_specreview${id}', 'det_specreview${id}');">
@@ -178,26 +166,68 @@
                                                                                 </p>
                                                                             </div>                                                         
                                                                             <!-- End .det_specreview -->
-                                                                            <div class="comment_specreview" id="reviewer_comment_specreview${id}">
-                                                                                <div class="old_comment">
-                                                                                    <p class="text_comment">Comments</p>
-                                                                                    <p><span class="text_reviewer_handle"><s:property value="viewData.specificationReview.creationUserHandle"/>: </span>(
-                                                                                    <c:choose>
-                                                                                        <c:when test="${viewData.specificationReview.review.creationTimestamp ne null}">
-                                                                                            <fmt:formatDate value="${viewData.specificationReview.review.creationTimestamp}" pattern="MM/dd/yyyy HH:mm"/>
-                                                                                        </c:when>
-                                                                                        <c:otherwise>00/00/0000 00.00</c:otherwise>
-                                                                                    </c:choose>
-                                                                                    )</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="comment_specreview" id="comment_specreview${id}" style="display:none">
-                                                                            </div>
+                                                                            
+                                                                            <s:set var="comments" value="%{#attr['viewData']['specComments'][#attr['id']]}"/> 
+                                                                           <div id="comment_area_${id}"> 
+                                                                            <s:iterator value="comments">
+                                                                                <c:if test="${commentType eq 'REVIEWER_COMMENT'}">
+                                                                                    <div class="comment_specreview">
+                                                                                        <div class="old_comment">
+                                                                                            <p class="text_comment">${reviewerCommentType}</p>
+                                                                                            <p><span class="text_reviewer_handle">${commentBy}: </span>(
+                                                                                            <c:choose>
+                                                                                                <c:when test="${commentDate ne null}">
+                                                                                                    <fmt:formatDate value="${commentDate}" pattern="MM/dd/yyyy HH:mm"/>
+                                                                                                </c:when>
+                                                                                                <c:otherwise>00/00/0000 00.00</c:otherwise>
+                                                                                            </c:choose>
+                                                                                            )</p>
+                                                                                            <p>${comment}</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </c:if>  
+                                                                                
+                                                                                <c:if test="${commentType eq 'USER_COMMENT'}">
+                                                                                    <div class="comment_specreview" id="commentDiv_${commentId}">
+                                                                                        <div class="old_comment">
+                                                                                            <c:if test="${commentBy eq userHandle}">
+                                                                                                <a href="javascript:;">
+                                                                                                    <img src="/images/edit.png" alt="Edit comment" class="sr_editcomment">
+                                                                                                </a>
+                                                                                            </c:if>
+                                                                                            <p>
+                                                                                                <span class="text_reviewer_handle">
+                                                                                                    <c:if test="${commentBy eq userHandle}">
+                                                                                                    Your
+                                                                                                    </c:if>
+                                                                                                    <c:if test="${commentBy ne userHandle}">
+                                                                                                    ${commentBy}
+                                                                                                    </c:if>
+                                                                                                    comment: 
+                                                                                                </span>
+                                                                                                <span class="date_field">(<fmt:formatDate value="${commentDate}" pattern="MM/dd/yyyy HH:mm"/>)</span>
+                                                                                            </p>
+                                                                                            <p class="comment_field">
+                                                                                                ${comment}
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div>   
+                                                                                    <div class="add_your_comment">
+                                                                                        <div class="textarea1"><textarea></textarea></div>
+                                                                                        <p class="add_comment">
+                                                                                            <a href="javascript:;" class="add_comment_cancel_text cancel_link">Cancel</a>
+                                                                                            <a href="javascript:;" class="add_comment_cancel_text edit_link">Edit</a>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </c:if>                                                                                
+                                                                            </s:iterator>
+                                                                            </div> 
+                                                                            
                                                                             <div class="to_add_your_comment" id="to_add_your_comment${id}">
                                                                                 <div class="captionInner">
                                                                                     <h2>
                                                                                         &nbsp;
-                                                                                        <a href="javascript:;" onclick="showHideDiv('add_your_comment${id}', 'to_add_your_comment${id}');"><img src="/images/add_your_comment.png" alt="Add Your Comment" class="sr_addcomment" /></a>
+                                                                                        <a href="javascript:;" onclick="showAddCommentDiv('${id}', 'add_your_comment${id}', 'to_add_your_comment${id}');"><img src="/images/add_your_comment.png" alt="Add Your Comment" class="sr_addcomment" /></a>
                                                                                     </h2>
                                                                                 </div>
                                                                             </div>
@@ -219,14 +249,18 @@
                                                             </s:iterator>
                                                         </s:iterator>
                                                         
+                                                        <!--
                                                         <div id="resubmit">
                                                             <a href="<s:url action="contest/detail" namespace="/"><s:param name="projectId" value="viewData.contestStats.contest.id"/></s:url>" class="resubmit"><img src="/images/resubmit.png" alt="resubmit" /></a>
                                                             <br />
                                                             <span class="bottom_text"></span>
                                                         </div>
+                                                        
 
                                                         <div class="panel">&nbsp;</div>
+                                                        -->
                                                         <div class="panel">&nbsp;</div>
+                                                        
                                                     </div>
                                                     <!-- End .container2Content -->
                                                 

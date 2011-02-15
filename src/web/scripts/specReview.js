@@ -8,6 +8,11 @@
  * @version 1.0
  */
 $(function() {
+    showAddCommentDiv = function(qId, div_to_show, div_to_hide) {
+        $("#add_your_comment" + qId + " textarea").val("Input your comment...");
+        showHideDiv(div_to_show, div_to_hide);
+    };
+
     /**
      * Show/Hide spec review question.
      * 
@@ -17,7 +22,7 @@ $(function() {
     showHideDiv = function(div_to_show, div_to_hide){
         $('#'+div_to_show).show();
         $('#'+div_to_hide).hide();
-    }
+    };
     
     /**
      * Change the comment according to the input text.
@@ -154,16 +159,22 @@ $(function() {
      * @param commentId the comment id
      */
     handleAddOrUpdateCommentEvent = function(questionId, contestId, userName, action, commentId) {
+        var comment = $("#add_your_comment" + questionId).find("textarea").val();
+
+        sendRequest(questionId, contestId, userName, action, commentId, comment);
+    };
+
+    sendRequest = function(questionId, contestId, userName, action, commentId, comment) {
         var request = {
             "questionId" : questionId,
             "contestId" : contestId,
             "commentBy" : userName,
             "action" : action,
             "commentId" : commentId,
-            "subject" : questionNames[questionId]
+            "subject" : questionNames[questionId],
+            "comment" : comment
         };
         
-        request.comment = $("#add_your_comment" + questionId).find("textarea").val();
         request.comment = request.comment.replace(/\\/g, "\\\\");
         //request.comment = $("#xConvertor").text(request.comment).html();
         
@@ -178,7 +189,7 @@ $(function() {
             }
         });
     };
-    
+
     /**
      * Update comment div, if it's not exist, then create one.
      * 
@@ -191,51 +202,40 @@ $(function() {
         var commentDivId = "commentDiv_" + userComment.commentId;
         var commentDiv = $("#" + commentDivId);
         if (commentDiv.length == 0) {
-            commentDiv = $("<div>");
-            commentDiv.addClass("old_comment");
+            commentDiv = $("<div class='comment_specreview'>");
             commentDiv.attr("id", commentDivId);
-            commentDiv.append("<a href='javascript:;'><img class='sr_editcomment' alt='Edit comment' src='/images/edit.png'></a>");
-            commentDiv.append("<p><span class='text_reviewer_handle'>Your comment: </span><span id='" + commentDivId + "_time'>(00/00/0000 00.00)</span></p>");
-            commentDiv.append("<p id='" + commentDivId + "_content'>");
-            $("#comment_specreview" + questionId).append(commentDiv);
+            var oldComment = $("<div>");
+            oldComment.addClass("old_comment");
+            oldComment.append("<a href='javascript:;'><img class='sr_editcomment' alt='Edit comment' src='/images/edit.png'></a>");
+            oldComment.append("<p><span class='text_reviewer_handle'>Your comment: </span><span class='date_field'>(00/00/0000 00.00)</span></p>");
+            oldComment.append("<p class='comment_field'");
+            commentDiv.append(oldComment);
+            $("#comment_area_" + questionId).append(commentDiv);
+
+            var editDiv = $("<div class='add_your_comment'>");
+            var textareaDiv = $("<div class='textarea1'>");
+            textareaDiv.append("<textarea>");
+            editDiv.append(textareaDiv);
+            editDiv.append("<p class='add_comment'>");        
+            editDiv.find("p").append("<a href='javascript:;' class='add_comment_cancel_text cancel_link'>Cancel</a>");
+            editDiv.find("p").append("<a href='javascript:;' class='add_comment_cancel_text edit_link'>Edit</a>");
+            $("#comment_area_" + questionId).append(editDiv);
+            registerEditEvent();
         }
-        $("#" + commentDivId + "_content").html(userComment.comment);
+        
+        $("#" + commentDivId).next().hide();
+        
+        $("#" + commentDivId + " .comment_field").html(userComment.comment);
         if (userComment.commentDate.month != null) {
-            $("#" + commentDivId + "_time").html(getDateFormatString(userComment.commentDate));
+            $("#" + commentDivId + " .date_field").html(getDateFormatString(userComment.commentDate));
         } else {
-            $("#" + commentDivId + "_time").html(userComment.commentDate);
+            $("#" + commentDivId + " .date_field").html(userComment.commentDate);
         }
         // use user name instead of "Your comment" and hide edit link if current user isn't the comment user
         if (userComment.commentBy != userName) {
             commentDiv.find(".text_reviewer_handle").html(userComment.commentBy + " comment: ");
             commentDiv.find(".sr_editcomment").hide();
         }
-            
-        commentDiv.find("a").unbind("click");
-        commentDiv.find("a").click(function() {
-            $($("#add_your_comment" + questionId).find("a")[1]).show();
-            $($("#add_your_comment" + questionId).find("a")[2]).hide();
-            $("#add_your_comment" + questionId).find("textarea").val($("#" + commentDivId + "_content").html());
-            
-            $("#add_your_comment" + questionId).show();
-            $("#to_add_your_comment" + questionId).hide();
-            
-            $($("#add_your_comment" + questionId).find("a")[1]).unbind("click");
-            $($("#add_your_comment" + questionId).find("a")[1]).click(function() {
-                handleAddOrUpdateCommentEvent(questionId, contestId, userName, "update", userComment.commentId);
-                $($("#add_your_comment" + questionId).find("a")[1]).hide();
-                $($("#add_your_comment" + questionId).find("a")[2]).show();
-                
-                $("#add_your_comment" + questionId).hide();
-                $("#to_add_your_comment" + questionId).show();
-            });
-            
-            $($("#add_your_comment" + questionId).find("a")[0]).click(function() {
-                $($("#add_your_comment" + questionId).find("a")[1]).hide();
-                $($("#add_your_comment" + questionId).find("a")[2]).show();
-            });
-        });
-    
     };
     
     /**
@@ -288,5 +288,36 @@ $(function() {
             data.userComment.comment = data.userComment.comment.replace(/\\\\/g, "\\");
             updateCommentDiv(data.userComment, questionId, contestId, userName);
         }
+    };
+
+    registerEditEvent = function() {
+        $(".comment_specreview a").unbind("click");
+        $(".comment_specreview a").click(function(e) {
+            showEditArea(e);
+        });
+
+        $(".add_your_comment .cancel_link").unbind("click");
+        $(".add_your_comment .cancel_link").click(function(e) {
+            $(e.target).parent().parent().hide();
+        });
+
+        $(".add_your_comment .edit_link").unbind("click");
+        $(".add_your_comment .edit_link").click(function(e) {
+            var editDiv = $(e.target).parent().parent();
+            var commentDiv = editDiv.prev();
+            var questionId = commentDiv.parent().attr("id").substring("comment_area_".length);
+            var commentId = commentDiv.attr("id").substring("commentDiv_".length);
+            var comment = editDiv.find("textarea").val();
+    
+            sendRequest(questionId, contestId, userName, "update", commentId, comment);
+        });
+
+    };
+
+    showEditArea = function(e) {
+        var commentDiv = $(e.target).parent().parent().find("a").parent().parent();
+        commentDiv.next().show();
+
+        commentDiv.next().find("textarea").val($.trim(commentDiv.find(".comment_field").html()));
     };
 });

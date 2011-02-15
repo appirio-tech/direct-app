@@ -27,16 +27,11 @@
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'specReview'}">class="on"</c:if>>
                 <if:isStudioContest contestStats="${contestStats}" negate="true">
-                    <c:if test="${!viewData.showSpecReview}">
-                        <a href="https://software.topcoder.com/review/actions/ViewProjectDetails.do?method=viewProjectDetails&pid=${contestStats.contest.id}">
-                    </c:if>
-                    <c:if test="${viewData.showSpecReview}">
-                        <a href="<s:url action="contest/viewSpecReview" namespace="/">
-                            <s:param name="contestId" value="contest.id"/>
-                            <s:param name="studio" value="false"/>
-                        </s:url>" >
-                    </c:if>
-                    
+                    <a href="<s:url action="contest/viewSpecReview" namespace="/">
+                        <s:param name="contestId" value="contest.id"/>
+                        <s:param name="studio" value="false"/>
+                    </s:url>" >
+                
                     <span class="left"><span class="right">Spec Review</span></span></a>
                 </if:isStudioContest>
             </li>

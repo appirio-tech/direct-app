@@ -5,6 +5,7 @@
 package com.topcoder.direct.services.view.action.specreview;
 
 import java.util.List;
+import java.util.Map;
 
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
@@ -82,30 +83,12 @@ public class ViewSpecificationReviewActionResultData {
      */
     private boolean showProgress;
     
+    private Map<Long, List<SpecComment>> specComments;
+    
     /**
      * Default constructor, creates new instance.
      */
     public ViewSpecificationReviewActionResultData() {
-    }
-
-    /**
-     * Getter for specification review.
-     *
-     * @return the specification review
-     */
-    public SpecificationReview getSpecificationReview() {
-        return specificationReview;
-    }
-
-    /**
-     * Setter for specification review.
-     *
-     * @param specificationReview the specification review
-     * @throws IllegalArgumentException if argument is null
-     */
-    public void setSpecificationReview(SpecificationReview specificationReview) {
-        ExceptionUtils.checkNull(specificationReview, null, null, "specificationReview cannot be null.");
-        this.specificationReview = specificationReview;
     }
 
     /**
@@ -144,14 +127,6 @@ public class ViewSpecificationReviewActionResultData {
      * @throws IllegalArgumentException if argument is null or contains null elements
      */
     public void setSpecReviewComments(List<SpecReviewComment> specReviewComments) {
-        ExceptionUtils.checkNull(specReviewComments, null, null, "specReviewComments cannot be null.");
-
-        // make sure no null elements are present
-        for (SpecReviewComment specReviewComment : specReviewComments) {
-            if (specReviewComment == null) {
-                throw new IllegalArgumentException("specReviewComments cannot contain null elements.");
-            }
-        }
         this.specReviewComments = specReviewComments;
     }
 
@@ -207,6 +182,42 @@ public class ViewSpecificationReviewActionResultData {
      */
     public void setShowProgress(boolean showProgress) {
         this.showProgress = showProgress;
+    }
+
+    /**
+     * Gets the specificationReview field.
+     *
+     * @return the specificationReview
+     */
+    public SpecificationReview getSpecificationReview() {
+        return specificationReview;
+    }
+
+    /**
+     * Sets the specificationReview field.
+     *
+     * @param specificationReview the specificationReview to set
+     */
+    public void setSpecificationReview(SpecificationReview specificationReview) {
+        this.specificationReview = specificationReview;
+    }
+
+    /**
+     * Gets the specComments field.
+     *
+     * @return the specComments
+     */
+    public Map<Long, List<SpecComment>> getSpecComments() {
+        return specComments;
+    }
+
+    /**
+     * Sets the specComments field.
+     *
+     * @param specComments the specComments to set
+     */
+    public void setSpecComments(Map<Long, List<SpecComment>> specComments) {
+        this.specComments = specComments;
     }
 
 }
