@@ -447,11 +447,11 @@ public class GetContestAction extends ContestAction {
                 sessionData = new SessionData(session);
                 ProjectBriefDTO project = new ProjectBriefDTO();
                 if (studioCompetition != null) {
-                    project.setId(studioCompetition.getContestData().getContestId());
+                    project.setId(studioCompetition.getContestData().getTcDirectProjectId());
                     project.setName(studioCompetition.getContestData().getTcDirectProjectName());
                 }
                 if (softwareCompetition != null) {
-                    project.setId(softwareCompetition.getProjectHeader().getId());
+                    project.setId(softwareCompetition.getProjectHeader().getTcDirectProjectId());
                     project.setName(getProjectName(softwareCompetition.getProjectHeader().getTcDirectProjectId()));
 
                 }
