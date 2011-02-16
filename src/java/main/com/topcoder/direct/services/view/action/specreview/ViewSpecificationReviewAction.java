@@ -275,6 +275,10 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
                     .getProjectTypedContests(getTCSubject().getUserId(),
                             contestStats.getContest().getProject().getId());
             sessionData.setCurrentProjectContests(contests);
+
+            // Set current project context based on selected contest
+            this.sessionData.setCurrentProjectContext(contestStats.getContest().getProject());
+            this.sessionData.setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
             
             // check whether spec review finished
             result.setShowSpecReview(true);
