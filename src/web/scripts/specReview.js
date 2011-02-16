@@ -106,25 +106,6 @@ $(function() {
                 $("#comment_specreview" + qId).show();
             }
         });
-        
-        // set resubmit click event
-        /*
-        $("#resubmit a").click(function() {
-            $.ajax({
-                type: 'post',
-                url: '../ajax/resubmitSpecReview.action',
-                data: {
-                    "content": "content",
-                    "contestId": contestId
-                },
-                cache: false,
-                dataType: 'json',
-                success: function(jsonResult) {
-                    handleResubitResult(jsonResult);
-                }
-            });
-        });
-        */
     };
     
     /**
@@ -134,7 +115,7 @@ $(function() {
      */
     handleResubitResult = function(jsonResult) {
         if (jsonResult.result != null) {
-            setPageWaitingForFixes();
+            setPagePendingReview();
         }
     };
     
@@ -148,6 +129,14 @@ $(function() {
         $(".sr_editcomment").hide();
         $(".add_your_comment").hide();
     };
+    
+    /**
+     * Change page style for waiting for fixes status.
+     */
+    setPagePendingReview = function() {
+        $(".container2Content_det span.status").html("Spec Review in Progress...");
+        $("#resubmit").hide();
+    };    
     
     /**
      * Handle add comment event or update comment event.
@@ -320,4 +309,21 @@ $(function() {
 
         commentDiv.next().find("textarea").val($.trim(commentDiv.find(".comment_field").html()));
     };
+    
+    // set resubmit click event
+    $("#resubmit a").click(function() {
+        $.ajax({
+            type: 'post',
+            url: '../ajax/resubmitSpecReview.action',
+            data: {
+                "content": "content",
+                "contestId": contestId
+            },
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleResubitResult(jsonResult);
+            }
+        });
+    });
 });

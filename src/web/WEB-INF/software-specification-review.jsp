@@ -249,16 +249,15 @@
                                                             </s:iterator>
                                                         </s:iterator>
                                                         
-                                                        <!--
-                                                        <div id="resubmit">
-                                                            <a href="<s:url action="contest/detail" namespace="/"><s:param name="projectId" value="viewData.contestStats.contest.id"/></s:url>" class="resubmit"><img src="/images/resubmit.png" alt="resubmit" /></a>
-                                                            <br />
-                                                            <span class="bottom_text"></span>
-                                                        </div>
+                                                        <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
+                                                            <div id="resubmit">
+                                                                <a href="javascript:;" class="resubmit"><img src="/images/resubmit.png" alt="resubmit" /></a>
+                                                                <br />
+                                                                <span class="bottom_text"></span>
+                                                            </div>
+                                                            <div class="panel">&nbsp;</div>
+                                                        </c:if>
                                                         
-
-                                                        <div class="panel">&nbsp;</div>
-                                                        -->
                                                         <div class="panel">&nbsp;</div>
                                                         
                                                     </div>

@@ -101,7 +101,8 @@ public class ResubmitSpecificationReviewAction extends SpecificationReviewAction
             }
 
             // resubmit the specification
-            specificationReviewService.submitSpecificationAsString(getTCSubject(), getContestId(), content);
+            specificationReviewService.resubmitSpecification(getTCSubject(), getContestId());
+            
             return SUCCESS;
 
         } catch (Exception e) {
