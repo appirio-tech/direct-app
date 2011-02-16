@@ -30,6 +30,7 @@ import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
@@ -337,14 +338,15 @@ public final class DirectUtils {
         } else {
             PhasedContestDTO phasedContest = new PhasedContestDTO();
             phasedContest.setCurrentPhases(DataProvider.getCurrentPhases(contestId));
-            List<DashboardContestSearchResultDTO> contests =
+            phasedContest.setStatus(ContestStatus.forName(resultContainer.getStringItem(recordIndex, "status")));
+            /*List<DashboardContestSearchResultDTO> contests =
                 DataProvider.searchUserContests(currentUser, null, null, null);
             for (DashboardContestSearchResultDTO c : contests) {
                 if (c.getContest().getId() == contestId) {
                     phasedContest.setStatus(c.getStatus());
                     break;
                 }
-            }
+            }*/
             contest = phasedContest;
         }
         contest.setId(resultContainer.getLongItem(recordIndex, "contest_id"));
@@ -389,7 +391,7 @@ public final class DirectUtils {
     public static ContestStatsDTO getContestStats(ContestServiceFacade contestServiceFacade, TCSubject currentUser,
         long contestId) throws PersistenceException {
 
-        List<CommonProjectContestData> userContests = contestServiceFacade.getCommonProjectContestData(currentUser);
+        /*List<CommonProjectContestData> userContests = contestServiceFacade.getCommonProjectContestData(currentUser);
         for (CommonProjectContestData contestData : userContests) {
             if (contestData.getContestId() == contestId) {
                 ProjectBriefDTO project = new ProjectBriefDTO();
@@ -411,8 +413,59 @@ public final class DirectUtils {
                 dto.setIsStudio("Studio".equals(contestData.getType()));
                 return dto;
             }
+        } */
+        try
+        {
+            DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+            Request request = new Request();
+            request.setContentHandle("direct_contest_stats");
+            request.setProperty("ct", String.valueOf(contestId));
+            request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+
+            final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_contest_stats");
+            final int recordNum = resultContainer.size();
+
+            int recordIndex = 0;
+
+            ProjectBriefDTO project = new ProjectBriefDTO();
+            project.setId(resultContainer.getIntItem(recordIndex, "project_id"));
+            project.setName(resultContainer.getStringItem(recordIndex, "project_name"));
+
+            ContestBriefDTO contest = new ContestBriefDTO();
+            contest.setId(resultContainer.getIntItem(recordIndex, "contest_id"));
+            contest.setTitle(resultContainer.getStringItem(recordIndex, "contest_name"));
+            contest.setProject(project);
+        
+            ContestStatsDTO contestStats = new ContestStatsDTO();
+            contestStats.setRegistrantsNumber(resultContainer.getIntItem(recordIndex, "number_of_registration"));
+            contestStats.setSubmissionsNumber(resultContainer.getIntItem(recordIndex, "number_of_submission"));
+            contestStats.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
+            contestStats.setContest(contest);
+
+            long forumId = -1;
+            try
+                {
+            if (resultContainer.getStringItem(recordIndex, "forum_id") != null
+                        && !resultContainer.getStringItem(recordIndex, "forum_id").equals(""))
+                forumId = Long.parseLong(resultContainer.getStringItem(recordIndex, "forum_id"));
+                contestStats.setForumId(forumId);
+            }
+            catch (NumberFormatException ne)
+            {
+            // ignore
+            }
+            
+            contestStats.setStartTime(resultContainer.getTimestampItem(recordIndex, "start_date"));
+            contestStats.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));
+            contestStats.setIsStudio("Studio".equals(resultContainer.getStringItem(recordIndex, "type")));
+
+            return contestStats;
         }
-        return null;
+        catch (Exception e)
+        {
+            throw new PersistenceException(e.getMessage());
+        }
+        
     }
 
     /**

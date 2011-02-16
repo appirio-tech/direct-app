@@ -478,8 +478,15 @@ public class GetContestAction extends ContestAction {
      */
     private String getProjectName(long projectId) throws Exception {
         try {
-            for (ProjectData project : getProjects()) {
+            /*for (ProjectData project : getProjects()) {
                 if (projectId == project.getProjectId()) {
+                    return project.getName();
+                }
+            }*/
+            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getCurrentUser().getUserId());
+
+            for (ProjectBriefDTO project : projects) {
+                if (projectId == project.getId()) {
                     return project.getName();
                 }
             }
