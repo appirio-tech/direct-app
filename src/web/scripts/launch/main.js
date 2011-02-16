@@ -509,6 +509,9 @@ function saveAsDraftRequestSoftware() {
    // the first page also gets some data
    updateSoftwarePrizes();
 
+   // add copilot cost into project header
+   mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
+
    //document uploads
    request['docUploadIds'] = getUploadDocumentIds();
    request['docCompIds'] = getCompDocumentIds();
@@ -991,9 +994,9 @@ function fillPrizes() {
    $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
 
    //totals
-   $('#swPrize_low').html(getContestTotal(feeObject, 'low').formatMoney(2));
-   $('#swPrize_medium').html(getContestTotal(feeObject, 'medium').formatMoney(2));
-   $('#swPrize_high').html(getContestTotal(feeObject, 'high').formatMoney(2));
+   $('#swPrize_low').html((getContestTotal(feeObject, 'low') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+   $('#swPrize_medium').html((getContestTotal(feeObject, 'medium') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+   $('#swPrize_high').html((getContestTotal(feeObject, 'high') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
 
    // spec cost
    $('#swSpecCost,#rswSpecCost').html(feeObject.specReviewCost.formatMoney(2));

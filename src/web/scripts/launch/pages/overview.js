@@ -139,6 +139,9 @@ function validateFieldsOverviewSoftware() {
 
    updateSoftwarePrizes();
 
+    // add copilot cost into project header
+   mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
+
    return true;
 }
 

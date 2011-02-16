@@ -363,6 +363,14 @@ com.topcoder.direct.Project = function() {
 	  	  return this.properties['Spec Review Cost'];
 	  }
 
+      this.setCopilotCost = function(copilotCost) {
+	  	  this.properties['Copilot Cost'] = copilotCost;
+	  }
+
+	  this.getCopilotCost = function() {
+	  	  return this.properties['Copilot Cost'];
+	  }
+
 	  this.setCostLevel = function(costLevel) {
 	  	 // 'A', 'B', 'C', 'M'
 	  	  this.properties['Cost Level'] = costLevel;
