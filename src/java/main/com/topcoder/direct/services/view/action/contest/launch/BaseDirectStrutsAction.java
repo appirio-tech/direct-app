@@ -28,6 +28,10 @@ import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.service.studio.StudioService;
 import com.topcoder.service.studio.contest.ContestManager;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.DBMS;
 
 /**
  * <p>
@@ -389,7 +393,7 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * @throws Exception if any error occurs
      */
     public List<ProjectData> getProjects() throws Exception {
-        List<DashboardProjectSearchResultDTO> searchUserProjects = DataProvider.searchUserProjects(DirectStrutsActionsHelper
+        /**List<DashboardProjectSearchResultDTO> searchUserProjects = DataProvider.searchUserProjects(DirectStrutsActionsHelper
             .getTCSubjectFromSession(), "");
 			
 		List<ProjectData> projects = new ArrayList<ProjectData>();
@@ -413,7 +417,26 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
 				String name2 = ((ProjectData)obj2).getName().trim();
 				return name1.compareTo(name2);
 			}
-        });		
+        });		*/
+
+        List<ProjectData> projects = new ArrayList<ProjectData>();
+
+         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_projects");
+        request.setProperty("uid", String.valueOf(getCurrentUser().getUserId()));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            ProjectData project = new ProjectData();
+            project.setName(tcDirectProjectName);
+            project.setProjectId(tcDirectProjectId);
+            projects.add(project);
+        }
+
         return projects;
     }
 
