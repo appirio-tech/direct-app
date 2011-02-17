@@ -141,7 +141,7 @@ function validateFieldsOverviewSoftware() {
 
     // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
-
+   
    return true;
 }
 
@@ -204,6 +204,7 @@ function validateFieldsOverviewStudio() {
    mainWidget.milestonePrizeData.numberOfSubmissions = parseInt($('#milestoneSubmissionNumber').val());
    mainWidget.competition.contestData.multiRoundData.roundOneIntroduction = round1Info;
    mainWidget.competition.contestData.multiRoundData.roundTwoIntroduction = round2Info;
+   mainWidget.competition.contestData.allowStockArt = $('#allowStockArt').is(':checked');
 
    return true;
 }

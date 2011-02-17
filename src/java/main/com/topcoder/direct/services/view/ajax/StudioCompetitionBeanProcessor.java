@@ -86,7 +86,11 @@ public class StudioCompetitionBeanProcessor implements JsonBeanProcessor {
         // doc uploads
         result.put("docUploads", contestData.getDocumentationUploads());
 
+				// stock art allowed
+				result.put("allowStockArt", contestData.getAllowStockArt());
+
         return result;
     }
 
 }
+

@@ -426,6 +426,14 @@
                <ul class="mylist" id="rFinalDeliveries">
                 </ul>                                           
 							  </p>	
+
+								<div class="bottom_spec"></div>
+
+								<p class="det_font">
+								<span class="name"><strong>Stock Arts</strong></span>
+								<br /><br />
+								<span class="small_info_spec" id="rContestStockArt"></span>
+								</p>
 					</div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- END Spec Display -->
@@ -477,6 +485,16 @@
                  <div class="clear"></div>
                </div>             	              
             </div> <!-- end .deliverables -->                   			
+						<div class="stockArts">
+							<h3><span class="icon">Stock Arts</span><a class="helpIcon" href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Stock+Art+and+Font+Files" target="_blank"><span class="hide">Help</span></a></h3>
+							<div class="deliverablesInnerSa">
+								<div id="stockArtsCheckboxs" class="checkInput">
+									<input type="checkbox" id="allowStockArt" value="true">
+									<label>Stock Arts Allowed</label>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div> <!-- end .stockArts -->
 		    </div> <!-- End .launchContestOut -->
 		    		
         <p class="save">               	
@@ -632,3 +650,4 @@
     </div>
   <!-- End .tooltipContainer -->
 </div>
+

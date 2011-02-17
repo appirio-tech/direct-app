@@ -163,15 +163,27 @@
                                                                                         pattern="MMM dd, yyyy, hh:mm:ss aa"/>
                                                                     </td>
                                                                 </tr>
-                                                                <!-- TODO: It will be used later. -->
-                                                                <tr style="display:none;">
-                                                                    <td class="label">Submitter Notes:</td>
-                                                                    <td>This is my submission, if you’re reading this,
-                                                                        this have passed
-                                                                        screening, The font I used
-                                                                        was Arial and Tahoma.
+                                                                <tr>
+                                                                    <td colspan="2">
+                                                                        <h3>Declarations</h3><i>Any notes and declared fonts or stock images that are used in the submission. <a href="http://topcoder.com/wiki/display/tcstudio/Declarations-+Stock+Art+and+Fonts">Read more here.</a></i>
                                                                     </td>
                                                                 </tr>
+                                                                <tr>
+                                                                    <td class="label">Comment:</td>
+                                                                    <td>${viewData.submission.comment}</td>
+                                                                </tr>
+                                                                <s:if test="viewData.submission.fonts != null && viewData.submission.fonts.size() > 0">
+                                                                <tr>
+                                                                    <td class="label">Fonts:</td>
+                                                                    <td><c:forEach items="${viewData.submission.fonts}" var="font"><a href="${font.url}" target="blank">${font.name}</a><br/></c:forEach></td>
+                                                                </tr>
+                                                                </s:if>
+                                                                <s:if test="viewData.submission.stockArts != null && viewData.submission.stockArts.size() > 0">
+                                                                <tr>
+                                                                    <td class="label">Stock Art:</td>
+                                                                    <td><c:forEach items="${viewData.submission.stockArts}" var="stockArt"><a href="${stockArt.url}" target="blank">${stockArt.name}</a><br/></c:forEach></td>
+                                                                </tr>
+                                                                </s:if>
                                                                 <s:if test="viewData.submission.feedbackText != null && viewData.submission.feedbackText.length() > 0">
                                                                     <if:isConfirmedStudioSubmission
                                                                             submission="${viewData.submission}">
@@ -224,3 +236,4 @@
 <!-- End #page -->
 
 </html>
+

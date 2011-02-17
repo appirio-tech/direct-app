@@ -126,6 +126,18 @@
 </div>
 <!-- end .deliverables -->
 
+<!-- Stock Arts -->
+<div class="stockArts">
+    <h3>Stock Arts:</h3>
+    
+    <div class="stockArtsInner">
+        <div  id="rStockArts">
+        </div>
+        <a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>        
+    </div>    
+</div>
+<!-- end .stockArts -->
+
 <div class="buttonBox">	
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
     <a href="javascript:saveAsDraftReview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>

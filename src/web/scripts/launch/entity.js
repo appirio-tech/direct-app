@@ -91,6 +91,7 @@ com.topcoder.direct.ContestData = function() {
 
    this.detailedStatusId=CONTEST_DETAILED_STATUS_DRAFT;
 
+   this.allowStockArt = false;
    
    ////////// Functions/Methods ///////////////
    /**
@@ -228,8 +229,8 @@ com.topcoder.direct.SoftwareCompetition = function() {
 
     // hold the copilot user handle
     this.copilotUserName = "";
-
-    // hold the copilot cost
+	
+	// hold the copilot cost
     this.copilotCost = 0.0;
 } 
 
@@ -362,7 +363,7 @@ com.topcoder.direct.Project = function() {
 	  this.getSpecReviewCost = function() {
 	  	  return this.properties['Spec Review Cost'];
 	  }
-
+	  
       this.setCopilotCost = function(copilotCost) {
 	  	  this.properties['Copilot Cost'] = copilotCost;
 	  }

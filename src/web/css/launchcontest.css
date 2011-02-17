@@ -970,6 +970,17 @@
 			border:#c1c1c1 solid 1px;
 			}
 			
+.stockArtsInner {
+    height:28px;
+    padding:5px 10px 0;
+    border:1px solid #c1c1c1;
+}
+#rStockArts {
+    color:#6C6C6C;
+    float:left;
+    font-size:12px;
+}
+
 			.prizesInner1{
 			padding:0px 0;
 			border:none;
@@ -1119,7 +1130,7 @@
 				font-weight:bold;
 				text-align:left;
 				color:#6c6c6c;
-                font-size:12px;
+				font-size:12px;
 				background:url(/images/prizesInput.gif) no-repeat;
 				}
 			
@@ -1289,7 +1300,69 @@
 				background:url(/images/addButton_hover.gif) no-repeat left center;
 				}
 				
-	
+		/** Stock Arts **/
+		.deliverablesInnerSa{
+			padding:5px 26px;
+			padding-right:0;
+			border:#c1c1c1 solid 1px;
+			}
+			
+			/** input on review page **/
+			.deliverablesInnerSa .rCheckInput{
+				display:block;
+				margin-top:4px;
+				}
+
+
+			/** input **/
+			.deliverablesInnerSa .checkInput{
+			       width:auto;
+				float:left;
+				display:inline;
+				margin-top:4px;
+				}
+				
+				/** label **/
+				.deliverablesInnerSa label{
+					padding-left:2px;
+					padding-right:50px;
+					font-size:12px;
+					color:#6c6c6c;
+					}
+				
+				/** input **/	
+				.deliverablesInnerSa .text{
+					width:46px;
+					height:16px;
+					border:0;
+					padding:3px 9px;
+					font-weight:bold;
+					color:#6c6c6c;
+					margin-right:30px;
+					background:url(/images/prizesInput.gif) no-repeat;
+					}
+			
+			/** file button **/		
+			.deliverablesInnerSa .fileType{
+				width:auto;
+				height:22px;
+				float:left;
+				display:inline;
+				margin-top:4px;
+				padding-left:28px;
+				font-size:12px;
+				color:#ab0000;
+				line-height:22px;
+				text-decoration:underline;
+				background:url(/images/addButton.gif) no-repeat left center;
+				}
+				
+			.deliverablesInnerSa .fileType:hover{
+				text-decoration:none;
+				background:url(/images/addButton_hover.gif) no-repeat left center;
+				}
+
+
 	/** button style **/			
 	.buttonBox{
 		padding-top:24px;
@@ -1583,8 +1656,8 @@
 	}
 		
 	/** tip link **/
-	#cboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink,
-	#swCboxFiles .tipLink,.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
+	#cboxFiles .tipLink,.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink, .stockArtsInner .tipLink,
+	#swCboxFiles .tipLink,.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
 		width:auto;
 		float:right;
 		display:inline;
@@ -1592,7 +1665,7 @@
 		margin-top:18px;
 		}
 		
-	.deliverablesInner .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
+	.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink,.stockArtsInner .tipLink{
 		margin-top:6px;
 	}
 	
@@ -2699,11 +2772,5 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	text-align:right;
 	color:#6c6c6c;
 	background:url(/images/prizesInput.gif) no-repeat;
-}
-
-.prizeInfo {
-  font-weight:bold;
-  color:#6c6c6c;
-  font-Size:12px;
 }
 

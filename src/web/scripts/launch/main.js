@@ -96,7 +96,7 @@ $(document).ready(function() {
             softwareContestFees = result.softwareContestFees;
             originalSoftwareContestFees = $.extend(true,{},softwareContestFees);
             billingInfos = result.billingInfos;
-            copilotFees = result.copilotFees;
+			copilotFees = result.copilotFees;
           },
           function(errorMessage) {
               showErrors(errorMessage);
@@ -124,7 +124,7 @@ $(document).ready(function() {
    //file types
    $('.fileType').click(function(){
      if($('.deliverablesInner .fileInput').length < 3){
-       $('.checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
+       $('.deliverablesInner .checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
      }
    });
 
@@ -511,7 +511,7 @@ function saveAsDraftRequestSoftware() {
 
    // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
-
+   
    //document uploads
    request['docUploadIds'] = getUploadDocumentIds();
    request['docCompIds'] = getCompDocumentIds();
@@ -988,7 +988,7 @@ function fillPrizes() {
    $('#swDigitalRun').val(contestCost.drCost.formatMoney(2));
    
    $('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
-
+   
    $('#swCopilotFee,#rswCopilotFee').html(mainWidget.softwareCompetition.copilotCost.formatMoney(2));
 
    $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
@@ -1235,6 +1235,7 @@ function getContestTotal(feeObject, prizeType) {
     var contestCost = getContestCost(feeObject, prizeType);
     return contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
     + contestCost.reliabilityBonusCost + contestCost.drCost + feeObject.contestFee + feeObject.specReviewCost;
+
 }
 
 function getContestCost(feeObject,prizeType) {

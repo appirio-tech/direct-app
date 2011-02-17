@@ -134,6 +134,20 @@
     </div>
     <!-- end .deliverables -->
     
+    <!-- Stock Arts -->
+	<div class="stockArts">
+    
+        <h3><span class="icon">Stock Arts:</span><a href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Stock+Art+and+Font+Files" class="helpIcon" target="_blank"><span class="hide">Help</span></a></h3>        
+        <div class="deliverablesInnerSa">
+        	<div class="checkInput" id="stockArtsCheckboxs">
+                       <input type="checkbox" value="true" id="allowStockArt" />
+                       <label>Stock Arts Allowed</label>
+          </div>
+          <div class="clear"></div>
+        </div>
+        
+    </div>
+    <!-- end .stockArts -->
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
         <a href="javascript:saveAsDraftOverview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>

@@ -96,6 +96,9 @@ function updateReviewStudio() {
 			 "<dd>" + doc.description + "</dd>";
    });
    $('#docUploadList').html(html);   
+
+  // stock arts
+  $('#rStockArts').html(mainWidget.competition.contestData.allowStockArt ? "Stock Arts allowed" : "Stock Arts not allowed");
 }
 
 function validateFieldsReview() {

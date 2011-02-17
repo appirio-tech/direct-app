@@ -244,6 +244,7 @@ function initContest(contestJson) {
    mainWidget.competition.contestData.statusId=contestJson.statusId;
    mainWidget.competition.contestData.detailedStatusId=contestJson.detailedStatusId;
    mainWidget.competition.contestData.contestAdministrationFee = contestJson.contestAdministrationFee;
+	 mainWidget.competition.contestData.allowStockArt = contestJson.allowStockArt;
    
    
    //multi round
@@ -699,6 +700,7 @@ function populateSpecSection() {
 	//edit
 	$('#contestIntroduction').val(mainWidget.competition.contestData.shortSummary);
 	$('#contestDescription').val(mainWidget.competition.contestData.contestDescriptionAndRequirements);
+	$('#allowStockArt').attr('checked', mainWidget.competition.contestData.allowStockArt);
 	
 	//file types
    $('#deliverablesCheckboxs').html('');
@@ -729,6 +731,8 @@ function populateSpecSection() {
    //update it
    $('#rTypeIntroduction').html(mainWidget.competition.contestData.shortSummary);
    
+	 $('#rContestStockArt').html(mainWidget.competition.contestData.allowStockArt ? 'Stock Arts allowed' : 'Stock Arts not allowed');
+
    // file types
    var fileTypes = mainWidget.competition.contestData.finalFileFormat.split(",");
    $.merge(fileTypes,mainWidget.competition.contestData.otherFileFormats.split(","));
@@ -794,6 +798,7 @@ function validateFieldsSpecSection() {
    mainWidget.competition.contestData.otherFileFormats = otherFileTypes.join(',').toUpperCase();
    mainWidget.competition.contestData.shortSummary = contestIntroduction;
    mainWidget.competition.contestData.contestDescriptionAndRequirements = contestDescription;      
+	 mainWidget.competition.contestData.allowStockArt = $('#allowStockArt').is(':checked');
    return true;	
 }
 
@@ -876,3 +881,4 @@ function handleActivationResultEdit(jsonResult) {
     });
 }
  
+
