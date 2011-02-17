@@ -132,7 +132,8 @@ public class StudioNoWinnerAction extends StudioOrSoftwareContestAction {
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+            //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
             getViewData().setContestStats(contestStats);
 
             // Set projects data

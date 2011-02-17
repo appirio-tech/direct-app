@@ -413,7 +413,9 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
         }
 
         // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+        //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
+
         getViewData().setContestStats(contestStats);
 
         // Set projects data
