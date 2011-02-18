@@ -165,7 +165,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td colspan="2">
-                                                                        <h3>Declarations</h3><i>Any notes and declared fonts or stock images that are used in the submission. <a href="http://topcoder.com/wiki/display/tcstudio/Declarations-+Stock+Art+and+Fonts">Read more here.</a></i>
+                                                                        <h3>Declarations</h3><i>Any notes and declared fonts or stock images that are used in the submission. <a href="http://topcoder.com/wiki/display/tcstudio/Declarations-+Stock+Art+and+Fonts" target="_blank">Read more here.</a></i>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
