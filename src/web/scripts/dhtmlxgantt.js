@@ -4415,7 +4415,7 @@ GanttTask.prototype.getDescStr = function()
 			case "Duration":
 				if(str != "")str += delim;
                 var c = parseFloat(this.TaskInfo[this.Chart.paramShowTask[i]]);
-				str += (c / 24) + "d";
+				str += Math.round((c / 24)*100)/100 + "d";
 				break;
 			case "PercentCompleted":
 				if(str != "")str += delim;
