@@ -373,11 +373,11 @@ public class CostReportDTO extends CommonDTO implements Serializable {
             // set the contest name
             row.getCell(4).setStringValue(costDetail.getContest().getName());
 
-            // set the status
-            row.getCell(5).setStringValue(costDetail.getStatus());
-
             // set the contest type
-            row.getCell(6).setStringValue(costDetail.getContestType().getName());
+            row.getCell(5).setStringValue(costDetail.getContestType().getName());
+
+            // set the status
+            row.getCell(6).setStringValue(costDetail.getStatus());
 
             // set the completion date
             row.getCell(7).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
