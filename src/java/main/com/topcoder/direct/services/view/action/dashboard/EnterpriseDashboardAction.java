@@ -397,10 +397,10 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             }
 
 
-            // Get and aggregate the average calculated values for client
+            // Get data from weekly_contest_status and aggregate the average calculated values for client
             List<EnterpriseDashboardDetailedProjectStatDTO> clientStats
                 = DataProvider.getEnterpriseStatsForProject(projectIds, categoryIds, startDate, endDate, customerIds,
-                                                            billingAccountIds);
+                                                            billingAccountIds, false);
             for (EnterpriseDashboardDetailedProjectStatDTO stat : clientStats) {
                 Date statDate = stat.getDate();
                 EnterpriseDashboardStatType statType = stat.getStatsType();
@@ -418,6 +418,26 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 }
 
                 aggregateClientStat(EnterpriseDashboardStatPeriodType.WEEK, getWeekLabel(statDate), stat, targetStats);
+            }
+            // Get data from monthly_contest_status and aggregate the average calculated values for client
+            List<EnterpriseDashboardDetailedProjectStatDTO> clientStatsMonthly
+                = DataProvider.getEnterpriseStatsForProject(projectIds, categoryIds, startDate, endDate, customerIds,
+                                                            billingAccountIds, true);
+            for (EnterpriseDashboardDetailedProjectStatDTO stat : clientStatsMonthly) {
+                Date statDate = stat.getDate();
+                EnterpriseDashboardStatType statType = stat.getStatsType();
+
+                Map<String, List<EnterpriseDashboardAggregatedStatDTO>> targetStats;
+                if (statType == EnterpriseDashboardStatType.COST) {
+                    targetStats = costStats;
+                    averageCustomerCost.aggregateClientValue(stat.getValue(), stat.getContestsCount());
+                } else if (statType == EnterpriseDashboardStatType.DURATION) {
+                    targetStats = durationStats;
+                    averageCustomerDuration.aggregateClientValue(stat.getValue(), stat.getContestsCount());
+                } else {
+                    targetStats = fulfillmentStats;
+                    averageCustomerFulfillment.aggregateClientValue(stat.getValue(), stat.getContestsCount());
+                }
                 aggregateClientStat(EnterpriseDashboardStatPeriodType.MONTH, getMonthLabel(statDate), stat,
                                     targetStats);
                 aggregateClientStat(EnterpriseDashboardStatPeriodType.QUARTER, getQuarterLabel(statDate), stat,
@@ -425,9 +445,10 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 aggregateClientStat(EnterpriseDashboardStatPeriodType.YEAR, getYearLabel(statDate), stat, targetStats);
             }
 
-            // Get and aggregate the average calculated values for all projects
+
+            // Get data from weekly_contest_status and aggregate the average calculated values for all projects
             List<EnterpriseDashboardDetailedProjectStatDTO> overallStats
-                = DataProvider.getEnterpriseStatsForAllProjects(categoryIds, startDate, endDate);
+                = DataProvider.getEnterpriseStatsForAllProjects(categoryIds, startDate, endDate, false);
             for (EnterpriseDashboardDetailedProjectStatDTO stat : overallStats) {
                 Date statDate = stat.getDate();
                 EnterpriseDashboardStatType statType = stat.getStatsType();
@@ -442,6 +463,23 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 }
 
                 aggregateOverallStat(EnterpriseDashboardStatPeriodType.WEEK, getWeekLabel(statDate), stat, targetStats);
+            }
+
+            // Get data from monthly_contest_status and aggregate the average calculated values for all projects
+            List<EnterpriseDashboardDetailedProjectStatDTO> overallStatsMonthly
+                = DataProvider.getEnterpriseStatsForAllProjects(categoryIds, startDate, endDate, true);
+            for (EnterpriseDashboardDetailedProjectStatDTO stat : overallStatsMonthly) {
+                Date statDate = stat.getDate();
+                EnterpriseDashboardStatType statType = stat.getStatsType();
+
+                Map<String, List<EnterpriseDashboardAggregatedStatDTO>> targetStats;
+                if (statType == EnterpriseDashboardStatType.COST) {
+                    targetStats = costStats;
+                } else if (statType == EnterpriseDashboardStatType.DURATION) {
+                    targetStats = durationStats;
+                } else {
+                    targetStats = fulfillmentStats;
+                }
                 aggregateOverallStat(EnterpriseDashboardStatPeriodType.MONTH, getMonthLabel(statDate), stat,
                                      targetStats);
                 aggregateOverallStat(EnterpriseDashboardStatPeriodType.QUARTER, getQuarterLabel(statDate), stat,

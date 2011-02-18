@@ -208,7 +208,7 @@ import com.topcoder.web.common.cache.MaxAge;
 public class DataProvider {
 
 
-
+    private static final String MONTHLY_SUFFIX = "_monthly";
     /**
      * <p>Constructs new <code>DataProvider</code> instance. This implementation does nothing.</p>
      */
@@ -1536,13 +1536,14 @@ public class DataProvider {
      * @param endDate a <code>Date</code> providing the ending date for period.
      * @param clientIds a <code>long</code> array listing the IDs for clients.
      * @param billingAccountIds a <code>long</code> array listing the IDs for billing accounts.
+     * @param monthly a<code>boolean</code> whether to get monthly or weekly data
      * @return a <code>List</code> of statistical data.
      * @throws Exception if an unexpected error occurs.
      * @throws IllegalArgumentException if any of specified arrays is <code>null</code> or empty.
      * @since 2.1.2
      */
     public static List<EnterpriseDashboardDetailedProjectStatDTO> getEnterpriseStatsForProject(long[] projectIds,
-        long[] projectCategoryIDs, Date startDate, Date endDate, long[] clientIds, long[] billingAccountIds)
+        long[] projectCategoryIDs, Date startDate, Date endDate, long[] clientIds, long[] billingAccountIds, boolean monthly)
         throws Exception {
 
         List<EnterpriseDashboardDetailedProjectStatDTO> data
@@ -1573,13 +1574,13 @@ public class DataProvider {
 
         String queryName;
         if(projectIds[0] != 0) {
-            queryName = "direct_dashboard_enterprise_detailed_stats_project";
+            queryName = "direct_dashboard_enterprise_detailed_stats_project" + MONTHLY_SUFFIX;
             request.setProperty("tdpis", String.valueOf(projectIDsList));
         } else if (billingAccountIds[0] != 0) {
-            queryName = "direct_dashboard_enterprise_detailed_stats_billing";
+            queryName = "direct_dashboard_enterprise_detailed_stats_billing" + MONTHLY_SUFFIX;
             request.setProperty("bpids", billingAccountIdsList);
         } else if (clientIds[0] != 0) {
-            queryName = "direct_dashboard_enterprise_detailed_stats_client";
+            queryName = "direct_dashboard_enterprise_detailed_stats_client" + MONTHLY_SUFFIX;
             request.setProperty("clids", clientIdsList);
         } else {
             return data;
@@ -1626,6 +1627,7 @@ public class DataProvider {
      * @param projectCategoryIDs a <code>long</code> array providing the IDs for project categories.
      * @param startDate a <code>Date</code> providing the beginning date for period.
      * @param endDate a <code>Date</code> providing the ending date for period.
+     * @param monthly <code>boolean</code> whether to get monthly or weekly data
      * @return a <code>List</code> of statistical data.
      * @throws Exception if an unexpected error occurs.
      * @throws IllegalArgumentException if specified <code>projectCategoryIDs</code> array is <code>null</code> or
@@ -1633,7 +1635,7 @@ public class DataProvider {
      * @since 2.1.2
      */
     public static List<EnterpriseDashboardDetailedProjectStatDTO> getEnterpriseStatsForAllProjects(
-        long[] projectCategoryIDs, Date startDate, Date endDate) throws Exception {
+        long[] projectCategoryIDs, Date startDate, Date endDate, boolean monthly) throws Exception {
         
         if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
             throw new IllegalArgumentException("Project category IDs are not specified");
@@ -1645,7 +1647,7 @@ public class DataProvider {
         List<EnterpriseDashboardDetailedProjectStatDTO> data
             = new ArrayList<EnterpriseDashboardDetailedProjectStatDTO>();
 
-        final String queryName = "direct_dashboard_enterprise_detailed_stats_overall";
+        final String queryName = "direct_dashboard_enterprise_detailed_stats_overall" + MONTHLY_SUFFIX; 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(queryName);
