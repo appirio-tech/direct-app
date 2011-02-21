@@ -41,8 +41,12 @@
                     <jsp:include page="includes/project/projectStats.jsp"/>
 
                     <div class="container2">
+                           
                         <!-- error information container -->
-                        <div id="ganttChartError"></div>
+    					<div style="padding-top:20px">                    
+									<a style="float:right; text-align: center;" class="button5" href="javascript:ganttChartControl.printToWindow();">Full Screen View</a>
+						  </div>
+ <div id="ganttChartError"></div>
                         <!-- gantt chart container-->
                         <div id="ganttChartDiv"></div>
 

@@ -3,6 +3,7 @@
 // global variable used to store generated XML data
 var ganttChartData;
 var actionErrorHeader = "GamePlanActionError:";
+var ganttChartControl;
 
 function createChartControl(htmlDiv, xml)
 {
@@ -11,6 +12,7 @@ function createChartControl(htmlDiv, xml)
 
     // Setup paths and behavior
     ganttChartControl.setImagePath("/images/gantt/");
+    ganttChartControl.setStylePath("/css/ganttchart.css");
     ganttChartControl.setEditable(false);
     ganttChartControl.showContextMenu(false);
     ganttChartControl.showTreePanel(true);

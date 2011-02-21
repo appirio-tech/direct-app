@@ -36,12 +36,7 @@
     white-space: nowrap;
 }
 
-.dayNumber {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 9px;
-    color: #858585;
-}
+.dayNumber, .monthName{font-family:Tahoma,Arial;font-weight:bold;font-size:9px;color:#858585;text-align:center;vertical-align:middle;}
 
 .poPupInfo {
     background: #FFFFFF;
@@ -50,6 +45,8 @@
     padding: 4px 6px 4px 6px;
     float: left;
 }
+
+.monthName {border-top:1px solid #f1f3f1; border-bottom:1px solid #f1f3f1; border-left:1px solid #f1f3f1;text-align:left;padding-left:5px;}
 
 .poPupTime {
     background: #FFFFFF;
@@ -112,6 +109,18 @@
 #ganttChartDiv {
     min-height: 550px;
     position: relative;
+     padding-top:20px;
+}
+
+#ganttChartDiv a {
+    font-family: Tahoma, Arial, Helvetica, serif;
+    font-size:10px;
+    color: #000000;
+    text-decoration:none;
+}
+
+#ganttChartDiv a:hover {
+    text-decoration:underline;
 }
 
 #ganttChartError {
