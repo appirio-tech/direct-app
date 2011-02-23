@@ -9,6 +9,7 @@
             <th>Scheduled</th>
             <th>Active</th>
             <th>Finished</th>
+            <th>Cancelled</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                 <td>${projectSummary.scheduled.totalNumber}/<fmt:formatNumber value="${projectSummary.scheduled.totalPayment}" type="currency" /></td>
                 <td>${projectSummary.active.totalNumber}/<fmt:formatNumber value="${projectSummary.active.totalPayment}" type="currency" /></td>
                 <td>${projectSummary.finished.totalNumber}/<fmt:formatNumber value="${projectSummary.finished.totalPayment}" type="currency" /></td>
+                <td>${projectSummary.cancelled.totalNumber}/<fmt:formatNumber value="${projectSummary.cancelled.totalPayment}" type="currency" /></td>
             </tr>
         </s:iterator>
 

@@ -30,6 +30,14 @@ public class ProjectStatsDTO implements Serializable {
         this.feesScheduled = feesScheduled;
     }
 
+    public double getFeesCancelled() {
+        return feesCancelled;
+    }
+
+    public void setFeesCancelled(double feesCancelled) {
+        this.feesCancelled = feesCancelled;
+    }
+
    
 
     /**
@@ -71,6 +79,11 @@ public class ProjectStatsDTO implements Serializable {
     private int finishedContestsNumber;
 
     /**
+     * <p>An <code>int</code> providing the number of cancelled contests for project.</p>
+     */
+    private int cancelledContestsNumber;
+
+    /**
      * <p>An <code>int</code> providing the number of tasked contests for project.</p>
      */
     private int taskedContestsNumber;
@@ -99,6 +112,11 @@ public class ProjectStatsDTO implements Serializable {
      * Scheduled contest fee
      */
     private double feesScheduled;
+
+    /**
+     * Cancelled contest fee
+     */
+    private double feesCancelled;
 
   
 
@@ -196,6 +214,25 @@ public class ProjectStatsDTO implements Serializable {
      */
     public void setFinishedContestsNumber(int finishedContestsNumber) {
         this.finishedContestsNumber = finishedContestsNumber;
+    }
+
+
+    /**
+     * <p>Gets the number of cancelled contests for project.</p>
+     *
+     * @return an <code>int</code> providing the number of cancelled contests for project.
+     */
+    public int getCancelledContestsNumber() {
+        return cancelledContestsNumber;
+    }
+
+    /**
+     * <p>Sets the number of cancelled contests for project.</p>
+     *
+     * @param cancelledContestsNumber an <code>int</code> providing the number of cancelled contests for project.
+     */
+    public void setCancelledContestsNumber(int cancelledContestsNumber) {
+        this.cancelledContestsNumber = cancelledContestsNumber;
     }
 
     /**

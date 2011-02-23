@@ -206,7 +206,8 @@ $(document).ready(function() {
 				{ "sType": "direct-projectNumber" },
 				{ "sType": "direct-projectNumber" },
 				{ "sType": "direct-projectNumber" },
-				{ "sType": "direct-projectNumber" }
+				{ "sType": "direct-projectNumber" },
+                { "sType": "direct-projectNumber" }
 			]
 
     });

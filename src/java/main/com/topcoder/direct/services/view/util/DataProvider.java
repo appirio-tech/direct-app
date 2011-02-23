@@ -717,8 +717,8 @@ public class DataProvider {
         ProjectStatsDTO stats = new ProjectStatsDTO();
         ProjectBriefDTO project = new ProjectBriefDTO();
 
-        double draftFee = 0, activeFee = 0, scheduledFee = 0, finishedFee = 0;
-        int draftNum = 0, activeNum = 0, scheduledNum = 0, finishedNum = 0;
+        double draftFee = 0, activeFee = 0, scheduledFee = 0, finishedFee = 0, cancelledFee = 0;
+        int draftNum = 0, activeNum = 0, scheduledNum = 0, finishedNum = 0, cancelledNum = 0;
     
         String tcDirectProjectName = "";
 
@@ -757,6 +757,9 @@ public class DataProvider {
              } else if (DirectUtils.FINISHED_STATUS.contains(statusName)) {
                  finishedNum++;
                  finishedFee += fee;
+             } else if (DirectUtils.CANCELLED_STATUS.contains(statusName)) {
+                 cancelledNum++;
+                 cancelledFee += fee;
              }
 
         }
@@ -770,12 +773,14 @@ public class DataProvider {
         stats.setRunningContestsNumber(activeNum);
         stats.setPipelineContestsNumber(scheduledNum);
         stats.setFinishedContestsNumber(finishedNum);
+        stats.setCancelledContestsNumber(cancelledNum);
 
         // contests fees
         stats.setFeesFinalized(finishedFee);
         stats.setFeesRunning(activeFee);
         stats.setFeesDraft(draftFee);
         stats.setFeesScheduled(scheduledFee);
+        stats.setFeesCancelled(cancelledFee);
         
 
         stats.setProject(project);
@@ -1297,6 +1302,7 @@ public class DataProvider {
             EnterpriseDashboardProjectStatDTO projectStatDTO = new EnterpriseDashboardProjectStatDTO();
             projectStatDTO.setProject(project);
             projectStatDTO.setCompletedNumber(row.getIntItem("completed_number"));
+            projectStatDTO.setCancelledNumber(row.getIntItem("cancelled_number"));
             projectStatDTO.setTotalMemberCost(row.getDoubleItem("total_member_cost"));
             projectStatDTO.setAverageMemberCostPerContest(row.getDoubleItem("average_member_cost"));
             projectStatDTO.setTotalContestFee(row.getDoubleItem("total_contest_fee"));

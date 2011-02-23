@@ -170,6 +170,12 @@ public final class DirectUtils {
         "Cancelled - Failed Review", "Cancelled - Failed Screening", "Cancelled - Zero Submissions",
         "Cancelled - Winner Unresponsive", "Cancelled - Zero Registrations");
 
+    /**
+     * Cancelled status list.
+     */
+    public final static List<String> CANCELLED_STATUS = Arrays.asList("Cancelled - Client Request",
+        "Cancelled - Requirement Infeasible");
+
      /**
      * Represents the &quot;Specification Submission&quot; phase type.
      */

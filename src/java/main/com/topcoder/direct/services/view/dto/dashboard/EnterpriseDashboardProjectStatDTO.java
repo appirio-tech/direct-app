@@ -73,6 +73,11 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
     private int completedNumber;
 
     /**
+     * <p>A <code>double</code> providing the cancelled contests number for specified project.</p>
+     */
+    private int cancelledNumber;
+
+    /**
      * <p>A <code>String</code> represents the average contest duration text.</p>
      * 
      * @since 1.0.1
@@ -271,6 +276,24 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      */
     public void setCompletedNumber(int completedNumber) {
         this.completedNumber = completedNumber;
+    }
+
+     /**
+     * <p>Gets the Cancelled contest number for specified project.</p>
+     *
+     * @return a <code>int</code> providing the Cancelled contest number for specified project.
+     */
+    public int getCancelledNumber() {
+        return this.cancelledNumber;
+    }
+
+    /**
+     * <p>Sets the Cancelled contest number for specified project.</p>
+     *
+     * @param cancelledNumber a <code>int</code> providing the Cancelled contest number for specified project.
+     */
+    public void setCancelledNumber(int cancelledNumber) {
+        this.cancelledNumber = cancelledNumber;
     }
 
 

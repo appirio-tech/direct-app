@@ -9,6 +9,7 @@
             <th>Scheduled</th>
             <th>Active</th>
             <th>Finished</th>
+            <th>Cancelled</th>
             
         </tr>
     </thead>
@@ -24,6 +25,7 @@
             <td class="date fees"><s:property value="pipelineContestsNumber"/>/$<fmt:formatNumber value="${feesScheduled}" pattern="##,##0.00"/></td>
             <td class="date fees"><s:property value="runningContestsNumber"/>/$<fmt:formatNumber value="${feesRunning}" pattern="##,##0.00"/></td>
             <td class="date fees"><s:property value="finishedContestsNumber"/>/$<fmt:formatNumber value="${feesFinalized}" pattern="##,##0.00"/></td>
+            <td class="date fees"><s:property value="cancelledContestsNumber"/>/$<fmt:formatNumber value="${feesCancelled}" pattern="##,##0.00"/></td>
            
         </tr>
     </s:push>

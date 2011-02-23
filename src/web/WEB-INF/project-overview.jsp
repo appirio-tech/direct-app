@@ -185,9 +185,10 @@
                                                 <td><s:property value="runningContestsNumber"/></td>
                                             </tr>
                                             <tr>
-                                                <td class="statusName">Finished(Completed/Failed)</td>
+                                                <td class="statusName">Finished(Completed/Failed/Cancelled)</td>
                                                 <td>${viewData.projectStats.finishedContestsNumber}(${viewData.dashboardProjectStat.completedNumber}/
-                                                    ${viewData.projectStats.finishedContestsNumber-viewData.dashboardProjectStat.completedNumber})</td>
+                                                    ${viewData.projectStats.finishedContestsNumber-viewData.dashboardProjectStat.completedNumber}/
+                                                    ${viewData.dashboardProjectStat.cancelledNumber})</td>
                                             </tr>
                                             <tr>
                                                 <td class="statusName">Total Member Cost</td>
