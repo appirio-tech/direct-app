@@ -1580,16 +1580,20 @@ public class DataProvider {
 
         String queryName;
         if(projectIds[0] != 0) {
-            queryName = "direct_dashboard_enterprise_detailed_stats_project" + MONTHLY_SUFFIX;
+            queryName = "direct_dashboard_enterprise_detailed_stats_project";
             request.setProperty("tdpis", String.valueOf(projectIDsList));
         } else if (billingAccountIds[0] != 0) {
-            queryName = "direct_dashboard_enterprise_detailed_stats_billing" + MONTHLY_SUFFIX;
+            queryName = "direct_dashboard_enterprise_detailed_stats_billing";
             request.setProperty("bpids", billingAccountIdsList);
         } else if (clientIds[0] != 0) {
-            queryName = "direct_dashboard_enterprise_detailed_stats_client" + MONTHLY_SUFFIX;
+            queryName = "direct_dashboard_enterprise_detailed_stats_client";
             request.setProperty("clids", clientIdsList);
         } else {
             return data;
+        }
+        
+        if(monthly) {
+            queryName += MONTHLY_SUFFIX;
         }
 
         request.setContentHandle(queryName);
@@ -1652,8 +1656,10 @@ public class DataProvider {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         List<EnterpriseDashboardDetailedProjectStatDTO> data
             = new ArrayList<EnterpriseDashboardDetailedProjectStatDTO>();
-
-        final String queryName = "direct_dashboard_enterprise_detailed_stats_overall" + MONTHLY_SUFFIX; 
+        String queryName = "direct_dashboard_enterprise_detailed_stats_overall";
+        if(monthly) {
+            queryName += MONTHLY_SUFFIX;
+        }
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(queryName);
@@ -2833,3 +2839,4 @@ public class DataProvider {
         return b.toString();
     }
 }
+
