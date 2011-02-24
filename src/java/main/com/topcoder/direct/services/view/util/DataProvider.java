@@ -1991,12 +1991,12 @@ public class DataProvider {
         ResultSetContainer resultContainer = null;
 
         if (DirectUtils.isTcOperations(tcSubject)) {
-            System.out.println("query the cockpit admin...");
+            //System.out.println("query the cockpit admin...");
             request.setContentHandle("admin_client_billing_accounts");
             resultContainer = dataAccess.getData(request).get(
                     "admin_client_billing_accounts");
         } else {
-            System.out.println("query non admin...");
+            //System.out.println("query non admin...");
             long[] projectIds = new long[projects.size()];
             int index = 0;
             for(ProjectData data : projects) {
