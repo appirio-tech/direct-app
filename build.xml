@@ -357,12 +357,6 @@
     <target name="deploy-jboss-files" description="deploy the dependent ears for direct application">
         <delete dir="${jboss_deploy_dir}/security.ear"/>
         <unzip src="${tcs_libdir}/security.ear" dest="${jboss_deploy_dir}/security.ear" overwrite="true" />
-
-        <!-- ejb depedent libs -->
-        <copy todir="${jboss.home}/server/${server.name}/lib" overwrite="true" verbose="true" flatten="true">
-            <fileset dir="${jboss_filesdir}/lib"/>
-        </copy>
-
     </target>
 
     <target name="deploy-static-files" description="deploy the static files for direct application">
