@@ -1,0 +1,23 @@
+<CMConfig>
+    <!--
+        A configuration for Document Generator 2.0 component. In context of Cockpit
+        application a custom WebTemplateSource template source is used for loading the templates
+        resolving them against CLASSPATH but not a file system.
+    -->
+    <Config name="com.topcoder.util.file">
+        <!-- the identifiers of the template sources -->
+        <Property name="sources">
+            <Value>web-resource</Value>
+        </Property>
+
+        <!-- the identifier of the template source to be used as default -->
+        <Property name="default_source">
+            <Value>web-resource</Value>
+        </Property>
+
+        <!-- file template source properties -->
+        <Property name="web-resource_class">
+            <Value>com.topcoder.widgets.assembly.ClasspathTemplateSource</Value>
+        </Property>
+    </Config>
+</CMConfig>

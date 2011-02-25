@@ -1,0 +1,46 @@
+<CMConfig>
+	<Config name="com.cronos.onlinereview.services.uploads.impl.DefaultManagersProvider">
+		<Property name="objectFactoryNamespace">
+			<Value>com.topcoder.util.objectfactory</Value>
+		</Property>
+		<Property name="resourceManagerIdentifier">
+			<Value>resourceManagerKey</Value>
+		</Property>
+		<Property name="phaseManagerIdentifier">
+			<Value>phaseManagerKey</Value>
+		</Property>
+		<Property name="projectManagerIdentifier">
+			<Value>projectManagerKey</Value>
+		</Property>
+		<Property name="screeningManagerIdentifier">
+			<Value>screeningManagerKey</Value>
+		</Property>
+		<Property name="uploadManagerIdentifier">
+			<Value>uploadManagerKey</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.cronos.onlinereview.services.uploads.impl.DefaultUploadServices">
+		<Property name="objectFactoryNamespace">
+			<Value>com.topcoder.util.objectfactory</Value>
+		</Property>
+		<Property name="managersProviderIdentifier">
+			<Value>managersProvider</Value>
+		</Property>
+	</Config>
+
+	<Config name="com.cronos.onlinereview.services.uploads.impl.DefaultUploadExternalServices">
+		<Property name="objectFactoryNamespace">
+			<Value>com.topcoder.util.objectfactory</Value>
+		</Property>
+		<Property name="uploadServicesIdentifier">
+			<Value>uploadServices</Value>
+		</Property>
+		<Property name="filenamePattern">
+			<Value>{0}_{1}</Value>
+		</Property>
+		<Property name="fileStorageLocation">
+			<Value>@file_storage_location@</Value>
+		</Property>
+	</Config>
+</CMConfig>

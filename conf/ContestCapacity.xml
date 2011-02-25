@@ -1,0 +1,436 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.service.pipeline.ejb.ContestPipelineServiceBean">
+        <Property name="SoftwareDaysCapacity">
+            <Property name="Monday">
+                <Property name="1">   <!-- Comp Des -->
+                    <Value>4</Value>
+                </Property>
+                <Property name="2">   <!-- Comp Dev -->
+                    <Value>4</Value>
+                </Property>
+                <Property name="6">   <!-- Spec -->
+                    <Value>2</Value>
+                </Property>
+                <Property name="7">   <!-- Arch -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="13">  <!-- Test Suite -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="14">  <!-- Assembly -->
+                    <Value>2</Value>
+                </Property>
+                 <Property name="19"> <!-- UI Proto -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="23">  <!-- Concept -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="24">  <!-- RIA Build -->
+                    <Value>0</Value>
+                </Property>
+                 <Property name="25"> <!-- RIA Comp -->
+                    <Value>0</Value>
+                </Property>
+                <Property name="26">  <!-- Test Scenarios -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+            <Property name="Tuesday">
+                <Property name="1">
+                    <Value>4</Value>  <!-- Comp Des        -->
+                </Property>			                    
+                <Property name="2">	                    
+                    <Value>4</Value>  <!-- Comp Dev        -->
+                </Property>			                    
+                <Property name="6">	                    
+                    <Value>2</Value>  <!-- Spec            -->
+                </Property>			                    
+                <Property name="7">	                    
+                    <Value>1</Value>  <!-- Arch            -->
+                </Property>			                    
+                <Property name="13">                    
+                    <Value>1</Value>  <!-- Test Suite      -->
+                </Property>			                    
+                <Property name="14">                    
+                    <Value>2</Value>  <!-- Assembly        -->
+                </Property>			                    
+                 <Property name="19">                   
+                    <Value>1</Value>  <!-- UI Proto        -->
+                </Property>			                    
+                <Property name="23">                     
+                    <Value>1</Value>  <!-- Concept        --> 
+                </Property>			                    
+                <Property name="24">                    
+                    <Value>1</Value>  <!-- RIA Build       -->
+                </Property>			                    
+                 <Property name="25">                   
+                    <Value>0</Value>  <!-- RIA Comp        -->
+                </Property>			                    
+                <Property name="26">                    
+                    <Value>1</Value>  <!-- Test Scenarios  -->
+                </Property>			                    
+            </Property>
+            <Property name="Wednesday">
+                 <Property name="1">
+                    <Value>4</Value>  <!-- Comp Des        -->
+                </Property>			                    
+                <Property name="2">	                    
+                    <Value>4</Value>  <!-- Comp Dev        -->
+                </Property>			                    
+                <Property name="6">	                    
+                    <Value>2</Value>  <!-- Spec            -->
+                </Property>			                    
+                <Property name="7">	                    
+                    <Value>1</Value>  <!-- Arch            -->
+                </Property>			                    
+                <Property name="13">                     
+                    <Value>1</Value>  <!-- Test Suite     --> 
+                </Property>			                    
+                <Property name="14">                    
+                    <Value>2</Value>  <!-- Assembly        -->
+                </Property>			                    
+                 <Property name="19">                   
+                    <Value>1</Value>  <!-- UI Proto        -->
+                </Property>			                    
+                <Property name="23">                    
+                    <Value>1</Value>  <!-- Concept         -->
+                </Property>			                    
+                <Property name="24">                    
+                    <Value>0</Value>  <!-- RIA Build       -->
+                </Property>			                    
+                 <Property name="25">                   
+                    <Value>0</Value>  <!-- RIA Comp        -->
+                </Property>			                    
+                <Property name="26">                    
+                    <Value>1</Value>  <!-- Test Scenarios  -->
+                </Property>			                    
+            </Property>
+            <Property name="Thursday">
+                 <Property name="1">  <!-- Comp Des        -->
+                    <Value>4</Value>                    
+                </Property>			                    
+                <Property name="2">	  <!-- Comp Dev        -->
+                    <Value>4</Value>                    
+                </Property>			                    
+                <Property name="6">	  <!-- Spec            -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                <Property name="7">	  <!-- Arch            -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="13">  <!-- Test Suite      -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="14">  <!-- Assembly        -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                 <Property name="19"> <!-- UI Proto        -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="23">  <!-- Concept         -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="24">  <!-- RIA Build       -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                 <Property name="25"> <!-- RIA Comp        -->
+                    <Value>0</Value>                    
+                </Property>			                    
+                <Property name="26">  <!-- Test Scenarios  -->
+                    <Value>1</Value>                    
+                </Property>
+            </Property>
+            <Property name="Friday">
+                 <Property name="1">  <!-- Comp Des        -->
+                    <Value>4</Value>                    
+                </Property>			                    
+                <Property name="2">	  <!-- Comp Dev        -->
+                    <Value>4</Value>                    
+                </Property>			                    
+                <Property name="6">	  <!-- Spec            -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                <Property name="7">	  <!-- Arch            -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="13">  <!-- Test Suite      -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="14">  <!-- Assembly        -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                 <Property name="19"> <!-- UI Proto        -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                <Property name="23">  <!-- Concept         -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="24">  <!-- RIA Build       -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                 <Property name="25"> <!-- RIA Comp        -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="26">  <!-- Test Scenarios  -->
+                    <Value>1</Value>                    
+                </Property>
+            </Property>
+            <Property name="Saturday">
+                <Property name="1">  <!-- Comp Des        -->
+                    <Value>4</Value>                   
+                </Property>			                   
+                <Property name="2">	 <!-- Comp Dev        -->
+                    <Value>4</Value>                   
+                </Property>			                   
+                <Property name="6">	 <!-- Spec            -->
+                    <Value>2</Value>                   
+                </Property>			                   
+                <Property name="7">	 <!-- Arch            -->
+                    <Value>1</Value>                   
+                </Property>			                   
+                <Property name="13"> <!-- Test Suite      -->
+                    <Value>1</Value>                   
+                </Property>			                   
+                <Property name="14"> <!-- Assembly        -->
+                    <Value>2</Value>                   
+                </Property>			                   
+                 <Property name="19"><!-- UI Proto        -->
+                    <Value>2</Value>                   
+                </Property>			                   
+                <Property name="23"> <!-- Concept         -->
+                    <Value>1</Value>                   
+                </Property>			                   
+                <Property name="24"> <!-- RIA Build       -->
+                    <Value>1</Value>                   
+                </Property>			                   
+                 <Property name="25"><!-- RIA Comp        -->
+                    <Value>0</Value>                   
+                </Property>			                   
+                <Property name="26"> <!-- Test Scenarios  -->
+                    <Value>1</Value>                   
+                </Property>
+            </Property>
+            <Property name="Sunday">
+                 <Property name="1">  <!-- Comp Des        -->
+                    <Value>4</Value>                    
+                </Property>			                    
+                <Property name="2">	  <!-- Comp Dev        -->
+                    <Value>4</Value>                    
+                </Property>			                    
+                <Property name="6">	  <!-- Spec            -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                <Property name="7">	  <!-- Arch            -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="13">  <!-- Test Suite      -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="14">  <!-- Assembly        -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                 <Property name="19"> <!-- UI Proto        -->
+                    <Value>2</Value>                    
+                </Property>			                    
+                <Property name="23">  <!-- Concept         -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                <Property name="24">  <!-- RIA Build       -->
+                    <Value>1</Value>                    
+                </Property>			                    
+                 <Property name="25"> <!-- RIA Comp        -->
+                    <Value>0</Value>                    
+                </Property>			                    
+                <Property name="26">  <!-- Test Scenarios  -->
+                    <Value>1</Value>                    
+                </Property>
+            </Property>
+        </Property>
+        <Property name="StudioDaysCapacity">
+            <Property name="Monday">
+                <Property name="1">   <!-- Web Page Design -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="3">   <!-- Logo Design -->
+                    <Value>2</Value>
+                </Property>
+                <Property name="4">   <!-- Web Elements -->
+                    <Value>2</Value>
+                </Property>
+                <Property name="5">   <!-- Application Front End Design -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="12">  <!-- Print Design -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="14">  <!-- Icon -->
+                    <Value>2</Value>
+                </Property>
+                <Property name="18">  <!-- Other -->
+                    <Value>1</Value>
+                </Property>
+                <Property name="21">  <!-- PowerPoint Presentation -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+            <Property name="Tuesday">
+                <Property name="1">   <!-- Web Page Design             -->  
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="3">	  <!-- Logo Design                   -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="4">	  <!-- Web Elements                  -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="5">	  <!-- Application Front End Design  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="12">  <!-- Print Design                  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="14">  <!-- Icon                          -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="18">  <!-- Other                         -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="21">  <!-- PowerPoint Presentation       -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+            <Property name="Wednesday">
+                <Property name="1">   <!-- Web Page Design               -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="3">	  <!-- Logo Design                   -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="4">	  <!-- Web Elements                  -->
+                    <Value>2</Value>                                   
+                </Property>			                                  
+                <Property name="5">	  <!-- Application Front End Design  -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="12">  <!-- Print Design                  -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="14">  <!-- Icon                          -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="18">  <!-- Other                         -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="21">  <!-- PowerPoint Presentation       -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+            <Property name="Thursday">
+                <Property name="1">   <!-- Web Page Design               -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="3">	  <!-- Logo Design                   -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="4">	  <!-- Web Elements                  -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="5">	  <!-- Application Front End Design  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="12">  <!-- Print Design                  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="14">  <!-- Icon                          -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="18">  <!-- Other                         -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="21">  <!-- PowerPoint Presentation       -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+            <Property name="Friday">
+                <Property name="1">   <!-- Web Page Design               -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="3">	  <!-- Logo Design                   -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="4">	  <!-- Web Elements                  -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="5">	  <!-- Application Front End Design  -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="12">  <!-- Print Design                  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="14">  <!-- Icon                          -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="18">  <!-- Other                         -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="21">  <!-- PowerPoint Presentation       -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+            <Property name="Saturday">
+                <Property name="1">   <!-- Web Page Design               -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="3">	  <!-- Logo Design                   -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="4">	  <!-- Web Elements                  -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="5">	  <!-- Application Front End Design  -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="12">  <!-- Print Design                  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="14">  <!-- Icon                          -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="18">  <!-- Other                         -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="21">  <!-- PowerPoint Presentation       -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+            <Property name="Sunday">
+                <Property name="1">   <!-- Web Page Design               -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="3">	  <!-- Logo Design                   -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="4">	  <!-- Web Elements                  -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="5">	  <!-- Application Front End Design  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="12">  <!-- Print Design                  -->
+                    <Value>1</Value>                                  
+                </Property>			                                  
+                <Property name="14">  <!-- Icon                          -->
+                    <Value>2</Value>                                  
+                </Property>			                                  
+                <Property name="18">  <!-- Other                         -->
+                    <Value>0</Value>                                  
+                </Property>			                                  
+                <Property name="21">  <!-- PowerPoint Presentation       -->
+                    <Value>1</Value>
+                </Property>
+            </Property>
+        </Property>
+    </Config>
+</CMConfig>

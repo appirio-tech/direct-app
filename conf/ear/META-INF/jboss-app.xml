@@ -1,2 +1,4 @@
 <jboss-app>
+    <module-order>strict</module-order>
+    <security-domain>java:/jaas/JBossLoginModule</security-domain>
 </jboss-app>

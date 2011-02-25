@@ -1,0 +1,12 @@
+The Liquid Resource contest %CONTEST_NAME% has been successfully registered.
+
+This email triggers the creation of a Jira tracking ticket. A copilot will setup the ticket, and will initiate informal review.
+You will receive another email identifying the URL for this Jira ticket. All communication regarding this contest must take place via comments on that ticket.
+
+Contest name\: %CONTEST_NAME% 
+Target launch\: %LAUNCH_TIME%   
+TopCoder ID\: %CONTEST_ID% 
+Account Code\: %ACCOUNT_CODE% 
+Contest Owner\: %CREATOR_HANDLE% 
+
+This is an automated email. DO NOT REPLY.

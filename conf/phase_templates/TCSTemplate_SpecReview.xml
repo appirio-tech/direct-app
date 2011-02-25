@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!-- A template which defines a set of project phases -->
+<Template name="Spec Review">
+	<!-- An enumeration of project phase types defined in this template -->
+	<PhaseTypes>
+		<PhaseType id="registration" typeId="1" typeName="Registration"/>
+		<PhaseType id="submission" typeId="2" typeName="Submission"/>
+		<PhaseType id="review" typeId="4" typeName="Review"/>
+		<PhaseType id="appeals" typeId="5" typeName="Appeals"/>
+		<PhaseType id="appeals_response" typeId="6" typeName="Appeals Response"/>
+		<PhaseType id="aggregation" typeId="7" typeName="Aggregation"/>
+		<PhaseType id="aggregation_review" typeId="8" typeName="Aggregation Review"/>
+		<PhaseType id="final_fixes" typeId="9" typeName="Final Fixes"/>
+		<PhaseType id="final_review" typeId="10" typeName="Final Review"/>
+	</PhaseTypes>
+	<!-- A set of project phases defined in this template. -->
+	<Phases>
+		<!-- A definition of a single phase. -->
+		<Phase id="registrationPhase" length="0" type="registration"  phaseId="1"/>
+
+		<Phase id="submissionPhase" length="0" type="submission"  phaseId="2">
+			<Dependency id="registrationPhase" isDependencyStart="true" isDependentStart="true" lagTime="0"/>
+		</Phase>
+
+		<Phase id="reviewPhase" length="7200000" type="review"  phaseId="3">
+			<!-- "isDependencyStart" is optional attribute(default to "false"), here it is omitted -->
+			<Dependency id="submissionPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
+		</Phase>
+
+		<Phase id="appealsPhase" length="0" type="appeals"  phaseId="5">
+			<!-- "isDependentStart" is optional attribute(default to "true"), here it is omitted -->
+			<Dependency id="reviewPhase" isDependencyStart="false" lagTime="0"/>
+		</Phase>
+
+		<Phase id="appealsReponsePhase" length="0" type="appeals_response"  phaseId="6">
+			<!-- "lagTime" is optional attribute(default to "0"), here it is omitted -->
+			<Dependency id="appealsPhase" isDependencyStart="false" isDependentStart="true"/>
+		</Phase>
+
+		<Phase id="aggregationPhase" length="1800000" type="aggregation"  phaseId="7">
+			<!-- all attributes except "id" are omitted -->
+			<Dependency id="appealsReponsePhase"/>
+		</Phase>
+
+		<Phase id="aggregationReviewPhase" length="0" type="aggregation_review"  phaseId="8">
+			<Dependency id="aggregationPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
+		</Phase>
+
+		<Phase id="finalFixesPhase" length="7200000" type="final_fixes"  phaseId="9">
+			<Dependency id="aggregationReviewPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
+		</Phase>
+
+		<Phase id="finalReviewPhase" length="3600000" type="final_review"  phaseId="10">
+			<Dependency id="finalFixesPhase" isDependencyStart="false" isDependentStart="true" lagTime="0"/>
+		</Phase>	</Phases>
+</Template>

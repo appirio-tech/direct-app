@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Config name="com.liquid.portal.service">
+		<property name="notusObserverTermsId">
+			<value>20794</value>
+		</property>
+
+        <property name="notusSubmitterTermsId">
+			<value>20623</value>
+		</property>
+
+        <property name="clientManagerForBillingProjects">
+			<value>70015983</value>
+            <value>1</value>
+		</property>
+
+
+		<property name="projectCategories">
+			<value>development::1</value>
+			<value>design::2</value>
+		</property>
+
+		<property name="studioContestTypes">
+			<value>icon::3</value>
+			<value>flash::4</value>
+		</property>
+
+		<property name="notusEligibilityGroupIds">
+            <value>217</value>
+		</property>
+
+        <property name="addToNotusEligibilityGroupIds">
+			<value>2</value>
+			<value>10</value>
+            <value>14</value>
+			<value>2000118</value>
+            <value>2000116</value>
+            <value>217</value>
+		</property>
+
+        <property name="zeroContestFeeBillingIds">
+			<value>70016058</value>
+			<value>70016059</value>
+            <value>70015983</value>
+		</property>
+
+		<property name="fullControlPermissionTypeId">
+			<value>3</value>
+		</property>
+
+		<property name="inactiveStudioContestStatusId">
+			<value>12</value>
+		</property>
+
+		<property name="inactiveSoftwareContestStatusId">
+			<value>13</value>
+		</property>
+
+		<property name="deletedSoftwareContestStatusId">
+			<value>14</value>
+		</property>
+
+		<property name="notusClientId">
+			<value>70014096</value>
+		</property>
+
+		<property name="billingAccountPropertyKey">
+			<value>account</value>
+		</property>
+
+		<property name="deleteReasonPropertyKey">
+			<value>reason</value>
+		</property>
+
+		<property name="logName">
+			<value>portal</value>
+		</property>
+
+		<property name="jiraEmailAddress">
+			<value>sma@topcoder.com</value>
+		</property>
+
+		<property name="jiraEmailSubject">
+			<value>Liquid Error</value>
+		</property>
+
+		<property name="jiraEmailSender">
+			<value>topcoder@topcoder.com</value>
+		</property>
+
+		<property name="jiraEmailMessageTemplateName">
+			<value>@JBOSS_HOME@/server/default/deploy/tcdirect.ear/liquid_template.txt</value>
+		</property>
+
+		<property name="liquidStudioContestsEmailFrom">
+			<value>sma@topcoder.com</value>
+		</property>
+
+		<property name="liquidStudioContestsEmailSubject">
+			<value>Studio Private Contest Creation</value>
+		</property>
+
+		<property name="liquidStudioContestsEmailTo">
+			<value>sma@topcoder.com</value>
+		</property>
+
+		<property name="liquidStudioContestsEmailCC">
+			<value>sma@topcoder.com</value>
+		</property>
+
+        <property name="liquidStudioContestsEmailBilling">
+			<value>1</value>
+		</property>
+
+		<property name="liquidStudioContestsEmailTemplateName">
+			<value>@JBOSS_HOME@/server/default/deploy/tcdirect.ear/liquid_studio_contests_email.txt</value>
+		</property>
+
+		<property name="ccnEmailFrom">
+			<value>sma@topcoder.com</value>
+		</property>
+		<property name="ccnEmailTo">
+			<value>sma@topcoder.com</value>
+		</property>
+
+		<property name="ccnEmailTemplateName">
+			<value>@JBOSS_HOME@/server/default/deploy/tcdirect.ear/contest_creation_notification.txt</value>
+		</property>
+
+	</Config>
+	<Config name="document_generator_configuration">
+		<Property name="sources">
+            <Value>file</Value>
+        </Property>
+
+        <!-- the identifier of the template source to be used as default -->
+        <Property name="default_source">
+            <Value>file</Value>
+        </Property>
+
+        <!-- here follow custom properties for each template source -->
+        <!-- the <sourceidentifier>_class property is mandatory -->
+        <!-- the other <sourceidentifier>_<property_name> properties are specific for each source -->
+
+        <!-- file template source properties -->
+        <Property name="file_class">
+            <Value>com.topcoder.util.file.templatesource.FileTemplateSource</Value>
+        </Property>
+	</Config>
+</CMConfig>

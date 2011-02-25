@@ -1,0 +1,14 @@
+    <CMConfig>
+        <Property name="smtp_host_addr">
+            <Value>@emailengine_smtp_host@</Value>
+        </Property>
+        <Property name="smtp_host_port">
+            <Value>@emailengine_smtp_port@</Value>
+        </Property>
+        <Property name="username">
+            <Value>@emailengine_smtp_user@</Value>
+        </Property>
+        <Property name="password">
+            <Value>@emailengine_smtp_password@</Value>
+        </Property>
+    </CMConfig>

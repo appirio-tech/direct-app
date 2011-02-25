@@ -1,0 +1,10 @@
+The following update was made to the specification review\:
+
+%SECTIONS%
+
+Please return to http\://www.topcoder.com/direct to make updates to your contest.
+
+If you have any questions or issues, contact directassist@topcoder.com.
+
+Thanks,
+The TopCoder Team.

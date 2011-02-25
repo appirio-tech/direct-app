@@ -1,0 +1,62 @@
+A message from TopCoder.
+
+Thank you for purchasing submissions from TopCoder Direct.  We have processed your payment.  
+ 
+You can track the status of this competition, and all your competitions, by visiting http\://www.topcoder.com/direct
+
+There you can\: 
+
+        + Track the progress of your competitions
+        + View information for competitions 
+        + Modify competitions that have not launched
+        + Select winners (if necessary for this competition)
+        + And much more
+
+The following submissions(s) have been purchased\: 
+
+--------------------------------------------------------------------
+
+Competition Type\:   %COMPETITION_TYPE%
+Competition Title\:  %COMPETITION_TITLE%
+Project\:       %PROJECT_NAME%
+#%loop:SUB_PRICES%
+#%SUB_ID% - %PRICE%
+#%endloop%
+%SUB_PURCHASE_LIST%
+
+---------------------------------------------------------------------
+Total\:      $%TOTAL_COST%
+-------------------------------------------------------------------
+
+
+Payment has been initiated for $%TOTAL_COST%.  All payments are subject to credit card approval and processing and address confirmation.
+ 
+
+--------------------------------------------------------------------
+
+This competition was ordered by\:
+#    %if:PURCHASE_TYPE = 'CC'%
+#    %PURCHASER_NAME%
+#    %PURCHASER_ADDRESS%
+#    %PURCHASER_CITY%, %PURCHASER_STATE% %PURCHASER_ZIP%
+#    %PURCHASER_COUNTRY%
+#    %endif%
+#    %if:PURCHASE_TYPE = 'PO'%
+#    Client Name\: %CLIENT_NAME%
+#    Project Name\: %PROJECT_NAME%
+#    PO \#\: %PO_NUMBER%
+#    %endif%
+    %PURCHASER_DETAILS%
+    Purchased By\: %PURCHASED_BY%
+
+--------------------------------------------------------------------
+
+If you've explored the links on the TopCoder Direct page but still need assistance with your competition, email %FROM_ADDRESS% and we'll be happy to help.
+
+---------------------------------------------------------------------
+
+Please note\: This e-mail was sent from a notification-only address that cannot accept incoming e-mail. Please do not reply to this message.
+
+Thank you for working with TopCoder.
+
+---------------------------------------------------------------------

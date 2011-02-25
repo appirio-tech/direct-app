@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CMConfig>
+    <Property name = "CockpitProjectPilotJob">
+        <Value>StartDTG: Jan 31, 2008 01:02:03 AM </Value>
+        <Value>EndDTG:  Jan 1, 20010 01:00:00 AM</Value>
+        <Value>IntervalValue: 5</Value>
+        <Value>IntervalUnit: MINUTE</Value>
+        <Value>JobType: JOB_TYPE_JAVA_CLASS</Value>
+        <Value>JobCmd: com.topcoder.widgets.assembly.CockpitAutoPilotJob</Value>
+    </Property>
+</CMConfig>

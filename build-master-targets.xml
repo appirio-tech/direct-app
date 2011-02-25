@@ -1,332 +1,521 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-     Dec 1, 2008 9:56:08 PM                                                        
+<!-- ======================================================================
+     Dec 1, 2008 9:56:08 PM
 
      Build Master Targets
-                   
-     TCSDEVELOPER                                               
+
+     TCSDEVELOPER
      ====================================================================== -->
 <project name="build-master-targets">
-	<description>
+  <description>
         This script file defines the common master targets: compile-all, clean-all,
         dist-all and those perform subversion related operations on subprojects.
-    </description>
+  </description>
 
-	<!-- subversion tasks -->
-	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svn.path" />
+  <!-- subversion tasks -->
+  <typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svn.path" />
 
-	<!-- ================================= 
-          target: compile-all              
+  <!-- =================================
+          target: compile-all
          ================================= -->
-	<target name="compile-all" description="Runs 'compile' target on every subproject.">
-		<run-target-all target="compile" />
-	</target>
+  <target name="compile-all" description="Runs 'compile' target on every subproject.">
+    <run-target-all target="compile" />
+  </target>
 
-	<!-- ================================= 
-          target: dist-all              
+  <!-- =================================
+          target: dist-all
          ================================= -->
-	<target name="dist-all" description="Runs 'dist' target on every subproject.">
-		<!-- copy the properties -->	
-		<antcall target="copy_properties" />
-		
-		<run-target-all target="dist_tcs" />
-		
-		<!-- build the parent project -->
-		<antcall target="dist" />
+  <target name="dist-all" description="Runs 'dist' target on every subproject.">
+    <!-- copy the properties -->
+    <antcall target="copy_properties" />
 
-	</target>
+    <antcall target="dist-backend" />
+  </target>
 
-	<!-- ================================= 
-          target: clean-all              
+
+  <!-- =================================
+          target: dist-backend
          ================================= -->
-	<target name="clean-all" description="Runs 'clean' target on every subproject.">
-		<run-target-all target="clean" />
-	</target>
+  <target name="dist-backend" description="Runs 'dist_tcs' target on every subproject.">
+    <run-target-all target="dist_tcs"/>
+
+    <!-- build the parent project -->
+    <antcall target="dist" />
+
+  </target>
 
 
-	<!-- ================================= 
-         target: checkout-all              
+  <!-- =================================
+          target: clean-all
          ================================= -->
-	<target name="checkout-all" description="Checks out all subprojects">
-		<condition property="version" value="TRUNK">
-			<not>
-				<isset property="version" />
-			</not>
-		</condition>
-		<execute-all prefix="project.current">
-			<sequential>
-				<version-path version="${version}" property="url" prefix="project.current" />
-				<echo message="-------------------- Checking out: ${project.current.basedir} from version: ${version}"/>
-				<svnex>
-					<checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-	
-	<!-- ================================= 
-         target: checkout-all-by-tag              
-         ================================= -->
-	<target name="checkout-all-by-tag" description="Checks out all subprojects">
-		<fail unless="tagName" message="The 'tagName' version is required. " />
-		<execute-all prefix="project.current">
-			<sequential>
-				<tag-path tag="${tagName}" property="url" prefix="project.current" />
-				<echo message="${url}" />
-				<svnex>
-					<checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-	
-	
-	<!-- ================================= 
-         target: checkout-all-by-branch              
-         ================================= -->
-	<target name="checkout-all-by-branch" description="Checks out all subprojects">
-		<fail unless="branchName" message="The 'branchName' version is required. " />
-		<execute-all prefix="project.current">
-			<sequential>
-				<branch-path branch="${branchName}" property="url" prefix="project.current" />
-				<echo message="${url}" />
-				<svnex>
-					<checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
+  <target name="clean-all" description="Runs 'clean' target on every subproject.">
+    <run-target-all target="clean" />
+  </target>
 
 
-	<!-- ================================= 
-         target: update-all              
+  <!-- =================================
+         target: checkout-all
          ================================= -->
-	<target name="update-all" description="Updates all subprojects.">
-		<execute-all prefix="project.current">
-			<sequential>
+  <target name="checkout-all" description="Checks out all subprojects">
+    <condition property="version" value="TRUNK">
+      <not>
+        <isset property="version" />
+      </not>
+    </condition>
+    <execute-all prefix="project.current">
+      <sequential>
+        <version-path version="${version}" property="url" prefix="project.current" />
+        <echo message="-------------------- Checking out: ${project.current.basedir} from version: ${version}"/>
+        <svnex>
+          <checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+  <!-- =================================
+         target: checkout-all-by-tag
+         ================================= -->
+  <target name="checkout-all-by-tag" description="Checks out all subprojects">
+    <fail unless="tagName" message="The 'tagName' version is required. " />
+    <execute-all prefix="project.current">
+      <sequential>
+        <tag-path tag="${tagName}" property="url" prefix="project.current" />
+        <echo message="${url}" />
+        <svnex>
+          <checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+
+  <!-- =================================
+         target: checkout-all-by-branch
+         ================================= -->
+  <target name="checkout-all-by-branch" description="Checks out all subprojects">
+    <fail unless="branchName" message="The 'branchName' version is required. " />
+    <execute-all prefix="project.current">
+      <sequential>
+        <branch-path branch="${branchName}" property="url" prefix="project.current" />
+        <echo message="${url}" />
+        <svnex>
+          <checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+
+  <!-- =================================
+         target: update-all
+         ================================= -->
+  <target name="update-all" description="Updates all subprojects.">
+    <execute-all prefix="project.current">
+      <sequential>
                 <echo message="-------------------- Updating: ${project.current.basedir}"/>
-				<svnex>
-					<update dir="${basedir}/${project.current.basedir}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
+        <svnex>
+          <update dir="${basedir}/${project.current.basedir}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
 
-	<!-- ================================= 
-          target: diff-all              
+  <!-- =================================
+          target: diff-all
          ================================= -->
-	<target name="generate-patch-all" description="Generates a diff file for every subproject and zips the diff files together.">
-		<mkdir dir="${user.home}/diff-temp" />
+  <target name="generate-patch-all" description="Generates a diff file for every subproject and zips the diff files together.">
+    <mkdir dir="${user.home}/diff-temp" />
 
-		<condition property="outFile" value="${basedir}/patch.zip">
-			<not>
-				<isset property="outFile" />
-			</not>
-		</condition>
+    <condition property="outFile" value="${basedir}/patch.zip">
+      <not>
+        <isset property="outFile" />
+      </not>
+    </condition>
 
-		<execute-all prefix="project.current">
-			<sequential>
-				<svnex>
-					<diff oldPath="${basedir}/${project.current.basedir}" outFile="${user.home}/diff-temp/${project.current.name}.patch" />
-				</svnex>
-			</sequential>
-		</execute-all>
+    <execute-all prefix="project.current">
+      <sequential>
+        <svnex>
+          <diff oldPath="${basedir}/${project.current.basedir}" outFile="${user.home}/diff-temp/${project.current.name}.patch" />
+        </svnex>
+      </sequential>
+    </execute-all>
 
-		<zip destfile="${outFile}" basedir="${user.home}/diff-temp">
-			<include name="**/*.patch" />
-		</zip>
-		<delete dir="${user.home}/diff-temp" />
-	</target>
+    <zip destfile="${outFile}" basedir="${user.home}/diff-temp">
+      <include name="**/*.patch" />
+    </zip>
+    <delete dir="${user.home}/diff-temp" />
+  </target>
 
-	<!-- ================================= 
-          target: diff-version-all             
+  <!-- =================================
+          target: diff-version-all
          ================================= -->
-	<target name="diff-version-all" description="Generates a diff file for every subproject between two versions and zips the diff files together.">
-		<mkdir dir="${user.home}/diff-temp" />
+  <target name="diff-version-all" description="Generates a diff file for every subproject between two versions and zips the diff files together.">
+    <mkdir dir="${user.home}/diff-temp" />
 
-		<condition property="outFile" value="${basedir}/patch.zip">
-			<not>
-				<isset property="outFile" />
-			</not>
-		</condition>
+    <condition property="outFile" value="${basedir}/patch.zip">
+      <not>
+        <isset property="outFile" />
+      </not>
+    </condition>
 
-		<fail unless="from" message="The 'from' version is required." />
-		<fail unless="to" message="The 'to' version is required. " />
+    <fail unless="from" message="The 'from' version is required." />
+    <fail unless="to" message="The 'to' version is required. " />
 
-		<execute-all prefix="project.current">
-			<sequential>
-				<version-path version="${from}" property="oldUrl" prefix="project.current" />
-				<version-path version="${to}" property="newUrl" prefix="project.current" />
-				<svnex>
-					<diff oldUrl="${oldUrl}" newUrl="${newUrl}" outFile="${user.home}/diff-temp/${project.current.name}.patch" />
-				</svnex>
-			</sequential>
-		</execute-all>
+    <execute-all prefix="project.current">
+      <sequential>
+        <version-path version="${from}" property="oldUrl" prefix="project.current" />
+        <version-path version="${to}" property="newUrl" prefix="project.current" />
+        <svnex>
+          <diff oldUrl="${oldUrl}" newUrl="${newUrl}" outFile="${user.home}/diff-temp/${project.current.name}.patch" />
+        </svnex>
+      </sequential>
+    </execute-all>
 
-		<zip destfile="${outFile}" basedir="${user.home}/diff-temp">
-			<include name="**/*.patch" />
-		</zip>
-		<delete dir="${user.home}/diff-temp" />
-	</target>
+    <zip destfile="${outFile}" basedir="${user.home}/diff-temp">
+      <include name="**/*.patch" />
+    </zip>
+    <delete dir="${user.home}/diff-temp" />
+  </target>
 
-	<!-- get the diff for the laste release and the current changes." -->
-	<target name="diff-prev-version">
-		<property name="from" value="RELEASE" />
-		<property name="to" value="TRUNK" />
-		<antcall target="diff-version-all" />
-	</target>
-	
-	<!-- ================================= 
-          target: patch-all              
+  <!-- get the diff for the laste release and the current changes." -->
+  <target name="diff-prev-version">
+    <property name="from" value="RELEASE" />
+    <property name="to" value="TRUNK" />
+    <antcall target="diff-version-all" />
+  </target>
+
+  <!-- =================================
+          target: patch-all
          ================================= -->
-	<target name="apply-patch-all" description="Patches all the subprojects with a zip file containing the patches">
-		<mkdir dir="${user.home}/patch-temp" />
+  <target name="apply-patch-all" description="Patches all the subprojects with a zip file containing the patches">
+    <mkdir dir="${user.home}/patch-temp" />
 
-		<condition property="inFile" value="${basedir}/patch.zip">
-			<not>
-				<isset property="inFile" />
-			</not>
-		</condition>
+    <condition property="inFile" value="${basedir}/patch.zip">
+      <not>
+        <isset property="inFile" />
+      </not>
+    </condition>
 
-		<unzip dest="${user.home}/patch-temp" src="${inFile}" />
+    <unzip dest="${user.home}/patch-temp" src="${inFile}" />
 
-		<execute-all prefix="project.current">
-			<sequential>
-				<patch patchfile="${user.home}/patch-temp/${project.current.name}.patch" dir="${basedir}/${project.current.basedir}" />
-			</sequential>
-		</execute-all>
+    <execute-all prefix="project.current">
+      <sequential>
+        <patch patchfile="${user.home}/patch-temp/${project.current.name}.patch" dir="${basedir}/${project.current.basedir}" />
+      </sequential>
+    </execute-all>
 
-		<delete dir="${user.home}/patch-temp" />
-	</target>
+    <delete dir="${user.home}/patch-temp" />
+  </target>
 
-	<!-- ================================= 
-          target: commit-all              
+  <!-- =================================
+          target: commit-all
          ================================= -->
-	<target name="commit-all" description="Commits all the subprojects.">
+  <target name="commit-all" description="Commits all the subprojects.">
 
-		<fail unless="message" message="Commit message must be specified." />
+    <fail unless="message" message="Commit message must be specified." />
 
-		<execute-all prefix="project.current">
-			<sequential>
-				<svnex>
-					<commit dir="${basedir}/${project.current.basedir}" message="${messsage}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
+    <execute-all prefix="project.current">
+      <sequential>
+        <svnex>
+          <commit dir="${basedir}/${project.current.basedir}" message="${messsage}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
 
-	<!-- ================================= 
-          target: switch-all              
+  <!-- =================================
+          target: switch-all
          ================================= -->
-	<target name="switch-all" description="Switches all the subprojects to another version.">
-		<condition property="version" value="TRUNK">
-			<not>
-				<isset property="version" />
-			</not>
-		</condition>
-	
-		<execute-all prefix="project.current">
-			<sequential>
-				<version-path version="${version}" property="url" prefix="project.current" />
-				<svnex>
-					<switch path="${basedir}/${project.current.basedir}" url="${url}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-	
-	<!-- ================================= 
-          target: switch-to-tag              
-         ================================= -->
-	<target name="switch-to-tag" description="Switches all the subprojects to another version.">
-		<fail unless="tagName" message="The version to swith to must be specified." />
+  <target name="switch-all" description="Switches all the subprojects to another version.">
+    <condition property="version" value="TRUNK">
+      <not>
+        <isset property="version" />
+      </not>
+    </condition>
 
-		<execute-all prefix="project.current">
-			<sequential>
-				<tag-path tag="${tagName}" property="url" prefix="project.current" />
-				<echo message="${url}" />
-				<svnex>
-					<switch path="${basedir}/${project.current.basedir}" url="${url}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-	
-	<!-- ================================= 
-          target: switch-to-branch              
-         ================================= -->
-	<target name="switch-to-branch" description="Switches all the subprojects to another version.">
-		<fail unless="branchName" message="The branchName to swith to must be specified." />
+    <execute-all prefix="project.current">
+      <sequential>
+        <version-path version="${version}" property="url" prefix="project.current" />
+        <svnex>
+          <switch path="${basedir}/${project.current.basedir}" url="${url}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
 
-		<execute-all prefix="project.current">
-			<sequential>
-				<branch-path branch="${branchName}" property="url" prefix="project.current" />
-				<echo message="${url}" />
-				<svnex>
-					<switch path="${basedir}/${project.current.basedir}" url="${url}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-
-	<!-- ================================= 
-          target: revert-all              
+  <!-- =================================
+          target: switch-to-tag
          ================================= -->
-	<target name="revert-all" description="Reverts changes on all the subprojects.">
-		<execute-all prefix="project.current">
-			<sequential>
-				<svnex>
-					<revert dir="${basedir}/${project.current.basedir}" recurse="true" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-	
-	<target name="tag-all" description="Tags all subprojects.">
-	
-		<condition property="version" value="TRUNK">
-			<not>
-				<isset property="version" />
-			</not>
-		</condition>
-	
-		<fail unless="tagName" message="The 'tagName' version is required. " />
-	
-		<execute-all prefix="project.current">
-			<sequential>
-				<version-path version="${version}" property="url" prefix="project.current" />
-				<tag-path tag="${tagName}" property="tagUrl" prefix="project.current" />
-				<echo message="${tagUrl}" />
-				<svnex>
-					<copy srcUrl="${url}" destUrl="${tagUrl}" message="tagged the branch as ${tagName}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-	
-	<target name="branch-all" description="Branches all subprojects.">
-	
-		<condition property="version" value="TRUNK">
-			<not>
-				<isset property="version" />
-			</not>
-		</condition>
-	
-		<fail unless="branchName" message="The 'branchName' version is required. " />
-	
-		<execute-all prefix="project.current">
-			<sequential>
-				<version-path version="${version}" property="url" prefix="project.current" />
-				<branch-path tag="${branchName}" property="branchUrl" prefix="project.current" />
-				<echo message="${branchUrl}" />
-				<svnex>
-					<copy srcUrl="${url}" destUrl="${branchUrl}" message="created a branch as ${branchName}" />
-				</svnex>
-			</sequential>
-		</execute-all>
-	</target>
-	
-	<target name="test-all" description="run all the test cases.">
-		<run-target-all target="test" />	
-	</target>
+  <target name="switch-to-tag" description="Switches all the subprojects to another version.">
+    <fail unless="tagName" message="The version to swith to must be specified." />
+
+    <execute-all prefix="project.current">
+      <sequential>
+        <tag-path tag="${tagName}" property="url" prefix="project.current" />
+        <echo message="${url}" />
+        <svnex>
+          <switch path="${basedir}/${project.current.basedir}" url="${url}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+  <!-- =================================
+          target: switch-to-branch
+         ================================= -->
+  <target name="switch-to-branch" description="Switches all the subprojects to another version.">
+    <fail unless="branchName" message="The branchName to swith to must be specified." />
+
+    <execute-all prefix="project.current">
+      <sequential>
+        <branch-path branch="${branchName}" property="url" prefix="project.current" />
+        <echo message="${url}" />
+        <svnex>
+          <switch path="${basedir}/${project.current.basedir}" url="${url}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+  <!-- =================================
+          target: revert-all
+         ================================= -->
+  <target name="revert-all" description="Reverts changes on all the subprojects.">
+    <execute-all prefix="project.current">
+      <sequential>
+        <svnex>
+          <revert dir="${basedir}/${project.current.basedir}" recurse="true" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+  <target name="tag-all" description="Tags all subprojects.">
+
+    <condition property="version" value="TRUNK">
+      <not>
+        <isset property="version" />
+      </not>
+    </condition>
+
+    <fail unless="tagName" message="The 'tagName' version is required. " />
+
+    <execute-all prefix="project.current">
+      <sequential>
+        <version-path version="${version}" property="url" prefix="project.current" />
+        <tag-path tag="${tagName}" property="tagUrl" prefix="project.current" />
+        <echo message="${tagUrl}" />
+        <svnex>
+          <copy srcUrl="${url}" destUrl="${tagUrl}" message="tagged the branch as ${tagName}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+  <target name="branch-all" description="Branches all subprojects.">
+
+    <condition property="version" value="TRUNK">
+      <not>
+        <isset property="version" />
+      </not>
+    </condition>
+
+    <fail unless="branchName" message="The 'branchName' version is required. " />
+
+    <execute-all prefix="project.current">
+      <sequential>
+        <version-path version="${version}" property="url" prefix="project.current" />
+        <branch-path branch="${branchName}" property="branchUrl" prefix="project.current" />
+        <echo message="${branchUrl}" />
+        <svnex>
+          <copy srcUrl="${url}" destUrl="${branchUrl}" message="created a branch as ${branchName}" />
+        </svnex>
+      </sequential>
+    </execute-all>
+  </target>
+
+  <target name="test-all" description="run all the test cases.">
+    <run-target-all target="test" />
+  </target>
+
+    <!-- =================================
+          target: info-all
+    ================================= -->
+    <target name="info-all" description="Info on all the subprojects.">
+        <execute-all prefix="project.current">
+            <sequential>
+                <echo message="-------------------- Info for: ${project.current.basedir}"/>
+                <svnex>
+                    <info target="${basedir}/${project.current.basedir}"/>
+                </svnex>
+                <echo message="-------------------- URL: ${svn.info.url}"/>
+            </sequential>
+        </execute-all>
+    </target>
+
+    <!-- =================================
+          target: check-all
+    ================================= -->
+    <target name="check-all" description="Info on all the subprojects.">
+        <execute-all prefix="project.current">
+            <sequential>
+                <echo message="-------------------- Checking for: ${project.current.basedir}"/>
+                <svnex>
+                    <info target="${basedir}/${project.current.basedir}"/>
+                </svnex>
+                <condition property="version" value="TRUNK">
+                    <not>
+                        <isset property="version" />
+                    </not>
+                </condition>
+                <version-path version="${version}" property="url" prefix="project.current" />
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+                <if>
+                    <not>
+                        <equals arg1="${svn.info.url}" arg2="${url}"/>
+                    </not>
+                    <then>
+                        <echo message="-------------------- ERROR SVN Path doesn't match for project: ${project.current.basedir}"/>
+                    </then>
+                </if>
+            </sequential>
+        </execute-all>
+    </target>
+
+  <!--
+    Added the switch-and-checkout target which switches the root project to the specified branch and then syncs all subprojects.
+    @author: snow01
+    @since: BUGR-3482
+  -->
+  <target name="switch-and-checkout" description="Switches the root to the specified branch and then syncs all subprojects">
+    <!-- Receives branch url as -DbranchURL=http://... -->
+    <if>
+      <isset property="branchURL"/>
+      <then>
+        <svnex>
+          <switch path="${basedir}" url="${branchURL}" />
+        </svnex>
+      </then>
+    </if>
+    <echo message="DEBUG: -------------------- Starting sync for subprojects"/>
+    <antcall target="sync-all" />
+  </target>
+
+  <!--
+    Checkout / sync all subprojects to the branch defined in subprojects.xml.
+    @author: snow01
+    @since: BUGR-3482
+  -->
+    <target name="sync-all" description="Checkout / sync all subprojects to the branch defined in subprojects.xml.">
+        <execute-all prefix="project.current">
+            <sequential>
+                <echo message="DEBUG: -------------------- Checking for: ${project.current.basedir}"/>
+
+                <condition property="version" value="TRUNK">
+                    <not>
+                        <isset property="version" />
+                    </not>
+                </condition>
+                <version-path version="${version}" property="url" prefix="project.current" />
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+                <!-- check if directory exist -->
+                <!-- if yes check the branch name -->
+                <!-- if matches simply update -->
+                <!-- else switch -->
+                <if>
+                    <available file="${basedir}/${project.current.basedir}"/>
+                    <then>
+                        <svnex>
+                            <info target="${basedir}/${project.current.basedir}"/>
+                        </svnex>
+                        <if>
+                            <not>
+                                <equals arg1="${svn.info.url}" arg2="${url}"/>
+                            </not>
+                            <then>
+                                <echo message="-------------------- Switching to url: ${url}"/>
+                                <svnex>
+                                    <switch path="${basedir}/${project.current.basedir}" url="${url}" />
+                                </svnex>
+                            </then>
+                            <else>
+                                <echo message="-------------------- Updating: ${url}"/>
+                                <svnex>
+                                    <update dir="${basedir}/${project.current.basedir}" />
+                                </svnex>
+                            </else>
+                        </if>
+                    </then>
+                    <!-- if not checkout the project -->
+                    <else>
+                        <echo message="-------------------- Checking out: ${project.current.basedir}"/>
+                        <svnex>
+                            <checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
+                        </svnex>
+                    </else>
+                </if>
+            </sequential>
+        </execute-all>
+    </target>
+
+    <target name="sync" description="Checkout / sync a single subproject to the branch defined in subprojects.xml.">
+      <if>
+        <isset property="project"/>
+            <then>
+            <execute-single prefix="project.current" subproject="${project}">
+                <sequential>
+                    <echo message="DEBUG: -------------------- Checking for: ${project.current.basedir}"/>
+
+                    <condition property="version" value="TRUNK">
+                        <not>
+                            <isset property="version" />
+                        </not>
+                    </condition>
+                    <version-path version="${version}" property="url" prefix="project.current" />
+                    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+                    <!-- check if directory exist -->
+                    <!-- if yes check the branch name -->
+                    <!-- if matches simply update -->
+                    <!-- else switch -->
+                    <if>
+                        <available file="${basedir}/${project.current.basedir}"/>
+                        <then>
+                            <svnex>
+                                <info target="${basedir}/${project.current.basedir}"/>
+                            </svnex>
+                            <if>
+                                <not>
+                                    <equals arg1="${svn.info.url}" arg2="${url}"/>
+                                </not>
+                                <then>
+                                    <echo message="-------------------- Switching to url: ${url}"/>
+                                    <svnex>
+                                        <switch path="${basedir}/${project.current.basedir}" url="${url}" />
+                                    </svnex>
+                                </then>
+                                <else>
+                                    <echo message="-------------------- Updating: ${url}"/>
+                                    <svnex>
+                                        <update dir="${basedir}/${project.current.basedir}" />
+                                    </svnex>
+                                </else>
+                            </if>
+                        </then>
+                        <!-- if not, checkout the project -->
+                        <else>
+                            <echo message="-------------------- Checking out: ${project.current.basedir}"/>
+                            <svnex>
+                                <checkout destPath="${basedir}/${project.current.basedir}" url="${url}" />
+                            </svnex>
+                        </else>
+                    </if>
+                </sequential>
+            </execute-single>
+            </then>
+            <else>
+                <echo message="Please specify the project name to sync like -Dproject=configuration_manager in commandline."/>
+            </else>
+        </if>
+    </target>
 </project>

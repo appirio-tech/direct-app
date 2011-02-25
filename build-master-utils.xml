@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-     Dec 2, 2008 11:05:12 PM                                                        
+<!-- ======================================================================
+     Dec 2, 2008 11:05:12 PM
 
-     Build Master Utils    
-                   
-     TCSDEVELOPER                                             
+     Build Master Utils
+
+     TCSDEVELOPER
      ====================================================================== -->
 <project name="tools.master.utils">
     <description>
         Defines utitlity tasks.
     </description>
-    
+
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
     <!-- = = = = = = = = = = = = = = = = =
            scriptdef: version-path
-                  
+
            Gets the svn path of a specific version of a subproject.
-                  
-           This task is only used within the 'execute-all' task.   
+
+           This task is only used within the 'execute-all' task.
           = = = = = = = = = = = = = = = = = = = = -->
     <scriptdef name="version-path" language="groovy" classpathref="script.path"
         description="Gets the svn path of a specific version of a subproject.">
@@ -35,20 +35,20 @@
         <![CDATA[
         def prefix = attributes.prefix
         def version = attributes.version
-        
+
         def value = project.getProperty("${prefix}.version.${version}")
         if (value == null)
         {
             value = version
-        }        
-        
+        }
+
         def svnbase = project.getProperty("${prefix}.svnbase")
-        
+
         project.setProperty("${attributes.property}", "${svnbase}/${value}")
         ]]>
     </scriptdef>
-	
-	<scriptdef name="tag-path" language="groovy" classpathref="script.path"
+
+  <scriptdef name="tag-path" language="groovy" classpathref="script.path"
         description="Gets the svn path of a specific version of a subproject.">
 
         <!-- prefix of the properties containing the subproject information -->
@@ -62,14 +62,14 @@
 
         <![CDATA[
         def prefix = attributes.prefix
-		def tag = attributes.tag
+    def tag = attributes.tag
         def svnbase = project.getProperty("${prefix}.svnbase")
-        
+
         project.setProperty("${attributes.property}", "${svnbase}/tags/${tag}")
         ]]>
     </scriptdef>
 
-	<scriptdef name="branch-path" language="groovy" classpathref="script.path"
+  <scriptdef name="branch-path" language="groovy" classpathref="script.path"
         description="Gets the svn path of a specific version of a subproject.">
 
         <!-- prefix of the properties containing the subproject information -->
@@ -83,24 +83,24 @@
 
         <![CDATA[
         def prefix = attributes.prefix
-		def branch = attributes.branch
+    def branch = attributes.branch
         def svnbase = project.getProperty("${prefix}.svnbase")
-        
+
         project.setProperty("${attributes.property}", "${svnbase}/branches/${branch}")
         ]]>
     </scriptdef>
-    
+
     <!-- = = = = = = = = = = = = = = = = =
           macrodef: svnex
-          
+
           This tasks execute svn operations against cached credentials,
-          or prompt for password if svn.username property is set.           
+          or prompt for password if svn.username property is set.
          = = = = = = = = = = = = = = = = = -->
     <macrodef name="svnex">
-        
+
         <!-- the operations to be performed via subversion -->
         <element name="operation" implicit="true"/>
-        
+
         <sequential>
             <if>
                 <isset property="svn.username"/>
@@ -126,4 +126,15 @@
         </sequential>
     </macrodef>
 
+    <condition property="is_windows">
+        <and>
+            <os family="windows"/>
+        </and>
+    </condition>
+
+    <condition property="is_unix">
+        <and>
+            <os family="unix"/>
+        </and>
+    </condition>
 </project>

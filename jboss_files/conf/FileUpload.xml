@@ -1,0 +1,26 @@
+<CMConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\tcs\Components\Configuration Manager\web\doc\CM v2 Schema.xsd" version="v2">
+	<Property name="allowed_directories">
+		<Value></Value>
+	</Property>
+	<Property name="temp_directory">
+		<Value>@temp_directory@</Value>
+	</Property>
+	<Property name="default_directory">
+		<Value>@default_directory@</Value>
+	</Property>
+	<Property name="overwrite_allowed">
+		<Value>yes</Value>
+	</Property>
+	<Property name="max_single_file_size">
+		<Value>50000</Value>
+	</Property>
+	<Property name="max_total_file_size">
+		<Value>100000</Value>
+	</Property>
+	<Property name="single_file_limit">
+		<Value>100000</Value>
+	</Property>
+	<Property name="total_file_limit">
+		<Value>100000</Value>
+	</Property>
+</CMConfig>

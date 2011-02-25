@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<Property name="com.topcoder.util.file">
+		<Value>emailTemplateConfig.xml</Value>
+	</Property>
+</CMConfig>

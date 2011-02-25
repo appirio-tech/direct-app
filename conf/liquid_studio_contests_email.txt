@@ -1,0 +1,8 @@
+Studio contest %StudioID% is a private contest and the following setup must be performed before registration opens on %DateTime%\:
+
+1. Verify name of contest begins with [Private], e.g. [Private] My Cool Logo Contest.
+2. Verify the contest description start with "This contest is private. Only the contest holder's employees may register for this contest and submit entries."
+3. Set submission to not viewable to the public. 
+
+Thanks
+TopCoder

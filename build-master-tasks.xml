@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-     Dec 1, 2008 10:12:19 PM                                                        
+<!-- ======================================================================
+     Dec 1, 2008 10:12:19 PM
 
      Build Master Tasks
-                   
-     TCSDEVELOPER                                                                
+
+     TCSDEVELOPER
      ====================================================================== -->
 <project name="tools.master.tasks">
     <description>
@@ -13,7 +13,7 @@
 
     <!-- = = = = = = = = = = = = = = = = =
           macrodef: run-targets-all
-          
+
           Builds a target on each of the subprojects.
          = = = = = = = = = = = = = = = = = -->
     <macrodef name="run-target-all" description="Builds a target on each of the subprojects.">
@@ -26,13 +26,15 @@
 
         <sequential>
             <execute-all prefix="project.current">
-                <sequential>                    
-                    <ant antfile="${project.current.basedir}/${project.current.buildfile}" target="@{target}" inheritall="false">
-                        <propertyset>
-                            <propertyref builtin="commandline"/>
-                        </propertyset>
-                        <properties />
-                    </ant>
+                <sequential>
+                  <echo message=""/>
+                  <echo message="--- Executing for: ${project.current.name}"/>
+                  <ant antfile="${project.current.basedir}/${project.current.buildfile}" target="@{target}" inheritall="false">
+                    <propertyset>
+                      <propertyref builtin="commandline"/>
+                    </propertyset>
+                    <properties />
+                  </ant>
                 </sequential>
             </execute-all>
         </sequential>
@@ -40,8 +42,8 @@
 
     <!-- = = = = = = = = = = = = = = = = =
          scriptdef: execute-all
-              
-         Runs any ant-script sequence on all subprojects.   
+
+         Runs any ant-script sequence on all subprojects.
          = = = = = = = = = = = = = = = = = -->
     <scriptdef name="execute-all" language="groovy" description="Runs a sequence of ant script on all the subprojects." classpathref="script.path">
 
@@ -61,28 +63,88 @@
             [[name : 'name', required : true ],
                     [name : 'svnbase', required : true ],
                     [name : 'basedir', required : false, defaultValue : subproject.'@name'],
-                    [name : 'buildfile', required : false, defaultValue : 'build.xml']].each {
-                        
+                    [name : 'buildfile', required : false, defaultValue : 'build.xml'],
+          [name : 'projectType', required : false, defaultValue : 'backend']].each {
+
                         def value = subproject."@${it.name}"
-                        
+
                         if (value == null || value.trim().length() == 0) {
                             if (it.required) {
                                 self.fail("The ${it.name} attribute of a subproject is required.")
                             }
-                            
+
                             value = it.defaultValue
                         }
-                        
+
                         value = project.replaceProperties(value)
                         project.setProperty("${prefix}.${it.name}", value)
                     }
-            
+
             subproject.versions.version.each {
-                project.setProperty("${prefix}.version.${it.'@name'}", it.'@path')             
+                project.setProperty("${prefix}.version.${it.'@name'}", it.'@path')
             }
-            
+
             elements.sequential.each { it.execute() }
         }
+        ]]>
+    </scriptdef>
+
+    <!-- = = = = = = = = = = = = = = = = =
+         scriptdef: execute-single
+
+         Runs any ant-script sequence on the specified subproject.
+         = = = = = = = = = = = = = = = = = -->
+    <scriptdef name="execute-single" language="groovy" description="Runs a sequence of ant script on the specified subproject." classpathref="script.path">
+        <!-- the prefix of the exported properties -->
+        <attribute name="prefix" />
+
+      <!-- defines for which subproject project to execute -->
+      <attribute name="subproject" />
+
+        <!-- the ant-script to run on each of the projects -->
+        <element name="sequential" type="sequential" />
+
+        <![CDATA[
+        import groovy.util.XmlParser
+
+        def prefix = attributes.prefix
+        def projectName = attributes.subproject
+        def projects = new XmlParser().parse(new File(project.getProperty("subprojects.conf")))
+
+      def matchedProjects = projects.project.findAll {it.'@name' == projectName}
+
+      if (matchedProjects.size() == 0) {
+          println "The subproject ${projectName} is not defined in ${project.getProperty("subprojects.conf")}."
+      } else if (matchedProjects.size() != 1) {
+          println "The subproject ${projectName} is mutiplely defined in ${project.getProperty("subprojects.conf")}."
+      } else {
+        matchedProjects.each { subproject ->
+              [[name : 'name', required : true ],
+                      [name : 'svnbase', required : true ],
+                      [name : 'basedir', required : false, defaultValue : subproject.'@name'],
+                      [name : 'buildfile', required : false, defaultValue : 'build.xml']].each {
+
+                          def value = subproject."@${it.name}"
+
+                          if (value == null || value.trim().length() == 0) {
+                              if (it.required) {
+                                  self.fail("The ${it.name} attribute of a subproject is required.")
+                              }
+
+                              value = it.defaultValue
+                          }
+
+                          value = project.replaceProperties(value)
+                          project.setProperty("${prefix}.${it.name}", value)
+                      }
+
+              subproject.versions.version.each {
+                  project.setProperty("${prefix}.version.${it.'@name'}", it.'@path')
+              }
+
+              elements.sequential.each { it.execute() }
+          }
+      }
         ]]>
     </scriptdef>
 </project>

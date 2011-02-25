@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<CMConfig>
+	<!-- bugr-1638 -->
+	<Config name="com.topcoder.util.file">
+	    <Property name="sources">
+	      <Value>fileTemplateSource</Value>
+	    </Property>
+
+	    <!-- the identifier of the template source to be used as default -->
+	    <Property name="default_source">
+	      <Value>fileTemplateSource</Value>
+	    </Property>
+
+	    <Property name="fileTemplateSource_class">
+	      <Value>com.topcoder.util.file.templatesource.FileTemplateSource</Value>
+	    </Property>
+    </Config>
+</CMConfig>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<CMConfig>
+  <Config name="com.topcoder.db.connectionfactory.DBConnectionFactoryImpl">
+    <Property name="connections">
+        <!-- The default should not be oracle, the db should be in the scope of the DBs which are allowed in IDGenerator 2.0 -->
+        <Property name="default">
+            <Value>tcs</Value>
+        </Property>
+
+        <Property name="cockpitDBConnection">
+            <Property name="producer">
+                <Value>com.topcoder.db.connectionfactory.producers.JNDIConnectionProducer</Value>
+            </Property>
+            <Property name="parameters">
+                <Property name="jndi_name">
+                    <Value>java:/InformixDS</Value>
+                </Property>
+            </Property>
+        </Property>
+
+        <Property name="tcs">
+            <Property name="producer">
+                <Value>com.topcoder.db.connectionfactory.producers.JNDIConnectionProducer</Value>
+            </Property>
+            <Property name="parameters">
+                <Property name="jndi_name">
+                    <Value>java:/InformixDS</Value>
+                </Property>
+            </Property>
+        </Property>
+
+        <Property name="DefaultSequence">
+            <Property name="producer">
+                <Value>com.topcoder.db.connectionfactory.producers.JNDIConnectionProducer</Value>
+            </Property>
+            <Property name="parameters">
+                <Property name="jndi_name">
+                    <Value>java:/OLTP</Value>
+                </Property>
+            </Property>
+        </Property>
+    </Property>
+  </Config>
+</CMConfig>
+

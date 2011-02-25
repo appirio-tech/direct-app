@@ -1,0 +1,128 @@
+<CMConfig>
+  <Config name="HibernateSearchStrategy">
+    
+    <!-- Property for defining the path of file from which Hibernate is configured. -->
+    <Property name="hibernateConfigFilePath">
+      <Value>hibernate.cfg.xml</Value>
+    </Property>
+
+    <Property name="searchFragmentFactoryNamespace">
+	  <Value>com.topcoder.search.builder.hibernate.factory</Value>
+	</Property>
+
+    <!-- Property for defining the mapping of Filter to corresponding FragmentBuilder -->
+    <Property name="searchFragmentBuilders">
+      <Property name="first">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.AndFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.AndFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="second">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.OrFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.OrFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="third">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.LikeFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.LikeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="fourth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.NotFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.NotFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="fifth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.EqualToFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.EqualsFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="sixth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.InFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.InFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="eighth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.NullFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.NullFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="ninth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.GreaterThanFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="tenth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.GreaterThanOrEqualToFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="eleventh">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.BetweenFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="twelfth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.LessThanOrEqualToFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+
+      <Property name="thirteenth">
+        <Property name="targetFilter">
+          <Value>com.topcoder.search.builder.filter.LessThanFilter</Value>
+        </Property>
+        <Property name="className">
+          <Value>com.topcoder.search.builder.hibernate.RangeFragmentBuilder</Value>
+        </Property>
+      </Property>
+    </Property>
+  </Config>
+
+   <Config name="com.topcoder.search.builder.hibernate.factory">
+  </Config>
+</CMConfig>
+

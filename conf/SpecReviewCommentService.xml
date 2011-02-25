@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.service.review.comment.specification.ejb.SpecReviewCommentServiceBean">
+        <Property name="createComment">
+        	<Value>@createComment@</Value>
+        </Property>
+        <Property name="forumBeanProviderUrl">
+        	<Value>@forumBeanProviderUrl@</Value>
+        </Property>
+    </Config>
+</CMConfig>

@@ -1,0 +1,23 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+
+		<property name="hibernate.connection.datasource">java:TimeDS</property>
+		 
+		<property name="use_sql_comments">false</property>
+		<property name="show_sql">false</property>
+		<property name="dialect">org.hibernate.dialect.InformixDialect</property>
+		
+		<!-- NO mapping files but mapping classes -->
+        <mapping package="com.topcoder.clients.model"/>
+        <mapping class="com.topcoder.clients.model.AuditableEntity"/>
+        <mapping class="com.topcoder.clients.model.Project"/>
+        <mapping class="com.topcoder.clients.model.ProjectStatus"/>
+        <mapping class="com.topcoder.clients.model.Client"/>
+        <mapping class="com.topcoder.clients.model.ClientStatus"/>
+        <mapping class="com.topcoder.clients.model.Company"/>
+	</session-factory>
+</hibernate-configuration>

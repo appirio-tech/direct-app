@@ -12,11 +12,11 @@
 <datasources>
     <local-tx-datasource>
         <jndi-name>InformixDS</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <!-- sql to call when connection is created
         <new-connection-sql>some arbitrary sql</new-connection-sql>
         -->
@@ -32,10 +32,10 @@
 
     <no-tx-datasource>
       <jndi-name>OLTP</jndi-name>
-      <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+      <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;</connection-url>
       <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-      <user-name>coder</user-name>
-      <password>c0d3r4T</password>
+      <user-name>@database.username@</user-name>
+      <password>@database.password@</password>
           <!-- sql to call when connection is created
           <new-connection-sql>some arbitrary sql</new-connection-sql>
           -->
@@ -51,11 +51,11 @@
 
     <no-tx-datasource>
         <jndi-name>DW</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/topcoder_dw:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/topcoder_dw:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <!-- sql to call when connection is created
         <new-connection-sql>some arbitrary sql</new-connection-sql>
         -->
@@ -71,11 +71,11 @@
 
     <no-tx-datasource>
         <jndi-name>TCS_CATALOG</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/tcs_catalog:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <!-- sql to call when connection is created
         <new-connection-sql>some arbitrary sql</new-connection-sql>
         -->
@@ -91,11 +91,11 @@
 
     <local-tx-datasource>
         <jndi-name>JTS_OLTP</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <!-- sql to call when connection is created
         <new-connection-sql>some arbitrary sql</new-connection-sql>
         -->
@@ -111,11 +111,11 @@
 
      <no-tx-datasource>
         <jndi-name>TCS_DW</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/tcs_dw:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_dw:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <!-- sql to call when connection is created
         <new-connection-sql>some arbitrary sql</new-connection-sql>
         -->
@@ -131,11 +131,11 @@
 
     <no-tx-datasource>
         <jndi-name>JTS_STUDIO_OLTP</jndi-name>
-        <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/studio_oltp:INFORMIXSERVER=informixoltp_tcp
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/studio_oltp:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>coder</user-name>
-        <password>c0d3r4T</password>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <!-- sql to call when connection is created
         <new-connection-sql>some arbitrary sql</new-connection-sql>
         -->
@@ -151,10 +151,10 @@
 
     <local-tx-datasource>
       <jndi-name>BUGS</jndi-name>
-      <connection-url>jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+      <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;</connection-url>
       <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-      <user-name>coder</user-name>
-      <password>c0d3r4T</password>
+      <user-name>@database.username@</user-name>
+      <password>@database.password@</password>
       <!-- sql to call when connection is created -->
       <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
@@ -168,7 +168,128 @@
         <metadata>
            <type-mapping>InformixDB</type-mapping>
         </metadata>
-</local-tx-datasource>
+    </local-tx-datasource>
+
+    <xa-datasource>
+        <jndi-name>StudioDS</jndi-name>
+
+	    <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value> 
+
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">studio_oltp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
+        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
+        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
+
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </xa-datasource>
+
+    <xa-datasource>
+        <jndi-name>JTS_CORPORATE_OLTP</jndi-name>
+
+	    <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value> 
 
 
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">corporate_oltp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
+        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
+        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
+
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </xa-datasource>
+
+
+    <xa-datasource>
+        <jndi-name>DS</jndi-name>
+
+	    <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value> 
+
+
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">common_oltp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
+        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
+        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
+
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+        <!-- sql to call on an existing pooled connection when it is obtained from pool
+        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
+         -->
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </xa-datasource>
+
+
+    
+
+    <xa-datasource>
+        <jndi-name>TimeDS</jndi-name>
+		<track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value> 
+
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">time_oltp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
+        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
+        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
+        
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+    <!--    <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>-->
+
+        <track-statements>true</track-statements>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </xa-datasource>
 </datasources>

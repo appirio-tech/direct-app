@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.service.facade.contest.ejb.ContestServiceFacadeBean">
+        <Property name="ContestEligibilityMapping">
+            <Property name="1">
+              <Property name="EligibilityName">
+                <Value>TextName1</Value>
+              </Property>
+              <Property name="EligibilityGroupId">
+                <Value>1</Value>
+              </Property>
+              <Property name="EligibilityAdminRole">
+                <Value>LCSUPPORT</Value>
+              </Property>
+            </Property>
+        </Property>
+        <Property name="PayflowProPaymentProcessor">
+		        <Property name="payFlowHostAddress">
+		            <Value>@payFlowHostAddress@</Value>
+		        </Property>
+		        <Property name="payFlowUser">
+		            <Value>@payFlowUser@</Value>
+		        </Property>
+		        <Property name="payFlowPartner">
+		            <Value>@payFlowPartner@</Value>
+		        </Property>
+		        <Property name="payFlowVendor">
+		            <Value>@payFlowVendor@</Value>
+		        </Property>
+		        <Property name="payFlowPassword">
+		            <Value>@payFlowPassword@</Value>
+		        </Property>
+        </Property>
+        <Property name="createForum">
+        	<Value>@createForum@</Value>
+        </Property>
+        <Property name="forumBeanProviderUrl">
+        	<Value>@forumBeanProviderUrl@</Value>
+        </Property>
+        <Property name="userBeanProviderUrl">
+        	<Value>@userBeanProviderUrl@</Value>
+        </Property>
+        <Property name="projectBeanProviderUrl">
+        	<Value>@projectBeanProviderUrl@</Value>
+        </Property>
+        <Property name="mockSubmissionFilePath">
+        	<Value>@mockSubmissionFilePath@</Value>
+        </Property>
+    </Config>
+</CMConfig>

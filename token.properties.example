@@ -1,0 +1,151 @@
+#######################################################
+# TopCoder Software Component Development Environment #
+#######################################################
+
+#############################
+## Home directory for Jboss #
+#############################
+# typical windows configuration
+@JBOSS_HOME@=C:/jboss-4.2.3.GA
+
+# typical unix/VM value
+#@JBOSS_HOME@=/home/direct/jboss-4.2.3.GA
+
+####################################
+## Informix database configuration #
+####################################
+# typical windows configuration
+@database.server@=localhost
+@database.port@=2021
+@database.username@=informix
+@database.password@=1nf0rm1x
+@database.INFORMIXSERVER@=informixoltp_tcp
+
+
+# typical VM configuration
+#@database.server@=env.topcoder.com
+#@database.port@=2021
+#@database.username@=coder
+#@database.password@=c0d3r4T
+#@database.INFORMIXSERVER@=informixoltp_tcp
+
+#######################################
+## Parameters used by EmailEngine.xml #
+#######################################
+# typical VM windows configuration
+@emailengine_smtp_host@=localhost
+@emailengine_smtp_port@=25
+@emailengine_smtp_user@=
+@emailengine_smtp_password@=
+
+# typical VM configuration
+#@emailengine_smtp_host@=env.topcoder.com
+#@emailengine_smtp_port@=25
+#@emailengine_smtp_user@=
+#@emailengine_smtp_password@=
+
+########################################################
+# URL for JNDI lookup used in following files          #
+#  tc_login_bean.properties                            #
+#  ApplicationServer.properties                        #
+########################################################
+# typical windows configuration
+@context.security.url@=localhost:1099
+
+# typical VM configuration
+#@context.security.url@=localhost:1599
+
+##############################################
+# URL for JNDI lookup used by auto_pilot.xml #
+##############################################
+# typical windows configuration
+@forum_bean_provider_url@=localhost:1099
+
+# typical VM configuration
+#@forum_bean_provider_url@=63.118.154.182:1099
+
+########################################################
+# URL for JNDI lookup used in following files          #
+#  app.properties                                      #
+#  auto_piolot.xml                                     #
+#  Direct.properties                                   #
+########################################################
+# typical windows configuration
+@service.provder.url@=localhost:1099
+
+# typical VM configuration
+#@service.provder.url@=env.topcoder.com:1599
+
+#############
+# LDAP host #
+#############
+# typical windows configuration
+@ldap_host@=75.101.176.125
+
+# typical VM configuration
+#@ldap_host@=env.topcoder.com
+
+############################################################################################
+# file storage location for DefaultUploadExternalServices in onlineReviewUpload_config.xml #
+############################################################################################
+# typical windows configuration
+@file_storage_location@=<<some_path>>/tmp
+
+# typical VM configuration
+#@file_storage_location@=/home/direct/temp_files
+
+##################
+# FileUpload.xml #
+##################
+# typical windows configuration
+@temp_directory@=<<some_path>>/tmp/temp_files
+@default_directory@=<<some_path>>/tmp/upload
+
+# typical VM configuration
+#@temp_directory@=/home/direct/upload/temp
+#@default_directory@=/home/direct/upload
+
+####################
+# cache.properties #
+####################
+# typical windows configuration
+@host_url@=75.101.176.125:2199
+
+# typical VM configuration
+#@host_url@=env.topcoder.com:2199
+
+
+###########################
+# Forum bean provider url #
+###########################
+@forumBeanProviderUrl@=jnp://63.118.154.182:1099
+
+#############################################################################
+# ContestEligibilityMapping.xml for contest service facade component        #
+#############################################################################
+#payflow
+@payFlowHostAddress@=pilot-payflowpro.paypal.com
+# @payFlowHostAddress@=payflowpro.paypal.com for production
+@payFlowUser@=tcTestAccount2
+@payFlowPartner@=PayPal
+@payFlowVendor@=tcTestAccount2
+@payFlowPassword@=password123
+@createForum@=false
+
+@userBeanProviderUrl@=jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199
+@projectBeanProviderUrl@=jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199
+@mockSubmissionFilePath@=/home/direct/jboss-4.2.3.GA/server/default/deploy/tcdirect.ear/
+
+###################################################
+# ejb-jar.xml for studio service component        #
+###################################################
+@documentBasePath@=/nfs_shares/studiofiles/documents/
+@pactsServiceLocation@=63.118.154.181:1099
+@autoPaymentsEnabled@=false
+@submissionSiteBaseUrl@=http://174.129.126.198/studio/submissions
+@submissionSiteFilePath@=/nfs_shares/studiofiles/documents/
+
+#################################################################################
+# SpecReviewCommentService.xml for spec review comment service component        #
+#################################################################################
+@createComment@=false
