@@ -234,7 +234,7 @@
                 <Value>com.topcoder.project.service.impl.ProjectServicesImpl</Value>
             </Property>
         </Property>
-        
+
         <!-- BUGR-1473 -->
         <Property name="projectPhaseTemplateKey">
             <Property name="type">
@@ -251,8 +251,8 @@
                 </Property>
             </Property>
         </Property>
-        
-        <!-- 
+
+        <!--
                     Configuration for JiraUserService implementation
                     @since: Jira & Confluence User Sync Service
                     -->
@@ -261,8 +261,8 @@
                 <Value>com.topcoder.jira.client.impl.JiraUserServiceImpl</Value>
             </Property>
         </Property>
-        
-        <!-- 
+
+        <!--
                     Configuration for ConfluenceUserService implementation
                     @since: Jira & Confluence User Sync Service
                     -->
@@ -1754,7 +1754,7 @@
     </Config>
 
     <Config name="com.topcoder.search.builder.database.factory"></Config>
-    
+
     <!-- BUGR-1473 -->
     <!-- Configuration for DefaultPhaseTemplate -->
 	<Config name="com.topcoder.project.phases.template.DefaultPhaseTemplate">
@@ -1796,7 +1796,7 @@
       		</Property>
     	</Property>
 	</Config>
-	
+
     <!-- BUGR-1473 -->
 	<!-- Configuration for XmlPhaseTemplatePersistence -->
 	<Config name="com.topcoder.project.phases.template.persistence.XmlPhaseTemplatePersistence">
@@ -1904,9 +1904,9 @@
         <Property name="nonWorkdays">
         </Property>
     </Config>
-    
-    <!-- 
-            Configuration for UserSyncServiceBean 
+
+    <!--
+            Configuration for UserSyncServiceBean
             @since: Jira & Confluence User Sync Service
             -->
     <Config name="com.topcoder.service.facade.user.UserServiceFacadeBean">
@@ -1920,22 +1920,22 @@
             <Value>confluenceUserServiceKey</Value>
         </Property>
         <Property name="jiraServiceEndPoint">
-            <Value>http://www.dev.topcoder.com/bugs/rpc/soap/jirasoapservice-v2</Value>
+            <Value>@jiraServiceEndPoint@</Value>
         </Property>
         <Property name="jiraServiceAdminUserName">
-            <Value>admin</Value>
+            <Value>@jiraServiceAdminUserName@</Value>
         </Property>
         <Property name="jiraServiceAdminUserPassword">
-            <Value>password</Value>
+            <Value>@jiraServiceAdminUserPassword@</Value>
         </Property>
         <Property name="confluenceServiceEndPoint">
-             <Value>http://www.dev.topcoder.com/wiki/rpc/soap-axis/confluenceservice-v1</Value> 
+             <Value>@confluenceServiceEndPoint@</Value>
         </Property>
         <Property name="confluenceServiceAdminUserName">
-            <Value>scamp</Value>
+            <Value>@confluenceServiceAdminUserName@</Value>
         </Property>
         <Property name="confluenceServiceAdminUserPassword">
-            <Value>password</Value>
+            <Value>@confluenceServiceAdminUserPassword@</Value>
         </Property>
         <Property name="normalUserConfluenceGroups">
             <Value>confluence-users</Value>
@@ -1951,7 +1951,7 @@
             <Value>cl0ckw0rk</Value>
         </Property>
     </Config>
-	
+
 	<!-- The object factory configuration for message generator -->
 	<!-- Cockpit Release Assembly for Receipts -->
     <Config name="com.topcoder.clientcockpit.objectfactory">

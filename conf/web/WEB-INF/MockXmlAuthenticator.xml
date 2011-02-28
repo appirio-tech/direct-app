@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE mappings [
+  <!ELEMENT users (user)+>
+  <!ELEMENT user EMPTY>
+  <!ATTLIST user name CDATA #REQUIRED>
+  <!ATTLIST user password CDATA #REQUIRED>
+  <!ATTLIST user id CDATA #REQUIRED>
+]>
+<users>
+  <user name="heffan" password="password" id="132456"/>
+  <user name="super" password="password" id="132457"/>
+  <user name="user" password="password" id="132458"/>
+  <user name="twight" password="password" id="124766"/>
+  <user name="sandking" password="password" id="124776"/>
+  <user name="lightspeed" password="password" id="124834"/>
+  <user name="reassembler" password="password" id="124835"/>
+  <user name="wyzmo" password="password" id="124856"/>
+  <user name="ksmith" password="password" id="124861"/>
+  <user name="Yoshi" password="password" id="124916"/>
+  <user name="Hung" password="password" id="124764"/>
+  <user name="Partha" password="password" id="124772"/>
+  <user name="annej9ny" password="password" id="124836"/>
+  <user name="plinehan" password="password" id="124852"/>
+  <user name="cartajs" password="password" id="124857"/>
+  <user name="dok_tester" password="password" id="20"/>
+  <user name="dok_tester1" password="password" id="21"/>
+</users>

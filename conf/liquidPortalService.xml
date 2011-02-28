@@ -2,11 +2,11 @@
 <CMConfig>
 	<Config name="com.liquid.portal.service">
 		<property name="notusObserverTermsId">
-			<value>20794</value>
+			<value>@notusObserverTermsId@</value>
 		</property>
 
         <property name="notusSubmitterTermsId">
-			<value>20623</value>
+			<value>@notusSubmitterTermsId@</value>
 		</property>
 
         <property name="clientManagerForBillingProjects">
@@ -77,7 +77,7 @@
 		</property>
 
 		<property name="jiraEmailAddress">
-			<value>sma@topcoder.com</value>
+			<value>@jiraEmailAddress@</value>
 		</property>
 
 		<property name="jiraEmailSubject">
@@ -93,7 +93,7 @@
 		</property>
 
 		<property name="liquidStudioContestsEmailFrom">
-			<value>sma@topcoder.com</value>
+			<value>@liquidStudioContestsEmailFrom@</value>
 		</property>
 
 		<property name="liquidStudioContestsEmailSubject">
@@ -101,15 +101,15 @@
 		</property>
 
 		<property name="liquidStudioContestsEmailTo">
-			<value>sma@topcoder.com</value>
+			<value>@liquidStudioContestsEmailTo@</value>
 		</property>
 
 		<property name="liquidStudioContestsEmailCC">
-			<value>sma@topcoder.com</value>
+			<value>@liquidStudioContestsEmailCC@</value>
 		</property>
 
         <property name="liquidStudioContestsEmailBilling">
-			<value>1</value>
+			<value>@liquidStudioContestsEmailBilling@</value>
 		</property>
 
 		<property name="liquidStudioContestsEmailTemplateName">

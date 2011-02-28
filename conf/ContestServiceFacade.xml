@@ -2,15 +2,15 @@
 <CMConfig>
     <Config name="com.topcoder.service.facade.contest.ejb.ContestServiceFacadeBean">
         <Property name="ContestEligibilityMapping">
-            <Property name="1">
+            <Property name="@ContestEligibilityMapping.name@">
               <Property name="EligibilityName">
-                <Value>TextName1</Value>
+                <Value>@ContestEligibilityMapping.EligibilityName@</Value>
               </Property>
               <Property name="EligibilityGroupId">
-                <Value>1</Value>
+                <Value>@ContestEligibilityMapping.EligibilityGroupId@</Value>
               </Property>
               <Property name="EligibilityAdminRole">
-                <Value>LCSUPPORT</Value>
+                <Value>@ContestEligibilityMapping.EligibilityAdminRole@</Value>
               </Property>
             </Property>
         </Property>

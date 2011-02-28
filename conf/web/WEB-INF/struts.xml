@@ -23,7 +23,7 @@
             </result-type>
         </result-types>
         <interceptors>
-            <interceptor name="preProcessor" class="com.topcoder.direct.services.view.interceptor.ActionPreProcessor"/>
+            <interceptor name="preProcessor" class="actionPreProcessor"/>
             <interceptor name="projectAccessGuard"
                          class="com.topcoder.direct.services.view.interceptor.ProjectAccessInterceptor"/>
             <interceptor name="contestAccessGuard"

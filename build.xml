@@ -20,7 +20,7 @@
     <property name="srcdir" value="src"/>
     <property name="docsdir" value="docs"/>
     <property name="configdir" value="conf"/>
-	  <property name="jboss_filesdir" value="jboss_files"/>
+    <property name="jboss_filesdir" value="jboss_files"/>
     <property name="testlogdir" value="log"/>
     <property name="test_reflib" value="test_reflib"/>
     <property name="testfiles" value="test_files"/>
@@ -357,6 +357,14 @@
     <target name="deploy-jboss-files" description="deploy the dependent ears for direct application">
         <delete dir="${jboss_deploy_dir}/security.ear"/>
         <unzip src="${tcs_libdir}/security.ear" dest="${jboss_deploy_dir}/security.ear" overwrite="true" />
+
+        <!-- ejb depedent libs -->
+        <copy todir="${jboss.home}/server/${server.name}/lib" overwrite="true" verbose="true" flatten="true">
+            <fileset dir="${jboss_filesdir}/lib"/>
+        </copy>
+
+        <copy file="${jboss_filesdir}/deploy/User.jar" todir="${jboss.home}/server/${server.name}/deploy"  overwrite="true"/>
+        <copy file="${jboss_filesdir}/deploy/Project.jar" todir="${jboss.home}/server/${server.name}/deploy"  overwrite="true"/>
     </target>
 
     <target name="deploy-static-files" description="deploy the static files for direct application">
@@ -535,6 +543,7 @@
             <webinf dir="${webdir}/WEB-INF" includes="tags/**/*.tag"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="validators.xml"/>
+            <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
             <classes dir="${build_classdir}" includes="**/*.class"/>
             <classes dir="${tokenized_conf}" includes="META-INF/**/*"/>
             <classes dir="${tokenized_conf}/web" includes="Messages.properties"/>

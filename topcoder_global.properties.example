@@ -17,6 +17,6 @@ jboss_config_name=${server.name}
 jboss_lib=${jboss.home}/server/${server.name}/lib
 apache_tcdocs=/mnt/apache/tcdocs
 
-#// the svn user, it is optional, then the cached username/password will be used
+# the svn user, it is optional, then the cached username/password will be used
 svn.username=xxx
 svn.password=xxx

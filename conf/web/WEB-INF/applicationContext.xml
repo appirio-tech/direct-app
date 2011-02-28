@@ -143,7 +143,7 @@
         </property>
         <property name="proxyInterface" value="com.topcoder.service.gameplan.GamePlanService"/>
     </bean>
-    
+
     <bean id="studioService" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="StudioServiceBean/remote"/>
         <property name="cache" value="true"/>
@@ -159,7 +159,7 @@
         </property>
         <property name="proxyInterface" value="com.topcoder.service.studio.StudioService"/>
     </bean>
-    
+
     <bean id="projectServices" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="ProjectServicesBean/remote"/>
         <property name="cache" value="true"/>
@@ -174,7 +174,7 @@
             </props>
         </property>
         <property name="proxyInterface" value="com.topcoder.project.service.ProjectServices"/>
-    </bean>    
+    </bean>
 
     <!-- AuthenticationInterceptor -->
     <bean id="authenticationInterceptor"
@@ -188,6 +188,12 @@
         <constructor-arg index="0">
             <value>directLogger</value>
         </constructor-arg>
+    </bean>
+
+    <!-- ActionPreProcessor -->
+    <bean id="actionPreProcessor"
+          class="com.topcoder.direct.services.view.interceptor.ActionPreProcessor">
+        <property name="loginProcessorClassName" value="@loginProcessor@"/>
     </bean>
 
     <bean id="referenceDataBean" class="com.topcoder.direct.services.configs.ReferenceDataBean">
@@ -407,7 +413,7 @@
         </property>
         <property name="proxyInterface" value="com.topcoder.service.review.specification.SpecificationReviewService"/>
     </bean>
-    
+
     <bean id="specReviewCommentService" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="SpecReviewCommentServiceBean/remote"/>
         <property name="cache" value="true"/>
@@ -422,13 +428,13 @@
             </props>
         </property>
         <property name="proxyInterface" value="com.topcoder.service.review.comment.specification.SpecReviewCommentService"/>
-    </bean>    
-    
+    </bean>
+
     <bean id="specificationReviewAction"
           class="com.topcoder.direct.services.view.action.specreview.SpecificationReviewAction"
           abstract="true">
     </bean>
-    
+
     <bean id="startSpecificationReviewAction"
           class="com.topcoder.direct.services.view.action.specreview.StartSpecificationReviewAction"
           scope="prototype" parent="specificationReviewAction">
@@ -443,7 +449,7 @@
         <property name="specReviewCommentService" ref="specReviewCommentService"/>
         <property name="userService" ref="userService"/>
     </bean>
-    
+
     <bean id="saveSpecReviewCommentAction"
           class="com.topcoder.direct.services.view.action.specreview.SaveSpecificationReviewCommentAction"
           scope="prototype" parent="specificationReviewAction">
@@ -454,7 +460,7 @@
           class="com.topcoder.direct.services.view.action.specreview.ResubmitSpecificationReviewAction"
           scope="prototype" parent="specificationReviewAction">
         <property name="specificationReviewService" ref="specificationReviewService"/>
-    </bean> 
+    </bean>
      <bean id="dashboardReportsAction"
           class="com.topcoder.direct.services.view.action.report.DashboardPipelineAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -478,18 +484,18 @@
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="viewData.showJustForm" value="false"/>
     </bean>
-    
+
     <bean id="enterpriseDashboardAction"
           class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="isAJAX" value="false"/>
-    </bean>    
+    </bean>
 
     <bean id="dashboardPipelineDraftsRatioAction"
           class="com.topcoder.direct.services.view.action.report.DashboardPipelineDraftsRatioAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
-    
+
         <!-- For Copilot Profile and Copilot Project DAO-->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName">
@@ -507,11 +513,11 @@
         <property name="hibernateProperties">
             <value>
                 hibernate.dialect=org.hibernate.dialect.InformixDialect
-                hibernate.show_sql=false                
+                hibernate.show_sql=false
             </value>
         </property>
     </bean>
-        
+
     <tx:annotation-driven transaction-manager="txManager" />
     <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -521,27 +527,27 @@
         <property name="loggerName" value="copilotBaseDAO"/>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    
+
     <bean name="copilotProfileDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProfileDAOImpl"
           parent="copilotBaseDAO"/>
 
     <bean name="copilotProjectDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProjectDAOImpl"
           parent="copilotBaseDAO"/>
-          
+
     <bean name="lookupDAO" class="com.topcoder.direct.services.copilot.dao.impl.LookupDAOImpl"
-          parent="copilotBaseDAO"/>          
+          parent="copilotBaseDAO"/>
 
     <bean id="copilotManageAction"
       class="com.topcoder.direct.services.view.action.copilot.CopilotManageAction"
       scope="prototype" parent="baseDirectStrutsAction">
         <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
-    </bean>   
-    
+    </bean>
+
     <bean id="copilotProjectAction"
       class="com.topcoder.direct.services.view.action.copilot.CopilotProjectAction"
       scope="prototype" parent="baseDirectStrutsAction">
     </bean>
-    
+
     <bean id="listCopilotContestsAction"
           class="com.topcoder.direct.services.view.action.copilot.ListCopilotContestsAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -567,16 +573,16 @@
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
     </bean>
-    
+
     <bean id="zoomEnterpriseDashboardAction"
           class="com.topcoder.direct.services.view.action.dashboard.ZoomEnterpriseDashboardAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="isAJAX" value="true"/>
-    </bean>    
-    
+    </bean>
+
     <bean id="ajaxEnterpriseDashboardAction"
           class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="isAJAX" value="true"/>
-    </bean>    
+    </bean>
 </beans>

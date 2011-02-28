@@ -8,7 +8,7 @@
 # typical windows configuration
 @JBOSS_HOME@=C:/jboss-4.2.3.GA
 
-# typical unix/VM value
+# typical VM configuration
 #@JBOSS_HOME@=/home/direct/jboss-4.2.3.GA
 
 ####################################
@@ -47,7 +47,6 @@
 ########################################################
 # URL for JNDI lookup used in following files          #
 #  tc_login_bean.properties                            #
-#  ApplicationServer.properties                        #
 ########################################################
 # typical windows configuration
 @context.security.url@=localhost:1099
@@ -55,26 +54,16 @@
 # typical VM configuration
 #@context.security.url@=localhost:1599
 
-##############################################
-# URL for JNDI lookup used by auto_pilot.xml #
-##############################################
-# typical windows configuration
-@forum_bean_provider_url@=localhost:1099
-
-# typical VM configuration
-#@forum_bean_provider_url@=63.118.154.182:1099
-
 ########################################################
 # URL for JNDI lookup used in following files          #
 #  app.properties                                      #
-#  auto_piolot.xml                                     #
-#  Direct.properties                                   #
+#  auto_pilot.xml                                     #
 ########################################################
 # typical windows configuration
-@service.provder.url@=localhost:1099
+@service.provider.url@=localhost:1099
 
 # typical VM configuration
-#@service.provder.url@=env.topcoder.com:1599
+#@service.provider.url@=env.topcoder.com:1599
 
 #############
 # LDAP host #
@@ -109,20 +98,28 @@
 # cache.properties #
 ####################
 # typical windows configuration
-@host_url@=75.101.176.125:2199
+@host_url@=localhost:1099
 
 # typical VM configuration
 #@host_url@=env.topcoder.com:2199
 
-
 ###########################
 # Forum bean provider url #
 ###########################
-@forumBeanProviderUrl@=jnp://63.118.154.182:1099
+# typical windows configuration
+@forumBeanProviderUrl@=jnp://localhost:1099
 
-#############################################################################
-# ContestEligibilityMapping.xml for contest service facade component        #
-#############################################################################
+# typical VM configuration
+#@forumBeanProviderUrl@=jnp://63.118.154.182:1099
+
+########################################################################
+# ContestServiceFacade.xml for contest service facade component        #
+########################################################################
+#ContestEligibilityMapping
+@ContestEligibilityMapping.name@=1
+@ContestEligibilityMapping.EligibilityName@=TextName1
+@ContestEligibilityMapping.EligibilityGroupId@=1
+@ContestEligibilityMapping.EligibilityAdminRole@=LCSUPPORT
 #payflow
 @payFlowHostAddress@=pilot-payflowpro.paypal.com
 # @payFlowHostAddress@=payflowpro.paypal.com for production
@@ -132,20 +129,131 @@
 @payFlowPassword@=password123
 @createForum@=false
 
-@userBeanProviderUrl@=jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199
-@projectBeanProviderUrl@=jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199
-@mockSubmissionFilePath@=/home/direct/jboss-4.2.3.GA/server/default/deploy/tcdirect.ear/
+# typical windows configuration
+@userBeanProviderUrl@=jnp://localhost:1099
+@projectBeanProviderUrl@=jnp://localhost:1099
+@mockSubmissionFilePath@=<<some_path>>/jboss-4.2.3.GA/server/default/deploy/tcdirect.ear/
+
+# typical VM configuration
+#@userBeanProviderUrl@=jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199
+#@projectBeanProviderUrl@=jnp://ec2-184-73-20-244.compute-1.amazonaws.com:1199
+#@mockSubmissionFilePath@=/home/direct/jboss-4.2.3.GA/server/default/deploy/tcdirect.ear/
 
 ###################################################
 # ejb-jar.xml for studio service component        #
 ###################################################
-@documentBasePath@=/nfs_shares/studiofiles/documents/
+# typical windows configuration
+@documentBasePath@=<<some_path>>/studiofiles/documents/
 @pactsServiceLocation@=63.118.154.181:1099
 @autoPaymentsEnabled@=false
 @submissionSiteBaseUrl@=http://174.129.126.198/studio/submissions
-@submissionSiteFilePath@=/nfs_shares/studiofiles/documents/
+@submissionSiteFilePath@=<<some_path>>/studiofiles/documents/
+
+# typical VM configuration
+#@documentBasePath@=/nfs_shares/studiofiles/documents/
+#@pactsServiceLocation@=63.118.154.181:1099
+#@autoPaymentsEnabled@=false
+#@submissionSiteBaseUrl@=http://174.129.126.198/studio/submissions
+#@submissionSiteFilePath@=/nfs_shares/studiofiles/documents/
 
 #################################################################################
 # SpecReviewCommentService.xml for spec review comment service component        #
 #################################################################################
 @createComment@=false
+
+
+##########################
+# applicationContext.xml #
+##########################
+# typical windows configuration
+@loginProcessor@=com.topcoder.direct.services.view.processor.security.MockLoginProcessor
+
+# typical VM configuration
+#@loginProcessor@=com.topcoder.direct.services.view.processor.security.LoginProcessor
+
+###########################
+# liquidPortalService.xml #
+###########################
+@notusObserverTermsId@=20794
+@notusSubmitterTermsId@=20623
+@jiraEmailAddress@=sma@topcoder.com
+@liquidStudioContestsEmailFrom@=sma@topcoder.com
+@liquidStudioContestsEmailTo@=sma@topcoder.com
+@liquidStudioContestsEmailCC@=sma@topcoder.com
+@liquidStudioContestsEmailBilling@=1
+
+#####################
+# Direct.properties #
+#####################
+# typical windows configuration
+@CONTEST_SERVICE_PROVIDER_URL@=localhost:1099
+
+# typical VM configuration
+#@CONTEST_SERVICE_PROVIDER_URL@=env.topcoder.com:1599
+
+
+############################
+# objectFactory_config.xml #
+############################
+@jiraServiceEndPoint@=http://www.dev.topcoder.com/bugs/rpc/soap/jirasoapservice-v2
+@jiraServiceAdminUserName@=admin
+@jiraServiceAdminUserPassword@=password
+@confluenceServiceEndPoint@=http://www.dev.topcoder.com/wiki/rpc/soap-axis/confluenceservice-v1
+@confluenceServiceAdminUserName@=scamp
+@confluenceServiceAdminUserPassword@=password
+
+################################
+# ApplicationServer.properties #
+################################
+## MEMBER_DEV
+@ApplicationServer.ENVIRONMENT@=3
+@ApplicationServer.SERVER_NAME@=tc.cloud.topcoder.com
+@ApplicationServer.STUDIO_SERVER_NAME@=studio.cloud.topcoder.com
+@ApplicationServer.OPENAIM_SERVER_NAME@=www.dev.topcoder.com/openaim
+@ApplicationServer.TRUVEO_SERVER_NAME@=www.dev.topcoder.com/truveo
+@ApplicationServer.WINFORMULA_SERVER_NAME@=www.dev.topcoder.com/winformula
+@ApplicationServer.CSF_SERVER_NAME@=csf.dev.topcoder.com
+@ApplicationServer.CORP_SERVER_NAME@=www.dev.topcoder.com/corp
+@ApplicationServer.SOFTWARE_SERVER_NAME@=tcs.cloud.topcoder.com
+@ApplicationServer.FORUMS_SERVER_NAME@=forums.dev.topcoder.com
+@ApplicationServer.HOST_URL@=localhost:1199
+@ApplicationServer.FORUMS_HOST_URL@=localhost:1199
+@ApplicationServer.CONTEST_HOST_URL@=63.118.154.180:10099
+@ApplicationServer.BASE_DIR@=/export/home/web/web/
+@ApplicationServer.XSL_CACHING@=false
+
+# typical windows configuration
+@ApplicationServer.SECURITY_PROVIDER_URL@=localhost:1099
+
+# typical VM configuration
+#@ApplicationServer.SECURITY_PROVIDER_URL@=localhost:1599
+
+
+@ApplicationServer.TCS_APP_SERVER_URL@=localhost:11199
+@ApplicationServer.SESSION_ID_LENGTH@=0
+@ApplicationServer.FILE_CONVERSION_PROVIDER_URL@=172.16.210.53:1099
+@ApplicationServer.WEB_SERVER_ID@=1
+@ApplicationServer.JMS_HOST_URL@=jnp://localhost:1699
+@ApplicationServer.DISTRIBUTED_UI_SERVER_NAME@ = localhost:8080
+@ApplicationServer.OR_WEBSERVICES_SERVER_NAME@ = 63.118.154.186:8080
+@ApplicationServer.WIKI_SERVER_NAME@ = www.dev.topcoder.com/wiki
+@ApplicationServer.USER_SERVICES_HOST_URL@=jnp://localhost:1199
+
+
+@ApplicationServer.JNDI_FACTORY@=org.jnp.interfaces.NamingContextFactory
+@ApplicationServer.JMS_FACTORY@=java:/ConnectionFactory
+@ApplicationServer.JMS_BKP_FACTORY@=jms.connection.jmsFactory_BKP
+@ApplicationServer.TRANS_FACTORY@=javax.transaction.UserTransaction
+@ApplicationServer.TRANS_MANAGER@=java:/TransactionManager
+@ApplicationServer.SECURITY_CONTEXT_FACTORY@=org.jnp.interfaces.NamingContextFactory
+
+@ApplicationServer.STUDIO_SERVICES_PROVIDER_URL@=jnp://localhost:1399
+@ApplicationServer.STUDIO_SERVICES_USERNAME@=user
+@ApplicationServer.STUDIO_SERVICES_PASSWORD@=password
+@ApplicationServer.STUDIO_SERVICES_PROTOCOL@=cockpitDomain
+@ApplicationServer.STUDIO_SERVICES_CONTEXT_FACTORY@=org.jboss.security.jndi.LoginInitialContextFactory
+@ApplicationServer.STUDIO_SERVICES_PKG_PREFIXES@=org.jboss.naming:org.jnp.interfaces
+@ApplicationServer.STUDIO_SERVICES_JNDI_NAME@=StudioServiceBean/remote
+
+
+

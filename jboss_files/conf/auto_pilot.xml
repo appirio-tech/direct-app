@@ -364,7 +364,7 @@
                     <Value>org.jnp.interfaces.NamingContextFactory</Value>
                 </Property>
                 <Property name="url">
-                    <Value>jnp://@service.provder.url@</Value>
+                    <Value>jnp://@service.provider.url@</Value>
                 </Property>
             </Property>
         </Property>
@@ -381,7 +381,7 @@
 
 
         <Property name="forum_bean_provider_url">
-            <Value>jnp://@forum_bean_provider_url@</Value>
+            <Value>@forumBeanProviderUrl@</Value>
         </Property>
 
           <Property name="send_start_phase_email">

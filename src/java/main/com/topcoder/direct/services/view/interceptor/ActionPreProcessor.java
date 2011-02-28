@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010,2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.interceptor;
 
@@ -52,10 +52,23 @@ import com.topcoder.direct.services.view.processor.stats.TopCoderDirectFactsProc
  *   </ul>
  * </p>
  *
+ * <p>Version 1.2 (TC Direct Build And Deploy Scripts assembly) change notes:
+ *   <ul>
+ *     <li>Makes the login processor configurable, in order to support mockup user authentication.</li>
+ *   </ul>
+ * </p>
+ *
  * @author isv
- * @version 1.1
+ * @version 1.2
  */
 public class ActionPreProcessor implements Interceptor {
+
+    /**
+     * Represents the full-qualified class name for login processor.
+     *
+     * @since 1.2
+     */
+    private String loginProcessorClassName;
 
     /**
      * <p>Constructs new <code>ActionPreProcessor</code> instance. This implementation does nothing.</p>
@@ -73,6 +86,26 @@ public class ActionPreProcessor implements Interceptor {
      * <p>Destroys this interceptor. This implementation does nothing.</p>
      */
     public void destroy() {
+    }
+
+    /**
+     * Gets the full-qualified class name for login processor.
+     *
+     * @return the full-qualified class name for login processor.
+     * @since 1.2
+     */
+    public String getLoginProcessorClassName() {
+        return loginProcessorClassName;
+    }
+
+    /**
+     * Sets the v class name for login processor.
+     *
+     * @param loginProcessorClassName the full-qualified class name for login processor.
+     * @since 1.2
+     */
+    public void setLoginProcessorClassName(String loginProcessorClassName) {
+        this.loginProcessorClassName = loginProcessorClassName;
     }
 
     /**
@@ -118,7 +151,7 @@ public class ActionPreProcessor implements Interceptor {
         if (action instanceof LoginAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new TopCoderDirectFactsProcessor(),
                                                                new CoPilotStatsProcessor(),
-                                                               new LoginProcessor()});
+                                                               getLoginProcessor()});
         } else if (action instanceof DashboardAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new CoPilotStatsProcessor(),
                                                                new UserProjectsProcessor(),
@@ -197,5 +230,28 @@ public class ActionPreProcessor implements Interceptor {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Gets the login processor.
+     *
+     * @return the login processor.
+     * @since 1.2
+     */
+    private RequestProcessor getLoginProcessor() {
+        if (loginProcessorClassName != null && loginProcessorClassName.trim().length() != 0) {
+            try {
+            // try to instantiate the configured login processor
+            return (RequestProcessor) Class.forName(loginProcessorClassName).newInstance();
+            } catch (ClassNotFoundException e) {
+                // ignore
+            } catch (InstantiationException e) {
+                // ignore
+            } catch (IllegalAccessException e) {
+                // ignore
+            }
+        }
+
+        return new LoginProcessor();
     }
 }
