@@ -69,10 +69,12 @@
 # LDAP host #
 #############
 # typical windows configuration
-@ldap_host@=75.101.176.125
+@ldap_host@=NOT_USED
+@bind_password@=NOT_USED
 
 # typical VM configuration
 #@ldap_host@=env.topcoder.com
+#@bind_password@=topcoder
 
 ############################################################################################
 # file storage location for DefaultUploadExternalServices in onlineReviewUpload_config.xml #
