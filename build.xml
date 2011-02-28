@@ -417,7 +417,6 @@
                 <include name="cockpit-login-config.xml" />
                 <include name="CockpitUserPersistence.xml" />
                 <include name="ds-login-config.xml" />
-                <include name="FileUpload.xml" />
                 <include name="JBossLoginModule.xml" />
                 <include name="JBossLoginModuleConfig.properties" />
                 <include name="LDAP.properties" />
