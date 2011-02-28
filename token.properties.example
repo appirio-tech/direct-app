@@ -85,17 +85,6 @@
 # typical VM configuration
 #@file_storage_location@=/home/direct/temp_files
 
-##################
-# FileUpload.xml #
-##################
-# typical windows configuration
-@temp_directory@=<<some_path>>/tmp/temp_files
-@default_directory@=<<some_path>>/tmp/upload
-
-# typical VM configuration
-#@temp_directory@=/home/direct/upload/temp
-#@default_directory@=/home/direct/upload
-
 ####################
 # cache.properties #
 ####################
