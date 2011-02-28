@@ -497,6 +497,10 @@
       <ant antfile="build-configuration.xml" target="update_properties" />
     </target>
 
+    <target name="move_properties" >
+      <ant antfile="build-configuration.xml" target="move_properties" />
+    </target>
+
     <target name="deploy-security">
         <copy todir="${jboss.home}/server/${server.name}/conf" overwrite="true">
             <fileset dir="${tokenized_conf}" includes="com/topcoder/security/Util.properties"/>
