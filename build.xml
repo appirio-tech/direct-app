@@ -348,10 +348,6 @@
     </target>
 
     <target name="deploy" depends="dist, deploy-internal" description="deploy the ear to jboss">
-        <delete file="${jboss_deploy_dir}/${distfilename}.ear"/>
-        <delete dir="${jboss_deploy_dir}/${distfilename}.ear"/>
-
-        <unzip src="${component.ear}" dest="${jboss_deploy_dir}/${distfilename}.ear"/>
     </target>
 
     <target name="deploy-jboss-files" description="deploy the dependent ears for direct application">
@@ -408,6 +404,10 @@
     </target>
 
     <target name="deploy-internal" depends="init" description="Deploy the direct related configurations and libs">
+        <delete file="${jboss_deploy_dir}/${distfilename}.ear"/>
+        <delete dir="${jboss_deploy_dir}/${distfilename}.ear"/>
+
+        <unzip src="${component.ear}" dest="${jboss_deploy_dir}/${distfilename}.ear"/>
         <copy file="${tokenized_conf}/direct-ds.xml" todir="${jboss.home}/server/${server.name}/deploy"  overwrite="true"/>
         <copy todir="${jboss.home}/server/${server.name}/conf" overwrite="true">
             <fileset dir="${tokenized_jboss_files}/conf">
