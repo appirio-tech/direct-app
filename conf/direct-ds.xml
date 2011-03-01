@@ -61,7 +61,7 @@
 
     <no-tx-datasource>
         <jndi-name>DW</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/top@database.username@_dw:INFORMIXSERVER=datawarehouse_tcp</connection-url>
+        <connection-url>jdbc:informix-sqli://@dw.database.server@:@database.port@/top@database.username@_dw:INFORMIXSERVER=@dw.database.INFORMIXSERVER@</connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
@@ -118,7 +118,7 @@
 
     <no-tx-datasource>
         <jndi-name>TCS_DW</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_dw:INFORMIXSERVER=datawarehouse_tcp</connection-url>
+        <connection-url>jdbc:informix-sqli://@dw.database.server@:@database.port@/tcs_dw:INFORMIXSERVER=@dw.database.INFORMIXSERVER@</connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
@@ -162,10 +162,10 @@
 
       <local-tx-datasource>
         <jndi-name>BUGS</jndi-name>
-        <connection-url>jdbc:mysql://@database.server@:@database.port@/bugs_oltp</connection-url>
-        <driver-class>com.mysql.jdbc.Driver</driver-class>
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
+        <connection-url>@bugs.connection.string@</connection-url>
+        <driver-class>@bugs.database.driver@</driver-class>
+        <user-name>@bugs.database.username@</user-name>
+        <password>@bugs.database.password@</password>
             <!-- sql to call when connection is created
             <new-connection-sql>set lock mode to wait 5</new-connection-sql>
      -->
@@ -174,7 +174,7 @@
 
           <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
           <metadata>
-             <type-mapping>mySQL</type-mapping>
+             <type-mapping>@bugs.type.mapping@</type-mapping>
           </metadata>
     <!--
     <track-statements>true</track-statements>
