@@ -10,7 +10,7 @@
 
 
 <datasources>
-    <local-tx-datasource>
+    <xa-datasource>
         <jndi-name>InformixDS</jndi-name>
         <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
@@ -28,7 +28,7 @@
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
-    </local-tx-datasource>
+    </xa-datasource>
 
     <no-tx-datasource>
       <jndi-name>OLTP</jndi-name>
@@ -89,7 +89,7 @@
         </metadata>
     </no-tx-datasource>
 
-    <local-tx-datasource>
+    <xa-datasource>
         <jndi-name>JTS_OLTP</jndi-name>
         <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;
         </connection-url>
@@ -107,7 +107,7 @@
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
-    </local-tx-datasource>
+    </xa-datasource>
 
      <no-tx-datasource>
         <jndi-name>TCS_DW</jndi-name>
@@ -149,7 +149,7 @@
         </metadata>
     </no-tx-datasource>
 
-    <local-tx-datasource>
+    <xa-datasource>
       <jndi-name>BUGS</jndi-name>
       <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;</connection-url>
       <driver-class>com.informix.jdbc.IfxDriver</driver-class>
@@ -168,7 +168,7 @@
         <metadata>
            <type-mapping>InformixDB</type-mapping>
         </metadata>
-    </local-tx-datasource>
+    </xa-datasource>
 
     <xa-datasource>
         <jndi-name>StudioDS</jndi-name>
