@@ -17,10 +17,13 @@
             <Value>@JBOSS_HOME@/server/default/conf/security.keystore</Value>
         </Property>
         <Property name="kspassword">
-            <Value>88#DoGthats&lt;100%evolved</Value>
+            <Value>@keystore_password@</Value>
         </Property>
         <Property name="alias">
-            <Value>users</Value>
+            <Value>@keystore_alias@</Value>
+        </Property>
+        <Property name="loginUrl">
+            <Value>@keystore_loginurl@</Value>
         </Property>
         <!-- DB connection factory configuration -->
         <Property name="connectionFactoryKey">

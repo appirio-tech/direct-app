@@ -173,6 +173,13 @@
 @liquidStudioContestsEmailCC@=sma@topcoder.com
 @liquidStudioContestsEmailBilling@=1
 
+##############################
+# CockpitUserPersistence.xml #
+##############################
+@keystore_password@=88#DoGthats&lt;100%evolved
+@keystore_alias@=users
+@keystore_loginurl@=jnp://env.topcoder.com:1099
+
 #####################
 # Direct.properties #
 #####################

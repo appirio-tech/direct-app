@@ -1,6 +1,6 @@
 # Property file defining the information for TC Direct application
 component.name=TC Direct System
-component.distfilename=tcdirect
+component.distfilename=direct
 component.package=com.topcoder.direct
 component.packagedir=com/topcoder
 component.version.major=1
