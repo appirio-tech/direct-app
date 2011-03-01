@@ -11,59 +11,66 @@
 
 <datasources>
     <xa-datasource>
-        <jndi-name>InformixDS</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=@database.INFORMIXSERVER@;
-        </connection-url>
-        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>@database.username@</user-name>
+    <jndi-name>InformixDS</jndi-name>
+    
+    <track-connection-by-tx>true</track-connection-by-tx> 
+    <isSameRM-override-value>false</isSameRM-override-value>
+
+    <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+    <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+	<xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+	<xa-datasource-property name="DatabaseName">tcs_catalog</xa-datasource-property>
+	<xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property> 
+
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+    <!-- sql to call when connection is created -->
+    <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+    <!-- sql to call on an existing pooled connection when it is obtained from pool
+      -->
+    <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+
+    <prepared-statement-cache-size>25</prepared-statement-cache-size>
+    <share-prepared-statements>true</share-prepared-statements>
+
+     <user-name>>@database.username@</user-name>
         <password>@database.password@</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
 
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <metadata>
-            <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </xa-datasource>
+    <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
+    <metadata>
+       <type-mapping>InformixDB</type-mapping>
+    </metadata>
+  </xa-datasource>
 
     <no-tx-datasource>
-      <jndi-name>OLTP</jndi-name>
-      <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;</connection-url>
-      <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-      <user-name>@database.username@</user-name>
-      <password>@database.password@</password>
-          <!-- sql to call when connection is created
-          <new-connection-sql>some arbitrary sql</new-connection-sql>
-          -->
+       <jndi-name>OLTP</jndi-name>
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
-          <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-          <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
 
         <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <metadata>
-           <type-mapping>InformixDB</type-mapping>
+            <type-mapping>InformixDB</type-mapping>
         </metadata>
     </no-tx-datasource>
 
     <no-tx-datasource>
         <jndi-name>DW</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/topcoder_dw:INFORMIXSERVER=@database.INFORMIXSERVER@;
-        </connection-url>
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/top@database.username@_dw:INFORMIXSERVER=datawarehouse_tcp</connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
 
         <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
@@ -71,19 +78,18 @@
 
     <no-tx-datasource>
         <jndi-name>TCS_CATALOG</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=@database.INFORMIXSERVER@;
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_catalog:INFORMIXSERVER=informixoltp_tcp
         </connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
+         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
 
         <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
@@ -91,166 +97,162 @@
 
     <xa-datasource>
         <jndi-name>JTS_OLTP</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;
-        </connection-url>
-        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
+        
+        <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value>
 
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
+        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+        <xa-datasource-property name="DatabaseName">informixoltp</xa-datasource-property>
+        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+
+		<new-connection-sql>set lock mode to wait 5</new-connection-sql>
         <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+		 <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
     </xa-datasource>
-
-     <no-tx-datasource>
-        <jndi-name>TCS_DW</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_dw:INFORMIXSERVER=@database.INFORMIXSERVER@;
-        </connection-url>
-        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
-
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <metadata>
-            <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </no-tx-datasource>
 
     <no-tx-datasource>
-        <jndi-name>JTS_STUDIO_OLTP</jndi-name>
-        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/studio_oltp:INFORMIXSERVER=@database.INFORMIXSERVER@;
-        </connection-url>
+        <jndi-name>TCS_DW</jndi-name>
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/tcs_dw:INFORMIXSERVER=datawarehouse_tcp</connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
-        <!-- sql to call when connection is created
-        <new-connection-sql>some arbitrary sql</new-connection-sql>
-        -->
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
-        <!-- sql to call on an existing pooled connection when it is obtained from pool -->
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
 
         <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
     </no-tx-datasource>
 
     <xa-datasource>
-      <jndi-name>BUGS</jndi-name>
-      <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/informixoltp:INFORMIXSERVER=@database.INFORMIXSERVER@;</connection-url>
-      <driver-class>com.informix.jdbc.IfxDriver</driver-class>
-      <user-name>@database.username@</user-name>
-      <password>@database.password@</password>
-      <!-- sql to call when connection is created -->
-      <new-connection-sql>set lock mode to wait 5</new-connection-sql>
-
-      <!-- sql to call on an existing pooled connection when it is obtained from pool
-      <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-      -->
-
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <track-statements>true</track-statements>
-        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
-        <metadata>
-           <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </xa-datasource>
-
-    <xa-datasource>
-        <jndi-name>StudioDS</jndi-name>
-
-	    <track-connection-by-tx>true</track-connection-by-tx> 
-        <isSameRM-override-value>false</isSameRM-override-value> 
+        <jndi-name>JTS_STUDIO_OLTP</jndi-name>
+        
+        <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value>
 
         <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">studio_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
-        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
-        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
+        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
 
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
         <!-- sql to call on an existing pooled connection when it is obtained from pool
         <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
          -->
-
+		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
         <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <track-statements>true</track-statements>
-        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
-        <metadata>
+         <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+		<metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
     </xa-datasource>
 
+      <local-tx-datasource>
+        <jndi-name>BUGS</jndi-name>
+        <connection-url>jdbc:mysql://@database.server@:@database.port@/bugs_oltp</connection-url>
+        <driver-class>com.mysql.jdbc.Driver</driver-class>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+            <!-- sql to call when connection is created
+            <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+     -->
+            <!-- sql to call on an existing pooled connection when it is obtained from pool
+            <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>-->
+
+          <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+          <metadata>
+             <type-mapping>mySQL</type-mapping>
+          </metadata>
+    <!--
+    <track-statements>true</track-statements>
+    -->
+      </local-tx-datasource>
+
+    <xa-datasource>
+    <jndi-name>StudioDS</jndi-name>
+    
+    <track-connection-by-tx>true</track-connection-by-tx> 
+    <isSameRM-override-value>false</isSameRM-override-value>
+
+    <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
+    <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
+	<xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
+	<xa-datasource-property name="DatabaseName">studio_oltp</xa-datasource-property>
+	<xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+
+    <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+    <!-- sql to call when connection is created -->
+    <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+ 
+    <!-- sql to call on an existing pooled connection when it is obtained from pool
+      -->
+    <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+ 
+    <prepared-statement-cache-size>25</prepared-statement-cache-size>
+    <share-prepared-statements>true</share-prepared-statements>
+
+     <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+    <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
+    <metadata>
+       <type-mapping>InformixDB</type-mapping>
+    </metadata>
+  </xa-datasource>
+
     <xa-datasource>
         <jndi-name>JTS_CORPORATE_OLTP</jndi-name>
-
-	    <track-connection-by-tx>true</track-connection-by-tx> 
-        <isSameRM-override-value>false</isSameRM-override-value> 
-
+        
+        <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value>
 
         <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">corporate_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
-        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
-        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
-
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
+        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
+        
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
         <!-- sql to call on an existing pooled connection when it is obtained from pool
         <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
          -->
+		 <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
 
         <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <track-statements>true</track-statements>
-        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+         <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
-    </xa-datasource>
+    </xa-datasource>  
 
 
     <xa-datasource>
         <jndi-name>DS</jndi-name>
-
-	    <track-connection-by-tx>true</track-connection-by-tx> 
-        <isSameRM-override-value>false</isSameRM-override-value> 
-
+        
+        <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value>
 
         <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">common_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
-        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
-        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
+        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
 
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
 
@@ -258,9 +260,10 @@
         <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
          -->
 
+		 <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
         <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-        <track-statements>true</track-statements>
-        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+		 <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
         <metadata>
             <type-mapping>InformixDB</type-mapping>
         </metadata>
@@ -269,27 +272,33 @@
 
     
 
-    <xa-datasource>
-        <jndi-name>TimeDS</jndi-name>
-		<track-connection-by-tx>true</track-connection-by-tx> 
-        <isSameRM-override-value>false</isSameRM-override-value> 
+   <xa-datasource>
+		<jndi-name>TimeDS</jndi-name>
+        
+        <track-connection-by-tx>true</track-connection-by-tx> 
+        <isSameRM-override-value>false</isSameRM-override-value>
 
         <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
         <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
         <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
         <xa-datasource-property name="DatabaseName">time_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">@database.INFORMIXSERVER@</xa-datasource-property>
-        <xa-datasource-property name="User">@database.username@</xa-datasource-property>
-        <xa-datasource-property name="Password">@database.password@</xa-datasource-property>
-        
-        <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
-    <!--    <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>-->
+        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
 
-        <track-statements>true</track-statements>
-        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
-        <metadata>
-            <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </xa-datasource>
+		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
+		<!-- sql to call when connection is created -->
+		<new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+		<prepared-statement-cache-size>25</prepared-statement-cache-size>
+		<share-prepared-statements>true</share-prepared-statements>
+
+		 <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+
+		<!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
+		<metadata>
+		   <type-mapping>InformixDB</type-mapping>
+		</metadata>
+  </xa-datasource>
+
+
 </datasources>
