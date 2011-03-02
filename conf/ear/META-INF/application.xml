@@ -220,7 +220,7 @@
     
     <module>
         <web>
-            <web-uri>tcdirect.war</web-uri>
+            <web-uri>direct.war</web-uri>
             <context-root>/direct</context-root>
         </web>
     </module>
