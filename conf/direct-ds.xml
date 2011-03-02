@@ -33,7 +33,7 @@
     <prepared-statement-cache-size>25</prepared-statement-cache-size>
     <share-prepared-statements>true</share-prepared-statements>
 
-     <user-name>>@database.username@</user-name>
+     <user-name>@database.username@</user-name>
         <password>@database.password@</password>
 
     <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
