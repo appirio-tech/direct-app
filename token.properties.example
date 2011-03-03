@@ -21,13 +21,40 @@
 @database.password@=1nf0rm1x
 @database.INFORMIXSERVER@=informixoltp_tcp
 
-
 # typical VM configuration
 #@database.server@=env.topcoder.com
 #@database.port@=2021
 #@database.username@=coder
 #@database.password@=c0d3r4T
 #@database.INFORMIXSERVER@=informixoltp_tcp
+
+###############################
+# bugs database configuration #
+###############################
+# typical windows configuration
+@bugs.connection.string@=jdbc:informix-sqli://localhost:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp;
+@bugs.database.username@=informix
+@bugs.database.password@=1nf0rm1x
+@bugs.database.driver@=com.informix.jdbc.IfxDriver
+@bugs.type.mapping@=InformixDB
+
+# typical VM configuration
+#@bugs.connection.string@=jdbc:informix-sqli://env.topcoder.com:2021/informixoltp:INFORMIXSERVER=informixoltp_tcp;
+#@bugs.database.username@=coder
+#@bugs.database.password@=c0d3r4T
+#@bugs.database.driver@=com.informix.jdbc.IfxDriver
+#@bugs.type.mapping@=InformixDB
+
+##############################
+# dw database configuration  #
+##############################
+# typical windows configuration
+@dw.database.server@=localhost
+@dw.database.INFORMIXSERVER@=informixoltp_tcp
+
+# typical VM configuration
+#@dw.database.server@=env.topcoder.com
+#@dw.database.INFORMIXSERVER@=informixoltp_tcp
 
 #######################################
 ## Parameters used by EmailEngine.xml #
