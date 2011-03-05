@@ -76,7 +76,7 @@
 #  tc_login_bean.properties                            #
 ########################################################
 # typical windows configuration
-@context.security.url@=localhost:1099
+@context.security.url@=localhost:1199
 
 # typical VM configuration
 #@context.security.url@=localhost:1599
@@ -87,7 +87,7 @@
 #  auto_pilot.xml                                     #
 ########################################################
 # typical windows configuration
-@service.provider.url@=localhost:1099
+@service.provider.url@=localhost:1199
 
 # typical VM configuration
 #@service.provider.url@=env.topcoder.com:1599
@@ -116,7 +116,7 @@
 # cache.properties #
 ####################
 # typical windows configuration
-@host_url@=localhost:1099
+@host_url@=localhost:1199
 
 # typical VM configuration
 #@host_url@=env.topcoder.com:2199
@@ -125,7 +125,7 @@
 # Forum bean provider url #
 ###########################
 # typical windows configuration
-@forumBeanProviderUrl@=jnp://localhost:1099
+@forumBeanProviderUrl@=jnp://localhost:1199
 
 # typical VM configuration
 #@forumBeanProviderUrl@=jnp://63.118.154.182:1099
@@ -148,8 +148,8 @@
 @createForum@=false
 
 # typical windows configuration
-@userBeanProviderUrl@=jnp://localhost:1099
-@projectBeanProviderUrl@=jnp://localhost:1099
+@userBeanProviderUrl@=jnp://localhost:1199
+@projectBeanProviderUrl@=jnp://localhost:1199
 @mockSubmissionFilePath@=<<some_path>>/jboss-4.2.3.GA/server/default/deploy/tcdirect.ear/
 
 # typical VM configuration
@@ -211,7 +211,7 @@
 # Direct.properties #
 #####################
 # typical windows configuration
-@CONTEST_SERVICE_PROVIDER_URL@=localhost:1099
+@CONTEST_SERVICE_PROVIDER_URL@=localhost:1199
 
 # typical VM configuration
 #@CONTEST_SERVICE_PROVIDER_URL@=env.topcoder.com:1599
@@ -248,7 +248,7 @@
 @ApplicationServer.XSL_CACHING@=false
 
 # typical windows configuration
-@ApplicationServer.SECURITY_PROVIDER_URL@=localhost:1099
+@ApplicationServer.SECURITY_PROVIDER_URL@=localhost:1199
 
 # typical VM configuration
 #@ApplicationServer.SECURITY_PROVIDER_URL@=localhost:1599
