@@ -502,9 +502,9 @@
             <include name="lib/tcs/*.jar" />
             <include name="lib/third_party/**/*.jar" />
             <include name="${component.ear}"/>
-            <include name="src/web/css/**/*.*"/>
-            <include name="src/web/scripts/**/*.*"/>
-            <include name="src/web/images/**/*.*"/>
+            <exclude name="src/web/css/**/*.*"/>
+            <exclude name="src/web/scripts/**/*.*"/>
+            <exclude name="src/web/images/**/*.*"/>
         </jar>
     </target>
 
