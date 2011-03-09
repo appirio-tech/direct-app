@@ -89,7 +89,7 @@
 		</property>
 
 		<property name="jiraEmailMessageTemplateName">
-			<value>@JBOSS_HOME@/server/default/deploy/tcdirect.ear/liquid_template.txt</value>
+			<value>@JBOSS_HOME@/server/default/deploy/direct.ear/liquid_template.txt</value>
 		</property>
 
 		<property name="liquidStudioContestsEmailFrom">
@@ -113,7 +113,7 @@
 		</property>
 
 		<property name="liquidStudioContestsEmailTemplateName">
-			<value>@JBOSS_HOME@/server/default/deploy/tcdirect.ear/liquid_studio_contests_email.txt</value>
+			<value>@JBOSS_HOME@/server/default/deploy/direct.ear/liquid_studio_contests_email.txt</value>
 		</property>
 
 		<property name="ccnEmailFrom">
@@ -124,7 +124,7 @@
 		</property>
 
 		<property name="ccnEmailTemplateName">
-			<value>@JBOSS_HOME@/server/default/deploy/tcdirect.ear/contest_creation_notification.txt</value>
+			<value>@JBOSS_HOME@/server/default/deploy/direct.ear/contest_creation_notification.txt</value>
 		</property>
 
 	</Config>
