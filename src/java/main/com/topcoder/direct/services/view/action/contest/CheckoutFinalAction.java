@@ -425,11 +425,11 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
         getViewData().setUserProjects(userProjectsDTO);
 
         // Set current project contests
-        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(currentUser.getUserId(),
-                contestStats.getContest().getProject().getId());
-        getSessionData().setCurrentProjectContests(contests);
+       // List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(currentUser.getUserId(),
+       //         contestStats.getContest().getProject().getId());
+       // getSessionData().setCurrentProjectContests(contests);
 
         // Set current project context based on selected contest
-        getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+        //getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
     }
 }
