@@ -406,6 +406,8 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
 
             // process payment
             contestServiceFacade.processSubmissionPurchaseOrderPayment(currentUser, contestData, orderPaymentData);
+
+            ut.commit();
         } catch(Exception e) {
            System.out.println("-----------------------------"+e);
            ut.rollback();
@@ -414,9 +416,9 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
 
         // Set contest stats
         //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-       // ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
 
-       // getViewData().setContestStats(contestStats);
+        getViewData().setContestStats(contestStats);
 
         // Set projects data
         List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
@@ -425,11 +427,11 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
         getViewData().setUserProjects(userProjectsDTO);
 
         // Set current project contests
-       // List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(currentUser.getUserId(),
-       //         contestStats.getContest().getProject().getId());
-       // getSessionData().setCurrentProjectContests(contests);
+        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(currentUser.getUserId(),
+                contestStats.getContest().getProject().getId());
+        getSessionData().setCurrentProjectContests(contests);
 
         // Set current project context based on selected contest
-        //getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+        getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
     }
 }
