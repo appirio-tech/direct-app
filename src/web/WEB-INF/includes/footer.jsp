@@ -16,6 +16,7 @@
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-6340959-9']);
+  _gaq.push(['_setDomainName', '.topcoder.com']);
   _gaq.push(['_trackPageview']);
 
   (function() {
