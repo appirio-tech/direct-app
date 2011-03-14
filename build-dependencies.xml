@@ -496,6 +496,11 @@
   <property name="workdays.path" value="workdays/${workdays.version}" />
   <property name="workdays.jar" value="${tcs_libdir}/${workdays.path}/${workdays.jar.name}" />
 
+  <property name="file_upload.version" value="2.0" />
+  <property name="file_upload.jar.name" value="file_upload.jar" />
+  <property name="file_upload.path" value="file_upload/${file_upload.version}" />
+  <property name="file_upload.jar" value="${tcs_libdir}/${file_upload.path}/${file_upload.jar.name}" />
+
   <property name="shared.jar.name" value="shared.jar" />
   <property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}" />
 
@@ -670,6 +675,7 @@
     <pathelement location="${user_service_facade.jar}" />
     <pathelement location="${user_service.jar}" />
     <pathelement location="${workdays.jar}" />
+    <pathelement location="${file_upload.jar}" />
     <pathelement location="${studio_contest_manager.jar}" />
     <pathelement location="${game_plan_service.jar}" />
     <pathelement location="${cockpit_facade_util.jar}" />

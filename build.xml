@@ -176,6 +176,7 @@
         <copy file="${typesafe_enum.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${user_group_manager.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${workdays.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${file_upload.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${shared.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${tcwebcommon.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
