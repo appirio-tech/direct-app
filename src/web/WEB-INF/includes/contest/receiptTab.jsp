@@ -71,7 +71,7 @@
                                                         <tr>
                                                             <th>Launch Time :</th>
                                                             <td><fmt:formatDate value="${viewData.contestStats.startTime}"
-                                                                                        pattern="MM/dd/yyyy HH:mm zzz"/></td>
+                                                                                        pattern="MM/dd/yyyy HH:mm zzz-05</td>
                                                         </tr>
                                                     </tbody></table>
                                                 </div>

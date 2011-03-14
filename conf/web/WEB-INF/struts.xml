@@ -553,6 +553,15 @@
         <action name="viewSpecReview" class="viewSpecReviewAction">
             <result>/WEB-INF/software-specification-review.jsp</result>
         </action>
+
+        <action name="downloadSoftwareSubmission" class="downloadSoftwareSubmissionAction">
+            <result type="stream">
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
     </package>
     
     <package name="ajax" namespace="/ajax" extends="base">

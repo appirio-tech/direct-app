@@ -161,7 +161,7 @@
                <div class="startEtSelect">
                	<select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                </div>
-               <span>ET (GMT-04)</span>
+               <span>EST (UTC-05)</span>
              </div>
              
              </div> <!-- end .schedule -->                           

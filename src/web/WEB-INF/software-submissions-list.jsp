@@ -38,15 +38,6 @@
                                 <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                             </div>
                             <div class="areaHeader">
-                                <div id="dropdownWrapper">
-                                    <select id="contestSelect">
-                                       <option>Contest Links</option>
-                                       <option>Contest Specification</option>
-                                       <option>Contest Forum</option>
-                                       <option>Online Review</option>
-                                       <option>Jira</option>
-                                    </select>
-                                 </div>
                                 <h2 class="title contestTitle"><s:property
                                         value="viewData.contestStats.contest.title"/></h2>
                             </div>
@@ -168,7 +159,8 @@
                                                         </c:choose>
                                                         <tr ${loop.index mod 2 > 0 ? 'class="alt"' : ''}>
                                                             <td>
-                                                                <a href="#" class="icoZip ${icoStyle}"></a>
+                                                                <link:onlineReviewDownloadSubmission projectId="${param.projectId}"
+                                                                    submissionId="${submission.submissionId}" styleClass="icoZip ${icoStyle}"></link:onlineReviewDownloadSubmission>
                                                             </td>
                                                             <td class="left">
                                                                 <link:user userId="${submitter.id}"

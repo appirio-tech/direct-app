@@ -1,7 +1,10 @@
 <%--
   - Author: TCSDEVELOPER
-  - Version: 1.0
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.1
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
+  - - Change time zone from GMT-04 to UTC-05.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -236,7 +239,7 @@
                         <jsp:include page="/WEB-INF/includes/common/timeOptions.jsp"/>
                     </select>
                 </div>
-                <span>ET (GMT-04)</span>
+                <span>ET (UTC-05)</span>
             </div>
 
             <p class="save">

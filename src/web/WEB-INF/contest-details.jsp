@@ -155,15 +155,15 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td class="column1"><strong>Start Date/Time</strong></td>
-                                                                    <td><strong>Start by:</strong> Next 3 days, 00/00/0000 at 00:00 ETC (GMT-04)</td>
+                                                                    <td><strong>Start by:</strong> Next 3 days, 00/00/0000 at 00:00 ETC (GMT-05)</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="column1"><strong>Milestone Date/Time</strong></td>
-                                                                    <td><strong>Run it for:</strong> 3 days after Start Time, 00/00/0000 at 00:00 ETC (GMT-04)</td>
+                                                                    <td><strong>Run it for:</strong> 3 days after Start Time, 00/00/0000 at 00:00 ETC (GMT-05)</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="column1"><strong>End Date/Time</strong></td>
-                                                                    <td><strong>Run it for:</strong> 7 days, 00/00/0000 at 00:00 ETC (GMT-04)</td>
+                                                                    <td><strong>Run it for:</strong> 7 days, 00/00/0000 at 00:00 ETC (GMT-05)</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

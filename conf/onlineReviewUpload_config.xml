@@ -43,4 +43,25 @@
 			<Value>@file_storage_location@</Value>
 		</Property>
 	</Config>
+
+	<!--
+        	=============== Configuration for File Upload component ===============
+   	-->
+    	<Config name="com.topcoder.servlet.request.LocalFileUpload">
+        	<Property name="single_file_limit">
+            		<Value>-1</Value>
+        	</Property>
+        	<Property name="total_file_limit">
+            		<Value>-1</Value>
+        	</Property>
+        	<Property name="allowed_dirs">
+            		<Value>@file_storage_location@</Value>
+        	</Property>
+        	<Property name="default_dir">
+            		<Value>@file_storage_location@</Value>
+        	</Property>
+        	<Property name="overwrite">
+            		<Value>false</Value>
+        	</Property>
+    	</Config>
 </CMConfig>

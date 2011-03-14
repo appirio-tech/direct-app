@@ -1,9 +1,10 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.0.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0.1 (TC Direct Software Contest Creation Update Assembly) changes: add display of copilots of software contest.
+  - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -135,7 +136,7 @@
           <div class="startEtSelect">
             <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span>ET (GMT-04)</span>
+          <span>ET (UTC-05)</span>
       </div>
 
       <!-- Milestone -->
@@ -145,7 +146,7 @@
           <div class="milestoneEtSelect">
             <select id="milestoneTime" name="milestoneTime"><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span>ET (GMT-04)</span>
+          <span>ET (UTC-05)</span>
       </div>
 
       <!-- End -->
@@ -155,7 +156,7 @@
           <div class="endEtSelect">
             <select id="endTime" name="endTime"><jsp:include page="../common/timeOptions.jsp"/></select>
           </div>
-          <span>ET (GMT-04)</span>
+          <span>ET (UTC-05)</span>
       </div>
 
 </div>

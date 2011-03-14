@@ -701,8 +701,9 @@
             
             if(this.studio) {
               $('#uploadButtonDiv').html('<input name="document" type="file" />');
+			  this._input = getFileInput(this.studio);
             } else {
-                if ($("#swUploadButtonDiv input[type='file']").length > 0) {
+                if ($("#swUploadButtonDiv").length > 0) {
                     $('#swUploadButtonDiv').html('<input name="document" type="file" />');
                     this._input = getFileInput(this.studio);
                 } else {

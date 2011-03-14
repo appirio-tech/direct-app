@@ -728,6 +728,12 @@ BODY#page{
 	width: 272px;
 }
 
+#area2 .contestsDropDown .longWordsBreak {
+	display:block !important;
+	padding-top:2px;
+	padding-left:1px;
+}
+
 .box{
 	background: url(../images/box_top2.png) no-repeat top;
 	padding: 15px 0 15px 9px;
@@ -803,7 +809,6 @@ BODY#page{
 .contestsDropDown UL LI{
 	margin: 0 !important;
 	padding: 3px 6px!important;
-	width: 220px;
 	cursor: pointer;
 }
 
@@ -1107,7 +1112,6 @@ P.projectArchive{
 	list-style: none;
 	margin: 0 auto;
 	padding: 10px 0 0 8px;
-	width: 210px;
 }
 
 	.box UL LI{
@@ -5033,6 +5037,26 @@ table.contests a.button1 span {
     overflow: hidden;
 }
 
-
-
-
+/*------------------------
+Contest links
+------------------------*/
+.contest-links {
+    margin-bottom: 15px;
+    font-size: 11px;
+    height: 10px;
+}
+.contest-links .link-title {
+    float: left;
+}
+.contest-links ul.links {
+    float: left;
+}
+.contest-links ul.links li {
+    float: left;
+    margin-left: 10px;
+    list-style-type: none;
+}
+.contest-links .clear {
+    clear: both;
+    height: 0px;
+}

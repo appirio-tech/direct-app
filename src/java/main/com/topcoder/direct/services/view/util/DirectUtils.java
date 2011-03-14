@@ -366,6 +366,7 @@ public final class DirectUtils {
         dto.setSubmissionsNumber(resultContainer.getIntItem(recordIndex, "number_of_submission"));
         dto.setRegistrantsNumber(resultContainer.getIntItem(recordIndex, "number_of_registration"));
         dto.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
+        dto.setSvn(resultContainer.getStringItem(recordIndex, "svn"));
         long forumId = -1;
         try {
             if (resultContainer.getStringItem(recordIndex, "forum_id") != null

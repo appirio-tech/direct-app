@@ -14,8 +14,12 @@
  * - Add method getCopilotsByDirectProjectId to get copilots info via Ajax.
  * - Update method saveAsDraftRequestSoftware to add copilot id and name into request.
  *
+ * Version 1.1.3 (TC Direct - Release Bug Fix Assembly) Change notes:
+ * - Change time zone from GMT-04 to UTC-05.
+ * - Update removeDocument method to add "studio:true" parameter.
+ *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1.2
+ * @version 1.1.3
  */
 
 /**
@@ -738,7 +742,7 @@ function formatDateForReview(d) {
    if(d == null) {
       return null;
    }
-   return d.toString("MM/dd/yyyy T HH:mm EST ").replace('T ','at ').replace('EST','EST (GMT-4)');
+   return d.toString("MM/dd/yyyy T HH:mm EST ").replace('T ','at ').replace('EST','EST (UTC-05)');
 }
 
 function getDatePart(d) {
@@ -811,7 +815,8 @@ function removeDocument(documentId) {
       url:  ctx+"/launch/removeDocument",
       data: {
         documentId: documentId,
-        contestId:mainWidget.competition.contestData.contestId
+        contestId:mainWidget.competition.contestData.contestId,
+		studio:true
       },
       cache: false,
       dataType: 'json',

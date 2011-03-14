@@ -79,15 +79,6 @@
                                     <strong><s:property value="viewData.contestStats.contest.title"/></strong>
                             </div>
                             <div class="areaHeader">
-                                <div id="dropdownWrapper">
-                                    <select id="contestSelect">
-                                       <option>Contest Links</option>
-                                       <option>Contest Specification</option>
-                                       <option>Contest Forum</option>
-                                       <option>Online Review</option>
-                                       <option>Jira</option>
-                                    </select>
-                                 </div>
                                 <h2 class="title contestTitle"><s:property
                                         value="viewData.contestStats.contest.title"/></h2>
                             </div>

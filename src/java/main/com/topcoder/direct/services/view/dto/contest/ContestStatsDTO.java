@@ -83,6 +83,11 @@ public class ContestStatsDTO implements Serializable {
 	
 	private String paymentReferenceId;
 	
+	/**
+	 * <p>A <code>String</code> providing the SVN module of the contest.</p>
+	 */
+	private String svn;
+
     /**
      * <p>Constructs new <code>ContestStatsDTO</code> instance. This implementation does nothing.</p>
      */
@@ -274,5 +279,23 @@ public class ContestStatsDTO implements Serializable {
 	
 	public String getPaymentReferenceId(){
 		return paymentReferenceId;
+	}
+	
+	/**
+	 * Gets the svn module.
+	 *
+	 * @return the svn module.
+	 */
+	public String getSvn() {
+	    return svn;
+	}
+	
+	/**
+	 * Sets the svn module.
+	 *
+	 * @param svn the svn module.
+	 */
+	public void setSvn(String svn) {
+	    this.svn = svn;
 	}
 }

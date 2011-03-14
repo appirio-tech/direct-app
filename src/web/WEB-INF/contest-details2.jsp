@@ -1,7 +1,7 @@
 <%--
   - Author: BeBetter, isv, TCSASSEMBLER
   - Version: 1.3
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 20111 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -11,7 +11,6 @@
   - - replaced contest stats area with contest dashboard area
   - Version 1.3 - TC Direct Release Assembly 7 Change Note
   - - added hasContestWritePermission field.
-  -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>

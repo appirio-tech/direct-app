@@ -12,6 +12,7 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <s:set var="contestStats" value="viewData.contestStats" scope="page"/>
 <s:push value="viewData.contestStats">
+    <jsp:include page="/WEB-INF/includes/contest/link.jsp"/>
     <div id="tabs3">
         <ul>
             <li class="firstItem <c:if test="${requestScope.CURRENT_SUB_TAB eq 'details'}">on</c:if>">

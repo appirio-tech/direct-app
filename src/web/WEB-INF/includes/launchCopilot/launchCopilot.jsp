@@ -1,10 +1,12 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Version: 1.0.1
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: Launch copilot contest page input/edit section.
   - Since: TC Direct - Launch Copilot Selection Contest assembly  
+  -
+  - Version 1.0.1 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -102,7 +104,7 @@
                 <div class="startEtSelect">
                     <select id="startTime" name="startTime" ><jsp:include page="../common/timeOptions.jsp"/></select>
                 </div>
-                <span>ET (GMT-04)</span>
+                <span>ET (UTC-05)</span>
             </div>
             <p class="save hide">
                 <a class="cancel_text" href="javascript:;">cancel</a>

@@ -176,6 +176,13 @@
         <property name="proxyInterface" value="com.topcoder.project.service.ProjectServices"/>
     </bean>
 
+    <!--  FileUpload -->
+    <bean id="fileUpload" class="com.topcoder.servlet.request.LocalFileUpload">
+        <constructor-arg index="0">
+            <value>com.topcoder.servlet.request.LocalFileUpload</value>
+        </constructor-arg>
+    </bean>
+
     <!-- AuthenticationInterceptor -->
     <bean id="authenticationInterceptor"
           class="com.topcoder.direct.services.view.interceptors.AuthenticationInterceptor">
@@ -584,5 +591,11 @@
           class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="isAJAX" value="true"/>
+    </bean>
+
+    <bean id="downloadSoftwareSubmissionAction"
+          class="com.topcoder.direct.services.view.action.contest.DownloadSoftwareSubmissionAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="fileUpload" ref="fileUpload"/>
     </bean>
 </beans>

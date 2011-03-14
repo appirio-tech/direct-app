@@ -1,8 +1,11 @@
 /**
  * The JavaScript code used by the Launch Copilot Posting Contest views.
  *
+ * Changes in 1.1 (TCCC-2706):
+ * - Update time zone from GMT-04 to UTC-05
+ *
  * @author TCSDEVELOPER
- * @version 1.0 (Direct Copilot Posting Contest Launching assembly)
+ * @version 1.1 (Direct Copilot Posting Contest Launching assembly)
  */
 
 var currentDocument = {};
@@ -420,7 +423,7 @@ function updateProjectDate() {
     var startDate = $('#start2DateInput').datePicker().val();
     var startTime = $('#start2TimeInput').val();
 
-    $('#startDateLabel').html(startDate + ' at ' + startTime + ' EST (GMT-04)');
+    $('#startDateLabel').html(startDate + ' at ' + startTime + ' EST (UTC-05)');
     $('#startDateInput').datePicker().val(startDate);
     $('#startTimeInput').val(startTime);
     
