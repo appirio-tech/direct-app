@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
@@ -9,7 +9,7 @@ import java.util.Map;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 
 /**
@@ -23,9 +23,17 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  * <li>Added {@link #dashboardProjectStat} and {@link #contests} parameters. </li>
  * </ul>
  * </p>
- * 
- * @author isv, TCSASSEMBLER
- * @version 1.0.1
+ *
+ * <p>
+ * Version 1.1 (Cockpit Performance Improvement Project Overview and Manage Copilot Posting Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #contests} variable to map objects of {@link ContestHealthDTO} type instead of
+ *     <code>ContestDashboardDTO</code> type.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, TCSDEVELOPER
+ * @version 1.1
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
                                                              UpcomingActivitiesDTO.Aware,
@@ -52,7 +60,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * A <code>EnterpriseDashboardProjectStatDTO</code> providing statistics on
      * project.
      * </p>
-     * 
+     *
      * @since 1.0.1
      */
     private EnterpriseDashboardProjectStatDTO dashboardProjectStat;
@@ -60,13 +68,13 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
     /**
      * <p>
      * A map of <code>ContestBriefDTO</code> and
-     * <code>ContestDashboardDTO</code> providing statistics on
+     * <code>ContestHealthDTO</code> providing statistics on
      * contest.
      * </p>
-     * 
+     *
      * @since 1.0.1
      */
-    private Map<ContestBriefDTO, ContestDashboardDTO> contests;
+    private Map<ContestBriefDTO, ContestHealthDTO> contests;
 
     /**
      * <p>
@@ -136,7 +144,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
 
     /**
      * Retrieves the dashboardProjectStat field.
-     * 
+     *
      * @return the dashboardProjectStat
      * @since 1.0.1
      */
@@ -146,7 +154,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
 
     /**
      * Sets the dashboardProjectStat field.
-     * 
+     *
      * @param dashboardProjectStat
      *            the dashboardProjectStat to set
      * @since 1.0.1
@@ -162,7 +170,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * @return the contests
      * @since 1.0.1
      */
-    public Map<ContestBriefDTO, ContestDashboardDTO> getContests() {
+    public Map<ContestBriefDTO, ContestHealthDTO> getContests() {
         return contests;
     }
 
@@ -172,7 +180,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * @param contests the contests to set
      * @since 1.0.1
      */
-    public void setContests(Map<ContestBriefDTO, ContestDashboardDTO> contests) {
+    public void setContests(Map<ContestBriefDTO, ContestHealthDTO> contests) {
         this.contests = contests;
     }
 }

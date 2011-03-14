@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -24,20 +24,7 @@ import java.util.Map.Entry;
 import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.dto.*;
-import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
-import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
-import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
-import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
-import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
-import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
-import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
-import com.topcoder.direct.services.view.dto.contest.RunningPhaseStatus;
-import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
-import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
-import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
@@ -59,13 +46,6 @@ import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
 import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
 import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
@@ -201,9 +181,29 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Add method getDashboardCostReportDetails to get cost details of each contest with specified filters.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 2.5.0 (Cockpit Performance Improvement Project Overview and Manage Copilot Posting) Change notes:
+ *   <ol>
+ *     <li>Update method getLatestActivitiesForUserProjects - a new request input 'tcdirectid' is added to
+ *      query 'direct_latest_activities', we set it to 0 in this method to get data for all user projects</li>
+ *     <li>Update method getLatestActivitiesForProject - update the method to use query 'direct_latest_activities'
+ *     with a new request input 'tcdirectid', is set to the id of the direct project. The method is no longer
+ *     depends on getLatestActivitiesForUserProjects which affected the performance.</li>
+ *     <li>Update method getUpcomingActivitiesForUserProjects - a new request input 'tcdirectid' is added to
+ *      query 'direct_upcoming_activities', we set it to 0 in this method to get data for all user projects</li>
+ *     <li>Add a new method getUpcomingActivitiesForProject - the method uses query 'direct_upcoming_activities'
+ *     with a new request input 'tcdirectid', is set to the id of the direct project.</li>
+ *     <li>Add a new method getProjectContestsHealth - the method uses a new query
+ *     'direct_project_overview_contests_health' to get the contest health data of all the active and scheduled
+ *     contests of the specified project.</li>
+ *     <li>update method getProjectStats to use a simplified query 'direct_project_overview_statistics'.</li>
+ *     <li>update method getCopilotPostingContests to use query 'direct_my_copilot_postings' to improve the
+ *     performance</li>
+ *   </ol>
+ * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, TCSDEVELOPER
- * @version 2.4.0
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues
+ * @version 2.5.0
  */
 public class DataProvider {
 
@@ -340,8 +340,11 @@ public class DataProvider {
     /**
      * <p>Gets the details on latest activities on projects associated with specified user.</p>
      *
-     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
-     * latest activities. Current implementation uses mock data.</p>
+     * <p>Updates in version 2.5.0:
+     * - Add a query request input 'tcdirectid' and set it to 0. It represents to query on all the direct projects the
+     * user has access to or created.
+     * - Refactoring the latest activity creation process into helper method fo reuse.
+     * </p>
      *
      * @param userId a <code>long</code> providing the user to get the latest activities on associated projects for.
      * @param days an <code>int</code> providing the number of days from current time for selecting activities.
@@ -353,6 +356,8 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_latest_activities");
+        // Setting to 0 means getting all the direct projects of the user
+        request.setProperty("tcdirectid", "0");
         request.setProperty("uid", String.valueOf(userId));
         request.setProperty("days", String.valueOf(days));
 
@@ -362,52 +367,28 @@ public class DataProvider {
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities");
         final int recordNum = resultContainer.size();
+
         for (int i = 0; i < recordNum; i++) {
-            String activityTypeText = resultContainer.getStringItem(i, "activity_type");
-            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
-            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
-            long contestId = resultContainer.getLongItem(i, "contest_id");
-            String contestName = resultContainer.getStringItem(i, "contest_name");
-            String contestType = resultContainer.getStringItem(i, "contest_type");
-            long contestTypeId = resultContainer.getLongItem(i, "contest_type_id"); // BUGR-3913
-            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
 
-            // System.out.println("#############contestType:"+contestType);
+            // create ActivityDTO from result row
+            ActivityDTO activity = createLatestActivity(resultContainer, i, projects, contests);
 
-            long originatorId = Long.parseLong(resultContainer.getStringItem(i, "user_id"));
-            String originatorHandle = resultContainer.getStringItem(i, "user");
-            Timestamp date = resultContainer.getTimestampItem(i, "activity_time");
+            ProjectBriefDTO project = activity.getContest().getProject();
+            List<ActivityDTO> projectActivities;
 
-            final ProjectBriefDTO project;
-            final List<ActivityDTO> projectActivities;
-            if (!projects.containsKey(tcDirectProjectId)) {
+            if (!activities.containsKey(project)) {
                 projectActivities = new ArrayList<ActivityDTO>();
-                project = createProject(tcDirectProjectId, tcDirectProjectName);
-                projects.put(tcDirectProjectId, project);
                 activities.put(project, projectActivities);
             } else {
-                project = projects.get(tcDirectProjectId);
                 projectActivities = activities.get(project);
             }
 
-            final TypedContestBriefDTO contest;
-            if (contests.containsKey(contestId)) {
-                contest = contests.get(contestId);
-            } else {
-                contest = createTypedContest(contestId, contestName, project, ContestType.forIdAndFlag(contestTypeId, isStudio), null, !isStudio);//here
-                contests.put(contestId, contest);
-            }
-
-            ActivityType activityType = ActivityType.forName(activityTypeText);
-            ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
             projectActivities.add(activity);
-            
         }
 
         LatestActivitiesDTO result = new LatestActivitiesDTO();
 
 
-        // start bugr-3901
         // sort the activities via activity date
         for (List<ActivityDTO> la : activities.values()) {
             Collections.sort(la, new Comparator<ActivityDTO>() {
@@ -420,6 +401,7 @@ public class DataProvider {
         // sort the map by project's latest activity date
         List<Map.Entry<ProjectBriefDTO, List<ActivityDTO>>> list =
                 new LinkedList<Map.Entry<ProjectBriefDTO, List<ActivityDTO>>>(activities.entrySet());
+
         Collections.sort(list, new Comparator<Map.Entry<ProjectBriefDTO, List<ActivityDTO>>>() {
             public int compare(Map.Entry<ProjectBriefDTO, List<ActivityDTO>> o1, Map.Entry<ProjectBriefDTO, List<ActivityDTO>> o2) {
                 ActivityDTO a1 = o1.getValue().get(0);
@@ -438,17 +420,74 @@ public class DataProvider {
         for(Map.Entry<ProjectBriefDTO, List<ActivityDTO>> e : list) {
             sortedActivities.put(e.getKey(),e.getValue());
         }
-        // end bugr-3901
 
         result.setActivities(sortedActivities);
+
         return result;
+    }
+
+
+    /**
+     * Helper method to get data from result of query 'direct_latest_activities' and instantiate an ActivityDTO
+     * instance to represent latest activity and return it as result.
+     *
+     *
+     * @param result the ResultSetContainer returned by running the query
+     * @param resultIndex the index to retrieve the result row
+     * @param directProjectsMap the map to store direct projects
+     * @param contestsMap the map to store the contests
+     * @return the instantiated ActivityDTO instance
+     * @since 2.5.0 - (Cockpit Performance Improvement Project Overview and Manage Copilot Posting Assembly)
+     */
+    private static ActivityDTO createLatestActivity(ResultSetContainer result, int resultIndex, Map<Long,
+            ProjectBriefDTO> directProjectsMap, Map<Long, TypedContestBriefDTO> contestsMap) {
+        
+            String activityTypeText = result.getStringItem(resultIndex, "activity_type");
+            long tcDirectProjectId = result.getLongItem(resultIndex, "tc_direct_project_id");
+            String tcDirectProjectName = result.getStringItem(resultIndex, "tc_direct_project_name");
+            long contestId = result.getLongItem(resultIndex, "contest_id");
+            String contestName = result.getStringItem(resultIndex, "contest_name");
+            String contestType = result.getStringItem(resultIndex, "contest_type");
+            long contestTypeId = result.getLongItem(resultIndex, "contest_type_id");
+            Boolean isStudio = (result.getIntItem(resultIndex, "is_studio") == 1);
+
+            long originatorId = Long.parseLong(result.getStringItem(resultIndex, "user_id"));
+            String originatorHandle = result.getStringItem(resultIndex, "user");
+            Timestamp date = result.getTimestampItem(resultIndex, "activity_time");
+
+
+            // Sets up the direct project
+            final ProjectBriefDTO project;
+
+            if (!directProjectsMap.containsKey(tcDirectProjectId)) {
+                project = createProject(tcDirectProjectId, tcDirectProjectName);
+                directProjectsMap.put(tcDirectProjectId, project);
+            } else {
+                project = directProjectsMap.get(tcDirectProjectId);
+            }
+
+            final TypedContestBriefDTO contest;
+            if (contestsMap.containsKey(contestId)) {
+                contest = contestsMap.get(contestId);
+            } else {
+                contest = createTypedContest(contestId, contestName, project, ContestType.forIdAndFlag(contestTypeId, isStudio), null, !isStudio);//here
+                contestsMap.put(contestId, contest);
+            }
+
+            ActivityType activityType = ActivityType.forName(activityTypeText);
+            ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
+
+            return activity;
     }
 
     /**
      * <p>Gets the details on upcoming activities on projects associated with specified user.</p>
      *
-     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
-     * upcoming activities. Current implementation uses mock data.</p>
+     * <p>Updates in version 2.5.0:
+     * - Add a new query into for query direct_upcoming_activities, and set it to 0 to represents getting upcoming
+     * activities of all the direct projects the user has access to or created.
+     * - Refactoring the upcoming activity creation into the helper method for reuse.
+     * </p>
      *
      * @param userId a <code>long</code> providing the user to get the upcoming activities on associated projects for.
      * @param days an <code>int</code> providing the number of days from current time for selecting activities.
@@ -460,51 +499,122 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_upcoming_activities");
+        request.setProperty("tcdirectid", "0");
         request.setProperty("uid", String.valueOf(userId));
         request.setProperty("days", String.valueOf(days));
 
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
-        final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();//here
+        final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();
         final List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
-            String activityTypeText = resultContainer.getStringItem(i, "activity_type");
-            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
-            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
-            long contestId = resultContainer.getLongItem(i, "contest_id");
-            String contestName = resultContainer.getStringItem(i, "contest_name");
-            long originatorId = Long.parseLong(resultContainer.getStringItem(i, "user_id"));
-            String originatorHandle = resultContainer.getStringItem(i, "user");
-            Timestamp date = resultContainer.getTimestampItem(i, "activity_time");
-            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
 
-            final ProjectBriefDTO project;
-            if (!projects.containsKey(tcDirectProjectId)) {
-                project = createProject(tcDirectProjectId, tcDirectProjectName);
-                projects.put(tcDirectProjectId, project);
-            } else {
-                project = projects.get(tcDirectProjectId);
-            }
+            ActivityDTO activity = createUpcomingActivity(resultContainer, i, projects, contests);
 
-	    
-            TypedContestBriefDTO contest;
-            if (contests.containsKey(contestId)) {
-                contest = contests.get(contestId);
-            } else {
-                contest = createTypedContest(contestId, contestName, project, null, null, !isStudio);
-                contests.put(contestId, contest);
-            }
-
-            ActivityType activityType = ActivityType.forName(activityTypeText);
-            ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
             activities.add(activity);
         }
 
         UpcomingActivitiesDTO result = new UpcomingActivitiesDTO();
         result.setActivities(activities);
         return result;
+    }
+
+    /**
+     * <p>
+     * Gets te details on upcoming activities of the specified direct project and specified user.
+     * </p>
+     *
+     * @param userId userId a <code>long</code> providing the user to get the upcoming activities on associated projects for.
+     * @param projectId a <code>long</code> providing the id of the direct project.
+     * @param days  days an <code>int</code> providing the number of days from current time for selecting activities.
+     * @return an <code>UpcomingActivitiesDTO</code> providing the details on upcoming activities on specified direct
+     *  project.
+     * @throws Exception if an unexpected error occurs while communicating to persistent data store.
+     * @since 2.5.0 (Cockpit Performance Improvement Project Overview and Manage Copilot Posting)
+     */
+    public static UpcomingActivitiesDTO getUpcomingActivitiesForProject(long userId, long projectId, int days) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+        // initialize the request
+        Request request = new Request();
+        request.setContentHandle("direct_upcoming_activities");
+        // set the query input value tcdirectid with the specified direct project id
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("days", String.valueOf(days));
+
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+        final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();
+        final List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities");
+
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+
+            ActivityDTO activity = createUpcomingActivity(resultContainer, i, projects, contests);
+
+            activities.add(activity);
+        }
+
+        UpcomingActivitiesDTO result = new UpcomingActivitiesDTO();
+        result.setActivities(activities);
+        return result;
+    }
+
+
+    /**
+     * Helper method to get data from result of query 'direct_upcoming_activities' and instantiate an ActivityDTO
+     * instance to represent upcoming activity and return it as result.
+     *
+     *
+     * @param result the ResultSetContainer returned by running the query
+     * @param resultIndex the index to retrieve the result row
+     * @param directProjectsMap the map to store direct projects
+     * @param contestsMap the map to store the contests
+     * @return the instantiated ActivityDTO instance
+     * @since 2.5.0 - (Cockpit Performance Improvement Project Overview and Manage Copilot Posting Assembly)
+     */
+    private static ActivityDTO createUpcomingActivity(ResultSetContainer result, int resultIndex, Map<Long,
+            ProjectBriefDTO> directProjectsMap, Map<Long, TypedContestBriefDTO> contestsMap) {
+
+        String activityTypeText = result.getStringItem(resultIndex, "activity_type");
+        long tcDirectProjectId = result.getLongItem(resultIndex, "tc_direct_project_id");
+        String tcDirectProjectName = result.getStringItem(resultIndex, "tc_direct_project_name");
+        long contestId = result.getLongItem(resultIndex, "contest_id");
+        String contestName = result.getStringItem(resultIndex, "contest_name");
+        Boolean isStudio = (result.getIntItem(resultIndex, "is_studio") == 1);
+
+        long originatorId = Long.parseLong(result.getStringItem(resultIndex, "user_id"));
+        String originatorHandle = result.getStringItem(resultIndex, "user");
+        Timestamp date = result.getTimestampItem(resultIndex, "activity_time");
+
+
+        // Sets up the direct project
+        final ProjectBriefDTO project;
+
+        if (!directProjectsMap.containsKey(tcDirectProjectId)) {
+            project = createProject(tcDirectProjectId, tcDirectProjectName);
+            directProjectsMap.put(tcDirectProjectId, project);
+        } else {
+            project = directProjectsMap.get(tcDirectProjectId);
+        }
+
+        // set up the contest
+        final TypedContestBriefDTO contest;
+        if (contestsMap.containsKey(contestId)) {
+            contest = contestsMap.get(contestId);
+        } else {
+            contest = createTypedContest(contestId, contestName, project, null, null, !isStudio);
+            contestsMap.put(contestId, contest);
+        }
+
+        ActivityType activityType = ActivityType.forName(activityTypeText);
+        ActivityDTO activity = createActivity(contest, date, originatorHandle, originatorId, activityType);
+
+        return activity;
     }
 
     /**
@@ -709,6 +819,10 @@ public class DataProvider {
      * Gets the stats on specified project.
      * </p>
      *
+     * <p>Update notes in version 2.5.0:
+     * Update to use a new simplified query 'direct_project_overview_statistics' to improvement the performance.
+     * </p>
+     *
      * @param projectId a <code>long</code> providing the ID for requested project.
      * @return a <code>ProjectStatsDTO</code> providing the stats for requested project.
      */
@@ -724,11 +838,11 @@ public class DataProvider {
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_contests");
+        request.setContentHandle("direct_project_overview_statistics");
         request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
         request.setProperty("tcdirectid", String.valueOf(projectId));
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_project_overview_statistics");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
              String statusName = resultContainer.getStringItem(i, "status");
@@ -791,10 +905,13 @@ public class DataProvider {
     /**
      * <p>Gets the details on latest activities on contests associated with specified project.</p>
      *
-     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
-     * latest activities. Current implementation uses mock data.</p>
+     * <p>
+     * Updates in version 2.5.0: Remove the logic of calling of getLatestActivitiesForUserProjects and filter by
+     * direct project id. This causes performance issue. In the new implementation, the direct project id is set as
+     * input of the query to improve the performance.
+     * .</p>
      *
-     * @param userId a <code>long</code> porividing the user ID.
+     * @param userId a <code>long</code> providing the user ID.
      * @param projectId a <code>long</code> providing the ID for project to get the latest activities on associated
      *        contests for.
      * @return an <code>LatestProjectActivitiesDTO</code> providing the details on latest activities on contests
@@ -803,33 +920,79 @@ public class DataProvider {
      */
     public static LatestProjectActivitiesDTO getLatestActivitiesForProject(long userId, long projectId)
         throws Exception {
-        // TODO : this is temporary implementation
-        LatestActivitiesDTO data = getLatestActivitiesForUserProjects(userId, 15);
-        Map<ProjectBriefDTO, List<ActivityDTO>> map = data.getActivities();
-        Iterator<ProjectBriefDTO> dtoIterator = map.keySet().iterator();
-        Map<ContestBriefDTO, List<ActivityDTO>> activities = new HashMap<ContestBriefDTO, List<ActivityDTO>>();
-        while (dtoIterator.hasNext()) {
-            ProjectBriefDTO project = dtoIterator.next();
-            if (project.getId() == projectId) {
-                List<ActivityDTO> list = map.get(project);
-                for (ActivityDTO a : list) {
-                    List<ActivityDTO> d;
-                    ContestBriefDTO c = a.getContest();
-                    if (!activities.containsKey(c)) {
-                        d = new ArrayList<ActivityDTO>();
-                        activities.put(c, d);
-                    } else {
-                        d = activities.get(c);
-                    }
-                    d.add(a);
-                }
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_latest_activities");
+
+        // set the value of direct project id
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+        request.setProperty("uid", String.valueOf(userId));
+
+        // get the activities of last 15 days
+        request.setProperty("days", "15");
+
+        final Map<ContestBriefDTO, List<ActivityDTO>> activities = new HashMap<ContestBriefDTO, List<ActivityDTO>>();
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+        final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities");
+        final int recordNum = resultContainer.size();
+
+        for (int i = 0; i < recordNum; i++) {
+            ActivityDTO activity = createLatestActivity(resultContainer, i, projects, contests);
+
+            List<ActivityDTO> contestActivities;
+
+            if (activities.containsKey(activity.getContest())) {
+                contestActivities = activities.get(activity.getContest());
+            } else {
+                contestActivities = new ArrayList<ActivityDTO>();
+                activities.put(activity.getContest(), contestActivities);
             }
+
+            contestActivities.add(activity);
         }
 
+        // sort the activities via activity date
+        for (List<ActivityDTO> la : activities.values()) {
+            Collections.sort(la, new Comparator<ActivityDTO>() {
+                public int compare(ActivityDTO e1, ActivityDTO e2) {
+                    return -e1.getDate().compareTo(e2.getDate());
+                }
+            });
+        }
+
+        // sort the map by contest's latest activity date
+        List<Map.Entry<ContestBriefDTO, List<ActivityDTO>>> list =
+                new LinkedList<Map.Entry<ContestBriefDTO, List<ActivityDTO>>>(activities.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<ContestBriefDTO, List<ActivityDTO>>>() {
+            public int compare(Map.Entry<ContestBriefDTO, List<ActivityDTO>> o1, Map.Entry<ContestBriefDTO, List<ActivityDTO>> o2) {
+                ActivityDTO a1 = o1.getValue().get(0);
+                ActivityDTO a2 = o2.getValue().get(0);
+
+                if (a1 == null || a2 == null) return 0;
+                else {
+                    return -a1.getDate().compareTo(a2.getDate());
+                }
+
+            }
+        });
+
+        Map<ContestBriefDTO, List<ActivityDTO>> sortedActivities = new LinkedHashMap<ContestBriefDTO, List<ActivityDTO>>();
+
+        for (Map.Entry<ContestBriefDTO, List<ActivityDTO>> e : list) {
+            sortedActivities.put(e.getKey(), e.getValue());
+        }
+
+
         LatestProjectActivitiesDTO dto = new LatestProjectActivitiesDTO();
-        dto.setActivities(activities);
+        dto.setActivities(sortedActivities);
+
         return dto;
     }
+
 
     /**
      * <p>Gets the details on contests associated with the specified project.</p>
@@ -1874,60 +2037,66 @@ public class DataProvider {
     /**
      * <p>Gets the list of <code>Copilot Posting</code> </p>
      *
+     * <p>Updates in version 2.5.0:
+     * Use the new query 'direct_my_copilot_postings' to get the copilot postings of the user.
+     * </p>
+     *
      * @param user a <code>TCSubject</code> referencing the user.
      * @return a <code>List</code> of <code>Copilot Posting</code> contests accessible to specified user.
      * @throws Exception if an unexpected error occurs.
-     * @since 2.1.7 
+     * @since 2.1.7
      */
     public static List<PhasedContestDTO> getCopilotPostingContests(TCSubject user) throws Exception {
-        StringBuilder contestIds = new StringBuilder();
         List<PhasedContestDTO> result = new ArrayList<PhasedContestDTO>();
-        List<DashboardContestSearchResultDTO> contests = searchUserContests(user, null, null, null);
-        for (DashboardContestSearchResultDTO contest : contests) {
-            if (ContestType.COPILOT_POSTING.getName().equals(contest.getContestType())) {
-                PhasedContestDTO dto = new PhasedContestDTO();
-                dto.setId(contest.getContest().getId());
-                dto.setContestType(ContestType.COPILOT_POSTING);
-                dto.setProject(contest.getContest().getProject());
-                dto.setSoftware(true);
-                dto.setStatus(contest.getStatus());
-                dto.setTitle(contest.getContest().getTitle());
+        Map<Long, ProjectBriefDTO> directProjects = new HashMap<Long, ProjectBriefDTO>();
 
-                result.add(dto);
-                if (contestIds.length() > 0) {
-                    contestIds.append(", ");
-                }
-                contestIds.append(contest.getContest().getId());
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+        Request request = new Request();
+        request.setContentHandle("direct_my_copilot_postings");
+        request.setProperty("uid", String.valueOf(user.getUserId()));
+
+        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+
+        final ResultSetContainer copilotPostings = results.get("direct_my_copilot_postings");
+
+        for (ResultSetContainer.ResultSetRow cp : copilotPostings) {
+
+            PhasedContestDTO dto = new PhasedContestDTO();
+
+            long contestId = cp.getLongItem("contest_id");
+            String contestName = cp.getStringItem("contest_name");
+            long directProjectId = cp.getLongItem("tc_direct_project_id");
+            String directProjectName = cp.getStringItem("tc_direct_project_name");
+            String contestStatus = cp.getStringItem("status");
+            String currentPhaseName = cp.getStringItem("current_phase_name");
+
+            ProjectBriefDTO project;
+
+            // check if we have the direct project initialized
+            if (directProjects.containsKey(directProjectId)) {
+                project = directProjects.get(directProjectId);
+            } else {
+                project = new ProjectBriefDTO();
+                project.setId(directProjectId);
+                project.setName(directProjectName);
             }
-        }
 
-        // Get current phases for Copilot Posting contests
-        if (!result.isEmpty()) {
-            DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
 
-            Request request = new Request();
-            request.setContentHandle("current_project_phases");
-            request.setProperty("pids", contestIds.toString());
+            dto.setId(contestId);
+            dto.setContestType(ContestType.COPILOT_POSTING);
+            dto.setProject(project);
+            dto.setSoftware(true);
+            dto.setStatus(ContestStatus.forName(contestStatus));
+            dto.setTitle(contestName);
 
-            Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+            ProjectPhaseDTO phase = new ProjectPhaseDTO();
+            phase.setPhaseName(currentPhaseName);
+            List<ProjectPhaseDTO> currentPhases = new ArrayList<ProjectPhaseDTO>();
+            currentPhases.add(phase);
+            dto.setCurrentPhases(currentPhases);
 
-            // Analyze current and next phases
-            final ResultSetContainer projectPhases = results.get("current_project_phases");
-            for (ResultSetContainer.ResultSetRow row : projectPhases) {
-                long projectId = row.getLongItem("project_id");
-                String phaseTypeName = row.getStringItem("phase_type_name");
-                ProjectPhaseDTO phase = new ProjectPhaseDTO();
-                phase.setPhaseName(phaseTypeName);
-
-                for (PhasedContestDTO contest : result) {
-                    if (contest.getId() == projectId) {
-                        if (contest.getCurrentPhases() == null) {
-                            contest.setCurrentPhases(new ArrayList<ProjectPhaseDTO>());
-                        }
-                        contest.getCurrentPhases().add(phase);
-                    }
-                }
-            }
+            result.add(dto);
         }
 
         return result;
@@ -2837,6 +3006,192 @@ public class DataProvider {
             b.append(id);
         }
         return b.toString();
+    }
+
+    /**
+     * <p>Gets the details on contests associated with the specified project.</p>
+     *
+     * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the details on
+     * project. Current implementation uses mock data.</p>
+     *
+     * @param userId a <code>long</code> providing the ID of a user associated with project.
+     * @param projectId a <code>long</code> providing the ID for project to get the details for associated contests for.
+     * @param cached a flag indicates whether to cache the query result.
+     * @return a <code>ProjectContestsListDTO</code> providing the details on contests associated with specified
+     *         project.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.5.0
+     */
+    public static Map<ContestBriefDTO, ContestHealthDTO> getProjectContestsHealth(long userId, long projectId,
+                                                                                  boolean cached)
+        throws Exception {
+
+        DataAccess dataAccessor;
+
+        if (cached) {
+            dataAccessor = new CachedDataAccess(MaxAge.HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        } else {
+            dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        }
+
+        Request request = new Request();
+        request.setContentHandle("direct_project_overview_contests_health");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+
+        final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_project_overview_contests_health");
+        final int recordNum = resultContainer.size();
+
+        Map<ContestBriefDTO, ContestHealthDTO> contests = new HashMap<ContestBriefDTO, ContestHealthDTO>();
+        for (int i = 0; i < recordNum; i++) {
+
+                ContestHealthDTO contestHealthDTO = new ContestHealthDTO();
+
+                boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+
+                if (isStudio) {
+                    contestHealthDTO.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                } else {
+                    // Evaluate current registration status
+                    double reliabilityTotal = getDouble(resultContainer.getRow(i), "reliability_total");
+                    long registrationPhaseStatus = getLong(resultContainer.getRow(i), "registration_phase_status");
+                    setRegistrationPhaseStatus(contestHealthDTO, reliabilityTotal, registrationPhaseStatus);
+
+                    // Evaluate current phase status
+                    Date currentPhaseEndTime = null;
+                    if (resultContainer.getItem(i, "current_phase_end_time").getResultData() != null) {
+                        currentPhaseEndTime = resultContainer.getTimestampItem(i, "current_phase_end_time");
+                    }
+                    setCurrentPhaseStatus(contestHealthDTO, currentPhaseEndTime);
+
+                    // Evaluate forum activity status
+                    int unAnsweredThreadsCount = getInt(resultContainer.getRow(i), "unanswered_threads");
+                    contestHealthDTO.setUnansweredForumPostsNumber(unAnsweredThreadsCount);
+
+                    // Evaluate review sign-up status
+                    int requiredReviewersCount = getInt(resultContainer.getRow(i), "required_reviewers_count");
+                    int registeredReviewersCount = getInt(resultContainer.getRow(i), "registered_reviewers_count");
+                    long hoursLeft = getInt(resultContainer.getRow(i), "review_hours_left");
+                    setReviewSignupStatus(contestHealthDTO, hoursLeft, requiredReviewersCount,
+                                          registeredReviewersCount);
+
+                    // Evaluate dependencies status
+                    Integer dependenciesCount
+                        = resultContainer.getIntItem(i, "dependencies_count");
+                    Integer incompleteDependenciesCount
+                        = resultContainer.getIntItem(i, "incomplete_dependencies_count");
+
+                    if (dependenciesCount == 0) {
+                        contestHealthDTO.setDependenciesStatus(DependenciesStatus.NO_DEPENDENCIES);
+                    } else if (incompleteDependenciesCount > 0) {
+                        contestHealthDTO.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_NON_SATISFIED);
+                    } else {
+                        contestHealthDTO.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_SATISFIED);
+                    }
+                }
+
+                // Set colors based on evaluated statuses
+                DashboardHelper.setContestStatusColor(contestHealthDTO);
+
+                // Get details for TC Direct Project
+                long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+                String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+
+                final ProjectBriefDTO project;
+                if (projects.containsKey(tcDirectProjectId)) {
+                    project = projects.get(tcDirectProjectId);
+                } else {
+                    project = createProject(tcDirectProjectId, tcDirectProjectName);
+                    projects.put(tcDirectProjectId, project);
+                }
+
+                // Get details for contest
+                long contestId = resultContainer.getLongItem(i, "contest_id");
+                String contestName = resultContainer.getStringItem(i, "contest_name");
+                ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
+
+                // Map contest to health status
+                contests.put(contestBrief, contestHealthDTO);
+        }
+
+        return contests;
+    }
+
+    /**
+     * <p>Sets the specified contest health DTO with status of running phase (Late, Closing, Running).</p>
+     *
+     * @param dto a <code>ContestHealthDTO</code> providing the DTO to be set with current phase status.
+     * @param currentPhaseEndTime a <code>Date</code> providing the end time for current phase or <code>null</code> if
+     *        there is no active phase for contest.
+     * @since 2.5.0
+     */
+    private static void setCurrentPhaseStatus(ContestHealthDTO dto, Date currentPhaseEndTime) {
+        if (currentPhaseEndTime != null) {
+            Date now = new Date();
+            if (now.compareTo(currentPhaseEndTime) > 0) {
+                dto.setCurrentPhaseStatus(RunningPhaseStatus.LATE);
+            } else {
+                long diff = currentPhaseEndTime.getTime() - now.getTime();
+                long hoursLeft = diff / (3600 * 1000);
+                if (hoursLeft < 2) {
+                    dto.setCurrentPhaseStatus(RunningPhaseStatus.CLOSING);
+                } else {
+                    dto.setCurrentPhaseStatus(RunningPhaseStatus.RUNNING);
+                }
+            }
+        }
+    }
+
+    /**
+     * <p>Sets the specified contest health DTO with status of registration phase (Healthy, Poor, Less Than Ideal).</p>
+     *
+     * @param dto a <code>ContestHealthDTO</code> providing the DTO to be set with registration phase status.
+     * @param reliabilityTotal a <code>double</code> providing the total reliability rating for registered users.
+     * @param registrationPhaseStatus a <code>long</code> referencing the current status of registration phase.
+     * @since 2.5.0
+     */
+    private static void setRegistrationPhaseStatus(ContestHealthDTO dto, double reliabilityTotal,
+                                                   long registrationPhaseStatus) {
+        if (registrationPhaseStatus == 2) {
+            if (reliabilityTotal >= 200) {
+                dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+            } else {
+                dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_ACTIVE);
+            }
+        } else if (registrationPhaseStatus == 3) {
+            if (reliabilityTotal >= 200) {
+                dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+            } else if (reliabilityTotal >= 100) {
+                dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_CLOSED);
+            } else {
+                dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_POOR);
+            }
+        }
+    }
+
+    /**
+     * <p>Sets the specified contest health DTO with status of review sign-up (All Filled, Danger, Warning).</p>
+     *
+     * @param dto a <code>ContestHealthDTO</code> providing the DTO to be set with review sign-up status.
+     * @param hoursLeft a <code>long</code> providing the hours left for review phase to complete.
+     * @param requiredReviewersCount an <code>int</code> providing the required number of reviewers for contest.
+     * @param registeredReviewersCount an <code>int</code> providing the actual number of registered reviewers for
+     *        contest.
+     * @since 2.5.0
+     */
+    private static void setReviewSignupStatus(ContestHealthDTO dto, long hoursLeft, int requiredReviewersCount,
+                                              int registeredReviewersCount) {
+        if (requiredReviewersCount > registeredReviewersCount) {
+            if (hoursLeft < 24) {
+                dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_DANGER);
+            } else {
+                dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_WARNING);
+            }
+        } else {
+            dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
+        }
     }
 }
 

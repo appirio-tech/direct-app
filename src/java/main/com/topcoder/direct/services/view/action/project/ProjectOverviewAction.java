@@ -1,27 +1,25 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.dto.ActivityDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectOverviewDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.service.project.ProjectData;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -35,9 +33,18 @@ import com.topcoder.service.project.ProjectData;
  * {@link #execute()} method to set dashboard project data and dashboard contests data.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.0.2 - 	Cockpit Performance Improvement Project Overview and Manage Copilot Posting Change Note
+ * <ul>
+ * <li>Remove the logic of filter out upcoming activities because ProjectOverviewAction new uses the new action preprocessor
+ * <code>UpcomingProjectActivitiesProcessor</code>.</li>
+ * <li>Update the method setDashboardContests to use new method to get contests health data.</code>.</li>
+ * </ul>
+ *
+ * </p>
  * 
  * @author isv, TCSASSEMBLER
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -100,18 +107,6 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             getSessionData().setCurrentSelectDirectProjectID(
                     getSessionData().getCurrentProjectContext().getId());
 
-            // remove irrelevant activities
-            List<ActivityDTO> activities = new ArrayList<ActivityDTO>(viewData
-                    .getUpcomingActivities().getActivities());
-            viewData.getUpcomingActivities().getActivities().clear();
-            for (ActivityDTO activityDTO : activities) {
-                if (activityDTO.getContest().getProject().getId() == formData
-                        .getProjectId()) {
-                    viewData.getUpcomingActivities().getActivities().add(
-                            activityDTO);
-                }
-            }
-            
             try {
                 // set dashboard project status
                 setDashboardProjectStat();
@@ -134,6 +129,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      * @throws Exception if any exception occurs
      */
     private void setDashboardProjectStat() throws Exception {
+
         List<ProjectData> tcDirectProjects = new ArrayList<ProjectData>();
         ProjectData projectData = new ProjectData();
         projectData.setProjectId(formData.getProjectId());
@@ -147,30 +143,20 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
     /**
      * Set dashboard contests data.
-     * 
+     * <p/>
+     * <p>Updated in 1.0.2: use DateProvider.getProjectContestsHealth to get contest health data of all the active
+     * and scheduled contests of this project.</p>
+     *
      * @throws Exception if any exception occurs
      */
     private void setDashboardContests() throws Exception {
-        Map<ContestBriefDTO, ContestDashboardDTO> contests = new HashMap<ContestBriefDTO, ContestDashboardDTO>();
-        ContestDashboardDTO contest;
 
-        ProjectContestsListDTO projectContestsListDTO = DataProvider
-                .getProjectContests(getSessionData().getCurrentUserId(),
-                        formData.getProjectId());
-        for (ProjectContestDTO projectContest : projectContestsListDTO
-                .getContests()) {
-            // just call all running and scheduled contest's query
-            if (DashboardHelper.SCHEDULED.equalsIgnoreCase(projectContest.getStatus().getShortName())
-                    || DashboardHelper.RUNNING.equalsIgnoreCase(projectContest.getStatus().getShortName())) {
-                contest = DataProvider.getContestDashboardData(projectContest
-                        .getContest().getId(), projectContest.getIsStudio(), true);
-
-                DashboardHelper.setContestStatusColor(contest);
-                contests.put(projectContest.getContest(), contest);
-            }
-        }
+         Map<ContestBriefDTO, ContestHealthDTO> contests =
+            DataProvider.getProjectContestsHealth(getSessionData().getCurrentUserId(), formData.getProjectId(), true);
+        viewData.setContests(contests);
 
         viewData.setContests(contests);
+
     }
 
 }

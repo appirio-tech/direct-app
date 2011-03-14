@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
 import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
 import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
@@ -15,9 +15,18 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  * <p>
  * A utility class used to provide some help methods.
  * </p>
- * 
- * @author TCSASSEMBLER
- * @version 1.0.0 (From Direct - Project Dashboard Assembly)
+ *
+ * <p>
+ * Version 1.1 (Cockpit Performance Improvement Project Overview and Manage Copilot Posting Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #setContestStatusColor(ContestHealthDTO)} and
+ *     {@link #hasSpecifiedColor(ContestHealthDTO, DashboardStatusColor)} methods to accept parameters of
+ *     {@link ContestHealthDTO} type instead of <code>ContestDashboardDTO</code> type.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author TCSDEVELOPER
+ * @version 1.1 (From Direct - Project Dashboard Assembly)
  */
 public class DashboardHelper {
     /**
@@ -38,11 +47,11 @@ public class DashboardHelper {
 
     /**
      * Set color for each status and contest.
-     * 
+     *
      * @param contest
      *            the contest
      */
-    public static void setContestStatusColor(ContestDashboardDTO contest) {
+    public static void setContestStatusColor(ContestHealthDTO contest) {
         // set phase status color
         if (contest.getCurrentPhaseStatus() == RunningPhaseStatus.RUNNING) {
             contest.setPhaseStatusColor(DashboardStatusColor.GREEN);
@@ -102,14 +111,14 @@ public class DashboardHelper {
 
     /**
      * Judge whether the contest has specified color.
-     * 
+     *
      * @param contest
      *            the contest to judge
      * @param color
      *            the color to judge
      * @return whether the contest contains this color
      */
-    private static boolean hasSpecifiedColor(ContestDashboardDTO contest,
+    private static boolean hasSpecifiedColor(ContestHealthDTO contest,
             DashboardStatusColor color) {
         if (contest.getPhaseStatusColor() == color
                 || contest.getRegStatusColor() == color
@@ -123,7 +132,7 @@ public class DashboardHelper {
 
     /**
      * Set average contest duration text.
-     * 
+     *
      * @param project the project to set
      */
     public static void setAverageConestDurationText(
@@ -131,7 +140,7 @@ public class DashboardHelper {
         StringBuilder stringBuilder = new StringBuilder();
         double time = project.getAverageContestDuration();
         time /= 24;
-        
+
         if (time >= 1) {
             if (time >= 2) {
                 stringBuilder.append((int) time + " days ");

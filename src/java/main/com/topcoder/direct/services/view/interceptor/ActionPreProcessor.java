@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010,2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.interceptor;
 
@@ -19,20 +19,13 @@ import com.topcoder.direct.services.view.action.project.ProjectContestsAction;
 import com.topcoder.direct.services.view.action.project.ProjectOverviewAction;
 import com.topcoder.direct.services.view.action.project.SetCurrentProjectAction;
 import com.topcoder.direct.services.view.action.project.ProjectGamePlanAction;
-import com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction;
 import com.topcoder.direct.services.view.processor.ProcessorsGroup;
 import com.topcoder.direct.services.view.processor.RequestProcessor;
 import com.topcoder.direct.services.view.processor.UserProjectsProcessor;
 import com.topcoder.direct.services.view.processor.contest.ContestDetailsProcessor;
 import com.topcoder.direct.services.view.processor.contest.ContestStatsProcessor;
 import com.topcoder.direct.services.view.processor.dashboard.DashboardSearchProcessor;
-import com.topcoder.direct.services.view.processor.project.CreateProjectProcessor;
-import com.topcoder.direct.services.view.processor.project.CurrentProjectContestsProcessor;
-import com.topcoder.direct.services.view.processor.project.LatestActivitiesProcessor;
-import com.topcoder.direct.services.view.processor.project.LatestProjectActivitiesProcessor;
-import com.topcoder.direct.services.view.processor.project.ProjectContestsListProcessor;
-import com.topcoder.direct.services.view.processor.project.ProjectStatsProcessor;
-import com.topcoder.direct.services.view.processor.project.UpcomingActivitiesProcessor;
+import com.topcoder.direct.services.view.processor.project.*;
 import com.topcoder.direct.services.view.processor.security.LoginProcessor;
 import com.topcoder.direct.services.view.processor.stats.CoPilotStatsProcessor;
 import com.topcoder.direct.services.view.processor.stats.TopCoderDirectFactsProcessor;
@@ -57,9 +50,15 @@ import com.topcoder.direct.services.view.processor.stats.TopCoderDirectFactsProc
  *     <li>Makes the login processor configurable, in order to support mockup user authentication.</li>
  *   </ul>
  * </p>
+ * <p>Version 1.3 (Cockpit Performance Improvement Project Overview and Manage Copilot Posting) change notes:
+ *   <ul>
+ *     <li>Change <code>UpcomingActivitiesProcessor</code> to <code>UpcomingProjectActivitiesProcessor.</code>
+ *  </li>
+ *   </ul>
+ * </p>
  *
- * @author isv
- * @version 1.2
+ * @author isv, Blues
+ * @version 1.3
  */
 public class ActionPreProcessor implements Interceptor {
 
@@ -140,7 +139,9 @@ public class ActionPreProcessor implements Interceptor {
     /**
      * <p>Gets the request processor for handling the request mapped to specified action.</p>
      *
-     * <p>Sub-sequent assemblies must implement this method accordingly.</p>
+     * <p> Updates in version 1.3:
+     * Replace the usage of UpcomingActivitiesProcessor to UpcomingProjectActivitiesProcessor for ProjectOverviewAction
+     * </p>
      *
      * @param action an <code>AbstractAction</code> representing the current action mapped to incoming request which is
      *        to be executed.
@@ -176,7 +177,7 @@ public class ActionPreProcessor implements Interceptor {
         } else if (action instanceof ForwardAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
         } else if (action instanceof ProjectOverviewAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new UpcomingActivitiesProcessor(),
+            return new ProcessorsGroup(new RequestProcessor[] {new UpcomingProjectActivitiesProcessor(),
                                                                new LatestProjectActivitiesProcessor(),
                                                                new ProjectStatsProcessor(),
                                                                new UserProjectsProcessor()});
