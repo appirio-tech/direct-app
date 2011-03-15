@@ -179,7 +179,6 @@
         <copy file="${file_upload.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${shared.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${tcwebcommon.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${file_upload.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
         <!-- third-party libs -->
         <copy file="${asm.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
