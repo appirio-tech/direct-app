@@ -681,6 +681,7 @@
     <pathelement location="${cockpit_facade_util.jar}" />
     <pathelement location="${specification_review_service.jar}" />
     <pathelement location="${specification_review_comment_service.jar}" />
+    <pathelement location="${file_upload.jar}" />
   </path>
 
   <path id="component.3rdParty-dependencies">
