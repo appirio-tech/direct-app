@@ -5060,3 +5060,10 @@ Contest links
     clear: both;
     height: 0px;
 }
+
+.preferenceItem {
+    padding-left:5px;
+    font-size:12px;
+}
+
+

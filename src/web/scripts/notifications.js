@@ -96,6 +96,36 @@ if (!window.notifications) var notifications = {
     }
 };
 
+function savePreference() {
+    var request = {
+        userPreferences: []
+    };
+    
+    $('#preDiv input').each(function(index, item) {
+        var id = $(item).attr('name').substring('pre_'.length);
+        var value = $(item).attr('checked');
+        
+        request.userPreferences[index] = {
+            preferenceId: parseInt(id),
+            value: value
+        };
+    });
+    
+    $('#loading').show();
+    
+    $.ajax({
+        type: 'POST',
+        url:'preference/updatePreferences',
+        data: request,
+        dataType: "json",
+        cache:false,
+        success:function(r) {
+            $('#loading').hide();
+        }
+    });
+    
+}
+
 /*
 $(document).ready(function() {
     $('#loading').hide();

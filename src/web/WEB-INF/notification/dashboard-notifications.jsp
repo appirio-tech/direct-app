@@ -127,16 +127,52 @@
                             </div>
 							<div class="areaHeader">
 								<h2 class="title notificationTitle">Notifications Setting</h2>
-                                                        <div class="select">
-                                                            Select a Setting Panel:
-                                                            <span name="settingPanel">
-                                                                <select name="select" onchange="changepn(this.value)">
-                                                    <option value="noti">Notifications</option>
-                                                                    <option value="perm">Permissions</option>
-                                                            </select>
-                                                        </span>
-                                                        </div>
-                                                </div><!-- End .areaHeader -->
+                                    <div class="select">
+                                        Select a Setting Panel:
+                                        <span name="settingPanel">
+                                            <select name="select" onchange="changepn(this.value)">
+                                                <option value="noti">Notifications</option>
+                                                <option value="perm">Permissions</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                            </div><!-- End .areaHeader -->
+                                                
+                            <div class="activity">
+                                <table width="100%" cellspacing="0" cellpadding="0" id="preferenceTable" class="project">
+                                    <thead>
+                                    <tr class=" ">
+                                        <th colspan="5">
+                                            <span class="left"><span class="right">Preference to Receive Notifications for Forums and Timeline Changes</span></span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <div class="container2">
+                                    <div class="container2Left">
+                                        <div class="container2Right">
+                                            <div class="container2BottomClear">
+                                                <div class="container2Content" id="preDiv">       
+                                                    <c:forEach items="${preferences}" var="pre">
+                                                        <div>
+                                                            <input type="checkbox" name="pre_${pre.preferenceId}" ${pre.value ? 'checked="checked"' : ''}></input>
+                                                            <span class="preferenceItem">${pre.desc}</span>
+                                                        </div>                                                        
+                                                    </c:forEach>
+                                                    
+                                                    
+                                                    <div class="panel2"><a class="button9" href="javascript:savePreference();" id="savePreferenceButton">Save Preference</a></div>
+                                                </div>                                            
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <!-- End .tableFooterLeft -->
+                                </div>
+                                <!-- End .tableFooter -->
+                            </div>      
+
+                            <div class="line"></div>                            
 
 							<div class="container2">
 							<div class="container2Left"><div class="container2Right"><div class="container2Bottom">

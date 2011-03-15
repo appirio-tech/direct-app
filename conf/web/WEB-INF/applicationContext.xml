@@ -183,6 +183,22 @@
         </constructor-arg>
     </bean>
 
+     <bean id="userPreferenceHome" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="com.topcoder.web.ejb.user.UserPreferenceHome"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="true"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">@userBeanProviderUrl@</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.web.ejb.user.UserPreferenceHome"/>
+    </bean>        
+
     <!-- AuthenticationInterceptor -->
     <bean id="authenticationInterceptor"
           class="com.topcoder.direct.services.view.interceptors.AuthenticationInterceptor">
@@ -223,6 +239,7 @@
         <property name="studioService" ref="studioService"/>
         <property name="projectServices" ref="projectServices"/>
         <property name="specificationReviewService" ref="specificationReviewService"/>
+        <property name="userPreferenceHome" ref="userPreferenceHome"/>
     </bean>
 
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
@@ -597,5 +614,10 @@
           class="com.topcoder.direct.services.view.action.contest.DownloadSoftwareSubmissionAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
+    </bean>
+
+     <bean id="updateUserPreferencesAction"
+      class="com.topcoder.direct.services.view.action.notification.UpdateUserPreferencesAction"
+      scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 </beans>

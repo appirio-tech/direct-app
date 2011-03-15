@@ -32,6 +32,7 @@ import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.ejb.user.UserPreferenceHome;
 
 /**
  * <p>
@@ -178,6 +179,11 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * </p>
      */
     private ReferenceDataBean referenceDataBean;
+    
+    /**
+     * Represents the user preference home ejb object. It has getter & setter. Can be any value.
+     */
+    private UserPreferenceHome userPreferenceHome;
 
     /**
      * <p>
@@ -581,4 +587,23 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
             SpecificationReviewService specificationReviewService) {
         this.specificationReviewService = specificationReviewService;
     }
+
+    /**
+     * Get the userPreferenceHome field.
+     *
+     * @return the userPreferenceHome
+     */
+    public UserPreferenceHome getUserPreferenceHome() {
+        return userPreferenceHome;
+    }
+
+    /**
+     * Set the userPreferenceHome field.
+     *
+     * @param userPreferenceHome the userPreferenceHome to set
+     */
+    public void setUserPreferenceHome(UserPreferenceHome userPreferenceHome) {
+        this.userPreferenceHome = userPreferenceHome;
+    }
+
 }

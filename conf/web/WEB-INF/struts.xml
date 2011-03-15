@@ -627,5 +627,12 @@
         <action name="createProject" class="createProjectAction">
             <result type="json" />
         </action>
+    </package>    
+    
+    <package name="preference" namespace="/preference" extends="base">                         
+        <action name="updatePreferences" class="updateUserPreferencesAction">
+            <result type="json" />
+        </action>            
     </package>
+
 </struts>
