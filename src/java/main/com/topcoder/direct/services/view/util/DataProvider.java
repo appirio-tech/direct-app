@@ -1159,14 +1159,14 @@ public class DataProvider {
     public static List<TypedContestBriefDTO> getProjectTypedContests(long userId, long projectId) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_contests");
+        request.setContentHandle("direct_my_typed_contests");
         request.setProperty("uid", String.valueOf(userId));
         request.setProperty("tcdirectid", String.valueOf(projectId));
 
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final List<TypedContestBriefDTO> contests = new ArrayList<TypedContestBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_typed_contests");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -1174,7 +1174,6 @@ public class DataProvider {
             long contestId = resultContainer.getLongItem(i, "contest_id");
             String contestName = resultContainer.getStringItem(i, "contest_name");
             String statusName = resultContainer.getStringItem(i, "status");
-            String typeName = resultContainer.getStringItem(i, "contest_type");
 
             //TODO, this is to not affecting existing VMs, will change later
             long contestTypeId = 1;
