@@ -2498,6 +2498,17 @@ A{
     margin-right: 10px;
 }
 
+.bcbottom1 {
+    float:right;
+    font-size: 12px;
+    /*left: -115px;*/
+    right: 180px;
+    position:relative;
+    width:auto;
+	  *top:-4px;
+    margin-right: 10px;
+}
+
 .bottom2 {
     float:right;
     font-size: 12px;
@@ -2508,6 +2519,18 @@ A{
     width:15%;
     *margin-top: 0px;
     *top:25px;
+}
+
+.bcbottom2 {
+    float:right;
+    font-size: 12px;
+    left: 120px;
+    position:relative;
+    margin-top: 15px;
+    margin-left: 15px;
+    width:15%;
+    *margin-top: 0px;
+    *top:12px;
 }
 
 .dataTables_info {
@@ -4437,6 +4460,11 @@ hr.plain {
     font-size: 14px;
 }
 
+#billingCostDetails th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+
 #contestFilter {
     margin-top: 20px;
 }
@@ -4447,24 +4475,24 @@ hr.plain {
     float: left;
 }
 
-TABLE.pipelineStats {
+TABLE.pipelineStats, TABLE.billingCostReport  {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 15px;
     border: 1px solid #bdbdbd;
 }
 
-TABLE.pipelineStats TH {
+TABLE.pipelineStats TH, TABLE.billingCostReport TH {
     color: #FFF;
     font-size: 11px;
     height: 33px;
 }
 
-TABLE.pipelineStats TH.tableTitle {
+TABLE.pipelineStats TH.tableTitle, TABLE.billingCostReport TH.tableTitle {
     background: transparent url(../images/calendar_header.png) repeat-x;
 }
 
-TABLE.pipelineStats TH.first {
+TABLE.pipelineStats TH.first, TABLE.billingCostReport TH.first  {
     border-left: 1px solid #37302d;
 }
 
@@ -4476,48 +4504,56 @@ TABLE.pipelineStats TD {
     width: 10%;
 }
 
-TABLE.pipelineStats TD.date {
+TABLE.billingCostReport TD {
+    font-size: 11px;
+    text-align: center;
+    padding: 5px 0;
+    border: 1px solid #a8abad;
+    width: 7.5%;
+}
+
+TABLE.pipelineStats TD.date, TABLE.billingCostReport TD.date  {
     font-size: 11px;
     font-weight: normal;
     width: 14%;
 }
 
-TABLE.pipelineStats TD.fees {
+TABLE.pipelineStats TD.fees, TABLE.billingCostReport TD.fees {
     width: 20%;
     font-size: 11px;
 }
 
-TABLE.pipelineStats TD.fees P {
+TABLE.pipelineStats TD.fees P, TABLE.billingCostReport TD.fees P {
     margin: 0 0 4px 0;
 }
 
-TABLE.pipelineStats TR.even TD {
+TABLE.pipelineStats TR.even TD, TABLE.billingCostReport TR.even TD {
     background-color: #F3F3F3;
 }
 
-TABLE.pipelineStats TR.noStrips TD {
+TABLE.pipelineStats TR.noStrips TD, TABLE.billingCostReport TR.noStrips TD {
     background-color: #FFFFFF !important;
 }
 
-TABLE.pipelineStats TD.checkbox {
+TABLE.pipelineStats TD.checkbox, TABLE.billingCostReport TD.checkbox  {
     width: 4%;
 }
 
-TABLE.pipelineStats TH INPUT {
+TABLE.pipelineStats TH INPUT, TABLE.billingCostReport TH INPUT {
     width: 13px;
     height: 13px;
 }
 
-TABLE.pipelineStats TR.alt TD{
+TABLE.pipelineStats TR.alt TD, TABLE.billingCostReport TR.alt TD {
 	background-color: #F3F3F3;
 }
 
-TABLE.pipelineStats TR.total TD{
+TABLE.pipelineStats TR.total TD, TABLE.billingCostReport TR.total TD {
 	background-color: #CCC8C9;
     font-weight: bold;
 }
 
-TABLE.pipelineStats TH.tableColumn {
+TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
 	background-color: #CCC8C9;
 	color: #000;
 }
@@ -4530,11 +4566,19 @@ TABLE.pipelineStats TH.tableColumn {
     background: url(../images/container2_bottom.png) repeat-x bottom;
 }
 
+#billingCostReportSection {
+    background: url(../images/container2_bottom.png) repeat-x bottom;
+}
+
 #pipelineDetails {
     margin-bottom: 0px;
 }
 
 #costDetails {
+    margin-bottom: 0px;
+}
+
+#billingCostDetails {
     margin-bottom: 0px;
 }
 
@@ -4546,6 +4590,10 @@ TABLE.pipelineStats TH.tableColumn {
     padding: 8px 50px 8px 0;
 }
 
+#billingCostReportSection div.panel {
+    padding: 8px 50px 8px 0;
+}
+
 #pipelineDetails_length select {
     margin-top: 6px;
 }
@@ -4554,7 +4602,16 @@ TABLE.pipelineStats TH.tableColumn {
     margin-top: 6px;
 }
 
+#billingCostDetails select {
+    margin-top: 6px;
+}
+
 #costReportSection .bottom2 {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#billingCostReportSection .bottom2 {
     margin-top: 10px;
     margin-right: 10px;
 }
@@ -4612,6 +4669,30 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #costReportSection th.tableTitle a.collapse{
+    background: url(../images/icon-collapse.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+
+#billingCostReportSection th.tableTitle a.expand{
+    background: url(../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#ffffff;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+
+#billingCostReportSection th.tableTitle a.collapse{
     background: url(../images/icon-collapse.png) no-repeat left center;
     text-decoration:none;
     font-size:14px;

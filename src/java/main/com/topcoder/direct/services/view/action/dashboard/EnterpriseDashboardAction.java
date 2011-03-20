@@ -1,13 +1,11 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
 import com.topcoder.clients.model.AuditableEntity;
-import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
@@ -65,9 +63,15 @@ import javax.servlet.http.HttpServletRequest;
  *     <li>Added admin attribute.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 1.0.4 (TC Cockpit Billing Cost Report Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Refactor methods which get mappings for client, billing account, and direct projects to DirectUtils</li>
+ *   </ol>
+ * </p>
  * 
- * @author isv, TCSASSEMBLER, xjtufreeman
- * @version 1.0.3
+ * @author isv, xjtufreeman, Blues
+ * @version 1.0.4
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -99,6 +103,9 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
      */
     private EnterpriseDashboardForm formData;
 
+    /**
+     * <p>The direct projects the user has access to.</p>
+     */
     private List<ProjectData> directProjectsData;
 
     /**
@@ -108,7 +115,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
      * @since 1.0.2
      */
     private boolean isAJAX;
-
 
     /**
      * <p>Whether current user is admin or not.</p>
@@ -224,7 +230,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
         getViewData().setProjects(enterpriseProjectStats);
 
-        Map<Long, String> customers = this.getAllClients(currentUser);
+        Map<Long, String> customers = DirectUtils.getAllClients(currentUser);
 
         // Analyze form parameters
         EnterpriseDashboardForm form = getFormData();
@@ -283,7 +289,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
         // set view data for billings
         if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
-            getViewData().setClientBillingProjects(getBillingsForClient(currentUser, getFormData().getCustomerIds()[0]));
+            getViewData().setClientBillingProjects(DirectUtils.getBillingsForClient(currentUser, getFormData().getCustomerIds()[0]));
         } else {
             getViewData().setClientBillingProjects(new HashMap<Long, String>());
         }
@@ -294,12 +300,12 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         // set view data for projects
         if (getFormData().getBillingAccountIds()[0] <= 0) {
             if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
-                getViewData().setProjectsLookupMap(getProjectsForClient(currentUser, getFormData().getCustomerIds()[0]));
+                getViewData().setProjectsLookupMap(DirectUtils.getProjectsForClient(currentUser, getFormData().getCustomerIds()[0]));
             } else {
                 getViewData().setProjectsLookupMap(new HashMap<Long, String>());
             }
         } else {
-            getViewData().setProjectsLookupMap(getProjectsForBilling(currentUser, getFormData().getBillingAccountIds()[0]));
+            getViewData().setProjectsLookupMap(DirectUtils.getProjectsForBilling(currentUser, getFormData().getBillingAccountIds()[0]));
         }
 
         // add the default all for projects
@@ -576,8 +582,8 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         TCSubject currentUser = getCurrentUser();
         Map<String, Object> result = new HashMap<String, Object>();
 
-        result.put("billings", convertMapKeyToString(getBillingsForClient(currentUser, getFormData().getCustomerIds()[0])));
-        result.put("projects", convertMapKeyToString(getProjectsForClient(currentUser, getFormData().getCustomerIds()[0])));
+        result.put("billings", convertMapKeyToString(DirectUtils.getBillingsForClient(currentUser, getFormData().getCustomerIds()[0])));
+        result.put("projects", convertMapKeyToString(DirectUtils.getProjectsForClient(currentUser, getFormData().getCustomerIds()[0])));
         setResult(result);
 
         return SUCCESS;
@@ -593,7 +599,8 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         TCSubject currentUser = getCurrentUser();
         Map<String, Object> result = new HashMap<String, Object>();
 
-        result.put("projects", convertMapKeyToString(getProjectsForBilling(currentUser, getFormData().getBillingAccountIds()[0])));
+        result.put("projects", convertMapKeyToString(DirectUtils.getProjectsForBilling(currentUser,
+                getFormData().getBillingAccountIds()[0])));
         setResult(result);
 
         return SUCCESS;
@@ -1070,82 +1077,18 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         });
     }
 
-    private Map<String, Object> getDashboardClientBillingProjectMappings(TCSubject tcSubject) throws Exception {
-        Map<String, Object> result;
-        HttpServletRequest request = DirectUtils.getServletRequest();
-        Object value = request.getSession().getAttribute("clientBillingProjectMappings");
 
-        if (value == null) {
-            List<ProjectData> tcDirectProjects = getDashboardDirectProjects();
-            result = DataProvider.getDashboardClientBillingProjectMappingsForAdmin(tcSubject, tcDirectProjects);
-            request.getSession().setAttribute("clientBillingProjectMappings", result);
-        } else {
-            result = (Map<String, Object>) value;
-        }
-
-        return result;
-    }
-
-    private Map<Long, String> getBillingsForClient(TCSubject tcSubject, long clientId) throws Exception {
-        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.billing");
-        Map<Long, String> result =  data.get(clientId);
-        if (result == null) {
-            return new HashMap<Long, String>();
-        } else {
-            return new HashMap<Long, String>(result);
-        }
-    }
-
-    private Map<Long, String> getProjectsForClient(TCSubject tcSubject, long clientId) throws Exception {
-        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.project");
-        Map<Long, String> result =  data.get(clientId);
-        if (result == null) {
-            return new HashMap<Long, String>();
-        } else {
-
-
-
-            return new HashMap<Long, String>(result);
-        }
-    }
-
-    private Map<Long, String> getProjectsForBilling(TCSubject tcSubject, long billingId) throws Exception {
-        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("billing.project");
-        Map<Long, String> result =  data.get(billingId);
-        if (result == null) {
-            return new HashMap<Long, String>();
-        } else {
-            return new HashMap<Long, String>(result);
-        }
-    }
-
-    private Map<Long, String> getAllClients(TCSubject tcSubject) throws Exception {
-        return  sortByValue((Map<Long, String>) getDashboardClientBillingProjectMappings(tcSubject).get("clients"));
-    }
-
-    static Map<Long, String> sortByValue(Map<Long, String> map) {
-        List list = new LinkedList<Map.Entry<Long, String>>(map.entrySet());
-        Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue())
-                        .compareTo(((Map.Entry) (o2)).getValue());
-            }
-        });
-
-        Map<Long, String> result = new LinkedHashMap<Long, String>();
-        for (Iterator it = list.iterator(); it.hasNext();) {
-            Map.Entry<Long, String> entry = (Map.Entry<Long, String>) it.next();
-            result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
-    }
-
+    /**
+     * Helper method to convert the key of Map<Long, String> to String, returns a Map<String, String>.
+     *
+     * @param toConvert the map to convert.
+     * @return the converted Map<String, String> instance.
+     */
     static Map<String, String> convertMapKeyToString(Map<Long, String> toConvert) {
         Map<String, String> result = new HashMap<String, String>();
         for(Map.Entry<Long, String> e : toConvert.entrySet()) {
             result.put(String.valueOf(e.getKey()), e.getValue());
         }
-
         return  result;
     }
 

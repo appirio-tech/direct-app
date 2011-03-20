@@ -222,7 +222,11 @@ a.fiterButton{
 }
 
 .filterContest .contestType{
-    width: 190px;
+    width: 200px;
+}
+
+.filterContest .paymentType{
+    width: 140px;
 }
 
 #customerNameFilter{
@@ -306,6 +310,12 @@ a.dp-choose-date { margin-right:0px;}
 	font-size:12px;
 	border:1px solid #a9acae;
     width:178px;
+}
+
+.filterContest .paymentType select{
+	font-size:12px;
+	border:1px solid #a9acae;
+    width:120px;
 }
 
 /* Table Data */

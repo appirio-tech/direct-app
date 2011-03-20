@@ -2,9 +2,11 @@
  * The JS script for Pipeline report.
  *
  * Version 1.1 updates: Toggle report type selection. Two reports are supported: pipeline and cost report.
+ * Version 1.2 updates: Toggle report type selection. Three reports are supported: pipeline ,
+ * cost report and billing cost report.
  *
- * @author isv, TCSDEVELOPER
- * @version 1.1
+ * @author isv, Blues
+ * @version 1.2
  * @since Direct Pipeline Stats Update Assembly
  */
 var ctx = "/direct";
@@ -52,8 +54,10 @@ $(document).ready(function(){
         var reportType = $(this).val();
         if (reportType == 'COST') {
             window.location.href = '/direct/dashboardCostReport';
-        } else if (reportType = 'PIPELINE') {
+        } else if (reportType == 'PIPELINE') {
             window.location.href = '/direct/dashboardReports';
+        } else if (reportType == 'BILLING_COST') {
+           window.location.href = '/direct/dashboardBillingCostReport';
         }
     });
 

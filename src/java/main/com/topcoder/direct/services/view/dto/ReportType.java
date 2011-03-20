@@ -1,15 +1,16 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto;
 
 /**
  * <p>An enumeration over the possible types of reports.</p>
  *
- * Version 1.1: add report type: COST
+ * Version 1.1: add report type: COST - (Direct Cockpit - Cost Report Assembly)
+ * Version 1.2: add report type: BILLING_COST (TC Cockpit Billing Cost Report Assembly )
  *
  * @author TCSDEVELOPER
- * @version 1.1 (Direct Cockpit - Cost Report Assembly)
+ * @version 1.2 (TC Cockpit Billing Cost Report Assembly)
  */
 public enum ReportType {
 
@@ -20,5 +21,9 @@ public enum ReportType {
     /**
      * <p>A <code>ReportType</code> corresponding to <code>Cost</code> report.</p>
      */
-    COST
+    COST,
+    /**
+     * <p>A <code>ReportType</code> corresponding to <code>Billing Cost</code> report.</p>
+     */
+    BILLING_COST
 }

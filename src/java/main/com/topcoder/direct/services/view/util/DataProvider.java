@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -28,6 +28,8 @@ import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
@@ -35,6 +37,7 @@ import com.topcoder.security.RolePrincipal;
 import com.topcoder.service.project.IllegalArgumentFault;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -201,13 +204,24 @@ import com.topcoder.web.common.cache.MaxAge;
  *     performance</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 2.6.0 (TC Cockpit Billing Cost Report Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Rename method getDashboardClientBillingProjectMappingsForAdmin to
+ *      getDashboardClientBillingProjectMappings, because it's not only for admin user. Removes the argument projects
+ *      which is not needed.</li>
+ *     <li>Add method.</li>
+ *   </ol>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues
- * @version 2.5.0
+ * @version 2.6.0
  */
 public class DataProvider {
 
-
+    /**
+     * The suffiex for 'monthly'
+     */
     private static final String MONTHLY_SUFFIX = "_monthly";
     /**
      * <p>Constructs new <code>DataProvider</code> instance. This implementation does nothing.</p>
@@ -2137,12 +2151,15 @@ public class DataProvider {
      * to populate the clients and customers dropdown for admin user. And it's a workaround for now and
      * should be replaced with a more formal approach in the following assembly.
      *
+     * <p>Updates in 2.6.0:
+     * <li>Remove the "ForAdmin" from the method name, and remove the argument projects. The projects list can be
+     * got by calling method getUserProjects(long userId).</li>
+     *
      * @param tcSubject the tcSubject
-     * @param projects  the list of direct projects
      * @return the list of billing projects.
      * @throws Exception if any error occurs.
      */
-    public static Map<String, Object> getDashboardClientBillingProjectMappingsForAdmin(TCSubject tcSubject, List<ProjectData> projects)
+    public static Map<String, Object> getDashboardClientBillingProjectMappings(TCSubject tcSubject)
             throws Exception {
 
         Map<String, Object> result = new HashMap<String, Object>();
@@ -2165,10 +2182,11 @@ public class DataProvider {
                     "admin_client_billing_accounts");
         } else {
             //System.out.println("query non admin...");
+            List<ProjectBriefDTO> projects = getUserProjects(tcSubject.getUserId());
             long[] projectIds = new long[projects.size()];
             int index = 0;
-            for(ProjectData data : projects) {
-                projectIds[index] = data.getProjectId();
+            for(ProjectBriefDTO data : projects) {
+                projectIds[index] = data.getId();
                 index++;
             }
             if (projects.size() > 0) {
@@ -2409,6 +2427,250 @@ public class DataProvider {
 
 
             data.add(costDTO);
+        }
+
+        return data;
+    }
+
+    /**
+     * Gets the billing cost report entries with the given parameters. The method returns a map,
+     * the key is the contest id, the value is a list of billing cost entries.
+     *
+     * @param projectIds the direct project ids.
+     * @param projectCategoryIds the software project category ides.
+     * @param studioProjectCategoryIds the studio project category ids.
+     * @param paymentTypeIds the payment type ids.
+     * @param clientIds the client ids.
+     * @param billingAccountIds the billing accounts ids.
+     * @param projectStatusIds the project status ids.
+     * @param startDate the start date.
+     * @param endDate the end date.
+     * @param statusMapping the mapping of all the contest status.
+     * @param paymentTypesMapping the mapping of all the payment types.
+     * @return the generated cost report.
+     * @throws Exception if any error occurs.
+     * @since 2.5.0
+     */
+    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(long[] projectIds,
+                                                                                           long[] projectCategoryIds,
+                                                                                           long[] studioProjectCategoryIds,
+                                                                                           long[] paymentTypeIds,
+                                                                                           long[] clientIds, long[] billingAccountIds, long[] projectStatusIds, Date startDate, Date endDate,
+                                                                                           Map<String, Long> statusMapping, Map<String, Long> paymentTypesMapping) throws Exception {
+        // create an empty map first to store the result data
+        Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
+
+        if ((projectIds == null) || (projectIds.length == 0)) {
+            return data;
+        }
+        if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
+            return data;
+        }
+
+        if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
+            return data;
+        }
+
+        if (paymentTypeIds == null || paymentTypeIds.length == 0) {
+            return data;
+        }
+
+        if ((clientIds == null) || (clientIds.length == 0)) {
+            return data;
+        }
+        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+            return data;
+        }
+        if (projectStatusIds == null || (projectStatusIds.length == 0)) {
+            return data;
+        }
+
+        // concatenate the filters
+        String projectCategoryIDsList = "-1";
+        if (projectCategoryIds != null && projectCategoryIds.length > 0) {
+            projectCategoryIDsList = concatenate(projectCategoryIds, ", ");
+        }
+        String studioProjectCategoryIdsList = "-1";
+        if (studioProjectCategoryIds != null && studioProjectCategoryIds.length > 0) {
+            studioProjectCategoryIdsList = concatenate(studioProjectCategoryIds, ", ");
+        }
+
+        String clientIdsList = concatenate(clientIds, ", ");
+        String billingAccountIdsList = concatenate(billingAccountIds, ", ");
+        String projectIDsList = concatenate(projectIds, ", ");
+
+        // date format to prepare date for query input
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+
+        String queryName = "dashboard_billing_cost_report";
+
+        if (projectIds[0] != 0) {
+
+            request.setProperty("tcdirectid", projectIDsList);
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+
+        } else if (billingAccountIds[0] != 0) {
+
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", billingAccountIdsList);
+            request.setProperty("clientid", "0");
+
+        } else if (clientIds[0] != 0) {
+
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", clientIdsList);
+
+        } else {
+            return data;
+        }
+
+        request.setContentHandle(queryName);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+        request.setProperty("scids", studioProjectCategoryIdsList);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+
+        // prepare status filter
+        Set<Long> statusFilter = new HashSet<Long>();
+        for (long statusId : projectStatusIds) {
+            statusFilter.add(statusId);
+        }
+
+        // prepare payment type filter
+        Set<Long> paymentTypeFilter = new HashSet<Long>();
+        for (long paymentTypeId : paymentTypeIds) {
+            paymentTypeFilter.add(paymentTypeId);
+        }
+
+
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+
+            BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
+
+            // set status first
+            costDTO.setStatus(row.getStringItem("contest_status").trim());
+
+            // filter by status
+            if (!statusFilter.contains(statusMapping.get(costDTO.getStatus().toLowerCase()))) continue;
+
+            // get payment type
+            String paymentType = row.getStringItem("line_item_category");
+
+            IdNamePair client = new IdNamePair();
+            IdNamePair billing = new IdNamePair();
+            IdNamePair directProject = new IdNamePair();
+            IdNamePair contest = new IdNamePair();
+            IdNamePair contestCategory = new IdNamePair();
+
+            if (row.getItem("contest_id").getResultData() != null) {
+                contest.setId(row.getLongItem("contest_id"));
+            }
+            if (row.getItem("contest_name").getResultData() != null) {
+                contest.setName(row.getStringItem("contest_name"));
+            }
+
+            if (row.getItem("client_id").getResultData() != null) {
+                client.setId(row.getLongItem("client_id"));
+            }
+            if (row.getItem("client").getResultData() != null) {
+                client.setName(row.getStringItem("client"));
+            }
+            if (row.getItem("billing_project_id").getResultData() != null) {
+                billing.setId(row.getLongItem("billing_project_id"));
+            }
+            if (row.getItem("billing_project_name").getResultData() != null) {
+                billing.setName(row.getStringItem("billing_project_name"));
+            }
+            if (row.getItem("direct_project_id").getResultData() != null) {
+                directProject.setId(row.getLongItem("direct_project_id"));
+            }
+            if (row.getItem("direct_project_name").getResultData() != null) {
+                directProject.setName(row.getStringItem("direct_project_name"));
+            }
+
+            if (row.getItem("project_category_id").getResultData() != null) {
+                contestCategory.setId(row.getLongItem("project_category_id"));
+            }
+            if (row.getItem("category").getResultData() != null) {
+                contestCategory.setName(row.getStringItem("category"));
+            }
+            if (row.getItem("actual_total_member_costs").getResultData() != null) {
+                costDTO.setActualTotalMemberCost(row.getDoubleItem("actual_total_member_costs"));
+            }
+            if (row.getItem("completion_date").getResultData() != null) {
+                costDTO.setCompletionDate(row.getTimestampItem("completion_date"));
+            }
+            if (row.getItem("launch_date").getResultData() != null) {
+                costDTO.setLaunchDate(row.getTimestampItem("launch_date"));
+            }
+            if (row.getItem("payment_date").getResultData() != null) {
+                costDTO.setPaymentDate(row.getTimestampItem("payment_date"));
+            }
+            if (row.getItem("line_item_amount").getResultData() != null) {
+                costDTO.setPaymentAmount(row.getDoubleItem("line_item_amount"));
+            }
+
+
+            costDTO.setClient(client);
+            costDTO.setBilling(billing);
+            costDTO.setProject(directProject);
+            costDTO.setContest(contest);
+            costDTO.setContestType(contestCategory);
+            costDTO.setPaymentType(paymentType);
+
+            double contestFee = 0;
+            double digitalRun = 0;
+
+            // get the contest fee of the contest
+            if (row.getItem("contest_fee").getResultData() != null) {
+                contestFee = row.getDoubleItem("contest_fee");
+            }
+
+            // get the digital run points of the contest
+            if (row.getItem("digital_run").getResultData() != null) {
+                digitalRun = row.getDoubleItem("digital_run");
+            }
+
+            List<BillingCostReportEntryDTO> entries;
+
+            if (!data.containsKey(costDTO.getContest().getId())) {
+                entries = new ArrayList<BillingCostReportEntryDTO>();
+                data.put(costDTO.getContest().getId(), entries);
+
+                // add entry for contest fee if the contest is first time processed
+                BillingCostReportEntryDTO contestFeeEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
+                contestFeeEntry.setPaymentType("Contest Fee");
+                contestFeeEntry.setPaymentAmount(contestFee);
+                contestFeeEntry.setPaymentDate(contestFeeEntry.getCompletionDate());
+
+                BillingCostReportEntryDTO digitalRunEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
+                digitalRunEntry.setPaymentType("Digital Run");
+                digitalRunEntry.setPaymentAmount(digitalRun);
+                digitalRunEntry.setPaymentDate(digitalRunEntry.getCompletionDate());
+
+                // add contest fee if the payment type filter allows
+                if (paymentTypeFilter.contains(1L)) {
+                    entries.add(contestFeeEntry);
+                }
+                // add digital run entry if the payment type filter allows
+                if (paymentTypeFilter.contains(6L)) {
+                    entries.add(digitalRunEntry);
+                }
+            } else {
+                entries = data.get(costDTO.getContest().getId());
+            }
+
+            // add the entry if payment type filter allows
+            if (paymentTypeFilter.contains(paymentTypesMapping.get(paymentType.trim().toLowerCase()))) {
+                entries.add(costDTO);
+            }
+
         }
 
         return data;

@@ -1,14 +1,12 @@
 /**
- * AUTHOR: Blues
- * VERSION: 1.1 (TopCoder Cockpit - Cost Report Assembly)
+ * AUTHOR: TCSDEVELOPER
+ * VERSION: 1.0 (TC Cockpit - Billing Cost Report Assembly))
  *
- * Version 1.1 change: add toggle trigger for billing cost report.
- *
- * Submits the cost report form and trigger cost report excel download.
+ * Submits the billing cost report form and trigger cost report excel download.
  */
-function getCostReportAsExcel() {
+function getBillingCostReportAsExcel() {
     $('#formDataExcel').val("true");
-    document.dashboardCostReportForm.submit();
+    document.dashboardBillingCostReportForm.submit();
 }
 
 $(document).ready(function() {
@@ -26,12 +24,6 @@ $(document).ready(function() {
         $('.filterArea').show();
         $('a.fiterButton').css('background-position', 'top left');
     }
-
-    // toggle the selection change for aggregation cost reports
-    $('#aggregationCostReportType').change(function() {
-        $('.scData').hide();
-        $('.' + $(this).val() + 'AggregationCostReport').show();
-    });
 
     /* Toggle Filter collapse/expand */
     $("a.fiterButton").click(function() {
@@ -60,7 +52,7 @@ $(document).ready(function() {
     /* Apply button action */
     $('a.applyButton').click(function(event) {
         $('#formDataExcel').val("false");
-        $('#dashboardCostReportForm').submit();
+        $('#dashboardBillingCostReportForm').submit();
     });
 
     $('.dateRange a').click(function() {

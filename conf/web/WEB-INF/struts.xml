@@ -334,6 +334,26 @@
             <result name="success">/WEB-INF/report/dashboard-cost-report.jsp</result>
         </action>
 
+        <action name="dashboardGetBillingCostReport" class="dashboardBillingCostReportAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-billing-cost-report.jsp</result>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=billing_cost_report.xls</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">viewData.inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
+         <action name="dashboardBillingCostReport" class="dashboardShowBillingCostReportAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-billing-cost-report.jsp</result>
+        </action>
+
         <action name="dashboardPipelineReport" class="dashboardPipelineAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>

@@ -14,7 +14,7 @@
  *  - Add two custom DataTable comparator for money and simple data.
  *  - Add collapse/expand event for aggregation cost report and cost details report.
  *
- * @author BeBetter, isv, TCSDEVELOPER
+ * @author BeBetter, isv, Blues
  * @version 1.3
  */
 var cookieOptions = { path: '/', expires: 1 };
@@ -26,6 +26,14 @@ $(document).ready(function() {
             '<option value="5">5</option>' +
             '<option value="10">10</option>' +
             '<option value="25">25</option>' +
+            '<option value="-1">All</option>' +
+            '</select>';
+
+    var sLongStdMenu =
+            '<strong>Show:  </strong><select size="1" name="dataTableLength" id="dataTableLength">' +
+            '<option value="10">10</option>' +
+            '<option value="25">25</option>' +
+            '<option value="50">50</option>' +
             '<option value="-1">All</option>' +
             '</select>';
 
@@ -469,6 +477,35 @@ $(document).ready(function() {
 
     });
 
+    $("#billingCostReportSection .paginatedDataTable").dataTable({
+        "iDisplayLength": 50,
+        "bFilter": false,
+        "bSort": true,
+        "bAutoWidth": false,
+              "oLanguage": {
+                   "sLengthMenu": sLongStdMenu + " per page"
+               },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bcbottom1"l><"bcbottom2"fp',
+        "aaSorting": [[4,'asc']],
+        "aoColumns": [
+                { "sType": "simple-date" },
+                { "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "simple-date" },
+                { "sType": "simple-date" },
+                { "sType": "money" },
+                { "sType": "html" },
+                { "sType": "money" }
+            ]
+
+    });
+
 
 
     function formatDate(d) {
@@ -586,6 +623,19 @@ $(document).ready(function() {
     });
 
     $("#costDetails .expand").click(function() {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $(this).parent().parent().next().show();
+            $(this).parent().parent().parent().next().show();
+            $(this).removeClass("collapse");
+        } else {
+            $(this).parent().parent().next().hide();
+            $(this).parent().parent().parent().next().hide();
+            $(this).addClass("collapse");
+        }
+    });
+
+    $("#billingCostDetails .expand").click(function() {
         $(this).blur();
         if ($(this).hasClass("collapse")) {
             $(this).parent().parent().next().show();

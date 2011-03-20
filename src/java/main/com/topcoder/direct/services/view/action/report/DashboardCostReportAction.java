@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
@@ -18,10 +18,8 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.ProjectData;
-import org.hibernate.hql.ast.tree.IdentNode;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -29,7 +27,13 @@ import java.util.*;
  * <p>A <code>Struts</code> action to be used for handling the requests for viewing the cost report.</p>
  * <p/>
  *
- * @author TCSDEVELOPER
+ * <p>Version 1.1 TC Cockpit Billing Cost Report Assembly change notes:
+ * <ol>
+ *     <li>Refactor methods which get mappings from client, billing account, and direct projects to DirectUtils</li>
+ *   </ol>
+ * </p>
+ *
+ * @author Blues
  * @version 1.0 (TopCoder Cockpit - Cost Report Assembly)
  */
 public class DashboardCostReportAction extends BaseDirectStrutsAction {
@@ -200,7 +204,7 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
         }
 
         // Get all the clients accessible by current user
-        Map<Long, String> customers = this.getAllClients(currentUser);
+        Map<Long, String> customers = DirectUtils.getAllClients(currentUser);
 
         // Analyze form parameters
         DashboardCostReportForm form = getFormData();
@@ -282,7 +286,7 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
 
         // set view data for billings
         if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
-            getViewData().setClientBillingProjects(getBillingsForClient(currentUser, getFormData().getCustomerIds()[0]));
+            getViewData().setClientBillingProjects(DirectUtils.getBillingsForClient(currentUser, getFormData().getCustomerIds()[0]));
         } else {
             getViewData().setClientBillingProjects(new HashMap<Long, String>());
         }
@@ -293,12 +297,13 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
         // set view data for projects
         if (getFormData().getBillingAccountIds()[0] <= 0) {
             if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
-                getViewData().setProjectsLookupMap(getProjectsForClient(currentUser, getFormData().getCustomerIds()[0]));
+                getViewData().setProjectsLookupMap(DirectUtils.getProjectsForClient(currentUser, getFormData().getCustomerIds()[0]));
             } else {
                 getViewData().setProjectsLookupMap(new HashMap<Long, String>());
             }
         } else {
-            getViewData().setProjectsLookupMap(getProjectsForBilling(currentUser, getFormData().getBillingAccountIds()[0]));
+            getViewData().setProjectsLookupMap(DirectUtils.getProjectsForBilling(currentUser,
+                    getFormData().getBillingAccountIds()[0]));
         }
 
         // add the default all for projects
@@ -334,8 +339,8 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
             } else softwareProjectCategoriesList.add(categoriesId);
         }
 
-        long[] softwareProjectCategories = covertLongListToArray(softwareProjectCategoriesList);
-        long[] studioProjectCategories = covertLongListToArray(studioProjectCategoriesList);
+        long[] softwareProjectCategories = DirectUtils.covertLongListToArray(softwareProjectCategoriesList);
+        long[] studioProjectCategories = DirectUtils.covertLongListToArray(studioProjectCategoriesList);
 
 
 
@@ -455,6 +460,15 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
         } else return costDetail.getContestType();
     }
 
+    /**
+     * Generates the aggregation drill in query for aggregation cost report.
+     *
+     * @param formData the form data
+     * @param aggregationType the aggregation type.
+     * @param id the id used for drill in
+     * @return the generated drill in url.
+     * @throws Exception if any error occurs.
+     */
     private static String generateAggregationDrillInQuery(DashboardCostReportForm formData, CostAggregationType aggregationType, long id) throws Exception {
 
         StringBuffer queryString = new StringBuffer();
@@ -511,126 +525,6 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
         }
 
         return queryString.toString();
-    }
-
-    /**
-     * Gets the mappings of client, billing and projects.
-     *
-     * @param tcSubject the tcSubject
-     * @return the mapping of client, billing and projects
-     * @throws Exception if any error occurs.
-     */
-    private Map<String, Object> getDashboardClientBillingProjectMappings(TCSubject tcSubject) throws Exception {
-        Map<String, Object> result;
-        HttpServletRequest request = DirectUtils.getServletRequest();
-        Object value = request.getSession().getAttribute("clientBillingProjectMappings");
-
-        if (value == null) {
-            List<ProjectData> tcDirectProjects = getDashboardDirectProjects();
-            result = DataProvider.getDashboardClientBillingProjectMappingsForAdmin(tcSubject, tcDirectProjects);
-            request.getSession().setAttribute("clientBillingProjectMappings", result);
-        } else {
-            result = (Map<String, Object>) value;
-        }
-
-        return result;
-    }
-
-    /**
-     * Gets the billing accounts of the given client.
-     *
-     * @param tcSubject the tcSubject instance.
-     * @param clientId the id of the client.
-     * @return the billing accounts of the client.
-     * @throws Exception if any error occurs.
-     */
-    private Map<Long, String> getBillingsForClient(TCSubject tcSubject, long clientId) throws Exception {
-        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.billing");
-        Map<Long, String> result =  data.get(clientId);
-        if (result == null) {
-            return new HashMap<Long, String>();
-        } else {
-            return new HashMap<Long, String>(result);
-        }
-    }
-
-    /**
-     * Gets the projects of the given client.
-     *
-     * @param tcSubject the tcSubject instance.
-     * @param clientId the client id.
-     * @return the projects of the client.
-     * @throws Exception
-     */
-    private Map<Long, String> getProjectsForClient(TCSubject tcSubject, long clientId) throws Exception {
-        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.project");
-        Map<Long, String> result =  data.get(clientId);
-        if (result == null) {
-            return new HashMap<Long, String>();
-        } else {
-            return new HashMap<Long, String>(result);
-        }
-    }
-
-    /**
-     * Gets the projects of the given billing.
-     *
-     * @param tcSubject the tcSubject instance.
-     * @param billingId the billing account id.
-     * @return the billing accounts of the project.
-     * @throws Exception if any error occurs.
-     */
-    private Map<Long, String> getProjectsForBilling(TCSubject tcSubject, long billingId) throws Exception {
-        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("billing.project");
-        Map<Long, String> result =  data.get(billingId);
-        if (result == null) {
-            return new HashMap<Long, String>();
-        } else {
-            return new HashMap<Long, String>(result);
-        }
-    }
-
-    /**
-     * Gets all the clients of current user.
-     *
-     * @param tcSubject the tcSubject instance.
-     * @return all the clients.
-     * @throws Exception if any error occurs.
-     */
-    private Map<Long, String> getAllClients(TCSubject tcSubject) throws Exception {
-        return  sortByValue((Map<Long, String>) getDashboardClientBillingProjectMappings(tcSubject).get("clients"));
-    }
-
-    /**
-     * Utility method to sort the map and returned a ordered one (backend with a LinkedHashMap).
-     *
-     * @param map the map to sort.
-     * @return the sorted map.
-     */
-    static Map<Long, String> sortByValue(Map<Long, String> map) {
-        List list = new LinkedList<Map.Entry<Long, String>>(map.entrySet());
-        Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue())
-                        .compareTo(((Map.Entry) (o2)).getValue());
-            }
-        });
-
-        Map<Long, String> result = new LinkedHashMap<Long, String>();
-        for (Iterator it = list.iterator(); it.hasNext();) {
-            Map.Entry<Long, String> entry = (Map.Entry<Long, String>) it.next();
-            result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
-    }
-
-    private static long[] covertLongListToArray(List<Long> list) {
-        long[] result = new long[list.size()];
-        int index = 0;
-        for (Long item : list) {
-            result[index++] = item.longValue();
-        }
-        return result;
     }
 
 }

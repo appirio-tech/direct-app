@@ -1,17 +1,12 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -28,6 +23,7 @@ import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
+import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
@@ -134,9 +130,20 @@ import com.topcoder.shared.util.DBMS;
  * <li>Updated {@link #isPhaseOpen} method.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.6.4 (TC Cockpit Billing Cost Report Assembly) Change notes:
+ * <ul>
+ *      <li>Added method getBillingsForClient</li>
+ *      <li>Added method getProjectsForClient</li>
+ *      <li>Added method getProjectsForBilling</li>
+ *      <li>Added method getAllClients</li>
+ * </ul>
+ * These methods are refactored from EnterpriseDashboardAction, DashboardCostReportAction and
+ * DashboardBillingCostReport action for increasing the reuse.
+ * </p>
  *
- * @author BeBetter, isv, flexme, TCSDEVELOPER
- * @version 1.6.3
+ * @author BeBetter, isv, flexme, Blues
+ * @version 1.6.4
  */
 public final class DirectUtils {
     /**
@@ -193,6 +200,9 @@ public final class DirectUtils {
      */
     private static final String ADMIN_ROLE = "Cockpit Administrator";
 
+    /**
+     * Private constant specifying TC operations role.
+     */
     private static final String TC_OPERATIONS_ROLE = "TC Operations";
 
     /**
@@ -587,7 +597,7 @@ public final class DirectUtils {
     /**
      * <p>Gets the submissions for specified round of specified <code>Studio</code> contest.</p>
      *
-     * @param contestId a <code>long</code> providing the ID of a contest.
+     * @param contest represents the contest.
      * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
      * @param currentUser a <code>TCSubject</code> representing the current user.
      * @param contestServiceFacade a <code>ContestServiceFacade</code> to be used for accessing the service layer for
@@ -769,6 +779,141 @@ public final class DirectUtils {
      */
     public static boolean isTcOperations(TCSubject tcSubject) {
         return isRole(tcSubject, TC_OPERATIONS_ROLE);
+    }
+
+    /**
+     * Gets the mappings of client, billing and projects.
+     *
+     * @param tcSubject the tcSubject
+     * @return the mapping of client, billing and projects
+     * @throws Exception if any error occurs.
+     * @since 1.6.4
+     */
+    private static Map<String, Object> getDashboardClientBillingProjectMappings(TCSubject tcSubject) throws Exception {
+        Map<String, Object> result;
+        HttpServletRequest request = DirectUtils.getServletRequest();
+        Object value = request.getSession().getAttribute("clientBillingProjectMappings");
+
+        if (value == null) {
+            result = DataProvider.getDashboardClientBillingProjectMappings(tcSubject);
+            request.getSession().setAttribute("clientBillingProjectMappings", result);
+        } else {
+            result = (Map<String, Object>) value;
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the billing accounts of the given client.
+     *
+     * @param tcSubject the tcSubject instance.
+     * @param clientId the id of the client.
+     * @return the billing accounts of the client.
+     * @throws Exception if any error occurs.
+     * @since 1.6.4
+     */
+    public static Map<Long, String> getBillingsForClient(TCSubject tcSubject, long clientId) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.billing");
+        Map<Long, String> result =  data.get(clientId);
+        if (result == null) {
+            return new HashMap<Long, String>();
+        } else {
+            return new HashMap<Long, String>(result);
+        }
+    }
+
+    /**
+     * Gets the projects of the given client.
+     *
+     * @param tcSubject the tcSubject instance.
+     * @param clientId the client id.
+     * @return the projects of the client.
+     * @throws Exception if any error occurs.
+     * @since 1.6.4
+     */
+    public static Map<Long, String> getProjectsForClient(TCSubject tcSubject, long clientId) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.project");
+        Map<Long, String> result =  data.get(clientId);
+        if (result == null) {
+            return new HashMap<Long, String>();
+        } else {
+
+
+
+            return new HashMap<Long, String>(result);
+        }
+    }
+
+    /**
+     * Gets the projects of the given billing.
+     *
+     * @param tcSubject the tcSubject instance.
+     * @param billingId the billing account id.
+     * @return the billing accounts of the project.
+     * @throws Exception if any error occurs.
+     * @since 1.6.4
+     */
+    public static Map<Long, String> getProjectsForBilling(TCSubject tcSubject, long billingId) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("billing.project");
+        Map<Long, String> result =  data.get(billingId);
+        if (result == null) {
+            return new HashMap<Long, String>();
+        } else {
+            return new HashMap<Long, String>(result);
+        }
+    }
+
+    /**
+     * Gets all the clients of current user.
+     *
+     * @param tcSubject the tcSubject instance.
+     * @return all the clients.
+     * @throws Exception if any error occurs.
+     * @since 1.6.4
+     */
+    public static Map<Long, String> getAllClients(TCSubject tcSubject) throws Exception {
+        return  sortByValue((Map<Long, String>) getDashboardClientBillingProjectMappings(tcSubject).get("clients"));
+    }
+
+    /**
+     * Utility method to sort the map and returned a ordered one (backend with a LinkedHashMap).
+     *
+     * @param map the map to sort.
+     * @return the sorted map.
+     * @since 1.6.4
+     */
+    private static Map<Long, String> sortByValue(Map<Long, String> map) {
+        List list = new LinkedList<Map.Entry<Long, String>>(map.entrySet());
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o1)).getValue())
+                        .compareTo(((Map.Entry) (o2)).getValue());
+            }
+        });
+
+        Map<Long, String> result = new LinkedHashMap<Long, String>();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry<Long, String> entry = (Map.Entry<Long, String>) it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
+    /**
+     * Utility method to covert a List<Long> to an array of long and return.
+     *
+     * @param list the list to convert.
+     * @return the converted array.
+     * @since 1.6.4
+     */
+    public static long[] covertLongListToArray(List<Long> list) {
+        long[] result = new long[list.size()];
+        int index = 0;
+        for (Long item : list) {
+            result[index++] = item.longValue();
+        }
+        return result;
     }
 
 
