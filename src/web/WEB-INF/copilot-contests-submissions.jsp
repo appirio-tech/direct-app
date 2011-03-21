@@ -112,7 +112,8 @@
                                                                 </td>
                                                                 <td>
                                                                     <link:onlineReviewDownloadSubmission
-                                                                            uploadId="${submission.uploadId}"
+                                                                            projectId="${projectId}"
+                                                                            submissionId="${submission.submissionId}"
                                                                             styleClass="downloadProfile">
                                                                         <span class="profileLeft">Download</span>
                                                                     </link:onlineReviewDownloadSubmission>
