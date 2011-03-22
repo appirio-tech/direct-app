@@ -454,11 +454,11 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
                     b.append(copilot);
                 }
                 String cp = b.toString();
-                if (cp.trim().equals(""))
+                if (!cp.trim().equals(""))
                 {
-                    cp = "None";
+                    row.getCell(6).setStringValue(cp);
                 }
-                row.getCell(6).setStringValue(cp);
+                
             }
 
             row.getCell(7).setStringValue(contest.getCpname());
