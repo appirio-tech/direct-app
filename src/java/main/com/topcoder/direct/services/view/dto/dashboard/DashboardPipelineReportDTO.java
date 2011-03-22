@@ -453,7 +453,12 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
                     }
                     b.append(copilot);
                 }
-                row.getCell(6).setStringValue(b.toString());
+                String cp = b.toString();
+                if (cp.trim().equals(""))
+                {
+                    cp = "None";
+                }
+                row.getCell(6).setStringValue(cp);
             }
 
             row.getCell(7).setStringValue(contest.getCpname());
@@ -461,7 +466,15 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
             row.getCell(8).setStringValue(contest.getPname());
             row.getCell(9).setStringValue(contest.getCname());
             row.getCell(10).setStringValue(contest.getSname());
-            row.getCell(11).setStringValue(contest.getWasReposted() ? "Yes" : "No");
+
+            if (contest.getWasReposted() != null && contest.getWasReposted())
+            {
+                row.getCell(11).setStringValue("Yes");
+            }
+            else 
+            {
+                row.getCell(11).setStringValue("No");
+            }
 
             StringBuilder resourceBuilder = new StringBuilder();
             
