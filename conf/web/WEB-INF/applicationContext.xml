@@ -191,7 +191,7 @@
             <props>
                 <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
                 </prop>
-                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.provider.url">@userBeanProviderUrl@</prop>
                 <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
                 </prop>
             </props>
