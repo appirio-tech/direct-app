@@ -150,7 +150,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="15">
+        <th class="tableTitle" colspan="13">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Billing Cost Details</span>
         </th>
