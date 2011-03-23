@@ -460,8 +460,11 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
                 }
                 
             }
-
-            row.getCell(7).setStringValue(contest.getCpname());
+            if (contest.getCpname() != null && !contest.getCpname().trim().equals(""))
+            {
+                 row.getCell(7).setStringValue(contest.getCpname());
+            }
+           
 
             row.getCell(8).setStringValue(contest.getPname());
             row.getCell(9).setStringValue(contest.getCname());
