@@ -117,13 +117,13 @@
 		</property>
 
 		<property name="ccnEmailFrom">
-			<value>sma@topcoder.com</value>
+			<value>@liquidCcnEmailFrom@</value>
 		</property>
 		<property name="ccnEmailTo">
-			<value>sma@topcoder.com</value>
+			<value>@liquidCcnEmailTo@</value>
 		</property>
 
-		<property name="ccnEmailTemplateName">
+    <property name="ccnEmailTemplateName">
 			<value>@JBOSS_HOME@/server/default/deploy/direct.ear/contest_creation_notification.txt</value>
 		</property>
 
