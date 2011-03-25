@@ -41,6 +41,11 @@ public class CostAggregationDTO implements Serializable {
     private String drillInQuery;
 
     /**
+     * aggregation name, if aggregation is project, then it is project name, if billing then it is billing project name
+     */
+    private String name;
+
+    /**
      * The type of the aggregation cost report.
      */
     CostAggregationType aggregationType;
@@ -151,5 +156,23 @@ public class CostAggregationDTO implements Serializable {
      */
     public void setDrillInQuery(String drillInQuery) {
         this.drillInQuery = drillInQuery;
+    }
+
+    /**
+     * Gets the name.
+     *
+     * @return the name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param name name to set.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

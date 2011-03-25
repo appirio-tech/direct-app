@@ -409,17 +409,18 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
         for (CostDetailsDTO c : costDetails) {
             // get the key used for aggregation report
             IdNamePair pair = getAggregationKey(c, aggregationType);
-            CostAggregationDTO item = aggregationDTOMap.get(pair.getName());
+            CostAggregationDTO item = aggregationDTOMap.get(pair.getName()+"-"+pair.getId());
             if (item == null) {
                 // does not exist, create a new CostAggregationDTO
                 item = new CostAggregationDTO();
                 item.setAggregationType(aggregationType);
+                item.setName(pair.getName());
                 long drillInId = pair.getId();
                 if(c.isStudio() && aggregationType == CostAggregationType.CONTEST_TYPE_AGGREGATION) {
                     drillInId += 100;
                 }
                 item.setDrillInQuery(generateAggregationDrillInQuery(this.formData, aggregationType, drillInId));
-                aggregationDTOMap.put(pair.getName(), item);
+                aggregationDTOMap.put(pair.getName()+"-"+pair.getId(), item);
             }
 
             // aggregate the contest fee

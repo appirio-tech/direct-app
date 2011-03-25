@@ -193,7 +193,7 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="projectAggregationCostReport scData ${rowStyle}">
-            <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.key}"/></a></td>
+            <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
             <td>
                 <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
             </td>
@@ -214,7 +214,7 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="billingAggregationCostReport scData hide ${rowStyle}">
-              <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.key}"/></a></td>
+              <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
             <td>
                 <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
             </td>
@@ -235,7 +235,7 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="contestTypeAggregationCostReport scData hide ${rowStyle}">
-              <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.key}"/></a></td>
+              <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
             <td>
                 <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
             </td>
@@ -256,7 +256,7 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="statusAggregationCostReport scData hide ${rowStyle}">
-             <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.key}"/></a></td>
+             <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
             <td>
                 <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
             </td>
