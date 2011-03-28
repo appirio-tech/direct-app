@@ -65,7 +65,7 @@
 
 <div class="bottom-review" id="contestDetailLinkDiv">
     <a href="#" class="button"></a>
-    <a href="<s:url action='listCopilotPostings' namespace='/copilot'/>" >Go to My Copilot Selection Contests</a>
-    <p>Go to My Copilot Selection Contests section to view your copilot posting.</p>
+    <a href="<s:url action='listCopilotPostings' namespace='/copilot'/>" >Go to My Copilot Postings</a>
+    <p>Go to My Copilot Postings to view your copilot posting.</p>
     <br /><br /><br />
 </div>
