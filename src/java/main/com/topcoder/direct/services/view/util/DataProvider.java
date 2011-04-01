@@ -2770,7 +2770,7 @@ public class DataProvider {
         contestReceipt.setCopilotCost(result.getDoubleItem(row, "copilot_cost"));
         contestReceipt.setBugFixCost(result.getDoubleItem(row, "bug_fix_cost"));
         contestReceipt.setTotalCost(result.getDoubleItem(row, "total_cost"));
-        contestReceipt.setFinished(result.getStringItem(row, "status").equals("Finished"));
+        contestReceipt.setFinished(result.getStringItem(row, "status").trim().equals("Finished"));
         
         return contestReceipt;
     }
