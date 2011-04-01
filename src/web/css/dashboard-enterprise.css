@@ -64,7 +64,7 @@
 {
 	border-width:0px;
 }
-.dashboardTable td.first{
+.dashboardTable td.first, .dashboardTable th.first{
 	padding-left:5px;
 }
 
@@ -324,7 +324,9 @@ a.dp-choose-date { margin-right:0px;}
 	border:1px solid #c6c7c8;
 	border-width:0px;
 }
-
+#fourthDashboardTableBody {
+    border-bottom:1px solid #c6c7c8;
+}
 .tableDataArea .dashboardTableHeader{
 	font-size:12px;
 	border-top:0px;
@@ -341,12 +343,12 @@ a.dp-choose-date { margin-right:0px;}
 }
 
 
-.dashboardTable tr.head td{
+.dashboardTable tr.head td, .dashboardTable tr.head th{
 	background:none;
 	font-weight:normal;	
 }
 
-.dashboardTable tr.head td.noBT{
+.dashboardTable tr.head td.noBT, .dashboardTable tr.head th.noBT{
  border-top:0px;
 }
 
@@ -420,7 +422,9 @@ a.dp-choose-date { margin-right:0px;}
     height: 378px;
 }
 
-#firstDashboardTableHeader table tr td , #secondDashboardTableHeader table tr td {
+#firstDashboardTableHeader table tr td , #secondDashboardTableHeader table tr td,
+#thirdDashboardTableBody table tr.head th, #fourthDashboardTableBody table tr.head th
+{
     cursor: pointer;
 }
 
@@ -473,4 +477,71 @@ td.fontGreen{
 	  right:0;
 }
 
-
+.expandViewPopup{ 
+    border:4px solid #000000; 
+    width:720px;
+    color:#333333;
+    padding:8px;
+    background:#ffffff;
+   /* display:none;*/
+    max-width:1500px;
+}
+.expandViewPopup h2{ 
+     font-size:20px;
+    font-weight:normal;
+    padding-bottom:6px;
+}
+.expandViewPopup .popContent{
+    padding:0 10px;
+}
+ 
+.expandViewPopup .close{
+    text-align:right;
+}
+.expandViewPopup .close a{
+    background:url("../images/ico-cancel.png") no-repeat left top;
+    height:17px;
+    width:17px;
+    display:inline-block;
+}
+.expandViewPopup .close a:hover{
+    background-position:left -17px;
+}
+.expandViewPopup .dashboardTable {
+    background: url("../images/dashboard-table-bg-2.png") repeat-x left top;
+    border: 1px solid #A9ACAE;
+}
+.expandViewPopup .dashboardTable td.first,.expandViewPopup .dashboardTable th.first{
+    text-align:center;
+    vertical-align:middle;
+}
+.expandViewPopup .costTable, .expandViewPopup .marketTable {
+    overflow:auto;
+    margin-bottom:0px;
+} 
+.expandViewPopup .costTable .tableWrapper{
+    width:1540px;
+    overflow:visible !important;
+    height:auto;
+}
+.expandViewPopup .marketTable .tableWrapper{
+    overflow:visible !important;
+    height:auto;
+}
+.expandViewPopup .collapse{
+    font-size:12px;
+    text-align:right;
+    padding-bottom:12px;
+    padding-top:15px;
+}
+.expandViewPopup .collapse a{
+    background:url("../images/arrow-2.png") no-repeat left -15px;;
+    line-height:14px;
+    padding-left:15px;
+}
+.expandViewPopup .collapse a.expand{
+    background-position:left top;
+}
+#thirdDashboardTableBody {
+    border-bottom: 1px solid #D0D0D1;
+}

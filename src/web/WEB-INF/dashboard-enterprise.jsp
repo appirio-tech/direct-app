@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, tangzx, TCSDEVELOPER
+  - Author: isv, tangzx, flexme
   -
   - Version: 1.0.2 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
@@ -11,6 +11,9 @@
   -
   - Version 1.0.2 - Cockpit - Enterprise Dashboard 2 Assembly Change Note
   - Implemented latest changes to UI according to requirements
+  -
+  - Version 1.0.3 - TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly Change Note
+  - Add contest cost breakdown and market cost breakdown popup windows.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -148,6 +151,7 @@
     <script type="text/javascript" src="/scripts/dashboard-chart-range.js"></script>
     <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
 </head>
 
 <body id="page">
@@ -291,8 +295,8 @@
                                                         <tr class="head">
                                                             <td>Contest</td>
                                                             <td>Market Avg</td>
-                                                            <td>Contest</td>
-                                                            <td>Market Avg</td>
+                                                            <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
+                                                            <td>Market Avg<br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
                                                             <td>Contest</td>
                                                             <td>Market Avg</td>
                                                         </tr>
@@ -519,8 +523,8 @@
                                                                 <tr class="head">
                                                                     <td>Contest</td>
                                                                     <td>Market Avg</td>
-                                                                    <td>Contest</td>
-                                                                    <td>Market Avg</td>
+                                                                    <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
+                                                                    <td>Market Avg <br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
                                                                     <td>Contest</td>
                                                                     <td>Market Avg</td>
                                                                 </tr>
@@ -617,6 +621,131 @@
 <!-- End #wrapper -->
 
 <jsp:include page="includes/popups.jsp"/>
+
+<div class="popups">
+    <div class="expandViewPopup hide" id="contestDViewPopup">
+        <div class="close">
+            <a href="javascript:void(0)" id="contestDViewClose"></a>.
+        </div>
+        <div class="popContent">
+            <h2>Cost Details</h2>
+            <div class="dashboardTable costTable">
+                <div id="thirdDashboardTableBody" class="tableWrapper dashboardTableHeader costBreakDownChart">
+                    <table cellpadding="0" cellspacing="0">
+                        <colgroup>
+                            <col width="70px" />
+                            <col width="94px" />
+                            <col width="94px" />
+                            <col width="140px"/>
+                            <col width="84px" />
+                            <col width="50px" />
+                            <col width="70px" />
+                            <col width="50px" />
+                            <col width="70px" />
+                            <col width="70px" />
+                            <col width="50px" />
+                            <col width="70px" />
+                            <col width="50px" />
+                            <col width="50px" />
+                            <col width="70px" />
+                            <col width="50px" />
+                            <col width="50px" />
+                            <col width="50px" />
+                            <col width="50px" />
+                            <col width="50px" />
+                            <col width="70px" />
+                            <col />
+                        </colgroup>
+                        <thead>
+                            <tr class="head costHead">
+                                <th class="first noBT" rowspan="2"><strong>Date</strong></th>
+                                <th class="noBT" rowspan="2"><strong>Customer</strong></th>
+                                <th class="noBT" rowspan="2"><strong>Project</strong></th>
+                                <th class="noBT" rowspan="2"><strong>Contest Name</strong></th>
+                                <th class="noBT" rowspan="2">Contest Type</th>
+                                <th class="noBT" colspan="2"><strong>FullFillment</strong></th>
+                                <th class="noBT" colspan="2"><strong>Cost</strong></th>
+                                <th class="noBT" colspan="10"><strong>Cost Breakdown</strong></th>
+                                <th class="noBT" colspan="2"><strong>Duration</strong> (Days)</th>
+                            </tr>
+                            <tr class="head costHead">
+                                <th>Contest</th>
+                                <th>Market Avg</th>
+                                <th>Contest</th>
+                                <th>Market Avg</th>
+                                <th>Contest Fee</th>
+                                <th>Prizes</th>
+                                <th>Spec Review</th>
+                                <th>Review</th>
+                                <th>Reliability</th>
+                                <th>Digital Run</th>
+                                <th>Copilot</th>
+                                <th>Build</th>
+                                <th>Bugs</th>
+                                <th>Misc</th>
+                                <th>Contest</th>
+                                <th>Market Avg</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="expandViewPopup" id="marketDViewPopup" style="display:none">
+        <div class="close">
+            <a href="javascript:void(0)" id="marketDViewClose"></a>.
+        </div>
+        <div class="popContent">
+            <h2>Average Market Cost Details</h2>
+            <div class="dashboardTable marketTable">
+            <div id="fourthDashboardTableBody" class="tableWrapper dashboardTableHeader marketBreakDownChart">
+                <table cellpadding="0" cellspacing="0">
+                    <colgroup>
+                        <col width="140px" />
+                        <col width="94px" />
+                        <col width="94px" />
+                        <col width="70px" />
+                        <col width="94px" />
+                        <col width="70px"/>
+                        <col width="70px" />
+                        <col width="94px" />
+                        <col width="70px" />
+                        <col width="70px" />
+                        <col width="70px" />
+                        <col width="70px" />
+                        <col />
+                    </colgroup>
+                    <thead>
+                        <tr class="head">
+                            <th  class="first noBT">Contest Type</th>
+                            <th  class="noBT">Average Cost</th>
+                            <th  class="noBT">Contest Fee</th>
+                            <th  class="noBT">Prizes</th>
+                            <th  class="noBT">Spec Review</th>
+                            <th  class="noBT">Review</th>
+                            <th  class="noBT">Reliability</th>
+                            <th  class="noBT">Digital Run</th>
+                            <th  class="noBT">Copilot</th>
+                            <th  class="noBT">Build</th>
+                            <th  class="noBT">Bugs</th>
+                            <th  class="noBT">Misc</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hide handler">
+        <a href="#" id="contestDViewMock"></a>
+        <a href="#" id="marketDViewMock"></a>
+    </div>
+</div>
 
 </body>
 <!-- End #page -->

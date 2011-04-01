@@ -9,6 +9,7 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardStatusColor;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardAggregatedStatDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDTO;
@@ -70,8 +71,16 @@ import javax.servlet.http.HttpServletRequest;
  *   </ol>
  * </p>
  * 
- * @author isv, xjtufreeman, Blues
- * @version 1.0.4
+ * <p>
+ * Version 1.0.5 (TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getCostBreakDown()} method to get the cost break down data for contests or market.</li>
+ *     <li>Updated {@link #executeAction()} method to return the average cost data of contest types to client browser.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, xjtufreeman, Blues, flexme
+ * @version 1.0.5
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -340,8 +349,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             return;
         }
 
-
-
+        Map<String, String> contestTypeAvgCost = new HashMap<String, String>();
         // Get the detailed stats for specific project, categories and time frame (only if project is specified)
         if (projectIdsAreSet && categoryIdsAreSet && billingAccountIdsAreSet && customerIdsAreSet) {
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> costStats = createEmptyStats();
@@ -355,6 +363,10 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             //Get contest avarage info
             Map<Integer, List<Double>> contestTypeAvgMap = DataProvider.getEnterpriseContestsAvgStatus(categoryIds,
                     startDate, endDate);
+            NumberFormat format = new DecimalFormat("###,##0.##");
+            for (Map.Entry<Integer, List<Double>> entry : contestTypeAvgMap.entrySet()) {
+                contestTypeAvgCost.put(entry.getKey().toString(), format.format(entry.getValue().get(1)));
+            }
             //Get the date info of the dirll in pointer
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
             Date drillStartDate = null;
@@ -382,6 +394,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                     contestDTO.setMarketAvgDuration(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(2));
                 }
                 contestResult.put("contestStatus",buildContestStatResults(contestStats));
+                contestResult.put("contestTypeAvgCost", contestTypeAvgCost);
                 setResult(contestResult);
                 return;
             }
@@ -398,6 +411,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                     contestDTO.setMarketAvgDuration(contestTypeAvgMap.get(contestDTO.getProjectCategoryId()).get(2));
                 }
                 allContestResult.put("allContestStatus",buildContestStatResults(allContestStats));
+                allContestResult.put("contestTypeAvgCost", contestTypeAvgCost);
                 setResult(allContestResult);
                 return;
             }
@@ -566,7 +580,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             result.put("avg1", format1.format(getViewData().getAverageFulfillment()));
             result.put("avg2", format2.format(getViewData().getAverageCost()));
             result.put("avg3", format3.format(getViewData().getAverageDuration()));
-
+            result.put("contestTypeAvgCost", contestTypeAvgCost);
 
             setResult(result);
         }
@@ -589,6 +603,19 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         return SUCCESS;
     }
 
+    /**
+     * Gets the cost break down data for contests or market. The result data will parsed into JSON format
+     * and used by the client browser. 
+     *
+     * @return the result
+     * @throws Exception if any error occurs
+     * @since 1.0.5
+     */
+    public String getCostBreakDown() throws Exception {
+        setResult(buildContestBreakDownResults(DataProvider.getDashboardCostBreakDown(formData.getProjectIds(), formData.getProjectCategoryIds())));
+        return SUCCESS;
+    }
+    
     /**
      * Gets the project dropdown options for the request billing id.
      *
@@ -637,6 +664,35 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             statsResult.put("year", buildStatResults(stats, EnterpriseDashboardStatPeriodType.YEAR));
         }
         return statsResult;
+    }
+
+    /**
+     * <p>Builds the map providing the cost break down data to be fed to JSON serializer.</p>
+     *
+     * @param costBreakDown a <code>List</code> providing the cost break down data.
+     * @return a <code>List</code> providing the mapping data of cost break down data to be fed to JSON serializer.
+     * @since 1.0.5
+     */
+    private List<Map<String, Object>> buildContestBreakDownResults(List<DashboardCostBreakDownDTO> costBreakDown) {
+        NumberFormat numberFormat1 = new DecimalFormat("###,##0.00");
+        NumberFormat numberFormat2 = new DecimalFormat("###,##0.##");
+        List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+        for (DashboardCostBreakDownDTO breakdown : costBreakDown) {
+            Map<String, Object> statData = new HashMap<String, Object>();
+            statData.put("id", breakdown.getId());
+            statData.put("contestFee", numberFormat2.format(breakdown.getContestFee()));
+            statData.put("prizes", numberFormat1.format(breakdown.getPrizes()));
+            statData.put("specReview", numberFormat1.format(breakdown.getSpecReview()));
+            statData.put("review", numberFormat1.format(breakdown.getReview()));
+            statData.put("reliability", numberFormat1.format(breakdown.getReliability()));
+            statData.put("digitalRun", numberFormat1.format(breakdown.getDigitalRun()));
+            statData.put("copilot", numberFormat1.format(breakdown.getCopilot()));
+            statData.put("build", numberFormat1.format(breakdown.getBuild()));
+            statData.put("bugs", numberFormat1.format(breakdown.getBugs()));
+            statData.put("misc", numberFormat1.format(breakdown.getMisc()));
+            list.add(statData);
+        }
+        return list;
     }
 
     /**

@@ -74,7 +74,7 @@
     border-left:1px solid #d0d0d1;
     height:28px;
 }
-.dashboardTable  td{
+.dashboardTable  td, .costHead th{
     font-size:11px; 
     color:#333333;
     border-left:1px solid #d0d0d1;
@@ -82,6 +82,7 @@
     padding:5px 0px;
     text-align:center;
     background-color:#fffffe;
+	height:auto !important;
 }
 .dashboardTable tr.topRow td{
     border-top:0px;   

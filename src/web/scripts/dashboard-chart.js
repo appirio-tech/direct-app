@@ -1,5 +1,10 @@
 // javascript functions for dashboard view chart
                                        
+/**
+ * - Version 1.1 (TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly) Change Notes:
+ * - - Add support to the Contest Cost Breakdown and Market Cost Breakdown. 
+ */
+
 // define google visualization charts
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
@@ -7,6 +12,21 @@ function drawChart() {
     var data = new google.visualization.DataTable();
     var chart = new google.visualization.LineChart($("#chart_div")[0]);
     var width = $(".visualization").width() - 5;
+    // a flag indicates whether we need to reload the contest cost break down data of customer
+    var tableViewProjectIdsDirty = false;
+    // a flag indicates whether we need to reload the contest cost break down data of market
+    var allContestProjectIdsDirty = false;
+    // a flag indicates whether we need to reload the market cost break down data
+    var marketBreakDownDirty = false;
+    var tableViewProjectIds = [];
+    var allContestProjectIds = [];
+    var oldProjectCategoryIds = [];
+    var viewType = "";
+    var timerange;
+    // the contest break down data of market
+    var allContestBreakDownData;
+    // the contest break down data of customer
+    var tableViewBreakDownData;
 
     // options for chart
     var options = {
@@ -37,12 +57,13 @@ function drawChart() {
         var selection = chart.getSelection();
         var row = selection[0].row;
         var column = selection[0].column;
-        var timeRange = chartData[displaying][timeDimension][row]["date"];
+        timeRange = chartData[displaying][timeDimension][row]["date"];
         var type = chartData[displaying]["column"][column].split(" ")[0];
         // if the coustomer data are the same with market data, then show the coustomer data
         if(chartData[displaying][timeDimension][row]["customer"] == chartData[displaying][timeDimension][row]["tc"]) {
             type = "Customer";
         }
+        viewType = type;
         if(lastSelectedRow == row && lastSelectedCol == column) {
             if(dirllTableDisplayed) {
                 $("#dynamicTableView").addClass("hide");
@@ -142,6 +163,8 @@ function drawChart() {
         var totalCompleted = 0;
         $("#firstDashboardTableBody table tbody tr").remove();
         $("#firstDashboardTableBody table tfoot").remove();
+        tableViewProjectIds = [];
+        viewType = "Customer";
         $(tableViewData).each(function(i){
             totalContestFullfilment += parseFloat(this.contestFullfilment);
             totalMarketAvgFullfilment += parseFloat(this.marketAvgFullfilment);
@@ -153,6 +176,7 @@ function drawChart() {
             totalMarketAvgCost += parseFloat(this.marketAvgCost.replace(reg1,"").replace(reg2,""));
             totalMarketAvgDuration += parseFloat(this.marketAvgDuration);
             $("#firstDashboardTableBody table tbody").append(getOneRow(i, this, ""));
+            tableViewProjectIds.push(this.projectId);
         });
         var totalNO = $(tableViewData).length;
         totalCompleted = totalCompleted == 0 ? 1: totalCompleted;
@@ -188,6 +212,8 @@ function drawChart() {
         var data = tableViewData;
         if (type == "Market") {
             data = allContestData;
+            allContestProjectIds = [];
+            idsData = allContestProjectIds;
             if(!isAdmin) {
                 if($("#secondDashboardTableHeader table colgroup col").length == 12) {
                     $($("#secondDashboardTableHeader table colgroup col")[1]).remove();
@@ -200,6 +226,8 @@ function drawChart() {
                 colspan = 3;
             }
         } else {
+            tableViewProjectIds = [];
+            idsData = tableViewProjectIds;
             if($("#secondDashboardTableHeader table colgroup col").length != 12) {
                 $($("#secondDashboardTableHeader table colgroup col")[0]).after("<col width=\"10%\">");
                 $($("#secondDashboardTableHeader table colgroup col")[1]).after("<col width=\"10%\">");
@@ -223,6 +251,7 @@ function drawChart() {
                 totalMarketAvgCost += parseFloat(this.marketAvgCost.replace(reg1,"").replace(reg2,""));
                 totalMarketAvgDuration += parseFloat(this.marketAvgDuration);
                 $(chartTableTbody).append(getOneRow(i,this, type));
+                idsData.push(this.projectId);
             }
         });
         if(rowsNo > 0) {
@@ -241,7 +270,10 @@ function drawChart() {
         }
     }
 
-    function getOneRow(index, elem ,type){
+    function getOneRow(index, elem ,type, firstClass, isCostBreakDown, breakdownMap) {
+        if (!firstClass) {
+            firstClass = "alignLeft";
+        }
         var display = true , colspan="";
         var projectLink = "/direct/projectOverview.action?formData.projectId="+elem.directProjectId;
         var contestLink = "";
@@ -257,7 +289,7 @@ function drawChart() {
         if(index%2 == 0) {
             tr += "class=\"even\"";
         }
-        tr += "><td class=\"alignLeft\">"+ elem.date +"</td>";
+        tr += "><td class=\"" + firstClass + "\">"+ elem.date +"</td>";
         if(display) {
             tr += "<td class=\"alignLeft\"><span>"+ elem.customerName +"</span></td>";
             tr += "<td class=\"alignLeft\"><a href=\""+ projectLink +"\">"+ elem.projectName +"</a></td>";
@@ -268,6 +300,24 @@ function drawChart() {
         tr += "<td class=\"fontGreen\">"+ elem.marketAvgFullfilment +"%</td>";
         tr += "<td>$"+ elem.contestCost +"</td>";
         tr += "<td class=\"fontGreen\">$"+ elem.marketAvgCost +"</td>";
+        // render the cost break down data
+        if (isCostBreakDown) {
+            var breakdown = breakdownMap[parseInt(elem.projectId)];
+            if (!breakdown) {
+                breakdown = {contestFee : "0", prizes : "0.00", specReview : "0.00", review : "0.00", reliability : "0.00", digitalRun : "0.00",
+                    copilot : "0.00", build : "0.00", bugs : "0.00", misc : "0.00"};
+            }
+            tr += "<td>$" + breakdown.contestFee + "</td>";
+            tr += "<td>$" + breakdown.prizes + "</td>";
+            tr += "<td>$" + breakdown.specReview + "</td>";
+            tr += "<td>$" + breakdown.review + "</td>";
+            tr += "<td>$" + breakdown.reliability + "</td>";
+            tr += "<td>$" + breakdown.digitalRun + "</td>";
+            tr += "<td>$" + breakdown.copilot + "</td>";
+            tr += "<td>$" + breakdown.build + "</td>";
+            tr += "<td>$" + breakdown.bugs + "</td>";
+            tr += "<td>$" + breakdown.misc + "</td>";
+        }
         tr += "<td>"+ elem.contestDuration +"</td>";
         tr += "<td class=\"fontGreen\">"+ elem.marketAvgDuration +"</td></tr>";
         return tr;
@@ -312,7 +362,20 @@ function drawChart() {
        
         return false;
     });
-    
+
+    // check whether the category ids have been changed, we need to reload the market
+    // cost break down data if the category ids have been changed
+    function checkCategoryIds() {
+        var categoryIds = [];
+        $("input[name='formData.projectCategoryIds']:checked").each(function() {
+            categoryIds.push(parseInt(this.value));
+        });
+        if (oldProjectCategoryIds.toString() != categoryIds.toString()) {
+            marketBreakDownDirty = true;
+            oldProjectCategoryIds = categoryIds;
+        }
+    }
+
     $('#enterpriseDashboardSubmit').click(function() {
         // validate dates
         $('#validationErrors').html('');
@@ -327,7 +390,7 @@ function drawChart() {
             formData = formData.replace('&__multiselect_formData.projectCategoryIds=', '');
             formData = formData.replace('&__multiselect_formData.customerIds=', '');
             formData = formData.replace('&__multiselect_formData.billingAccountIds=', '');
-        
+
             loadStats(formData, 'dashboardEnterpriseAJAX');
 
             if($("a.btnTable").hasClass("active")){
@@ -375,7 +438,7 @@ function drawChart() {
     $('a.btnTable').click(function() {
         $('.btnArea a').removeClass('active');
         $(this).addClass('active');
-       	$('.visualization').addClass('noBorder');
+        $('.visualization').addClass('noBorder');
         $('#firstTableDataArea').show();
         $('.chartCollapse a.expand').html('Table View');
         $('.top,.chartWrapper,.tableResultFilter').hide();
@@ -391,6 +454,7 @@ function drawChart() {
         formData = formData.replace('&__multiselect_formData.customerIds=', '');
         formData = formData.replace('&__multiselect_formData.billingAccountIds=', '');
         $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
+        checkCategoryIds();
         $.ajax({
             type: 'get',
             url: formActionUrl,
@@ -403,6 +467,8 @@ function drawChart() {
                         jsonResult,
                         function(result){
                             tableViewData = result.contestStatus;
+                            contestTypeAvgCost = result.contestTypeAvgCost;
+                            tableViewProjectIdsDirty = true;
                             chartNormalTableView();
                         },
                         function(errorMessage) {
@@ -437,6 +503,7 @@ function drawChart() {
             formActionUrl = "dashboardEnterpriseTableViewCall";    
         }
         $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
+        checkCategoryIds();
         $.ajax({
             type: 'get',
             url: formActionUrl,
@@ -450,6 +517,9 @@ function drawChart() {
                         function(result){
                             tableViewData = result.contestStatus;
                             allContestData = result.allContestStatus;
+                            contestTypeAvgCost = result.contestTypeAvgCost;
+                            tableViewProjectIdsDirty = true;
+                            allContestProjectIdsDirty = true;
                             chartDrillTableView(timeRange, timeDimension, type);
                             $('#secondDashboardTableBody table').css('width', $('#secondDashboardTableHeader table').width());
                             secondTablePagination.dataInit("#secondDashboardTableBody table", $("#secondDashboardTableFooter select").val(), "#secondDashboardTableFooter");
@@ -466,6 +536,7 @@ function drawChart() {
     }
     function loadStats(formData, formActionUrl) {
         $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
+        checkCategoryIds();
         $.ajax({
                    type: 'get',
                    url:  formActionUrl,
@@ -490,6 +561,7 @@ function drawChart() {
                                             chartData['contest'] = result.contest;
                                             chartData['cost'] = result.cost;
                                             chartData['fulfill'] = result.fulfill;
+                                            contestTypeAvgCost = result.contestTypeAvgCost;
                                             parseChartData();
                                             renderChart();
                                             $('.chartSummary').effect("highlight", {'color' : '#E1F2FF'}, 3000);
@@ -507,6 +579,253 @@ function drawChart() {
 
     }
 
+    // expandView pop up
+    $("#contestDViewMock").overlay({
+        closeOnClick:false,
+        mask: {
+            color: '#000000',
+            loadSpeed: 200,
+            opacity: 0.6
+        },
+        top:"center",
+        close :"#contestDViewClose",
+        fixed : true,
+        target : $("#contestDViewPopup"),
+        onBeforeLoad : function(){
+            var wWid = $(window).width() > 1540?1500:$(window).width()-40;
+            var hHht = $(window).height() > 800 ? 750 :$(window).height()-50;
+            $("#contestDViewPopup").css("width", wWid + "px");
+            $("#contestDViewPopup").css("max-height", hHht + "px");
+            $("#contestDViewPopup .dashboardTable").css("max-height", hHht-100 + "px"); 
+        }
+     });
+    contestDViewApi =  $("#contestDViewMock").data("overlay");
+    $("#marketDViewMock").overlay({
+            closeOnClick:false,
+            mask: {
+                color: '#000000',
+                loadSpeed: 200,
+                opacity: 0.6
+            },
+            top:"center",
+            close :"#marketDViewClose",
+            fixed : true,
+            target : $("#marketDViewPopup"),
+            onBeforeLoad : function(){
+                var wWid = $(window).width() > 1540?1500:$(window).width()-40;
+                var hHht = $(window).height() > 800 ? 750 :$(window).height()-50;
+                $("#marketDViewPopup").css("width", wWid + "px");
+                $("#marketDViewPopup").css("max-height", hHht + "px");
+                $(".marketTable").css("max-height", hHht-100 + "px");
+            }
+     });
+    marketDViewApi =  $("#marketDViewMock").data("overlay");
+
+    /**
+     * Load contest break down data using ajax.
+     *
+     * @param projectIds the project ids of the contests
+     * @param viewType the view type, can be Customer or Market
+     */
+    function loadContestBreakDownData(projectIds, viewType) {
+        var data = {formData:{projectIds:projectIds}};
+        $.blockUI({ message: '<div id=loading> loading.... </div>' });
+        $.ajax({
+            type: 'get',
+            url: "dashboardGetCostBreakDownAJAX",
+            data: data,
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult(
+                    jsonResult,
+                    function(result){
+                        $.unblockUI();
+                        if (viewType == "Market") {
+                            allContestProjectIdsDirty = false;
+                            allContestBreakDownData = result;
+                        } else {
+                            tableViewProjectIdsDirty = false;
+                            tableViewBreakDownData = result;
+                        }
+                        renderContestBreakDown(viewType);
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                    });
+            }
+        });
+    }
+
+    /**
+     * Loads market cost break down data using ajax.
+     */
+    function loadMarketBreakDownData() {
+        var data = {formData:{projectCategoryIds:oldProjectCategoryIds}};
+        $.blockUI({ message: '<div id=loading> loading.... </div>' });
+        $.ajax({
+            type: 'get',
+            url: "dashboardGetCostBreakDownAJAX",
+            data: data,
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult(
+                    jsonResult,
+                    function(result){
+                        $.unblockUI();
+                        marketBreakDownDirty = false;
+                        marketBreakDownData = result;
+                        renderMarketBreakDown();
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                    });
+            }
+        });
+    }
+
+    /**
+     * Render the market cost break down data to the popup window.
+     */
+    function renderMarketBreakDown() {
+        var breakDownMap = [];
+        for (var i = 0; i < marketBreakDownData.length; i++) {
+            breakDownMap[marketBreakDownData[i].id] = marketBreakDownData[i];
+        }
+        var chartTableTbody = $(".marketBreakDownChart table tbody");
+        $(".marketBreakDownChart table tbody tr").remove();
+        var rowsNo = 0;
+
+        $("input[name='formData.projectCategoryIds']:checked").each(function(i) {
+            var projectCategoryId = parseInt(this.value);
+            var categoryName = $(this).parent().text();
+            var avgCost = contestTypeAvgCost["" + projectCategoryId];
+            if (!avgCost) {
+                avgCost = "0";
+            }
+            var breakdown = breakDownMap[projectCategoryId];
+            if (!breakdown) {
+                breakdown = {contestFee : "0", prizes : "0.00", specReview : "0.00", review : "0.00", reliability : "0.00", digitalRun : "0.00",
+                    copilot : "0.00", build : "0.00", bugs : "0.00", misc : "0.00"};
+            }
+            var tr = "<tr";
+            if (rowsNo % 2 == 0) {
+                tr += " class=\"even\"";
+            }
+            tr += ">";
+            tr += "<td class='first'>" + categoryName + "</td>";
+            tr += "<td class='fontGreen'>$" + avgCost + "</td>";
+            tr += "<td>$" + breakdown.contestFee + "</td>";
+            tr += "<td>$" + breakdown.prizes + "</td>";
+            tr += "<td>$" + breakdown.specReview + "</td>";
+            tr += "<td>$" + breakdown.review + "</td>";
+            tr += "<td>$" + breakdown.reliability + "</td>";
+            tr += "<td>$" + breakdown.digitalRun + "</td>";
+            tr += "<td>$" + breakdown.copilot + "</td>";
+            tr += "<td>$" + breakdown.build + "</td>";
+            tr += "<td>$" + breakdown.bugs + "</td>";
+            tr += "<td>$" + breakdown.misc + "</td></tr>";
+            $(chartTableTbody).append(tr);
+            
+            rowsNo++;
+        });
+        if (rowsNo == 0) {
+             var noNumTr = "<tr style=\"height:60px;\"><td colspan=\"12\" class=\"first\">NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>";
+            $(chartTableTbody).append(noNumTr);
+        }
+        attachTabeleSortEvent("fourth", "");
+        $("#fourthDashboardTableBody table").trigger("update");
+        marketDViewApi.load();
+    }
+
+    /**
+     * Render the contests cost break down data to the popup window.
+     *
+     * @param viewType the view type, can be Customer or Market
+     */
+    function renderContestBreakDown(viewType) {
+        var breakDownMap = [];
+        if (viewType == "Market") {
+            breakDownData = allContestBreakDownData;
+        } else {
+            breakDownData = tableViewBreakDownData;
+        }
+        for (var i = 0; i < breakDownData.length; i++) {
+            breakDownMap[breakDownData[i].id] = breakDownData[i];
+        }
+
+        var chartTableTbody = $(".costBreakDownChart table tbody");
+        $(".costBreakDownChart table tbody tr").remove();
+        var rowsNo = 0;
+        // data to render the cost breakdown table
+        var data = tableViewData;
+        if (viewType == "Market") {
+            data = allContestData;
+            if(!isAdmin) {
+                if($("#thirdDashboardTableBody table colgroup col").length == 22) {
+                    $($("#thirdDashboardTableBody table colgroup col")[1]).remove();
+                    $($("#thirdDashboardTableBody table colgroup col")[1]).remove();
+                    $($("#thirdDashboardTableBody table thead tr th")[1]).remove();
+                    $($("#thirdDashboardTableBody table thead tr th")[1]).remove();
+                }
+            }
+        } else {
+            if($("#thirdDashboardTableBody table colgroup col").length != 22) {
+                $($("#thirdDashboardTableBody table colgroup col")[0]).after("<col width=\"94px\">");
+                $($("#thirdDashboardTableBody table colgroup col")[1]).after("<col width=\"94px\">");
+                $($("#thirdDashboardTableBody table thead tr th")[0]).after("<th class=\"noBT\" rowspan=\"2\"><strong>Customer</strong></th>");
+                $($("#thirdDashboardTableBody table thead tr th")[1]).after("<th class=\"noBT\" rowspan=\"2\"><strong>Project</strong></th>");
+            }
+        }
+
+        $(data).each(function(i){
+            if($("a.btnTable").hasClass("active") || timeFilter(timeRange, this.date, timeDimension)) {
+                rowsNo++;
+                $(chartTableTbody).append(getOneRow(i, this, viewType, "first", true, breakDownMap));
+            }
+        });
+        if(rowsNo == 0) {
+            var noNumTr = "<tr style=\"height:60px;\"><td colspan=\"21\" class=\"first\">NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>";
+            $(chartTableTbody).append(noNumTr);
+        }
+        attachTabeleSortEvent("third", viewType);
+        $("#thirdDashboardTableBody table").trigger("update");
+        contestDViewApi.load();
+    }
+
+    /**
+     * Event handler for the Contest Cost BreakDown button.
+     */
+    $("a.contestDlink").click(function(event) {
+        event.stopPropagation();
+        if (viewType == "Market") {
+            dirty = allContestProjectIdsDirty;
+            projectIds = allContestProjectIds;
+        } else {
+            dirty = tableViewProjectIdsDirty;
+            projectIds = tableViewProjectIds;
+        }
+        if (dirty) {
+            loadContestBreakDownData(projectIds, viewType);
+        } else {
+            renderContestBreakDown(viewType);
+        }
+        return false;
+    });
+
+    /**
+     * Event handler for the Market Cost BreakDown button.
+     */
+    $("a.marketDlink").click(function(event) {
+        event.stopPropagation();
+        if (marketBreakDownDirty) {
+            loadMarketBreakDownData();
+        } else {
+            renderMarketBreakDown();
+        }
+        return false;
+    });
 }
 
 
@@ -514,25 +833,47 @@ $(document).ready(function() {
     //add the table sort function
     attachTabeleSortEvent = function (order,type) {
         var paginationObj = order == "first" ? firstTablePagination : secondTablePagination;
+        if (order == "third" || order == "fourth") {
+            paginationObj = null;
+        }
         var endtd = 5;
         if(!isAdmin && type == "Market") {
             endtd = 3;
+        }
+        if (order == "fourth") {
+            endtd = 12;
         }
         var myTextExtraction = function(node)
         {
             return $.trim($(node).text());
         }
 
-        $("#"+order+"DashboardTableBody table").tablesorter({
+        if (order != "fourth") {
+            $("#"+order+"DashboardTableBody table").tablesorter({
                 textExtraction: myTextExtraction,
                 headers :{
                     0: {
                         sorter: 'shortDate'
                     }
                 }
-        });
+            });
+        } else {
+            $("#"+order+"DashboardTableBody table").tablesorter({
+                textExtraction: myTextExtraction,
+                headers :{}
+            });
+        }
 
-        $("#"+order+"DashboardTableHeader table tr:first-child td").each(function(i){
+        var id = "#"+order+"DashboardTableHeader";
+        if (order == "third" || order == "fourth") {
+            id = "#"+order+"DashboardTableBody";
+        }
+        var firsel = id+" table tr:first-child td";
+        if (order == "third" || order == "fourth") {
+            firsel= id+" table thead tr:first-child th";
+        }
+        $(firsel).each(function(i){
+            $(this).unbind('click');
             if(i<endtd) {
                 var sortType = 0;
                 $(this).click(function() {
@@ -540,32 +881,41 @@ $(document).ready(function() {
                     $("#"+order+"DashboardTableBody table").trigger("sorton", [sorting]);
                     var rows =  $("#"+order+"DashboardTableBody table tbody tr");
                     rows.removeClass("even");
-                    rows.addClass("hide");
-                    for(var j=0 ;j<paginationObj.pagesize; j++){
-                        $(rows[j]).removeClass("hide");
+                    if (paginationObj) {
+                        rows.addClass("hide");
+                        for(var j=0 ;j<paginationObj.pagesize; j++){
+                           $(rows[j]).removeClass("hide");
+                        }
                     }
                     $("#"+order+"DashboardTableBody table tbody tr:even").addClass("even");
                 });
             }
         });
 
-        $("#"+order+"DashboardTableHeader table tr:last-child td").each(function(i){
-            var sortType = 0;
-            $(this).click(function() {
-                var sorting = [[i+endtd, (sortType++)%2]];
-                $("#"+order+"DashboardTableBody table").trigger("sorton", [sorting]);
-                var rows =  $("#"+order+"DashboardTableBody table tbody tr");
-                rows.removeClass("even");
-                rows.addClass("hide");
-                for(var j=0 ;j<paginationObj.pagesize; j++){
-                    $(rows[j]).removeClass("hide");
-                }
-                $("#"+order+"DashboardTableBody table tbody tr:even").addClass("even");
+        if (order != "fourth") {
+            var firsel = id+" table tr:last-child td";
+            if (order == "third") {
+                firsel = id+" table thead tr:last-child th";
+            }
+            $(firsel).each(function(i){
+                var sortType = 0;
+                $(this).unbind('click');
+                $(this).click(function() {
+                    var sorting = [[i+endtd, (sortType++)%2]];
+                    $("#"+order+"DashboardTableBody table").trigger("sorton", [sorting]);
+                    var rows =  $("#"+order+"DashboardTableBody table tbody tr");
+                    rows.removeClass("even");
+                    if (paginationObj) {
+                        rows.addClass("hide");
+                        for(var j=0 ;j<paginationObj.pagesize; j++){
+                           $(rows[j]).removeClass("hide");
+                        }
+                    }
+                    $("#"+order+"DashboardTableBody table tbody tr:even").addClass("even");
+                });
             });
-        });
+        }
     }
-
-
 
     //add pagination function for the table
     function paginationforContest (tableid, pagesize, paginationId) {
@@ -733,9 +1083,27 @@ $(document).ready(function() {
 
     attachTabeleSortEvent("first","");
 
-
+    var resizePopupId = -1;
+    /**
+     * Resize the popup windows to adapt for the new window size.
+     */
+    function resizePopup() {
+        resizePopupId = -1;
+        if (contestDViewApi && contestDViewApi.isOpened()) {
+            contestDViewApi.close();
+            setTimeout(function() {contestDViewApi.load();}, 300);
+        }
+        if (marketDViewApi && marketDViewApi.isOpened()) {
+            marketDViewApi.close();
+            setTimeout(function() {marketDViewApi.load();}, 300);
+        }
+    }
     $(window).resize(function(){
         $('#firstDashboardTableBody table').css('width', $('#firstDashboardTableHeader table').width());
         $('#secondDashboardTableBody table').css('width', $('#secondDashboardTableHeader table').width());
+        if (resizePopupId != -1) {
+            clearTimeout(resizePopupId);
+        }
+        resizePopupId = setTimeout(resizePopup, 100);
     });
 });

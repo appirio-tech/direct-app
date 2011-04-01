@@ -138,6 +138,10 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result type="json"/>
         </action>
+        <action name="dashboardGetCostBreakDownAJAX" method="getCostBreakDown" class="ajaxEnterpriseDashboardAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result type="json"/>
+        </action>
         <action name="dashboardEnterpriseTableViewCall" class="enterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result type="json"/>

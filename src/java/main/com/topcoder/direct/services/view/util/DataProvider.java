@@ -53,6 +53,7 @@ import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
@@ -213,9 +214,17 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Add method.</li>
  *   </ol>
  * </p>
+ * 
+ * <p>
+ * Version 2.6.1 (TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getDashboardCostBreakDown(long[], long[])} method to get the cost break down data for contests or
+ *     market.</li>
+ *   </ol>
+ * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues
- * @version 2.6.0
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme
+ * @version 2.6.1
  */
 public class DataProvider {
 
@@ -1534,6 +1543,55 @@ public class DataProvider {
         return map;
     }
 
+    /**
+     * <p>Gets the cost breakdown data for contests or markets.</p>
+     *
+     * @param projectIds the project ids of the contests
+     * @param projectCategoriesIds the project category ids of the market
+     * @return If projectIds is not null or empty, the cost breakdown data for contests will be returned. If
+     * projectCategoriesIds is not null or empty, the cost breakdown data for the market will be returned.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.6.1
+     */
+    public static List<DashboardCostBreakDownDTO> getDashboardCostBreakDown(long[] projectIds, long[] projectCategoriesIds) throws Exception {
+        List <DashboardCostBreakDownDTO> data = new ArrayList<DashboardCostBreakDownDTO>();
+        if ( (projectIds == null || projectIds.length == 0) && (projectCategoriesIds == null || projectCategoriesIds.length == 0) ) {
+            return data;
+        }
+        
+        DataAccess dataAccessor;
+        Request request = new Request();
+        String queryName;
+        if (projectCategoriesIds == null || projectCategoriesIds.length == 0) {
+            queryName = "dashboard_contest_cost_breakdown";
+            request.setProperty("pids", concatenate(projectIds, ", "));
+            dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        } else {
+            queryName = "dashboard_market_cost_breakdown";
+            request.setProperty("pcids", concatenate(projectCategoriesIds, ", "));
+            dataAccessor = new CachedDataAccess(MaxAge.THREE_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        }
+        request.setContentHandle(queryName);
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            DashboardCostBreakDownDTO dto = new DashboardCostBreakDownDTO();
+            dto.setId(row.getLongItem("id"));
+            dto.setContestFee(row.getDoubleItem("contest_fee"));
+            dto.setPrizes(row.getDoubleItem("prizes"));
+            dto.setSpecReview(row.getDoubleItem("spec_review"));
+            dto.setReview(row.getDoubleItem("review"));
+            dto.setReliability(row.getDoubleItem("reliability"));
+            dto.setDigitalRun(row.getDoubleItem("digital_run"));
+            dto.setCopilot(row.getDoubleItem("copilot"));
+            dto.setBuild(row.getDoubleItem("build"));
+            dto.setBugs(row.getDoubleItem("bugs"));
+            dto.setMisc(row.getDoubleItem("misc"));
+            data.add(dto);
+        }
+        
+        return data;
+    }
+    
     /**
      * <p>Gets the enterprise-level statistics of contests posted within specified period of time.</p>
      *
