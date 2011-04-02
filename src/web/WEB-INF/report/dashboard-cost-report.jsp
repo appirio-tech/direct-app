@@ -285,7 +285,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="13">
+        <th class="tableTitle" colspan="8">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Cost Details</span>
         </th>
