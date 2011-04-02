@@ -511,6 +511,9 @@ td.fontGreen{
     background: url("../images/dashboard-table-bg-2.png") repeat-x left top;
     border: 1px solid #A9ACAE;
 }
+.expandViewPopup .nobg {
+    background: none !important;
+}
 .expandViewPopup .dashboardTable td.first,.expandViewPopup .dashboardTable th.first{
     text-align:center;
     vertical-align:middle;
@@ -544,4 +547,7 @@ td.fontGreen{
 }
 #thirdDashboardTableBody {
     border-bottom: 1px solid #D0D0D1;
+}
+#breakdownBody tbody td {
+    padding: 5px;
 }

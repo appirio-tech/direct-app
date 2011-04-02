@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
@@ -8,8 +8,16 @@ import java.io.Serializable;
 /**
  * <p>A form bean providing the form data submitted by user for getting the cost report.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (TopCoder Cockpit - Cost Report Assembly)
+ * <p>
+ * Version 1.0.1 (TC Cockpit Cost Report Update Cost Breakdown Assembly) change note:
+ * <ol>
+ * <li>Added {@link #showBreakdown} property to indicate whether to export the cost break down,
+ * also the getter/setter were added.</li>
+ * </ol>
+ * </p>
+ *
+ * @author flexme
+ * @version 1.0.1 (TopCoder Cockpit - Cost Report Assembly)
  */
 public class DashboardCostReportForm implements Serializable {
 
@@ -53,6 +61,14 @@ public class DashboardCostReportForm implements Serializable {
      * <code>Excel</code> format or not.</p>
      */
     private boolean excel;
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether the cost break down data should display in
+     * the cost report.</p>
+     * 
+     * @since 1.0.1
+     */
+    private boolean showBreakdown;
 
     /**
      * <p>Constructs new <code>DashboardCostReportForm</code> instance. This implementation does nothing.</p>
@@ -203,5 +219,25 @@ public class DashboardCostReportForm implements Serializable {
      */
     public void setExcel(boolean excel) {
         this.excel = excel;
+    }
+
+    /**
+     * Gets the flag indicating whether the cost breakdown data should display in the report.
+     *
+     * @return true if the cost breakdown data should display in the report, false otherwise.
+     * @since 1.0.1
+     */
+    public boolean isShowBreakdown() {
+        return showBreakdown;
+    }
+
+    /**
+     * Sets the flag indicating whether the cost breakdown data should display in the report.
+     * 
+     * @param showBreakdown true if the cost breakdown data should display in the report, false otherwise.
+     * @since 1.0.1
+     */
+    public void setShowBreakdown(boolean showBreakdown) {
+        this.showBreakdown = showBreakdown;
     }
 }

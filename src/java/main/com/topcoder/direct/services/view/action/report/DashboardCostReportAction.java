@@ -33,8 +33,14 @@ import java.util.*;
  *   </ol>
  * </p>
  *
- * @author Blues
- * @version 1.0 (TopCoder Cockpit - Cost Report Assembly)
+ * <p>Version 1.1.1 (TC Cockpit Cost Report Update Cost Breakdown Assembly) change notes:
+ * <ol>
+ *     <li>Update {@link #execute()} to support exporting cost breakdown report to excel.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author Blues, flexme
+ * @version 1.1.1 (TopCoder Cockpit - Cost Report Assembly)
  */
 public class DashboardCostReportAction extends BaseDirectStrutsAction {
 
@@ -175,6 +181,7 @@ public class DashboardCostReportAction extends BaseDirectStrutsAction {
         String result = super.execute();
         if (SUCCESS.equals(result)) {
             if (getFormData().isExcel()) {
+                getViewData().setShowBreakdown(getFormData().isShowBreakdown());
                 return "download";
             }
         }

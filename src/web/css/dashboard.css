@@ -2538,7 +2538,10 @@ A{
 	font-size: 12px;
 	padding: 15px 0px 0px;
 }
-
+#breakdownBody .dataTables_info {
+	padding: 0px;
+	padding-left: 15px;
+}
 #notificationsContent .bottom2 {
     margin-top: 18px;
     *margin-top: 0px;	
@@ -4558,11 +4561,16 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
 	color: #000;
 }
 
+#breakdownBody TH.tableColumn {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
 #pipelineReportArea {
     background: url(../images/container2_bottom.png) repeat-x bottom;
 }
 
-#costReportSection {
+#costReportSection, #breakdownBody {
     background: url(../images/container2_bottom.png) repeat-x bottom;
 }
 
@@ -4593,7 +4601,9 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
 #billingCostReportSection div.panel {
     padding: 8px 50px 8px 0;
 }
-
+#breakdownBody div.panel {
+    padding: 8px 50px 8px 0;
+}
 #pipelineDetails_length select {
     margin-top: 6px;
 }
@@ -4621,7 +4631,7 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     padding-right: 5px;
 }
 
-#costReportAggregationArea th.viewType {
+#costReportAggregationArea th.viewType, #costDetails th.viewType {
     text-align: right;
     padding-right: 5px;
 }

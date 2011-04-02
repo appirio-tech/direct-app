@@ -1,13 +1,17 @@
 /**
- * AUTHOR: Blues
- * VERSION: 1.1 (TopCoder Cockpit - Cost Report Assembly)
+ * AUTHOR: Blues, flexme
+ * VERSION: 1.2 (TopCoder Cockpit - Cost Report Assembly)
  *
  * Version 1.1 change: add toggle trigger for billing cost report.
  *
+ * Version 1.2 (TC Cockpit Cost Report Update Cost Breakdown Assembly) change: add support for the cost breakdown
+ *  report view.
+ * 
  * Submits the cost report form and trigger cost report excel download.
  */
-function getCostReportAsExcel() {
+function getCostReportAsExcel(showBreakdown) {
     $('#formDataExcel').val("true");
+    $('#formDataShowBreakdown').val(showBreakdown);
     document.dashboardCostReportForm.submit();
 }
 
@@ -221,5 +225,173 @@ $(document).ready(function() {
             }
         });
 
+    });
+
+    // expandView pop up
+    $("#contestDViewMock").overlay({
+        closeOnClick:false,
+        mask: {
+            color: '#000000',
+            loadSpeed: 200,
+            opacity: 0.6
+        },
+        top:"center",
+        close :"#contestDViewClose",
+        fixed : true,
+        target : $("#contestDViewPopup"),
+        onBeforeLoad : function(){
+            var wWid = $(window).width() > 1540?1500:$(window).width()-40;
+            var hHht = $(window).height() > 800 ? 750 :$(window).height()-50;
+            $("#contestDViewPopup").css("width", wWid + "px");
+            $("#contestDViewPopup").css("max-height", hHht + "px");
+            $("#contestDViewPopup .dashboardTable").css("max-height", hHht-100 + "px"); 
+        },
+        onClose : function() {
+            $("#costDetailsViewType").val("default");
+        }
+     });
+    contestDViewApi =  $("#contestDViewMock").data("overlay");
+    $("#costDetailsViewType").val("default");
+    // a flag indicates whether the cost break down data has been loaded
+    var breakdownLoaded = false;
+
+    /**
+     * Loads the cost breakdown data for the specified projects using AJAX.
+     * 
+     * @param projectIds the id of the specified projects
+     */
+    function loadBreakdownData(projectIds) {
+        var data = {formData:{projectIds:projectIds}};
+        $.blockUI({ message: '<div id=loading> loading.... </div>' });
+        $.ajax({
+            type: 'get',
+            url: "dashboardGetCostBreakDownAJAX",
+            data: data,
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult(
+                    jsonResult,
+                    function(result){
+                        $.unblockUI();
+                        contestDViewApi.load();
+                        breakdownLoaded = true;
+                        var breakDownMap = [];
+                        for (var i = 0; i < result.length; i++) {
+                            breakDownMap[result[i].id] = result[i];
+                        }
+                        $("#breakdownBody table tbody tr").each(function() {
+                            var projectId = parseInt($(this).attr("rel"));
+                            var breakdown = breakDownMap[projectId];
+                            if (!breakdown) {
+                                breakdown = ["0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
+                            } else {
+                                breakdown = [breakdown.prizes, breakdown.specReview, breakdown.review, breakdown.reliability,
+                                    breakdown.digitalRun, breakdown.copilot, breakdown.build, breakdown.bugs, breakdown.misc];
+                            }
+                            $(this).children("td:not(:last)").each(function(i) {
+                                if (i >= 10) {
+                                    $(this).html("$" + breakdown[i - 10]);
+                                }
+                            });
+                        });
+
+                        // bind sort event
+                        var myTextExtraction = function(node) {
+                            return $.trim($(node).text());
+                        }
+                        $("#breakdownBody table").tablesorter({
+                            textExtraction: myTextExtraction,
+                            headers :{
+                                    6: {
+                                        sorter: 'shortDate'
+                                    }
+                                }
+                            });
+                        $("#breakdownBody table th").each(function(i) {
+                            var sortType = 0;
+                            $(this).unbind('click');
+                            $(this).click(function() {
+                                var sorting = [[i, (sortType++)%2]];
+                                $("#breakdownBody table").trigger("sorton", [sorting]);
+                                var rows = $("#breakdownBody table tbody tr");
+                                rows.removeClass("alt");
+                                $("#breakdownBody table tbody tr:odd").addClass("alt");
+                            });
+                        });
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                    });
+            }
+        });
+    }
+
+    // bind change event to the view type dorpdown
+    $("#costDetailsViewType").change(function() {
+        if ($(this).val() == "breakdown") {
+            if (!breakdownLoaded) {
+                // load the cost breakdown data
+                var tbody = $("#breakdownBody table tbody");
+                tbody.children("tr").remove();
+                var oldval = $("#dataTableLength").val();
+                $("#dataTableLength").val(-1);
+                $("#dataTableLength").trigger("change");
+                var trs = $("#costDetails tbody tr");
+                var projectIds = [];
+                trs.each(function(i) {
+                    var projectId = parseInt($(this).attr("id").substr(8));
+                    if (!isNaN(projectId)) {
+                        projectIds.push(projectId);
+                        var classes = "pipelineDetailsRow";
+                        if (i % 2 == 1) {
+                            classes = "pipelineDetailsRow alt";
+                        }
+                        var tr = $("<tr class='" + classes + "' rel='" + projectId + "'></tr>");
+                        $(this).children("td:not(:last)").each(function() {
+                            tr.append("<td>" + $(this).text() + "</td>");
+                        });
+                        for (var i = 0; i < 9; i++)
+                        {
+                            tr.append("<td></td>");
+                        }
+                        tr.append("<td>" + $(this).children("td:last").text() + "</td>");
+                        tbody.append(tr);
+                    }
+                });
+                if (projectIds.length == 0) {
+                    tbody.append("<tr><td class='dataTables_empty' valign='top' colspan='20'>No matching records found</td></tr>");
+                    contestDViewApi.load();
+                }
+                $("#breakdown_costDetails_info").html("Total " + projectIds.length + " entries");
+                $("#dataTableLength").val(oldval);
+                $("#dataTableLength").trigger("change");
+
+                if (projectIds.length > 0) {
+                    loadBreakdownData(projectIds);
+                }
+            } else {
+                contestDViewApi.load();
+            }
+        }
+    });
+
+    var resizePopupId = -1;
+    /**
+     * Dynamic resize the popup windows to adapt for the new window size.
+     */
+    function resizePopup() {
+        resizePopupId = -1;
+        if (contestDViewApi && contestDViewApi.isOpened()) {
+            contestDViewApi.close();
+            setTimeout(function() {contestDViewApi.load();}, 300);
+        }
+    }
+    // bind resize event to window so that we can dynamic resize the popup windows.
+    $(window).resize(function(){
+        if (resizePopupId != -1) {
+            clearTimeout(resizePopupId);
+        }
+        resizePopupId = setTimeout(resizePopup, 100);
     });
 });

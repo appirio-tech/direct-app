@@ -1,10 +1,12 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.costreport;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.ReportType;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.excel.Row;
 import com.topcoder.excel.Sheet;
 import com.topcoder.excel.Workbook;
@@ -19,6 +21,8 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,12 +37,36 @@ import java.util.Map;
  * It also contains the input stream to serialize cost details report data.
  * </p>
  *
- * @author TCSDEVELOPER
+ * <p>
+ * Version 1.0.1 (TC Cockpit Cost Report Update Cost Breakdown Assembly) change note:
+ * <ol>
+ * <li>Added {@link #showBreakdown} property to indicate whether to export the cost break down,
+ * also the getter/setter were added.</li>
+ * <li>Added {@link #getExcelFileName()} method to return the excel file name when exporting the report.</li>
+ * <li>Updated {@link #insertSheetData(Sheet)} method to support exporting cost breakdown data to excel.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author Blues, flexme
  * @version  1.0 (TopCoder Cockpit - Cost Report Assembly)
  *
  */
 public class CostReportDTO extends CommonDTO implements Serializable {
 
+    /**
+     * Represents the excel file name when exporting cost report.
+     *
+     * @since 1.0.1
+     */
+    private static final String COST_REPORT_EXCEL_FILE_NAME = "cost_report.xls";
+    
+    /**
+     * Represents the excel file name when exporting cost breakdown report.
+     *
+     * @since 1.0.1
+     */
+    private static final String COST_BREAKDOWN_REPORT_EXCEL_FILE_NAME = "cost_report_breakdown.xls";
+    
     /**
      * The project aggregation cost report data.
      */
@@ -94,6 +122,14 @@ public class CostReportDTO extends CommonDTO implements Serializable {
      * displayed.</p>
      */
     private boolean showJustForm;
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether the cost break down data should display in
+     * the cost report.</p>
+     * 
+     * @since 1.0.1
+     */
+    private boolean showBreakdown;
 
     /**
      * Gets the project aggregation cost report data.
@@ -303,6 +339,26 @@ public class CostReportDTO extends CommonDTO implements Serializable {
     }
 
     /**
+     * Gets the flag indicating whether the cost breakdown data should display in the report.
+     *
+     * @return true if the cost breakdown data should display in the report, false otherwise.
+     * @since 1.0.1
+     */
+    public boolean isShowBreakdown() {
+        return showBreakdown;
+    }
+
+    /**
+     * Sets the flag indicating whether the cost breakdown data should display in the report.
+     * 
+     * @param showBreakdown true if the cost breakdown data should display in the report, false otherwise.
+     * @since 1.0.1
+     */
+    public void setShowBreakdown(boolean showBreakdown) {
+        this.showBreakdown = showBreakdown;
+    }
+
+    /**
      * <p>Gets the excel file download stream for cost report.</p>
      *
      * @return the download stream.
@@ -334,7 +390,7 @@ public class CostReportDTO extends CommonDTO implements Serializable {
      *
      * @param sheet the sheet.
      */
-    private void insertSheetData(Sheet sheet) {
+    private void insertSheetData(Sheet sheet) throws Exception {
         // the date format used for displaying 'completion date'
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -343,59 +399,131 @@ public class CostReportDTO extends CommonDTO implements Serializable {
 
         // set up the sheet header first
         Row row = sheet.getRow(1);
-        row.getCell(1).setStringValue("Customer");
-        row.getCell(2).setStringValue("Billing");
-        row.getCell(3).setStringValue("Project");
-        row.getCell(4).setStringValue("Contest");
-        row.getCell(5).setStringValue("Contest Type");
-        row.getCell(6).setStringValue("Status");
-        row.getCell(7).setStringValue("Completion Date");
-        row.getCell(8).setStringValue("Contest Fee");
-        row.getCell(9).setStringValue("Estimated Member Cost");
-        row.getCell(10).setStringValue("Actual Member Cost");
-        row.getCell(11).setStringValue("Total");
-
+        int index = 1;
+        row.getCell(index++).setStringValue("Customer");
+        row.getCell(index++).setStringValue("Billing");
+        row.getCell(index++).setStringValue("Project");
+        row.getCell(index++).setStringValue("Contest");
+        row.getCell(index++).setStringValue("Contest Type");
+        row.getCell(index++).setStringValue("Status");
+        row.getCell(index++).setStringValue("Completion Date");
+        row.getCell(index++).setStringValue("Contest Fee");
+        row.getCell(index++).setStringValue("Estimated Member Cost");
+        row.getCell(index++).setStringValue("Actual Member Cost");
+        if (isShowBreakdown()) {
+            row.getCell(index++).setStringValue("Prizes");
+            row.getCell(index++).setStringValue("Spec Review");
+            row.getCell(index++).setStringValue("Review");
+            row.getCell(index++).setStringValue("Reliability");
+            row.getCell(index++).setStringValue("Digital Run");
+            row.getCell(index++).setStringValue("Copilot");
+            row.getCell(index++).setStringValue("Build");
+            row.getCell(index++).setStringValue("Bugs");
+            row.getCell(index++).setStringValue("Misc");
+        }
+        row.getCell(index++).setStringValue("Total");
+        
         // insert sheet data from 2nd row
         int rowIndex = 2;
 
+        Map<Long, DashboardCostBreakDownDTO> breakdownMap = new HashMap<Long, DashboardCostBreakDownDTO>();
+        if (isShowBreakdown()) {
+            long[] projectIds = new long[getCostDetails().size()];
+            for (int i = 0; i < getCostDetails().size(); i++) {
+                projectIds[i] = getCostDetails().get(i).getContest().getId();
+            }
+            List<DashboardCostBreakDownDTO> breakDown = DataProvider.getDashboardCostBreakDown(projectIds, null);
+            for (DashboardCostBreakDownDTO data : breakDown) {
+                breakdownMap.put(data.getId(), data);
+            }
+        }
         for (CostDetailsDTO costDetail : getCostDetails()) {
             row = sheet.getRow(rowIndex++);
 
+            index = 1;
             // set the customer
-            row.getCell(1).setStringValue(costDetail.getClient().getName());
+            row.getCell(index++).setStringValue(costDetail.getClient().getName());
 
             // set the billing account name
-            row.getCell(2).setStringValue(costDetail.getBilling().getName());
+            row.getCell(index++).setStringValue(costDetail.getBilling().getName());
 
             // set the project name
-            row.getCell(3).setStringValue(costDetail.getProject().getName());
+            row.getCell(index++).setStringValue(costDetail.getProject().getName());
 
             // set the contest name
-            row.getCell(4).setStringValue(costDetail.getContest().getName());
+            row.getCell(index++).setStringValue(costDetail.getContest().getName());
 
             // set the contest type
-            row.getCell(5).setStringValue(costDetail.getContestType().getName());
+            row.getCell(index++).setStringValue(costDetail.getContestType().getName());
 
             // set the status
-            row.getCell(6).setStringValue(costDetail.getStatus());
+            row.getCell(index++).setStringValue(costDetail.getStatus());
 
             // set the completion date
-            row.getCell(7).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
+            row.getCell(index++).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
 
             // set the contest fee
-            row.getCell(8).setStringValue(moneyFormatter.format(costDetail.getContestFee()));
+            row.getCell(index++).setStringValue(moneyFormatter.format(costDetail.getContestFee()));
 
             // set the estimated member cost
-            row.getCell(9).setStringValue(moneyFormatter.format(costDetail.getEstimatedCost()));
+            row.getCell(index++).setStringValue(moneyFormatter.format(costDetail.getEstimatedCost()));
 
 
             // set the actual member cost, the 'active' and 'scheduled' contest does not have actual member cost
             if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
-                row.getCell(10).setStringValue(moneyFormatter.format(costDetail.getActualCost()));
+                row.getCell(index).setStringValue(moneyFormatter.format(costDetail.getActualCost()));
             }
+            index++;
 
+            if (isShowBreakdown()) {
+                DashboardCostBreakDownDTO breakdown = breakdownMap.get(costDetail.getContest().getId());
+                if (breakdown != null) {
+                    // set Prizes cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getPrizes()));
+                    
+                    // set Spec Review cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getSpecReview()));
+                    
+                    // set Review cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getReview()));
+                    
+                    // set Reliability cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getReliability()));
+                    
+                    // set Digital Run cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getDigitalRun()));
+                    
+                    // set Copilot cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getCopilot()));
+                    
+                    // set Build cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getBuild()));
+                    
+                    // set Bugs cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getBugs()));
+                    
+                    // set Misc cost
+                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getMisc()));
+                } else {
+                    index += 9;
+                }
+            }
             // set the total cost
-            row.getCell(11).setStringValue(moneyFormatter.format(costDetail.getTotal()));
+            row.getCell(index++).setStringValue(moneyFormatter.format(costDetail.getTotal()));
+        }
+    }
+
+    /**
+     * Return the excel file name when exporting the report.
+     * 
+     * @return the excel file name
+     * @since 1.0.1
+     */
+    public String getExcelFileName() {
+        if (isShowBreakdown()) {
+            return COST_BREAKDOWN_REPORT_EXCEL_FILE_NAME;
+        } else {
+            return COST_REPORT_EXCEL_FILE_NAME;
         }
     }
 }

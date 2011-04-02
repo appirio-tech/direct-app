@@ -1,7 +1,10 @@
 <%--
-  - Author: TCSDEVELOPER
+  - Author: Blues, flexme
   - Version: 1.0 ((TopCoder Cockpit - Cost Report Assembly)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
+  - - Add a popup window to support the cost breakdown data.
   -
   - Description: This page renders the view for cost report including form and report data.
   -
@@ -18,6 +21,7 @@
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-cost-report.js"></script>
+	<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <link rel="stylesheet" href="/css/dashboard-enterprise.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/datepicker.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.multiSelect.css" media="all" type="text/css"/>
@@ -49,6 +53,7 @@
     <s:form method="get" action="dashboardGetCostReport" namespace="/"
             id="dashboardCostReportForm">
         <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
+        <s:hidden name="formData.showBreakdown" id="formDataShowBreakdown" value="false"/>
         <div id="costReportFilters" class="filterLinkArea">
         	<div id="costReportFilterShowControl">
             <a class="fiterButton" href="javascript:">Filters</a>
@@ -284,6 +289,12 @@
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Cost Details</span>
         </th>
+        <th class="tableTitle viewType" colspan="3">
+            <select id="costDetailsViewType">
+                <option value="default">Default View</option>
+                <option value="breakdown">Cost Breakdown View</option>
+            </select>
+        </th>
     </tr>
     <tr>
         <th class="tableColumn">&nbsp;Customer&nbsp;</th>
@@ -302,7 +313,7 @@
     <tbody>
     <c:forEach items="${viewData.costDetails}" var="item" varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-        <tr class="${rowStyle} pipelineDetailsRow">
+        <tr class="${rowStyle} pipelineDetailsRow" id="contest_${item.contest.id}">
             <td>
                 <c:out value="${item.client.name}"/>
             </td>
@@ -349,7 +360,7 @@
 
 <div class="panel">
     <!-- this area contains the print, export to excel, export to pdf links -->
-    <a href="javascript:getCostReportAsExcel();"
+    <a href="javascript:getCostReportAsExcel(false);"
        class="exportExcel">Export to <strong>Excel</strong></a>
 </div>
 <!-- End .panel -->
@@ -376,6 +387,57 @@
 
 <jsp:include page="/WEB-INF/includes/popups.jsp"/>
 
+<div class="popups">
+    <div class="expandViewPopup hide" id="contestDViewPopup">
+        <div class="close">
+            <a href="javascript:void(0)" id="contestDViewClose"></a>.
+        </div>
+        <div class="popContent">
+            <h2>Cost Details</h2>
+            <div class="dashboardTable costTable nobg">
+                <div id="breakdownBody" class="tableWrapper">
+                    <table cellpadding="0" cellspacing="0" class="pipelineStats">
+                        <thead>
+                            <tr>
+                                <th class="tableColumn sorting">Customer</th>
+                                <th class="tableColumn sorting_desc">Billing</th>
+                                <th class="tableColumn sorting">Project</th>
+                                <th class="tableColumn sorting">Contest</th>
+                                <th class="tableColumn sorting">Contest Type</th>
+                                <th class="tableColumn sorting">Status</th>
+                                <th class="tableColumn sorting">Completion Date</th>
+                                <th class="tableColumn sorting">Contest Fee</th>
+                                <th class="tableColumn sorting">Estimated Member Cost</th>
+                                <th class="tableColumn sorting">Actual Member Cost</th>
+                                <th class="tableColumn sorting">Prizes</th>
+                                <th class="tableColumn sorting">Spec Review</th>
+                                <th class="tableColumn sorting">Review</th>
+                                <th class="tableColumn sorting">Reliability</th>
+                                <th class="tableColumn sorting">Digital Run</th>
+                                <th class="tableColumn sorting">Copilot</th>
+                                <th class="tableColumn sorting">Build</th>
+                                <th class="tableColumn sorting">Bugs</th>
+                                <th class="tableColumn sorting">Misc</th>
+                                <th class="tableColumn sorting">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div class="panel">
+                        <div class="dataTables_info" id="breakdown_costDetails_info"></div>
+                        <!-- this area contains the print, export to excel, export to pdf links -->
+                        <a href="javascript:getCostReportAsExcel(true);"
+                           class="exportExcel">Export to <strong>Excel</strong></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hide handler">
+        <a href="#" id="contestDViewMock"></a>
+    </div>
+</div>
 </body>
 <!-- End #page -->
 
