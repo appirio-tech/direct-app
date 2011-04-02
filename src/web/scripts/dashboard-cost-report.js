@@ -240,9 +240,10 @@ $(document).ready(function() {
         fixed : true,
         target : $("#contestDViewPopup"),
         onBeforeLoad : function(){
-            var wWid = $(window).width() > 1540?1500:$(window).width()-40;
+            var wWid = $(window).width()-40;
             var hHht = $(window).height() > 800 ? 750 :$(window).height()-50;
-            $("#contestDViewPopup").css("width", wWid + "px");
+            $("#contestDViewPopup").css("width", "auto");
+            $("#contestDViewPopup").css("max-width", wWid + "px");
             $("#contestDViewPopup").css("max-height", hHht + "px");
             $("#contestDViewPopup .dashboardTable").css("max-height", hHht-100 + "px"); 
         },
