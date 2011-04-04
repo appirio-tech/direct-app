@@ -2684,6 +2684,7 @@ public class DataProvider {
 
             double contestFee = 0;
             double digitalRun = 0;
+            double reliability = 0;
 
             // get the contest fee of the contest
             if (row.getItem("contest_fee").getResultData() != null) {
@@ -2693,6 +2694,11 @@ public class DataProvider {
             // get the digital run points of the contest
             if (row.getItem("digital_run").getResultData() != null) {
                 digitalRun = row.getDoubleItem("digital_run");
+            }
+
+            // get the reliability payment of the contest
+            if (row.getItem("reliability").getResultData() != null) {
+                reliability = row.getDoubleItem("reliability");
             }
 
             List<BillingCostReportEntryDTO> entries;
@@ -2712,6 +2718,11 @@ public class DataProvider {
                 digitalRunEntry.setPaymentAmount(digitalRun);
                 digitalRunEntry.setPaymentDate(digitalRunEntry.getLaunchDate());
 
+                BillingCostReportEntryDTO reliabilityEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
+                reliabilityEntry.setPaymentType("Reliability");
+                reliabilityEntry.setPaymentAmount(reliability);
+                reliabilityEntry.setPaymentDate(reliabilityEntry.getCompletionDate());
+
                 // add contest fee if the payment type filter allows
                 if (paymentTypeFilter.contains(1L)) {
                     entries.add(contestFeeEntry);
@@ -2719,6 +2730,11 @@ public class DataProvider {
                 // add digital run entry if the payment type filter allows
                 if (paymentTypeFilter.contains(6L)) {
                     entries.add(digitalRunEntry);
+                }
+
+                // add reliability payment if the payment type filter allows
+                if (paymentTypeFilter.contains(5L) && reliability > 0) {
+                    entries.add(reliabilityEntry);
                 }
             } else {
                 entries = data.get(costDTO.getContest().getId());
