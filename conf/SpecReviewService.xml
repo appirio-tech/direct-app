@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.service.review.specification.ejb.SpecificationReviewServiceBean">
+        <Property name="@defaultSepcReviewerContestType1@">
+        	<Value>@defaultSepcReviewerUserId1@</Value>
+        </Property>
+    </Config>
+</CMConfig>

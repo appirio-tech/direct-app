@@ -422,6 +422,7 @@
                 <include name="ContestServiceFacade.xml" />
                 <include name="StudioService.xml" />
                 <include name="SpecReviewCommentService.xml" />
+                <include name="SpecReviewService.xml" />
                 <include name="ContestEligibilityValidationManagerBean.xml" />
                 <include name="DocumentManager.xml" />
                 <include name="emailTemplateConfig.xml" />
