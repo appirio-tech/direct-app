@@ -717,7 +717,7 @@ function drawChart() {
             tr += ">";
             tr += "<td class='first'>" + categoryName + "</td>";
             tr += "<td class='fontGreen'>$" + avgCost + "</td>";
-            tr += "<td>$" + breakdown.contestFee + "</td>";
+            
             tr += "<td>$" + breakdown.prizes + "</td>";
             tr += "<td>$" + breakdown.specReview + "</td>";
             tr += "<td>$" + breakdown.review + "</td>";

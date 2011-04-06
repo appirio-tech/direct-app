@@ -64,22 +64,25 @@
 
                 <div class="firstRow">
                     <div class="datePicker">
-                        <div>
-                            <span class="label">Start: </span>
-                            <s:textfield name="formData.startDate" readonly="true"
-                                         id="startDateCostReport"
-                                         cssClass="text date-pick"/>
-                        </div>
-                        <div>
-                            <span class="label">End: </span>
-                            <s:textfield name="formData.endDate" readonly="true"
-                                         id="endDateCostReport" cssClass="text date-pick"/>
-                        </div>
-                        <s:if test="hasActionErrors()">
-                            <div id="validationErrors">
-                                <s:actionerror/>
+                        <div class="columns contestType">
+                            <strong>Status</strong><br/>
+                            <div>
+                                <span class="label">Start: </span>
+                                <s:textfield name="formData.startDate" readonly="true"
+                                             id="startDateCostReport"
+                                             cssClass="text date-pick"/>
                             </div>
-                        </s:if>
+                            <div>
+                                <span class="label">End: </span>
+                                <s:textfield name="formData.endDate" readonly="true"
+                                             id="endDateCostReport" cssClass="text date-pick"/>
+                            </div>
+                            <s:if test="hasActionErrors()">
+                                <div id="validationErrors">
+                                    <s:actionerror/>
+                                </div>
+                            </s:if>
+                         </div?
                     </div>
 
                     <div class="timeDimension">

@@ -706,7 +706,7 @@
                     <colgroup>
                         <col width="140px" />
                         <col width="94px" />
-                        <col width="94px" />
+
                         <col width="70px" />
                         <col width="94px" />
                         <col width="70px"/>
@@ -722,7 +722,7 @@
                         <tr class="head">
                             <th  class="first noBT">Contest Type</th>
                             <th  class="noBT">Average Cost</th>
-                            <th  class="noBT">Contest Fee</th>
+
                             <th  class="noBT">Prizes</th>
                             <th  class="noBT">Spec Review</th>
                             <th  class="noBT">Review</th>
