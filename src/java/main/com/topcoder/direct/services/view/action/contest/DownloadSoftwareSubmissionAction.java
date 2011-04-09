@@ -62,7 +62,7 @@ public class DownloadSoftwareSubmissionAction extends BaseDirectStrutsAction {
     @Override
     protected void executeAction() throws Exception {
         // get the submission of the project
-        Submission[] submissions = getContestServiceFacade().getSoftwareProjectSubmissions(getCurrentUser(), projectId);
+        Submission[] submissions = getContestServiceFacade().getSoftwareProjectSubmissions(getCurrentUser(), projectId); 
         // check whether the project contains the submission the user want to download
         for (Submission sub : submissions) {
             if (sub.getUpload() != null && sub.getId() == submissionId) {
