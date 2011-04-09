@@ -228,6 +228,10 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
+        <action name="contestIssuesTracking" class="com.topcoder.direct.services.view.action.contest.ContestIssuesTrackingAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
+        </action>
         <action name="projectOverview" class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>

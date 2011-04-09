@@ -229,6 +229,12 @@
 @confluenceServiceAdminUserName@=scamp
 @confluenceServiceAdminUserPassword@=password
 
+###########################
+# IssueTrackingConfig.xml #
+###########################
+@jiraIssueURLPrefix@=http://www.dev.topcoder.com/bugs/browse/
+@jiraProfilePrefix@=http://www.dev.topcoder.com/bugs/secure/ViewProfile.jspa?name=
+
 ################################
 # ApplicationServer.properties #
 ################################

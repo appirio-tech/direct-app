@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -12,8 +12,13 @@ import com.topcoder.service.studio.MilestonePrizeData;
 /**
  * <p>A DTO providing the statistics on requested contest.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.0.1 Change notes (TC Cockpit Bug Tracking R1 Contest Tracking assembly):
+ * - Add property
+ *
+ *
+ * @author isv, Veve
+ * @version 1.0.1
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -82,6 +87,14 @@ public class ContestStatsDTO implements Serializable {
 	private Boolean isStudio;
 	
 	private String paymentReferenceId;
+
+
+    /**
+     * <p>A <code>int</code> providing the number of jira issues and bug races for contest.</p>
+     *
+     * @since 1.0.1
+     */
+    private int totalJiraIssuesNumber;
 	
 	/**
 	 * <p>A <code>String</code> providing the SVN module of the contest.</p>
@@ -298,4 +311,24 @@ public class ContestStatsDTO implements Serializable {
 	public void setSvn(String svn) {
 	    this.svn = svn;
 	}
+
+    /**
+     * <p>Gets the total number of jira issues and bug races for this contest.</p>
+     *
+     * @return the total number of jira issues and bug races for the contest.
+     * @since 1.0.1
+     */
+    public int getTotalJiraIssuesNumber() {
+        return totalJiraIssuesNumber;
+    }
+
+    /**
+     * <p>Sets the total number of jira issues and bug races for this contest.</p>
+     *
+     * @param totalJiraIssuesNumber the number to set.
+     * @since 1.0.1
+     */
+    public void setTotalJiraIssuesNumber(int totalJiraIssuesNumber) {
+        this.totalJiraIssuesNumber = totalJiraIssuesNumber;
+    }
 }

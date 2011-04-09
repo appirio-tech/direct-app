@@ -194,6 +194,7 @@
         <copy file="${ifxjdbcx.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ifxjdbc.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jira-service-axis-client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${jira-soapclient-all.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${mysql-connector-java-5.1.6-bin.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${payflow.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${paypal_base.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -406,6 +407,7 @@
                 <include name="app.properties" />
                 <include name="contestFees.xml" />
                 <include name="copilotFees.xml" />
+                <include name="IssueTrackingConfig.xml" />
                 <include name="contestTypes.xml" />
                 <include name="CockpitUserPersistence.xml" />
                 <include name="fileTypes.xml" />

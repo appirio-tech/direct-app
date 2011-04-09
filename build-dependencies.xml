@@ -520,6 +520,7 @@
   <property name="ifxjdbcx.jar" value="${ext_libdir}/informix/ifxjdbcx.jar" />
   <property name="ifxjdbc.jar" value="${ext_libdir}/informix/ifxjdbc.jar" />
   <property name="jira-service-axis-client.jar" value="${ext_libdir}/jira/3.13.4/jira-service-axis-client.jar" />
+  <property name="jira-soapclient-all.jar" value="${ext_libdir}/jira/jira-soapclient-all.jar" />
   <property name="mysql-connector-java-5.1.6-bin.jar" value="${ext_libdir}/mysql/mysql-connector-java-5.1.6-bin.jar" />
   <property name="payflow.jar" value="${ext_libdir}/payflow/4.3/payflow.jar" />
   <property name="paypal_base.jar" value="${ext_libdir}/paypal/paypal_base.jar" />
@@ -691,6 +692,7 @@
     <path refid="hibernate.libs" />
     <path refid="commons.libs" />
     <path refid="asm.libs" />
+    <pathelement location="${jira-soapclient-all.jar}" />
     <pathelement location="${servlet-api.jar}" />
     <pathelement location="${jaxb.jar}" />
     <pathelement location="${javaee.jar}" />

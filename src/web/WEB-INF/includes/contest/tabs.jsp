@@ -1,12 +1,15 @@
 <%--
-  - Author: isv
-  - Version: 1.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Veve
+  - Version: 1.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
   -
   - Version 1.1 (Submission Viewer Release 1 assembly) changes: linked Submissions tab to submission pages
   - for Studio contests.
+  - Version 1.2 (TC Cockpit Bug Tracking R1 Contest Tracking  assembly) changes: Add new tab for the issue tracking for
+  - software and studio contest.
+  -
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -62,6 +65,17 @@
                         </span>
                     </link:softwareSubmissionsList>
                 </if:isStudioContest>
+            </li>
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'issueTracking'}">class="on"</c:if>>
+
+                 <s:if test="isStudio == true">
+                    <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
+                    <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
+                </s:if>
+                <s:if test="isStudio == false">
+                    <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
+                    <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
+                </s:if>
             </li>
 			<li id="rReceiptTab" class="lastItem <c:choose>
 				<c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>

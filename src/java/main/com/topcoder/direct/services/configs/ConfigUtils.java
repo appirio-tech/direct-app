@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.configs;
 
@@ -17,9 +17,13 @@ import javax.xml.bind.JAXBContext;
  * Version 1.1 - TC Direct - Software Contest Creation Update Assembly 1.0 change notes:
  * - Add the logic to load copilot fees from the configuration file copilotFeeds.xml
  * </p>
+ * <p>
+ * Version 1.2 - TC Cockpit Bug Tracking R1 Contest Tracking Assembly 1.0 change notes:
+ * - Add the logic to load issue tracking configs from configuration file IssueTrackingConfig.xml
+ * </p>
  *
- * @author BeBetter, TCSDEVELOPER
- * @version 1.1
+ * @author BeBetter, Veve
+ * @version 1.2
  */
 public final class ConfigUtils {
     /**
@@ -80,6 +84,15 @@ public final class ConfigUtils {
      */
     private static Map<String, CopilotFee> copilotFees;
 
+    /**
+     * <p>
+     * Jira Issue Tracking configuration.
+     * </p>
+     *
+     * @since 1.2
+     */
+    private static IssueTrackingConfig issueTrackingConfig;
+
 
     static {
         try {
@@ -103,6 +116,7 @@ public final class ConfigUtils {
      * Initialize the configuration objects.
      * </p>
      * <p> version 1.1 changes - add load of copilot fees</p>
+     * <p> version 1.2 changes - add load of issue tracking configuration</p>
      */
     private static void init() throws Exception {
         JAXBContext studioTypesJaxbContext = JAXBContext.newInstance(StudioContestTypes.class);
@@ -154,6 +168,11 @@ public final class ConfigUtils {
         for(CopilotFee copilotFee : parsedFees.getCopilotFees()) {
             copilotFees.put(String.valueOf(copilotFee.getContestTypeId()), copilotFee);
         }
+
+        // load Jira issue tracking configuration
+        JAXBContext issueTrackingJaxbContext = JAXBContext.newInstance(IssueTrackingConfig.class);
+        issueTrackingConfig = (IssueTrackingConfig) issueTrackingJaxbContext.createUnmarshaller().unmarshal(
+                ConfigUtils.class.getResourceAsStream("/IssueTrackingConfig.xml"));
     }
 
     /**
@@ -262,4 +281,15 @@ public final class ConfigUtils {
         return copilotFees;
     }
 
+    /**
+     * <p>
+     * Gets the configuration for jira issue tracking.
+     * </p>
+     *
+     * @retrn the configuration of jira issue tracking.
+     * @since 1.2
+     */
+    public static IssueTrackingConfig getIssueTrackingConfig() {
+        return issueTrackingConfig;
+    }
 }

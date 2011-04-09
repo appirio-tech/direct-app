@@ -372,6 +372,202 @@ $(document).ready(function(){
         $('#SelectCopilotForm').submit();
         return false;
     });
+
+
+    /*
+     * ************************************************
+     * scripts for bug tracking - contest integration
+     * ************************************************
+     */
+
+
+    $('#issue .issueSelectionContent div.rowItem:odd').addClass('oddRowItem');
+
+
+    $('#issue .issueSelectionContent td').each(function() {
+        $(this).find('div.rowItem:last').addClass('lastRowItem');
+    });
+
+    $('#issue .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+
+    //view all for issue
+    /*$('#issue .checkbox').live('click',function(){
+     if($(this).attr('checked')){
+     $('#issue .hideDetails').show();
+     $('#issue .viewDetails').hide();
+     $('#issue .longDetails').show();
+     $('#issue .shortDetails').hide();
+     }else{
+     $('#issue .hideDetails').hide();
+     $('#issue .viewDetails').show();
+     $('#issue .longDetails').hide();
+     $('#issue .shortDetails').show();
+     }
+     });*/
+
+    $('#issue .hideDetails').live('click', function() {
+        $(this).hide();
+        $(this).parent().find('.viewDetails').show();
+        $(this).parent().parent().parent().find('.longDetails').hide();
+        $(this).parent().parent().parent().find('.shortDetails').show();
+    });
+
+    $('#issue .viewDetails').live('click', function() {
+        $(this).hide();
+        $(this).parent().find('.hideDetails').show();
+        $(this).parent().parent().parent().find('.shortDetails').hide();
+        $(this).parent().parent().parent().find('.longDetails').show();
+    });
+
+    function sortFunction() {
+        $('#issue .issueSelectionContent div.rowItem').removeClass('lastRowItem');
+        $('#issue .issueSelectionContent div.rowItem').removeClass('oddRowItem');
+        $('#issue .container2Opt .corner').removeClass('evencorner');
+        $('#issue .issueSelectionContent div.rowItem:visible:odd').addClass('oddRowItem');
+        $('#issue .issueSelectionContent td').each(function() {
+            $(this).find('div.rowItem').removeClass('lastRowItem');
+            $(this).find('div.rowItem:visible:last').addClass('lastRowItem');
+        });
+        $('#issue .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+        if ($('#issue .issueSelectionContent div.rowItem:visible').length % 2 != 0) {
+            $('#issue .container2Opt .corner').addClass('evencorner');
+        }
+    }
+
+    $('#issue .select2').change(function() {
+        if ($(this).val().match('All Issues')) {
+            $('#issue .rowItem').show();
+            sortFunction();
+        } else if ($(this).val().match('Unresolved Issues')) {
+            $('#issue .rowItem').show();
+            $('#issue .rowItem').each(function() {
+                $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
+                $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
+            });
+            sortFunction();
+        } else {
+            $('#issue .rowItem').hide();
+            $('#issue .rowItem').each(function() {
+                $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().show();
+                $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().show();
+            });
+            sortFunction();
+        }
+    });
+
+    if ($('#issue .issueSelectionContent div.rowItem').length % 2 != 0) {
+        $('#issue .container2Opt .corner').addClass('evencorner');
+    }
+
+    $('#bugRace .issueSelectionContent div.rowItem:odd').addClass('oddRowItem');
+    $('#bugRace .issueSelectionContent td').each(function() {
+        $(this).find('div.rowItem:last').addClass('lastRowItem');
+    });
+    $('#bugRace .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+
+    //view all for issue
+    $('.checkbox').live('click', function() {
+        if ($(this).attr('checked')) {
+            $('.hideDetails').show();
+            $('.viewDetails').hide();
+            $('.longDetails').show();
+            $('.shortDetails').hide();
+            $('.checkbox').attr('checked', true);
+        } else {
+            $('.hideDetails').hide();
+            $(' .viewDetails').show();
+            $('.longDetails').hide();
+            $('.shortDetails').show();
+            $('.checkbox').attr('checked', false);
+        }
+    });
+
+    $('.viewAll label').live('click', function() {
+        if ($(this).parent().find('.checkbox').attr('checked')) {
+            $('.hideDetails').hide();
+            $(' .viewDetails').show();
+            $('.longDetails').hide();
+            $('.shortDetails').show();
+            $('.checkbox').attr('checked', false);
+        } else {
+            $('.hideDetails').show();
+            $('.viewDetails').hide();
+            $('.longDetails').show();
+            $('.shortDetails').hide();
+            $('.checkbox').attr('checked', true);
+        }
+    });
+
+    $('#bugRace .hideDetails').live('click', function() {
+        $(this).hide();
+        $(this).parent().find('.viewDetails').show();
+        $(this).parent().parent().parent().find('.longDetails').hide();
+        $(this).parent().parent().parent().find('.shortDetails').show();
+    });
+
+    $('#bugRace .viewDetails').live('click', function() {
+        $(this).hide();
+        $(this).parent().find('.hideDetails').show();
+        $(this).parent().parent().parent().find('.shortDetails').hide();
+        $(this).parent().parent().parent().find('.longDetails').show();
+    });
+
+    function bugSortFunction() {
+        $('#bugRace .container2Opt .corner').removeClass('evencorner');
+        $('#bugRace .issueSelectionContent div.rowItem').removeClass('lastRowItem');
+        $('#bugRace .issueSelectionContent div.rowItem').removeClass('oddRowItem');
+        $('#bugRace .issueSelectionContent div.rowItem:visible:odd').addClass('oddRowItem');
+        $('#bugRace .issueSelectionContent td').each(function() {
+            $(this).find('div.rowItem').removeClass('lastRowItem');
+            $(this).find('div.rowItem:visible:last').addClass('lastRowItem');
+        });
+        $('#bugRace .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+        if ($('#bugRace .issueSelectionContent div.rowItem:visible').length % 2 != 0) {
+            $('#bugRace .container2Opt .corner').addClass('evencorner');
+        }
+    }
+
+    $('#bugRace .select2').change(function() {
+        if ($(this).val().match('All Bug Races') != null) {
+            $('#bugRace .rowItem').show();
+            bugSortFunction();
+        } else if ($(this).val().match('Ongoing Bug Races') != null) {
+            $('#bugRace .rowItem').show();
+            $('#bugRace .rowItem').each(function() {
+                $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
+                $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
+            });
+            bugSortFunction();
+        } else {
+            $('#bugRace .rowItem').hide();
+            $('#bugRace .rowItem').each(function() {
+                $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().show();
+                $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().show();
+            });
+            bugSortFunction();
+        }
+    });
+
+    if ($('#bugRace .issueSelectionContent div.rowItem').length % 2 != 0) {
+        $('#bugRace .container2Opt .corner').addClass('evencorner');
+    }
+
+
+    //tab click
+    $('.issueTab').live('click', function() {
+        $('#issue').show();
+        $('#bugRace').hide();
+        $('#issue .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+        $('#bugRace .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+    });
+
+    $('.bugRaceTab').live('click', function() {
+        $('#issue').hide();
+        $('#bugRace').show();
+        $('#issue .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+        $('#bugRace .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+    });
+
 });
 
 

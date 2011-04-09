@@ -21,6 +21,7 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.ProjectData;
@@ -141,9 +142,15 @@ import com.topcoder.shared.util.DBMS;
  * These methods are refactored from EnterpriseDashboardAction, DashboardCostReportAction and
  * DashboardBillingCostReport action for increasing the reuse.
  * </p>
+ * <p>
+ * Version 1.6.5 (TC Cockpit Bug Tracking R1 Contest Tracking assembly) change notes:
+ * <ul>
+ *      <li>Change method getContestStats to add the number of jira issues and bug races of the contest into contest
+ *      statistics</li>
+ * </ul>
  *
- * @author BeBetter, isv, flexme, Blues
- * @version 1.6.4
+ * @author BeBetter, isv, flexme, Blues, Veve
+ * @version 1.6.5
  */
 public final class DirectUtils {
     /**
@@ -289,6 +296,10 @@ public final class DirectUtils {
      * Gets the statistics for the specified contest.
      * </p>
      *
+     * <p>version 1.6.5 changes:
+     *  - add the total number of jira issues and bug races into contest statistics.
+     * </p>
+     *
      * @param currentUser a <code>TCSubject</code> representing the current user.
      * @param contestId a <code>long</code> providing the ID of a contest.
      * @param isStudio a flag indicates whether the contest to get is a studio contest.
@@ -389,6 +400,10 @@ public final class DirectUtils {
 
         dto.setContest(contest);
         dto.setIsStudio(isStudio);
+
+        // gets the number of issues and bug races for contest
+        dto.setTotalJiraIssuesNumber(JiraRpcServiceWrapper.getIssuesForContest(contestId, isStudio).size());
+
         return dto;
     }
 
