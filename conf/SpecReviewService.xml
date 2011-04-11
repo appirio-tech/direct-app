@@ -6,5 +6,11 @@
                 <Value>@defaultSepcReviewerUserId1@</Value>
             </Property>
         </Property>
+        <Property name="createForum">
+        	<Value>@createForum@</Value>
+        </Property>
+        <Property name="forumBeanProviderUrl">
+        	<Value>@forumBeanProviderUrl@</Value>
+        </Property>
     </Config>
 </CMConfig>
