@@ -185,7 +185,7 @@ $(document).ready(function(){
         }
     });
     makeMaxCharsTinyMCE('allDescription', 12000);
-    makeMaxCharsTinyMCE('privateDescription', 12000);
+    makeMaxCharsTinyMCE('privateDescription', 2048);
    
     /**
      * Initiate add project dialog.
@@ -508,8 +508,8 @@ function validateFields() {
     if (allDescription.length > 12000) {
         errors.push('Public Description can haave at most 12000 characters.');
     }
-    if (privateDescription.length > 12000) {
-        errors.push('Private Description can haave at most 12000 characters.');
+    if (privateDescription.length > 2048) {
+        errors.push('Private Description can haave at most 2048 characters.');
     }
 
     if(errors.length > 0) {

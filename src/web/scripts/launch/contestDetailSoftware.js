@@ -215,8 +215,8 @@ $(document).ready(function(){
         });
     }
     makeMaxCharsTinyMCE("swDetailedRequirements", 12000);
-    makeMaxCharsTinyMCE("swPrivateDescription", 12000);
-    makeMaxCharsTinyMCE("swGuidelines", 12000);
+    makeMaxCharsTinyMCE("swPrivateDescription", 2048);
+    makeMaxCharsTinyMCE("swGuidelines", 2048);
 });
 
 var ACTIVE_PROJECT_STATUS = 1;
