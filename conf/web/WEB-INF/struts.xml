@@ -98,6 +98,7 @@
                 <param name="actionName">dashboardActive</param>
                 <param name="namespace">/</param>
             </result>
+            <result name="forward" type="redirect">${forwardUrl}</result>
             <result name="input">/WEB-INF/index.jsp</result>
         </action>
         <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">
@@ -135,10 +136,6 @@
             <result type="json"/>
         </action>
         <action name="dashboardGetOptionsForBillingAJAX" method="getOptionsForBilling" class="ajaxEnterpriseDashboardAction">
-            <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
-        </action>
-        <action name="dashboardGetCostBreakDownAJAX" method="getCostBreakDown" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result type="json"/>
         </action>
@@ -227,10 +224,6 @@
                 <param name="inputName">viewData.inputStream</param>
                 <param name="bufferSize">1024</param>
             </result>
-        </action>
-        <action name="contestIssuesTracking" class="com.topcoder.direct.services.view.action.contest.ContestIssuesTrackingAction">
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
         </action>
         <action name="projectOverview" class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
@@ -328,7 +321,7 @@
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-cost-report.jsp</result>
             <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=${viewData.excelFileName}</param>
+                <param name="contentDisposition">attachment;filename=cost_report.xls</param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">viewData.inputStream</param>
                 <param name="bufferSize">1024</param>
@@ -340,26 +333,6 @@
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-cost-report.jsp</result>
-        </action>
-
-        <action name="dashboardGetBillingCostReport" class="dashboardBillingCostReportAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success">/WEB-INF/report/dashboard-billing-cost-report.jsp</result>
-            <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=billing_cost_report.xls</param>
-                <param name="contentType">application/vnd.ms-excel</param>
-                <param name="inputName">viewData.inputStream</param>
-                <param name="bufferSize">1024</param>
-            </result>
-        </action>
-
-         <action name="dashboardBillingCostReport" class="dashboardShowBillingCostReportAction">
-            <interceptor-ref name="baseStack"/>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="authnInterceptor"/>
-            <result name="success">/WEB-INF/report/dashboard-billing-cost-report.jsp</result>
         </action>
 
         <action name="dashboardPipelineReport" class="dashboardPipelineAction">
@@ -655,12 +628,5 @@
         <action name="createProject" class="createProjectAction">
             <result type="json" />
         </action>
-    </package>    
-    
-    <package name="preference" namespace="/preference" extends="base">                         
-        <action name="updatePreferences" class="updateUserPreferencesAction">
-            <result type="json" />
-        </action>            
     </package>
-
 </struts>

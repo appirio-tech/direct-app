@@ -14,8 +14,11 @@
  * Version 1.1.2 (TC Direct - Software Creation Update Assembly) Change notes:
  * - Update method populateTypeSection to populate copilots data.
  * 
+ * Version 1.1.3 (TCCC-2926)
+ * -  Add support to restrict the max characters of private description and public description.
+ *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1.2
+ * @version 1.1.3
  */
 $(document).ready(function(){
 	  //general initialization
@@ -195,20 +198,25 @@ $(document).ready(function(){
     $('#swDigitalRun').bind('keyup',function() {
        onDigitalRunChangeKeyUp();
     });
-    
-  tinyMCE.init({
-  	mode : "exact",
-  	elements : "swDetailedRequirements,swGuidelines,swPrivateDescription",
-  	plugins : "paste",
-  	theme : "advanced",  	
-	  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link",
-	  theme_advanced_buttons2 : "",
-	  theme_advanced_buttons3 : "",
-	  init_instance_callback : function() {
-	  	  $('table.mceLayout').css('width','100%');
-	  }
-  });
-      
+
+    function makeMaxCharsTinyMCE(obj, maxChars) {
+        tinyMCE.init({
+            mode : "exact",
+            elements : obj,
+            plugins : "paste",
+            theme : "advanced",      
+              theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link",
+              theme_advanced_buttons2 : "",
+              theme_advanced_buttons3 : "",
+              init_instance_callback : function() {
+                  $('table.mceLayout').css('width','100%');
+              },
+              handle_event_callback : maxCharsEventHandler(obj, maxChars)
+        });
+    }
+    makeMaxCharsTinyMCE("swDetailedRequirements", 12000);
+    makeMaxCharsTinyMCE("swPrivateDescription", 12000);
+    makeMaxCharsTinyMCE("swGuidelines", 12000);
 });
 
 var ACTIVE_PROJECT_STATUS = 1;

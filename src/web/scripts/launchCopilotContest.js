@@ -1,12 +1,17 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file is used to render elements to launch copilot contest page, and handle
  * events.
  * 
+ * Changes in 1.1 (TCCC-2926 and TCCC-2900 and TCCC-2965):
+ * - Add support to restrict the max characters of private description and public description.
+ * - Fix bug TCCC-2900.
+ * - Add support to allow setting customer contest prizes.
+ * 
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.1
  */
 $(document).ready(function(){
     /**
@@ -134,13 +139,36 @@ $(document).ready(function(){
         fixed : true,
         target : $("#saveAsDraft")
     });
-    
+
     /**
      * Initiate mce elements.
      */
+    function makeMaxCharsTinyMCE(obj, maxChars) {
+        tinyMCE.init({
+            mode : "exact",
+            elements : obj,
+            plugins :"pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
+
+            theme : "advanced",
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            theme_advanced_statusbar_location : "bottom",
+            theme_advanced_path : false,
+            theme_advanced_resizing : true,
+            theme_advanced_resize_horizontal : false,
+            
+            init_instance_callback : function() {
+                $('table.mceLayout').css('width','100%');
+            },
+            
+            handle_event_callback : maxCharsEventHandler(obj, maxChars)
+        });
+    }
+
     tinyMCE.init({
         mode : "exact",
-        elements : "allDescription, privateDescription, contestDescription,contestIntroduction,round1Info,round2Info,swDetailedRequirements,swGuidelines",
+        elements : "contestDescription,contestIntroduction,round1Info,round2Info,swDetailedRequirements,swGuidelines",
         plugins :"pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
 
         theme : "advanced",
@@ -156,6 +184,8 @@ $(document).ready(function(){
             $('table.mceLayout').css('width','100%');
         }
     });
+    makeMaxCharsTinyMCE('allDescription', 12000);
+    makeMaxCharsTinyMCE('privateDescription', 12000);
    
     /**
      * Initiate add project dialog.
@@ -209,9 +239,10 @@ $(document).ready(function(){
         
         // initiate private description section
         initiateSpecifyPanel("privateDescriptionSection", "description", true);
+
+        initiateSpecifyPanel("costs", "description", false);
         
-        // initiate cost section
-        $(".costs a").hide();
+     
         
         // initiate upload section
         initiateSpecifyPanel("uploadSection", "fileupload", true);
@@ -269,6 +300,21 @@ $(document).ready(function(){
      */
     $("#submitButton").click(function() {
         submitCompetition();
+    });
+
+    $('#swFirstPlace').bind('keyup',function() {
+        onFirstPlaceChangeKeyUp();
+        var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+        var feeObject = softwareContestFees[projectCategoryId];
+        var contestCost = getContestCost(feeObject, 'custom');
+        contestCost.reviewBoardCost = 0;
+        contestCost.reliabilityBonusCost = 0;
+        contestCost.drCost = 0;
+        fillPrizes();
+     });
+
+     $('input[name="prizeRadio"]').click(function(){
+        fillPrizes();
     });
 });
 
@@ -363,10 +409,7 @@ function initPanel() {
     
     // update prize fields
     updateSoftwarePrizes();
-    $('#sworAdminFee').html(mainWidget.softwareCompetition.projectHeader.getAdminFee().formatMoney(0));
-    $('#sworFirstFee').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(0));
-    $('#sworSecondFee').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(0));
-    $('#sworTotal').html("$" + getCurrentContestTotal().formatMoney(0));
+    fillPrizes();
 };
 
 /**
@@ -402,6 +445,15 @@ function fillInValues() {
     
     $('#allDescriptionEdit').html(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
     $('#privateDescriptionEdit').html(mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription);
+
+    // prizes
+    var contestFee = mainWidget.softwareCompetition.projectHeader.getAdminFee();
+    $("#sworContestFee").html(contestFee.formatMoney(2));
+    var firstPrize = mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost();
+    $('#sworFirstPlace').html(firstPrize.formatMoney(2));
+    var secondPrize = mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost();
+    $('#sworSecondPlace').html(secondPrize.formatMoney(2));
+    $('#sworTotal').html((contestFee + firstPrize + secondPrize).formatMoney(2));
     
     $('#fileUploadTableEdit').find('tr').remove();
     $.each(swDocuments, function(index, item) {
@@ -446,6 +498,20 @@ function validateFields() {
         errors.push('Copilot posting name should not be empty.');
     } 
     
+    var prizeType = $('input[name="prizeRadio"]:checked').val();
+    if(prizeType == 'custom') {
+        var value = $('#swFirstPlace').val();
+        if(!checkRequired(value) || !checkNumber(value)) {
+            errors.push('first place value is invalid.');
+        }
+    }
+    if (allDescription.length > 12000) {
+        errors.push('Public Description can haave at most 12000 characters.');
+    }
+    if (privateDescription.length > 12000) {
+        errors.push('Private Description can haave at most 12000 characters.');
+    }
+
     if(errors.length > 0) {
         showErrors(errors);
         return false;
@@ -462,6 +528,7 @@ function validateFields() {
     mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = allDescription;
     mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
     
+    updateSoftwarePrizes();
     return true;
 };
 

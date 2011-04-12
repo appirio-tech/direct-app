@@ -13,7 +13,7 @@ BODY#page{
 ---------------*/
 
 #content{
-	min-width: 1000px;
+	min-width: 1100px;
 }
 
 /*-------------
@@ -313,7 +313,7 @@ BODY#page{
 		margin: 0;
 		padding: 0;
 		height: 40px;
-		width: 16.66%;
+		width: 20%;
 		overflow: hidden;
 	}
 	
@@ -2498,17 +2498,6 @@ A{
     margin-right: 10px;
 }
 
-.bcbottom1 {
-    float:right;
-    font-size: 12px;
-    /*left: -115px;*/
-    right: 180px;
-    position:relative;
-    width:auto;
-	  *top:-4px;
-    margin-right: 10px;
-}
-
 .bottom2 {
     float:right;
     font-size: 12px;
@@ -2521,27 +2510,12 @@ A{
     *top:25px;
 }
 
-.bcbottom2 {
-    float:right;
-    font-size: 12px;
-    left: 120px;
-    position:relative;
-    margin-top: 15px;
-    margin-left: 15px;
-    width:15%;
-    *margin-top: 0px;
-    *top:12px;
-}
-
 .dataTables_info {
 	float: left;
 	font-size: 12px;
 	padding: 15px 0px 0px;
 }
-#breakdownBody .dataTables_info {
-	padding: 0px;
-	padding-left: 15px;
-}
+
 #notificationsContent .bottom2 {
     margin-top: 18px;
     *margin-top: 0px;	
@@ -4463,11 +4437,6 @@ hr.plain {
     font-size: 14px;
 }
 
-#billingCostDetails th.tableTitle {
-    text-align: left;
-    font-size: 14px;
-}
-
 #contestFilter {
     margin-top: 20px;
 }
@@ -4478,24 +4447,24 @@ hr.plain {
     float: left;
 }
 
-TABLE.pipelineStats, TABLE.billingCostReport  {
+TABLE.pipelineStats {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 15px;
     border: 1px solid #bdbdbd;
 }
 
-TABLE.pipelineStats TH, TABLE.billingCostReport TH {
+TABLE.pipelineStats TH {
     color: #FFF;
     font-size: 11px;
     height: 33px;
 }
 
-TABLE.pipelineStats TH.tableTitle, TABLE.billingCostReport TH.tableTitle {
+TABLE.pipelineStats TH.tableTitle {
     background: transparent url(../images/calendar_header.png) repeat-x;
 }
 
-TABLE.pipelineStats TH.first, TABLE.billingCostReport TH.first  {
+TABLE.pipelineStats TH.first {
     border-left: 1px solid #37302d;
 }
 
@@ -4507,74 +4476,57 @@ TABLE.pipelineStats TD {
     width: 10%;
 }
 
-TABLE.billingCostReport TD {
-    font-size: 11px;
-    text-align: center;
-    padding: 5px 0;
-    border: 1px solid #a8abad;
-    width: 7.5%;
-}
-
-TABLE.pipelineStats TD.date, TABLE.billingCostReport TD.date  {
+TABLE.pipelineStats TD.date {
     font-size: 11px;
     font-weight: normal;
     width: 14%;
 }
 
-TABLE.pipelineStats TD.fees, TABLE.billingCostReport TD.fees {
+TABLE.pipelineStats TD.fees {
     width: 20%;
     font-size: 11px;
 }
 
-TABLE.pipelineStats TD.fees P, TABLE.billingCostReport TD.fees P {
+TABLE.pipelineStats TD.fees P {
     margin: 0 0 4px 0;
 }
 
-TABLE.pipelineStats TR.even TD, TABLE.billingCostReport TR.even TD {
+TABLE.pipelineStats TR.even TD {
     background-color: #F3F3F3;
 }
 
-TABLE.pipelineStats TR.noStrips TD, TABLE.billingCostReport TR.noStrips TD {
+TABLE.pipelineStats TR.noStrips TD {
     background-color: #FFFFFF !important;
 }
 
-TABLE.pipelineStats TD.checkbox, TABLE.billingCostReport TD.checkbox  {
+TABLE.pipelineStats TD.checkbox {
     width: 4%;
 }
 
-TABLE.pipelineStats TH INPUT, TABLE.billingCostReport TH INPUT {
+TABLE.pipelineStats TH INPUT {
     width: 13px;
     height: 13px;
 }
 
-TABLE.pipelineStats TR.alt TD, TABLE.billingCostReport TR.alt TD {
+TABLE.pipelineStats TR.alt TD{
 	background-color: #F3F3F3;
 }
 
-TABLE.pipelineStats TR.total TD, TABLE.billingCostReport TR.total TD {
+TABLE.pipelineStats TR.total TD{
 	background-color: #CCC8C9;
     font-weight: bold;
 }
 
-TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
+TABLE.pipelineStats TH.tableColumn {
 	background-color: #CCC8C9;
 	color: #000;
-}
-
-#breakdownBody TH.tableColumn {
-	padding-left: 5px;
-	padding-right: 5px;
 }
 
 #pipelineReportArea {
     background: url(../images/container2_bottom.png) repeat-x bottom;
 }
 
-#costReportSection, #breakdownBody {
-    background: url(../images/container2_bottom.png) repeat-x bottom;
-}
-
-#billingCostReportSection {
+#costReportSection {
     background: url(../images/container2_bottom.png) repeat-x bottom;
 }
 
@@ -4586,10 +4538,6 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     margin-bottom: 0px;
 }
 
-#billingCostDetails {
-    margin-bottom: 0px;
-}
-
 #pipelineReportArea div.panel {
     padding: 8px 0px 8px;
 }
@@ -4598,12 +4546,6 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     padding: 8px 50px 8px 0;
 }
 
-#billingCostReportSection div.panel {
-    padding: 8px 50px 8px 0;
-}
-#breakdownBody div.panel {
-    padding: 8px 50px 8px 0;
-}
 #pipelineDetails_length select {
     margin-top: 6px;
 }
@@ -4612,16 +4554,7 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     margin-top: 6px;
 }
 
-#billingCostDetails select {
-    margin-top: 6px;
-}
-
 #costReportSection .bottom2 {
-    margin-top: 10px;
-    margin-right: 10px;
-}
-
-#billingCostReportSection .bottom2 {
     margin-top: 10px;
     margin-right: 10px;
 }
@@ -4631,7 +4564,7 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     padding-right: 5px;
 }
 
-#costReportAggregationArea th.viewType, #costDetails th.viewType {
+#costReportAggregationArea th.viewType {
     text-align: right;
     padding-right: 5px;
 }
@@ -4679,30 +4612,6 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #costReportSection th.tableTitle a.collapse{
-    background: url(../images/icon-collapse.png) no-repeat left center;
-    text-decoration:none;
-    font-size:14px;
-    color:#ffffff;
-    padding-left:20px;
-    display:inline-block;
-    font-weight:bold;
-    height:32px;
-    margin-left: 5px;
-}
-
-#billingCostReportSection th.tableTitle a.expand{
-    background: url(../images/icon-expand.png) no-repeat left center;
-    text-decoration:none;
-    font-size:14px;
-    color:#ffffff;
-    padding-left:20px;
-    display:inline-block;
-    font-weight:bold;
-    height:32px;
-    margin-left: 5px;
-}
-
-#billingCostReportSection th.tableTitle a.collapse{
     background: url(../images/icon-collapse.png) no-repeat left center;
     text-decoration:none;
     font-size:14px;
@@ -5151,537 +5060,3 @@ Contest links
     clear: both;
     height: 0px;
 }
-
-.preferenceItem {
-    padding-left:5px;
-    font-size:12px;
-}
-
-
-.bankSelectionTab LI A, .bankSelectionTab LI div.tabOff, .finalFixesMask .headerTabs li a {
-    color: #000002;
-    line-height: 25px;
-    font-size: 11px;
-    text-decoration: none;
-    background: url(../images/bank_selection_tab_left.png) no-repeat left top; /* left corner */
-    float: left;
-    padding: 0 0 0 4px;
-    margin: 10px 3px 0 0;
-}
-
-.bankSelectionTab LI A SPAN, .bankSelectionTab LI div.tabOff SPAN, .finalFixesMask .headerTabs li a span {
-    background: url(../images/bank_selection_tab_right.png) no-repeat right top; /* right corner */
-    float: left;
-    height: 25px;
-    width: 100px; /*padding-left: 33px;*/
-    text-align: center;
-    cursor: pointer;
-}
-
-.bankSelectionTab LI div.tabOff SPAN {
-    cursor: default !important;
-}
-
-.bankSelectionTab LI.off A, .bankSelectionTab LI.off div.tabOff, .finalFixesMask .headerTabs li.off a {
-    background-position: left bottom;
-}
-
-.bankSelectionTab LI.off SPAN, .bankSelectionTab LI.off div.tabOff SPAN, .finalFixesMask .headerTabs li.off span {
-    background-position: right bottom;
-}
-
-.bankSelectionHead {
-    color: #cacaca;
-    font-size: 11px;
-    height: 35px;
-    background: #37302e url(../images/calendar_header.png) repeat-x left top;
-}
-
-.bankSelectionHead h3 {
-    float: left;
-    color: #FFFFFE;
-    font-size: 12px;
-    font-weight: bold;
-    height: 16px;
-    line-height: 17px;
-    margin: 10px 0 0 20px;
-    padding: 0 0 0 20px;
-    background: url(../images/ico_bank_selection_head.png) no-repeat left top;
-}
-
-.bankSelectionHead ul {
-    float: right;
-    margin: 0 20px 0 0;
-}
-
-.bankSelectionHead ul li, .finalFixesMask .headerTabs li {
-    float: left;
-    list-style: none;
-}
-
-.cockipTab {
-    width: 100%;
-    overflow: hidden;
-    height: 40px;
-}
-
-.cockipTab UL {
-    height: 40px;
-    background: url(../images/tabs3_bg.png) repeat-x top;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    width: 100%;
-}
-
-.cockipTab UL LI {
-    float: left;
-    margin: 0;
-    padding: 0;
-    height: 40px;
-    width: 20%;
-    overflow: hidden;
-}
-
-.cockipTab UL LI.lastItem {
-    float: none;
-    width: auto;
-}
-
-.cockipTab UL LI A {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.cockipTab UL LI A:hover {
-    background: url(../images/tabs3_bg_hover.png) repeat-x;
-}
-
-.cockipTab UL LI A SPAN {
-    float: left;
-    height: 40px;
-    width: 100%;
-    cursor: pointer;
-}
-
-.cockipTab UL LI A.first SPAN.left {
-/* tabs left corner */
-    background: url(../images/tabs3_left.png) no-repeat left top;
-}
-
-.cockipTab UL LI A.last SPAN.left {
-/* tabs right corner */
-    background: url(../images/tabs3_right.png) no-repeat right top;
-}
-
-.cockipTab UL LI A.last SPAN.right {
-    background: none; /* no right border for the last tab */
-}
-
-.cockipTab UL LI A SPAN.right {
-    height: 30px;
-    padding-top: 10px;
-    text-align: center;
-    background: url(../images/tabs3_border.png) no-repeat top right;
-}
-
-.cockipTab UL LI A.first:hover SPAN.left {
-    background-position: left bottom;
-}
-
-.cockipTab UL LI A.last:hover SPAN.left {
-    background-position: right bottom;
-}
-
-.cockipTab UL LI.on A {
-/* tabs on the active state */
-    background: transparent url(../images/tabs3_on.png) repeat-x top !important;
-    color: #FFF; /*font-size: 14px;*/
-    font-family: Verdana, Geneva, sans-serif;
-}
-
-.cockipTab UL LI.off A SPAN.right {
-    color: #a9a9a9;
-}
-
-.cockipTab UL LI.on A SPAN.right {
-    height: 32px;
-    padding-top: 8px;
-    background: url(../images/tabs3_arrow.png) no-repeat center bottom;
-}
-
-.cockipTab UL LI.on A.first SPAN.left {
-    background: url(../images/tabs3_left_on.png) no-repeat left;
-}
-
-.cockipTab UL LI.on A.last SPAN.left {
-    background: url(../images/tabs3_right_on.png) no-repeat right;
-}
-
-#issue a:hover {
-    text-decoration: none;
-}
-
-#issue .viewAndShow a:hover {
-    text-decoration: underline;
-}
-
-#bugRace a:hover {
-    text-decoration: none;
-}
-
-#bugRace .viewAndShow a:hover {
-    text-decoration: underline;
-}
-
-.container2Opt {
-    position: relative;
-}
-
-.container2Opt .corner {
-    width: 5px;
-    height: 5px;
-    position: absolute;
-    overflow: hidden;
-    background-image: url(../images/oddCorner.png);
-    background-repeat: no-repeat;
-}
-
-.container2Opt .evencorner {
-    width: 5px;
-    height: 5px;
-    position: absolute;
-    overflow: hidden;
-    background-image: url(../images/evenCorner.png);
-    background-repeat: no-repeat;
-}
-
-.container2Opt .bl {
-    bottom: -1px;
-    left: 0;
-    background-position: 0 0;
-}
-
-.container2Opt .br {
-    bottom: -1px;
-    right: 0;
-    background-position: -5px 0;
-}
-
-#area1 h2.issueTitle {
-    background: url(../images/issue_ico.png) no-repeat left center;
-}
-
-/* issueTabs */
-.issueTabs .issueTabsLeft {
-    background: url(../images/issue_corner.png) no-repeat left top;
-}
-
-.issueTabs .issueTabRight {
-    margin-left: 5px;
-    background: url(../images/issue_corner.png) no-repeat right -82px;
-}
-
-.issueTabs .issueTabInner {
-    height: 41px;
-    margin-right: 5px;
-    background: url(../images/issue_corner.png) repeat-x left -41px;
-}
-
-.issueTabs .total {
-    width: auto;
-    float: left;
-    display: inline;
-    margin-top: 12px;
-    margin-left: 12px;
-    line-height: 18px;
-}
-
-.issueTabs .total dt, .issueTabs .total dd {
-    width: auto;
-    float: left;
-    display: inline;
-    font-size: 14px;
-    font-weight: bold;
-    color: #252525;
-}
-
-.issueTabs .total dd {
-    margin-left: 4px;
-}
-
-.issueTabs .total dt.lastOngoing {
-    margin-left: 7px;
-    padding-left: 7px;
-    border-left: #c0c0c0 solid 1px;
-}
-
-.issueTabs .total dd.lastOngoingNum {
-    color: #ff0001;
-}
-
-.issueTabs .viewAll {
-    width: auto;
-    float: right;
-    display: inline;
-    margin-right: 5px;
-    margin-top: 12px;
-}
-
-.issueTabs .viewAll .checkbox {
-    width: 13px;
-    height: 13px;
-    float: left;
-    display: inline;
-    margin-top: 3px;
-    margin-right: 4px;
-    overflow: hidden;
-}
-
-.issueTabs .viewAll label {
-    font-size: 12px;
-    color: #464646;
-    cursor: pointer;
-}
-
-/* issueSelection */
-.issueSelection .viewSort {
-    width: auto;
-    float: left;
-    display: inline;
-    margin-top: 8px;
-    margin-left: 17px;
-}
-
-.issueSelection .viewSort label {
-    margin-right: 6px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #fffffe;
-}
-
-#area1 .issueSelection .viewSort .select2 {
-    width: 160px;
-    font-size: 12px;
-    color: #333333;
-}
-
-/* issueSelectionContent */
-.issueSelectionContent {
-    font-size: 12px;
-}
-
-.issueSelectionContent .content {
-    margin: 0 1px;
-}
-
-.issueContest {
-    width: 100%;
-}
-
-.issueContest td {
-    border-bottom: #bebebe solid 1px;
-    font-size: 12px;
-    color: #333333;
-}
-
-.issueContest .contestNameTd {
-    vertical-align: top;
-    border-right: #bebebe solid 1px;
-    border-bottom: #bebebe solid 1px;
-}
-
-.issueContest .lastTr td {
-    border-bottom: 0;
-}
-
-.issueContest .contestNameTd a {
-    margin-left: 16px;
-    line-height: 40px;
-}
-
-/* rowItem */
-.issueSelectionContent .rowItem {
-    padding: 10px 0;
-    padding-left: 18px;
-    padding-right: 20px;
-    border-bottom: #c9c9c9 solid 1px;
-}
-
-.issueSelectionContent .oddRowItem {
-    background: #f5f5f5;
-}
-
-.issueSelectionContent .lastRowItem {
-    border-bottom: 0;
-}
-
-.issueSelectionContent .rowItem .issueContestHead {
-    padding-bottom: 8px;
-}
-
-/* issueContestTitle */
-.issueSelectionContent .rowItem .issueContestTitle {
-    width: auto;
-    float: left;
-    display: inline;
-    padding-left: 32px;
-    line-height: 18px;
-    background: url(../images/issueDetail_ico.png) no-repeat left center;
-}
-
-.issueSelectionContent .rowItem .bugContestTitle {
-    width: auto;
-    float: left;
-    display: inline;
-    padding-left: 32px;
-    line-height: 18px;
-    background: url(../images/bugDetail_ico.png) no-repeat left center;
-}
-
-.issueSelectionContent .rowItem .issueName a {
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.issueSelectionContent .rowItem .viewAndShow {
-    width: auto;
-    float: right;
-    display: inline;
-    line-height: 18px;
-}
-
-.issueSelectionContent .rowItem .viewAndShow a {
-    color: #ff0001;
-    text-decoration: none;
-}
-
-/* shortDetails */
-.issueSelectionContent .rowItem .shortDetails dt {
-    width: auto;
-    float: left;
-    display: inline;
-}
-
-.issueSelectionContent .rowItem .shortDetails dd {
-    width: auto;
-    float: left;
-    display: inline;
-    margin-left: 4px;
-    margin-right: 20px;
-}
-
-.issueSelectionContent .rowItem dd .open {
-    color: #ff0001;
-}
-
-.issueSelectionContent .rowItem dd .resolved {
-    color: #009200;
-}
-
-.issueSelectionContent .rowItem dd .progress {
-    color: #ff9000;
-}
-
-/* longDetails */
-.issueSelectionContent .rowItem .longDetails {
-    border-top: #eaebeb solid 2px;
-}
-
-.issueSelectionContent .rowItem .longDetails li {
-    width: auto;
-    float: left;
-    display: inline;
-    list-style: none;
-    margin-right: 6px;
-}
-
-.issueSelectionContent .rowItem .longDetails li.detailList {
-    width: 200px;
-}
-
-.issueSelectionContent .rowItem .longDetails li.peopleList {
-    width: 210px;
-}
-
-.issueSelectionContent .rowItem .longDetails li.datesList {
-    width: 230px;
-    min-height: 98px;
-}
-
-.issueSelectionContent .rowItem .longDetails li h3 {
-    margin-top: 6px;
-    line-height: 20px;
-}
-
-.issueSelectionContent .rowItem .longDetails li dt {
-    width: 88px;
-    float: left;
-    display: inline;
-    line-height: 18px;
-    clear: both;
-}
-
-.issueSelectionContent .rowItem .longDetails li dd {
-    width: 50%;
-    float: left;
-    display: inline;
-    line-height: 18px;
-}
-
-.issueSelectionContent .rowItem .longDetails li.linkList dd {
-    width: 100%;
-}
-
-/* Cockpit Contest Details - Issue Tracking */
-#cockpit .contestBugRace {
-    margin-top: -8px;
-}
-
-#area1 h2.bugTitle {
-    background: url(../images/bug_ico.png) no-repeat left center;
-}
-
-#area1 .viewContestButton {
-    width: 144px;
-    float: right;
-    display: inline;
-    text-align: center;
-}
-
-#area1 .contestBugRace {
-    height: 41px;
-    border-left: #bebebe solid 1px;
-    border-right: #bebebe solid 1px;
-}
-
-.cockipTab ul.contestBugRaceTab li {
-    width: 17%;
-}
-
-.cockipTab ul.contestBugRaceTab li.lastItem {
-    width: auto;
-}
-
-#bugRace {
-    display: none;
-}
-
-#bugRace .hidden {
-    display: none;
-}
-
-#issue .hidden {
-    display: none;
-}
-
-
-
-
-
-

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
@@ -15,8 +15,15 @@ import org.apache.struts2.ServletActionContext;
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for user authentication to application.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 (Direct Improvements Assembly Release 1) Change notes:
+ * <ul>
+ * <li>Added {@link #forwardUrl} property to support redirecting to the latest link after user login in.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author isv, TCSASSEMBER
+ * @version 1.1
  */
 public class LoginAction extends LandingPage implements FormAction<LoginForm> {
 
@@ -32,6 +39,13 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
     private LoginForm formData = new LoginForm();
 
     /**
+     * Represents the link URL the user will be redirected to.
+     * 
+     * @since 1.1
+     */
+    private String forwardUrl;
+    
+    /**
      * <p>Constructs new <code>LoginAction</code> instance. This implementation does nothing.</p>
      */
     public LoginAction() {
@@ -46,6 +60,16 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
         return this.formData;
     }
 
+    /**
+     * Gets the link URL the user will be redirected to.
+     * 
+     * @return the link URL the user will be redirected to.
+     * @since 1.1
+     */
+    public String getForwardUrl() {
+        return forwardUrl;
+    }
+    
     /**
      * <p>Handles the incoming request.</p>
      *
@@ -71,6 +95,13 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
                     new SimpleResource("direct"),
                     DBMS.JTS_OLTP_DATASOURCE_NAME);
                 auth.setCookie(getSessionData().getCurrentUserId(), true);
+            }
+            // clear redirect URL from session
+            getSessionData().getSession().removeAttribute("redirectBackUrl");
+            forwardUrl = ServletActionContext.getRequest().getParameter("forwardUrl");
+            if (forwardUrl != null && forwardUrl.trim().length() > 0) {
+                // should be redirected
+                return "forward";
             }
             return SUCCESS;
         } else if (RC_INVALID_CREDENTIALS == getResultCode()) {

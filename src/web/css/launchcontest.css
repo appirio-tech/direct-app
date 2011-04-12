@@ -2228,6 +2228,13 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
     padding:15px 5px;
 
 }
+.htmlDescription {
+    padding: 15px 5px;
+}
+.htmlDescription ul {
+    margin-left: 15px;
+    padding-left: 15px;
+}
 .launchCopilotContest .infoPanel .infoPanelMask{
    /* border:1px solid #BDBDBD;
     padding:15px 0px;*/
@@ -2279,7 +2286,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
     border:0px;
     padding:0 10px 0 10px;
 }
-.launchCopilotContest .editMask.greybg .infoPanel{
+.launchCopilotContest .editMask.greybg .infoPanel, .launchCopilotContest .editMask.greybg .htmlDescription {
    background-color:#f5f5f5;
 }
 .launchCopilotContest .editMask .addNewContestInfo,.launchCopilotContest .editMask .addNewContest{

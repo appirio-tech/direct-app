@@ -4,8 +4,12 @@
  * Changes in 1.1 (TCCC-2706):
  * - Update time zone from GMT-04 to UTC-05
  *
+ * Changes in 1.2 (TCCC-2926 and TCCC-2900):
+ * - Add support to restrict the max characters of private description and public description.
+ * - Fix bug TCCC-2900.
+ *
  * @author TCSDEVELOPER
- * @version 1.1 (Direct Copilot Posting Contest Launching assembly)
+ * @version 1.2 (Direct Copilot Posting Contest Launching assembly)
  */
 
 var currentDocument = {};
@@ -32,18 +36,23 @@ $(document).ready(function() {
         $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
     }
 
-    tinyMCE.init({
-        mode : "exact",
-        elements : "publicCopilotPostingDescription2, privateCopilotPostingDescription2",
-        plugins : "paste",
-        theme : "advanced",
-        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
-        theme_advanced_buttons2 : "",
-        theme_advanced_buttons3 : "",
-        init_instance_callback : function() {
-            $('table.mceLayout').css('width', '100%');
-        }
-    });
+    function makeMaxCharsTinyMCE(obj, maxChars) {
+        tinyMCE.init({
+            mode : "exact",
+            elements : obj,
+            plugins : "paste",
+            theme : "advanced",
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            init_instance_callback : function() {
+                $('table.mceLayout').css('width', '100%');
+            },
+            handle_event_callback : maxCharsEventHandler(obj, maxChars)
+        });
+    }
+    makeMaxCharsTinyMCE("publicCopilotPostingDescription2", 12000);
+    makeMaxCharsTinyMCE("privateCopilotPostingDescription2", 12000);
 
     /* init pop */
     var prevPopup = null;
@@ -104,7 +113,7 @@ $(document).ready(function() {
     $(".editMask .editLink").click(function() {
         var mask = $(this).parents(".editMask");
         mask.find(".editPanel").show();
-        mask.find(".infoPanel").hide();
+        mask.find(".infoPanel, .htmlDescription").hide();
     });
 
     $('#cancelContestInfo').click(function() {
@@ -382,7 +391,7 @@ function getDateByIdPrefix(idPrefix) {
 function hideEdit(cancelButton) {
     var mask = cancelButton.parents(".editMask");
     mask.find(".editPanel").hide();
-    mask.find(".infoPanel").show();
+    mask.find(".infoPanel,.htmlDescription").show();
 }
 
 function restorePrevData() {
@@ -433,6 +442,10 @@ function updateProjectDate() {
 
 function updatePublicDesc() {
     var publicDescription = tinyMCE.get('publicCopilotPostingDescription2').getContent();
+    if (publicDescription.length > 12000) {
+        showErrors('Public Description can haave at most 12000 characters.');
+        return;
+    }
     $('#publicDescriptionText').html(publicDescription);
 
     sendSaveDraftRequestToServer();
@@ -440,6 +453,10 @@ function updatePublicDesc() {
 
 function updatePrivateDesc() {
     var privateDescription = tinyMCE.get('privateCopilotPostingDescription2').getContent();
+    if (privateDescription.length > 12000) {
+        showErrors('Private Description can haave at most 12000 characters.');
+        return;
+    }
     $('#privateDescriptionText').html(privateDescription);
     sendSaveDraftRequestToServer();
 }

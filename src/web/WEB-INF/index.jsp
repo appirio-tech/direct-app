@@ -1,11 +1,13 @@
 <%--
   - Author: isv, TCSDEVELOPER
-  - Version: 1.0.1
+  - Version: 1.0.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Landing page for TC Direct application.
   -
   - Version 1.0.1 (Direct Release 6 assembly) changes: pressing Enter on Login form input fields submits the form.
+  - Version 1.0.2 (Direct Improvements Assembly Release 1 ) Change notes: Add a hidden field forwarUrl to support redirecting
+  - to the latest URL after user login in.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -249,6 +251,9 @@
                                                     <span class="left"><span class="right">LOGIN</span></span></a>
                                             </p>
                                         </div><!-- End .register -->
+                                        <c:if test="${not empty sessionScope.redirectBackUrl}">
+                                            <s:hidden name="forwardUrl" value="%{#session.redirectBackUrl}" />
+                                        </c:if>
                                     </s:form>
 								</div><!-- End .login -->
 								

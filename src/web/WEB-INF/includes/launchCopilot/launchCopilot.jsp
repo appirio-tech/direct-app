@@ -6,7 +6,11 @@
   - Description: Launch copilot contest page input/edit section.
   - Since: TC Direct - Launch Copilot Selection Contest assembly  
   -
-  - Version 1.0.1 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
+  - - Version 1.0.2 (Direct Improvements Assembly Release 1 ) Change notes:
+  - - Fix bug TCCC-2900.
+  - - Add support to allow setting custom contest prizes.
+  -
+  - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -148,7 +152,7 @@
         </div>
     </div>
     
-     <div class="infoPanel descriptionInfo hide">
+     <div class="descriptionInfo hide htmlDescription">
             <h3><span class="icon">Description that you want everyone to see</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
             <div class="infoPanelMask">
                 <p id="allDescriptionEdit"></p>
@@ -178,7 +182,7 @@
         </div>
     </div>
     
-    <div class="infoPanel descriptionInfo hide">
+    <div class="htmlDescription descriptionInfo hide">
             <h3><span class="icon">Description that is only viewable to copilots that register for this posting</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
             <div class="infoPanelMask">
                 <p id="privateDescriptionEdit"></p>
@@ -188,24 +192,56 @@
 <!-- end .description -->
 
  <!-- Contest Costs -->
-<div class="costs editMask">
-    <h3><span class="icon">Costs</span><a href="javascript:;" class="helpIcon tooltipLink" id="costIcon"><span class="hide">Help</span></a></h3>
-    <table class="prizesTable">
-        <tbody><tr>
-            <td class="prize"><span>Administration Fee:</span> $<span id="sworAdminFee" class="feeValue"></span> </td>
-            <td class="prize"><span>1st Prize :</span> $<span id="sworFirstFee" class="feeValue"></span> </td>
-            <td class="prize"><span>2nd Prize :</span> $<span id="sworSecondFee" class="feeValue"></span></td>
-            <td class="total">Total</td>
-            <td class="last" id="sworTotal"></td>
-        </tr>
-        </tbody>
-    </table>
-    
-    <!-- only used for updateSoftwarePrizes method, will not be shown -->
-    <div class="hide">
-        <input type="radio" name="prizeRadio" value="low" checked="true"></input>
-        <input type="radio" name="prizeRadio" value="medium"></input>
-        <input type="radio" name="prizeRadio" value="high"></input>
+<div class="costs">
+    <div class="iconDivToHide">
+        <h3><span class="icon">Costs</span><a href="javascript:;" class="helpIcon tooltipLink" id="costIcon"><span class="hide">Help</span></a></h3>
+    </div>
+    <div class="description">
+        <div class="iconDiv hide">
+            <h3><span class="icon">Costs</span><a href="javascript:;" ><img class="edit_type" alt="edit" src="/images/edit_red.png" /></a></h3>
+        </div>
+        <div class="prizesInner_software editPanelMask" style="height:auto;">
+            <span class="head"><p>Please Select the prize structure for your contest by choosing one of the options below:</p></span> 
+            <p>
+                <br/>
+                  <span class="radio_font">
+                      <input type="radio" name="prizeRadio" value="low" checked/>&nbsp;&nbsp;&nbsp;Low&nbsp;&nbsp;($<span id="swPrize_low"></span>)
+                    <input type="radio" name="prizeRadio" value="medium" class="space_radio" />&nbsp;&nbsp;&nbsp;Medium&nbsp;&nbsp;($<span id="swPrize_medium"></span>)
+                    <input type="radio" name="prizeRadio" value="high" class="space_radio" />&nbsp;&nbsp;&nbsp;High&nbsp;&nbsp;($<span id="swPrize_high"></span>)
+                    <input type="radio" name="prizeRadio" value="custom" class="space_radio customRadio" /> <span class="customRadio"> &nbsp;&nbsp;&nbsp; Custom </span>
+                  </span>
+            </p>
+            <br/>
+            <table class="prizesTable">
+                <tbody><tr>
+                    <td class="prize"><span>Administration Fee:</span> $ <span id="swContestFee" class="feeValue"></span> </td>
+                    <td class="prize"><span>1st Prize :</span> $ <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" /></td>
+                    <td class="prize"><span>2nd Prize :</span> $ <span id="swSecondPlace" class="prizeInfo"></span></td>
+                    <td class="total">Total</td>
+                    <td class="last" style="width:110px;">$ <span id="swTotal"></span></td>
+                </tr></tbody>
+            </table>
+
+            <p class="save hide">
+                <a class="cancel_text" href="javascript:;">cancel</a>
+                <a href="javascript:;"><img class="save_btn" alt="save" src="/images/save_change.png" /></a>
+            </p>         
+        </div>
+    </div>
+
+    <div class="infoPanel descriptionInfo hide">
+        <h3><span class="icon">Conetst Prizes</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+        <div class="infoPanelMask">
+            <table class="prizesTable">
+            <tbody><tr>
+                <td class="prize"><span>Administration Fee:</span> $ <span id="sworContestFee" class="feeValue"></span> </td>
+                <td class="prize"><span>1st Prize :</span> $ <span id="sworFirstPlace" class="feeValue"></span></td>
+                <td class="prize"><span>2nd Prize :</span> $ <span id="sworSecondPlace" class="feeValue"></span></td>
+                <td class="total">Total</td>
+                <td class="last" style="width:110px;">$ <span id="sworTotal" class="feeValue"></span></td>
+            </tr></tbody>
+            </table>
+        </div>
     </div>
 </div>
 <!-- end .Costs -->

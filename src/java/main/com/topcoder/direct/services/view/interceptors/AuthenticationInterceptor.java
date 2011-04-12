@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.interceptors;
@@ -149,11 +149,18 @@ import com.topcoder.web.common.security.SessionPersistor;
  * </p>
  *
  * <p>
+ * Version 2.1 (Direct Improvements Assembly Release 1) Change notes:
+ * <ul>
+ * <li>Added support to redirect to the latest URL after user login in.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
  * <b>Thread safety:</b> This class is mutable and not thread safe.
  * </p>
  *
  * @author woodjhon, TCSDEVELOPER
- * @version 2.0
+ * @version 2.1
  */
 public class AuthenticationInterceptor extends AbstractInterceptor {
 
@@ -178,6 +185,13 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
      * </p>
      */
     private String userSessionIdentityKey = "user";
+
+    /**
+     * Represents the redirect back URL session identity key attribute.
+     * 
+     * @since 2.1
+     */
+    private String redirectBackUrlIdentityKey;
 
     /**
      * Default constructor, constructs an instance of this class.
@@ -218,6 +232,10 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         if (userSessionIdentityKey == null) {
             throw new IllegalStateException("userSessionIdentityKey has not been injected.");
         }
+        
+        if (redirectBackUrlIdentityKey == null) {
+            throw new IllegalStateException("redirectBackUrlIdentityKey has not been injected.");
+        }
 
         HttpSession session = ServletActionContext.getRequest().getSession();
         SessionData sessionData = new SessionData(session);
@@ -234,6 +252,28 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
                 sessionData.setCurrentUser(tcSubject);
                 sessionData.setCurrentUserHandle(user.getUserName());
             } else {
+                if ("GET".equalsIgnoreCase(request.getMethod())) {
+                    StringBuffer redirectBackUrl = new StringBuffer();
+
+                    redirectBackUrl.append(request.getScheme());
+                    redirectBackUrl.append("://");
+                    redirectBackUrl.append(request.getServerName());
+                    redirectBackUrl.append(':');
+                    redirectBackUrl.append(request.getServerPort());
+                    redirectBackUrl.append(request.getRequestURI());
+                    if (request.getQueryString() != null && request.getQueryString().trim().length() != 0) {
+                        redirectBackUrl.append('?');
+                        redirectBackUrl.append(request.getQueryString());
+                    }
+
+                    request.getSession().setAttribute(redirectBackUrlIdentityKey, redirectBackUrl.toString());
+                } else {
+                    // Get the referer URL if the request method is POST
+                    final String referer = request.getHeader("Referer");
+                    if (referer != null && referer.trim().length() != 0) {
+                        request.getSession().setAttribute(redirectBackUrlIdentityKey, referer);
+                    }
+                }
                 return loginPageName;
             }
         }
@@ -282,5 +322,26 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
     public void setUserSessionIdentityKey(String userSessionIdentityKey) {
         Helper.checkNotNullOrEmpty(userSessionIdentityKey, "userSessionIdentityKey");
         this.userSessionIdentityKey = userSessionIdentityKey;
+    }
+
+    /**
+     * Gets the redirect back URL session identity key attribute.
+     * 
+     * @return the redirect back URL session identity key attribute.
+     * @since 2.1
+     */
+    public String getRedirectBackUrlIdentityKey() {
+        return redirectBackUrlIdentityKey;
+    }
+
+    /**
+     * Sets the redirect back URL session identity key attribute.
+     * 
+     * @param redirectBackUrlIdentityKey the redirect back URL session identity key attribute.
+     * @since 2.1
+     */
+    public void setRedirectBackUrlIdentityKey(String redirectBackUrlIdentityKey) {
+        Helper.checkNotNullOrEmpty(redirectBackUrlIdentityKey, "redirectBackUrlIdentityKey");
+        this.redirectBackUrlIdentityKey = redirectBackUrlIdentityKey;
     }
 }

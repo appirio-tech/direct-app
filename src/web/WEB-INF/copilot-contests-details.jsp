@@ -1,10 +1,13 @@
 <%--
   - Author: TCSDEVELOPER
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
   - - Change time zone from GMT-04 to UTC-05.
+  -
+  - Version 1.2 (Direct Improvements Assembly Release 1 ) Change notes:
+  - - Fix bug TCCC-2900.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -255,7 +258,7 @@
 <!-- Contest Description -->
 
 <div class="editMask">
-    <div class="infoPanel descriptionInfo ">
+    <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that you want everyone to see</span>
             <if:isEditable typedContestBrief="${contestDTO}">
@@ -291,7 +294,7 @@
 <!-- end .description -->
 
 <div class="editMask greybg">
-    <div class="infoPanel descriptionInfo ">
+    <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that is only viewable to copilots that register for this posting</span>
             <if:isEditable typedContestBrief="${contestDTO}">

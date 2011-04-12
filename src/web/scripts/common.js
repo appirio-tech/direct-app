@@ -269,4 +269,30 @@ function caculateImageRatio(image,oldWidth, oldHeight) {
     }
 }
 
-
+/**
+ * Return the event handler used by tinyMCE to restrict the max characters.
+ * 
+ * @param obj the tinyMCE name
+ * @param maxChars the max characters
+ */
+function maxCharsEventHandler(obj, maxChars) {
+    var ori;
+    var timeId = -1;
+    return function(e) {
+        var content = tinyMCE.get(obj).getContent();
+        if (content.length <= maxChars) {
+            ori = content;
+        }
+        if (timeId != -1) {
+            timeId = clearTimeout(timeId);
+        }
+        timeId = setTimeout(function() {
+            timeId = -1;
+            if (tinyMCE.get(obj).getContent().length > maxChars) {
+            	showErrors("You can only input max " + maxChars + " characters.");
+                tinyMCE.get(obj).setContent(ori);
+            }
+        }, 100);
+        return true;
+    };
+}
