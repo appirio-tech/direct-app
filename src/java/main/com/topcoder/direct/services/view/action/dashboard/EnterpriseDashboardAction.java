@@ -612,7 +612,9 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
      * @since 1.0.5
      */
     public String getCostBreakDown() throws Exception {
-        setResult(buildContestBreakDownResults(DataProvider.getDashboardCostBreakDown(formData.getProjectIds(), formData.getProjectCategoryIds())));
+        Date startDate = DirectUtils.getDate(formData.getStartDate());
+        Date endDate = DirectUtils.getDate(formData.getEndDate());
+        setResult(buildContestBreakDownResults(DataProvider.getDashboardCostBreakDown(formData.getProjectIds(), formData.getProjectCategoryIds(), startDate, endDate)));
         return SUCCESS;
     }
     
@@ -690,6 +692,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             statData.put("build", numberFormat1.format(breakdown.getBuild()));
             statData.put("bugs", numberFormat1.format(breakdown.getBugs()));
             statData.put("misc", numberFormat1.format(breakdown.getMisc()));
+            statData.put("fullfillment", breakdown.getFullfillment());
             list.add(statData);
         }
         return list;

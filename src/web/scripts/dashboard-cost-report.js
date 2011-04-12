@@ -281,20 +281,41 @@ $(document).ready(function() {
                         for (var i = 0; i < result.length; i++) {
                             breakDownMap[result[i].id] = result[i];
                         }
+                        var totalCompleted = 0;
+                        var totalCost = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                        var reg1 = /\$/g,reg2 = /\,/g;
                         $("#breakdownBody table tbody tr").each(function() {
                             var projectId = parseInt($(this).attr("rel"));
                             var breakdown = breakDownMap[projectId];
+                            var fullfillment = 0;
                             if (!breakdown) {
                                 breakdown = ["0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00", "0.00"];
                             } else {
+                                if (breakdown.fullfillment > 0) {
+                                    fullfillment = 1;
+                                }
                                 breakdown = [breakdown.prizes, breakdown.specReview, breakdown.review, breakdown.reliability,
                                     breakdown.digitalRun, breakdown.copilot, breakdown.build, breakdown.bugs, breakdown.misc];
                             }
+                            totalCompleted += fullfillment;
                             $(this).children("td:not(:last)").each(function(i) {
                                 if (i >= 10) {
                                     $(this).html("$" + breakdown[i - 10]);
                                 }
                             });
+                            if (fullfillment > 0) {
+                                $(this).children("td").each(function(i) {
+                                    if (i >= 7) {
+                                        totalCost[i - 7] += parseFloat($(this).text().replace(reg1,"").replace(reg2,""));
+                                    }
+                                });
+                            }
+                        });
+                        totalCompleted = totalCompleted == 0 ? 1 : totalCompleted;
+                        $("#breakdownBody table tfoot tr td").each(function(i) {
+                            if (i >= 1) {
+                                $(this).html("$" + new Number(totalCost[i - 1] / totalCompleted).toFixed(2));
+                            }
                         });
 
                         // bind sort event
@@ -335,6 +356,7 @@ $(document).ready(function() {
                 // load the cost breakdown data
                 var tbody = $("#breakdownBody table tbody");
                 tbody.children("tr").remove();
+                $("#breakdownBody table tfoot").remove();
                 var oldval = $("#dataTableLength").val();
                 $("#dataTableLength").val(-1);
                 $("#dataTableLength").trigger("change");
@@ -369,6 +391,7 @@ $(document).ready(function() {
                 $("#dataTableLength").trigger("change");
 
                 if (projectIds.length > 0) {
+                    $("#breakdownBody table").append("<tfoot><tr><td colspan='7' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
                     loadBreakdownData(projectIds);
                 }
             } else {

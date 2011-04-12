@@ -721,7 +721,7 @@
                     <thead>
                         <tr class="head">
                             <th  class="first noBT">Contest Type</th>
-                            <th  class="noBT">Average Cost</th>
+                            <th  class="noBT">Average Member Cost</th>
 
                             <th  class="noBT">Prizes</th>
                             <th  class="noBT">Spec Review</th>

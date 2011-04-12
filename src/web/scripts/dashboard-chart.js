@@ -21,6 +21,8 @@ function drawChart() {
     var tableViewProjectIds = [];
     var allContestProjectIds = [];
     var oldProjectCategoryIds = [];
+    var oldStartTime = "";
+    var oldEndTime = "";
     var viewType = "";
     var timerange;
     // the contest break down data of market
@@ -270,7 +272,7 @@ function drawChart() {
         }
     }
 
-    function getOneRow(index, elem ,type, firstClass, isCostBreakDown, breakdownMap) {
+    function getOneRow(index, elem ,type, firstClass, isCostBreakDown, breakDownMap) {
         if (!firstClass) {
             firstClass = "alignLeft";
         }
@@ -302,7 +304,7 @@ function drawChart() {
         tr += "<td class=\"fontGreen\">$"+ elem.marketAvgCost +"</td>";
         // render the cost break down data
         if (isCostBreakDown) {
-            var breakdown = breakdownMap[parseInt(elem.projectId)];
+            var breakdown = breakDownMap[parseInt(elem.projectId)];
             if (!breakdown) {
                 breakdown = {contestFee : "0", prizes : "0.00", specReview : "0.00", review : "0.00", reliability : "0.00", digitalRun : "0.00",
                     copilot : "0.00", build : "0.00", bugs : "0.00", misc : "0.00"};
@@ -370,9 +372,14 @@ function drawChart() {
         $("input[name='formData.projectCategoryIds']:checked").each(function() {
             categoryIds.push(parseInt(this.value));
         });
-        if (oldProjectCategoryIds.toString() != categoryIds.toString()) {
+        var startTime = $("#startDateEnterprise").val();
+        var endTime = $("#endDateEnterprise").val();
+        if (oldProjectCategoryIds.toString() != categoryIds.toString()
+            || oldStartTime != startTime || oldEndTime != endTime) {
             marketBreakDownDirty = true;
             oldProjectCategoryIds = categoryIds;
+            oldStartTime = startTime;
+            oldEndTime = endTime;
         }
     }
 
@@ -632,7 +639,7 @@ function drawChart() {
         var data = {formData:{projectIds:projectIds}};
         $.blockUI({ message: '<div id=loading> loading.... </div>' });
         $.ajax({
-            type: 'get',
+            type: 'post',
             url: "dashboardGetCostBreakDownAJAX",
             data: data,
             cache: false,
@@ -662,10 +669,10 @@ function drawChart() {
      * Loads market cost break down data using ajax.
      */
     function loadMarketBreakDownData() {
-        var data = {formData:{projectCategoryIds:oldProjectCategoryIds}};
+        var data = {formData:{projectCategoryIds:oldProjectCategoryIds, startDate:oldStartTime, endDate:oldEndTime}};
         $.blockUI({ message: '<div id=loading> loading.... </div>' });
         $.ajax({
-            type: 'get',
+            type: 'post',
             url: "dashboardGetCostBreakDownAJAX",
             data: data,
             cache: false,
@@ -686,6 +693,10 @@ function drawChart() {
         });
     }
 
+    function getNumber(price) {
+        return parseFloat(price.replace(",", ""));
+    }
+
     /**
      * Render the market cost break down data to the popup window.
      */
@@ -701,22 +712,21 @@ function drawChart() {
         $("input[name='formData.projectCategoryIds']:checked").each(function(i) {
             var projectCategoryId = parseInt(this.value);
             var categoryName = $(this).parent().text();
-            var avgCost = contestTypeAvgCost["" + projectCategoryId];
-            if (!avgCost) {
-                avgCost = "0";
-            }
             var breakdown = breakDownMap[projectCategoryId];
             if (!breakdown) {
                 breakdown = {contestFee : "0", prizes : "0.00", specReview : "0.00", review : "0.00", reliability : "0.00", digitalRun : "0.00",
                     copilot : "0.00", build : "0.00", bugs : "0.00", misc : "0.00"};
             }
+            var avgMemeberCost = getNumber(breakdown.prizes) + getNumber(breakdown.specReview) + getNumber(breakdown.review)
+                            + getNumber(breakdown.reliability) + getNumber(breakdown.digitalRun) + getNumber(breakdown.copilot)
+                            + getNumber(breakdown.build) + getNumber(breakdown.bugs) + getNumber(breakdown.misc);
             var tr = "<tr";
             if (rowsNo % 2 == 0) {
                 tr += " class=\"even\"";
             }
             tr += ">";
             tr += "<td class='first'>" + categoryName + "</td>";
-            tr += "<td class='fontGreen'>$" + avgCost + "</td>";
+            tr += "<td class='fontGreen'>$" + avgMemeberCost.formatMoney(2) + "</td>";
             
             tr += "<td>$" + breakdown.prizes + "</td>";
             tr += "<td>$" + breakdown.specReview + "</td>";
@@ -758,9 +768,11 @@ function drawChart() {
 
         var chartTableTbody = $(".costBreakDownChart table tbody");
         $(".costBreakDownChart table tbody tr").remove();
+        $(".costBreakDownChart table tfoot").remove();
         var rowsNo = 0;
         // data to render the cost breakdown table
         var data = tableViewData;
+        var colspan = "5";
         if (viewType == "Market") {
             data = allContestData;
             if(!isAdmin) {
@@ -770,6 +782,7 @@ function drawChart() {
                     $($("#thirdDashboardTableBody table thead tr th")[1]).remove();
                     $($("#thirdDashboardTableBody table thead tr th")[1]).remove();
                 }
+                colspan = "3";
             }
         } else {
             if($("#thirdDashboardTableBody table colgroup col").length != 22) {
@@ -780,13 +793,55 @@ function drawChart() {
             }
         }
 
+        var totalContestFullfilment = 0, totalMarketAvgFullfilment = 0;
+        var totalContestCost = 0, totalMarketAvgCost = 0;
+        var totalContestDuration = 0, totalMarketAvgDuration = 0;
+        var reg1 = /\$/g, reg2 = /\,/g;
+        var totalCompleted = 0;
+        var totalBreakdown = {contestFee : 0, prizes : 0.00, specReview : 0.00, review : 0.00, reliability : 0.00, digitalRun : 0.00,
+                    copilot : 0.00, build : 0.00, bugs : 0.00, misc : 0.00};
+
         $(data).each(function(i){
             if($("a.btnTable").hasClass("active") || timeFilter(timeRange, this.date, timeDimension)) {
                 rowsNo++;
+                totalContestFullfilment += parseFloat(this.contestFullfilment);
+                totalMarketAvgFullfilment += parseFloat(this.marketAvgFullfilment);
+                if(parseFloat(this.contestFullfilment) != 0){
+                    totalCompleted++;
+                    totalContestCost += parseFloat(this.contestCost.replace(reg1,"").replace(reg2,""));
+                    totalContestDuration += parseFloat(this.contestDuration);
+                    for (var key in totalBreakdown) {
+                        totalBreakdown[key] += parseFloat(breakDownMap[parseInt(this.projectId)][key].replace(reg1,"").replace(reg2,""));
+                    }
+                }
+                totalMarketAvgCost += parseFloat(this.marketAvgCost.replace(reg1,"").replace(reg2,""));
+                totalMarketAvgDuration += parseFloat(this.marketAvgDuration);
                 $(chartTableTbody).append(getOneRow(i, this, viewType, "first", true, breakDownMap));
             }
         });
-        if(rowsNo == 0) {
+        totalCompleted = totalCompleted == 0 ? 1: totalCompleted;
+        if(rowsNo > 0) {
+            var totalTr = "<tfoot><tr><td colspan='" + colspan + "' class=\"alignLeft\">Average</td>";
+            totalTr += "<td>"+ new Number(totalContestFullfilment/rowsNo).toFixed(2) +"%</td>";
+            totalTr += "<td class=\"fontGreen\">"+ new Number(totalMarketAvgFullfilment/rowsNo).toFixed(2) +"%</td>";
+            totalTr += "<td>$"+ new Number(totalContestCost/totalCompleted).toFixed(2) +"</td>";
+            totalTr += "<td class=\"fontGreen\">$"+ new Number(totalMarketAvgCost/rowsNo).toFixed(2) +"</td>";
+
+            totalTr += "<td>$" + new Number(totalBreakdown.contestFee/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.prizes/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.specReview/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.review/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.reliability/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.digitalRun/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.copilot/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.build/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.bugs/totalCompleted).toFixed(2) + "</td>";
+            totalTr += "<td>$" + new Number(totalBreakdown.misc/totalCompleted).toFixed(2) + "</td>";
+
+            totalTr += "<td>"+ new Number(totalContestDuration/totalCompleted).toFixed(2) +"</td>";
+            totalTr += "<td class=\"fontGreen\">"+ new Number(totalMarketAvgDuration/rowsNo).toFixed(2) +"</td></tr></tfoot>";
+            $(".costBreakDownChart table").append(totalTr);
+        } else {
             var noNumTr = "<tr style=\"height:60px;\"><td colspan=\"21\" class=\"first\">NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>";
             $(chartTableTbody).append(noNumTr);
         }

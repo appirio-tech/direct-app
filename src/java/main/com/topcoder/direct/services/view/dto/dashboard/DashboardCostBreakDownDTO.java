@@ -23,6 +23,11 @@ public class DashboardCostBreakDownDTO implements Serializable {
     private long id;
     
     /**
+     * Represents the full fillment of the project.
+     */
+    private int fullfillment;
+    
+    /**
      * Represents the contest fee cost.
      */
     private double contestFee;
@@ -95,6 +100,24 @@ public class DashboardCostBreakDownDTO implements Serializable {
      */
     public void setId(long id) {
         this.id = id;
+    }
+
+    /**
+     * Gets the full fillment of the project.
+     * 
+     * @return the full fillment of the project.
+     */
+    public int getFullfillment() {
+        return fullfillment;
+    }
+
+    /**
+     * Sets the full fillment of the project.
+     * 
+     * @param fullfillment the full fillment of the project.
+     */
+    public void setFullfillment(int fullfillment) {
+        this.fullfillment = fullfillment;
     }
 
     /**

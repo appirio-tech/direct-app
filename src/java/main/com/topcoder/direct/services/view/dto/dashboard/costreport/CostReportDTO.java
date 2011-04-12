@@ -432,7 +432,7 @@ public class CostReportDTO extends CommonDTO implements Serializable {
             for (int i = 0; i < getCostDetails().size(); i++) {
                 projectIds[i] = getCostDetails().get(i).getContest().getId();
             }
-            List<DashboardCostBreakDownDTO> breakDown = DataProvider.getDashboardCostBreakDown(projectIds, null);
+            List<DashboardCostBreakDownDTO> breakDown = DataProvider.getDashboardCostBreakDown(projectIds, null, null, null);
             for (DashboardCostBreakDownDTO data : breakDown) {
                 breakdownMap.put(data.getId(), data);
             }

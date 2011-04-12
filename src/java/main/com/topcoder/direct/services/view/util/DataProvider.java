@@ -1548,12 +1548,14 @@ public class DataProvider {
      *
      * @param projectIds the project ids of the contests
      * @param projectCategoriesIds the project category ids of the market
+     * @param startDate the start date when getting market cost breakdown data
+     * @param endDate the end date when getting market cost breakdown data
      * @return If projectIds is not null or empty, the cost breakdown data for contests will be returned. If
      * projectCategoriesIds is not null or empty, the cost breakdown data for the market will be returned.
      * @throws Exception if an unexpected error occurs.
      * @since 2.6.1
      */
-    public static List<DashboardCostBreakDownDTO> getDashboardCostBreakDown(long[] projectIds, long[] projectCategoriesIds) throws Exception {
+    public static List<DashboardCostBreakDownDTO> getDashboardCostBreakDown(long[] projectIds, long[] projectCategoriesIds, Date startDate, Date endDate) throws Exception {
         List <DashboardCostBreakDownDTO> data = new ArrayList<DashboardCostBreakDownDTO>();
         if ( (projectIds == null || projectIds.length == 0) && (projectCategoriesIds == null || projectCategoriesIds.length == 0) ) {
             return data;
@@ -1567,8 +1569,11 @@ public class DataProvider {
             request.setProperty("pids", concatenate(projectIds, ", "));
             dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         } else {
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
             queryName = "dashboard_market_cost_breakdown";
             request.setProperty("pcids", concatenate(projectCategoriesIds, ", "));
+            request.setProperty("sdt", dateFormatter.format(startDate));
+            request.setProperty("edt", dateFormatter.format(endDate));
             dataAccessor = new CachedDataAccess(MaxAge.THREE_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
         }
         request.setContentHandle(queryName);
@@ -1586,6 +1591,9 @@ public class DataProvider {
             dto.setBuild(row.getDoubleItem("build"));
             dto.setBugs(row.getDoubleItem("bugs"));
             dto.setMisc(row.getDoubleItem("misc"));
+            if (queryName.equals("dashboard_contest_cost_breakdown")) {
+                dto.setFullfillment(row.getIntItem("fullfillment"));
+            }
             data.add(dto);
         }
         
