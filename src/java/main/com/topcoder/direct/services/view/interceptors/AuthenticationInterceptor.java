@@ -18,10 +18,13 @@ import com.topcoder.security.TCSubject;
 import com.topcoder.shared.security.SimpleResource;
 import com.topcoder.shared.security.User;
 import com.topcoder.shared.util.DBMS;
+import com.topcoder.shared.util.logging.Logger;
 import com.topcoder.web.common.SimpleRequest;
 import com.topcoder.web.common.SimpleResponse;
 import com.topcoder.web.common.security.BasicAuthentication;
 import com.topcoder.web.common.security.SessionPersistor;
+
+
 
 /**
  * <p>
@@ -164,6 +167,8 @@ import com.topcoder.web.common.security.SessionPersistor;
  */
 public class AuthenticationInterceptor extends AbstractInterceptor {
 
+    private static final Logger logger = Logger.getLogger(AuthenticationInterceptor.class);
+
     /**
      * <p>
      * Represents the login page name attribute.
@@ -240,8 +245,9 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         HttpSession session = ServletActionContext.getRequest().getSession();
         SessionData sessionData = new SessionData(session);
 
+        HttpServletRequest request = ServletActionContext.getRequest();
+
         if (sessionData.isAnonymousUser()) {
-            HttpServletRequest request = ServletActionContext.getRequest();
             HttpServletResponse response = ServletActionContext.getResponse();
             BasicAuthentication auth = new BasicAuthentication(new SessionPersistor(request.getSession()),
                 new SimpleRequest(request), new SimpleResponse(response), new SimpleResource("direct"),
@@ -277,6 +283,35 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
                 return loginPageName;
             }
         }
+
+        String servletPath = request.getContextPath() + request.getServletPath();
+        String query = request.getQueryString();
+        String queryString = (query == null) ? ("") : ("?" + query);
+
+        StringBuffer buf = new StringBuffer(200);
+        buf.append(request.getScheme()+"://");        
+        buf.append(request.getServerName());
+        buf.append(servletPath);
+        buf.append(queryString);
+        String requestString = buf.toString();
+        String handle = "";
+        if (sessionData != null && sessionData.getCurrentUserHandle() != null && !sessionData.getCurrentUserHandle().equals(""))
+        {
+            handle = sessionData.getCurrentUserHandle();
+        }
+
+        StringBuffer loginfo = new StringBuffer(100);
+        loginfo.append("[* ");
+        loginfo.append(handle);
+        loginfo.append(" * ");
+        loginfo.append(request.getRemoteAddr());
+        loginfo.append(" * ");
+        loginfo.append(request.getMethod());
+        loginfo.append(" ");
+        loginfo.append(requestString);
+        loginfo.append(" *]");
+        logger.info(loginfo.toString());
+
 
         // process the action and return its result
         return invocation.invoke();

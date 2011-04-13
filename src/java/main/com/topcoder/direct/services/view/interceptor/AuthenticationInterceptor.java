@@ -15,6 +15,7 @@ import com.topcoder.security.login.AuthenticationException;
 import com.topcoder.shared.security.SimpleResource;
 import com.topcoder.shared.security.User;
 import com.topcoder.shared.util.DBMS;
+import com.topcoder.shared.util.logging.Logger;
 import com.topcoder.web.common.SimpleRequest;
 import com.topcoder.web.common.SimpleResponse;
 import com.topcoder.web.common.security.BasicAuthentication;
@@ -32,6 +33,8 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0
  */
 public class AuthenticationInterceptor implements Interceptor {
+
+    private static final Logger logger = Logger.getLogger(AuthenticationInterceptor.class);
 
     /**
      * <p>Constructs new <code>AuthenticationInterceptor</code> instance. This implementation does nothing.</p>
@@ -63,9 +66,11 @@ public class AuthenticationInterceptor implements Interceptor {
         // Check if currently there is an active session and if user is authenticated. If not then attempt
         // to authenticate the user based on persistent cookie
         TopCoderDirectAction action = (TopCoderDirectAction) actionInvocation.getAction();
+        HttpServletRequest request = ServletActionContext.getRequest();
+
         SessionData sessionData = action.getSessionData();
         if ((sessionData == null) || sessionData.isAnonymousUser()) {
-            HttpServletRequest request = ServletActionContext.getRequest();
+            
             HttpServletResponse response = ServletActionContext.getResponse();
             BasicAuthentication auth = new BasicAuthentication(
                 new SessionPersistor(request.getSession()), new SimpleRequest(request),
@@ -83,6 +88,35 @@ public class AuthenticationInterceptor implements Interceptor {
                 return "anonymous";
             }
         }
+
+        String servletPath = request.getContextPath() + request.getServletPath();
+        String query = request.getQueryString();
+        String queryString = (query == null) ? ("") : ("?" + query);
+
+        StringBuffer buf = new StringBuffer(200);
+        buf.append(request.getScheme()+"://");        
+        buf.append(request.getServerName());
+        buf.append(servletPath);
+        buf.append(queryString);
+        String requestString = buf.toString();
+        String handle = "";
+        if (sessionData != null && sessionData.getCurrentUserHandle() != null && !sessionData.getCurrentUserHandle().equals(""))
+        {
+            handle = sessionData.getCurrentUserHandle();
+        }
+
+        StringBuffer loginfo = new StringBuffer(100);
+        loginfo.append("[* ");
+        loginfo.append(handle);
+        loginfo.append(" * ");
+        loginfo.append(request.getRemoteAddr());
+        loginfo.append(" * ");
+        loginfo.append(request.getMethod());
+        loginfo.append(" ");
+        loginfo.append(requestString);
+        loginfo.append(" *]");
+        logger.info(loginfo.toString());
+
         return actionInvocation.invoke();
     }
 }
