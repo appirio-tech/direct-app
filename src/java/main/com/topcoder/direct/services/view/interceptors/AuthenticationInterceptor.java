@@ -14,6 +14,9 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.topcoder.direct.services.view.action.contest.launch.Helper;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.RolePrincipal;
+import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
 import com.topcoder.shared.security.SimpleResource;
 import com.topcoder.shared.security.User;
@@ -23,6 +26,8 @@ import com.topcoder.web.common.SimpleRequest;
 import com.topcoder.web.common.SimpleResponse;
 import com.topcoder.web.common.security.BasicAuthentication;
 import com.topcoder.web.common.security.SessionPersistor;
+
+import java.util.Set;
 
 
 
@@ -254,7 +259,10 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
                 DBMS.JTS_OLTP_DATASOURCE_NAME);
             User user = auth.checkCookie();
             if (user != null && user.getId() > 0) {
-                TCSubject tcSubject = new TCSubject(user.getId());
+                 // get user roles for the user id
+                Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
+                TCSubject tcSubject = new TCSubject(roles, user.getId());
+
                 sessionData.setCurrentUser(tcSubject);
                 sessionData.setCurrentUserHandle(user.getUserName());
             } else {

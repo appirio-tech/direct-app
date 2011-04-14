@@ -38,6 +38,7 @@ import com.topcoder.project.phases.PhaseType;
 import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.service.ContestSaleData;
 import com.topcoder.security.RolePrincipal;
+import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ContestServiceException;
@@ -421,6 +422,33 @@ public final class DirectUtils {
             return null;
         }
         return new SessionData(request.getSession()).getCurrentUser();
+    }
+    
+    /**
+     * Gets user roles from the persistence.
+     *
+     * @return a set of RolePrincipal which represents user roles
+     * @throws Exception if any error occurs.
+     */
+    public static Set<TCPrincipal> getUserRoles(long userId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("security_roles");
+        request.setProperty("uid", String.valueOf(userId));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("security_roles");
+
+        final int recordNum = resultContainer.size();
+
+        Set<TCPrincipal> principals = new HashSet<TCPrincipal>();
+        for (int i = 0; i < recordNum; i++) {
+            long roleId = resultContainer.getLongItem(i, "role_id");
+            String description = resultContainer.getStringItem(i, "description");
+
+            principals.add(new RolePrincipal(description, roleId));
+        }
+
+        return principals;
     }
 
     /**
