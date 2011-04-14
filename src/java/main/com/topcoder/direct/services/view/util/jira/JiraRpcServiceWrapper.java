@@ -156,7 +156,8 @@ public class JiraRpcServiceWrapper {
 
         } catch (Exception ex) {
             // all the other exception will be wrapped into JiraRpcServiceProcessingException
-            throw new JiraRpcServiceProcessingException("Error occurs when calling Jira RPC Service.", ex);
+            //throw new JiraRpcServiceProcessingException("Error occurs when calling Jira RPC Service.", ex);
+            System.out.println(ex);
         }
 
         // successfully get data, reset retry attempts
