@@ -82,7 +82,7 @@
                                     <s:actionerror/>
                                 </div>
                             </s:if>
-                         </div?
+                         </div>
                     </div>
 
                     <div class="timeDimension">
