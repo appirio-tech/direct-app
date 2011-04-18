@@ -1,7 +1,9 @@
 The Liquid Resource contest %CONTEST_NAME% has been successfully registered.
 
-This email triggers the creation of a Jira tracking ticket. A copilot will setup the ticket, and will initiate informal review.
+This email triggers the creation of a Jira tracking ticket.
 You will receive another email identifying the URL for this Jira ticket. All communication regarding this contest must take place via comments on that ticket.
+
+A copilot will setup the ticket, and will initiate informal review. DO NOT ACTIVATE the competition until the copilot has completed informal review and has provided you a ROM estimate.
 
 Contest name\: %CONTEST_NAME% 
 Target launch\: %LAUNCH_TIME%   
