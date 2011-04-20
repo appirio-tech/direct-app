@@ -1,6 +1,6 @@
 A message from TopCoder.
 
-Thank you for purchasing submissions from TopCoder Direct.  We have processed your payment.  
+Thank you for purchasing submissions from TopCoder.  We have processed your selections.  
  
 You can track the status of this competition, and all your competitions, by visiting http\://www.topcoder.com/direct
 
@@ -29,12 +29,12 @@ Total\:      $%TOTAL_COST%
 -------------------------------------------------------------------
 
 
-Payment has been initiated for $%TOTAL_COST%.  All payments are subject to credit card approval and processing and address confirmation.
+You will be invoiced for $%TOTAL_COST% in accordance with the agreement you have in place with TopCoder, Inc.
  
 
 --------------------------------------------------------------------
 
-This competition was ordered by\:
+This purchase was made for\:
 #    %if:PURCHASE_TYPE = 'CC'%
 #    %PURCHASER_NAME%
 #    %PURCHASER_ADDRESS%
@@ -51,7 +51,7 @@ This competition was ordered by\:
 
 --------------------------------------------------------------------
 
-If you've explored the links on the TopCoder Direct page but still need assistance with your competition, email %FROM_ADDRESS% and we'll be happy to help.
+If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
 
 ---------------------------------------------------------------------
 

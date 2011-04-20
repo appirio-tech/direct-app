@@ -1,7 +1,7 @@
 A message from TopCoder.
 
-We thought you'd like to know that we have scheduled your competition and processed payment.  
- 
+We have scheduled your competition.  The contest will now undergo a specification review before it launches, which will be performed by the TopCoder Community %COMPETITION_TYPE% review board.
+
 You can track the status of this competition, and all your competitions, by visiting http\://www.topcoder.com/direct
 
 There you can\: 
@@ -19,16 +19,16 @@ The following competition(s) have been scheduled\:
 Competition Type\:   %COMPETITION_TYPE%
 Competition Title\:  %COMPETITION_TITLE%
 Project\:       %PROJECT_NAME%
-Launch Time\:  %LAUNCH_TIME%
-Price\:    $%CONTEST_COST%
+Scheduled Launch Time\:  %LAUNCH_TIME%
+*Estimated Cost\:    $%CONTEST_COST%
 
 ---------------------------------------------------------------------
 Total\:      $%TOTAL_COST%
 -------------------------------------------------------------------
 
+* The Estimated Cost includes the contest fee as well as an estimate of the members costs for the competition.  The actual cost will be presented in Cockpit (http\://www.topcoder.com/direct) at the conclusion of the competition.
 
-Payment has been initiated for $%TOTAL_COST%.  All payments are subject to credit card approval and processing and address confirmation.
- 
+You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.
 
 --------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ This competition was ordered by\:
 
 --------------------------------------------------------------------
 
-If you've explored the links on the TopCoder Direct page but still need assistance with your competition, email %FROM_ADDRESS% and we'll be happy to help.
+If you've explored the links in TopCoder Cockpit and the Help Center but still need assistance with your competition, email support@topcoder.com and we'll be happy to help.
 
 ---------------------------------------------------------------------
 
