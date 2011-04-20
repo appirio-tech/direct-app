@@ -166,7 +166,7 @@
                     <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
-                    <a href="<s:url action="dashboard" namespace="/"/>"><span class="dashboardSpan">Upcoming Activities</span></a>
+                    <a href="<s:url action="calendar" namespace="/"/>"><span class="dashboardSpan">Calendar</span></a>
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
                     <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>

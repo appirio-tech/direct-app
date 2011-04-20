@@ -57,13 +57,11 @@
                     <div id="area1"><!-- the main area -->
                         <div class="area1Content">
                         <div class="areaHeader">
-                            <h2 class="title">Latest / Upcoming Activities</h2>
-                            <a href="<s:url action="dashboardActive" namespace="/"/>" class="button1"><span>Regular view</span></a>
+                            <h2 class="title">Calendar</h2>
+                            <a href="<s:url action="dashboard" namespace="/"/>" class="button1"><span>List view</span></a>
                         </div><!-- End .areaHeader -->
 
                         <div id="calendar"></div>
-
-                            <jsp:include page="includes/upcomingActivities.jsp"/>
 
                             <jsp:include page="includes/copilotArea.jsp"/>
                         </div>
