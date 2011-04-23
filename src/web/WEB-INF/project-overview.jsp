@@ -1,13 +1,16 @@
 <%--
-  - Author: TCSASSEMBLER
+  - Author: Veve
   -
-  - Version: 1.0.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.0.2
+  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
   -
   - Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
   - Change to new UI.
+  - version 1.0.2 - TC Cockpit Bug Tracking R1 Cockpit Project Tracking Assembly Change Note
+  - -add issue tracking to health table
+  - -add unresolved issues and ongoing bug races to project status.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -40,7 +43,7 @@
 
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
-                                <a href="project-overview.html">Projects</a> &gt;
+                                <a href="<s:url action="allProjects" namespace="/"/>">Projects</a> &gt;
                                 <strong><s:property value="sessionData.currentProjectContext.name"/></strong>
                             </div>
 
@@ -60,6 +63,7 @@
                                                     <col width="10%" />
                                                     <col width="10%" />
                                                     <col width="10%"/>
+                                                    <col width="10%"/>
                                                 </colgroup>
                                                 <thead>
                                                     <tr>
@@ -69,6 +73,7 @@
                                                         <th>Review</th>
                                                         <th>Forum</th>
                                                         <th>Dependencies</th>
+                                                        <th>Issue Tracking</th>
                                                     </tr>
                                                 </thead>
                                             </div>
@@ -154,6 +159,16 @@
                                                                     <span class="${value.dependenciesStatusColor.name}"></span></a>
                                                                 </s:else>
                                                             </td>
+                                                            <td>
+                                                                 <s:if test="%{#attr['key'].software}" >
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.contestIssuesColor.name}"></span></a>
+                                                                </s:if>
+                                                                <s:else>
+                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.contestIssuesColor.name}"></span></a>
+                                                                </s:else>
+                                                            </td>
                                                         </tr>
                                                     </s:iterator>
                                                 </tbody>
@@ -224,6 +239,24 @@
                                                 <td class="statusName">Average Fulfillment</td>
                                                 <td>
                                                     <fmt:formatNumber value="${viewData.dashboardProjectStat.averageFulfillment}" pattern="##0.##"/>%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Unresolved Issues</td>
+                                                <td>
+                                                    <a href="<s:url action='projectIssueTracking' namespace='/'>
+                                                    <s:param name='formData.projectId' value='formData.projectId'/>
+                                                     <s:param name='subTab'>issues</s:param></s:url>">
+
+                                                    ${viewData.dashboardProjectStat.unresolvedIssuesNumber}</a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Ongoing Bug Races</td>
+                                                <td>
+                                                     <a href="<s:url action='projectIssueTracking' namespace='/'>
+                                                    <s:param name='formData.projectId' value='formData.projectId'/>
+                                                     <s:param name='subTab'>bugRaces</s:param></s:url>">${viewData.dashboardProjectStat.ongoingBugRacesNumber}</a>
                                                 </td>
                                             </tr>
                                         </tbody>

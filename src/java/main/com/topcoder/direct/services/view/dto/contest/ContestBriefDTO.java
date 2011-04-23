@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -10,8 +10,12 @@ import java.io.Serializable;
 /**
  * <p>A DTO providing the brief details for a single contest. </p>
  *
- * @author isv
- * @version 1.0
+ * <p>Version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0) change notes:
+ * - Add methods equals and hashCode.
+ * </p>
+ *
+ * @author isv, TCSDEVELOPER
+ * @version 1.1
  */
 public class ContestBriefDTO implements Serializable {
 
@@ -111,5 +115,33 @@ public class ContestBriefDTO implements Serializable {
      */
     public void setProject(ProjectBriefDTO project) {
         this.project = project;
+    }
+
+    /**
+     * <p>Compares the ContestBriefDTO by contest id.</p>
+     *
+     * @param aThat an object to compare.
+     * @return true if the object is of type ContestBriefDTO and has the same contest id, otherwise false.
+     * @since 1.1
+     */
+    @Override
+    public boolean equals(Object aThat) {
+        if (this == aThat) return true;
+        if (!(aThat instanceof ContestBriefDTO)) return false;
+
+        ContestBriefDTO that = (ContestBriefDTO) aThat;
+
+        return this.getId() == that.getId();
+    }
+
+    /**
+     * <p>Gets the hash code of the ContestBriefDTO</p>
+     *
+     * @return the hash code of the ContestBriefDTO.
+     * @since 1.1
+     */
+    @Override
+    public int hashCode() {
+        return (int) this.getId();
     }
 }

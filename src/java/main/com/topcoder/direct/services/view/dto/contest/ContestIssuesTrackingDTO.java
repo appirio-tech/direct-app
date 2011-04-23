@@ -8,6 +8,9 @@ import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.form.ContestIdForm;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -15,10 +18,27 @@ import java.util.List;
  * The DTO class used for storing the data and rendering the contest issue tracking page.
  * </p>
  *
- * @author TCSDEVELOPER
- * @version  1.0 (TC Cockpit Bug Tracking R1 Contest Tracking assembly)
+ * <p>Version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly) change notes:
+ * - add method getUnresolvedIssues.
+ * - add private static comparator to compare TcJiraIssue by creation date.
+ * </p>
+ *
+ * @author Veve
+ * @version  1.1
  */
 public class ContestIssuesTrackingDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
+
+    /**
+     * Comparator to compare TcJiraIssue by creation date.
+     *
+     * @since 1.1
+     */
+    private static final Comparator<TcJiraIssue> CREATION_DATE_SORTER =
+                                 new Comparator<TcJiraIssue>() {
+        public int compare(TcJiraIssue e1, TcJiraIssue e2) {
+            return e2.getCreationDate().compareTo(e1.getCreationDate());
+        }
+    };
 
     /**
      * <p>A <code>long</code> providing the ID of contest.</p>
@@ -92,6 +112,27 @@ public class ContestIssuesTrackingDTO extends CommonDTO implements ContestStatsD
      */
     public void setIssues(List<TcJiraIssue> issues) {
         this.issues = issues;
+    }
+
+    /**
+     * Gets the list of unresolved issues. The list of unresolved is ordered by creation date decreasingly.
+     *
+     * @return the list of unresolved issues.
+     * @since 1.1
+     */
+    public List<TcJiraIssue> getUnresolvedIssues() {
+        List<TcJiraIssue> unresolvedIssues = new ArrayList<TcJiraIssue>();
+        List<Long> resolvedStatusIds = ConfigUtils.getIssueTrackingConfig().getResolvedStatusIds();
+        for(TcJiraIssue issue : issues) {
+            if (!resolvedStatusIds.contains(Long.parseLong(issue.getStatusId()))) {
+                 unresolvedIssues.add(issue);
+            }
+        }
+
+        // sort by creation date
+        Collections.sort(unresolvedIssues, CREATION_DATE_SORTER);
+
+        return unresolvedIssues;
     }
 
     /**

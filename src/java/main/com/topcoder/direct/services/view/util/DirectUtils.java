@@ -149,9 +149,17 @@ import com.topcoder.shared.util.DBMS;
  *      <li>Change method getContestStats to add the number of jira issues and bug races of the contest into contest
  *      statistics</li>
  * </ul>
+ * </p>
+ * <p>
+ * Version 1.6.6 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly) change notes:
+ * <ul>
+ *      <li>Change method getContestStats to add contest issues into contest stats</li>
+ * </ul>
+ * </p
+ *
  *
  * @author BeBetter, isv, flexme, Blues, Veve
- * @version 1.6.5
+ * @version 1.6.6
  */
 public final class DirectUtils {
     /**
@@ -297,8 +305,12 @@ public final class DirectUtils {
      * Gets the statistics for the specified contest.
      * </p>
      *
-     * <p>version 1.6.5 changes:
+     * <p>
+     * version 1.6.5 changes:
      *  - add the total number of jira issues and bug races into contest statistics.
+     *
+     * version 1.6.6 changes:
+     * - add issues of the contest into contest stats.
      * </p>
      *
      * @param currentUser a <code>TCSubject</code> representing the current user.
@@ -402,8 +414,11 @@ public final class DirectUtils {
         dto.setContest(contest);
         dto.setIsStudio(isStudio);
 
+        // sets the issues of contests
+        dto.setIssues(DataProvider.getContestIssues(contestId, isStudio));
+
         // gets the number of issues and bug races for contest
-        dto.setTotalJiraIssuesNumber(JiraRpcServiceWrapper.getIssuesForContest(contestId, isStudio).size());
+        dto.setTotalJiraIssuesNumber(dto.getIssues().getIssuesNumber() + dto.getIssues().getBugRacesNumber());
 
         return dto;
     }

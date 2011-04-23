@@ -6,9 +6,7 @@ package com.topcoder.direct.services.view.action.project;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
+import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectOverviewDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
@@ -40,11 +38,17 @@ import java.util.Map;
  * <code>UpcomingProjectActivitiesProcessor</code>.</li>
  * <li>Update the method setDashboardContests to use new method to get contests health data.</code>.</li>
  * </ul>
- *
+ * </p>
+ *  <p>
+ * Version 1.0.3 - 	TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 Change Notes
+ * <ul>
+ * <li>Added codes to set issue tracking health status of contests.</li>
+ * <li>Added codes to set unresolved issues number and ongoing bug races number of the project</li>
+ * </ul>
  * </p>
  * 
- * @author isv, TCSASSEMBLER
- * @version 1.0.2
+ * @author isv, Veve
+ * @version 1.0.3
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -113,6 +117,33 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
                 // set dashboard contests
                 setDashboardContests();
+
+                // get project issues
+                List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
+                Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
+
+                int totalUnresolvedIssues = 0;
+                int totalOngoingBugRaces = 0;
+
+                // update dashboard health
+                for(Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
+                    ContestHealthDTO health = getViewData().getContests().get(contestIssues.getKey());
+
+                    if (health != null) {
+                        health.setUnresolvedIssuesNumber(contestIssues.getValue().getUnresolvedIssuesNumber());
+
+                        // update health color
+                        DashboardHelper.setContestStatusColor(health);
+                    }
+
+                    totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
+                    totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
+                }
+
+                viewData.getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
+                viewData.getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
+
+
             } catch (Exception e) {
                 return ERROR;
             }
@@ -153,7 +184,6 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
          Map<ContestBriefDTO, ContestHealthDTO> contests =
             DataProvider.getProjectContestsHealth(getSessionData().getCurrentUserId(), formData.getProjectId(), true);
-        viewData.setContests(contests);
 
         viewData.setContests(contests);
 

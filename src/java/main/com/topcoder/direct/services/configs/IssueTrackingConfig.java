@@ -13,8 +13,13 @@ import java.util.List;
  * This class stores all the configuration for the cockpit issue tracking. It will use JAXB to load the configs
  * from the XML configuration file.
  *
- * @author TCSDEVELOPER
- * @version 1.0 (TC Cockpit Bug Tracking R1 Contest Tracking assembly)
+ * <p>
+ *     Version 1.1 TC Cockpit Bug Tracking R1 Cockpit Project Tracking change notes:
+ *     - Added projectIDField, studioIDField, and badContestHealthIssuesNumber.
+ * </p>
+ *
+ * @author Veve
+ * @version 1.1
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "IssueTrackingConfiguration")
@@ -75,6 +80,22 @@ public class IssueTrackingConfig {
     private String prizeFieldId;
 
     /**
+     * The custom field id for projectID.
+     *
+     * @since 1.1
+     */
+    @XmlElement
+    private String projectIDField;
+
+    /**
+     * The custom field id for studioID.
+     *
+     * @since 1.1
+     */
+    @XmlElement
+    private String studioIDField;
+
+    /**
      * A list of status id that represents an issue is resolved or closed.
      */
     @XmlElement(name = "resolvedStatusIds")
@@ -97,6 +118,14 @@ public class IssueTrackingConfig {
      */
     @XmlElement
     private int maxResultNumber;
+
+    /**
+     * The number of issues that represents the contest is in a bad 'health'
+     *
+     * @since 1.1
+     */
+    @XmlElement
+    private int badContestHealthIssuesNumber;
 
     /**
      * Gets the jira RPC url.
@@ -330,5 +359,65 @@ public class IssueTrackingConfig {
      */
     public void setMaxResultNumber(int maxResultNumber) {
         this.maxResultNumber = maxResultNumber;
+    }
+
+    /**
+     * Gets the number of unresolved issues which represents a contest in a bad health.
+     *
+     * @return the bad contest health issues number.
+     * @since 1.1
+     */
+    public int getBadContestHealthIssuesNumber() {
+        return badContestHealthIssuesNumber;
+    }
+
+    /**
+     * Sets the number of unresolved issues which represents a contest in a bad health.
+     *
+     * @param badContestHealthIssuesNumber the bad contest health issues number.
+     * @since 1.1
+     */
+    public void setBadContestHealthIssuesNumber(int badContestHealthIssuesNumber) {
+        this.badContestHealthIssuesNumber = badContestHealthIssuesNumber;
+    }
+
+    /**
+     * Gets the custom projectIDField.
+     *
+     * @return the custom projectIDField.
+     * @since 1.1
+     */
+    public String getProjectIDField() {
+        return projectIDField;
+    }
+
+    /**
+     * Sets the custom projectIDField.
+     *
+     * @param projectIDField the custom projectIDField
+     * @since 1.1
+     */
+    public void setProjectIDField(String projectIDField) {
+        this.projectIDField = projectIDField;
+    }
+
+    /**
+     * Gets the custom studioIDField.
+     *
+     * @return the custom studioIDField.
+     * @since 1.1
+     */
+    public String getStudioIDField() {
+        return studioIDField;
+    }
+
+    /**
+     * Sets the custom studioIDField
+     *
+     * @param studioIDField the custom studioIDField.
+     * @since 1.1
+     */
+    public void setStudioIDField(String studioIDField) {
+        this.studioIDField = studioIDField;
     }
 }

@@ -15,15 +15,24 @@ import java.util.Date;
 /**
  * The DTO class which is used to store the data for a Jira issue of TopCoder.
  *
- * @author TCSDEVELOPER
- * @version 1.0 (TC Cockpit Bug Tracking R1 Contest Tracking assembly)
+ * <p>Version 1.1 TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 assembly change note:
+ * - Add getProjectID, getStudioId, and isBugRace.
+ * </p>
+ *
+ * @author Veve
+ * @version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 assembly)
  */
 public class TcJiraIssue implements Serializable {
 
     /**
-     * The data format used for format the dates for the issues.
+     * The data format used for format the create and update dates for the issues.
      */
     private static final DateFormat ISSUE_DATE_FORMAT = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+
+    /**
+     * The data format used for format the due dates for the issues.
+     */
+    private static final DateFormat ISSUE_DUE_DATE_FORMAT = new SimpleDateFormat("MMM dd, yyyy");
 
     /**
      * String constant to display n/a.
@@ -219,7 +228,7 @@ public class TcJiraIssue implements Serializable {
         for (RemoteCustomFieldValue rcf : customValues) {
             if (rcf.getCustomfieldId().trim().toLowerCase().equals(
                     ConfigUtils.getIssueTrackingConfig().getPrizeFieldId().trim().toLowerCase())) {
-                return Float.parseFloat(rcf.getValues()[0]);
+                return Float.parseFloat(rcf.getValues()[0].trim());
             }
         }
 
@@ -290,6 +299,55 @@ public class TcJiraIssue implements Serializable {
      */
     public String getDueDateString() {
         Date date = getDueDate();
-        return date == null ? NA : ISSUE_DATE_FORMAT.format(date);
+        return date == null ? NA : ISSUE_DUE_DATE_FORMAT.format(date);
     }
+
+    /**
+     * Gets the project id from the jira issue.
+     *
+     * @return the project id of the jira issue.
+     * @since 1.1
+     */
+    public Long getProjectID() {
+        RemoteCustomFieldValue[] values = this.issue.getCustomFieldValues();
+
+        for(RemoteCustomFieldValue value : values) {
+            if(value.getCustomfieldId().trim().toLowerCase().equals(ConfigUtils.getIssueTrackingConfig().getProjectIDField().trim().toLowerCase())) {
+                return Long.parseLong(value.getValues()[0].trim());
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the studio id of the jira issue.
+     *
+     * @return the studio id the jira issue.
+     * @since 1.1
+     */
+    public Long getStudioID() {
+         RemoteCustomFieldValue[] values = this.issue.getCustomFieldValues();
+
+        for(RemoteCustomFieldValue value : values) {
+            if(value.getCustomfieldId().trim().toLowerCase().equals(ConfigUtils.getIssueTrackingConfig().getStudioIDField().trim().toLowerCase())) {
+                return Long.parseLong(value.getValues()[0].trim());
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if the issue is a bug race.
+     *
+     * @return true if it's a bug race, false not.
+     * @since 1.1
+     */
+    public boolean isBugRace() {
+        String bugRaceProjectName = ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName().trim().toLowerCase();
+
+        return getProjectName().trim().toLowerCase().equals(bugRaceProjectName);
+    }
+
 }

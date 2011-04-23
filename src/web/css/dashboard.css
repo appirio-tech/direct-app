@@ -5501,8 +5501,16 @@ Contest links
 }
 
 .issueContest .contestNameTd a {
-    margin-left: 16px;
-    line-height: 40px;
+    /* margin-left: 16px;
+    line-height: 40px;   */
+}
+
+.issueContest .contestNameLink {
+
+    padding-left: 16px;
+    padding-right: 10px;
+    padding-top: 15px;
+    text-align: left;
 }
 
 /* rowItem */
@@ -5680,6 +5688,9 @@ Contest links
     display: none;
 }
 
+#issueHeader {
+    margin-bottom:10px;
+}
 
 
 

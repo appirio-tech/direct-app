@@ -1,21 +1,20 @@
 <%--
-  - Author: isv, tangzx, TCSDEVELOPER
-  - Version: 1.5.2
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: isv, tangzx, Veve
+  - Version: 1.5.3
+  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
   - It renders the common page headers.
   -
   - Version 1.1 (Direct Permissions Setting Back-end and Integration Assembly 1.0) changes: added Permissions tab for
   - dahsboard pages.
-  -
   - Version 1.2 (Direct Pipeline Integration Assembly 1.0) changes: added Reports tab.
   - Version 1.3 (Direct Enterprise Dashboard Assembly 1.0) changes: added Overview tab for dashboard pages.  
   - Version 1.4 (TC Direct - Launch Copilot Selection Contest assembly) changes: add copilot tab.
   - Version 1.5 (TC Direct Manage Copilots Assembly) changes: update copilot manage sub tab.
   - Version 1.5.1 (Direct Release 6 assembly) changes: fixed styles for Hello User handle.
-  - Version 1.5.2 (Manage Copilot Postings assembly) change notes: linked "My Copilot Selection Contests" tab
-  - to "Manage Copilot Postings" page.
+  - Version 1.5.2 (Manage Copilot Postings assembly) change notes: linked "My Copilot Selection Contests" tab to "Manage Copilot Postings" page.
+  - version 1.5.3 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly) changes notes: linked "Issue Tracking" tab
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -151,6 +150,9 @@
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
                     <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
+                </li>
+                 <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="on"</c:if>>
+                    <a href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Issue Tracking</span></a>
                 </li>
             </ul>
         </div>

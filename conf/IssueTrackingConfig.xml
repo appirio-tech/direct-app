@@ -30,7 +30,7 @@
 
 	<!-- the max retry attempts of authentication -->
 
-	<maxAuthRetry>3</maxAuthRetry>
+	<maxAuthRetry>0</maxAuthRetry>
 
 	<!-- the name of the project for hosting bug race -->
 
@@ -40,6 +40,12 @@
 
 	<prizeFieldId>customfield_10012</prizeFieldId>
 
+	<!-- the custom field id fo custom filed 'project ID Field' -->
+	<projectIDField>customfield_10093</projectIDField>
+
+	<!-- the custom field id fo custom filed 'studio ID Field' -->
+	<studioIDField>customfield_10094</studioIDField>
+
 	<!-- the JQL query used for software contest -->
 	<softwareContestJQLQuery>ProjectID ~ </softwareContestJQLQuery>
 
@@ -48,5 +54,8 @@
 
 	<!-- the max result number -->
 	<maxResultNumber>10000</maxResultNumber>
+
+	<!-- The number of issues that represents the contest is in a bad 'health' -->
+	<badContestHealthIssuesNumber>5</badContestHealthIssuesNumber>
 
 </IssueTrackingConfiguration>

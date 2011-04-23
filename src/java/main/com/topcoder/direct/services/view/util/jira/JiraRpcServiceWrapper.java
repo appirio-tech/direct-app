@@ -7,6 +7,8 @@ import com.atlassian.jira.rpc.soap.client.*;
 import com.atlassian.jira_soapclient.SOAPSession;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -18,10 +20,20 @@ import java.util.Map;
  * <p>The class provides a wrapper for the JiraSoapService. And it provides various methods to get issue data using
  * JiraSoapService.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (TC Cockpit Bug Tracking R1 Contest Tracking assembly)
+ * <p>Version 1.1 TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 change notes:
+ * - Added {@link #getIssuesForDirectProject(List<? extends ContestBriefDTO>)} method
+ * - Added {@link #getIssuesFromJQLQuery(String)} method
+ * </p>
+ *
+ * @author Veve
+ * @version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly)
  */
 public class JiraRpcServiceWrapper {
+
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(JiraRpcServiceWrapper.class);
 
     /**
      * The soap session between client and Jira RPC soap service.
@@ -102,10 +114,8 @@ public class JiraRpcServiceWrapper {
      * @throws Exception if any error occurs.
      */
     public static List<TcJiraIssue> getIssuesForContest(long contestId, boolean isStudio) throws Exception {
-        // if soap session is not established, initialize a soap session first
-        if (soapSession == null) {
-            initializeSoapSession();
-        }
+
+        long time = System.currentTimeMillis();
 
         // throw IllegalArgumentException when the contest id is not positive
         if (contestId <= 0 ) {
@@ -116,6 +126,63 @@ public class JiraRpcServiceWrapper {
         String softwareQuery = ConfigUtils.getIssueTrackingConfig().getSoftwareContestJQLQuery();
         String studioQuery = ConfigUtils.getIssueTrackingConfig().getStudioContestJQLQuery();
         String jqlQuery = (isStudio ? studioQuery : softwareQuery) + contestId;
+
+        List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
+
+        return result;
+    }
+
+    /**
+     * Gets TcJiraIssues of the given list of contests.
+     *
+     * @param contests a list of contests.
+     * @return a list of TcJiraIssues.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.1
+     */
+    public static List<TcJiraIssue> getIssuesForDirectProject(List<? extends ContestBriefDTO> contests) throws Exception {
+        long time = System.currentTimeMillis();
+
+        // when the input is null or empty, return an empty result
+        if (contests == null || contests.size() == 0 ) {
+            return  new ArrayList<TcJiraIssue>();
+        }
+
+        // build the JQL query first
+        String softwareQuery = ConfigUtils.getIssueTrackingConfig().getSoftwareContestJQLQuery();
+        String studioQuery = ConfigUtils.getIssueTrackingConfig().getStudioContestJQLQuery();
+
+        StringBuffer jqlQueryBuilder = new StringBuffer();
+
+        for(ContestBriefDTO contest : contests) {
+            jqlQueryBuilder.append((contest.isSoftware() ? softwareQuery : studioQuery) + contest.getId());
+            jqlQueryBuilder.append(" OR ");
+        }
+
+        // remove the last " OR " which is not needed
+        String jqlQuery = jqlQueryBuilder.substring(0, jqlQueryBuilder.length() - 3) + " order by Created DESC";
+
+        List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
+
+
+        return result;
+    }
+
+
+    /**
+     * Gets a list of TcJiraIssue by calling remote service with the specified JQL query.
+     *
+     * @param jqlQuery the JQL query.
+     * @return a list of TcJiraIssue.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.1
+     */
+    private static List<TcJiraIssue> getIssuesFromJQLQuery(String jqlQuery) throws Exception {
+        // if soap session is not established, initialize a soap session first
+        if (soapSession == null) {
+            initializeSoapSession();
+        }
+
 
         // List to store the final result
         final List<TcJiraIssue> result = new ArrayList<TcJiraIssue>();
@@ -147,21 +214,23 @@ public class JiraRpcServiceWrapper {
             if (retryAttemptCount < ConfigUtils.getIssueTrackingConfig().getMaxAuthRetry()) {
                 retryAttemptCount++;
                 initializeSoapSession();
-                return getIssuesForContest(contestId, isStudio);
+                return getIssuesFromJQLQuery(jqlQuery);
             }
             else {
                 // wrap into JiraRpcServiceAuthenticationException and rethrow
-                throw new JiraRpcServiceAuthenticationException("Failed to authenticate with Jira RPC Service.", authEx);
+                // throw new JiraRpcServiceAuthenticationException("Failed to authenticate with Jira RPC Service.", authEx);
+                logger.error("Error when executing method getIssuesFromJQLQuery" + ", JQL Query is :" + jqlQuery + "Error message is :" + authEx.getMessage(), authEx);
             }
 
         } catch (Exception ex) {
             // all the other exception will be wrapped into JiraRpcServiceProcessingException
-            //throw new JiraRpcServiceProcessingException("Error occurs when calling Jira RPC Service.", ex);
-            System.out.println(ex);
+            // throw new JiraRpcServiceProcessingException("Error occurs when calling Jira RPC Service.", ex);
+            logger.error("Error when executing method getIssuesFromJQLQuery" + ", JQL Query is :" + jqlQuery + "Error message is :" + ex.getMessage(), ex);
         }
 
         // successfully get data, reset retry attempts
         retryAttemptCount = 0;
+
         return result;
     }
 }

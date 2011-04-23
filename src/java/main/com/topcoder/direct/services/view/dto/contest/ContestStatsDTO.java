@@ -14,11 +14,14 @@ import com.topcoder.service.studio.MilestonePrizeData;
  *
  * <p>
  * Version 1.0.1 Change notes (TC Cockpit Bug Tracking R1 Contest Tracking assembly):
- * - Add property
+ * - Add property totalJiraIssuesNumber.
  *
+ * Version 1.0.2 Change notes (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly):
+ * - Add property issues.
+ * </p>
  *
  * @author isv, Veve
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -95,6 +98,13 @@ public class ContestStatsDTO implements Serializable {
      * @since 1.0.1
      */
     private int totalJiraIssuesNumber;
+
+    /**
+     * <p>Provides the issues information which can be used the contest dashboard if needed</p>
+     *
+     * @since 1.0.2
+     */
+    private ContestIssuesTrackingDTO issues;
 	
 	/**
 	 * <p>A <code>String</code> providing the SVN module of the contest.</p>
@@ -311,6 +321,26 @@ public class ContestStatsDTO implements Serializable {
 	public void setSvn(String svn) {
 	    this.svn = svn;
 	}
+
+    /**
+     * Gets the issues of the contest.
+     *
+     * @return the issues of the contest.
+     * @since 1.0.2
+     */
+    public ContestIssuesTrackingDTO getIssues() {
+        return issues;
+    }
+
+    /**
+     * Sets the issues of the contest.
+     *
+     * @param issues the issues of the contest.
+     * @since 1.0.2
+     */
+    public void setIssues(ContestIssuesTrackingDTO issues) {
+        this.issues = issues;
+    }
 
     /**
      * <p>Gets the total number of jira issues and bug races for this contest.</p>

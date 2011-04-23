@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard;
 
@@ -16,9 +16,16 @@ import java.io.Serializable;
  * <li>Added {@link #averageContestDurationText} and {@link #projectStatusColor} parameters. </li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.0.2 - TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 Change Note
+ * <ul>
+ * <li>Added property unresolvedIssuesNumber. </li>
+ * <li>Added property ongoingBugRacesNumber. </li>
+ * </ul>
+ * </p>
  *
- * @author isv, TCSASSEMBLER
- * @version 1.0.1
+ * @author isv, Veve
+ * @version 1.0.2
  */
 public class EnterpriseDashboardProjectStatDTO implements Serializable {
 
@@ -90,6 +97,20 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
      * @since 1.0.1
      */
     private DashboardStatusColor projectStatusColor;
+
+    /**
+     * <p>A <code>int</code> represents the number of unresolved issues of the project.
+     *
+     * @since 1.0.2
+     */
+    private int unresolvedIssuesNumber;
+
+    /**
+     * <p>A <code>int</code> represents the number of ongoing bug races of the project.
+     *
+     * @since 1.0.2
+     */
+    private int ongoingBugRacesNumber;
 
     /**
      * <p>Constructs new <code>EnterpriseDashboardProjectStatDTO</code> instance. This implementation does nothing.</p>
@@ -336,4 +357,46 @@ public class EnterpriseDashboardProjectStatDTO implements Serializable {
     public void setProjectStatusColor(DashboardStatusColor projectStatusColor) {
         this.projectStatusColor = projectStatusColor;
     }
+
+    /**
+     * Gets the number of unresolved issues.
+     *
+     * @return the number of unresolved issues.
+     * @since 1.0.2
+     */
+    public int getUnresolvedIssuesNumber() {
+        return unresolvedIssuesNumber;
+    }
+
+    /**
+     * Sets the number of unresolved issues.
+     *
+     * @param unresolvedIssuesNumber the number of unresolved issues.
+     * @since 1.0.2
+     */
+    public void setUnresolvedIssuesNumber(int unresolvedIssuesNumber) {
+        this.unresolvedIssuesNumber = unresolvedIssuesNumber;
+    }
+
+    /**
+     * Gets the number of ongoing bug races.
+     *
+     * @return the number of ongoing bug races.
+     * @since 1.0.2
+     */
+    public int getOngoingBugRacesNumber() {
+        return ongoingBugRacesNumber;
+    }
+
+    /**
+     * Sets the number of ongoing bug races.
+     *
+     * @param ongoingBugRacesNumber the number of ongoing bug races.
+     * @since 1.0.2
+     */
+    public void setOngoingBugRacesNumber(int ongoingBugRacesNumber) {
+        this.ongoingBugRacesNumber = ongoingBugRacesNumber;
+    }
 }
+
+

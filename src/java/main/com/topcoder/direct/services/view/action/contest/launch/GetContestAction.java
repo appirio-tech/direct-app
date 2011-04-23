@@ -1,40 +1,34 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.util.List;
-import java.util.Collections;
-import java.util.Comparator;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.topcoder.direct.services.view.dto.contest.*;
-import com.topcoder.management.resource.Resource;
-import com.topcoder.management.resource.ResourceRole;
-import org.apache.struts2.ServletActionContext;
-
 import com.topcoder.direct.services.exception.DirectException;
-import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.resource.ResourceRole;
+import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
-import com.topcoder.web.common.CachedDataAccess;
-import com.topcoder.web.common.cache.MaxAge;
-import com.topcoder.security.TCSubject;
-import com.topcoder.service.project.CompetitionPrize;
-import com.topcoder.service.studio.ContestStatusData;
+import org.apache.struts2.ServletActionContext;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * <p>
@@ -82,9 +76,15 @@ import com.topcoder.service.studio.ContestStatusData;
  * <li>Updated {@link #executeAction()} method to set hasContestWritePermission flag to the view data.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.2.5 - TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 Change Note
+ * <ul>
+ * <li>Updated {@link #executeAction()} method to set UnresolvedIssuesNumber to the dashboard view data.</li>
+ * </ul>
+ * </p>
  * 
- * @author fabrizyo, FireIce, isv, TCSASSEMBLER
- * @version 1.2.4
+ * @author fabrizyo, FireIce, isv, Veve
+ * @version 1.2.5
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -244,6 +244,10 @@ public class GetContestAction extends ContestAction {
             viewData.setShowSpecReview(getSpecificationReviewService()
                     .getSpecificationReview(currentUser, projectId) != null);
         }
+
+        // calculate the contest issues tracking health
+        getViewData().getDashboard().setUnresolvedIssuesNumber(getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
+        DashboardHelper.setContestStatusColor(getViewData().getDashboard());
     }
 
     /**

@@ -9,7 +9,7 @@ $(document).ready(function(){
         $(".date-pick").datePicker({startDate:'01/01/2001'});
     }
     
-    /* dashboard view Table expand/collapse function */
+    /* dashboard view Table expand/collapse function */ 
     $(".dashboardTable .expand").click(function(){
         $(this).blur();
         if($(this).hasClass("collapse")){
@@ -90,6 +90,7 @@ $(document).ready(function(){
                 "sDom": 'rt<"bottom1"il><"bottom2"fp',
                 "aaSorting": [[0,'asc']],
                 "aoColumns": [
+                                { "sType": "html" },
                                 { "sType": "html" },
                                 { "sType": "html" },
                                 { "sType": "html" },

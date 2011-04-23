@@ -25,8 +25,12 @@ import java.util.List;
 /**
  * <p>Action class which handles retrieving Jira issues and bug races for the contest</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0
+ * <p>Version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0) change notes:
+ * - refactor the logic of getting ContestIssuesTrackingDTO into method DataProvider.getContestIssues
+ * </p>
+ *
+ * @author Veve
+ * @version 1.1
  */
 public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
 
@@ -61,6 +65,9 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
      * <p>Handles the incoming request. If action is executed successfully then changes the current project context to
      * project for contest requested for this action.</p>
      *
+     * <p>Changes in version 1.1: the logic of getting and populating ContestIssuesTrackingDTO
+     * has been refactored into method DataProvider.getContestIssues.</p>
+     *
      * @throws Exception if an unexpected error occurs while processing the request.
      */
     @Override
@@ -79,33 +86,8 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
             contestId = getProjectId();
         }
 
-        // get issues and bug races from the Jira RPC soap service
-        List<TcJiraIssue> results = JiraRpcServiceWrapper.getIssuesForContest(contestId, isStudioCompetition());
 
-        // use one list to store issues, another list to store bug races
-        List<TcJiraIssue> issues = new ArrayList<TcJiraIssue>();
-        List<TcJiraIssue> bugRaces = new ArrayList<TcJiraIssue>();
-
-        // get the jira project name for bug race from the configuration. It will be used to tell which issue
-        // is a bug race
-        String bugRaceProjectName = ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName().trim().toLowerCase();
-
-
-        // filter out the jira issues and bug races
-        for (TcJiraIssue item : results) {
-            if(item.getProjectName().trim().toLowerCase().equals(bugRaceProjectName)) {
-                bugRaces.add(item);
-            } else {
-                issues.add(item);
-            }
-        }
-
-
-        // set the view data
-        getViewData().setContestId(contestId);
-        getViewData().setIssues(issues);
-        getViewData().setBugRaces(bugRaces);
-
+        this.viewData = DataProvider.getContestIssues(contestId, isStudioCompetition());
 
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, isStudioCompetition());

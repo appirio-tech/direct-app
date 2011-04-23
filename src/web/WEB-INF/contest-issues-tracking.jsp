@@ -1,11 +1,12 @@
 <%--
   - Author: TCSDEVELOPER
-  - Version: 1.0.0
+  - Version: 1.0.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the issues and bug races of the contest.
+  - Version 1.0.1 - Fix an issue with assignee display
   -
-  - Version 1.0.0 (TC Cockpit Bug Tracking R1 Contest Tracking assembly).
+  - Version 1.0.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -160,7 +161,7 @@
                                                                         <dt>Assignee :</dt>
                                                                         <dd>
                                                                             <c:choose>
-                                                                                <c:when test="${bugRace.reporter == 'Unassigned'}">
+                                                                                <c:when test="${bugRace.assignee == 'Unassigned'}">
                                                                                     Unassigned
                                                                                 </c:when>
                                                                                 <c:otherwise>
@@ -336,7 +337,7 @@
                                                                                                 <dt>Assignee :</dt>
                                                                                                 <dd>
                                                                                                     <c:choose>
-                                                                                                        <c:when test="${issue.reporter == 'Unassigned'}">
+                                                                                                        <c:when test="${issue.assignee == 'Unassigned'}">
                                                                                                             Unassigned
                                                                                                         </c:when>
                                                                                                         <c:otherwise>
@@ -415,13 +416,7 @@
 
 <jsp:include page="includes/popups.jsp"/>
 
-<s:form action="contestRegistrants" namespace="/"
-        cssStyle="visibility:hidden;display:none;" id="ContestRegistrantsForm" method="get">
-    <s:hidden name="formData.excel" id="formDataExcel" value="false" />
-    <s:hidden name="formData.contestId"/>
-    <s:hidden name="contestId"/>
-    <s:hidden name="projectId"/>
-</s:form>
+
 </body>
 <!-- End #page -->
 

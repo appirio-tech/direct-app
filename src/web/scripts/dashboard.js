@@ -389,6 +389,7 @@ $(document).ready(function(){
     });
 
     $('#issue .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+    $("#issue tbody>tr:visible:last").addClass("lastTr");
 
     //view all for issue
     /*$('#issue .checkbox').live('click',function(){
@@ -432,11 +433,29 @@ $(document).ready(function(){
         if ($('#issue .issueSelectionContent div.rowItem:visible').length % 2 != 0) {
             $('#issue .container2Opt .corner').addClass('evencorner');
         }
+
+        $("#issue tbody>tr").removeClass("lastTr");
+        $("#issue tbody>tr:visible:last").addClass("lastTr");
+    }
+
+    function hideIssuesEmptyContest() {
+        if ($("#issue .contestIssuesTd").length > 0) {
+
+            $("#issue .contestIssuesTd").each(function() {
+                $(this).parent().show();
+                if ($(this).find(".rowItem:visible").length == 0) {
+                    // hide the row
+                    $(this).parent().hide();
+                }
+
+            });
+        }
     }
 
     $('#issue .select2').change(function() {
         if ($(this).val().match('All Issues')) {
             $('#issue .rowItem').show();
+            hideIssuesEmptyContest();
             sortFunction();
         } else if ($(this).val().match('Unresolved Issues')) {
             $('#issue .rowItem').show();
@@ -444,6 +463,7 @@ $(document).ready(function(){
                 $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
                 $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
             });
+            hideIssuesEmptyContest();
             sortFunction();
         } else {
             $('#issue .rowItem').hide();
@@ -451,6 +471,7 @@ $(document).ready(function(){
                 $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().show();
                 $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().show();
             });
+            hideIssuesEmptyContest();
             sortFunction();
         }
     });
@@ -464,6 +485,7 @@ $(document).ready(function(){
         $(this).find('div.rowItem:last').addClass('lastRowItem');
     });
     $('#bugRace .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
+    $("#bugRace tbody>tr:visible:last").addClass("lastTr");
 
     //view all for issue
     $('.checkbox').live('click', function() {
@@ -525,11 +547,28 @@ $(document).ready(function(){
         if ($('#bugRace .issueSelectionContent div.rowItem:visible').length % 2 != 0) {
             $('#bugRace .container2Opt .corner').addClass('evencorner');
         }
+
+        $("#bugRace tbody>tr:visible:last").addClass("lastTr");
+    }
+
+    function hideBugRacesEmptyContest() {
+        if ($("#bugRace .contestIssuesTd").length > 0) {
+
+            $("#bugRace .contestIssuesTd").each(function() {
+                $(this).parent().show();
+                if ($(this).find(".rowItem:visible").length == 0) {
+                    // hide the row
+                    $(this).parent().hide();
+                }
+
+            });
+        }
     }
 
     $('#bugRace .select2').change(function() {
         if ($(this).val().match('All Bug Races') != null) {
             $('#bugRace .rowItem').show();
+            hideBugRacesEmptyContest();
             bugSortFunction();
         } else if ($(this).val().match('Ongoing Bug Races') != null) {
             $('#bugRace .rowItem').show();
@@ -537,6 +576,7 @@ $(document).ready(function(){
                 $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
                 $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
             });
+            hideBugRacesEmptyContest();
             bugSortFunction();
         } else {
             $('#bugRace .rowItem').hide();
@@ -544,6 +584,7 @@ $(document).ready(function(){
                 $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().show();
                 $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().show();
             });
+            hideBugRacesEmptyContest();
             bugSortFunction();
         }
     });
@@ -567,6 +608,41 @@ $(document).ready(function(){
         $('#issue .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
         $('#bugRace .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
     });
+
+    function getUrlPara(paraName){
+		var sUrl = location.href;
+		var sReg = "(?:\\?|&){1}"+paraName+"=([^&]*)"
+		var re=new RegExp(sReg,"gi");
+		re.exec(sUrl);
+		return RegExp.$1;
+	}
+
+    /**
+     * check whether the url has parameter to indicate which sub tab to use.
+     */
+    if (getUrlPara('subTab') == 'issues') {
+        $('#issue').show();
+        $('#bugRace').hide();
+        $('#issue .select2').get(0).selectedIndex = 1;
+        $('#issue .rowItem').show();
+        $('#issue .rowItem').each(function() {
+            $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
+            $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
+        });
+        hideIssuesEmptyContest();
+        sortFunction();
+    } else if (getUrlPara('subTab') == 'bugRaces') {
+        $('#bugRace').show();
+        $('#issue').hide();
+        $('#bugRace .select2').get(0).selectedIndex = 1;
+        $('#bugRace .rowItem').show();
+        $('#bugRace .rowItem').each(function() {
+            $(this).find('.issueStatus:contains("Resolved")').parent().parent().parent().hide();
+            $(this).find('.issueStatus:contains("Closed")').parent().parent().parent().hide();
+        });
+        hideBugRacesEmptyContest();
+        bugSortFunction();
+    }
 
 });
 

@@ -10,8 +10,14 @@ import java.io.Serializable;
 /**
  * <p>A <code>DTO</code> providing the data for health status for single contest.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (Cockpit Performance Improvement Project Overview and Manage Copilot Posting Assembly 1.0)
+ * <p>
+ *     Version 1.1 Change notes (TC Cockpit Bug Tracking R1 Cockpit Project Tracking Assembly):
+ *     - Add the property unresolvedIssuesNumber
+ *     - Add the property contestIssuesColor
+ * </p>
+ *
+ * @author Veve
+ * @version 1.1 
  */
 public class ContestHealthDTO implements Serializable {
 
@@ -29,6 +35,13 @@ public class ContestHealthDTO implements Serializable {
      * <p>An <code>int</code> providing the number of unanswered forum posts for project.</p>
      */
     private int unansweredForumPostsNumber;
+
+    /**
+     * <p>An <code>int</code> providing the number of unresolved issues for the contest.</p>
+     *
+     * @since 1.1
+     */
+    private int unresolvedIssuesNumber;
 
     /**
      * <p>A <code>RegistrationStatus</code> providing the status for registration for project.</p>
@@ -77,7 +90,16 @@ public class ContestHealthDTO implements Serializable {
     private DashboardStatusColor contestStatusColor;
 
     /**
+     * <p>A <code>DashboardStatusColor</code> presents which color should be used when render the contest issues status</p>
+     *
+     * @since 1.1
+     */
+    private DashboardStatusColor contestIssuesColor;
+
+    /**
      * <p>Constructs new <code>ContestHealthDTO</code> instance. This implementation does nothing.</p>
+     *
+     * @since 1.1
      */
     public ContestHealthDTO() {
     }
@@ -302,5 +324,45 @@ public class ContestHealthDTO implements Serializable {
      */
     public void setContestStatusColor(DashboardStatusColor contestStatusColor) {
         this.contestStatusColor = contestStatusColor;
+    }
+
+    /**
+     * Gets the number of unresolved issues of the contest.
+     *
+     * @return the number of unresolved issues of the contest.
+     * @since 1.1
+     */
+    public int getUnresolvedIssuesNumber() {
+        return unresolvedIssuesNumber;
+    }
+
+    /**
+     * Sets the number of unresolved issues of the contest.
+     *
+     * @param unresolvedIssuesNumber the number of unresolved issues of the contest.
+     * @since 1.1
+     */
+    public void setUnresolvedIssuesNumber(int unresolvedIssuesNumber) {
+        this.unresolvedIssuesNumber = unresolvedIssuesNumber;
+    }
+
+    /**
+     * Gets the health color represents the health of contest issues.
+     *
+     * @return the health color of contest issues.
+     * @since 1.1
+     */
+    public DashboardStatusColor getContestIssuesColor() {
+        return contestIssuesColor;
+    }
+
+    /**
+     * Sets the health color of the contest issues.
+     *
+     * @param contestIssuesColor the health colors of contest issues.
+     * @since 1.1
+     */
+    public void setContestIssuesColor(DashboardStatusColor contestIssuesColor) {
+        this.contestIssuesColor = contestIssuesColor;
     }
 }

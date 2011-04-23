@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
 import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
@@ -25,8 +26,15 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  *   </ol>
  * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.1 (From Direct - Project Dashboard Assembly)
+ * <p>
+ * Version 1.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0) Change notes:
+ *   <ol>
+ *     <li>Add logic of calculating health for issue tracking of contest.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author Veve
+ * @version 1.2
  */
 public class DashboardHelper {
     /**
@@ -46,7 +54,9 @@ public class DashboardHelper {
     }
 
     /**
-     * Set color for each status and contest.
+     * <p>Set color for each status and contest.</p>
+     *
+     * <p>Version 1.2 changes: add logic of setting contest issue tracking health color.</p>
      *
      * @param contest
      *            the contest
@@ -99,6 +109,15 @@ public class DashboardHelper {
             contest.setDependenciesStatusColor(DashboardStatusColor.GREEN);
         }
 
+        // set the contest issues color
+        if (contest.getUnresolvedIssuesNumber() >= ConfigUtils.getIssueTrackingConfig().getBadContestHealthIssuesNumber()) {
+            contest.setContestIssuesColor(DashboardStatusColor.RED);
+        } else if (contest.getUnresolvedIssuesNumber() > 0) {
+            contest.setContestIssuesColor(DashboardStatusColor.ORANGE);
+        } else {
+            contest.setContestIssuesColor(DashboardStatusColor.GREEN);
+        }
+
         // set contest status color
         if (hasSpecifiedColor(contest, DashboardStatusColor.RED)) {
             contest.setContestStatusColor(DashboardStatusColor.RED);
@@ -110,7 +129,9 @@ public class DashboardHelper {
     }
 
     /**
-     * Judge whether the contest has specified color.
+     * <p>Judge whether the contest has specified color.</p>
+     *
+     * <p>Version 1.2 changes: add contest issue tracking color.</p>
      *
      * @param contest
      *            the contest to judge
@@ -124,7 +145,7 @@ public class DashboardHelper {
                 || contest.getRegStatusColor() == color
                 || contest.getForumActivityStatusColor() == color
                 || contest.getReviewersSignupStatusColor() == color
-                || contest.getDependenciesStatusColor() == color) {
+                || contest.getDependenciesStatusColor() == color || contest.getContestIssuesColor() == color) {
             return true;
         }
         return false;

@@ -3,74 +3,42 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.LinkedList;
-import java.util.LinkedHashMap;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.Map.Entry;
-
-import com.topcoder.clients.model.Client;
-import com.topcoder.clients.model.Project;
+import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.dto.*;
 import com.topcoder.direct.services.view.dto.contest.*;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
+import com.topcoder.direct.services.view.dto.dashboard.*;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
-import com.topcoder.security.RolePrincipal;
-import com.topcoder.service.project.IllegalArgumentFault;
+import com.topcoder.direct.services.view.dto.project.*;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.CommonProjectContestData;
+import com.topcoder.service.facade.contest.ProjectSummaryData;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.MaxAge;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 
-import com.topcoder.direct.services.view.dto.ActivityDTO;
-import com.topcoder.direct.services.view.dto.ActivityType;
-import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
-import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
-import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
-import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
-import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
-import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.CommonProjectContestData;
-import com.topcoder.service.facade.contest.ProjectSummaryData;
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.util.DBMS;
-import com.topcoder.web.common.CachedDataAccess;
-import com.topcoder.web.common.cache.MaxAge;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -223,8 +191,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme
- * @version 2.6.1
+ * <p>
+ * Version 2.6.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0) Change notes:
+ *   <ol>
+ *       <li>Added {@link #getContestIssues(long, boolean)} to get issues of the contest.<li>
+ *       <li>Added (@link #getDirectProjectIssues(List<? extends ContestBriefDTO>)} to get issues of the direct project.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
+ * @version 2.6.2
  */
 public class DataProvider {
 
@@ -3535,6 +3511,117 @@ public class DataProvider {
         } else {
             dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
         }
+    }
+
+    /**
+     * <p>Gets the issues of the contest. The result is returned in a ContestIssuesTrackingDTO object.</p>
+     *
+     * @param contestId the id of the contest
+     * @param isStudio the boolean to tell if the contest is a studio contest
+     * @return the ContestIssuesTrackingDTO object
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.6.2
+     */
+    public static ContestIssuesTrackingDTO getContestIssues(long contestId, boolean isStudio) throws Exception {
+
+        // get issues and bug races from the Jira RPC soap service
+        List<TcJiraIssue> results = JiraRpcServiceWrapper.getIssuesForContest(contestId, isStudio);
+
+        // use one list to store issues, another list to store bug races
+        List<TcJiraIssue> issues = new ArrayList<TcJiraIssue>();
+        List<TcJiraIssue> bugRaces = new ArrayList<TcJiraIssue>();
+
+        // get the jira project name for bug race from the configuration. It will be used to tell which issue
+        // is a bug race
+        String bugRaceProjectName = ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName().trim().toLowerCase();
+
+
+        // filter out the jira issues and bug races
+        for (TcJiraIssue item : results) {
+            if(item.getProjectName().trim().toLowerCase().equals(bugRaceProjectName)) {
+                bugRaces.add(item);
+            } else {
+                issues.add(item);
+            }
+        }
+
+        // populate result
+        ContestIssuesTrackingDTO result = new ContestIssuesTrackingDTO();
+        result.setContestId(contestId);
+        result.setIssues(issues);
+        result.setBugRaces(bugRaces);
+
+        return result;
+    }
+
+
+    /**
+     * <p>Gets the issues of the direct project. The list of contests belong to the project will be passed in.</p>
+     *
+     * @param contests the list of the contests
+     * @return map of contest to contest issues.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.6.2
+     */
+    public static Map<ContestBriefDTO, ContestIssuesTrackingDTO> getDirectProjectIssues(List<? extends ContestBriefDTO> contests) throws Exception {
+
+        // Gets result from jira service
+        List<TcJiraIssue> issues = JiraRpcServiceWrapper.getIssuesForDirectProject(contests);
+
+        // Creates map to store result
+        Map<ContestBriefDTO, ContestIssuesTrackingDTO> issuesMap = new HashMap<ContestBriefDTO, ContestIssuesTrackingDTO>();
+
+        // Creates another assistant map
+        Map<Long, ContestIssuesTrackingDTO> idsMap = new HashMap<Long, ContestIssuesTrackingDTO>();
+
+        // Initializes the maps first
+        for(ContestBriefDTO contest : contests) {
+            ContestIssuesTrackingDTO contestIssues = new ContestIssuesTrackingDTO();
+            contestIssues.setBugRaces(new ArrayList<TcJiraIssue>());
+            contestIssues.setIssues(new ArrayList<TcJiraIssue>());
+            contestIssues.setContestId(contest.getId());
+            issuesMap.put(contest, contestIssues);
+            idsMap.put(contest.getId(), contestIssues);
+        }
+
+        // Puts result into the map
+        for(TcJiraIssue issue : issues) {
+            Long projectId = issue.getProjectID();
+            Long studioId = issue.getStudioID();
+            ContestIssuesTrackingDTO dto;
+
+            if(issue.isBugRace()) {
+                if(projectId != null) {
+                    dto = idsMap.get(projectId);
+                    if (dto != null) {
+                        dto.getBugRaces().add(issue);
+                    }
+                }
+                if (studioId != null) {
+                     dto = idsMap.get(studioId);
+                     if (dto != null) {
+                        dto.getBugRaces().add(issue);
+                     }
+                }
+            } else {
+                 if(projectId != null) {
+                    dto = idsMap.get(projectId);
+                    if (dto != null) {
+                        dto.getIssues().add(issue);
+                    }
+                }
+                if (studioId != null) {
+                    dto = idsMap.get(studioId);
+                    if (dto != null) {
+                        dto.getIssues().add(issue);
+                    }
+                }
+            }
+
+
+        }
+
+        return issuesMap;
     }
 }
 

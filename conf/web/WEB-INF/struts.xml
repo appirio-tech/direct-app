@@ -237,6 +237,10 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
         </action>
+         <action name="projectIssueTracking" class="com.topcoder.direct.services.view.action.project.ProjectIssuesTrackingAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/project-issues-tracking.jsp</result>
+        </action>
         <action name="currentProjectOverview"
                 class="com.topcoder.direct.services.view.action.project.CurrentProjectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>

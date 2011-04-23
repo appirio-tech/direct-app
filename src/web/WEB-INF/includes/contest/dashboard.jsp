@@ -1,7 +1,9 @@
 <%--
-  - Author: isv
-  - Version: 1.0 (Direct Contest Dashboard assembly)
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Veve
+  - Version: 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0)
+  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 change notes: add issue tracking health status into dashboard page.
   -
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -224,7 +226,35 @@
                         </c:if>
                     </td>
                 </tr>
-                </s:if>    
+                </s:if>
+
+
+                     <tr class="even">
+                                                <td class="first">
+                                                      <label class="<s:property value='viewData.dashboard.contestIssuesColor.toString().toLowerCase()'/>">Issue Tracking</label>
+                                                </td>
+                                                <td>
+                                                    <div class="info">
+                                                        <span class="leftPart">
+                                                           Open Issue : <s:property value='viewData.contestStats.issues.unresolvedIssuesNumber'/>&nbsp;&nbsp;
+                                                            <a class="triggerDetail" href="<s:if test='software'><s:url action='contestIssuesTracking'>
+                                                            <s:param name='projectId' value='projectId'/><s:param name='subTab'>issues</s:param></s:url></s:if>
+                                                            <s:else><s:url action='contestIssuesTracking'><s:param name='contestId' value='contestId'/><s:param name='subTab'>issues</s:param></s:url></s:else>">View Details</a>
+                                                        </span>
+                                                        <span class="rightPart">
+                                                            <s:if test="viewData.contestStats.issues.unresolvedIssues.size > 0">
+                                                                 <s:set var="latestIssue" value="viewData.contestStats.issues.unresolvedIssues[0]"/>
+
+
+                                                                 Latest issue : <a href="<s:property value='#latestIssue.issueLink'/>" target="_blank"><s:property value="#latestIssue.issueSummary"/></a>
+
+                                                            </s:if>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
                 </tbody>
             </table>
         </dd>
