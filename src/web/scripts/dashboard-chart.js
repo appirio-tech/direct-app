@@ -309,7 +309,7 @@ function drawChart() {
                 breakdown = {contestFee : "0", prizes : "0.00", specReview : "0.00", review : "0.00", reliability : "0.00", digitalRun : "0.00",
                     copilot : "0.00", build : "0.00", bugs : "0.00", misc : "0.00"};
             }
-            tr += "<td>$" + breakdown.contestFee + "</td>";
+            // tr += "<td>$" + breakdown.contestFee + "</td>";
             tr += "<td>$" + breakdown.prizes + "</td>";
             tr += "<td>$" + breakdown.specReview + "</td>";
             tr += "<td>$" + breakdown.review + "</td>";
@@ -776,7 +776,8 @@ function drawChart() {
         if (viewType == "Market") {
             data = allContestData;
             if(!isAdmin) {
-                if($("#thirdDashboardTableBody table colgroup col").length == 22) {
+                if($("#thirdDashboardTableBody table colgroup col").length == 21) {
+
                     $($("#thirdDashboardTableBody table colgroup col")[1]).remove();
                     $($("#thirdDashboardTableBody table colgroup col")[1]).remove();
                     $($("#thirdDashboardTableBody table thead tr th")[1]).remove();
@@ -785,7 +786,7 @@ function drawChart() {
                 colspan = "3";
             }
         } else {
-            if($("#thirdDashboardTableBody table colgroup col").length != 22) {
+            if($("#thirdDashboardTableBody table colgroup col").length != 21) {
                 $($("#thirdDashboardTableBody table colgroup col")[0]).after("<col width=\"94px\">");
                 $($("#thirdDashboardTableBody table colgroup col")[1]).after("<col width=\"94px\">");
                 $($("#thirdDashboardTableBody table thead tr th")[0]).after("<th class=\"noBT\" rowspan=\"2\"><strong>Customer</strong></th>");
@@ -827,7 +828,7 @@ function drawChart() {
             totalTr += "<td>$"+ new Number(totalContestCost/totalCompleted).toFixed(2) +"</td>";
             totalTr += "<td class=\"fontGreen\">$"+ new Number(totalMarketAvgCost/rowsNo).toFixed(2) +"</td>";
 
-            totalTr += "<td>$" + new Number(totalBreakdown.contestFee/totalCompleted).toFixed(2) + "</td>";
+            // totalTr += "<td>$" + new Number(totalBreakdown.contestFee/totalCompleted).toFixed(2) + "</td>";
             totalTr += "<td>$" + new Number(totalBreakdown.prizes/totalCompleted).toFixed(2) + "</td>";
             totalTr += "<td>$" + new Number(totalBreakdown.specReview/totalCompleted).toFixed(2) + "</td>";
             totalTr += "<td>$" + new Number(totalBreakdown.review/totalCompleted).toFixed(2) + "</td>";

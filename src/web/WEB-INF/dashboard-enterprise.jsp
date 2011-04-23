@@ -289,7 +289,7 @@
                                                             <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
                                                             <td class="noBT" rowspan="2">Contest Type</td>
                                                             <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
-                                                            <td class="noBT" colspan="2"><strong>Cost</strong></td>
+                                                            <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
                                                             <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
                                                         </tr>
                                                         <tr class="head">
@@ -517,7 +517,7 @@
                                                                     <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
                                                                     <td class="noBT" rowspan="2">Contest Type</td>
                                                                     <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
-                                                                    <td class="noBT" colspan="2"><strong>Cost</strong></td>
+                                                                    <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
                                                                     <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
                                                                 </tr>
                                                                 <tr class="head">
@@ -642,7 +642,7 @@
                             <col width="70px" />
                             <col width="50px" />
                             <col width="70px" />
-                            <col width="70px" />
+
                             <col width="50px" />
                             <col width="70px" />
                             <col width="50px" />
@@ -663,9 +663,9 @@
                                 <th class="noBT" rowspan="2"><strong>Project</strong></th>
                                 <th class="noBT" rowspan="2"><strong>Contest Name</strong></th>
                                 <th class="noBT" rowspan="2">Contest Type</th>
-                                <th class="noBT" colspan="2"><strong>FullFillment</strong></th>
-                                <th class="noBT" colspan="2"><strong>Cost</strong></th>
-                                <th class="noBT" colspan="10"><strong>Cost Breakdown</strong></th>
+                                <th class="noBT" colspan="2"><strong>FullFilment</strong></th>
+                                <th class="noBT" colspan="2"><strong>Member Cost</strong></th>
+                                <th class="noBT" colspan="9"><strong>Member Cost Breakdown</strong></th>
                                 <th class="noBT" colspan="2"><strong>Duration</strong> (Days)</th>
                             </tr>
                             <tr class="head costHead">
@@ -673,7 +673,6 @@
                                 <th>Market Avg</th>
                                 <th>Contest</th>
                                 <th>Market Avg</th>
-                                <th>Contest Fee</th>
                                 <th>Prizes</th>
                                 <th>Spec Review</th>
                                 <th>Review</th>
