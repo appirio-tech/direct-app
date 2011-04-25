@@ -182,7 +182,7 @@
 
                             <div class="leftColumn">
                                 <div class="areaHeader padding2">
-                                        <h2 class="title">Project Status</h2>
+                                        <h2 class="title">Project Stats</h2>
                                 </div><!-- End .areaHeader -->
                                 <table class="projectStats" cellpadding="0" cellspacing="0">
                                     <s:push value="viewData.projectStats">
