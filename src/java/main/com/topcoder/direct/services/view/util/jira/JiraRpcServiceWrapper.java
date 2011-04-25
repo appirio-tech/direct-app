@@ -178,16 +178,18 @@ public class JiraRpcServiceWrapper {
      * @since 1.1
      */
     private static List<TcJiraIssue> getIssuesFromJQLQuery(String jqlQuery) throws Exception {
-        // if soap session is not established, initialize a soap session first
-        if (soapSession == null) {
-            initializeSoapSession();
-        }
-
 
         // List to store the final result
         final List<TcJiraIssue> result = new ArrayList<TcJiraIssue>();
 
         try {
+            
+            // if soap session is not established, initialize a soap session first
+            if (soapSession == null) {
+                initializeSoapSession();
+            }
+
+            
             JiraSoapService service = soapSession.getJiraSoapService();
             String token = soapSession.getAuthenticationToken();
 
