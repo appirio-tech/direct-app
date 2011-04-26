@@ -30,7 +30,7 @@
 
 	<!-- the max retry attempts of authentication -->
 
-	<maxAuthRetry>0</maxAuthRetry>
+	<maxAuthRetry>3</maxAuthRetry>
 
 	<!-- the name of the project for hosting bug race -->
 
