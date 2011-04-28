@@ -18,7 +18,7 @@ The following submissions(s) have been purchased\:
 
 Competition Type\:   %COMPETITION_TYPE%
 Competition Title\:  %COMPETITION_TITLE%
-Project\:       %PROJECT_NAME%
+Project\:    %PROJECT_NAME%
 #%loop:SUB_PRICES%
 #%SUB_ID% - %PRICE%
 #%endloop%
@@ -43,7 +43,7 @@ This purchase was made for\:
 #    %endif%
 #    %if:PURCHASE_TYPE = 'PO'%
 #    Client Name\: %CLIENT_NAME%
-#    Project Name\: %PROJECT_NAME%
+#    Billing Account\: %PROJECT_NAME%
 #    PO \#\: %PO_NUMBER%
 #    %endif%
     %PURCHASER_DETAILS%
