@@ -295,11 +295,11 @@
                                                 <td>
                                                     <s:if test="%{#attr['contest'].software}" >
                                                     <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
-                                                        Link To <c:out value="${contest.title}"/></a>
+                                                        <c:out value="${contest.title}"/></a>
                                                     </s:if>
                                                     <s:else>
                                                     <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].id}"/></s:url>">
-                                                        Link To <c:out value="${contest.title}"/></a>
+                                                        <c:out value="${contest.title}"/></a>
                                                     </s:else>
                                                 </td>
                                                 <td class="posted">
