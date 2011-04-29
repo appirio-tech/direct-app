@@ -7,16 +7,15 @@
  * - Add character limitation for the input fields and input areas when creating contests.
  *
  * @author TCSDEVELOPER
- * @version 1.1
- * @since Launch Contest Assembly - Studio
  * @version 1.2(Direct Improvements Assembly Release 2)
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
        /*BUGR-4512*/
       adjustImageRatio();
-	  function limitFileDescriptionChars(maxChars) {
-			var ori;
+
+	 function limitFileDescriptionChars(maxChars) {
+			var ori="";
 			var timeId = -1;
 			return function(e) {
 				var textArea = $(this);
@@ -37,10 +36,49 @@ $(document).ready(function() {
 				}, 100);
 				return true;
 			};
+	}
+		
+	var invliadCharsRegExp = /[^a-zA-Z0-9\$!]+/mg;
+	/**
+	 * Limits the allowed chars to alphanumeric, $, and !
+	 * https://apps.topcoder.com/bugs/browse/TCCC-3091
+	 */
+	function limitContestProjectNameChars(maxChars) {
+			var ori="";
+			var timeId = -1;
+			return function(e) {
+				var textArea = $(this);
+				var content = textArea.val();
+				var invalid = false;
+				if(content.search(invliadCharsRegExp, '') > -1) {
+					invalid = true;
+				}
+				if (content.length <= maxChars && !invalid) {
+					ori = content;
+				}
+				if (timeId != -1) {
+					timeId = clearTimeout(timeId);
+				}
+				timeId = setTimeout(function() {
+					timeId = -1;
+					if(invalid) {
+						alert("Only alphanumeric, $, and ! characters are allowed.");
+						textArea.val(ori);
+						return;
+					}
+					if (textArea.val().length > maxChars) {
+						alert("You can only input max " + maxChars
+								+ " characters.");
+						textArea.val(ori);
+					}
+				}, 100);
+				return true;
+			};
 		}
 
 	  // limits the characters for text inputs and text editors
-	  $("#contestName, #projectName").bind('keydown keyup paste', limitFileDescriptionChars(50));
+	  $("#contestName, #projectName").bind('keydown keyup paste', limitContestProjectNameChars(50));
+	  
 	  $("#swFileDescription, #fileDescription").bind('keydown keyup paste', limitFileDescriptionChars(200));
 });
 
