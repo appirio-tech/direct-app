@@ -38,7 +38,7 @@ $(document).ready(function() {
 			};
 	}
 		
-	var invliadCharsRegExp = /[^a-zA-Z0-9\$!]+/mg;
+	var invliadCharsRegExp = /[^a-zA-Z0-9\$!\- ]+/mg;
 	/**
 	 * Limits the allowed chars to alphanumeric, $, and !
 	 * https://apps.topcoder.com/bugs/browse/TCCC-3091
@@ -62,7 +62,7 @@ $(document).ready(function() {
 				timeId = setTimeout(function() {
 					timeId = -1;
 					if(invalid) {
-						alert("Only alphanumeric, $, and ! characters are allowed.");
+						alert("Only alphanumeric, $, -, ! and space characters are allowed.");
 						textArea.val(ori);
 						return;
 					}
