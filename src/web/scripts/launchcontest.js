@@ -6,10 +6,11 @@
  * - Bind change event to project dropdown to dynamically load copilots of the selected project
  * - Add method isCopilotDropDownHidden to check if the copilot dropdown is hidden
  * - Add method handleProjectDropDownChange for project dropdown change event
+ * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
+ * - Add character limitation for the input fields and input areas when creating contests.
  * 
- *
  * @author TCSDEVELOPER
- * @version 1.1
+ * @version 1.2(Direct Improvements Assembly Release 2)
  */
 $(document).ready(function() {
 
@@ -417,6 +418,32 @@ $(document).ready(function() {
         $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
     }
 
+	/**
+    * Initiate mce elements.
+    */
+    function makeMaxCharsAndAllowedTagsTinyMCE(obj, maxChars) {
+        tinyMCE.init({
+            mode : "exact",
+            elements : obj,
+            plugins :"pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
+
+            theme : "advanced",
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+            theme_advanced_buttons2 : "",
+            theme_advanced_buttons3 : "",
+            theme_advanced_statusbar_location : "bottom",
+            theme_advanced_path : false,
+            theme_advanced_resizing : true,
+            theme_advanced_resize_horizontal : false,
+            
+            init_instance_callback : function() {
+                $('table.mceLayout').css('width','100%');
+            },
+            
+            handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
+        });
+    }
+
     /*****************************
      *   Overview page
      ****************************/
@@ -432,6 +459,12 @@ $(document).ready(function() {
             $('table.mceLayout').css('width', '100%');
         }
     });
+	makeMaxCharsAndAllowedTagsTinyMCE('contestDescription', 10000);
+    makeMaxCharsAndAllowedTagsTinyMCE('contestIntroduction', 10000);
+	makeMaxCharsAndAllowedTagsTinyMCE('round1Info', 2000);
+	makeMaxCharsAndAllowedTagsTinyMCE('round2Info', 2000);
+	makeMaxCharsAndAllowedTagsTinyMCE('swDetailedRequirements', 12000);
+	makeMaxCharsAndAllowedTagsTinyMCE('swGuidelines', 12000);
 
 }); // end of jQuery onload
 

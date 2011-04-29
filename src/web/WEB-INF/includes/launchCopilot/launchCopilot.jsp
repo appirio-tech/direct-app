@@ -1,7 +1,7 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.0.3
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Launch copilot contest page input/edit section.
   - Since: TC Direct - Launch Copilot Selection Contest assembly  
@@ -11,6 +11,7 @@
   - - Add support to allow setting custom contest prizes.
   -
   - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
+  - Version 1.0.3 (Direct Improvements Assembly Release 2) changes: Add preview button.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -295,5 +296,10 @@
         <a class="conditions thickbox" href="/direct/conditions.jsp?height=400&amp;width=800&amp;inlineId=helpPopup">Terms and Conditions</a>
         <a id="continue" href="javascript:;" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
         <a id="submitButton" href="javascript:;" class="button6 contiune hide"><span class="left"><span class="right">SUBMIT &amp; LAUNCH CONTEST</span></span></a>
-        <a id="saveDraftButton" href="javascript:;" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>                           
+        <a id="saveDraftButton" href="javascript:;" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a> 
+		<a id="previewButton" href="javascript:;" class="button6 preview hide"><span class="left"><span class="right">PREVIEW</span></span></a>
+</div>
+
+<div id="activateContestConfirmation" title="Do you really want to activate the contest?">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will create a new contest and activate it. Please confirm to continue?</p>
 </div>

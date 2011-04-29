@@ -1,11 +1,12 @@
 <%--
   - Author: Blues, flexme
-  - Version: 1.0 ((TopCoder Cockpit - Cost Report Assembly)
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2 (Direct Improvements Assembly Release 2)
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
   - - Add a popup window to support the cost breakdown data.
-  -
+  - Version 1.2 Direct Improvements Assembly Release 2 Assembly Change notes:
+  - - Make 'Custom name' column before the 'project name' column.
   - Description: This page renders the view for cost report including form and report data.
   -
 --%>
@@ -60,6 +61,12 @@
           </div>
 
             <div class="filterArea">
+
+				<div class="filterCustomName" id="customerNameFilter">
+                    <span class="label">Customer Name</span>
+                    <s:select list="viewData.clientAccounts" id="formData.customerIds"
+                        name="formData.customerIds" size="1"/>
+                </div>
 
                 <div class="filterProject">
                     <span class="label">Project Name </span>

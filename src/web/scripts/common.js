@@ -3,14 +3,45 @@
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
  * - Add some functions for modal pop ups
+ * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
+ * - Add character limitation for the input fields and input areas when creating contests.
  *
  * @author TCSDEVELOPER
  * @version 1.1
+ * @since Launch Contest Assembly - Studio
+ * @version 1.2(Direct Improvements Assembly Release 2)
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
        /*BUGR-4512*/
       adjustImageRatio();
+	  function limitFileDescriptionChars(maxChars) {
+			var ori;
+			var timeId = -1;
+			return function(e) {
+				var textArea = $(this);
+				var content = textArea.val();
+				if (content.length <= maxChars) {
+					ori = content;
+				}
+				if (timeId != -1) {
+					timeId = clearTimeout(timeId);
+				}
+				timeId = setTimeout(function() {
+					timeId = -1;
+					if (textArea.val().length > maxChars) {
+						alert("You can only input max " + maxChars
+								+ " characters.");
+						textArea.val(ori);
+					}
+				}, 100);
+				return true;
+			};
+		}
+
+	  // limits the characters for text inputs and text editors
+	  $("#contestName, #projectName").bind('keydown keyup paste', limitFileDescriptionChars(50));
+	  $("#swFileDescription, #fileDescription").bind('keydown keyup paste', limitFileDescriptionChars(200));
 });
 
 
@@ -288,6 +319,56 @@ function maxCharsEventHandler(obj, maxChars) {
         }
         timeId = setTimeout(function() {
             timeId = -1;
+            if (tinyMCE.get(obj).getContent().length > maxChars) {
+            	showErrors("You can only input max " + maxChars + " characters.");
+                tinyMCE.get(obj).setContent(ori);
+            }
+        }, 100);
+        return true;
+    };
+}
+
+var allowedTags = [
+/&lt;a\s*(href\s*=\s*[^=|^&gt;|^&lt;]*)?&gt;/mg,
+/&lt;img\s*((src|height|width)\s*=\s*[^=|^&gt;|^&lt;|^\s]*\s*)*&gt;/mg, 
+/&lt;span\s*(style\s*=\s*[^=|^&gt;|^&lt;]*)?&gt;/mg,
+/&lt;font\s*((color|size)\s*=\s*[^=|^&gt;|^&lt;|^\s]*\s*)*&gt;/mg, 
+/&lt;(annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*&gt;/mg, 
+/&lt;\/\s*(a|img|span|font|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*&gt;/mg
+];
+var tagsRegExp = /&lt;(\/)*[^&gt;|^\/]*&gt;/mg;
+ /**
+ * Return the event handler used by tinyMCE to restrict the max characters and the allowed tags.
+ * 
+ * @param obj the tinyMCE name
+ * @param maxChars the max characters
+ */
+function maxCharsAndAllowedTagsEventHandler(obj, maxChars) {
+    var ori='';
+    var timeId = -1;
+    return function(e) {
+        var content = tinyMCE.get(obj).getContent();
+		var invalid = false;
+        if (content.length <= maxChars) {
+			var c = content;
+			for(var i = 0; i < allowedTags.length; i++) {
+				c = c.replace(allowedTags[i], '');
+			}
+			if(c.search(tagsRegExp) < 0) { // no invalid tags 
+				ori = content;
+			} else {
+				invalid = true;
+			}
+        }
+        if (timeId != -1) {
+            timeId = clearTimeout(timeId);
+        }
+        timeId = setTimeout(function() {
+            timeId = -1;
+			if(invalid) {
+				showErrors("You have inputted non-allowed tags or invalid attributes.");
+                tinyMCE.get(obj).setContent(ori);
+			}
             if (tinyMCE.get(obj).getContent().length > maxChars) {
             	showErrors("You can only input max " + maxChars + " characters.");
                 tinyMCE.get(obj).setContent(ori);

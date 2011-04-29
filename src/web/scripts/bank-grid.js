@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Studio submissions grid view page.
@@ -9,8 +9,13 @@
  * - Hide input fields if user has no write permission.
  * </p>
  *
+ * <p>
+ * Version 1.0.2 (Direct Improvements Assembly Release 2) Change notes:
+ * - Make drop submissions into the sink easy.
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.0.1
+ * @version 1.0.2
  */
  
 var listLikes = new Array();
@@ -310,7 +315,8 @@ $(document).ready(function(){
                             return false;
                         });
                         getBankData();
-                    }
+                    },
+					tolerance:"touch"
                 }).sortable({
                         items: 'li:not(#extraPrize)'
                     });
@@ -336,8 +342,8 @@ $(document).ready(function(){
                     return false;
                 });
                 getBankData();
-                
-            }
+            },	
+            tolerance:"touch"
         });  
     }
     

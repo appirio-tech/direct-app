@@ -9,9 +9,11 @@
  * - Add support to restrict the max characters of private description and public description.
  * - Fix bug TCCC-2900.
  * - Add support to allow setting customer contest prizes.
+ * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
+ * - Add previw button for the copilot creation page.
  * 
  * @author TCSASSEMBLER
- * @version 1.1
+ * @version 1.2(Direct Improvements Assembly Release 2)
  */
 $(document).ready(function(){
     /**
@@ -185,7 +187,7 @@ $(document).ready(function(){
         }
     });
     makeMaxCharsTinyMCE('allDescription', 12000);
-    makeMaxCharsTinyMCE('privateDescription', 2048);
+    makeMaxCharsTinyMCE('privateDescription', 12000);
    
     /**
      * Initiate add project dialog.
@@ -251,7 +253,7 @@ $(document).ready(function(){
         $(".bottomButton .conditions").hide();
         $(".bottomButton #continue").hide();
         $(".bottomButton #submitButton").removeClass("hide");
-        
+        $(".bottomButton #previewButton").removeClass("hide");
         $('html, body').animate({scrollTop:0}, 'fast');
     });
     
@@ -315,6 +317,12 @@ $(document).ready(function(){
 
      $('input[name="prizeRadio"]').click(function(){
         fillPrizes();
+    });
+	/**
+     * Bind preview action to preview button click event.
+     */
+    $("#previewButton").click(function() {
+        previewContest();
     });
 });
 
@@ -508,7 +516,7 @@ function validateFields() {
     if (allDescription.length > 12000) {
         errors.push('Public Description can haave at most 12000 characters.');
     }
-    if (privateDescription.length > 2048) {
+    if (privateDescription.length > 12000) {
         errors.push('Private Description can haave at most 2048 characters.');
     }
 
@@ -603,6 +611,38 @@ function handleCopilotContestSaveAsDraftResult(jsonResult) {
         showErrors(errorMessage);
     });
 };
+$(document).ready(function() {
+	$( "#activateContestConfirmation" ).dialog({
+			autoOpen: false,
+			resizable: true,
+			height:200,
+			width: 500,
+			modal: true,
+			buttons: {
+				"No": function() {
+					$( this ).dialog( "close" );
+				},
+				"Yes": function() {
+					$( this ).dialog("close");
+					// construct request data
+					var request = saveAsDraftRequestSoftware();
+					request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
+					request['activationFlag'] = true;
+					
+					$.ajax({
+						type: 'POST',
+						url: '../launch/saveDraftContest',
+						data: request,
+						cache: false,
+						dataType: 'json',
+						success: handleCopilotContestActivateResult,
+						beforeSend: beforeAjax,
+						complete: afterAjax   
+					});
+				}
+			}
+	});
+});
 
 /**
  * Handle submit competition action.
@@ -627,6 +667,11 @@ function submitCompetition() {
         beforeSend: beforeAjax,
         complete: afterAjax   
     });
+	// confirm that user want to activate the contest
+	// if it's confirmed, a new contest will be saved
+	if(!$( "#activateContestConfirmation" ).dialog( "isOpen" )) {
+		$( "#activateContestConfirmation" ).dialog( "open" );
+	}
 };
 
 /**

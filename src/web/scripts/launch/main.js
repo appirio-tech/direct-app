@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Main Script. It contains the functions/variables shared for launch contest/edit contest.
@@ -18,8 +18,11 @@
  * - Change time zone from GMT-04 to UTC-05.
  * - Update removeDocument method to add "studio:true" parameter.
  *
+ * Version 1.1.4 (Direct Improvements Assembly Release 2) Change notes:
+ * - Change the previewContest function to preview the copilot contest correctly.
+ *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1.3
+ * @version 1.1.4
  */
 
 /**
@@ -444,10 +447,10 @@ function previewContest() {
   if(!isContestSaved()) {
      showErrors("You must 'Save as Draft' before you can preview your contest.");
   } else {
-    if(mainWidget.isSoftwareContest()) {
-        window.open('http://www.topcoder.com/tc?module=ProjectDetail&pj='+mainWidget.softwareCompetition.projectHeader.id);
+    if(mainWidget.isStudioContest ()) {
+        window.open('http://studio.topcoder.com/?module=ViewContestDetails&ct='+mainWidget.softwareCompetition.projectHeader.id);
     } else {
-        window.open('http://studio.topcoder.com/?module=ViewContestDetails&ct='+mainWidget.competition.contestData.contestId);
+		window.open('http://www.topcoder.com/tc?module=ProjectDetail&pj='+mainWidget.softwareCompetition.projectHeader.id);
     }
   }
 }

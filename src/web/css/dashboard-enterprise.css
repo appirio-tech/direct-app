@@ -551,3 +551,23 @@ td.fontGreen{
 #breakdownBody tbody td {
     padding: 5px;
 }
+.filterCustomName{
+	background:#e1f2ff;
+	font-size:12px;
+	padding:12px 8px;
+	border-top:1px solid #cad9e5;
+	border-bottom:1px solid #cad9e5;
+	width: auto	!important;	
+}
+.filterCustomName span.label{
+	margin-top:3px;
+	padding-right:10px;
+	float:left;
+	font-weight:bold;
+}
+
+.filterCustomName select{ 
+	width:350px;
+	font-size:12px;
+	border:1px solid #a9acae;
+}

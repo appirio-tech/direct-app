@@ -1,11 +1,14 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Rerender the order review page.
+ * Version 1.1 change notes:
+ * Provide a confirmation dialog when activating the created contest.
  * 
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.1(Direct Improvements Assembly Release 2)
+ * @since 1.0
  */
 /**
  * Update order review page of software contest.
@@ -161,11 +164,31 @@ function backOrderReview() {
  * Activate contest.
  */
 function activateContest() {	
-   if(mainWidget.isSoftwareContest()) {
-   	  activateContestSoftware();
-   } else {
-   	  activateContestStudio();
-   }	   	
+   $( "#activateContestConfirmation" ).dialog({
+			autoOpen: true,
+			resizable: true,
+			height:200,
+			width: 500,
+			modal: true,
+			buttons: {
+				"No": function() {
+					$( this ).dialog( "close" );
+				},
+				"Yes": function() {
+					$( this ).dialog("close");
+					if(mainWidget.isSoftwareContest()) {
+						activateContestSoftware();
+					} else {
+						activateContestStudio();
+					}
+				}
+			}
+	});
+	// confirm that user want to activate the contest
+	// if it's confirmed, a new contest will be saved
+	if(!$( "#activateContestConfirmation" ).dialog( "isOpen" )) {
+		$( "#activateContestConfirmation" ).dialog( "open" );
+	}   	
 }
 
 /**

@@ -7,7 +7,11 @@ import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectOverviewDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
@@ -46,9 +50,14 @@ import java.util.Map;
  * <li>Added codes to set unresolved issues number and ongoing bug races number of the project</li>
  * </ul>
  * </p>
- * 
- * @author isv, Veve
- * @version 1.0.3
+ * <p>
+ * Version 1.0.4 - 	Direct Improvements Assembly Release 2 Change Note
+ * <ul>
+ * <li>Update the execute method to set the current project name.</li>
+ * </ul>
+ * </p>
+ * @author isv, Veve, TCSASSEMBLER, TCSDEVELOPER
+ * @version 1.0.4
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -140,6 +149,13 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                     totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
                 }
 
+				// set the project name if it's not set yet
+				for(ProjectBriefDTO project : getViewData().getUserProjects().getProjects()) {
+					if(project.getId() == getSessionData().getCurrentProjectContext().getId()) {
+						getSessionData().getCurrentProjectContext().setName(project.getName());
+					}
+				}
+
                 viewData.getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
                 viewData.getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
 
@@ -184,9 +200,9 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
          Map<ContestBriefDTO, ContestHealthDTO> contests =
             DataProvider.getProjectContestsHealth(getSessionData().getCurrentUserId(), formData.getProjectId(), true);
+		viewData.setContests(contests);
 
         viewData.setContests(contests);
-
     }
 
 }
