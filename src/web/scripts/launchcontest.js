@@ -449,7 +449,7 @@ $(document).ready(function() {
      ****************************/
     tinyMCE.init({
         mode : "exact",
-        elements : "contestDescription,contestIntroduction,round1Info,round2Info,swDetailedRequirements,swGuidelines",
+        elements : "",
         plugins : "paste",
         theme : "advanced",
         theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
@@ -464,7 +464,7 @@ $(document).ready(function() {
 	makeMaxCharsAndAllowedTagsTinyMCE('round1Info', 2000);
 	makeMaxCharsAndAllowedTagsTinyMCE('round2Info', 2000);
 	makeMaxCharsAndAllowedTagsTinyMCE('swDetailedRequirements', 12000);
-	makeMaxCharsAndAllowedTagsTinyMCE('swGuidelines', 12000);
+	makeMaxCharsAndAllowedTagsTinyMCE('swGuidelines', 2048);
 
 }); // end of jQuery onload
 
