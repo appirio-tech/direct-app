@@ -1,10 +1,13 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.0
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: TCSDEVELOPER, tangzx
+  - Version: 1.1
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
+  -
+  - Version 1.1 (TC Direct - Page Layout Update Assembly) Change notes:
+  - Apply to new prototype.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -58,82 +61,112 @@
                                         <table id="tableSorterUsed"
                                                class="projectStats contests contestsStatus paginatedDataTable"
                                                cellpadding="0" cellspacing="0">
+
+                                            <colgroup>
+                                                <col width="24%" />
+                                                <col width="18%" />
+                                                <col width="9%" />
+                                                <col width="9%" />
+                                                <col width="8%" />
+                                                <col width="8%" />
+                                                <col width="8%" />
+                                                <col width="9%" />
+                                                <col width="9%" />
+
+                                            </colgroup>                                               
+                                            
                                             <thead>
                                             <tr>
-                                                <th class="copilotPosting">Copilot posting</th>
-                                                <th class="projectName">Project name</th>
-                                                <th class="projectStatus">Status</th>
-                                                <th class="currentPhase">Current Phase</th>
-                                                <th class="{sorter: false}">&nbsp;</th>
+                                                <th class="sorting_asc alignLeft">Copilot Posting</th>
+                                                <th class="sorting alignLeft">Project Name</th>
+                                                <th class="sorting">Start Date</th>
+                                                <th class="sorting">End Date</th>
+                                                <th class="sorting truncateRegs">Registrants</th>
+                                                <th class="sorting truncateSubs">Submissions </th>
+                                                <th class="sorting">Forums</th>
+                                                <th class="sorting">Status</th>
+                                                <th class="{sorter: false} sorting">&nbsp;</th>                                                
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <c:forEach items="${viewData.contests}" var="contest" varStatus="loop">
+                                            
                                                 <tr>
-                                                    <td class="copilotPosting">
+                                                    <td class="alignLeft first">
                                                         <a href="<s:url namespace="/copilot" action="copilotContestDetails">
-                                                                     <s:param name="projectId" value="%{#attr['contest'].id}"/>
+                                                                     <s:param name="projectId" value="%{#attr['contest'].contest.id}"/>
                                                                  </s:url>">
-                                                            <c:out value="${contest.title}"/></a>
+                                                            <c:out value="${contest.contest.title}"/></a>
                                                     </td>
-                                                    <td class="projectName">
-                                                        <c:out value="${contest.project.name}"/>
+                                                    <td class="alignLeft">
+                                                        <a href="../projectOverview?formData.projectId=${contest.contest.project.id}">${contest.contest.project.name}</a>
                                                     </td>
-                                                    <td class="projectStatus">
-                                                        <if:isActive typedContestBrief="${contest}">
-                                                            <span class="running">Active</span>
-                                                        </if:isActive>
-                                                        <if:isActive typedContestBrief="${contest}" negate="true">
+                                                    <td>
+                                                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${contest.startTime}"/> ET (GMT-400)
+                                                    </td>
+                                                    <td>
+                                                        <fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${contest.endTime}"/> ET (GMT-400)
+                                                    </td>
+                                                    <td>
+                                                        <a href="<s:url namespace="/copilot" action="listCopilotContestRegistrants">
+                                                                <s:param name="projectId" value="%{#attr['contest'].contest.id}"/>
+                                                            </s:url>">
+                                                            ${contest.registrantsNumber}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="<s:url namespace="/copilot" action="listCopilotContestSubmissions">
+                                                                <s:param name="projectId" value="%{#attr['contest'].contest.id}"/>
+                                                            </s:url>">
+                                                            ${contest.submissionsNumber}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <s:if test="%{#attr['contest'].forumId != -1}">
+                                                            <a href="http://forums.topcoder.com/?module=Category&categoryID=${contest.forumId}" target="_blank">
+                                                                ${contest.forumPostsNumber}
+                                                            </a>
+                                                        </s:if>
+                                                        <s:else>
+                                                            ${contest.forumPostsNumber}
+                                                        </s:else>
+                                                    </td>
+                                                    <td>
+                                                        <s:if test="%{#attr['contest'].status.name == 'Completed'}">
+                                                            Completed
+                                                        </s:if>
+                                                        <s:if test="%{#attr['contest'].status.shortName == 'draft' || #attr['contest'].status.shortName == 'running'}">
                                                             <span class="${contest.status.shortName}">
-                                                                <c:out value="${contest.status.name}"/></span>
-                                                        </if:isActive>
+                                                                ${contest.status.name}
+                                                            </span>
+                                                        </s:if>
                                                     </td>
-                                                    <td class="currentPhase">
-                                                        <c:choose>
-                                                            <c:when test="${empty contest.currentPhases}">&nbsp;</c:when>
-                                                            <c:otherwise>
-                                                                <c:out value="${contest.currentPhases[0].phaseName}"/>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                    <td class="currentCommand">
-                                                        <if:isEditable typedContestBrief="${contest}">
+                                                    <td class="last">
+                                                        <s:if test="%{#attr['contest'].status.shortName == 'draft' || #attr['contest'].status.shortName == 'running'}">
                                                             <a href="<s:url namespace="/copilot" action="copilotContestDetails">
-                                                                       <s:param name="projectId" value="%{#attr['contest'].id}"/>
+                                                                       <s:param name="projectId" value="%{#attr['contest'].contest.id}"/>
                                                                      </s:url>"
                                                                class="button1"><span>View / Edit</span>
                                                             </a>
-                                                        </if:isEditable>
-                                                        <if:isActive typedContestBrief="${contest}">
-                                                            <if:isInRegistrationOrSubmissionPhase phasedContest="${contest}">
-                                                                <a href="<s:url namespace="/copilot" action="listCopilotContestRegistrants">
-                                                                           <s:param name="projectId" value="%{#attr['contest'].id}"/>
-                                                                         </s:url>"
-                                                                   class="button1"><span>View</span></a>
-                                                            </if:isInRegistrationOrSubmissionPhase>
-                                                            <if:isInScreeningPhase phasedContest="${contest}">
-                                                                <a href="<s:url namespace="/copilot" action="listCopilotContestSubmissions">
-                                                                             <s:param name="projectId" value="%{#attr['contest'].id}"/>
-                                                                         </s:url>"
-                                                                   class="button1"><span>Review</span>
-                                                            </if:isInScreeningPhase>
-                                                        </if:isActive>
+                                                        </s:if>
                                                     </td>
-                                                </tr>
+                                                </tr>                                            
+                                            
+
                                             </c:forEach>
 
                                             </tbody>
                                         </table>
-                                        </div>
-                                   </div>
-                                    <!-- end .getCopilotsStep -->
+                                    </div>
+                                </div>
+                                <!-- end .getCopilotsStep -->
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">
                                             <div class="container2BottomLeft">
                                                 <div class="container2BottomRight">
 
-                                                        <div class="panel"></div>
+                                                        <div class="panel copilotPostingsPanel"></div>
 
                                                     </div>
                                             </div>
@@ -141,7 +174,6 @@
                                     </div>
                                 </div>
                                 <!-- end .orderReview -->
-
 
                             </div>
                             <!-- end #copilotsIntroduction -->

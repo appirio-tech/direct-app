@@ -2091,24 +2091,21 @@ TABLE.contests TD{
 	}
 
 	TABLE.contests TD SPAN.draft{ 
-		color: #00c600;
-		background: url(../images/draft_ico.png) no-repeat left;
-	}
-	
-	TABLE.contests TD SPAN.running{ 
-		color: #177de3;
-		background: url(../images/running_ico.png) no-repeat left;
-	}
-	
-	TABLE.contests TD SPAN.awarding{ 
-		color: #ffb000;
-		background: url(../images/awarding_ico.png) no-repeat left;
-	}
-	
-	TABLE.contests TD SPAN.milestone{ 
-		color: #dc0000;
-		background: url(../images/milestone_ico.png) no-repeat left;
-	}
+        color: #00c600;
+        background: url(../images/draft_ico.png) no-repeat left 1px;
+    }
+    TABLE.contests TD SPAN.running{ 
+        color: #177de3;
+        background: url(../images/running_ico.png) no-repeat left 1px;
+    }
+    TABLE.contests TD SPAN.awarding{ 
+        color: #ffb000;
+        background: url(../images/awarding_ico.png) no-repeat left 1px;
+    }
+    TABLE.contests TD SPAN.milestone{ 
+        color: #dc0000;
+        background: url(../images/milestone_ico.png) no-repeat left 1px;
+    }
 
 TABLE.contests TD SPAN.failedReview{
     color: #dc0000;
@@ -5692,6 +5689,120 @@ Contest links
     margin-bottom:10px;
 }
 
+/* ADDED CSS CODE */ 
+.myCopilotsContestsList, .myProjectContests {
+    border-left:1px solid #A8ABAD;
+    border-right:1px solid #A8ABAD;
+}
+.myCopilotsContestsList table.contests, table#ProjectContests {
+    border:0px;
 
-
-
+    margin-bottom:0px;
+}
+.myCopilotsContestsList table.projectStats th{
+    text-align:center;
+}
+.myCopilotsContestsList table.projectStats th.alignLeft{
+    text-align:left;
+    padding-left:6px; 
+}
+.myCopilotsContestsList table.projectStats td, table#ProjectContests td {
+    width:inherit;
+    text-align:center;
+    padding:12px 4px;
+}
+.myCopilotsContestsList .dataTables_info, .myProjectContests .dataTables_info {
+    padding-left:5px;
+    padding-top:8px;
+}
+.myCopilotsContestsList table.projectStats td.alignLeft{
+    text-align:left;
+    padding-left:6px;
+}
+.myCopilotsContestsList table.projectStats td.last, table#ProjectContests td.last {
+    border-right:0px;
+}
+.myCopilotsContestsList table.projectStats td.first, table#ProjectContests td.first {
+    border-left:0px;
+}
+.copilotPostingsPanel{
+    height:30px;
+    padding:0px;
+}
+.myCopilotsContestsList table#tableSorterUsed tr.even td{
+    background-color:#f3f3f3;
+}
+.myCopilotsContestsList table#tableSorterUsed tr.odd td{
+    background-color:#FFFFFF;
+}
+.myCopilotsContestsList table.projectStats td a, table#ProjectContests td a {
+    text-decoration: underline;
+}
+.myCopilotsContestsList table.projectStats td a.button1, table#ProjectContests td a.button1 {
+    text-decoration:none;
+}
+.myCopilotsContestsList table.projectStats td a:hover, table#ProjectContests td a:hover {
+    text-decoration: none;
+}
+.myCopilotsContestsList table.projectStats td a.button1:hover, table#ProjectContests td a.button1:hover {
+    text-decoration:none;
+}
+.myCopilotsContestsList table.contests a.button1, table#ProjectContests td a.button1 {
+    margin-left:6px;
+}
+.myCopilotsContestsList .previous{
+    padding-left:6px;
+    text-decoration:none;
+}
+.myProjectContests .previous{
+    padding-left:4px;
+    text-decoration:none;
+}
+.myCopilotsContestsList .next{
+    padding-right:6px;
+    text-decoration:none;
+}
+.myProjectContests .next{
+    padding-right:4px;
+    text-decoration:none;
+}
+.myCopilotsContestsList a.button1:hover, table#ProjectContests a.button1:hover {
+    background-image:url(../images/button_left_hover.png);
+}
+.myCopilotsContestsList a.button1:hover span, table#ProjectContests a.button1:hover span {
+    background-image:url(../images/button_right_hover.png);
+}
+#copilotsIntroduction .myCopilotsContests h2{
+    padding-top:31px;
+}
+.myCopilotsContestsList .bottom1, .myProjectContests .bottom1 {
+    position:static;
+    margin-top:-6px;
+}
+.myCopilotsContestsList .bottom2, .myProjectContests .bottom2 {
+    position:static;
+    width:auto;
+    margin-right:6px;
+    margin-left:1px;
+    margin-top:8px;
+}
+.myProjectContests .bottom2 {
+    margin-right:5px; 
+}
+.myCopilotsContestsList .bottom2 a.pageLink, .myProjectContests .bottom2 a.pageLink {
+    text-decoration:none;
+    padding:0 2px;
+}
+.myCopilotsContestsList .bottom2 .current, .myProjectContests .bottom1 .current {
+    font-weight:bold;
+}
+.myCopilotsContestsList .bottom2 a.pageLink:hover, .myProjectContests .bottom2 a.pageLink:hover {
+    text-decoration:underline;
+}
+.myCopilotsContestsList .bottom2 span span:hover, .myProjectContests .bottom2 span span:hover {
+    text-decoration:underline;
+}
+.myCopilotsContestsList .bottom2 span span.paginate_active:hover, .myProjectContests .bottom2 span span.paginate_active:hover {
+    text-decoration:none;
+    cursor: default;
+}

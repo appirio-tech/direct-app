@@ -14,8 +14,11 @@
  *  - Add two custom DataTable comparator for money and simple data.
  *  - Add collapse/expand event for aggregation cost report and cost details report.
  *
- * @author BeBetter, isv, Blues
- * @version 1.3
+ *  Version 1.4 - (TC Direct - Page Layout Update Assembly)
+ *  - Add more rows for data table in copilot contests page & project contests page.
+ * 
+ * @author BeBetter, isv, Blues, tangzx
+ * @version 1.4
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -275,12 +278,13 @@ $(document).ready(function() {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
 		"aaSorting": [[0,'asc']],
 		"aoColumns": [
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "date-direct" },
+                { "sType": "date-direct" },
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "html" },
@@ -397,13 +401,17 @@ $(document).ready(function() {
                    "sLengthMenu": sStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },                
                 null
             ]
 

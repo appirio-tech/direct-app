@@ -1,4 +1,15 @@
-// JavaScript Document
+/*
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ */
+/**
+ * The JS script for dashboard.
+ *
+ *  Version 1.1 - TC Direct - Page Layout Update Assembly
+ *  - Added auto truncated function.
+ *
+ * @author tangzx
+ * @version 1.1
+ */
 $(document).ready(function(){
 						   
 	
@@ -644,6 +655,28 @@ $(document).ready(function(){
         bugSortFunction();
     }
 
+    /* added js code */
+	
+    /**
+     * Auto truncate columns.
+
+     */
+    function  truncateTH(){
+        var width = $(window).width();
+        if(width < 1200){
+             $(".myCopilotsContestsList .truncateRegs, .myProjectContests .truncateRegs").text("Regs");
+             $(".myCopilotsContestsList .truncateSubs, .myProjectContests .truncateSubs").text("Subs");
+        } else{
+             $(".myCopilotsContestsList .truncateRegs, .myProjectContests .truncateRegs").text("Registrants");
+             $(".myCopilotsContestsList .truncateSubs, .myProjectContests .truncateSubs").text("Submissions");
+        } 
+    }
+
+    $(window).resize(function(){
+          truncateTH();
+    }) ;
+
+	truncateTH();
 });
 
 

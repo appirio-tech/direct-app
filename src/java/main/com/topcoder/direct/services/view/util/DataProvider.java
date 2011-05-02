@@ -198,9 +198,16 @@ import java.util.Map.Entry;
  *       <li>Added (@link #getDirectProjectIssues(List<? extends ContestBriefDTO>)} to get issues of the direct project.</li>
  *   </ol>
  * </p>
- *
+ * 
+ * <p>
+ * Version 2.6.3 (TC Direct - Page Layout Update Assembly) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getCopilotPostingContests(TCSubject)} method to get a list of ProjectContestDTO.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.2
+ * @version 2.6.3
  */
 public class DataProvider {
 
@@ -2096,13 +2103,17 @@ public class DataProvider {
      * Use the new query 'direct_my_copilot_postings' to get the copilot postings of the user.
      * </p>
      *
+     * <p>Updates in version 2.6.3:
+     * Use the new query 'direct_my_copilot_postings' to get a list of ProjectContestDTO.
+     * </p>
+     *
      * @param user a <code>TCSubject</code> referencing the user.
      * @return a <code>List</code> of <code>Copilot Posting</code> contests accessible to specified user.
      * @throws Exception if an unexpected error occurs.
      * @since 2.1.7
      */
-    public static List<PhasedContestDTO> getCopilotPostingContests(TCSubject user) throws Exception {
-        List<PhasedContestDTO> result = new ArrayList<PhasedContestDTO>();
+    public static List<ProjectContestDTO> getCopilotPostingContests(TCSubject user) throws Exception {
+        List<ProjectContestDTO> result = new ArrayList<ProjectContestDTO>();
         Map<Long, ProjectBriefDTO> directProjects = new HashMap<Long, ProjectBriefDTO>();
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
@@ -2116,47 +2127,52 @@ public class DataProvider {
         final ResultSetContainer copilotPostings = results.get("direct_my_copilot_postings");
 
         for (ResultSetContainer.ResultSetRow cp : copilotPostings) {
-
-            PhasedContestDTO dto = new PhasedContestDTO();
-
             long contestId = cp.getLongItem("contest_id");
             String contestName = cp.getStringItem("contest_name");
             long directProjectId = cp.getLongItem("tc_direct_project_id");
             String directProjectName = cp.getStringItem("tc_direct_project_name");
             String contestStatus = cp.getStringItem("status");
             String currentPhaseName = cp.getStringItem("current_phase_name");
+            Timestamp startDate = cp.getTimestampItem("start_date");
+            Timestamp endDate = cp.getTimestampItem("end_date");
+            int forumPostsCount = cp.getIntItem("number_of_forum");
+            int registrantsCount = cp.getIntItem("number_of_registration");
+            int submissionsCount = cp.getIntItem("number_of_submission");
+            int forumId = -1;
+            String forumIdStr = cp.getStringItem("forum_id");
+            
+            if (!StringUtils.isEmpty(forumIdStr)) {
+                forumId = Integer.parseInt(forumIdStr);
+            }
 
-            ProjectBriefDTO project;
+            final ProjectBriefDTO project;
 
             // check if we have the direct project initialized
             if (directProjects.containsKey(directProjectId)) {
                 project = directProjects.get(directProjectId);
             } else {
-                project = new ProjectBriefDTO();
-                project.setId(directProjectId);
-                project.setName(directProjectName);
+                project = createProject(directProjectId, directProjectName);
+                
+                directProjects.put(directProjectId, project);
             }
 
+            ContestBriefDTO contestBrief = createContest(contestId, contestName, project);
+            ContestStatus status = ContestStatus.forName(contestStatus);
+            if (status == ContestStatus.ACTIVE) {
+                status = ContestStatus.forName(currentPhaseName);
+            }
 
-            dto.setId(contestId);
-            dto.setContestType(ContestType.COPILOT_POSTING);
-            dto.setProject(project);
-            dto.setSoftware(true);
-            dto.setStatus(ContestStatus.forName(contestStatus));
-            dto.setTitle(contestName);
+            ProjectContestDTO contest = createProjectContest(contestBrief,
+                    ContestType.COPILOT_POSTING, status, startDate, endDate,
+                    forumPostsCount, registrantsCount, submissionsCount, forumId,
+                    false);
 
-            ProjectPhaseDTO phase = new ProjectPhaseDTO();
-            phase.setPhaseName(currentPhaseName);
-            List<ProjectPhaseDTO> currentPhases = new ArrayList<ProjectPhaseDTO>();
-            currentPhases.add(phase);
-            dto.setCurrentPhases(currentPhases);
-
-            result.add(dto);
+            result.add(contest);
         }
 
         return result;
     }
-
+	
     /**
      * <p>Gets the currently open phases for specified project.</p>
      *
