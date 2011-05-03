@@ -153,9 +153,13 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="13">
+        <th class="tableTitle" colspan="12">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Billing Cost Details</span>
+            <span style="float:right;padding-top:4px; padding-right:5px">
+                <s:set var="totalPayment" value="viewData.totalAmount" scope="page"/>
+                Total Amount: <fmt:formatNumber value="${totalPayment}" pattern="$###,##0.00"/>
+            </span>
         </th>
     </tr>
     <tr>
@@ -169,62 +173,74 @@
         <th class="tableColumn">&nbsp;Status&nbsp;</th>
         <th class="tableColumn">&nbsp;Launch Date&nbsp;</th>
         <th class="tableColumn">&nbsp;Completion Date&nbsp;</th>
-        <th class="tableColumn">&nbsp;Actual Total Member Cost&nbsp;</th>
+   <!--     <th class="tableColumn">&nbsp;Actual Total Member Cost&nbsp;</th> -->
         <th class="tableColumn">&nbsp;Payment Type&nbsp;</th>
         <th class="tableColumn">&nbsp;Amount&nbsp;</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${viewData.entries}" var="item" varStatus="loop">
-        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-        <tr class="${rowStyle} pipelineDetailsRow">
-            <td>
-                <fmt:formatDate pattern="yyyy-MM-dd" value="${item.paymentDate}"/>
-            </td>
-            <td>
-                <c:out value="${item.client.name}"/>
-            </td>
-            <td>
-                <c:out value="${item.billing.name}"/>
-            </td>
-            <td>
-                <c:out value="${item.project.name}"/>
-            </td>
-            <td>
-                <c:out value="${item.contest.name}"/>
-            </td>
-            <td>
-                <c:out value="${item.contest.id}"/>
-            </td>
-            <td>
-                <c:out value="${item.contestType.name}"/>
-            </td>
-            <td>
-                <c:out value="${item.status}"/>
-            </td>
-            <td>
-                <fmt:formatDate pattern="yyyy-MM-dd" value="${item.launchDate}"/>
-            </td>
-            <td>
-                <fmt:formatDate pattern="yyyy-MM-dd" value="${item.completionDate}"/>
-            </td>
-             <td>
 
-                 <c:set var="status" value="${fn:trim(item.status)}"/>
-                <%-- only display the actual cost when the contest is finished --%>
-                <c:if test="${status == 'Finished'}">
-                    <fmt:formatNumber value="${item.actualTotalMemberCost}" pattern="$###,##0.00"/>
-                </c:if>
-            </td>
-             <td>
-                <c:out value="${item.paymentType}"/>
+    <s:iterator value="viewData.entries" status="statusValue">
+        <tr class="$pipelineDetailsRow">
+            <td>
+                <s:date name="paymentDate" format="yyyy-MM-dd" />
             </td>
             <td>
-                <fmt:formatNumber value="${item.paymentAmount}" pattern="$###,##0.00"/>
+                <s:property value="client.name"/>
+            </td>
+            <td>
+                <s:property value="billing.name"/>
+            </td>
+            <td>
+                <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="project.id"/></s:url>">
+
+                   <s:property value="project.name"/>
+
+                </a>
+
+            </td>
+            <td>
+
+                <s:if test="studio">
+                    <a class="longWordsBreak"
+                       href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="contest.id"/></s:url>">
+                        <s:property value="contest.name"/></a>
+                </s:if>
+                <s:else>
+                    <a class="longWordsBreak"
+                       href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="contest.id"/></s:url>">
+                         <s:property value="contest.name"/></a>
+                </s:else>
+
+
+            </td>
+            <td>
+                 <s:property value="contest.id"/>
+            </td>
+            <td>
+                 <s:property value="contestType.name"/>
+            </td>
+            <td>
+                 <s:property value="status"/>
+            </td>
+            <td>
+                 <s:date name="launchDate" format="yyyy-MM-dd" />
+            </td>
+            <td>
+                 <s:date name="completionDate" format="yyyy-MM-dd" />
+            </td>
+            <td>
+                 <s:property value="paymentType"/>
+            </td>
+            <td>
+                <s:set var="paymentA" value="paymentAmount" scope="page"/>
+                <fmt:formatNumber value="${paymentA}" pattern="$###,##0.00"/>
             </td>
 
         </tr>
-    </c:forEach>
+
+    </s:iterator>
+
     </tbody>
 </table>
 

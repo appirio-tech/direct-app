@@ -507,7 +507,6 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "simple-date" },
                 { "sType": "simple-date" },
-                { "sType": "money" },
                 { "sType": "html" },
                 { "sType": "money" }
             ]

@@ -124,15 +124,18 @@
                                                 <div id="purchaseSummary">
                                                     <div class="selectPaymentTitle">
                                                         <h3>Purchase Summary</h3>
-                                                        <div class="paymentMethod">
-                                                            <label>Billing Account:</label>
-                                                            <div id="selectPaymentWrapper">
-                                                                <select id="slPaymentType">
-                                                                    <s:iterator value="viewData.billingAccounts">
-                                                                    <option value="${id}">${name}</option>
-                                                                    </s:iterator>
-                                                                </select>
-                                                            </div>
+                                                        <div class="paymentMethod" style='<s:if test="!canAccessBillingAccount">display:none</s:if>'>
+
+
+                                                                <label>Billing Account:</label>
+                                                                <div id="selectPaymentWrapper">
+                                                                    <select id="slPaymentType" >
+                                                                        <s:iterator value="viewData.billingAccounts">
+                                                                        <option value="${id}" <s:if test="id == contestBillingAccountId">selected="selected"</s:if>>${name}</option>
+                                                                        </s:iterator>
+                                                                    </select>
+                                                                </div>
+
                                                         </div>
                                                      </div>
                                                      <table id="summary"></table>

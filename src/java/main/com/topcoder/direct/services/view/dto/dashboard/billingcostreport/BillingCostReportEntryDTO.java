@@ -77,6 +77,32 @@ public class BillingCostReportEntryDTO implements Serializable {
     private String paymentType;
 
     /**
+     * Flag indicates whether the contest payment is of type studio contest.
+     */
+
+    private boolean isStudio;
+
+
+    /**
+     * Gets the flag isStudio.
+     *
+     * @return the flag isStudio.
+     */
+    public boolean isStudio() {
+        return isStudio;
+    }
+
+    /**
+     * Sets the flag isStudio.
+     *
+     * @param studio whether the contest is a studio contest.
+     */
+    public void setStudio(boolean studio) {
+        isStudio = studio;
+    }
+
+
+    /**
      * Gets the client
      *
      * @return the client.

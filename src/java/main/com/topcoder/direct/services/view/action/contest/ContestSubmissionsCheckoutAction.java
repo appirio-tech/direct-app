@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
@@ -63,6 +64,16 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
     private StudioContestSubmissionsDTO viewData;
 
     /**
+     * The billing account id of the contest used for check out.
+     */
+    private long contestBillingAccountId;
+
+    /**
+     * The flag to show whether the current user has access to the billing account used for check out.
+     */
+    private boolean canAccessBillingAccount;
+
+    /**
      * <p>
      * Constructs new <code>ContestSubmissionsActionCheckout</code> instance. This implementation does nothing.
      * </p>
@@ -92,6 +103,24 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
      */
     public SessionData getSessionData() {
         return this.sessionData;
+    }
+
+    /**
+     * Gets the contest billing account id.
+     *
+     * @return the contest billing account id
+     */
+    public long getContestBillingAccountId() {
+        return contestBillingAccountId;
+    }
+
+    /**
+     * Gets whether the current user can access the contest billing account
+     *
+     * @return the flag to show whether the current user has access to the billing account used for check out.
+     */
+    public boolean getCanAccessBillingAccount() {
+        return this.canAccessBillingAccount;
     }
 
     /**
@@ -175,6 +204,24 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
             viewData.setBillingAccounts(getProjectServiceFacade().getClientProjectsByUser(currentUser));
             // set flag indicating whether the submissions have already been checked out
             viewData.setHasCheckout(DirectUtils.getSubmissionsCheckout(submissions, roundType));
+
+            this.contestBillingAccountId = studioCompetition.getContestData().getBillingProject();
+
+            this.canAccessBillingAccount = false;
+
+            for(Project billing : viewData.getBillingAccounts()) {
+                if (this.contestBillingAccountId == billing.getId()) {
+                    this.canAccessBillingAccount = true;
+                }
+            }
+
+            if (!this.canAccessBillingAccount) {
+                // add the billing account so user can check out
+                Project selectedBilling = new Project();
+                selectedBilling.setId(this.contestBillingAccountId);
+                selectedBilling.setName("HIDDEN BILLING NAME");
+                viewData.getBillingAccounts().add(selectedBilling);
+            }
 
             // For normal request flow prepare various data to be displayed to user
 

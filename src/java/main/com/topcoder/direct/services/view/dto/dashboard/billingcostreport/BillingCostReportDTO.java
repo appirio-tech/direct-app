@@ -75,6 +75,23 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
      */
     private Map<Long, String> contestStatus;
 
+    /**
+     * Total amount of this billing cost report.
+     */
+    private double totalAmount;
+
+    /**
+     * Gets the total cost amount of this billing cost report.
+     *
+     * @return the total billing cost report amount.
+     */
+    public double getTotalAmount() {
+        double totalAmount = 0;
+        for(BillingCostReportEntryDTO entry: this.entries) {
+            totalAmount += entry.getPaymentAmount();
+        }
+        return totalAmount;
+    }
 
     /**
      * <p>Gets the projects lookup map.</p>
