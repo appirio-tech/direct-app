@@ -367,14 +367,14 @@ function maxCharsEventHandler(obj, maxChars) {
 }
 
 var allowedTags = [
-/&lt;a\s*(href\s*=\s*[^=|^&gt;|^&lt;]*)?&gt;/mg,
-/&lt;img\s*((src|height|width)\s*=\s*[^=|^&gt;|^&lt;|^\s]*\s*)*&gt;/mg, 
-/&lt;span\s*(style\s*=\s*[^=|^&gt;|^&lt;]*)?&gt;/mg,
-/&lt;font\s*((color|size)\s*=\s*[^=|^&gt;|^&lt;|^\s]*\s*)*&gt;/mg, 
-/&lt;(annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*&gt;/mg, 
-/&lt;\/\s*(a|img|span|font|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*&gt;/mg
+/<a\s*(href\s*=\s*[^=|^>|^<]*)?>/mg,
+/<img\s*((src|height|width)\s*=\s*[^=|^>|^<|^\s]*\s*)*>/mg, 
+/<span\s*(style\s*=\s*[^=|^>|^<]*)?>/mg,
+/<font\s*((color|size)\s*=\s*[^=|^>|^<|^\s]*\s*)*>/mg, 
+/<(annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg, 
+/<\/\s*(a|img|span|font|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg
 ];
-var tagsRegExp = /&lt;(\/)*[^&gt;|^\/]*&gt;/mg;
+var tagsRegExp = /<(\/)*[^<|^>|^\/]*>/mg;
  /**
  * Return the event handler used by tinyMCE to restrict the max characters and the allowed tags.
  * 
@@ -389,6 +389,7 @@ function maxCharsAndAllowedTagsEventHandler(obj, maxChars) {
 		var invalid = false;
         if (content.length <= maxChars) {
 			var c = content;
+			c = c.replace(/<|>/mg, "").replace(/&lt;/mg, "<").replace(/&gt;/mg, ">");
 			for(var i = 0; i < allowedTags.length; i++) {
 				c = c.replace(allowedTags[i], '');
 			}
