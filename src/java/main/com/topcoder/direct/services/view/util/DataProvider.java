@@ -2233,7 +2233,7 @@ public class DataProvider {
         // set to null first
         ResultSetContainer resultContainer = null;
 
-        if (DirectUtils.isTcOperations(tcSubject)) {
+        if (DirectUtils.isTcOperations(tcSubject) || DirectUtils.isTcStaff(tcSubject)) {
             //System.out.println("query the cockpit admin...");
             request.setContentHandle("admin_client_billing_accounts");
             resultContainer = dataAccess.getData(request).get(

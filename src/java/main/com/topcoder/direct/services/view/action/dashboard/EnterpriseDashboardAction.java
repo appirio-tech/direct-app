@@ -218,7 +218,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         boolean isTableViewCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseTableViewCall");
         boolean isDrillTableCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseDrillTableCall");
 
-        admin = DirectUtils.isTcOperations(currentUser);
+        admin = DirectUtils.isTcOperations(currentUser) || DirectUtils.isTcOperations(currentUser);
         // Get the list of available project categories
         Map<Long, String> projectCategories = DataProvider.getAllProjectCategories();
 
