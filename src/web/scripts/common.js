@@ -389,7 +389,7 @@ function maxCharsAndAllowedTagsEventHandler(obj, maxChars) {
 		var invalid = false;
         if (content.length <= maxChars) {
 			var c = content;
-			c = c.replace(/<|>/mg, "").replace(/&lt;/mg, "<").replace(/&gt;/mg, ">");
+			c = c.replace(/<|>/mg, "").replace(/&lt;/mg, "<").replace(/&gt;/mg, ">").replace(/&amp;lt;/mg, "<").replace(/&amp;gt;/mg, ">");
 			for(var i = 0; i < allowedTags.length; i++) {
 				c = c.replace(allowedTags[i], '');
 			}

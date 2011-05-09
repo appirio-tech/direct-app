@@ -169,6 +169,6 @@
     <a href="javascript:cancelContest();" class="button6 preview"><span class="left"><span class="right">CANCEL</span></span></a>
 </div>
 
-<div id="activateContestConfirmation" title="Do you really want to activate the contest?">
+<div id="activateContestConfirmation" title="Do you really want to activate the contest?" style="display:none;">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will create a new contest for you and then activate the created contest. Please confirm you want to create the contest and activate it?</p>
 </div>

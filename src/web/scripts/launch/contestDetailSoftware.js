@@ -199,6 +199,7 @@ $(document).ready(function(){
        onDigitalRunChangeKeyUp();
     });
 
+	// restrict chars for the text editor
     function makeMaxCharsTinyMCE(obj, maxChars) {
         tinyMCE.init({
             mode : "exact",
@@ -211,7 +212,7 @@ $(document).ready(function(){
               init_instance_callback : function() {
                   $('table.mceLayout').css('width','100%');
               },
-              handle_event_callback : maxCharsEventHandler(obj, maxChars)
+              handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
         });
     }
     makeMaxCharsTinyMCE("swDetailedRequirements", 12000);
