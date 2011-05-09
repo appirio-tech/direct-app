@@ -77,7 +77,7 @@ $(document).ready(function() {
 		}
 
 	  // limits the characters for text inputs and text editors
-	  $("#contestName, #projectName").bind('keydown keyup paste', limitContestProjectNameChars(50));
+	  $("#contestName, #projectName").bind('keydown keyup paste', limitContestProjectNameChars(200));
 	  
 	  $("#swFileDescription, #fileDescription").bind('keydown keyup paste', limitFileDescriptionChars(200));
 });
