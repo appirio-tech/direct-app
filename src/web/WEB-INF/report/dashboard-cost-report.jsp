@@ -115,12 +115,6 @@
                                       name="formData.projectCategoryIds" size="5"/>
                         </div>
 
-                        <div class="columns" id="customerNameFilter">
-                            <strong>Customer Name</strong><br/>
-                            <s:select list="viewData.clientAccounts" id="formData.customerIds"
-                                      name="formData.customerIds" size="1"/>
-                        </div>
-
                         <div class="columns" id="clientBillingProjectsFilter">
                             <strong>Billing Account</strong><br/>
                             <s:select list="viewData.clientBillingProjects"
