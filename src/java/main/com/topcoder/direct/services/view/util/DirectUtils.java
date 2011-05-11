@@ -398,6 +398,7 @@ public final class DirectUtils {
         contest.setTitle(resultContainer.getStringItem(recordIndex, "contest_name"));
         contest.setProject(project);
         contest.setSoftware(!isStudio);
+        contest.setContestTypeName(contestType);
 
         ContestStatsDTO dto = new ContestStatsDTO();
         dto.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));

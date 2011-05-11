@@ -40,6 +40,11 @@ public class ContestBriefDTO implements Serializable {
     private ProjectBriefDTO project;
 
     /**
+     * <p>A <code>String</code> providing the contest type.</p>
+     */
+    private String contestTypeName;
+
+    /**
      * <p>Constructs new <code>ContestBriefDTO</code> instance. This implementation does nothing.</p>
      */
     public ContestBriefDTO() {
@@ -116,6 +121,26 @@ public class ContestBriefDTO implements Serializable {
     public void setProject(ProjectBriefDTO project) {
         this.project = project;
     }
+
+
+    /**
+     * <p>Gets the contest type of this contest.</p>
+     *
+     * @return a <code>String</code> providing the contest type.
+     */
+    public String getContestTypeName() {
+        return contestTypeName;
+    }
+
+    /**
+     * <p>Sets the contest type of this contest.</p>
+     *
+     * @param id a <code>String</code> providing the contest type.
+     */
+    public void setContestTypeName(String contestTypeName) {
+        this.contestTypeName = contestTypeName;
+    }
+
 
     /**
      * <p>Compares the ContestBriefDTO by contest id.</p>

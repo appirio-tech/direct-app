@@ -721,6 +721,7 @@ public class DataProvider {
                 brief.setId(contest.getContestId());
                 brief.setTitle(contest.getCname());
                 brief.setSoftware(!"Studio".equals(contest.getType()));
+                brief.setContestTypeName(contest.getType());
                 dto.setContest(brief);
 
                 ProjectBriefDTO project = new ProjectBriefDTO();
@@ -1069,7 +1070,7 @@ public class DataProvider {
                 project = projects.get(tcDirectProjectId);
             }
 
-            ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
+            ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio, typeName);
             ContestType type = ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
@@ -1136,7 +1137,7 @@ public class DataProvider {
                 project = projects.get(tcDirectProjectId);
             }
 
-            ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
+            ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio, typeName);
             ContestType type =  ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
@@ -3152,12 +3153,13 @@ public class DataProvider {
      * @param project a <code>ProjectBriefDTO</code> providing the details for project contest belongs to.
      * @return an <code>ContestBriefDTO</code> providing the details for a single contest.
      */
-    private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project, Boolean isSoftware) {
+    private static ContestBriefDTO createContest(long id, String name, ProjectBriefDTO project, Boolean isSoftware, String contestType) {
         ContestBriefDTO contest = new ContestBriefDTO();
         contest.setId(id);
         contest.setTitle(name);
         contest.setProject(project);
         contest.setSoftware(isSoftware);
+        contest.setContestTypeName(contestType);
         return contest;
     }
 
@@ -3445,7 +3447,9 @@ public class DataProvider {
                 // Get details for contest
                 long contestId = resultContainer.getLongItem(i, "contest_id");
                 String contestName = resultContainer.getStringItem(i, "contest_name");
-                ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio);
+                String contestType = resultContainer.getStringItem(i, "contest_type");
+
+                ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio, contestType);
 
                 // Map contest to health status
                 contests.put(contestBrief, contestHealthDTO);
