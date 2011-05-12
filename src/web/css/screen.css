@@ -680,12 +680,13 @@ A.delete{
     font-weight:bold;
 }
 .tabs3Special .launchCopilotContest .fileUploadInfo table td.fileName{
-    width:35%;
+
 	height:34px;
 	padding:0;
 }
 .tabs3Special .launchCopilotContest .fileUploadInfo table td.fileDesc{
     color:#666666;
+    padding-left:20px;
 }
 .tabs3Special .launchCopilotContest .fileUploadInfo table td.fileName a{
     color:#333333;

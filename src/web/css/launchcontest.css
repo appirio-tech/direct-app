@@ -2222,6 +2222,34 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
     margin-top:5px;
     margin-left:10px;
 }
+
+.launchCopilotContest .addButton {
+    background: url("../images/addButton.gif") no-repeat scroll 0 0 transparent;
+    display: inline;
+    float: left;
+    height: 21px;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 22px;
+}
+
+.launchCopilotContest .addButton:hover {
+    background: url("../images/addButton_hover.gif") no-repeat scroll 0 0 transparent;
+}
+
+.launchCopilotContest .removeButton {
+    background: url("../images/removeButton.gif") no-repeat scroll 0 0 transparent;
+    display: inline;
+    float: left;
+    height: 21px;
+    margin-left: 7px;
+    margin-top: 2px;
+    width: 22px;
+}
+.launchCopilotContest .removeButton:hover {
+    background: url("../images/removeButton_hover.gif") no-repeat scroll 0 0 transparent;
+}
+
 .launchCopilotContest .infoPanel{
     overflow:hidden; 
     /*margin-top:10px;*/

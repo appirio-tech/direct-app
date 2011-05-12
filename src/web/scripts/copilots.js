@@ -13,8 +13,9 @@
  */
 
 var currentDocument = {};
-var documents = [];
-var documents2 = [];
+var exsitingDocuments = [];
+var newDocuments = [];
+var uploadedDocuments = [];
 var projectId = -1;
 
 $(document).ready(function() {
@@ -231,14 +232,14 @@ $(document).ready(function() {
                 responseType : 'json',
                 onSubmit : function(file, ext) {
                     currentDocument['fileName'] = file;
-                    uploader2.setData({contestFileDescription : currentDocument['description'], documentTypeId : 0, studio: false});
+                    uploader2.setData({contestFileDescription : currentDocument['description'], documentTypeId : 24, studio: false});
                     $.blockUI({ message: '<div id=loading> loading.... </div>' });
                 },
                 onComplete : function(file, jsonResult) {
                     handleJsonResult(jsonResult,
                                      function(result) {
                                          currentDocument['documentId'] = result.documentId;
-                                         documents2.push(currentDocument);
+                                         newDocuments.push(currentDocument);
                                          addFileItem(currentDocument);
                                          currentDocument = {};
                                          $('#fileDescription2').val('');
@@ -395,19 +396,19 @@ function hideEdit(cancelButton) {
 }
 
 function restorePrevData() {
-    documents2 = [];
+    // documents2 = [];
     var template = unescape($('#uploadedDocumentTemplate').html());
     $('#uploadedDocumentsTable').html('');
     $('#fileUpload2 dl').remove('.uploadedDocumentItem');
-    for (var i = 0; i < documents.length; i++) {
-        var doc = documents[i];
+    for (var i = 0; i < exsitingDocuments.length; i++) {
+        var doc = exsitingDocuments[i];
         var d = '<tr><td class="fileName"><span>' + (i + 1) + '.</span> <a href="javascript:">' + doc['fileName']
                 + '</a></td> <td class="fileDesc">' + doc['description'] + '</td></tr>';
         $('#uploadedDocumentsTable').append(d);
 
         var html = $.validator.format(template, doc['documentId'], doc['fileName'], doc['description'], '2');
         $('#fileUpload2 dl').append(html);
-        documents2[i] = doc;
+        // documents2[i] = doc;
     }
 }
 
@@ -462,22 +463,32 @@ function updatePrivateDesc() {
 }
 
 function updateProjectFiles() {
-    $('#uploadedDocumentsTable').html('');
+    // $('#uploadedDocumentsTable').html('');
     $('#fileUpload dl').html('');
 
-    for (var i = 0; i < documents2.length; i++) {
-        var doc = documents2[i];
-        var d = '<tr><td class="fileName"><span>' + (i + 1) + '.</span> <a href="javascript:">' + doc['fileName']
-                + '</a></td> <td class="fileDesc">' + doc['description'] + '</td></tr>';
-        $('#uploadedDocumentsTable').append(d);
-    }
-    documents = documents2;
-    documents2 = [];
-    for (var i = 0; i < documents.length; i++) {
-        documents2.push(documents[i]);
-    }
-    
     sendSaveDraftRequestToServer();
+
+    for (var i = 0; i < newDocuments.length; i++) {
+        var doc = newDocuments[i];
+
+        var uploaded = false;
+
+        for(var j = 0; j < uploadedDocuments.length; ++j) {
+            var toCheck = uploadedDocuments[j];
+            if (toCheck['documentId'] == doc['documentId']) {
+                uploaded = true;
+                break;
+            }
+        }
+
+        if (uploaded == false) {
+            var d = '<tr><td class="fileName"><span>' + (i + 1) + '.</span> <a href="javascript:">' + doc['fileName']
+                    + '</a></td> <td class="fileDesc">' + doc['description'] + '</td></tr>';
+            $('#uploadedDocumentsTable').append(d);
+            uploadedDocuments.push(doc);
+        }
+
+    }
 }
 
 function validateContestInput() {
@@ -547,12 +558,19 @@ function saveAsDraftRequest() {
     request['projectHeader.tcDirectProjectName'] = $.trim($('#projects2 option:selected').text());
 
     request['docUploadIds'] = getDocumentIds();
+    request['docCompIds'] = getExistingDocumentIds();
 
     return request;
 }
 
 function getDocumentIds() {
-    return $.map(documents, function(doc, i) {
+    return $.map(newDocuments, function(doc, i) {
+        return doc.documentId;
+    });
+}
+
+function getExistingDocumentIds() {
+    return $.map(exsitingDocuments, function(doc, i) {
         return doc.documentId;
     });
 }

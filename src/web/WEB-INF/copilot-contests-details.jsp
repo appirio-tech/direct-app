@@ -42,14 +42,17 @@
             $('#mainContent').data('p2', '${projectHeader.properties["Billing Project"]}');
             $('#mainContent').data('p3', '${assetDTO.productionDate}');
             var d;
-        <c:forEach items="${assetDTO.documentation}" var="doc" varStatus="loop">
-            d = {};
-            d['fileName'] = '${doc.documentName}';
-            d['documentId'] = ${doc.id};
-            d['description'] = '';
-            documents.push(d);
-            documents2.push(d);
-        </c:forEach>
+            <c:forEach items="${assetDTO.documentation}" var="doc" varStatus="loop">
+                d = {};
+                <c:set var="docUrl" value="${doc.url}"/>
+                <c:set var="splitURI" value="${fn:split(docUrl, '/')}"/>
+                <c:set var="docName" value="${splitURI[fn:length(splitURI)-1]}"/>
+                d['fileName'] = '${docName}';
+                d['documentId'] = ${doc.id};
+                d['description'] = '${doc.documentName}';
+                exsitingDocuments.push(d);
+                // documents2.push(d);
+            </c:forEach>
         <c:forEach items="${assetDTO.compUploadedFiles}" var="doc" varStatus="loop">
             <!-- ${doc.uploadedFileName} ${doc.uploadedFileDesc} -->
         </c:forEach>
@@ -135,7 +138,7 @@
                                 <c:out value="${p.name}"/>
                             </c:if>
                         </c:forEach>
-                    </strong>    
+                    </strong>
                 </li>
             </ul>
         </div>
@@ -213,8 +216,8 @@
         <div class="infoPanelMask">
             <ul>
                 <li>
-                    <label>Start Time:</label> 
-                    <span id="startDateLabel"><fmt:formatDate value="${tcdirect:toDate(assetDTO.productionDate)}" 
+                    <label>Start Time:</label>
+                    <span id="startDateLabel"><fmt:formatDate value="${tcdirect:toDate(assetDTO.productionDate)}"
                                                               pattern="MM/dd/yyyy HH:mm zzz"/></span>
                 </li>
 <%--
@@ -279,7 +282,7 @@
 
         <div class="editPanelMask">
             <div class="textarea">
-                <textarea rows="15" cols="80" style="width:100%;" 
+                <textarea rows="15" cols="80" style="width:100%;"
                           id="publicCopilotPostingDescription2">${projectHeader.projectSpec.detailedRequirements}</textarea>
             </div>
 
@@ -314,7 +317,7 @@
 
         <div class="editPanelMask">
             <div class="textarea">
-                <textarea rows="15" cols="80" style="width:100%;" 
+                <textarea rows="15" cols="80" style="width:100%;"
                           id="privateCopilotPostingDescription2">${projectHeader.projectSpec.privateDescription}</textarea>
             </div>
 
@@ -342,11 +345,14 @@
 
         <div class="infoPanelMask">
         <table id="uploadedDocumentsTable">
-            <c:forEach items="${assetDTO.compUploadedFiles}" var="doc" varStatus="loop">
+            <c:forEach items="${assetDTO.documentation}" var="doc" varStatus="loop">
                 <tr>
+                    <c:set var="docUrl" value="${doc.url}"/>
+                    <c:set var="splitURI" value="${fn:split(docUrl, '/')}"/>
+                    <c:set var="docName" value="${splitURI[fn:length(splitURI)-1]}"/>
                     <td class="fileName"><span>${loop.index + 1}.</span>
-                        <a href="#"><c:out value="${doc.fileName}"/></a></td>
-                    <td class="fileDesc"><c:out value="${doc.description}"/></td>
+                        <a href="${doc.url}"><c:out value="${docName}"/></a></td>
+                    <td class="fileDesc"><c:out value="${doc.documentName}"/></td>
                 </tr>
             </c:forEach>
             </table>
@@ -503,14 +509,14 @@
 </div>
 <div id="uploadedDocumentTemplate" class="hide">
     <dd id="doc{0}" class="uploadedDocumentItem">
-        <div class="attachFile">{1}</div>
+        <div class="attachFile"><span style="line-height:30px"><span style="margin-right:5px"><b>File Name:</b></span>{1}</span></div>
         <div class="attachDesc">
             <table>
                 <tbody>
                 <tr>
-                    <td class="descInput">{2}</td>
+                    <td class="descInput"><span style="margin-right:5px"><b>Description:</b></span>{2}</td>
                     <td class="addDelBtn">
-                        <a class="removeButton" href="javascript:removeFileItem('{0}', documents2);" id="removeButton{0}">
+                        <a class="removeButton" href="javascript:removeFileItem('{0}', newDocuments);" id="removeButton{0}">
                             <span class="hide">REMOVE</span></a>
                     </td>
                 </tr>
@@ -519,6 +525,8 @@
         </div>
     </dd>
 </div>
+
+
 
 <!-- End .popups -->
 <jsp:include page="includes/popups.jsp"/>
