@@ -17,6 +17,7 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.shared.util.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +62,11 @@ import java.util.Map;
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
+
+    /**
+     * <p>A <code>Logger</code> to be used for logging the events encountered while processing the requests.</p>
+     */
+    private static final Logger log = Logger.getLogger(ProjectOverviewAction.class);
 
     /**
      * <p>A <code>ProjectIdForm</code> providing the ID of a requested project.</p>
@@ -161,6 +167,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
 
             } catch (Exception e) {
+                log.error("Project Overview error: ", e);
                 return ERROR;
             }
 
