@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Contest Detail Javascript
@@ -8,9 +8,13 @@
  * Version 1.0.1 (TC Direct Release Assembly 7) Change notes:
  * - Hide edit button if user has no write permission.
  * </p>
+ * <p>
+ * Version 1.0.2 (TC Direct "Contest Links and Button" Update 24Hr Assembly) Change notes:
+ * - Add support to show the 'Preview Contest' link if the contest is in draft status.
+ * </p>
  *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.0.1
+ * @version 1.0.2
  */
 $(document).ready(function(){
     /* init date-pack */
@@ -191,28 +195,21 @@ $(document).ready(function(){
   },function(){
     $('#contestRound2ToolTip').hide();
   });
-
-	// restrict chars for the text editor
-	function makeMaxCharsTinyMCE(obj, maxChars) {
-        tinyMCE.init({
-            mode : "exact",
-            elements : obj,
-            plugins : "paste",
-            theme : "advanced",      
-              theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link",
-              theme_advanced_buttons2 : "",
-              theme_advanced_buttons3 : "",
-              init_instance_callback : function() {
-                  $('table.mceLayout').css('width','100%');
-              },
-              handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
-        });
-    }
-    makeMaxCharsTinyMCE("contestDescription", 10000);
-    makeMaxCharsTinyMCE("contestIntroduction", 10000);
-    makeMaxCharsTinyMCE("round1Info", 2000);
-	makeMaxCharsTinyMCE("round2Info", 2000);
-	
+  
+  //tiny mce BUGR 3813 
+  tinyMCE.init({
+  	mode : "exact",
+  	elements : "contestDescription,contestIntroduction,round1Info,round2Info",
+  	plugins : "paste",
+  	theme : "advanced",  	
+	  theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+	  theme_advanced_buttons2 : "",
+	  theme_advanced_buttons3 : "",
+	  init_instance_callback : function() {
+	  	  $('table.mceLayout').css('width','100%');
+	  }
+  });
+  
    //contest type
    $('#contestTypes').bind("change", function() {
         updateContestFee();
@@ -289,7 +286,15 @@ function initContest(contestJson) {
    if(hasContestWritePermission && isDraft()) {
          $('#resubmit').show(); 
    }
-   
+
+   //preview contest
+   var detailedStatusId = contestJson.detailedStatusId;
+   if(15 == detailedStatusId) {
+    	$('#previewContestButton').show();
+   } else {
+		$('#viewContestButton').show();
+   }
+
     //BUGR-3812: only show edit buttons if it is in draft or scheduled status
     // if has no write permission, no edit;
     if (!hasContestWritePermission) {

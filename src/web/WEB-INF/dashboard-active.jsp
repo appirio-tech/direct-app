@@ -1,3 +1,11 @@
+<%--
+  - Author: TCSASSEMBLER, TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
+  - Change the  style for the View/Edit buttons. 
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -122,15 +130,10 @@
                                                                             value="status.name"/></span></td>
                                                                     <td>
                                                                         <s:if test="isStudio == true">
-                                                                            <a href="contest/detail?contestId=${contest.id}" class="button1 button"><span>View/Edit</span></a>
+                                                                            <a href="contest/detail?contestId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
                                                                         </s:if>
                                                                          <s:if test="isStudio == false">
-                                                                            <s:if test="contestType.name == 'Copilot Posting'">
-                                                                                <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1 button"><span>View/Edit</span></a>
-                                                                            </s:if>
-                                                                            <s:if test="contestType.name != 'Copilot Posting'">
-                                                                                <a href="contest/detail?projectId=${contest.id}" class="button1 button"><span>View/Edit</span></a>
-                                                                            </s:if>
+                                                                            <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
                                                                         </s:if>
                                                                     </td>
                                                                 </tr>

@@ -313,7 +313,7 @@ BODY#page{
 		margin: 0;
 		padding: 0;
 		height: 40px;
-		width: 16.66%;
+		width: 20%;
 		overflow: hidden;
 	}
 	
@@ -2089,8 +2089,8 @@ TABLE.contests TD{
 		font-weight: bold;
 		padding-left: 14px;
 	}
-
-	TABLE.contests TD SPAN.draft{ 
+    
+    TABLE.contests TD SPAN.draft{ 
         color: #00c600;
         background: url(../images/draft_ico.png) no-repeat left 1px;
     }
@@ -5498,16 +5498,8 @@ Contest links
 }
 
 .issueContest .contestNameTd a {
-    /* margin-left: 16px;
-    line-height: 40px;   */
-}
-
-.issueContest .contestNameLink {
-
-    padding-left: 16px;
-    padding-right: 10px;
-    padding-top: 15px;
-    text-align: left;
+    margin-left: 16px;
+    line-height: 40px;
 }
 
 /* rowItem */
@@ -5685,10 +5677,6 @@ Contest links
     display: none;
 }
 
-#issueHeader {
-    margin-bottom:10px;
-}
-
 /* ADDED CSS CODE */ 
 .myCopilotsContestsList, .myProjectContests {
     border-left:1px solid #A8ABAD;
@@ -5696,7 +5684,6 @@ Contest links
 }
 .myCopilotsContestsList table.contests, table#ProjectContests {
     border:0px;
-
     margin-bottom:0px;
 }
 .myCopilotsContestsList table.projectStats th{
@@ -5806,3 +5793,186 @@ Contest links
     text-decoration:none;
     cursor: default;
 }
+
+
+.myProjectContests table#ProjectContests td a.button1, #activeContests table.projectStats  td a.button1 {
+    background: url("../images/button1.png") no-repeat scroll left top transparent;
+    color: #313131;
+    display: inline-block;
+    font-size: 11px;
+    padding-left: 2px;
+    text-decoration: none;
+	float: none;
+}
+.myProjectContests table#ProjectContests td a.button1 span, #activeContests table.projectStats  td a.button1 span {
+	font-weight: normal;
+    padding-left: 0;
+	width: auto;
+}
+.myProjectContests table#ProjectContests td a.button1 .btnR, #activeContests table.projectStats  td a.button1 .btnR {
+    background: url("../images/button1.png") no-repeat scroll right -50px transparent;
+    cursor: pointer;
+    float: left;
+    height: 19px;
+    padding-right: 2px;
+}
+.myProjectContests table#ProjectContests td a.button1 .btnR .btnC, #activeContests table.projectStats  td a.button1 .btnR .btnC {
+    background: url("../images/button1.png") repeat-x scroll left -25px transparent;
+    cursor: pointer;
+    float: left;
+    height: 25px;
+    padding: 0 8px;
+	margin-top: -5px;
+}
+.myProjectContests table#ProjectContests td a.button1 .btnR .btnC .btnIcon, #activeContests table.projectStats  td a.button1 .btnR .btnC .btnIcon {
+    background: url("../images/button1-icon.gif") no-repeat scroll left center transparent;
+    cursor: pointer;
+    float: left;
+    height: 25px;
+    line-height: 24px;
+    overflow: hidden;
+    padding: 0 2px 0 15px;
+}
+
+.myProjectContests table#ProjectContests td a.button1:hover, #activeContests table.projectStats  td a.button1:hover{
+		background-position:left -75px;
+	}
+		.myProjectContests table#ProjectContests td a.button1:hover .btnR, #activeContests table.projectStats  td a.button1:hover .btnR{
+			background-position:right -125px;
+		}
+			.myProjectContests table#ProjectContests td a.button1:hover .btnR .btnC, #activeContests table.projectStats  td a.button1:hover .btnR .btnC{
+				background-position:left -100px;
+			}
+	
+/*------------------------
+Contest links
+------------------------*/
+.contestLinks {
+    font-size: 11px;
+	color:#313131;
+    height: 28px;
+	margin-top:-3px;
+	padding-left:5px;
+}
+.contestLinks ul li{
+	list-style:none;
+	padding:0;
+	margin:0;
+	float:left;
+	width:auto;
+	display:inline;
+	height:20px;
+	line-height:18px;
+}
+.contestLinks ul li.splitter{
+	width:20px;
+	background:url(../images/link-icon-splitter.gif) center 1px no-repeat;
+}
+.contestLinks ul li a{
+	text-decoration:none;
+	display:inline-block;
+	height:20px;
+}
+.contestLinks ul li a:hover{
+	text-decoration:underline;
+}
+.contestLinks ul li a.contestLinkIcon{
+	background-position:left top;
+	background-repeat:no-repeat;
+	padding-left:20px;
+}
+.contestLinks ul li a.linkIconViewContest{
+	padding-left:24px;
+	background-image:url(../images/link-icon-view-contest.gif);
+}
+.contestLinks ul li a.linkIconOnlineReview{
+	padding-left:22px;
+	background-image:url(../images/link-icon-online-review.gif);
+	background-position:left 1px;
+}
+.contestLinks ul li a.linkIconRegistrationPage{
+	padding-left:22px;
+	background-image:url(../images/link-icon-registration-page.gif);
+	background-position:left 1px;
+}
+.contestLinks ul li a.linkIconForum{
+	padding-left:21px;
+	background-image:url(../images/link-icon-forum.gif);
+	background-position:left 1px;
+}
+.contestLinks ul li a.linkIconJIRA{
+	background-image:url(../images/link-icon-jira.gif);
+	background-position:left 2px;
+}
+.contestLinks ul li a.linkIconSVN{
+	background-image:url(../images/link-icon-svn.gif);
+	background-position:left 2px;
+}
+.contestLinks ul li a.linkIconPreviewContest{
+	padding-left:24px;
+	background-image:url(../images/link-icon-preview-contest.gif);
+}
+.contestLinks ul li a.linkIconNewVersion{
+	padding-left:24px;
+	background-image:url(../images/link-icon-new-version.gif);
+}
+.contestLinks ul li a.linkIconRepostContest{
+	padding-left:24px;
+	background-image:url(../images/link-icon-new-version.gif);
+}
+
+A.button11{
+	display:inline-block;
+	background: transparent url(../images/button1.png) left top no-repeat;
+	font-size: 11px;
+	color: #313131;
+	padding-left:2px;
+	text-decoration: none;
+}	
+
+	A.button11 .btnR{
+		float: left;
+		background: transparent url(../images/button1.png) right -50px no-repeat;
+		cursor: pointer;
+		padding-right:2px;
+		height:25px;
+	}	
+		A.button11 .btnR .btnC{
+			float: left;
+			background: transparent url(../images/button1.png) left -25px repeat-x;
+			cursor: pointer;
+			height: 25px;
+			padding:0 8px;
+		}	
+			A.button11 .btnR .btnC .btnIcon{
+				float: left;
+				background:url(../images/button1-icon.gif) left center no-repeat;
+				line-height:24px;
+				cursor: pointer;
+				height: 25px;
+				padding:0 2px 0 15px;
+				overflow: hidden;
+			}
+	
+	A.button11:hover{
+		background-position:left -75px;
+	}
+		A.button11:hover .btnR{
+			background-position:right -125px;
+		}	
+			A.button11:hover .btnR .btnC{
+				background-position:left -100px;
+			}
+	TABLE.contests .button11 SPAN{ /* contest status */
+		font-weight:normal;
+		padding-left: 0px;
+	}
+	.no_details .captionInner H2{
+		float:left;
+	}
+	.clearFix{
+		clear:both;
+		height:0;
+		width:0;
+		overflow:hidden;
+	}

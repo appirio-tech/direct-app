@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Contest Detail Javascript.
@@ -17,8 +17,11 @@
  * Version 1.1.3 (TCCC-2926)
  * -  Add support to restrict the max characters of private description and public description.
  *
+ * Version 1.1.4 (TC Direct "Contest Links and Button" Update 24Hr Assembly)
+ * - Add support to show the 'Preview Contest' link if the contest is in draft status.
+ *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1.3
+ * @version 1.1.4
  */
 $(document).ready(function(){
 	  //general initialization
@@ -199,7 +202,6 @@ $(document).ready(function(){
        onDigitalRunChangeKeyUp();
     });
 
-	// restrict chars for the text editor
     function makeMaxCharsTinyMCE(obj, maxChars) {
         tinyMCE.init({
             mode : "exact",
@@ -212,12 +214,12 @@ $(document).ready(function(){
               init_instance_callback : function() {
                   $('table.mceLayout').css('width','100%');
               },
-              handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
+              handle_event_callback : maxCharsEventHandler(obj, maxChars)
         });
     }
     makeMaxCharsTinyMCE("swDetailedRequirements", 12000);
-    makeMaxCharsTinyMCE("swPrivateDescription", 2048);
-    makeMaxCharsTinyMCE("swGuidelines", 2048);
+    makeMaxCharsTinyMCE("swPrivateDescription", 12000);
+    makeMaxCharsTinyMCE("swGuidelines", 12000);
 });
 
 var ACTIVE_PROJECT_STATUS = 1;
@@ -351,13 +353,19 @@ function initContest(contestJson) {
      $('.technology').hide();
    }      
    
-   //repost and new version
-   var statusName = contestJson.projectStatus.name;    
+   // preview contest, repost and new version
+   var statusName = contestJson.projectStatus.name;
+   if(statusName.indexOf('Draft') != -1) {
+		$('#previewContestButton').show();
+   } else {
+		$('#viewContestButton').show();
+   }
    if(statusName.indexOf('Cancelled') != -1) {
     	 repostProjectId = contestJson.contestId;
 	     repostTcProjectId = contestJson.tcDirectProjectId;
    	  
    	  $('#repostButton').show();
+	  $('#repostButtonSplitter').show();
    	  $('#repostButton').click(function(){
    	      $('#repostDialog').dialog('open');	 
    	  });
@@ -371,6 +379,7 @@ function initContest(contestJson) {
 	     newVersionMinorVersion = false;
    	  
    	  $('#newVersionButton').show();
+	  $('#newVersionButtonSplitter').show();
    	  $('#newVersionButton').click(function(){
    	      $('#newVersionDialog').dialog('open');	 
    	  });

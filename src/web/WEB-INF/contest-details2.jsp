@@ -1,7 +1,7 @@
 <%--
   - Author: BeBetter, isv, TCSASSEMBLER
-  - Version: 1.3
-  - Copyright (C) 2010 - 20111 TopCoder Inc., All Rights Reserved.
+  - Version: 1.4
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -11,6 +11,8 @@
   - - replaced contest stats area with contest dashboard area
   - Version 1.3 - TC Direct Release Assembly 7 Change Note
   - - added hasContestWritePermission field.
+  - Version 1.4 - TC Direct "Contest Links and Button" Update 24Hr Assembly Change Note
+  - - removed the 'View Contest', 'Repost Contest', 'New Version' links.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -72,9 +74,6 @@
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>
-                        <a href="javascript:previewContest();" class="button5" style="float:right;text-align:center;">View Contest</a>
-                        <a href="javascript:;" id="repostButton" class="button5" style="float:right;text-align:center;display:none;">Repost</a>
-                        <a href="javascript:;" id="newVersionButton" class="button5" style="float:right;text-align:center;display:none;">New Version</a>
                         </h2>
                     </div><!-- End .areaHeader -->
 

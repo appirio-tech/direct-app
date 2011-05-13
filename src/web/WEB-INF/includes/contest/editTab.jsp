@@ -1,10 +1,19 @@
+<%--
+  - Author: TCSASSEMBLER, TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
+  - Change the  style for the Edit links for each contest edit sections. 
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- Contest Type Display-->
 <div class="no_details contest_type">																						
   <div class="caption_det_type">													
 	    <div class="captionInner">
-           <h2>Contest Type <a href="javascript:;"><img src="/images/edit.png" alt="edit" id="editTypeButton" class="edit_type" /></a></h2>                                                            
+           <h2>Contest Type </h2> 
+<a href="javascript:;" class="button11 edit_type"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>		   
       </div>
 													
    </div><!-- End .caption -->
@@ -112,7 +121,8 @@
 <div class="no_details contest_round">											
 		 <div class="caption_det_round">		 	
 		 		<div class="captionInner">
-		 			<h2>Rounds Type & Schedule <a href="javascript:;"><img src="/images/edit.png" alt="edit" class="edit_round" /></a></h2>                                        
+		 			<h2>Rounds Type & Schedule </h2>  
+<a href="javascript:;" class="button11 edit_round"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>					
 		 		</div>		 	
 		 </div><!-- End .caption -->												
 		<div class="detailsContent_det_round">
@@ -303,7 +313,8 @@
 <div class="no_details contest_prize">											
       <div class="caption_det_prize">				
 					<div class="captionInner">
-						<h2>Prizes <a href="javascript:;"><img src="/images/edit.png" alt="edit" class="edit_prize" /></a></h2>
+						<h2>Prizes </h2>
+						<a href="javascript:;" class="button11 edit_prize"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
 					</div>				
 			</div><!-- End .caption -->												
 	     <div class="detailsContent_det_prize">
@@ -386,9 +397,9 @@
 <div class="no_details contest_spec">											
 				<div class="caption_det_spec">					
 						<div class="captionInner">
-							<h2>Specification
-              <a href="javascript:;"><img src="/images/edit.png" alt="edit" class="edit_spec" /></a>                                            
-              </h2>                                            
+							<h2>Specification</h2>
+<a href="javascript:;" class="button11 edit_spec"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>			  
+                                                         
 						</div>					
 				</div><!-- End .caption -->
 												
@@ -512,7 +523,8 @@
 <div class="no_details contest_files">											
 				<div class="caption_det_files">													
 						<div class="captionInner">
-							<h2>Files <a href="javascript:;"><img src="/images/edit.png" alt="edit" class="edit_files" /></a></h2>
+							<h2>Files </h2>
+							<a href="javascript:;" class="button11 edit_files"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
 						</div>													
 				</div><!-- End .caption -->												
 				<div class="detailsContent_det_files">
