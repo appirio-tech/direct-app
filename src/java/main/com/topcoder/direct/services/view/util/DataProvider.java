@@ -1323,7 +1323,8 @@ public class DataProvider {
             submitter.setHandle(submissionRow.getStringItem("submitter_handle"));
 
             SoftwareSubmissionDTO submission = new SoftwareSubmissionDTO();
-            submission.setSubmissionId(submissionRow.getLongItem("submission_id"));
+            long submissionId = submissionRow.getLongItem("submission_id");
+            submission.setSubmissionId(submissionId);
             submission.setSubmissionDate(submissionRow.getTimestampItem("create_date"));
             submission.setScreeningScore((Float) submissionRow.getItem("screening_score").getResultData());
             submission.setInitialScore((Float) submissionRow.getItem("initial_score").getResultData());
@@ -1347,6 +1348,7 @@ public class DataProvider {
                 winner.setId(submitter.getId());
                 winner.setPlacement(placement);
                 winner.setProjectId(dto.getProjectId());
+                winner.setSubmissionId(submissionId);
                 if (placement == 1) {
                     dto.setFirstPlaceWinner(winner);
                 } else if (winner.getPlacement() == 2) {

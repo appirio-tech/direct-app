@@ -27,6 +27,11 @@ public class SoftwareContestWinnerDTO extends UserDTO {
     private long projectId;
 
     /**
+     * <p>A <code>long</code> providing the ID of the winner submission</p>
+     */
+    private long submissionId;
+
+    /**
      * <p>Constructs new <code>SoftwareContestWinnerDTO</code> instance. This implementation does nothing.</p>
      */
     public SoftwareContestWinnerDTO() {
@@ -84,5 +89,24 @@ public class SoftwareContestWinnerDTO extends UserDTO {
      */
     public void setPlacement(int placement) {
         this.placement = placement;
+    }
+
+
+     /**
+     * <p>Gets the ID of a software project.</p>
+     *
+     * @return a <code>long</code> providing the ID of the submission.
+     */
+    public long getSubmissionId() {
+        return this.submissionId;
+    }
+
+    /**
+     * <p>Sets the ID of a software project.</p>
+     *
+     * @param projectId a <code>long</code> providing the ID of the submission.
+     */
+    public void setSubmissionId(long submissionId) {
+        this.submissionId = submissionId;
     }
 }

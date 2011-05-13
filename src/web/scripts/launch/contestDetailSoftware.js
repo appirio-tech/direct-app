@@ -202,6 +202,7 @@ $(document).ready(function(){
        onDigitalRunChangeKeyUp();
     });
 
+	// restrict chars for the text editor
     function makeMaxCharsTinyMCE(obj, maxChars) {
         tinyMCE.init({
             mode : "exact",
@@ -214,12 +215,12 @@ $(document).ready(function(){
               init_instance_callback : function() {
                   $('table.mceLayout').css('width','100%');
               },
-              handle_event_callback : maxCharsEventHandler(obj, maxChars)
+              handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
         });
     }
     makeMaxCharsTinyMCE("swDetailedRequirements", 12000);
-    makeMaxCharsTinyMCE("swPrivateDescription", 12000);
-    makeMaxCharsTinyMCE("swGuidelines", 12000);
+    makeMaxCharsTinyMCE("swPrivateDescription", 2048);
+    makeMaxCharsTinyMCE("swGuidelines", 2048);
 });
 
 var ACTIVE_PROJECT_STATUS = 1;

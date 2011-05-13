@@ -133,7 +133,12 @@
                                                                             <a href="contest/detail?contestId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
                                                                         </s:if>
                                                                          <s:if test="isStudio == false">
-                                                                            <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                                            <s:if test="contestType.name == 'Copilot Posting'">
+                                                                                <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                                            </s:if>
+                                                                            <s:if test="contestType.name != 'Copilot Posting'">
+                                                                                <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                                            </s:if>
                                                                         </s:if>
                                                                     </td>
                                                                 </tr>

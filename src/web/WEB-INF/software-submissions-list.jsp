@@ -56,8 +56,9 @@
                                                 <c:if test="${firstPlaceWinner != null}">
                                                     <div id="winnerPanel">
                                                         <div class="winnerCol">
-                                                            <link:onlineReviewProjectDetails styleClass="downloadFile"
-                                                                                             projectId="${firstPlaceWinner.projectId}"/>
+                                                            <link:onlineReviewDownloadSubmission projectId="${firstPlaceWinner.projectId}"
+                                                                    submissionId="${firstPlaceWinner.submissionId}" styleClass="icoZip ${icoStyle}">
+                                                            </link:onlineReviewDownloadSubmission>
                                                             <div class="winnerData">
                                                                 <h3>1st Place Winner</h3>
                                                                 <link:user styleClass="handle"
@@ -74,9 +75,9 @@
 
                                                         <c:if test="${secondPlaceWinner != null}">
                                                             <div class="winnerCol">
-                                                                <link:onlineReviewProjectDetails
-                                                                        styleClass="downloadFile"
-                                                                        projectId="${secondPlaceWinner.projectId}"/>
+                                                                <link:onlineReviewDownloadSubmission projectId="${secondPlaceWinner.projectId}"
+                                                                    submissionId="${secondPlaceWinner.submissionId}" styleClass="icoZip ${icoStyle}">
+                                                                </link:onlineReviewDownloadSubmission>
                                                                 <div class="winnerData">
                                                                     <h3>2nd Place Winner</h3>
                                                                     <link:user styleClass="handle"
