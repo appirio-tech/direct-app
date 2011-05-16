@@ -2714,12 +2714,12 @@ public class DataProvider {
                 BillingCostReportEntryDTO contestFeeEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
                 contestFeeEntry.setPaymentType("Contest Fee");
                 contestFeeEntry.setPaymentAmount(contestFee);
-                contestFeeEntry.setPaymentDate(contestFeeEntry.getLaunchDate());
+                contestFeeEntry.setPaymentDate(contestFeeEntry.getCompletionDate());
 
                 BillingCostReportEntryDTO digitalRunEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
                 digitalRunEntry.setPaymentType("Digital Run");
                 digitalRunEntry.setPaymentAmount(digitalRun);
-                digitalRunEntry.setPaymentDate(digitalRunEntry.getLaunchDate());
+                digitalRunEntry.setPaymentDate(digitalRunEntry.getCompletionDate());
 
                 BillingCostReportEntryDTO reliabilityEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
                 reliabilityEntry.setPaymentType("Reliability");
@@ -2728,11 +2728,17 @@ public class DataProvider {
 
                 // add contest fee if the payment type filter allows
                 if (paymentTypeFilter.contains(1L)) {
-                    entries.add(contestFeeEntry);
+                    // check date range
+                    if (contestFeeEntry.getPaymentDate().after(startDate) && contestFeeEntry.getPaymentDate().before(endDate)) {
+                        entries.add(contestFeeEntry);
+                    }
+
                 }
                 // add digital run entry if the payment type filter allows
                 if (paymentTypeFilter.contains(6L)) {
-                    entries.add(digitalRunEntry);
+                    if (digitalRunEntry.getPaymentDate().after(startDate) && digitalRunEntry.getPaymentDate().before(endDate)) {
+                        entries.add(digitalRunEntry);
+                    }
                 }
 
                 // add reliability payment if the payment type filter allows
