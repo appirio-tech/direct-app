@@ -2714,7 +2714,7 @@ public class DataProvider {
                 BillingCostReportEntryDTO contestFeeEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
                 contestFeeEntry.setPaymentType("Contest Fee");
                 contestFeeEntry.setPaymentAmount(contestFee);
-                contestFeeEntry.setPaymentDate(contestFeeEntry.getCompletionDate());
+                contestFeeEntry.setPaymentDate(contestFeeEntry.getLaunchDate());
 
                 BillingCostReportEntryDTO digitalRunEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
                 digitalRunEntry.setPaymentType("Digital Run");
