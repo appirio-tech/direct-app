@@ -7,6 +7,7 @@
   - - Add a popup window to support the cost breakdown data.
   - Version 1.2 Direct Improvements Assembly Release 2 Assembly Change notes:
   - - Make 'Custom name' column before the 'project name' column.
+  - Version 1.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Description: This page renders the view for cost report including form and report data.
   -
 --%>
@@ -145,7 +146,7 @@
 <div id="costReportSection">
 
     <%-- aggregation cost report --%>
-<table id="costReportAggregationArea" class="pipelineStats"
+<table id="costReportAggregationArea" class="pipelineStats resultTable"
        cellpadding="0" cellspacing="0">
     <thead>
     <tr>
@@ -198,7 +199,7 @@
     <c:forEach items="${viewData.projectAggregation}" var="item"
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-        <tr class="projectAggregationCostReport scData ${rowStyle}">
+        <tr class="projectAggregationCostReport scData  ${rowStyle}">
             <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
             <td>
                 <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
@@ -281,8 +282,9 @@
     </tbody>
 </table>
 
+<div class="resultTableContainer">
     <%-- Cost report Details --%>
-<table id="costDetails" class="pipelineStats paginatedDataTable" cellpadding="0"
+<table id="costDetails" class="pipelineStats paginatedDataTable resultTable" cellpadding="0"
        cellspacing="0">
     <thead>
     <tr>
@@ -314,7 +316,7 @@
     <tbody>
     <c:forEach items="${viewData.costDetails}" var="item" varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-        <tr class="${rowStyle} pipelineDetailsRow" id="contest_${item.contest.id}">
+        <tr class="pipelineDetailsRow" id="contest_${item.contest.id}">
             <td>
                 <c:out value="${item.client.name}"/>
             </td>
@@ -359,10 +361,25 @@
     </tbody>
 </table>
 
-<div class="panel">
-    <!-- this area contains the print, export to excel, export to pdf links -->
-    <a href="javascript:getCostReportAsExcel(false);"
-       class="exportExcel">Export to <strong>Excel</strong></a>
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getCostReportAsExcel(false);" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </div>
 <!-- End .panel -->
 

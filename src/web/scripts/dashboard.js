@@ -4,7 +4,7 @@
 /**
  * The JS script for dashboard.
  *
- *  Version 1.1 - TC Direct - Page Layout Update Assembly
+ *  Version 1.1 - TC Direct - Page Layout Update Assembly & TC Direct - Page Layout Update Assembly 2
  *  - Added auto truncated function.
  *
  * @author tangzx
@@ -672,11 +672,24 @@ $(document).ready(function(){
         } 
     }
 
+    function  truncateTableHeaderNames(){
+        var width = $(window).width();
+        // 1240 is better than 1024 when testing
+        if(width < 1240){
+             $(".resultTable th.truncateRegs").text("Regs");
+             $(".resultTable th.truncateSubs").text("Subs");
+        } else{
+             $(".resultTable th.truncateRegs").text("Registrants");
+             $(".resultTable th.truncateSubs").text("Submissions");
+        }
+    }
     $(window).resize(function(){
           truncateTH();
+	  truncateTableHeaderNames();
     }) ;
 
-	truncateTH();
+    truncateTH();
+    truncateTableHeaderNames();
 });
 
 

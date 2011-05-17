@@ -1,3 +1,12 @@
+/**
+ * The JS script for notification.
+ *
+ *  Version 1.1 - (TC Direct - Page Layout Update Assembly 2) changes:
+ *  - Update the codes to fix layout issues of notification
+ *
+ * @author TCSASSEMBLER
+ * @version 1.1
+ */
 if (!window.notifications) var notifications = {
 //    pageNumber: 0,
 
@@ -79,19 +88,19 @@ if (!window.notifications) var notifications = {
         if (pageNumber > 0) {
             pages.append('<a href="javascript:notifications.showTablePage(' + (pageNumber - 1) + ');" class="prev">Prev</a>');
         } else {
-            pages.append('<a href="javascript:;"><span class="prev">Prev</span></a>');
+            pages.append('<a href="javascript:;" class="prev">Prev</a>');
         }
         for (var i = 0; i * pageSize < projects.length; ++i) {
             if (i == pageNumber) {
                 pages.append('<a href="javascript:;" class="current" >' + (i + 1) + '</a>');
             } else {
-                pages.append('<a href="javascript:notifications.showTablePage(' + i + ');" >' + (i + 1) + '</a>');
+                pages.append('<a class="pageNumber" href="javascript:notifications.showTablePage(' + i + ');" >' + (i + 1) + '</a>');
             }
         }
         if ((pageNumber + 1) * pageSize < projects.length) {
             pages.append('<a href="javascript:notifications.showTablePage(' + (pageNumber + 1) + ');" class="next">Next</a>');
         } else {
-            pages.append('<a href="javascript:;"><span class="next">Next</span></a>');
+            pages.append('<a href="javascript:;" class="next">Next</a>');
         }
     }
 };

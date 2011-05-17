@@ -1,4 +1,11 @@
-/* CSS Document */
+/*
+ * CSS for pages under dashboard.
+ *
+ * Changes log:
+ * - (TC Direct - Page Layout Update Assembly 2) changes: add line 5710 - 5820 to fix layout issues of dashboard
+ * - notification page, project search page, contest search page, all projects page, contest registrants page,
+ * - pipeline report page, cost report page and billing cost report page.
+ */
 
 BODY#page{
 	margin: 0;
@@ -1489,6 +1496,14 @@ DIV.notif-div{
 	.container2BottomClear{
 		border-bottom: 1px solid #bdbdbd;
 	}
+
+    .container2LeftClear{
+		border-left: 1px solid #bdbdbd;
+	}
+
+	.container2RightClear{
+		border-right: 1px solid #bdbdbd;
+	}
 	
 	.container2BottomLeft{
 		background: url(../images/container2_bottom_left.png) no-repeat bottom left;
@@ -1573,6 +1588,7 @@ DIV.notif-div{
 		text-decoration: none;
 		height: 19px;
 		padding-top: 2px;
+        padding-left:5px;
 	}
 	
 	.panel2  A:hover{
@@ -1732,6 +1748,7 @@ DIV.notif-div{
 .search{
 	height: 30px;
 	font-size: 12px;
+    padding-bottom:15px;
 }	
 
 	.search LABEL{
@@ -2109,7 +2126,7 @@ TABLE.contests TD{
 
 TABLE.contests TD SPAN.failedReview{
     color: #dc0000;
-    background: url(../images/milestone_ico.png) no-repeat left;
+    background: url(../images/milestone_ico.png) no-repeat left 1px;
 }
 
 TABLE.contests A.button{
@@ -2204,6 +2221,14 @@ TABLE.notifications A.subgroup{ /* group name link */
 	font-weight: bold;
 }
 
+TABLE.notifications A.subgroup:hover {
+    text-decoration: none;
+}
+
+TABLE.notifications A.subgroup {
+    text-decoration:underline;
+}
+
 TABLE.notifications A.expand{
 	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 }
@@ -2221,11 +2246,13 @@ TABLE.notifications .group{
 TABLE.notifications .expand{
 	text-decoration: none;
 	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+    cursor:pointer;
 }
 
 TABLE.notifications .collapse{
 	text-decoration: none;
 	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+    cursor:pointer;
 }
 
 TABLE.notifications TH.permCol{
@@ -2243,8 +2270,7 @@ TABLE.notifications TH.permCol2{
 	text-align: right;
 	height: 20px;
 	font-size: 12px;
-	background-color: transparent;
-	width:250px;
+	width:270px;
 }
 
 	.pagination A{
@@ -2256,30 +2282,45 @@ TABLE.notifications TH.permCol2{
 	
 	.pagination A.current{ /* the current page */
 		font-weight: bold;
+        cursor:default;
 	}
-	
+
+    .pagination A.pageNumber {
+        text-decoration:none;
+    }
+
+    .pagination A.pageNumber:hover {
+        text-decoration:underline;
+    }
+
 	.pagination A.prev{
 		background: url(../images/page_prev.png) no-repeat left;
-		padding-left: 10px;
+		padding-left: 11px;
 	}
 	
 	.pagination A.next{
 		background: url(../images/page_next.png) no-repeat right;
-		padding-right: 10px;
+		padding-right: 11px;
 	}
 	
 	.pagination SPAN.prev{
 		background: url(../images/page_prev_nactive.png) no-repeat left;
-		padding-left: 10px;
+		padding-left: 11px;
 	}
-	 
-	 .pagination .pages{
-	 	float: right;
-	 	padding-top: 11px;
-	 }
+
+.pagination .pages {
+    float: right;
+    margin-top: 13px;
+    *margin-top:15px;
+    margin-right: 5px;
+    width: auto;
+    position: relative;
+    left: 0px;
+    margin-left: 0px;
+    *top:0px;
+}
 	
 	.pagination .showPages{
-		float: left;
 		top: 0;
 		left: 0;
 	}
@@ -2338,7 +2379,24 @@ TABLE.notifications TH.permCol2{
 	padding: 4px 0;
 	width: 100%;
 	overflow: hidden;
-}	
+}
+
+#permission_submit {
+    margin-top:10px;
+}
+
+#permissions_wrapper .pagination-info .pagination {
+    margin-top:18px;
+    width:auto;
+}
+
+#permissions_wrapper .pagination-info  .display-perpage {
+    margin-top:15px;
+}
+
+.paging_permission_button .next {
+    background:none;
+}
 	
 .permissionForm .permissionLabel{
 	float: left;
@@ -4651,6 +4709,10 @@ TABLE.pipelineStats TH.tableTitle span {
     margin-left: 5px;
 }
 
+#pipelineReportArea div.bottom1, #costDetails  div.bottom1 {
+    margin-top: -1px;
+}
+
 #pipelineReportArea th.tableTitle a.collapse{
     background: url(../images/icon-collapse.png) no-repeat left center;
     text-decoration:none;
@@ -5976,3 +6038,132 @@ A.button11{
 		width:0;
 		overflow:hidden;
 	}
+
+/** layout update 2 **/
+
+.resultTableContainer .bottom1 {
+    position: static;
+    margin-top: -6px;
+}
+
+.resultTableContainer .bottom2 {
+    position: static;
+    width: auto;
+    margin-right: 5px;
+    margin-left: 1px;
+    margin-top: 8px;
+}
+
+.resultTableContainer .previous {
+    padding-left: 6px;
+    text-decoration: none;
+}
+
+.resultTableContainer .next {
+    padding-right: 6px;
+    text-decoration: none;
+}
+
+.resultTableContainer .dataTables_info {
+    padding-left: 5px;
+    padding-top: 8px;
+}
+
+.tableControlPanel {
+    height: 30px;
+    padding: 0;
+}
+
+.resultTableContainer .bottom2 span span.paginate_button:hover {
+    text-decoration: underline;
+}
+
+.resultTableContainer .bottom2 span.paginate_active:hover {
+    text-decoration: none;
+    cursor: default;
+}
+
+.resultTableContainer {
+    border-left: 1px solid #A8ABAD;
+    border-right: 1px solid #A8ABAD;
+}
+
+.resultTableContainer .resultTable {
+    border: 0px;
+    margin-bottom: 0px;
+}
+
+.resultTableContainer .innerResultTable {
+    border: 0px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.resultTableContainer .resultTable td.first, .resultTableContainer .innerResultTable td.first {
+    border-left: 0px;
+}
+
+.resultTableContainer .resultTable td.last, .resultTableContainer .innerResultTable td.last {
+    border-right: 0px;
+}
+
+/* default td padding and align */
+.resultTableContainer table.resultTable td {
+    padding: 12px 4px;
+    text-align: center;
+    width: inherit;
+}
+
+.resultTableContainer table.resultTable th.alignLeft {
+    padding-left: 6px;
+    text-align: left;
+}
+
+.resultTableContainer table.resultTable td.alignLeft {
+    padding-left: 6px;
+    text-align: left;
+}
+
+table.resultTable td a {
+    text-decoration: underline;
+}
+
+table.resultTable td a.button1 {
+    text-decoration: none;
+}
+
+table.resultTable td a:hover {
+    text-decoration: none;
+}
+
+table.resultTable td a.button1:hover {
+    text-decoration: none;
+}
+
+.resultTableContainer table.resultTable .button1 {
+    margin-left: 6px;
+}
+
+.resultTableContainer table.resultTable .button1 span.button1Text {
+    padding-top: 7px;
+}
+
+.resultTableContainer table.resultTable a.button1:hover {
+    background-image: url("../images/button_left_hover.png");
+}
+
+.resultTableContainer table.resultTable a.button1:hover span {
+    background-image: url("../images/button_right_hover.png");
+}
+
+.exportControl {
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+
+
+
+
+
+

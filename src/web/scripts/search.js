@@ -16,9 +16,11 @@
  *
  *  Version 1.4 - (TC Direct - Page Layout Update Assembly)
  *  - Add more rows for data table in copilot contests page & project contests page.
+ *   Version 1.5 - (TC Direct - Page Layout Update Assembly 2) changes:
+ *  - Update the codes to initialize the pagination table to fix layout issues
  * 
  * @author BeBetter, isv, Blues, tangzx
- * @version 1.4
+ * @version 1.5
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -210,7 +212,7 @@ $(document).ready(function() {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
 		"aaSorting": [[0,'asc']],
 		"aoColumns": [
 				{ "sType": "html-trimmed" },
@@ -253,13 +255,14 @@ $(document).ready(function() {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
 		"aaSorting": [[0,'asc']],
 		"aoColumns": [
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "date-direct" },
+                { "sType": "date-direct" },
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "html" },
@@ -303,7 +306,7 @@ $(document).ready(function() {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
         "aaSorting": [
             [0,'asc']
         ],
@@ -371,7 +374,7 @@ $(document).ready(function() {
                    "sLengthMenu": sStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
                 { "sType": "html" },
@@ -386,8 +389,8 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },
-                { "sType": "html" },
-                null
+                { "sType": "simple-date" },
+                { "sType": "simple-date" }
             ]
 
     });
@@ -467,7 +470,7 @@ $(document).ready(function() {
                    "sLengthMenu": sStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
                 { "sType": "html" },
@@ -494,7 +497,7 @@ $(document).ready(function() {
                    "sLengthMenu": sLongStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bcbottom1"l><"bcbottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
         "aaSorting": [[4,'asc']],
         "aoColumns": [
                 { "sType": "simple-date" },

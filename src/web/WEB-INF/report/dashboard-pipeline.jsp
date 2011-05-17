@@ -1,12 +1,13 @@
 <%--
-  - Author: isv
-  - Version: 1.1 (Direct Pipeline Integration Assembly 1.0)
+  - Author: isv, TCSASSEMBLER
+  - Version: 1.2 (Direct Pipeline Integration Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
   -
   - Version 1.1 (Direct Pipeline Stats Update assembly) change notes: Added "Drafts To Lauched" column to "Launched
   - Contests" section.
+  - Version 1.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -135,7 +136,7 @@
                             --%>
                             <div id="pipelineReportArea">
                                 <%-- Pipeline summary --%>
-                                <table id="pipelineSummary" class="pipelineStats" cellpadding="0" cellspacing="0">
+                                <table id="pipelineSummary" class="pipelineStats resultTable" cellpadding="0" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th class="tableTitle" colspan="5">
@@ -336,8 +337,29 @@
                                 </table>
 
                                 <%-- Pipeline Details --%>
-                                <table id="pipelineDetails" class="pipelineStats paginatedDataTable" cellpadding="0" 
+                                <div class="resultTableContainer">
+                                <table id="pipelineDetails" class="pipelineStats resultTable paginatedDataTable" cellpadding="0"
                                        cellspacing="0">
+                                 <colgroup>
+                                                <col width="6%" />
+                                                <col width="6%" />
+                                                <col width="6%" />
+                                                <col width="6%" />
+                                                <col width="5%" />
+                                                <col width="5%" />
+                                                <col width="6%" />
+                                                <col width="15%" />
+                                                <col width="18%" />
+                                                <col width="5%" />
+                                                <col width="5%" />
+                                                <col width="5%" />
+                                                <col width="6%" />
+                                                <col width="6%" />
+                                </colgroup>
+
+
+
+
                                 <thead>
                                     <tr>
                                         <th class="tableTitle" colspan="14">
@@ -365,8 +387,8 @@
                                     <tbody>
                                     <c:forEach items="${viewData.contests}" var="contest" varStatus="loop">
                                         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
-                                    <tr class="${rowStyle} pipelineDetailsRow contestOfWeek${tcdirect:getWeekOfDate(contest.startDate).time}">
-                                        <td>
+                                    <tr class="pipelineDetailsRow contestOfWeek${tcdirect:getWeekOfDate(contest.startDate).time}">
+                                        <td class="first">
                                             <fmt:formatDate value="${tcdirect:toDate(contest.startDate)}"
                                                             pattern="yyyy-MM-dd (EEE)"/>
                                         </td>
@@ -413,7 +435,7 @@
                                             &nbsp;<fmt:formatDate value="${tcdirect:toDate(contest.createTime)}"
                                                             pattern="yyyy-MM-dd"/>&nbsp;
                                         </td>
-                                        <td>
+                                        <td class="last">
                                             &nbsp;<fmt:formatDate value="${tcdirect:toDate(contest.modifyTime)}"
                                                                   pattern="yyyy-MM-dd"/>&nbsp;
                                         </td>
@@ -422,14 +444,32 @@
                                     </tbody>
                                 </table>
 
-                                    <div class="panel">
-                                        <!-- this area contains the print, export to excel, export to pdf links -->
-                                        <strong id="showText">Show:</strong>
-                                        <a href="javascript:directExcel();"
-                                           class="exportExcel">Export to <strong>Excel</strong></a>
-                                    </div>
-                                    <!-- End .panel -->
 
+
+
+
+                                         <div class="container2Left">
+                                                        <div class="container2Right">
+                                                            <div class="container2Bottom">
+                                                                <div class="container2BottomLeft">
+                                                                    <div class="container2BottomRight">
+
+                                                                        <div class="panel tableControlPanel">
+                                                                            <div class="exportControl">
+                                                                                <a href="javascript:directExcel();" class="exportExcel">Export to <strong>Excel</strong></a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        <!-- this area contains the print, export to excel, export to pdf links -->
+
+
+                                    <!-- End .panel -->
+                                </div>
                             </div>
                             </c:if>
                             <!-- End .container2Content -->

@@ -1,11 +1,12 @@
 <%--
-  - Author: isv, TCSDEVELOPER
-  - Version: 1.0.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: isv, TCSASSEMBLER
+  - Version: 1.0.2
+  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Contest Registrants list.
   -
   - Version 1.0.1 (Direct Release 6 assembly) changes: fixed bug with displaying the reliability.
+  - Version 1.0.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -48,16 +49,12 @@
                             <jsp:include page="includes/contest/contestStats.jsp"/>
 
                             <div class="container2 tabs3Container" id="ProjectRegistrants" >
-
+                                 	
                                 <jsp:include page="includes/contest/tabs.jsp"/>
 
-                                <div class="container2Left">
-                                    <div class="container2Right">
-                                        <div class="container2Bottom">
-                                            <div class="container2BottomLeft">
-                                                <div class="container2BottomRight">
-                                                    <div class="container2Content">
-                                                        <table class="projectStats contests paginatedDataTable"
+                                        <div class="resultTableContainer" style="padding-top:20px">
+
+                                                        <table class="projectStats contests resultTable paginatedDataTable"
                                                                cellpadding="0" cellspacing="0">
                                                         <thead>
                                                             <tr>
@@ -77,7 +74,7 @@
                                                                 <s:set var="submissionDate" value="submissionDate"
                                                                        scope="page"/>
                                                                 <tr>
-                                                                    <td>
+                                                                    <td class="first">
                                                                         <link:user userId="${userId}" handle="${handle}"/>
                                                                     </td>
                                                                     <td>
@@ -105,7 +102,7 @@
                                                                             <c:otherwise>&minus;</c:otherwise>
                                                                         </c:choose>
                                                                     </td>
-                                                                    <td>
+                                                                    <td class="last">
                                                                         <c:choose>
                                                                             <c:when test="${submissionDate ne null}">
                                                                                 <fmt:formatDate value="${submissionDate}"
@@ -119,15 +116,23 @@
                                                             </tbody>
                                                         </table>
 
-                                                        <div class="panel"></div>
+                                                    </div>
 
+                                                    <div class="container2Left">
+                                                        <div class="container2Right">
+                                                            <div class="container2Bottom">
+                                                                <div class="container2BottomLeft">
+                                                                    <div class="container2BottomRight">
+
+                                                                        <div class="panel tableControlPanel"></div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <!-- End .container2Content -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                             <!-- End .container2 -->
                         </div>

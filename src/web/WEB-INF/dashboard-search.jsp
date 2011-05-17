@@ -1,3 +1,12 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page provides function of search projects and contests.
+  -
+  - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -51,13 +60,9 @@
 					</s:if>
 
                     <s:if test="viewData.resultType != null">
-                        <div class="container2" id="resultsContainer">
-                            <div class="container2Left">
-                                <div class="container2Right">
-                                    <div class="container2Bottom">
-                                        <div class="container2BottomLeft">
-                                            <div class="container2BottomRight">
-                                                <div class="container2Content">
+                        <div class="container2 resultTableContainer" id="resultsContainer">
+                            <div>
+
                                                     <s:if test="viewData.resultType.name() == 'PROJECTS'">
                                                         <s:include value="includes/dashboard/projectsSearchResults.jsp"/>
                                                     </s:if>
@@ -68,15 +73,23 @@
                                                         <s:include value="includes/dashboard/membersSearchResults.jsp"/>
                                                     </s:if>
 
-                                                    <div class="panel"></div>
-
                                                 </div>
+
+                                                 <div class="container2Left">
+                                                        <div class="container2Right">
+                                                            <div class="container2Bottom">
+                                                                <div class="container2BottomLeft">
+                                                                    <div class="container2BottomRight">
+
+                                                                        <div class="panel tableControlPanel"></div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 <!-- End .container2Content -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                         <!-- End .container2 -->
                     </s:if>

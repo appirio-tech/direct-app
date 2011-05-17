@@ -1,10 +1,10 @@
 <%--
-  - Author: Blues
-  - Version: 1.0 ((TopCoder Cockpit - Cost Report Assembly)
+  - Author: Blues, TCSASSEMBLER
+  - Version: 1.1 ((TopCoder Cockpit - Cost Report Assembly)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
-  -
+  - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -146,10 +146,10 @@
 <%--
   Cost report area
 --%>
-<div id="billingCostReportSection">
+<div id="billingCostReportSection" class="resultTableContainer">
 
     <%-- Cost report Details --%>
-<table id="billingCostDetails" class="billingCostReport paginatedDataTable" cellpadding="0"
+<table id="billingCostDetails" class="billingCostReport resultTable paginatedDataTable" cellpadding="0"
        cellspacing="0">
     <thead>
     <tr>
@@ -244,11 +244,24 @@
     </tbody>
 </table>
 
-<div class="panel">
-    <!-- this area contains the print, export to excel, export to pdf links -->
-    <a href="javascript:getBillingCostReportAsExcel();"
-       class="exportExcel">Export to <strong>Excel</strong></a>
-</div>
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getBillingCostReportAsExcel();" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 <!-- End .panel -->
 
 </div>

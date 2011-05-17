@@ -1,3 +1,12 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page renders the user notifications.
+  -
+  - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <%--@elvariable id="notifications" type="java.util.List<com.topcoder.service.facade.contest.notification.ProjectNotification>"--%>
@@ -65,6 +74,7 @@
 				document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
 				document.getElementById("area2-perm").innerHTML = "";
                         $("#area1 .areaHeader select").val("perm");
+                $(".paging_permission_button .next").removeClass("next");
 			}
 			else
 			{
@@ -148,9 +158,9 @@
                                     </tr>
                                     </thead>
                                 </table>
-                                <div class="container2">
-                                    <div class="container2Left">
-                                        <div class="container2Right">
+                                <div class="">
+                                    <div class="container2LeftClear">
+                                        <div class="container2RightClear">
                                             <div class="container2BottomClear">
                                                 <div class="container2Content" id="preDiv">       
                                                     <c:forEach items="${preferences}" var="pre">
@@ -175,101 +185,135 @@
                             <div class="line"></div>                            
 
 							<div class="container2">
-							<div class="container2Left"><div class="container2Right"><div class="container2Bottom">
-								<div class="container2BottomLeft"><div class="container2BottomRight">
-									<div class="container2Content">
+
+							    <div class="dashboardNotificationsDiv">
+
                                         <form id="dashboard-notifications-form">
-										<table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
-											<thead>
-												<tr>
-													<th class="permCol">Project / Contest</th>
-													<th class="permCol2" colspan="2">Notifications</th>
-												</tr>
-											</thead>
-											<tbody class="checkPermissions">
-												<tr class="applyForAll">
-													<td class="markRed">Apply for All Projects</td>
-													<td class="checkbox">
-                                                        <input class="selectUser select_timeline" type="checkbox" onclick="notifications.selectAll(this, 'timeline');" autocomplete="off"> Timeline
-                                                    </td>
-													<td class="checkbox">
-                                                        <input class="selectUser select_forum" type="checkbox" onclick="notifications.selectAll(this, 'forum');" autocomplete="off"> Forum
-                                                    </td>
-												</tr>
-
-
-                                                <c:forEach items="${notifications}" var="projectNotifications" varStatus="i">
-                                                    <c:set var="projectClass" scope="page" value="project_${projectNotifications.projectId}"/>
-                                                    <tr class="select_project">
-                                                        <td><div onclick="showHideGroup(this,'${projectClass}');" class="group expand">${projectNotifications.name}</div></td>
+                                            <table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="permCol">Project / Contest</th>
+                                                        <th class="permCol2" colspan="2">Notifications</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="checkPermissions">
+                                                    <tr class="applyForAll">
+                                                        <td class="markRed">Apply for All Projects</td>
                                                         <td class="checkbox">
-                                                            <input class="selectUser select_timeline" type="checkbox" onclick="notifications.selectProject(this, 'timeline', ${projectNotifications.projectId});" autocomplete="off"> Timeline
+                                                            <input id="timeCheckAllId" class="selectUser select_timeline" type="checkbox" onclick="notifications.selectAll(this, 'timeline');" autocomplete="off">
+                                                            <label for="timeCheckAllId"> Timeline </label>
                                                         </td>
                                                         <td class="checkbox">
-                                                            <input class="selectUser select_forum" type="checkbox" onclick="notifications.selectProject(this, 'forum', ${projectNotifications.projectId});" autocomplete="off"> Forum
+                                                            <input id="forumCheckAllId" class="selectUser select_forum" type="checkbox" onclick="notifications.selectAll(this, 'forum');" autocomplete="off">
+                                                            <label for="forumCheckAllId">Forum</label>
                                                         </td>
                                                     </tr>
 
-                                                    <c:forEach items="${projectNotifications.contestNotifications}" var="contestNotifications" varStatus="j">
-                                                        <tr class="alternate ${projectClass} hide">
-                                                            <td><a class="subgroup shorten" href="contest/detail?projectId=${contestNotifications.contestId}">${contestNotifications.name} (${contestNotifications.type})</a></td>
+
+                                                    <c:forEach items="${notifications}" var="projectNotifications" varStatus="i">
+                                                        <c:set var="projectClass" scope="page" value="project_${projectNotifications.projectId}"/>
+                                                        <c:set var="projectCheckTimeId" scope="page" value="projectCheckTimeId${projectNotifications.projectId}"/>
+                                                        <c:set var="projectCheckForumId" scope="page" value="projectCheckForumId${projectNotifications.projectId}"/>
+                                                        <tr class="select_project">
+                                                            <td><div onclick="showHideGroup(this,'${projectClass}');" class="group expand">${projectNotifications.name}</div></td>
                                                             <td class="checkbox">
-                                                                <input name="timeline" value="${contestNotifications.contestId}"
-                                                                       class="selectUser select_timeline" type="checkbox"
-                                                                       onclick="notifications.selectContest(this, 'timeline', ${projectNotifications.projectId});"
-                                                                       ${contestNotifications.projectNotification ? 'checked="checked"' : ''}
-                                                                       autocomplete="off"
-                                                                    >
-                                                                Timeline
+                                                                <input id='${projectCheckTimeId}' class="selectUser select_timeline" type="checkbox" onclick="notifications.selectProject(this, 'timeline', ${projectNotifications.projectId});" autocomplete="off">
+                                                                <label for='${projectCheckTimeId}'>Timeline</label>
                                                             </td>
                                                             <td class="checkbox">
-                                                                <input name="forum" value="${contestNotifications.contestId}"
-                                                                       class="selectUser select_forum group_${contestNotifications.forumId}" type="checkbox"
-                                                                       onclick="notifications.selectContest(this, 'forum', ${projectNotifications.projectId}, ${contestNotifications.forumId});"
-                                                                       ${contestNotifications.forumNotification ? 'checked="checked"' : ''}
-                                                                       autocomplete="off"
-                                                                    >
-                                                                Forum
+                                                                <input id='${projectCheckForumId}' class="selectUser select_forum" type="checkbox" onclick="notifications.selectProject(this, 'forum', ${projectNotifications.projectId});" autocomplete="off">
+                                                                <label for='${projectCheckForumId}'>Forum</label>
                                                             </td>
                                                         </tr>
+
+                                                        <c:forEach items="${projectNotifications.contestNotifications}" var="contestNotifications" varStatus="j">
+
+                                                            <c:set var="contestCheckTimeId" scope="page" value="contestCheckTimeId${contestNotifications.contestId}"/>
+                                                            <c:set var="contestCheckForumId" scope="page" value="contestCheckTimeId${contestNotifications.contestId}"/>
+
+                                                            <tr class="alternate ${projectClass} hide">
+                                                                <td><a class="subgroup shorten" href="contest/detail?projectId=${contestNotifications.contestId}">${contestNotifications.name} (${contestNotifications.type})</a></td>
+                                                                <td class="checkbox">
+                                                                    <input id='${contestCheckTimeId}' name="timeline" value="${contestNotifications.contestId}"
+                                                                           class="selectUser select_timeline" type="checkbox"
+                                                                           onclick="notifications.selectContest(this, 'timeline', ${projectNotifications.projectId});"
+                                                                           ${contestNotifications.projectNotification ? 'checked="checked"' : ''}
+                                                                           autocomplete="off"
+                                                                        >
+                                                                    <label for="${contestCheckTimeId}">Timeline</label>
+                                                                </td>
+                                                                <td class="checkbox">
+                                                                    <input id='${contestCheckForumId}' name="forum" value="${contestNotifications.contestId}"
+                                                                           class="selectUser select_forum group_${contestNotifications.forumId}" type="checkbox"
+                                                                           onclick="notifications.selectContest(this, 'forum', ${projectNotifications.projectId}, ${contestNotifications.forumId});"
+                                                                           ${contestNotifications.forumNotification ? 'checked="checked"' : ''}
+                                                                           autocomplete="off"
+                                                                        >
+                                                                    <label for="${contestCheckForumId}">Forum</label>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
                                                     </c:forEach>
-                                                </c:forEach>
-											</tbody>
+                                                </tbody>
 
-										</table><!-- End .projectsStats -->
-										<div class="pagination">
-											<div class="pages">
-                                            </div><!-- End .pages -->
+                                            </table>
 
-											<div class="showPages"><!-- number of rows that can be displayed on the same page -->
-												<label><strong>Show:</strong></label>
-												<select id="pageSize" class="normalOption" onchange="notifications.refreshTable();">
-													<option value="10">10</option>
-													<option value="25">25</option>
-													<option value="50">50</option>
-													<option value="1000000" selected="selected">All</option>
-												</select>
-												<span>per page</span>
-                                            </div>
-											<!-- End .showPages -->
-										</div>
+                                               </form>
+
+
+
+                                              <div class="container2Left">
+                                                            <div class="container2Right">
+                                                                <div class="container2Bottom">
+                                                                    <div class="container2BottomLeft">
+                                                                        <div class="container2BottomRight">
+
+
+
+                                                                            <div class="pagination">
+
+                                                                                    <div class="pages bottom2"></div>
+
+                                                                                    <div class="showPages bottom1"><!-- number of rows that can be displayed on the same page -->
+                                                                                        <label><strong>Show:</strong></label>
+                                                                                        <select id="pageSize" class="normalOption" onchange="notifications.refreshTable();">
+                                                                                            <option value="10">10</option>
+                                                                                            <option value="25">25</option>
+                                                                                            <option value="50">50</option>
+                                                                                            <option value="1000000" selected="selected">All</option>
+                                                                                        </select>
+                                                                                        <span>per page</span>
+                                                                                    </div>
+
+                                                                                    <!-- End .pages -->
+                                                                                    <!-- End .showPages -->
+                                                                                </div>
+
+
+
+                                                                            <div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
+                                                                                    <a class="button9" href="javascript:notifications.update();">Save Notifications</a>
+                                                                                </div>
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                              </div>
+                                            <!-- End .projectsStats -->
+
 										<!-- End .pagination -->
 
-										<div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
-											<a class="button9" href="javascript:notifications.update();">Save Notifications</a>
 
-										</div><!-- End .panel -->
-                                        </form>
-
-									</div><!-- End .container2Content -->
-								</div></div>
-							</div></div></div>
-						</div><!-- End .container2 -->
+                                            <!-- End .panel -->
 
 
-
-					</div> 
-                    </div>
+								</div><!-- End .container2Content -->
+							</div>
+                        </div>
+					</div>
 
 
                     <div id="area2-perm" style="display:none">
