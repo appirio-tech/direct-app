@@ -11,6 +11,7 @@
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="contestLinks">
+
     <ul class="links">
 		<li>
         <a href="javascript:;" id="repostButton" class="contestLinkIcon linkIconRepostContest" style="text-shadow: 0px 1px 1px rgb(255, 255, 255); display:none;">Repost</a>
@@ -61,4 +62,3 @@
     </ul>
     <div class="clear"></div>
 </div>
-

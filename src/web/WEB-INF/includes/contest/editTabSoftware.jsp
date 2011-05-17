@@ -294,6 +294,8 @@
 						<div class="captionInner">
 							<h2>Specification </h2>
 							<a href="javascript:;" class="button11 edit_type edit_spec"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>                                      
+
+
 						</div>					
 				</div><!-- End .caption -->
 												

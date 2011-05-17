@@ -74,6 +74,9 @@
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>
+
+
+
                         </h2>
                     </div><!-- End .areaHeader -->
 

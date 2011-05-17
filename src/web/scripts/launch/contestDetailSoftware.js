@@ -355,7 +355,7 @@ function initContest(contestJson) {
    }      
    
    // preview contest, repost and new version
-   var statusName = contestJson.projectStatus.name;
+   var statusName = contestJson.projectStatus.name;    
    if(statusName.indexOf('Draft') != -1) {
 		$('#previewContestButton').show();
    } else {

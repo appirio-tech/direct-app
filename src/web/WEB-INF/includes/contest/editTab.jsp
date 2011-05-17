@@ -5,6 +5,7 @@
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
   - Change the  style for the Edit links for each contest edit sections. 
+
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -400,6 +401,8 @@
 							<h2>Specification</h2>
 <a href="javascript:;" class="button11 edit_spec"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>			  
                                                          
+
+
 						</div>					
 				</div><!-- End .caption -->
 												
