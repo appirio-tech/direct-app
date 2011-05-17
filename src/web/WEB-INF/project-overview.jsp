@@ -101,8 +101,14 @@
                                                         <tr <c:if test="${sta.even}">class='even'</c:if>>
                                                             <td class="first">
                                                                 <s:if test="%{#attr['key'].software}" >
-                                                                <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <c:out value="${key.title}"/></a>
+                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                                                                    <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                                <c:out value="${key.title}"/></a>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                                <c:out value="${key.title}"/></a>
+                                                                    </s:else>
                                                                 </s:if>
                                                                 <s:else>
                                                                 <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
@@ -111,8 +117,14 @@
                                                             </td>
                                                             <td>
                                                                 <s:if test="%{#attr['key'].software}" >
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
                                                                     <span class="${value.phaseStatusColor.name}"></span></a>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.phaseStatusColor.name}"></span></a>
+                                                                    </s:else>
                                                                 </s:if>
                                                                 <s:else>
                                                                 <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
@@ -121,8 +133,14 @@
                                                             </td>
                                                             <td>
                                                                 <s:if test="%{#attr['key'].software}" >
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
                                                                     <span class="${value.regStatusColor.name}"></span></a>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.regStatusColor.name}"></span></a>
+                                                                    </s:else>
                                                                 </s:if>
                                                                 <s:else>
                                                                 <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
@@ -131,8 +149,14 @@
                                                             </td>
                                                             <td>
                                                                 <s:if test="%{#attr['key'].software}" >
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
                                                                     <span class="${value.reviewersSignupStatusColor.name}"></span></a>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.reviewersSignupStatusColor.name}"></span></a>
+                                                                    </s:else>
                                                                 </s:if>
                                                                 <s:else>
                                                                 <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
@@ -141,8 +165,14 @@
                                                             </td>
                                                             <td>
                                                                 <s:if test="%{#attr['key'].software}" >
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
                                                                     <span class="${value.forumActivityStatusColor.name}"></span></a>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.forumActivityStatusColor.name}"></span></a>
+                                                                    </s:else>
                                                                 </s:if>
                                                                 <s:else>
                                                                 <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
@@ -151,8 +181,14 @@
                                                             </td>
                                                             <td>
                                                                  <s:if test="%{#attr['key'].software}" >
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
                                                                     <span class="${value.dependenciesStatusColor.name}"></span></a>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.dependenciesStatusColor.name}"></span></a>
+                                                                    </s:else>
                                                                 </s:if>
                                                                 <s:else>
                                                                 <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
@@ -161,8 +197,14 @@
                                                             </td>
                                                             <td>
                                                                  <s:if test="%{#attr['key'].software}" >
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
+                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
                                                                     <span class="${value.contestIssuesColor.name}"></span></a>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
+                                                                    <span class="${value.contestIssuesColor.name}"></span></a>
+                                                                    </s:else>
                                                                 </s:if>
                                                                 <s:else>
                                                                 <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
