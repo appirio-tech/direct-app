@@ -5838,9 +5838,7 @@ Contest links
     margin-left:1px;
     margin-top:8px;
 }
-.myProjectContests .bottom2 {
-    margin-right:5px; 
-}
+
 .myCopilotsContestsList .bottom2 a.pageLink, .myProjectContests .bottom2 a.pageLink {
     text-decoration:none;
     padding:0 2px;

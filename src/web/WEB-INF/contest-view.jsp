@@ -60,22 +60,10 @@
 
                             <div class="container2"  id="ProjectContests">
                                 <div class="myProjectContests">                                    
-                                    <table id="ProjectContests" class="projectStats contests paginatedDataTable"
+                                    <table id="ProjectContests" class="projectStats contests paginatedDataTable" width="auto"
                                            cellpadding="0"
                                            cellspacing="0">
-                                           
-                                    <colgroup>
-                                        <col width="16%" />
-                                        <col width="22%" />
-                                        <col width="9%" />
-                                        <col width="9%" />
-                                        <col width="8%" />
-                                        <col width="8%" />
-                                        <col width="8%" />
-                                        <col width="11%" />
-                                        <col width="9%" />
-
-                                    </colgroup>    
+                                            
                         
                                     <thead>
                                         <tr>
