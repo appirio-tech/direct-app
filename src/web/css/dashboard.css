@@ -2392,7 +2392,7 @@ TABLE.notifications TH.permCol2{
 }
 
 #permissions_wrapper .pagination-info  .display-perpage {
-    margin-top:15px;
+    margin-top:13px;
 }
 
 .paging_permission_button .next {
@@ -2728,8 +2728,9 @@ cursor: pointer;
 							}
 							
 							.display-perpage {
-				float: left;
+				float: right;
 				font-size: 12px;   
+				margin-right:10px;
 			}
 			.display-perpage label{ font-weight: bold; }
 			
@@ -4646,20 +4647,10 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     margin-bottom: 0px;
 }
 
-#pipelineReportArea div.panel {
-    padding: 8px 0px 8px;
-}
-
-#costReportSection div.panel {
-    padding: 8px 50px 8px 0;
-}
-
-#billingCostReportSection div.panel {
-    padding: 8px 50px 8px 0;
-}
 #breakdownBody div.panel {
     padding: 8px 50px 8px 0;
 }
+
 #pipelineDetails_length select {
     margin-top: 6px;
 }
