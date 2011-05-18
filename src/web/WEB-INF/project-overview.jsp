@@ -1,7 +1,7 @@
 <%--
-  - Author: Veve
+  - Author: Veve, isv
   -
-  - Version: 1.0.2
+  - Version: 1.0.3
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -11,6 +11,8 @@
   - version 1.0.2 - TC Cockpit Bug Tracking R1 Cockpit Project Tracking Assembly Change Note
   - -add issue tracking to health table
   - -add unresolved issues and ongoing bug races to project status.
+  - Version 1.0.3 - Direct - TC Cockpit Contest Duration Calculation Updates Assembly Change Note:
+  - added Average Contest Duration 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -275,6 +277,12 @@
                                                 <td class="statusName">Total Project Cost</td>
                                                 <td>
                                                     <fmt:formatNumber value="${viewData.dashboardProjectStat.totalProjectCost}" pattern="$#,##0.00"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="statusName">Average Contest Duration</td>
+                                                <td>
+                                                    <c:out value="${tcdirect:getDurationTextInDays(viewData.dashboardProjectStat.averageContestDuration)}"/>
                                                 </td>
                                             </tr>
                                             <tr>

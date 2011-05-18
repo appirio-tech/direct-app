@@ -57,8 +57,14 @@ import java.util.Map;
  * <li>Update the execute method to set the current project name.</li>
  * </ul>
  * </p>
- * @author isv, Veve, TCSASSEMBLER, TCSDEVELOPER
- * @version 1.0.4
+ * <p>
+ * Version 1.0.5 (TC Cockpit Contest Duration Calculation Updates Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Fixed typo in name of {@link DashboardHelper#setContestStatusColor(ContestHealthDTO)} method.</li>
+ *   </ol>
+ * </p>
+ * @author isv, Veve, isv
+ * @version 1.0.5
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -192,7 +198,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats = DataProvider
                 .getDirectProjectStats(tcDirectProjects, getSessionData().getCurrentUserId());
         viewData.setDashboardProjectStat(enterpriseProjectStats.get(0));
-        DashboardHelper.setAverageConestDurationText(viewData.getDashboardProjectStat());
+        DashboardHelper.setAverageContestDurationText(viewData.getDashboardProjectStat());
     }
 
     /**
@@ -207,7 +213,6 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
          Map<ContestBriefDTO, ContestHealthDTO> contests =
             DataProvider.getProjectContestsHealth(getSessionData().getCurrentUserId(), formData.getProjectId(), true);
-		viewData.setContests(contests);
 
         viewData.setContests(contests);
     }

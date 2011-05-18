@@ -205,9 +205,17 @@ import java.util.Map.Entry;
  *     <li>Updated {@link #getCopilotPostingContests(TCSubject)} method to get a list of ProjectContestDTO.</li>
  *   </ol>
  * </p>
+ * <p>
+ *
+ * Version 2.6.4 (TC Cockpit Contest Duration Calculation Updates Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getDirectProjectStats(List, long)} method to calculate average contest duration for project.
+ *     </li>
+ *   </ol>
+ * </p>
  * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.3
+ * @version 2.6.4
  */
 public class DataProvider {
 
@@ -1480,6 +1488,7 @@ public class DataProvider {
             projectStatDTO.setAverageContestFeePerContest(row.getDoubleItem("average_contest_fee"));
             projectStatDTO.setAverageFulfillment(row.getDoubleItem("fullfillment"));
             projectStatDTO.setTotalProjectCost(row.getDoubleItem("total_cost"));
+            projectStatDTO.setAverageContestDuration(row.getDoubleItem("average_duration"));
 
             data.add(projectStatDTO);
         }
@@ -1497,6 +1506,7 @@ public class DataProvider {
                 projectStatDTO.setTotalContestFee(0);
                 projectStatDTO.setAverageContestFeePerContest(0);
                 projectStatDTO.setAverageFulfillment(0);
+                projectStatDTO.setAverageContestDuration(0);
                 projectStatDTO.setTotalProjectCost(0);
 
                 data.add(projectStatDTO);

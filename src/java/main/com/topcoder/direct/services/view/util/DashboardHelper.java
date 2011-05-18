@@ -33,8 +33,15 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  *   </ol>
  * </p>
  *
- * @author Veve
- * @version 1.2
+ * <p>
+ * Version 1.2.1 (TC Cockpit Contest Duration Calculation Updates Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Fixed typo in name of {@link #setContestStatusColor(ContestHealthDTO)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author Veve, isv
+ * @version 1.2.1
  */
 public class DashboardHelper {
     /**
@@ -156,7 +163,7 @@ public class DashboardHelper {
      *
      * @param project the project to set
      */
-    public static void setAverageConestDurationText(
+    public static void setAverageContestDurationText(
             EnterpriseDashboardProjectStatDTO project) {
         StringBuilder stringBuilder = new StringBuilder();
         double time = project.getAverageContestDuration();

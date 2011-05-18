@@ -87,4 +87,10 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>java.lang.String toString(com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineNumericalFilterType)</function-signature>
     </function>
+
+    <function>
+        <name>getDurationTextInDays</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getDurationTextInDays(double)</function-signature>
+    </function>
 </taglib>

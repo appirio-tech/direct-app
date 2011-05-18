@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -12,6 +12,8 @@ import com.topcoder.service.pipeline.CommonPipelineData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,9 +54,16 @@ import java.util.List;
  *     <li>Added {@link #toString(PipelineNumericalFilterType)} method.</li>
  *   </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.1.4 (TC Cockpit Contest Duration Calculation Updates Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getDurationTextInDays(double)} method.</li>
+ *   </ol>
+ * </p>
  *
- * @author isv, TCSDEVELOPER
- * @version 1.1.2
+ * @author isv
+ * @version 1.1.4
  */
 public class JSPHelper {
 
@@ -348,6 +357,26 @@ public class JSPHelper {
         } else  {
             return "Second Place Prize";
         }
+    }
+
+    /**
+     * <p>Gets the textual presentation of specified duration in days.</p>
+     * 
+     * @param durationInHours a <code>double</code> providing the duration in hours. 
+     * @return a <code>String</code> providing the specified duration in days.
+     * @since 1.1.4
+     */
+    public static String getDurationTextInDays(double durationInHours) {
+        Double durationInDays = durationInHours / 24;
+        NumberFormat format = new DecimalFormat("######0.##");
+        String text = format.format(durationInDays);
+        if (durationInDays.intValue() != 1) {
+            text += " days";
+        } else {
+            text += " day";
+        }
+        
+        return text;
     }
 
     /**
