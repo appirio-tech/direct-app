@@ -2391,7 +2391,16 @@ TABLE.notifications TH.permCol2{
     width:auto;
 }
 
+#userTable_wrapper .pagination-info .pagination {
+    margin-top:18px;
+    width:auto;
+}
+
 #permissions_wrapper .pagination-info  .display-perpage {
+    margin-top:13px;
+}
+
+#userTable_wrapper .pagination-info  .display-perpage {
     margin-top:13px;
 }
 

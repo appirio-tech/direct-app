@@ -1460,7 +1460,7 @@
 								"asSorting": [ "asc" ],
 								"bInfo" : false,
 								"oLanguage" : {
-									"sLengthMenu" : "_MENU_ Per page page"
+									"sLengthMenu" : "_MENU_ Per page"
 								},
 								"sPaginationType" : "permission_button",
 								"bAutoWidth" : false,
