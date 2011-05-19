@@ -57,7 +57,7 @@
                                                     <div id="winnerPanel">
                                                         <div class="winnerCol">
                                                             <link:onlineReviewDownloadSubmission projectId="${firstPlaceWinner.projectId}"
-                                                                    submissionId="${firstPlaceWinner.submissionId}" styleClass="icoZip ${icoStyle}">
+                                                                    submissionId="${firstPlaceWinner.submissionId}" styleClass="downloadFile">
                                                             </link:onlineReviewDownloadSubmission>
                                                             <div class="winnerData">
                                                                 <h3>1st Place Winner</h3>
@@ -76,7 +76,7 @@
                                                         <c:if test="${secondPlaceWinner != null}">
                                                             <div class="winnerCol">
                                                                 <link:onlineReviewDownloadSubmission projectId="${secondPlaceWinner.projectId}"
-                                                                    submissionId="${secondPlaceWinner.submissionId}" styleClass="icoZip ${icoStyle}">
+                                                                    submissionId="${secondPlaceWinner.submissionId}" styleClass="downloadFile">
                                                                 </link:onlineReviewDownloadSubmission>
                                                                 <div class="winnerData">
                                                                     <h3>2nd Place Winner</h3>
