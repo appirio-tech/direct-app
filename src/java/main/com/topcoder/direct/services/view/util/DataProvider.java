@@ -2698,6 +2698,7 @@ public class DataProvider {
             double contestFee = 0;
             double digitalRun = 0;
             double reliability = 0;
+            Date reliabilityPayDate = null;
 
             // get the contest fee of the contest
             if (row.getItem("contest_fee").getResultData() != null) {
@@ -2712,6 +2713,11 @@ public class DataProvider {
             // get the reliability payment of the contest
             if (row.getItem("reliability").getResultData() != null) {
                 reliability = row.getDoubleItem("reliability");
+            }
+
+            // get the reliability payment date of the contest
+            if(row.getItem("reliability_payment_date").getResultData() != null) {
+                reliabilityPayDate = row.getTimestampItem("reliability_payment_date");
             }
 
             List<BillingCostReportEntryDTO> entries;
@@ -2734,7 +2740,7 @@ public class DataProvider {
                 BillingCostReportEntryDTO reliabilityEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
                 reliabilityEntry.setPaymentType("Reliability");
                 reliabilityEntry.setPaymentAmount(reliability);
-                reliabilityEntry.setPaymentDate(reliabilityEntry.getCompletionDate());
+                reliabilityEntry.setPaymentDate(reliabilityPayDate);
 
                 // add contest fee if the payment type filter allows
                 if (paymentTypeFilter.contains(1L)) {
@@ -2746,14 +2752,18 @@ public class DataProvider {
                 }
                 // add digital run entry if the payment type filter allows
                 if (paymentTypeFilter.contains(6L)) {
+                    // check date range
                     if (digitalRunEntry.getPaymentDate().after(startDate) && digitalRunEntry.getPaymentDate().before(endDate)) {
                         entries.add(digitalRunEntry);
                     }
                 }
 
                 // add reliability payment if the payment type filter allows
-                if (paymentTypeFilter.contains(5L) && reliability > 0) {
-                    entries.add(reliabilityEntry);
+                if (paymentTypeFilter.contains(5L) && reliability > 0 && reliabilityPayDate != null) {
+                    // check the date range
+                    if (reliabilityEntry.getPaymentDate().after(startDate) && reliabilityEntry.getPaymentDate().before(endDate)) {
+                        entries.add(reliabilityEntry);
+                    }
                 }
             } else {
                 entries = data.get(costDTO.getContest().getId());
