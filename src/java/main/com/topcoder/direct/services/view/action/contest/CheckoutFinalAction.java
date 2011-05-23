@@ -259,7 +259,7 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
     /**
      * Sets the id of the billing account.
      * 
-     * @param projectId
+     * @param billingProjectId
      *            A <code>long</code> providing the id of the billing account.
      */
     public void setBillingProjectId(long billingProjectId) {
@@ -386,23 +386,32 @@ public class CheckoutFinalAction extends StudioOrSoftwareContestAction {
             getViewData().setAdditionalPrize(additionalPrize);
 
             List<Project> billingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
+
             Project billingAccount = null;
+
             for (Project project : billingProjects) {
                 if (project.getId() == billingProjectId) {
                     billingAccount = project;
                     break;
                 }
             }
-            if (billingAccount == null) {
-                throw new Exception("Can't find billing project for id:[" + billingProjectId + "].");
-            }
+
             TCPurhcaseOrderPaymentData orderPaymentData = new TCPurhcaseOrderPaymentData();
-            orderPaymentData.setClientId(billingAccount.getClient().getId());
-            orderPaymentData.setClientName(billingAccount.getClient().getName());
-            orderPaymentData.setProjectId(billingAccount.getId());
-            orderPaymentData.setProjectName(billingAccount.getName());
-            orderPaymentData.setType(PaymentType.TCPurchaseOrder);
-            orderPaymentData.setPoNumber(billingAccount.getPOBoxNumber());
+
+
+            if (billingAccount == null) {
+                // we still need to pass in the billing account id to service side if not found
+                orderPaymentData.setProjectId(billingProjectId);
+                orderPaymentData.setType(PaymentType.TCPurchaseOrder);
+            } else {
+                orderPaymentData.setClientId(billingAccount.getClient().getId());
+                orderPaymentData.setClientName(billingAccount.getClient().getName());
+                orderPaymentData.setProjectId(billingAccount.getId());
+                orderPaymentData.setProjectName(billingAccount.getName());
+                orderPaymentData.setType(PaymentType.TCPurchaseOrder);
+                orderPaymentData.setPoNumber(billingAccount.getPOBoxNumber());
+            }
+
 
             // process payment
             contestServiceFacade.processSubmissionPurchaseOrderPayment(currentUser, contestData, orderPaymentData);
