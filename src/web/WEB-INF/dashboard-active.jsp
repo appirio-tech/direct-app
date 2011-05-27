@@ -1,5 +1,5 @@
 <%--
-  - Author: TCSASSEMBLER, TCSASSEMBLER
+  - Author: tangzx, TCSASSEMBLER
   - Version: 1.1
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
@@ -41,117 +41,134 @@
                             </div>
                             <!-- End .areaHeader -->
 
-                            <div class="container2" id="activeContests">
+                            <div class="container2 resultTableContainer" id="activeContests">
+                                <div>
+                                    <table id="activeContests" class="projectStats contests paginatedDataTable resultTable"
+                                           cellpadding="0"
+                                           cellspacing="0">
+                                           
+                                        <colgroup>
+                                            <col width="9%" />
+                                            <col width="14%" />
+                                            <col width="12%" />
+                                            <col width="10%" />
+                                            <col width="10%" />
+                                            <col width="8%" />
+                                            <col width="8%" />
+                                            <col width="8%" />
+                                            <col width="10%" />
+                                            <col width="11%" />
+                                        </colgroup>  
+                                        
+                                        <thead>
+                                            <tr>
+                                                <th>Contest Type</th>
+                                                <th>Contest Name</th>
+                                                <th>Project Name</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th class="truncateRegs">Registrants</th>
+                                                <th class="truncateSubs">Submissions</th>
+                                                <th>Forums</th>
+                                                <th>Status</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+
+                                            <s:iterator value="viewData.projectContests.contests"
+                                                        status="status">
+                                                <s:set value="contest" var="contest" scope="page"/>
+                                                <s:set value="startTime" var="startTime" scope="page"/>
+                                                <s:set value="endTime" var="endTime" scope="page"/>
+                                                <s:set value="contestType" var="contestType"
+                                                       scope="page"/>
+                                                <tr>
+
+                                                    <td class="first"><s:property value="contestType.name"/></td>
+                                                    <td>
+                                                        <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
+                                                            <img class="contestTypeIcon" src="/images/<s:property value="contestType.letter"/>_small.png"
+                                                                 alt="<s:property value="contestType.letter"/>"/>
+
+                                                        </div>
+                                                        <div style="display:table-cell;text-align:left">
+                                                            <link:contestDetails contest="${contest}"
+                                                                    />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="display:table-cell;text-align:left">
+                                                            <a href="projectOverview?formData.projectId=${contest.project.id}"><s:property value="contest.project.name"/></a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <fmt:formatDate value="${startTime}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                                                    </td>
+
+                                                     <td>
+                                                        <fmt:formatDate value="${endTime}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                                                    </td>                                                    
+                                                    <td>
+                                                        <s:if test="isStudio == true">
+                                                        <a href="contest/contestRegistrants.action?contestId=${contest.id}">
+                                                        </s:if>
+                                                        <s:if test="isStudio == false">
+                                                        <a href="contest/contestRegistrants.action?projectId=${contest.id}">
+                                                        </s:if>
+                                                        <s:property value="registrantsNumber"/>
+                                                        </a></td>
+                                                    <td><s:if test="isStudio == true">
+                                                        <link:studioSubmissionsGrid contestId="${contest.id}">
+                                                                <s:property value="submissionsNumber"/>
+                                                        </link:studioSubmissionsGrid>
+                                                        </s:if>
+                                                        <s:if test="isStudio == false">
+                                                        <link:softwareSubmissionsList contestId="${contest.id}">
+                                                                <s:property value="submissionsNumber"/>
+                                                        </link:softwareSubmissionsList>
+                                                        </s:if>
+                                                    </td>
+                                                    <td>
+                                                    <s:if test="forumId != -1">
+                                                        <s:if test="isStudio == true"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
+                                                        <s:if test="isStudio == false"><a href="http://forums.topcoder.com/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
+                                                    </s:if>
+                                                    <s:property value="forumPostsNumber"/>
+                                                    <s:if test="forumId != -1"></a></s:if>
+                                                    </td>
+                                                    <td><span
+                                                            class="<s:property value="status.shortName"/>"><s:property
+                                                            value="status.name"/></span></td>
+                                                    <td class="last">
+                                                        <s:if test="isStudio == true">
+                                                            <a href="contest/detail?contestId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                        </s:if>
+                                                         <s:if test="isStudio == false">
+                                                            <s:if test="contestType.name == 'Copilot Posting'">
+                                                                <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                            </s:if>
+                                                            <s:if test="contestType.name != 'Copilot Posting'">
+                                                                <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                            </s:if>
+                                                        </s:if>
+                                                    </td>
+                                                </tr>
+                                            </s:iterator>
+
+                                        </tbody>
+                                    </table>
+                                    <!-- End .projectsStats -->
+
+                                </div>                          
+                            
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">
                                             <div class="container2BottomLeft">
                                                 <div class="container2BottomRight">
-                                                    <div class="container2Content">
-
-                                                        <table id="activeContests" class="projectStats contests paginatedDataTable"
-                                                               cellpadding="0"
-                                                               cellspacing="0">
-                                                        <thead>
-                                                            <tr>
-
-                                                                <th>Contest Type</th>
-                                                                <th>Contest Name</th>
-                                                                <th>Project Name</th>
-                                                                <th>Start/End</th>
-                                                                <th>Registrants</th>
-                                                                <th>Submissions</th>
-                                                                <th>Forums</th>
-                                                                <th>Status</th>
-                                                                <th></th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-
-                                                            <s:iterator value="viewData.projectContests.contests"
-                                                                        status="status">
-                                                                <s:set value="contest" var="contest" scope="page"/>
-                                                                <s:set value="startTime" var="startTime" scope="page"/>
-                                                                <s:set value="endTime" var="endTime" scope="page"/>
-                                                                <s:set value="contestType" var="contestType"
-                                                                       scope="page"/>
-                                                                <tr>
-
-                                                                    <td><s:property value="contestType.name"/></td>
-                                                                    <td>
-                                                                        <div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px">
-                                                                            <img src="/images/<s:property value="contestType.letter"/>_small.png"
-                                                                                 alt="<s:property value="contestType.letter"/>"/>
-
-                                                                        </div>
-                                                                        <div style="display:table-cell;text-align:left">
-                                                                            <link:contestDetails contest="${contest}"
-                                                                                    />
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div style="display:table-cell;text-align:left">
-																	        <a href="projectOverview?formData.projectId=${contest.project.id}"><s:property value="contest.project.name"/></a>
-                                                                        </div>
-																	</td>
-                                                                    <td><fmt:formatDate value="${startTime}"
-                                                                                        pattern="MM/dd/yyyy HH:mm zzz"/>
-                                                                        <c:out value="${tcdirect:getEndText(endTime)}"/></td>
-                                                                    <td>
-                                                                        <s:if test="isStudio == true">
-                                                                        <a href="contest/contestRegistrants.action?contestId=${contest.id}">
-                                                                        </s:if>
-                                                                        <s:if test="isStudio == false">
-                                                                        <a href="contest/contestRegistrants.action?projectId=${contest.id}">
-                                                                        </s:if>
-                                                                        <s:property value="registrantsNumber"/>
-                                                                        </a></td>
-                                                                    <td><s:if test="isStudio == true">
-                                                                        <link:studioSubmissionsGrid contestId="${contest.id}">
-                                                                                <s:property value="submissionsNumber"/>
-                                                                        </link:studioSubmissionsGrid>
-                                                                        </s:if>
-                                                                        <s:if test="isStudio == false">
-                                                                        <link:softwareSubmissionsList contestId="${contest.id}">
-                                                                                <s:property value="submissionsNumber"/>
-                                                                        </link:softwareSubmissionsList>
-                                                                        </s:if>
-                                                                    </td>
-                                                                    <td>
-																	<s:if test="forumId != -1">
-																		<s:if test="isStudio == true"><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
-																		<s:if test="isStudio == false"><a href="http://forums.topcoder.com/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
-																	</s:if>
-																	<s:property value="forumPostsNumber"/>
-																	<s:if test="forumId != -1"></a></s:if>
-																	</td>
-                                                                    <td><span
-                                                                            class="<s:property value="status.shortName"/>"><s:property
-                                                                            value="status.name"/></span></td>
-                                                                    <td>
-                                                                        <s:if test="isStudio == true">
-                                                                            <a href="contest/detail?contestId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                                        </s:if>
-                                                                         <s:if test="isStudio == false">
-                                                                            <s:if test="contestType.name == 'Copilot Posting'">
-                                                                                <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                                            </s:if>
-                                                                            <s:if test="contestType.name != 'Copilot Posting'">
-                                                                                <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                                            </s:if>
-                                                                        </s:if>
-                                                                    </td>
-                                                                </tr>
-                                                            </s:iterator>
-
-                                                            </tbody>
-                                                        </table>
-                                                        <!-- End .projectsStats -->
-
-                                                        <div class="panel"></div>
-
-                                                    </div>
-                                                    <!-- End .container2Content -->
+                                                    <div class="panel tableControlPanel"></div>
                                                 </div>
                                             </div>
                                         </div>

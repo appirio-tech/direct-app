@@ -16,11 +16,15 @@
  *
  *  Version 1.4 - (TC Direct - Page Layout Update Assembly)
  *  - Add more rows for data table in copilot contests page & project contests page.
- *   Version 1.5 - (TC Direct - Page Layout Update Assembly 2) changes:
+ *   
+ *  Version 1.5 - (TC Direct - Page Layout Update Assembly 2) changes:
  *  - Update the codes to initialize the pagination table to fix layout issues
+ *   
+ *  Version 1.6 - (TC Direct Page Layout Update 24Hr Assembly)) changes:
+ *  - Update the codes to initialize the pagination table to fix layout issues for dashboard active page.
  * 
- * @author BeBetter, isv, Blues, tangzx
- * @version 1.5
+ * @author BeBetter, isv, Blues, tangzx, TCSASSEMBLER
+ * @version 1.6
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -329,13 +333,14 @@ $(document).ready(function() {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
 		"aaSorting": [[0,'asc']],
 		"aoColumns": [
 				{ "sType": "html" },
 				{ "sType": "html" },
                 { "sType": "html" },
 				{ "sType": "date-direct" },
+                { "sType": "date-direct" },
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "html" },
