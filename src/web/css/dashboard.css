@@ -5999,7 +5999,7 @@ A.button11{
 	font-size: 11px;
 	color: #313131;
 	padding-left:2px;
-	text-decoration: none;
+	text-decoration: none !important;
 }	
 
 	A.button11 .btnR{

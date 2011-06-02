@@ -97,13 +97,22 @@
 				</td>
                 <td><span class="<s:property value="status.shortName"/>"><s:property value="status.name"/></span></td>
                 <td class="last">
-                   <s:if test="contestType == 'Studio'">
-                    <a href="contest/detail?contestId=${contest.id}" class="button1"><span class="button1Text">View/Edit</span></a>
+                  <s:if test="contestType == 'Studio'">
+                    <a href="contest/detail?contestId=${contest.id}" class="button11">
+                        <span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span>
+                    </a>
                  </s:if>
-                 <s:if test="contestType != 'Studio'">
-                    <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="button1Text">View/Edit</span></a>
+                 <s:if test="contestType == 'Copilot Posting'">
+                    <a href="copilot/copilotContestDetails.action?projectId=${contest.id}" class="button11">
+                        <span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span>
+                    </a>
                  </s:if>
-                    
+                 <s:if test="contestType != 'Studio' && contestType != 'Copilot Posting'">
+                    <a href="contest/detail?projectId=${contest.id}" class="button11">
+                        <span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span>
+                    </a>
+                 </s:if>
+
                 </td>
             </tr>
         </s:iterator>

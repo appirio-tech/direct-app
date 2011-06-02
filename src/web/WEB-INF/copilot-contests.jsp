@@ -146,7 +146,8 @@
                                                             <a href="<s:url namespace="/copilot" action="copilotContestDetails">
                                                                        <s:param name="projectId" value="%{#attr['contest'].contest.id}"/>
                                                                      </s:url>"
-                                                               class="button1"><span>View / Edit</span>
+                                                               class="button11">
+							                                    <span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span>
                                                             </a>
                                                         </s:if>
                                                     </td>
