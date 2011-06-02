@@ -153,7 +153,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="12">
+        <th class="tableTitle" colspan="13">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Billing Cost Details</span>
             <span style="float:right;padding-top:4px; padding-right:5px">
@@ -169,6 +169,7 @@
         <th class="tableColumn">&nbsp;Project&nbsp;</th>
         <th class="tableColumn">&nbsp;Contest&nbsp;</th>
         <th class="tableColumn">&nbsp;Contest ID&nbsp;</th>
+        <th class="tableColumn">&nbsp;Reference ID&nbsp;</th>
         <th class="tableColumn">&nbsp;Category&nbsp;</th>
         <th class="tableColumn">&nbsp;Status&nbsp;</th>
         <th class="tableColumn">&nbsp;Launch Date&nbsp;</th>
@@ -216,6 +217,9 @@
             </td>
             <td>
                  <s:property value="contest.id"/>
+            </td>
+            <td>
+                 <s:property value="referenceId"/>
             </td>
             <td>
                  <s:property value="contestType.name"/>

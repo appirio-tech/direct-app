@@ -83,6 +83,16 @@ public class BillingCostReportEntryDTO implements Serializable {
     private boolean isStudio;
 
 
+    private String referenceId;
+
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+    }
+
     /**
      * Gets the flag isStudio.
      *

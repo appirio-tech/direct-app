@@ -2686,6 +2686,9 @@ public class DataProvider {
             if (row.getItem("line_item_amount").getResultData() != null) {
                 costDTO.setPaymentAmount(row.getDoubleItem("line_item_amount"));
             }
+            if (row.getItem("reference_id").getResultData() != null) {
+                costDTO.setReferenceId(row.getStringItem("reference_id"));
+            }
 
 
             costDTO.setClient(client);
