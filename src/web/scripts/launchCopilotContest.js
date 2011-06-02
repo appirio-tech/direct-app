@@ -611,7 +611,8 @@ function handleCopilotContestSaveAsDraftResult(jsonResult) {
         showErrors(errorMessage);
     });
 };
-$(document).ready(function() {
+
+function submitCompetition() {
 	$( "#activateContestConfirmation" ).dialog({
 			autoOpen: false,
 			resizable: true,
@@ -642,37 +643,12 @@ $(document).ready(function() {
 				}
 			}
 	});
-});
-
-/**
- * Handle submit competition action.
- */
-function submitCompetition() {
-    if (!validateFields()) {
-        return;
-    }
-    
-    // construct request data
-    var request = saveAsDraftRequestSoftware();
-    request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
-    request['activationFlag'] = true;
-    
-    $.ajax({
-        type: 'POST',
-        url: '../launch/saveDraftContest',
-        data: request,
-        cache: false,
-        dataType: 'json',
-        success: handleCopilotContestActivateResult,
-        beforeSend: beforeAjax,
-        complete: afterAjax   
-    });
-	// confirm that user want to activate the contest
+    // confirm that user want to activate the contest
 	// if it's confirmed, a new contest will be saved
 	if(!$( "#activateContestConfirmation" ).dialog( "isOpen" )) {
 		$( "#activateContestConfirmation" ).dialog( "open" );
 	}
-};
+}
 
 /**
  * Handle result of submit contest action. 
