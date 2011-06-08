@@ -2690,6 +2690,13 @@ public class DataProvider {
                 costDTO.setReferenceId(row.getStringItem("reference_id"));
             }
 
+            if (row.getItem("is_studio").getResultData() != null) {
+                if (row.getIntItem("is_studio") == 1)
+                {
+                    costDTO.setStudio(true);
+                }
+            }
+
 
             costDTO.setClient(client);
             costDTO.setBilling(billing);
