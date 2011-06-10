@@ -8,6 +8,7 @@ import com.topcoder.direct.services.view.action.contest.launch.AbstractAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.cloudvm.VMContestType;
+import com.topcoder.direct.services.view.dto.cloudvm.VMUsage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMImage;
 import com.topcoder.direct.services.view.dto.cloudvm.VMInstanceData;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -52,6 +53,12 @@ public class DashboardVMAction extends AbstractAction {
      */
     private List<VMContestType> vmContestTypes;
 
+
+    /**
+     * List of vm usages.
+     */
+    private List<VMUsage> vmUsages;
+
     /**
      * List of current vm instances.
      */
@@ -74,6 +81,7 @@ public class DashboardVMAction extends AbstractAction {
         AbstractVMAction.authorize(user);
         vmImages = getCloudVMService().getVMImages(user);
         vmContestTypes = getCloudVMService().getVMContestTypes(user);
+        vmUsages = getCloudVMService().getVMUsages(user);
         
         // try {
             vmInstances = getCloudVMService().getVMInstances(user);
@@ -115,6 +123,15 @@ public class DashboardVMAction extends AbstractAction {
      */
     public List<VMContestType> getVmContestTypes() {
         return vmContestTypes;
+    }
+
+    /**
+     * Returns list of usages.
+     *
+     * @return list of usages
+     */
+    public List<VMUsage> getVmUsages() {
+        return vmUsages;
     }
 
     /**

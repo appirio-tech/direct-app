@@ -81,6 +81,7 @@ public class LaunchVMInstanceAction extends AbstractVMAction {
         instance.setVmImageId(fetchId(request, "vmImageId", errors));
         instance.setContestId(fetchId(request, "contestId", errors));
         instance.setContestTypeId(fetchId(request, "vmContestTypeId", errors));
+        instance.setUsageId(fetchId(request, "vmUsageId", errors));
         instance.setSvnBranch(fetchString(request, "svnBranch", errors));
         instance.setTcMemberHandle(fetchString(request, "tcHandle", errors));
         instance.setUserData(fetchNullIfEmptyString(request, "userData")); // BUGR-3931

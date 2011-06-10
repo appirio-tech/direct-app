@@ -7,6 +7,7 @@
 <head>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
+    <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/vmservice.js"></script>
     <link href="/css/screen.css" rel="stylesheet" type="text/css" />
     <link href="../../css/dashboard.css" rel="stylesheet" type="text/css" /> 
@@ -71,6 +72,14 @@
 													</c:forEach>
 												</select>
 											</div>
+                                            <div class="line">
+												<label for="vm_usage_id" >Usage</label>
+												 <select id="vm_usage_id" name="vmUsageId">
+													<c:forEach items="${vmUsages}" var="vmUsage">
+														<option value="${vmUsage.id}">${vmUsage.name}</option>
+													</c:forEach>
+												</select>
+											</div>
 											<div class="line">
 												<label for="user_data">Additional User Data</label>
 												<textarea rows="5" name="userData" id="user_data"></textarea>
@@ -107,7 +116,7 @@
 								<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td>
  							   	 <a id="refreshBtn" href="javascript:vmService.refresh();" class="button1"><span>Refresh</span></a>    
 								</td></tr></table>    
-                                <table border="1px" class="projectStats contests">
+                                <table border="1px" class="projectStats contests" id="contest_vms">
                                     <thead>
                                         <tr>
                                             <th>Contest Id</th>
@@ -119,13 +128,15 @@
                                                 <th>Manager Handle</th>
                                             </c:if>
                                             <th>Public IP</th>
+                                            <th>Creation Time</th>
+					    <th>Usage</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="vm_instances_body">
                                         <c:forEach items="${vmInstances}" var="vmInstance">
-                                            <tr id="vm_instance_${vmInstance.instance.id}">
+                                            <tr>
                                                 <td>${vmInstance.instance.contestId}</td>
                                                 <td>${vmInstance.contestName}</td>
                                                 <td>${vmInstance.vmImageTcName}</td> 
@@ -135,41 +146,23 @@
                                                     <td>${vmInstance.managerHandle}</td>
                                                 </c:if>
                                                 <td>${vmInstance.instance.publicIP}</td>
+                                                <td><fmt:formatDate value="${vmInstance.instance.creationTime}" pattern="MM/dd/yyyy HH:mm"/></td>
+						<td>
+						<c:forEach items="${vmUsages}" var="vmUsage">
+						    <c:if test="${vmUsage.id == vmInstance.instance.usageId}">
+						        ${vmUsage.name}
+						    </c:if>
+						</c:forEach>
+					        </td>
                                                 <td class="vm_instance_status">${vmInstance.status}</td>
                                                 <td class="vm_instance_action" align="center"><c:if test="${vmInstance.status eq 'RUNNING'}">
 													<div class="term1"><div>
-													<a href="javascript:vmService.terminate(${vmInstance.instance.id});" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>&nbsp;
+													<a href="javascript:void(0)" onclick="javascript:vmService.terminate(${vmInstance.instance.id}, this);" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>&nbsp;
 													</div></div>
 													
 												</c:if></td>
                                             </tr>
                                         </c:forEach>
-										<c:if test="${fn:length(vmInstances) == 0 }">
-											<tr>
-												<td colspan="9">
-													No matching records found
-												</td>
-											</tr>
-										</c:if>
-                                    </tbody>
-                                </table>
-
-                                <%--template to render ajax responses--%>
-                                <table style="visibility:hidden;display:none;">
-                                    <tbody id="vm_instance_template">
-                                    <tr id="vm_instance_#instance.id#">
-                                        <td>#instance.contestId#</td>
-                                        <td>#contestName#</td>
-                                        <td>#vmImageTcName#</td>
-                                        <td>#instance.svnBranch#</td>
-                                        <td>#instance.tcMemberHandle#</td>
-                                        <c:if test="${admin}">
-                                            <td>#managerHandle#</td>
-                                        </c:if>
-                                        <td>#instance.publicIP#</td>
-                                        <td class="vm_instance_status">#status#</td>
-                                        <td class="vm_instance_action" align="center"><div class="term1"><div>#action#</div></div></td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>

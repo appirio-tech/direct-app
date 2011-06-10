@@ -4353,8 +4353,12 @@ vertical-align: top;
 .line input {
 	display: inline;
 	width: 287px;
-
 }
+
+.line select#vm_usage_id {
+	width: 287px;
+}
+
 .submBtn {
 	left: 0;
 	vertical-align:bottom;

@@ -1,3 +1,58 @@
+var vmTable;
+
+$(document).ready(function() {
+    vmTable = $("#contest_vms").dataTable({
+        "bPaginate": false,
+        "bFilter": false,
+        "bSort": true,
+        "bAutoWidth": false,
+        "bInfo": false,                            
+        "aaSorting": [[4,'asc']],
+        "aoColumns": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                { "sType": "date-direct" },
+                null,
+                { "sClass": "vm_instance_status" },
+                { "sClass": "vm_instance_action" }
+            ],
+       "fnRowCallback":function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {          
+          return nRow;
+       }
+
+    });
+});
+
+function addData(vm) {
+    var action = '';
+    if (vm.status == 'RUNNING') {
+       	action = '<a href="javascript:void(0)" onclick="javascript:vmService.terminate(' + vm.instance.id + ', this);" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>';
+    }
+
+    vmTable.fnAddData([
+        vm.instance.contestId,
+        vm.contestName,
+        vm.vmImageTcName,
+        vm.instance.svnBranch,
+        vm.instance.tcMemberHandle,
+        vm.managerHandle,
+        vm.instance.publicIP,
+        vm.vmCreationTime,
+        vm.usage,
+        vm.status,
+        action
+    ])
+}
+
+function deleteData(vm) {
+
+}
+
 if (!window.vmService) var vmService = {
     launch : function(formId) {
         var data = $('#' + formId).serialize();
@@ -23,10 +78,12 @@ if (!window.vmService) var vmService = {
                         $('#' + errors[p].propertyName + 'Error').html(errors[p].messages[0]);
                     }
                 } else {
-					          var container = $('.vm_instances_body');
-					          for (var i=0; i<r.length; i++) { // is able to launch multiple VMs at once
-                        container.prepend(vmService.vmToHtml(r[i]));
+					var container = $('.vm_instances_body');
+					for (var i=0; i<r.length; i++) { // is able to launch multiple VMs at once
+                        addData(r[i]);
                     }
+
+
                 }
             }
         });
@@ -48,10 +105,9 @@ if (!window.vmService) var vmService = {
                 if (errors) {
                     $('#generalError').html("failed to load vm data");
                 } else {
-                    var container = $('.vm_instances_body');
-                    container.html('');
+                    vmTable.fnClearTable();
                     for (var i=0; i<r.length; i++) {
-                        container.append(vmService.vmToHtml(r[i]));
+                        addData(r[i]);
                     }
                 }
             }
@@ -59,39 +115,26 @@ if (!window.vmService) var vmService = {
     },
 
 
-    terminate : function(instanceId) {
-        $('#loading').show();
-        var actionArea = $('#vm_instance_' + instanceId + ' .vm_instance_action');
-        actionArea.html('');
-        $.ajax({
-            type: 'POST',
-            url: 'terminateVMInstance',
-            data: {'instanceId' : instanceId},
-            dataType: "json",
-            cache: false,
-            success: function(r) {
-                $('#loading').hide();
-                $('#vm_instance_' + instanceId + ' .vm_instance_status').html(r.result['return'][0]);
+    terminate : function(instanceId, elem) {                         
+        if (window.confirm("Are you sure you want to terminate this VM?")) {                                    
+            $('#loading').show();
+            while (elem.parentNode && elem.parentNode.tagName != "TR"){
+                elem = elem.parentNode;
             }
-        });
-    },
-
-    vmToHtml : function(vm) {
-        var template = $('#vm_instance_template').html();
-        var html = template.replace(/#instance.id#/g, vm.instance.id);
-        html = html.replace(/#instance.contestId#/g, vm.instance.contestId);
-        html = html.replace(/#instance.svnBranch#/g, vm.instance.svnBranch);
-        html = html.replace(/#instance.tcMemberHandle#/g, vm.instance.tcMemberHandle);
-        html = html.replace(/#managerHandle#/g, vm.managerHandle);
-        html = html.replace(/#status#/g, vm.status);
-        html = html.replace(/#contestName#/g, vm.contestName);
-        html = html.replace(/#vmImageTcName#/g, vm.vmImageTcName);
-        html = html.replace(/#instance.publicIP#/g, vm.instance.publicIP);
-        var action = '';
-        if (vm.status == 'RUNNING') {
-           	action = '<a href="javascript:vmService.terminate(' + vm.instance.id + ');" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>';
-        }
-        html = html.replace(/#action#/g, action);
-        return html;
+            var rowElem = elem.parentNode;
+            var actionArea = $(rowElem).find(".vm_instance_action");
+            actionArea.html('');
+            $.ajax({
+                type: 'POST',
+                url: 'terminateVMInstance',
+                data: {'instanceId' : instanceId},
+                dataType: "json",
+                cache: false,
+                success: function(r) {
+                    $('#loading').hide(); 
+                    $(rowElem).find('.vm_instance_status').html(r.result['return'][0]);                                       
+                }
+            });
+        }        
     }
 }
