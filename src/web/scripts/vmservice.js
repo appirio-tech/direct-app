@@ -1,3 +1,15 @@
+/*
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ */
+/**
+ * The JS script for VM service.
+ *
+ *  Version 1.1 - TC Direct UI Improvement Assembly 1 (BHCUI-90) Change Note
+ *  - Solve "all clear buttons in "VM Management" cannot work"
+ *
+ * @author winsty
+ * @version 1.1 (TC Direct UI Improvement Assembly 1)
+ */
 var vmTable;
 var columnCount;
 
@@ -108,7 +120,13 @@ if (!window.vmService) var vmService = {
                 var errors = r.errors;
                 if (errors) {
                     for (var p=0; p<errors.length; p++) {
-                        $('#' + errors[p].propertyName + 'Error').html(errors[p].messages[0]);
+                        //Judge whether it is IE
+                        var ua = navigator.userAgent.toLowerCase(); 
+                        if (window.ActiveXObject && ua.match(/msie ([\d.]+)/)[1] < 8.0){
+                            $('#' + errors[p].propertyName + 'Error').html(errors[p].messages[0]).show();
+                        } else {
+                            $('#' + errors[p].propertyName + 'Error').html(errors[p].messages[0]).css('display', 'inline-block');
+                        }
                     }
                 } else {
 					var container = $('.vm_instances_body');
@@ -171,3 +189,13 @@ if (!window.vmService) var vmService = {
         }        
     }
 }
+$(function(){
+    /*
+        *  BHCUI-90
+        *  Click action for launchVM.
+        */
+    $('#launchVM').click(function(){
+        $(".error").hide();
+        vmService.launch('vm-launch-form');
+    });
+});
