@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file is used to render permission data to page, and handle
@@ -13,8 +13,12 @@
  *   </ol>
  * </p>
  *
+ * Version 1.0.2 TC Direct UI Improvement Assembly 1 (BHCUI-38, BHCUI-70, BHCUI-98) Change notes:
+ *  -Solve "checkbox exists when no data in Settings > Permissions"
+ *  - User can't delete the permision of himself. When deleting other's permision, there is a dialog to make sure this action.
+ *
  * @author TCSASSEMBLER
- * @version 1.0.1
+ * @version 1.0.2 (TC Direct UI Improvement Assembly 1)
  */
 //$(function() {
 	/**
@@ -65,9 +69,9 @@
 		}
 
 		jsonResult = jsonResult['result']['return'];
-        if (jsonResult.length == 0) {
-            $(".applyForAll").remove();
-        }
+        if (jsonResult.length != 0) {
+				$("#permissions thead").append('<tr class="applyForAll"><td class="markRed"></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td></td></tr>');
+		}
 		for ( var i = 0; i < jsonResult.length; i++) {
 			jsonResult[i].rperm = false;
 			jsonResult[i].wperm = false;
@@ -113,6 +117,48 @@
 				document.forms['permissionForm'].submit();
 			}
 //);
+
+	/*
+	 * Bind the click event of delete single user.
+	 */
+	$(".removeProject").live('click', function(){
+		//It is current user.
+		if ($(this).attr('userid') < 0){
+			return true;
+		}
+		
+		var id = $(this).attr('userid');
+		$( "#deleteUserConfirmation" ).dialog({
+			autoOpen: true,
+			resizable: true,
+			height:200,
+			width: 500,
+			modal: true,
+			buttons: {
+				"No": function() {
+					$( this ).dialog( "close" );
+					return false;
+				},
+				"Yes": function() {
+					$( this ).dialog("close");
+					$.permission.removeSingleUser(id);
+					pbutton_submit();
+					return true;
+				}
+			}
+		});
+		$( "#deleteUserConfirmation" ).parent().find('.ui-dialog-titlebar').show();
+		if(!$( "#deleteUserConfirmation" ).dialog( "isOpen" )) {
+			$( "#deleteUserConfirmation" ).dialog( "open" );
+		}
+		
+	});
+	
+	function showDeleteOneselfError(){
+		initDialog('errorDialog', 300);
+        showErrors("You cannot delete yourself!");
+		$("#errorDialog").parent().find(".ui-dialog-titlebar").show();
+	}
 
 	/**
 	 * The permission object, used to store information and handle event.
@@ -759,8 +805,16 @@
 				html += "<td class='checkbox'>";
 				html += "<a href='javascript:$.permission.handleAssignProjectClick(";
 				html += this.userId + ")' class='addProject'></a>";
-				html += "<a href='javascript:$.permission.removeSingleUser(";
-				html += this.userId + ");pbutton_submit();' class='removeProject'></a>";
+				
+				// Check whether it is current user
+				var currentUser = $(".helloUser li:first a").html();
+				if (currentUser == this.handle){
+					html += "<a userid=-1 href=\"javascript:showDeleteOneselfError()\" class='removeProject'></a>";
+				} else {
+					html += "<a userid = ";
+					html += this.userId + " class='removeProject'></a>";
+				}
+
 				html += "</tr>";
 
 				html += "</tr>\n";
