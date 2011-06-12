@@ -6,9 +6,11 @@
  *
  *  Version 1.1 - TC Direct - Page Layout Update Assembly & TC Direct - Page Layout Update Assembly 2
  *  - Added auto truncated function.
+ *  Version 1.2 - TC Direct UI Improvement Assembly 1 (BHCUI-83) change note
+ *  - Check whether the project name is empty.
  *
- * @author tangzx
- * @version 1.1
+ * @author tangzx, TCSASSEMBLER
+ * @version 1.2 (TC Direct UI Improvement Assembly 1)
  */
 $(document).ready(function(){
 						   
@@ -692,6 +694,42 @@ $(document).ready(function(){
     truncateTableHeaderNames();
 });
 
+/*
+ * BHCUI-83
+ * Check whether the project name is empty.
+ */
+function checkProjectName(){
+	var projectName = $('#projectName').val();
+    projectName = jQuery.trim(projectName);
+
+    var errors = [];
+
+    if (!checkRequired(projectName)) {
+        errors.push('project name is empty.');
+    }
+
+	if (projectName.length > 60){
+		errors.push('project name cannot be longer than 30 chars.');
+	}
+    if (errors.length > 0) {
+		initDialog('errorDialog', 500);
+        showErrors(errors);
+        return false;
+    }
+	return true;
+}
+
+$('#createProjectViewSave').live('click', function(){
+	if (checkProjectName()){
+		$('#createProjectAndContest').submit();
+	}
+});
+
+$('#addExistContest').live('click', function(){
+	if (checkProjectName()){
+		$('#CreateProjectForm').submit();
+	}
+});
 
 function exportContestRegistrantsToExcel() {
     $('#formDataExcel').val("true");
