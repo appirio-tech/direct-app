@@ -4841,9 +4841,19 @@ th.pipelineData14 {
 #header .logo img.copilotTitle{
     vertical-align:bottom;
 }
+
+#header .logo img.projectTitle{
+    vertical-align:top;
+}
+
 #header .logo span{
     font-weight:bold;
     line-height:39px;
+}
+
+#header .logo #projectTitleSpan{
+	line-height:32px;
+	padding-left:10px;
 }
 
 /* Accept and Reject pop-up */
