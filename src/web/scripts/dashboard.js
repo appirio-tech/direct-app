@@ -709,7 +709,7 @@ function checkProjectName(){
     }
 
 	if (projectName.length > 60){
-		errors.push('project name cannot be longer than 30 chars.');
+		errors.push('project name cannot be longer than 60 chars.');
 	}
     if (errors.length > 0) {
 		initDialog('errorDialog', 500);
