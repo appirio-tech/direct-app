@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve
-  - Version: 1.5.3
+  - Author: isv, tangzx, Veve, winsty
+  - Version: 1.5.4
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -15,6 +15,7 @@
   - Version 1.5.1 (Direct Release 6 assembly) changes: fixed styles for Hello User handle.
   - Version 1.5.2 (Manage Copilot Postings assembly) change notes: linked "My Copilot Selection Contests" tab to "Manage Copilot Postings" page.
   - version 1.5.3 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly) changes notes: linked "Issue Tracking" tab
+  - Version 1.5.4 (TC Direct UI Improvement Assembly 1) changes notes: Solve '"Project" tab is not highlight when select Project'
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -43,8 +44,12 @@
             </a>
         </c:when>
         <c:otherwise>
-            <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo projectLogo">
+            <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo">
+            <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
+            <span id="projectTitleSpan">Projects</span>
+            <c:if test="${requestScope.CURRENT_TAB != 'overview'}">
                 <s:property value="sessionData.currentProjectContext.name"/>
+            </c:if>
             </a>
         </c:otherwise>
     </c:choose>

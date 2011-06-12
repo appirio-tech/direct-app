@@ -1,3 +1,13 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page provides function of creating project in dashboard.
+  -
+  - Version 1.1 (TC Direct UI Improvement Assembly 1) changes: Solve "an error has occurred when try to save new project without any input".
+--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -70,11 +80,11 @@
 
                                 <div class="buttons">
                                     <link:cancelDashboardOperation/>
-                                    <a href="javascript:document.CreateProjectForm.submit();"
+                                    <a id="addExistContest"
                                        class="button6 middleButton">
                                         <span class="left"><span class="right">Add A Contest to This Project</span></span></a>
-                                    <a href="javascript:document.CreateProjectForm.submit();"
-                                       class="button6 rightButton"><span class="left"><span class="right">Save</span></span></a>
+                                    <a
+                                       class="button6 rightButton" id="createProjectViewSave"><span class="left"><span class="right">Save</span></span></a>
                                 </div>
                                 <!-- End .buttons -->
                                 </s:form>

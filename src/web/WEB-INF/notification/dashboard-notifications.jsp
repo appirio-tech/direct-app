@@ -1,11 +1,12 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.1
+  - Author: greatKevin, winsty
+  - Version: 1.2
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the user notifications.
   -
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
+  - Version 1.2 (TC Direct UI Improvement Assembly 1) changes notes: Solve "checkbox exists when no data in Settings > Permissions".
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -365,21 +366,6 @@
                                                         <th class="permCol2">Write</th>
                                                         <th class="permCol2">Full Access</th>
                                                         <th class="permCol2">&nbsp;</th>
-                                                    </tr>
-                                                    <tr class="applyForAll">
-                                                        <td class="markRed">
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="selectUser"/>
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="selectUser"/>
-                                                        </td>
-                                                        <td class="checkbox">
-                                                            <input type="checkbox" class="selectUser"/>
-                                                        </td>
-                                                        <td>
-                                                        </td>
                                                     </tr>
                                                     </thead>
                                                     <tbody class="checkPermissions">

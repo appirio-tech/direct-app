@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, TCSDEVELOPER
+  - Author: isv, TCSDEVELOPER ,winsty
   - Version: 1.0.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -7,6 +7,7 @@
   -
   - Version 1.0.1 (Direct Release 6 assembly) changes: pressing Enter on Login form input fields submits the form.
   - Version 1.0.2 (Direct Improvements Assembly Release 1 ) Change notes: Add a hidden field forwarUrl to support redirecting
+  - Version 1.0.3 (TC Direct UI Improvement Assembly 1 ) Change notes: Solve "404 not found when click "Projects Available for Conpilots" link in Copilots section in home page."
   - to the latest URL after user login in.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -201,7 +202,7 @@
                                                 </td>
                                             </tr>
                                             <tr class="even">
-                                                <td><a href="/tc?module=ActiveContests&pt=29" style="color:black;text-decoration: none;" target="_blank">
+                                                <td><a href="https://www.topcoder.com/tc?module=ActiveContests&pt=29" style="color:black;text-decoration: none;" target="_blank">
                                                     <strong>Projects Available</strong> for Copilots</a>
                                                 </td>
                                                 <td class="highLight2">

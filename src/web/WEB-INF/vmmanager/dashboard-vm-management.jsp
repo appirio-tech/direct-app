@@ -1,3 +1,13 @@
+<%--
+  - Author: winsty
+  - Version: 1.1
+  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page provides function of VM management in dashboard.
+  -
+  - Version 1.1 (TC Direct UI Improvement Assembly 1) changes: Solve "all clear buttons in "VM Management" cannot work"
+--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -52,17 +62,17 @@
 											<div class="line">
 												<label for="contest_id" >Contest id</label>
 												<input type="text" id="contest_id" name="contestId" /> 
-												<span id="contestIdError" style="color:red" class="error"></span>
+												<span id="contestIdError" style="color:red" class="error hide"></span>
 											</div>
 											<div class="line">
 												<label for="svn_branch" >SVN branch</label>
 												<input type="text" id="svn_branch" name="svnBranch" /> 
-												<span id="svnBranchError" style="color:red" class="error"></span>
+												<span id="svnBranchError" style="color:red" class="error hide"></span>
 											</div>
 											<div class="line">
 												<label for="tc_handle" >TopCoder handle</label>
 												<input type="text" id="tc_handle" name="tcHandle" />
-												<span id="tcHandleError" style="color:red" class="error"></span>
+												<span id="tcHandleError" style="color:red" class="error hide"></span>
 											</div>	
 											<div class="line">
 												<label for="vm_contest_type_id" >Contest type</label>
@@ -83,7 +93,7 @@
 											<div class="line">
 												<label for="user_data">Additional User Data</label>
 												<textarea rows="5" name="userData" id="user_data"></textarea>
-												<span id="userDataError" style="color:red" class="error"></span>
+												<div id="userDataError" style="color:red" class="error hide" style="display:inline"></div>
 
 											</div>	
                                     	</div>
@@ -98,7 +108,7 @@
 										</div>  -->
 									</div>
 									
-                                    <span id="generalError" style="color:red" class="error"></span>
+                                    <span id="generalError" style="color:red" class="error hide"></span>
 
                                     <div id="loading" style="display:none;"> Sending request.... </div>
                                 </form>
@@ -106,7 +116,7 @@
 
                             </div>
 							<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td>
-								<a id="launchVM" href="javascript:vmService.launch('vm-launch-form');" class="button6"><span class="left"><span class="right">Submit</span></span></a>		
+								<a id="launchVM"  class="button6"><span class="left"><span class="right">Submit</span></span></a>		
 							</td></tr></table>
 							<!-- End .form -->
 							<hr color="black" class="plain" />

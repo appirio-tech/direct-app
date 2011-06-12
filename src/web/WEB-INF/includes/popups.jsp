@@ -1,12 +1,14 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.1
+  - Author: TCSDEVELOPER, winsty
+  - Version: 1.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - add repost and new version pop ups .
+  - Version 1.2 - TC Direct UI Improvement Assembly 1 Change Note
+  - - add delete user confirmation
   -
 --%>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -120,4 +122,7 @@
         <p class="note">*48 hours prior to the scheduled contest start time.</p>
     </div>
     
+ <div id="deleteUserConfirmation" title="Do you really want to delete the user?" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will delete the user from the project. Please confirm you want to delete the user?</p>
+    </div>
 </div><!-- End .popups -->
