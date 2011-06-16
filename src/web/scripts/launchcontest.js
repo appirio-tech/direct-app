@@ -8,7 +8,8 @@
  * - Add method handleProjectDropDownChange for project dropdown change event
  * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
  * - Add character limitation for the input fields and input areas when creating contests.
- * 
+ * Version 1.3 TC Direct UI Improvement Assembly 2 Assembly change note
+ * - Solve "Help of Enforce CCA doesn't work"
  * @author TCSDEVELOPER
  * @version 1.2(Direct Improvements Assembly Release 2)
  */
@@ -247,6 +248,12 @@ $(document).ready(function() {
         showPopup(this, 'contestDescriptionToolTip');
     }, function() {
         $('#contestDescriptionToolTip').hide();
+    });
+
+    $('#cca .helpme').hover(function() {
+        showPopup(this, 'enforceCCAToolTip');
+    }, function() {
+        $('#enforceCCAToolTip').hide();
     });
 
     $('#Round1HelpIcon .helpIcon').hover(function() {
