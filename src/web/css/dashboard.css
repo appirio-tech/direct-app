@@ -5,6 +5,8 @@
  * - (TC Direct - Page Layout Update Assembly 2) changes: add line 5710 - 5820 to fix layout issues of dashboard
  * - notification page, project search page, contest search page, all projects page, contest registrants page,
  * - pipeline report page, cost report page and billing cost report page.
+ * - (TC Direct UI Improvement Assembly 2) changes: BHCUI-92, 76, 46, 10
+ * - For layout issue with resize and round-corner,
  */
 
 BODY#page{
@@ -1858,7 +1860,6 @@ TABLE.notif{
 	}
 
 TABLE.project{
-	border-collapse: collapse;
 	border: none;
 	margin-bottom: 8px;
 }
@@ -1895,12 +1896,10 @@ TABLE.project{
 	
 	TABLE.project THEAD SPAN.left{
 		display: block;
-		background: url(../images/th_left_bg.png) no-repeat left top;
 	}
 	
 	TABLE.project THEAD SPAN.right{
 		display: block;
-		background: url(../images/th_right_bg.png) no-repeat right top;
 		height: 22px;
 		padding-top: 3px;
 		padding-left: 16px;
@@ -1991,7 +1990,9 @@ TABLE.project TBODY TD.contestLaunch{
 
 .activity TABLE{
 	margin-bottom: 0;
-	border-bottom: 1px solid #bdbdbd;	
+	border-bottom: 1px solid #bdbdbd;
+	border-left: 1px solid #bdbdbd;	
+	border-right: 1px solid #bdbdbd;
 }
 
 	.activity TABLE TD.posted{ /* contest title column */
@@ -2000,15 +2001,9 @@ TABLE.project TBODY TD.contestLaunch{
 	}
 	
 .tableFooter{
-	background: url(../images/table_footer.png) repeat-x;
-}
-
-.tableFooterLeft{
-	background: url(../images/table_footer_left.png) no-repeat left;
-}
-
-.tableFooterRight{
-	background: url(../images/table_footer_right.png) no-repeat right;
+	border-bottom: 1px solid #bdbdbd;
+	border-left: 1px solid #bdbdbd;	
+	border-right: 1px solid #bdbdbd;
 }
 
 .tableFooterInner{
@@ -2057,6 +2052,7 @@ TABLE.projectStats{
 		padding: 13px 0;
 		border: 1px solid #a8abad;
 		width: 10%;
+		white-space: nowrap;
 	}
 	
 	TABLE.projectStats TD.date{
@@ -4326,6 +4322,10 @@ width: 290px;
 
 #user_data {
 	width: 287px;
+	max-width: 500px;
+	min-width: 200px;
+	min-height: 50px;
+	max-height:500px
 }
 
 .subm {
@@ -4415,7 +4415,12 @@ hr.plain {
 	margin-bottom:10px;
 	font-size:12px;
 }
-
+#swFileDescription{
+	max-width: 500px;
+	min-height: 50px;
+	min-width: 100px;
+	max-height: 500px;
+}
 
 /* Milestone round feedback area */
 #milestoneRoundComment {
