@@ -1,11 +1,28 @@
+<%--
+  - Author: Blues
+  - Version: 1.1 (Release Assembly - TC Cockpit Sidebar Header and Footer Update)
+  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: The footer of the topcoder cockpit.
+  -
+  - Version 1.1 - updated to the new footer.
+--%>
 <%@ include file="taglibs.jsp" %>
 <div id="footer">
-
-    <p>TopCoder is the world's largest competitive software development community with
-        <s:property value="sessionData.memberCount"/> developers representing over 200 countries.</p>
-
-    <p><strong>Copyright &copy;2011, TopCoder, Inc. All rights reserved</strong></p>
-    <a href="http://www.topcoder.com" class="poweredBy"><img src="/images/logo2.png" alt="TopCoder"/></a>
+	<!--Update footer-->
+ 	<div class="socialNetwork">
+        <span>Follow us on :</span>
+        <a href="http://www.twitter.com/TopCoder" class="twitterIcon" target="_blank" title="Follow us on Twitter"></a>
+        <a href="http://www.linkedin.com/company/topcoder" class="linkedInIcon" target="_blank"title="Follow us on LinkedIn"></a>
+        <a href="http://www.facebook.com/TopCoderInc" class="facebookIcon" target="_blank" title="Follow us on Facebook"></a>
+    </div>
+    <!--End socialNetwork-->
+    <div class="copyright">
+    	<span>Copyright TopCoder, Inc. 2001-2011</span>
+        <a href="http://www.topcoder.com/tc?module=Static&d1=about&d2=terms" target="_blank" title="Terms of Use">Terms of Use</a>
+        <a href="http://www.topcoder.com/tc?module=Static&d1=about&d2=privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+    </div>
+    <!--End copyright-->
 </div>
 
 <% 

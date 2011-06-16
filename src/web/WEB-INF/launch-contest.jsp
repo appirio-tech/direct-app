@@ -33,7 +33,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent" style="overflow:visible">
+                <div id="mainContent">
 
                     <jsp:include page="includes/right.jsp"/>
 

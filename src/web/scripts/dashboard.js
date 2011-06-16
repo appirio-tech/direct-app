@@ -1,20 +1,25 @@
-/*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
- */
 /**
- * The JS script for dashboard.
+ *  Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ *
+ *  The JS script for dashboard.
  *
  *  Version 1.1 - TC Direct - Page Layout Update Assembly & TC Direct - Page Layout Update Assembly 2
  *  - Added auto truncated function.
  *  Version 1.2 - TC Direct UI Improvement Assembly 1 (BHCUI-83) change note
  *  - Check whether the project name is empty.
  *
- * @author tangzx, TCSASSEMBLER
- * @version 1.2 (TC Direct UI Improvement Assembly 1)
+ *  Version 1.2 - Release Assembly - TC Cockpit Sidebar Header and Footer Update
+ *  - Changed the direct project drop down in right sidebar to native selection style.
+ *  - Changed the scroll bar of project contests list to native browser scroll bar.
+ *  - Fix the zebra style issues of 'Sort Contests by'
+ *
+ * @author tangzx, Blues
+ * @version 1.2
  */
 $(document).ready(function(){
 						   
-	
+	var Sys = {};
+	var ua = navigator.userAgent.toLowerCase();
 	
 	//------------------------------------------------- Contests List
 	
@@ -24,19 +29,31 @@ $(document).ready(function(){
 	/* sort contest by title */
 	sortTitle = function(){
 		 var sorting = [[1,0]];
-        $("#contestsTable").trigger("sorton",[sorting]); 
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr").each(function(){
+			$("#contestsTable tr:even").addClass("even");
+		});
 	}
 	
 	/* sort contest by status */
 	sortStatus = function(){
 		var sorting = [[0,0]];
-        $("#contestsTable").trigger("sorton",[sorting]); 
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr").each(function(){
+			$("#contestsTable tr:even").addClass("even");
+		});
 	}
 	
 	/* sort contest by type */
 	sortType = function(){
 		var sorting = [[2,0]];
-        $("#contestsTable").trigger("sorton",[sorting]); 
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr").each(function(){
+			$("#contestsTable tr:even").addClass("even");
+		});
 	}
 	
 	/* get the selected index and sort the contests table */
@@ -51,7 +68,7 @@ $(document).ready(function(){
 			sortType();
 	}
 	
-	/*---------------------- Show the scrollbar when the number of contests is more than 10----*/
+	/*-Show the scrollbar when the number of contests is more than 10-*/
 	
 	var rows_height = 0;
 	var contests_nbre = 0;
@@ -63,8 +80,28 @@ $(document).ready(function(){
 			contests_nbre++;
 	});
 	
-	if( contests_nbre > 10 ){ // if the number of contests > 0 we will set the height to show the scrollbar 
-		$(".contestsContent").height(rows_height);
+	 if (contests_nbre > 10) { // if the number of contests > 0 we will set the height to show the scrollbar
+        $(".contestsContent").height(rows_height);
+
+        // Chrome
+        if (ua.match(/chrome\/([\d.]+)/) != null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0] > 2) {
+            $(".contestsContent").height(rows_height + 20);
+        }
+
+        // Safari
+        if (ua.match(/version\/([\d.]+).*safari/) != null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0] > 3) {
+            $(".contestsContent").height(rows_height + 20);
+        }
+
+        // IE 7
+        if ($.browser.msie && $.browser.version == 7.0) {
+            $(".contestsContent").height(rows_height + 20);
+        }
+
+        // IE 8
+        if ($.browser.msie && $.browser.version == 8.0) {
+            $(".contestsContent").height(rows_height + 20);
+        }
 		$(".contestsContent TABLE").css("width","232px");
 	}
 	
@@ -85,6 +122,10 @@ $(document).ready(function(){
 	showHideList = function(){
 		$("#dropDown1").slideToggle(100);
 		$("#sortTableBy").toggle();
+
+        if($(".contestsDropDown UL").height() > 200) {
+            $(".contestsDropDown UL").css('width', 233);
+        }
 	}
 	
 	/*TCCC-2398*/
@@ -123,8 +164,7 @@ $(document).ready(function(){
 		$(this).removeClass("highlight");
 	});
 	
-	
-	/*------------------------- show or hide rows functionnality in dashboard.html --*/
+	/*------------------------- show or hide rows functionality in dashboard.html --*/
 	// we will show just the first rows_nbre rows 
 	$("TABLE.rowsToHide").each(function(){
 		
@@ -186,18 +226,6 @@ $(document).ready(function(){
         $('#calendar').fullCalendar(getCalendarConfig());
     } catch(e) {
     }
-
-	/*----------------- this function is for demonstration purpose, it will show some contests on the contests list --*/
-	showContestsDemo = function(){
-//			var curr = 0;
-//			$("TABLE#contestsTable TBODY TR").each(function(){
-//					if( curr > 2 )
-//						$(this).addClass("hide");
-//
-//					curr++;
-//			});
-	}
-	
 	
 	/*-------------------------------------------------------------- Popup -----------------*/
 	
@@ -692,6 +720,76 @@ $(document).ready(function(){
 
     truncateTH();
     truncateTableHeaderNames();
+
+    $(".darkenBtn,#helpCenterWidget h6").css("text-shadow", "0 -1px 1px #221d1a");
+
+    /*help center widget tab function*/
+
+    $("#helpCenterWidget .tabList li a.tab").click(function() {
+        $("#helpCenterWidget .tabContent").hide();
+        $(this).addClass("actived");
+        $(this).parent("li").siblings("li").children("a.tab").removeClass("actived");
+        switch ($(this).attr("id")) {
+            case "FAQTab":
+                $("#FAQTabContent").show();
+                break;
+            case "videoTab":
+                $("#videoTabContent").show();
+                break;
+            case "tutorialTab":
+                $("#tutorialTabContent").show();
+                break;
+            case "exampleTab":
+                $("#exampleTabContent").show();
+                break;
+            case "moreTab":
+                $(".tab").hide();
+                $(".tabMore,#exampleTab").css("display", "inline-block");
+                $("#exampleTabContent").show();
+                $("#exampleTab").addClass("actived");
+                break;
+            default:
+                break;
+        }
+    });
+    $("#helpCenterWidget .tabList li a#lessTab").click(function() {
+        $("#moreTab").removeClass("actived");
+        $(".tab").show();
+        $("#exampleTabContent").hide();
+        $("#exampleTab").removeClass("actived");
+        $(".tabMore,#exampleTab").css("display", "none");
+        $("#FAQTabContent").show();
+        $("#FAQTab").addClass("actived");
+
+    });
+
+    // FF 3
+	if(ua.match(/firefox\/([\d.]+)/)!=null && ua.match(/firefox\/([\d.]+)/)[1].split('.')[0]>2){
+		$("#helpCenterWidget ul.tabList a#moreTab,#helpCenterWidget ul.tabList a#lessTab").css("padding","0 14px");
+		$(".dashboardPage #helpCenterWidget .tabContent").css({"position":"relative","top":"-5px"});
+		$(".dashboardPage #helpCenterWidget ul.tabList a#moreTab,.dashboardPage #helpCenterWidget ul.tabList a#lessTab").css("padding","0 12px");
+	}
+	// FF 4
+	if(ua.match(/firefox\/([\d.]+)/)!=null && ua.match(/firefox\/([\d.]+)/)[1].split('.')[0]>3){
+		$("#helpCenterWidget ul.tabList a#moreTab,#helpCenterWidget ul.tabList a#lessTab").css("padding","0 14px");
+		$(".dashboardPage #helpCenterWidget .tabContent").css({"position":"relative","top":"-6px"});
+		$(".dashboardPage #helpCenterWidget ul.tabList a#moreTab,.dashboardPage #helpCenterWidget ul.tabList a#lessTab").css("padding","0 13px");
+	}
+
+    // IE 7
+    if ($.browser.msie && $.browser.version == 7.0) {
+        $(".contestsContent").css("overflow-x", "hidden");
+    }
+
+    /*select a project function*/
+    $(".selectProject").change(function() {
+        if ($(this).val().length != 0) {
+            window.location = $(this).val();
+        }
+    });
+
+    $(".selectProject option:even").css("background", "#f3f3f3");
+
 });
 
 /*
@@ -729,6 +827,10 @@ $('#addExistContest').live('click', function(){
 	if (checkProjectName()){
 		$('#CreateProjectForm').submit();
 	}
+
+
+
+
 });
 
 function exportContestRegistrantsToExcel() {

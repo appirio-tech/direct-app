@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, TCSDEVELOPER ,winsty
-  - Version: 1.0.2
+  - Author: isv, winsty, Blues
+  - Version: 1.1
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Landing page for TC Direct application.
@@ -9,6 +9,11 @@
   - Version 1.0.2 (Direct Improvements Assembly Release 1 ) Change notes: Add a hidden field forwarUrl to support redirecting
   - Version 1.0.3 (TC Direct UI Improvement Assembly 1 ) Change notes: Solve "404 not found when click "Projects Available for Conpilots" link in Copilots section in home page."
   - to the latest URL after user login in.
+  - Version 1.1 (Release Assembly - TC Cockpit Sidebar Header and Footer Update) changes:
+  - 1) Updated the video area of the home page right sidebar.
+  - 2) Added a help center widget to the home page right sibebar.
+  - 3) Updated the footer of the home page.
+  - 4) Added a link to topcoder community in the home page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -28,18 +33,32 @@
     <link rel="stylesheet" href="/css/homepage.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.jcarousel.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/thickbox.css" media="all" type="text/css"/>
-    <!--[if IE 6]>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/homepage-ie6.css"/>
+
+   <!--[if IE 6]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/homepage-ie6.css"/>
+    <![endif]-->
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie7.css"/>
+    <![endif]-->
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie8.css"/>
+    <![endif]-->
+    <!--[if IE 9]>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/screen-ie9.css"/>
     <![endif]-->
 
     <!-- External javascripts -->
     <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js"></script>
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js"></script>
     <script type="text/javascript" src="/scripts/thickbox-compressed.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.validate.js"></script>
     <script type="text/javascript" src="/scripts/scripts.js"></script>
     <script type="text/javascript" src="/scripts/AJAXProcessor.js"></script>
     <script type="text/javascript" src="/scripts/RSSProcessor.js"></script>
     <script type="text/javascript" src="/scripts/FeedLoader.js"></script>
+    <script type="text/javascript" src="/scripts/loadHelps.js"></script>
+
+
     <script type="text/javascript">
         $(document).ready(function() {
             $("#LoginForm [name=formData.username]").focus();
@@ -59,7 +78,7 @@
     </script>
 </head>
 
-<body id="page">
+<body class="homePage" id="page">
 	<div id="landingPage">
 	
 		<!-- The header of the landing page -->
@@ -74,8 +93,11 @@
 					<div class="welcome">
 						<img src="/images/welcome.png" alt="Welcome To TopCoder Cockpit" />
 					</div><!-- end .welcome -->
+                    <div class="clear"></div>
+                    <p class="lookCP">Looking for Community Portal?
+                        <a onclick="window.open('http://community.topcoder.com/');" href="javascript:;">Go There Now</a>
+                    </p>
 				</div><!-- End .welcomeHelp -->
-				
 			</div><!-- End .headerInner -->
 		</div><!-- End #header -->
 		
@@ -258,34 +280,11 @@
                                     </s:form>
 								</div><!-- End .login -->
 								
-								<!-- this area will contain some links -->
-								<div class="box">
-								<!-- video wrapper -->
-									<img src="/images/video.png" alt="Video"/>
-                                    <link:allVideos/>
-								</div><!-- End .box -->
+								<!-- video Widget -->
+								<jsp:include page="includes/videoWidget.jsp"/>
 								
-                                <jsp:include page="includes/links.jsp"/>
-								
-								<!-- the need help box -->
-								<div class="box">
-									<div class="needHelpBox">
-										<div class="needHelpLeft"><div class="needHelpRight">
-											<div class="needHelpContent">
-												<div>
-													<h3><a href="http://topcoder.com/home/help-form/" target="_blank">Need Help?</a></h3>
-													<p><a href="http://topcoder.com/home/lets-talk/" target="_blank">Contact Us</a></p>
-                                                </div>
-                                                <div class="faq">
-													<div class="faqHelp">
-														<link:faq/>, your answers maybe there already!
-													</div>
-												</div><!-- End .faq -->
-											</div><!-- needHelpContent -->
-										</div></div>
-									</div><!-- End .needHelpBox -->
-								</div><!-- End .box -->
-								
+                                <jsp:include page="includes/helpWidget.jsp"/>
+
 							</div><!-- End .area2Content -->
 						</div><!-- End area2 -->
 						</div><!-- End .contentInner -->

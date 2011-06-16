@@ -1,12 +1,18 @@
 /*
  * CSS for pages under dashboard.
  *
- * Changes log:
- * - (TC Direct - Page Layout Update Assembly 2) changes: add line 5710 - 5820 to fix layout issues of dashboard
+ * Change logs:
+ *
+ * - (TC Direct - Page Layout Update Assembly 2) changes:
+ * - add line 5710 - 5820 to fix layout issues of dashboard
  * - notification page, project search page, contest search page, all projects page, contest registrants page,
  * - pipeline report page, cost report page and billing cost report page.
+ *
  * - (TC Direct UI Improvement Assembly 2) changes: BHCUI-92, 76, 46, 10
  * - For layout issue with resize and round-corner,
+ *
+ * - (Release Assembly - TC Cockpit Sidebar Header and Footer Update) changes:
+ * - Updates the CSS styles of right sidebar and footer.
  */
 
 BODY#page{
@@ -735,6 +741,7 @@ BODY#page{
 #area2{
 	float: right;
 	width: 272px;
+    overflow:hidden;
 }
 
 #area2 .contestsDropDown .longWordsBreak {
@@ -862,7 +869,7 @@ BODY#page{
 	padding-left: 1px;
 	padding-right: 1px;
 	width: 250px;
-	height: auto;
+	height: 237px;
 	overflow: auto;
 }
 
@@ -1054,25 +1061,23 @@ BODY#page{
 	background: url(../images/w_type.png) no-repeat;
 }
 
-P.projectArchive{
-	margin: 4px 0;
-	text-align: right;
-	padding-right: 10px;
-	display: block;
-	color: #FFF;
-	font-size: 11px;
-	background: transparent;
+P.projectArchive {
+    margin: 4px 0;
+    text-align: right;
+    padding-right: 10px;
+    display: block;
+    font-size: 11px;
+    background: transparent;
 }
 
-	P.projectArchive A{
+P.projectArchive A {
+    color: #FFF;
+    text-decoration: underline;
+}
 
-		text-decoration: none;
-	}
-
-	P.projectArchive A:hover{
-		text-decoration: none;
-	}
-	
+P.projectArchive A:hover {
+    text-decoration: none;
+}
 
 .box .title2{ /* links title */
 	background: url(../images/title2_left.png) no-repeat left;
@@ -2450,7 +2455,7 @@ permissionPopupInner .buttons{
 ------------------*/
 
 #footer{
-	padding: 20px 21px;
+	padding: 20px 21px 17px 10px;
 	margin: 0 auto;
 	font-size: 11px;
 	color: #333;
@@ -2458,6 +2463,7 @@ permissionPopupInner .buttons{
 	border-top: 1px solid #bdbdbd;
 }
 
+/*
 #footer A{
 	text-decoration: none;
 }
@@ -2477,7 +2483,7 @@ permissionPopupInner .buttons{
 	position: absolute;
 	right: 21px;
 	top: 30px;
-}
+} */
 
 /*--------------
 	MISC

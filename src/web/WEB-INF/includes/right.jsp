@@ -1,11 +1,25 @@
+<%--
+  - Author: Blues
+  - Version: 1.1 (Release Assembly - TC Cockpit Sidebar Header and Footer Update)
+  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: The footer of the topcoder cockpit.
+  -
+  - Version 1.1 changes:
+  - 1) updated the style of direct project dropdown.
+  - 2) updated the style of project contests list
+  - 3) added the help widget.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
-<div id="area2"><!-- the right column -->
+<div id="area2" class="dashboardPage"><!-- the right column -->
+
     <div class="box">
         <a href="${ctx}/copilot/launchCopilotContest" class="button2">Get A Copilot</a>
         <br />
         <a href="${ctx}/launch/home" class="button2">Launch New Contest</a>
     </div>
+    <span id="contextPath" value="${ctx}"/>
     <!-- End .box -->
     <div class="box">
         <h2 class="title">My Projects</h2>
@@ -39,7 +53,8 @@
             <!-- End .contestsDropDown -->
 
             <ui:isProjectContextSet>
-                <div class="contestsList"><!-- This will contain the list of contests -->
+                <div class="contestsList">
+                    <!-- This will contain the list of contests -->
                     <div class="caption">
                         <label>Sort Contests by &nbsp;</label>
                         <select id="sortTableBy" onchange="sortTable(this);">
@@ -86,15 +101,14 @@
                 <!-- End .contestsList -->
             </ui:isProjectContextSet>
 
-            <p class="projectArchive">
-                Projects Archive</p>
+            <p class="projectArchive"><a href="javascript:;">Projects Archive</a></p>
         </div>
         <!-- End .contestsContainer -->
 
     </div>
     <!-- End .box -->
 
-    <ui:isDashboardPage>
-        <jsp:include page="links.jsp"/>
-    </ui:isDashboardPage>
+    <!-- help widget -->
+    <jsp:include page="helpWidget.jsp"/>
+
 </div>

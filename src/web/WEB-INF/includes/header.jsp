@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty
+  - Author: isv, tangzx, Veve, winsty, Blues
   - Version: 1.5.4
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
@@ -16,6 +16,7 @@
   - Version 1.5.2 (Manage Copilot Postings assembly) change notes: linked "My Copilot Selection Contests" tab to "Manage Copilot Postings" page.
   - version 1.5.3 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly) changes notes: linked "Issue Tracking" tab
   - Version 1.5.4 (TC Direct UI Improvement Assembly 1) changes notes: Solve '"Project" tab is not highlight when select Project'
+  - version 1.5.5 (Release Assembly - TC Cockpit Sidebar Header and Footer Update) changes notes: add link to topcoder community site in header
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -132,7 +133,12 @@
         </ul>
     </div><!-- End .helloUSer -->
 
-	<c:if test="${requestScope.CURRENT_TAB eq 'overview'}">
+    <%-- link to community site --%>
+    <p class="lookCP dashBoardLookCP">Looking for Community Portal?
+        <a onclick="window.open('http://community.topcoder.com/');" href="javascript:;">Go There Now</a>
+    </p>
+
+    <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">
 		<s:set name="projId" value="viewData.projectStats.project.id"/>  
 	</c:if>
 	<c:if test="${requestScope.CURRENT_TAB eq 'contests'}">

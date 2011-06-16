@@ -1,3 +1,9 @@
+/**
+ * The CSS File contains CSS styles used specifically used for rendering IE7.
+ *
+ * Release Assembly - TC Cockpit Sidebar Header and Footer Update changes:
+ * 1) Added new styles for help center widget.
+ */
 .add_comment_cancel_text{
 	margin-right: 22px;
 }
@@ -18,4 +24,32 @@
 	height:90px;
 	margin-left: 25px;
 	margin-right: 70px;
+}
+
+.dashboardPage .tabContent {
+    position: relative;
+    top: -1px;
+}
+
+.homePage .tabContent {
+    position: relative;
+    top: -13px;
+}
+
+.tabContent ul li {
+    padding-bottom: 5px;
+    background: url(../images/grayArrow.gif) no-repeat 0 7px;
+}
+
+.tabMore {
+    position: relative;
+    left: -9px;
+}
+
+.homePage #helpCenterWidget .contactUs {
+    margin-top: 0px;
+}
+
+#helpCenterWidget .contactUs {
+    margin-top: 13px;
 }

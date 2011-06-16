@@ -1,4 +1,9 @@
-/* CSS Document */
+/**
+ * The CSS File contains CSS styles used by the home page.
+ *
+ * Release Assembly - TC Cockpit Sidebar Header and Footer Update changes:
+ * 1) Updated styles of video area.
+ */
 
 BODY{
 	margin: 0;
@@ -12,9 +17,9 @@ BODY{
 	LANDING PAGE
 ----------------*/
 
-#landingPage #header{
-	background: url(../images/header_landing_bg.png) repeat-x top;
-	height: 101px;
+#landingPage #header {
+    background: url(../images/header_landing_bg.png) repeat-x top;
+    height: 123px;
 }
 
 #landingPage #header .headerInner{
@@ -23,9 +28,9 @@ BODY{
 	position: relative;
 }
 
-#landingPage #header .logo{
-	position: absolute;
-	top: 16px;
+#landingPage #header .logo {
+    position: absolute;
+    top: 40px;
 }
 
 #landingPage #header .welcomeHelp{
@@ -34,28 +39,28 @@ BODY{
 	top: 31px;
 }
 
-	.welcomeHelp .welcome{
-		float: right;
-		padding: 4px 16px 4px 0;
-		border-right: 1px solid #bcbcbc;
-	}
-	
-	.welcomeHelp .help{
-		float: right;
-		padding: 4px 0 4px 16px;
-	}
-	
-	.welcomeHelp .help A{
-		font-size: 11px;
-		color: #333;
-		font-weight: bold;
-		text-decoration: none;
-		display: block;
-		background: url(../images/help_ico.png) no-repeat top;
-		padding-top: 30px;
-		width: 26px;
-		text-align: center;
-	}
+.welcomeHelp .welcome {
+    float: right;
+    padding: 4px 16px 4px 0;
+    border-right: 1px solid #bcbcbc;
+}
+
+.welcomeHelp .help {
+    float: right;
+    padding: 4px 17px 4px 9px;
+}
+
+.welcomeHelp .help A {
+    font-size: 11px;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    background: url(../images/help_ico.png) no-repeat top;
+    padding-top: 30px;
+    width: 26px;
+    text-align: center;
+}
 
 	.welcomeHelp .help A:hover{
 		color: #908886;
@@ -419,21 +424,28 @@ BODY{
 	position: relative;
 }
 
-A.allVideos{ /* all videos link */
-	background: transparent url(../images/all_videos.png) no-repeat;
-	width: 59px;
-	height: 16px;
-	padding-top: 4px;
-	padding-left: 21px;
-	display: block;
-	margin-left: 115px;
-	font-size: 11px;
-	color: #FFF;
-	text-decoration: none;
+A.allVideos {
+/* all videos link */
+    background: transparent url(../images/all_videos.png) no-repeat;
+    width: 59px;
+    height: 16px;
+    padding-top: 4px;
+    padding-left: 21px;
+    display: block;
+    float: right;
+    margin-top: 10px;
+    font-size: 11px;
+    color: #FFF;
+    text-decoration: none;
 }
 
-.box .title{ /* links title */
-	background: url(../images/title2_left.png) no-repeat left;
+A.allVideos:hover {
+    background: transparent url(../images/all_videosHover.png) no-repeat;
+}
+
+.box .title {
+/* links title */
+    background: url(../images/title2_left.png) no-repeat left;
 }
 
 	.box .title .titleInner{ /* links title */
@@ -544,13 +556,14 @@ A.allVideos{ /* all videos link */
 	FOOTER
 ------------------*/
 
-#footer{ /* footer container */
-	width: 960px;
-	padding: 20px 0;
-	margin: 0 auto;
-	font-size: 11px;
-	color: #333;
-	position: relative;
+#footer {
+/* footer container */
+    width: 960px;
+    padding: 17px 0;
+    margin: 0 auto;
+    font-size: 11px;
+    color: #333;
+    position: relative;
 }
 
 #footer A{

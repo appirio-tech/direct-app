@@ -1,13 +1,15 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: Blues
+  - Version: 1.2
+  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
-  - Description: Contest Detail page
+  - Description: HTML header file linking to the CSS and javascript files. It is included by all the other JSP pages.
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
-  - - bump common.js version .
+  - 1) bump common.js version.
   -
+  - Version 1.2 - Release Assembly - TC Cockpit Sidebar Header and Footer Update
+  - 1) included the loadHelps.js which loads the contents of help widget in right sidebar.
 --%>
 <title>TopCoder Cockpit</title>
 
@@ -24,6 +26,19 @@
 
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie6.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/homepage-ie6.css"/>
+<![endif]-->
+
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie7.css"/>
+<![endif]-->
+
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie8.css"/>
+<![endif]-->
+
+<!--[if IE 9]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie9.css"/>
 <![endif]-->
 
 <!-- External javascript -->
@@ -49,3 +64,4 @@
 <script type="text/javascript" src="/scripts/jquery.autocomplete.js"></script>
 
 <script type="text/javascript" src="/scripts/dashboard.js"></script>
+<script type="text/javascript" src="/scripts/loadHelps.js"></script>
