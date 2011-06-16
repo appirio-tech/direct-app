@@ -46,7 +46,7 @@
 			<Dependency id="appealsPhase" isDependencyStart="false" isDependentStart="true"/>
 		</Phase>
 
-		<Phase id="aggregationPhase" length="21600000" type="aggregation"  phaseId="7">
+		<Phase id="aggregationPhase" length="43200000" type="aggregation"  phaseId="7">
 			<!-- all attributes except "id" are omitted -->
 			<Dependency id="appealsReponsePhase"/>
 		</Phase>
