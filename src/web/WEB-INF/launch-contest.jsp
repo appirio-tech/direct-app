@@ -1,3 +1,12 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: This page provides function of creating project in dashboard.
+  -
+  - Version 1.1 (TC Direct UI Improvement Assembly 2) changes: Solve help information layout issues.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -207,7 +216,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>If you have selected a software contest, then simply set the date and time you would like the registration and submission phase to begin.  If you have selected a Studio contest, then please visit the Contest Holder Guide where you will find more information about multi-round contests. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                    <p>If you have selected a software contest, then simply set the date and time you would like the registration and submission phase to begin.  If you have selected a Studio contest, then please visit the Contest Holder Guide where you will find more information about multi-round contests. http://topcoder.com/wiki/display<br/>/tcstudio/Studio+Guide+for+<br/>Contest+Holders</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
@@ -231,7 +240,7 @@
                 </div><!-- End .tooltipCaption -->
 
                 <div class="tooltipContent">
-                    <p>Need help writing a great Studio contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display/tcstudio/Studio+Guide+for+Contest+Holders</p>
+                    <p>Need help writing a great Studio contest description? Please visit the Contest Holder Guide where you will find contest samples and templates. http://topcoder.com/wiki/display<br/>/tcstudio/Studio+Guide+for+<br/>Contest+Holders</p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>
@@ -288,8 +297,30 @@
   <!-- End .tooltipContainer -->
 </div>
 
+<div class="tooltipArea">
+    <div id="enforceCCAToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
 
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
 
+                <div class="tooltipContent">
+                    <p>In some cases, when clients would like to hold a "private" competition that has confidentiality terms in addition to the usual click-through terms, the competition will require a Competition Confidentiality Agreement or "CCA" document to be completed prior to participation in the competition. http://apps.topcoder.com/wiki<br/>/display/tc/Competition+<br/>Confidentiality+Agreement+<br/>%28CCA%29</p>
+                </div><!-- End .tooltipContent -->
+
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
 
 <jsp:include page="includes/popups.jsp"/>
 
