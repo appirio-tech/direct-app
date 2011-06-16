@@ -1,11 +1,12 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of creating project in dashboard.
   -
   - Version 1.1 (TC Direct UI Improvement Assembly 1) changes: Solve "an error has occurred when try to save new project without any input".
+  - Version 1.2 (TC Direct UI Improvement Assembly 2) changes: Solve "Choosing Create A New Project but Calendar is highlighted".
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <ui:dashboardPageType tab="dashboard"/>
+    <ui:dashboardPageType tab="createProject"/>
 </head>
 
 <body id="page">
