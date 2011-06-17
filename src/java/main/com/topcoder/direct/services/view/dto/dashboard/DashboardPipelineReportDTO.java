@@ -413,7 +413,7 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
     private void insertSheetData(Sheet sheet) {
         DateFormat dateFormatter1 = new SimpleDateFormat("yyyy-MM-dd (EEE)");
         DateFormat dateFormatter2 = new SimpleDateFormat("yyyy-MM-dd");
-        NumberFormat moneyFormatter = new DecimalFormat("$###,##0.00");
+        NumberFormat moneyFormatter = new DecimalFormat("###,##0.00");
 
         NumberFormat ratingFormatter = new DecimalFormat("#######0");
 

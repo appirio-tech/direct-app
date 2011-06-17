@@ -283,7 +283,7 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         // the format used for various cost and fees
-        NumberFormat moneyFormatter = new DecimalFormat("$###,##0.00");
+        NumberFormat moneyFormatter = new DecimalFormat("###,##0.00");
 
         // set up the sheet header first
         Row row = sheet.getRow(1);
