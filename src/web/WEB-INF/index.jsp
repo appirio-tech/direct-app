@@ -44,7 +44,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie8.css"/>
     <![endif]-->
     <!--[if IE 9]>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/screen-ie9.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie9.css"/>
     <![endif]-->
 
     <!-- External javascripts -->
