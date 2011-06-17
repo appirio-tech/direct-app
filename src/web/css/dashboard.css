@@ -2057,7 +2057,6 @@ TABLE.projectStats{
 		padding: 13px 0;
 		border: 1px solid #a8abad;
 		width: 10%;
-		white-space: nowrap;
 	}
 	
 	TABLE.projectStats TD.date{
