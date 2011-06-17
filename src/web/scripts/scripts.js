@@ -101,7 +101,7 @@ $(document).ready(function(){
     // FF 4
     if(ua.match(/firefox\/([\d.]+)/)!=null && ua.match(/firefox\/([\d.]+)/)[1].split('.')[0]>3){
         $("#helpCenterWidget ul.tabList a#moreTab,#helpCenterWidget ul.tabList a#lessTab").css("padding","0 14px");
-        $(".tabContent").css({"position":"relative","top":"-6px"});
+        $(".tabContent").css({"position":"relative","top":"-4px"});
     }
 
 
