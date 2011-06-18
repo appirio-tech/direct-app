@@ -5909,7 +5909,7 @@ Contest links
     background: url("../images/button1.png") no-repeat scroll right -50px transparent;
     cursor: pointer;
     float: left;
-    height: 19px;
+    height: 18px;
     padding-right: 2px;
 }
 .myProjectContests table#ProjectContests td a.button1 .btnR .btnC, #activeContests table.projectStats  td a.button1 .btnR .btnC {
