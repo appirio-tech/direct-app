@@ -16,7 +16,7 @@ var columnCount;
 $(document).ready(function() {
     columnCount = $("#contest_vms").find('tr')[0].cells.length;
 
-    if (columnCount == 11) {
+    if (columnCount == 12) {
         vmTable = $("#contest_vms").dataTable({
             "bPaginate": false,
             "bFilter": false,
@@ -25,6 +25,7 @@ $(document).ready(function() {
             "bInfo": false,
             "aaSorting": [[4,'asc']],
             "aoColumns": [
+                    null,
                     null,
                     null,
                     null,
@@ -47,6 +48,7 @@ $(document).ready(function() {
             "bInfo": false,
             "aaSorting": [[4,'asc']],
             "aoColumns": [
+                    null,
                     null,
                     null,
                     null,
@@ -68,11 +70,12 @@ function addData(vm) {
        	action = '<a href="javascript:void(0)" onclick="javascript:vmService.terminate(' + vm.instance.id + ', this);" class="button6" style="margin:auto;"><span class="left"><span class="right">Terminate</span></span></a>';
     }
 
-    if (columnCount == 11) {
+    if (columnCount == 12) {
         vmTable.fnAddData([
             vm.instance.contestId,
             vm.contestName,
             vm.vmImageTcName,
+            vm.accountName,
             vm.instance.svnBranch,
             vm.instance.tcMemberHandle,
             vm.managerHandle,
@@ -87,6 +90,7 @@ function addData(vm) {
             vm.instance.contestId,
             vm.contestName,
             vm.vmImageTcName,
+            vm.accountName,
             vm.instance.svnBranch,
             vm.instance.tcMemberHandle,
             vm.instance.publicIP,

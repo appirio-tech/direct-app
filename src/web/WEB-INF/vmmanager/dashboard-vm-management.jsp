@@ -132,6 +132,7 @@
                                             <th>Contest Id</th>
                                             <th>Contest Name</th>
                                             <th>TC Image Name</th>
+                                            <th>Account Name</th>
                                             <th>SVN Branch</th>
                                             <th>TC member handle</th>
                                             <c:if test="${admin}">
@@ -149,7 +150,8 @@
                                             <tr>
                                                 <td>${vmInstance.instance.contestId}</td>
                                                 <td>${vmInstance.contestName}</td>
-                                                <td>${vmInstance.vmImageTcName}</td> 
+                                                <td>${vmInstance.vmImageTcName}</td>
+                                                <td>${vmInstance.accountName}</td>
                                                 <td>${vmInstance.instance.svnBranch}</td>
                                                 <td>${vmInstance.instance.tcMemberHandle}</td>
                                                 <c:if test="${admin}">
