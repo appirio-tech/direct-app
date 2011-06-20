@@ -45,21 +45,3 @@
 </script>
 <!-- End #footer -->
 
-
-<!-- Performable Analytics -->
-<%
- if (handle != null && !handle.equals("")) {
-%>
-<script type="text/javascript">
-
-    var _paq = _paq || [];
- 
-    _paq.push(["identify", {
-    id: "<%=handle %>"
-    }]);
-</script>
-
-<%}%>
-
-<script src="//d1nu2rn22elx8m.cloudfront.net/performable/pax/4wrbNk.js" type="text/javascript"></script>
-
