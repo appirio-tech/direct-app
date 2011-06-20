@@ -93,6 +93,11 @@ public class ContestStatsDTO implements Serializable {
 
 
     /**
+     * The current status of the contest.
+     */
+    private String currentStatus;
+
+    /**
      * <p>A <code>int</code> providing the number of jira issues and bug races for contest.</p>
      *
      * @since 1.0.1
@@ -116,6 +121,23 @@ public class ContestStatsDTO implements Serializable {
      */
     public ContestStatsDTO() {
 		this.isStudio = true;
+    }
+
+    public boolean isDraft() {
+        return this.currentStatus.toLowerCase().indexOf("draft") != -1;
+    }
+
+    public boolean isSoftwareContestCompleted() {
+        return !isStudio && this.currentStatus.toLowerCase().indexOf("completed") != -1;
+    }
+
+
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
     }
 
     /**

@@ -63,7 +63,18 @@
                                     <table id="ProjectContests" class="projectStats contests paginatedDataTable" width="auto"
                                            cellpadding="0"
                                            cellspacing="0">
-                                            
+
+                                     <colgroup>
+                                            <col width="11%" />
+                                            <col width="21%" />
+                                            <col width="10%" />
+                                            <col width="10%" />
+                                            <col width="9%" />
+                                            <col width="9%" />
+                                            <col width="9%" />
+                                            <col width="10%" />
+                                            <col width="11%" />
+                                        </colgroup>
                         
                                     <thead>
                                         <tr>

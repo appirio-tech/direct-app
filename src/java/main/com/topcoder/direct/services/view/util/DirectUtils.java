@@ -401,6 +401,7 @@ public final class DirectUtils {
         contest.setContestTypeName(contestType);
 
         ContestStatsDTO dto = new ContestStatsDTO();
+        dto.setCurrentStatus(resultContainer.getStringItem(recordIndex, "status"));
         dto.setEndTime(resultContainer.getTimestampItem(recordIndex, "end_date"));
         dto.setStartTime(resultContainer.getTimestampItem(recordIndex, "start_date"));
         dto.setSubmissionsNumber(resultContainer.getIntItem(recordIndex, "number_of_submission"));

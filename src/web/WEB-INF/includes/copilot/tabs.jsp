@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <c:set var="contest" value="${viewData.contestStats.contest}"/>
+<jsp:include page="/WEB-INF/includes/copilot/copilotLinks.jsp"/>
 <div id="tabs3">
     <ul>
         <li class="firstItem ${requestScope.CURRENT_SUB_TAB eq 'copilotContestDetails' ? 'on' : ''}">
