@@ -12,7 +12,7 @@
 	<!--Update footer-->
  	<div class="socialNetwork">
         <span>Follow us on :</span>
-        <a href="http://www.twitter.com/TopCoder" class="twitterIcon" target="_blank" title="Follow us on Twitter"></a>
+        <a href="http://www.twitter.com/_TopCoder_" class="twitterIcon" target="_blank" title="Follow us on Twitter"></a>
         <a href="http://www.linkedin.com/company/topcoder" class="linkedInIcon" target="_blank"title="Follow us on LinkedIn"></a>
         <a href="http://www.facebook.com/TopCoderInc" class="facebookIcon" target="_blank" title="Follow us on Facebook"></a>
     </div>
