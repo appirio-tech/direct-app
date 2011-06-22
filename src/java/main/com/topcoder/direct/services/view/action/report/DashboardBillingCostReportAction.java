@@ -228,6 +228,9 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
 
         boolean isFirstCall = this.viewData.isShowJustForm();
 
+        // if user is cockpit admin
+        boolean isCockpitAdmin = DirectUtils.isCockpitAdmin(sessionData.getCurrentUser());
+
         // If client account IDs are not specified then use the first client account id
         boolean customerIdsAreSet = (customerIds != null) && (customerIds.length > 0);
         if (isFirstCall && !customerIdsAreSet) {
@@ -237,6 +240,12 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
                 break;
             }
             form.setCustomerIds(customerIds);
+
+            // if user is in the admin group change it to all customers
+            if(isCockpitAdmin) {
+               customerIds[0] = 0;
+            }
+
             customerIdsAreSet = true;
         }
 
@@ -307,12 +316,33 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
         getViewData().setContestStatus(BILLING_COST_REPORT_CONTEST_STATUS);
 
         // set view data for clients
+
+        // if current user is cockpit admin, add "all customers" option
+        if (isCockpitAdmin) {
+            Map<Long, String> tmpCustomers = new LinkedHashMap<Long, String>();
+
+            tmpCustomers.put(0L, "All Customers");
+
+            for(Map.Entry<Long, String> c : customers.entrySet()) {
+                tmpCustomers.put(c.getKey(), c.getValue());
+            }
+
+            customers = tmpCustomers;
+        }
+
         getViewData().setClientAccounts(customers);
 
         // set view data for billings
         if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
-            getViewData().setClientBillingProjects(DirectUtils.getBillingsForClient(currentUser,
-                    getFormData().getCustomerIds()[0]));
+
+            if (getFormData().getCustomerIds()[0] != 0) {
+
+                getViewData().setClientBillingProjects(DirectUtils.getBillingsForClient(currentUser,
+                        getFormData().getCustomerIds()[0]));
+            } else {
+                getViewData().setClientBillingProjects(new HashMap<Long, String>());
+            }
+
         } else {
             getViewData().setClientBillingProjects(new HashMap<Long, String>());
         }
@@ -322,14 +352,25 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
 
         // set view data for projects
         if (getFormData().getBillingAccountIds()[0] <= 0) {
+
+            // billing account is set to all or negative
             if (getFormData().getCustomerIds() != null && getFormData().getCustomerIds().length > 0) {
-                getViewData().setProjectsLookupMap(DirectUtils.getProjectsForClient(currentUser,
-                        getFormData().getCustomerIds()[0]));
+
+                if (getFormData().getCustomerIds()[0] != 0) {
+                    getViewData().setProjectsLookupMap(DirectUtils.getProjectsForClient(currentUser,
+                            getFormData().getCustomerIds()[0]));
+                } else {
+                    getViewData().setProjectsLookupMap(new HashMap<Long, String>());
+                }
+
+
             } else {
                 getViewData().setProjectsLookupMap(new HashMap<Long, String>());
             }
         } else {
+
             getViewData().setProjectsLookupMap(DirectUtils.getProjectsForBilling(currentUser, getFormData().getBillingAccountIds()[0]));
+
         }
 
         // add the default all for projects

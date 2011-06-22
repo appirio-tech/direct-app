@@ -186,7 +186,7 @@ import java.util.Map.Entry;
  * <p>
  * Version 2.6.1 (TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly) Change notes:
  *   <ol>
- *     <li>Added {@link #getDashboardCostBreakDown(long[], long[])} method to get the cost break down data for contests or
+ *     <li>Added getDashboardCostBreakDown(long[], long[])} method to get the cost break down data for contests or
  *     market.</li>
  *   </ol>
  * </p>
@@ -2531,6 +2531,7 @@ public class DataProvider {
         // create an empty map first to store the result data
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
 
+
         if ((projectIds == null) || (projectIds.length == 0)) {
             return data;
         }
@@ -2589,11 +2590,16 @@ public class DataProvider {
             request.setProperty("billingaccountid", billingAccountIdsList);
             request.setProperty("clientid", "0");
 
-        } else if (clientIds[0] != 0) {
+        } else if (clientIds[0] >= 0) {
 
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", clientIdsList);
+
+            if(clientIds[0] == 0) {
+                request.setProperty("clientid", "0");
+            } else {
+              request.setProperty("clientid", clientIdsList);
+            }
 
         } else {
             return data;
