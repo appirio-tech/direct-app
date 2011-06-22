@@ -12,15 +12,15 @@
 	<!--Update footer-->
  	<div class="socialNetwork">
         <span>Follow us on :</span>
-        <a href="http://www.twitter.com/_TopCoder_" class="twitterIcon" target="_blank" title="Follow us on Twitter"></a>
-        <a href="http://www.linkedin.com/company/topcoder" class="linkedInIcon" target="_blank"title="Follow us on LinkedIn"></a>
-        <a href="http://www.facebook.com/TopCoderInc" class="facebookIcon" target="_blank" title="Follow us on Facebook"></a>
+        <a href="https://www.twitter.com/_TopCoder_" class="twitterIcon" target="_blank" title="Follow us on Twitter"></a>
+        <a href="https://www.linkedin.com/company/topcoder" class="linkedInIcon" target="_blank"title="Follow us on LinkedIn"></a>
+        <a href="https://www.facebook.com/TopCoderInc" class="facebookIcon" target="_blank" title="Follow us on Facebook"></a>
     </div>
     <!--End socialNetwork-->
     <div class="copyright">
     	<span>Copyright TopCoder, Inc. 2001-2011</span>
-        <a href="http://www.topcoder.com/tc?module=Static&d1=about&d2=terms" target="_blank" title="Terms of Use">Terms of Use</a>
-        <a href="http://www.topcoder.com/tc?module=Static&d1=about&d2=privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+        <a href="https://www.topcoder.com/tc?module=Static&d1=about&d2=terms" target="_blank" title="Terms of Use">Terms of Use</a>
+        <a href="https://www.topcoder.com/tc?module=Static&d1=about&d2=privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
     </div>
     <!--End copyright-->
 </div>

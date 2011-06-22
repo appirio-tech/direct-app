@@ -145,7 +145,7 @@
         
     </script>
     <!-- google visualization -->
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart-range.js"></script>

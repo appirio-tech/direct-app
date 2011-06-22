@@ -308,12 +308,12 @@ function getType(v) {
 	if (v.match(/watch\?v=(.+)(.*)/)) {
 		f.width.value = '425';
 		f.height.value = '350';
-		f.src.value = 'http://www.youtube.com/v/' + v.match(/v=(.*)(.*)/)[0].split('=')[1];
+		f.src.value = 'https://www.youtube.com/v/' + v.match(/v=(.*)(.*)/)[0].split('=')[1];
 		return 'flash';
 	}
 
 	// Google video
-	if (v.indexOf('http://video.google.com/videoplay?docid=') == 0) {
+	if (v.indexOf('https://video.google.com/videoplay?docid=') == 0) {
 		f.width.value = '425';
 		f.height.value = '326';
 		f.src.value = 'http://video.google.com/googleplayer.swf?docId=' + v.substring('http://video.google.com/videoplay?docid='.length) + '&hl=en';

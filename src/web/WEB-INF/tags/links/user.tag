@@ -24,7 +24,7 @@
 
 <c:choose>
     <c:when test="${isStudio}">
-        <a href="http://<%=ApplicationServer.STUDIO_SERVER_NAME%>/?module=ViewMemberProfile&ha=${handle}"
+        <a href="https://<%=ApplicationServer.STUDIO_SERVER_NAME%>/?module=ViewMemberProfile&ha=${handle}"
            class="${styleClass}" target="_blank">
             <c:out value="${handle}"/></a>
     </c:when>

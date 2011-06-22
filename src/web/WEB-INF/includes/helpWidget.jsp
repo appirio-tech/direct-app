@@ -24,19 +24,19 @@
 
     <div class="tabContent" id="FAQTabContent">
         <ul>
-            <li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=622')">How to monitor
+            <li><a href="javascript:;" onclick="window.open('https://topcoder.com/home/help/?p=622')">How to monitor
                 Forum Activity?</a></li>
-            <li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=620')">What is TopCoder
+            <li><a href="javascript:;" onclick="window.open('https://topcoder.com/home/help/?p=620')">What is TopCoder
                 forum?</a></li>
-            <li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=618')">How to Extend
+            <li><a href="javascript:;" onclick="window.open('https://topcoder.com/home/help/?p=618')">How to Extend
                 deadline?</a></li>
-            <li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=616')">How to increase
+            <li><a href="javascript:;" onclick="window.open('https://topcoder.com/home/help/?p=616')">How to increase
                 Prize?</a></li>
-            <li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=614')">What can I do once
+            <li><a href="javascript:;" onclick="window.open('https://topcoder.com/home/help/?p=614')">What can I do once
                 a contest is running?</a></li>
-            <li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=606')">What types of
+            <li><a href="javascript:;" onclick="window.open('https://topcoder.com/home/help/?p=606')">What types of
                 forums does TopCoder provide?</a></li>
-            <li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=604')">How do I know a
+            <li><a href="javascript:;" onclick="window.open('https://topcoder.com/home/help/?p=604')">How do I know a
                 member has posted in forum?</a></li>
         </ul>
         <a href="" target="_blank" class="viewAllLink">View All</a>
@@ -66,7 +66,7 @@
     </div>
     <!--End exampleTabContent-->
     <p class="contactUs">
-        <a href="javascript:;" onclick="window.open('http://topcoder.com/home/lets-talk/')" class="darkenBtn"
+        <a href="javascript:;" onclick="window.open('https://topcoder.com/home/lets-talk/')" class="darkenBtn"
            title="CONTACT US"><span class="right"><span class="middle">CONTACT US</span></span></a>
     </p>
 

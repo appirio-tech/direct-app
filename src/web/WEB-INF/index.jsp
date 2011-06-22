@@ -95,7 +95,7 @@
 					</div><!-- end .welcome -->
                     <div class="clear"></div>
                     <p class="lookCP">Looking for Community Portal?
-                        <a onclick="window.open('http://community.topcoder.com/');" href="javascript:;">Go There Now</a>
+                        <a onclick="window.open('https://community.topcoder.com/');" href="javascript:;">Go There Now</a>
                     </p>
 				</div><!-- End .welcomeHelp -->
 			</div><!-- End .headerInner -->
@@ -260,14 +260,14 @@
                                             <s:checkbox id="remember_me" cssClass="rememberMe"
                                                         name="formData.remember"/>
                                             <s:label for="remember_me" cssClass="rememberMe">Remember me</s:label>
-                                            <a href="http://www.topcoder.com/tc?module=RecoverPassword"
+                                            <a href="https://www.topcoder.com/tc?module=RecoverPassword"
                                                class="forgotPass" target="_blank">Forgot Password?</a>
                                             <s:submit cssStyle="display:none;"/>
                                         </p>
 
                                         <div class="register">
                                             <p class="registerLink">New to TopCoder? Please
-                                                <a href="http://www.topcoder.com/reg" target="_blank">Register</a>
+                                                <a href="https://www.topcoder.com/reg" target="_blank">Register</a>
                                             </p>
                                             <p class="registerLink">
                                                 <a href="javascript:document.LoginForm.submit();" class="button8">

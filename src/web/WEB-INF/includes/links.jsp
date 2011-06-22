@@ -8,11 +8,11 @@
     </div>
 
     <ul class="links">
-        <li><a href="http://topcoder.com/home/contact-us">Contact Us</a></li>
+        <li><a href="https://topcoder.com/home/contact-us">Contact Us</a></li>
         <li><link:help/></li>
-        <li><a href="http://topcoder.com/home/help">Video Tutorials</a></li>
-        <li><a href="http://www.topcoder.com/studio">Studio</a></li>
-        <li><a href="http://www.topcoder.com">TopCoder.com</a></li>
+        <li><a href="https://topcoder.com/home/help">Video Tutorials</a></li>
+        <li><a href="https://www.topcoder.com/studio">Studio</a></li>
+        <li><a href="https://www.topcoder.com">TopCoder.com</a></li>
     </ul>
 
 </div><!-- End .box -->
