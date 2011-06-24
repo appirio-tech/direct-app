@@ -228,8 +228,8 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
 
         boolean isFirstCall = this.viewData.isShowJustForm();
 
-        // if user is cockpit admin
-        boolean isCockpitAdmin = DirectUtils.isCockpitAdmin(sessionData.getCurrentUser());
+        // if user is TcOperations
+        boolean isTcOperations = DirectUtils.isTcOperations(sessionData.getCurrentUser());
 
         // If client account IDs are not specified then use the first client account id
         boolean customerIdsAreSet = (customerIds != null) && (customerIds.length > 0);
@@ -242,7 +242,7 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
             form.setCustomerIds(customerIds);
 
             // if user is in the admin group change it to all customers
-            if(isCockpitAdmin) {
+            if(isTcOperations) {
                customerIds[0] = 0;
             }
 
@@ -318,7 +318,7 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
         // set view data for clients
 
         // if current user is cockpit admin, add "all customers" option
-        if (isCockpitAdmin) {
+        if (isTcOperations) {
             Map<Long, String> tmpCustomers = new LinkedHashMap<Long, String>();
 
             tmpCustomers.put(0L, "All Customers");
