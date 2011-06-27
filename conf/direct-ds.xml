@@ -62,7 +62,7 @@
 
     <no-tx-datasource>
         <jndi-name>DW</jndi-name>
-        <connection-url>jdbc:informix-sqli://@dw.database.server@:@database.port@/top@database.username@_dw:INFORMIXSERVER=@dw.database.INFORMIXSERVER@</connection-url>
+        <connection-url>jdbc:informix-sqli://@dw.database.server@:@database.port@/topcoder_dw:INFORMIXSERVER=@dw.database.INFORMIXSERVER@</connection-url>
         <driver-class>com.informix.jdbc.IfxDriver</driver-class>
         <!-- sql to call when connection is created -->
         <new-connection-sql>set lock mode to wait 5</new-connection-sql>
