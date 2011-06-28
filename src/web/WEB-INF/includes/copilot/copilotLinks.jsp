@@ -1,0 +1,50 @@
+<%@ include file="/WEB-INF/includes/taglibs.jsp" %>
+<div class="contestLinks">
+
+    <ul class="links">
+
+
+        <s:set name="contestLink"
+               value="'http://www.topcoder.com/tc?module=ProjectDetail&pj=' + viewData.contestStats.contest.id"/>
+
+        <s:if test="viewData.contestStats.draft">
+
+            <li id="previewContestButton">
+                <a href="<s:property value='#contestLink'/>" target="_blank"
+                   class="contestLinkIcon linkIconPreviewContest"
+                   style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">Preview Contest</a>
+            </li>
+
+        </s:if>
+        <s:else>
+
+            <li id="viewContestButton">
+                <a href="<s:property value='#contestLink'/>" target="_blank" class="contestLinkIcon linkIconViewContest"
+                   style="text-shadow: 0px 1px 1px rgb(255, 255, 255);">View Contest</a>
+            </li>
+        </s:else>
+
+
+        <li class="splitter"></li>
+
+
+        <li><a href="<s:property value='#contestLink'/>" target="_blank"
+               class="contestLinkIcon linkIconRegistrationPage">Registration
+            Page</a></li>
+
+
+        <li class="splitter"></li>
+
+
+        <li>
+            <a href="http://forums.topcoder.com/?module=Category&categoryID=${viewData.contestStats.forumId}"
+               target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+
+        </li>
+
+        <li class="splitter"></li>
+
+
+    </ul>
+    <div class="clear"></div>
+</div>
