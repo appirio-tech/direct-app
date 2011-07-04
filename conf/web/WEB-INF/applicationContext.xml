@@ -633,4 +633,9 @@
       class="com.topcoder.direct.services.view.action.notification.UpdateUserPreferencesAction"
       scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+
+    <bean id="projectContestsHealthAction"
+     class="com.topcoder.direct.services.view.action.project.ProjectContestsHealthAction"
+     scope="prototype" parent="baseDirectStrutsAction">
+   </bean>
 </beans>

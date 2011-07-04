@@ -4,11 +4,9 @@
 package com.topcoder.direct.services.view.dto.project;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 
@@ -32,8 +30,16 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  *   </ol>
  * </p>
  *
- * @author isv, TCSDEVELOPER
- * @version 1.1
+ * <p>
+ * Version 1.2 (Project Health Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Removed <code>contests</code> variable as project contests health status is now retrieved separately via AJAX
+ *     call.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv
+ * @version 1.2
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
                                                              UpcomingActivitiesDTO.Aware,
@@ -64,17 +70,6 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * @since 1.0.1
      */
     private EnterpriseDashboardProjectStatDTO dashboardProjectStat;
-
-    /**
-     * <p>
-     * A map of <code>ContestBriefDTO</code> and
-     * <code>ContestHealthDTO</code> providing statistics on
-     * contest.
-     * </p>
-     *
-     * @since 1.0.1
-     */
-    private Map<ContestBriefDTO, ContestHealthDTO> contests;
 
     /**
      * <p>
@@ -162,25 +157,5 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
     public void setDashboardProjectStat(
             EnterpriseDashboardProjectStatDTO dashboardProjectStat) {
         this.dashboardProjectStat = dashboardProjectStat;
-    }
-
-    /**
-     * Retrieves the contests field.
-     *
-     * @return the contests
-     * @since 1.0.1
-     */
-    public Map<ContestBriefDTO, ContestHealthDTO> getContests() {
-        return contests;
-    }
-
-    /**
-     * Sets the contests field.
-     *
-     * @param contests the contests to set
-     * @since 1.0.1
-     */
-    public void setContests(Map<ContestBriefDTO, ContestHealthDTO> contests) {
-        this.contests = contests;
     }
 }

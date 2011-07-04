@@ -20,6 +20,7 @@ import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
@@ -56,7 +57,7 @@ import java.util.Map.Entry;
  * </p>
  *
  * <p>
- * Version 2.1.1 (Direct Software Submisison Viewer Assembly 1.0) Change notes:
+ * Version 2.1.1 (Direct Software Submission Viewer Assembly 1.0) Change notes:
  *   <ol>
  *     <li>Added {@link #setSoftwareSubmissionsData(SoftwareContestSubmissionsDTO)} method.</li>
  *   </ol>
@@ -186,8 +187,8 @@ import java.util.Map.Entry;
  * <p>
  * Version 2.6.1 (TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly) Change notes:
  *   <ol>
- *     <li>Added getDashboardCostBreakDown(long[], long[])} method to get the cost break down data for contests or
- *     market.</li>
+ *     <li>Added {@link #getDashboardCostBreakDown(long[], long[], Date, Date)} method to get the cost break down data 
+ *     for contests or market.</li>
  *   </ol>
  * </p>
  *
@@ -213,9 +214,17 @@ import java.util.Map.Entry;
  *     </li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.6.5 (Project Health Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getStudioContestDashboardData(long, boolean)} method to calculate current and next phases for
+ *     <code>Studio</code> contests.</li>
+ *   </ol>
+ * </p>
  * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.4
+ * @version 2.6.5
  */
 public class DataProvider {
 
@@ -3136,7 +3145,68 @@ public class DataProvider {
         dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
         dto.setTotalForumPostsCount(totalForum);
 
+        // Set current and next phases
+        StudioCompetition studioCompetition 
+            = DirectUtils.getContestServiceFacade().getContest(DirectUtils.getTCSubjectFromSession(), contestId);
+        Date startTime = studioCompetition.getStartTime().toGregorianCalendar().getTime();
+        Date endTime = studioCompetition.getEndTime().toGregorianCalendar().getTime();
+        Date winnerAnnouncementTime = studioCompetition.getContestData().getWinnerAnnoucementDeadline().toGregorianCalendar().getTime();
+        Date milestoneDate = null;
+        if (studioCompetition.getContestData().isMultiRound()) {
+            milestoneDate = studioCompetition.getContestData().getMultiRoundData().
+                                              getMilestoneDate().toGregorianCalendar().getTime();
+        }
+        Date now = new Date();
+        
+        ProjectPhaseDTO registrationPhase = createProjectPhaseDTO("Registrations", startTime, endTime);
+        ProjectPhaseDTO r1SubmissionsPhase = null;
+        ProjectPhaseDTO r1FeedbackPhase = null;
+        ProjectPhaseDTO r2SubmissionsPhase;
+        if (milestoneDate != null) {
+            r1SubmissionsPhase = createProjectPhaseDTO("R1 Submissions", startTime, milestoneDate);
+            r1FeedbackPhase = createProjectPhaseDTO("R1 Feedback", milestoneDate, endTime);
+            r2SubmissionsPhase = createProjectPhaseDTO("R2 Submissions", milestoneDate, endTime);
+        } else {
+            r2SubmissionsPhase = createProjectPhaseDTO("R2 Submissions", startTime, endTime);
+        }
+        ProjectPhaseDTO winnerAnnouncementPhase = createProjectPhaseDTO("Winner Announcement", endTime, 
+                                                                        winnerAnnouncementTime);
+        
+        boolean isInRegistration = registrationPhase.getStartTime().compareTo(now) <= 0 
+                                   && registrationPhase.getEndTime().compareTo(now) >= 0;
+        boolean isInMilestoneSubmission = false;
+        boolean isInMilestoneFeedback = false;
+        if (milestoneDate != null) {
+            isInMilestoneSubmission = r1SubmissionsPhase.getStartTime().compareTo(now) <= 0 
+                                      && r1SubmissionsPhase.getEndTime().compareTo(now) >= 0;
+            isInMilestoneFeedback = r1FeedbackPhase.getStartTime().compareTo(now) <= 0 
+                                    && r1FeedbackPhase.getEndTime().compareTo(now) >= 0;
+        }
+        boolean isInSubmission = r2SubmissionsPhase.getStartTime().compareTo(now) <= 0 
+                                 && r2SubmissionsPhase.getEndTime().compareTo(now) >= 0;
+        boolean isInWinnerAnnouncement = winnerAnnouncementPhase.getStartTime().compareTo(now) <= 0 
+                                         && winnerAnnouncementPhase.getEndTime().compareTo(now) >= 0;
 
+        if (isInRegistration) {
+            dto.setCurrentPhase(registrationPhase);
+            if (isInMilestoneSubmission) {
+                dto.setNextPhase(r1SubmissionsPhase);
+            } else {
+                dto.setNextPhase(r2SubmissionsPhase);
+            }
+        } else if (isInMilestoneSubmission) {
+            dto.setCurrentPhase(r1SubmissionsPhase);
+            dto.setNextPhase(r1FeedbackPhase);
+        } else if (isInMilestoneFeedback) {
+            dto.setCurrentPhase(r1FeedbackPhase);
+            dto.setNextPhase(r2SubmissionsPhase);
+        } else if (isInSubmission) {
+            dto.setCurrentPhase(r2SubmissionsPhase);
+            dto.setNextPhase(winnerAnnouncementPhase);
+        } else if (isInWinnerAnnouncement) {
+            dto.setCurrentPhase(winnerAnnouncementPhase);
+        }
+        
         return dto;
     }
 
@@ -3537,6 +3607,7 @@ public class DataProvider {
      */
     private static void setRegistrationPhaseStatus(ContestHealthDTO dto, double reliabilityTotal,
                                                    long registrationPhaseStatus) {
+        dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
         if (registrationPhaseStatus == 2) {
             if (reliabilityTotal >= 200) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
@@ -3686,6 +3757,23 @@ public class DataProvider {
         }
 
         return issuesMap;
+    }
+
+    /**
+     * <p>Constructs new <code>ProjectPhaseDTO</code> instance.</p>
+     * 
+     * @param phaseName a <code>String</code> providing the phase name.
+     * @param startTime a <code>Date</code> providing the phase start time. 
+     * @param endTime a <code>Date</code> providing the phase end time.
+     * @return a <code>ProjectPhaseDTO</code> instance.
+     * @since 2.6.5
+     */
+    private static ProjectPhaseDTO createProjectPhaseDTO(String phaseName, Date startTime, Date endTime) {
+        ProjectPhaseDTO phase = new ProjectPhaseDTO();
+        phase.setStartTime(startTime);
+        phase.setEndTime(endTime);
+        phase.setPhaseName(phaseName);
+        return phase;
     }
 }
 

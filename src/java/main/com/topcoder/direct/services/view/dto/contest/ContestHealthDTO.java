@@ -16,8 +16,15 @@ import java.io.Serializable;
  *     - Add the property contestIssuesColor
  * </p>
  *
- * @author Veve
- * @version 1.1 
+ * <p>
+ * Version 1.2 (Project Health Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #dashboardData} property.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author Veve, isv
+ * @version 1.2 
  */
 public class ContestHealthDTO implements Serializable {
 
@@ -95,6 +102,13 @@ public class ContestHealthDTO implements Serializable {
      * @since 1.1
      */
     private DashboardStatusColor contestIssuesColor;
+
+    /**
+     * <p>A <code>ContestDashboardDTO</code> providing the dashboard data for contest.</p>
+     * 
+     * @since 1.2
+     */
+    private ContestDashboardDTO dashboardData;
 
     /**
      * <p>Constructs new <code>ContestHealthDTO</code> instance. This implementation does nothing.</p>
@@ -364,5 +378,25 @@ public class ContestHealthDTO implements Serializable {
      */
     public void setContestIssuesColor(DashboardStatusColor contestIssuesColor) {
         this.contestIssuesColor = contestIssuesColor;
+    }
+
+    /**
+     * <p>Gets the dashboard data for contest.</p>
+     *
+     * @return a <code>ContestDashboardDTO</code> providing the dashboard data for contest.
+     * @since 1.2
+     */
+    public ContestDashboardDTO getDashboardData() {
+        return this.dashboardData;
+    }
+
+    /**
+     * <p>Sets the dashboard data for contest.</p>
+     *
+     * @param dashboardData a <code>ContestDashboardDTO</code> providing the dashboard data for contest.
+     * @since 1.2
+     */
+    public void setDashboardData(ContestDashboardDTO dashboardData) {
+        this.dashboardData = dashboardData;
     }
 }

@@ -104,11 +104,13 @@
    display:inline-block;
    background: url(../images/red-icon.png) no-repeat left center;
    padding-left:18px;
+   min-height:13px;
 }
 .dashboardTable td  a.orange,.dashboardTable td  label.orange{
    display:inline-block;
    background: url(../images/orange-icon.png) no-repeat left center;
    padding-left:18px;
+   min-height:13px;
 }
 .dashboardTable.contestDashboard td{
     padding-top:7px;
@@ -122,6 +124,7 @@
    display:inline-block;
    background: url(../images/green-icon.png) no-repeat left center;
    padding-left:18px;
+   min-height:13px;
 }
 
 
@@ -317,4 +320,209 @@
 #validationErrors {
     color: red;
     font-size: 12px;
+}
+
+/* Edit 05/16/2011 pj=30017558 */
+.dashboardTable td  a.longWordsBreak{
+	background-position:left 1px;
+}
+.dashboardTable td  a.longWordsBreak:hover,
+TABLE.project TBODY TD a.longWordsBreak:hover{
+	text-decoration:none;
+}
+
+.dashboardTable td span.green{
+	margin-top:3px;
+}
+.projectHealthBody td span.green,
+.projectHealthBody td span.orange,
+.projectHealthBody td span.red{
+	cursor:pointer;
+}
+
+.projectHealthHeader th{
+	height:28px;
+	background: url(../images/dashboard-table-bg.png) repeat-x left -34px;
+}
+/*.projectHealthBody{*/
+	/*min-height:10px;*/
+/*}*/
+/*.dashboardTable .projectHealthBody table{*/
+	/*width:auto;*/
+/*}*/
+.projectHealthHeader table tbody,
+.projectHealthBody table thead{
+	display:none;
+}
+.projectHealthBody .unitContent{
+	padding-left:6px;
+	text-align:left;
+}
+.projectHealthBody  td.first{
+    padding-left:8px;
+}
+
+##projectHealthTable {
+    width: 100%;
+}
+
+.projectHealthBody #projectHealthTable tr.hover td{
+	background-color:#FF9;
+}
+.dateTruncateFormat{
+	display:none;
+}
+.alignTop{
+	vertical-align:top;
+}
+.projectHealthHeader thead th div{
+	overflow:hidden;
+	min-width:10px;
+}
+
+
+/* new tooltips */
+.tooltipBox{
+	position: absolute;
+	width: 182px;
+	z-index: 999;
+	display: none;
+	color: #000;
+	background-color: transparent;
+}
+
+	.tooltipBox SPAN.arrow{
+		position: absolute;
+		left: 87px;
+		top:auto;
+		bottom: -4px;
+		display: block;
+		width: 7px;
+		height: 5px;
+		background: url(../images/popup_new_arrow.png) no-repeat;
+	}
+	
+	.tooltipHeader{
+		height:26px;
+		background:url(../images/tooltip_new_green.png) left top no-repeat;
+		padding-left:3px;
+		overflow:hidden;
+	}
+		.tooltipHeader .tooltipHeaderRight{
+			height:26px;
+			background:url(../images/tooltip_new_green.png) right -52px no-repeat;
+			padding-right:3px;
+		}
+			.tooltipHeader .tooltipHeaderCenter{
+				height:26px;
+				background:url(../images/tooltip_new_green.png) left -26px repeat-x;
+			}
+			.tooltipHeader h2{
+				font-size: 12px;
+				color: #FFF;
+				background-color: transparent;
+				padding-top: 6px;
+				padding-left: 7px;
+				margin: 0;
+			}
+	.tooltipBox .tooltipContent{
+		border-left:1px solid #bdbdbd;
+		border-right:1px solid #bdbdbd;
+		padding: 10px 9px 8px;
+		font-size: 12px;
+		color: #333;
+		background-color:#fffffd;
+		}
+		.tooltipBox .tooltipContent H3{
+			color: #333333;
+			margin-bottom:3px;
+		}
+		.tooltipBox .tooltipContent P{
+			padding:2px 0;
+		}
+			.tooltipBox .tooltipContent P a{
+				color:#333333;
+				text-decoration:underline;
+			}
+	.tooltipFooter{
+		height:3px;
+		background:url(../images/tooltip_new_cornner.png) left top no-repeat;
+		padding-left:3px;
+		overflow:hidden;
+	}
+		.tooltipFooter .tooltipFooterRight{
+			height:3px;
+			background:url(../images/tooltip_new_cornner.png) right -6px no-repeat;
+			padding-right:3px;
+		}
+			.tooltipFooter .tooltipFooterCenter{
+				height:3px;
+				background:url(../images/tooltip_new_cornner.png) left -3px repeat-x;
+			}
+	.tooltipBox .tooltipContent a.viewDetailsLink{
+		float:right;
+		display:inline;
+	}
+	.tooltipBox .tooltipContent P a:hover,
+	.tooltipBox .tooltipContent a.viewDetailsLink:hover{
+		text-decoration:none;
+	}
+	
+	/* Green Tooltip */
+	.greenToolTipBox .tooltipHeader,
+	.greenToolTipBox .tooltipHeaderRight,
+	.greenToolTipBox .tooltipHeaderCenter{
+		background-image: url(../images/tooltip_new_green.png);
+	}
+	
+	/* Orange Tooltip */
+	.orangeToolTipBox .tooltipHeader,
+	.orangeToolTipBox .tooltipHeaderRight,
+	.orangeToolTipBox .tooltipHeaderCenter{
+		background-image: url(../images/tooltip_new_orange.png);
+	}
+	
+	/* Red caption*/
+	.redToolTipBox .tooltipHeader,
+	.redToolTipBox .tooltipHeaderRight,
+	.redToolTipBox .tooltipHeaderCenter{
+		background-image: url(../images/tooltip_new_red.png);
+	}
+
+/* End Edit 05/16/2011 */
+.dataTables_empty{ 
+	border: none!important; 
+	background: none!important;  
+    font-size: 21px!important;
+    height: 100% !important;
+    padding: 50px 0!important;
+    text-align: center;
+	color: #d6d3d8!important;
+}
+
+#loaderProjectHealth{
+    float: left;
+    text-align: center;
+    /*height: 156px;*/
+    width: 100%;
+    line-height: 144px;
+}
+
+/*#loaderProjectHealth img {*/
+    /*margin-top: 58px;*/
+/*}*/
+
+#loaderProjectHealthWrapper td {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    height: 156px;
+}
+
+.dataTables_scrollBody {
+    overflow-x: hidden;
+}
+
+#projectHealthTableBody tr {
+    height: 39px;
 }

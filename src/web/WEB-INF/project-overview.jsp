@@ -1,7 +1,7 @@
 <%--
   - Author: Veve, isv
   -
-  - Version: 1.0.3
+  - Version: 1.0.4
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -13,6 +13,8 @@
   - -add unresolved issues and ongoing bug races to project status.
   - Version 1.0.3 - Direct - TC Cockpit Contest Duration Calculation Updates Assembly Change Note:
   - added Average Contest Duration 
+  - Version 1.0.4 - Direct - TC Cockpit Project Health Update Assembly Change Note:
+  - Added new columns to Project Health area; the data for Project Health area is loaded via AJAX call now 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -22,10 +24,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css" />
+    <![endif]-->
     <ui:projectPageType tab="overview"/>
     <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js"></script>
+    <script type="text/javascript">
+        var tcDirectProjectId = <s:property value="formData.projectId"/>;
+    </script>
 </head>
 
 <body id="page">
@@ -56,20 +66,26 @@
                                         <a href="javascript:void(0)" class="expand">Project Health</a>
                                     </dt>
                                     <dd>
-                                        <table  cellpadding="0" cellspacing="0" id="projectHealthTable">
-                                            <div class="dashboardTableHeader">
+                                        <div class="projectHealthHeader">
+                                            <table cellpadding="0" cellspacing="0">
                                                 <colgroup>
-                                                    <col width="40%" />
+                                                    <col width="26%" />
+                                                    <col width="13%" />
                                                     <col width="10%" />
-                                                    <col width="10%" />
-                                                    <col width="10%" />
-                                                    <col width="10%" />
-                                                    <col width="10%"/>
-                                                    <col width="10%"/>
+                                                    <col width="14%" />
+                                                    <col width="7%" />
+                                                    <col width="6%"/>
+                                                    <col width="6%"/>
+                                                    <col width="6%" />
+                                                    <col width="6%"/>
+                                                    <col width="6%"/>
                                                 </colgroup>
                                                 <thead>
                                                     <tr>
                                                         <th class="first">Contest</th>
+                                                        <th>Type</th>
+                                                        <th>Current Phase</th>
+                                                        <th>Next Phase</th>
                                                         <th>Timeline</th>
                                                         <th>Registration</th>
                                                         <th>Review</th>
@@ -78,146 +94,33 @@
                                                         <th>Issue Tracking</th>
                                                     </tr>
                                                 </thead>
-                                            </div>
-                                            <div>
-                                                <!--
+                                            </table>
+                                        </div>
+                                        <div class="projectHealthBody">
+                                            <table  cellpadding="0" cellspacing="0" id="projectHealthTable">
                                                 <colgroup>
-                                                    <col width="40%" />
+                                                    <col width="26%" />
+                                                    <col width="13%" />
                                                     <col width="10%" />
-                                                    <col width="10%" />
-                                                    <col width="10%" />
-                                                    <col width="10%" />
-                                                    <col width="10%" />
+                                                    <col width="14%" />
+                                                    <col width="7%" />
+                                                    <col width="6%"/>
+                                                    <col width="6%"/>
+                                                    <col width="6%" />
+                                                    <col width="6%"/>
+                                                    <col width="6%"/>
                                                 </colgroup>
-                                                -->
-                                                <tbody>
-                                                    <!--
-                                                        <th>Timeline</th>
-                                                        <th>Registration</th>
-                                                        <th>Review</th>
-                                                        <th>Forum</th>
-                                                        <th>Dependencies</th>
-                                                    -->
-                                                        
-                                                    <s:iterator value="viewData.contests" status="sta">
-                                                        <tr <c:if test="${sta.even}">class='even'</c:if>>
-                                                            <td class="first">
-                                                                <s:if test="%{#attr['key'].software}" >
-                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-                                                                    <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                                <c:out value="${key.title}"/></a>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                    <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                                <c:out value="${key.title}"/></a>
-                                                                    </s:else>
-                                                                </s:if>
-                                                                <s:else>
-                                                                <a class="longWordsBreak ${value.contestStatusColor.name}" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <c:out value="${key.title}"/></a>
-                                                                </s:else>
-                                                            </td>
-                                                            <td>
-                                                                <s:if test="%{#attr['key'].software}" >
-                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.phaseStatusColor.name}"></span></a>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.phaseStatusColor.name}"></span></a>
-                                                                    </s:else>
-                                                                </s:if>
-                                                                <s:else>
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.phaseStatusColor.name}"></span></a>
-                                                                </s:else>
-                                                            </td>
-                                                            <td>
-                                                                <s:if test="%{#attr['key'].software}" >
-                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.regStatusColor.name}"></span></a>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.regStatusColor.name}"></span></a>
-                                                                    </s:else>
-                                                                </s:if>
-                                                                <s:else>
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.regStatusColor.name}"></span></a>
-                                                                </s:else>
-                                                            </td>
-                                                            <td>
-                                                                <s:if test="%{#attr['key'].software}" >
-                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.reviewersSignupStatusColor.name}"></span></a>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.reviewersSignupStatusColor.name}"></span></a>
-                                                                    </s:else>
-                                                                </s:if>
-                                                                <s:else>
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.reviewersSignupStatusColor.name}"></span></a>
-                                                                </s:else>
-                                                            </td>
-                                                            <td>
-                                                                <s:if test="%{#attr['key'].software}" >
-                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.forumActivityStatusColor.name}"></span></a>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.forumActivityStatusColor.name}"></span></a>
-                                                                    </s:else>
-                                                                </s:if>
-                                                                <s:else>
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.forumActivityStatusColor.name}"></span></a>
-                                                                </s:else>
-                                                            </td>
-                                                            <td>
-                                                                 <s:if test="%{#attr['key'].software}" >
-                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.dependenciesStatusColor.name}"></span></a>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.dependenciesStatusColor.name}"></span></a>
-                                                                    </s:else>
-                                                                </s:if>
-                                                                <s:else>
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.dependenciesStatusColor.name}"></span></a>
-                                                                </s:else>
-                                                            </td>
-                                                            <td>
-                                                                 <s:if test="%{#attr['key'].software}" >
-                                                                    <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-                                                                    <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.contestIssuesColor.name}"></span></a>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                    <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.contestIssuesColor.name}"></span></a>
-                                                                    </s:else>
-                                                                </s:if>
-                                                                <s:else>
-                                                                <a href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['key'].id}"/></s:url>">
-                                                                    <span class="${value.contestIssuesColor.name}"></span></a>
-                                                                </s:else>
-                                                            </td>
-                                                        </tr>
-                                                    </s:iterator>
+                                                <tbody id="projectHealthTableBody">
+                                                    <tr id="loaderProjectHealthWrapper">
+                                                        <td colspan="10">
+                                                            <div id="loaderProjectHealth">
+                                                                &nbsp;<img src="/images/ajax-loader.gif" alt="Loading" width="220" height="19"/>&nbsp;
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
-                                            </div>
-                                        </table>
+                                            </table>
+                                        </div>
                                     </dd>
                                 </dl>
                             </div>
@@ -386,6 +289,10 @@
 <!-- End #wrapper -->
 
 <jsp:include page="includes/popups.jsp"/>
+
+<!-- .tooltipArea -->
+<div class="tooltipArea"></div>
+<!-- end .tooltipArea -->
 
 </body>
 <!-- End #page -->

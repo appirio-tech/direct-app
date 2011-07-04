@@ -8,7 +8,6 @@ import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -20,7 +19,6 @@ import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.util.logging.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,8 +61,17 @@ import java.util.Map;
  *     <li>Fixed typo in name of {@link DashboardHelper#setContestStatusColor(ContestHealthDTO)} method.</li>
  *   </ol>
  * </p>
- * @author isv, Veve, isv
- * @version 1.0.5
+ *
+ * <p>
+ * Version 1.0.6 (Project Health Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Removed <code>setDashboardContests</code> method as project contests health status is now retrieved
+ *     separately via AJAX call.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author isv, Veve
+ * @version 1.0.6
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -136,9 +143,6 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 // set dashboard project status
                 setDashboardProjectStat();
 
-                // set dashboard contests
-                setDashboardContests();
-
                 // get project issues
                 List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
                 Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
@@ -148,28 +152,19 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
                 // update dashboard health
                 for(Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
-                    ContestHealthDTO health = getViewData().getContests().get(contestIssues.getKey());
-
-                    if (health != null) {
-                        health.setUnresolvedIssuesNumber(contestIssues.getValue().getUnresolvedIssuesNumber());
-
-                        // update health color
-                        DashboardHelper.setContestStatusColor(health);
-                    }
-
                     totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
                     totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
                 }
 
-				// set the project name if it's not set yet
-				for(ProjectBriefDTO project : getViewData().getUserProjects().getProjects()) {
-					if(project.getId() == getSessionData().getCurrentProjectContext().getId()) {
-						getSessionData().getCurrentProjectContext().setName(project.getName());
-					}
-				}
+                // set the project name if it's not set yet
+                for (ProjectBriefDTO project : getViewData().getUserProjects().getProjects()) {
+                    if (project.getId() == getSessionData().getCurrentProjectContext().getId()) {
+                        getSessionData().getCurrentProjectContext().setName(project.getName());
+                    }
+                }
 
-                viewData.getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
-                viewData.getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
+                getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
+                getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
 
 
             } catch (Exception e) {
@@ -197,24 +192,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
         List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats = DataProvider
                 .getDirectProjectStats(tcDirectProjects, getSessionData().getCurrentUserId());
-        viewData.setDashboardProjectStat(enterpriseProjectStats.get(0));
-        DashboardHelper.setAverageContestDurationText(viewData.getDashboardProjectStat());
+        getViewData().setDashboardProjectStat(enterpriseProjectStats.get(0));
+        DashboardHelper.setAverageContestDurationText(getViewData().getDashboardProjectStat());
     }
-
-    /**
-     * Set dashboard contests data.
-     * <p/>
-     * <p>Updated in 1.0.2: use DateProvider.getProjectContestsHealth to get contest health data of all the active
-     * and scheduled contests of this project.</p>
-     *
-     * @throws Exception if any exception occurs
-     */
-    private void setDashboardContests() throws Exception {
-
-         Map<ContestBriefDTO, ContestHealthDTO> contests =
-            DataProvider.getProjectContestsHealth(getSessionData().getCurrentUserId(), formData.getProjectId(), true);
-
-        viewData.setContests(contests);
-    }
-
 }
