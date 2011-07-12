@@ -83,8 +83,15 @@ import java.util.List;
  * </ul>
  * </p>
  * 
- * @author fabrizyo, FireIce, isv, Veve
- * @version 1.2.5
+ * <p>
+ * Version 1.2.6 - TC Direct Contest Dashboard Update Assembly version 1.0 Change Note
+ * <ul>
+ * <li>Updated {@link #executeAction()} method to set phases if it is studio contest.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author fabrizyo, FireIce, isv, Veve, TCSASSEMBLER
+ * @version 1.2.6
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -213,7 +220,14 @@ public class GetContestAction extends ContestAction {
             getViewData().setContestStats(contestStats);
 
             getViewData().setDashboard(DataProvider.getContestDashboardData(contestId, true, false));
-
+            getViewData().getDashboard().setAllPhases(DirectUtils.getStudioPhases(studioCompetition));
+            getViewData().getDashboard().setStartTime(
+                    getViewData().getDashboard().getAllPhases().get(0).getStartTime());
+            getViewData().getDashboard().setEndTime(
+                    getViewData().getDashboard().getAllPhases()
+                            .get(getViewData().getDashboard().getAllPhases().size() - 1)
+                            .getEndTime());
+            
             // set contest permission
             viewData.setHasContestWritePermission(DirectUtils
                     .hasWritePermission(this, currentUser, contestId, true));
@@ -226,6 +240,10 @@ public class GetContestAction extends ContestAction {
             ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
             getViewData().setContestStats(contestStats);
             getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, false, false));
+            
+            // adjust phases
+            getViewData().setDashboard(DirectUtils.adjustSoftwarePhases(getViewData().getDashboard()));
+            
             if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
             {
                 contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());

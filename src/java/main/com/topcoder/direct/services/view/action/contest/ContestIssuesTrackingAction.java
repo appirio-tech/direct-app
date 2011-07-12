@@ -29,8 +29,12 @@ import java.util.List;
  * - refactor the logic of getting ContestIssuesTrackingDTO into method DataProvider.getContestIssues
  * </p>
  *
- * @author Veve
- * @version 1.1
+ * <p>Version 1.2 (TC Direct Contest Dashboard Update Assembly version 1.0) change notes:
+ * - update executeAction method to set contest dashboard data.
+ * </p>
+ *
+ * @author Veve, TCSASSEMBLER
+ * @version 1.2
  */
 public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
 
@@ -107,6 +111,9 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         // Set current project context based on selected contest
         this.sessionData.setCurrentProjectContext(contestStats.getContest().getProject());
         this.sessionData.setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
+        
+        DirectUtils.setDashboardData(currentUser, contestId, viewData,
+                getContestServiceFacade(), isSoftware());
     }
 
 

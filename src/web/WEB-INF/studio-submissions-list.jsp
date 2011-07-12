@@ -4,9 +4,12 @@
   - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: added Winners section.
   - Version 1.4 (TC Direct Release Assembly 7) change Notes: added hasContestWritePermission field.  
   -
-  - Version: 1.4
+  - Version 1.5 (TC Direct Contest Dashboard Update Assembly) change Notes: 
+  - 1.Add dashboard header.  
+  -  
+  - Version: 1.5
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Studio contest in a list view.
 --%>
@@ -52,6 +55,8 @@
                                         value="viewData.contestStats.contest.title"/></h2>
                             </div>
                             <!-- End .areaHeader -->
+							
+							<jsp:include page="includes/contest/dashboard.jsp"/>
                             <jsp:include page="includes/contest/contestStats.jsp"/>
                             <!-- End .projectsStats -->
                             <div class="container2 tabs3Container">

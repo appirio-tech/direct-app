@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.dto.contest;
 import com.topcoder.direct.services.view.dto.UserDTO;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,8 +29,18 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author isv, TCSDEVELOPER
- * @version 1.1
+ * <p>
+ * Version 1.2 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Add allPhases : List<ProjectPhaseDTO> field and corresponding get/set methods.</li>
+ *     <li>Add startTime : Date field and corresponding get/set methods.</li>
+ *     <li>Add endTime : Date field and corresponding get/set methods.</li>
+ *     <li>Add regProgressPercent : int field and corresponding get/set methods.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.2
  */
 public class ContestDashboardDTO extends ContestHealthDTO implements Serializable {
 
@@ -88,6 +99,34 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      */
     private ProjectPhaseDTO nextPhase;
 
+    /**
+     * <p>A list of <code>ProjectPhaseDTO</code> providing the details for all phases.</p>
+     * 
+     * @since 1.2
+     */
+    private List<ProjectPhaseDTO> allPhases;
+    
+    /**
+     * The start time.
+     * 
+     * @since 1.2
+     */
+    private Date startTime;
+    
+    /**
+     * The end time.
+     * 
+     * @since 1.2
+     */
+    private Date endTime;
+    
+    /**
+     * The registration progress percent data.
+     * 
+     * @since 1.2
+     */
+    private int regProgressPercent;
+    
     /**
      * <p>
      * Constructs new <code>ContestDashboardDTO</code> instance. This
@@ -294,5 +333,85 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      */
     public void setCurrentPhase(ProjectPhaseDTO currentPhase) {
         this.currentPhase = currentPhase;
+    }
+
+    /**
+     * Gets the all phases field.
+     * 
+     * @return the allPhases
+     * @since 1.2
+     */
+    public List<ProjectPhaseDTO> getAllPhases() {
+        return allPhases;
+    }
+
+    /**
+     * Sets the all phases field.
+     *
+     * @param allPhases the allPhases to set
+     * @since 1.2
+     */
+    public void setAllPhases(List<ProjectPhaseDTO> allPhases) {
+        this.allPhases = allPhases;
+    }
+
+    /**
+     * Gets the startTime field.
+     * 
+     * @return the startTime
+     * @since 1.2
+     */
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Sets the startTime field.
+     *
+     * @param startTime the startTime to set
+     * @since 1.2
+     */
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    /**
+     * Gets the endTime field.
+     * 
+     * @return the endTime
+     * @since 1.2
+     */
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Sets the endTime field.
+     *
+     * @param endTime the endTime to set
+     * @since 1.2
+     */
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    /**
+     * Gets the regProgressPercent field.
+     * 
+     * @return the regProgressPercent
+     * @since 1.2
+     */
+    public int getRegProgressPercent() {
+        return regProgressPercent;
+    }
+
+    /**
+     * Sets the regProgressPercent field.
+     *
+     * @param regProgressPercent the regProgressPercent to set
+     * @since 1.2
+     */
+    public void setRegProgressPercent(int regProgressPercent) {
+        this.regProgressPercent = regProgressPercent;
     }
 }

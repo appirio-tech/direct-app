@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -9,8 +9,13 @@ import java.util.Date;
 /**
  * <p>A <code>DTO</code> providing details for single project phase.</p>
  *
- * @author isv
- * @version 1.0 (Direct Contest Dashboard assembly)
+ * <p>Version 1.6 (TC Direct Contest Dashboard Update Assembly) change notes:
+ * - add phase type and corresponding get/set methods.
+ * - add phase status and corresponding get/set methods.
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.1 (Direct Contest Dashboard assembly)
  */
 public class ProjectPhaseDTO implements Serializable {
 
@@ -28,6 +33,27 @@ public class ProjectPhaseDTO implements Serializable {
      * <p>A <code>Date</code> providing the end time for the phase.</p>
      */
     private Date endTime;
+    
+    /**
+     * The phase type.
+     * 
+     * @since 1.1
+     */
+    private ProjectPhaseType phaseType;
+    
+    /**
+     * The phase status
+     * 
+     * @since 1.1
+     */
+    private ProjectPhaseStatus phaseStatus;
+    
+    /**
+     * The num.
+     * 
+     * @since 1.1
+     */
+    private int num;
 
     /**
      * <p>Constructs new <code>ProjectPhaseDTO</code> instance. This implementation does nothing.</p>
@@ -87,5 +113,70 @@ public class ProjectPhaseDTO implements Serializable {
      */
     public void setPhaseName(String phaseName) {
         this.phaseName = phaseName;
+    }
+
+    /**
+     * Gets the phaseType field.
+     * 
+     * @return the phaseType
+     * @since 1.1
+     */
+    public ProjectPhaseType getPhaseType() {
+        return phaseType;
+    }
+
+    /**
+     * Sets the phaseType field.
+     *
+     * @param phaseType the phaseType to set
+     * @since 1.1
+     */
+    public void setPhaseType(ProjectPhaseType phaseType) {
+        this.phaseType = phaseType;
+    }
+
+    /**
+     * Gets the phaseStatus field.
+     * 
+     * @return the phaseStatus
+     * @since 1.1
+     */
+    public ProjectPhaseStatus getPhaseStatus() {
+        return phaseStatus;
+    }
+
+    /**
+     * Sets the phaseStatus field.
+     *
+     * @param phaseStatus the phaseStatus to set
+     * @since 1.1
+     */
+    public void setPhaseStatus(ProjectPhaseStatus phaseStatus) {
+        this.phaseStatus = phaseStatus;
+    }
+
+    /**
+     * Get the num field.
+     *
+     * @return the num
+     */
+    public int getNum() {
+        return num;
+    }
+
+    /**
+     * Set the num field.
+     *
+     * @param num the num to set
+     */
+    public void setNum(int num) {
+        this.num = num;
+    }
+    
+    /**
+     * num plus one.
+     */
+    public void increaseNum() {
+        this.num++;
     }
 }

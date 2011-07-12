@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -29,7 +29,6 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- *
  * <p>
  * Version 1.0.2 (Direct Manage Copilot Postings Assembly 1.0) Change notes:
  *   <ol>
@@ -37,8 +36,15 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.0.2 (Direct Software Submission Viewer assembly)
+ * <p>
+ * Version 1.0.3 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to set contest dashboard data.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.0.3 (Direct Software Submission Viewer assembly)
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -134,6 +140,9 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
             // set whether to show spec review
             viewData.setShowSpecReview(getSpecificationReviewService()
                     .getSpecificationReview(currentUser, getProjectId()) != null);
+            
+            DirectUtils.setDashboardData(currentUser, getProjectId(), viewData,
+                    getContestServiceFacade(), isSoftware());
         }
     }
 }

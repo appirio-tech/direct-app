@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.specreview;
@@ -28,6 +28,7 @@ import com.topcoder.management.scorecard.data.Group;
 import com.topcoder.management.scorecard.data.Question;
 import com.topcoder.management.scorecard.data.Section;
 import com.topcoder.project.phases.PhaseStatus;
+import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
 import com.topcoder.service.review.comment.specification.SpecReviewCommentService;
 import com.topcoder.service.review.comment.specification.UserComment;
@@ -71,9 +72,18 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * transactions. Hence this class can be considered as being effectively thread
  * safe.
  * </p>
- * 
- * @author caru, TCSDEVELOPER
- * @version 1.0
+ *
+ * <p>
+ * Version 1.1 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #isSoftware()} method.</li>
+ *     <li>Added {@link #contestServiceFacade} field and corresponding get/set methods.</li>
+ *     <li>Updated {@link #execute()} method to set contest dashboard data.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author caru, TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.1
  */
 public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
@@ -130,6 +140,18 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
      */
     private UserService userService;
 
+    /**
+     * <p>
+     * Represents the contest service facade used to retrieve contest start date.
+     * <p>
+     *
+     * <p>
+     * Initially set to null, once set cannot be null. It set by setter and accessed by getter. Used in
+     * <code>execute</code> method.
+     * </p>
+     */
+    private ContestServiceFacade contestServiceFacade;
+    
     /**
      * Default constructor, creates new instance.
      */
@@ -284,6 +306,8 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             result.setShowSpecReview(true);
             
             setViewData(result);
+            DirectUtils.setDashboardData(getTCSubject(), getContestId(), viewData,
+                    contestServiceFacade, isSoftware());
             
             return SUCCESS;
         } catch (Exception e) {
@@ -401,5 +425,37 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * <p>
+     * Determines if it is software contest or not.
+     * </p>
+     *
+     * @return true if it is software contest
+     * @since 1.1
+     */
+    public boolean isSoftware() {
+        return !isStudio();
+    }
+
+    /**
+     * Gets the contestServiceFacade field.
+     * 
+     * @return the contestServiceFacade
+     * @since 1.1
+     */
+    public ContestServiceFacade getContestServiceFacade() {
+        return contestServiceFacade;
+    }
+
+    /**
+     * Sets the contestServiceFacade field.
+     *
+     * @param contestServiceFacade the contestServiceFacade to set
+     * @since 1.1
+     */
+    public void setContestServiceFacade(ContestServiceFacade contestServiceFacade) {
+        this.contestServiceFacade = contestServiceFacade;
     }
 }

@@ -1,9 +1,12 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version 1.0 (Direct Software Submission Viewer assembly)
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: TCSDEVELOPER, TCSASSEMBLER
+  - Version 1.1 (Direct Software Submission Viewer assembly)
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Software contest in a list view.
+  -
+  - Version 1.1 (TC Direct Contest Dashboard Update Assembly) change Notes: 
+  - 1.Add dashboard header.    
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -43,6 +46,7 @@
                             </div>
                             <!-- End .areaHeader -->
 
+							<jsp:include page="includes/contest/dashboard.jsp"/>
                             <div class="container2 tabs3Container">
 
                                 <jsp:include page="includes/contest/tabs.jsp"/>

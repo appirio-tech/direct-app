@@ -24,10 +24,12 @@ import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
 import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
+import com.topcoder.web.common.model.comp.ProjectPhase;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -223,8 +225,16 @@ import java.util.Map.Entry;
  *   </ol>
  * </p>
  * 
+ * <p>
+ * Version 2.6.6 (TC Direct Contest Dashboard Update Assembly) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getSoftwareContestDashboardData(long, boolean)} method to get all phases.</li>
+
+ *     <li>Updated {@link #getStudioContestDashboardData(long, boolean)} method to set reg progress percent.</li>
+ *   </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.5
+ * @version 2.6.6
  */
 public class DataProvider {
 
@@ -2881,38 +2891,61 @@ public class DataProvider {
         Map<String, ResultSetContainer> results = dataAccessor.getData(request);
         ContestDashboardDTO dto = new ContestDashboardDTO();
 
-        // Analyze current and next phases
+       // Retrieve all phases and analyze current and next phases
         final ResultSetContainer projectPhasesStats = results.get("project_phases_status");
         if (!projectPhasesStats.isEmpty()) {
-            int currentPhaseStatusId = getInt(projectPhasesStats.getRow(0), "phase_status_id");
-            if (currentPhaseStatusId == 2) { // If current phase is already running
-                ProjectPhaseDTO currentPhase = new ProjectPhaseDTO();
-                currentPhase.setStartTime(projectPhasesStats.getTimestampItem(0, "start_time"));
-                currentPhase.setEndTime(projectPhasesStats.getTimestampItem(0, "end_time"));
-                currentPhase.setPhaseName(projectPhasesStats.getStringItem(0, "phase_name"));
-                dto.setCurrentPhase(currentPhase);
-                Date now = new Date();
-                Date currentPhaseEndTime = currentPhase.getEndTime();
-                if (now.compareTo(currentPhaseEndTime) > 0) {
-                    dto.setCurrentPhaseStatus(RunningPhaseStatus.LATE);
-                } else {
-                    long diff = currentPhaseEndTime.getTime() - now.getTime();
-                    long hoursLeft = diff / (3600 * 1000);
-                    if (hoursLeft < 2) {
-                        dto.setCurrentPhaseStatus(RunningPhaseStatus.CLOSING);
-                    } else {
-                        dto.setCurrentPhaseStatus(RunningPhaseStatus.RUNNING);
-                    }
+            List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
+            boolean findCurrPhase = false;
+            Date startTime = null;
+            Date endTime = null;
+            
+            for (ResultSetRow row : projectPhasesStats) {
+                ProjectPhaseDTO phase = new ProjectPhaseDTO();
+                phase.setStartTime(row.getTimestampItem("start_time"));
+                phase.setEndTime(row.getTimestampItem("end_time"));
+                phase.setPhaseName(row.getStringItem("phase_name"));
+                phase.setPhaseType(ProjectPhaseType.findProjectPhaseType(row.getIntItem("phase_type_id")));
+                phase.setPhaseStatus(ProjectPhaseStatus.findProjectPhaseStatus(row.getIntItem("phase_status_id")));
+                
+                phases.add(phase);
+                
+                if (startTime == null || startTime.after(phase.getStartTime())) {
+                    startTime = phase.getStartTime();
                 }
-
-                if (projectPhasesStats.size() > 1) {
-                    ProjectPhaseDTO nextPhase = new ProjectPhaseDTO();
-                    nextPhase.setStartTime(projectPhasesStats.getTimestampItem(1, "start_time"));
-                    nextPhase.setEndTime(projectPhasesStats.getTimestampItem(1, "end_time"));
-                    nextPhase.setPhaseName(projectPhasesStats.getStringItem(1, "phase_name"));
-                    dto.setNextPhase(nextPhase);
+                if (endTime == null || endTime.before(phase.getEndTime())) {
+                    endTime = phase.getEndTime();
+                }
+                
+                if (row.getIntItem("phase_status_id") == 2) {
+                    // find current phase 
+                    findCurrPhase = true;
+                    dto.setCurrentPhase(phase);
+                    
+                    // set current phase status
+                    Date now = new Date();
+                    Date currentPhaseEndTime = phase.getEndTime();
+                    if (now.compareTo(currentPhaseEndTime) > 0) {
+                        dto.setCurrentPhaseStatus(RunningPhaseStatus.LATE);
+                    } else {
+                        long diff = currentPhaseEndTime.getTime() - now.getTime();
+                        long hoursLeft = diff / (3600 * 1000);
+                        if (hoursLeft < 2) {
+                            dto.setCurrentPhaseStatus(RunningPhaseStatus.CLOSING);
+                        } else {
+                            dto.setCurrentPhaseStatus(RunningPhaseStatus.RUNNING);
+                        }
+                    }
+                    
+                } else if (findCurrPhase) {
+                    // find next phase
+                    findCurrPhase = false;
+                    dto.setNextPhase(phase);
                 }
             }
+            
+            dto.setStartTime(startTime);
+            dto.setEndTime(endTime);
+            dto.setAllPhases(phases);
         }
 
         // Analyze registration status
@@ -2941,8 +2974,8 @@ public class DataProvider {
                     dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_POOR);
                 }
             }
+            dto.setRegProgressPercent((int) Math.min(reliabilityTotal * 100 / 200, 100));
         }
-
 
         String latestHandle = "";
         long latestUserId = 0;
@@ -2970,7 +3003,6 @@ public class DataProvider {
             unansweredForumPostsNumber = getInt(forumStats.getRow(0), "unanswered_threads");
             latestTime = getDate(forumStats.getRow(0), "latest_time");
         }
-
 
         UserDTO latestForumPostAuthor = new UserDTO();
         latestForumPostAuthor.setHandle(latestHandle);
@@ -3093,6 +3125,7 @@ public class DataProvider {
         // Analyze registration status
         // For now the registration status is always assumed to be Healthy for Studio contests
         dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+        dto.setRegProgressPercent(100);
         final ResultSetContainer registrationStats = results.get("studio_registration_status");
         if (!registrationStats.isEmpty()) {
             ResultSetContainer.ResultSetRow row = registrationStats.getRow(0);

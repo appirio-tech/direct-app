@@ -12,9 +12,13 @@
   - Version 1.3 (TC Direct Release Assembly 7) change Notes: 
   - 1.Added hasContestWritePermission field.  
   -
-  - Version: 1.3
+  - Version 1.4 (TC Direct Contest Dashboard Update Assembly) change Notes: 
+  - 1.Apply to new submission view.
+  - 2.Add dashboard header.  
+  -
+  - Version: 1.4
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the single submission for Studio contest.
 --%>
@@ -66,6 +70,7 @@
                             </div>
                             <!-- End .areaHeader -->
 
+							<jsp:include page="includes/contest/dashboard.jsp"/>
                             <jsp:include page="includes/contest/contestStats.jsp"/>
 
                             <!-- End .projectsStats -->
@@ -114,7 +119,7 @@
                                                         <a href="javascript:;" id="navSingleSubmissionSlideNext"
                                                            class="navSingleSubmissionSlideNext"></a>
 
-                                                        <ul id="carouselSingle">
+                                                        <ul id="carouselSingle" style="position: relative; width: 750px; height: 550px; overflow: hidden;">
                                                             <%--
                                                             For Wireframe contests only preview image is shown;
                                                             For other contests images carousel is shown

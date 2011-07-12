@@ -1,12 +1,13 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.0.1
+  - Author: TCSDEVELOPER, TCSASSEMBLER
+  - Version: 1.0.2
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the issues and bug races of the contest.
   - Version 1.0.1 - Fix an issue with assignee display
   -
-  - Version 1.0.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly).
+  - Version 1.0.2 (TC Direct Contest Dashboard Update Assembly) change Notes: 
+  - 1.Add dashboard header.  
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -46,6 +47,7 @@
                             </div>
                             <!-- End .areaHeader -->
 
+							<jsp:include page="includes/contest/dashboard.jsp"/>
                             <jsp:include page="includes/contest/contestStats.jsp"/>
 
 

@@ -18,8 +18,15 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
+import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.service.permission.PermissionServiceException;
@@ -155,11 +162,19 @@ import com.topcoder.shared.util.DBMS;
  * <ul>
  *      <li>Change method getContestStats to add contest issues into contest stats</li>
  * </ul>
- * </p
+ * </p>
  *
- *
- * @author BeBetter, isv, flexme, Blues, Veve
- * @version 1.6.6
+ * <p>
+ * Version 1.6.7 (TC Direct Contest Dashboard Update Assembly) change notes:
+ * <ul>
+ *      <li>Add setDashboardData method to set dashboard data.</li>
+ *      <li>Add getStudioPhases method to get all phases for studio contest.</li>
+ *      <li>Add getPhase method to generate single phase.</li>
+ * </ul>
+ * </p>
+ * 
+ * @author BeBetter, isv, flexme, Blues, Veve, TCSASSEMBLER
+ * @version 1.6.7
  */
 public final class DirectUtils {
     /**
@@ -1014,5 +1029,164 @@ public final class DirectUtils {
             }
         }
         return false;
+    }
+    
+    /**
+     * Set dashboard data.
+     * 
+     * @param currentUser current user
+     * @param contestId the contest id
+     * @param dto the contest common DTO
+     * @param facade the contest service facade
+     * @param software whether it is a software contest
+     * @throws Exception if any exception occurs
+     * @since 1.6.7
+     */
+    public static void setDashboardData(TCSubject currentUser, long contestId, BaseContestCommonDTO dto, ContestServiceFacade facade, boolean software) throws Exception {
+        if (dto.getContestStats() == null) {
+            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId, !software));
+        }
+        dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
+        
+        if (!software) {
+            StudioCompetition studioCompetition = facade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
+                    contestId);
+            dto.getDashboard().setAllPhases(getStudioPhases(studioCompetition));
+            dto.getDashboard().setStartTime(
+                    dto.getDashboard().getAllPhases().get(0).getStartTime());
+            dto.getDashboard().setEndTime(
+                    dto.getDashboard().getAllPhases()
+                            .get(dto.getDashboard().getAllPhases().size() - 1)
+                            .getEndTime());
+        }
+    }
+    
+    /**
+     * Set dashboard data.
+     * 
+     * @param currentUser current user
+     * @param contestId the contest id
+     * @param dto the specification review dto
+     * @param facade the contest service facade
+     * @param software whether it is a software contest
+     * @throws Exception if any exception occurs
+     * @since 1.6.7
+     */
+    public static void setDashboardData(TCSubject currentUser, long contestId, ViewSpecificationReviewActionResultData dto, ContestServiceFacade facade, boolean software) throws Exception {
+        if (dto.getContestStats() == null) {
+            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId, !software));
+        }
+        dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
+        
+        if (!software) {
+            StudioCompetition studioCompetition = facade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
+                    contestId);
+            dto.getDashboard().setAllPhases(getStudioPhases(studioCompetition));
+            dto.getDashboard().setStartTime(
+                    dto.getDashboard().getAllPhases().get(0).getStartTime());
+            dto.getDashboard().setEndTime(
+                    dto.getDashboard().getAllPhases()
+                            .get(dto.getDashboard().getAllPhases().size() - 1)
+                            .getEndTime());
+        } else {
+            // adjust phases
+            dto.setDashboard(adjustSoftwarePhases(dto.getDashboard()));
+        }
+    }
+    
+    /**
+     * Get all phases for studio contest.
+     * 
+     * @param competition the studio contest
+     * @return a list of phases
+     * @since 1.6.7
+     */
+    public static List<ProjectPhaseDTO> getStudioPhases(StudioCompetition competition) {
+        List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
+        
+        // set registration
+        phases.add(getPhase(getDate(competition.getStartTime()), getDate(competition.getEndTime()), ProjectPhaseType.STUDIO_REG));
+        
+        if (competition.getContestData().isMultiRound()) {
+            // set r1 subs
+            phases.add(getPhase(getDate(competition.getStartTime()),
+                    getDate(competition.getContestData().getMultiRoundData()
+                            .getMilestoneDate()), ProjectPhaseType.R1_SUBS));
+            
+            // set r1 feedback
+            phases.add(getPhase(getDate(competition.getContestData()
+                    .getMultiRoundData().getMilestoneDate()),
+                    getDate(competition.getEndTime()),
+                    ProjectPhaseType.R1_FEEDBACK));
+            
+            // set r2 subs
+            phases.add(getPhase(getDate(competition.getContestData()
+                    .getMultiRoundData().getMilestoneDate()),
+                    getDate(competition.getEndTime()),
+                    ProjectPhaseType.R2_SUBS));
+            
+        } else {
+            // set r1 subs
+            phases.add(getPhase(getDate(competition.getStartTime()),
+                    getDate(competition.getEndTime()), ProjectPhaseType.R1_SUBS));
+        }
+        
+        // set winner
+        phases.add(getPhase(getDate(competition.getEndTime()),
+                getDate(competition.getContestData()
+                        .getWinnerAnnoucementDeadline()),
+                ProjectPhaseType.WINNER));
+        
+        return phases;
+    }
+    
+    /**
+     * Generate a single phase.
+     * 
+     * @param startTime the start time
+     * @param endTime the end time
+     * @param type the phase type
+     * @return generated phase
+     * @since 1.6.7
+     */
+    private static ProjectPhaseDTO getPhase(Date startTime, Date endTime, ProjectPhaseType type) {
+        ProjectPhaseDTO phase = new ProjectPhaseDTO();
+        
+        phase.setStartTime(startTime);
+        phase.setEndTime(endTime);
+        phase.setPhaseType(type);
+        
+        Date now = new Date();
+        if (startTime.after(now)) {
+            phase.setPhaseStatus(ProjectPhaseStatus.SCHEDULED);
+        } else if (endTime.before(now)) {
+            phase.setPhaseStatus(ProjectPhaseStatus.CLOSED);
+        } else {
+            phase.setPhaseStatus(ProjectPhaseStatus.OPEN);
+        }
+        
+        return phase;
+    }
+    
+    public static ContestDashboardDTO adjustSoftwarePhases(ContestDashboardDTO dashboard) {
+        List<ProjectPhaseDTO> phases = dashboard.getAllPhases();
+        List<ProjectPhaseDTO> adjustedPhases = new ArrayList<ProjectPhaseDTO>();
+        Map<ProjectPhaseType, Integer> phaseIndex = new HashMap<ProjectPhaseType, Integer>();
+        
+        for (ProjectPhaseDTO phase : phases) {
+            if (!phaseIndex.containsKey(phase.getPhaseType())) {        
+                adjustedPhases.add(phase);
+                phaseIndex.put(phase.getPhaseType(), adjustedPhases.size() - 1);
+            }
+            
+            ProjectPhaseDTO tmpPhase = adjustedPhases.get(phaseIndex.get(phase.getPhaseType()));
+            
+            tmpPhase.increaseNum();
+            tmpPhase.setStartTime(phase.getStartTime());
+            tmpPhase.setEndTime(phase.getEndTime());
+        }
+        
+        dashboard.setAllPhases(adjustedPhases);
+        return dashboard;
     }
 }

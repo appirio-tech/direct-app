@@ -1,9 +1,12 @@
 <%--
-  - Author: isv, TCSDEVELOPER
-  - Version: 1.0 (Submission Viewer Release 1 assembly)
+  - Author: isv, TCSDEVELOPER, TCSASSEMBLER
+  - Version: 1.2 (Submission Viewer Release 1 assembly)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Direct Submission Viewer Release 4) change notes: Replaced "submissionId" with "submission" attribute.
+  -
+  - Version 1.2 (TC Direct Contest Dashboard Update Assembly) change Notes: 
+  - 1.Apply to new submission view prototype. 
   -
   - Description: This tag renders the HTML markup for a single submission included into a carousel view on Single Studio
   - submission page.
@@ -19,7 +22,7 @@
 <%@ attribute name="artifactNum" required="true" type="java.lang.Integer" %>
 <c:set var="submissionId" value="${submission.submissionId}"/>
 
-<li>
+<li style="position: absolute; top: 0px; left: 0px; display: list-item; z-index: 7; opacity: 1;">
     <div id="submission-${submissionId}"
          class="carouselSingleItem ${tcdirect:isCheckedOut(formData.roundType, submission) ? 'prizedSubmission' : ''}">
         <div class="hidden">

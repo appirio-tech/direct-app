@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -32,8 +32,14 @@ import java.util.List;
  *   </ul>
  * </p>
  *
- * @author isv
- * @version 1.1
+ * <p>Version 1.2 (TC Direct Contest Dashboard Update Assembly) change notes:
+ *   <ul>
+ *     <li>Update executeAction method to set contest dashboard data.</li>
+ *   </ul>
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.2
  */
 public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
 
@@ -152,6 +158,9 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
         // set whether to show spec review
         viewData.setShowSpecReview(getSpecificationReviewService()
                 .getSpecificationReview(currentUser, contestId) != null);
+        
+        DirectUtils.setDashboardData(currentUser, contestId, viewData,
+                getContestServiceFacade(), isSoftware());
     }
 
     /**

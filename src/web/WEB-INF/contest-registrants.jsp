@@ -1,12 +1,15 @@
 <%--
   - Author: isv, TCSASSEMBLER
-  - Version: 1.0.2
+  - Version: 1.0.3
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Contest Registrants list.
   -
   - Version 1.0.1 (Direct Release 6 assembly) changes: fixed bug with displaying the reliability.
   - Version 1.0.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
+  -
+  - Version 1.0.3 (TC Direct Contest Dashboard Update Assembly) change Notes: 
+  - 1.Add dashboard header.      
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -46,6 +49,7 @@
                             </div>
                             <!-- End .areaHeader -->
 
+							<jsp:include page="includes/contest/dashboard.jsp"/>
                             <jsp:include page="includes/contest/contestStats.jsp"/>
 
                             <div class="container2 tabs3Container" id="ProjectRegistrants" >

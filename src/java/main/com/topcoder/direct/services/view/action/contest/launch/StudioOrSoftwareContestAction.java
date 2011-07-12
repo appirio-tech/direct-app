@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.contest.launch;
@@ -18,8 +18,15 @@ import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
  * reused). This class is mutable and stateful, so it's not thread safe.
  * </p>
  *
- * @author fabrizyo, TCSDEVELOPER
- * @version 1.0
+ * <p>
+ * Version 1.1 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #isSoftware()} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author fabrizyo, TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.1
  */
 public abstract class StudioOrSoftwareContestAction extends ContestAction {
 
@@ -122,4 +129,17 @@ public abstract class StudioOrSoftwareContestAction extends ContestAction {
     public void setContestId(long contestId) {
         this.contestId = contestId;
     }
+
+    /**
+     * <p>
+     * Determines if it is software contest or not.
+     * </p>
+     *
+     * @return true if it is software contest
+     * @since 1.1
+     */
+    public boolean isSoftware() {
+        return !isStudioCompetition();
+    }
+
 }

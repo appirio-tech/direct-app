@@ -1,7 +1,11 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version 1.0 (HTML Cockpit Spec Review Assembly assembly)
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version 1.1 (HTML Cockpit Spec Review Assembly assembly)
+  -
+  - Version 1.2 (TC Direct Contest Dashboard Update Assembly) change Notes: 
+  - 1.Add dashboard header.  
+  -  
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the specification reivew view.
 --%>
@@ -84,6 +88,7 @@
                             </div>
                             <!-- End .areaHeader -->
                             
+							<jsp:include page="includes/contest/dashboard.jsp"/>
                             <jsp:include page="includes/contest/contestStats.jsp"/>
                     
                             <div class="container2 tabs3Container">

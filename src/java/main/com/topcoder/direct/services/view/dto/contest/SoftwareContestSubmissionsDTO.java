@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -21,10 +21,15 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.0.1 (Direct Software Submission Viewer assembly)
+ * <p>Version 1.0.2 (TC Direct Contest Dashboard Update Assembly) change notes:
+ * - change to extend from BaseContestCommonDTO.
+ * - remove ContestStatsDTO and corresponding get/set methods.
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.0.2 (Direct Software Submission Viewer assembly)
  */
-public class SoftwareContestSubmissionsDTO extends CommonDTO implements ProjectIdForm.Aware, ContestStatsDTO.Aware {
+public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implements ProjectIdForm.Aware, ContestStatsDTO.Aware {
 
     /**
      * <p>A <code>long</code> providing the ID of software project.</p>
@@ -51,11 +56,6 @@ public class SoftwareContestSubmissionsDTO extends CommonDTO implements ProjectI
      */
     private List<UserDTO> reviewers;
 
-    /**
-     * <p>A <code>ContestStatsDTO </code> providing the statistics on contest.</p>
-     */
-    private ContestStatsDTO contestStats;
-    
     /**
      * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
      */
@@ -157,24 +157,6 @@ public class SoftwareContestSubmissionsDTO extends CommonDTO implements ProjectI
      */
     public void setProjectId(long projectId) {
         this.projectId = projectId;
-    }
-
-    /**
-     * <p>Gets the statistics on contest.</p>
-     *
-     * @return a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public ContestStatsDTO getContestStats() {
-        return this.contestStats;
-    }
-
-    /**
-     * <p>Sets the statistics on contest.</p>
-     *
-     * @param contestStats a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public void setContestStats(ContestStatsDTO contestStats) {
-        this.contestStats = contestStats;
     }
 
     /**

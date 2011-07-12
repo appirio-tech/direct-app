@@ -4046,7 +4046,7 @@ a.thumbList img{ margin: 3px; }
 	display:block;
 	position:relative;
 	clear:both; 
-	width: 665px;
+	width: 750px;
 	margin: 0 auto;
 }
 
@@ -4056,8 +4056,8 @@ a.thumbList img{ margin: 3px; }
 a.thumbSingle{
 	display:block;
 	overflow:hidden;
-	height: 484px;
-	width: 665px;
+	height: 550px;
+	width: 750px;
 	text-decoration: none; 
 	margin: 0 auto;
 }
@@ -4065,8 +4065,8 @@ a.thumbSingle span{
 	display:block;
 	position:absolute;
 	z-index:5;
-	height: 484px;
-	width: 665px;
+	height: 550px;
+	width: 750px;
 	background:url(../images/submission_single_bg.png) left top;
 }
 a.thumbSingle img{ margin: 3px; }
@@ -4077,7 +4077,7 @@ a.thumbSingle img{ margin: 3px; }
 	width: 33px;
 	height: 50px;
 	background:url(../images/single_submission_prev.png) left top;
-	top: 220px;
+	top: 247px;
 	z-index: 100;
 }
 
@@ -4087,7 +4087,7 @@ a.thumbSingle img{ margin: 3px; }
 	width: 33px;
 	height: 50px;
 	background:url(../images/single_submission_next.png) left top;
-	top: 220px;
+	top: 247px;
 	right:0;
 	z-index: 100;
 }
@@ -6203,7 +6203,418 @@ table.resultTable td a.button1:hover {
     float: left;
 }
 
-
+/* new added for contest dashboard */
+	.dashboardModule .heading{
+		position:relative;
+		background:#fdfdfd url(../images/bg-dashboardModuleHeading.png) left bottom repeat-x;
+		border:1px solid #bdbdbd;
+		margin:0;
+		padding:4px 0 4px 13px;
+		color:#333333;
+		font-size:13px;
+	}
+		.dashboardModule .heading .tl, .dashboardModule .heading .tr{
+			position:absolute;
+			top:-1px;
+			display:block;
+			background-image:url(../images/bg-dashboardModuleHeading-corners.png);
+			background-repeat:no-repeat;
+			width:2px;
+			height:2px;
+			overflow:hidden;
+		}
+		.dashboardModule .heading .tl{
+			background-position:left top;
+			left:-1px;
+		}
+		.dashboardModule .heading .tr{
+			background-position:right top;
+			right:-1px;
+		}
+	.dashboardModule .content{
+		position:relative;
+		background:#fffffe url(../images/bg-dashboardModuleContent.png) left bottom repeat-x;
+		border:1px solid #cccccc;
+		border-top:none;
+		margin:0;
+		padding:0;
+		font-size:11px;
+		text-align:center;
+	}
+		.dashboardModule .content .bl, .dashboardModule .content .br{
+			position:absolute;
+			bottom:-1px;
+			display:block;
+			background-image:url(../images/bg-dashboardModuleContent-corners.png);
+			background-repeat:no-repeat;
+			width:6px;
+			height:6px;
+			overflow:hidden;
+		}
+		.dashboardModule.dependenciesModule .content .bl, .dashboardModule.dependenciesModule .content .br{
+			bottom:0px;
+		}		
+		.dashboardModule .content .bl{
+			background-position:left top;
+			left:-1px;
+		}
+		.dashboardModule .content .br{
+			background-position:right top;
+			right:-1px;
+		}
+		.dashboardModule .content .timelineContainer{
+			position:relative;
+			width:772px;
+			margin:0 auto;
+			padding:41px 0 39px;
+			overflow:hidden;
+		}
+			.dashboardModule .content .timelineContainer .projectDate{
+				position:absolute;
+				top:11px;
+				display:inline-block;
+				background:#fcfcfc url(../images/bg-projectDate.png) left bottom repeat-x;
+				border:1px solid #cccccc;
+				padding:5px 8px 4px 7px;
+				color:#333333;
+			}
+			.dashboardModule .content .timelineContainer.studio .projectDate{ top:8px; }
+			.dashboardModule .content .timelineContainer .startDate{ left:2px; }
+			.dashboardModule .content .timelineContainer .endDate{ right:3px; }
+			.dashboardModule .content .timelineContainer.studio .startDate{ left:27px; }
+			.dashboardModule .content .timelineContainer.studio .endDate{ right:25px; }
+				.dashboardModule .content .timelineContainer .projectDate .arrow{
+					position:absolute;
+					bottom:-7px;
+					display:block;
+					background-image:url(../images/bg-projectDate-arrows.png);
+					background-repeat:no-repeat;
+					width:7px;
+					height:7px;
+					z-index:2;
+				}
+				.dashboardModule .content .timelineContainer .startDate .arrow{
+					background-position:left top;
+					left:-1px;
+				}
+				.dashboardModule .content .timelineContainer .endDate .arrow{
+					background-position:right top;
+					right:-1px;
+				}
+				.dashboardModule .content .timelineContainer .projectDate label{ color:#000001; }
+			.dashboardModule .content .progressContainer{
+				float:left;
+				margin:0;
+				padding:1px 0 0 0;
+				list-style:none;
+			}
+				.dashboardModule .content .progressContainer li{
+					position:relative;
+					float:left;
+					margin:0;
+					padding:0;
+					text-align:center;
+				}
+					.dashboardModule .content .progressContainer li .phaseName{
+						display:block;
+						margin-bottom:5px;
+						color:#000001;
+					}
+					.dashboardModule .content .progressContainer li .leftSide{
+						background:url(../images/bg-progressStatus-sides.png) left top no-repeat;
+						padding-left:7px;
+						overflow:hidden;
+					}
+					.dashboardModule .content .progressContainer li.current .leftSide{ background-position:left -11px; }
+					.dashboardModule .content .progressContainer li.completed .leftSide{ background-position:left -22px; }
+					.dashboardModule .content .progressContainer li .rightSide{
+						background:url(../images/bg-progressStatus-sides.png) right top no-repeat;
+						padding-right:7px;
+						overflow:hidden;
+					}
+					.dashboardModule .content .progressContainer li.current .rightSide{ background-position:right -11px; }
+					.dashboardModule .content .progressContainer li.completed .rightSide{ background-position:right -22px; }
+					.dashboardModule .content .progressContainer li .progressStatus{
+						background:url(../images/bg-progressStatus.png) left top repeat-x;
+						height:11px;
+					}
+					.dashboardModule .content .progressContainer li.current .progressStatus{ background-position:left -11px; }
+					.dashboardModule .content .progressContainer li.completed .progressStatus{ background-position:left -22px; }
+					.dashboardModule .content .progressContainer li .phaseDate{
+						position:absolute;
+						left:50%;
+						top:30px;
+						display:none;
+						background:url(../images/bg-phaseDate.png) center 1px no-repeat;
+						width:120px;
+						margin-left:-60px;
+						padding-top:8px;
+						color:#333333;
+					}
+					.dashboardModule .content .progressContainer li.current .phaseDate{ display:block; }
+						.dashboardModule .content .progressContainer li .phaseDate label{
+							display:inline-block;
+							width:26px;
+							text-align:left;
+						}
+						.dashboardModule .content .progressContainer li .phaseDate .start{ margin-bottom:4px; }
+						
+.appositeContainer{
+	width:100%;
+	margin-top:10px;
+	margin-bottom:10px;
+	/*overflow:hidden;*/
+}
+.appositeContainer .dashboardModule{ float:left; }
+.appositeContainer .registrationModule{
+	width:19.7%;
+	margin-right:1%;
+}
+.appositeContainer.studio .registrationModule{
+	width:37.3%;
+	margin-right:0.6%;
+}
+.appositeContainer .forumModule{
+	width:23.2%;
+	margin-right:0.8%;
+}
+.appositeContainer.studio .forumModule{
+	width:37.2%;
+	margin-right:0.6%;
+}
+.appositeContainer .reviewsModule{
+	width:18.5%;
+	margin-right:1%;
+}
+.appositeContainer .dependenciesModule{
+	width:18.1%;
+	margin-right:0.8%;
+}
+.appositeContainer .issueModule{ width:16.9%; }
+.appositeContainer.studio .issueModule{ width:24.3%; }
+	.appositeContainer .dashboardModule .content{ height:94px; }
+	.appositeContainer .registrationModule .content{
+		height:85px;
+		padding-top:9px;
+	}
+	.appositeContainer.studio .registrationModule .content{
+		height:59px;
+		padding-top:14px;
+	}
+	.appositeContainer .forumModule .content{
+		height:86px;
+		padding-top:8px;
+		padding-left:15px;
+		text-align:left;
+	}
+	.appositeContainer.studio .forumModule .content{ height:65px; }
+	.appositeContainer .reviewsModule .content{
+		height:88px;
+		padding-top:6px;
+		padding-left:15px;
+		text-align:left;
+	}
+	.appositeContainer .dependenciesModule .content{
+		height:85px;
+		padding-top:9px;
+		padding-left:17px;
+		text-align:left;
+	}
+	.appositeContainer .issueModule .content{
+		height:85px;
+		padding-top:9px;
+	}
+	.appositeContainer.studio .issueModule .content{ height:64px; }
+		.dashboardModule .listContent p{
+			width:132px;
+			margin:0 auto 4px;
+			text-align:left;
+		}
+		.appositeContainer .registrationModule .wrap{ width:264px; margin:0 auto; }
+		.appositeContainer .registrationModule .column{
+			float:left;
+			width:102px;
+		}
+		.appositeContainer .registrationModule .column.first{ width:162px; }
+		.appositeContainer .registrationModule .column p{ width:102px; }
+		.appositeContainer .registrationModule .column.first p,
+		.appositeContainer .registrationModule .column.first .statusP{ width:162px; }
+		.appositeContainer .forumModule .listContent p,
+		.appositeContainer .dependenciesModule .listContent p{ width:auto; }
+		.appositeContainer .issueModule .listContent p{ width:85px; }
+		.appositeContainer .reviewsModule .listContent p{
+			width:auto;
+			margin-bottom:2px;
+		}
+		.appositeContainer .reviewsModule .listContent p.registered{ margin-bottom:7px; }
+			.dashboardModule .listContent .statusP{
+				position:relative;
+				width:145px; 
+				margin:0 auto;
+				text-align:left;
+			}
+				.appositeContainer .registrationModule .tooltipContainer{
+					left:145px;
+					top:-38px;
+				}
+				.softWareDashboard .appositeContainer .poor  .tooltipContainer{
+					left:134px;
+					}
+				.softWareDashboard .appositeContainer .healthy .tooltipContainer{
+					left:145px;
+					}
+				.softWareDashboard .appositeContainer .lessThanIdeal .tooltipContainer{
+					left:150px;
+					}
+				.studioDashboard .appositeContainer .poor  .tooltipContainer{
+					left:134px;
+					}
+				.studioDashboard .appositeContainer .healthy .tooltipContainer{
+					left:145px;
+					}
+				.studioDashboard .appositeContainer .lessThanIdeal  .tooltipContainer{
+					left:150px;
+					}
+				/*.appositeContainer.studio .registrationModule .tooltipContainer{
+					left:150px;
+					top:-38px;
+				}*/
+				
+					.appositeContainer .registrationModule .tooltipContainer .tooltipCaption{ text-align:left; }
+					.appositeContainer .registrationModule .tooltipContainer .tooltipCaption h2{ padding-left:11px; }
+					.appositeContainer .registrationModule .tooltipContainer .tooltipContent{
+						padding:4px 10px 9px;
+					}
+					.appositeContainer.studio .registrationModule .tooltipContainer .tooltipContent{
+						padding:4px 10px 3px;
+					}
+						.appositeContainer .registrationModule .tooltipContainer .tooltipContent p{
+							width:auto;
+							line-height:18px;
+						}
+						.appositeContainer.studio .registrationModule .tooltipContainer .tooltipContent p{
+							width:auto;
+							line-height:18px;
+						}
+					.tooltipLessThanIdeal .tooltipCaption{
+						background: url(../images/tooltip_caption_lessThanIdeal.png) left -26px repeat-x;
+					}
+					
+					.tooltipLessThanIdeal .tooltipCaptionLeft{
+						background: url(../images/tooltip_caption_lessThanIdeal.png) left top no-repeat;
+					}
+					
+					.tooltipLessThanIdeal .tooltipCaptionRight{
+						background: url(../images/tooltip_caption_lessThanIdeal.png) right -52px no-repeat;
+					}
+				.dashboardModule .listContent .statusP .progressStatus{
+					position:relative;
+					display:inline-block;
+					background:url(../images/bg-progressStatus.png) left top repeat-x;
+					width:78px;
+					height:11px;
+					overflow:hidden;
+				}
+					.dashboardModule .listContent .statusP .progressStatus .cover{
+						position:absolute;
+						top:0;
+						left:0;
+						display:block;
+						background:url(../images/bg-registration-status.png) left top no-repeat;
+						width:100%;
+						height:11px;
+						z-index:2;
+					}
+					.dashboardModule .listContent .statusP .progressStatus .progress{
+						display:block;
+						background-image:url(../images/bg-progressStatus.png);
+						background-repeat:repeat-x;
+						width:20px;
+						height:11px;
+					}
+					.dashboardModule .listContent .healthy .progressStatus .progress{ width:55px; }
+					.dashboardModule .listContent .poor .progress{ background-position:left -33px; }
+					.dashboardModule .listContent .lessThanIdeal .progress{ background-position:left -11px; }
+					.dashboardModule .listContent .healthy .progress{ background-position:left -22px; }
+				.appositeContainer .registrationModule .statusP .status{
+					position:relative;
+					top:-2px;
+					margin:0 5px 0 3px;
+					padding:0;
+					color:#333333;
+					font-size:11px;
+					font-weight:normal;
+				}
+					.appositeContainer .registrationModule .poor .status{ color:#ff0000; }
+					.appositeContainer .registrationModule .lessThanIdeal .status{ color:#ffcc00; }
+					.appositeContainer .registrationModule .healthy .status{ color:#009900; }
+				.appositeContainer .registrationModule .statusP .helpBtn,
+				.appositeContainer .registrationModule .statusP .helpBtn:visited{
+					position:relative;
+					top:-1px;
+					display:inline-block;
+					background:url(../images/bg-help.png) left top no-repeat;
+					width:13px;
+					height:13px;
+					text-indent:-999px;
+					overflow:hidden;
+				}
+				.appositeContainer .registrationModule .statusP .helpBtn:hover{
+					background-position:left -13px;
+				}
+			.dashboardModule .listContent p label{
+				display:inline-block;
+				font-weight:bold;
+			}
+			.appositeContainer .registrationModule .prediction{ /*width:73px;*/ }
+			.appositeContainer .issueModule p label{ width:71px; }
+			.appositeContainer .forumModule p .lastestPost{
+				width:70px;
+				color:#010101;
+			}
+			.appositeContainer .forumModule p .date{
+				display:block;
+				margin:4px 0 0 75px;
+				color:#010101;
+			}
+			.appositeContainer.studio .forumModule p .date{
+				display:inline-block;
+				margin:0 0 0 4px;
+			}
+			.dashboardModule .listContent p a:hover{ text-decoration:none; }
+	.appositeContainer .dashboardModule .person,
+	.appositeContainer .dashboardModule .person:visited{
+		color:#009900;
+		font-weight:bold;
+		text-decoration:none;
+	}
+	.appositeContainer .dashboardModule .coderTextRed:hover, 
+	.appositeContainer .dashboardModule .coderTextYellow:hover, 
+	.appositeContainer .dashboardModule .coderTextBlue:hover, 
+	.appositeContainer .dashboardModule .coderTextGreen:hover, 
+	.appositeContainer .dashboardModule .coderTextGray:hover, 
+	.appositeContainer .dashboardModule .coderTextOrange:hover, 
+	.appositeContainer .dashboardModule .coderTextWhite:hover, 
+	.appositeContainer .dashboardModule .coderTextBlack:hover {
+		text-decoration: underline;
+	}
+	.appositeContainer .dashboardModule .coderTextRed, 
+	.appositeContainer .dashboardModule .coderTextYellow, 
+	.appositeContainer .dashboardModule .coderTextBlue, 
+	.appositeContainer .dashboardModule .coderTextGreen, 
+	.appositeContainer .dashboardModule .coderTextGray, 
+	.appositeContainer .dashboardModule .coderTextOrange, 
+	.appositeContainer .dashboardModule .coderTextWhite, 
+	.appositeContainer .dashboardModule .coderTextBlack {
+		font-weight:bold;
+	}
+	.appositeContainer .dashboardModule .person:hover{ text-decoration:underline; }
+	.dashboardTable{
+	   /* margin-bottom:15px;*/
+	   margin-bottom:0;
+	   overflow:hidden;
+	}
+/* end */
 
 
 

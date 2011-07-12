@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -35,20 +35,20 @@ import java.util.List;
  *   </ul>
  * </p>
  *
- * @author isv
- * @version 1.1
+ * <p>Version 1.2 (TC Direct Contest Dashboard Update Assembly) change notes:
+ * - change to extend from BaseContestCommonDTO.
+ * - remove ContestStatsDTO and corresponding get/set methods.
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.2
  */
-public class ContestRegistrantsDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
+public class ContestRegistrantsDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
     /**
      * <p>A <code>long</code> providing the ID of contest.</p>
      */
     private long contestId;
-
-    /**
-     * <p>A <code>ContestStatsDTO </code> providing the statistics on contest.</p>
-     */
-    private ContestStatsDTO contestStats;
 
     /**
      * <p>A <code>List</code> providing the details for registrants for contest.</p>
@@ -64,23 +64,6 @@ public class ContestRegistrantsDTO extends CommonDTO implements ContestStatsDTO.
      * <p>Constructs new <code>ContestRegistrantsDTO</code> instance. This implementation does nothing.</p>
      */
     public ContestRegistrantsDTO() {
-    }
-    /**
-     * <p>Gets the statistics on contest.</p>
-     *
-     * @return a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public ContestStatsDTO getContestStats() {
-        return this.contestStats;
-    }
-
-    /**
-     * <p>Sets the statistics on contest.</p>
-     *
-     * @param contestStats a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public void setContestStats(ContestStatsDTO  contestStats) {
-        this.contestStats = contestStats;
     }
 
     /**

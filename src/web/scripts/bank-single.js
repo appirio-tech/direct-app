@@ -9,8 +9,13 @@
  * - Hide input fields if user has no write permission.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0.1
+ * <p>
+ * Version 1.0.2 (TC Direct Contest Dashboard Update Assembly) Change notes:
+ * - Apply to new prototype.
+ * </p>
+ *
+ * @author tangzx
+ * @version 1.0.2
  */
  
 var listLikes = new Array();
@@ -41,7 +46,12 @@ $(document).ready(function(){
 			pause:  1,
 			speed: 1000
 		});
-		$('#carouselSingle').css('height', '560px');
+		//$('#carouselSingle').css('height', '560px');
+		/* new added for contest dashboard */
+		if($(".SubmissionSlotTitle").length > 0){
+			$(window).scrollTop($(".SubmissionSlotTitle").offset().top - 15);
+		}
+		/* end */
 						   
 $("a.actButtonlike, a.actButtondislike, a.actButtonzoom, a.actButtonzoom, a.actButtondollar, a.actButtonstar").hover(function() { 
 			var $this = $(this);	

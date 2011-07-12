@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -51,9 +51,16 @@ import java.util.List;
  *   </ul>
  * </p>
  *
+ * <p>
+ *   Version 1.4 (TC Direct Contest Dashboard Update Assembly) change notes:
+ *   <ul>
+ *     <li>Updated {@link #executeAction()} method to set contest dashboard data.</li>
+ *   </ul>
+ * </p>
+ *
  * @author isv, flexme, TCSASSEMBLER
  * @since Submission Viewer Release 1 assembly
- * @version 1.3
+ * @version 1.4
  */
 public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
 
@@ -194,6 +201,9 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
             // set contest permission
             viewData.setHasContestWritePermission(DirectUtils
                     .hasWritePermission(this, currentUser, contestId, true));
+            
+            DirectUtils.setDashboardData(currentUser, contestId, viewData,
+                    getContestServiceFacade(), isSoftware());
         }
     }
 }

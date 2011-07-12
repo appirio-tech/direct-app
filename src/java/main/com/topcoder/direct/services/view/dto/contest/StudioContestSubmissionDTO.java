@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -31,22 +31,22 @@ import com.topcoder.service.studio.SubmissionData;
  * <li>Added {@link #hasContestWritePermission} property with respective accessor/mutator methods.</li>
  * </ul>
  * </p>
- * 
+ *
+ * <p>Version 1.4 (TC Direct Contest Dashboard Update Assembly) change notes:
+ * - change to extend from BaseContestCommonDTO.
+ * - remove ContestStatsDTO and corresponding get/set methods.
+ * </p>
+ *
  * @author isv, flexme, TCSDEVELOPER, TCSASSEMBLER
  * @since Submission Viewer Release 1 assembly
- * @version 1.3
+ * @version 1.4
  */
-public class StudioContestSubmissionDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
+public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
     /**
      * <p>A <code>long</code> providing the ID of contest.</p>
      */
     private long contestId;
-
-    /**
-     * <p>A <code>ContestStatsDTO </code> providing the statistics on contest.</p>
-     */
-    private ContestStatsDTO contestStats;
 
     /**
      * <p>A <code>SubmissionData</code> providing the details for requested <code>Studio</code> submission.</p>
@@ -109,24 +109,6 @@ public class StudioContestSubmissionDTO extends CommonDTO implements ContestStat
      * <p>Constructs new <code>StudioContestSubmissionDTO</code> instance. This implementation does nothing.</p>
      */
     public StudioContestSubmissionDTO() {
-    }
-
-    /**
-     * <p>Gets the statistics on contest.</p>
-     *
-     * @return a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public ContestStatsDTO getContestStats() {
-        return this.contestStats;
-    }
-
-    /**
-     * <p>Sets the statistics on contest.</p>
-     *
-     * @param contestStats a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public void setContestStats(ContestStatsDTO contestStats) {
-        this.contestStats = contestStats;
     }
 
     /**

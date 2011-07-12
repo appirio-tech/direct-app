@@ -23,10 +23,15 @@ import java.util.List;
  * - add private static comparator to compare TcJiraIssue by creation date.
  * </p>
  *
- * @author Veve
- * @version  1.1
+ * <p>Version 1.2 (TC Direct Contest Dashboard Update Assembly) change notes:
+ * - change to extend from BaseContestCommonDTO.
+ * - remove ContestStatsDTO and corresponding get/set methods.
+ * </p>
+ *
+ * @author Veve, TCSASSEMBLER
+ * @version  1.2
  */
-public class ContestIssuesTrackingDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
+public class ContestIssuesTrackingDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
     /**
      * Comparator to compare TcJiraIssue by creation date.
@@ -44,11 +49,6 @@ public class ContestIssuesTrackingDTO extends CommonDTO implements ContestStatsD
      * <p>A <code>long</code> providing the ID of contest.</p>
      */
     private long contestId;
-
-    /**
-     * <p>A <code>ContestStatsDTO </code> providing the statistics on contest.</p>
-     */
-    private ContestStatsDTO contestStats;
 
     /**
      * The jira issues of the contest.
@@ -76,24 +76,6 @@ public class ContestIssuesTrackingDTO extends CommonDTO implements ContestStatsD
      */
     public void setContestId(long contestId) {
         this.contestId = contestId;
-    }
-
-    /**
-     * Gets the contest stats.
-     *
-     * @return the contest statistics.
-     */
-    public ContestStatsDTO getContestStats() {
-        return contestStats;
-    }
-
-    /**
-     * Sets the contest stats.
-     *
-     * @param contestStats the contest stats to set.
-     */
-    public void setContestStats(ContestStatsDTO contestStats) {
-        this.contestStats = contestStats;
     }
 
     /**

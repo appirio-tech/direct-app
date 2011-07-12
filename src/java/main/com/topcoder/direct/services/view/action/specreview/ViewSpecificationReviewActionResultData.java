@@ -1,12 +1,12 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
-
 package com.topcoder.direct.services.view.action.specreview;
 
 import java.util.List;
 import java.util.Map;
 
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
 import com.topcoder.service.review.specification.SpecificationReview;
@@ -26,8 +26,15 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * Also, this is not an issue at the client side because it is single-threaded.
  * </p>
  *
- * @author caru, TCSDEVELOPER
- * @version 1.0
+ * <p>
+ * Version 1.1 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #dashboard} field and corresponding get/set methods.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author caru, TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.1
  */
 public class ViewSpecificationReviewActionResultData {
 
@@ -83,7 +90,15 @@ public class ViewSpecificationReviewActionResultData {
      */
     private boolean showProgress;
     
+    /**
+     * The spec comments.
+     */
     private Map<Long, List<SpecComment>> specComments;
+    
+    /**
+     * The contest dashboard data.s
+     */
+    private ContestDashboardDTO dashboard;
     
     /**
      * Default constructor, creates new instance.
@@ -220,4 +235,25 @@ public class ViewSpecificationReviewActionResultData {
         this.specComments = specComments;
     }
 
+    /**
+     * Gets the dashboard field.
+     * 
+     * @return the dashboard
+     * @since 1.1
+     */
+    public ContestDashboardDTO getDashboard() {
+        return dashboard;
+    }
+
+    /**
+     * Sets the dashboard field.
+     *
+     * @param dashboard the dashboard to set
+     * @since 1.1
+     */
+    public void setDashboard(ContestDashboardDTO dashboard) {
+        this.dashboard = dashboard;
+    }
+
+    
 }

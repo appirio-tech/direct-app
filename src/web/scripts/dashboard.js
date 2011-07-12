@@ -1,20 +1,25 @@
+/*
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ */
 /**
- *  Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
- *
- *  The JS script for dashboard.
+ * The JS script for dashboard.
  *
  *  Version 1.1 - TC Direct - Page Layout Update Assembly & TC Direct - Page Layout Update Assembly 2
  *  - Added auto truncated function.
+ *
  *  Version 1.2 - TC Direct UI Improvement Assembly 1 (BHCUI-83) change note
  *  - Check whether the project name is empty.
  *
- *  Version 1.2 - Release Assembly - TC Cockpit Sidebar Header and Footer Update
+ *  Version 1.3 - Release Assembly - TC Cockpit Sidebar Header and Footer Update
  *  - Changed the direct project drop down in right sidebar to native selection style.
  *  - Changed the scroll bar of project contests list to native browser scroll bar.
  *  - Fix the zebra style issues of 'Sort Contests by'
  *
+ *  Version 1.4 - TC Direct Contest Dashboard Update Assembly
+ *  - Apply to new prototype, change the layout when window resized.
+ *
  * @author tangzx, Blues
- * @version 1.2
+ * @version 1.4
  */
 $(document).ready(function(){
 						   
@@ -226,6 +231,18 @@ $(document).ready(function(){
         $('#calendar').fullCalendar(getCalendarConfig());
     } catch(e) {
     }
+
+	/*----------------- this function is for demonstration purpose, it will show some contests on the contests list --*/
+	showContestsDemo = function(){
+//			var curr = 0;
+//			$("TABLE#contestsTable TBODY TR").each(function(){
+//					if( curr > 2 )
+//						$(this).addClass("hide");
+//
+//					curr++;
+//			});
+	}
+	
 	
 	/*-------------------------------------------------------------- Popup -----------------*/
 	
@@ -789,7 +806,126 @@ $(document).ready(function(){
     });
 
     $(".selectProject option:even").css("background", "#f3f3f3");
+    
+	/* new added for contest dashboard */
+    // BUGR-4901 - Resize timeline relative the amount of phases.
+	var progressContainerWidth = $('.progressContainer').width();
+	// 771 = max size of the progressContainer to no break in min-width
+	// phaseNamePadding = space free / amount phases / 2 (2 sides)
+	var phaseNamePadding = Math.floor((771 - progressContainerWidth) / $('.progressContainer li').size() / 2);
+	
+	// set paddings
+	$('.dashboardModule .content .progressContainer li .phaseName').css('padding-left', phaseNamePadding + 'px');
+	$('.dashboardModule .content .progressContainer li .phaseName').css('padding-right', phaseNamePadding + 'px');
+	
+	// get new progressContainer width and update timelineContainer
+	progressContainerWidth = $('.progressContainer').width();
+	$('.dashboardModule .content .timelineContainer').width(progressContainerWidth+1);
+	
+	var firstPhaseWidth = $(".dashboardModule .content .progressContainer li:first").width();
+	if(firstPhaseWidth < 120)
+		$(".dashboardModule .content .progressContainer li:first .phaseDate p").css({"position":"relative","left":Math.floor((120-firstPhaseWidth)/2)+"px"});
 
+	var lastPhaseWidth = $(".dashboardModule .content .progressContainer li:last").width();
+	if(lastPhaseWidth < 120)
+		$(".dashboardModule .content .progressContainer li:last .phaseDate p").css({"position":"relative","right":Math.floor((120-lastPhaseWidth)/2)+"px"});
+
+
+	// IE progressStatus fix
+	if($.browser.msie) {
+		$('.dashboardModule .content .progressContainer li .progressStatus').each(function() {
+			$(this).width($(this).parent().width());
+		});
+		$('.dashboardModule .content .progressContainer li:first .progressStatus').width($('.dashboardModule .content .progressContainer li:first').width()-7);
+		$('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
+	}
+	
+	$(".statusP .helpBtn").hover(
+		function(){
+			if($(this).parent(".statusP").hasClass("lessThanIdeal")){
+				$(this).parents(".dashboardModule").find(".tooltipContainer").removeClass("tooltipForum").addClass("tooltipLessThanIdeal");
+			}
+			else if($(this).parent(".statusP").hasClass("healthy")){
+				$(this).parents(".dashboardModule").find(".tooltipContainer").removeClass("tooltipLessThanIdeal").addClass("tooltipForum");
+			}
+			else{
+				$(this).parents(".dashboardModule").find(".tooltipContainer").removeClass("tooltipLessThanIdeal").removeClass("tooltipForum");
+				
+			}
+			$(this).parents(".dashboardModule").find(".tooltipContainer").css("display", "block");
+		}
+		,
+		function(){
+			$(this).siblings(".tooltipContainer").hide();
+		}
+	);
+	
+	$(".appositeContainer .registrationModule .tooltipContainer .closeIco").click(function(){
+		$(this).parents(".tooltipContainer").css("display", "none");
+	});
+	
+	var Sys = {}; 
+	var ua = navigator.userAgent.toLowerCase(); 
+	if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){ 
+		$(".appositeContainer .issueModule").css({"width":"17.2%"});
+		$(".appositeContainer.studio .issueModule").css("width","24.7%");
+	} 
+	if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){ 
+		$(".appositeContainer .issueModule").css("width","17.4%");
+		$(".appositeContainer.studio .issueModule").css("width","24.7%");
+	} 
+	function adjust(){
+		if($(".dashboardModule .content .timelineContainer").parents(".dashboardModule").width() > 830){
+			$(".dashboardModule .content .timelineContainer").css("padding", "41px 29px 39px");
+			$(".dashboardModule .content .timelineContainer .startDate").css("left", "30px");
+			$(".dashboardModule .content .timelineContainer .endDate").css("right", "31px");
+		}
+		else{
+			$(".dashboardModule .content .timelineContainer").css("padding", "41px 0 39px");
+			$(".dashboardModule .content .timelineContainer .startDate").css("left", "2px");
+			$(".dashboardModule .content .timelineContainer .endDate").css("right", "3px");
+		}
+		if($(window).width() > 1024){
+			$(".dashboardModule .content .timelineContainer").css("padding-bottom", "48px");
+			$(".dashboardModule .content .timelineContainer.studio").css("padding-bottom", "46px");
+			
+			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){
+				$(".appositeContainer .issueModule").css({"width":"17.2%"}); 
+				$(".appositeContainer.studio .issueModule").css("width","24.5%"); 
+			} 
+			if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){ 
+				$(".appositeContainer .issueModule").css("width","17.3%");
+				$(".appositeContainer.studio .issueModule").css("width","24.5%");
+			} 
+
+		}
+		else{
+			$(".dashboardModule .content .timelineContainer").css("padding-bottom", "39px");
+			$(".dashboardModule .content .timelineContainer.studio").css("padding-bottom", "42px");
+			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){  
+				$(".appositeContainer .issueModule").css("width","17.4%");
+				$(".appositeContainer.studio .issueModule").css("width","24.8%");
+			} 
+			if(ua.match(/version\/([\d.]+).*safari/)!=null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0]>3){ 
+				$(".appositeContainer .issueModule").css("width","17.4%");
+				$(".appositeContainer.studio .issueModule").css("width","24.8%");
+			} 
+			// IE 7
+			if($.browser.msie && $.browser.version == 7.0){  
+				$(".appositeContainer .issueModule").css("width","17.1%");
+				$(".appositeContainer.studio .issueModule").css("width","24.3%");
+			} 
+		}
+	}
+	adjust();
+	$(window).resize(function(){
+          adjust();
+    });
+	// IE 8 
+	if($.browser.msie && $.browser.version == 8.0){ 
+		$(".appositeContainer .registrationModule .statusP .helpBtn").css("top","0");
+	} 
+	/* end */
 });
 
 /*
