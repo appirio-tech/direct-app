@@ -2404,22 +2404,49 @@ public class DataProvider {
 
         String queryName = "dashboard_cost_report";
 
+        // Gets TCSubject
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
         if (projectIds[0] != 0) {
 
-            request.setProperty("tcdirectid", projectIDsList);
-            request.setProperty("billingaccountid", "0");
+            request.setProperty("pids", projectIDsList);
+            request.setProperty("billingaccountids", "0");
             request.setProperty("clientid", "0");
 
         } else if (billingAccountIds[0] != 0) {
 
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", billingAccountIdsList);
+            // if user choose a billing account, we need to get all projects under that billing account the user has access to
+            Map<Long, String> projectsForBilling = DirectUtils.getProjectsForBilling(currentUser, billingAccountIds[0]);
+
+            long[] projectIdsForBilling = new long[projectsForBilling.size()];
+            int count = 0;
+
+            for(Long projectId : projectsForBilling.keySet()) {
+                projectIdsForBilling[count++] = projectId;
+            }
+
+            String  projectIdsForBillingStr = concatenate(projectIdsForBilling, ", ");
+
+            request.setProperty("pids", projectIdsForBillingStr);
+            request.setProperty("billingaccountids", billingAccountIdsList);
             request.setProperty("clientid", "0");
 
         } else if (clientIds[0] != 0) {
 
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", "0");
+            // if user choose a client account, we need to get all billing accounts under that client the user has access to
+            Map<Long, String> billingsForCustomer = DirectUtils.getBillingsForClient(currentUser, clientIds[0]);
+
+            long[] billingIdsForCustomer = new long[billingsForCustomer.size()];
+            int count = 0;
+
+            for(Long billingId : billingsForCustomer.keySet()) {
+                billingIdsForCustomer[count++] = billingId;
+            }
+
+            String  billingIdsForCustomerStr = concatenate(billingIdsForCustomer, ", ");
+
+            request.setProperty("pids", "0");
+            request.setProperty("billingaccountids", billingIdsForCustomerStr);
             request.setProperty("clientid", clientIdsList);
 
         } else {
@@ -2597,26 +2624,57 @@ public class DataProvider {
 
         String queryName = "dashboard_billing_cost_report";
 
+        // Gets TCSubject
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
         if (projectIds[0] != 0) {
 
-            request.setProperty("tcdirectid", projectIDsList);
-            request.setProperty("billingaccountid", "0");
+            request.setProperty("pids", projectIDsList);
+            request.setProperty("billingaccountids", "0");
             request.setProperty("clientid", "0");
 
         } else if (billingAccountIds[0] != 0) {
 
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", billingAccountIdsList);
+            // if user choose a billing account, we need to get all projects under that billing account the user has access to
+            Map<Long, String> projectsForBilling = DirectUtils.getProjectsForBilling(currentUser, billingAccountIds[0]);
+
+            long[] projectIdsForBilling = new long[projectsForBilling.size()];
+            int count = 0;
+
+            for(Long projectId : projectsForBilling.keySet()) {
+                projectIdsForBilling[count++] = projectId;
+            }
+
+            String  projectIdsForBillingStr = concatenate(projectIdsForBilling, ", ");
+
+            request.setProperty("pids", projectIdsForBillingStr);
+            request.setProperty("billingaccountids", billingAccountIdsList);
             request.setProperty("clientid", "0");
 
         } else if (clientIds[0] >= 0) {
 
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", "0");
+             // if user choose a client account, we need to get all billing accounts under that client the user has access to
+            Map<Long, String> billingsForCustomer = DirectUtils.getBillingsForClient(currentUser, clientIds[0]);
+
+            long[] billingIdsForCustomer = new long[billingsForCustomer.size()];
+            int count = 0;
+
+            for(Long billingId : billingsForCustomer.keySet()) {
+                billingIdsForCustomer[count++] = billingId;
+            }
+
+            String  billingIdsForCustomerStr = concatenate(billingIdsForCustomer, ", ");
+
+
+            request.setProperty("pids", "0");
 
             if(clientIds[0] == 0) {
+                // we do not apply client and billing filtering if "All Customers" is chosen because
+                // current user is of role "TC operations"
                 request.setProperty("clientid", "0");
+                request.setProperty("billingaccountids", "0");
             } else {
+              request.setProperty("billingaccountids", billingIdsForCustomerStr);
               request.setProperty("clientid", clientIdsList);
             }
 
