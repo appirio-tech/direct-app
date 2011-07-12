@@ -473,6 +473,7 @@
         <property name="specificationReviewService" ref="specificationReviewService"/>
         <property name="specReviewCommentService" ref="specReviewCommentService"/>
         <property name="userService" ref="userService"/>
+		<property name="contestServiceFacade" ref="contestServiceFacade"/>
     </bean>
 
     <bean id="saveSpecReviewCommentAction"
