@@ -2409,7 +2409,7 @@ public class DataProvider {
 
         if (projectIds[0] != 0) {
 
-            request.setProperty("pids", projectIDsList);
+            request.setProperty("tcdirectids", projectIDsList);
             request.setProperty("billingaccountids", "0");
             request.setProperty("clientid", "0");
 
@@ -2427,7 +2427,7 @@ public class DataProvider {
 
             String  projectIdsForBillingStr = concatenate(projectIdsForBilling, ", ");
 
-            request.setProperty("pids", projectIdsForBillingStr);
+            request.setProperty("tcdirectids", projectIdsForBillingStr);
             request.setProperty("billingaccountids", billingAccountIdsList);
             request.setProperty("clientid", "0");
 
@@ -2445,7 +2445,7 @@ public class DataProvider {
 
             String  billingIdsForCustomerStr = concatenate(billingIdsForCustomer, ", ");
 
-            request.setProperty("pids", "0");
+            request.setProperty("tcdirectids", "0");
             request.setProperty("billingaccountids", billingIdsForCustomerStr);
             request.setProperty("clientid", clientIdsList);
 
@@ -2629,7 +2629,7 @@ public class DataProvider {
 
         if (projectIds[0] != 0) {
 
-            request.setProperty("pids", projectIDsList);
+            request.setProperty("tcdirectids", projectIDsList);
             request.setProperty("billingaccountids", "0");
             request.setProperty("clientid", "0");
 
@@ -2647,7 +2647,7 @@ public class DataProvider {
 
             String  projectIdsForBillingStr = concatenate(projectIdsForBilling, ", ");
 
-            request.setProperty("pids", projectIdsForBillingStr);
+            request.setProperty("tcdirectids", projectIdsForBillingStr);
             request.setProperty("billingaccountids", billingAccountIdsList);
             request.setProperty("clientid", "0");
 
@@ -2666,7 +2666,7 @@ public class DataProvider {
             String  billingIdsForCustomerStr = concatenate(billingIdsForCustomer, ", ");
 
 
-            request.setProperty("pids", "0");
+            request.setProperty("tcdirectids", "0");
 
             if(clientIds[0] == 0) {
                 // we do not apply client and billing filtering if "All Customers" is chosen because
