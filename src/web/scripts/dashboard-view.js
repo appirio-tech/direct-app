@@ -147,6 +147,21 @@ $(document).ready(function(){
                 initTooltips();
             }
         });
+        
+        if ($.browser.msie) {
+            $(window).resize($.debounce(200, function() {
+                truncateProjectHealthTable();
+                adjustTables();
+            }));
+        } else {
+            $(window).resize(function() {
+                truncateProjectHealthTable();
+                adjustTables();
+            });
+        }
+
+        truncateProjectHealthTable();
+        
     }    
 
     //Truncate Project Health Table
@@ -215,21 +230,6 @@ $(document).ready(function(){
         }
     }
 
-    if ($.browser.msie) {
-        $(window).resize($.debounce(200, function() {
-            truncateProjectHealthTable();
-            adjustTables();
-        }));
-    } else {
-        $(window).resize(function() {
-            truncateProjectHealthTable();
-            adjustTables();
-        });
-    }
-
-
-    truncateProjectHealthTable();
-    
     function adjustTables() {
         // Determine if scrollbar is displayed for table
         var d = $('.dataTables_scrollBody')[0];

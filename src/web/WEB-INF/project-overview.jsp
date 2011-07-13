@@ -31,8 +31,8 @@
     <ui:projectPageType tab="overview"/>
     <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>
