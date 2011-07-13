@@ -291,6 +291,7 @@ $(document).ready(function(){
         //tooltops clear
         $('.tooltipBox').live('mouseover', function() {
             if (tooltopsTimer) clearTimeout(tooltopsTimer);
+            $('#projectHealthTable .onActive').closest('tr').addClass("hover");
         });
         $('.tooltopsBtn, .tooltipBox').live('mouseout', function() {
             tooltopsTimer = setTimeout(function() {
