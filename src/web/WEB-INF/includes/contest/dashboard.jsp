@@ -30,14 +30,14 @@
                 <c:if test="${viewData.dashboard.startTime != null}">
                     <div class="projectDate startDate">
                         <span class="arrow"></span>
-                        <label>Project Start :</label>
+                        <label>Contest Start :</label>
                         <fmt:formatDate value="${viewData.dashboard.startTime}" pattern="MM/dd/yyyy HH:mm"/> 
                     </div>                                            
                 </c:if>
                 <c:if test="${viewData.dashboard.endTime != null}">
                     <div class="projectDate endDate">
                         <span class="arrow"></span>
-                        <label>Project End :</label>
+                        <label>Contest End :</label>
                         <fmt:formatDate value="${viewData.dashboard.endTime}" pattern="MM/dd/yyyy HH:mm"/>
                     </div>                                        
                 </c:if>
