@@ -22,9 +22,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/dashboard-ie7.css" />
+    <![endif]-->    
     <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
-    <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
-
+    
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="details"/>
 

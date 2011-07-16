@@ -30,6 +30,11 @@ $(document).ready(function(){
 	
 	/* sort contests */
 	$("#contestsTable").tablesorter(); 
+    
+    /* init date-pack */
+    if($('.date-pick').length > 0){
+        $(".date-pick").datePicker({startDate:'01/01/2001'});
+    }   
 	
 	/* sort contest by title */
 	sortTitle = function(){

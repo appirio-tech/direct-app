@@ -44,8 +44,10 @@
                 
                 <div></div><!-- fix ie7 -->
                 
+                <c:set var="alreadyShowDate" value="false"/>
                 <c:if test="${viewData.dashboard.allPhases != null}">
                     <ul class="progressContainer">
+                        
                         <c:forEach items="${viewData.dashboard.allPhases}" var="phase" varStatus="loop">
                             <li class="${phase.phaseType.htmlClass} ${phase.phaseStatus.htmlClass}">
                                 <span class="phaseName">${phase.phaseType.shortName} <c:if test="${phase.num > 1}">(${phase.num})&nbsp;</c:if></span>
@@ -55,13 +57,13 @@
                                         <div class="leftSide">
                                             <div class="progressStatus">
                                             </div>
-                                        </div>                                                                                                                        
+                                        </div>            
                                     </c:when>
                                     <c:when test="${loop.last}">
                                         <div class="rightSide">
                                             <div class="progressStatus">
                                             </div>
-                                        </div>                                                                                                                        
+                                        </div>      
                                     </c:when>    
                                     <c:otherwise>
                                         <div class="progressStatus">
@@ -69,12 +71,15 @@
                                     </c:otherwise>
                                 </c:choose>
 
-                                <div class="phaseDate">
-                                    <p class="start"><label>Start</label>: 
-                                    <fmt:formatDate value="${phase.startTime}" pattern="MM/dd/yyyy HH:mm"/></p>
-                                    <p><label>End</label>: 
-                                    <fmt:formatDate value="${phase.endTime}" pattern="MM/dd/yyyy HH:mm"/></p>
-                                </div>
+                                <c:if test="${phase.phaseStatus.phaseStatusId == 2 && !alreadyShowDate}">
+                                    <c:set var="alreadyShowDate" value="true"/>
+                                    <div class="phaseDate">
+                                        <p class="start"><label>Start</label>: 
+                                        <fmt:formatDate value="${phase.startTime}" pattern="MM/dd/yyyy HH:mm"/></p>
+                                        <p><label>End</label>: 
+                                        <fmt:formatDate value="${phase.endTime}" pattern="MM/dd/yyyy HH:mm"/></p>
+                                    </div>
+                                </c:if>
                             </li>                                                        
                             
                         </c:forEach>
