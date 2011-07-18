@@ -173,8 +173,15 @@ import com.topcoder.shared.util.DBMS;
  * </ul>
  * </p>
  * 
- * @author BeBetter, isv, flexme, Blues, Veve, TCSASSEMBLER
- * @version 1.6.7
+ * <p>
+ * Version 1.6.8 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1) change notes:
+ * <ul>
+ *      <li>Add method daysBetween to add contest issues into contest stats</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve
+ * @version 1.6.8
  */
 public final class DirectUtils {
     /**
@@ -242,12 +249,33 @@ public final class DirectUtils {
     private static final String TC_STAFF_ROLE = "TC Staff";
 
     /**
+     * Represents one hour in milliseconds.
+     *
+     * @since 1.6.7
+     */
+    private static final long ONE_HOUR = 60 * 60 * 1000L;
+
+
+    /**
      * <p>
      * Default Constructor.
      * </p>
      */
     private DirectUtils() {
 
+    }
+
+    /**
+     * Calculates the number of days between two dates.
+     *
+     * @param d1 the early date.
+     * @param d2 the later date.
+     * @return the number of days between d2 and d1.
+     * @since 1.6.8
+     */
+    public static long daysBetween(Date d1, Date d2) {
+        return ((d2.getTime() - d1.getTime() + ONE_HOUR) /
+                (ONE_HOUR * 24));
     }
 
     /**

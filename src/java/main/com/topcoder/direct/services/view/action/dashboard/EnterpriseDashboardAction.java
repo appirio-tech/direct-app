@@ -9,15 +9,7 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardStatusColor;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardAggregatedStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatPeriodType;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
@@ -79,8 +71,15 @@ import javax.servlet.http.HttpServletRequest;
  *   </ol>
  * </p>
  *
- * @author isv, xjtufreeman, Blues, flexme
- * @version 1.0.5
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add the logics for the new summary panel.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, xjtufreeman, Blues, flexme, Veve
+ * @version 1.1
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -355,19 +354,40 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> costStats = createEmptyStats();
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> durationStats = createEmptyStats();
             Map<String, List<EnterpriseDashboardAggregatedStatDTO>> fulfillmentStats = createEmptyStats();
+
+
+            // average data for the customer summary
             EnterpriseDashboardAggregatedStatDTO averageCustomerCost = new EnterpriseDashboardAggregatedStatDTO();
             EnterpriseDashboardAggregatedStatDTO averageCustomerDuration = new EnterpriseDashboardAggregatedStatDTO();
             EnterpriseDashboardAggregatedStatDTO averageCustomerFulfillment 
                 = new EnterpriseDashboardAggregatedStatDTO();
 
-            //Get contest avarage info
+            // average data for the market summary
+            EnterpriseDashboardAggregatedStatDTO averageMarketCost = new EnterpriseDashboardAggregatedStatDTO();
+            EnterpriseDashboardAggregatedStatDTO averageMarketDuration = new EnterpriseDashboardAggregatedStatDTO();
+            EnterpriseDashboardAggregatedStatDTO averageMarketFulfillment
+                = new EnterpriseDashboardAggregatedStatDTO();
+
+            // summary panel data - customer
+            int customerTotalVolume = 0;
+            long numberOfDays = DirectUtils.daysBetween(startDate, endDate);
+            double customerTotalCost = 0;
+            boolean hasCustomerSummaryData = false;
+
+            // summary panel data - market
+            int marketTotalVolume = 0;
+            double marketTotalCost = 0;
+            long numberOfDaysMarket = numberOfDays;
+            boolean hasMarketSummaryData = false;
+
+            //Get contest average info
             Map<Integer, List<Double>> contestTypeAvgMap = DataProvider.getEnterpriseContestsAvgStatus(categoryIds,
                     startDate, endDate);
             NumberFormat format = new DecimalFormat("###,##0.##");
             for (Map.Entry<Integer, List<Double>> entry : contestTypeAvgMap.entrySet()) {
                 contestTypeAvgCost.put(entry.getKey().toString(), format.format(entry.getValue().get(1)));
             }
-            //Get the date info of the dirll in pointer
+            //Get the date info of the drill in pointer
             SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
             Date drillStartDate = null;
             Date drillEndDate = null;
@@ -417,7 +437,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             }
 
 
-            // Get data from weekly_contest_status and aggregate the average calculated values for client
+            // Get data from weekly_contest_stats and aggregate the average calculated values for client
             List<EnterpriseDashboardDetailedProjectStatDTO> clientStats
                 = DataProvider.getEnterpriseStatsForProject(projectIds, categoryIds, startDate, endDate, customerIds,
                                                             billingAccountIds, false);
@@ -429,6 +449,13 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 if (statType == EnterpriseDashboardStatType.COST) {
                     targetStats = costStats;
                     averageCustomerCost.aggregateClientValue(stat.getValue(), stat.getContestsCount());
+
+                    // calculate the customer summary data
+                    customerTotalCost += (stat.getValue() * stat.getContestsCount());
+                    customerTotalVolume += stat.getContestsCount();
+                    numberOfDays += 7;
+                    hasCustomerSummaryData = true;
+
                 } else if (statType == EnterpriseDashboardStatType.DURATION) {
                     targetStats = durationStats;
                     averageCustomerDuration.aggregateClientValue(stat.getValue(), stat.getContestsCount());
@@ -439,7 +466,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
                 aggregateClientStat(EnterpriseDashboardStatPeriodType.WEEK, getWeekLabel(statDate), stat, targetStats);
             }
-            // Get data from monthly_contest_status and aggregate the average calculated values for client
+            // Get data from monthly_contest_stats and aggregate the average calculated values for client
             List<EnterpriseDashboardDetailedProjectStatDTO> clientStatsMonthly
                 = DataProvider.getEnterpriseStatsForProject(projectIds, categoryIds, startDate, endDate, customerIds,
                                                             billingAccountIds, true);
@@ -465,8 +492,9 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 aggregateClientStat(EnterpriseDashboardStatPeriodType.YEAR, getYearLabel(statDate), stat, targetStats);
             }
 
+            /** Market data starts here **/
 
-            // Get data from weekly_contest_status and aggregate the average calculated values for all projects
+            // Get data from weekly_contest_stats and aggregate the average calculated values for all projects - market
             List<EnterpriseDashboardDetailedProjectStatDTO> overallStats
                 = DataProvider.getEnterpriseStatsForAllProjects(categoryIds, startDate, endDate, false);
             for (EnterpriseDashboardDetailedProjectStatDTO stat : overallStats) {
@@ -476,10 +504,22 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 Map<String, List<EnterpriseDashboardAggregatedStatDTO>> targetStats;
                 if (statType == EnterpriseDashboardStatType.COST) {
                     targetStats = costStats;
+
+                    averageMarketCost.aggregateOverallValue(stat.getValue(), stat.getContestsCount());
+
+                    // calculate the market summary data
+                    marketTotalCost += (stat.getContestsCount() * stat.getValue());
+                    marketTotalVolume += stat.getContestsCount();
+                    numberOfDaysMarket += 7;
+                    hasMarketSummaryData = true;
                 } else if (statType == EnterpriseDashboardStatType.DURATION) {
                     targetStats = durationStats;
+
+                    averageMarketDuration.aggregateOverallValue(stat.getValue(), stat.getContestsCount());
                 } else {
                     targetStats = fulfillmentStats;
+
+                    averageMarketFulfillment.aggregateOverallValue(stat.getValue(), stat.getContestsCount());
                 }
 
                 aggregateOverallStat(EnterpriseDashboardStatPeriodType.WEEK, getWeekLabel(statDate), stat, targetStats);
@@ -521,10 +561,54 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             getViewData().setCostStats(costStats);
             getViewData().setDurationStats(durationStats);
             getViewData().setFulfillmentStats(fulfillmentStats);
-            
-            getViewData().setAverageCost(averageCustomerCost.getClientValue());
-            getViewData().setAverageDuration(averageCustomerDuration.getClientValue());
-            getViewData().setAverageFulfillment(averageCustomerFulfillment.getClientValue());
+
+            if (hasCustomerSummaryData) {
+                // set summary data for customer
+                EnterpriseDashboardSummary customerSummary = new EnterpriseDashboardSummary();
+                customerSummary.setAverageContestCost(averageCustomerCost.getClientValue());
+                customerSummary.setAverageContestDuration(averageCustomerDuration.getClientValue());
+                customerSummary.setAverageFulfillment(averageCustomerFulfillment.getClientValue());
+                customerSummary.setTotalContestVolume(customerTotalVolume);
+                customerSummary.setTotalMemberCost(customerTotalCost);
+                customerSummary.setAverageVolPerMonth(customerTotalVolume * 30.0 / numberOfDays);
+
+                // get the cost range and duration range for customer
+                Map<String, Double> customerRangeData = DataProvider.getEnterpriseDashboardSummaryRange(projectIds, categoryIds, startDate, endDate, customerIds,
+                        billingAccountIds);
+
+                customerSummary.setMaxContestCost(customerRangeData.get("max_cost"));
+                customerSummary.setMinContestCost(customerRangeData.get("min_cost"));
+                customerSummary.setMaxContestDuration(customerRangeData.get("max_duration") / 24.0 / 60.0);
+                customerSummary.setMinContestDuration(customerRangeData.get("min_duration") / 24.0 / 60.0);
+
+                getViewData().setCustomerSummary(customerSummary);
+            } else {
+                getViewData().setCustomerSummary(null);
+            }
+
+            if (hasMarketSummaryData) {
+                // set summary data for market
+                EnterpriseDashboardSummary marketSummary = new EnterpriseDashboardSummary();
+                marketSummary.setAverageContestCost(averageMarketCost.getOverallValue());
+                marketSummary.setAverageContestDuration(averageMarketDuration.getOverallValue() / 24.0);
+                marketSummary.setAverageFulfillment(averageMarketFulfillment.getOverallValue());
+                marketSummary.setTotalContestVolume(marketTotalVolume);
+                marketSummary.setTotalMemberCost(marketTotalCost);
+                marketSummary.setAverageVolPerMonth(marketTotalVolume * 30.0 / numberOfDaysMarket);
+
+                long[] noIds = new long[]{0};
+                // get the cost range and duration range for market
+                Map<String, Double> marketRangeData = DataProvider.getEnterpriseDashboardSummaryRange(noIds, categoryIds, startDate, endDate, noIds,
+                        noIds);
+                marketSummary.setMaxContestCost(marketRangeData.get("max_cost"));
+                marketSummary.setMinContestCost(marketRangeData.get("min_cost"));
+                marketSummary.setMaxContestDuration(marketRangeData.get("max_duration") / 24.0 / 60.0 );
+                marketSummary.setMinContestDuration(marketRangeData.get("min_duration") / 24.0 / 60.0 );
+
+                getViewData().setMarketSummary(marketSummary);
+            } else {
+                getViewData().setMarketSummary(null);
+            }
         }
 
         // For normal request flow prepare various data to be displayed to user
@@ -552,6 +636,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         
         // Build the result for consumption by JSON serializer in case of AJAX calls
         if (isAJAXCall) {
+     
             Map<String, Object> durations = buildStats(getViewData().getDurationStats(),
                                                        new String[]{"date", "Customer Avg Contest Duration",
                                                                     "Market Avg Contest Duration"});
@@ -577,12 +662,47 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             NumberFormat format1 = new DecimalFormat("##0.##");
             NumberFormat format2 = new DecimalFormat("#,##0.00");
             NumberFormat format3 = new DecimalFormat("##0.#");
-            result.put("avg1", format1.format(getViewData().getAverageFulfillment()));
-            result.put("avg2", format2.format(getViewData().getAverageCost()));
-            result.put("avg3", format3.format(getViewData().getAverageDuration()));
+
+            if (getViewData().getCustomerSummary() != null) {
+                result.put("customerAverageFulfillment", format1.format(getViewData().getCustomerSummary().getAverageFulfillment()));
+                result.put("customerAverageCost", format2.format(getViewData().getCustomerSummary().getAverageContestCost()));
+                result.put("customerAverageDuration", format3.format(getViewData().getCustomerSummary().getAverageContestDuration()));
+                result.put("customerAverageVol", format3.format(getViewData().getCustomerSummary().getAverageVolPerMonth()));
+                result.put("customerTotalVol", format3.format(getViewData().getCustomerSummary().getTotalContestVolume()));
+                result.put("customerTotalCost", format2.format(getViewData().getCustomerSummary().getTotalMemberCost()));
+                result.put("customerMaxCost", format2.format(getViewData().getCustomerSummary().getMaxContestCost()));
+                result.put("customerMinCost", format2.format(getViewData().getCustomerSummary().getMinContestCost()));
+                result.put("customerMaxDuration", format3.format(getViewData().getCustomerSummary().getMaxContestDuration()));
+                result.put("customerMinDuration", format3.format(getViewData().getCustomerSummary().getMinContestDuration()));
+                result.put("hasCustomerSummary", true);
+            } else {
+                result.put("hasCustomerSummary", false);
+            }
+
+            if (getViewData().getMarketSummary() != null) {
+                result.put("marketAverageFulfillment", format1.format(getViewData().getMarketSummary().getAverageFulfillment()));
+                result.put("marketAverageCost", format2.format(getViewData().getMarketSummary().getAverageContestCost()));
+                result.put("marketAverageDuration", format3.format(getViewData().getMarketSummary().getAverageContestDuration()));
+                result.put("marketAverageVol", format3.format(getViewData().getMarketSummary().getAverageVolPerMonth()));
+                result.put("marketTotalVol", format3.format(getViewData().getMarketSummary().getTotalContestVolume()));
+                result.put("marketTotalCost", format2.format(getViewData().getMarketSummary().getTotalMemberCost()));
+                result.put("marketMaxCost", format2.format(getViewData().getMarketSummary().getMaxContestCost()));
+                result.put("marketMinCost", format2.format(getViewData().getMarketSummary().getMinContestCost()));
+                result.put("marketMaxDuration", format3.format(getViewData().getMarketSummary().getMaxContestDuration()));
+                result.put("marketMinDuration", format3.format(getViewData().getMarketSummary().getMinContestDuration()));
+                result.put("hasMarketSummary", true);
+            } else {
+                result.put("hasMarketSummary", false);
+            }
+
+            if(getViewData().getCustomerSummary() != null && getViewData().getMarketSummary() != null) {
+                result.put("marketCap", format1.format(getViewData().getCustomerSummary().getTotalMemberCost() * 100.0 / getViewData().getMarketSummary().getTotalMemberCost()));
+            }
+
             result.put("contestTypeAvgCost", contestTypeAvgCost);
 
             setResult(result);
+     
         }
     }
 

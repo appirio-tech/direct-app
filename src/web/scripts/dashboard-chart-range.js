@@ -1,3 +1,7 @@
+/**
+ * - Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1) Change Notes:
+ * - Add the codes for the new summary panel and it's tips
+ */
 $(document).ready(function() {
     /* Multi Select */
     $('.multiselect').multiSelect();
@@ -15,6 +19,43 @@ $(document).ready(function() {
         }
     });
 
+    /* new add */
+	$(".summaryPanel .tabs a").click(function(){
+		$(".summaryPanel .tabs a.current").removeClass("current");
+		$(".summaryPanel .tabs a.currentPrev").removeClass("currentPrev");
+		$(this).parent().prev().children().addClass("currentPrev");
+		$(this).addClass("current");
+		switch($(this).parent().index()){
+			case 0:
+				$(".summaryPanel .tabs").removeClass("market").removeClass("compare").addClass("customer");
+				$(".customerSummary").removeClass("hide");
+				$(".marketSummary").addClass("hide");
+				$(".compare").addClass("hide");
+				break;
+			case 1:
+				$(".summaryPanel .tabs").addClass("market").removeClass("compare").removeClass("customer");
+				$(".customerSummary").addClass("hide");
+				$(".marketSummary").removeClass("hide");
+				$(".compare").addClass("hide");
+				break;
+			case 2:
+				$(".summaryPanel .tabs").removeClass("market").addClass("compare").removeClass("customer");
+				$(".customerSummary").addClass("hide");
+				$(".marketSummary").addClass("hide");
+				$(".compare").removeClass("hide");
+				break;
+			default:
+				break;
+		}
+	})
+	$(".fieldName").hover(
+		function(){
+			$(this).find(".tooltipBox").css("display", "block");
+		},
+		function(){
+			$(this).find(".tooltipBox").css("display", "none");
+		}
+	);
 
     /* Apply button action */
     $('a.applyButton').click(function(event) {

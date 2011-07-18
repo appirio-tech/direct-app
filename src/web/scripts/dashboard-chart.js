@@ -1,8 +1,11 @@
-// javascript functions for dashboard view chart
-                                       
 /**
  * - Version 1.1 (TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly) Change Notes:
- * - - Add support to the Contest Cost Breakdown and Market Cost Breakdown. 
+ * - Add support to the Contest Cost Breakdown and Market Cost Breakdown.
+ *
+ * - Version 1.2 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1) Change Notes:
+ * - Add the codes to fill in data for the new summary panel
+ * - Add ajax loading indicator of the chart view drill-in operation
+ * - Change the AJAX loading indicator for the contest breakdown and market breakdown view
  */
 
 // define google visualization charts
@@ -486,11 +489,19 @@ function drawChart() {
     }
     //transform date format from "Aug 01, 2010" to "08/01/2010"
     function transformDate(date) {
+        console.log(date);
         var dateMap = {Jan:"01",Feb:"02",Mar:"03",Apr:"04",May:"05",Jun:"06",Jul:"07",Aug:"08",Sep:"09",Oct:"10",Nov:"11",Dec:"12"};
         var month = date.split(",")[0].split(" ")[0];
         var day =  date.split(",")[0].split(" ")[1];
         var year = date.split(" ")[2];
         return dateMap[month]+"/"+day+"/"+year;
+    }
+    
+    function isValidDrillInDate(date) {
+        var day =  date.split(",")[0].split(" ")[1];
+        var year = date.split(" ")[2];
+        
+        return !(isNaN(day) || isNaN(year));  
     }
 
     function loadDrillTableData(timeRange, timeDimension, type) {
@@ -502,6 +513,16 @@ function drawChart() {
         var startEndDate = getStartEndDate(timeRange, timeDimension);
         formData += "&drillStartDate="+escape(transformDate(startEndDate[0]) + " 00:00:00");
         formData += "&drillEndDate="+escape(transformDate(startEndDate[1]) + " 23:59:59");
+        
+        if(!isValidDrillInDate(startEndDate[0]) || !isValidDrillInDate(startEndDate[1])) {
+            $(".tableViewChart table tbody").append("<tr  style=\"height:378px;\"><td colspan=13>NO ENOUGH STATISTICS TO RENDER THE TABLE</td></tr>");
+            
+            // hide the vertical scrollbar
+            $("#secondDashboardTableBody").css("overflow-y", "hidden");
+            return;
+        }
+        
+        $("#secondDashboardTableBody").css("overflow-y", "auto");
 
         var formActionUrl = "";
         if(type == "Market") {
@@ -510,6 +531,7 @@ function drawChart() {
             formActionUrl = "dashboardEnterpriseTableViewCall";    
         }
         $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
+        showDrillInLoadingIndicator();
         checkCategoryIds();
         $.ajax({
             type: 'get',
@@ -519,6 +541,7 @@ function drawChart() {
             dataType: 'json',
             success: function(jsonResult) {
                 $('#zoomMessage').html('');
+                $(".loadingIndicator").hide();
                 handleJsonResult(
                         jsonResult,
                         function(result){
@@ -527,6 +550,7 @@ function drawChart() {
                             contestTypeAvgCost = result.contestTypeAvgCost;
                             tableViewProjectIdsDirty = true;
                             allContestProjectIdsDirty = true;
+                            $("#secondDashboardTableBodyTable").show();
                             chartDrillTableView(timeRange, timeDimension, type);
                             $('#secondDashboardTableBody table').css('width', $('#secondDashboardTableHeader table').width());
                             secondTablePagination.dataInit("#secondDashboardTableBody table", $("#secondDashboardTableFooter select").val(), "#secondDashboardTableFooter");
@@ -541,6 +565,22 @@ function drawChart() {
             }
         });
     }
+
+    /**
+     * Show the AJAX loading indicator for the chart view drill-in.
+     *
+     * @since 1.2
+     */
+    function showDrillInLoadingIndicator() {
+        $(".tableViewChart table tbody tr").remove();
+        $(".tableViewChart table tfoot").remove();
+        $(".tableViewChart table tfoot").hide();
+        $("#secondDashboardTableBodyTable").hide();
+        $(".loadingIndicator").css("margin-top", "100px");
+        $(".loadingIndicator").css("margin-left", ($('#secondDashboardTableBody').width()/2 - 110) + 'px');
+        $(".loadingIndicator").show();
+    }
+
     function loadStats(formData, formActionUrl) {
         $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
         checkCategoryIds();
@@ -556,9 +596,57 @@ function drawChart() {
                                         function(result) {
                                             $('#startDateLabel').html(result.periodStart);
                                             $('#endDateLabel').html(result.periodEnd);
-                                            $('#avg1').html(result.avg1);
-                                            $('#avg2').html(result.avg2);
-                                            $('#avg3').html(result.avg3);
+
+                                            // display the customer summary data in the summary panel
+                                            if(!result.hasCustomerSummary) {
+                                                $("#customerSummaryData").hide();
+                                                $("#customerSummaryNoData").show();
+                                                $("#comparisonCustomerData").hide();
+                                                $("#comparisonCustomerNoData").show();
+                                            } else {
+                                                $("#customerSummaryData").show();
+                                                $("#customerSummaryNoData").hide();
+                                                $("#comparisonCustomerData").show();
+                                                $("#comparisonCustomerNoData").hide();
+
+                                                // insert customer result data
+                                                $("#customerAverageFulfillment, #customerAverageFulfillmentComparison").html(result.customerAverageFulfillment.toString() + '%');
+                                                $("#customerAverageCost, #customerAverageCostComparison").html('$' + result.customerAverageCost.toString());
+                                                $("#customerAverageDuration, #customerAverageDurationComparison").html(result.customerAverageDuration.toString() + ' days');
+                                                $("#customerAverageVol, #customerAverageVolComparison").html(result.customerAverageVol.toString());
+                                                $("#customerTotalVol, #customerTotalVolComparison").html(result.customerTotalVol.toString());
+                                                $("#customerTotalCost, #customerTotalCostComparison").html('$' + result.customerTotalCost.toString());
+                                                $("#customerMinMaxCost, #customerMinMaxCostComparison").html('$' + result.customerMinCost.toString() + " - $" + result.customerMaxCost.toString());
+                                                $("#customerMinMaxDuration, #customerMinMaxDurationComparison").html(result.customerMinDuration.toString() + " - " + result.customerMaxDuration.toString() + ' days');
+                                            }
+
+                                            // display the market summary data in the summary panel
+                                            if(!result.hasMarketSummary) {
+                                                $("#marketSummaryData").hide();
+                                                $("#marketSummaryNoData").show();
+                                                $("#comparisonMarketData").hide();
+                                                $("#comparisonMarketNoData").show();
+                                            } else {
+                                                $("#marketSummaryData").show();
+                                                $("#marketSummaryNoData").hide();
+                                                $("#comparisonMarketData").show();
+                                                $("#comparisonMarketNoData").hide();
+
+                                                // insert market result data
+                                                $("#marketAverageFulfillment, #marketAverageFulfillmentComparison").html(result.marketAverageFulfillment.toString() + '%');
+                                                $("#marketAverageCost, #marketAverageCostComparison").html('$' + result.marketAverageCost.toString());
+                                                $("#marketAverageDuration, #marketAverageDurationComparison").html(result.marketAverageDuration.toString() + ' days');
+                                                $("#marketAverageVol, #marketAverageVolComparison").html(result.marketAverageVol.toString());
+                                                $("#marketTotalVol, #marketTotalVolComparison").html(result.marketTotalVol.toString());
+                                                $("#marketTotalCost, #marketTotalCostComparison").html('$' + result.marketTotalCost.toString());
+                                                $("#marketMinMaxCost, #marketMinMaxCostComparison").html('$' + result.marketMinCost.toString() + " - $" + result.marketMaxCost.toString());
+                                                $("#marketMinMaxDuration, #marketMinMaxDurationComparison").html(result.marketMinDuration.toString() + " - " + result.marketMaxDuration.toString() + ' days');
+                                            }
+
+                                            // show the market cap
+                                            if(result.hasMarketSummary && result.hasCustomerSummary) {
+                                                 $("#marketCap").html(result.marketCap + "%");
+                                            }
 
                                             $("#startDateEnterprise").datePicker().val(result.periodStartCalendar)
                                                     .trigger('change');
@@ -637,7 +725,7 @@ function drawChart() {
      */
     function loadContestBreakDownData(projectIds, viewType) {
         var data = {formData:{projectIds:projectIds}};
-        $.blockUI({ message: '<div id=loading> loading.... </div>' });
+        modalPreloader();
         $.ajax({
             type: 'post',
             url: "dashboardGetCostBreakDownAJAX",
@@ -648,7 +736,7 @@ function drawChart() {
                 handleJsonResult(
                     jsonResult,
                     function(result){
-                        $.unblockUI();
+                        modalClose();
                         if (viewType == "Market") {
                             allContestProjectIdsDirty = false;
                             allContestBreakDownData = result;
@@ -670,7 +758,7 @@ function drawChart() {
      */
     function loadMarketBreakDownData() {
         var data = {formData:{projectCategoryIds:oldProjectCategoryIds, startDate:oldStartTime, endDate:oldEndTime}};
-        $.blockUI({ message: '<div id=loading> loading.... </div>' });
+        modalPreloader();
         $.ajax({
             type: 'post',
             url: "dashboardGetCostBreakDownAJAX",
@@ -681,7 +769,7 @@ function drawChart() {
                 handleJsonResult(
                     jsonResult,
                     function(result){
-                        $.unblockUI();
+                        modalClose();
                         marketBreakDownDirty = false;
                         marketBreakDownData = result;
                         renderMarketBreakDown();

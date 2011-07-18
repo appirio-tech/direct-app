@@ -24,10 +24,10 @@ $(document).ready(function(){
     $(".chartCollapse a.expand").click(function(){
         $(this).blur();
         if($(this).hasClass("collapse")){
-            $(".visualization").show();
+            $(".chartContent").show();
             $(this).removeClass("collapse");
         }else{
-             $(".visualization").hide();
+             $(".chartContent").hide();
              $(this).addClass("collapse");
         }
     });

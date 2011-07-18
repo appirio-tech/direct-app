@@ -1,8 +1,11 @@
 
 .chartCollapse a.expand{
-  background-position:0px 5px;
-  padding-top:8px;
+  display:inline-block;
+  background-position:left top;
   float:left;
+  height:21px;
+  line-height:21px;
+  margin-top:8px;
 }
 
 .timeDimension,.displaying{
@@ -389,10 +392,11 @@ a.dp-choose-date { margin-right:0px;}
 
 .dashboardTableFooter .pagination3 .pages{
     padding-top:4px;
+    margin-top: 0px;
 }
 
 .dashboardTableFooter .pagination3 .showPages select{
-    margin-top:3px;
+    margin-top:1px;
 }
 
 .dashboardTableFooter .panel a{
@@ -401,9 +405,9 @@ a.dp-choose-date { margin-right:0px;}
 
 .dashboardTableFooter .allPages {
     float: right;
-    padding-right:5px;
+    padding-right:10px;
     padding-top:4px;
-
+    padding-left: 10px;
 }
 
 .dashboardTableBody{
@@ -571,3 +575,337 @@ td.fontGreen{
 	font-size:12px;
 	border:1px solid #a9acae;
 }
+
+/* new added in TC Cockpit Enterprise Dashboard Update Assembly 1 */
+.summaryPanel {
+    position: relative;
+    border-left: 1px solid #aaacae;
+    border-right: 1px solid #aaacae;
+    padding: 0;
+}
+
+.summaryPanel .date {
+    position: absolute;
+    right: 6px;
+    top: 4px;
+    color: #000000;
+    font-size: 12px;
+}
+
+.summaryPanel .zoomMessage {
+    position: absolute;
+    right: 50%;
+    top: 4px;
+    color: #000000;
+    font-size: 12px;
+}
+
+.summaryPanel .tabs {
+    float: left;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.summaryPanel .tabs.customer {
+    background: url(../images/bg-tabs-customer.png) left bottom repeat-x;
+}
+
+.summaryPanel .tabs.market {
+    background: url(../images/bg-tabs-market.png) left bottom repeat-x;
+}
+
+.summaryPanel .tabs.compare {
+    background: url(../images/bg-tabs-compare.png) left bottom repeat-x;
+}
+
+.summaryPanel .tabs li {
+    float: left;
+}
+
+.summaryPanel .tabs li a,
+.summaryPanel .tabs li a:visited {
+    display: block;
+    border-width: 1px;
+    border-style: solid;
+    border-left: none;
+    border-bottom: none;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.summaryPanel .tabs li .customer {
+    border-color: #cad9e5;
+    /* border-left:1px solid #cad9e5; */
+    background: #e1f2ff;
+    color: #2882ff;
+}
+
+.summaryPanel .tabs li .customer.current {
+    /* border-left:1px solid #cad9e5; */
+    padding-bottom: 6px;
+}
+
+.summaryPanel .tabs li .market {
+    border-color: #c1e2af;
+    background: #efffca;
+    color: #008600
+}
+
+.summaryPanel .tabs li .market.current {
+    border-left: 1px solid #c1e2af;
+    padding-bottom: 6px;
+}
+
+.summaryPanel .tabs li .compare {
+    border-color: #efd699;
+    background: #fffacd;
+    color: #bf7a31;
+}
+
+.summaryPanel .tabs li .compare.current {
+    border-left: 1px solid #efd699;
+    padding-bottom: 6px;
+}
+
+.summaryPanel .tabs li .currentPrev {
+    border-right: none;
+}
+
+.summaryPanel .tabs li a:hover {
+    text-decoration: underline;
+}
+
+.summaryPanel .tabs li .current:hover {
+    text-decoration: none;
+}
+
+.summaryPanel .tabsContent {
+    clear: left;
+    font-size: 12px;
+}
+
+.summaryPanel .tabsContent .customerSummary {
+    border-bottom: 1px solid #cad9e5;
+    background: #e1f2ff;
+    padding: 9px 8px 6px;
+}
+
+.summaryPanel .tabsContent table td.fieldName {
+    padding-right: 8px;
+    padding-bottom: 1px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.summaryPanel .tabsContent table td.fieldData {
+    padding-right: 36px;
+    color: #2882ff;
+    text-align: right;
+}
+
+.summaryPanel .tabsContent .marketSummary table td.fieldData {
+    color: #68a71d;
+}
+
+.summaryPanel .tabsContent .marketSummary {
+    border-bottom: 1px solid #c1e2af;
+    background: #efffca;
+    padding: 9px 8px 6px;
+}
+
+.summaryPanel .tabsContent .compare {
+    border-bottom: 1px solid #efd699;
+    background: #fffacd;
+    padding: 9px 8px 6px;
+}
+
+.summaryPanel .tabsContent .compare table td {
+    padding: 0 13px 6px 13px;
+    text-align: center;
+}
+
+.summaryPanel .tabsContent .compare table td.firstColumn {
+    padding: 0 10px 6px 0;
+    text-align: left;
+}
+
+.summaryPanel .tabsContent .compare table td.mkt {
+    font-size: 17.3px;
+    font-weight: bold;
+}
+
+.summaryPanel .tabsContent .compare table tr.marketTR td {
+    color: #68a71d;
+    padding-bottom: 2px;
+}
+
+/* new tooltips */
+.tooltipWrapper {
+    position: relative;
+}
+
+.tooltipBox {
+    position: absolute;
+    width: 180px;
+    left: 50%;
+    bottom: 19px;
+    margin-left: -90px;
+    z-index: 999;
+    display: none;
+    color: #000;
+    background-color: transparent;
+    text-align: left;
+}
+
+.summaryPanel .tabsContent .marketSummary .tooltipBox {
+    width: 208px;
+    margin-left: -104px;
+}
+
+.summaryPanel .tabsContent .compare .tooltipBox {
+    width: 140px;
+    margin-left: -70px;
+}
+
+.volumeView .tooltipBox {
+    width: 192px;
+    margin-left: -96px;
+}
+
+.tooltipBox.firstColumn {
+    left: 80%;
+}
+
+.tooltipBox SPAN.arrow {
+    position: absolute;
+    left: 50%;
+    top: auto;
+    bottom: -4px;
+    display: block;
+    width: 7px;
+    height: 5px;
+    margin-left: -3px;
+    background: url(../images/popup_new_arrow.png) no-repeat;
+}
+
+.tooltipHeader {
+    height: 26px;
+    background: url(../images/tooltip_new_blue.png) left top no-repeat;
+    padding-left: 3px;
+    overflow: hidden;
+}
+
+.tooltipHeader .tooltipHeaderRight {
+    height: 26px;
+    background: url(../images/tooltip_new_blue.png) right -52px no-repeat;
+    padding-right: 3px;
+}
+
+.tooltipHeader .tooltipHeaderCenter {
+    height: 26px;
+    background: url(../images/tooltip_new_blue.png) left -26px repeat-x;
+}
+
+.tooltipHeader h2 {
+    font-size: 11px;
+    color: #FFF;
+    background-color: transparent;
+    padding-top: 6px;
+    padding-left: 7px;
+    margin: 0;
+}
+
+.tooltipBox .tooltipContent {
+    border-left: 1px solid #bdbdbd;
+    border-right: 1px solid #bdbdbd;
+    padding: 0px 7px;
+    font-size: 12px;
+    color: #333;
+    background-color: #fffffd;
+}
+
+.tooltipBox .tooltipContent H3 {
+    color: #333333;
+    margin-bottom: 3px;
+}
+
+.tooltipBox .tooltipContent P {
+    padding: 2px 0;
+}
+
+.tooltipBox .tooltipContent P a {
+    color: #333333;
+    text-decoration: underline;
+}
+
+.tooltipFooter {
+    height: 3px;
+    background: url(../images/tooltip_new_cornner.png) left top no-repeat;
+    padding-left: 3px;
+    overflow: hidden;
+}
+
+.tooltipFooter .tooltipFooterRight {
+    height: 3px;
+    background: url(../images/tooltip_new_cornner.png) right -6px no-repeat;
+    padding-right: 3px;
+}
+
+.tooltipFooter .tooltipFooterCenter {
+    height: 3px;
+    background: url(../images/tooltip_new_cornner.png) left -3px repeat-x;
+}
+
+.tooltipBox .tooltipContent a.viewDetailsLink {
+    float: right;
+    display: inline;
+}
+
+.tooltipBox .tooltipContent P a:hover,
+.tooltipBox .tooltipContent a.viewDetailsLink:hover {
+    text-decoration: none;
+}
+
+/* Green Tooltip */
+.greenToolTipBox .tooltipHeader,
+.greenToolTipBox .tooltipHeaderRight,
+.greenToolTipBox .tooltipHeaderCenter {
+    background-image: url(../images/tooltip_new_green.png);
+}
+
+/* Orange Tooltip */
+.orangeToolTipBox .tooltipHeader,
+.orangeToolTipBox .tooltipHeaderRight,
+.orangeToolTipBox .tooltipHeaderCenter {
+    background-image: url(../images/tooltip_new_orange.png);
+}
+
+.btnArea a.btnView {
+    background: url(../images/btn-view.png) top left no-repeat;
+    width: 19px;
+    height: 21px;
+    display: block;
+    float: left;
+}
+
+.btnArea a.btnView.active {
+    background-position: left -21px;
+}
+
+.btnArea a.btnCompare {
+    background: url(../images/btn-compare.png) top left no-repeat;
+    width: 21px;
+    height: 21px;
+    display: block;
+    float: left;
+}
+
+.btnArea a.btnCompare.active {
+    background-position: left -21px;
+}
+
+/* end */

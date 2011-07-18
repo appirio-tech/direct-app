@@ -1,8 +1,7 @@
-/*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
- */
 /**
- * The JS script for dashboard.
+ *  Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ *
+ *  The JS script for dashboard.
  *
  *  Version 1.1 - TC Direct - Page Layout Update Assembly & TC Direct - Page Layout Update Assembly 2
  *  - Added auto truncated function.
@@ -18,8 +17,11 @@
  *  Version 1.4 - TC Direct Contest Dashboard Update Assembly
  *  - Apply to new prototype, change the layout when window resized.
  *
- * @author tangzx, Blues
- * @version 1.4
+ *  Version 1.5 - Release Assembly - TC Cockpit Sidebar Header and Footer Update
+ *  - Add the functions for ajax pre loader and modal window.
+ *
+ * @author tangzx, Blues, TCSASSEMBLER
+ * @version 1.2
  */
 $(document).ready(function(){
 						   
@@ -236,18 +238,6 @@ $(document).ready(function(){
         $('#calendar').fullCalendar(getCalendarConfig());
     } catch(e) {
     }
-
-	/*----------------- this function is for demonstration purpose, it will show some contests on the contests list --*/
-	showContestsDemo = function(){
-//			var curr = 0;
-//			$("TABLE#contestsTable TBODY TR").each(function(){
-//					if( curr > 2 )
-//						$(this).addClass("hide");
-//
-//					curr++;
-//			});
-	}
-	
 	
 	/*-------------------------------------------------------------- Popup -----------------*/
 	
@@ -999,3 +989,98 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
     $('#removeProjectDialog').dialog("open");
     return false;
 }
+
+/* new code for Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1 - add ajax preloader functions */
+var intPreloaderTimmer = 20000;	//timer
+var strTip = "Loading...";		//string for preloader
+var objPreloaderTimmer;			//timer for modal
+var floatOverlayOpacity = 0.6;	//opacity for modal Background
+
+(function($) {
+
+	/* position modal */
+	modalPosition = function(){
+		var wWidth  = window.innerWidth;
+		var wHeight = window.innerHeight;
+
+		if (wWidth==undefined) {
+			wWidth  = document.documentElement.clientWidth;
+			wHeight = document.documentElement.clientHeight;
+		}
+
+		var boxLeft = parseInt((wWidth / 2) - ( $("#new-modal").width() / 2 ));
+		var boxTop  = parseInt((wHeight / 2) - ( $("#new-modal").height() / 2 ));
+
+		// position modal
+		$("#new-modal").css({
+			'margin': boxTop + 'px auto 0 ' + boxLeft + 'px'
+		});
+
+		$("#modalBackground").css("opacity", floatOverlayOpacity);
+
+		if ($("body").height() > $("#modalBackground").height()){
+            $("#modalBackground").css("height", $("body").height() + "px");
+		}
+	}
+
+	/* close modal */
+	modalClose = function() {
+        $('#modalBackground').hide();
+		$('.outLay').hide();
+    }
+
+	/* load modal (string itemID )*/
+	modalLoad = function(itemID) {
+		modalClose();
+        $('#modalBackground').show();
+		$(itemID).show();
+		modalPosition();
+    }
+
+
+	/*
+	 * Function modalPreloader
+	 *
+	 * string itemID e.g. #preloaderModal
+	 * string strMarginTop e.g. 40px
+	 * object callback e.g. function(){}
+	 *
+	 */
+	modalPreloader = function(itemID,strMarginTop,callback){
+		if($('#new-modal #preloaderModal').length == 0){
+			var preloaderHtml = '';
+			preloaderHtml += '<div id="preloaderModal" class="outLay">';
+			preloaderHtml += 	'<div class="modalHeaderSmall">';
+			preloaderHtml += 	'<div class="modalHeaderSmallRight">';
+			preloaderHtml += 	'<div class="modalHeaderSmallCenter">';
+			preloaderHtml += 	'</div></div></div>';
+
+			preloaderHtml += 	'<div class="modalBody">';
+			preloaderHtml += 	'<img src="../images/preloader-loading.gif" alt="Loading" />';
+			preloaderHtml += 	'<div class="preloaderTips">';
+			preloaderHtml += 	strTip;
+			preloaderHtml += 	'</div></div>';
+
+			preloaderHtml += 	'<div class="modalFooter">';
+			preloaderHtml += 	'<div class="modalFooterRight">';
+			preloaderHtml += 	'<div class="modalFooterCenter">';
+			preloaderHtml += 	'<div class="</div></div></div>">';
+			preloaderHtml += '</div>';
+
+			$('#new-modal').append(preloaderHtml);
+		}
+		modalLoad('#preloaderModal');
+
+		if(objPreloaderTimmer) clearTimeout(objPreloaderTimmer);
+	    objPreloaderTimmer = setTimeout(function(){
+			$('#new-modal #preloaderModal').hide();
+			modalClose();
+        },intPreloaderTimmer);
+	}
+
+	$('#new-modal .outLay .closeModal').live('click', function(){
+		modalClose();
+		return false;
+	});
+
+})(jQuery);

@@ -6,6 +6,10 @@
  * 2) Added new styles for help widget.
  * 3) Added new styles for header and footer.
  * 4) Added new styles for right sidebar.
+ *
+ *
+ * Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1
+ * 1) Added new styles for AJAX preloader and modal window
  */
 
 /* Remove Firefox button outline */
@@ -1416,4 +1420,191 @@ overflow: auto;
 #footer .copyright a:hover {
     text-decoration: underline;
 }
+
+#modalBackground {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    display: none;
+    background: #000002;
+}
+
+#new-modal {
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 10001;
+}
+
+#new-modal .outLay {
+    position: relative;
+    display: none;
+}
+
+.outLay {
+    width: 360px;
+}
+
+#new-modal .outLay .modalHeader .closeModal,
+#new-modal .outLay .modalHeader .closeOtherModal {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999px;
+    background: url(../images/modal-close.png) left top no-repeat;
+    z-index: 2;
+}
+
+#new-modal .outLay .modalHeader .closeModal:hover {
+    background-position: left -30px;
+}
+
+#new-modal .outLay .modalHeader {
+    height: 40px;
+    background: url(../images/modal-header.png) left top no-repeat;
+    padding-left: 8px;
+    overflow: hidden;
+}
+
+#new-modal .outLay .modalHeader .modalHeaderRight {
+    height: 40px;
+    background: url(../images/modal-header.png) right -80px no-repeat;
+    padding-right: 8px;
+}
+
+#new-modal .outLay .modalHeader .modalHeaderCenter {
+    height: 40px;
+    font-size: 14px;
+    line-height: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #000000;
+    padding-left: 22px;
+    background: url(../images/modal-header.png) left -40px repeat-x;
+}
+
+#new-modal .outLay .modalHeaderSmall {
+    height: 8px;
+    background: url(../images/preloader-corner.png) left top no-repeat;
+    padding-left: 8px;
+    overflow: hidden;
+}
+
+#new-modal .outLay .modalHeaderSmall .modalHeaderSmallRight {
+    height: 8px;
+    background: url(../images/preloader-corner.png) right -16px no-repeat;
+    padding-right: 8px;
+}
+
+#new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter {
+    height: 8px;
+    background: url(../images/preloader-corner.png) left -8px repeat-x;
+}
+
+#new-modal .outLay .modalFooter {
+    height: 8px;
+    background: url(../images/preloader-corner.png) left -24px no-repeat;
+    padding-left: 8px;
+    overflow: hidden;
+}
+
+#new-modal .outLay .modalFooter .modalFooterRight {
+    height: 8px;
+    background: url(../images/preloader-corner.png) right -40px no-repeat;
+    padding-right: 8px;
+}
+
+#new-modal .outLay .modalFooter .modalFooterCenter {
+    height: 8px;
+    background: url(../images/preloader-corner.png) left -32px repeat-x;
+}
+
+.outLay .modalBody {
+    border: 4px solid #000000;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    background: #e6e6e6 url(../images/modal-body-normal.png) left top repeat-x;
+    font-size: 12px;
+    color: #333333;
+    line-height: 18px;
+    min-height: 10px;
+}
+
+.outLay .iconNotice {
+    position: absolute;
+    left: 22px;
+    top: 73px;
+}
+
+.outLay .modalBody .noticeContent {
+    padding-left: 96px;
+    height: 109px;
+    width: 240px;
+}
+
+.outLay .modalBody .modalCommandBox {
+    border-top: 1px solid #ccc;
+    padding-top: 16px;
+    height: 36px;
+    text-align: center;
+}
+
+.outLay input.text {
+    height: 19px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-top: 1px solid #717171;
+    border-left: 1px solid #b4b4b4;
+    border-right: 1px solid #b4b4b4;
+    border-bottom: 1px solid #dadada;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333;
+    line-height: 18px;
+    font-size: 12px;
+    background: #ffffff url(../images/modal-text-shadow.png) left top repeat-x;
+}
+
+.outLay .textField {
+    border: 1px solid #999999;
+    border-top-color: #737373;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333;
+    line-height: 18px;
+    font-size: 12px;
+    overflow: auto;
+}
+
+/* #preloaderModal */
+#preloaderModal {
+    width: 100px;
+    height: 80px;
+}
+
+#preloaderModal .modalBody {
+    height: auto;
+    min-height: 10px;
+    padding-top: 4px;
+    text-align: center;
+    background: url(../images/preloader-body.png) left -2px repeat-x;
+}
+
+#preloaderModal .modalBody .preloaderTips {
+    padding-top: 5px;
+    font-size: 12px;
+    color: #333333;
+}
+
+/* end #preloaderModal */
+
+
 

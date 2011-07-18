@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, tangzx, flexme
+  - Author: isv, tangzx, flexme, Veve
   -
   - Version: 1.0.2 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
@@ -14,6 +14,9 @@
   -
   - Version 1.0.3 - TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly Change Note
   - Add contest cost breakdown and market cost breakdown popup windows.
+  -
+  - Version 1.1 - Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1 Change Note
+  - Add the new summary panel for chart view and table view.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -229,380 +232,1525 @@
                                     <a href="javascript:" class="btnTable"></a>
                                 </div>
                             </div>
-                            
-                            <div class="chartSummary" style="text-align:center">
-                                <div class="summaryContent">
-                                   <span class="strongBlue">Summary</span>
-                                    <strong>:</strong>
-                                    Avg. Fulfillment : 
-                                    <span id="avg1">
-                                        <fmt:formatNumber value="${viewData.averageFulfillment}" pattern="##0.##"/>%
-                                    </span>&nbsp;&nbsp;&nbsp;
-                                    Avg. Cost : $ 
-                                    <span id="avg2">
-                                        <fmt:formatNumber value="${viewData.averageCost}" pattern="#,##0.00"/>
-                                    </span>&nbsp;&nbsp;&nbsp;
-                                    Avg. Duration : 
-                                    <span id="avg3">
-                                        <fmt:formatNumber value="${viewData.averageDuration}" pattern="##0.#"/> 
-                                    </span> Days
-                               
-                                </div>
-                                <span id="zoomMessage"></span>
-                                <div class="summaryDate">
-                                    <strong>Date :</strong>
+
+                            <div class="chartContent">
+
+                                <div class="summaryPanel">
                                     <fmt:parseDate value="${formData.startDate}" pattern="MM/dd/yyyy" var="startDate"/>
                                     <fmt:parseDate value="${formData.endDate}" pattern="MM/dd/yyyy" var="endDate"/>
-                                    <span id="startDateLabel"><fmt:formatDate value="${startDate}" pattern="MMM dd,yyyy"/></span>
-                                    -
-                                    <span id="endDateLabel"><fmt:formatDate value="${endDate}" pattern="MMM dd,yyyy"/></span>
-                                </div>
-                            </div>
-                            <!-- start tableDataArea-->
-                            <div class="tableDataArea" id="firstTableDataArea">
-                                <!-- start dashboardTable-->
-							    <div class="dashboardTable">
-								    <dl>
-									    <dd>
-                                            <!-- start dashboardTableHeader-->
-										    <div class="dashboardTableHeader" id="firstDashboardTableHeader">
-                                                <table  cellpadding="0" cellspacing="0">
-                                                    <colgroup>
-                                                        <col width="8%" />
-                                                        <col width="10%" />
-                                                        <col width="10%" />
-                                                        <col/>
-                                                        <col width="9%" />
-                                                        <col width="8%" />
-                                                        <col width="8%" />
-                                                        <col width="8%" />
-                                                        <col width="8%" />
-                                                        <col width="8%" />
-                                                        <col width="8%" />
-                                                        <col />
-                                                    </colgroup>
-                                                    <tbody>
-                                                        <tr class="head">
-                                                            <td class="first noBT" rowspan="2"><strong>Date</strong></td>
-                                                            <td class="noBT" rowspan="2"><strong>Customer</strong></td>
-                                                            <td class="noBT" rowspan="2"><strong>Project</strong></td>
-                                                            <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
-                                                            <td class="noBT" rowspan="2">Contest Type</td>
-                                                            <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
-                                                            <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
-                                                            <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
-                                                        </tr>
-                                                        <tr class="head">
-                                                            <td>Contest</td>
-                                                            <td>Market Avg</td>
-                                                            <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
-                                                            <td>Market Avg<br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
-                                                            <td>Contest</td>
-                                                            <td>Market Avg</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!-- end dashboardTableHeader-->
-                                            <!-- start dashboardTableBody-->
-                                            <div class="dashboardTableBody" id="firstDashboardTableBody">
-											    <table  cellpadding="0" cellspacing="0">
-												    <colgroup>
-													    <col width="8%" />
-														<col width="10%" />
-														<col width="10%" />
-														<col/>
-														<col width="9%" />
-														<col width="8%" />
-														<col width="8%" />
-														<col width="8%" />
-														<col width="8%" />
-														<col width="8%" />
-														<col width="8%" />
-														<col />
-													</colgroup>
-                                                    <thead>
-                                                        <tr>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>                                                                                                                           
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                             <th></th>
-                                                        </tr>
-                                                    </thead>
+                                    <span class="zoomMessage" id="zoomMessage"></span>
+									<span class="date">Date : <span id="startDateLabel"><fmt:formatDate value="${startDate}" pattern="MMM dd,yyyy"/></span> - <span id="endDateLabel"><fmt:formatDate value="${endDate}" pattern="MMM dd,yyyy"/></span></span>
+									<ul class="tabs customer">
+										<li><a href="javascript:;" class="customer current">Customer Summary</a></li>
+										<li><a href="javascript:;" class="market">Market Summary</a></li>
+										<li><a href="javascript:;" class="compare">Compare</a></li>
+									</ul>
+									<div class="tabsContent">
+										<div class="customerSummary">
+											<table id="customerSummaryData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.customerSummary == null">hide</s:if>'>
 												<tbody>
-                                                </tbody>
-                                             </table>
-                                          </div>
-                                          <!-- end dashboardTableBody-->
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Fulfillment</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average contests fulfillment of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
 
-                                          <div class="dashboardTableFooter" id="firstDashboardTableFooter">
-										        <div class="pagination pagination3">
-												    <div class="pages">
-													    <a class="prev prevInactive">Prev</a><!-- we are on the first page so the prev link must be deactive -->
-														<a class="current">1</a>
-														<a >2</a>
-														<a class="next">Next</a>
-													</div><!-- End .pages -->
-                                                    <div class="allPages"></div>
-													<div class="showPages"><!-- number of rows that can be displayed on the same page -->
-													    <label><strong>Show:</strong></label>
-														<select>
-														    <option>5</option>
-															<option>10</option>
-															<option>25</option>
-															<option>50</option>
-															<option selected="true">All</option>
-														</select>
-														<span>per page</span>
-													</div><!-- End .showPages -->
-												</div><!-- End .pagination -->
-												<div class="panel panel3">
-												</div><!-- End .panel -->
-											</div><!-- End .dashboardTableFooter-->
-                                        </dd>
-                                    </dl>
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerAverageFulfillment" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.averageFulfillment}" pattern="##0.##"/>%</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Duration of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerAverageDuration" class="fieldData"> <fmt:formatNumber value="${viewData.customerSummary.averageContestDuration}" pattern="##0.#"/> days</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Total number of contests completed in the date range for customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerTotalVol" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.totalContestVolume}" pattern="##0"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The cost range of contests for the customer, from min to max</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerMinMaxCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.customerSummary.maxContestCost}" pattern="#,##0.00"/></td>
+													</tr>
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The average contest cost of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerAverageCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.averageContestCost}" pattern="#,##0.00"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Volume in 30 days for the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerAverageVol" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.averageVolPerMonth}" pattern="##0.#"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The total memeber cost of the contests for the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerTotalCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.totalMemberCost}" pattern="#,##0.00"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Duration Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The contest duration range of contests for the customer, from min to max in days</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerMinMaxDuration" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.minContestDuration}" pattern="##0.#"/> - <fmt:formatNumber value="${viewData.customerSummary.maxContestDuration}" pattern="##0.#"/> days</td>
+													</tr>
+												</tbody>
+											</table>
+
+                                            <table id="customerSummaryNoData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.customerSummary != null">hide</s:if>'>
+												<tbody>
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Fulfillment</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average contests fulfillment of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Duration of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Total number of contests completed in the date range for customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The cost range of contests for the customer, from min to max</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+													</tr>
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The average contest cost of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Volume in 30 days for the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The total member cost of the contests for the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Duration Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The contest duration range of contests for the customer, from min to max in days</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<!-- End .customerSummary -->
+										<div class="marketSummary hide">
+											<table id="marketSummaryData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.marketSummary == null">hide</s:if>'>
+												<tbody>
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
+																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Fulfillment</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average contests fulfillment of the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketAverageFulfillment" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageFulfillment}" pattern="##0.##"/>%</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Duration of the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketAverageDuration" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageContestDuration}" pattern="##0.#"/> days</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Total number of contests completed in the date range for whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketTotalVol" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.totalContestVolume}" pattern="##0"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The cost range of contests for the whole market, from min to max</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketMinMaxCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.marketSummary.maxContestCost}" pattern="#,##0.00"/></td>
+													</tr>
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The average contest cost of the whole market in the date range</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketAverageCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.averageContestCost}" pattern="#,##0.00"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Volume in 30 days for the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketAverageVol" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageVolPerMonth}" pattern="##0.#"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The total memeber cost of the contests for the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketTotalCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.totalMemberCost}" pattern="#,##0.00"/></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Duration Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The contest duration range of contests for the whole market, from min to max in days</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketMinMaxDuration" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.minContestDuration}" pattern="##0.#"/> - <fmt:formatNumber value="${viewData.marketSummary.maxContestDuration}" pattern="##0.#"/> days</td>
+													</tr>
+												</tbody>
+											</table>
+
+                                            <table id="marketSummaryNoData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.marketSummary != null">hide</s:if>'>
+												<tbody>
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
+																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Fulfillment</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average contests fulfillment of the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Duration of the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Total number of contests completed in the date range for whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The cost range of contests for the whole market, from min to max</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+													</tr>
+													<tr>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The average contest cost of the whole market in the date range</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Volume in 30 days for the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The total memeber cost of the contests for the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Duration Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The contest duration range of contests for the whole market, from min to max in days</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<!-- End .marketSummary -->
+										<div class="compare hide">
+											<table cellpadding="0" cellspacing="0">
+												<tbody>
+													<tr>
+														<td></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Fulfillment</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer average fulfillment with market average fulfillment</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer average contest cost with market average contset cost</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer average contest duration with market average contest duration</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer average volume per month with market average volume per month</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer total contests volume with market total contests volume</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer total member cost with market total member cost</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer contest cost range with market contest cost range</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Duration Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Comparison of customer contest duration range with market contest duration range</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldName"><div class="tooltipWrapper"> Mkt Cap %
+																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Mkt Cap %</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The percentage of (customer total member cost / market total member cost)</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+													</tr>
+
+													<tr id="comparisonCustomerData" class='<s:if test="viewData.customerSummary == null">hide</s:if>'>
+														<td class="firstColumn">Customer</td>
+														<td id="customerAverageFulfillmentComparison"><fmt:formatNumber value="${viewData.customerSummary.averageFulfillment}" pattern="##0.##"/>%</td>
+														<td id="customerAverageCostComparison">$<fmt:formatNumber value="${viewData.customerSummary.averageContestCost}" pattern="#,##0.00"/></td>
+														<td id="customerAverageDurationComparison"><fmt:formatNumber value="${viewData.customerSummary.averageContestDuration}" pattern="##0.#"/> days</td>
+														<td id="customerAverageVolComparison"><fmt:formatNumber value="${viewData.customerSummary.averageVolPerMonth}" pattern="##0.#"/></td>
+														<td id="customerTotalVolComparison"><fmt:formatNumber value="${viewData.customerSummary.totalContestVolume}" pattern="##0"/></td>
+														<td id="customerTotalCostComparison">$<fmt:formatNumber value="${viewData.customerSummary.totalMemberCost}" pattern="#,##0.00"/></td>
+														<td id="customerMinMaxCostComparison">$<fmt:formatNumber value="${viewData.customerSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.customerSummary.maxContestCost}" pattern="#,##0.00"/></td>
+														<td id="customerMinMaxDurationComparison"><fmt:formatNumber value="${viewData.customerSummary.minContestDuration}" pattern="##0.#"/> - <fmt:formatNumber value="${viewData.customerSummary.maxContestDuration}" pattern="##0.#"/> days</td>
+														<td id ="marketCap" rowspan="2" class="mkt"><fmt:formatNumber value="${viewData.customerSummary.totalMemberCost / viewData.marketSummary.totalMemberCost}" pattern="##0.##"/>%</td>
+													</tr>
+                                                    <tr id="comparisonCustomerNoData" class='<s:if test="viewData.customerSummary != null">hide</s:if>'>
+														<td class="firstColumn">Customer</td>
+														<td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+														<td rowspan="2" class="mkt">N/A</td>
+													</tr>
+													<tr class='marketTR <s:if test="viewData.marketSummary == null">hide</s:if>' id="comparisonMarketData">
+														<td class="firstColumn">Market</td>
+														<td id="marketAverageFulfillmentComparison"><fmt:formatNumber value="${viewData.marketSummary.averageFulfillment}" pattern="##0.##"/>%</td>
+														<td id="marketAverageCostComparison">$<fmt:formatNumber value="${viewData.marketSummary.averageContestCost}" pattern="#,##0.00"/></td>
+														<td id="marketAverageDurationComparison"><fmt:formatNumber value="${viewData.marketSummary.averageContestDuration}" pattern="##0.#"/> days</td>
+														<td id="marketAverageVolComparison"><fmt:formatNumber value="${viewData.marketSummary.averageVolPerMonth}" pattern="##0.#"/></td>
+														<td id="marketTotalVolComparison"><fmt:formatNumber value="${viewData.marketSummary.totalContestVolume}" pattern="##0"/></td>
+														<td id="marketTotalCostComparison">$<fmt:formatNumber value="${viewData.marketSummary.totalMemberCost}" pattern="#,##0.00"/></td>
+														<td id="marketMinMaxCostComparison">$<fmt:formatNumber value="${viewData.marketSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.marketSummary.maxContestCost}" pattern="#,##0.00"/></td>
+														<td id="marketMinMaxDurationComparison"><fmt:formatNumber value="${viewData.marketSummary.minContestDuration}" pattern="##0.#"/> - <fmt:formatNumber value="${viewData.marketSummary.maxContestDuration}" pattern="##0.#"/> days</td>
+													</tr>
+                                                    <tr class='marketTR <s:if test="viewData.marketSummary != null">hide</s:if>' id="comparisonMarketNoData">
+														<td class="firstColumn">Market</td>
+                                                        <td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+														<td>N/A</td>
+                                                        <td>N/A</td>
+                                                        <td>N/A</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+										<!-- End .compare -->
+									</div>
+									<!-- End .tabsContent -->
+								</div>
+                                <!-- start tableDataArea-->
+                                <div class="tableDataArea" id="firstTableDataArea">
+                                    <!-- start dashboardTable-->
+                                    <div class="dashboardTable">
+                                        <dl>
+                                            <dd>
+                                                <!-- start dashboardTableHeader-->
+                                                <div class="dashboardTableHeader" id="firstDashboardTableHeader">
+                                                    <table  cellpadding="0" cellspacing="0">
+                                                        <colgroup>
+                                                            <col width="8%" />
+                                                            <col width="10%" />
+                                                            <col width="10%" />
+                                                            <col/>
+                                                            <col width="9%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col />
+                                                        </colgroup>
+                                                        <tbody>
+                                                            <tr class="head">
+                                                                <td class="first noBT" rowspan="2"><strong>Date</strong></td>
+                                                                <td class="noBT" rowspan="2"><strong>Customer</strong></td>
+                                                                <td class="noBT" rowspan="2"><strong>Project</strong></td>
+                                                                <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
+                                                                <td class="noBT" rowspan="2">Contest Type</td>
+                                                                <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
+                                                                <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
+                                                                <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
+                                                            </tr>
+                                                            <tr class="head">
+                                                                <td>Contest</td>
+                                                                <td>Market Avg</td>
+                                                                <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
+                                                                <td>Market Avg<br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
+                                                                <td>Contest</td>
+                                                                <td>Market Avg</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- end dashboardTableHeader-->
+                                                <!-- start dashboardTableBody-->
+                                                <div class="dashboardTableBody" id="firstDashboardTableBody">
+                                                    <table  cellpadding="0" cellspacing="0">
+                                                        <colgroup>
+                                                            <col width="8%" />
+                                                            <col width="10%" />
+                                                            <col width="10%" />
+                                                            <col/>
+                                                            <col width="9%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col width="8%" />
+                                                            <col />
+                                                        </colgroup>
+                                                        <thead>
+                                                            <tr>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                                 <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                 </table>
+                                              </div>
+                                              <!-- end dashboardTableBody-->
+
+                                              <div class="dashboardTableFooter" id="firstDashboardTableFooter">
+                                                    <div class="pagination pagination3">
+                                                        <div class="pages">
+                                                            <a class="prev prevInactive">Prev</a><!-- we are on the first page so the prev link must be deactive -->
+                                                            <a class="current">1</a>
+                                                            <a >2</a>
+                                                            <a class="next">Next</a>
+                                                        </div><!-- End .pages -->
+                                                        <div class="allPages"></div>
+                                                        <div class="showPages"><!-- number of rows that can be displayed on the same page -->
+                                                            <label><strong>Show:</strong></label>
+                                                            <select>
+                                                                <option>5</option>
+                                                                <option>10</option>
+                                                                <option>25</option>
+                                                                <option>50</option>
+                                                                <option selected="true">All</option>
+                                                            </select>
+                                                            <span>per page</span>
+                                                        </div><!-- End .showPages -->
+                                                    </div><!-- End .pagination -->
+                                                    <div class="panel panel3">
+                                                    </div><!-- End .panel -->
+                                                </div><!-- End .dashboardTableFooter-->
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <!-- end dashboardTable-->
                                 </div>
-                                <!-- end dashboardTable-->
-                            </div>
-                            <!-- end tableDataArea-->
-                            <div class="graphArea">
-                            <div class="visualization">
-                                <s:form action="dashboardEnterprise" namespace="/" id="EnterpriseDashboardForm"
-                                        method="get">
-                                    <input type="hidden" name="zoomType" value="" id="zoomTypeInput"/>
-                                    <div class="top">
-                                        <div class="dateRange">
-                                                <strong>Zoom</strong> :
-                                                   <a href="WEEK" class="zoomLink">1 Week</a> &nbsp;
-                                                   <a href="MONTH" class="zoomLink">1 Month</a>  &nbsp;
-                                                   <a href="QUARTER" class="zoomLink">3 Month</a>  &nbsp;
-                                                   <a href="HALF_OF_THE_YEAR" class="zoomLink">6 Month</a> &nbsp;
-                                                   <a href="YEAR" class="zoomLink">YTD</a> &nbsp;
-                                        </div>
-                                        <div class="displaying">
-                                            <span>Displaying :</span>
-                                            <input type="radio" name="displaying" value="contest"/>
-                                            <span>Contest Duration&nbsp;</span>
-                                            <input type="radio" name="displaying" checked="checked" value="cost"/>
-                                            <span>Cost&nbsp;</span>
-                                            <input type="radio" name="displaying" value="fulfill"/>
-                                            <span>Fulfillment</span>
-                                        </div>
-                                    </div>
-                                    <!-- top -->
-
-                                    <div class="chartWrapper">
-                                        <div id="chart_div"></div>
-                                        <div id="NoEnoughStats" class="hide">
-                                            <p>NO ENOUGH STATISTICS TO RENDER THE CHART</p>
-                                        </div>
-                                    </div>    
-                                    <!-- chart container-->
-
-                                    <div class="filterLinkArea">
-                                        <a class="fiterButton" href="javascript:">Filters</a>
-
-                                        <div class="filterArea">
-
-                                            <div class="filterProject">
-                                                <span class="label">Project Name </span>
-                                                <s:select list="viewData.projectsLookupMap" name="formData.projectIds" 
-                                                          id="formData.projectIds"/>
+                                <!-- end tableDataArea-->
+                                <div class="graphArea">
+                                <div class="visualization">
+                                    <s:form action="dashboardEnterprise" namespace="/" id="EnterpriseDashboardForm"
+                                            method="get">
+                                        <input type="hidden" name="zoomType" value="" id="zoomTypeInput"/>
+                                        <div class="top">
+                                            <div class="dateRange">
+                                                    <strong>Zoom</strong> :
+                                                       <a href="WEEK" class="zoomLink">1 Week</a> &nbsp;
+                                                       <a href="MONTH" class="zoomLink">1 Month</a>  &nbsp;
+                                                       <a href="QUARTER" class="zoomLink">3 Month</a>  &nbsp;
+                                                       <a href="HALF_OF_THE_YEAR" class="zoomLink">6 Month</a> &nbsp;
+                                                       <a href="YEAR" class="zoomLink">YTD</a> &nbsp;
                                             </div>
-                                            
-                                            <div class="firstRow">
-                                                <div class="datePicker">
-                                                    <div>
-                                                        <span class="label">Start: </span>
-                                                        <s:textfield name="formData.startDate" readonly="true" 
-                                                                     id="startDateEnterprise" 
-                                                                     cssClass="text date-pick"/>
-                                                    </div>
-                                                    <div>
-                                                        <span class="label">End: </span>
-                                                        <s:textfield name="formData.endDate" readonly="true" 
-                                                                     id="endDateEnterprise" cssClass="text date-pick"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="timeDimension">
-                                                    <strong>Group By</strong><br/>
-                                                    <select id="timeDimension">
-                                                        <option value="">Select Time Dimension</option>
-                                                        <option value="week">Week</option>
-                                                        <option value="month" selected="selected">Month</option>
-                                                        <option value="quarter">Quarter</option>
-                                                        <option value="year">Year</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="spacer"></div>
-                                            <div class="secondRow">
-                                                <div class="filterContest">
-                                                    <div class="columns contestType">
-                                                        <strong>Contest Type</strong><br/>
-                                                        <s:select list="viewData.projectCategories" multiple="true"
-                                                                  cssClass="multiselect"
-                                                                  id="formData.projectCategoryIds"
-                                                                  name="formData.projectCategoryIds" size="5"/>
-                                                    </div>
-
-                                                    <div class="columns" id="customerNameFilter">
-                                                        <strong>Customer Name</strong><br/>
-                                                        <s:select list="viewData.clientAccounts" id="formData.customerIds"
-                                                                  name="formData.customerIds" size="1"/>
-                                                    </div>
-
-                                                    <div class="columns" id="clientBillingProjectsFilter">
-                                                        <strong>Billing Account</strong><br/>
-                                                        <s:select list="viewData.clientBillingProjects"
-                                                                  id="formData.billingAccountIds"
-                                                                  name="formData.billingAccountIds" size="1"/>
-                                                    </div>
-
-                                                    <div class="columns columnButton">
-                                                        <a class="button6 applyButton" href="javascript:" 
-                                                           id="enterpriseDashboardSubmit">
-                                                            <span class="left"><span class="right">Apply</span></span>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
+                                            <div class="displaying">
+                                                <span>Displaying :</span>
+                                                <input type="radio" name="displaying" value="contest"/>
+                                                <span>Contest Duration&nbsp;</span>
+                                                <input type="radio" name="displaying" checked="checked" value="cost"/>
+                                                <span>Cost&nbsp;</span>
+                                                <input type="radio" name="displaying" value="fulfill"/>
+                                                <span>Fulfillment</span>
                                             </div>
                                         </div>
-                                        <!-- End .filterArea -->
-                                    </div>
+                                        <!-- top -->
 
+                                        <div class="chartWrapper">
+                                            <div id="chart_div"></div>
+                                            <div id="NoEnoughStats" class="hide">
+                                                <p>NO ENOUGH STATISTICS TO RENDER THE CHART</p>
+                                            </div>
+                                        </div>
+                                        <!-- chart container-->
 
-                                    <div id="filterResultContainer"></div>
+                                        <div class="filterLinkArea">
+                                            <a class="fiterButton" href="javascript:">Filters</a>
 
-                                    <div id="validationErrors"></div>
-                                    <!-- start tableDataArea-->
-                                    <div class="tableDataArea hide" id="dynamicTableView">
-                                        <!-- start dashboardTable-->
-                                        <div class="dashboardTable">
-                                            <dl>
-                                                <dd>
-                                                    <!-- start dashboardTableHeader-->
-                                                    <div class="dashboardTableHeader" id="secondDashboardTableHeader">
-                                                        <table  cellpadding="0" cellspacing="0">
-                                                            <colgroup>
-                                                                <col width="8%" />
-                                                                <col width="10%" />
-                                                                <col width="10%" />
-                                                                <col/>
-                                                                <col width="9%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col />
-                                                            </colgroup>
-                                                            <tbody>
-                                                                <tr class="head">
-                                                                    <td class="first noBT" rowspan="2"><strong>Date</strong></td>
-                                                                    <td class="noBT" rowspan="2"><strong>Customer</strong></td>
-                                                                    <td class="noBT" rowspan="2"><strong>Project</strong></td>
-                                                                    <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
-                                                                    <td class="noBT" rowspan="2">Contest Type</td>
-                                                                    <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
-                                                                    <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
-                                                                    <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
-                                                                </tr>
-                                                                <tr class="head">
-                                                                    <td>Contest</td>
-                                                                    <td>Market Avg</td>
-                                                                    <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
-                                                                    <td>Market Avg <br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
-                                                                    <td>Contest</td>
-                                                                    <td>Market Avg</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                            <div class="filterArea">
+
+                                                <div class="filterProject">
+                                                    <span class="label">Project Name </span>
+                                                    <s:select list="viewData.projectsLookupMap" name="formData.projectIds"
+                                                              id="formData.projectIds"/>
+                                                </div>
+
+                                                <div class="firstRow">
+                                                    <div class="datePicker">
+                                                        <div>
+                                                            <span class="label">Start: </span>
+                                                            <s:textfield name="formData.startDate" readonly="true"
+                                                                         id="startDateEnterprise"
+                                                                         cssClass="text date-pick"/>
+                                                        </div>
+                                                        <div>
+                                                            <span class="label">End: </span>
+                                                            <s:textfield name="formData.endDate" readonly="true"
+                                                                         id="endDateEnterprise" cssClass="text date-pick"/>
+                                                        </div>
                                                     </div>
-                                                    <!-- end dashboardTableHeader-->
-                                                    <!-- start dashboardTableBody-->
-                                                    <div class="dashboardTableBody tableViewChart" id="secondDashboardTableBody">
-                                                        <table  cellpadding="0" cellspacing="0">
-                                                            <colgroup>
-                                                                <col width="8%" />
-                                                                <col width="10%" />
-                                                                <col width="10%" />
-                                                                <col/>
-                                                                <col width="9%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col width="8%" />
-                                                                <col />
-                                                            </colgroup>
-                                                            <thead>
-                                                                <tr>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                     <th></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                
-                                                            </tbody>
-                                                         </table>
+
+                                                    <div class="timeDimension">
+                                                        <strong>Group By</strong><br/>
+                                                        <select id="timeDimension">
+                                                            <option value="">Select Time Dimension</option>
+                                                            <option value="week">Week</option>
+                                                            <option value="month" selected="selected">Month</option>
+                                                            <option value="quarter">Quarter</option>
+                                                            <option value="year">Year</option>
+                                                        </select>
                                                     </div>
-                                                    <!-- end dashboardTableBody-->
-                                                    <div class="dashboardTableFooter" id="secondDashboardTableFooter">
-                                                        <div class="pagination pagination3">
-                                                            <div class="pages">
-                                                                <a class="prev prevInactive">Prev</a><!-- we are on the first page so the prev link must be deactive -->
-                                                                <a class="current">1</a>
-                                                                <a >2</a>
-                                                                <a class="next">Next</a>
-                                                            </div><!-- End .pages -->
-                                                            <div class="allPages"></div>
-                                                            <div class="showPages"><!-- number of rows that can be displayed on the same page -->
-                                                                <label><strong>Show:</strong></label>
-                                                                <select>
-                                                                    <option>5</option>
-                                                                    <option>10</option>
-                                                                    <option>25</option>
-                                                                    <option>50</option>
-                                                                    <option selected="true">All</option>
-                                                                </select>
-                                                                <span>per page</span>
-                                                            </div><!-- End .showPages -->
-                                                        </div><!-- End .pagination -->
-                                                        <div class="panel panel3">
-                                                        </div><!-- End .panel -->
-                                                    </div><!-- End .dashboardTableFooter-->
-                                                </dd>
-                                             </dl>
-                                         </div>
-                                        <!-- end dashboardTable-->
-                                    </div>
-                                    <!-- end tableDataArea-->
-                                </s:form>
-                            </div>
-                            <!-- End .visualization -->
+                                                </div>
+                                                <div class="spacer"></div>
+                                                <div class="secondRow">
+                                                    <div class="filterContest">
+                                                        <div class="columns contestType">
+                                                            <strong>Contest Type</strong><br/>
+                                                            <s:select list="viewData.projectCategories" multiple="true"
+                                                                      cssClass="multiselect"
+                                                                      id="formData.projectCategoryIds"
+                                                                      name="formData.projectCategoryIds" size="5"/>
+                                                        </div>
+
+                                                        <div class="columns" id="customerNameFilter">
+                                                            <strong>Customer Name</strong><br/>
+                                                            <s:select list="viewData.clientAccounts" id="formData.customerIds"
+                                                                      name="formData.customerIds" size="1"/>
+                                                        </div>
+
+                                                        <div class="columns" id="clientBillingProjectsFilter">
+                                                            <strong>Billing Account</strong><br/>
+                                                            <s:select list="viewData.clientBillingProjects"
+                                                                      id="formData.billingAccountIds"
+                                                                      name="formData.billingAccountIds" size="1"/>
+                                                        </div>
+
+                                                        <div class="columns columnButton">
+                                                            <a class="button6 applyButton" href="javascript:"
+                                                               id="enterpriseDashboardSubmit">
+                                                                <span class="left"><span class="right">Apply</span></span>
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End .filterArea -->
+                                        </div>
+
+
+                                        <div id="filterResultContainer"></div>
+
+                                        <div id="validationErrors"></div>
+                                        <!-- start tableDataArea-->
+                                        <div class="tableDataArea hide" id="dynamicTableView">
+                                            <!-- start dashboardTable-->
+                                            <div class="dashboardTable">
+                                                <dl>
+                                                    <dd>
+                                                        <!-- start dashboardTableHeader-->
+                                                        <div class="dashboardTableHeader" id="secondDashboardTableHeader">
+                                                            <table  cellpadding="0" cellspacing="0">
+                                                                <colgroup>
+                                                                    <col width="8%" />
+                                                                    <col width="10%" />
+                                                                    <col width="10%" />
+                                                                    <col/>
+                                                                    <col width="9%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col />
+                                                                </colgroup>
+                                                                <tbody>
+                                                                    <tr class="head">
+                                                                        <td class="first noBT" rowspan="2"><strong>Date</strong></td>
+                                                                        <td class="noBT" rowspan="2"><strong>Customer</strong></td>
+                                                                        <td class="noBT" rowspan="2"><strong>Project</strong></td>
+                                                                        <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
+                                                                        <td class="noBT" rowspan="2">Contest Type</td>
+                                                                        <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
+                                                                        <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
+                                                                        <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
+                                                                    </tr>
+                                                                    <tr class="head">
+                                                                        <td>Contest</td>
+                                                                        <td>Market Avg</td>
+                                                                        <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
+                                                                        <td>Market Avg <br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
+                                                                        <td>Contest</td>
+                                                                        <td>Market Avg</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!-- end dashboardTableHeader-->
+                                                        <!-- start dashboardTableBody-->
+                                                        <div class="dashboardTableBody tableViewChart" id="secondDashboardTableBody">
+                                                            <table  id="secondDashboardTableBodyTable" cellpadding="0" cellspacing="0">
+                                                                <colgroup>
+                                                                    <col width="8%" />
+                                                                    <col width="10%" />
+                                                                    <col width="10%" />
+                                                                    <col/>
+                                                                    <col width="9%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col width="8%" />
+                                                                    <col />
+                                                                </colgroup>
+                                                                <thead>
+                                                                    <tr>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                         <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                </tbody>
+                                                             </table>
+                                                            <div class="hide loadingIndicator" style="width:50%;margin:auto"><img src="../images/ajax-loader.gif" alt="Loading..."></img></div>
+                                                        </div>
+                                                        <!-- end dashboardTableBody-->
+                                                        <div class="dashboardTableFooter" id="secondDashboardTableFooter">
+                                                            <div class="pagination pagination3">
+                                                                <div class="pages">
+                                                                    <a class="prev prevInactive">Prev</a><!-- we are on the first page so the prev link must be deactive -->
+                                                                    <a class="current">1</a>
+                                                                    <a >2</a>
+                                                                    <a class="next">Next</a>
+                                                                </div><!-- End .pages -->
+                                                                <div class="allPages"></div>
+                                                                <div class="showPages"><!-- number of rows that can be displayed on the same page -->
+                                                                    <label><strong>Show:</strong></label>
+                                                                    <select>
+                                                                        <option>5</option>
+                                                                        <option>10</option>
+                                                                        <option>25</option>
+                                                                        <option>50</option>
+                                                                        <option selected="true">All</option>
+                                                                    </select>
+                                                                    <span>per page</span>
+                                                                </div><!-- End .showPages -->
+                                                            </div><!-- End .pagination -->
+                                                            <div class="panel panel3">
+                                                            </div><!-- End .panel -->
+                                                        </div><!-- End .dashboardTableFooter-->
+                                                    </dd>
+                                                 </dl>
+                                             </div>
+                                            <!-- end dashboardTable-->
+                                        </div>
+                                        <!-- end tableDataArea-->
+                                    </s:form>
+                                </div>
+                                <!-- End .visualization -->
+                                </div>
+
                             </div>
                         </div>
                     </div>

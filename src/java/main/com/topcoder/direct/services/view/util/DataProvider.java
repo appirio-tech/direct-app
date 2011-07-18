@@ -233,8 +233,16 @@ import java.util.Map.Entry;
  *     <li>Updated {@link #getStudioContestDashboardData(long, boolean)} method to set reg progress percent.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 2.6.7 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1) Change notes:
+ *   <ol>
+ *     <li>Add {@link #getEnterpriseDashboardSummaryRange(long[], long[], java.util.Date, java.util.Date, long[], long[])}
+ *     method to get the min and max values of contest duration and contest cost of customer and market.
+ *     </li>
+ *   </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.6
+ * @version 2.6.7
  */
 public class DataProvider {
 
@@ -1882,6 +1890,86 @@ public class DataProvider {
             data.add(costDTO);
             data.add(durationDTO);
             data.add(fulfillmentDTO);
+        }
+
+        return data;
+    }
+
+    /**
+     *  Gets the cost range and duration range for the enterprise dashboard summary section. If any of the concrete client id, billing account id or project id is set,
+     *  it retrieves the data for the customer. If client id, billing account id and project id are all set to 0, it retrieves the data for the market.
+     *
+     * @param projectIds the direct project ids
+     * @param projectCategoryIDs  the project category ids
+     * @param startDate the start date
+     * @param endDate the end date
+     * @param clientIds the client ids
+     * @param billingAccountIds the billing account ids.
+     * @return the range data
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.6.7
+     */
+    public static Map<String, Double> getEnterpriseDashboardSummaryRange(long[] projectIds,
+                                                                         long[] projectCategoryIDs, Date startDate, Date endDate, long[] clientIds, long[] billingAccountIds)
+            throws Exception {
+
+        Map<String, Double> data = new HashMap<String, Double>();
+
+        if ((projectIds == null) || (projectIds.length == 0)) {
+            return data;
+        }
+        if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
+            return data;
+        }
+        if ((clientIds == null) || (clientIds.length == 0)) {
+            return data;
+        }
+        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+            return data;
+        }
+
+
+        String projectIDsList = concatenate(projectIds, ", ");
+        String projectCategoryIDsList = concatenate(projectCategoryIDs, ", ");
+        String clientIdsList = concatenate(clientIds, ", ");
+        String billingAccountIdsList = concatenate(billingAccountIds, ", ");
+
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+
+        String queryName = "direct_dashboard_enterprise_summary";
+
+        if (projectIds[0] != 0) {
+            request.setProperty("tdpis", String.valueOf(projectIDsList));
+            request.setProperty("bpids", "0");
+            request.setProperty("clids", "0");
+        } else if (billingAccountIds[0] != 0) {
+            request.setProperty("tdpis", "0");
+            request.setProperty("bpids", billingAccountIdsList);
+            request.setProperty("clids", "0");
+        } else if (clientIds[0] != 0) {
+            request.setProperty("tdpis", "0");
+            request.setProperty("bpids", "0");
+            request.setProperty("clids", clientIdsList);
+        } else {
+            // get market data
+            request.setProperty("tdpis", "0");
+            request.setProperty("bpids", "0");
+            request.setProperty("clids", "0");
+        }
+
+        request.setContentHandle(queryName);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            data.put("max_cost", row.getDoubleItem("max_cost"));
+            data.put("min_cost", row.getDoubleItem("min_cost"));
+            data.put("max_duration", row.getDoubleItem("max_duration_hours"));
+            data.put("min_duration", row.getDoubleItem("min_duration_hours"));
         }
 
         return data;

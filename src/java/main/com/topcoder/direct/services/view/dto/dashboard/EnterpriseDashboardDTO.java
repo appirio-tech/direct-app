@@ -33,10 +33,17 @@ import java.util.Map;
  *     <li>Added {@link #allContestStat} property with respective accessor/mutator methods.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 1.0.3 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1) Change notes:
+ *   <ol>
+ *     <li>Added {@link #customerSummary} property with respective set/get methods.</li>
+ *     <li>Added {@link #marketSummary} property with respective set/get methods.</li>
+ *   </ol>
+ * </p>
  *
  *
- * @author isv xjtufreeman
- * @version 1.0.2 (Direct Enterprise Dashboard Assembly 1.0)
+ * @author isv xjtufreeman, Veve
+ * @version 1.0.3 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1)
  */
 public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
 
@@ -81,28 +88,20 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      */
     private Map<Long, String> clientAccounts;
 
-    /**
-     * <p>A <code>double</code> providing the average cost for entire stats for customer.</p>
-     * 
-     * @since 1.0.1
-     */
-    private double averageCost;
-
-    /**
-     * <p>A <code>double</code> providing the average contest duration for entire stats for customer.</p>
-     * 
-     * @since 1.0.1
-     */
-    private double averageDuration;
-
-    /**
-     * <p>A <code>double</code> providing the average project fulfillment for entire stats for customer.</p>
-     * 
-     * @since 1.0.1
-     */
-    private double averageFulfillment;
 
     private Map<Long, String> projectsLookupMap;
+
+    /**
+     * The customer summary data
+     * @since 1.0.3
+     */
+    private EnterpriseDashboardSummary customerSummary;
+
+    /**
+     * The market summary data.
+     * @since 1.0.3
+     */
+    private EnterpriseDashboardSummary marketSummary;
 
     /**
      * <p>A <code>List</code> providing the statistics for contests associated to current user.</p>
@@ -122,6 +121,46 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      * <p>Constructs new <code>EnterpriseDashboardDTO</code> instance. This implementation does nothing.</p>
      */
     public EnterpriseDashboardDTO() {
+    }
+
+    /**
+     * Gets the customer summary.
+     *
+     * @return the customer summary.
+     * @since 1.0.3
+     */
+    public EnterpriseDashboardSummary getCustomerSummary() {
+        return customerSummary;
+    }
+
+    /**
+     * Sets the customer summary.
+     *
+     * @param customerSummary the customer summary data.
+     * @since 1.0.3
+     */
+    public void setCustomerSummary(EnterpriseDashboardSummary customerSummary) {
+        this.customerSummary = customerSummary;
+    }
+
+    /**
+     * Gets the market summary.
+     *
+     * @return the market summary.
+     * @since 1.0.3
+     */
+    public EnterpriseDashboardSummary getMarketSummary() {
+        return marketSummary;
+    }
+
+    /**
+     * Sets the market summary.
+     *
+     * @param marketSummary the market summary data.
+     * @since 1.0.3
+     */
+    public void setMarketSummary(EnterpriseDashboardSummary marketSummary) {
+        this.marketSummary = marketSummary;
     }
 
     /**
@@ -272,68 +311,6 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      */
     public void setClientAccounts(Map<Long, String> clientAccounts) {
         this.clientAccounts = clientAccounts;
-    }
-
-    /**
-     * <p>Gets the average project fulfillment for entire stats for customer.</p>
-     *
-     * @return a <code>double</code> providing the average project fulfillment for entire stats for customer.
-     * @since 1.0.1
-     */
-    public double getAverageFulfillment() {
-        return this.averageFulfillment;
-    }
-
-    /**
-     * <p>Sets the average project fulfillment for entire stats for customer.</p>
-     *
-     * @param averageFulfillment a <code>double</code> providing the average project fulfillment for entire stats for
-     *                          customer.
-     * @since 1.0.1
-     */
-    public void setAverageFulfillment(double averageFulfillment) {
-        this.averageFulfillment = averageFulfillment;
-    }
-
-    /**
-     * <p>Gets the average contest duration for entire stats for customer.</p>
-     *
-     * @return a <code>double</code> providing the average contest duration for entire stats for customer.
-     * @since 1.0.1
-     */
-    public double getAverageDuration() {
-        return this.averageDuration;
-    }
-
-    /**
-     * <p>Sets the average contest duration for entire stats for customer.</p>
-     *
-     * @param averageDuration a <code>double</code> providing the average contest duration for entire stats for
-     *                        customer.
-     * @since 1.0.1
-     */
-    public void setAverageDuration(double averageDuration) {
-        this.averageDuration = averageDuration;
-    }
-
-    /**
-     * <p>Gets the average cost for entire stats for customer.</p>
-     *
-     * @return a <code>double</code> providing the average cost for entire stats for customer.
-     * @since 1.0.1
-     */
-    public double getAverageCost() {
-        return this.averageCost;
-    }
-
-    /**
-     * <p>Sets the average cost for entire stats for customer.</p>
-     *
-     * @param averageCost a <code>double</code> providing the average cost for entire stats for customer.
-     * @since 1.0.1
-     */
-    public void setAverageCost(double averageCost) {
-        this.averageCost = averageCost;
     }
 
     /**
