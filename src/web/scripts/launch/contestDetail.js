@@ -305,13 +305,14 @@ function initContest(contestJson) {
     //BUGR-3812: only show edit buttons if it is in draft or scheduled status
     // if has no write permission, no edit;
     if (!hasContestWritePermission) {
-        $('img[alt="edit"]').parent().hide();
+        $('a.button11').hide();
         $("#resubmit").hide();
         
     } else if(CONTEST_DETAILED_STATUS_DRAFT != mainWidget.competition.contestData.detailedStatusId &&
         CONTEST_DETAILED_STATUS_SCHEDULED != mainWidget.competition.contestData.detailedStatusId) {
-        $('img[alt="edit"]').parent().hide();   
-    }   
+         $('a.button11').hide();
+    }    
+
    
    
    function parseDate(dateObj) {

@@ -388,11 +388,11 @@ function initContest(contestJson) {
    
     // if has no write permission, no edit; if any phase is open, no edit
     if (!hasContestWritePermission) {
-        $('img[alt="edit"]').parent().hide();
+        $('a.button11').hide();
         $("#resubmit").hide();
         $("#swEdit_bottom_review").hide();
     } else if(contestJson.phaseOpen) {
-        $('img[alt="edit"]').parent().hide();
+        $('a.button11').hide();
         // open prize edit section if project is active
         if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS) {
             isActiveContest = true;
