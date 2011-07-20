@@ -1132,9 +1132,6 @@ public final class DirectUtils {
     public static List<ProjectPhaseDTO> getStudioPhases(StudioCompetition competition) {
         List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
         
-        // set registration
-        phases.add(getPhase(getDate(competition.getStartTime()), getDate(competition.getEndTime()), ProjectPhaseType.STUDIO_REG));
-        
         if (competition.getContestData().isMultiRound()) {
             // set r1 subs
             phases.add(getPhase(getDate(competition.getStartTime()),
