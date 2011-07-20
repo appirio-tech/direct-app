@@ -835,6 +835,10 @@ $(document).ready(function(){
 		$('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
 	}
 	
+	// get new progressContainer width and update timelineContainer
+	progressContainerWidth = $('.progressContainer').width();
+	$('.dashboardModule .content .timelineContainer').width(progressContainerWidth+1);
+
 	$(".statusP .helpBtn").hover(
 		function(){
 			if($(this).parent(".statusP").hasClass("lessThanIdeal")){
