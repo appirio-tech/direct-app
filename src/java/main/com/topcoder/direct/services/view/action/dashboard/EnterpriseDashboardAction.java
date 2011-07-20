@@ -590,7 +590,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 // set summary data for market
                 EnterpriseDashboardSummary marketSummary = new EnterpriseDashboardSummary();
                 marketSummary.setAverageContestCost(averageMarketCost.getOverallValue());
-                marketSummary.setAverageContestDuration(averageMarketDuration.getOverallValue() / 24.0);
+                marketSummary.setAverageContestDuration(averageMarketDuration.getOverallValue());
                 marketSummary.setAverageFulfillment(averageMarketFulfillment.getOverallValue());
                 marketSummary.setTotalContestVolume(marketTotalVolume);
                 marketSummary.setTotalMemberCost(marketTotalCost);
