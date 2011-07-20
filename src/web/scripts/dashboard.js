@@ -861,6 +861,7 @@ $(document).ready(function(){
 	
 	var Sys = {}; 
 	var ua = navigator.userAgent.toLowerCase(); 
+	/*
 	if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){ 
 		$(".appositeContainer .issueModule").css({"width":"17.2%"});
 		$(".appositeContainer.studio .issueModule").css("width","24.7%");
@@ -869,6 +870,7 @@ $(document).ready(function(){
 		$(".appositeContainer .issueModule").css("width","17.4%");
 		$(".appositeContainer.studio .issueModule").css("width","24.7%");
 	} 
+	*/
 	function adjust(){
 		if($(".dashboardModule .content .timelineContainer").parents(".dashboardModule").width() > 830){
 			$(".dashboardModule .content .timelineContainer").css("padding", "41px 29px 39px");
@@ -884,6 +886,7 @@ $(document).ready(function(){
 			$(".dashboardModule .content .timelineContainer").css("padding-bottom", "48px");
 			$(".dashboardModule .content .timelineContainer.studio").css("padding-bottom", "46px");
 			
+			/*
 			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){
 				$(".appositeContainer .issueModule").css({"width":"17.2%"}); 
 				$(".appositeContainer.studio .issueModule").css("width","24.5%"); 
@@ -892,11 +895,13 @@ $(document).ready(function(){
 				$(".appositeContainer .issueModule").css("width","17.3%");
 				$(".appositeContainer.studio .issueModule").css("width","24.5%");
 			} 
+			*/
 
 		}
 		else{
 			$(".dashboardModule .content .timelineContainer").css("padding-bottom", "39px");
 			$(".dashboardModule .content .timelineContainer.studio").css("padding-bottom", "42px");
+			/*
 			if(ua.match(/chrome\/([\d.]+)/)!=null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0]>2){  
 				$(".appositeContainer .issueModule").css("width","17.4%");
 				$(".appositeContainer.studio .issueModule").css("width","24.8%");
@@ -910,6 +915,7 @@ $(document).ready(function(){
 				$(".appositeContainer .issueModule").css("width","17.1%");
 				$(".appositeContainer.studio .issueModule").css("width","24.3%");
 			} 
+			*/
 		}
 	}
 	adjust();
