@@ -1892,6 +1892,10 @@
         <a href="#" id="contestDViewMock"></a>
         <a href="#" id="marketDViewMock"></a>
     </div>
+
+    <div id="modalBackground"></div>
+    <div id="new-modal"></div>
+    <span class="hide"><img src="../images/preloader-loading.gif" alt="Loading" /></span>
 </div>
 
 </body>
