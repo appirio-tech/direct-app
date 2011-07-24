@@ -694,6 +694,12 @@ td.fontGreen{
     padding: 9px 8px 6px;
 }
 
+.customerSummary .marketCap {
+    font-weight:bold;
+    font-size:16px;
+    color:#2882FF
+}
+
 .summaryPanel .tabsContent table td.fieldName {
     padding-right: 8px;
     padding-bottom: 1px;
@@ -741,6 +747,14 @@ td.fontGreen{
 .summaryPanel .tabsContent .compare table tr.marketTR td {
     color: #68a71d;
     padding-bottom: 2px;
+}
+
+.summaryPanel .compare .fieldName {
+    font-weight: bold;
+}
+
+.summaryPanel .compare .firstColumn {
+    font-weight: bold;
 }
 
 /* new tooltips */

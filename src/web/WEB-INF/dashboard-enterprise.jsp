@@ -250,113 +250,8 @@
 											<table id="customerSummaryData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.customerSummary == null">hide</s:if>'>
 												<tbody>
 													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
-																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Avg. Fulfillment</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Average contests fulfillment of the customer</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
 
-															<!-- End .tooltipWrapper --></td>
-														<td id="customerAverageFulfillment" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.averageFulfillment}" pattern="##0.##"/>%</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
-																<div class="tooltipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Avg. Duration</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Average Contest Duration of the customer</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="customerAverageDuration" class="fieldData"> <fmt:formatNumber value="${viewData.customerSummary.averageContestDuration}" pattern="##0.#"/> days</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
-																<div class="tooltipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Total Vol</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Total number of contests completed in the date range for customer</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="customerTotalVol" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.totalContestVolume}" pattern="##0"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
-																<div class="tooltipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Cost Range</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>The cost range of contests for the customer, from min to max</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="customerMinMaxCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.customerSummary.maxContestCost}" pattern="#,##0.00"/></td>
-													</tr>
-													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Cost:
 																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -382,7 +277,37 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td id="customerAverageCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.averageContestCost}" pattern="#,##0.00"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Duration:
+                                                                                                                    <div class="tooltipBox"> <span class="arrow"></span>
+                                                                                                                        <div class="tooltipHeader">
+                                                                                                                            <div class="tooltipHeaderRight">
+                                                                                                                                <div class="tooltipHeaderCenter">
+                                                                                                                                    <h2>Avg. Duration</h2>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <!-- End .tooltipHeader -->
+                                                                                                                        <div class="tooltipContent">
+                                                                                                                            <p>Average Contest Duration of the customer</p>
+                                                                                                                        </div>
+                                                                                                                        <!-- End .tooltipContent -->
+                                                                                                                        <div class="tooltipFooter">
+                                                                                                                            <div class="tooltipFooterRight">
+                                                                                                                                <div class="tooltipFooterCenter"></div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <!-- End .tooltipFooter -->
+                                                                                                                    </div>
+                                                                                                                    <!-- End .tooltipBox -->
+                                                                                                                </div>
+
+                                                                                                                <!-- End .tooltipWrapper --></td>
+                                                      <td id="customerAverageDuration" class="fieldData"> <fmt:formatNumber value="${viewData.customerSummary.averageContestDuration}" pattern="##0.#"/> days</td>
+
+
+                                                      <td class="fieldName"><div class="tooltipWrapper"> Avg. Vol:
 																<div class="tooltipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -408,18 +333,23 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td id="customerAverageVol" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.averageVolPerMonth}" pattern="##0.#"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
-																<div class="tooltipBox"> <span class="arrow"></span>
+
+
+
+
+
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment:
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
 																			<div class="tooltipHeaderCenter">
-																				<h2>Total Member Cost</h2>
+																				<h2>Avg. Fulfillment</h2>
 																			</div>
 																		</div>
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total memeber cost of the contests for the customer</p>
+																		<p>Average contests fulfillment of the customer</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -433,8 +363,43 @@
 															</div>
 
 															<!-- End .tooltipWrapper --></td>
-														<td id="customerTotalCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.totalMemberCost}" pattern="#,##0.00"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
+														<td id="customerAverageFulfillment" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.averageFulfillment}" pattern="##0.##"/>%</td>
+
+                                                        <td>Market Cap</td>
+													</tr>
+
+
+													<tr>
+
+
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range:
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The cost range of contests for the customer, from min to max</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerMinMaxCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.customerSummary.maxContestCost}" pattern="#,##0.00"/></td>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Duration Range:
 																<div class="tooltipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -460,6 +425,70 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td id="customerMinMaxDuration" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.minContestDuration}" pattern="##0.#"/> - <fmt:formatNumber value="${viewData.customerSummary.maxContestDuration}" pattern="##0.#"/> days</td>
+
+
+
+
+
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Total Vol:
+                                                                <div class="tooltipBox"> <span class="arrow"></span>
+                                                                    <div class="tooltipHeader">
+                                                                        <div class="tooltipHeaderRight">
+                                                                            <div class="tooltipHeaderCenter">
+                                                                                <h2>Total Vol</h2>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End .tooltipHeader -->
+                                                                    <div class="tooltipContent">
+                                                                        <p>Total number of contests completed in the date range for customer</p>
+                                                                    </div>
+                                                                    <!-- End .tooltipContent -->
+                                                                    <div class="tooltipFooter">
+                                                                        <div class="tooltipFooterRight">
+                                                                            <div class="tooltipFooterCenter"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End .tooltipFooter -->
+                                                                </div>
+                                                                <!-- End .tooltipBox -->
+                                                            </div>
+
+                                                            <!-- End .tooltipWrapper --></td>
+                                                        <td id="customerTotalVol" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.totalContestVolume}" pattern="##0"/></td>
+
+
+
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost:
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The total memeber cost of the contests for the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="customerTotalCost" class="fieldData">$<fmt:formatNumber value="${viewData.customerSummary.totalMemberCost}" pattern="#,##0.00"/></td>
+
+
+                                                        <td id="customerMarketCap" align='center' class="marketCap"> <fmt:formatNumber value="${viewData.customerSummary.totalMemberCost / viewData.marketSummary.totalMemberCost}" pattern="##0.##"/>% </td>
 													</tr>
 												</tbody>
 											</table>
@@ -467,113 +496,8 @@
                                             <table id="customerSummaryNoData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.customerSummary != null">hide</s:if>'>
 												<tbody>
 													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
-																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Avg. Fulfillment</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Average contests fulfillment of the customer</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
 
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
-																<div class="tooltipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Avg. Duration</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Average Contest Duration of the customer</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
-																<div class="tooltipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Total Vol</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Total number of contests completed in the date range for customer</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
-																<div class="tooltipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Cost Range</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>The cost range of contests for the customer, from min to max</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
-													</tr>
-													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Cost:
 																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -597,9 +521,39 @@
 																<!-- End .tooltipBox -->
 															</div>
 
-															<!-- End .tooltipWrapper --></td>
+															<!-- End .tooltipWrapper -->
+                                                        </td>
 														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration:
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Duration of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td class="fieldData">N/A</td>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Vol:
 																<div class="tooltipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -625,7 +579,128 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment:
+																<div class="tooltipBox firstColumn"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Fulfillment</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average contests fulfillment of the customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td class="fieldData">N/A</td>
+
+                                                        <td>Market Cap</td>
+
+
+
+													</tr>
+
+
+													<tr>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Cost Range:
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The cost range of contests for the customer, from min to max</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Duration Range:
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Duration Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The contest duration range of contests for the customer, from min to max in days</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td class="fieldData">N/A</td>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Total Vol:
+																<div class="tooltipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Total number of contests completed in the date range for customer</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+
+
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost:
 																<div class="tooltipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -651,32 +726,8 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
-																<div class="tooltipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Duration Range</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>The contest duration range of contests for the customer, from min to max in days</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
 
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
+														<td align='center' class="marketCap"> N/A </td>
 													</tr>
 												</tbody>
 											</table>
@@ -685,114 +736,8 @@
 										<div class="marketSummary hide">
 											<table id="marketSummaryData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.marketSummary == null">hide</s:if>'>
 												<tbody>
-													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
-																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Avg. Fulfillment</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Average contests fulfillment of the whole market</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="marketAverageFulfillment" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageFulfillment}" pattern="##0.##"/>%</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Avg. Duration</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Average Contest Duration of the whole market</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="marketAverageDuration" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageContestDuration}" pattern="##0.#"/> days</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Total Vol</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Total number of contests completed in the date range for whole market</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="marketTotalVol" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.totalContestVolume}" pattern="##0"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Cost Range</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>The cost range of contests for the whole market, from min to max</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="marketMinMaxCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.marketSummary.maxContestCost}" pattern="#,##0.00"/></td>
-													</tr>
-													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+                                                    <tr>
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Cost:
 																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -818,7 +763,35 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td id="marketAverageCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.averageContestCost}" pattern="#,##0.00"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Duration of the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td id="marketAverageDuration" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageContestDuration}" pattern="##0.#"/> days</td>
+
+                                                        	<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol:
 																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -844,66 +817,8 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td id="marketAverageVol" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageVolPerMonth}" pattern="##0.#"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Total Member Cost</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>The total memeber cost of the contests for the whole market</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
 
-															<!-- End .tooltipWrapper --></td>
-														<td id="marketTotalCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.totalMemberCost}" pattern="#,##0.00"/></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Duration Range</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>The contest duration range of contests for the whole market, from min to max in days</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
-
-															<!-- End .tooltipWrapper --></td>
-														<td id="marketMinMaxDuration" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.minContestDuration}" pattern="##0.#"/> - <fmt:formatNumber value="${viewData.marketSummary.maxContestDuration}" pattern="##0.#"/> days</td>
-													</tr>
-												</tbody>
-											</table>
-
-                                            <table id="marketSummaryNoData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.marketSummary != null">hide</s:if>'>
-												<tbody>
-													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment
+														<td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment:
 																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -927,61 +842,17 @@
 																<!-- End .tooltipBox -->
 															</div>
 
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Duration
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Avg. Duration</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Average Contest Duration of the whole market</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td id="marketAverageFulfillment" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.averageFulfillment}" pattern="##0.##"/>%</td>
 
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Vol
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
-																	<div class="tooltipHeader">
-																		<div class="tooltipHeaderRight">
-																			<div class="tooltipHeaderCenter">
-																				<h2>Total Vol</h2>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipHeader -->
-																	<div class="tooltipContent">
-																		<p>Total number of contests completed in the date range for whole market</p>
-																	</div>
-																	<!-- End .tooltipContent -->
-																	<div class="tooltipFooter">
-																		<div class="tooltipFooterRight">
-																			<div class="tooltipFooterCenter"></div>
-																		</div>
-																	</div>
-																	<!-- End .tooltipFooter -->
-																</div>
-																<!-- End .tooltipBox -->
-															</div>
 
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Cost Range
+
+													</tr>
+
+													<tr>
+
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range:
 																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -1005,11 +876,104 @@
 																<!-- End .tooltipBox -->
 															</div>
 
-															<!-- End .tooltipWrapper --></td>
-														<td class="fieldData">N/A</td>
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td id="marketMinMaxCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.minContestCost}" pattern="#,##0.00"/> - $<fmt:formatNumber value="${viewData.marketSummary.maxContestCost}" pattern="#,##0.00"/></td>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Duration Range:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Duration Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The contest duration range of contests for the whole market, from min to max in days</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td id="marketMinMaxDuration" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.minContestDuration}" pattern="##0.#"/> - <fmt:formatNumber value="${viewData.marketSummary.maxContestDuration}" pattern="##0.#"/> days</td>
+
+														 <td class="fieldName"><div class="tooltipWrapper"> Total Vol:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Total number of contests completed in the date range for whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td id="marketTotalVol" class="fieldData"><fmt:formatNumber value="${viewData.marketSummary.totalContestVolume}" pattern="##0"/></td>
+
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Total Member Cost:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The total memeber cost of the contests for the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper -->
+                                                        </td>
+														<td id="marketTotalCost" class="fieldData">$<fmt:formatNumber value="${viewData.marketSummary.totalMemberCost}" pattern="#,##0.00"/></td>
+
 													</tr>
+												</tbody>
+											</table>
+
+                                            <table id="marketSummaryNoData" cellpadding="0" cellspacing="0" class='<s:if test="viewData.marketSummary != null">hide</s:if>'>
+												<tbody>
 													<tr>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Cost
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Cost:
 																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -1035,7 +999,35 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Duration:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Avg. Duration</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Average Contest Duration of the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+
+                                                        	<td class="fieldName"><div class="tooltipWrapper"> Avg. Vol:
 																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -1061,18 +1053,19 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost
-																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Avg. Fulfillment:
+																<div class="tooltipBox greenToolTipBox firstColumn"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
 																			<div class="tooltipHeaderCenter">
-																				<h2>Total Member Cost</h2>
+																				<h2>Avg. Fulfillment</h2>
 																			</div>
 																		</div>
 																	</div>
 																	<!-- End .tooltipHeader -->
 																	<div class="tooltipContent">
-																		<p>The total memeber cost of the contests for the whole market</p>
+																		<p>Average contests fulfillment of the whole market</p>
 																	</div>
 																	<!-- End .tooltipContent -->
 																	<div class="tooltipFooter">
@@ -1087,7 +1080,41 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td class="fieldData">N/A</td>
-														<td class="fieldName"><div class="tooltipWrapper"> Duration Range
+
+
+													</tr>
+													<tr>
+
+
+
+														<td class="fieldName"><div class="tooltipWrapper"> Cost Range:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Cost Range</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The cost range of contests for the whole market, from min to max</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+
+                                                        <td class="fieldName"><div class="tooltipWrapper"> Duration Range:
 																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
@@ -1113,6 +1140,61 @@
 
 															<!-- End .tooltipWrapper --></td>
 														<td class="fieldData">N/A</td>
+
+                                                         <td class="fieldName"><div class="tooltipWrapper"> Total Vol:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Vol</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>Total number of contests completed in the date range for whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+
+														<td class="fieldName"><div class="tooltipWrapper"> Total Member Cost:
+																<div class="tooltipBox greenToolTipBox"> <span class="arrow"></span>
+																	<div class="tooltipHeader">
+																		<div class="tooltipHeaderRight">
+																			<div class="tooltipHeaderCenter">
+																				<h2>Total Member Cost</h2>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipHeader -->
+																	<div class="tooltipContent">
+																		<p>The total memeber cost of the contests for the whole market</p>
+																	</div>
+																	<!-- End .tooltipContent -->
+																	<div class="tooltipFooter">
+																		<div class="tooltipFooterRight">
+																			<div class="tooltipFooterCenter"></div>
+																		</div>
+																	</div>
+																	<!-- End .tooltipFooter -->
+																</div>
+																<!-- End .tooltipBox -->
+															</div>
+
+															<!-- End .tooltipWrapper --></td>
+														<td class="fieldData">N/A</td>
+
 													</tr>
 												</tbody>
 											</table>

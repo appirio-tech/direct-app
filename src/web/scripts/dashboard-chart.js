@@ -646,6 +646,7 @@ function drawChart() {
                                             // show the market cap
                                             if(result.hasMarketSummary && result.hasCustomerSummary) {
                                                  $("#marketCap").html(result.marketCap + "%");
+                                                 $("#customerMarketCap").html(result.marketCap + "%");
                                             }
 
                                             $("#startDateEnterprise").datePicker().val(result.periodStartCalendar)
