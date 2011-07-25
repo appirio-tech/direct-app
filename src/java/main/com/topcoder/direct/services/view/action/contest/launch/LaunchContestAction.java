@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,9 +17,14 @@ import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.SessionData;
+import org.apache.struts2.ServletActionContext;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * <p>
@@ -32,9 +38,13 @@ import com.topcoder.direct.services.view.util.SessionData;
  * Version 1.2 - TC Direct - Software Contest Creation Update Assembly Change Note
  * - add method getCurrentProjectCopilots to return copilots of current selected project.
  * </p>
+ * <p>
+ * Version 1.2.1 - Release Assembly - Direct Improvements Assembly Release 3 Change Note
+ * - add method getCurrentServerDate to return current server date.
+ * </p>
  *
  * @author BeBetter,TCSDEVELOPER
- * @version 1.2
+ * @version 1.2.1
  */
 public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
@@ -69,6 +79,16 @@ public class LaunchContestAction extends ContestAction {
 
     public SessionData getSessionData() {
         return sessionData;
+    }
+
+	/**
+     * Gets the current server date.
+     *
+     * @return the current server date.
+     * @since 1.2.1
+     */
+    public Date getCurrentServerDate() {
+        return new Date();
     }
 
     /**

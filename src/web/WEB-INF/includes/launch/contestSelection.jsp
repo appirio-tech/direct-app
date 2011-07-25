@@ -1,10 +1,11 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0.2
+  - Version: 1.0.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0.1 (TC Direct Software Contest Creation Update Assembly) changes: add display of copilots of software contest.
   - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
+  - Version 1.0.3 (Release Assembly - Direct Improvements Assembly Release 3) changes: add current date on server to populate start/end date.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -127,6 +128,10 @@
                 <option value="multi">Contest will be run in multi-rounds</option>
               </select>
           </div>
+      </div>
+
+	  <div id="currentServerDate" style="display:none">
+          <s:date name="currentServerDate" format="MM/dd/yyyy"/>
       </div>
 
       <!-- Start -->

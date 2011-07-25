@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -11,12 +11,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.configs.CopilotFee;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
-
 import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.CompDocumentation;
 import com.topcoder.catalog.entity.CompUploadedFile;
@@ -24,6 +18,8 @@ import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.configs.CopilotFee;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
@@ -50,6 +46,12 @@ import com.topcoder.service.studio.ContestSpecificationsData;
 import com.topcoder.service.studio.MediumData;
 import com.topcoder.service.studio.MilestonePrizeData;
 import com.topcoder.service.studio.PrizeData;
+
+import com.topcoder.service.studio.*;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  * <p>
@@ -104,9 +106,15 @@ import com.topcoder.service.studio.PrizeData;
  * <li>Adds the logic to put copilot resource data into software competition to create</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.5 - Release Assembly - Direct Improvements Assembly Release 3 Change Note
+ * <ul>
+ * <li>Sets the direct project name of studio competition and software competition </li>
+ * </ul>
+ * </p>
  *
  * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.4
+ * @version 1.5
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -898,7 +906,11 @@ public class SaveDraftContestAction extends ContestAction {
      * @throws Exception if any error occurs
      */
     private StudioCompetition activateStudioCompeition(StudioCompetition studioCompetition) throws Exception {
-        ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(getCurrentUser(),
+        
+		// set the direct project name of the studio competition
+        DirectUtils.setStudioCompetitionDirectProjectName(studioCompetition, getProjects());
+
+		ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(getCurrentUser(),
             studioCompetition, getPaymentData(studioCompetition));
         return new StudioCompetition(result.getContestData());
     }
@@ -916,7 +928,10 @@ public class SaveDraftContestAction extends ContestAction {
     private SoftwareCompetition activateSoftwareCompeition(SoftwareCompetition softwareCompetition) throws Exception {
         softwareCompetition.getAssetDTO().setCompComments(getCurrentUser().getUserId() + "");
 
-        SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(
+        // set the direct project name of software competition
+        DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
+		
+		SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(
             getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition));
 
         // return result.getSoftwareCompetition();

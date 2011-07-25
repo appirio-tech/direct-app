@@ -1,3 +1,11 @@
+<%--
+  - Author: TCSDEVELOPER
+  - Version: 1.1
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - Direct Improvements Assembly Release 3) changes:
+  - Set the today in calendar with the today date on server, not on the client side.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -11,7 +19,9 @@
     <link rel="stylesheet" href="/css/fullcalendar.css" media="all" type="text/css" />
     <script type="text/javascript">
         function getCalendarConfig() {
-            return {
+			var currentDate = new Date($.trim($("#calendarToday").text()));
+            
+			return {
             header: {
                 left: 'prev',
                 center: 'title',
@@ -19,7 +29,9 @@
             },
             editable: false,
             dayNamesShort: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            events: [
+            year: currentDate.getFullYear(),
+            month:currentDate.getMonth(),
+			events: [
                 <s:iterator value="viewData.latestActivities.activities" status="status1">
                     <s:iterator value="value" status="status2">
                         <s:set var="date" value='date'/>
@@ -62,7 +74,7 @@
                         </div><!-- End .areaHeader -->
 
                         <div id="calendar"></div>
-
+							<span id="calendarToday" style="display:none"><s:date name="calendarToday" format="MM/dd/yyyy"/></span>
                             <jsp:include page="includes/copilotArea.jsp"/>
                         </div>
                     </div>

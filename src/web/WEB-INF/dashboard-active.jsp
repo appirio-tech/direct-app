@@ -1,10 +1,12 @@
 <%--
   - Author: tangzx, TCSASSEMBLER
-  - Version: 1.1
+  - Version: 1.1.1
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
   - Change the  style for the View/Edit buttons. 
+  - Version 1.1.1 (Release Assembly - Direct Improvements Assembly Release 3) changes:
+  - Fix the bread crumb link to "Active Contests"
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -34,7 +36,7 @@
                         <div class="area1Content">
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
-                                <strong><s:property value="sessionData.currentProjectContext.name"/></strong>
+                                 <strong>Active Contests</strong>
                             </div>
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Contests</h2>

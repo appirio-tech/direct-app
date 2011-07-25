@@ -37,12 +37,14 @@ import org.apache.struts2.ServletActionContext;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.project.phases.Phase;
-import com.topcoder.project.phases.PhaseType;
 import com.topcoder.project.phases.PhaseStatus;
+import com.topcoder.project.phases.PhaseType;
 import com.topcoder.project.service.ContestSaleData;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
@@ -50,6 +52,9 @@ import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.permission.PermissionServiceException;
+import com.topcoder.service.project.CompetitionPrize;
+import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.service.studio.PersistenceException;
@@ -61,6 +66,7 @@ import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
+import org.apache.struts2.ServletActionContext;
 
 /**
  * <p>
@@ -180,8 +186,16 @@ import com.topcoder.shared.util.DBMS;
  * </ul>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve
- * @version 1.6.8
+ * <p>
+ * Version 1.6.9 (Release Assembly - Direct Improvements Assembly Release 3) change notes:
+ * <ul>
+ *      <li>Added {@link #setSoftwareCompetitionDirectProjectName(com.topcoder.service.project.SoftwareCompetition, java.util.List)} method</li>
+ *      <li>Added {@link #setStudioCompetitionDirectProjectName(com.topcoder.service.project.StudioCompetition, java.util.List)}</li>
+ * </ul>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, TCSDEVELOPER
+ * @version 1.6.9
  */
 public final class DirectUtils {
     /**
@@ -247,6 +261,13 @@ public final class DirectUtils {
      * Private constant specifying TC operations role.
      */
     private static final String TC_STAFF_ROLE = "TC Staff";
+
+	/**
+     * The project name to use when the direct project name is not available, usually this will not happen.
+     *
+     * @since 1.6.7
+     */
+    private static final String DIRECT_PROJECT_NOT_AVAILABLE = "Project name not available";
 
     /**
      * Represents one hour in milliseconds.
@@ -768,6 +789,48 @@ public final class DirectUtils {
             return studioCompetition.getPrizes().size();
         }
     }
+
+    /**
+     * Sets the direct project name of the given SoftwareCompetition
+     *
+     * @param softwareCompetition the software competition to set.
+     * @param projects all the direct projects the user has.
+     * @since 1.6.7
+     */
+    public static void setSoftwareCompetitionDirectProjectName(SoftwareCompetition softwareCompetition, List<ProjectData> projects) {
+        softwareCompetition.getProjectHeader().setTcDirectProjectName(getDirectProjectName(softwareCompetition.getProjectHeader().getTcDirectProjectId(), projects));
+    }
+
+    /**
+     * Sets the direct project name of the given StudioCompetition
+     *
+     * @param studioCompetition the studio competition to set.
+     * @param projects all the direct projects the user has.
+     * @since 1.6.7
+     */
+    public static void setStudioCompetitionDirectProjectName(StudioCompetition studioCompetition, List<ProjectData> projects) {
+        studioCompetition.getContestData().setTcDirectProjectName(getDirectProjectName(studioCompetition.getContestData().getTcDirectProjectId(), projects));
+    }
+
+    /**
+     * Gets the name of the direct project by comparing the direct project id.
+     *
+     * @param directProjectId the direct project id
+     * @param projects all the direct projects the user has
+     * @return the found direct project name.
+     * @since 1.6.7
+     */
+    private static String getDirectProjectName(long directProjectId, List<ProjectData> projects) {
+
+        for(ProjectData project : projects) {
+            if(project.getProjectId() == directProjectId) {
+                return project.getName();
+            }
+        }
+
+        return DIRECT_PROJECT_NOT_AVAILABLE;
+    }
+
 
     /**
      * <p>Gets a flag indicating whether the submissions have already been checked out.</p>

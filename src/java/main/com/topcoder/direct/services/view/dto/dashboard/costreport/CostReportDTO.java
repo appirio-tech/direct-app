@@ -46,9 +46,16 @@ import java.util.Map;
  * <li>Updated {@link #insertSheetData(Sheet)} method to support exporting cost breakdown data to excel.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.1 (Release Assembly - Direct Improvements Assembly Release 3) change note:
+ * <ol>
+ * <li>Change all cost related call value in the excel to format 'Number', it was 'String'.</li>
+ * </ol>
+ * </p>
  * 
- * @author Blues, flexme
- * @version  1.0 (TopCoder Cockpit - Cost Report Assembly)
+ * @author Blues, flexme, TCSDEVELOPER
+ * @version  1.1 (TopCoder Cockpit - Cost Report Assembly)
  *
  */
 public class CostReportDTO extends CommonDTO implements Serializable {
@@ -394,8 +401,6 @@ public class CostReportDTO extends CommonDTO implements Serializable {
         // the date format used for displaying 'completion date'
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        // the format used for various cost and fees
-        NumberFormat moneyFormatter = new DecimalFormat("###,##0.00");
 
         // set up the sheet header first
         Row row = sheet.getRow(1);
@@ -463,15 +468,15 @@ public class CostReportDTO extends CommonDTO implements Serializable {
             row.getCell(index++).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
 
             // set the contest fee
-            row.getCell(index++).setStringValue(moneyFormatter.format(costDetail.getContestFee()));
+            row.getCell(index++).setNumberValue(costDetail.getContestFee());
 
-            // set the estimated member cost
-            row.getCell(index++).setStringValue(moneyFormatter.format(costDetail.getEstimatedCost()));
+			// set the estimated member cost
+            row.getCell(index++).setNumberValue(costDetail.getEstimatedCost());
 
 
             // set the actual member cost, the 'active' and 'scheduled' contest does not have actual member cost
             if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
-                row.getCell(index).setStringValue(moneyFormatter.format(costDetail.getActualCost()));
+                row.getCell(index).setNumberValue(costDetail.getActualCost());
             }
             index++;
 
@@ -479,37 +484,37 @@ public class CostReportDTO extends CommonDTO implements Serializable {
                 DashboardCostBreakDownDTO breakdown = breakdownMap.get(costDetail.getContest().getId());
                 if (breakdown != null) {
                     // set Prizes cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getPrizes()));
+                    row.getCell(index++).setNumberValue(breakdown.getPrizes());
                     
                     // set Spec Review cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getSpecReview()));
+                    row.getCell(index++).setNumberValue(breakdown.getSpecReview());
                     
                     // set Review cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getReview()));
+                    row.getCell(index++).setNumberValue(breakdown.getReview());
                     
                     // set Reliability cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getReliability()));
+                    row.getCell(index++).setNumberValue(breakdown.getReliability());
                     
                     // set Digital Run cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getDigitalRun()));
+                    row.getCell(index++).setNumberValue(breakdown.getDigitalRun());
                     
                     // set Copilot cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getCopilot()));
+                    row.getCell(index++).setNumberValue(breakdown.getCopilot());
                     
                     // set Build cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getBuild()));
+                    row.getCell(index++).setNumberValue(breakdown.getBuild());
                     
                     // set Bugs cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getBugs()));
+                    row.getCell(index++).setNumberValue(breakdown.getBugs());
                     
                     // set Misc cost
-                    row.getCell(index++).setStringValue(moneyFormatter.format(breakdown.getMisc()));
+                    row.getCell(index++).setNumberValue(breakdown.getMisc());
                 } else {
                     index += 9;
                 }
             }
             // set the total cost
-            row.getCell(index++).setStringValue(moneyFormatter.format(costDetail.getTotal()));
+            row.getCell(index++).setNumberValue(costDetail.getTotal());
         }
     }
 

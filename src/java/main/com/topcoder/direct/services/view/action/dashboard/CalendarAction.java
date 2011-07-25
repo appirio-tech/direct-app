@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
@@ -9,11 +9,18 @@ import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardDTO;
 import com.topcoder.direct.services.view.form.CalendarForm;
 
+import java.util.Date;
+
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Calendar</code> page.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ *     Version 1.1 Release Assembly - Direct Improvements Assembly Release 3 change note:
+ *     - add method getCalendarToday to return the today date on the server.
+ * </p>
+ *
+ * @author isv, TCSDEVELOPER
+ * @version 1.1
  */
 public class CalendarAction extends AbstractAction implements ViewAction<DashboardDTO>, FormAction<CalendarForm> {
 
@@ -49,5 +56,15 @@ public class CalendarAction extends AbstractAction implements ViewAction<Dashboa
      */
     public CalendarForm getFormData() {
         return this.formData;
+    }
+
+	/**
+     * <p>Gets the current date on server as today for calendar</p>
+     *
+     * @return the current date on server.
+     * @since 1.1
+     */
+    public Date getCalendarToday() {
+        return new Date();
     }
 }

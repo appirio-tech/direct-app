@@ -20,8 +20,11 @@
  * Version 1.1.4 (TC Direct "Contest Links and Button" Update 24Hr Assembly)
  * - Add support to show the 'Preview Contest' link if the contest is in draft status.
  *
+ * Version 1.1.5 (Release Assembly - Direct Improvements Assembly Release 3)
+ * - Fixes the contest fee bug in contest detail screen, load the actual contest fee from contest data rather than from config.
+ *
  * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1.4
+ * @version 1.1.5
  */
 $(document).ready(function(){
 	  //general initialization
@@ -388,11 +391,11 @@ function initContest(contestJson) {
    
     // if has no write permission, no edit; if any phase is open, no edit
     if (!hasContestWritePermission) {
-        $('a.button11').hide();
+        $('img[alt="edit"]').parent().hide();
         $("#resubmit").hide();
         $("#swEdit_bottom_review").hide();
     } else if(contestJson.phaseOpen) {
-        $('a.button11').hide();
+        $('img[alt="edit"]').parent().hide();
         // open prize edit section if project is active
         if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS) {
             isActiveContest = true;
@@ -639,7 +642,8 @@ function populatePrizeSection(initFlag) {
 	var radioButtonValue = (COSTLEVEL_RADIOVALUE_MAP[mainWidget.softwareCompetition.projectHeader.getCostLevel()]) || "medium";	
 	$('input[name="prizeRadio"][value="' + radioButtonValue + '"]').attr("checked","checked");
 	
-	fillPrizes();	
+	// if init flag is true - open contest detail page - show actual cost data
+    if(!initFlag) { fillPrizes(); } else { updateContestCostData();}
 	
    
   if(initFlag) {
@@ -651,6 +655,81 @@ function populatePrizeSection(initFlag) {
   }      
   
   preCost = retrieveContestCostWithoutAdminFee();
+}
+
+/**
+ * Show the contest cost data according to the actual contest cost returned from server.
+ */
+function updateContestCostData() {
+    if (!mainWidget.softwareCompetition.projectHeader.projectCategory || mainWidget.softwareCompetition.projectHeader.projectCategory.id < 0) {
+        return;
+    }
+
+    var prizeType = $('input[name="prizeRadio"]:checked').val();
+    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+    var feeObject = softwareContestFees[projectCategoryId];
+    if (!feeObject) {
+        alert('no fee found for project category ' + projectCategoryId);
+        return;
+    }
+
+    // gets all cost data from contest data
+    var p = mainWidget.softwareCompetition.projectHeader.properties;
+    var firstPlacePrize = parseFloat(p['First Place Cost']);
+    var secondPlacePrize = parseFloat(p['Second Place Cost']);
+    var reviewCost = parseFloat(p['Review Cost']);
+    var reliability = parseFloat(p['Reliability Bonus Cost']);
+    var specReview = parseFloat(p['Spec Review Cost']);
+    var digitalRun = parseFloat(p['DR points']);
+    var contestFee = parseFloat(mainWidget.softwareCompetition.adminFee);
+    var copilotFee = parseFloat(mainWidget.softwareCompetition.copilotCost);
+
+    // (1) set the first place prize
+    $('#swFirstPlace').val(firstPlacePrize.formatMoney(2));
+    $('#rswFirstPlace').html(firstPlacePrize.formatMoney(2));
+
+    // (2) set the second place prize
+    $('#swSecondPlace,#rswSecondPlace').html(secondPlacePrize.formatMoney(2));
+
+    // (3) set the review cost
+    $('#swReviewCost,#rswReviewCost').html(reviewCost.formatMoney(2));
+
+    // (4) set the reliability
+    $('#swReliabilityBonus,#rswReliabilityBonus').html(reliability.formatMoney(2));
+
+    // (5) set the digital run
+    $('#rswDigitalRun').html(digitalRun.formatMoney(2));
+    $('#swDigitalRun').val(digitalRun.formatMoney(2));
+
+    // (6) set the contest fee
+    $('#swContestFee,#rswContestFee').html(contestFee.formatMoney(2));
+
+    // (7) set the copilot cost
+    $('#swCopilotFee,#rswCopilotFee').html(copilotFee.formatMoney(2));
+
+    // (8) set the spec review cost
+    $('#swSpecCost,#rswSpecCost').html(specReview.formatMoney(2));
+
+    var total = firstPlacePrize + secondPlacePrize + reviewCost + reliability + specReview + digitalRun + contestFee + copilotFee;
+
+    $('#swTotal,#rswTotal').html(total.formatMoney(2));
+
+    //totals
+    $('#swPrize_low').html((getContestTotal(feeObject, 'low') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+    $('#swPrize_medium').html((getContestTotal(feeObject, 'medium') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+    $('#swPrize_high').html((getContestTotal(feeObject, 'high') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+
+    //if custom, make the first place editable
+   if(prizeType == 'custom') {
+      $('#swFirstPlace').attr('readonly',false);
+      $('#swFirstPlace').val(contestCost.firstPlaceCost);
+
+      $('#swDigitalRun').attr('readonly',false);
+      $('#swDigitalRun').val(contestCost.drCost);
+   } else {
+      $('#swFirstPlace').attr('readonly',true);
+      $('#swDigitalRun').attr('readonly',true);
+   }
 }
 
 function isBillingViewable() {

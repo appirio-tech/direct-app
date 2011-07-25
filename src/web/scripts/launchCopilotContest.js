@@ -35,7 +35,7 @@ $(document).ready(function(){
      * Initiate date pick.
      */
     if($('.date-pick').length > 0){
-        $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
+        $(".date-pick").datePicker().val($.trim($("#currentCopilotDate").val())).trigger('change');
     }
 
     /**

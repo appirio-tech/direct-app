@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.service.facade.contest.ContestPaymentResult;
 import com.topcoder.service.facade.contest.SoftwareContestPaymentResult;
 import com.topcoder.service.payment.PaymentResult;
@@ -46,8 +47,15 @@ import com.topcoder.service.project.StudioCompetition;
  * (different from Struts 1) are created for every request.
  * </p>
  *
+ * <p>
+ * Version 1.1 - Release Assembly - Direct Improvements Assembly Release 3 Change Note
+ * <ul>
+ * <li>Sets the direct project name of studio competition and software competition </li>
+ * </ul>
+ * </p>
+ *
  * @author fabrizyo, TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
  */
 public class PayByBillingAccountAction extends PayContestAction {
 
@@ -95,12 +103,20 @@ public class PayByBillingAccountAction extends PayContestAction {
         // and return payment result
         if (isStudioCompetition()) {
             StudioCompetition studioCompetition = getContestServiceFacade().getContest(null, getContestId());
-            ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(null,
+
+			// set the direct project name of studio competition
+            DirectUtils.setStudioCompetitionDirectProjectName(studioCompetition, getProjects());
+            
+			ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(null,
                 studioCompetition, tcPurchaseOrderPaymentData);
             return result.getPaymentResult();
         } else {
             SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(null,
                 getProjectId());
+
+			 // set the direct project name of software competition
+            DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
+
             SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(null,
                 softwareCompetition, tcPurchaseOrderPaymentData);
             return result.getPaymentResult();

@@ -10,8 +10,10 @@
  * - Add character limitation for the input fields and input areas when creating contests.
  * Version 1.3 TC Direct UI Improvement Assembly 2 Assembly change note
  * - Solve "Help of Enforce CCA doesn't work"
+ * Version 1.4 Release Assembly - Direct Improvements Assembly Release 3
+ * - user server date as date picker initial date
  * @author TCSDEVELOPER
- * @version 1.2(Direct Improvements Assembly Release 2)
+ * @version 1.4(Release Assembly - Direct Improvements Assembly Release 3)
  */
 $(document).ready(function() {
 
@@ -422,7 +424,7 @@ $(document).ready(function() {
 
     /* init date-pack */
     if ($('.date-pick').length > 0) {
-        $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
+        $(".date-pick").datePicker().val($.trim($("#currentServerDate").text())).trigger('change');
     }
 
 	/**

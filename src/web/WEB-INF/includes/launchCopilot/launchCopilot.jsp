@@ -104,6 +104,8 @@
         <div class="editPanelMask">
             <!-- Start -->
             <div class="row">
+			<jsp:useBean id="currentDate" class="java.util.Date" />
+            <input id="currentCopilotDate" type="hidden" value='<fmt:formatDate value="${currentDate}" type="date" pattern="MM/dd/yyyy" />' />
             <label>Start:</label>
                 <input id="startDate" name="startDate" type="text"  class="text date-pick" readonly="true"/>
                 <div class="startEtSelect">
