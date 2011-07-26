@@ -18,9 +18,73 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="active"/>
 	<jsp:include page="includes/paginationSetup.jsp"/>
+<!--[if IE 6]>
+    <script type="text/javascript" src="scripts/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="scripts/ie6.js"></script>
+<![endif]-->
 </head>
 
 <body id="page">
+
+<!-- ie6 notification module -->
+<div id="ie6-notification">
+    <div class="content">
+        <div class="alert">
+            <span class="title">You&acute;re using Internet Explorer 6 or Lower. </span>
+            <span class="desc">For the full features supported and best experience we strongly recommend upgrading to 
+                <strong class="ie8"><a href="javascript:;">Internet Explorer 8</a>
+                    <span class="tip">
+                        <span class="tipTop"></span>
+                        <span class="tipBg">
+                            <span class="pic"><img src="images/ie_icon.png" alt="Internet Explorer 8" /></span>
+                            <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-8" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                        </span>
+                        <span class="tipBottom"></span>
+                    </span>
+                </strong>, 
+                <strong class="ff"><a href="javascript:;">Firefox 5.0</a>
+                    <span class="tip">
+                        <span class="tipTop"></span>
+                        <span class="tipBg">
+                            <span class="pic"><img src="images/ff_icon.png" alt="Firefox 5.0" /></span>
+                            <a href="http://www.mozilla.com/en-US/firefox/fx/" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                        </span>
+                        <span class="tipBottom"></span>
+                    </span>
+                </strong>, 
+                <strong class="safari"><a href="javascript:;">Safari 5</a>
+                        <span class="tip">
+                            <span class="tipTop"></span>
+                            <span class="tipBg">
+                                <span class="pic"><img src="images/safari_icon.png" alt="Safari 5.0" /></span>
+                                <a href="http://www.apple.com/safari/download/" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                            </span>
+                            <span class="tipBottom"></span>
+                        </span>
+                    </strong> or 
+                    <strong class="chrome"><a href="javascript:;">Google Chrome</a>
+                        <span class="tip">
+                            <span class="tipTop"></span>
+                            <span class="tipBg">
+                                <span class="pic"><img src="images/chrome_icon.png" alt="Google Chrome" /></span>
+                                <a href="http://www.google.com/chrome/" class="downloadSubmission"><span>DOWNLOAD</span></a>
+                            </span>
+                            <span class="tipBottom"></span>
+                        </span>
+                    </strong>
+            </span>
+        </div>
+        <div class="noAsk">
+            <a href="javascript:;" class="close">Close</a>
+            <div class="clear"></div>
+            <div class="noAakInner"><input type="checkbox" id="noAshAgain" /><label>Don&acute;t show again</label>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- ie6 notification module ends -->
+
 <div id="wrapper">
     <div id="wrapperInner">
         <div id="container">

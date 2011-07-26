@@ -12,6 +12,10 @@
  * 1) Added new styles for AJAX preloader and modal window
  */
 
+html,body{
+	width:100%;
+}
+
 /* Remove Firefox button outline */
 a:hover, a:active, a:focus, a:active {
     outline: none;
@@ -1606,5 +1610,197 @@ overflow: auto;
 
 /* end #preloaderModal */
 
+			}
+			
+/*
+ * IE6 Notification styles
+ * 
+ */
+#ie6-notification{
+	width:auto;
+	min-width:960px;
+	height:51px;
+	background:url(../images/ie6-notification-bg.png) repeat-x left top;
+	position:absolute;
+	z-index:1000;
+	top:-51px;
+	}
+
+	#ie6-notification .homeContent{
+		width:960px;
+		margin:0 auto;
+		}
+
+		#ie6-notification .alert{
+			width:755px;
+			float:left;
+			display:inline;
+			margin-left:25px;
+			margin-top:13px;
+			padding-left:42px;
+			background:url(../images/ie6-alert.png) 0 0 no-repeat;
+			}
+			
+		#ie6-notification .homeContent .alert{
+			width:788px;
+			float:left;
+			display:inline;
+			margin-left:2px;
+			margin-top:13px;
+			padding-left:42px;
+			background:url(../images/ie6-alert.png) 0 0 no-repeat;
+			}	
+
+			#ie6-notification .title{
+				display:block;
+				margin-bottom:1px;
+				font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+				font-size:16px;
+				font-weight:bold;
+				color:#d10000;
+				line-height:1em;
+				background:none;
+				}
+	
+			#ie6-notification .desc{
+				display:block;
+				color:#333333;
+				font-size:11px;
+				line-height:1em;
+				position:relative;
+				}
+
+				#ie6-notification .desc a{
+					font-weight:bold;
+					color:#ec1c23;
+					text-decoration:none;
+					}
+					
+					#ie6-notification .tip{
+						position:absolute;
+						}
+						
+					#ie6-notification .ie8 .tip{
+						margin-top:-9999px;
+						margin-left:-120px;
+						}
+						
+					#ie6-notification .ff .tip{
+						margin-top:-9999px;
+						margin-left:-96px;
+						}
+						
+					#ie6-notification .safari .tip{
+						margin-top:-9999px;
+						margin-left:-88px;
+						}
+						
+					#ie6-notification .chrome .tip{
+						margin-top:-9999px;
+						margin-left:-112px;
+						}
+						
+						#ie6-notification .tipBg{
+							width:130px;
+							height:122px;
+							display:block;
+							text-align:center;
+							background:url(../images/tip_Out.png) no-repeat;
+							}
+							
+							#ie6-notification .tip .pic{
+								height:51px;
+								display:block;
+								margin-top:20px;
+								padding-top:6px;
+								}
+
+		#ie6-notification .noAsk{
+			width:auto;
+			float:right;
+			display:inline;
+			margin-top:8px;
+			margin-right:20px;
+			}
+			
+		#ie6-notification .homeContent .noAsk{
+			width:auto;
+			float:right;
+			display:inline;
+			margin-top:11px;
+			margin-right:2px;
+			}
+			
+			#ie6-notification .noAsk .noAakInner{
+				width:auto;
+				float:right;
+				display:inline;
+				}		
+
+			#ie6-notification .noAsk label{
+				margin-left:2px;
+				font-size:11px;
+				color:#333333;
+				line-height:21px;
+				}
+				
+			#ie6-notification .homeContent .noAsk label{
+				line-height:25px;
+				}
+				
+			#noAshAgain{
+				width:auto;
+				float:left;
+				display:inline;
+				margin-top:2px;
+				}
+
+	#ie6-notification a.close{
+		width:auto;
+		float:right;
+		display:inline;
+		overflow:hidden;
+		padding-left:14px;
+		font-size:11px;
+		color:#333333;
+		clear:both;
+		text-decoration:underline;
+		background:url(../images/ie6-close-icon.png) 0 center no-repeat;
+		}
+	
+	#ie6-notification a.close:hover{
+		text-decoration:none;
+		}
+	
+	
+	#ie6-notification a.downloadSubmission{
+		float:left; 
+		font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+		text-decoration: none;
+		margin-top:10px;
+		margin-left:10px;
+		padding: 0 0 0 27px;
+		background:url(../images/checkout_download.png) no-repeat left top;
+		}
+	
+	#ie6-notification a.downloadSubmission span{
+		float:left;
+		cursor: pointer;
+		height: 24px;
+		font-size: 12px;
+		line-height: 24px;
+		font-weight: bold;
+		color:#FFFFFE;
+		padding: 0 7px;
+		background:url(../images/checkout_download_right.png) no-repeat right top;
+		}
+	
+	#ie6-notification a.downloadSubmission:hover{
+		background:url(../images/checkout_download.png) no-repeat left -24px;
+		}
+	
+	#ie6-notification a.downloadSubmission:hover span{
+		background:url(../images/checkout_download_right.png) no-repeat right -24px;
+		}
 
 
