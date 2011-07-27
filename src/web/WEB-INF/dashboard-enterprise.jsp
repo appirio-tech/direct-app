@@ -365,7 +365,7 @@
 															<!-- End .tooltipWrapper --></td>
 														<td id="customerAverageFulfillment" class="fieldData"><fmt:formatNumber value="${viewData.customerSummary.averageFulfillment}" pattern="##0.##"/>%</td>
 
-                                                        <td>Market Cap</td>
+                                                        <td>% of Market</td>
 													</tr>
 
 
@@ -608,7 +608,7 @@
                                                         </td>
 														<td class="fieldData">N/A</td>
 
-                                                        <td>Market Cap</td>
+                                                        <td>% of Market</td>
 
 
 
@@ -1405,12 +1405,12 @@
 															</div>
 
 															<!-- End .tooltipWrapper --></td>
-														<td class="fieldName"><div class="tooltipWrapper"> Mkt Cap %
+														<td class="fieldName"><div class="tooltipWrapper"> % of Market
 																<div class="tooltipBox orangeToolTipBox"> <span class="arrow"></span>
 																	<div class="tooltipHeader">
 																		<div class="tooltipHeaderRight">
 																			<div class="tooltipHeaderCenter">
-																				<h2>Mkt Cap %</h2>
+																				<h2>% of Market</h2>
 																			</div>
 																		</div>
 																	</div>
