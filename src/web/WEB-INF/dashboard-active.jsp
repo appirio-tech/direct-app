@@ -19,9 +19,9 @@
     <ui:dashboardPageType tab="active"/>
 	<jsp:include page="includes/paginationSetup.jsp"/>
 <!--[if IE 6]>
-    <script type="text/javascript" src="scripts/DD_belatedPNG.js"></script>
-    <script type="text/javascript" src="scripts/jquery.cookie.js"></script>
-    <script type="text/javascript" src="scripts/ie6.js"></script>
+    <script type="text/javascript" src="/scripts/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/scripts/ie6.js"></script>
 <![endif]-->
 </head>
 
@@ -37,7 +37,7 @@
                     <span class="tip">
                         <span class="tipTop"></span>
                         <span class="tipBg">
-                            <span class="pic"><img src="images/ie_icon.png" alt="Internet Explorer 8" /></span>
+                            <span class="pic"><img src="/images/ie_icon.png" alt="Internet Explorer 8" /></span>
                             <a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-8" class="downloadSubmission"><span>DOWNLOAD</span></a>
                         </span>
                         <span class="tipBottom"></span>
@@ -47,7 +47,7 @@
                     <span class="tip">
                         <span class="tipTop"></span>
                         <span class="tipBg">
-                            <span class="pic"><img src="images/ff_icon.png" alt="Firefox 5.0" /></span>
+                            <span class="pic"><img src="/images/ff_icon.png" alt="Firefox 5.0" /></span>
                             <a href="http://www.mozilla.com/en-US/firefox/fx/" class="downloadSubmission"><span>DOWNLOAD</span></a>
                         </span>
                         <span class="tipBottom"></span>
@@ -57,7 +57,7 @@
                         <span class="tip">
                             <span class="tipTop"></span>
                             <span class="tipBg">
-                                <span class="pic"><img src="images/safari_icon.png" alt="Safari 5.0" /></span>
+                                <span class="pic"><img src="/images/safari_icon.png" alt="Safari 5.0" /></span>
                                 <a href="http://www.apple.com/safari/download/" class="downloadSubmission"><span>DOWNLOAD</span></a>
                             </span>
                             <span class="tipBottom"></span>
@@ -67,7 +67,7 @@
                         <span class="tip">
                             <span class="tipTop"></span>
                             <span class="tipBg">
-                                <span class="pic"><img src="images/chrome_icon.png" alt="Google Chrome" /></span>
+                                <span class="pic"><img src="/images/chrome_icon.png" alt="Google Chrome" /></span>
                                 <a href="http://www.google.com/chrome/" class="downloadSubmission"><span>DOWNLOAD</span></a>
                             </span>
                             <span class="tipBottom"></span>
