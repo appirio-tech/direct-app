@@ -340,6 +340,7 @@ $(document).ready(function() {
  			  },            
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [[3,'desc']],
 		"aoColumns": [
 				{ "sType": "html" },
 				{ "sType": "html" },
@@ -357,7 +358,7 @@ $(document).ready(function() {
     });
 
     // sort by start date
-    $.activeContestsDataTable.fnSort( [[3,'desc']] );
+    //$.activeContestsDataTable.fnSort( [[3,'desc']] );
 
     $("#notificationsContent .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
