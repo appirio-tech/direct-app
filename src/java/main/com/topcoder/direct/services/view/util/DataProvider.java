@@ -1208,15 +1208,21 @@ public class DataProvider {
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
             Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
             int forumId = -1;
-            try
-                {
-            if (resultContainer.getStringItem(i, "forum_id") != null
+            long customerId = -1L;
+            try {
+                if (resultContainer.getStringItem(i, "forum_id") != null
                         && !resultContainer.getStringItem(i, "forum_id").equals(""))
-                forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
+                    forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
+            } catch (NumberFormatException ne) {
+                // ignore
             }
-            catch (NumberFormatException ne)
-            {
-		    // ignore
+
+            try {
+                if (resultContainer.getStringItem(i, "client_id") != null
+                        && !resultContainer.getStringItem(i, "client_id").equals(""))
+                    customerId = Long.parseLong(resultContainer.getStringItem(i, "client_id"));
+            } catch (NumberFormatException ne) {
+                // ignore
             }
 				
 			
@@ -1229,6 +1235,7 @@ public class DataProvider {
             }
 
             ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio, typeName);
+            contestBrief.setCustomerId(customerId);
             ContestType type =  ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
