@@ -1,7 +1,8 @@
+/*
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ */
 /**
- *  Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
- *
- *  The JS script for dashboard.
+ * The JS script for dashboard.
  *
  *  Version 1.1 - TC Direct - Page Layout Update Assembly & TC Direct - Page Layout Update Assembly 2
  *  - Added auto truncated function.
@@ -20,8 +21,11 @@
  *  Version 1.5 - Release Assembly - TC Cockpit Sidebar Header and Footer Update
  *  - Add the functions for ajax pre loader and modal window.
  *
- * @author tangzx, Blues, TCSASSEMBLER
- * @version 1.2
+ *  Version 1.6 - Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination
+ *  - Add javascript codes for the customer dropdown in the right sidebar
+ *
+ * @author tangzx, Blues, GreatKevin
+ * @version 1.6
  */
 $(document).ready(function(){
 						   
@@ -82,46 +86,53 @@ $(document).ready(function(){
 	
 	/*-Show the scrollbar when the number of contests is more than 10-*/
 	
-	var rows_height = 0;
-	var contests_nbre = 0;
-	
-	/* get the height of the 10 first rows ( one contest per row)*/
-	$("#contestsTable TBODY").children().each(function(){
-			if( contests_nbre < 10 )
-				rows_height += $(this).height();
-			contests_nbre++;
-	});
-	
-	 if (contests_nbre > 10) { // if the number of contests > 0 we will set the height to show the scrollbar
-        $(".contestsContent").height(rows_height);
+	adjustContestListHeight = function() {
+        var rows_height = 0;
+        var contests_nbre = 0;
 
-        // Chrome
-        if (ua.match(/chrome\/([\d.]+)/) != null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0] > 2) {
-            $(".contestsContent").height(rows_height + 20);
+        /* get the height of the 10 first rows ( one contest per row)*/
+        $("#contestsTable TBODY").children().each(function() {
+            if (contests_nbre < 10)
+                rows_height += $(this).height();
+            contests_nbre++;
+        });
+
+        if (contests_nbre > 10) {
+            $(".contestsContent").height(rows_height);
+
+            // Chrome
+            if (ua.match(/chrome\/([\d.]+)/) != null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0] > 2) {
+                $(".contestsContent").height(rows_height + 20);
+            }
+
+            // Safari
+            if (ua.match(/version\/([\d.]+).*safari/) != null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0] > 3) {
+                $(".contestsContent").height(rows_height + 20);
+            }
+
+            // IE 7
+            if ($.browser.msie && $.browser.version == 7.0) {
+                $(".contestsContent").height(rows_height + 20);
+            }
+
+            // IE 8
+            if ($.browser.msie && $.browser.version == 8.0) {
+                $(".contestsContent").height(rows_height + 20);
+            }
+            $(".contestsContent TABLE").css("width", "232px");
+
+            return rows_height + 20;
         }
 
-        // Safari
-        if (ua.match(/version\/([\d.]+).*safari/) != null && ua.match(/version\/([\d.]+).*safari/)[1].split('.')[0] > 3) {
-            $(".contestsContent").height(rows_height + 20);
-        }
+        return 0;
+    }
 
-        // IE 7
-        if ($.browser.msie && $.browser.version == 7.0) {
-            $(".contestsContent").height(rows_height + 20);
-        }
-
-        // IE 8
-        if ($.browser.msie && $.browser.version == 8.0) {
-            $(".contestsContent").height(rows_height + 20);
-        }
-		$(".contestsContent TABLE").css("width","232px");
-	}
+    adjustContestListHeight();
 	
 	/* Stylished scrollbar*/
 	$('.contestsContent').jScrollPane({
 		scrollbarWidth: 17,
 		showArrows: true
-	
 	});
 	
 	/* if a user click a contest cell he will be taken to that Contest description page*/
@@ -130,14 +141,154 @@ $(document).ready(function(){
 	});
 	
 	/*-------------------------- Show/hide the dropdown list --*/
-	
-	showHideList = function(){
+
+    var updateCustomerDropDown  = function(dropDownWrapper,items){
+        var dropDown = dropDownWrapper.find(".contestsDropDown ul");
+        var input = dropDownWrapper.find(".inputSelect input");
+        dropDown.find("li").remove();
+        input.val("");
+        $.each(items,function(index,item){
+            var li = $("<li><a class='longWordsBreak' href='#'></a></li>");
+            li.data("id",item.id);
+            li.find("a").text(item.value);
+            if(index == 0){
+                input.val(item.value);
+            }
+            li.appendTo(dropDown);
+        })
+        dropDown.find("li:odd").addClass("even");
+    }
+
+    var updateProjectDropDown  = function(dropDownWrapper,items){
+        var dropDown = dropDownWrapper.find(".contestsDropDown ul");
+        var input = dropDownWrapper.find(".inputSelect input");
+        dropDown.find("li").remove();
+        input.val("");
+        var hasCurrentProject = false;
+        $.each(items,function(index,item){
+            var li = $("<li><a class='longWordsBreak' href='/direct/projectOverview?formData.projectId=" + item.id + "'></a></li>");
+            li.data("id",item.id);
+            li.find("a").text(item.value);
+            if(item.value == currentProjectName){
+                input.val(item.value);
+                hasCurrentProject = true;
+            }
+            li.appendTo(dropDown);
+        })
+
+        if (!hasCurrentProject) input.val("Select a project here");
+
+        if (!isInProjectScope) {
+
+            if (hasCurrentProject) {
+                if ((undefined != currentProjectContests) && $("#contestsTable tbody tr").length <= 0) {
+                    $("#contestsTable tbody").html(currentProjectContests);
+                    var newHeight =  adjustContestListHeight();
+                    if (newHeight > 0) {
+                        $(".jScrollPaneContainer").height(newHeight);
+                    }
+                    $('.contestsContent').jScrollPane({
+                        scrollbarWidth: 17,
+                        showArrows: true
+                    });
+                }
+            } else {
+                // clear the contests if needed
+                if ($("#contestsTable tbody tr").length > 0) {
+                    currentProjectContests = $("#contestsTable tbody").html();
+                    $("#contestsTable tbody").html('');
+                    $(".jScrollPaneContainer").height(233);
+                    $('.contestsContent').jScrollPane({
+                        scrollbarWidth: 17,
+                        showArrows: true
+                    });
+                }
+            }
+
+
+        }
+
+        dropDown.find("li:odd").addClass("even");
+    }
+
+
+    var getCustomers = function(){
+        var arr = [{"id":"","value":"All Customers"}];
+        var count = 0;
+        var noCustomer;
+        for(var p in rightSidebarData){
+             if(typeof(rightSidebarData[p])!="function"){
+                count ++;
+                var obj = new Object();
+                 obj.value = p;
+                 obj.id = rightSidebarData[p]["id"];
+                 obj.projects = rightSidebarData[p]["projects"];
+
+                 if (!(obj.id == "none")) {
+                    arr.push(obj);
+                 } else {
+                    noCustomer = obj;
+                 }
+             }
+        }
+
+        if (undefined != noCustomer) {
+            arr.push(noCustomer);
+        }
+
+        if (count == 1) { arr.shift(); }
+
+        return arr;
+    }
+    var customerList = getCustomers();
+    updateCustomerDropDown($(".customerSelectMask"),customerList);
+
+    var getProjects = function(id){
+        var arr = [];
+        $.each(customerList,function(index,item){
+            var projects = item.projects;
+            if(id == "" || id == "0"){
+                for(var p in projects){
+                     if(typeof(projects[p])!="function"){
+                        var obj = new Object();
+                         obj.id = p;
+                         obj.value = projects[p];
+                         arr.push(obj);
+                     }
+                }
+            }else{
+                if(item.id == id){
+                    for(var p in projects){
+                         if(typeof(projects[p])!="function"){
+                            var obj = new Object();
+                             obj.id = p;
+                             obj.value = projects[p];
+                             arr.push(obj);
+                         }
+                    }
+                }
+            }
+        });
+        return arr;
+    }
+    updateProjectDropDown($(".projectSelectMask"),getProjects(""));
+
+
+	showHideProjectList = function(){
 		$("#dropDown1").slideToggle(100);
 		$("#sortTableBy").toggle();
 
-        if($(".contestsDropDown UL").height() > 200) {
-            $(".contestsDropDown UL").css('width', 233);
+        if($(".projectSelectMask .contestsDropDown UL").height() > 200) {
+            $(".projectSelectMask .contestsDropDown UL").css('width', 233);
         }
+	}
+
+    showHideCustomerList = function(){
+		var  contestsDropDown = $(".customerSelectMask .contestsDropDown");
+        if(contestsDropDown.is(":hidden")){
+            $(".customerSelectMask .contestsDropDown").hide();
+        }
+        contestsDropDown.slideToggle(100);
 	}
 	
 	/*TCCC-2398*/
@@ -145,9 +296,10 @@ $(document).ready(function(){
 	
 	filterProject = function(){
 		if ($("#dropDown1").attr("display") == "none") {
-			showHideList();
+			showHideProjectList();
 		}
-        var typedText = $(".inputSelect>input")[0].value;
+        var typedText = $(".projectSelectMask .inputSelect>input")[0].value;
+
         $("#dropDown1>ul>li").each(function() {
             if ($(this).find("a")[0].innerHTML.toLowerCase().indexOf(typedText.toLowerCase()) == -1) {
                 $(this).css('display', 'none');
@@ -156,14 +308,62 @@ $(document).ready(function(){
             }
         });
 	}
+
+    $(".customerSelectMask .inputSelect input").focus(function(){
+        showHideCustomerList();
+    });
+    $(".customerSelectMask .inputSelect a").click(function(){
+        showHideCustomerList();
+    });
+
+    var updateBreadcrumb = function(customer) {
+        var breadcrumb = $("#area1 .currentPage");
+        var lastText = breadcrumb.find("strong");
+        breadcrumb.find(".customer").remove();
+        if (customer == "") {
+            lastText.text("All Active Contests");
+        } else {
+            lastText.text("Active Contests");
+            lastText.before($("<a/>", {
+                "text":customer,
+                "class":"customer",
+                "href":"#"
+            }));
+            lastText.before($("<span/>", {
+                "text":" > ",
+                "class":"customer"
+            }));
+        }
+    }
+
+
+
+    $(".customerSelectMask  UL LI").click(function() {
+        var mask = $(this).parents(".customerSelectMask");
+        mask.find("input").val($(this).find("a").text());
+        mask.find(".contestsDropDown").slideToggle(100);
+        updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
+        if ($("#activeContests").length > 0) {
+            $.activeContestsDataTable.fnFilter($(this).data("id"), 10);
+            $.activeContestsDataTable.fnSort([
+                [3,'desc']
+            ]);
+            var customer = "";
+            if ($(this).data("id") != "0" && $(this).data("id") != "") {
+                customer = $(this).text();
+            }
+            updateBreadcrumb(customer);
+        }
+        return false;
+    })
 	
 	/*------------------------- hover state of the dropdown list  --*/
 	
-	$(".contestsDropDown UL LI").mouseover(function(){
+	$(".contestsDropDown UL LI").live("mouseover",function(){
 			$(this).addClass("hover");
 	});
-	
-	$(".contestsDropDown UL LI").mouseout(function(){
+
+	$(".contestsDropDown UL LI").live("mouseout",function(){
 			$(this).removeClass("hover");
 	});
 	
@@ -238,6 +438,18 @@ $(document).ready(function(){
         $('#calendar').fullCalendar(getCalendarConfig());
     } catch(e) {
     }
+
+	/*----------------- this function is for demonstration purpose, it will show some contests on the contests list --*/
+	showContestsDemo = function(){
+//			var curr = 0;
+//			$("TABLE#contestsTable TBODY TR").each(function(){
+//					if( curr > 2 )
+//						$(this).addClass("hide");
+//
+//					curr++;
+//			});
+	}
+	
 	
 	/*-------------------------------------------------------------- Popup -----------------*/
 	

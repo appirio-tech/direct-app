@@ -293,13 +293,14 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
         row.getCell(4).setStringValue("Project");
         row.getCell(5).setStringValue("Contest");
         row.getCell(6).setStringValue("Contest ID");
-        row.getCell(7).setStringValue("Category");
-        row.getCell(8).setStringValue("Status");
-        row.getCell(9).setStringValue("Launch Date");
-        row.getCell(10).setStringValue("Completion Date");
-        row.getCell(11).setStringValue("Actual Total Member Cost");
-        row.getCell(12).setStringValue("Payment Type");
-        row.getCell(13).setStringValue("Amount");
+        row.getCell(7).setStringValue("Reference ID");
+        row.getCell(8).setStringValue("Category");
+        row.getCell(9).setStringValue("Status");
+        row.getCell(10).setStringValue("Launch Date");
+        row.getCell(11).setStringValue("Completion Date");
+        row.getCell(12).setStringValue("Actual Total Member Cost");
+        row.getCell(13).setStringValue("Payment Type");
+        row.getCell(14).setStringValue("Amount");
 
         // insert sheet data from 2nd row
         int rowIndex = 2;
@@ -325,28 +326,31 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
             // set the contest id
             row.getCell(6).setStringValue(String.valueOf(costDetail.getContest().getId()));
 
+            // set the reference id
+            row.getCell(7).setStringValue(String.valueOf(costDetail.getReferenceId()));
+
             // set the contest type
-            row.getCell(7).setStringValue(costDetail.getContestType().getName());
+            row.getCell(8).setStringValue(costDetail.getContestType().getName());
 
             // set the status
-            row.getCell(8).setStringValue(costDetail.getStatus());
+            row.getCell(9).setStringValue(costDetail.getStatus());
 
             // set the Launch date
-            row.getCell(9).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
+            row.getCell(10).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
 
             // set the completion date
-            row.getCell(10).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
+            row.getCell(11).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
 
             // set the actual total member cost, the 'active' and 'scheduled' contest does not have actual member cost
             if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
-                row.getCell(11).setStringValue(moneyFormatter.format(costDetail.getActualTotalMemberCost()));
+                row.getCell(12).setStringValue(moneyFormatter.format(costDetail.getActualTotalMemberCost()));
             }
 
             // set the payment type
-            row.getCell(12).setStringValue(costDetail.getPaymentType());
+            row.getCell(13).setStringValue(costDetail.getPaymentType());
 
             // set the amount
-            row.getCell(13).setStringValue(moneyFormatter.format(costDetail.getPaymentAmount()));
+            row.getCell(14).setStringValue(moneyFormatter.format(costDetail.getPaymentAmount()));
         }
     }
 }

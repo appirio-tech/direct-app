@@ -13,9 +13,12 @@ import java.io.Serializable;
  * <p>Version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0) change notes:
  * - Add methods equals and hashCode.
  * </p>
+ * <p>Version 1.2 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination version 1.0) change notes:
+ * - Add property customerId to store the id of the customer.
+ * </p>
  *
- * @author isv, TCSDEVELOPER
- * @version 1.1
+ * @author isv, GreatKevin
+ * @version 1.2
  */
 public class ContestBriefDTO implements Serializable {
 
@@ -43,6 +46,13 @@ public class ContestBriefDTO implements Serializable {
      * <p>A <code>String</code> providing the contest type.</p>
      */
     private String contestTypeName;
+
+    /**
+     * <p>The id of the customer</p>
+     *
+     * @since 1.2
+     */
+    private long customerId;
 
     /**
      * <p>Constructs new <code>ContestBriefDTO</code> instance. This implementation does nothing.</p>
@@ -141,6 +151,25 @@ public class ContestBriefDTO implements Serializable {
         this.contestTypeName = contestTypeName;
     }
 
+    /**
+     * Gets the id of the customer the contest is under.
+     *
+     * @return the id of the customer.
+     * @since 1.2
+     */
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    /**
+     * Sets the id of the customer the contest is under.
+     *
+     * @param customerId the id of the customer
+     * @since 1.2
+     */
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
+    }
 
     /**
      * <p>Compares the ContestBriefDTO by contest id.</p>
