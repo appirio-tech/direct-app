@@ -13,9 +13,6 @@
  *
  * - (Release Assembly - TC Cockpit Sidebar Header and Footer Update) changes:
  * - Updates the CSS styles of right sidebar and footer.
- *
- * - (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
- * - Added the CSS style for customer dropdown in the right sidebar
  */
 
 BODY#page{
@@ -809,12 +806,12 @@ BODY#page{
 /* The drop down list */
 .box .contestsDropDown{
 	border: 1px solid #d0d2d3;
-	background-color: #FFFFFF;
+	background-color: #FFF;
 	width: 250px;
 	position: absolute;
 	top: 48px;
 	display: none;
-	color: #333333;
+	color: #333;
 	z-index: 999;
 }
 
@@ -822,6 +819,7 @@ BODY#page{
 	margin: 0 !important;
 	padding: 0 !important;
 	list-style: none;
+	width: 250px;
 }
 
 .contestsDropDown UL LI{
@@ -6617,23 +6615,6 @@ table.resultTable td a.button1:hover {
 	   overflow:hidden;
 	}
 /* end */
-.box .contestsList{
-	position:relative;
-	z-index:10;
-}
-.box .selectMask{
-    position:relative;
-}
-.box .customerSelectMask{
-	z-index:999;
-}
-.box .projectSelectMask{
-	z-index:998;
-}
-    .box .selectMask .contestsDropDown{
-        max-height:200px;
-        overflow:auto;
-    }
 
 
 
