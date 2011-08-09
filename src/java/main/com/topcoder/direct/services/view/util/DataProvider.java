@@ -241,8 +241,16 @@ import java.util.Map.Entry;
  *     </li>
  *   </ol>
  * </p>
+ <p>
+ * Version 2.6.8 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getUserProjects(long)} method to get add customers data.</li>
+
+ *     <li>Updated {@link #getActiveContests(long)} method to add customer id of each active contest.</li>
+ *   </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.7
+ * @version 2.6.8
  */
 public class DataProvider {
 
@@ -851,6 +859,28 @@ public class DataProvider {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
             String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
             projects.add(createProject(tcDirectProjectId, tcDirectProjectName));
+        }
+
+
+        // get current user in session
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+        
+        // if user id equals to current user id, get customers for it
+        if (currentUser.getUserId() == userId) {
+            // get all clients of the user
+            Map<Long, String> allClients = DirectUtils.getAllClients(currentUser);
+
+            for(Map.Entry<Long, String> client : allClients.entrySet()) {
+                Map<Long, String> projectsForClient = DirectUtils.getProjectsForClient(currentUser, client.getKey());
+
+                for(ProjectBriefDTO p : projects) {
+                    if (projectsForClient.containsKey(p.getId())) {
+                        p.setCustomerId(client.getKey());
+                        p.setCustomerName(client.getValue());
+                    }
+                }
+
+            }
         }
 
         return projects;
