@@ -857,6 +857,32 @@ public class DataProvider {
     }
 
     /**
+     * <p>Gets the list of projects associated with specified user.</p>
+     *
+     * @param userId a <code>long</code> providing the user ID.
+     * @return a <code>List</code> listing the details for user projects.
+     * @throws Exception if an unexpected error occurs.
+     */
+    public static List<ProjectBriefDTO> getUserProjectsList(long userId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_projects");
+        request.setProperty("uid", String.valueOf(userId));
+
+        List<ProjectBriefDTO> projects = new ArrayList<ProjectBriefDTO>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
+            String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
+            projects.add(createProject(tcDirectProjectId, tcDirectProjectName));
+        }
+
+        return projects;
+    }
+
+    /**
      * <p>
      * Gets the stats on specified project.
      * </p>
@@ -2360,7 +2386,7 @@ public class DataProvider {
                     "admin_client_billing_accounts");
         } else {
             //System.out.println("query non admin...");
-            List<ProjectBriefDTO> projects = getUserProjects(tcSubject.getUserId());
+            List<ProjectBriefDTO> projects = getUserProjectsList(tcSubject.getUserId());
             long[] projectIds = new long[projects.size()];
             int index = 0;
             for(ProjectBriefDTO data : projects) {

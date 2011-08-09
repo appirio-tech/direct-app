@@ -327,14 +327,7 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
             row.getCell(6).setStringValue(String.valueOf(costDetail.getContest().getId()));
 
             // set the reference id
-            if (costDetail.getReferenceId() == null || costDetail.getReferenceId().equals(""))
-            {
-                row.getCell(7).setStringValue("None");
-            }
-            else
-            {
-                row.getCell(7).setStringValue(String.valueOf(costDetail.getReferenceId()));
-            }
+            row.getCell(7).setStringValue(String.valueOf(costDetail.getReferenceId()));
 
             // set the contest type
             row.getCell(8).setStringValue(costDetail.getContestType().getName());

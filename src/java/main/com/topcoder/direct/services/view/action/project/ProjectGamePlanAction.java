@@ -3,13 +3,8 @@ package com.topcoder.direct.services.view.action.project;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
-import com.topcoder.direct.services.view.util.DataProvider;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -73,13 +68,6 @@ public class ProjectGamePlanAction extends AbstractAction implements FormAction<
             // use setCurrentProjectContext to override the current chosen direct project with current
             // chosen contest, for the safe, we put the direct project id into session separately again
             getSessionData().setCurrentSelectDirectProjectID(getSessionData().getCurrentProjectContext().getId());
-
-            // set user projects
-            List<ProjectBriefDTO> projects = DataProvider
-                    .getUserProjects(getSessionData().getCurrentUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            viewData.setUserProjects(userProjectsDTO);
             
             return SUCCESS;
         } else {
