@@ -1,15 +1,12 @@
 <%--
   - Author: tangzx, TCSASSEMBLER
-  - Version: 1.2
+  - Version: 1.1.1
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
   - Change the  style for the View/Edit buttons. 
   - Version 1.1.1 (Release Assembly - Direct Improvements Assembly Release 3) changes:
   - Fix the bread crumb link to "Active Contests"
-  - Version 1.2 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
-  - 1) Change the bread crumb of the active contests page
-  - 2) Add the hidden column customerId into the active contests table, it will be used to filter active contests.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -103,7 +100,7 @@
                         <div class="area1Content">
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
-                                <strong>All Active Contests</strong>
+                                 <strong>Active Contests</strong>
                             </div>
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Contests</h2>
@@ -127,7 +124,6 @@
                                             <col width="8%" />
                                             <col width="10%" />
                                             <col width="11%" />
-                                            <col width=""/>
                                         </colgroup>  
                                         
                                         <thead>
@@ -142,7 +138,6 @@
                                                 <th>Forums</th>
                                                 <th>Status</th>
                                                 <th></th>
-                                                <th class="hide"></th>
                                             </tr>
                                         </thead>
                                         
@@ -225,7 +220,6 @@
                                                             </s:if>
                                                         </s:if>
                                                     </td>
-                                                    <td class="hide"><span><s:property value="contest.customerId"/></span></td>
                                                 </tr>
                                             </s:iterator>
 

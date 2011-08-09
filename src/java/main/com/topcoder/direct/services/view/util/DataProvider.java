@@ -241,16 +241,8 @@ import java.util.Map.Entry;
  *     </li>
  *   </ol>
  * </p>
- <p>
- * Version 2.6.8 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) Change notes:
- *   <ol>
- *     <li>Updated {@link #getUserProjects(long)} method to get add customers data.</li>
-
- *     <li>Updated {@link #getActiveContests(long)} method to add customer id of each active contest.</li>
- *   </ol>
- * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.8
+ * @version 2.6.7
  */
 public class DataProvider {
 
@@ -861,27 +853,6 @@ public class DataProvider {
             projects.add(createProject(tcDirectProjectId, tcDirectProjectName));
         }
 
-        // get current user in session
-        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-        
-        // if user id equals to current user id, get customers for it
-        if (currentUser.getUserId() == userId) {
-            // get all clients of the user
-            Map<Long, String> allClients = DirectUtils.getAllClients(currentUser);
-
-            for(Map.Entry<Long, String> client : allClients.entrySet()) {
-                Map<Long, String> projectsForClient = DirectUtils.getProjectsForClient(currentUser, client.getKey());
-
-                for(ProjectBriefDTO p : projects) {
-                    if (projectsForClient.containsKey(p.getId())) {
-                        p.setCustomerId(client.getKey());
-                        p.setCustomerName(client.getValue());
-                    }
-                }
-
-            }
-        }
-
         return projects;
     }
 
@@ -1181,21 +1152,15 @@ public class DataProvider {
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
             Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
             int forumId = -1;
-            long customerId = -1L;
-            try {
-                if (resultContainer.getStringItem(i, "forum_id") != null
+            try
+                {
+            if (resultContainer.getStringItem(i, "forum_id") != null
                         && !resultContainer.getStringItem(i, "forum_id").equals(""))
-                    forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
-            } catch (NumberFormatException ne) {
-                // ignore
+                forumId = Integer.parseInt(resultContainer.getStringItem(i, "forum_id"));
             }
-
-            try {
-                if (resultContainer.getStringItem(i, "client_id") != null
-                        && !resultContainer.getStringItem(i, "client_id").equals(""))
-                    customerId = Long.parseLong(resultContainer.getStringItem(i, "client_id"));
-            } catch (NumberFormatException ne) {
-                // ignore
+            catch (NumberFormatException ne)
+            {
+		    // ignore
             }
 				
 			
@@ -1208,7 +1173,6 @@ public class DataProvider {
             }
 
             ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio, typeName);
-            contestBrief.setCustomerId(customerId);
             ContestType type =  ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 

@@ -22,12 +22,8 @@
  *   
  *  Version 1.6 - (TC Direct Page Layout Update 24Hr Assembly)) changes:
  *  - Update the codes to initialize the pagination table to fix layout issues for dashboard active page.
- *
- *  Version 1.7 - (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
- *  - Update the codes to initialize the pagination table of active contests table
- *  - Add the filter feature to the active contests table
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin
+ * @author BeBetter, isv, Blues, tangzx, TCSASSEMBLER
  * @version 1.6
  */
 var cookieOptions = { path: '/', expires: 1 };
@@ -327,20 +323,18 @@ $(document).ready(function() {
         ]
 
     });
-
-    $.activeContestsDataTable = $("#activeContests .paginatedDataTable").dataTable({
+    $("#activeContests .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
-        "bStateSave": false,
-        "bFilter": true,
+        "bStateSave": true,
+        "bFilter": false,
         "bSort": true,
 		"bAutoWidth": false,
 			  "oLanguage": {
- 			  	"sLengthMenu": sStdMenu + " per page",
-                "sInfoFiltered":""
+ 			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"p><"bottom1"l',
-        "aaSorting": [[3,'desc']],
+        "sDom": 'rti<"bottom2"fp><"bottom1"l',
+		"aaSorting": [[0,'asc']],
 		"aoColumns": [
 				{ "sType": "html" },
 				{ "sType": "html" },
@@ -351,14 +345,10 @@ $(document).ready(function() {
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "html" },
-				null,
-                null
+				null
 			]
 
     });
-
-    // sort by start date
-    //$.activeContestsDataTable.fnSort( [[3,'desc']] );
 
     $("#notificationsContent .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
