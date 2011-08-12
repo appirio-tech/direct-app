@@ -89,11 +89,11 @@
                                                                                 </td>
                                                                                 <td>
                                                                                     <a rel="_blank"
-                                                                                       href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=${registrant.userId}"
+                                                                                       href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr=${registrant.userId}"
                                                                                        class="memberProfile">
                                                                                         <span class="profileLeft">Member Profile</span></a>
                                                                                     <a rel="_blank"
-                                                                                       href="http://www.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${registrant.userId}"
+                                                                                       href="https://www.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${registrant.userId}"
                                                                                        class="copilotProfile">
                                                                                         <span class="profileLeft">Copilot Profile</span></a>
                                                                                     <!--this link should be replaced by Copilot Profile page-->

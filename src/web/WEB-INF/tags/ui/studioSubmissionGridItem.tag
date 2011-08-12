@@ -26,7 +26,7 @@
             <ui:studioSubmissionImage submissionId="${submissionId}" imageType="thumb" dimension="66"
                                       styleClass="submissionIMG"/>
         </div>
-        <label>Submission ID: <span class="submissionID">${submissionId}</span>(<a href="http://studio.topcoder.com/?module=DownloadSubmission&sbmid=${submissionId}">Download</a>)</label>
+        <label>Submission ID: <span class="submissionID">${submissionId}</span>(<a href="https://studio.topcoder.com/?module=DownloadSubmission&sbmid=${submissionId}">Download</a>)</label>
         <a href="javascript:;" class="thumbGrid"><span></span>
             <ui:studioSubmissionImage submissionId="${submissionId}" imageType="small" dimension="200"/>
         </a>

@@ -12,7 +12,7 @@
 <%@ attribute name="submissionId" required="true" type="java.lang.Long" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 
-<a href="http://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=${submissionId}&sbt=original"
+<a href="https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=${submissionId}&sbt=original"
    class="${styleClass}">
     <jsp:doBody/>
 </a>

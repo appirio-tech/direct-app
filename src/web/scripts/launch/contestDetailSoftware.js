@@ -437,7 +437,7 @@ function populateTypeSection() {
   if (mainWidget.softwareCompetition.copilotUserId <=0) {
   	 $("#rCopilots").html("Unassigned");
   } else {
-  	 $("#rCopilots").html('<a href=http://www.topcoder.com/tc?module=MemberProfile&cr=' + mainWidget.softwareCompetition.copilotUserId + '>' + mainWidget.softwareCompetition.copilotUserName + '</a>');
+  	 $("#rCopilots").html('<a href=https://www.topcoder.com/tc?module=MemberProfile&cr=' + mainWidget.softwareCompetition.copilotUserId + '>' + mainWidget.softwareCompetition.copilotUserName + '</a>');
   }
 
     // set copilot selection value in edit mode

@@ -23,7 +23,7 @@
                                     styleClass="toggleViewList">Switch to Grid View</link:studioSubmissionsGrid>
     </s:if>
     <s:if test="formData.viewType.toString() == 'SINGLE'">
-        <h3>Submission ID: <s:property value="formData.submissionId"/>(<a href="http://studio.topcoder.com/?module=DownloadSubmission&sbmid=<s:property value="formData.submissionId"/>">Download</a>)</h3>
+        <h3>Submission ID: <s:property value="formData.submissionId"/>(<a href="https://studio.topcoder.com/?module=DownloadSubmission&sbmid=<s:property value="formData.submissionId"/>">Download</a>)</h3>
         <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
                                     styleClass="toggleViewList">See More Submissions</link:studioSubmissionsGrid>
     </s:if>

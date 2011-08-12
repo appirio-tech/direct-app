@@ -99,10 +99,10 @@
                                                                 </td>
                                                                 <td>
                                                                     <a rel="_blank"
-                                                                       href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=${submitter.id}"
+                                                                       href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr=${submitter.id}"
                                                                        class="memberProfile"><span class="profileLeft">Member Profile</span></a>
                                                                     <a rel="_blank"
-                                                                       href="http://www.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${submitter.id}"
+                                                                       href="https://www.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${submitter.id}"
                                                                        class="copilotProfile"><span class="profileLeft">Copilot Profile</span></a>
                                                                 </td>
                                                                 <td>

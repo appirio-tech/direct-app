@@ -32,7 +32,7 @@
         <div class="submissionDetails">
             <label>${submissionId}</label>
             <div class="submissionDetailsContent">${feedbackText}</div>
-            <a href="http://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=${submissionId}&sbt=original" class="downloadSubmission"><span>DOWNLOAD</span></a>
+            <a href="https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=${submissionId}&sbt=original" class="downloadSubmission"><span>DOWNLOAD</span></a>
         </div>
     </td>
  </tr>

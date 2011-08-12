@@ -29,10 +29,10 @@
         
 
         <s:if test="viewData.contestStats.isStudio">
-           <s:set name="contestLink" value="'http://studio.topcoder.com/?module=ViewContestDetails&ct=' + viewData.contestStats.contest.id"/>
+           <s:set name="contestLink" value="'https://studio.topcoder.com/?module=ViewContestDetails&ct=' + viewData.contestStats.contest.id"/>
         </s:if>
         <s:else>
-           <s:set name="contestLink" value="'http://www.topcoder.com/tc?module=ProjectDetail&pj=' + viewData.contestStats.contest.id"/>
+           <s:set name="contestLink" value="'https://www.topcoder.com/tc?module=ProjectDetail&pj=' + viewData.contestStats.contest.id"/>
         </s:else>
 
         <s:if test="viewData.contestStats.draft">
@@ -66,10 +66,10 @@
         </s:if>
         <li>
         <s:if test="!viewData.contestStats.isStudio">
-        <a href="http://forums.topcoder.com/?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
+        <a href="https://forums.topcoder.com/?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
         </s:if>
         <s:else>
-        <a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
+        <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
         </s:else>
         </li>
 		<li class="splitter"></li>

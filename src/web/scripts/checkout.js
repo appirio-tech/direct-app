@@ -209,7 +209,7 @@ $(document).ready(function(){
 			if (tempObj[label]) continue;
 			extraNumber++;
 			html += '<div class="additionalCol"><label>#' + label + '</label><input name="ch" type="checkbox" value=""'
-				+ ' class="selectThumb" id="extra_' + label + '"/><a href="#" class="thumbList"><span></span><img src="http://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=' + label + '&sbt=small"'
+				+ ' class="selectThumb" id="extra_' + label + '"/><a href="#" class="thumbList"><span></span><img src="https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=' + label + '&sbt=small"'
 				+ ' width="136" height="136"/></a></div>';
 		}
 		$("#purchasePreview").html(html);

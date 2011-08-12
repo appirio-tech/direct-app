@@ -32,7 +32,7 @@
         </a>
 
     </td>
-    <td class="submissionID" title="${submissionId}">${submissionId} (<a href="http://studio.topcoder.com/?module=DownloadSubmission&sbmid=${submissionId}">Download</a>)</td>
+    <td class="submissionID" title="${submissionId}">${submissionId} (<a href="https://studio.topcoder.com/?module=DownloadSubmission&sbmid=${submissionId}">Download</a>)</td>
     <td><span class="icoBankLocation"></span></td>
     <td>
         <ui:submissionAction contestId="${contestId}" submission="${submission}"/>
