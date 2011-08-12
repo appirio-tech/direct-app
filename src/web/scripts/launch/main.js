@@ -448,7 +448,7 @@ function previewContest() {
      showErrors("You must 'Save as Draft' before you can preview your contest.");
   } else {
     if(mainWidget.isStudioContest ()) {
-        window.open('http://studio.topcoder.com/?module=ViewContestDetails&ct='+mainWidget.competition.contestData.contestId);
+        window.open('https://studio.topcoder.com/?module=ViewContestDetails&ct='+mainWidget.competition.contestData.contestId);
     } else {
 		window.open('https://www.topcoder.com/tc?module=ProjectDetail&pj='+mainWidget.softwareCompetition.projectHeader.id);
     }
