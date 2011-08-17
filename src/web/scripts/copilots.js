@@ -53,7 +53,7 @@ $(document).ready(function() {
         });
     }
     makeMaxCharsTinyMCE("publicCopilotPostingDescription2", 12000);
-    makeMaxCharsTinyMCE("privateCopilotPostingDescription2", 2048);
+    makeMaxCharsTinyMCE("privateCopilotPostingDescription2", 4096);
 
     /* init pop */
     var prevPopup = null;
@@ -454,8 +454,8 @@ function updatePublicDesc() {
 
 function updatePrivateDesc() {
     var privateDescription = tinyMCE.get('privateCopilotPostingDescription2').getContent();
-    if (privateDescription.length > 2048) {
-        showErrors('Private Description can haave at most 2048 characters.');
+    if (privateDescription.length > 4096) {
+        showErrors('Private Description can haave at most 4096 characters.');
         return;
     }
     $('#privateDescriptionText').html(privateDescription);

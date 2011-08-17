@@ -222,7 +222,7 @@ $(document).ready(function(){
         });
     }
     makeMaxCharsTinyMCE("swDetailedRequirements", 12000);
-    makeMaxCharsTinyMCE("swPrivateDescription", 2048);
+    makeMaxCharsTinyMCE("swPrivateDescription", 4096);
     makeMaxCharsTinyMCE("swGuidelines", 2048);
 });
 
