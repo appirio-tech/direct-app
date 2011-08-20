@@ -243,6 +243,14 @@ $(document).ready(function(){
     var customerList = getCustomers();
     updateCustomerDropDown($(".customerSelectMask"),customerList);
 
+    function compareProject(projectA, ProjectB) {
+        if (projectA.value.toLowerCase() < ProjectB.value.toLowerCase())
+            return -1;
+        if (projectA.value.toLowerCase() > ProjectB.value.toLowerCase())
+            return 1;
+        return 0;
+    }
+
     var getProjects = function(id){
         var arr = [];
         $.each(customerList,function(index,item){
@@ -269,6 +277,9 @@ $(document).ready(function(){
                 }
             }
         });
+
+        arr.sort(compareProject);
+
         return arr;
     }
     updateProjectDropDown($(".projectSelectMask"),getProjects(""));
