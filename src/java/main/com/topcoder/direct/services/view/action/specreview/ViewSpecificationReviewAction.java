@@ -5,6 +5,7 @@
 package com.topcoder.direct.services.view.action.specreview;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.util.HtmlUtils;
 
@@ -26,6 +29,7 @@ import com.topcoder.management.review.data.Item;
 import com.topcoder.management.scorecard.data.Group;
 import com.topcoder.management.scorecard.data.Question;
 import com.topcoder.management.scorecard.data.Section;
+import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
 import com.topcoder.service.review.comment.specification.SpecReviewCommentService;
@@ -307,6 +311,12 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             setViewData(result);
             DirectUtils.setDashboardData(getTCSubject(), getProjectId(), viewData,
                     contestServiceFacade, isSoftware());
+
+             // Set projects data
+            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getTCSubject().getUserId());
+            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
+            userProjectsDTO.setProjects(projects);
+            getViewData().setUserProjects(userProjectsDTO);
             
             return SUCCESS;
         } catch (Exception e) {

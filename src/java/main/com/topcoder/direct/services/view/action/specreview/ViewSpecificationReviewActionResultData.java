@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.specreview;
 import java.util.List;
 import java.util.Map;
 
+import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
@@ -36,7 +37,7 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * @author caru, TCSDEVELOPER, TCSASSEMBLER
  * @version 1.1
  */
-public class ViewSpecificationReviewActionResultData {
+public class ViewSpecificationReviewActionResultData extends CommonDTO {
 
     /**
      * <p>
