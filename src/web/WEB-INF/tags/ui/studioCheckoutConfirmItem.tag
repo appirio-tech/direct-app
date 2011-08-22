@@ -1,7 +1,7 @@
 <%--
-  - Author: flexme
-  - Version: 1.0 (Submission Viewer Release 3 assembly)
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: FireIce
+  - Version: 1.0
+  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This tag renders the HTML markup for a single submission displayed on Studio Checkout confirmation
   - page for selected contest.
@@ -16,7 +16,7 @@
 <%@ attribute name="feedbackText" required="true" type="java.lang.String" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 
-<tr>
+<tr id="submission-${submissionId}" style="display:none;">
     <td></td>
     <td>
         <div class="thumbCheckout">
@@ -35,4 +35,5 @@
             <a href="https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=${submissionId}&sbt=original" class="downloadSubmission"><span>DOWNLOAD</span></a>
         </div>
     </td>
+    <td></td>
  </tr>

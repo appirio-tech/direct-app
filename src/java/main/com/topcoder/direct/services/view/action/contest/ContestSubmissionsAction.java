@@ -3,8 +3,27 @@
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+
+import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
@@ -16,27 +35,12 @@ import com.topcoder.direct.services.view.form.StudioContestSubmissionsForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.project.StudioCompetition;
-import com.topcoder.service.studio.SubmissionData;
-import com.topcoder.service.user.UserService;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a list of submissions for
@@ -68,15 +72,29 @@ import java.util.Map;
  * </p>
  * 
  * <p>
- *   Version 1.4 (TC Direct Contest Dashboard Update Assembly) change notes:
+ *   Version 1.4 (TC Direct Replatforming Release 3) change notes:
+ *   <ul>
+ *     <li>The {@link #executeAction()} method was totally updated to work for the new studio contest.</li>
+ *   </ul>
+ * </p>
+ * 
+ * <p>
+ *   Version 1.5 (TC Direct Contest Dashboard Update Assembly) change notes:
  *   <ul>
  *     <li>Updated {@link #executeAction()} method to set contest dashboard data.</li>
  *   </ul>
  * </p>
  *
- * @author isv, flexme, TCSDEVELOPER, TCSASSEMBLER
+ * <p>
+ *   Version 1.6 (TC Direct Replatforming Release 5) change notes:
+ *   <ul>
+ *     <li>Updated {@link #executeAction()} method to load the <code>Resource</code> data associated with the submissions.</li>
+ *   </ul>
+ * </p>
+ * 
+ * @author isv, flexme
  * @since Submission Viewer Release 1 assembly
- * @version 1.4
+ * @version 1.6
  */
 public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -171,67 +189,78 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
      */
     @Override
     public void executeAction() throws Exception {
-        getFormData().setContestId(getContestId());
-        if (isStudioCompetition()) {
+        getFormData().setContestId(getProjectId());
+        long projectId = getProjectId();
+        if (projectId <= 0) {
+            throw new DirectException("projectId less than 0 or not defined.");
+        }
+        
+        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
+        TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
+        SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
+        
+        // only works for studio contest
+        if (DirectUtils.isStudio(softwareCompetition)) {
             // Get current session
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
-
-            ContestServiceFacade contestServiceFacade = getContestServiceFacade();
-            TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
-
-            // Set flag indicating on milestone round presence
-            long contestId = getContestId();
-            StudioCompetition studioCompetition = contestServiceFacade.getContest(currentUser, contestId);
-            getViewData().setHasMilestoneRound(studioCompetition.getContestData().getMultiRound());
-
+            
+            boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
+            getViewData().setHasMilestoneRound(hasMilestoneRound);
+            
             // if Final round was requested and if milestone round is present then check if milestone round
             // if confirmed. If Milestone round is not confirmed yet then cause the request to be redirected to
             // Milestone submissions view
             ContestRoundType roundType = getFormData().getRoundType();
-            if (getViewData().getHasMilestoneRound()) {
+            if (hasMilestoneRound) {
                 if (roundType == ContestRoundType.FINAL) {
-                    List<SubmissionData> milestoneSubmissions
-                        = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(),
-                                                                  ContestRoundType.MILESTONE, currentUser,
-                                                                  contestServiceFacade);
-                    boolean isMilestoneRoundConfirmed =
-                        DirectUtils.getSubmissionsCheckout(milestoneSubmissions, ContestRoundType.MILESTONE);
+                    // if the milestone is not confirmed
+                    boolean isMilestoneRoundConfirmed = DirectUtils.getContestCheckout(softwareCompetition, ContestRoundType.MILESTONE);
                     if (!isMilestoneRoundConfirmed) {
                         this.redirectToMilestone = true;
                         return;
                     }
                 }
             }
-
-            // Set submissions data
-            List<SubmissionData> submissions
-                = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(), roundType, currentUser,
-                                                          contestServiceFacade);
-            getViewData().setHasCheckout(DirectUtils.getSubmissionsCheckout(submissions, roundType));
-            if (getViewData().getHasCheckout()) {
+            
+            PhaseType reviewPhaseType;
+            if (roundType == ContestRoundType.FINAL) {
+                reviewPhaseType = PhaseType.REVIEW_PHASE;
+            } else {
+                reviewPhaseType = PhaseType.MILESTONE_REVIEW_PHASE;
+            }
+            // set submission data
+            List<Submission> submissions = DirectUtils.getStudioContestSubmissions(projectId, roundType, currentUser, contestServiceFacade);
+            if (DirectUtils.isPhaseScheduled(softwareCompetition, reviewPhaseType)) {
+                viewData.setPhaseOpen(false);
+            } else {
+                viewData.setPhaseOpen(true);
+            }
+            
+            boolean hasCheckout = DirectUtils.getContestCheckout(softwareCompetition, roundType);
+            getViewData().setHasCheckout(hasCheckout);
+            if (hasCheckout && viewData.isPhaseOpen()) {
                 Collections.sort(submissions, new SubmissionsRankComparator());
                 getViewData().setContestSubmissions(submissions);
             } else {
                 getViewData().setContestSubmissions(submissions);
             }
-
-
+            
             // If contest submissions are confirmed then set the request cookie for contest with the details on
             // prized submissions
-            if (getViewData().getHasCheckout()) {
-                // Build submissions map for faster lookup and Collect handles for submitters
-                UserService userService = getUserService();
-                Map<String, SubmissionData> submissionsMap = new HashMap<String, SubmissionData>();
-                Map<Long, String> submitterHandles = new HashMap<Long, String>();
-                for (SubmissionData submission : submissions) {
-                    submissionsMap.put(String.valueOf(submission.getSubmissionId()), submission);
-                    submitterHandles.put(submission.getSubmitterId(),
-                                         userService.getUserHandle(submission.getSubmitterId()));
+            if (hasCheckout && viewData.isPhaseOpen()) {
+                // Collect resources for submissions
+                Map<Long, Resource> submissionResources = new HashMap<Long, Resource>();
+                Map<Long, Resource> resources = new HashMap<Long, Resource>();
+                for (Resource resource : softwareCompetition.getResources()) {
+                    resources.put(resource.getId(), resource);
                 }
-                getViewData().setSubmitterHandles(submitterHandles);
+                for (Submission submission : submissions) {
+                    submissionResources.put(submission.getId(), resources.get(submission.getUpload().getOwner()));
+                }
+                getViewData().setSubmissionResources(submissionResources);
                 
-                String contestIdString = String.valueOf(contestId);
+                String contestIdString = String.valueOf(projectId);
                 JSONObject bankSelectionJSON = null;
                 JSONObject contestSelectionJSON = null;
                 JSONObject contestRoundSelectionJSON = null;
@@ -271,46 +300,50 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
                         }
                     }
                 } else {
-                    contestRoundSelectionJSON = (JSONObject) JSONSerializer.toJSON("{\"" + roundType + "\":{}}");
+                    contestRoundSelectionJSON = (JSONObject) JSONSerializer.toJSON("{}");
                 }
 
                 // Set real prized submissions as is for confirmed contest
                 int prizeIndex = 0;
-                for (SubmissionData submission : submissions) {
-                    if (isCheckedOut(roundType, submission)) {
-                        if (roundType == ContestRoundType.MILESTONE) {
-                            contestRoundSelectionJSON.put(prizeSlotNames[prizeIndex++], 
-                                                          String.valueOf(submission.getSubmissionId()));
-                        } else {
-                            contestRoundSelectionJSON.put(prizeSlotNames[submission.getUserRank() - 1],
-                                                          String.valueOf(submission.getSubmissionId()));
-                        }
+                for (Submission submission : submissions) {
+                    if (!submission.isExtra() && submission.getFinalScore() > 10.0) {
+                        // milestone prize
+                        contestRoundSelectionJSON.put(prizeSlotNames[prizeIndex++], 
+                                String.valueOf(submission.getId()));
                     }
                 }
 
                 // Remove real prized submissions from list of liked, disliked, additional purchased submissions
                 // as provided by request cookie
-                removeSubmissionFromList(contestRoundSelectionJSON, roundType, "listLikes", submissionsMap);
-                removeSubmissionFromList(contestRoundSelectionJSON, roundType, "listDislikes", submissionsMap);
-                removeSubmissionFromList(contestRoundSelectionJSON, roundType, "listExtra", submissionsMap);
+                removeSubmissionFromList(contestRoundSelectionJSON, "listLikes");
+                removeSubmissionFromList(contestRoundSelectionJSON, "listDislikes");
+                removeSubmissionFromList(contestRoundSelectionJSON, "listExtra");
 
+                // set extra purchases
+                JSONArray listExtra = new JSONArray();
+                for (Submission submission : submissions) {
+                    if (submission.isExtra()) {
+                        listExtra.add(submission.getId());
+                    }
+                }
+                contestRoundSelectionJSON.put("listExtra", listExtra);
+                
                 contestSelectionJSON.put(roundType.toString(), contestRoundSelectionJSON);
                 bankSelectionJSON.put(contestIdString, contestSelectionJSON);
 
                 HttpServletResponse response = DirectUtils.getServletResponse();
                 response.addCookie(toBankSelectionCookie(bankSelectionJSON));
             }
-
-
+            
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, isStudioCompetition());
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
             getViewData().setContestStats(contestStats);
 
             // set the number of prizes
-            int prizeNumber = DirectUtils.getContestPrizeNumber(studioCompetition, roundType);
+            int prizeNumber = DirectUtils.getContestPrizeNumber(softwareCompetition, roundType);
             getViewData().setPrizeNumber(prizeNumber);
 
             // Set projects data
@@ -330,10 +363,9 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             
             // set contest permission
             viewData.setHasContestWritePermission(DirectUtils
-                    .hasWritePermission(this, currentUser, contestId, true));
+                    .hasWritePermission(this, currentUser, projectId, false));
             
-            DirectUtils.setDashboardData(currentUser, contestId, viewData,
-                    getContestServiceFacade(), isSoftware());
+            DirectUtils.setDashboardData(currentUser, projectId, viewData, getContestServiceFacade(), false);
         }
     }
 
@@ -341,48 +373,13 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
      * <p>Removes prized submissions from the specified list of user's bank selection.</p>
      *
      * @param contestRoundSelectionJSON a <code>JSONObject</code> providing the data for contest round selection.
-     * @param roundType a <code>ContestRoundType</code> referencing the round type.
      * @param listName a <code>String</code> providing the name of the list to be processed.
-     * @param submissionsMap a <code>Map</code> mapping submission IDs to submission details.
      */
-    private void removeSubmissionFromList(JSONObject contestRoundSelectionJSON, ContestRoundType roundType,
-                                          String listName, Map<String, SubmissionData> submissionsMap) {
+    private void removeSubmissionFromList(JSONObject contestRoundSelectionJSON, String listName) {
         if (contestRoundSelectionJSON.has(listName)) {
             JSONArray list = contestRoundSelectionJSON.getJSONArray(listName);
-            Iterator listIterator = list.iterator();
-            while (listIterator.hasNext()) {
-                String submissionId = (String) listIterator.next();
-                if (submissionsMap.containsKey(submissionId)) {
-                    SubmissionData submission = submissionsMap.get(submissionId);
-                    boolean isSubmissionCheckedOut = false;
-                    isSubmissionCheckedOut = isCheckedOut(roundType, submission);
-                    if (isSubmissionCheckedOut) {
-                        listIterator.remove();
-                    }
-                }
-            }
+            list.clear();
         }
-    }
-
-    /**
-     * <p>Checks if specified submission is checked out.</p>
-     *
-     * @param roundType a <code>ContestRoundType</code> referencing the round type.
-     * @param submission a <code>SubmissionData</code> providing details for submission.
-     * @return <code>true</code> if submission is checked out; <code>false</code> otherwise.
-     */
-    private boolean isCheckedOut(ContestRoundType roundType, SubmissionData submission) {
-        boolean submissionCheckedOut = false;
-        if (roundType == ContestRoundType.MILESTONE) {
-            if (submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize()) {
-                submissionCheckedOut = true;
-            }
-        } else {
-            if (submission.getUserRank() > 0) {
-                submissionCheckedOut = true;
-            }
-        }
-        return submissionCheckedOut;
     }
 
     /**
@@ -418,7 +415,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
      * @author isv
      * @version 1.0
      */
-    private static class SubmissionsRankComparator implements Comparator<SubmissionData> {
+    private static class SubmissionsRankComparator implements Comparator<Submission> {
 
         /**
          * <p>Constructs new <code>ContestSubmissionsAction$SubmissionsRankComparator</code> instance. This
@@ -434,15 +431,15 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
          * @param s1 a <code>SubmissionData</code> to compare.
          * @param s2 a <code>SubmissionData</code> to compare.
          */
-        public int compare(SubmissionData s1, SubmissionData s2) {
-            int rank1 = s1.getUserRank();
-            int rank2 = s2.getUserRank();
+        public int compare(Submission s1, Submission s2) {
+            long rank1 = s1.getPlacement();
+            long rank2 = s2.getPlacement();
 
             if (rank1 > 0) {
                 if (rank2 <= 0) {
                     return -1;
                 } else {
-                    return rank1 - rank2;
+                    return (int) (rank1 - rank2);
                 }
             } else {
                 if (rank2 > 0) {

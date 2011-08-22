@@ -118,10 +118,14 @@
                                                                 Spec Review is Complete
                                                             </c:if>
                                                         </span>
-                                                        
                                                         <c:if test="${viewData.specificationReview ne null}">
                                                             <span class="reviewer_handle_text"><s:property value="viewData.specificationReview.creationUserHandle"/></span>
                                                             <span class="reviewer_text">Reviewer : </span>
+                                                        </c:if>
+
+                                                        <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
+                                                            <p class="specForumInfo">Please review the scorecard results below. If your spec reviewer has asked for fixes, you will need to edit your contest before clicking "Resbmit for Review" below. If you have 
+                                                            any questions regarding your spec review, please use the forum (linked at the bottom) to discuss it with your spec reviewer.</p>
                                                         </c:if>
 
                                                         <div class="clearForIE6">
@@ -151,8 +155,15 @@
                                                                                 <a href="javascript:;" onclick="showHideDiv('caption_specreview${id}', 'det_specreview${id}');">
                                                                                     <img src="/images/ico-hide-srquestion-detail.png" alt="hide detail" class="sr_question_showdetail" />
                                                                                 </a>
-                                                                                <div class="captionInner">                                                                    		<h2>
-                                                                                        <img src="/images/ico-success2.png" alt="success" class="icon_status" />
+                                                                                <div class="captionInner">                                                                            <h2>
+                                                                                    <c:choose>
+                                                                                        <c:when test="${viewData.responses[id]}">
+                                                                                            <img src="/images/ico-success2.png" alt="success" class="icon_status" />
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            <img src="/images/ico-fail2.png" alt="failed" class="icon_status" />
+                                                                                        </c:otherwise>
+                                                                                    </c:choose>
                                                                                         <span style="display:block">
                                                                                         ${description}
                                                                                         </span>
@@ -245,6 +256,10 @@
                                                                 </s:iterator>
                                                             </s:iterator>
                                                         </s:iterator>
+                                                        
+                                                        <c:if test="${viewData.contestStats.isStudio and viewData.specificationReview ne null}">
+                                                            <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
+                                                        </c:if>
                                                         
                                                         <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
                                                             <div id="resubmit">

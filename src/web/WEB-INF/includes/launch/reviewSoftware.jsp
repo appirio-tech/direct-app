@@ -1,3 +1,16 @@
+<%--
+  - Author: TCSASSEMBER
+  - Version: 1.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: review page for software contest.
+  -
+  - Version 1.1 - Direct - Repost and New Version Assembly Change Note
+  - - Add multiround type support to software contest.
+  -
+  - Version 1.2 - TC Direct Replatforming Release 2 
+  - - Added milestone prizes section.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- tabHead -->
@@ -26,9 +39,17 @@
 			<td><span id="rswBillingAccount"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
 		<tr>
+            <th>Round Type :</th>
+            <td><span id="rswRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+        </tr>
+		<tr>
 			<th>Start :</th>
 			<td><span id="rswStartDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 		</tr>
+		<tr id="rswMileStoneTR">
+            <th>Milestone End :</th>
+            <td><span id="rswMilestoneDate"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+        </tr>
 	</table>
 </div>
 <!-- End .overviewBox -->
@@ -75,6 +96,22 @@
     </div>    
 </div>
 <!-- end .prizes -->
+
+<!-- Milestone Prizes -->
+<div class="mPrizes" id="rswMPrizesDiv">
+    <h3>Milestone Prizes:</h3>
+    
+    <div class="mPrizesInner">
+        <label class="first">Pay</label>
+        <span class="dw">$</span>
+        <span class="numberDor" id="rswMPrizesAmount"></span>
+        <strong>for each submission up to</strong>
+        <span class="numberDor" id="rswMPrizesNumberOfSubmissions"></span>
+        
+        <a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a>
+    </div>
+</div>
+<!-- end .mPrizes -->
 
 <div class="buttonBox">	
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>

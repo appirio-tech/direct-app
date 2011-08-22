@@ -183,6 +183,14 @@
         <ejb>liquid_portal_service.jar</ejb>
     </module>
 
+    <module>
+        <ejb>User.jar</ejb>
+    </module>
+
+    <module>
+        <ejb>Project.jar</ejb>
+    </module>
+
     <!-- WARs -->
     <module>
         <web>

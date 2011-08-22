@@ -1,9 +1,14 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.StudioNoWinnerDTO;
@@ -15,18 +20,25 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>A base <code>Struts</code> action to be used for handling requests for <code>Can't Choose a Winner</code> flow for
  * <code>Studio</code> contests.</p>  
  *
+ * <p>
+ *   Version 1.1 (TC Direct Replatforming Release 5) change notes:
+ *   <ul>
+ *     <li>Changed the super class from <code>StudioOrSoftwareContestAction</code> to <code>SaveContestSubmissionRankAction</code> because
+ *     this action need to save submission ranks.</li>
+ *     <li>Updated {@link #executeAction()} method to work for the new Studio contest.</code>
+ *   </ul>
+ * </p>
+ *
  * @author TCSDEVELOPER
- * @version 1.0 (Submission Viewer Release 4 assembly)
+ * @version 1.1 (Submission Viewer Release 4 assembly)
  */
-public class StudioNoWinnerAction extends StudioOrSoftwareContestAction {
+public class StudioNoWinnerAction extends SaveContestSubmissionRankAction {
 
     /**
      * <p>A <code>StudioNoWinnerForm</code> providing the parameters of the incoming request.</p>
@@ -115,25 +127,35 @@ public class StudioNoWinnerAction extends StudioOrSoftwareContestAction {
      */
     @Override
     public void executeAction() throws Exception {
-        long contestId = getContestId();
-        getFormData().setContestId(contestId);
-        if (isStudioCompetition()) {
+        long projectId = getProjectId();
+        getFormData().setContestId(projectId);
+        if (projectId <= 0) {
+            throw new DirectException("projectId less than 0 or not defined.");
+        }
+        
+        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
+        TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
+        SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
+        
+        if (DirectUtils.isStudio(softwareCompetition)) {
             // Get current session
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
 
             // Abandon contest if necessary
-            ContestServiceFacade contestServiceFacade = getContestServiceFacade();
-            TCSubject currentUser = getCurrentUser();
             if (getAbandonContest()) {
-                contestServiceFacade.updateContestStatus(currentUser, contestId, 7);
+                // save the submission ranks
+                setRanks("");
+                setAdditionalPurchases("");
+                setRoundType(formData.getRoundType());
+                super.executeAction();
             }
 
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, true);
             getViewData().setContestStats(contestStats);
 
             // Set projects data

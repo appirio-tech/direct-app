@@ -82,34 +82,19 @@ public enum ProjectPhaseType {
     POST_MOTERM(12, "postMoterm", "Post Moterm"),
     
     /**
-     * The studio reg type.
+     * The milestone submission type.
      */
-    STUDIO_REG(-6, "studioRegistration", "Registration"),
+    MILESTONE_SUBMISSION(15, "milestoneSubmission", "Milestone Submission"),
     
     /**
-     * The r1 subs type.
+     * The milestone submission type.
      */
-    R1_SUBS(-2, "r1Subs", "R1 Subs"),
+    MILESTONE_SCREENING(16, "milestoneScreening", "Milestone Screening"),
     
     /**
-     * The r1 feedback type.
+     * The milestone submission type.
      */
-    R1_FEEDBACK(-3, "r1Feedback", "R1 Feedback"),
-    
-    /**
-     * The r2 submission type.
-     */
-    R2_SUBS(-4, "r2Subs", "R2 Subs"),
-    
-    /**
-     * The winner type.
-     */
-    WINNER(-5, "winner", "Winner"),
-    
-    /**
-     * Other phase types.
-     */
-    OTHER_PHASE(-1, "otherPhase", "");
+    MILESTONE_REVIEW(17, "milestoneReview", "Milestone Review");
     
     /**
      * The phase type id.
@@ -152,7 +137,7 @@ public enum ProjectPhaseType {
             }
         }
         
-        return OTHER_PHASE;
+        return SUBMISSION;
     }
 
     /**

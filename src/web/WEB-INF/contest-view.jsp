@@ -1,5 +1,5 @@
 <%--
-  - Author: BeBetter, isv, TCSASSEMBLER
+  - Author: BeBetter, isv, tangzx
   - Version: 1.5
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
@@ -122,13 +122,8 @@
                                                 </td>
                                                     
                                                 <td>
-                                                    <s:if test="isStudio == true">
-                                                    <a href="contest/contestRegistrants.action?contestId=${contest.id}">
-                                                    </s:if>
-                                                    <s:if test="isStudio == false">
                                                     <a href="contest/contestRegistrants.action?projectId=${contest.id}">
-                                                    </s:if>
-                                                <s:property value="registrantsNumber"/>
+                                                        <s:property value="registrantsNumber"/>
                                                     </a></td>
                                                 <td>
                                                     <if:isStudioContest contestBrief="${contest}">
@@ -154,16 +149,11 @@
                                                         class="<s:property value="status.shortName"/>"><s:property
                                                         value="status.name"/></span></td>
                                                 <td class="last">
-                                                    <s:if test="isStudio == true">
-                                                        <a href="contest/detail?contestId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                     </s:if>
-                                                     <s:if test="isStudio == false">
-                                                        <s:if test="contestType.name == 'Copilot Posting'">
-                                                            <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                        </s:if>
-                                                        <s:if test="contestType.name != 'Copilot Posting'">
-                                                            <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                        </s:if>
+                                                    <s:if test="contestType.name == 'Copilot Posting'">
+                                                        <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                    </s:if>
+                                                    <s:if test="contestType.name != 'Copilot Posting'">
+                                                        <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
                                                      </s:if>
                                                      <%// repost if it is software contest and it is cancelled status %>
                                                      <s:if test="!isStudio && status.name.startsWith('Cancelled')">

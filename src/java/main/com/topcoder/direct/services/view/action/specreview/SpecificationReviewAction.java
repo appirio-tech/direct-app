@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.specreview;
@@ -84,7 +84,12 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * &lt;/html&gt;
  * </pre>
  * </p>
- *
+ * <p>Version 1.1 change notes:
+ * <ul>
+ *  <li>Update {@link #execute()} to use the projectId instead of contestId</li>
+ * </ul>
+ * </p>
+
  * <p>
  * <b>Thread safety:</b> This class is mutable and not thread safe and the implementations do not need be
  * thread safe. This should be fine since different instances of this class should be created to serve
@@ -92,8 +97,9 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * framework). So it can be considered as being used in a thread safe manner.
  * </p>
  *
- * @author caru, TCSDEVELOPER
- * @version 1.0
+ * @author caru, TCSDEVELOPER, morehappiness
+ * @version 1.1
+ * @since 1.0
  */
 public abstract class SpecificationReviewAction extends SessionAwareAction {
 
@@ -122,14 +128,14 @@ public abstract class SpecificationReviewAction extends SessionAwareAction {
 
     /**
      * <p>
-     * Represents the contest id.
+     * Represents the project id.
      * </p>
      *
      * <p>
      * Initially set to 0 (default), can be any value. It set by setter and accessed by getter.
      * </p>
      */
-    private long contestId;
+    private long projectId;
 
     /**
      * <p>
@@ -283,21 +289,21 @@ public abstract class SpecificationReviewAction extends SessionAwareAction {
     }
 
     /**
-     * Getter for contest id.
+     * Getter for project id.
      *
-     * @return the contest id
+     * @return the project id
      */
-    public long getContestId() {
-        return contestId;
+    public long getProjectId() {
+        return projectId;
     }
 
     /**
-     * Setter for contest id.
+     * Setter for project id.
      *
-     * @param contestId the contest id
+     * @param projectId the project id
      */
-    public void setContestId(long contestId) {
-        this.contestId = contestId;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
     /**

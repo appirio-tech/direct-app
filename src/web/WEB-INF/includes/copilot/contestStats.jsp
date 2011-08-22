@@ -32,45 +32,15 @@
                 <fmt:formatDate value="${contestEndDate}" pattern="MM/dd/yyyy HH:mm zzz"/>
             </td>
             <td>
-                <a href="<s:url action="listCopilotContestRegistrants" namespace="/copilot"><s:param name="projectId" value="contest.id"/></s:url>">
-                    <s:property value="registrantsNumber"/>
-                </a>
+                <s:property value="registrantsNumber"/>
             </td>
-            <td>
-                <s:if test="forumId != -1">
-
-                <a href="http://forums.topcoder.com/?module=Category&categoryID=${forumId}" target="_blank">
-                    </s:if>
-                    <s:property value="forumPostsNumber"/>
-                    <s:if test="forumId != -1"></a></s:if></td>
-            <td>
-                <a href="<s:url action="listCopilotContestSubmissions" namespace="/copilot"><s:param name="projectId" value="contest.id"/></s:url>">
-                    <s:property value="submissionsNumber"/>
-                </a>
-            </td>
+            <td><s:property value="forumPostsNumber"/></td>
+            <td><s:property value="submissionsNumber"/></td>
             <td class="fees">
                 <if:isActive typedContestBrief="${contest}">
                     <if:isInReviewPhase phasedContest="${contest}">
-                        <a href="<s:url action="listCopilotContestSubmissions" namespace="/copilot"><s:param name="projectId" value="contest.id"/></s:url>">
-                            Choose Copilot
-                        </a>
-
+                        Choose Copilot
                     </if:isInReviewPhase>
-
-                    <s:set var="passReviewPhase" value="true"/>
-                    <s:iterator value="contest.currentPhases">
-                        <s:if test='phaseName in {"Registration", "Submission", "Screening", "Review"}'>
-                            <s:set var="passReviewPhase" value="false"/>
-                        </s:if>
-                    </s:iterator>
-
-                    <s:if test="#passReviewPhase == true">
-                        <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="contest.project.id"/></s:url>">
-                            Go To My Project
-                        </a>
-                    </s:if>
-
-
                 </if:isActive>
             </td>
         </tr>

@@ -127,7 +127,7 @@
                             </thead>
                             <tbody>
                             <s:iterator value="sessionData.currentProjectContests" status="status" var="contest">
-                            	<tr <s:if test="#status.even">class="even"</s:if> onclick="document.location.href = '<s:if test="#contest.contestType.studio"><s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].id}"/></s:url></s:if><s:else><s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url></s:else>'; this.style.cursor='pointer';">
+                            	<tr <s:if test="#status.even">class="even"</s:if> onclick="document.location.href = '<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; this.style.cursor='pointer';">
                                     <td class="status" width="15%">
                                         <span class="<s:property value="status.shortName"/>"><span>a</span></span>
                                     </td>

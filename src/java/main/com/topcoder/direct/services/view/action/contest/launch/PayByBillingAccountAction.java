@@ -99,28 +99,15 @@ public class PayByBillingAccountAction extends PayContestAction {
      * @throws Exception if some error occurs during method execution
      */
     protected PaymentResult processPayment() throws Exception {
-        // get the studio competition or software competition, process the payment using purchase order data,
-        // and return payment result
-        if (isStudioCompetition()) {
-            StudioCompetition studioCompetition = getContestServiceFacade().getContest(null, getContestId());
+        SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(null,
+            getProjectId());
 
-			// set the direct project name of studio competition
-            DirectUtils.setStudioCompetitionDirectProjectName(studioCompetition, getProjects());
-            
-			ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(null,
-                studioCompetition, tcPurchaseOrderPaymentData);
-            return result.getPaymentResult();
-        } else {
-            SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(null,
-                getProjectId());
+         // set the direct project name of software competition
+        DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
 
-			 // set the direct project name of software competition
-            DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
-
-            SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(null,
-                softwareCompetition, tcPurchaseOrderPaymentData);
-            return result.getPaymentResult();
-        }
+        SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(null,
+            softwareCompetition, tcPurchaseOrderPaymentData);
+        return result.getPaymentResult();
     }
 
     /**

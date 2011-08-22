@@ -22,70 +22,59 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Wireframe</code> contest type.</p>
      */
-    WIREFRAME("Wireframes", "wf", 25, true),
+    WIREFRAME("Wireframes", "wf", 18),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
      */
-    WEB_DESIGN("Web Design", "w", 1, true),
+    WEB_DESIGN("Web Design", "w", 17),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Web Design</code> contest type.</p>
      */
-    WEB_ELEMENTS("Web Elements", "We", 4, true),
+    WEB_ELEMENTS("Web Elements", "We", 4),
 
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Logo Design</code> contest type.</p>
      */
-    LOGO_DESIGN("Logo Design", "L", 3, true),
-
-   /**
-     * <p>A <code>ContestType</code> corresponding to <code>Icon</code> contest type.</p>
-     */
-    ICONS("Icon", "ic", 14, true),
+    LOGO_DESIGN("Logo Design", "L", 20),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Idea Generation</code> contest type.</p>
      */
-    IDEA_GENERATION("Idea Generation", "ig", 26, true),
+    IDEA_GENERATION("Idea Generation", "ig", 22),
 
 
     /**
-     * <p>A <code>ContestType</code> corresponding to <code>Print Design</code> contest type.</p>
+     * <p>A <code>ContestType</code> corresponding to <code>Print/Presentation</code> contest type.</p>
      */
-    PRINT_DESIGN("Print Design", "Pr", 12, true),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to <code>PowerPoint Presentation</code> contest type.</p>
-     */
-    POWERPOINT_PRESENTATION("PowerPoint Presentation", "Pw", 21, true),
-
+    PRINT_DESIGN("Print/Presentation", "Pr", 21),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Application Front-End Design</code> contest type.</p>
      */
-    APP_FRONT_END_DESIGN("Application Front-End Design", "ap", 5, true),
+    APP_FRONT_END_DESIGN("Application Front-End Design", "ap", 32),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Front-End Flash</code> contest type.</p>
      */
-    FRONT_END_FLASH("Front-End Flash", "F", 8, true),
+    FRONT_END_FLASH("Front-End Flash", "F", 31),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Banners/Icons</code> contest type.</p>
      */
-    BANNERS_ICONS("Banners/Icons", "bi", 4, true), 
+    BANNERS_ICONS("Banners/Icons", "bi", 16),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Widget or Mobile Screen Design</code> contest type.</p>
      */
-    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "wi", 6, true), 
+    WIDGET_MOBILE_SCREEN_DESIGN("Widget or Mobile Screen Design", "wi", 30),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Other</code> contest type.</p>
      */
-    OTHER("Other", "O", 18, true),
+    OTHER("Other", "O", 34),
 
     /**
      * <p>A <code>ContestType</code> corresponding to <code>UI Prototype</code> contest type.</p>
@@ -182,7 +171,7 @@ public enum ContestType {
      *
      * @since 1.1
      */
-    STUDIO("Studio", true, new ContestType[] {WIREFRAME, WEB_DESIGN});
+    STUDIO("Studio", true, new ContestType[] {WIREFRAME, WEB_DESIGN, WIDGET_MOBILE_SCREEN_DESIGN, BANNERS_ICONS, FRONT_END_FLASH, APP_FRONT_END_DESIGN, PRINT_DESIGN, IDEA_GENERATION, LOGO_DESIGN, WEB_ELEMENTS});
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the

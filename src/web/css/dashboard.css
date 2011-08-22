@@ -6065,9 +6065,6 @@ A.button11{
 		font-weight:normal;
 		padding-left: 0px;
 	}
-	.no_details .captionInner H2{
-		float:left;
-	}
 	.clearFix{
 		clear:both;
 		height:0;
@@ -6636,4 +6633,19 @@ table.resultTable td a.button1:hover {
     }
 
 
+.feedbackAction {
+    width: 350px;
+}
+
+.generalFeedbackAction {
+    width: 98%;
+}
+
+.fright {
+    float: right;
+}
+
+.errorinfo {
+    color: red;
+}
 

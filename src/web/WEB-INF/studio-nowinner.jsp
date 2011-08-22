@@ -1,7 +1,9 @@
 <%--
   - Author: TCSDEVELOPER
   -
-  - Version: 1.0
+  - Version 1.1 (TC Direct Replatforming Release 5) change notes: Change contestId parameter to projectId.
+  -
+  - Version: 1.1
   - Since: Submission Viewer Release 4 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -86,16 +88,16 @@
 
                                                 <div id="bankSelectionButtonBottom">
                                                     <a href="<s:url action="studioNoWinnerDecide" namespace="/contest">
-                                                                 <s:param name="contestId" value="viewData.contestStats.contest.id"/>
+                                                                 <s:param name="projectId" value="viewData.contestStats.contest.id"/>
                                                                  <s:param name="formData.roundType" value="formData.roundType"/>
                                                              </s:url>" class="button7 btnDoNotChooseAWinner">
                                                         <span class="left"><span class="right">Do Not Choose a Winner </span></span></a>
 
-                                                    <link:studioSubmissionsList contestId="${viewData.contestId}" 
+                                                    <link:studioSubmissionsGrid contestId="${viewData.contestId}" 
                                                                                 milestoneRound="${formData.isMilestoneRound}"
                                                                                 styleClass="button6 btnSelectAWinner">
                                                         <span class="left"><span class="right">Select a Winner</span></span>
-                                                    </link:studioSubmissionsList>
+                                                    </link:studioSubmissionsGrid>
                                                 </div>
 
                                             </div>

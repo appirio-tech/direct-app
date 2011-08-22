@@ -1,3 +1,14 @@
+<%--
+  - Author: TCSASSEMBER
+  - Version: 1.1
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: order review page for studio contest page.
+  -
+  - Version 1.1 - TC Direct Replatforming Release 2 Change Note
+  - - Add specification review cost.
+  - - Add "Go to my Spec Review" section to support starting specification review for studio contest. 
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="orderReview">
@@ -58,7 +69,9 @@
 	<h3>Administration</h3>
 	<table class="prizesTable">
 		<tr>
-			<td class="large">Administration Fee : <span id="orAdminFee1"></span></td>
+			<td>Administration Fee : <span id="orAdminFee1"></span></td>
+			<td>Specification Review : <span id="orSpecificationReviewPayment"></span> <a href="javascript:showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
+			<td>Copilot Fee : <span id="orCopilotFee"></span></td>
 			<td class="last"><span id="orAdminFee2"></span></td>
 		</tr>
 	</table>
@@ -83,4 +96,11 @@
 
 <div class="buttonBox, hide" id="orderReview_buttonBox2">
 	<a href="javascript:editContest();" class="button6 contiune"><span class="left"><span class="right">Edit</span></span></a>
+</div>
+
+<div class="bottom-review" style="display:none" id="orderReview_bottom_review">
+    <a href="javascript:;" class="specrev-goto button"></a>
+    <a href="javascript:;" class="specrev-goto">Go to my Spec Review</a>
+    <p></p>
+    <br /><br /><br />
 </div>

@@ -1,10 +1,11 @@
 <%--
   - Author: isv, flexme, TCSDEVELOPER
+  - Version 1.3 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
   - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: Added "I can not choose a winner" button.
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Add link for checkout button.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Create dynamic prize slots depends on the prize number.
   -
-  - Version: 1.3
+  - Version: 1.4
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -97,26 +98,34 @@
 
 
         <div id="bankSelectionButton">
+        <s:if test="!viewData.hasCheckout" >
             <s:if test="formData.roundType.toString() == 'MILESTONE'">
-                <link:studioCheckout contestId="${contestId}" milestoneRound="${true}" styleClass="buttonBankSelection">
+                <s:if test="viewData.phaseOpen">
+                <link:studioCheckout contestId="${projectId}" milestoneRound="${true}" styleClass="buttonBankSelection">
                     <span class="left"><span class="right">Confirm Milestone</span></span>
                 </link:studioCheckout>
+                </s:if>
+                <s:else>
+                <a href="javascript:;" class="buttonBankSelection"><span class="left"><span
+                         class="right">Confirm Milestone</span></span></a>
+                </s:else>
             </s:if>
             <s:else>
-                <link:studioCheckout contestId="${contestId}" milestoneRound="${false}"
+                <link:studioCheckout contestId="${projectId}" milestoneRound="${false}"
                                      styleClass="buttonBankSelection">
                     <span class="left"><span class="right">Lock-in Winners</span></span>
                 </link:studioCheckout>
             </s:else>
-            <s:if test="!viewData.hasCheckout">
+            <s:if test="formData.roundType.toString() == 'FINAL'">
             <a href="<s:url action="studioNoWinner" namespace="/contest">
-                         <s:param name="contestId" value="viewData.contestStats.contest.id"/>
+                         <s:param name="projectId" value="viewData.contestStats.contest.id"/>
                          <s:param name="formData.roundType" value="formData.roundType"/>
                      </s:url>" class="buttonBankSelection">
                 <span class="left"><span class="right">I cannot choose a winner</span></span></a>
             </s:if>
             <a href="javascript:;" id="clearSlots" class="buttonBankSelection"><span class="left"><span
                     class="right">Clear Slots</span></span></a>
+        </s:if>
         </div>
 
     </div>

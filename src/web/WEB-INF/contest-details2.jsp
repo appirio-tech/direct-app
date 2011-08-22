@@ -8,7 +8,9 @@
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - add repost and new version buttons and assoicated js file.
   - Version 1.2 - Direct - Contest Dashboard Assembly Change Note
-  - - replaced contest stats area with contest dashboard area
+  - - replaced contest stats area with contest dashboard area.
+  - Version 1.3 - TC Direct Replatforming Release 1
+  - - Studio contest is the nearly the same as software contest. Don't use special javascript file for studio contest.
   - Version 1.3 - TC Direct Release Assembly 7 Change Note
   - - added hasContestWritePermission field.
   - Version 1.4 - TC Direct "Contest Links and Button" Update 24Hr Assembly Change Note
@@ -32,25 +34,15 @@
 
     <script type="text/javascript">
     //<![CDATA[
-        <s:if test="software">
-          var paramContestId = ${param.projectId};
-        </s:if>
-        <s:else>
-           var paramContestId = ${param.contestId};
-        </s:else>
+        var paramContestId = ${param.projectId};
         
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
     //]]>
     </script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=45"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=45"></script>
-    <s:if test="software">
-        <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=46"></script>
-        <script type="text/javascript" src="/scripts/repostcontest.js?v=45"></script> 	        	
-    </s:if>
-    <s:else>
-        <script type="text/javascript" src="/scripts/launch/contestDetail.js?v=45"></script>
-    </s:else>
+    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=46"></script>
+    <script type="text/javascript" src="/scripts/repostcontest.js?v=45"></script>
 </head>
 
 <body id="page">

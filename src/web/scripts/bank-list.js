@@ -167,7 +167,7 @@ $(document).ready(function(){
 	roundType = $("#roundType").val();
 	// get the url of a sumbission's single page
 	function getSinglePage(submissionId) {
-		return "studioSubmission?contestId=" + contestId + "&formData.submissionId=" + submissionId + "&formData.roundType=" + roundType;
+		return "studioSubmission?projectId=" + contestId + "&formData.submissionId=" + submissionId + "&formData.roundType=" + roundType;
 	}
 
 	// update the order of the bank slots
@@ -277,23 +277,20 @@ $(document).ready(function(){
 	updateNullSlots();
 
 	// #clearSlots click function to clear all slots
-	$("#clearSlots").click(function() {  
-        if (!hasCheckout) {
+	if (!hasCheckout) {
+	$("#clearSlots").click(function() { 
 			$("#bankSelectionItemList li:not(:last-child)").html('<a href="#" class="thumb"><span></span></a>');
-        }
 			listExtra = new Array();
 			listLikes = new Array();
 			listDislikes = new Array();
 			$("#numExtra").html("(0)");
 			$("#likeCount").html("0");
 			$("#dislikeCount").html("0");
-        if (!hasCheckout) {
 			$(".icoBankLocation").removeClass("firstSlots");
 			$(".icoBankLocation").removeClass("secondSlots");
 			$(".icoBankLocation").removeClass("thirdSlots");
 			$(".icoBankLocation").removeClass("fourthSlots");
 			$(".icoBankLocation").removeClass("fifthSlots");
-        }
 			$(".icoBankLocation").removeClass("dollarSlots");
 			$(".icoBankLocation").removeClass("likeSlots");  
 			$(".icoBankLocation").removeClass("dislikeSlots");  
@@ -301,6 +298,7 @@ $(document).ready(function(){
 			getBankData();
 			return false;
 	}); 
+	}
 
     if (hasContestWritePermission) {	
         // #likeFolder init droppable
@@ -415,7 +413,7 @@ $(document).ready(function(){
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			$(".icoBankLocation").removeClass("firstSlots").addClass("icoBankLocation");
 			updateNullSlots();
 			$("#firstPrize").html('<a href="#" id="removeFirstPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("firstSlots");
@@ -436,7 +434,7 @@ $(document).ready(function(){
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			$(".icoBankLocation").removeClass("secondSlots").addClass("icoBankLocation");
 			updateNullSlots();
 			$("#secondPrize").html('<a href="#" id="removeSecondPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("secondSlots");
@@ -456,7 +454,7 @@ $(document).ready(function(){
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			$(".icoBankLocation").removeClass("thirdSlots").addClass("icoBankLocation");
 			updateNullSlots();
 			$("#thirdPrize").html('<a href="#" id="removeThirdPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("thirdSlots");
@@ -476,7 +474,7 @@ $(document).ready(function(){
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			$(".icoBankLocation").removeClass("fourthSlots").addClass("icoBankLocation");
 			updateNullSlots();
 			$("#fourthPrize").html('<a href="#" id="removeFourthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("fourthSlots");
@@ -496,7 +494,7 @@ $(document).ready(function(){
 			var $item = $(this).attr("title"); 
 			var $itemlabel = $(this).attr("rel"); 
 			removeIfExist($itemlabel);
-			$(".icoBankLocation").removeClass().addClass("icoBankLocation");
+			$(".icoBankLocation").removeClass("fifthSlots").addClass("icoBankLocation");
 			updateNullSlots();
 			$("#fifthPrize").html('<a href="#" id="removeFifthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
 			$('#submission-'+$itemlabel).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("fifthSlots");
@@ -648,6 +646,12 @@ $(document).ready(function(){
 		for (var i = 0; i < bankData.listExtra.length; i++) {
 			var label = bankData.listExtra[i];
 			$("#submission-" + label).find(".extraSlot").click();
+			if (hasCheckout) {
+				$('#submission-' + label).children("td").children(".icoBankLocation").removeClass().addClass("icoBankLocation").addClass("dollarSlots");
+			}
+		}
+		if (hasCheckout) {
+			$("#numExtra").html("(" + bankData.listExtra.length + ")");
 		}
 	}
 	 

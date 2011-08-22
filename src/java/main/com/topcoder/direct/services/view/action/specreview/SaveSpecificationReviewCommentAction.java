@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.specreview;
@@ -34,7 +34,11 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * &lt;/action&gt;
  * </pre>
  * </p>
- *
+ * <p>Version 1.1 change notes:
+ * <ul>
+ *  <li>Update {@link #execute()} to use the projectId instead of contestId</li>
+ * </ul>
+ * </p>
  * <p>
  * <b>Thread safety:</b>
  * This class is mutable and not thread safe. This should be fine since different instances of this
@@ -44,8 +48,9 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * for handling transactions. Hence this class can be considered as being effectively thread safe.
  * </p>
  *
- * @author caru, TCSDEVELOPER
- * @version 1.0
+ * @author caru, TCSDEVELOPER, morehappiness
+ * @version 1.1
+ * @since 1.0
  */
 public class SaveSpecificationReviewCommentAction extends SpecificationReviewAction {
 
@@ -209,7 +214,7 @@ public class SaveSpecificationReviewCommentAction extends SpecificationReviewAct
                 // the SpecReviewCommentService is responsible for setting the remaining fields
                 // for the add operation
                 long newCommentId = specReviewCommentService.addSpecReviewComment(getTCSubject(),
-                    getContestId(), isStudio(), questionId, userComment);
+                    getProjectId(), isStudio(), questionId, userComment);
                 userComment.setCommentId(newCommentId);
             } else {
                 userComment.setCommentId(commentId);
@@ -217,7 +222,7 @@ public class SaveSpecificationReviewCommentAction extends SpecificationReviewAct
 
                 // the SpecReviewCommentService is responsible for setting the remaining fields for the update
                 // operation
-                specReviewCommentService.updateSpecReviewComment(getTCSubject(), getContestId(), isStudio(),
+                specReviewCommentService.updateSpecReviewComment(getTCSubject(), getProjectId(), isStudio(),
                     questionId, userComment);
             }
 

@@ -1,41 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <subTypes>
     <contestType id="STUDIO">
-    	<subType id="1">	
-    		<description><![CDATA[Use this contest type to receive static (non-coded) screens for your website. These mock-ups of your web site determine the look and feel of your design. You can hold contests for your home page, splash screens, or new sections of your web site. It’s best to ask the members to design no more than 5-8 screens at one time. Your prizes and timelines should be tailored to the amount of work involved. 
-
-			TIP! You don’t need every page of your site designed because when you run a contest to have it coded, the developer carries the design elements from this contest across all of your pages.
-			]]>
-			</description>
-    		<example1>
-    			<name>$1000 AOL/TopCoder Sensations Developer Challenge Storyboards</name>
-    			<thumbImage>./assets/overviewImages/thumbs/t_web_design_AOL.jpg</thumbImage>
-    			<fullsizeImage>assets/overviewImages/fullsize_images/web_design_AOL.jpg</fullsizeImage>
-    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2467</contestLink>
-    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2467</submissionsLink>
-    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2467</winnersLink>
-    			<prizes>$1000</prizes>
-    			<duration>5 days</duration>
-    			<registrants>25</registrants>
-    			<submissions>9</submissions>
-    		</example1>
-    		<example2>
-    			<name>Kids Savings Account Storyboard</name>
-    			<thumbImage>./assets/overviewImages/thumbs/t_web_design_KIDS.jpg</thumbImage>
-    			<fullsizeImage>assets/overviewImages/fullsize_images/web_design_KIDS.jpg</fullsizeImage>
-    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2240</contestLink>
-    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2240</submissionsLink>
-    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2240</winnersLink>
-    			<prizes>$1600</prizes>
-    			<duration>5 days</duration>
-    			<registrants>41</registrants>
-    			<submissions>11</submissions>
-    		</example2>
-    		<minPrize>$450</minPrize>
-    		<averagePrize>$1000</averagePrize>
-    		<maxExposure>$2000</maxExposure>
-    	</subType>
-    	<subType id="4">	
+    	<subType id="16">	<!-- Banners/Icons -->
     		<description><![CDATA[Web elements include banner designs, promos, buttons, navigational pieces, masthead designs and other small elements. For banner designs, it’s best to ask for no more than 3-4 banner sizes in one contest.
 
 			TIP! You can ask for different web elements within the same contest, such as a banner and three promotional buttons for your Facebook page. These kinds of "sets" increase your branding.
@@ -69,7 +35,7 @@
     		<averagePrize>$350</averagePrize>
     		<maxExposure>$1000</maxExposure>
     	</subType>	
-    	<subType id="3">	
+    	<subType id="20">	<!--  Logo Design -->
     		<description><![CDATA[Your logo is the most important design you’ll use to brand your business. Higher prize amounts will generally give you more quality logos to choose from. You should also set prizes higher if you are asking for more than one logo.
 
 			TIP! You can also use this category to get logos for products or services. For example, if your company is launching a series of new applications, run a contest to get a cohesive set of logos.
@@ -103,7 +69,7 @@
     		<averagePrize>$300</averagePrize>
     		<maxExposure>$1000</maxExposure>
     	</subType>	
-    	<subType id="12">	
+    	<subType id="21">	<!-- Print/Presentation -->
     		<description><![CDATA[Print contests include brochures, flyers, business cards, magazine ads, and all other designs meant to be printed. Prizes widely vary due to project complexity.
 
 			TIP! You can group simple projects together, such as a business card and letterhead. However, large projects such as a brochure or magazine ad should be held as single contests.
@@ -137,41 +103,7 @@
     		<averagePrize>$750</averagePrize>
     		<maxExposure>$2000</maxExposure>
     	</subType>
-    	<subType id="5">	
-    		<description><![CDATA[Use this category for any static design that will act as the user interface for desktop applications, flash games, mobile apps, and any other front end designs that do not fall under the Web Design category. It’s best to ask the members to design no more than 5-8 screens at one time. Your prizes and timelines should be tailored to the amount of work involved.
-
-			TIP! You don’t need every page of your application designed because when you run a contest to have it coded, the developer carries the design elements from this contest across all of your screens.
-			]]>
-			</description>
-    		<example1>
-    			<name>RadioTAGr iPhone Application Storyboards</name>
-    			<thumbImage>./assets/overviewImages/thumbs/t_app_design_RADIO.jpg</thumbImage>
-    			<fullsizeImage>assets/overviewImages/fullsize_images/app_design_RADIO.jpg</fullsizeImage>
-    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=1000062</contestLink>
-    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=1000062</submissionsLink>
-    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=1000062</winnersLink>
-    			<prizes>$600</prizes>
-    			<duration>2 days</duration>
-    			<registrants>21</registrants>
-    			<submissions>8</submissions>
-    		</example1>
-    		<example2>
-    			<name>$1250 Sun Examination Interface Design</name>
-    			<thumbImage>./assets/overviewImages/thumbs/t_app_design_SUN.jpg</thumbImage>
-    			<fullsizeImage>assets/overviewImages/fullsize_images/app_design_SUN.jpg</fullsizeImage>
-    			<contestLink>http://studio.topcoder.com/?module=ViewContestDetails&amp;ct=2490</contestLink>
-    			<submissionsLink>http://studio.topcoder.com/?module=ViewSubmissions&amp;ct=2490</submissionsLink>
-    			<winnersLink>http://studio.topcoder.com/?module=ViewContestResults&amp;ct=2490</winnersLink>
-    			<prizes>$1250</prizes>
-    			<duration>6 days</duration>
-    			<registrants>44</registrants>
-    			<submissions>19</submissions>
-    		</example2>
-    		<minPrize>$450</minPrize>
-    		<averagePrize>$1000</averagePrize>
-    		<maxExposure>$2000</maxExposure>
-    	</subType>
-    	<subType id="8">	
+    	<subType id="31">	<!-- Front End Flash -->
     		<description><![CDATA[This contest type is for all PPT contests. You can ask for a blank template, a redesign of a current PPT or any charts or other graphics that will be used in your presentation.
 
 			TIP! If your PPT design includes a large amount of design elements, such as charts and graphs, your prizes and timelines should be tailored to the amount of work involved.
@@ -205,7 +137,7 @@
     		<averagePrize>$500</averagePrize>
     		<maxExposure>$1200</maxExposure>
     	</subType>
-    	<subType id="6">	
+    	<subType id="30">	<!-- Windget or Mobile Screen Design -->
     		<description><![CDATA[Get icon designs for print, web, mobile or desktop applications. It’s best to ask the members to design no more than 10-15 icons at one time unless the icons are extremely simple. 
 
 			TIP! If you need vector (scalable) icons, you may need to ask for several sizes, which require more detail work from the designer. Your prizes and timelines should be tailored to the amount of work involved.
@@ -239,18 +171,26 @@
     		<averagePrize>$350</averagePrize>
     		<maxExposure>$1000</maxExposure>
     	</subType>
-    	<subType id="18">	
+    	<subType id="34">	 <!-- Other -->
     		<description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
     		<minPrize>$300</minPrize>
     	</subType>
-		<subType id="25">	
+		<subType id="18">	<!-- Wireframes -->
     		<description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
     		<minPrize>$300</minPrize>
     	</subType>
-    	<subType id="26">	
+    	<subType id="22">	<!-- Idea Generation -->
     		<description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
     		<minPrize>$300</minPrize>
     	</subType>
+    	<subType id="17">  <!-- Web Design -->
+            <description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
+            <minPrize>$300</minPrize>
+        </subType>
+        <subType id="32">   <!-- Application Front-End Design -->
+            <description><![CDATA[Only use this category if your static design project clearly does not fit into the other categories.]]> </description>
+            <minPrize>$300</minPrize>
+        </subType>
 		</contestType>
     <contestType id="DESIGN">	
         <description><![CDATA[Component Design contests produce a detailed technical design of a component.  Typical applications are comprised of many components.  The components are identified during the architecture process.<br/><br/>For complete details please refer to the <a href="http://www.topcoder.com/wiki/display/tc/Component+Production+Competitions" target="_blank"><b><u>Component Production Guide</u></b></a>.<br/><br/>You can see active examples of contests <a href="http://www.topcoder.com/tc?module=ViewActiveContests&ph=112" target="_blank"><b><u>here</u></b></a>.]]></description>

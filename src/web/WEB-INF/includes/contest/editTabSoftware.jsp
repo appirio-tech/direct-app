@@ -11,6 +11,21 @@
   - Version 1.0.3 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
   - Change the  style for the Edit links for each contest edit sections. 
 --%>
+<%--
+  - Author: TCSASSEMBER
+  - Version: 1.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: Edit Tab for software contest detail page
+  -
+  - Version 1.1 - Direct - Repost and New Version Assembly Change Note
+  - - Studio contest type is rendered by javascript now.
+  - - Add support for multi round type. 
+  -
+  - Version 1.2 - TC Direct Replatforming Release 2 Change noets:
+  - - Added milestone prizes section to support milestone prizes for software contest.
+  - Version 1.3 (Direct Replatforming Release 4) changes: Add milestone end time edit support for softare contest.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <!-- Contest Type Display-->
@@ -54,20 +69,16 @@
 		  
       <div class="detailsContent_det_type_edit">
 					<p class="det_font">                                                
-         	<div id="launchContestOut" class="hide">                                                        	
-						 <div class="tabOut">                                    
+         	<div id="launchContestOut" class="hide">                                  
                  <!-- tab contest -->
                  <div class="tabContest tabContest1">                                    	
                    <!-- selectDesing -->
                    <div class="selectDesing selectDesing1">                      	
                           <div class="selectX">
-                          		<span class="name"><strong>Contest Type</strong></span>
+                          		<span class="name fixWidthName"><strong>Contest Type</strong></span>
                                 <div class="selectOut">                                	
                                     <select id="contestTypes">
                                          <optgroup label="Studio">
-                                         	<s:iterator value="studioContestTypes">
-                                         	<option value='STUDIO<s:property value="contestTypeId" />'><s:property value="description" /></option>
-                                          </s:iterator>
                                          </optgroup>														                            
                                          <optgroup label="Software">
                                          </optgroup>														                             
@@ -80,16 +91,15 @@
                   </div>
                   <!-- end .tabContest -->
                                     
-                 </div></div> <!-- end #launchContestOut -->
-                                                                                                
-                 <span class="name2"><strong>Contest Name</strong></span>
+                 <br/></div> <!-- end #launchContestOut -->           
+                 <span class="name fixWidthName"><strong>Contest Name</strong></span>
                  <span class="value"><input type="text" class="bigin"  id="contestName" /></span>
 				 <br /><br />
                  
 				 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
 				 <br /> <br />
 				 <div id="projectEditDiv">
-				 <span class="name"><strong>Project Name</strong></span>
+				 <span class="name fixWidthName"><strong>Project Name</strong></span>
 				 <div class="projectsSelect" style="float:left">
 					  <select id="projects" name="tcProject" class="bigin">
 							<option value="-1">Please select an existing project</option>
@@ -103,7 +113,7 @@
                  </div>
                  <br /> <br />
                  <div id="copilotEditDiv">
-                 <span class="name"><strong>Copilot</strong></span>
+                 <span class="name fixWidthName"><strong>Copilot</strong></span>
                 <div class="copilotsSelect" style="float:left">
 					  <select id="copilots" name="copilots" class="bigin">
 							<option value="0">Unassigned</option>
@@ -142,23 +152,49 @@
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rStartDate"></span></td>
              </tr>
+             <tr id="rMileStoneTR">
+                <td class="first_tab"><strong>Milestone End Date/Time</strong></td>
+                <td class="sec_tab">&nbsp;</td>
+                <td><span id="rMilestoneDate"></span></td>
+             </tr>
         </table>        
+        
+         <div id="rMultiRoundInfoDiv">
+		   <p class="det_font">
+             <span class="name"><strong>Milestone Prizes</strong></span>
+             <br /><br />
+             <span class="small_info_spec">
+           	  Pay <span id="rMPrizesAmount"></span> for each submission up to <span id="rMPrizesNumberOfSubmissions"></span>
+             </span>
+           </p>
+         </div>
+          
      </div><!-- End .detailsContent -->												
 </div><!-- End .details -->
 <!-- End Round Display -->
 
 <!-- Round Edit -->                                            
-<div class="no_details contest_round_edit hide">											
+<div class="no_details contest_round_edit hide" style="padding-bottom:20px;">											
 		<div class="caption_det_round_edit">													
 				<div class="captionInner">
-					<h2>Schedule</h2>
+					<h2>Rounds Type & Schedule</h2>
 				</div>													
 		</div><!-- End .caption -->
 										
 		<div class="detailsContent_det_round_edit">										 
         <div id="launchContestOut">
-            <div class="schedule schedule1" style="height:90px;">
-                         
+            <div class="schedule schedule1">
+            <!-- Round Type -->
+             <div class="row" id="type">
+                <span class="name_label"><strong>Round Type:</strong></span>
+              <div class="roundelect">
+                  <select id="roundTypes">
+                    <option value="single">Contest will be run in single-rounds</option>
+                    <option value="multi">Contest will be run in multi-rounds</option>                                              
+                  </select>
+              </div>
+             </div>
+             
              <!-- Start -->
              <div class="row">
              	<span class="name_label"><strong>Start:</strong></span>
@@ -169,7 +205,44 @@
                <span>EST (UTC-05)</span>
              </div>
              
-             </div> <!-- end .schedule -->                           
+             <!-- Milestone -->
+             <div id="mileStoneEditDiv" class="row">
+                <span class="name_label"><strong>Milestone Duration:</strong></span>
+                 <div class="milestoneEtSelect">
+                   <select id="milestoneDateDay" name="milestoneDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
+                 </div>
+                 <div class="selectSpan"><span>days</span></div>
+                 <div class="milestoneEtSelect">
+                   <select id="milestoneDateHour" name="milestoneDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
+                  </div>
+                  <div class="selectSpan"><span>hours</span></div>
+                  <div class="clear"></div>
+             </div>
+			 <!-- End -->
+             </div><!-- end .schedule -->
+             
+             <!-- Milestone Prizes -->
+	           <div class="mPrizes" id="milestonePrizeDiv">               
+                   <h3><span class="icon">Milestone Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                   
+                   <div class="mPrizesInner">
+                   	<label class="first">Pay</label>
+                       <span class="dw">$</span>
+                       <input type="text" id="swMilestonePrize" class="prizesInput" value="" />
+                       <strong>for each submission up to</strong>
+                       <div class="numSelect">
+                       	<select id="swMilestoneSubmissionNumber" >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                       </div>
+                   </div>                   
+              </div>
+              <!-- end .mPrizes -->  
+              
+             </div> <!-- end .schedule -->                            
         </div> <!-- end of #launchContestOut -->
                                      
         <p class="save">        	
@@ -177,7 +250,6 @@
             <a href="javascript:;"><img src="/images/save_change.png" alt="save" class="save_btn_round" /></a>
         </p>												
     </div><!-- End .detailsContent -->												
-</div><!-- End .details -->
 <!-- End Round Edit -->
 
 
@@ -226,7 +298,7 @@
 																
 				<div class="detailsContent_det_prize_edit">
                  <div id="billingAccountDivEdit">
-                     <span class="name"><strong>Billing Account </strong></span>
+                     <span class="name fixWidthName"><strong>Billing Account </strong></span>
                      <div class="prizeBillingSelect" style="float:left" >
                          <select id="billingProjects" name="billingProject">
                          	<option value="-1">Please select an existing account</option>
@@ -539,7 +611,7 @@
 	       <div id="documentTemplate" class='hide'>
 	       	    <table><tbody>
                	<tr class="rightbor">
-                   	<td class="first_tab"  align="left"><strong>{0}. {1}</strong></td>
+                   	<td class="first_tab"  align="left"><strong>{0}. <a href="${ctx}/launch/downloadDocument?documentId={3}" target="_blank">{1}</a></strong></td>
                     <td class="sec_tab_files">{2}</td>
                 </tr>
               </tbody></table>  

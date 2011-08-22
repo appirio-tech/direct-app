@@ -47,6 +47,12 @@ public enum SubmissionViewerType {
     CHECKOUT,
 
     /**
+     * <p>A <code>SubmissionViewerType</code> corresponding to <code>checkout confirm</code> view of submissions.</p>
+     * @since 1.1
+     */
+    CHECKOUT_CONFIRM,
+
+    /**
      * <p>A <code>SubmissionViewerType</code> corresponding to <code>Can't Choose a Winner</code> views of submissions.
      * </p>
      *

@@ -13,9 +13,6 @@
 <c:set var="CURRENT_TAB" value="copilotPostings" scope="request"/>
 <c:set var="CURRENT_SUB_TAB" value="copilotContestSubmissions" scope="request"/>
 
-<c:set var="contestDTO" value="${viewData.contestStats.contest}"/>
-<c:set var="copilotProfilesMap" value="${requestScope.copilotProfilesMap}"/>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -44,7 +41,7 @@
                             <div class="currentPage">
                                 <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
                                 <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-                                <strong>My Copilot Postings</strong>
+                                <strong>My Copilot Selection Contests</strong>
                             </div>
                             <!-- End .currentPage -->
 
@@ -55,13 +52,13 @@
                                         <span class="introductionHeadIcon">
                                             <img src="/images/copilot_contests_icon.png" alt="copilot contests"/></span>
 
-                                        <h2 class="sectionHead"><c:out value="${contestDTO.title}"/></h2>
+                                        <h2 class="sectionHead"><c:out value="${viewData.contestStats.contest.title}"/></h2>
                                     </div>
                                     <!-- end .getCopilots -->
 
-                                    <c:set value="${contestDTO.project.id}" var="tcDirectProjectId"/>
-                                    <c:set value="${contestDTO.project.name}" var="tcDirectProjectName"/>
-                                    <c:set value="${contestDTO.id}" var="projectId"/>
+                                    <c:set value="${viewData.contestStats.contest.project.id}" var="tcDirectProjectId"/>
+                                    <c:set value="${viewData.contestStats.contest.project.name}" var="tcDirectProjectName"/>
+                                    <c:set value="${viewData.contestStats.contest.id}" var="projectId"/>
                                     <div class="myCopilotsContestsList">
 
                                         <jsp:include page="includes/copilot/contestStats.jsp"/>
@@ -95,7 +92,7 @@
                                                             <tr>
                                                                 <td class="photo">
                                                                     <img src="/images/photo_people.png" alt="photo"/>
-                                                                    <span><link:user userId="${submitter.id}" handle="${submitter.handle}"/> </span>
+                                                                    <span><c:out value="${submitter.handle}"/></span>
                                                                 </td>
                                                                 <td>
                                                                     <a rel="_blank"
@@ -104,6 +101,7 @@
                                                                     <a rel="_blank"
                                                                        href="https://www.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=${submitter.id}"
                                                                        class="copilotProfile"><span class="profileLeft">Copilot Profile</span></a>
+                                                                    <!--this link should be replaced by Copilot Profile page-->
                                                                 </td>
                                                                 <td>
                                                                     <fmt:formatDate value="${submission.submissionDate}"
@@ -122,22 +120,18 @@
                                                                 <td>
                                                                         <c:choose>
                                                                             <c:when test="${firstPlaceWinner eq null}">
-                                                                                <if:isInScreeningPhase phasedContest="${contestDTO}">
-                                                                                    <a href="#" 
-                                                                                       onclick="setCopilotSelection(${submission.submissionId}, ${copilotProfilesMap[submitter.id].id}, 1, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
-                                                                                       class="chooseCopilotButton"><span
-                                                                                        class="profileLeft">Choose This Copilot</span></a>
-                                                                                </if:isInScreeningPhase>
+                                                                                <a href="#" 
+                                                                                   onclick="setCopilotSelection(${submission.submissionId}, ${submitter.id}, 1, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
+                                                                                   class="chooseCopilotButton"><span
+                                                                                    class="profileLeft">Choose This Copilot</span></a>
                                                                             </c:when>
                                                                             <c:when test="${submitter.id eq firstPlaceWinner.id}">
                                                                                 The Chosen Copilot
                                                                             </c:when>
                                                                             <c:when test="${secondPlaceWinner eq null}">
-                                                                                <if:isInScreeningPhase phasedContest="${contestDTO}">
-                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
+                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId}, ${submitter.id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
                                                                                    class="chooseCopilotButton"><span
                                                                                     class="profileLeft">Choose as 2nd place</span></a>
-                                                                                </if:isInScreeningPhase>
                                                                             </c:when>
                                                                             <c:when test="${submitter.id eq secondPlaceWinner.id}">
                                                                                 The Runner-Up Copilot

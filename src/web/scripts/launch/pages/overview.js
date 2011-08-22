@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Overview Page.
@@ -9,8 +9,19 @@
  * - Bind digital run input field change event.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0.1
+ * Version 1.1 TC Direct Replatforming Release 1 change note
+ * - Many changes were made to work for the new studio contest type and multiround type.
+ * 
+ * Version 1.2 TC Direct Replatforming Release 2 change notes:
+ * - The software contest can set milestone prizes.
+ * - The studio contest can have specification review cost.
+ *
+ * Version 1.3 TC Direct Replatforming Release 4 change notes:
+ * - Add support to save the DR points for the studio contests.
+ * - Add support to save the stock arts allowed flag for the studio contests.
+ *
+ * @author TCSASSEMBER
+ * @version 1.3
  */
 $(document).ready(function() {
    //technologies
@@ -55,6 +66,9 @@ $(document).ready(function() {
     $('#swDigitalRun').bind('keyup',function() {
        onDigitalRunChangeKeyUp();
     });
+    
+    $('#swMilestonePrize').bind('keyup', onMilestonePrizeChangeKeyUp);
+    $('#swMilestoneSubmissionNumber').bind('change', onMilestonePrizeChangeKeyUp);
 }); // end of initiation
 
 
@@ -71,6 +85,8 @@ function validateFieldsOverviewSoftware() {
    var detailedRequirements = tinyMCE.get('swDetailedRequirements').getContent();
    var softwareGuidelines = tinyMCE.get('swGuidelines').getContent();	
    var rootCategoryId = $('#catalogSelect').val();
+   //milestone prize and submission numbers
+   var milestonePrizeInput = $('#swMilestonePrize').val();
 
 
    //validation
@@ -114,6 +130,13 @@ function validateFieldsOverviewSoftware() {
      }
    }
 
+   if(mainWidget.softwareCompetition.multiRound) {
+      var milestonePrize = parseFloat(milestonePrizeInput);
+      if(!checkRequired(milestonePrizeInput) || !checkNumber(milestonePrizeInput) || isNaN(milestonePrize)) {
+         errors.push('Milestone prize is invalid.');
+      }      
+   }
+   
    if(errors.length > 0) {
        showErrors(errors);
        return false;
@@ -167,12 +190,17 @@ function validateFieldsOverviewStudio() {
 
    var prizes = validatePrizes(errors);
 
+   var dr = 0;
+   for(var i = 0, len = prizes.length; i < len; i++) {
+		dr += prizes[i].prizeAmount;
+   }
+   
    var fileTypesResult = validateFileTypes(errors);
    var fileTypes = fileTypesResult[0];
    var otherFileTypes = fileTypesResult[1];
 
    var milestonePrize;
-   if(mainWidget.competition.contestData.multiRound) {
+   if(mainWidget.softwareCompetition.multiRound) {
       milestonePrize = parseFloat(milestonePrizeInput);
        if(!checkRequired(milestonePrizeInput) || !checkNumber(milestonePrizeInput) || isNaN(milestonePrize)) {
            errors.push('Milestone prize is invalid.');
@@ -185,8 +213,20 @@ function validateFieldsOverviewStudio() {
       if(!checkRequired(round2Info)) {
           errors.push('Round 2 information is empty.');
       }
+      
+	  dr += parseInt($('#milestoneSubmissionNumber').val()) * milestonePrize;
+      prizes.push(new com.topcoder.direct.Prize(1, milestonePrize, MILESTONE_PRIZE_TYPE_ID, parseInt($('#milestoneSubmissionNumber').val())));
+      mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundOneIntroduction = round1Info;
+      mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.roundTwoIntroduction = round2Info;
    }
 
+   if ($('#maxSubmissions').length) {
+       var maxSubmissions = $('#maxSubmissions').val();
+
+       if (!(optional(maxSubmissions) || (/^\d+$/.test(maxSubmissions) && parseInt(maxSubmissions) > 0))) {
+          errors.push('Max Submissions field should be empty or positive integer.');
+       }
+   }
 
    if(errors.length > 0) {
        showErrors(errors);
@@ -194,17 +234,41 @@ function validateFieldsOverviewStudio() {
    }
 
    //update
-   mainWidget.competition.contestData.prizes = prizes;
-   mainWidget.competition.contestData.finalFileFormat = fileTypes.join(',');
-   mainWidget.competition.contestData.otherFileFormats = otherFileTypes.join(',');
-   mainWidget.competition.contestData.shortSummary = contestIntroduction;
-   mainWidget.competition.contestData.contestDescriptionAndRequirements = contestDescription;
+   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription = contestDescription;
+   mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction = contestIntroduction;
+   
+   mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+   
+   mainWidget.softwareCompetition.fileTypes = fileTypes.concat(otherFileTypes);
+   // set specification review cost
+   for (var i = 0; i < studioSubtypeFees.length; i++) {
+	   if (studioSubtypeFees[i].id == mainWidget.softwareCompetition.projectHeader.projectCategory.id) {
+		   mainWidget.softwareCompetition.projectHeader.setSpecReviewCost(studioSubtypeFees[i].specReviewCost);
+	   }
+   }
+   
+   // save the allow stock art
+   mainWidget.softwareCompetition.projectHeader.properties['Allow Stock Art'] = '' + $('#allowStockArt').is(':checked');
 
-   mainWidget.milestonePrizeData.amount = milestonePrize;
-   mainWidget.milestonePrizeData.numberOfSubmissions = parseInt($('#milestoneSubmissionNumber').val());
-   mainWidget.competition.contestData.multiRoundData.roundOneIntroduction = round1Info;
-   mainWidget.competition.contestData.multiRoundData.roundTwoIntroduction = round2Info;
-   mainWidget.competition.contestData.allowStockArt = $('#allowStockArt').is(':checked');
+   if ($('#maxSubmissions').length) {
+       var maxSubmissions = $('#maxSubmissions').val();
+       if ($.trim(maxSubmissions).length == 0) {
+           mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] = '';
+       } else {
+           mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] = parseInt(maxSubmissions);
+       }
+   } else {
+       mainWidget.softwareCompetition.projectHeader.properties['Maximum Submissions'] = 5;
+   }
+
+   if ($('#viewableSubmFlag').length) {
+       mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = '' + $('#viewableSubmFlag').is(":checked");
+   } else {
+       mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'true';
+   }
+
+   //save the DR points
+   mainWidget.softwareCompetition.projectHeader.properties['DR points'] = dr * 0.25;
 
    return true;
 }

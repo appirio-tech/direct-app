@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.util;
 
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.*;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
@@ -20,16 +21,13 @@ import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
 import com.topcoder.service.project.ProjectData;
-import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
 import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
-import com.topcoder.web.common.model.comp.ProjectPhase;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -249,8 +247,21 @@ import java.util.Map.Entry;
  *     <li>Updated {@link #getActiveContests(long)} method to add customer id of each active contest.</li>
  *   </ol>
  * </p>
+ * 
+ * <p>
+ * Version 2.7.0 (Direct Replatforming Release 4) Change notes:
+ *   <ol>
+ *     <li>Remove the method getStudioContestDashboardData.</li>
+ *     <li>Update {@link # getProjectContests(long, long)} to use the new
+ *      direct_my_contests_replatformingg query</li>
+ *     <li>Update {@link # getActiveContests(long)} to use the new
+ *      direct_active_contests_replatforming query</li>
+ *   </ol>
+ * </p>
+ * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.6.8
+ * @version 2.7.0
+ * @since 1.0
  */
 public class DataProvider {
 
@@ -404,7 +415,7 @@ public class DataProvider {
     public static LatestActivitiesDTO getLatestActivitiesForUserProjects(long userId, int days) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_latest_activities");
+        request.setContentHandle("direct_latest_activities_replatforming");
         // Setting to 0 means getting all the direct projects of the user
         request.setProperty("tcdirectid", "0");
         request.setProperty("uid", String.valueOf(userId));
@@ -414,7 +425,7 @@ public class DataProvider {
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();//here
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities_replatforming");
         final int recordNum = resultContainer.size();
 
         for (int i = 0; i < recordNum; i++) {
@@ -496,9 +507,8 @@ public class DataProvider {
             String tcDirectProjectName = result.getStringItem(resultIndex, "tc_direct_project_name");
             long contestId = result.getLongItem(resultIndex, "contest_id");
             String contestName = result.getStringItem(resultIndex, "contest_name");
-            String contestType = result.getStringItem(resultIndex, "contest_type");
             long contestTypeId = result.getLongItem(resultIndex, "contest_type_id");
-            Boolean isStudio = (result.getIntItem(resultIndex, "is_studio") == 1);
+            Boolean isStudio = result.getBooleanItem(resultIndex, "is_studio");
 
             long originatorId = Long.parseLong(result.getStringItem(resultIndex, "user_id"));
             String originatorHandle = result.getStringItem(resultIndex, "user");
@@ -547,7 +557,7 @@ public class DataProvider {
     public static UpcomingActivitiesDTO getUpcomingActivitiesForUserProjects(long userId, int days) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_upcoming_activities");
+        request.setContentHandle("direct_upcoming_activities_replatforming");
         request.setProperty("tcdirectid", "0");
         request.setProperty("uid", String.valueOf(userId));
         request.setProperty("days", String.valueOf(days));
@@ -556,7 +566,7 @@ public class DataProvider {
         final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();
         final List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities_replatforming");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
 
@@ -588,7 +598,7 @@ public class DataProvider {
 
         // initialize the request
         Request request = new Request();
-        request.setContentHandle("direct_upcoming_activities");
+        request.setContentHandle("direct_upcoming_activities_replatforming");
         // set the query input value tcdirectid with the specified direct project id
         request.setProperty("tcdirectid", String.valueOf(projectId));
         request.setProperty("uid", String.valueOf(userId));
@@ -598,7 +608,7 @@ public class DataProvider {
         final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();
         final List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_upcoming_activities_replatforming");
 
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
@@ -634,7 +644,7 @@ public class DataProvider {
         String tcDirectProjectName = result.getStringItem(resultIndex, "tc_direct_project_name");
         long contestId = result.getLongItem(resultIndex, "contest_id");
         String contestName = result.getStringItem(resultIndex, "contest_name");
-        Boolean isStudio = (result.getIntItem(resultIndex, "is_studio") == 1);
+        Boolean isStudio = result.getBooleanItem(resultIndex, "is_studio");
 
         long originatorId = Long.parseLong(result.getStringItem(resultIndex, "user_id"));
         String originatorHandle = result.getStringItem(resultIndex, "user");
@@ -1021,7 +1031,7 @@ public class DataProvider {
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_latest_activities");
+        request.setContentHandle("direct_latest_activities_replatforming");
 
         // set the value of direct project id
         request.setProperty("tcdirectid", String.valueOf(projectId));
@@ -1034,7 +1044,7 @@ public class DataProvider {
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final Map<Long, TypedContestBriefDTO> contests = new HashMap<Long, TypedContestBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_latest_activities_replatforming");
         final int recordNum = resultContainer.size();
 
         for (int i = 0; i < recordNum; i++) {
@@ -1107,14 +1117,14 @@ public class DataProvider {
     public static ProjectContestsListDTO getProjectContests(long userId, long projectId) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_contests");
+        request.setContentHandle("direct_my_contests_replatforming");
         request.setProperty("uid", String.valueOf(userId));
         request.setProperty("tcdirectid", String.valueOf(projectId));
 
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final List<ProjectContestDTO> contests = new ArrayList<ProjectContestDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_contests_replatforming");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -1139,7 +1149,7 @@ public class DataProvider {
             int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
             int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
-            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+            Boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
             int forumId = -1;
             try
                 {
@@ -1185,13 +1195,13 @@ public class DataProvider {
     public static ProjectContestsListDTO getActiveContests(long userId) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_active_contests");
+        request.setContentHandle("direct_active_contests_replatforming");
         request.setProperty("uid", String.valueOf(userId));
 
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final List<ProjectContestDTO> contests = new ArrayList<ProjectContestDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_active_contests");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_active_contests_replatforming");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -1206,7 +1216,7 @@ public class DataProvider {
             int forumPostsCount = resultContainer.getIntItem(i, "number_of_forum");
             int registrantsCount = resultContainer.getIntItem(i, "number_of_registration");
             int submissionsCount = resultContainer.getIntItem(i, "number_of_submission");
-            Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+            Boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
             int forumId = -1;
             long customerId = -1L;
             try {
@@ -1264,14 +1274,14 @@ public class DataProvider {
     public static List<TypedContestBriefDTO> getProjectTypedContests(long userId, long projectId) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_typed_contests");
+        request.setContentHandle("direct_my_typed_contests_replatforming");
         request.setProperty("uid", String.valueOf(userId));
         request.setProperty("tcdirectid", String.valueOf(projectId));
 
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
         final List<TypedContestBriefDTO> contests = new ArrayList<TypedContestBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_typed_contests");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_typed_contests_replatforming");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -1299,7 +1309,7 @@ public class DataProvider {
                 project = projects.get(tcDirectProjectId);
             }
 
-	        Boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+	        Boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
             ContestType type = ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
@@ -1616,7 +1626,7 @@ public class DataProvider {
     public static Map<Long, String> getAllProjectCategories() throws Exception {
         Map<Long, String> map = new LinkedHashMap<Long, String>();
 
-        final String queryName = "project_categories";
+        final String queryName = "project_categories_replatforming";
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(queryName);
@@ -2125,11 +2135,217 @@ public class DataProvider {
      */
     public static ContestDashboardDTO getContestDashboardData(long contestId,
             boolean isStudio, boolean cached) throws Exception {
-        if (isStudio) {
-            return getStudioContestDashboardData(contestId, cached);
+     // Prepare request to database
+        DataAccess dataAccessor;
+
+        if (cached) {
+            dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR,
+                    DBMS.TCS_OLTP_DATASOURCE_NAME);
         } else {
-            return getSoftwareContestDashboardData(contestId, cached);
+            dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         }
+
+        Request request = new Request();
+        request.setContentHandle("direct_contest_dashboard_replatforming");
+        request.setProperty("pj", String.valueOf(contestId));
+
+        // Query database for contest dashboard data
+        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+        ContestDashboardDTO dto = new ContestDashboardDTO();
+
+        dto.setCurrentPhase(new ArrayList<ProjectPhaseDTO> ());
+        dto.setAllPhases(new ArrayList<ProjectPhaseDTO> ());
+        
+        // Analyze current and next phases
+        final ResultSetContainer projectPhasesStats = results.get("project_phases_status_replatforming");
+
+        if (projectPhasesStats != null && !projectPhasesStats.isEmpty()) {
+            for(int i = 0; i < projectPhasesStats.getRowCount(); i++) {
+                ResultSetContainer.ResultSetRow row = projectPhasesStats.getRow(i);
+
+                int phaseStatusId = getInt(row, "phase_status_id");
+                if(phaseStatusId == 2) { // If current phase is already running
+                    if(i == 0) {
+                        // set the current phase status to 'running'
+                        dto.setCurrentPhaseStatus(RunningPhaseStatus.RUNNING);
+                    }
+                    ProjectPhaseDTO currentPhase = new ProjectPhaseDTO();
+                    currentPhase.setStartTime(row.getTimestampItem("start_time"));
+                    currentPhase.setEndTime(row.getTimestampItem("end_time"));
+                    currentPhase.setPhaseName(row.getStringItem("phase_name"));
+                    
+                    dto.getCurrentPhase().add(currentPhase);
+                    
+                    Date now = new Date();
+                    Date currentPhaseEndTime = currentPhase.getEndTime();
+                    
+                    if (now.compareTo(currentPhaseEndTime) > 0) {
+                        dto.setCurrentPhaseStatus(RunningPhaseStatus.LATE);
+                    } else {
+                        long diff = currentPhaseEndTime.getTime() - now.getTime();
+                        long hoursLeft = diff / (3600 * 1000);
+                        if (hoursLeft < 2) {
+                            dto.setCurrentPhaseStatus(RunningPhaseStatus.CLOSING);
+                        }
+                    }
+                } else {
+                    if(dto.getNextPhase() == null) {
+                        ProjectPhaseDTO nextPhase = new ProjectPhaseDTO();
+                        nextPhase.setStartTime(row.getTimestampItem( "start_time"));
+                        nextPhase.setEndTime(row.getTimestampItem( "end_time"));
+                        nextPhase.setPhaseName(row.getStringItem("phase_name"));
+                        dto.setNextPhase(nextPhase);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Analyze registration status
+        final ResultSetContainer registrationStats = results.get("registration_status_replatforming");
+        if (!registrationStats.isEmpty()) {
+            ResultSetContainer.ResultSetRow row = registrationStats.getRow(0);
+            dto.setNumberOfRegistrants(getInt(row, "registrants_count"));
+            dto.setNumberOfSubmissions(getInt(row, "number_of_submissions"));
+            dto.setPredictedNumberOfSubmissions(getInt(row, "predicted_number_of_submissions"));
+
+            double reliabilityTotal = getDouble(row, "reliability_total");
+            long registrationPhaseStatus = getLong(row, "registration_phase_status");
+
+            if (registrationPhaseStatus == 2) {
+                if (reliabilityTotal >= 200) {
+                    dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                } else {
+                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_ACTIVE);
+                }
+            } else if (registrationPhaseStatus == 3) {
+                if (reliabilityTotal >= 200) {
+                    dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                } else if (reliabilityTotal >= 100) {
+                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_CLOSED);
+                } else {
+                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_POOR);
+                }
+            }
+        }
+
+
+        String latestHandle = "";
+        long latestUserId = 0;
+        long latestThreadId = 0;
+        int totalForum = 0;
+        long forumId = 0;
+        int unansweredForumPostsNumber = 0;
+        Date latestTime = null;
+
+        final ResultSetContainer forumStats = results.get("contest_forum_stats_replatforming");
+        if (!forumStats.isEmpty()) {
+            if (forumStats.getRow(0).getStringItem("latest_handle") != null)
+            {
+                latestHandle = forumStats.getRow(0).getStringItem("latest_handle");
+            }
+            latestUserId = getLong(forumStats.getRow(0), "latest_userid");
+            latestThreadId = getLong(forumStats.getRow(0), "latest_threadid");
+            if (forumStats.getRow(0).getStringItem("forum_id") != null)
+            {
+                String frm = forumStats.getRow(0).getStringItem("forum_id");
+                forumId = new Long(frm);
+            }
+            
+            totalForum = getInt(forumStats.getRow(0), "number_of_forum");
+            unansweredForumPostsNumber = getInt(forumStats.getRow(0), "unanswered_threads");
+            latestTime = getDate(forumStats.getRow(0), "latest_time");
+        }
+
+
+        UserDTO latestForumPostAuthor = new UserDTO();
+        latestForumPostAuthor.setHandle(latestHandle);
+        latestForumPostAuthor.setId(latestUserId);
+
+        ForumPostDTO latestForumPost = new ForumPostDTO();
+        latestForumPost.setAuthor(latestForumPostAuthor);
+        if (!isStudio) {
+            latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=" + latestThreadId);
+        } else {
+            latestForumPost.setUrl("http://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
+        }
+        latestForumPost.setTimestamp(new Date());
+        
+        if (latestUserId != 0)
+        {
+            dto.setLatestForumPost(latestForumPost);
+        }
+        
+        if (!isStudio) {
+            dto.setForumURL("http://forums.topcoder.com/?module=Category&categoryID=" + forumId);
+        } else {
+            dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
+        }
+        dto.setTotalForumPostsCount(totalForum);
+        dto.setUnansweredForumPostsNumber(unansweredForumPostsNumber);
+
+        // Analyze the status for reviewers signup and collect the list of reviewers
+        final ResultSetContainer reviewSignupStats = results.get("review_signup_stats");
+        if (reviewSignupStats.isEmpty()) {
+            dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
+        } else {
+            long hoursLeft = getLong(reviewSignupStats.getRow(0), "hours_left");
+            int requiredReviewersCount = getInt(reviewSignupStats.getRow(0), "required_reviewers_count");
+            List<UserDTO> reviewers = new ArrayList<UserDTO>();
+            for (ResultSetContainer.ResultSetRow row : reviewSignupStats) {
+                String reviewerHandle = row.getStringItem("reviewer_handle");
+                if (reviewerHandle != null) {
+                    UserDTO reviewer = new UserDTO();
+                    reviewer.setId(getLong(row, "reviewer_id"));
+                    reviewer.setHandle(reviewerHandle);
+                    reviewers.add(reviewer);
+                }
+            }
+            dto.setReviewers(reviewers);
+            dto.setRequiredReviewersNumber(requiredReviewersCount);
+            if (requiredReviewersCount > reviewers.size()) {
+                if (hoursLeft < 24) {
+                    dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_DANGER);
+                } else {
+                    dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_WARNING);
+                }
+            } else {
+                dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
+            }
+        }
+
+        // Analyze the overall status of dependencies for project
+        final ResultSetContainer projectDependenciesStatuses = results.get("project_dependencies_statuses");
+        if (projectDependenciesStatuses.isEmpty()) {
+            dto.setDependenciesStatus(DependenciesStatus.NO_DEPENDENCIES);
+        } else {
+            List<DependencyDTO> dependencies = new ArrayList<DependencyDTO>();
+            boolean thereAreIncompleteDependencies = false;
+            for (ResultSetContainer.ResultSetRow row : projectDependenciesStatuses) {
+                long parentProjectStatusId = getLong(row, "project_status_id");
+                if ((parentProjectStatusId == 1) || (parentProjectStatusId == 2)) {
+                    thereAreIncompleteDependencies = true;
+                }
+                ProjectBriefDTO dependencyProject = new ProjectBriefDTO();
+                dependencyProject.setId(getLong(row, "project_id"));
+                dependencyProject.setName(row.getStringItem("project_name"));
+
+                DependencyDTO dependency = new DependencyDTO();
+                dependency.setDependencyProject(dependencyProject);
+                dependency.setDependencyType(row.getStringItem("link_type_name"));
+
+                dependencies.add(dependency);
+            }
+            dto.setDependencies(dependencies);
+
+            if (thereAreIncompleteDependencies) {
+                dto.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_NON_SATISFIED);
+            } else {
+                dto.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_SATISFIED);
+            }
+        }
+
+        return dto;
     }
     
 
@@ -2977,10 +3193,10 @@ public class DataProvider {
         DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         
         Request request = new Request();
-        request.setContentHandle("direct_contest_receipt");
+        request.setContentHandle("direct_contest_receipt_replatforming");
         request.setProperty("pj", String.valueOf(contestId));
 
-        ResultSetContainer result = dataAccess.getData(request).get("direct_contest_receipt");
+        ResultSetContainer result = dataAccess.getData(request).get("direct_contest_receipt_replatforming");
         if (result.size() == 0) {
             return null;
         }
@@ -3004,394 +3220,6 @@ public class DataProvider {
         contestReceipt.setFinished(result.getStringItem(row, "status").trim().equals("Finished"));
         
         return contestReceipt;
-    }
-
-    /**
-     * <p>
-     * Gets the dashboard data for specified software project.
-     * </p>
-     * 
-     * @param projectId
-     *            a <code>long</code> providing the ID of a software project to
-     *            get dashboard data for.
-     * @return a <code>ContestDashboardDTO</code> providing the data for
-     *         dashboard for specified contest.
-     * @param cached
-     *            whether should apply to cached model
-     * @throws Exception
-     *             if an unexpected error occurs.
-     * @since 2.1.3
-     */
-    private static ContestDashboardDTO getSoftwareContestDashboardData(
-            long projectId, boolean cached) throws Exception {
-        // Prepare request to database
-        DataAccess dataAccessor;
-
-        if (cached) {
-            dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR,
-                    DBMS.TCS_OLTP_DATASOURCE_NAME);
-        } else {
-            dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        }
-
-        Request request = new Request();
-        request.setContentHandle("direct_software_contest_dashboard");
-        request.setProperty("pj", String.valueOf(projectId));
-
-        // Query database for contest dashboard data
-        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
-        ContestDashboardDTO dto = new ContestDashboardDTO();
-
-       // Retrieve all phases and analyze current and next phases
-        final ResultSetContainer projectPhasesStats = results.get("project_phases_status");
-        if (!projectPhasesStats.isEmpty()) {
-            List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
-            boolean findCurrPhase = false;
-            Date startTime = null;
-            Date endTime = null;
-            
-            for (ResultSetRow row : projectPhasesStats) {
-                ProjectPhaseDTO phase = new ProjectPhaseDTO();
-                phase.setStartTime(row.getTimestampItem("start_time"));
-                phase.setEndTime(row.getTimestampItem("end_time"));
-                phase.setPhaseName(row.getStringItem("phase_name"));
-                phase.setPhaseType(ProjectPhaseType.findProjectPhaseType(row.getIntItem("phase_type_id")));
-                phase.setPhaseStatus(ProjectPhaseStatus.findProjectPhaseStatus(row.getIntItem("phase_status_id")));
-                
-                phases.add(phase);
-                
-                if (startTime == null || startTime.after(phase.getStartTime())) {
-                    startTime = phase.getStartTime();
-                }
-                if (endTime == null || endTime.before(phase.getEndTime())) {
-                    endTime = phase.getEndTime();
-                }
-                
-                if (row.getIntItem("phase_status_id") == 2) {
-                    // find current phase 
-                    findCurrPhase = true;
-                    dto.setCurrentPhase(phase);
-                    
-                    // set current phase status
-                    Date now = new Date();
-                    Date currentPhaseEndTime = phase.getEndTime();
-                    if (now.compareTo(currentPhaseEndTime) > 0) {
-                        dto.setCurrentPhaseStatus(RunningPhaseStatus.LATE);
-                    } else {
-                        long diff = currentPhaseEndTime.getTime() - now.getTime();
-                        long hoursLeft = diff / (3600 * 1000);
-                        if (hoursLeft < 2) {
-                            dto.setCurrentPhaseStatus(RunningPhaseStatus.CLOSING);
-                        } else {
-                            dto.setCurrentPhaseStatus(RunningPhaseStatus.RUNNING);
-                        }
-                    }
-                    
-                } else if (findCurrPhase) {
-                    // find next phase
-                    findCurrPhase = false;
-                    dto.setNextPhase(phase);
-                }
-            }
-            
-            dto.setStartTime(startTime);
-            dto.setEndTime(endTime);
-            dto.setAllPhases(phases);
-        }
-
-        // Analyze registration status
-        final ResultSetContainer registrationStats = results.get("registration_status");
-        if (!registrationStats.isEmpty()) {
-            ResultSetContainer.ResultSetRow row = registrationStats.getRow(0);
-            dto.setNumberOfRegistrants(getInt(row, "registrants_count"));
-            dto.setNumberOfSubmissions(getInt(row, "number_of_submissions"));
-            dto.setPredictedNumberOfSubmissions(getInt(row, "predicted_number_of_submissions"));
-
-            double reliabilityTotal = getDouble(row, "reliability_total");
-            long registrationPhaseStatus = getLong(row, "registration_phase_status");
-
-            if (registrationPhaseStatus == 2) {
-                if (reliabilityTotal >= 200) {
-                    dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
-                } else {
-                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_ACTIVE);
-                }
-            } else if (registrationPhaseStatus == 3) {
-                if (reliabilityTotal >= 200) {
-                    dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
-                } else if (reliabilityTotal >= 100) {
-                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_LESS_IDEAL_CLOSED);
-                } else {
-                    dto.setRegistrationStatus(RegistrationStatus.REGISTRATION_POOR);
-                }
-            }
-            dto.setRegProgressPercent((int) Math.min(reliabilityTotal * 100 / 200, 100));
-        }
-
-        String latestHandle = "";
-        long latestUserId = 0;
-        long latestThreadId = 0;
-        int totalForum = 0;
-        long forumId = 0;
-        int unansweredForumPostsNumber = 0;
-        Date latestTime = null;
-
-        final ResultSetContainer forumStats = results.get("contest_forum_stats");
-        if (!forumStats.isEmpty()) {
-            if (forumStats.getRow(0).getStringItem("latest_handle") != null)
-            {
-                latestHandle = forumStats.getRow(0).getStringItem("latest_handle");
-            }
-            latestUserId = getLong(forumStats.getRow(0), "latest_userid");
-            latestThreadId = getLong(forumStats.getRow(0), "latest_threadid");
-            if (forumStats.getRow(0).getStringItem("forum_id") != null)
-            {
-                String frm = forumStats.getRow(0).getStringItem("forum_id");
-                forumId = new Long(frm);
-            }
-            
-            totalForum = getInt(forumStats.getRow(0), "number_of_forum");
-            unansweredForumPostsNumber = getInt(forumStats.getRow(0), "unanswered_threads");
-            latestTime = getDate(forumStats.getRow(0), "latest_time");
-        }
-
-        UserDTO latestForumPostAuthor = new UserDTO();
-        latestForumPostAuthor.setHandle(latestHandle);
-        latestForumPostAuthor.setId(latestUserId);
-
-        ForumPostDTO latestForumPost = new ForumPostDTO();
-        latestForumPost.setAuthor(latestForumPostAuthor);
-        latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=" + latestThreadId);
-        latestForumPost.setTimestamp(new Date());
-        
-        if (latestUserId != 0)
-        {
-            dto.setLatestForumPost(latestForumPost);
-        }
-        
-        dto.setForumURL("http://forums.topcoder.com/?module=Category&categoryID=" + forumId);
-        dto.setTotalForumPostsCount(totalForum);
-        dto.setUnansweredForumPostsNumber(unansweredForumPostsNumber);
-
-        // Analyze the status for reviewers signup and collect the list of reviewers
-        final ResultSetContainer reviewSignupStats = results.get("review_signup_stats");
-        if (reviewSignupStats.isEmpty()) {
-            dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
-        } else {
-            long hoursLeft = getLong(reviewSignupStats.getRow(0), "hours_left");
-            int requiredReviewersCount = getInt(reviewSignupStats.getRow(0), "required_reviewers_count");
-            List<UserDTO> reviewers = new ArrayList<UserDTO>();
-            for (ResultSetContainer.ResultSetRow row : reviewSignupStats) {
-                String reviewerHandle = row.getStringItem("reviewer_handle");
-                if (reviewerHandle != null) {
-                    UserDTO reviewer = new UserDTO();
-                    reviewer.setId(getLong(row, "reviewer_id"));
-                    reviewer.setHandle(reviewerHandle);
-                    reviewers.add(reviewer);
-                }
-            }
-            dto.setReviewers(reviewers);
-            dto.setRequiredReviewersNumber(requiredReviewersCount);
-            if (requiredReviewersCount > reviewers.size()) {
-                if (hoursLeft < 24) {
-                    dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_DANGER);
-                } else {
-                    dto.setReviewersSignupStatus(ReviewersSignupStatus.REVIEW_POSITIONS_NON_FILLED_WARNING);
-                }
-            } else {
-                dto.setReviewersSignupStatus(ReviewersSignupStatus.ALL_REVIEW_POSITIONS_FILLED);
-            }
-        }
-
-        // Analyze the overall status of dependencies for project
-        final ResultSetContainer projectDependenciesStatuses = results.get("project_dependencies_statuses");
-        if (projectDependenciesStatuses.isEmpty()) {
-            dto.setDependenciesStatus(DependenciesStatus.NO_DEPENDENCIES);
-        } else {
-            List<DependencyDTO> dependencies = new ArrayList<DependencyDTO>();
-            boolean thereAreIncompleteDependencies = false;
-            for (ResultSetContainer.ResultSetRow row : projectDependenciesStatuses) {
-                long parentProjectStatusId = getLong(row, "project_status_id");
-                if ((parentProjectStatusId == 1) || (parentProjectStatusId == 2)) {
-                    thereAreIncompleteDependencies = true;
-                }
-                ProjectBriefDTO dependencyProject = new ProjectBriefDTO();
-                dependencyProject.setId(getLong(row, "project_id"));
-                dependencyProject.setName(row.getStringItem("project_name"));
-
-                DependencyDTO dependency = new DependencyDTO();
-                dependency.setDependencyProject(dependencyProject);
-                dependency.setDependencyType(row.getStringItem("link_type_name"));
-
-                dependencies.add(dependency);
-            }
-            dto.setDependencies(dependencies);
-
-            if (thereAreIncompleteDependencies) {
-                dto.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_NON_SATISFIED);
-            } else {
-                dto.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_SATISFIED);
-            }
-        }
-
-        return dto;
-    }
-
-    /**
-     * <p>
-     * Gets the dashboard data for specified Studio contest.
-     * </p>
-     * 
-     * @param contestId
-     *            a <code>long</code> providing the ID of a Studio contest to
-     *            get dashboard data for.
-     * @param cached
-     *            whether should apply to cached model
-     * @return a <code>ContestDashboardDTO</code> providing the data for
-     *         dashboard for specified contest.
-     * @throws Exception
-     *             if an unexpected error occurs.
-     * @since 2.1.3
-     */
-    private static ContestDashboardDTO getStudioContestDashboardData(
-            long contestId, boolean cached) throws Exception {
-        // Prepare request to database
-        DataAccess dataAccessor;
-
-        if (cached) {
-            dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR,
-                    DBMS.STUDIO_DATASOURCE_NAME);
-        } else {
-            dataAccessor = new DataAccess(DBMS.STUDIO_DATASOURCE_NAME);
-        }
-
-        Request request = new Request();
-        request.setContentHandle("direct_studio_contest_dashboard");
-        request.setProperty("ct", String.valueOf(contestId));
-
-        // Query database for contest dashboard data
-        Map<String, ResultSetContainer> results = dataAccessor.getData(request);
-        ContestDashboardDTO dto = new ContestDashboardDTO();
-
-        // Analyze registration status
-        // For now the registration status is always assumed to be Healthy for Studio contests
-        dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
-        dto.setRegProgressPercent(100);
-        final ResultSetContainer registrationStats = results.get("studio_registration_status");
-        if (!registrationStats.isEmpty()) {
-            ResultSetContainer.ResultSetRow row = registrationStats.getRow(0);
-            dto.setNumberOfRegistrants(getInt(row, "registrants_count"));
-            dto.setNumberOfSubmissions(getInt(row, "number_of_submissions"));
-            dto.setPredictedNumberOfSubmissions(getInt(row, "predicted_number_of_submissions"));
-        }
-
-        String latestHandle = "";
-        long latestUserId = 0;
-        long latestThreadId = 0;
-        int totalForum = 0;
-        long forumId = 0;
-        int unansweredForumPostsNumber = 0;
-        Date latestTime = null;
-
-        final ResultSetContainer forumStats = results.get("studio_contest_forum_stats");
-        if (!forumStats.isEmpty()) {
-            if (forumStats.getRow(0).getStringItem("latest_handle") != null)
-            {
-                latestHandle = forumStats.getRow(0).getStringItem("latest_handle");
-            }
-            latestUserId = getLong(forumStats.getRow(0), "latest_userid");
-            latestThreadId = getLong(forumStats.getRow(0), "latest_threadid");
-            if (forumStats.getRow(0).getStringItem("forum_id") != null)
-            {
-                String frm = forumStats.getRow(0).getStringItem("forum_id");
-                forumId = new Long(frm);
-            }
-            
-            totalForum = getInt(forumStats.getRow(0), "number_of_forum");
-            latestTime = getDate(forumStats.getRow(0), "latest_time");
-        }
-
-
-        UserDTO latestForumPostAuthor = new UserDTO();
-        latestForumPostAuthor.setHandle(latestHandle);
-        latestForumPostAuthor.setId(latestUserId);
-
-        ForumPostDTO latestForumPost = new ForumPostDTO();
-        latestForumPost.setAuthor(latestForumPostAuthor);
-        latestForumPost.setUrl("http://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
-        latestForumPost.setTimestamp(new Date());
-        
-        if (latestUserId != 0)
-        {
-            dto.setLatestForumPost(latestForumPost);
-        }
-        
-        dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
-        dto.setTotalForumPostsCount(totalForum);
-
-        // Set current and next phases
-        StudioCompetition studioCompetition 
-            = DirectUtils.getContestServiceFacade().getContest(DirectUtils.getTCSubjectFromSession(), contestId);
-        Date startTime = studioCompetition.getStartTime().toGregorianCalendar().getTime();
-        Date endTime = studioCompetition.getEndTime().toGregorianCalendar().getTime();
-        Date winnerAnnouncementTime = studioCompetition.getContestData().getWinnerAnnoucementDeadline().toGregorianCalendar().getTime();
-        Date milestoneDate = null;
-        if (studioCompetition.getContestData().isMultiRound()) {
-            milestoneDate = studioCompetition.getContestData().getMultiRoundData().
-                                              getMilestoneDate().toGregorianCalendar().getTime();
-        }
-        Date now = new Date();
-        
-        ProjectPhaseDTO registrationPhase = createProjectPhaseDTO("Registrations", startTime, endTime);
-        ProjectPhaseDTO r1SubmissionsPhase = null;
-        ProjectPhaseDTO r1FeedbackPhase = null;
-        ProjectPhaseDTO r2SubmissionsPhase;
-        if (milestoneDate != null) {
-            r1SubmissionsPhase = createProjectPhaseDTO("R1 Submissions", startTime, milestoneDate);
-            r1FeedbackPhase = createProjectPhaseDTO("R1 Feedback", milestoneDate, endTime);
-            r2SubmissionsPhase = createProjectPhaseDTO("R2 Submissions", milestoneDate, endTime);
-        } else {
-            r2SubmissionsPhase = createProjectPhaseDTO("R2 Submissions", startTime, endTime);
-        }
-        ProjectPhaseDTO winnerAnnouncementPhase = createProjectPhaseDTO("Winner Announcement", endTime, 
-                                                                        winnerAnnouncementTime);
-        
-        boolean isInRegistration = registrationPhase.getStartTime().compareTo(now) <= 0 
-                                   && registrationPhase.getEndTime().compareTo(now) >= 0;
-        boolean isInMilestoneSubmission = false;
-        boolean isInMilestoneFeedback = false;
-        if (milestoneDate != null) {
-            isInMilestoneSubmission = r1SubmissionsPhase.getStartTime().compareTo(now) <= 0 
-                                      && r1SubmissionsPhase.getEndTime().compareTo(now) >= 0;
-            isInMilestoneFeedback = r1FeedbackPhase.getStartTime().compareTo(now) <= 0 
-                                    && r1FeedbackPhase.getEndTime().compareTo(now) >= 0;
-        }
-        boolean isInSubmission = r2SubmissionsPhase.getStartTime().compareTo(now) <= 0 
-                                 && r2SubmissionsPhase.getEndTime().compareTo(now) >= 0;
-        boolean isInWinnerAnnouncement = winnerAnnouncementPhase.getStartTime().compareTo(now) <= 0 
-                                         && winnerAnnouncementPhase.getEndTime().compareTo(now) >= 0;
-
-        if (isInRegistration) {
-            dto.setCurrentPhase(registrationPhase);
-            if (isInMilestoneSubmission) {
-                dto.setNextPhase(r1SubmissionsPhase);
-            } else {
-                dto.setNextPhase(r2SubmissionsPhase);
-            }
-        } else if (isInMilestoneSubmission) {
-            dto.setCurrentPhase(r1SubmissionsPhase);
-            dto.setNextPhase(r1FeedbackPhase);
-        } else if (isInMilestoneFeedback) {
-            dto.setCurrentPhase(r1FeedbackPhase);
-            dto.setNextPhase(r2SubmissionsPhase);
-        } else if (isInSubmission) {
-            dto.setCurrentPhase(r2SubmissionsPhase);
-            dto.setNextPhase(winnerAnnouncementPhase);
-        } else if (isInWinnerAnnouncement) {
-            dto.setCurrentPhase(winnerAnnouncementPhase);
-        }
-        
-        return dto;
     }
 
     /**
@@ -3755,6 +3583,28 @@ public class DataProvider {
 
         return contests;
     }
+	
+	 /**
+     * Gets the documentUrl for the given document id.
+     *
+	 * @param documentId the document Id to get url
+     * @return the document Url
+     * @throws Exception if can not find the document url
+     */
+    public static String getDocumentUrl(String documentId) throws Exception {
+        final String queryName = "retrieve_document_url_replatforming";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("docid", documentId);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        if(resultSetContainer.getRowCount() != 1) {
+            throw new DirectException("The document does not exist for " + documentId);
+        }
+        return resultSetContainer.getStringItem(0, "url");
+    }
+
 
     /**
      * <p>Sets the specified contest health DTO with status of running phase (Late, Closing, Running).</p>
@@ -3941,23 +3791,6 @@ public class DataProvider {
         }
 
         return issuesMap;
-    }
-
-    /**
-     * <p>Constructs new <code>ProjectPhaseDTO</code> instance.</p>
-     * 
-     * @param phaseName a <code>String</code> providing the phase name.
-     * @param startTime a <code>Date</code> providing the phase start time. 
-     * @param endTime a <code>Date</code> providing the phase end time.
-     * @return a <code>ProjectPhaseDTO</code> instance.
-     * @since 2.6.5
-     */
-    private static ProjectPhaseDTO createProjectPhaseDTO(String phaseName, Date startTime, Date endTime) {
-        ProjectPhaseDTO phase = new ProjectPhaseDTO();
-        phase.setStartTime(startTime);
-        phase.setEndTime(endTime);
-        phase.setPhaseName(phaseName);
-        return phase;
     }
 }
 

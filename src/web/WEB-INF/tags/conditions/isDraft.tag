@@ -14,21 +14,20 @@
               type="com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO" %>
 <%@ attribute name="negate" required="false" type="java.lang.Boolean" %>
 
-<c:set var="statusName" value="${typedContestBrief.status.name}"/>
-<c:set var="isScheduled" value="false"/>
+<c:set var="isDraft" value="false"/>
 <c:choose>
     <c:when test="${typedContestBrief ne null}">
-        <c:if test="${typedContestBrief.software and statusName eq 'Draft'}">
-            <c:set var="isScheduled" value="true"/>
+        <c:if test="${typedContestBrief.software and typedContestBrief.status.name eq 'Draft'}">
+            <c:set var="isDraft" value="true"/>
         </c:if>
     </c:when>
 </c:choose>
 
 <c:choose>
-    <c:when test="${negate and not isScheduled}">
+    <c:when test="${negate and not isDraft}">
         <jsp:doBody/>
     </c:when>
-    <c:when test="${not negate and isScheduled}">
+    <c:when test="${not negate and isDraft}">
         <jsp:doBody/>
     </c:when>
 </c:choose>

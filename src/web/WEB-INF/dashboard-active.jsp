@@ -182,15 +182,12 @@
                                                         <fmt:formatDate value="${endTime}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
                                                     </td>                                                    
                                                     <td>
-                                                        <s:if test="isStudio == true">
-                                                        <a href="contest/contestRegistrants.action?contestId=${contest.id}">
-                                                        </s:if>
-                                                        <s:if test="isStudio == false">
                                                         <a href="contest/contestRegistrants.action?projectId=${contest.id}">
-                                                        </s:if>
-                                                        <s:property value="registrantsNumber"/>
-                                                        </a></td>
-                                                    <td><s:if test="isStudio == true">
+                                                            <s:property value="registrantsNumber"/>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <s:if test="isStudio == true">
                                                         <link:studioSubmissionsGrid contestId="${contest.id}">
                                                                 <s:property value="submissionsNumber"/>
                                                         </link:studioSubmissionsGrid>
@@ -213,16 +210,11 @@
                                                             class="<s:property value="status.shortName"/>"><s:property
                                                             value="status.name"/></span></td>
                                                     <td class="last">
-                                                        <s:if test="isStudio == true">
-                                                            <a href="contest/detail?contestId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
+                                                        <s:if test="contestType.name == 'Copilot Posting'">
+                                                            <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
                                                         </s:if>
-                                                         <s:if test="isStudio == false">
-                                                            <s:if test="contestType.name == 'Copilot Posting'">
-                                                                <a href="copilot/copilotContestDetails?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                            </s:if>
-                                                            <s:if test="contestType.name != 'Copilot Posting'">
-                                                                <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
-                                                            </s:if>
+                                                        <s:if test="contestType.name != 'Copilot Posting'">
+                                                            <a href="contest/detail?projectId=${contest.id}" class="button1"><span class="btnR"><span class="btnC"><span class="btnIcon">View/Edit</span></span></span></a>
                                                         </s:if>
                                                     </td>
                                                     <td class="hide"><span><s:property value="contest.customerId"/></span></td>

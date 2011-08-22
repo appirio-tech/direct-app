@@ -75,6 +75,26 @@
     </project>
 
     <project
+      name="project_management"
+      svnbase="https://coder.topcoder.com/tcs/catalog/java/project_management"
+      buildfile="build.xml">
+      <versions>
+        <version name="TRUNK" path="branches/cockpit_trunk" />
+        <version name="RELEASE" path="release" />
+      </versions>
+    </project>
+
+    <project
+          name="project_management_persistence"
+          svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/project_management_persistence"
+          buildfile="build.xml">
+      <versions>
+        <version name="TRUNK" path="branches/cockpit_trunk" />
+        <version name="RELEASE" path="release" />
+      </versions>
+    </project>
+
+    <project
         name="deliverable_management"
         svnbase="https://coder.topcoder.com/tcs/catalog/java/deliverable_management"
         buildfile="build.xml">
@@ -193,16 +213,6 @@
    
 
     <project
-        name="project_management"
-        svnbase="https://coder.topcoder.com/tcs/catalog/java/project_management"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-
-    <project
         name="project_phases"
         svnbase="https://coder.topcoder.com/tcs/catalog/java/project_phases"
         buildfile="build.xml">
@@ -272,37 +282,17 @@
             <version name="TRUNK" path="branches/cockpit_trunk"/>
             <version name="RELEASE" path="release"/>
         </versions>
-    </project>
-
-
+    </project> 
+    
+    
     <project
-        name="project_management_persistence"
-        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/project_management_persistence"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-
-     <project
-        name="project_services"
-        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/project_services"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-
-    <project
-      name="catalog_services"
-      svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/catalog_services"
-      buildfile="build.xml">
-      <versions>
+    name="project_services"
+    svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/project_services"
+    buildfile="build.xml">
+    <versions>
         <version name="TRUNK" path="branches/cockpit_trunk"/>
         <version name="RELEASE" path="release"/>
-      </versions>
+    </versions>
     </project>
 
 
@@ -314,6 +304,16 @@
             <version name="TRUNK" path="branches/cockpit_trunk"/>
             <version name="RELEASE" path="release"/>
         </versions>
+    </project>
+    
+    <project
+      name="catalog_services"
+      svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/catalog_services"
+      buildfile="build.xml">
+      <versions>
+        <version name="TRUNK" path="branches/cockpit_trunk"/>
+        <version name="RELEASE" path="release"/>
+      </versions>
     </project>
 
     <project

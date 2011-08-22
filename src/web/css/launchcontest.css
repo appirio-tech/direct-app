@@ -225,7 +225,7 @@
            font-size:14px;
            line-height:28px;
            margin-left:14px;
-           width:118px;
+           width:140px;
         }					
 
         #launchContestOut .contestDetail .textarea1 {
@@ -245,7 +245,7 @@
 	
 	/** add new **/
 	#launchContestOut .addNewContest{
-		height:154px;
+		padding-bottom: 20px;
 		margin-top:34px;
 		border:#bdbdbd solid 1px;
 		}
@@ -703,8 +703,8 @@
 	
 	/** schedule **/
 	#launchContestOut .schedule{
-		height:165px;
 		border:#bdbdbd solid 1px;
+		padding-bottom:20px;
 		}
 	 #launchContestOut.launchCopilotContest .schedule{
          	height:auto;
@@ -728,7 +728,7 @@
 			
 			/** label **/
 			#launchContestOut .schedule label{
-				width:118px;
+				width:125px;
 				float:left;
 				display:inline;
 				margin-left:14px;
@@ -970,12 +970,12 @@
 			border:#c1c1c1 solid 1px;
 			}
 			
-.stockArtsInner {
+.stockArtsInner, .maxSubmissionsInner, .submissionVisibilityInner {
     height:28px;
     padding:5px 10px 0;
     border:1px solid #c1c1c1;
 }
-#rStockArts {
+#rStockArts, #rViewableSubmFlag, #rMaxSubmissions {
     color:#6C6C6C;
     float:left;
     font-size:12px;
@@ -1657,7 +1657,7 @@
 		
 	/** tip link **/
 	#cboxFiles .tipLink,.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink, .stockArtsInner .tipLink,
-	#swCboxFiles .tipLink,.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink{
+	#swCboxFiles .tipLink,.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink, .maxSubmissionsInner .tipLink, .submissionVisibilityInner .tipLink{
 		width:auto;
 		float:right;
 		display:inline;
@@ -1665,7 +1665,7 @@
 		margin-top:18px;
 		}
 		
-	.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink,.stockArtsInner .tipLink{
+	.deliverablesInner .tipLink,.deliverablesInnerSa .tipLink,.mPrizesInner .tipLink,.prizesInner .tipLink,.stockArtsInner .tipLink, .maxSubmissionsInner .tipLink, .submissionVisibilityInner .tipLink {
 		margin-top:6px;
 	}
 	
@@ -2808,4 +2808,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	color:#6c6c6c;
 	background:url(/images/prizesInput.gif) no-repeat;
 }
-
+div.selectSpan{
+	float:left;
+	margin-right:4px;
+}

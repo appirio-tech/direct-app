@@ -9,8 +9,9 @@ import java.util.Map;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.form.ContestIdForm;
-import com.topcoder.service.project.CompetitionPrize;
-import com.topcoder.service.studio.SubmissionData;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.project.Prize;
+import com.topcoder.management.resource.Resource;
 
 /**
  * <p>
@@ -56,9 +57,27 @@ import com.topcoder.service.studio.SubmissionData;
  * - remove ContestStatsDTO and corresponding get/set methods.
  * </p>
  *
+ * <p>
+ *   Version 1.6 (TC Direct Replatforming Release 3) change notes:
+ *   <ul>
+ *     <li>Change the type of {@link #contestSubmissions} from <code>SubmissionData</code> to <code>Submission</code>.</li>
+ *     <li>Added {@link #submissionFeedback} property with respective accessor/mutator methods.</li>
+ *   </ul>
+ * </p>
+ * 
+ * <p>
+ *   Version 1.7 (TC Direct Replatforming Release 5) change notes:
+ *   <ul>
+ *     <li>Remove <code>billingAccounts</code>, <code>prizes</code>, <code>milestonePrize</code>, <code>additionalPrize</code>,
+ *     <code>milestoneAwardNumber</code>, <code>paidSubmissions</code> and <code>submitterHandles</code> fields, also the getters/setters
+ *     are removed.</li>
+ *     <li>Added {@link #submissionResources} property with respective accessor/mutator methods.</li>
+ *   </ul>
+ * </p>
+ *
  * @author isv, flexme, TCSDEVELOPER, TCSASSEMBLER
  * @since Submission Viewer Release 1 assembly
- * @version 1.6
+ * @version 1.7
  */
 public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -74,7 +93,7 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
      * A <code>List</code> listing the submissions for requested contest.
      * </p>
      */
-    private List<SubmissionData> contestSubmissions;
+    private List<Submission> contestSubmissions;
 
     /**
      * <p>
@@ -92,24 +111,68 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
 
     /**
      * <p>
-     * An <code>List</code> providing the Billing Account of the client.
-     * </p>
-     */
-    private List<Project> billingAccounts;
-
-    /**
-     * <p>
      * A <code>boolean</code> providing the flag indicating whether the submissions have already been checked out.
      * </p>
      */
     private boolean hasCheckout;
 
     /**
+     * <p>A <code>String</code> providing the text for milestone round overall feedback.</p>
+     *
+     * @since 1.4
+     */
+    private String milestoneRoundFeedbackText;
+    
+    /**
+     * <p>
+     * A boolean used to represent whether user has write permission to this
+     * contest.
+     * </p>
+     *
+     * @since 1.5
+     */
+    private boolean hasContestWritePermission;
+
+    /**
+     * <p>
+     * A <code>Map</code> providing the client feedback for submissions.
+     * </p>
+     * 
+     * @since 1.6
+     */
+    private Map<Long, String> submissionFeedback;
+
+    /**
+     * <p>
+     * A <code>boolean</code> represents whether the corresponding phase is open. If the phase is scheduler, user can't do
+     * any operation.
+     * </p>
+     * 
+     * @since 1.6
+     */
+    private boolean phaseOpen;
+
+    /**
+     * Represents the <code>Resource</code> associated with the submissions. The key is the submission id, the value is the 
+     * <code>Resource</code> associated with the submission.
+     * 
+     * @since 1.7
+     */
+    private Map<Long, Resource> submissionResources;
+
+
+    /**
+     * Represents the billing account associated with the current contest.
+     */
+    private Project billingAccount;
+
+
+        /**
      * <p>
      * A <code>List</code> providing the prizes data.
      * </p>
      */
-    private List<CompetitionPrize> prizes;
+    private List<Prize> prizes;
 
     /**
      * <p>
@@ -131,37 +194,7 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
      * </p>
      */
     private int milestoneAwardNumber;
-
-    /**
-     * <p>
-     * A <code>String</code> providing the submissions id which have been already paid.
-     */
-    private String paidSubmissions;
-
-    /**
-     * <p>A <code>String</code> providing the text for milestone round overall feedback.</p>
-     *
-     * @since 1.4
-     */
-    private String milestoneRoundFeedbackText;
-
-    /**
-     * <p>A <code>Map</code> providing the handles for submitters.</p>
-     *
-     * @since 1.4
-     */
-    private Map<Long, String> submitterHandles;
     
-    /**
-     * <p>
-     * A boolean used to represent whether user has write permission to this
-     * contest.
-     * </p>
-     *
-     * @since 1.5
-     */
-    private boolean hasContestWritePermission;
-
     /**
      * <p>
      * Constructs new <code>StudioContestSubmissionsDTO</code> instance. This implementation does nothing.
@@ -200,7 +233,7 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
      * 
      * @return a <code>List</code> listing the submissions for requested contest.
      */
-    public List<SubmissionData> getContestSubmissions() {
+    public List<Submission> getContestSubmissions() {
         return contestSubmissions;
     }
 
@@ -212,7 +245,7 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
      * @param contestSubmissions
      *            a <code>List</code> listing the submissions for requested contest.
      */
-    public void setContestSubmissions(List<SubmissionData> contestSubmissions) {
+    public void setContestSubmissions(List<Submission> contestSubmissions) {
         this.contestSubmissions = contestSubmissions;
     }
 
@@ -272,37 +305,12 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
      * @return an <code>int</code> providing the total number of submissions for requested contest.
      */
     public int getSubmissionsCount() {
-        List<SubmissionData> submissions = getContestSubmissions();
+        List<Submission> submissions = getContestSubmissions();
         if (submissions != null) {
             return submissions.size();
         } else {
             return 0;
         }
-    }
-
-    /**
-     * <p>
-     * Gets the billing accounts of the client.
-     * </p>
-     * 
-     * @return a <code>List</code> providing the billing accounts of the client.
-     * @since 1.2
-     */
-    public List<Project> getBillingAccounts() {
-        return billingAccounts;
-    }
-
-    /**
-     * <p>
-     * Sets the billing accounts of the client.
-     * </p>
-     * 
-     * @param a
-     *            <code>List</code> providing the billing accounts of the client.
-     * @since 1.2
-     */
-    public void setBillingAccounts(List<Project> billingAccounts) {
-        this.billingAccounts = billingAccounts;
     }
 
     /**
@@ -329,111 +337,6 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
     }
 
     /**
-     * Gets the prizes data.
-     * 
-     * @return A <code>List</code> providing the prizes data.
-     * @since 1.2
-     */
-    public List<CompetitionPrize> getPrizes() {
-        return prizes;
-    }
-
-    /**
-     * Sets the prizes data.
-     * 
-     * @param prizes
-     *            A <code>List</code> providing the prizes data.
-     * @since 1.2
-     */
-    public void setPrizes(List<CompetitionPrize> prizes) {
-        this.prizes = prizes;
-    }
-
-    /**
-     * Gets the milestone prize.
-     * 
-     * @return A <code>double</code> providing the milestone prize.
-     * @since 1.2
-     */
-    public double getMilestonePrize() {
-        return milestonePrize;
-    }
-
-    /**
-     * Sets the milestone prize.
-     * 
-     * @param milestonePrize
-     *            A <code>double</code> providing the milestone prize.
-     * @since 1.2
-     */
-    public void setMilestonePrize(double milestonePrize) {
-        this.milestonePrize = milestonePrize;
-    }
-
-    /**
-     * Gets the additional prize.
-     * 
-     * @return A <code>double</code> providing the additional prize.
-     * @since 1.2
-     */
-    public double getAdditionalPrize() {
-        return additionalPrize;
-    }
-
-    /**
-     * Sets the additional prize.
-     * 
-     * @param additionalPrize
-     *            A <code>double</code> providing the additional prize.
-     * @since 1.2
-     */
-    public void setAdditionalPrize(double additionalPrize) {
-        this.additionalPrize = additionalPrize;
-    }
-
-    /**
-     * Gets the number of milestone submissions which should award.
-     * 
-     * @return An <code>int</code> providing the number of milestone submissions which should award.
-     * @since 1.2
-     */
-    public int getMilestoneAwardNumber() {
-        return milestoneAwardNumber;
-    }
-
-    /**
-     * Sets the number of milestone submissions which should award.
-     * 
-     * @param milestoneAwardNumber
-     *            An <code>int</code> providing the number of milestone submissions which should award.
-     * @since 1.2
-     */
-    public void setMilestoneAwardNumber(int milestoneAwardNumber) {
-        this.milestoneAwardNumber = milestoneAwardNumber;
-    }
-
-    /**
-     * Gets the submission id which have been already been paid.
-     * 
-     * @return the submission id which have been already been paid.
-     * @since 1.2
-     */
-    public String getPaidSubmissions() {
-        return paidSubmissions;
-    }
-
-    /**
-     * Sets the submission id which have been already been paid.
-     * 
-     * @param paidSubmissions
-     *            the submission id which have been already been paid.
-     * @since 1.2
-     */
-    public void setPaidSubmissions(String paidSubmissions) {
-        this.paidSubmissions = paidSubmissions;
-    }
-
-    /**
      * <p>Gets the text for milestone round overall feedback.</p>
      *
      * @return a <code>String</code> providing the text for milestone round overall feedback.
@@ -451,26 +354,6 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
      */
     public void setMilestoneRoundFeedbackText(String milestoneRoundFeedbackText) {
         this.milestoneRoundFeedbackText = milestoneRoundFeedbackText;
-    }
-
-    /**
-     * <p>Gets the handles for submitters.</p>
-     *
-     * @return a <code>Map</code> providing the handles for submitters.
-     * @since 1.4
-     */
-    public Map<Long, String> getSubmitterHandles() {
-        return this.submitterHandles;
-    }
-
-    /**
-     * <p>Sets the handles for submitters.</p>
-     *
-     * @param submitterHandles a <code>Map</code> providing the handles for submitters.
-     * @since 1.4
-     */
-    public void setSubmitterHandles(Map<Long, String> submitterHandles) {
-        this.submitterHandles = submitterHandles;
     }
 
     /**
@@ -493,4 +376,172 @@ public class StudioContestSubmissionsDTO extends BaseContestCommonDTO implements
     public void setHasContestWritePermission(boolean hasContestWritePermission) {
         this.hasContestWritePermission = hasContestWritePermission;
     }
+
+    /**
+     * Gets the client feedback for the submissions.
+     * 
+     * @return a <code>Map</code> providing the client feedback for submissions.
+     * @since 1.6
+     */
+    public Map<Long, String> getSubmissionFeedback() {
+        return submissionFeedback;
+    }
+
+    /**
+     * Sets the client feedback for the submissions.
+     * 
+     * @param submissionFeedback a <code>Map</code> providing the client feedback for submissions.
+     * @since 1.6
+     */
+    public void setSubmissionFeedback(Map<Long, String> submissionFeedback) {
+        this.submissionFeedback = submissionFeedback;
+    }
+
+    /**
+     * Gets whether the phase is open.
+     *
+     * @return true if the phase is open, false otherwise.
+     * @since 1.6
+     */
+    public boolean isPhaseOpen() {
+        return phaseOpen;
+    }
+
+    /**
+     * Sets whether the phase is open.
+     * 
+     * @param phaseOpen true if the phase is open, false otherwise.
+     * @since 1.6
+     */
+    public void setPhaseOpen(boolean phaseOpen) {
+        this.phaseOpen = phaseOpen;
+    }
+
+    /**
+     * Gets the <code>Resource</code> associated with the submissions.
+     * 
+     * @return the <code>Resource</code> associated with the submissions.
+     * @since 1.7
+     */
+    public Map<Long, Resource> getSubmissionResources() {
+        return submissionResources;
+    }
+
+    /**
+     * Sets the <code>Resource</code> associated with the submissions.
+     * 
+     * @param submissionResources the <code>Resource</code> associated with the submissions.
+     * @since 1.7
+     */
+    public void setSubmissionResources(Map<Long, Resource> submissionResources) {
+        this.submissionResources = submissionResources;
+    }
+
+        /**
+     * <p>
+     * Gets the billing account.
+     * </p>
+     *
+     * @return the billing account for requested contest.
+     */
+    public Project getBillingAccount() {
+        return billingAccount;
+    }
+
+    /**
+     * <p>
+     * Sets the billing account for contest.
+     * </p>
+     *
+     * @param billingAccount
+     *            the billing account for requested contest.
+     */
+    public void setBillingAccount(Project billingAccount) {
+        this.billingAccount = billingAccount;
+    }
+
+    /**
+     * Gets the prizes data.
+     *
+     * @return A <code>List</code> providing the prizes data.
+     * @since 1.2
+     */
+    public List<Prize> getPrizes() {
+        return prizes;
+    }
+
+    /**
+     * Sets the prizes data.
+     *
+     * @param prizes
+     *            A <code>List</code> providing the prizes data.
+     * @since 1.2
+     */
+    public void setPrizes(List<Prize> prizes) {
+        this.prizes = prizes;
+    }
+
+    /**
+     * Gets the milestone prize.
+     *
+     * @return A <code>double</code> providing the milestone prize.
+     * @since 1.2
+     */
+    public double getMilestonePrize() {
+        return milestonePrize;
+    }
+
+    /**
+     * Sets the milestone prize.
+     *
+     * @param milestonePrize
+     *            A <code>double</code> providing the milestone prize.
+     * @since 1.2
+     */
+    public void setMilestonePrize(double milestonePrize) {
+        this.milestonePrize = milestonePrize;
+    }
+
+    /**
+     * Gets the additional prize.
+     *
+     * @return A <code>double</code> providing the additional prize.
+     * @since 1.2
+     */
+    public double getAdditionalPrize() {
+        return additionalPrize;
+    }
+
+    /**
+     * Sets the additional prize.
+     *
+     * @param additionalPrize
+     *            A <code>double</code> providing the additional prize.
+     * @since 1.2
+     */
+    public void setAdditionalPrize(double additionalPrize) {
+        this.additionalPrize = additionalPrize;
+    }
+
+    /**
+     * Gets the number of milestone submissions which should award.
+     *
+     * @return An <code>int</code> providing the number of milestone submissions which should award.
+     * @since 1.2
+     */
+    public int getMilestoneAwardNumber() {
+        return milestoneAwardNumber;
+    }
+
+    /**
+     * Sets the number of milestone submissions which should award.
+     *
+     * @param milestoneAwardNumber
+     *            An <code>int</code> providing the number of milestone submissions which should award.
+     * @since 1.2
+     */
+    public void setMilestoneAwardNumber(int milestoneAwardNumber) {
+        this.milestoneAwardNumber = milestoneAwardNumber;
+    }
+
 }

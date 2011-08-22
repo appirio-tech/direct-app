@@ -1,3 +1,14 @@
+<%--
+  - Author: TCSASSEMBER
+  - Version: 1.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: overview page for studio contest.
+  -
+  - Version 1.1 - Direct - Repost and New Version Assembly Change Note
+  - - The file upload function should the same as software contest.
+  - Version 1.2 (Direct Replatforming Release 4) changes: remove the requirement document radio box for the studio contest.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="contestDetail">	
@@ -49,18 +60,9 @@
                File to Upload: <span id="uploadButtonDiv"><input name="document" type="file" > </span> <br/>
                File Description:
                <textarea id="fileDescription" rows="5" cols="50"></textarea>               
-               <input id="fileUploadBtn"  type="button" value="Upload File -->"/>	
+               <input id="fileUploadBtn"  type="button" value="Upload File -->"/> <br/>
             </div>
-        </div> <!-- end .uploadInner -->
-
-        <div id="fileTemplte" class="hide">
-         <div id="doc{0}" class="document">
-           <span class="fileInput">{1}</span>
-           <a href='${ctx}/launch/downloadDocument?documentId={0}' target="_blank" >download</a>            	  
-           <a href="javascript:removeDocument({0});" >remove</a>            
-         </div>
-       </div>  
-        
+        </div> <!-- end .uploadInner --> 
  </div>
  <!-- end #uploadSection -->
     
@@ -141,13 +143,36 @@
         <div class="deliverablesInnerSa">
         	<div class="checkInput" id="stockArtsCheckboxs">
                        <input type="checkbox" value="true" id="allowStockArt" />
-                       <label>Stock Arts Allowed</label>
+                       <label>Is stock photography allowed? Please be sure you understand the <a href="http://apps.topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Stock+Art+and+Font+Files">stock art policy</a> before checking this box.</label>
           </div>
           <div class="clear"></div>
         </div>
         
     </div>
     <!-- end .stockArts -->
+    <c:if test="${admin}">
+    <div class="submissionVisibility">
+               <h3><span class="icon">Submissions Visibility</span><a class="helpIcon" href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Submissions+Visibility" target="_blank"><span class="hide">Help</span></a></h3>
+               <div class="deliverablesInnerSa">
+                   <div id="viewableSubmCheckbox" class="checkInput">
+                       <input type="checkbox" id="viewableSubmFlag" value="true" checked="checked">
+                       <label>Submissions are viewable after contest ends. NOTE: all submissions are hidden during the submission phase.</label>
+                   </div>
+                   <div class="clear"></div>
+               </div>
+    </div> <!-- end .submissionVisibility -->
+
+    <div class="maxSubmissions">
+       <h3><span class="icon">Maximum Number of Submissions</span><a class="helpIcon" href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Maximum+Number+of+Submissions" target="_blank"><span class="hide">Help</span></a></h3>
+       <div class="deliverablesInnerSa">
+           <div id="maxSubmissionsInput">
+               <input type="text" id="maxSubmissions" class="text" value="5">
+               <label>Please enter the max number of submissions a competitor can upload to each round in the contest. The standard number is 5. Leave blank if you want unlimited submissions.</label>
+           </div>
+           <div class="clear"></div>
+       </div>
+   </div> <!-- end .maxSubmissions -->
+   </c:if>
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
         <a href="javascript:saveAsDraftOverview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>

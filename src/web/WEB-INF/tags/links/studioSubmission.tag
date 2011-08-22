@@ -1,6 +1,9 @@
 <%--
   - Author: isv
-  - Version: 1.0 (Submission Viewer Release 1 assembly)
+  - Version 1.1 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
+  -
+  - Version: 1.1
+  - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This tag renders the HTML markup for A element referencing the Single Studio Submission
@@ -21,7 +24,7 @@
         <a  <c:if test="${not empty id}">id="${id}"</c:if>
             <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>
             href="<s:url action="studioSubmission" namespace="/contest">
-                        <s:param name="contestId" value="%{#attr['contestId']}"/>
+                        <s:param name="projectId" value="%{#attr['contestId']}"/>
                         <s:param name="formData.submissionId" value="%{#attr['submissionId']}"/>
                         <s:param name="formData.roundType" value="%{#attr['roundType']}"/>
                  </s:url>">

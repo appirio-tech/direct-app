@@ -365,16 +365,27 @@ function maxCharsEventHandler(obj, maxChars) {
         return true;
     };
 }
+/**
+ * Set the event handler used by tinyMCE to restrict the max characters when there is a call to setContent() method.
+ */
+function setMaxCharsEventHandlerOnSetup(ed, maxChars) {
+	ed.onBeforeSetContent.add(function(ed, o) {
+		if (o.content.length > maxChars) {
+			showErrors("You can only input max " + maxChars + " characters.");
+			o.content = ed.getContent();
+		}
+	});
+}
 
 var allowedTags = [
 /<a\s*(href\s*=\s*[^=|^>|^<]*)?>/mg,
-/<img\s*((src|height|width)\s*=\s*[^=|^>|^<|^\s]*\s*)*>/mg, 
-/<span\s*(style\s*=\s*[^=|^>|^<]*)?>/mg,
-/<font\s*((color|size)\s*=\s*[^=|^>|^<|^\s]*\s*)*>/mg, 
+/<(span|ul)\s*(style\s*=\s*[^=|^>|^<]*)?>/mg,
 /<(annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg, 
-/<\/\s*(a|img|span|font|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg
+/<\/\s*(a|span|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg
 ];
 var tagsRegExp = /<(\/)*[^<|^>|^\/]*>/mg;
+var tinyMCEValidElements = "a[href],-span[style],-ul[style],annot,abbr,acronym,-blockquote,br,em/i,-li,-ol,#p,-pre,s,strike,-sub,-sup,-strong/b,-table,#td,-tr,tt,u";
+
  /**
  * Return the event handler used by tinyMCE to restrict the max characters and the allowed tags.
  * 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.ajax;
 
@@ -41,9 +41,21 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </p>
  * </p>
  *
- *
- * @author BeBetter, TCSDEVELOPER
- * @version 1.2
+ * <p>
+ * Version 1.3 - TC Direct Replatforming Release 1 Change Note
+ * <ul>
+ * <li>Add prizes, hasMulti, multiRoundEndDate, projectStudioSpecification, fileTypes to the response.</li>
+ * </ul>
+ * </p>
+
+ * <p>
+ * Version 1.4 - TC Direct Replatforming Release 4 Change Note
+ * <ul>
+ * <li>Add document url to the response.</li>
+ * </ul>
+ * </p>
+ * @author BeBetter, TCSDEVELOPER, morehappiness
+ * @version 1.4
  * @since Direct - View/Edit/Activate Software Contests Assembly
  */
 public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
@@ -153,9 +165,12 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("properties", project.getProperties());
 
         // spec
-        result.put("detailedRequirements", project.getProjectSpec().getDetailedRequirements());
-        result.put("softwareGuidelines", project.getProjectSpec().getFinalSubmissionGuidelines());
-        result.put("privateDescription", project.getProjectSpec().getPrivateDescription());
+        if (!DirectUtils.isStudio(bean)) {
+        	result.put("detailedRequirements", project.getProjectSpec().getDetailedRequirements());
+            result.put("softwareGuidelines", project.getProjectSpec().getFinalSubmissionGuidelines());
+            result.put("privateDescription", project.getProjectSpec().getPrivateDescription());
+        }
+        
         // technologies/categories for development/design
         if (isDevOrDesign(bean)) {
             result.put("rootCategoryId", assetDTO.getRootCategory().getId());
@@ -183,6 +198,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
                 docMap.put("fileName", doc.getUrl().substring(doc.getUrl().lastIndexOf("/") + 1));
                 docMap.put("description", doc.getDocumentName());
                 docMap.put("documentTypeId", doc.getDocumentTypeId());
+                docMap.put("url", doc.getUrl());
                 return docMap;
             }
         }));
@@ -191,13 +207,26 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("softwareContestFees", ConfigUtils.getSoftwareContestFees());
 
         // end date
+        result.put("subEndDate", DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(bean)));
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(bean)));
         result.put("paidFee", DirectUtils.getPaidFee(bean));
 
         result.put("phaseOpen", DirectUtils.isPhaseOpen(bean));
         result.put("hasSpecReview", DirectUtils.hasSpecReview(bean));
         result.put("isSpecReviewStarted", DirectUtils.isSpecReviewStarted(bean));
+        result.put("prizes", bean.getProjectHeader().getPrizes());
 
+        boolean hasMulti = DirectUtils.isMultiRound(bean);
+        result.put("hasMulti", hasMulti);
+        if (hasMulti) {
+            result.put("multiRoundEndDate", DirectUtils.getDateString(DirectUtils.getMultiRoundEndDate(bean)));
+        }
+        
+        // for studio contest
+        if (DirectUtils.isStudio(bean)) {
+            result.put("projectStudioSpecification", bean.getProjectHeader().getProjectStudioSpecification());
+            result.put("fileTypes", bean.getProjectHeader().getProjectFileTypes());
+        }
 
 
         return result;

@@ -6,9 +6,16 @@
  * Version 1.1 change notes:
  * Provide a confirmation dialog when activating the created contest.
  * 
+ * Version 1.2 TC Direct Replatforming Release 1 change note
+ * - Many changes were made to work for the new studio contest type and multiround type.
+ *
+ * Versino 1.3 TC Direct Replatforming Release 2 change notes:
+ * - Display the milestone prizes for software contest.
+ * - Display the specification review cost for studio contest.
+ * - The studio contest can start specification review when the contest is activated.
+ * 
  * @author TCSASSEMBLER
- * @version 1.1(Direct Improvements Assembly Release 2)
- * @since 1.0
+ * @version 1.3
  */
 /**
  * Update order review page of software contest.
@@ -26,6 +33,24 @@ function updateOrderReviewSoftware() {
    $('#sworProjectName').html($("#projects option[value="+ mainWidget.softwareCompetition.projectHeader.tcDirectProjectId +"]").text());
    $('#sworBillingAccount').html($("#billingProjects option[value="+ billingProjectId +"]").text());
    $('#sworStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
+   
+   //milestone prizes
+   var milestonePrizesTotal = 0;
+   if(!mainWidget.softwareCompetition.multiRound) {
+   	  $('#orswMilestonePrizesDiv').hide();
+   } else {
+   	  $('#orswMilestonePrizesDiv').show();
+   	  var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+      var amount = prizes[prizes.length - 1].prizeAmount;   	  
+      html = "";
+   	  for(var i = 1; i <= prizes[prizes.length - 1].numberOfSubmissions; i++) {
+   	     milestonePrizesTotal += amount;	
+         html +=
+         '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewSoftwarePage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';
+   	  }
+      html += '<td class="last">$' + milestonePrizesTotal.formatMoney(2) + '</td>';
+      $('#orswMilestonePrizeTR').html(html);   	  
+   }
    
    var firstPrize = mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost();
    $('#sworFirstPlaceCost').html(firstPrize.formatMoney(2));
@@ -47,37 +72,40 @@ function updateOrderReviewSoftware() {
    $('#sworCopilotFee').html(parseFloat(mainWidget.softwareCompetition.copilotCost).formatMoney(2));
    var additionalFee = specificationReviewPayment + reviewPayment + contestFee + parseFloat(mainWidget.softwareCompetition.copilotCost);
    $('#sworAdditionalCosts').html(additionalFee.formatMoney(2));
-   $('#sworTotal').html((contestPrizeCost + additionalFee).formatMoney(2));
+   $('#sworTotal').html((contestPrizeCost + milestonePrizesTotal + additionalFee).formatMoney(2));
 }
 
 /**
  * Update order review page of studio contest.
  */
 function updateOrderReviewStudio() {
-   var competition = mainWidget.competition;
+	var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
 
-   if(competition.contestData.isBillingSelected()) {
+   if(billingProjectId > 0) {
    	 $('#orderReview_activateButton').show();     
    } else {
    	 $('#orderReview_activateButton').hide();
    }   
    
    $('#orDate').html(formatDateForReview(new Date()));   
-   $('#orContestName').html(mainWidget.competition.contestData.name);
-   var isMultiRound = mainWidget.competition.contestData.multiRound;
+   $('#orContestName').html(mainWidget.softwareCompetition.assetDTO.name);
+   var isMultiRound = mainWidget.softwareCompetition.multiRound;
    $('#orRoundType').html((!isMultiRound)?"Contest will be run in single-round":"Contest will be run in multi-rounds");
 
-   var billingProjectId = mainWidget.competition.contestData.billingProject;
    $('#orBillingAccount').html((billingProjectId == -1)?"(not selected)":$("#billingProjects option[value="+ billingProjectId +"]").text());
 
-   $('#orStartDate').html(formatDateForReview(mainWidget.competition.startDate));   
+   $('#orStartDate').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));   
    
    //prizes
    var contestPrizesTotal = 0;
    var html = "";
-   $.each(mainWidget.competition.contestData.prizes, function(i, prize) {
-       var place = i+1;
-       var amount = prize.amount;
+   var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+   $.each(prizes, function(i, prize) {
+	   if (prize.prizeType.id != CONTEST_PRIZE_TYPE_ID) {
+		   return;
+	   }
+       var place = prize.place;
+       var amount = prize.prizeAmount;
        contestPrizesTotal += amount;
        html +=
        '<td>'+ place +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';       
@@ -93,9 +121,9 @@ function updateOrderReviewStudio() {
    } else {
    	  $('#orMilestonePrizesDiv').show();
       
-      var amount = mainWidget.milestonePrizeData.amount;   	  
+      var amount = prizes[prizes.length - 1].prizeAmount;   	  
       html = "";
-   	  for(var i=1;i<=mainWidget.milestonePrizeData.numberOfSubmissions;i++) {
+   	  for(var i=1;i<=prizes[prizes.length - 1].numberOfSubmissions;i++) {
    	   milestonePrizesTotal += amount;	
        html +=
        '<td>'+ i +' : $'+ amount.formatMoney(0) +'<a href="javascript: showPage(\'overviewPage\');" class="tipLink"><img src="/images/penicon.gif" alt="Edit" /></a></td>';          	  	
@@ -104,11 +132,15 @@ function updateOrderReviewStudio() {
       $('#orMilestonePrizeTR').html(html);   	  
    }
    
-   var adminFee = mainWidget.competition.contestData.contestAdministrationFee;
+   var specificationReviewPayment = mainWidget.softwareCompetition.projectHeader.getSpecReviewCost();
+   var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
+   $('#orSpecificationReviewPayment').html(specificationReviewPayment.formatMoney(2));
+   $('#orCopilotFee').html(copilotCost.formatMoney(2));
+   var adminFee = mainWidget.softwareCompetition.projectHeader.contestAdministrationFee;
    $('#orAdminFee1').html('$'+adminFee.formatMoney(0));
-   $('#orAdminFee2').html('$'+adminFee.formatMoney(0));
+   $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost).formatMoney(0));
    
-   var total = contestPrizesTotal + milestonePrizesTotal + adminFee;
+   var total = contestPrizesTotal + milestonePrizesTotal + adminFee + specificationReviewPayment + copilotCost;
    $('#orTotal').html('$' + total.formatMoney(0));
 }
 
@@ -118,21 +150,25 @@ function updateOrderReviewStudio() {
  * @return points
  */
 function calculateStudioCupPoints() {
-    var isMultiRound = mainWidget.competition.contestData.multiRound;
-    var milestoneAmount = mainWidget.milestonePrizeData.amount;
+    var isMultiRound = mainWidget.softwareCompetition.multiRound;
+    var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+    var milestoneAmount = prizes[prizes.length - 1].prizeAmount;
     var milestoneTotal = 0;
 
     if (isMultiRound) {
 
-        for (var i = 1; i <= mainWidget.milestonePrizeData.numberOfSubmissions; i++) {
+        for (var i = 1; i <= prizes[prizes.length - 1].numberOfSubmissions; i++) {
             milestoneTotal += milestoneAmount;
         }
     }
 
     var contestPrizeTotal = 0;
 
-    $.each(mainWidget.competition.contestData.prizes, function(i, prize) {
-        var amount = prize.amount;
+    $.each(prizes, function(i, prize) {
+    	if (prize.prizeType.id != CONTEST_PRIZE_TYPE_ID) {
+    		return;
+    	}
+        var amount = prize.prizeAmount;
         contestPrizeTotal += amount;
     });
 
@@ -167,8 +203,8 @@ function activateContest() {
    $( "#activateContestConfirmation" ).dialog({
 			autoOpen: true,
 			resizable: true,
-			height:200,
-			width: 500,
+			height:240,
+			width: 520,
 			modal: true,
 			buttons: {
 				"No": function() {
@@ -176,11 +212,7 @@ function activateContest() {
 				},
 				"Yes": function() {
 					$( this ).dialog("close");
-					if(mainWidget.isSoftwareContest()) {
-						activateContestSoftware();
-					} else {
-						activateContestStudio();
-					}
+					activateContestSoftware();
 				}
 			}
 	});
@@ -214,42 +246,7 @@ function activateContestSoftware() {
       success: handleActivationResult,
       beforeSend: beforeAjax,
       complete: afterAjax            
-   });   
-}
-
-/**
- * Activate studio contest.
- */
-function activateContestStudio() {	
-   if(!validateFieldsOrderReview()) {
-       return;
-   }
-
-   var competition = mainWidget.competition;
-
-   if(!competition.contestData.isBillingSelected()) {
-   	  showErrors("no billing project is selected.");
-   	  return;
-   }
-
-   
-   competition.contestData.statusId=CONTEST_STATUS_ACTIVE_PUBLIC;
-   competition.contestData.detailedStatusId=CONTEST_DETAILED_STATUS_SCHEDULED;
-
-   //construct request data
-   var request = saveAsDraftRequest();
-   request['activationFlag'] = true;
-
-   $.ajax({
-      type: 'POST',
-      url:  "saveDraftContest",
-      data: request,
-      cache: false,
-      dataType: 'json',
-      success: handleActivationResult,
-      beforeSend: beforeAjax,
-      complete: afterAjax       
-   });   
+   }); 
 }
 
 /**
@@ -260,12 +257,9 @@ function activateContestStudio() {
 function handleActivationResult(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
-       var startSpecReviewUrl = "../contest/startSpecReview.action?contestId=";
+       var startSpecReviewUrl = "../contest/startSpecReview.action?projectId=";
+       mainWidget.softwareCompetition.projectHeader.id = result.projectId;
        if(mainWidget.isSoftwareContest()) {
-        if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
-          mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-        }
-         
          //show as receipt
          $('#swOrderReview_title').text('Receipt');
          $('#swReceiptAlert').show();
@@ -273,16 +267,7 @@ function handleActivationResult(jsonResult) {
          $('#swOrderReview_buttonBox2').show();   
          //remove all edit icons
          $('#orderReviewSoftwarePage a.tipLink').hide();
-         // show go to my spec review pop div
-         if (result.hasSpecReview && !result.isSpecReviewStarted) {
-             $('#swOrderReview_bottom_review').show();
-         }
-         startSpecReviewUrl += result.projectId + "&";
        } else {
-         if(mainWidget.competition.contestData.contestId < 0 ) {
-           mainWidget.competition.contestData.contestId = result.contestId;
-         } 
-         
          //show as receipt
          $('#orderReview_title').text('Receipt');
          $('#receiptAlert').show();
@@ -291,6 +276,15 @@ function handleActivationResult(jsonResult) {
          //remove all edit icons
          $('#orderReviewPage a.tipLink').hide();
        }
+       // show go to my spec review pop div
+       if (result.hasSpecReview && !result.isSpecReviewStarted) {
+    	   if(mainWidget.isSoftwareContest()) {
+    		   $('#swOrderReview_bottom_review').show();
+    	   } else {
+    		   $('#orderReview_bottom_review').show();
+    	   }
+       }
+       startSpecReviewUrl += result.projectId + "&";
         $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
         $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
     },
@@ -326,13 +320,8 @@ function saveAsDraftOrderReview() {
  * Edit contest.
  */
 function editContest() {
-   if(mainWidget.isSoftwareContest()) {
-	   var contestId = mainWidget.softwareCompetition.projectHeader.id
-	   location.replace(ctx+'/contest/detail?projectId='+contestId);
-   } else {
-	   var contestId = mainWidget.competition.contestData.contestId;
-	   location.replace(ctx+'/contest/detail?contestId='+contestId);
-   }	   		
+	var contestId = mainWidget.softwareCompetition.projectHeader.id
+	location.replace(ctx+'/contest/detail?projectId='+contestId);	   		
 }
 
 $(function() {

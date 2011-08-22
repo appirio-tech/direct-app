@@ -58,11 +58,6 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
     private static final Map<String, Long> BILLING_COST_REPORT_PAYMENT_TYPES_IDS;
 
     /**
-     * The mapping between studio contest type id and studio contest types.
-     */
-    private static final Map<Long, String> STUDIO_CONTEST_TYPES;
-
-    /**
      * The default duration used for date filter.
      */
     private static final long DEFAULT_DURATION = 182 * 24 * 3600 * 1000L;
@@ -91,19 +86,6 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
         BILLING_COST_REPORT_CONTEST_STATUS_IDS.put(scheduled.getName().toLowerCase(), scheduled.getId());
         BILLING_COST_REPORT_CONTEST_STATUS_IDS.put(active.getName().toLowerCase(), active.getId());
         BILLING_COST_REPORT_CONTEST_STATUS_IDS.put(finished.getName().toLowerCase(), finished.getId());
-
-        STUDIO_CONTEST_TYPES = new HashMap<Long, String>();
-
-        STUDIO_CONTEST_TYPES.put(1L, "Web Design");
-        STUDIO_CONTEST_TYPES.put(3L, "Logo Design");
-        STUDIO_CONTEST_TYPES.put(4L, "Banners/Icons");
-        STUDIO_CONTEST_TYPES.put(5L, "Application Front-End Design");
-        STUDIO_CONTEST_TYPES.put(6L, "Widget or Mobile Screen Design");
-        STUDIO_CONTEST_TYPES.put(8L, "Front-End Flash");
-        STUDIO_CONTEST_TYPES.put(12L, "Print/Presentation");
-        STUDIO_CONTEST_TYPES.put(18L, "Other");
-        STUDIO_CONTEST_TYPES.put(25L, "Wireframes");
-        STUDIO_CONTEST_TYPES.put(26L, "Idea Generation");
 
         // initialize the payment types mappings
         BILLING_COST_REPORT_PAYMENT_TYPES = new HashMap<Long, String>();
@@ -205,11 +187,6 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
 
         // Get the list of available project categories
         Map<Long, String> projectCategories = DataProvider.getAllProjectCategories();
-
-        // add studio project categories
-        for (Map.Entry<Long, String> entry : STUDIO_CONTEST_TYPES.entrySet()) {
-            projectCategories.put(entry.getKey() + 100L, entry.getValue());
-        }
 
         // Get all the clients accessible by current user
         Map<Long, String> customers = DirectUtils.getAllClients(currentUser);

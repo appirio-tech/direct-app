@@ -17,22 +17,24 @@ import javax.xml.bind.JAXBContext;
  * Version 1.1 - TC Direct - Software Contest Creation Update Assembly 1.0 change notes:
  * - Add the logic to load copilot fees from the configuration file copilotFeeds.xml
  * </p>
+ *
+ * <p>
+ * Version 1.1 - TC Direct Replatforming Release 1 Change note
+ * <ul>
+ * <li>Remove studioContestTypes filed and getter method for it.</li>
+ * <li>Update {@link #init()} method to don't initialize studioContestTypes from files.</li>
+ * </ul>
+ * </p>
+ *
  * <p>
  * Version 1.2 - TC Cockpit Bug Tracking R1 Contest Tracking Assembly 1.0 change notes:
  * - Add the logic to load issue tracking configs from configuration file IssueTrackingConfig.xml
  * </p>
- *
+ * 
  * @author BeBetter, Veve
  * @version 1.2
  */
 public final class ConfigUtils {
-    /**
-     * <p>
-     * studio contest types.
-     * </p>
-     */
-    private static StudioContestTypes studioContestTypes;
-
     /**
      * <p>
      * Overview object to hold studio overview information.
@@ -119,11 +121,6 @@ public final class ConfigUtils {
      * <p> version 1.2 changes - add load of issue tracking configuration</p>
      */
     private static void init() throws Exception {
-        JAXBContext studioTypesJaxbContext = JAXBContext.newInstance(StudioContestTypes.class);
-
-        studioContestTypes = (StudioContestTypes) studioTypesJaxbContext.createUnmarshaller().unmarshal(
-                ConfigUtils.class.getResourceAsStream("/contestTypes.xml"));
-
         JAXBContext overviewJaxbContext = JAXBContext.newInstance(Overview.class);
         overview = (Overview) overviewJaxbContext.createUnmarshaller().unmarshal(
                 ConfigUtils.class.getResourceAsStream("/overview.xml"));
@@ -173,17 +170,6 @@ public final class ConfigUtils {
         JAXBContext issueTrackingJaxbContext = JAXBContext.newInstance(IssueTrackingConfig.class);
         issueTrackingConfig = (IssueTrackingConfig) issueTrackingJaxbContext.createUnmarshaller().unmarshal(
                 ConfigUtils.class.getResourceAsStream("/IssueTrackingConfig.xml"));
-    }
-
-    /**
-     * <p>
-     * Gets studio contest types.
-     * </p>
-     *
-     * @return studio contest types
-     */
-    public static List<StudioContestType> getStudioContestTypes() {
-        return studioContestTypes.getContestTypes();
     }
 
     /**

@@ -3,9 +3,11 @@
  */
 package com.topcoder.direct.services.view.dto.contest;
 
-import com.topcoder.direct.services.view.dto.CommonDTO;
+import java.util.List;
+import java.util.Map;
+
 import com.topcoder.direct.services.view.form.ContestIdForm;
-import com.topcoder.service.studio.SubmissionData;
+import com.topcoder.management.deliverable.Submission;
 
 /**
  * <p>A <code>DTO</code> class providing the data for displaying by <code>Studio Contest Submission</code> view.</p>
@@ -37,9 +39,25 @@ import com.topcoder.service.studio.SubmissionData;
  * - remove ContestStatsDTO and corresponding get/set methods.
  * </p>
  *
- * @author isv, flexme, TCSDEVELOPER, TCSASSEMBLER
+ * <p>
+ *   Version 1.4 (TC Direct Replatforming Release 3) change notes:
+ *   <ul>
+ *     <li>Change the type of {@link #submission} from <code>SubmissionData</code> to <code>Submission</code>.</li>
+ *     <li>Added {@link #feedbackText} property with respective accessor/mutator methods.</p>
+ *   </ul>
+ * </p>
+ * 
+ * <p>
+ *   Version 1.5 (TC Direct Replatforming Release 5) change notes:
+ *   <ul>
+ *     <li>Added {@link #fonts} property with respective accessor/mutator methods.</li>
+ *     <li>Added {@link #stockArts} property with respective accessor/mutator methods.</li>
+ *   </ul>
+ * </p>
+ * 
+ * @author isv, flexme
  * @since Submission Viewer Release 1 assembly
- * @version 1.4
+ * @version 1.5
  */
 public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -49,9 +67,14 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     private long contestId;
 
     /**
-     * <p>A <code>SubmissionData</code> providing the details for requested <code>Studio</code> submission.</p>
+     * <p>A <code>Submission</code> providing the details for requested <code>Studio</code> submission.</p>
      */
-    private SubmissionData submission;
+    private Submission submission;
+
+    /**
+     * <p>A <code>submissionArtifactCount</code> providing the nubmer of artifact count of the submission</p>
+     */
+    private long submissionArtifactCount;
 
     /**
      * <p>A <code>boolean</code> providing the flag indicating whether contest has milestone round set or not.</p>
@@ -106,6 +129,39 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     private boolean hasContestWritePermission;
 
     /**
+     * <p>
+     * A <code>String</code> providing the client feedback of the submission.
+     * </p>
+     * 
+     * @since 1.4
+     */
+    private String feedbackText;
+
+    /**
+     * <p>
+     * A <code>boolean</code> represents whether the corresponding phase is open. If the phase is scheduled, user can't do
+     * any operation.
+     * </p>
+     * 
+     * @since 1.5
+     */
+    private boolean phaseOpen;
+
+    /**
+     * Represents the Fonts external contents of the submission.
+     * 
+     * @since 1.5
+     */
+    private List<Map<String, String>> fonts;
+    
+    /**
+     * Represents the Stock Art external contents of the submission.
+     * 
+     * @since 1.5
+     */
+    private List<Map<String, String>> stockArts;
+    
+    /**
      * <p>Constructs new <code>StudioContestSubmissionDTO</code> instance. This implementation does nothing.</p>
      */
     public StudioContestSubmissionDTO() {
@@ -132,21 +188,42 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     /**
      * <p>Gets the details for requested submission.</p>
      *
-     * @return a <code>SubmissionData</code> providing the details for requested <code>Studio</code> submission.
+     * @return a <code>Submission</code> providing the details for requested <code>Studio</code> submission.
      */
-    public SubmissionData getSubmission() {
+    public Submission getSubmission() {
         return this.submission;
     }
 
     /**
      * <p>Sets the details for requested submission.</p>
      *
-     * @param submission a <code>SubmissionData</code> providing the details for requested <code>Studio</code>
+     * @param submission a <code>Submission</code> providing the details for requested <code>Studio</code>
      * submission.
      */
-    public void setSubmission(SubmissionData submission) {
+    public void setSubmission(Submission submission) {
         this.submission = submission;
     }
+
+     /**
+     * <p>Get the submissionArtifactCount.</p>
+     *
+     * @return the number of artifact of the current submission
+     */
+    public long getSubmissionArtifactCount() {
+        return this.submissionArtifactCount;
+    }
+
+    /**
+     * <p>Sets the submissionArtifactCount.</p>
+     *
+     * @param submissionArtifactCount - submission Artifact Count
+     */
+    public void setSubmissionArtifactCount(long submissionArtifactCount) {
+        this.submissionArtifactCount = submissionArtifactCount;
+    }
+
+
+    
 
     /**
      * <p>Gets the flag indicating whether contest has milestone round set or not.</p>
@@ -310,5 +387,85 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
      */
     public void setHasContestWritePermission(boolean hasContestWritePermission) {
         this.hasContestWritePermission = hasContestWritePermission;
+    }
+
+    /**
+     * Gets the client feedback of the submission.
+     * 
+     * return the client feedback of the submission.
+     * @since 1.4
+     */
+    public String getFeedbackText() {
+        return feedbackText;
+    }
+
+    /**
+     * Sets the client feedback of the submission.
+     *
+     * @param feedbackText the client feedback of the submission.
+     * @since 1.4
+     */
+    public void setFeedbackText(String feedbackText) {
+        this.feedbackText = feedbackText;
+    }
+    
+    /**
+     * Gets whether the phase is open.
+     *
+     * @return true if the phase is open, false otherwise.
+     * @since 1.5
+     */
+    public boolean isPhaseOpen() {
+        return phaseOpen;
+    }
+
+    /**
+     * Sets whether the phase is open.
+     * 
+     * @param phaseOpen true if the phase is open, false otherwise.
+     * @since 1.5
+     */
+    public void setPhaseOpen(boolean phaseOpen) {
+        this.phaseOpen = phaseOpen;
+    }
+
+    /**
+     * Gets the Fonts external contents of the submission.
+     * 
+     * @return the Fonts external contents of the submission.
+     * @since 1.5
+     */
+    public List<Map<String, String>> getFonts() {
+        return fonts;
+    }
+
+    /**
+     * Sets the Fonts external contents of the submission.
+     * 
+     * @param fonts the Fonts external contents of the submission.
+     * @since 1.5
+     */
+    public void setFonts(List<Map<String, String>> fonts) {
+        this.fonts = fonts;
+    }
+
+    /**
+     * Gets the Fonts external contents of the submission.
+     * 
+     * @return the Fonts external contents of the submission.
+     * @since 1.5
+     */
+    public List<Map<String, String>> getStockArts() {
+        return stockArts;
+    }
+
+    /**
+     * Sets the Fonts external contents of the submission.
+     * 
+     * @param stockArts the Fonts external contents of the submission.
+     * @since 1.5
+     */
+    public void setStockArts(List<Map<String, String>> stockArts) {
+        this.stockArts = stockArts;
     }
 }

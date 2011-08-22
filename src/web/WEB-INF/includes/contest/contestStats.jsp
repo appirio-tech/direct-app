@@ -1,12 +1,13 @@
 <%--
-  - Author: isv
-  - Version: 1.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: isv, morehappiness
+  - Version: 1.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
   -
   - Version 1.1 (Submission Viewer Release 1 assembly) changes: linked Submissions tab to submission pages
   - for Studio contests.
+  - Version 1.2 (Direct Replatforming Release 4) changes: remove the condition test on whether it's studio contest or not.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -34,16 +35,9 @@
                 <fmt:formatDate value="${contestEndDate}" pattern="MM/dd/yyyy HH:mm zzz"/>
             </td>
             <td>
-                <s:if test="isStudio == true">
-                    <a href="<s:url action="contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
-                        <s:property value="registrantsNumber"/>
-                    </a>
-                </s:if>
-                <s:if test="isStudio == false">
                     <a href="<s:url action="contestRegistrants" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
                         <s:property value="registrantsNumber"/>
                     </a>
-                </s:if>
             </td>
             <td>
                 <if:isStudioContest contestStats="${contestStats}">

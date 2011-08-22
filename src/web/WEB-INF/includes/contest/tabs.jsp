@@ -1,13 +1,14 @@
 <%--
-  - Author: isv, Veve
-  - Version: 1.2
+  - Author: isv, Veve, morehappiness
+  - Version: 1.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
   -
   - Version 1.1 (Submission Viewer Release 1 assembly) changes: linked Submissions tab to submission pages
   - for Studio contests.
-  - Version 1.2 (TC Cockpit Bug Tracking R1 Contest Tracking  assembly) changes: Add new tab for the issue tracking for
+  - Version 1.2 (Direct Replatforming Release 4) changes: remove the condition test on whether it's studio contest or not.
+  - Version 1.3 (TC Cockpit Bug Tracking R1 Contest Tracking  assembly) changes: Add new tab for the issue tracking for
   - software and studio contest.
   -
 --%>
@@ -19,36 +20,22 @@
     <div id="tabs3">
         <ul>
             <li class="firstItem <c:if test="${requestScope.CURRENT_SUB_TAB eq 'details'}">on</c:if>">
-
-                <s:if test="isStudio == true">
-                    <a href="<s:url action="contest/detail" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>" class="first">
-                    <span class="left"><span class="right">Details</span></span></a>
-                </s:if>
-                <s:if test="isStudio == false">
                     <a href="<s:url action="contest/detail" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>" class="first">
                     <span class="left"><span class="right">Details</span></span></a>
-                </s:if>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'specReview'}">class="on"</c:if>>
-                <if:isStudioContest contestStats="${contestStats}" negate="true">
-                    <a href="<s:url action="contest/viewSpecReview" namespace="/">
-                        <s:param name="contestId" value="contest.id"/>
-                        <s:param name="studio" value="false"/>
-                    </s:url>" >
-                
-                    <span class="left"><span class="right">Spec Review</span></span></a>
-                </if:isStudioContest>
+				<a href="<s:url action="contest/viewSpecReview" namespace="/">
+					<s:param name="projectId" value="contest.id"/>
+					<s:param name="studio" value="viewData.contestStats.isStudio"/>
+				</s:url>" >
+			
+				<span class="left"><span class="right">Spec Review</span></span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'registrants'}">class="on"</c:if>>
 
-                 <s:if test="isStudio == true">
-                    <a href="<s:url action="contest/contestRegistrants" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
-                    <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
-                </s:if>
-                <s:if test="isStudio == false">
                     <a href="<s:url action="contest/contestRegistrants" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
-                </s:if>
+
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if>>
                 <if:isStudioContest contestStats="${contestStats}">
@@ -80,12 +67,7 @@
 			<li id="rReceiptTab" class="lastItem <c:choose>
 				<c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>
 				</c:choose>">
-                <s:if test="isStudio == true">
-					<a class="last" href="<s:url action="contest/receipt" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
-                </s:if>
-                <s:if test="isStudio == false">
 					<a class="last" href="<s:url action="contest/receipt" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-                </s:if>				
 				<span class="left"><span class="right">Receipt</span></span></a>
 			</li>
 

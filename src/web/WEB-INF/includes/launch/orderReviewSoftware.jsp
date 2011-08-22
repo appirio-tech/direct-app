@@ -1,3 +1,13 @@
+<%--
+  - Author: TCSASSEMBER
+  - Version: 1.1
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: order review page for software contest page.
+  -
+  - Version 1.1 - TC Direct Replatforming Release 2 Change Note
+  - - Add milestone prizes section.
+--%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="orderReview">
@@ -50,6 +60,12 @@
   			<td class="last"><span id="sworContestPrizeCost"></span></td>
   		</tr></tbody>  				
   </table>	
+  <div id="orswMilestonePrizesDiv">
+    <h3>Milestone Prizes</h3>
+    <table class="prizesTable">
+      <tr id="orswMilestonePrizeTR"></tr>
+    </table>
+  </div>
 	<h3>Additional Costs:</h3>
 	<table class="prizesTable">
 		<tr>

@@ -88,5 +88,10 @@
     <script type="text/javascript" src="/scripts/jquery.blockUI.js"></script>
     <script type="text/javascript" src="/scripts/checkout.js"></script>
 </s:if>
+<s:if test="formData.viewType.toString() == 'CHECKOUT_CONFIRM'">
+    <script type="text/javascript" src="/scripts/common.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="/scripts/confirmCheckout.js"></script>
+</s:if>
 <script type="text/javascript" src="/scripts/json2.js"></script>
 <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>

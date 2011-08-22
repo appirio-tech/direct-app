@@ -117,7 +117,7 @@ $(document).ready(function(){
 	roundType = $("#roundType").val();
 	// get the url of a sumbission's single page
 	function getSinglePage(submissionId) {
-		return "studioSubmission?contestId=" + contestId + "&formData.submissionId=" + submissionId + "&formData.roundType=" + roundType;
+		return "studioSubmission?projectId=" + contestId + "&formData.submissionId=" + submissionId + "&formData.roundType=" + roundType;
 	}
 
 	// update the order of the bank slots
@@ -219,10 +219,9 @@ $(document).ready(function(){
         }); 
 
         // #clearSlots click function to clear all slots
+        if (!hasCheckout) {
         $("#clearSlots").click(function() {
-            if (!hasCheckout) {
                 $("#bankSelectionItemList li:not(:last-child)").html('<a href="#" class="thumb"><span></span></a>');
-            }
                 listExtra = new Array();
                 listLikes = new Array();
                 listDislikes = new Array();
@@ -230,13 +229,11 @@ $(document).ready(function(){
                 $("#likeCount").html("0");
                 $("#dislikeCount").html("0");
 
-            if (!hasCheckout) {
                 $(".statusSubmission").removeClass("firstSlot");
                 $(".statusSubmission").removeClass("secondSlot");
                 $(".statusSubmission").removeClass("thirdSlot");
                 $(".statusSubmission").removeClass("fourthSlot");
                 $(".statusSubmission").removeClass("fifthSlot");
-            }
 
                 $(".statusSubmission").removeClass("dollarSlot");
                 $(".statusSubmission").removeClass("likeSlot");
@@ -244,6 +241,7 @@ $(document).ready(function(){
                 getBankData();
                 return false;
         });  
+        }
         
         // #likeFolder init droppable
         $("#likeFolder a").droppable({ 
@@ -618,6 +616,12 @@ $(document).ready(function(){
 		for (var i = 0; i < bankData.listExtra.length; i++) {
 			var label = bankData.listExtra[i];
 			$("#submission-" + label).find(".extraSlot").click();
+			if (hasCheckout) {
+				$('#submission-' + label).children(".statusSubmission").removeClass().addClass("statusSubmission").addClass("dollarSlot");
+			}
+		}
+		if (hasCheckout) {
+			$("#numExtra").html("(" + bankData.listExtra.length + ")");
 		}
 	}
 	// show like submissions

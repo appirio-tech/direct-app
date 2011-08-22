@@ -167,8 +167,6 @@
         <copy file="${object_formatter.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${online_review_phases.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${PactsClientServices.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${project.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-        <copy file="${user.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${project_phase_template.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${search_builder.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${security.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -268,6 +266,8 @@
         <copy file="${pipeline_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${liquid_portal_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${pipeline_service_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
+        <copy file="${project.jar}" todir="${build_distdir}" overwrite="true"/>
+        <copy file="${user.jar}" todir="${build_distdir}" overwrite="true"/>
         <!-- war files -->
         <copy file="${contest_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${admin_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
@@ -346,9 +346,6 @@
         <copy todir="${jboss.home}/server/${server.name}/lib" overwrite="true" verbose="true" flatten="true">
             <fileset dir="${jboss_filesdir}/lib"/>
         </copy>
-
-        <copy file="${jboss_filesdir}/deploy/User.jar" todir="${jboss.home}/server/${server.name}/deploy"  overwrite="true"/>
-        <copy file="${jboss_filesdir}/deploy/Project.jar" todir="${jboss.home}/server/${server.name}/deploy"  overwrite="true"/>
     </target>
 
     <target name="deploy-static-files" description="deploy the static files for direct application">

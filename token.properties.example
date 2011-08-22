@@ -235,6 +235,11 @@
 @jiraIssueURLPrefix@=http://www.dev.topcoder.com/bugs/browse/
 @jiraProfilePrefix@=http://www.dev.topcoder.com/bugs/secure/ViewProfile.jspa?name=
 
+##############
+# struts.xml #
+##############
+@uploadedFilesRootDir@=uploaded_files_path
+
 ################################
 # ApplicationServer.properties #
 ################################

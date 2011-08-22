@@ -488,9 +488,9 @@ function populateRoundSection() {
 	$('#roundTypes').val(isMultiRound?'multi':'single');
 	$('#roundTypes').trigger("change");         			      	
 	$('#startDate').datePicker().val(getDatePart(mainWidget.competition.startDate)).trigger('change');
-	$('#startTime').val(getTimePart(mainWidget.competition.startDate));
+	$('#startTime').val(getRoundedTime(mainWidget.competition.startDate));
 	$('#endDate').datePicker().val(getDatePart(mainWidget.competition.endDate)).trigger('change');
-	$('#endTime').val(getTimePart(mainWidget.competition.endDate));
+	$('#endTime').val(getRoundedTime(mainWidget.competition.endDate));
 	
    if(!isMultiRound) {	
       $('#mileStoneEditDiv').hide();  		     
@@ -500,7 +500,7 @@ function populateRoundSection() {
 	 } else {
 	 	  $('#mileStoneEditDiv').show();  	
 	 	  $('#milestoneDate').datePicker().val(getDatePart(mainWidget.competition.milestoneDate)).trigger('change');
-	 	  $('#milestoneTime').val(getTimePart(mainWidget.competition.milestoneDate));
+	 	  $('#milestoneTime').val(getRoundedTime(mainWidget.competition.milestoneDate));
 	 	  
 	 	  $('#milestonePrizeDiv').show();
 	 	  $('#milestonePrize').val(mainWidget.milestonePrizeData.amount);
@@ -750,8 +750,6 @@ function populateSpecSection() {
    
    //update it
    $('#rTypeIntroduction').html(mainWidget.competition.contestData.shortSummary);
-   
-	 $('#rContestStockArt').html(mainWidget.competition.contestData.allowStockArt ? 'Stock Arts allowed' : 'Stock Arts not allowed');
 
    // file types
    var fileTypes = mainWidget.competition.contestData.finalFileFormat.split(",");

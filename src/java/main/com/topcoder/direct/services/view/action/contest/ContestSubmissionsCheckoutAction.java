@@ -1,15 +1,18 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.clients.model.Project;
+import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
@@ -20,10 +23,12 @@ import com.topcoder.direct.services.view.form.StudioContestSubmissionsForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.project.Prize;
+import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.project.StudioCompetition;
-import com.topcoder.service.studio.SubmissionData;
+import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>
@@ -31,11 +36,18 @@ import com.topcoder.service.studio.SubmissionData;
  * <code>Studio</code> contest.
  * </p>
  * 
+ * <p>
+ *   Version 1.1 (TC Direct Replatforming Release 3) change notes:
+ *   <ul>
+ *     <li>The {@link #executeAction()} method was totally updated to work for the new studio contest.</li>
+ *   </ul>
+ * </p>
+ *
  * @author flexme
  * @since Submission Viewer Release 3 assembly
- * @version 1.0
+ * @version 1.1
  */
-public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAction {
+public class ContestSubmissionsCheckoutAction extends ContestAction {
     /**
      * Represents the serial version unique id.
      */
@@ -146,93 +158,103 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
      */
     @Override
     public void executeAction() throws Exception {
-        getFormData().setContestId(getContestId());
-        if (isStudioCompetition()) {
+        getFormData().setContestId(getProjectId());
+        long projectId = getProjectId();
+        if (projectId <= 0) {
+            throw new DirectException("projectId less than 0 or not defined.");
+        }
+        
+        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
+        TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
+        SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
+        
+        // only works for studio contest
+        if (DirectUtils.isStudio(softwareCompetition)) {
             // Get current session
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
+            
+            boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
+            getViewData().setHasMilestoneRound(hasMilestoneRound);
+            getViewData().setPrizes(DirectUtils.getContestPrizes(softwareCompetition));
+            getViewData().setAdditionalPrize(DirectUtils.getAdditionalPrize(softwareCompetition));
 
-            ContestServiceFacade contestServiceFacade = getContestServiceFacade();
-            TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
+            if (hasMilestoneRound) {
+                Prize milestonePrize = DirectUtils.getMilestonePrize(softwareCompetition);
+                getViewData().setMilestonePrize(milestonePrize.getPrizeAmount());
 
-            // Set flag indicating on milestone round presence
-            long contestId = getContestId();
-            StudioCompetition studioCompetition = contestServiceFacade.getContest(currentUser, contestId);
-            getViewData().setHasMilestoneRound(studioCompetition.getContestData().getMultiRound());
-            getViewData().setPrizes(studioCompetition.getPrizes());
-            if (getViewData().getHasMilestoneRound()) {
-                getViewData().setMilestonePrize(studioCompetition.getContestData().getMilestonePrizeData().getAmount());
+
+                if (getFormData().getRoundType() == ContestRoundType.FINAL) {
+                    List<Submission> milestoneSubmissions = DirectUtils.getStudioContestSubmissions(projectId, ContestRoundType.MILESTONE, currentUser, contestServiceFacade);
+
+                    int count = 0;
+
+                    for (Submission submission : milestoneSubmissions) {
+                        if (submission.isExtra() || submission.getFinalScore() > 10.0) {
+                            count++;
+                        }
+                    }
+
+                    getViewData().setMilestoneAwardNumber(milestonePrize.getNumberOfSubmissions() > count ? count : milestonePrize.getNumberOfSubmissions());
+                }
             }
-            getViewData().setAdditionalPrize(DirectUtils.getAdditionalPrize(studioCompetition));
+
             if (getFormData().getRoundType() == ContestRoundType.MILESTONE) {
-                getViewData().setMilestoneRoundFeedbackText(
-                    studioCompetition.getContestData().getMultiRoundData().getGeneralFeedbackText());
+                getViewData().setMilestoneRoundFeedbackText(softwareCompetition.getProjectHeader().getProjectStudioSpecification().getGeneralFeedback());
             }
-
+            
             // Set submissions data
             ContestRoundType roundType = getFormData().getRoundType();
-            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(), roundType,
-                    currentUser, contestServiceFacade);
-            getViewData().setContestSubmissions(submissions);
+            PhaseType reviewPhaseType;
             if (roundType == ContestRoundType.FINAL) {
-                StringBuffer paidSubmissions = new StringBuffer();
-                for (SubmissionData sub : submissions) {
-                    if (sub.isPaidFor()) {
-                        paidSubmissions.append(sub.getSubmissionId()).append(",");
-                    }
-                }
-                List<SubmissionData> mileSubmissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(),
-                        ContestRoundType.MILESTONE, currentUser, contestServiceFacade);
-                int total = 0;
-                for (SubmissionData submission : mileSubmissions) {
-                    if (submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize()) {
-                        total++;
-                    }
-                    if ((submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize())
-                            || submission.isPaidFor()) {
-                        paidSubmissions.append(submission.getSubmissionId()).append(",");
-                    }
-                }
-                getViewData().setMilestoneAwardNumber(total);
-                if (paidSubmissions.length() > 0) {
-                    paidSubmissions.deleteCharAt(paidSubmissions.length() - 1);
-                }
-                getViewData().setPaidSubmissions(paidSubmissions.toString());
+                reviewPhaseType = PhaseType.REVIEW_PHASE;
+            } else {
+                reviewPhaseType = PhaseType.MILESTONE_REVIEW_PHASE;
             }
-
-            // set billing accounts
-            viewData.setBillingAccounts(getProjectServiceFacade().getClientProjectsByUser(currentUser));
-            // set flag indicating whether the submissions have already been checked out
-            viewData.setHasCheckout(DirectUtils.getSubmissionsCheckout(submissions, roundType));
-
-            this.contestBillingAccountId = studioCompetition.getContestData().getBillingProject();
+            List<Submission> submissions = DirectUtils.getStudioContestSubmissions(projectId, roundType, currentUser, contestServiceFacade);
+            if (DirectUtils.isPhaseScheduled(softwareCompetition, reviewPhaseType)) {
+                viewData.setPhaseOpen(false);
+            } else {
+                viewData.setPhaseOpen(true);
+            }
+            getViewData().setContestSubmissions(submissions);
+            getViewData().setSubmissionFeedback(DirectUtils.getStudioSubmissionsFeedback(currentUser, contestServiceFacade, submissions, projectId, reviewPhaseType));
+            
+            boolean hasCheckout = DirectUtils.getContestCheckout(softwareCompetition, roundType);
+            getViewData().setHasCheckout(hasCheckout);
+            
+            this.contestBillingAccountId = DirectUtils.getBillingIdForProject(currentUser, projectId);
 
             this.canAccessBillingAccount = false;
 
-            for(Project billing : viewData.getBillingAccounts()) {
-                if (this.contestBillingAccountId == billing.getId()) {
+            List<Project> billingAccounts = DirectUtils.getBillingAccounts(currentUser);
+            Project selectedBilling = null;
+            for(Project billingAccount : billingAccounts) {
+                if (this.contestBillingAccountId == billingAccount.getId()) {
                     this.canAccessBillingAccount = true;
+                    selectedBilling = billingAccount;
+                    break;
                 }
             }
 
             if (!this.canAccessBillingAccount) {
                 // add the billing account so user can check out
-                Project selectedBilling = new Project();
+                selectedBilling = new Project();
                 selectedBilling.setId(this.contestBillingAccountId);
                 selectedBilling.setName("HIDDEN BILLING NAME");
-                viewData.getBillingAccounts().add(selectedBilling);
             }
+
+            getViewData().setBillingAccount(selectedBilling);
 
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
-            //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, true);
 
             getViewData().setContestStats(contestStats);
 
             // set the number of prizes
-            int prizeNumber = DirectUtils.getContestPrizeNumber(studioCompetition, roundType);
+            int prizeNumber = DirectUtils.getContestPrizeNumber(softwareCompetition, roundType);
             getViewData().setPrizeNumber(prizeNumber);
 
             // Set projects data
@@ -250,4 +272,6 @@ public class ContestSubmissionsCheckoutAction extends StudioOrSoftwareContestAct
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
         }
     }
+
+
 }

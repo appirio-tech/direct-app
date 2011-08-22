@@ -1,6 +1,11 @@
 <%--
   - Author: TCSDEVELOPER
-  - Version: 1.0 (Direct Submission Viewer Release 4)
+  -
+  - Version 1.1 (TC Direct Replatforming Release 5) Change notes:
+  - - Update EL expression for submission entity because the submission entity type is changed.
+  - - Update the online review download submission link tag. 
+  -
+  - Version: 1.1 (Direct Submission Viewer Release 4)
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
@@ -12,15 +17,15 @@
         <div id="winnerPanel">
             <c:forEach items="${viewData.contestSubmissions}"
                        var="submission">
-                <if:isConfirmedStudioSubmission submission="${submission}">
+                <c:if test="${submission.prize != null}">
                     <c:choose>
-                        <c:when test="${submission.userRank eq 1}">
+                        <c:when test="${submission.placement eq 1}">
                             <c:set var="suffix" value="st"/>
                         </c:when>
-                        <c:when test="${submission.userRank eq 2}">
+                        <c:when test="${submission.placement eq 2}">
                             <c:set var="suffix" value="nd"/>
                         </c:when>
-                        <c:when test="${submission.userRank eq 3}">
+                        <c:when test="${submission.placement eq 3}">
                             <c:set var="suffix" value="rd"/>
                         </c:when>
                         <c:otherwise>
@@ -28,16 +33,20 @@
                         </c:otherwise>
                     </c:choose>
                     <div class="winnerCol">
-                        <link:studioSubmissionDownload styleClass="downloadFile"
-                                                       submissionId="${submission.submissionId}"/>
+                        <link:studioSubmissionDownload submissionId="${submission.id}" styleClass="downloadFile" />
                         <div class="winnerData">
-                            <h3>${submission.userRank}${suffix} Place Winner</h3>
-                            <link:user styleClass="handle" handle="${viewData.submitterHandles[submission.submitterId]}"
-                                       isStudio="true" userId="${submission.submitterId}"/>
+                            <c:if test="${not submission.extra}">
+                                <h3>${submission.placement}${suffix} Place Winner</h3>
+                            </c:if>
+                            <c:if test="${submission.extra}">
+                                <h3>Client Selection</h3>
+                            </c:if>
+                            <link:user styleClass="handle" handle="${viewData.submissionResources[submission.id].properties['Handle']}"
+                                       userId="${viewData.submissionResources[submission.id].properties['External Reference ID']}"/>
                         </div>
                     </div>
-                </if:isConfirmedStudioSubmission>
                 <!-- End .winnerCol -->
+                </c:if>
             </c:forEach>
         </div>
         <!-- End #winnerPanel -->

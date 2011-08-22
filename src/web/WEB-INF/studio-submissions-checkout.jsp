@@ -1,9 +1,12 @@
 <%--
   - Author: flexme, TCSDEVELOPER
   -
+  - Version 1.3 (TC Direct Replatforming Release 5) change notes: The final round check out process is changed, the unused code were removed.
+  - Version 1.2 (TC Direct Replatforming Release 3  ) change notes: Update studioCheckoutSubmissionItem tag to work with the new Submission type.
   - Version 1.1 (Direct Submission Viewer Release 4 ) change notes: Added logic for handling "Confirmed" submissions.
   -
-  - Version: 1.1 (Submission Viewer Release 3 assembly)
+  - Version: 1.3
+  - Since: Submission Viewer Release 3 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Studio contest for checking out.
@@ -61,8 +64,7 @@
                                                         <jsp:include page="includes/contest/submissionViewer/checkoutButtons.jsp"/>
                                                     </div>
                                                 </div>
-                                                
-                                                <s:if test="!(formData.roundType.toString() == 'FINAL' && viewData.hasCheckout == true)">
+                                             
                                                 <div class="SubmissionSlotTitle">
                                                     <s:if test="formData.roundType.toString() == 'MILESTONE'">
                                                         <h3>Milestone Selection Summary</h3>
@@ -85,30 +87,23 @@
                                                         </thead>
                                                         <tbody>
                                                         <s:iterator value="viewData.contestSubmissions">
-                                                            <s:set var="contestId" value="contestId" scope="page"/>
-                                                            <s:set var="submissionId" value="submissionId" scope="page"/>
-                                                            <s:set var="feedbackText" value="feedbackText" scope="page"/>
-                                                            <s:set var="userRank" value="userRank" scope="page"/>
-                                                            <s:set var="awardMilestonePrize" value="awardMilestonePrize" scope="page"/>
-                                                            <s:if test="(viewData.hasCheckout == false) || (formData.roundType.toString() == 'MILESTONE' && top.isAwardMilestonePrize()) || (formData.roundType.toString() == 'FINAL' && top.userRank > 0)">
+                                                            <s:set var="contestId" value="projectId" scope="page"/>
+                                                            <s:set var="submissionId" value="id" scope="page"/>
                                                             <ui:studioCheckoutSubmissionItem contestId="${contestId}"
                                                                                              isConfirmed="${viewData.hasCheckout}"
                                                                                              submissionId="${submissionId}"
-                                                                                             feedbackText="${feedbackText}"/>
-                                                            </s:if>
+                                                                                             feedbackText="${viewData.submissionFeedback[submissionId]}"/>
                                                         </s:iterator>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                </s:if>
                                                 <!-- End #submissionList -->
                                                 
-                                                <s:if test="formData.roundType.toString() == 'FINAL'">
                                                 <div id="additionalPurchase" style="display:none;">
                                                     <h3>Additional Purchases</h3>
                                                     
                                                     <div class="additionalPurchaseTitle">
-                                                        <p>Submission that will be purchased for <strong><fmt:formatNumber value="${viewData.additionalPrize}" type="currency" pattern="$.00" /></strong> each</p>
+                                                        <p>Submission that will be purchased for extra.</p>
                                                     </div>
                                                     
                                                     <div class="additionalPurchaseContent">
@@ -120,7 +115,7 @@
                                                         <div id="purchasePreview" class="additionalPreview"></div>
                                                     </div>
                                                 </div><!-- End #additionalPurchase -->
-                                                
+                                                <s:if test="formData.roundType.toString() == 'FINAL'">
                                                 <div id="purchaseSummary">
                                                     <div class="selectPaymentTitle">
                                                         <h3>Purchase Summary</h3>
@@ -129,11 +124,7 @@
 
                                                                 <label>Billing Account:</label>
                                                                 <div id="selectPaymentWrapper">
-                                                                    <select id="slPaymentType" >
-                                                                        <s:iterator value="viewData.billingAccounts">
-                                                                        <option value="${id}" <s:if test="id == contestBillingAccountId">selected="selected"</s:if>>${name}</option>
-                                                                        </s:iterator>
-                                                                    </select>
+                                                                    ${viewData.billingAccount.name}
                                                                 </div>
 
                                                         </div>
@@ -161,11 +152,16 @@
                                                                         ${viewData.milestoneRoundFeedbackText}
                                                                     </c:when>
                                                                     <c:otherwise>
+                                                                    	<s:if test="viewData.phaseOpen">
                                                                         <textarea class="txtFeedback" cols="10" rows="5"
                                                                                   id="feedbackTextMilestoneRound">${viewData.milestoneRoundFeedbackText}</textarea>
+                                                                        <div class="generalFeedbackAction">
                                                                         <a href="javascript:" class="button6" rel="${contestId}"
                                                                            id="saveGeneralFeedback">
                                                                             <span class="left"><span class="right">Save Feedback</span></span></a>
+                                                                            <span id="ginfo" class="fright"></span>
+                                                                        </div>
+                                                                        </s:if>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </td>
@@ -205,12 +201,10 @@
 <input type="hidden" id="additionalPrize" value="${viewData.additionalPrize}" />
 <input type="hidden" id="milestonePrize" value="${viewData.milestonePrize}" />
 <input type="hidden" id="milestoneAwardNumber" value="${viewData.milestoneAwardNumber}" />
-<input type="hidden" id="hasCheckout" value="${viewData.hasCheckout}" />
-<input type="hidden" id="paidSubmissions" value="${viewData.paidSubmissions}" />
 <s:iterator value="viewData.prizes">
 <s:set var="place" value="place" scope="page"/>
-<s:set var="amount" value="amount" scope="page"/>
-<input type="hidden" id="prize_${place}" value="${amount}" />
+<s:set var="prizeAmount" value="prizeAmount" scope="page"/>
+<input type="hidden" id="prize_${place}" value="${prizeAmount}" />
 </s:iterator>
 <jsp:include page="includes/contest/submissionViewer/checkoutForm.jsp" />
 <jsp:include page="includes/popups.jsp"/>

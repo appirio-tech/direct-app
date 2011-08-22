@@ -6,14 +6,19 @@
  * - Bind change event to project dropdown to dynamically load copilots of the selected project
  * - Add method isCopilotDropDownHidden to check if the copilot dropdown is hidden
  * - Add method handleProjectDropDownChange for project dropdown change event
- * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
+ * 
+ * Version 1.1 TC Direct Replatforming Release 1 change note
+ * - Changes were made to work for the new studio contest type and multiround type.
+ * 
+ * Version 1.2 TC Direct Replatforming Release 2 change note
+ * - The software contest can set milestone prizes.
+ *
+ * Version 1.3 Direct Improvements Assembly Release 2 Assembly change note
  * - Add character limitation for the input fields and input areas when creating contests.
- * Version 1.3 TC Direct UI Improvement Assembly 2 Assembly change note
- * - Solve "Help of Enforce CCA doesn't work"
- * Version 1.4 Release Assembly - Direct Improvements Assembly Release 3
- * - user server date as date picker initial date
- * @author TCSDEVELOPER
- * @version 1.4(Release Assembly - Direct Improvements Assembly Release 3)
+ *
+ *
+ * @author TCSASSEMBER
+ * @version 1.3
  */
 $(document).ready(function() {
 
@@ -174,6 +179,8 @@ $(document).ready(function() {
 
     });
 
+    $("#milestoneDateDay").val(3).trigger('change');
+    $("#endDateDay").val(3).trigger('change');
 
     /* init pop */
     var prevPopup = null;
@@ -258,6 +265,7 @@ $(document).ready(function() {
         $('#enforceCCAToolTip').hide();
     });
 
+
     $('#Round1HelpIcon .helpIcon').hover(function() {
         showPopup(this, 'contestRound1ToolTip');
     }, function() {
@@ -335,10 +343,14 @@ $(document).ready(function() {
     // populate the select option for software group
     $.each(projectCategoryArray, function(i, projectCategory) {
         // not show copilot contest type
-        if (projectCategory.id != 29) {
+        if (projectCategory.id != 29 && projectCategory.typeId != 3) {
             $("<option/>").val("SOFTWARE" + projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Software']");
         }
+        if (projectCategory.typeId == 3) {
+        	$("<option/>").val("STUDIO"+projectCategory.id).text(projectCategory.label).appendTo("optgroup[label='Studio']");
+        }
     });
+    
 
     if ($('select').length > 0) {
         $('.selectSoftware select,.selectDesing select,.startSelect select,.milestoneSelect select,.endSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect();
@@ -408,16 +420,19 @@ $(document).ready(function() {
     // round types
     $('#roundTypes').bind("change", function() {
         var roundType = $('#roundTypes').val();
-        if (roundType == 'single') {
-            $('#mileStoneDiv').hide();
-            $('#milestonePrizeDiv').hide();
-            $('#round1InfoDiv').hide();
-            $('#round2InfoDiv').hide();
+	updateRoundDurationLabels();
+        if(roundType == 'single') {
+           $('#mileStoneDiv').hide();
+           $('#milestonePrizeDiv').hide();
+           $('#swMilestonePrizeDiv').hide();
+           $('#round1InfoDiv').hide();
+           $('#round2InfoDiv').hide();
         } else {
-            $('#mileStoneDiv').show();
-            $('#milestonePrizeDiv').show();
-            $('#round1InfoDiv').show();
-            $('#round2InfoDiv').show();
+           $('#mileStoneDiv').show();
+           $('#milestonePrizeDiv').show();           
+           $('#swMilestonePrizeDiv').show();
+           $('#round1InfoDiv').show();
+           $('#round2InfoDiv').show();
         }
     });
     $('#roundTypes').trigger("change");
@@ -434,42 +449,27 @@ $(document).ready(function() {
         tinyMCE.init({
             mode : "exact",
             elements : obj,
-            plugins :"pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
-
+            plugins :"pagebreak,style,layer,table,save,advhr,advimage,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
             theme : "advanced",
-            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink,code",
             theme_advanced_buttons2 : "",
             theme_advanced_buttons3 : "",
             theme_advanced_statusbar_location : "bottom",
             theme_advanced_path : false,
             theme_advanced_resizing : true,
             theme_advanced_resize_horizontal : false,
+	    valid_elements : tinyMCEValidElements,
             
             init_instance_callback : function() {
                 $('table.mceLayout').css('width','100%');
             },
-            
+            setup: function(ed) {setMaxCharsEventHandlerOnSetup(ed, maxChars);},
             handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
         });
     }
 
-    /*****************************
-     *   Overview page
-     ****************************/
-    tinyMCE.init({
-        mode : "exact",
-        elements : "",
-        plugins : "paste",
-        theme : "advanced",
-        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
-        theme_advanced_buttons2 : "",
-        theme_advanced_buttons3 : "",
-        init_instance_callback : function() {
-            $('table.mceLayout').css('width', '100%');
-        }
-    });
 	makeMaxCharsAndAllowedTagsTinyMCE('contestDescription', 10000);
-    makeMaxCharsAndAllowedTagsTinyMCE('contestIntroduction', 10000);
+    makeMaxCharsAndAllowedTagsTinyMCE('contestIntroduction', 2000);
 	makeMaxCharsAndAllowedTagsTinyMCE('round1Info', 2000);
 	makeMaxCharsAndAllowedTagsTinyMCE('round2Info', 2000);
 	makeMaxCharsAndAllowedTagsTinyMCE('swDetailedRequirements', 12000);
@@ -482,12 +482,6 @@ var capacityFullDates = {};
 
 // flag to indicate copilot dropdown initialization
 var copilotDropdownFlag = false;
-
-
-// function checks whether the copilot selection dropdown is hidden
-function isCopilotDropDownHidden() {
-    return !$(".addNewContest .software").is(":visible");
-}
 
 // method to populate copilots selection based on the project selection change
 function handleProjectDropDownChange() {
@@ -511,24 +505,36 @@ function handleProjectDropDownChange() {
     // set the selection drop down value
     $contestCopilots.val(selected);
 
-    if (!isCopilotDropDownHidden()) {
-        // we only refersh stylish selection when it's not hidden
-        $('.copilotSelect select').resetSS();
-        $('.copilotSelect select').getSetSSValue(selected);
-    }
+    // we only refersh stylish selection when it's not hidden
+    $('.copilotSelect select').resetSS();
+    $('.copilotSelect select').getSetSSValue(selected);
 }
 
+function updateRoundDurationLabels() {
+	var contestType = getContestType(true)[0];
+	var roundType = $('#roundTypes').val();
+    if(contestType == "SOFTWARE") {
+		$("#mileStoneDiv label").html("Milestone Duration:");
+	} else {
+		if (roundType == "single") {
+			$("#endDiv label").html("Round 1 Duration:");
+		} else {
+			$("#mileStoneDiv label").html("Round 1 Duration:");
+			$("#endDiv label").html("Round 2 Duration:");
+		}
+	}
+}
 
 /**
  * event handler function when contest type is changed.
  */
 function onContestTypeChange() {
-    var contestType = getContestType(true)[0];
-    var typeId = getContestType(true)[1];
-    var currentTypeId = -1;
-    if (isContestSaved()) {
-        currentTypeId = mainWidget.isSoftwareContest() ? mainWidget.softwareCompetition.projectHeader.projectCategory.id : mainWidget.competition.contestData.contestTypeId;
-    }
+       var contestType = getContestType(true)[0];
+       var typeId = getContestType(true)[1];
+       var currentTypeId = -1;
+       if(isContestSaved()) {
+          currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+       }
 
     if (isContestSaved() && mainWidget.competitionType != contestType) {
         alert("You can not switch between studio and software after it is saved.");
@@ -536,27 +542,34 @@ function onContestTypeChange() {
         return;
     }
 
+    updateRoundDurationLabels();
     mainWidget.competitionType = contestType;
-
     if (typeId == currentTypeId) {
         // it is a revert, nothing to do here
         return;
     }
 
-    $('.software').hide();
-    $('.studio').hide();
-    $(".schedule").css("height", "70px");
-    $(".schedule").css("margin-bottom", "105px");
+       
+       if (mainWidget.softwareCompetition.projectHeader.projectCategory && mainWidget.softwareCompetition.projectHeader.projectCategory.id > 0) {
+    	   mainWidget.softwareCompetition.projectHeader.projectCategory.id = typeId;
+       }
+       
+      $('.software').hide();
+      $('.studio').hide();
+      $(".schedule").css("margin-bottom","0px");
 
-    /// Studio Contest
-    if (mainWidget.isSoftwareContest()) {
-        //Software Contest
-        $('.software').show();
-        $('.studio').hide();
-        $(".schedule").css("height", "70px");
-        $(".schedule").css("margin-bottom", "105px");
-        // update the height of addNewContest panel to accommodate copilot dropdown
-        $("#launchContestOut .addNewContest").css("height", "200px")
+      if (hasMultiRound(typeId)) {
+    	  $("#roundTypeDiv").show();
+      } else {
+    	  $("#roundTypeDiv").hide();
+    	  $("#mileStoneDiv").hide();
+    	  mainWidget.softwareCompetition.multiRound = false;
+      }
+      /// Studio Contest
+      if(mainWidget.isSoftwareContest()) {
+         //Software Contest
+         $('.software').show();
+         $('.studio').hide();
 
         // the copilot dropdown options
         var SelectOptions = {
@@ -571,56 +584,52 @@ function onContestTypeChange() {
         } else {
             // initialized before, we only do the reset to update the data
             $('.copilotSelect select').resetSS();
-        }
+        }         
 
+         if(typeId == SOFTWARE_CATEGORY_ID_DEVELOPMENT) {
+         	  $('#contestName').hide();
+         	  $('#contestNameFromDesign').show();
+         	  $('#contestNameFromDesign').val("");
+         	  $('#contestIdFromDesign').val("");
+         	  $('#devOnlyDiv').show();
+         	  $('#devOnlyDiv').css("display","inline");
+         	  $('#devOnlyCheckBox').attr('checked', false);         	           	  
+         } else {
+         	  $('#contestName').show();
+         	  $('#contestNameFromDesign').hide();
+         	  $('#devOnlyDiv').hide();
+         	  $('#devOnlyCheckBox').attr('checked', false);         	  
+         }
+      }
 
-        if (typeId == SOFTWARE_CATEGORY_ID_DEVELOPMENT) {
-            $('#contestName').hide();
-            $('#contestNameFromDesign').show();
-            $('#contestNameFromDesign').val("");
-            $('#contestIdFromDesign').val("");
-            $('#devOnlyDiv').show();
-            $('#devOnlyDiv').css("display", "inline");
-            $('#devOnlyCheckBox').attr('checked', false);
-        } else {
-            $('#contestName').show();
-            $('#contestNameFromDesign').hide();
-            $('#devOnlyDiv').hide();
-            $('#devOnlyCheckBox').attr('checked', false);
-        }
-    }
+      if(mainWidget.isStudioContest()) {
+          $('.software').hide();
+          $('.studio').show();
+          $('#roundTypes').trigger('change');
 
-    if (mainWidget.isStudioContest()) {
-        $('.software').hide();
-        $('.studio').show();
-        $('#roundTypes').trigger('change');
-        $("#launchContestOut .addNewContest").css("height", "154px");
+          $.each(studioSubtypeOverviews, function(i, overview) {
+              if(overview.id == typeId) {
+                 // update overview description
+                 $('#contestDescriptionTooltip').html(overview.description);
+              }
+          });
 
-        $.each(studioSubtypeOverviews, function(i, overview) {
-            if (overview.id == typeId) {
-                // update overview description
-                $('#contestDescriptionTooltip').html(overview.description);
-            }
-        });
+          $.each(studioSubtypeFees, function(i, fee) {
+               if(fee.id == typeId) {
+                 // not set yet, auto fill
+                 if(isEmpty($('#prize3').val())) {
+                     $('#prize1').val(fee.firstPlaceCost)
+                     $('#prize2').val(fee.secondPlaceCost)
+                 }
+              }
+          });
 
-        $.each(studioSubtypeFees, function(i, fee) {
-            if (fee.id == typeId) {
-                // not set yet, auto fill
-                if (isEmpty($('#prize3').val())) {
-                    $('#prize1').val(fee.firstPlaceCost)
-                    $('#prize2').val(fee.secondPlaceCost)
-                }
-            }
-        });
+          resetFileTypes(typeId);
+          $(".schedule").css("margin-bottom","0px");
 
-        resetFileTypes(typeId);
-        $(".schedule").css("height", "165px");
-        $(".schedule").css("margin-bottom", "0px");
-
-        getCapacityDatesForStudioSubType(getContestType(true)[1]);
-    }
-
-    updateContestFee();
+          getCapacityDatesForStudioSubType(getContestType(true)[1]);
+      }
+      updateContestFee();      
 }
 
 /**

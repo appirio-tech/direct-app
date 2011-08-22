@@ -96,6 +96,11 @@ public class ViewSpecificationReviewActionResultData {
     private Map<Long, List<SpecComment>> specComments;
     
     /**
+     * <p>A <code>Map</code> holding info whether response was maximum for a question.
+     */
+    private Map<Long, Boolean> responses;
+    
+    /**
      * The contest dashboard data.s
      */
     private ContestDashboardDTO dashboard;
@@ -233,6 +238,21 @@ public class ViewSpecificationReviewActionResultData {
      */
     public void setSpecComments(Map<Long, List<SpecComment>> specComments) {
         this.specComments = specComments;
+    }
+    
+    /**
+     * Gets the responses field.
+     */
+    public Map<Long, Boolean> getResponses() {
+    	return responses;
+    }
+    
+    /**
+     * Sets the responses field.
+     * @param responses the responses to set
+     */
+    public void setResponses(Map<Long, Boolean> responses) {
+    	this.responses = responses;
     }
 
     /**

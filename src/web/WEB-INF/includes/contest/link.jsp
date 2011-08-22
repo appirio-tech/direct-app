@@ -54,16 +54,15 @@
 
         <li class="splitter"></li>
 
-        <s:if test="!viewData.contestStats.isStudio">
-            <li>
-                <link:onlineReviewProjectDetails projectId="${param.projectId}" target="_blank"
-                                                 styleClass="contestLinkIcon linkIconOnlineReview">Online Review</link:onlineReviewProjectDetails>
-            </li>
-            <li class="splitter"></li>
-            <li><a href="<s:property value='#contestLink'/>"  target="_blank" class="contestLinkIcon linkIconRegistrationPage">Registration
-                Page</a></li>
-            <li class="splitter"></li>
-        </s:if>
+        <li>
+            <link:onlineReviewProjectDetails projectId="${param.projectId}" target="_blank"
+                                             styleClass="contestLinkIcon linkIconOnlineReview">Online Review</link:onlineReviewProjectDetails>
+        </li>
+        <li class="splitter"></li>
+        <li><a href="<s:property value='#contestLink'/>" target="_blank"
+               class="contestLinkIcon linkIconRegistrationPage">Registration
+            Page</a></li>
+        <li class="splitter"></li>
         <li>
         <s:if test="!viewData.contestStats.isStudio">
         <a href="https://forums.topcoder.com/?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
@@ -74,12 +73,7 @@
         </li>
 		<li class="splitter"></li>
         <li>
-        <s:if test="!viewData.contestStats.isStudio">
         <link:jira projectId="${param.projectId}" target="_blank" styleClass="contestLinkIcon linkIconJIRA" >JIRA</link:jira>
-        </s:if>
-        <s:else>
-        <link:jira projectId="${param.contestId}" target="_blank" styleClass="contestLinkIcon linkIconJIRA" >JIRA</link:jira>
-        </s:else>
         </li>
 
         <c:if test="${!viewData.contestStats.isStudio && ! empty viewData.contestStats.svn}">

@@ -49,6 +49,52 @@
         <copilotFee>600</copilotFee>
 	</contestType>
 
+    <contestType contestTypeId="16"><!-- Banners/Icons -->
+        <copilotFee>300</copilotFee>
+    </contestType>
 
+    <contestType contestTypeId="17"><!-- Web Design -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="18"><!-- Wireframes -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="20"><!-- Logo Design -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="21"><!-- Print/Presentation -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="22"><!-- Idea Generation -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="30"><!-- Widget or Mobile Screen Design -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="31"><!-- Front-End Flash -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="32"><!-- Application Front-End Design -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="34"><!-- Studio Other -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="18"><!-- Banners/Icons -->
+        <copilotFee>300</copilotFee>
+    </contestType>
+
+    <contestType contestTypeId="18"><!-- Banners/Icons -->
+        <copilotFee>300</copilotFee>
+    </contestType>
 </contestTypes>
 

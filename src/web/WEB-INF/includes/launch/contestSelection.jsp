@@ -1,11 +1,22 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0.3
+  - Version: 1.2
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0.1 (TC Direct Software Contest Creation Update Assembly) changes: add display of copilots of software contest.
   - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
   - Version 1.0.3 (Release Assembly - Direct Improvements Assembly Release 3) changes: add current date on server to populate start/end date.
+--%>
+<%--
+  - Author: TCSASSEMBER
+  - Version: 1.1
+  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: Contest selection page.
+  -
+  - Version 1.1 - Direct - Repost and New Version Assembly Change Note
+  - - Studio contest type is rendered by javascript now.
+  - - Add support for multi round type for both software contest and studio contest.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -21,9 +32,6 @@
                   <div class="selectOut">
                       <select id="contestTypes">
                            <optgroup label="Studio">
-                             <s:iterator value="studioContestTypes">
-                             <option value='STUDIO<s:property value="contestTypeId" />'><s:property value="description" /></option>
-                            </s:iterator>
                            </optgroup>
                            <optgroup label="Software">
                            </optgroup>
@@ -98,7 +106,7 @@
       </div>
 
       <!-- Copilot for Software Contest -->
-      <div class="row software hide">
+      <div class="row">
           <label>Copilot :</label>
           <div class="copilotSelect">
               <select id="contestCopilot" name="contestCopilot">
@@ -120,7 +128,7 @@
   <div class="schedule">
 
       <!-- Round Type -->
-      <div class="row studio" id="roundTypeDiv">
+      <div class="row" id="roundTypeDiv">
         <label>Round Type:</label>
           <div class="roundelect">
               <select id="roundTypes">
@@ -130,7 +138,7 @@
           </div>
       </div>
 
-	  <div id="currentServerDate" style="display:none">
+      <div id="currentServerDate" style="display:none">
           <s:date name="currentServerDate" format="MM/dd/yyyy"/>
       </div>
 
@@ -145,25 +153,32 @@
       </div>
 
       <!-- Milestone -->
-      <div class="row studio" id="mileStoneDiv">
-        <label>Milestone:</label>
-          <input  id="milestoneDate" name="milestoneDate"  type="text" class="text date-pick" readonly="true"/>
-          <div class="milestoneEtSelect">
-            <select id="milestoneTime" name="milestoneTime"><jsp:include page="../common/timeOptions.jsp"/></select>
-          </div>
-          <span>ET (UTC-05)</span>
+      <div class="row" id="mileStoneDiv">
+        <label>Round 1 Duration:</label>
+        <div class="milestoneEtSelect">
+          <select id="milestoneDateDay" name="milestoneDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
+        </div>
+        <div class="selectSpan"><span>days</span></div>
+        <div class="milestoneEtSelect">
+          <select id="milestoneDateHour" name="milestoneDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
+        </div>
+        <div class="selectSpan"><span>hours</span></div>
+        <div class="clear"></div>
       </div>
 
       <!-- End -->
-      <div class="row studio">
-        <label>End:</label>
-          <input id="endDate" name="endDate" type="text" class="text date-pick" readonly="true"/>
-          <div class="endEtSelect">
-            <select id="endTime" name="endTime"><jsp:include page="../common/timeOptions.jsp"/></select>
-          </div>
-          <span>ET (UTC-05)</span>
+      <div class="row studio" id="endDiv">
+        <label>Round 2 Duration:</label>
+        <div class="endEtSelect">
+          <select id="endDateDay" name="endDateDay"><c:forEach var="i" begin="0" end="10"><option value="${i}">${i}</option></c:forEach></select>
+        </div>
+        <div class="selectSpan"><span>days</span></div>
+        <div class="endEtSelect">
+          <select id="endDateHour" name="endDateHour"><c:forEach var="i" begin="0" end="23"><option value="${i}">${i}</option></c:forEach></select>
+        </div>
+        <div class="selectSpan"><span>hours</span></div>
+        <div class="clear"></div>
       </div>
-
 </div>
 <!-- end .schedule -->
 
@@ -175,5 +190,8 @@
 </div>
 
 <div id="activateContestConfirmation" title="Do you really want to activate the contest?" style="display:none;">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will create a new contest for you and then activate the created contest. Please confirm you want to create the contest and activate it?</p>
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+    This will create a new contest for you and then activate the created contest. 
+    Please confirm you want to create the contest and activate it. 
+    After activation, you will start the contest specification review.</p>
 </div>

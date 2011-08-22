@@ -3,6 +3,7 @@
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: include the contestVars.jsp.
   - Version 1.2 (Direct Submission Viewer Release 4 ) change notes: added Winners section.
   - Version 1.3 (TC Direct Release Assembly 7) change Notes: added hasContestWritePermission field.
+  - Version 1.4 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
   -
   - Version 1.4 (TC Direct Contest Dashboard Update Assembly) change Notes: 
   - 1.Add dashboard header.  
@@ -80,7 +81,7 @@
                                                     <ul>
                                                         <s:iterator value="viewData.contestSubmissions"
                                                                     status="status">
-                                                            <s:set var="contestId" value="contestId" scope="page"/>
+                                                            <s:set var="contestId" value="projectId" scope="page"/>
                                                             <s:set var="submissionId" value="submissionId" scope="page"/>
                                                             <s:set var="submission" value="top" scope="page"/>
                                                             <s:set var="index" value="#status2.index" scope="page"/>

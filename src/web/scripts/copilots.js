@@ -43,12 +43,14 @@ $(document).ready(function() {
             elements : obj,
             plugins : "paste",
             theme : "advanced",
-            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink,code",
             theme_advanced_buttons2 : "",
             theme_advanced_buttons3 : "",
             init_instance_callback : function() {
                 $('table.mceLayout').css('width', '100%');
             },
+            valid_elements : tinyMCEValidElements,
+            setup: function(ed) {setMaxCharsEventHandlerOnSetup(ed, maxChars);},
             handle_event_callback : maxCharsEventHandler(obj, maxChars)
         });
     }
@@ -552,10 +554,8 @@ function saveAsDraftRequest() {
     request['projectHeader.id'] = projectId;
     request['projectHeader.tcDirectProjectId'] = $('#projects2').val();
     request["projectHeader.properties['Billing Project']"] = $('#billingProjects2').val();
-    request["projectHeader.properties['Project Name']"] = $('#contestNameInput2').val();
     request['projectHeader.projectSpec.detailedRequirements'] = tinyMCE.get('publicCopilotPostingDescription2').getContent();
     request['projectHeader.projectSpec.privateDescription'] = tinyMCE.get('privateCopilotPostingDescription2').getContent();
-    request['projectHeader.tcDirectProjectName'] = $.trim($('#projects2 option:selected').text());
 
     request['docUploadIds'] = getDocumentIds();
     request['docCompIds'] = getExistingDocumentIds();
@@ -575,6 +575,27 @@ function getExistingDocumentIds() {
     });
 }
 
+
+/**
+ * Handle contest activation result.
+ *
+ * @param jsonResult the json result
+ */
+function handleActivation(jsonResult) {
+    handleJsonResult(jsonResult,
+                     function(result) {
+                         $('#paymentNumBox').html('No. ' + result.paymentNumber);
+                         $('#contestNameReceipt').html($('#contestNameInput').val());
+                         $('#projectNameReceipt').html($('#projects option:selected').text());
+                         $('#paymentMethodReceipt').html(result.paymentMethodReceipt);
+                         $('#startTimeReceipt').html(result.startTimeReceipt);
+                         $('.launchpage').hide();
+                         $('.orderReviewPage').show();
+                     },
+                     function(errorMessage) {
+                         showErrors(errorMessage);
+                     });
+}
 
 /**
  * Handle contest draft saving result.
@@ -603,7 +624,6 @@ function handleDraftSaving(jsonResult) {
                          showErrors(errorMessage);
                      });
 }
-
 function sendSaveDraftRequestToServer() {
     // Send request to server
     var request = saveAsDraftRequest();
@@ -623,59 +643,3 @@ function sendSaveDraftRequestToServer() {
     });
 }
 
-/**
- * Activation in edit page
- */
-function activateContestEdit() {
-    var billingProjectId = $('#billingProjects2').val();
-    if (billingProjectId <= 0) {
-        showErrors("no billing project is selected.");
-        return;
-    }
-
-
-    //construct request data
-   var request = saveAsDraftRequest();
-   request['activationFlag'] = true;
-
-   $.ajax({
-      type: 'POST',
-      url:  ctx + "/launch/saveDraftContest",
-      data: request,
-      cache: false,
-      dataType: 'json',
-      success: handleActivationResultEdit,
-      beforeSend: beforeAjax,
-      complete: afterAjax            
-   });  
-      
-}
-
-function handleActivationResultEdit(jsonResult) {
-    handleJsonResult(jsonResult,
-                     function(result) {
-                         $('#resubmit').hide();
-                         $("#savedAsDraftAndActivated").overlay({
-                             closeOnClick:false,
-                             mask: {
-                                 color: '#000000',
-                                 loadSpeed: 200,
-                                 opacity: 0.6
-                             },
-                             top:"20%",
-                             close :"#saveAsDraftOK2",
-                             fixed : true,
-                             load: true
-                         });
-                     },
-                     function(errorMessage) {
-                         showErrors(errorMessage);
-                     });
-}
-function beforeAjax() {
-	 $.blockUI({ message: '<div id=loading> loading.... </div>' });
-}
-
-function afterAjax() {
-	 $.unblockUI();
-}

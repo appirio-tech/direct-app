@@ -465,6 +465,7 @@
         </action>
 
         <action name="downloadDocument" class="downloadDocumentAction">
+            <param name="uploadedFilesRootDir">@uploadedFilesRootDir@</param>
             <result type="stream">
                 <param name="contentDisposition">${contentDisposition}</param>
                 <param name="contentType">${document.mimeType.description}</param>
@@ -521,7 +522,7 @@
             <result name="milestone" type="redirectAction">
                 <param name="actionName">submissions</param>
                 <param name="namespace">/contest</param>
-                <param name="contestId">${contestId}</param>
+                <param name="projectId">${projectId}</param>
                 <param name="formData.viewType">GRID</param>
                 <param name="formData.roundType">MILESTONE</param>
             </result>
@@ -538,22 +539,40 @@
             <result type="json" />
         </action>
 
+        <action name="hasSubmissionFeedback" class="hasStudioSubmissionFeedbackAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json" />
+        </action>
+
         <action name="checkout" class="studioSubmissionCheckoutAction">
+            <result name="confirm">/WEB-INF/studio-final-checkout-confirmation.jsp</result>
             <result>/WEB-INF/studio-submissions-checkout.jsp</result>
         </action>
-        
-        <action name="saveMilestone" class="saveMilestoneAction">
+
+        <action name="checkoutConfirm" class="studioSubmissionCheckoutAction">
+            <result>/WEB-INF/studio-final-checkout-confirmation.jsp</result>
+        </action>
+
+        <action name="saveContestMilestoneSubmissionRank" class="saveContestSubmissionRankAction">
             <result type="redirectAction">
                 <param name="actionName">submissions</param>
                 <param name="namespace">/contest</param>
-                <param name="contestId">${contestId}</param>
+                <param name="projectId">${projectId}</param>
                 <param name="formData.viewType">GRID</param>
                 <param name="formData.roundType">FINAL</param>
             </result>
         </action>
-        
-        <action name="checkoutFinal" class="checkoutFinalAction">
-            <result>/WEB-INF/studio-final-checkout-confirmation.jsp</result>
+
+        <action name="saveContestSubmissionRank" class="saveContestSubmissionRankAction">
+            <result type="redirectAction">
+                <param name="actionName">checkoutConfirm</param>
+                <param name="namespace">/contest</param>
+                <param name="projectId">${projectId}</param>
+                <param name="formData.viewType">CHECKOUT_CONFIRM</param>
+                <param name="formData.roundType">${roundType}</param>
+            </result>
         </action>
 
         <action name="softwareSubmissions" class="softwareContestSubmissionsAction">
@@ -579,11 +598,18 @@
             <result type="json" />
         </action>
 
+        <action name="hasGeneralSubmissionsFeedback" class="hasStudioGeneralFeedbackAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result type="json" />
+        </action>
+
         <action name="startSpecReview" class="startSpecificationReviewAction">
             <result type="redirectAction">
                 <param name="actionName">detail</param>
                 <param name="namespace">/contest</param>
-                <param name="projectId">${contestId}</param>
+                <param name="projectId">${projectId}</param>
             </result>
         </action>
 

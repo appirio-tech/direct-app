@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.specreview;
@@ -29,7 +29,11 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * </pre>
  *
  * </p>
- *
+ * <p>Version 1.1 change notes:
+ * <ul>
+ *  <li>Update {@link #execute()} to use the projectId instead of contestId</li>
+ * </ul>
+ * </p>
  * <p>
  * <b>Thread safety:</b> This class is mutable and not thread safe. This should be fine since different
  * instances of this class should be created to serve different user requests and will not be shared across
@@ -38,8 +42,8 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * considered as being effectively thread safe.
  * </p>
  *
- * @author caru, TCSDEVELOPER
- * @version 1.0
+ * @author caru, TCSDEVELOPER, morehappiness
+ * @version 1.1
  */
 public class ResubmitSpecificationReviewAction extends SpecificationReviewAction {
 
@@ -101,7 +105,7 @@ public class ResubmitSpecificationReviewAction extends SpecificationReviewAction
             }
 
             // resubmit the specification
-            specificationReviewService.resubmitSpecification(getTCSubject(), getContestId());
+            specificationReviewService.resubmitSpecification(getTCSubject(), getProjectId());
             
             return SUCCESS;
 

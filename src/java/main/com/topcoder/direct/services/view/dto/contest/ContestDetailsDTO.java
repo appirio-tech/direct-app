@@ -3,7 +3,6 @@
  */
 package com.topcoder.direct.services.view.dto.contest;
 
-import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.form.ContestIdForm;
 
 /**
@@ -22,22 +21,24 @@ import com.topcoder.direct.services.view.form.ContestIdForm;
  *     <li>Added {@link #hasContestWritePermission} property with respective accessor/mutator methods.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.0.3 (Direct Release 6 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Made the class the descendant of {@link BaseContestCommonDTO} and removed contesStats property.</li>
+ *   </ol>
+ * </p>
  * 
  * @author isv, TCSASSEMBLER
- * @version 1.0.2
+ * @version 1.0.3
  */
-public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Aware, ContestDTO.Aware,
+public class ContestDetailsDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestDTO.Aware,
                                                             ContestIdForm.Aware {
 
     /**
      * <p>A <code>long</code> providing the ID of contest.</p>
      */
     private long contestId;
-
-    /**
-     * <p>A <code>ContestStatsDTO </code> providing the statistics on contest.</p>
-     */
-    private ContestStatsDTO contestStats;
 
     /**
      * <p>A <code>ContestDTO</code> providing the details on contest.</p>
@@ -70,24 +71,6 @@ public class ContestDetailsDTO extends CommonDTO implements ContestStatsDTO.Awar
      * <p>Constructs new <code>ContestDetailsDTO</code> instance. This implementation does nothing.</p>
      */
     public ContestDetailsDTO() {
-    }
-
-    /**
-     * <p>Gets the statistics on contest.</p>
-     *
-     * @return a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public ContestStatsDTO getContestStats() {
-        return this.contestStats;
-    }
-
-    /**
-     * <p>Sets the statistics on contest.</p>
-     *
-     * @param contestStats a <code>ContestStatsDTO </code> providing the statistics on contest.
-     */
-    public void setContestStats(ContestStatsDTO  contestStats) {
-        this.contestStats = contestStats;
     }
 
     /**

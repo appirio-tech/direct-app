@@ -14,6 +14,17 @@
  * </p>
  * @author TCSASSEMBLER, TCSDEVELOPER
  * @version 1.0.2
+ * <p>
+ * Changes in 1.1 TC Direct Replatforming Release 1 change note
+ * - Many changes were made to work for the new studio contest type and multiround type.
+ * </p>
+ * <p>
+ * Changes in 1.2 TC Direct Replatforming Release 4 change note
+ * - Change com.topcoder.direct.Projec to support art stocks and maximal submission limitation.
+ * </p>
+ * 
+ * @author TCSASSEMBLER
+ * @version 1.2
  */
 if(!com) {
    var com = {};
@@ -35,110 +46,67 @@ var CONTEST_STATUS_ACTIVE_PUBLIC = 2 ;
 var CONTEST_DETAILED_STATUS_DRAFT =15 ;
 var CONTEST_DETAILED_STATUS_ACTIVE_PUBLIC =2 ;
 var CONTEST_DETAILED_STATUS_SCHEDULED =9 ;
-
-
-/**
- * Studio Competition Classes
- */
-com.topcoder.direct.StudioCompetition = function() {
-   this.id = -1;
-
-   this.type = null;
-
-   this.contestData = new com.topcoder.direct.ContestData();
-
-   //Dates
-   this.startDate = null;
-
-   this.endDate	= null;
-
-   this.milestoneDate = null;
-}
+var MILESTONE_PRIZE_TYPE_ID = 14;
+var CONTEST_PRIZE_TYPE_ID = 15;
 
 /**
- * Contest data class.
- */
-com.topcoder.direct.ContestData = function() {
-   this.contestId = -1;
-   
-   this.contestTypeId = -1;
-
-   this.name = null;
-
-   this.projectId = -1;
-
-   this.tcDirectProjectId = -1;
-
-   this.tcDirectProjectName = null;
-
-   this.billingProject = -1;
-
-   this.multiRound = false;
-   
-   this.shortSummary = null;
-
-   this.contestDescriptionAndRequirements = null;
-
-   this.prizes = [];
-
-   this.multiRoundData = 	new com.topcoder.direct.ContestMultiRoundInformationData();
-
-   this.finalFileFormat = '';
-
-   this.otherFileFormats = '';
-
-   this.statusId=CONTEST_STATUS_UNACTIVE_NOT_YET_PUBLISHED;
-
-   this.detailedStatusId=CONTEST_DETAILED_STATUS_DRAFT;
-
-   this.allowStockArt = false;
-   
-   ////////// Functions/Methods ///////////////
-   /**
-    * If the billing project is selected.
-    *
-    * @return true if the billing project is selected. otherwise false.
-    */
-   this.isBillingSelected = function() {
-         return (this.billingProject > 0);
-   }
-}
-
-/**
- * Contest multiple round information data.
- */
-com.topcoder.direct.ContestMultiRoundInformationData = function() {
-   this.id = -1;
-
-   //this.milestoneDate = null;
-   
-   this.roundOneIntroduction = null;
-   
-   this.roundTwoIntroduction = null;
-}
-
-/**
- * Milestone prize data class.
- */
-com.topcoder.direct.MilestonePrizeData = function() {
-   this.id = -1;
-
-   this.amount = 0;
-
-   this.numberOfSubmissions = 0;
-}
-
-/**
- * Prize data class.
+ * Prize class.
  * 
  * @param place the place
  * @param amount the amount
+ * @param prizeType the prize type id
+ * @param number Of submissions the number of submissions 
  */
-com.topcoder.direct.PrizeData = function(place, amount) {
-   this.place = place;
+com.topcoder.direct.Prize = function(place, amount, prizeType, numberOfSubmissions) {
+	this.place = place;
+	
+	this.prizeAmount = amount;
+	
+	this.prizeType = {};
+	
+	this.prizeType.id = prizeType;
+	
+	if (prizeType == CONTEST_PRIZE_TYPE_ID) {
+		this.prizeType.description = "Contest Prize";
+	} else if (prizeType == MILESTONE_PRIZE_TYPE_ID) {
+		this.prizeType.description = "Milestone Prize";
+	}
+	
+	this.numberOfSubmissions = numberOfSubmissions;
+};
 
-   this.amount = amount;
-}
+/**
+ * Project studio specification class.
+ */
+com.topcoder.direct.ProjectStudioSpecification = function() {
+	this.goals = "";
+	
+	this.targetAudience = "";
+	
+	this.brandingGuidelines = "";
+	
+	this.dislikedDesignWebSites = "";
+	
+	this.otherInstructions = "";
+	
+	this.winningCriteria = "";
+	
+	this.submittersLockedBetweenRounds = false;
+	
+	this.roundOneIntroduction = "";
+	
+	this.roundTwoIntroduction = "";
+	
+	this.colors = "";
+	
+	this.fonts = "";
+	
+	this.layoutAndSize = "";
+	
+	this.contestIntroduction = "";
+	
+	this.contestDescription = "";
+};
 
 /**
  * Software Constants
@@ -164,20 +132,45 @@ var SOFTWARE_CATEGORY_ID_SPEC = 6;
 var SOFTWARE_CATEGORY_ID_CONTENT = 35;
  
 var projectCategoryArray = [
-{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application'},
-{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',     label:'Software Specification',     typeId:2, typeName:'Application'},
-{id:7,                                 name:'ARCHITECTURE',      label:'Architecture',               typeId:2, typeName:'Application'},
-{id:SOFTWARE_CATEGORY_ID_DESIGN,       name:'DESIGN',            label:'Component Design',           typeId:1, typeName:'Component'},
-{id:SOFTWARE_CATEGORY_ID_DEVELOPMENT,  name:'DEVELOPMENT',       label:'Component Development',      typeId:1, typeName:'Component'},
-{id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application'},
-{id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application'},
-{id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application'},
-{id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application'},
-{id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application'},
-{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application'},
-{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application'},
-{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application'}
+{id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',     label:'Software Specification',     typeId:2, typeName:'Application', hasMulti:false},
+{id:7,                                 name:'ARCHITECTURE',      label:'Architecture',               typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_DESIGN,       name:'DESIGN',            label:'Component Design',           typeId:1, typeName:'Component', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_DEVELOPMENT,  name:'DEVELOPMENT',       label:'Component Development',      typeId:1, typeName:'Component', hasMulti:false},
+{id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application', hasMulti:false},
+{id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application', hasMulti:false},
+{id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application', hasMulti:false},
+{id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:false},
+{id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application', hasMulti:false},
+{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application', hasMulti:false},
+{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application', hasMulti:false},
+{id:17,                                name:'Web Design',        label:'Web Design',                 typeId:3, typeName:'Studio', hasMulti:true},
+{id:20,                                name:'Logo Design',       label:'Logo Design',                typeId:3, typeName:'Studio', hasMulti:true},
+{id:16,                                name:'Banners/Icons',     label:'Banners/Icons',              typeId:3, typeName:'Studio', hasMulti:true},
+{id:32,                                name:'Application Front-End Design', label:'Application Front-End Design', typeId:3, typeName:'Studio', hasMulti:true},
+{id:30,                                name:'Widget or Mobile Screen Design',   label:'Widget or Mobile Screen Design',            typeId:3, typeName:'Studio', hasMulti:true},
+{id:31,                                name:'Front-End Flash',   label:'Front-End Flash',            typeId:3, typeName:'Studio', hasMulti:true},
+{id:21,                                name:'Print/Presentation',label:'Print/Presentation',         typeId:3, typeName:'Studio', hasMulti:true},
+{id:34,                                name:'Other',             label:'Other',                      typeId:3, typeName:'Studio', hasMulti:true},
+{id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
+{id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true}
 ];
+
+/**
+ * Checks whether the project category can be multiround type.
+ * 
+ * @param categoryId the project category id
+ * @returns {Boolean} true if the category contest can be multiround type, false otherwise
+ */
+function hasMultiRound(categoryId) {
+	for (var i = 0; i < projectCategoryArray.length; i++) {
+		if (projectCategoryArray[i].id == categoryId && projectCategoryArray[i].hasMulti) {
+			return true;
+		}
+	}
+	return false;
+}
 
 /**
  * Get project category by id.
@@ -218,11 +211,12 @@ com.topcoder.direct.SoftwareCompetition = function() {
 	
     this.projectHeader = new com.topcoder.direct.Project();    
     
-    // holding the end date information
-    this.endDate = null;
-    
     // holding the paid fee
     this.paidFee = 0;
+    
+    this.multiRound = false;
+    
+    this.milestoneDate = null;
 
     // hold the copilot user id
     this.copilotUserId = 0;
@@ -260,6 +254,10 @@ com.topcoder.direct.Project = function() {
 	  
 	  this.projectSpec = new com.topcoder.direct.ProjectSpec();
 	  
+	  this.projectStudioSpecification = new com.topcoder.direct.ProjectStudioSpecification();
+	  
+	  this.prizes = [];
+
 	  this.properties = {};
 	  
 	  this.setBillingProject = function(billingProjectId) {
@@ -380,6 +378,22 @@ com.topcoder.direct.Project = function() {
 	  this.getCostLevel = function() {
 	  	  return this.properties['Cost Level'];
 	  }
+	  
+	  this.setAllowStockArt = function(allowStockArt) {
+	  	  this.properties['Allow Stock Art'] = allowStockArt;
+	  }
+
+	  this.getAllowStockArt = function() {
+	  	  return this.properties['Allow Stock Art'];
+	  }
+	  
+	  this.setMaximumSubmissions = function(maximumSubmissions) {
+	  	  this.properties['Maximum Submissions'] = maximumSubmissions;
+	  }
+
+	  this.getMaximumSubmissions = function() {
+	  	  return this.properties['Maximum Submissions'];
+	  }
 
 	  this.setBillingProject(0);
 }
@@ -411,14 +425,11 @@ com.topcoder.direct.ProjectSpec = function() {
  * Main Widget
  */
 com.topcoder.direct.MainWidget = function() {
+  // allowStockArt
+  this.allowStockArt = true;
+
   //'STUDIO' or 'SOFTWARE'
   this.competitionType = null;
-
-  // studio competition
-  this.competition = new com.topcoder.direct.StudioCompetition();
-
-  // holding the mileston prize information
-  this.milestonePrizeData = new com.topcoder.direct.MilestonePrizeData();
   
   // software competition
   this.softwareCompetition = new com.topcoder.direct.SoftwareCompetition();

@@ -1,21 +1,34 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
-import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.ContestServiceFacade;
 import org.springframework.web.util.HtmlUtils;
 
+import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.project.phases.PhaseType;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.SoftwareCompetition;
+
 /**
- * <p>A <code>Struts</code> action to be used for processing requests for updating general feedback for milestne round.
+ * <p>A <code>Struts</code> action to be used for processing requests for updating general feedback for milestone round.
+ * </p>
+ *
+ * <p>
+ *   Version 1.1 (TC Direct Replatforming Release 3) change notes:
+ *   <ul>
+ *     <li>The {@link #executeAction()} method was totally updated to work for the new studio contest.</li>
+ *   </ul>
  * </p>
  *
  * @author TCSDEVELOPER
- * @version 1.0 (Submission Viewer Release 4 assembly)
+ * @version 1.1
+ * @since Submission Viewer Release 4 assembly
  */
-public class UpdateGeneralSubmissionsFeedbackAction extends StudioOrSoftwareContestAction {
+public class UpdateGeneralSubmissionsFeedbackAction extends ContestAction {
 
     /**
      * <p>A <code>String</code> providing the text for the general feedback.</p>
@@ -54,15 +67,26 @@ public class UpdateGeneralSubmissionsFeedbackAction extends StudioOrSoftwareCont
      */
     @Override
     public void executeAction() throws Exception {
-        if (isStudioCompetition()) {
-            ContestServiceFacade contestServiceFacade = getContestServiceFacade();
-            TCSubject tcSubject = getCurrentUser();
-            boolean updateResult
-                = contestServiceFacade.updateSubmissionsGeneralFeedback(tcSubject, getContestId(),
-                                                                        HtmlUtils.htmlEscape(getFeedbackText()));
-            setResult(updateResult);
-        } else {
-            setResult(false);
+        long projectId = getProjectId();
+        if (projectId <= 0) {
+            throw new DirectException("projectId less than 0 or not defined.");
+        }
+        TCSubject currentUser = getCurrentUser();
+        if (!DirectUtils.hasWritePermission(this, currentUser, projectId, false)) {
+            throw new DirectException("Have no permission to update the general feedback.");
+        }
+        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
+        SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
+        if (!DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE)) {
+            throw new DirectException("The milestone review phase is not open.");
+        }
+        
+        // only works for studio contest
+        if (DirectUtils.isStudio(softwareCompetition)) {
+            softwareCompetition.getProjectHeader().getProjectStudioSpecification().setGeneralFeedback(HtmlUtils.htmlEscape(feedbackText));
+            softwareCompetition.setProjectHeaderReason("Update general feedback");
+            contestServiceFacade.updateSoftwareContest(currentUser, softwareCompetition, softwareCompetition.getProjectHeader().getTcDirectProjectId(),
+                    DirectUtils.getMultiRoundEndDate(softwareCompetition), DirectUtils.getSubmissionEndDate(softwareCompetition));
         }
     }
 }

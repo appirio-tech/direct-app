@@ -1047,6 +1047,18 @@
                                submission.initial_score,
                                submission.final_score,
                                submission.placement,
+                               submission.user_rank,
+                               submission.mark_for_purchase,
+                               prize.prize_id,
+                               prize.place,
+                               prize.prize_amount,
+                               prize.number_of_submissions,
+                               prize.create_user AS prize_create_user,
+                               prize.create_date AS prize_create_date,
+                               prize.modify_user AS prize_modify_user,
+                               prize.modify_date AS prize_modify_date,
+                               prize_type_lu.prize_type_id,
+                               prize_type_lu.prize_type_desc,
                                submission_type_lu.submission_type_id AS submission_type_id,
                                submission_type_lu.create_user AS submission_type_create_user,
                                submission_type_lu.create_date AS submission_type_create_date,
@@ -1054,18 +1066,16 @@
                                submission_type_lu.modify_date AS submission_type_modify_date,
                                submission_type_lu.name AS submission_type_name,
                                submission_type_lu.description AS submission_type_description
-                          FROM submission,
-                               upload,
-                               submission_status_lu,
-                               submission_type_lu,
-                               upload_type_lu,
-                               upload_status_lu
-                         WHERE submission.upload_id = upload.upload_id
-                           AND submission.submission_status_id = submission_status_lu.submission_status_id
-                           AND submission.submission_type_id = submission_type_lu.submission_type_id
-                           AND upload.upload_type_id = upload_type_lu.upload_type_id
-                           AND upload.upload_status_id = upload_status_lu.upload_status_id
-                           AND
+                        FROM submission
+                        INNER JOIN upload ON submission.upload_id = upload.upload_id
+                        INNER JOIN submission_status_lu ON submission.submission_status_id = submission_status_lu.submission_status_id
+                        INNER JOIN submission_type_lu ON submission.submission_type_id = submission_type_lu.submission_type_id
+                        INNER JOIN upload_type_lu ON upload.upload_type_id = upload_type_lu.upload_type_id
+                        INNER JOIN upload_status_lu ON upload.upload_status_id = upload_status_lu.upload_status_id
+                        LEFT JOIN prize ON submission.prize_id = prize.prize_id
+                        LEFT JOIN prize_type_lu ON prize.prize_type_id = prize_type_lu.prize_type_id
+                       WHERE 1=1 
+                         AND 
                     </Value>
                 </Property>
                 <Property name="alias">

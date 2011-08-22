@@ -10,13 +10,14 @@ import java.util.*;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
-import javax.transaction.UserTransaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
@@ -27,46 +28,39 @@ import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
+import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectType;
 import com.topcoder.project.phases.Phase;
 import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.project.phases.PhaseType;
 import com.topcoder.project.service.ContestSaleData;
+import com.topcoder.search.builder.SearchBuilderException;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.service.project.CompetitionPrize;
-import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.service.studio.PersistenceException;
-import com.topcoder.service.studio.SubmissionData;
-import com.topcoder.service.studio.ContestData;
-import com.topcoder.service.studio.ContestNotFoundException;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
-import org.apache.struts2.ServletActionContext;
 
 /**
  * <p>
@@ -109,7 +103,7 @@ import org.apache.struts2.ServletActionContext;
  * <li>Update {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} method
  * to use getMilestoneSubmissionsForContest and getFinalSubmissionsForContest methods to retrieve submissions.
  * </li>
- * <li>Add {@link #getContestPrizeNumber(StudioCompetition, ContestRoundType)} method
+ * <li>Add {@link #getContestPrizeNumber(SoftwareCompetition, ContestRoundType)} method
  * to get the number of a contest's prizes.</li>
  * </ul>
  * </p>
@@ -168,7 +162,7 @@ import org.apache.struts2.ServletActionContext;
  * <ul>
  *      <li>Change method getContestStats to add contest issues into contest stats</li>
  * </ul>
- * </p>
+ * </p
  *
  * <p>
  * Version 1.6.7 (TC Direct Contest Dashboard Update Assembly) change notes:
@@ -194,8 +188,53 @@ import org.apache.struts2.ServletActionContext;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.7 (TC Direct Replatforming Release 1) Change notes:
+ *   <ol>
+ *     <li>Update {@link #getContestStats(TCSubject, long, boolean)} method to work with the new Studio contest type.</li>
+ *     <li>Add {@link #isMultiRound(SoftwareCompetition)} method.</li>
+ *     <li>Add {@link #getMultiRoundEndDate(SoftwareCompetition)} method.</li>
+ *     <li>Add {@link #isStudio(SoftwareCompetition)} method.</li>
+ *   </ol>
+ * </p>
+ * 
+ * <p>
+ * Version 1.7.1 (TC Direct Replatforming Release 3) Change notes:
+ *   <ol>
+ *     <li>Add {@link #MILESTONE_PRIZE_TYPE_ID} and {@link #CONTEST_PRIZE_TYPE_ID} constants.</li>
+ *     <li>Add {@link #isPhaseScheduled(SoftwareCompetition, PhaseType)} method.</li>
+ *     <li>Update {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} and
+ *     {@link #getContestPrizeNumber(SoftwareCompetition, ContestRoundType)} methods to work with the new studio contest type.</li>
+ *     <li>Add {@link #getContestCheckout(SoftwareCompetition, ContestRoundType)} method.</li>
+ *     <li>Add {@link #getStudioSubmissionsFeedback(TCSubject, ContestServiceFacade, List, long, PhaseType)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
+ * Version 1.7.2 (TC Direct Replatforming Release 5) Change notes:
+ *   <ol>
+ *     <li>Fixed {@link #getStudioContestSubmissions(long, ContestRoundType, TCSubject, ContestServiceFacade)} method to work for Final Round.</li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
+ * Version 1.7.3 (TC Direct Replatforming Release 4) Change notes:
+ *   <ol>
+ *     <li>Update {@link #getContestStats} method to use the
+ *      new direct_contest_stats_replatforming query.</li>
+ *   </ol>
+ * </p> 
+ *
+ *
+ * <p>
+ * Version 1.7.4 (Direct Release 6 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated <code>setDashboardData</code> methods to properly analyze the types of the contest.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author BeBetter, isv, flexme, Blues, Veve, TCSDEVELOPER
- * @version 1.6.9
+ * @version 1.7.4
  */
 public final class DirectUtils {
     /**
@@ -247,7 +286,7 @@ public final class DirectUtils {
 
     /**
      * Private constant specifying administrator role.
-     * 
+     *
      * @since 1.6.2
      */
     private static final String ADMIN_ROLE = "Cockpit Administrator";
@@ -276,7 +315,34 @@ public final class DirectUtils {
      */
     private static final long ONE_HOUR = 60 * 60 * 1000L;
 
+    /**
+     * Represents the milestone submission type id.
+     * 
+     * @since 1.7.2
+     */
+    private static final int MILESTONE_SUBMISSION_TYPE_ID = 3;
 
+    /**
+     * Represents the prize type id for milestone submission.
+     *
+     * @since 1.7.1
+     */
+    private static final long MILESTONE_PRIZE_TYPE_ID = 14L;
+
+    /**
+     * Represents the prize type if for contest submission.
+     *
+     * @since 1.7.1
+     */
+    private static final long CONTEST_PRIZE_TYPE_ID = 15L;
+
+    /**
+     * Represents the contest submission type id.
+     * 
+     * @since 1.7.2
+     */
+    private static final int CONTEST_SUBMISSION_TYPE_ID = 1;
+    
     /**
      * <p>
      * Default Constructor.
@@ -394,11 +460,11 @@ public final class DirectUtils {
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_contest_stats");
-        request.setProperty("ct", String.valueOf(contestId));
+        request.setContentHandle("direct_contest_stats_replatforming");
+        request.setProperty("pj", String.valueOf(contestId));
         request.setProperty("uid", String.valueOf(currentUser.getUserId()));
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_contest_stats");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_contest_stats_replatforming");
         final int recordNum = resultContainer.size();
 
         if (recordNum == 0) {
@@ -408,43 +474,12 @@ public final class DirectUtils {
 
         int recordIndex = 0;
 
-        String contestType = null;
-        if (recordNum > 1) {
-            // there are two records, find out the correct one
-            String[] types = new String[2];
-            types[0] = resultContainer.getStringItem(0, "type").trim();
-            types[1] = resultContainer.getStringItem(1, "type").trim();
-
-            if (isStudio) {
-                recordIndex = types[0].equals("Studio") ? 0 : 1;
-            } else {
-                recordIndex = types[0].equals("Studio") ? 1 : 0;
-            }
-
-        } else if (recordNum == 1) {
-
-            // get the contest type first
-            contestType = resultContainer.getStringItem(0, "type").trim();
-
-            if (isStudio && (!contestType.equals("Studio"))) {
-                // contest type is not studio when param indicates the studio, return null
-                return null;
-            }
-
-            if (!isStudio && contestType.equals("Studio")) {
-                // contest type is studio when param indicate sw, return null
-                return null;
-            }
-        }
-
         ProjectBriefDTO project = new ProjectBriefDTO();
         project.setId(resultContainer.getLongItem(recordIndex, "project_id"));
         project.setName(resultContainer.getStringItem(recordIndex, "project_name"));
 
         ContestBriefDTO contest;
-        if (isStudio) {
-            contest = new ContestBriefDTO();
-        } else {
+
             PhasedContestDTO phasedContest = new PhasedContestDTO();
             phasedContest.setCurrentPhases(DataProvider.getCurrentPhases(contestId));
             phasedContest.setStatus(ContestStatus.forName(resultContainer.getStringItem(recordIndex, "status")));
@@ -456,13 +491,14 @@ public final class DirectUtils {
                     break;
                 }
             }*/
-            contest = phasedContest;
-        }
+
+        contest = phasedContest;
+
         contest.setId(resultContainer.getLongItem(recordIndex, "contest_id"));
         contest.setTitle(resultContainer.getStringItem(recordIndex, "contest_name"));
         contest.setProject(project);
         contest.setSoftware(!isStudio);
-        contest.setContestTypeName(contestType);
+        contest.setContestTypeName(resultContainer.getStringItem(recordIndex, "type"));
 
         ContestStatsDTO dto = new ContestStatsDTO();
         dto.setCurrentStatus(resultContainer.getStringItem(recordIndex, "status"));
@@ -483,7 +519,7 @@ public final class DirectUtils {
         }
 
         dto.setContest(contest);
-        dto.setIsStudio(isStudio);
+		dto.setIsStudio("Studio".equalsIgnoreCase(resultContainer.getStringItem(recordIndex, "type").trim()));
 
         // sets the issues of contests
         dto.setIssues(DataProvider.getContestIssues(contestId, isStudio));
@@ -537,6 +573,34 @@ public final class DirectUtils {
         return principals;
     }
 
+
+    /**
+     * Get studio submission artifact count.
+     *
+     * @return the number of artifacts
+     * @throws Exception if any error occurs.
+     */
+    public static long getStudioSubmissionArtifactCount(long submissionId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("studio_submission_artifact_count");
+        request.setProperty("subid", String.valueOf(submissionId));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("studio_submission_artifact_count");
+
+        final long recordNum = resultContainer.size();
+
+        if (recordNum == 0) {
+            // return null, if no record is found
+            return 0;
+        }
+
+        long count = resultContainer.getLongItem(0, "artifact_count");
+
+        return count;
+
+    }
+
     /**
      * <p>
      * Creates the <code>XMLGregorianCalendar</code> from the given date.
@@ -558,6 +622,62 @@ public final class DirectUtils {
         return datatypeFactory.newXMLGregorianCalendar(gc);
     }
 
+    /**
+     * <p>Checks whether a <code>SoftwareCompetition</code> is multi round or not.</p>
+     *
+     * @param softwareCompetition the <code>SoftwareCompetition</code> to check.
+     * @return true if the contest is multi round, false otherwise.
+     * @since 1.7
+     */
+    public static boolean isMultiRound(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * <p>Gets the milestone submission phase end date for a multiround contest.
+     *
+     * @param softwareCompetition the multiround contest
+     * @return the milestone submission phase end date
+     * @since 1.7
+     */
+    public static Date getMultiRoundEndDate(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return null;
+        }
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
+                return phase.getActualEndDate() != null ? phase.getActualEndDate() : phase.getScheduledEndDate();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * <p>Gets the submission phase end date for a contest.
+     *
+     * @param softwareCompetition the contest
+     * @return the submission phase end date
+     */
+    public static Date getSubmissionEndDate(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return null;
+        }
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == PhaseType.SUBMISSION_PHASE.getId()) {
+                return phase.getActualEndDate() != null ? phase.getActualEndDate() : phase.getScheduledEndDate();
+            }
+        }
+        return null;
+    }
+    
     /**
      * <p>
      * Gets the end date of software competition.
@@ -596,9 +716,51 @@ public final class DirectUtils {
         }
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
-            if (PhaseStatus.OPEN.getId() == phase.getPhaseStatus().getId() 
+            if (PhaseStatus.OPEN.getId() == phase.getPhaseStatus().getId()
                 && !SPECIFICATION_SUBMISSION.equals(phase.getPhaseType().getName())
                 && !SPECIFICATION_REVIEW.equals(phase.getPhaseType().getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether a phase of a specified contest is in Open status.
+     *
+     * @param softwareCompetition the specified contest
+     * @param phaseType the phase
+     * @return true if the phase of the specified contest is in open status, false otherwise.
+     * @since 1.7.1
+     */
+    public static boolean isPhaseOpen(SoftwareCompetition softwareCompetition, PhaseType phaseType) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == phaseType.getId() && phase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks whether a phase of a specified contest is in scheduled status.
+     *
+     * @param softwareCompetition the specified contest
+     * @param phaseType the phase
+     * @return true if the phase of the specified contest is in scheduled status, false otherwise.
+     * @since 1.7.1
+     */
+    public static boolean isPhaseScheduled(SoftwareCompetition softwareCompetition, PhaseType phaseType) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return false;
+        }
+
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == phaseType.getId() && phase.getPhaseStatus().getId() == PhaseStatus.SCHEDULED.getId()) {
                 return true;
             }
         }
@@ -637,14 +799,14 @@ public final class DirectUtils {
             }
         }
 
-        if (specificationReviewPhase != null 
+        if (specificationReviewPhase != null
              && (PhaseStatus.OPEN.getName().equals(specificationReviewPhase.getPhaseStatus().getName())
                   || PhaseStatus.CLOSED.getName().equals(specificationReviewPhase.getPhaseStatus().getName())))
-        { 
+        {
             return true;
         }
 
-        if (specificationSubmissionPhase != null 
+        if (specificationSubmissionPhase != null
              && (PhaseStatus.OPEN.getName().equals(specificationSubmissionPhase.getPhaseStatus().getName())
                   || PhaseStatus.CLOSED.getName().equals(specificationSubmissionPhase.getPhaseStatus().getName())))
         {
@@ -726,7 +888,7 @@ public final class DirectUtils {
     /**
      * <p>Gets the submissions for specified round of specified <code>Studio</code> contest.</p>
      *
-     * @param contest represents the contest.
+     * @param projectId represents the contest.
      * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
      * @param currentUser a <code>TCSubject</code> representing the current user.
      * @param contestServiceFacade a <code>ContestServiceFacade</code> to be used for accessing the service layer for
@@ -736,57 +898,36 @@ public final class DirectUtils {
      * @throws ContestServiceException if an unexpected error occurs.
      * @since 1.4
      */
-    public static List<SubmissionData> getStudioContestSubmissions(ContestData contest, ContestRoundType roundType,
+    public static List<Submission> getStudioContestSubmissions(long projectId, ContestRoundType roundType,
                                                                    TCSubject currentUser,
                                                                    ContestServiceFacade contestServiceFacade)
-        throws PermissionServiceException, ContestServiceException,  PersistenceException, ContestNotFoundException  {
-
-        List<SubmissionData> submissions = contestServiceFacade.retrieveSubmissionsForContest(currentUser, contest.getContestId());
-
-        if (contest.getMultiRound()) {
-
-            Date milestoneDate = getDate(contest.getMultiRoundData().getMilestoneDate());
-            List<SubmissionData> filteredSubmissions = new ArrayList<SubmissionData>();
-
-            for (SubmissionData sub : submissions)
-            {
-                Date subDate = getDate(sub.getSubmittedDate());
-
-                if (roundType == ContestRoundType.MILESTONE) {
-                    if (subDate.before(milestoneDate))
-                    {
-                        filteredSubmissions.add(sub);
-                    }
-                } else {
-                    if (subDate.after(milestoneDate))
-                    {
-                        filteredSubmissions.add(sub);
-                    }
-
-                }
-            }
-
-            return filteredSubmissions;
-             
-        } else {
-                return submissions;
-        }
-      
+        throws UploadPersistenceException, SearchBuilderException {
+        return Arrays.asList(contestServiceFacade.getSoftwareActiveSubmissions(projectId,
+                roundType == ContestRoundType.MILESTONE ? MILESTONE_SUBMISSION_TYPE_ID : CONTEST_SUBMISSION_TYPE_ID));
     }
 
     /**
      * <p>Gets the number of prizes for specified round of specified <code>Studio</code> contest.</p>
      *
-     * @param studioCompetition a <code>StudioCompetition</code> providing the studio contest.
+     * @param competition a <code>StudioCompetition</code> providing the studio contest.
      * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
      * @return an <code>int</code> providing the number of the prize for specified round of specified <code>Studio</code> contest.
      * @since 1.5
      */
-    public static int getContestPrizeNumber(StudioCompetition studioCompetition, ContestRoundType roundType) {
+    public static int getContestPrizeNumber(SoftwareCompetition competition, ContestRoundType roundType) {
+        int tot1 = 0;
+        int tot2 = 0;
+        for (Prize prize : competition.getProjectHeader().getPrizes()) {
+            if (prize.getPrizeType().getId() == MILESTONE_PRIZE_TYPE_ID) {
+                tot1 += prize.getNumberOfSubmissions();
+            } else if (prize.getPrizeType().getId() == CONTEST_PRIZE_TYPE_ID) {
+                tot2 += prize.getNumberOfSubmissions();
+            }
+        }
         if (roundType == ContestRoundType.MILESTONE) {
-            return studioCompetition.getContestData().getMilestonePrizeData().getNumberOfSubmissions();
+            return tot1;
         } else {
-            return studioCompetition.getPrizes().size();
+            return tot2;
         }
     }
 
@@ -834,7 +975,7 @@ public final class DirectUtils {
 
     /**
      * <p>Gets a flag indicating whether the submissions have already been checked out.</p>
-     * 
+     *
      * @param submissions the submissions to check.
      * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
      * @return a flag indicating whether the submissions have already been checked out.
@@ -854,7 +995,31 @@ public final class DirectUtils {
         }
         return false;
     }
-    
+
+    /**
+     * Checks whether a specified round type of a contest is checked out. If the corresponding phase is closed,
+     * then the contest is checked out.
+     *
+     * @param competition the contest to check
+     * @param roundType the specified round type
+     * @return true if the specified round type of the contest is checked out, false otherwise.
+     * @since 1.7.1
+     */
+    public static boolean getContestCheckout(SoftwareCompetition competition, ContestRoundType roundType) {
+        for (Phase phase : competition.getProjectPhases().getPhases()) {
+            if (roundType == ContestRoundType.MILESTONE) {
+                if (phase.getPhaseType().getId() == PhaseType.MILESTONE_REVIEW_PHASE.getId()) {
+                    return !(phase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId());
+                }
+            } else if (roundType == ContestRoundType.FINAL) {
+                if (phase.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
+                    return !(phase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId());
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * <p>Gets the additional prize for a studio competition.</p>
      *
@@ -895,10 +1060,21 @@ public final class DirectUtils {
     public static HttpServletResponse getServletResponse() {
         return (HttpServletResponse) ActionContext.getContext().get(ServletActionContext.HTTP_RESPONSE);
     }
-    
+
+    /**
+     * <p>Checks whether a <code>SoftwareCompetition</code> is a studio contest or not.</p>
+     *
+     * @param competition the <code>SoftwareCompetition</code> to check
+     * @return true if the contest is a studio contest, false otherwise.
+     * @since 1.7
+     */
+    public static boolean isStudio(SoftwareCompetition competition) {
+        return competition.getProjectHeader().getProjectCategory().getProjectType().getId() == ProjectType.STUDIO.getId();
+    }
+
     /**
      * Check whether user has permission to a specify contest.
-     * 
+     *
      * @param action
      *            the action
      * @param tcSubject
@@ -965,6 +1141,27 @@ public final class DirectUtils {
     }
 
     /**
+     * Gets the client feedback for submissions.
+     *
+     * @param currentUser TCSubject instance for login user
+     * @param contestServiceFacade the <code>ContestServiceFacade</code> service bean
+     * @param submissions a <code>List</code> providing the submissions
+     * @param projectId the project id which the submissions belong to
+     * @param phaseType the phase type which the submissions belong to
+     * @return a <code>Map</code> providing the client feedback for the submissions.
+     * @throws Exception if any error occurs
+     * @since 1.7.1
+     */
+    public static Map<Long, String> getStudioSubmissionsFeedback(TCSubject currentUser, ContestServiceFacade contestServiceFacade,
+            List<Submission> submissions, long projectId, PhaseType phaseType) throws Exception {
+        Map<Long, String> feedback = new HashMap<Long, String>();
+        for (Submission submission : submissions) {
+            feedback.put(submission.getId(),
+                    contestServiceFacade.getStudioSubmissionFeedback(currentUser, projectId, submission.getId(), phaseType));
+        }
+        return feedback;
+    }
+    /**
      * Gets the mappings of client, billing and projects.
      *
      * @param tcSubject the tcSubject
@@ -1007,6 +1204,53 @@ public final class DirectUtils {
     }
 
     /**
+     * Gets the billing account id of the given project.
+     *
+     * @param tcSubject the tcSubject instance.
+     * @param projectId the id of the project.
+     * @return the billing account id, or -1 if not found.
+     * @throws Exception if any error occurs.
+     */
+    public static Long getBillingIdForProject(TCSubject tcSubject, long projectId) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("billing.project");
+
+        for (Map.Entry<Long, Map<Long, String>> entry : data.entrySet()) {
+            Map<Long, String> projects = entry.getValue();
+
+            if (projects.containsKey(projectId)) {
+                return entry.getKey();
+            }
+        }
+
+        return -1l;
+    }
+
+    /**
+     * Gets the billing accounts.
+     *
+     * @param tcSubject the tcSubject instance.
+     * @return the billing accounts, never null, possible entry
+     * @throws Exception if any error occurs.
+     */
+    public static List<Project> getBillingAccounts(TCSubject tcSubject) throws Exception {
+        Map<Long, Map<Long, String>> data = (Map<Long, Map<Long, String>>) getDashboardClientBillingProjectMappings(tcSubject).get("client.billing");
+
+        List<Project> billingAccounts = new ArrayList<Project>();
+        for (Map<Long, String> billingData : data.values()) {
+
+            for (Map.Entry<Long, String> entry : billingData.entrySet()) {
+                Project project = new Project();
+                project.setId(entry.getKey());
+                project.setName(entry.getValue());
+
+                billingAccounts.add(project);
+            }
+        }
+
+        return billingAccounts;
+    }
+
+    /**
      * Gets the projects of the given client.
      *
      * @param tcSubject the tcSubject instance.
@@ -1021,8 +1265,6 @@ public final class DirectUtils {
         if (result == null) {
             return new HashMap<Long, String>();
         } else {
-
-
 
             return new HashMap<Long, String>(result);
         }
@@ -1104,13 +1346,13 @@ public final class DirectUtils {
      * <p>
      * Checks if the login user is of given role
      * </p>
-     * 
+     *
      * @param tcSubject
      *            TCSubject instance for login user
      * @return true if it is given role
      * @since 1.6.2
      */
-    private static boolean isRole(TCSubject tcSubject, String roleName) {
+    public static boolean isRole(TCSubject tcSubject, String roleName) {
         Set<RolePrincipal> roles = tcSubject.getPrincipals();
         if (roles != null) {
             for (RolePrincipal role : roles) {
@@ -1120,6 +1362,71 @@ public final class DirectUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * <p>Gets the additional prize for a studio competition.</p>
+     *
+     * @param softwareCompetition the studio competition
+     * @return the additional prize for the studio competition
+     */
+    public static double getAdditionalPrize(SoftwareCompetition softwareCompetition) {
+        List<Prize> prizes = softwareCompetition.getProjectHeader().getPrizes();
+        if (prizes.size() == 0) {
+            return 0.0;
+}
+
+        double prize = Double.MAX_VALUE;
+        for (int i = 0; i < prizes.size(); i++) {
+            // only check contest prize
+            if (prizes.get(i).getPrizeType().getId() == 15) {
+                prize = Math.min(prize, prizes.get(i).getPrizeAmount());
+            }
+        }
+
+        if (prize == Double.MAX_VALUE) {
+            // since there are always contest prize, no such case.
+            prize = 0.0;
+        }
+        return prize;
+    }
+
+    /**
+     * <p>Gets the contest prizes.</p>
+     *
+     * @param softwareCompetition the studio competition
+     * @return the list of contest prize
+     */
+    public static List<Prize> getContestPrizes(SoftwareCompetition softwareCompetition) {
+        List<Prize> prizes = new ArrayList<Prize>(softwareCompetition.getProjectHeader().getPrizes());
+        for (Iterator<Prize> iter = prizes.iterator(); iter.hasNext();) {
+            Prize prize = iter.next();
+            // only left contest prize
+            if (prize.getPrizeType().getId() != 15) {
+                iter.remove();
+            }
+        }
+
+        return prizes;
+    }
+
+    /**
+     * <p>Gets the milestone prize.</p>
+     *
+     * @param softwareCompetition the studio competition
+     * @return the milestone prize or null
+     */
+    public static Prize getMilestonePrize(SoftwareCompetition softwareCompetition) {
+        List<Prize> prizes = softwareCompetition.getProjectHeader().getPrizes();
+        for (Iterator<Prize> iter = prizes.iterator(); iter.hasNext();) {
+            Prize prize = iter.next();
+            // only left contest prize
+            if (prize.getPrizeType().getId() == 14) {
+                return prize;
+            }
+        }
+
+        return null;
     }
     
     /**
@@ -1138,17 +1445,16 @@ public final class DirectUtils {
             dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId, !software));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
-        
-        if (!software) {
-            StudioCompetition studioCompetition = facade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
-                    contestId);
-            dto.getDashboard().setAllPhases(getStudioPhases(studioCompetition));
+
+        SoftwareCompetition softwareCompetition = facade.getSoftwareContestByProjectId(currentUser, contestId);
+        if (isStudio(softwareCompetition)) {
+            dto.getDashboard().setAllPhases(getStudioPhases(softwareCompetition));
             dto.getDashboard().setStartTime(
-                    dto.getDashboard().getAllPhases().get(0).getStartTime());
+                dto.getDashboard().getAllPhases().get(0).getStartTime());
             dto.getDashboard().setEndTime(
-                    dto.getDashboard().getAllPhases()
-                            .get(dto.getDashboard().getAllPhases().size() - 1)
-                            .getEndTime());
+                dto.getDashboard().getAllPhases()
+                    .get(dto.getDashboard().getAllPhases().size() - 1)
+                    .getEndTime());
         }
     }
     
@@ -1169,10 +1475,9 @@ public final class DirectUtils {
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
         
-        if (!software) {
-            StudioCompetition studioCompetition = facade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
-                    contestId);
-            dto.getDashboard().setAllPhases(getStudioPhases(studioCompetition));
+        SoftwareCompetition softwareCompetition = facade.getSoftwareContestByProjectId(currentUser, contestId);
+        if (isStudio(softwareCompetition)) {
+            dto.getDashboard().setAllPhases(getStudioPhases(softwareCompetition));
             dto.getDashboard().setStartTime(
                     dto.getDashboard().getAllPhases().get(0).getStartTime());
             dto.getDashboard().setEndTime(
@@ -1192,38 +1497,31 @@ public final class DirectUtils {
      * @return a list of phases
      * @since 1.6.7
      */
-    public static List<ProjectPhaseDTO> getStudioPhases(StudioCompetition competition) {
+    public static List<ProjectPhaseDTO> getStudioPhases(SoftwareCompetition competition) {
         List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
         
-        if (competition.getContestData().isMultiRound()) {
+        if (isMultiRound(competition)) {
             // set r1 subs
-            phases.add(getPhase(getDate(competition.getStartTime()),
-                    getDate(competition.getContestData().getMultiRoundData()
-                            .getMilestoneDate()), ProjectPhaseType.R1_SUBS));
+            phases.add(getPhase(getDate(competition.getStartTime()), getMultiRoundEndDate(competition), 
+                                ProjectPhaseType.MILESTONE_SUBMISSION));
             
             // set r1 feedback
-            phases.add(getPhase(getDate(competition.getContestData()
-                    .getMultiRoundData().getMilestoneDate()),
-                    getDate(competition.getEndTime()),
-                    ProjectPhaseType.R1_FEEDBACK));
+            phases.add(getPhase(getMultiRoundEndDate(competition), getDate(competition.getEndTime()),
+                                ProjectPhaseType.MILESTONE_REVIEW));
             
             // set r2 subs
-            phases.add(getPhase(getDate(competition.getContestData()
-                    .getMultiRoundData().getMilestoneDate()),
-                    getDate(competition.getEndTime()),
-                    ProjectPhaseType.R2_SUBS));
+            phases.add(getPhase(getMultiRoundEndDate(competition), getDate(competition.getEndTime()),
+                                ProjectPhaseType.SUBMISSION));
             
         } else {
             // set r1 subs
             phases.add(getPhase(getDate(competition.getStartTime()),
-                    getDate(competition.getEndTime()), ProjectPhaseType.R1_SUBS));
+                                getDate(competition.getEndTime()), ProjectPhaseType.SUBMISSION));
         }
         
         // set winner
-        phases.add(getPhase(getDate(competition.getEndTime()),
-                getDate(competition.getContestData()
-                        .getWinnerAnnoucementDeadline()),
-                ProjectPhaseType.WINNER));
+        phases.add(getPhase(getDate(competition.getEndTime()), getDate(competition.getEndTime()),
+                            ProjectPhaseType.REVIEW));
         
         return phases;
     }
@@ -1245,9 +1543,9 @@ public final class DirectUtils {
         phase.setPhaseType(type);
         
         Date now = new Date();
-        if (startTime.after(now)) {
+        if (startTime == null || startTime.after(now)) {
             phase.setPhaseStatus(ProjectPhaseStatus.SCHEDULED);
-        } else if (endTime.before(now)) {
+        } else if (endTime != null && endTime.before(now)) {
             phase.setPhaseStatus(ProjectPhaseStatus.CLOSED);
         } else {
             phase.setPhaseStatus(ProjectPhaseStatus.OPEN);

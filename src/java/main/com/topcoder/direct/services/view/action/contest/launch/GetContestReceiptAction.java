@@ -50,13 +50,8 @@ public class GetContestReceiptAction extends GetContestAction {
      * @throws Exception if any other error occurs
      */
     protected void executeAction() throws Exception {
-        super.executeAction();
-        
-        if (super.getContestId() > 0) {
-            contestReceipt = DataProvider.getContestReceipt(super.getContestId(), true);
-        } else {
-            contestReceipt = DataProvider.getContestReceipt(super.getProjectId(), false);
-        }
+        super.executeAction();        
+            contestReceipt = DataProvider.getContestReceipt(super.getProjectId(), !super.isSoftware());
     }
 
     /**

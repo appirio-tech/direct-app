@@ -5,11 +5,17 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 
 import com.topcoder.catalog.entity.Category;
 import com.topcoder.catalog.entity.CompDocumentation;
@@ -17,46 +23,33 @@ import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.catalog.entity.Technology;
 import com.topcoder.catalog.service.AssetDTO;
 import com.topcoder.clients.model.Project;
-import com.topcoder.clients.model.ProjectContestFee;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.CopilotFee;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
+import com.topcoder.management.project.FileType;
+import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectStatus;
+import com.topcoder.management.project.ProjectStudioSpecification;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.admin.AdminServiceFacadeException;
-import com.topcoder.service.facade.contest.ContestPaymentResult;
+import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.contest.SoftwareContestPaymentResult;
 import com.topcoder.service.payment.PaymentType;
 import com.topcoder.service.payment.TCPurhcaseOrderPaymentData;
 import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.service.pipeline.CapacityData;
 import com.topcoder.service.pipeline.CompetitionType;
-import com.topcoder.service.project.CompetionType;
-import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.project.StudioCompetition;
-import com.topcoder.service.studio.ContestData;
-import com.topcoder.service.studio.ContestMultiRoundInformationData;
-import com.topcoder.service.studio.ContestSpecificationsData;
-import com.topcoder.service.studio.MediumData;
-import com.topcoder.service.studio.MilestonePrizeData;
-import com.topcoder.service.studio.PrizeData;
-
-import com.topcoder.service.studio.*;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
 
 
 /**
  * <p>
- * This action permits to create or update a contest. The contest could be a studio or a software competition, based
- * on competition type. The action is an update based on the the project id or contest id presence. This class action
+ * This action permits to create or update a contest. The contest could be a studio or a software competition, based on
+ * competition type. The action is an update based on the the project id or contest id presence. This class action
  * contains also in the prepare method another action: it permits to write the sub entities of the software and/or
  * studio competition so two http round trips will be provided in this action.
  * </p>
@@ -64,7 +57,7 @@ import org.apache.commons.lang.StringUtils;
  * Notes, to configure this action properly, we need use parameters intercepor twice. One before calling the prepare
  * interceptor, one after the prepare interceptor, as we need projectId and contestId be ready when calling prepare
  * interceptor. the config is like following:<br>
- *
+ * 
  * <pre>
  * &lt;!-- Calls the params interceptor twice, allowing you to
  *        pre-load data for the second time parameters are set --&gt;
@@ -77,16 +70,16 @@ import org.apache.commons.lang.StringUtils;
  *       &lt;result name=&quot;success&quot;&gt;good_result.ftl&lt;/result&gt;
  *   &lt;/action&gt;
  * </pre>
- *
+ * 
  * </p>
  * <p>
- * <b>Thread Safety</b>: In <b>Struts 2</b> framework, the action is constructed for every request so the thread
- * safety is not required (instead in Struts 1 the thread safety is required because the action instances are reused).
- * This class is mutable and stateful: it's not thread safe.
+ * <b>Thread Safety</b>: In <b>Struts 2</b> framework, the action is constructed for every request so the thread safety
+ * is not required (instead in Struts 1 the thread safety is required because the action instances are reused). This
+ * class is mutable and stateful: it's not thread safe.
  * </p>
  * <p>
- * Change note for 1.1 Direct Launch Contest Studio Assembly 1.0: 1. Add some fields for holding parameters for
- * contest create/update 2. Adjust some of methods such as XML date conversion.
+ * Change note for 1.1 Direct Launch Contest Studio Assembly 1.0: 1. Add some fields for holding parameters for contest
+ * create/update 2. Adjust some of methods such as XML date conversion.
  * </p>
  * <p>
  * Version 1.2 - Direct - View/Edit/Activate Studio Contests Assembly Change Note - Adds studio contest activation
@@ -99,6 +92,11 @@ import org.apache.commons.lang.StringUtils;
  * <li>Adds the functions for activating software contest</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.4 - TC Direct Replatforming Release 1: Replatforming this class to create Studio contest
+ * the same as the software contest. And add milestone support for both studio contest and software contest.
+ * </p>
+ * 
  * <p>
  * Version 1.4 - TC Direct - Software Contest Creation Update Change Note
  * <ul>
@@ -133,29 +131,9 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Default prizes to be used if they are not provided.
-     * </p>
-     */
-    private static final List<CompetitionPrize> DEFAULT_STUDIO_PRIZES = new ArrayList<CompetitionPrize>();
-
-    static {
-        CompetitionPrize prize1 = new CompetitionPrize();
-        prize1.setPlace(1);
-        prize1.setAmount(350);
-
-        CompetitionPrize prize2 = new CompetitionPrize();
-        prize2.setPlace(2);
-        prize2.setAmount(70);
-
-        DEFAULT_STUDIO_PRIZES.add(prize1);
-        DEFAULT_STUDIO_PRIZES.add(prize2);
-    }
-
-    /**
-     * <p>
      * Constant for active project status.
      * </p>
-     *
+     * 
      * @since Direct Launch Software Contests Assembly
      */
     private static final ProjectStatus PROJECT_STATUS_ACTIVE = new ProjectStatus(1, "ACTIVE");
@@ -171,7 +149,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Constant for resource role of manager.
      * </p>
-     *
+     * 
      * @since Direct Launch Software Contests Assembly
      */
     private static final long RESOURCE_ROLE_MANAGER = 13L;
@@ -180,7 +158,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Constant for key of resource info: handle.
      * </p>
-     *
+     * 
      * @since 1.4
      */
     private static final String RESOURCE_INFO_HANDLE = "Handle";
@@ -229,7 +207,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Constant for design project category.
      * </p>
-     *
+     * 
      * @since Direct Launch Software Contests Assembly
      */
     private static final long PROJECT_CATEGORY_DESIGN = 1;
@@ -238,7 +216,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Constant for dev project category.
      * </p>
-     *
+     * 
      * @since Direct Launch Software Contests Assembly
      */
     private static final long PROJECT_CATEGORY_DEV = 2;
@@ -261,7 +239,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Constant for billing project id key.
      * </p>
-     *
+     * 
      * @since Direct Launch Software Contests Assembly
      */
     private static final String PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID = "Billing Project";
@@ -276,18 +254,11 @@ public class SaveDraftContestAction extends ContestAction {
     private static final long UNSET_RESOURCE_ID = -1;
 
     /**
-     * <p>
-     * This is the start date of the contest.
      * </p>
+     * 
+     * @since TC Direct Replatforming Release 1
      */
-    private Date startDate = new Date();
-
-    /**
-     * <p>
-     * This is the end date of the contest.
-     * </p>
-     */
-    private Date endDate = new Date();
+    private boolean hasMulti = false;
 
     /**
      * <p>
@@ -298,36 +269,21 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * This is the name of contest.
-     * </p>
-     * <p>
-     * It's mapped to the similar name field (type) in related Competition instance. It must be not null, String, max
-     * 255 chars, non empty. It's changed by the setter and returned by the getter.
+     * End date of the contest. Only available for the studio contest.
      * </p>
      */
-    private String contestName;
+    private XMLGregorianCalendar endDate = null;
 
     /**
      * <p>
      * This is the id of project of contest.
      * </p>
      * <p>
-     * It's used to update the contest: if it's present then it's an update otherwise is a create. It can be 0 (it
-     * means not present) or greater than 0 if it's present. It's changed by the setter and returned by the getter.
+     * It's used to update the contest: if it's present then it's an update otherwise is a create. It can be 0 (it means
+     * not present) or greater than 0 if it's present. It's changed by the setter and returned by the getter.
      * </p>
      */
     private long projectId;
-
-    /**
-     * <p>
-     * This is the id of contest.
-     * </p>
-     * <p>
-     * It's used to update the contest: if it's present then it's an update otherwise is a create. It can be 0 (it
-     * means not present) or greater than 0 if it's present. It's changed by the setter and returned by the getter.
-     * </p>
-     */
-    private long contestId;
 
     /**
      * <p>
@@ -355,98 +311,26 @@ public class SaveDraftContestAction extends ContestAction {
      * @since 1.4
      */
     private String contestCopilotName;
-
+    
     /**
-     * <p>
-     * This is the category of competition.
-     * </p>
-     * <p>
-     * It's changed by the setter and returned by the getter. It can be null or empty.
-     * </p>
-     */
-    private String category;
-
-    /**
-     * <p>
-     * This is the review payment of competition.
-     * </p>
-     * <p>
-     * It's changed by the setter and returned by the getter. it can be greater or equal than 0.
-     * </p>
-     */
-    private double reviewPayment;
-
-    /**
-     * <p>
-     * This is the specification review payment of competition.
-     * </p>
-     * <p>
-     * It's changed by the setter and returned by the getter. it can be greater or equal than 0.
-     * </p>
-     */
-    private double specificationReviewPayment;
-
-    /**
-     * <p>
-     * This one indicates if the contest has wiki specification.
-     * </p>
-     * <p>
-     * All values are possible. It's changed by the setter and returned by the getter.
-     * </p>
-     */
-    private boolean hasWikiSpecification;
-
-    /**
-     * <p>
-     * This is the notes of competition.
-     * </p>
-     * <p>
-     * It's changed by the setter and returned by the getter. It can be null or empty.
-     * </p>
-     */
-    private String notes;
-
-    /**
-     * <p>
-     * This is the digital run points competition.
-     * </p>
-     * <p>
-     * It's changed by the setter and returned by the getter. it can be greater or equal than 0.
-     * </p>
-     */
-    private double drPoints;
-
-    /**
-     * <p>
      * This is the competition type used to determine the type of competition (Studio or not) to update or create.
      * </p>
      * <p>
      * If it's studio then we need also the studio type otherwise the field is mapped to the type field in the
-     * Competition instance. It can't be null when the logic is performed, the possible values are all enum values.
-     * It's changed by the setter and returned by the getter.
+     * Competition instance. It can't be null when the logic is performed, the possible values are all enum values. It's
+     * changed by the setter and returned by the getter.
      * </p>
      */
     private CompetitionType competitionType;
 
     /**
      * <p>
-     * these are the prizes of competition.
-     * </p>
-     * <p>
-     * It's changed by the setter and returned by the getter. It can't be null when the prizes change.
-     * </p>
-     */
-    private List<CompetitionPrize> prizes;
-
-    /**
-     * <p>
      * This is asset dto of the software competition.
      * </p>
      * <p>
-     * It's used only by the software competition. It's changed by the setter and the prepare method and returned by
-     * the getter. It can't be null when the prizes change. It will be created/retrieved in the prepare method to
-     * permit to update the technologies and categories. Some setters and getters delegate to it, if it's a software
-     * competition.
+     * It's used only by the software competition. It's changed by the setter and the prepare method and returned by the
+     * getter. It can't be null when the prizes change. It will be created/retrieved in the prepare method to permit to
+     * update the technologies and categories. Some setters and getters delegate to it, if it's a software competition.
      * </p>
      */
     private AssetDTO assetDTO;
@@ -455,30 +339,10 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * This is project object of the software competition.
      * </p>
-     *
+     * 
      * @since Direct Launch Software Contests Assembly
      */
     private com.topcoder.management.project.Project projectHeader;
-
-    /**
-     * <p>
-     * This is contest data of the studio software competition.
-     * </p>
-     * <p>
-     * It's used only by the studio competition. It's changed by the setter and the prepare method and returned by the
-     * getter. It can't be null when the prizes change. It contains also the MilestonePrizeData,
-     * ContestMultiRoundInformationData, MediumData or ContestSpecificationsData. These instances will be created in
-     * the prepare method so they can be filled directly (with the same mechanism of list of entities) in the setters.
-     * </p>
-     */
-    private ContestData contestData;
-
-    /**
-     * <p>
-     * <code>studioCompetition</code> to hold the object retrieved before parameters are populated.
-     * </p>
-     */
-    private StudioCompetition studioCompetition;
 
     /**
      * <p>
@@ -486,20 +350,6 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private SoftwareCompetition softwareCompetition;
-
-    /**
-     * <p>
-     * Milestone prize amount.
-     * </p>
-     */
-    private double milestonePrizeAmount;
-
-    /**
-     * <p>
-     * Milestone prize number of submissions.
-     * </p>
-     */
-    private int milestonePrizeNumberOfSubmissions;
 
     /**
      * <p>
@@ -552,11 +402,20 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * For development software contest. It might indicate the design component which the current design component
-     * will be derived from.
+     * For development software contest. It might indicate the design component which the current design component will
+     * be derived from.
      * </p>
      */
     private long selectedDesignId = -1;
+
+    /**
+     * <p>
+     * For studio contest. It contains the file types.
+     * </p>
+     * 
+     * @since TC Direct Replatforming Release 1
+     */
+    private List<String> fileTypes;
 
     /**
      * <p>
@@ -573,9 +432,11 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Save or update the contest based on the value of contest or project id.
      * </p>
-     *
-     * @throws IllegalStateException if the contest service facade is not set.
-     * @throws Exception if any error occurs
+     * 
+     * @throws IllegalStateException
+     *             if the contest service facade is not set.
+     * @throws Exception
+     *             if any error occurs
      * @see ContestServiceFacade#getContest(TCSubject, long)
      * @see ContestServiceFacade#getSoftwareContestByProjectId(TCSubject, long)
      * @see ContestServiceFacade#updateContest(TCSubject, StudioCompetition)
@@ -586,15 +447,15 @@ public class SaveDraftContestAction extends ContestAction {
     protected void executeAction() throws Exception {
         ContestServiceFacade contestServiceFacade = getContestServiceFacadeWithISE();
 
-        XMLGregorianCalendar startTime = newXMLGregorianCalendar(startDate);
-        XMLGregorianCalendar endTime = newXMLGregorianCalendar(endDate);
-
         // get the TCSubject from session
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
 
+        if (!hasMulti) {
+            milestoneDate = null;
+        }
         if (projectId > 0) {
             softwareCompetition.setProjectHeaderReason("user update");
-            populateSoftwareCompetition(softwareCompetition);
+            populateCompetition(softwareCompetition);
 
             // update the software competition copilot resource first
             updateSoftwareCompetitionCopilotResource();
@@ -603,64 +464,23 @@ public class SaveDraftContestAction extends ContestAction {
                 softwareCompetition = activateSoftwareCompeition(softwareCompetition);
             } else {
                 softwareCompetition = contestServiceFacade.updateSoftwareContest(tcSubject, softwareCompetition,
-                    tcDirectProjectId);
+                        tcDirectProjectId, milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
             }
             setResult(getSoftwareResult(softwareCompetition));
-        } else if (contestId > 0) {
-            studioCompetition.setStartTime(startTime);
-            studioCompetition.setEndTime(endTime);
-            populateStudioCompetition(studioCompetition);
-
-            if (isActivation(studioCompetition)) {
-                studioCompetition = activateStudioCompeition(studioCompetition);
-            } else {
-                contestServiceFacade.updateContest(tcSubject, studioCompetition);
-            }
-            setResult(getStudioResult(studioCompetition));
         } else {
-            if (competitionType == CompetitionType.STUDIO) {
-                if (StringUtils.isBlank(contestData.getContestDescriptionAndRequirements())) {
-                    contestData.setContestDescriptionAndRequirements("");
-                }
+            // creation of the software competition
+            softwareCompetition = new SoftwareCompetition();
+            softwareCompetition.setAssetDTO(getAssetDTOForNewSoftware());
+            softwareCompetition.setProjectHeader(projectHeader);
+            initializeCompetition(softwareCompetition);
+            populateCompetition(softwareCompetition);
 
-                // creation of the studio competition
-                studioCompetition = new StudioCompetition(contestData);
-
-                studioCompetition.setStartTime(startTime);
-                studioCompetition.setEndTime(endTime);
-                populateStudioCompetition(studioCompetition);
-
-                if (isActivation(studioCompetition)) {
-                    studioCompetition = activateStudioCompeition(studioCompetition);
-                } else {
-                    studioCompetition = contestServiceFacade.createContest(tcSubject, studioCompetition,
-                        tcDirectProjectId);
-                }
-
-                // add preloaded documents
-                if (docUploadIds != null && docUploadIds.size() > 0) {
-                    for (String docUploadId : docUploadIds) {
-                        contestServiceFacade.addDocumentToContest(tcSubject, Long.parseLong(docUploadId),
-                            studioCompetition.getContestData().getContestId());
-                    }
-                }
-
-                setResult(getStudioResult(studioCompetition));
-            } else if (competitionType == CompetitionType.SOFTWARE) {
-                // creation of the software competition
-                softwareCompetition = new SoftwareCompetition();
-                softwareCompetition.setAssetDTO(getAssetDTOForNewSoftware());
-                softwareCompetition.setProjectHeader(projectHeader);
-
-                initializeSoftwareCompetition(softwareCompetition);
-
-                populateSoftwareCompetition(softwareCompetition);
-
+            if (competitionType == CompetitionType.STUDIO || competitionType == CompetitionType.SOFTWARE) {
                 if (isActivation(softwareCompetition)) {
                     softwareCompetition = activateSoftwareCompeition(softwareCompetition);
                 } else {
                     softwareCompetition = contestServiceFacade.createSoftwareContest(tcSubject, softwareCompetition,
-                        tcDirectProjectId);
+                            tcDirectProjectId, milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
                 }
                 setResult(getSoftwareResult(softwareCompetition));
             } else {
@@ -719,18 +539,105 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * Populates the values of SoftwareCompetition object with parameters of this action.
+     * </p>
+     * 
+     * @param softwareCompetition the SoftwareCompetition object
+     * @throws ContestServiceException if any error occurs
+     * @since TC Direct Replatforming Release 1
+     */
+    @SuppressWarnings("all")
+    private void populateCompetition(SoftwareCompetition softwareCompetition) throws ContestServiceException {
+        AssetDTO assetDTO = softwareCompetition.getAssetDTO();
+        if (assetDTO.getDetailedDescription() == null) {
+            assetDTO.setDetailedDescription("NA");
+        }
+
+        // handle upload documents
+        SessionFileStore fileStore = new SessionFileStore(DirectUtils.getServletRequest().getSession(true));
+        List<CompUploadedFile> files = new ArrayList<CompUploadedFile>();
+        if (docUploadIds != null && docUploadIds.size() > 0) {
+            for (String docUploadId : docUploadIds) {
+                CompUploadedFile file = fileStore.getFile(Long.parseLong(docUploadId));
+                if (file != null) {
+                    files.add(file);
+                }
+            }
+        }
+        assetDTO.setCompUploadedFiles(files);
+
+        // handle existing documents
+        if (assetDTO.getDocumentation() != null) {
+            assetDTO.setDocumentation((List) CollectionUtils.select(assetDTO.getDocumentation(), new Predicate() {
+                public boolean evaluate(Object object) {
+                    return docCompIds != null && docCompIds.contains(((CompDocumentation) object).getId());
+                }
+            }));
+        }
+
+        // Set prizes
+        List<Prize> prizes = projectHeader.getPrizes();
+        List<Prize> newPrizes = new ArrayList<Prize>();
+        for (Prize prize : prizes) {
+            if (prize.getPrizeAmount() > 0) {
+                newPrizes.add(prize);
+            }
+        }
+        softwareCompetition.getProjectHeader().setPrizes(newPrizes);
+        
+        if (DirectUtils.isStudio(softwareCompetition)) {
+            populateStudioCompetition(softwareCompetition);
+        } else {
+            populateSoftwareCompetition(softwareCompetition);
+        }
+    }
+
+    /**
+     * <p>Convert a list string of file types to a list of FileType objects.</p>
+     * 
+     * @param fileTypes the List of String represents the names of the file types
+     * @return the List of FileType objects
+     * @throws ContestServiceException if any error occurs
+     * @since TC Direct Replatforming Release 1
+     */
+    private List<FileType> getFileTypes(List<String> fileTypes) throws ContestServiceException {
+        List<FileType> newFileTypes = new ArrayList<FileType>();
+        FileType[] allFileTypes = getContestServiceFacadeWithISE().getAllFileTypes();
+        if (fileTypes != null) {
+            Map<String, FileType> nameToFileType = new HashMap<String, FileType>();
+            for (FileType type : allFileTypes) {
+                nameToFileType.put(type.getExtension().toUpperCase(), type);
+            }
+            for (String name : fileTypes) {
+                String ext = name.toUpperCase();
+                if (nameToFileType.containsKey(ext)) {
+                    newFileTypes.add(nameToFileType.get(ext));
+                } else {
+                    FileType type = new FileType();
+                    type.setExtension(ext);
+                    type.setDescription("description");
+                    newFileTypes.add(type);
+                }
+            }
+        }
+        return newFileTypes;
+    }
+
+    /**
+     * <p>
      * Gets assetDTO for new software contest.
      * </p>
-     *
+     * 
      * @return the assetDTO for new software contest
-     * @throws Exception if any error occurs
+     * @throws Exception
+     *             if any error occurs
      */
     private AssetDTO getAssetDTOForNewSoftware() throws Exception {
         if (selectedDesignId <= 0) {
             return assetDTO;
         } else {
             SoftwareCompetition designCompetition = getContestServiceFacade().getSoftwareContestByProjectId(
-                DirectStrutsActionsHelper.getTCSubjectFromSession(), selectedDesignId);
+                    DirectStrutsActionsHelper.getTCSubjectFromSession(), selectedDesignId);
             AssetDTO designAssetDTO = designCompetition.getAssetDTO();
             designAssetDTO.setProductionDate(assetDTO.getProductionDate());
             return designAssetDTO;
@@ -741,6 +648,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Initializes the software competition object.
      * </p>
+     * 
+     * @param softwareCompetition the SoftwareCompetition object
+     * @since TC Direct Replatforming Release 1
      *
      * <p>
      * Version 1.4 change notes:
@@ -750,7 +660,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @param softwareCompetition software competition
      * @since Direct Launch Software Contests Assembly
      */
-    private void initializeSoftwareCompetition(SoftwareCompetition softwareCompetition) {
+    private void initializeCompetition(SoftwareCompetition softwareCompetition) {
         // asset DTO
         AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
         if (assetDTOTemp.getVersionNumber() == null) {
@@ -764,6 +674,10 @@ public class SaveDraftContestAction extends ContestAction {
 
         // project header
         com.topcoder.management.project.Project projectHeaderTemp = softwareCompetition.getProjectHeader();
+
+        // project catalogs
+        assetDTOTemp.setCategories(new ArrayList<Category>());
+        
         if (projectHeaderTemp.getProjectCategory().getDescription() == null) {
             projectHeaderTemp.getProjectCategory().setDescription("");
         }
@@ -785,8 +699,86 @@ public class SaveDraftContestAction extends ContestAction {
         // project phases
         softwareCompetition.setProjectPhases(new com.topcoder.project.phases.Project());
 
-        // project catalogs
-        assetDTOTemp.setCategories(new ArrayList<Category>());
+        if (!DirectUtils.isStudio(softwareCompetition)) {
+            initializeSoftwareCompetition(softwareCompetition);
+        } else {
+            initializeStudioCompetition(softwareCompetition);
+        }
+    }
+
+    /**
+     * <p>
+     * Initializes the software competition object for studio contest.
+     * </p>
+     * 
+     * @param studioCompetition the SoftwareCompetition object
+     * @since TC Direct Replatforming Release 1
+     */
+    private void initializeStudioCompetition(SoftwareCompetition studioCompetition) {
+        // asset DTO
+        AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
+        assetDTOTemp.setRootCategory(getReferenceDataBean().getNotSetCatalog());
+        assetDTOTemp.getCategories().add(getReferenceDataBean().getNotSetCategory());
+        
+        if (softwareCompetition.getProjectHeader().getProjectStudioSpecification() == null) {
+            softwareCompetition.getProjectHeader().setProjectStudioSpecification(new ProjectStudioSpecification());
+        }
+        ProjectStudioSpecification projectStudioSpecification = softwareCompetition.getProjectHeader().getProjectStudioSpecification();
+        if (projectStudioSpecification.getBrandingGuidelines() == null) {
+            projectStudioSpecification.setBrandingGuidelines("");
+        }
+        if (projectStudioSpecification.getColors() == null) {
+            projectStudioSpecification.setColors("");
+        }
+        if (projectStudioSpecification.getDislikedDesignWebSites() == null) {
+            projectStudioSpecification.setDislikedDesignWebSites("");
+        }
+        if (projectStudioSpecification.getFonts() == null) {
+            projectStudioSpecification.setFonts("");
+        }
+        if (projectStudioSpecification.getGoals() == null) {
+            projectStudioSpecification.setGoals("");
+        }
+        if (projectStudioSpecification.getLayoutAndSize() == null) {
+            projectStudioSpecification.setLayoutAndSize("");
+        }
+        if (projectStudioSpecification.getOtherInstructions() == null) {
+            projectStudioSpecification.setOtherInstructions("");
+        }
+        if (projectStudioSpecification.getRoundOneIntroduction() == null) {
+            projectStudioSpecification.setRoundOneIntroduction("");
+        }
+        if (projectStudioSpecification.getRoundTwoIntroduction() == null) {
+            projectStudioSpecification.setRoundTwoIntroduction("");
+        }
+        if (projectStudioSpecification.getTargetAudience() == null) {
+            projectStudioSpecification.setTargetAudience("");
+        }
+        if (projectStudioSpecification.getWinningCriteria() == null) {
+            projectStudioSpecification.setWinningCriteria("");
+        }
+        
+        if (softwareCompetition.getProjectHeader().getPrizes() == null) {
+            softwareCompetition.getProjectHeader().setPrizes(new ArrayList<Prize>());
+        }
+    }
+    
+    /**
+     * <p>
+     * Initializes the software competition object for software contest.
+     * </p>
+     * 
+     * @param softwareCompetition
+     *            software competition
+     * @since Direct Launch Software Contests Assembly
+     */
+    private void initializeSoftwareCompetition(SoftwareCompetition softwareCompetition) {
+        // asset DTO
+        AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
+        
+        // project header
+        com.topcoder.management.project.Project projectHeaderTemp = softwareCompetition.getProjectHeader();
+
         if (isDevOrDesign(projectHeaderTemp)) {
             assetDTOTemp.setRootCategory(getReferenceDataBean().getNotSetCatalog());
             assetDTOTemp.getCategories().add(getReferenceDataBean().getNotSetCategory());
@@ -798,8 +790,11 @@ public class SaveDraftContestAction extends ContestAction {
         if (isDesign(projectHeaderTemp) && this.autoCreateDev) {
             softwareCompetition.setDevelopmentProjectHeader(new com.topcoder.management.project.Project());
             softwareCompetition.getDevelopmentProjectHeader().setProperties(new HashMap<String, String>());
-            softwareCompetition.getDevelopmentProjectHeader().getProperties().put(PROJECT_HEADER_FIRST_PLACE_COST,
-                projectHeaderTemp.getProperties().get(PROJECT_HEADER_FIRST_PLACE_COST));
+            softwareCompetition
+                    .getDevelopmentProjectHeader()
+                    .getProperties()
+                    .put(PROJECT_HEADER_FIRST_PLACE_COST,
+                            projectHeaderTemp.getProperties().get(PROJECT_HEADER_FIRST_PLACE_COST));
         }
     }
 
@@ -807,8 +802,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Determine if the project is dev or design.
      * </p>
-     *
-     * @param projectHeader the project
+     * 
+     * @param projectHeader
+     *            the project
      * @return true if it is dev or design
      */
     private boolean isDevOrDesign(com.topcoder.management.project.Project projectHeader) {
@@ -820,8 +816,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Determine if the project is design.
      * </p>
-     *
-     * @param projectHeader the project
+     * 
+     * @param projectHeader
+     *            the project
      * @return true if it is design
      */
     private boolean isDesign(com.topcoder.management.project.Project projectHeader) {
@@ -833,8 +830,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Determines if it needs technology.
      * </p>
-     *
-     * @param projectHeader the software competition project
+     * 
+     * @param projectHeader
+     *            the software competition project
      * @return true if it needs technology
      */
     private boolean isTechnologyContest(com.topcoder.management.project.Project projectHeader) {
@@ -846,7 +844,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Creates the user resource.
      * </p>
-     *
+     * 
      * @return the resource
      */
     private Resource getUserResource() {
@@ -897,33 +895,16 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Activates the studio competition.
-     * </p>
-     *
-     * @param studioCompetition the studio competition data
-     * @return the studio competition. it will contain contest id if it is newly created
-     * @throws PermissionServiceException if any permission error
-     * @throws Exception if any error occurs
-     */
-    private StudioCompetition activateStudioCompeition(StudioCompetition studioCompetition) throws Exception {
-        
-		// set the direct project name of the studio competition
-        DirectUtils.setStudioCompetitionDirectProjectName(studioCompetition, getProjects());
-
-		ContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderPayment(getCurrentUser(),
-            studioCompetition, getPaymentData(studioCompetition));
-        return new StudioCompetition(result.getContestData());
-    }
-
-    /**
-     * <p>
      * Activates the software competition.
      * </p>
-     *
-     * @param softwareCompetition the software competition data
+     * 
+     * @param softwareCompetition
+     *            the software competition data
      * @return the software competition. it will contain project id if it is newly created
-     * @throws PermissionServiceException if any permission error
-     * @throws Exception if any error occurs
+     * @throws PermissionServiceException
+     *             if any permission error
+     * @throws Exception
+     *             if any error occurs
      */
     private SoftwareCompetition activateSoftwareCompeition(SoftwareCompetition softwareCompetition) throws Exception {
         softwareCompetition.getAssetDTO().setCompComments(getCurrentUser().getUserId() + "");
@@ -932,45 +913,30 @@ public class SaveDraftContestAction extends ContestAction {
         DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
 		
 		SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(
-            getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition));
+                getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition), milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
 
         // return result.getSoftwareCompetition();
         // retrieve the software contest again, seems the contest sale is not updated
         return getContestServiceFacade().getSoftwareContestByProjectId(
-            DirectStrutsActionsHelper.getTCSubjectFromSession(),
-            result.getSoftwareCompetition().getProjectHeader().getId());
-    }
-
-    /**
-     * <p>
-     * Determines if it is activation request for studio competition.
-     * </p>
-     *
-     * @param studioCompetition the studio competition
-     * @return true if it is activation request
-     * @throws DirectException if no billing project is defined
-     */
-    private boolean isActivation(StudioCompetition studioCompetition) throws DirectException {
-        if (activationFlag && studioCompetition.getContestData().getBillingProject() <= 0) {
-            throw new DirectException("no billing project is selected.");
-        }
-
-        return activationFlag;
+                DirectStrutsActionsHelper.getTCSubjectFromSession(),
+                result.getSoftwareCompetition().getProjectHeader().getId());
     }
 
     /**
      * <p>
      * Determines if it is activation request for software competition.
      * </p>
-     *
-     * @param softwareCompetition the software competition
+     * 
+     * @param softwareCompetition
+     *            the software competition
      * @return true if it is activation request
-     * @throws DirectException if no billing project is defined
+     * @throws DirectException
+     *             if no billing project is defined
      */
     private boolean isActivation(SoftwareCompetition softwareCompetition) throws DirectException {
         if (activationFlag
-            && Long.parseLong(softwareCompetition.getProjectHeader().getProperties().get(
-                PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID)) <= 0) {
+                && Long.parseLong(softwareCompetition.getProjectHeader().getProperties()
+                        .get(PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID)) <= 0) {
             throw new DirectException("no billing project is selected.");
         }
 
@@ -981,28 +947,16 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Gets the payment data for purchase/activation.
      * </p>
-     *
-     * @param studioCompetition the studio competition
+     * 
+     * @param softwareCompetition
+     *            the software competition
      * @return the payment data
-     * @throws Exception if any error occurs when do purchasing
-     */
-    private TCPurhcaseOrderPaymentData getPaymentData(StudioCompetition studioCompetition) throws Exception {
-        long billingProjectId = studioCompetition.getContestData().getBillingProject();
-        return getPaymentData(billingProjectId);
-    }
-
-    /**
-     * <p>
-     * Gets the payment data for purchase/activation.
-     * </p>
-     *
-     * @param softwareCompetition the software competition
-     * @return the payment data
-     * @throws Exception if any error occurs when do purchasing
+     * @throws Exception
+     *             if any error occurs when do purchasing
      */
     private TCPurhcaseOrderPaymentData getPaymentData(SoftwareCompetition softwareCompetition) throws Exception {
-        long billingProjectId = Long.parseLong(softwareCompetition.getProjectHeader().getProperties().get(
-                PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID));
+        long billingProjectId = Long.parseLong(softwareCompetition.getProjectHeader().getProperties()
+                .get(PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID));
         return getPaymentData(billingProjectId);
     }
 
@@ -1010,17 +964,19 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Gets the payment data for purchase/activation.
      * </p>
-     *
-     * @param billingProjectId the billing project id
+     * 
+     * @param billingProjectId
+     *            the billing project id
      * @return the payment data
-     * @throws Exception if any error occurs when do purchasing
+     * @throws Exception
+     *             if any error occurs when do purchasing
      */
     private TCPurhcaseOrderPaymentData getPaymentData(long billingProjectId) throws Exception {
         TCPurhcaseOrderPaymentData paymentData = new TCPurhcaseOrderPaymentData();
 
         // retrieve all client projects with the current user
         List<Project> projects = getProjectServiceFacade().getClientProjectsByUser(
-            DirectStrutsActionsHelper.getTCSubjectFromSession());
+                DirectStrutsActionsHelper.getTCSubjectFromSession());
         for (Project project : projects) {
             if (project.getId() == billingProjectId) {
                 paymentData.setProjectId(project.getId());
@@ -1048,23 +1004,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Creates a result map so it could be serialized by JSON serializer.
      * </p>
-     *
-     * @param studioCompetition Studio competition object
-     * @return the result map
-     */
-    private Map<String, Object> getStudioResult(StudioCompetition studioCompetition) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("contestId", studioCompetition.getContestData().getContestId());
-        result.put("contestAdministrationFee", studioCompetition.getContestData().getContestAdministrationFee());
-        return result;
-    }
-
-    /**
-     * <p>
-     * Creates a result map so it could be serialized by JSON serializer.
-     * </p>
-     *
-     * @param softwareCompetition Software competition object
+     * 
+     * @param softwareCompetition
+     *            Software competition object
      * @return the result map
      */
     private Map<String, Object> getSoftwareResult(SoftwareCompetition softwareCompetition) {
@@ -1081,14 +1023,16 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Override the parent method to retrieve or create the prize list, the asset dto and the contest data. This
-     * method will be called in a http round trip (another round trip different from the execute method) to init the
-     * html client lists. This method is obviously re-called in the following round-trip, when the execute method is
+     * Override the parent method to retrieve or create the prize list, the asset dto and the contest data. This method
+     * will be called in a http round trip (another round trip different from the execute method) to init the html
+     * client lists. This method is obviously re-called in the following round-trip, when the execute method is
      * performed but at the point it will does nothing.
      * </p>
-     *
-     * @throws IllegalStateException if the contest service facade is not set yet
-     * @throws Exception if any problem occurs.
+     * 
+     * @throws IllegalStateException
+     *             if the contest service facade is not set yet
+     * @throws Exception
+     *             if any problem occurs.
      */
     @Override
     public void prepare() throws Exception {
@@ -1096,43 +1040,27 @@ public class SaveDraftContestAction extends ContestAction {
         super.prepare();
 
         ContestServiceFacade contestServiceFacade = getContestServiceFacadeWithISE();
+        
         // if both projectId
         if (projectId > 0) {
-            softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
-                .getTCSubjectFromSession(), projectId);
-            prizes = softwareCompetition.getPrizes();
+            softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(
+                    DirectStrutsActionsHelper.getTCSubjectFromSession(), projectId);
             assetDTO = softwareCompetition.getAssetDTO();
             projectHeader = softwareCompetition.getProjectHeader();
         }
-
-        if (contestId > 0) {
-            studioCompetition = contestServiceFacade.getContest(DirectStrutsActionsHelper.getTCSubjectFromSession(),
-                contestId);
-            contestData = studioCompetition.getContestData();
-        }
-
-        prizes = null;
 
         if (null == softwareCompetition) {
             assetDTO = new AssetDTO();
             projectHeader = new com.topcoder.management.project.Project();
         }
-
-        if (null == studioCompetition) {
-            contestData = new ContestData();
-
-            contestData.setMilestonePrizeData(new MilestonePrizeData());
-            contestData.setMedia(new ArrayList<MediumData>());
-            contestData.setMultiRoundData(new ContestMultiRoundInformationData());
-            contestData.setSpecifications(new ContestSpecificationsData());
-        }
+        projectHeader.setPrizes(null);
     }
 
     /**
      * <p>
      * Gets the competition type.
      * </p>
-     *
+     * 
      * @return the competition type
      */
     public CompetitionType getCompetitionType() {
@@ -1147,8 +1075,9 @@ public class SaveDraftContestAction extends ContestAction {
      * Don't perform argument checking by the usual exception. The conversion from enum value string to enum is
      * automatically done by the enum type converter of Struts 2. (for example: "STUDIO" string --> Studio enum).
      * </p>
-     *
-     * @param competitionType the competition type to set, can't be null considering the validation.
+     * 
+     * @param competitionType
+     *            the competition type to set, can't be null considering the validation.
      */
     public void setCompetitionType(CompetitionType competitionType) {
         this.competitionType = competitionType;
@@ -1156,61 +1085,20 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Gets the start date.
-     * </p>
-     *
-     * @return the start date
+     * Sets the flat indicating whether the contest is multi round or not.
+     * 
+     * @param hasMulti the flag indicating whether the contest is multi round or not.
+     * @since TC Direct Replatforming Release 1
      */
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    /**
-     * <p>
-     * Set the start date.
-     * </p>
-     * <p>
-     * The default type conversion of Struts 2 correctly converts the SHORT date format described in ARS using the
-     * locale, so a custom type conversion is not necessary. Don't perform argument checking by the usual exception.
-     * </p>
-     *
-     * @param startDate the start date to set
-     */
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    /**
-     * <p>
-     * Gets the end date.
-     * </p>
-     *
-     * @return the end date
-     */
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    /**
-     * <p>
-     * Set the end date.
-     * </p>
-     * <p>
-     * The default type conversion of Struts 2 correctly converts the SHORT date format described in ARS using the
-     * locale, so a custom type conversion is not necessary. Don't perform argument checking by the usual exception.
-     * </p>
-     *
-     * @param endDate the end date to set
-     */
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setHasMulti(boolean hasMulti) {
+        this.hasMulti = hasMulti;
     }
 
     /**
      * <p>
      * Gets mile stone date.
      * </p>
-     *
+     * 
      * @return the mile stone date
      */
     public Date getMilestoneDate() {
@@ -1221,8 +1109,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the mile stone date.
      * </p>
-     *
-     * @param milestoneDate the milestone date
+     * 
+     * @param milestoneDate
+     *            the milestone date
      */
     public void setMilestoneDate(Date milestoneDate) {
         this.milestoneDate = milestoneDate;
@@ -1230,56 +1119,31 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Gets the contest name.
+     * End date of the contest.
      * </p>
-     *
-     * @return the contest name
+     * 
+     * @return End date of the contest.
      */
-    public String getContestName() {
-        return contestName;
+    public XMLGregorianCalendar getEndDate() {
+        return endDate;
     }
 
     /**
      * <p>
-     * Set the contest name.
+     * End date of the contest.
      * </p>
-     * <p>
-     * Don't perform argument checking by the usual exception.
-     * </p>
-     *
-     * @param contestName the contest name to set
+     * 
+     * @param endDate End date of the contest.
      */
-    public void setContestName(String contestName) {
-        this.contestName = contestName;
-    }
-
-    /**
-     * <p>
-     * Get the contest data.
-     * </p>
-     *
-     * @return the contest data
-     */
-    public ContestData getContestData() {
-        return contestData;
-    }
-
-    /**
-     * <p>
-     * Set the contest data.
-     * </p>
-     *
-     * @param contestData the contest data
-     */
-    public void setContestData(ContestData contestData) {
-        this.contestData = contestData;
+    public void setEndDate(XMLGregorianCalendar endDate) {
+        this.endDate = endDate;
     }
 
     /**
      * <p>
      * Gets the asset dto.
      * </p>
-     *
+     * 
      * @return asset dto
      */
     public AssetDTO getAssetDTO() {
@@ -1290,8 +1154,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the asset dto.
      * </p>
-     *
-     * @param assetDTO the asset dto
+     * 
+     * @param assetDTO
+     *            the asset dto
      */
     public void setAssetDTO(AssetDTO assetDTO) {
         this.assetDTO = assetDTO;
@@ -1301,7 +1166,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Gets the project header object.
      * </p>
-     *
+     * 
      * @return the project header object
      * @since Direct Launch Software Contests Assembly
      */
@@ -1313,8 +1178,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the project header object.
      * </p>
-     *
-     * @param projectHeader the project header object
+     * 
+     * @param projectHeader
+     *            the project header object
      * @since Direct Launch Software Contests Assembly
      */
     public void setProjectHeader(com.topcoder.management.project.Project projectHeader) {
@@ -1325,7 +1191,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Gets the project id.
      * </p>
-     *
+     * 
      * @return the project id
      */
     public long getProjectId() {
@@ -1339,8 +1205,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Don't perform argument checking by the usual exception.
      * </p>
-     *
-     * @param projectId the project id to set
+     * 
+     * @param projectId
+     *            the project id to set
      */
     public void setProjectId(long projectId) {
         this.projectId = projectId;
@@ -1393,7 +1260,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Gets the tc direct project id.
      * </p>
-     *
+     * 
      * @return the tc direct project id
      */
     public long getTcDirectProjectId() {
@@ -1407,212 +1274,14 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Don't perform argument checking by the usual exception.
      * </p>
-     *
-     * @param tcDirectProjectId the tc direct project id to set
+     * 
+     * @param tcDirectProjectId
+     *            the tc direct project id to set
      */
     // @FieldExpressionValidator(message = "The tcDirectProjectId should be positive", key =
     // "i18n.SaveDraftContestAction.tcDirectProjectIdRequiredSetPositive", expression = "tcDirectProjectId >= 1")
     public void setTcDirectProjectId(long tcDirectProjectId) {
         this.tcDirectProjectId = tcDirectProjectId;
-    }
-
-    /**
-     * <p>
-     * Gets the contest id.
-     * </p>
-     *
-     * @return the contest id
-     */
-    public long getContestId() {
-        return contestId;
-    }
-
-    /**
-     * <p>
-     * Set the contest id.
-     * </p>
-     * <p>
-     * Don't perform argument checking by the usual exception.
-     * </p>
-     *
-     * @param contestId the contest id to set
-     */
-    // @FieldExpressionValidator(message = "The contestId should be positive", key =
-    // "i18n.SaveDraftContestAction.contestIdRequiredSetPositive", expression = "contestId >= 0")
-    public void setContestId(long contestId) {
-        this.contestId = contestId;
-    }
-
-    /**
-     * <p>
-     * Gets the category.
-     * </p>
-     *
-     * @return the category
-     */
-    public String getCategory() {
-        return category;
-    }
-
-    /**
-     * <p>
-     * Set the category.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param category the category to set
-     */
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    /**
-     * <p>
-     * Gets the review payment.
-     * </p>
-     *
-     * @return the review payment
-     */
-    public double getReviewPayment() {
-        return reviewPayment;
-    }
-
-    /**
-     * <p>
-     * Set the review payment.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param reviewPayment the review payment to set
-     */
-    public void setReviewPayment(double reviewPayment) {
-        this.reviewPayment = reviewPayment;
-    }
-
-    /**
-     * <p>
-     * Gets the specification review payment.
-     * </p>
-     *
-     * @return the specification review payment
-     */
-    public double getSpecificationReviewPayment() {
-        return specificationReviewPayment;
-    }
-
-    /**
-     * <p>
-     * Set the specification review payment.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param specificationReviewPayment the specification review payment to set
-     */
-    public void setSpecificationReviewPayment(double specificationReviewPayment) {
-        this.specificationReviewPayment = specificationReviewPayment;
-    }
-
-    /**
-     * <p>
-     * Gets the flag whether has wiki specification.
-     * </p>
-     *
-     * @return the flag whether has wiki specification.
-     */
-    public boolean isHasWikiSpecification() {
-        return hasWikiSpecification;
-    }
-
-    /**
-     * <p>
-     * Set the flag whether has wiki specification.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param hasWikiSpecification the flag whether has wiki specification to set
-     */
-    public void setHasWikiSpecification(boolean hasWikiSpecification) {
-        this.hasWikiSpecification = hasWikiSpecification;
-    }
-
-    /**
-     * <p>
-     * Gets the notes.
-     * </p>
-     *
-     * @return the notes
-     */
-    public String getNotes() {
-        return notes;
-    }
-
-    /**
-     * <p>
-     * Set the notes.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param notes the notes to set
-     */
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    /**
-     * <p>
-     * Gets the digital run points for the competition.
-     * </p>
-     *
-     * @return the digital run points for the competition.
-     */
-    public double getDrPoints() {
-        return drPoints;
-    }
-
-    /**
-     * <p>
-     * Sets the digital run points for the competition.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param drPoints the digital run points for the competition.
-     */
-    public void setDrPoints(double drPoints) {
-        this.drPoints = drPoints;
-    }
-
-    /**
-     * <p>
-     * Gets the prizes for the competition.
-     * </p>
-     *
-     * @return the prizes for the competition.
-     */
-    public List<CompetitionPrize> getPrizes() {
-        return prizes;
-    }
-
-    /**
-     * <p>
-     * Sets the prizes for the competition.
-     * </p>
-     *
-     * @param prizes the prizes for the competition.
-     */
-    public void setPrizes(List<CompetitionPrize> prizes) {
-        this.prizes = prizes;
     }
 
     /**
@@ -1625,9 +1294,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Validation: no validation
      * </p>
-     *
-     * @param shortDescription the short description of the asset. Should not be null or empty when updating or
-     *            creating an asset.
+     * 
+     * @param shortDescription
+     *            the short description of the asset. Should not be null or empty when updating or creating an asset.
      * @see AssetDTO#setShortDescription(String)
      */
     public void setShortDescription(String shortDescription) {
@@ -1638,7 +1307,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Retrieves the short description of the asset.
      * </p>
-     *
+     * 
      * @return the short description of the asset.
      * @see AssetDTO#getShortDescription()
      */
@@ -1656,8 +1325,9 @@ public class SaveDraftContestAction extends ContestAction {
      * Validation: no validation
      * </p>
      * </p>
-     *
-     * @param detailedDescription the detailed description of the asset.
+     * 
+     * @param detailedDescription
+     *            the detailed description of the asset.
      * @see AssetDTO#setDetailedDescription(String)
      */
     public void setDetailedDescription(String detailedDescription) {
@@ -1668,7 +1338,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Retrieves the detailed description of the asset.
      * </p>
-     *
+     * 
      * @return the detailed description of the asset.
      * @see AssetDTO#getDetailedDescription()
      */
@@ -1686,9 +1356,10 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Validation: no validation
      * </p>
-     *
-     * @param functionalDescription the functional description of the asset. Should not be null or empty when updating
-     *            or creating an asset.
+     * 
+     * @param functionalDescription
+     *            the functional description of the asset. Should not be null or empty when updating or creating an
+     *            asset.
      * @see AssetDTO#setFunctionalDescription(String)
      */
     public void setFunctionalDescription(String functionalDescription) {
@@ -1703,7 +1374,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Validation: no validation
      * </p>
-     *
+     * 
      * @return the functional description of the asset.
      * @see AssetDTO#getFunctionalDescription()
      */
@@ -1713,478 +1384,9 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
-     * Gets prize description.
-     * </p>
-     *
-     * @return the prize description
-     * @see ContestData#getPrizeDescription()
-     */
-    public String getPrizeDescription() {
-        return contestData.getPrizeDescription();
-    }
-
-    /**
-     * <p>
-     * Set prize description.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param prizeDescription the prize description to set
-     * @see ContestData#setPrizeDescription(String)
-     */
-    public void setPrizeDescription(String prizeDescription) {
-        contestData.setPrizeDescription(prizeDescription);
-    }
-
-    /**
-     * <p>
-     * Gets the maximum submissions.
-     * </p>
-     *
-     * @return the maximum submissions.
-     * @see ContestData#getMaximumSubmissions()
-     */
-    public long getMaximumSubmissions() {
-        return contestData.getMaximumSubmissions();
-    }
-
-    /**
-     * <p>
-     * Set the maximum submissions.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param maximumSubmissions the maximum submissions to set
-     * @see ContestData#setMaximumSubmissions(long)
-     */
-    public void setMaximumSubmissions(long maximumSubmissions) {
-        contestData.setMaximumSubmissions(maximumSubmissions);
-    }
-
-    /**
-     * <p>
-     * Gets the prizes.
-     * </p>
-     *
-     * @return the prizes.
-     * @see ContestData#getPrizes()
-     */
-    public List<PrizeData> getPrizesData() {
-        return contestData.getPrizes();
-    }
-
-    /**
-     * <p>
-     * Set the prizes.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param prizes the prizes to set.
-     * @throws IllegalArgumentException if <code>prizes</code> is null.
-     */
-    public void setPrizesData(List<PrizeData> prizes) {
-        DirectStrutsActionsHelper.checkNull(prizes, "prizes");
-
-        contestData.setPrizes(prizes);
-    }
-
-    /**
-     * <p>
-     * Gets the media.
-     * </p>
-     *
-     * @return the media.
-     * @see ContestData#getMedia()
-     */
-    public List<MediumData> getMedia() {
-        return contestData.getMedia();
-    }
-
-    /**
-     * <p>
-     * Set the media.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param mediums the media to set.
-     * @see ContestData#setMedia(List)
-     */
-    public void setMedia(List<MediumData> mediums) {
-        contestData.setMedia(mediums);
-    }
-
-    /**
-     * <p>
-     * Gets the contest description and requirements.
-     * </p>
-     *
-     * @return the contest description and requirements.
-     * @see ContestData#getContestDescriptionAndRequirements()
-     */
-    public String getContestDescriptionAndRequirements() {
-        return contestData.getContestDescriptionAndRequirements();
-    }
-
-    /**
-     * <p>
-     * Set the contest description and requirements.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param contestDescriptionAndRequirements the contest description and requirements to set.
-     * @see ContestData#setContestDescriptionAndRequirements(String)
-     */
-    public void setContestDescriptionAndRequirements(String contestDescriptionAndRequirements) {
-        contestData.setContestDescriptionAndRequirements(contestDescriptionAndRequirements);
-    }
-
-    /**
-     * <p>
-     * Gets the required or restricted colors.
-     * </p>
-     *
-     * @return the required or restricted colors.
-     * @see ContestData#getRequiredOrRestrictedColors()
-     */
-    public String getRequiredOrRestrictedColors() {
-        return contestData.getRequiredOrRestrictedColors();
-    }
-
-    /**
-     * <p>
-     * Set the required or restricted colors.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param requiredOrRestrictedColors the required or restricted colors to set.
-     * @see ContestData#setRequiredOrRestrictedColors(String)
-     */
-    public void setRequiredOrRestrictedColors(String requiredOrRestrictedColors) {
-        contestData.setRequiredOrRestrictedColors(requiredOrRestrictedColors);
-    }
-
-    /**
-     * <p>
-     * Gets the required or restricted fonts.
-     * </p>
-     *
-     * @return the required or restricted fonts
-     * @see ContestData#getRequiredOrRestrictedFonts()
-     */
-    public String getRequiredOrRestrictedFonts() {
-        return contestData.getRequiredOrRestrictedFonts();
-    }
-
-    /**
-     * <p>
-     * Set the required or restricted fonts.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param requiredOrRestrictedFonts the required or restricted fonts to set.
-     * @see ContestData#setRequiredOrRestrictedFonts(String)
-     */
-    public void setRequiredOrRestrictedFonts(String requiredOrRestrictedFonts) {
-        contestData.setRequiredOrRestrictedFonts(requiredOrRestrictedFonts);
-    }
-
-    /**
-     * <p>
-     * Gets the size requirements.
-     * </p>
-     *
-     * @return the size requirements.
-     * @see ContestData#getSizeRequirements()
-     */
-    public String getSizeRequirements() {
-        return contestData.getSizeRequirements();
-    }
-
-    /**
-     * <p>
-     * Set the size requirements.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param sizeRequirements the size requirements to set.
-     * @see ContestData#setSizeRequirements(String)
-     */
-    public void setSizeRequirements(String sizeRequirements) {
-        contestData.setSizeRequirements(sizeRequirements);
-    }
-
-    /**
-     * <p>
-     * Gets the other requirements or restrictions.
-     * </p>
-     *
-     * @return the other requirements or restrictions.
-     * @see ContestData#getOtherRequirementsOrRestrictions()
-     */
-    public String getOtherRequirementsOrRestrictions() {
-        return contestData.getOtherRequirementsOrRestrictions();
-    }
-
-    /**
-     * <p>
-     * Set the other requirements or restrictions.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param otherRequirementsOrRestrictions the other requirements or restrictions to set.
-     * @see ContestData#setOtherRequirementsOrRestrictions(String)
-     */
-    public void setOtherRequirementsOrRestrictions(String otherRequirementsOrRestrictions) {
-        contestData.setOtherRequirementsOrRestrictions(otherRequirementsOrRestrictions);
-    }
-
-    /**
-     * <p>
-     * Gets the final file format.
-     * </p>
-     *
-     * @return the final file format.
-     * @see ContestData#getFinalFileFormat()
-     */
-    public String getFinalFileFormat() {
-        return contestData.getFinalFileFormat();
-    }
-
-    /**
-     * <p>
-     * Set the final file format.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param finalFileFormat the final file format to set.
-     * @see ContestData#setFinalFileFormat(String)
-     */
-    public void setFinalFileFormat(String finalFileFormat) {
-        contestData.setFinalFileFormat(finalFileFormat);
-    }
-
-    /**
-     * <p>
-     * Gets the other file formats.
-     * </p>
-     *
-     * @return the other file formats.
-     * @see ContestData#getOtherFileFormats()
-     */
-    public String getOtherFileFormats() {
-        return contestData.getOtherFileFormats();
-    }
-
-    /**
-     * <p>
-     * Set the other file formats.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param otherFileFormats the other file formats to set.
-     * @see ContestData#setOtherFileFormats(String)
-     */
-    public void setOtherFileFormats(String otherFileFormats) {
-        contestData.setOtherFileFormats(otherFileFormats);
-    }
-
-    /**
-     * <p>
-     * Sets the Launch immediately flag.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param launchImmediately the launch immediately flag to set.
-     * @see ContestData#setLaunchImmediately(boolean)
-     */
-    public void setLaunchImmediately(boolean launchImmediately) {
-        contestData.setLaunchImmediately(launchImmediately);
-    }
-
-    /**
-     * <p>
-     * Gets the launch immediately flag.
-     * </p>
-     *
-     * @return the launch immediately flag.
-     * @see ContestData#isLaunchImmediately()
-     */
-    public boolean isLaunchImmediately() {
-        return contestData.isLaunchImmediately();
-    }
-
-    /**
-     * <p>
-     * Gets the multi-round flag.
-     * </p>
-     *
-     * @return true if the contest is a multi-round format, false otherwise.
-     * @see ContestData#isMultiRound()
-     */
-    public boolean isMultiRound() {
-        return contestData.isMultiRound();
-    }
-
-    /**
-     * <p>
-     * Sets the value of the multi-round flag.
-     * </p>
-     *
-     * @param multiRound the new value for the multi-round flag
-     * @see ContestData#setMultiRound(boolean)
-     */
-    public void setMultiRound(boolean multiRound) {
-        contestData.setMultiRound(multiRound);
-    }
-
-    /**
-     * <p>
-     * Gets the contest specifications data.
-     * </p>
-     *
-     * @return the contest specifications data.
-     * @see ContestData#getSpecifications()
-     */
-    public ContestSpecificationsData getSpecifications() {
-        return contestData.getSpecifications();
-    }
-
-    /**
-     * <p>
-     * Sets the contest specifications data.
-     * </p>
-     *
-     * @param specifications the new value for the contest specifications data.
-     * @see ContestData#setSpecifications(ContestSpecificationsData)
-     */
-    public void setSpecifications(ContestSpecificationsData specifications) {
-        contestData.setSpecifications(specifications);
-    }
-
-    /**
-     * <p>
-     * Gets the contest multi-round data.
-     * </p>
-     *
-     * @return the contest multi-round data.
-     * @see ContestData#getMultiRoundData()
-     */
-    public ContestMultiRoundInformationData getMultiRoundData() {
-        return contestData.getMultiRoundData();
-    }
-
-    /**
-     * <p>
-     * Sets the contest multi-round data.
-     * </p>
-     * <p>
-     * Validation: no validation
-     * </p>
-     *
-     * @param multiRoundData the contest multi-round data.
-     * @see ContestData#setMultiRoundData(ContestMultiRoundInformationData)
-     */
-    public void setMultiRoundData(ContestMultiRoundInformationData multiRoundData) {
-        contestData.setMultiRoundData(multiRoundData);
-    }
-
-    /**
-     * <p>
-     * Gets the milestone prize data.
-     * </p>
-     *
-     * @return the milestone prize data.
-     * @see ContestData#getMilestonePrizeData()
-     */
-    public MilestonePrizeData getMilestonePrizeData() {
-        return contestData.getMilestonePrizeData();
-    }
-
-    /**
-     * <p>
-     * Sets the milestone prize data.
-     * </p>
-     *
-     * @param milestonePrizeData the milestone prize data.
-     * @see ContestData#setMilestonePrizeData(MilestonePrizeData)
-     */
-    public void setMilestonePrizeData(MilestonePrizeData milestonePrizeData) {
-        contestData.setMilestonePrizeData(milestonePrizeData);
-    }
-
-    /**
-     * <p>
-     * Gets the milestone prize amount.
-     * </p>
-     *
-     * @return the mile stone prize amount
-     */
-    public double getMilestonePrizeAmount() {
-        return milestonePrizeAmount;
-    }
-
-    /**
-     * <p>
-     * Sets the milestone prize amount.
-     * </p>
-     *
-     * @param milestonePrizeAmount the prize amount
-     */
-    public void setMilestonePrizeAmount(double milestonePrizeAmount) {
-        this.milestonePrizeAmount = milestonePrizeAmount;
-    }
-
-    /**
-     * <p>
-     * Gets milestone prize number of submissions.
-     * </p>
-     *
-     * @return the number of submissions for milestone prize
-     */
-    public int getMilestonePrizeNumberOfSubmissions() {
-        return milestonePrizeNumberOfSubmissions;
-    }
-
-    /**
-     * <p>
-     * Sets the milestone prize number of submissions.
-     * </p>
-     *
-     * @param milestonePrizeNumberOfSubmissions the number of submissions for given
-     */
-    public void setMilestonePrizeNumberOfSubmissions(int milestonePrizeNumberOfSubmissions) {
-        this.milestonePrizeNumberOfSubmissions = milestonePrizeNumberOfSubmissions;
-    }
-
-    /**
-     * <p>
      * Gets the doc upload ids.
      * </p>
-     *
+     * 
      * @return the list of upload ids for docs
      */
     public List<String> getDocUploadIds() {
@@ -2195,8 +1397,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the doc upload ids.
      * </p>
-     *
-     * @param docUploadIds upload ids for documents
+     * 
+     * @param docUploadIds
+     *            upload ids for documents
      */
     public void setDocUploadIds(List<String> docUploadIds) {
         this.docUploadIds = docUploadIds;
@@ -2206,7 +1409,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Gets compDocument ids.
      * </p>
-     *
+     * 
      * @return the docCompIds the ids
      */
     public List<String> getDocCompIds() {
@@ -2217,33 +1420,68 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the docCompIds field.
      * </p>
-     *
-     * @param docCompIds the docCompIds to set
+     * 
+     * @param docCompIds
+     *            the docCompIds to set
      */
     public void setDocCompIds(List<String> docCompIds) {
         this.docCompIds = docCompIds;
     }
 
+    /**
+     * <p>
+     * Gets the technologies for development contest.
+     * </p>
+     * 
+     * @return the technologies for development contest.
+     */
     public List<String> getTechnologies() {
         return technologies;
     }
 
+    /**
+     * <p>
+     * Sets the technologies for development contest.
+     * </p>
+     * 
+     * @param technologies the technologies for development contest.
+     */
     public void setTechnologies(List<String> technologies) {
         this.technologies = technologies;
     }
 
+    /**
+     * Gets the root category id.
+     * 
+     * @return the root category id.
+     */
     public long getRootCategoryId() {
         return rootCategoryId;
     }
 
+    /**
+     * Sets the root category id.
+     * 
+     * @param rootCategoryId the root category id.
+     */
     public void setRootCategoryId(long rootCategoryId) {
         this.rootCategoryId = rootCategoryId;
     }
 
+    /**
+     * Gets the categories.
+     * 
+     * @return the categories
+     */
     public List<String> getCategories() {
         return categories;
     }
 
+    /**
+     * Sets the categories.
+     * 
+     * @param categories the categories
+     */
     public void setCategories(List<String> categories) {
         this.categories = categories;
     }
@@ -2252,7 +1490,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Returns the activation flag.
      * </p>
-     *
+     * 
      * @return the activation flag
      */
     public boolean isActivationFlag() {
@@ -2263,8 +1501,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the activation flag.
      * </p>
-     *
-     * @param activationFlag the activation flag
+     * 
+     * @param activationFlag
+     *            the activation flag
      */
     public void setActivationFlag(boolean activationFlag) {
         this.activationFlag = activationFlag;
@@ -2274,7 +1513,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * is auto create dev.
      * </p>
-     *
+     * 
      * @return the autoCreateDev
      */
     public boolean isAutoCreateDev() {
@@ -2285,8 +1524,9 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the autoCreateDev flag.
      * </p>
-     *
-     * @param autoCreateDev the autoCreateDev to set
+     * 
+     * @param autoCreateDev
+     *            the autoCreateDev to set
      */
     public void setAutoCreateDev(boolean autoCreateDev) {
         this.autoCreateDev = autoCreateDev;
@@ -2296,7 +1536,7 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Gets the selectedDesignId value.
      * </p>
-     *
+     * 
      * @return the selectedDesignId
      */
     public long getSelectedDesignId() {
@@ -2307,225 +1547,49 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Sets the selectedDesignId value.
      * </p>
-     *
-     * @param selectedDesignId the selectedDesignId to set
+     * 
+     * @param selectedDesignId
+     *            the selectedDesignId to set
      */
     public void setSelectedDesignId(long selectedDesignId) {
         this.selectedDesignId = selectedDesignId;
     }
 
     /**
-     * <p>
-     * Creates the <code>XMLGregorianCalendar</code> from the given date.
-     * </p>
-     *
-     * @param date the date
-     * @return the created XMLGregorianCalendar instance
-     * @throws DatatypeConfigurationException if fail to create the XMLGregorianCalendar instance
+     * Sets the file types for studio contest.
+     * 
+     * @param fileTypes the file types for studio contest
+     * @since TC Direct Replatforming Release 1
      */
-    private static XMLGregorianCalendar newXMLGregorianCalendar(Date date) throws DatatypeConfigurationException {
-        return DirectUtils.newXMLGregorianCalendar(date);
-    }
-
-    /**
-     * <p>
-     * Creates the <code>XMLGregorianCalendar</code> from the given date, hour and minute.
-     * </p>
-     *
-     * @param date the date
-     * @param hour the hour
-     * @param minute the minute
-     * @return the created XMLGregorianCalendar instance
-     * @throws DatatypeConfigurationException if fail to create the XMLGregorianCalendar instance
-     */
-    private static XMLGregorianCalendar newXMLGregorianCalendar(Date date, int hour, int minute)
-        throws DatatypeConfigurationException {
-        if (date == null) {
-            date = new Date();
-        }
-        DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
-
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.setTime(date);
-        gc.set(Calendar.HOUR, hour);
-        gc.set(Calendar.MINUTE, minute);
-
-        return datatypeFactory.newXMLGregorianCalendar(gc);
-    }
-
-    /**
-     * <p>
-     * Populates the values of StudioCompetition object with parameters of this action.
-     * </p>
-     *
-     * @param studioCompetition the StudioCompetition object
-     * @throws Exception if any error occurs
-     */
-    private void populateStudioCompetition(StudioCompetition studioCompetition) throws Exception {
-        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-
-        // validate to make sure the start time is not full
-        boolean startTimeOk = true;
-        // validate startTime for capacity
-        List<CapacityData> capacityDataList = getPipelineServiceFacade().getCapacityFullDates(tcSubject,
-            (int) studioCompetition.getContestData().getContestTypeId(), true);
-        capacityDataList = (capacityDataList == null) ? new ArrayList<CapacityData>() : capacityDataList;
-        for (CapacityData capacity : capacityDataList) {
-            if (isSameDay(studioCompetition.getStartTime(), capacity.getDate())) {
-                // capacity contests is an int list
-                if (!capacity.getContests().contains((int) contestId)) {
-                    startTimeOk = false;
-                }
-            }
-        }
-        if (!startTimeOk) {
-            throw new Exception("You must change your start date since it's full.");
-        }
-
-        studioCompetition.setCategory(category);
-        studioCompetition.setReviewPayment(reviewPayment);
-        studioCompetition.setSpecificationReviewPayment(specificationReviewPayment);
-        studioCompetition.setHasWikiSpecification(hasWikiSpecification);
-        studioCompetition.setNotes(notes);
-        // studioCompetition.setDrPoints(drPoints);
-
-        // can not set directly through contestData, it always return copy
-        if (prizes != null && prizes.size() >= 2) {
-            studioCompetition.setPrizes(prizes);
-        } else {
-            studioCompetition.setPrizes(DEFAULT_STUDIO_PRIZES);
-        }
-        studioCompetition.setType(CompetionType.STUDIO);
-
-        // milestone date
-        ContestData contestData = studioCompetition.getContestData();
-
-        // adjust administration fee
-        double contestFee = getProjectStudioContestFee(contestData.getBillingProject(), contestData
-            .getContestTypeId());
-        if (contestFee > 0) {
-            contestData.setContestAdministrationFee(contestFee);
-        }
-
-        // make sure the short summary is not null
-        if (StringUtils.isBlank(studioCompetition.getShortSummary())) {
-            studioCompetition.setShortSummary("");
-        }
-
-        if (contestData.getMultiRound()) {
-            contestData.getMultiRoundData().setMilestoneDate(newXMLGregorianCalendar(milestoneDate));
-
-            MilestonePrizeData milestonePrizeData = new MilestonePrizeData();
-            milestonePrizeData.setAmount(milestonePrizeAmount);
-            milestonePrizeData.setNumberOfSubmissions(milestonePrizeNumberOfSubmissions);
-            contestData.setMilestonePrizeData(milestonePrizeData);
-        } else {
-            contestData.setMilestonePrizeData(null);
-        }
-
-        if (contestData.getFinalFileFormat() != null) {
-            contestData.setFinalFileFormat(contestData.getFinalFileFormat().toLowerCase());
-        }
-
-        // set dr point in the end. it is a derivative number before all other prizes/amount are decided.
-        studioCompetition.setDrPoints(getDrPoint(studioCompetition));
-
-        // set channel id to 2
-        contestData.setContestChannelId(2);
-        contestData.setMaximumSubmissions(5);
-        contestData.setRequiresPreviewImage(true);
-        contestData.setRequiresPreviewFile(false);
-    }
-
-    /**
-     * <p>
-     * Calculates the dr point and set it up.
-     * </p>
-     *
-     * @param studioCompetition studio competition
-     * @return the DR point
-     */
-    private double getDrPoint(StudioCompetition studioCompetition) {
-        // prizes not set yet
-        if (studioCompetition.getPrizes().size() == 0) {
-            return 0;
-        }
-
-        double sum = 0;
-
-        ContestData contestData = studioCompetition.getContestData();
-
-        // add all prizes up
-        for (PrizeData prizeData : contestData.getPrizes()) {
-            sum += prizeData.getAmount();
-        }
-
-        if (contestData.getMultiRound()) {
-            sum += contestData.getMilestonePrizeData().getAmount()
-                * contestData.getMilestonePrizeData().getNumberOfSubmissions();
-        }
-
-        return sum * 0.25;
-    }
-
-    /**
-     * <p>
-     * Determine if it is the same day.
-     * </p>
-     *
-     * @param day1 the day 1
-     * @param day2 the day 2
-     * @return true if the same day
-     */
-    private boolean isSameDay(XMLGregorianCalendar day1, XMLGregorianCalendar day2) {
-        return (day1.getYear() == day2.getYear()) && (day1.getMonth() == day2.getMonth())
-            && (day1.getDay() == day2.getDay());
-    }
-
-    /**
-     * <p>
-     * Gets project studio contest fee.
-     * </p>
-     *
-     * @param billingProjectId the billing project id
-     * @param studioSubTypeId studio sub type id
-     * @return contest fee &gt;0 if it exists
-     * @throws AdminServiceFacadeException if any error occurs
-     */
-    private double getProjectStudioContestFee(long billingProjectId, long studioSubTypeId)
-        throws AdminServiceFacadeException {
-        if (billingProjectId <= 0) {
-            return -1;
-        }
-
-        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-
-        List<ProjectContestFee> contestFees = getAdminServiceFacade().getContestFeesByProject(tcSubject,
-            billingProjectId);
-        for (ProjectContestFee contestFee : contestFees) {
-            if (contestFee.isStudio() && contestFee.getContestTypeId() == studioSubTypeId) {
-                return contestFee.getContestFee();
-            }
-        }
-
-        return -1;
+    public void setFileTypes(List<String> fileTypes) {
+        this.fileTypes = fileTypes;
     }
 
     /**
      * <p>
      * Populates the values of SoftwareCompetition object with parameters of this action.
      * </p>
-     *
-     * @param softwareCompetition the SoftwareCompetition object
+     * 
+     * @param studioCompetition
+     *            the SoftwareCompetition object
+     * @since TC Direct Replatforming Release 1
+     */
+    private void populateStudioCompetition(SoftwareCompetition studioCompetition) throws ContestServiceException {
+        studioCompetition.getProjectHeader().setProjectFileTypes(getFileTypes(fileTypes));
+    }
+
+    /**
+     * <p>
+     * Populates the values of SoftwareCompetition object with parameters of this action.
+     * </p>
+     * 
+     * @param softwareCompetition
+     *            the SoftwareCompetition object
      */
     @SuppressWarnings("all")
     private void populateSoftwareCompetition(SoftwareCompetition softwareCompetition) {
-        AssetDTO assetDTO = softwareCompetition.getAssetDTO();
-        if (assetDTO.getDetailedDescription() == null) {
-            assetDTO.setDetailedDescription("NA");
-        }
-
         // sync in properties
+        AssetDTO assetDTO = softwareCompetition.getAssetDTO();
         com.topcoder.management.project.Project projectHeader = softwareCompetition.getProjectHeader();
         projectHeader.getProperties().put("Root Catalog ID", assetDTO.getRootCategory().getId() + "");
 
@@ -2554,37 +1618,16 @@ public class SaveDraftContestAction extends ContestAction {
                 assetDTO.setTechnologies(dtoTechs);
             }
         }
-
-        // handle upload documents
-        SessionFileStore fileStore = new SessionFileStore(DirectUtils.getServletRequest().getSession(true));
-        List<CompUploadedFile> files = new ArrayList<CompUploadedFile>();
-        if (docUploadIds != null && docUploadIds.size() > 0) {
-            for (String docUploadId : docUploadIds) {
-                CompUploadedFile file = fileStore.getFile(Long.parseLong(docUploadId));
-                if (file != null) {
-                    files.add(file);
-                }
-            }
-        }
-        assetDTO.setCompUploadedFiles(files);
-
-        // handle existing documents
-        if (assetDTO.getDocumentation() != null) {
-            assetDTO.setDocumentation((List) CollectionUtils.select(assetDTO.getDocumentation(), new Predicate() {
-                public boolean evaluate(Object object) {
-                    return docCompIds != null && docCompIds.contains(((CompDocumentation) object).getId());
-                }
-            }));
-        }
     }
 
     /**
      * <p>
      * Gets the contest service facade, throw <code>IllegalStateException</code> if it is null.
      * </p>
-     *
+     * 
      * @return the contest service facade
-     * @throws IllegalStateException if the contest service facade is null
+     * @throws IllegalStateException
+     *             if the contest service facade is null
      */
     private ContestServiceFacade getContestServiceFacadeWithISE() {
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();

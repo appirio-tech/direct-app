@@ -5,7 +5,6 @@
 package com.topcoder.direct.services.view.action.specreview;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,6 @@ import com.topcoder.management.review.data.Item;
 import com.topcoder.management.scorecard.data.Group;
 import com.topcoder.management.scorecard.data.Question;
 import com.topcoder.management.scorecard.data.Section;
-import com.topcoder.project.phases.PhaseStatus;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
 import com.topcoder.service.review.comment.specification.SpecReviewCommentService;
@@ -62,7 +60,12 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * </pre>
  * 
  * </p>
- * 
+ * <p>Version 1.1 change notes:
+ * <ul>
+ *  <li>Update {@link #execute()} to use the projectId instead of contestId</li>
+ * </ul>
+ * </p>
+
  * <p>
  * <b>Thread safety:</b> This class is mutable and not thread safe. This should
  * be fine since different instances of this class should be created to serve
@@ -72,18 +75,10 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * transactions. Hence this class can be considered as being effectively thread
  * safe.
  * </p>
- *
- * <p>
- * Version 1.1 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Added {@link #isSoftware()} method.</li>
- *     <li>Added {@link #contestServiceFacade} field and corresponding get/set methods.</li>
- *     <li>Updated {@link #execute()} method to set contest dashboard data.</li>
- *   </ol>
- * </p>
- *
- * @author caru, TCSDEVELOPER, TCSASSEMBLER
+ * 
+ * @author caru, TCSDEVELOPER, morehappiness
  * @version 1.1
+ * @since 1.0
  */
 public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
@@ -202,17 +197,19 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
 
             // fetch the specification review, status and comments
             List<SpecificationReview> specificationReviews = specificationReviewService
-                    .getAllSpecificationReviews(getTCSubject(), getContestId());
+                    .getAllSpecificationReviews(getTCSubject(), getProjectId());
 
             SpecificationReviewStatus specificationReviewStatus = specificationReviewService
                     .getSpecificationReviewStatus(getTCSubject(),
-                            getContestId());
+                            getProjectId());
             
             List<SpecReviewComment> specReviewComments = specReviewCommentService
-                    .getSpecReviewComments(getTCSubject(), getContestId(),
+                    .getSpecReviewComments(getTCSubject(), getProjectId(),
                             isStudio());
 
             Map<Long, List<SpecComment>> specComments = new HashMap<Long, List<SpecComment>>();
+            
+            Map<Long, Boolean> lastResponses = new HashMap<Long, Boolean>();
             
             for (SpecificationReview specificationReview : specificationReviews) {
                 for (Item item : specificationReview.getReview().getItems()) {
@@ -220,10 +217,9 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
                         specComments.put(item.getQuestion(),
                                 new ArrayList<SpecComment>());
                     }
-                    
+                                        
                     for (Comment comment : item.getAllComments()) {
                         SpecComment specComment = new SpecComment();
-                        
                         specComment.setCommentType(SpecCommentType.REVIEWER_COMMENT);
                         specComment.setComment(comment.getComment());
                         specComment.setReviewerCommentType(comment.getCommentType().getName());
@@ -231,6 +227,8 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
                         specComment.setCommentBy(specificationReview.getCreationUserHandle());
                         
                         specComments.get(item.getQuestion()).add(specComment);
+                        
+                        lastResponses.put(item.getQuestion(), isMaxScore(item.getAnswer()));
                     }
                 }                   
             }
@@ -281,12 +279,13 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             result.setSpecificationReviewStatus(specificationReviewStatus);
             result.setSpecReviewComments(specReviewComments);
             result.setSpecComments(specComments);
+            result.setResponses(lastResponses);
             
             // for normal request flow prepare various data to be displayed to
             // user
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(
-                    getTCSubject(), getContestId(), isStudio());
+                    getTCSubject(), getProjectId(), isStudio());
             result.setContestStats(contestStats);
 
             // Get current session
@@ -306,7 +305,7 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             result.setShowSpecReview(true);
             
             setViewData(result);
-            DirectUtils.setDashboardData(getTCSubject(), getContestId(), viewData,
+            DirectUtils.setDashboardData(getTCSubject(), getProjectId(), viewData,
                     contestServiceFacade, isSoftware());
             
             return SUCCESS;
@@ -425,6 +424,27 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+    
+    /**
+     * Check whether passed answer is maximum possible score.
+     * 
+     * @param answer the answer to check
+     * @return whetehr answer is maximum possible
+     */
+    private static Boolean isMaxScore(String answer) {
+    	// Yes/No questions have maximum answer "1"
+    	if (answer == null || "0".equals(answer)) {
+    		return false;
+    	} else if ("1".equals(answer)) {
+        	return true;
+        }
+        // other max questions are N/N
+        int pos = answer.indexOf('/');
+        if (answer.substring(0, pos).equals(answer.substring(pos+1))) {
+        	return true;
+        }
+        return false;
     }
 
     /**

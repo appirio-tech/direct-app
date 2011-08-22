@@ -3,8 +3,16 @@
  */
 package com.topcoder.direct.services.view.action.contest;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
@@ -15,13 +23,14 @@ import com.topcoder.direct.services.view.form.StudioContestSubmissionForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.SubmissionDeclaration;
+import com.topcoder.management.deliverable.SubmissionExternalContent;
+import com.topcoder.management.deliverable.SubmissionExternalContentProperty;
+import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.project.StudioCompetition;
-import com.topcoder.service.studio.SubmissionData;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a single submission for
@@ -52,17 +61,31 @@ import java.util.List;
  * </p>
  *
  * <p>
- *   Version 1.4 (TC Direct Contest Dashboard Update Assembly) change notes:
+ *   Version 1.4 (TC Direct Replatforming Release 3) change notes:
+ *   <ul>
+ *     <li>The {@link #executeAction()} method was totally updated to work for the new studio contest.</li>
+ *   </ul>
+ * </p>
+ * 
+ * <p>
+ *   Version 1.5 (TC Direct Contest Dashboard Update Assembly) change notes:
  *   <ul>
  *     <li>Updated {@link #executeAction()} method to set contest dashboard data.</li>
  *   </ul>
  * </p>
  *
+ * <p>
+ *   Version 1.6 (TC Direct Replatforming Release 5) change notes:
+ *   <ul>
+ *     <li>Update {@link #executeAction()} method to load the Fonts and Stock Art submission external content.</code>
+ *   </ul>
+ * </p>
+ *
  * @author isv, flexme, TCSASSEMBLER
  * @since Submission Viewer Release 1 assembly
- * @version 1.4
+ * @version 1.6
  */
-public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
+public class StudioSubmissionAction extends ContestAction {
 
     /**
      * <p>A <code>SessionData</code> providing interface to current session.</p>
@@ -124,58 +147,96 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
      */
     @Override
     public void executeAction() throws Exception {
-        getFormData().setContestId(getContestId());
-        if (isStudioCompetition()) {
+        long projectId = getProjectId();
+        getFormData().setContestId(projectId);
+        if (projectId <= 0) {
+            throw new DirectException("projectId less than 0 or not defined.");
+        }
+        
+        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
+        TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
+        SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
+        
+        // only works for studio contest
+        if (DirectUtils.isStudio(softwareCompetition)) {
+            ContestRoundType roundType = getFormData().getRoundType();
+            PhaseType reviewPhaseType;
+            if (roundType == ContestRoundType.FINAL) {
+                reviewPhaseType = PhaseType.REVIEW_PHASE;
+            } else {
+                reviewPhaseType = PhaseType.MILESTONE_REVIEW_PHASE;
+            }
+            viewData.setPhaseOpen(true);
+
             // Get current session
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
 
-            ContestServiceFacade contestServiceFacade = getContestServiceFacade();
-            TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
-
-            // Set flag indicating on milestone round presence
-            long contestId = getContestId();
-            StudioCompetition studioCompetition = contestServiceFacade.getContest(currentUser, contestId);
-            getViewData().setHasMilestoneRound(studioCompetition.getContestData().getMultiRound());
+            boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
+            getViewData().setHasMilestoneRound(hasMilestoneRound);
 
             // Set submissions count
-            ContestRoundType roundType = getFormData().getRoundType();
-            List<SubmissionData> submissions = DirectUtils.getStudioContestSubmissions(studioCompetition.getContestData(), roundType,
-                                                                                       currentUser,
-                                                                                       contestServiceFacade);
+            List<Submission> submissions = DirectUtils.getStudioContestSubmissions(projectId, roundType, currentUser, contestServiceFacade);
             int submissionsCount = submissions.size();
             getViewData().setSubmissionsCount(submissionsCount);
-            getViewData().setHasCheckout(DirectUtils.getSubmissionsCheckout(submissions, roundType));
+            boolean hasCheckout = DirectUtils.getContestCheckout(softwareCompetition, roundType);
+            getViewData().setHasCheckout(hasCheckout);
 
             // Set submission data
             long submissionId = getFormData().getSubmissionId();
-            SubmissionData submission = contestServiceFacade.retrieveSubmission(currentUser, submissionId);
-            getViewData().setSubmission(submission);
+            for (Submission sub : submissions) {
+                if (sub.getId() == submissionId) {
+                    getViewData().setSubmission(sub);
+                    getViewData().setSubmissionArtifactCount(DirectUtils.getStudioSubmissionArtifactCount(submissionId));
+                    break;
+                }
+            }
+            List<Map<String, String>> fonts = new ArrayList<Map<String, String>>();
+            List<Map<String, String>> stockArts = new ArrayList<Map<String, String>>();
+            SubmissionDeclaration submissionDeclaration = getViewData().getSubmission().getSubmissionDeclaration();
+            if (submissionDeclaration != null && submissionDeclaration.hasExternalContent()) {
+                for (SubmissionExternalContent externalContent : submissionDeclaration.getExternalContents()) {
+                    Map<String, String> properties = new HashMap<String, String>();
+                    for (SubmissionExternalContentProperty property : externalContent.getExternalContentProperties()) {
+                        properties.put(property.getName(), property.getValue());
+                    }
+                    if ("Fonts".equalsIgnoreCase(externalContent.getExternalContentType().getName())) {
+                        fonts.add(properties);
+                    } else if ("Stock Art".equalsIgnoreCase(externalContent.getExternalContentType().getName())) {
+                        stockArts.add(properties);
+                    }
+                }
+            }
+            getViewData().setFonts(fonts);
+            getViewData().setStockArts(stockArts);
 
             // Set IDs of next and previous submissions
             for (int i = 0; i < submissions.size(); i++) {
-                SubmissionData submissionData = submissions.get(i);
-                if (submissionData.getSubmissionId() == submission.getSubmissionId()) {
+                Submission submission = submissions.get(i);
+                if (submission.getId() == submissionId) {
                     if (i > 0) {
-                        getViewData().setPreviousSubmissionId(submissions.get(i - 1).getSubmissionId());
+                        getViewData().setPreviousSubmissionId(submissions.get(i - 1).getId());
                     }
                     if ((i + 1) < submissions.size()) {
-                        getViewData().setNextSubmissionId(submissions.get(i + 1).getSubmissionId());
+                        getViewData().setNextSubmissionId(submissions.get(i + 1).getId());
                     }
                     break;
                 }
             }
+            
+            // set the feedback text
+            getViewData().setFeedbackText(contestServiceFacade.getStudioSubmissionFeedback(currentUser, projectId, submissionId, reviewPhaseType));
 
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, true);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
 
             getViewData().setContestStats(contestStats);
 
              // set the number of prizes
-            int prizeNumber = DirectUtils.getContestPrizeNumber(studioCompetition, roundType);
+            int prizeNumber = DirectUtils.getContestPrizeNumber(softwareCompetition, roundType);
             getViewData().setPrizeNumber(prizeNumber);
             
             // Set projects data
@@ -189,7 +250,7 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
                     currentUser.getUserId(), contestStats.getContest().getProject().getId());
             getSessionData().setCurrentProjectContests(contests);
             for (TypedContestBriefDTO contest : contests) {
-                if (contest.getId() == contestId) {
+                if (contest.getId() == projectId) {
                     getViewData().setCurrentContest(contest);
                     break;
                 }
@@ -197,13 +258,13 @@ public class StudioSubmissionAction extends StudioOrSoftwareContestAction {
 
             // Set current project context based on selected contest
             getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+            getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
             
             // set contest permission
             viewData.setHasContestWritePermission(DirectUtils
-                    .hasWritePermission(this, currentUser, contestId, true));
+                    .hasWritePermission(this, currentUser, projectId, false));
             
-            DirectUtils.setDashboardData(currentUser, contestId, viewData,
-                    getContestServiceFacade(), isSoftware());
+            DirectUtils.setDashboardData(currentUser, projectId, viewData, getContestServiceFacade(), true);
         }
     }
 }

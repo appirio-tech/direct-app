@@ -3,6 +3,7 @@
   - Version: 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0)
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
+  - Description: Contest Dashboard area for Contest Details page.
   - Version 1.1 change notes: add issue tracking health status into dashboard page.
   -
   - Version 1.2 (TC Direct Contest Dashboard Update Assembly) change Notes: 
@@ -13,7 +14,7 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="dashboardTable contestDashboard 
-    <s:if test="software">softWareDashboard softwareDetail</s:if>
+    <s:if test="!viewData.contestStats.isStudio">softWareDashboard softwareDetail</s:if>
     <s:else>studioDashboard studioDetails</s:else>
     ">
     
@@ -26,7 +27,7 @@
         <div class="content">
             <span class="bl"></span>
             <span class="br"></span>
-            <div class="timelineContainer <s:if test="!software">studio</s:if>">
+            <div class="timelineContainer <s:if test="viewData.contestStats.isStudio">studio</s:if>">
                 <c:if test="${viewData.dashboard.startTime != null}">
                     <div class="projectDate startDate">
                         <span class="arrow"></span>
@@ -92,7 +93,7 @@
         <!-- End .content -->
     </div>
     <!-- End .dashboardModule -->
-    <div class="appositeContainer <s:if test="!software">studio</s:if>">
+    <div class="appositeContainer <s:if test="viewData.contestStats.isStudio">studio</s:if>">
         <div class="dashboardModule registrationModule">
         
             <s:set var="registrationStatus" value="viewData.dashboard.registrationStatus.toString()"/>
@@ -130,7 +131,7 @@
                 <span class="bl"></span>
                 <span class="br"></span>
                 <div class="listContent">
-                    <s:if test="!software">
+                    <s:if test="viewData.contestStats.isStudio">
                         <div class="wrap">
                         <div class="column first">
                     </s:if>
@@ -166,7 +167,7 @@
                         </div>
                         <!-- End .tooltipContainer -->
                     </div>
-                    <s:if test="!software">
+                    <s:if test="viewData.contestStats.isStudio">
                         </div>
                         <!-- End .column -->
                         <div class="column">
@@ -176,14 +177,14 @@
                     </p>
                     <p>
                         <label class="prediction">Prediction</label>: 
-                        <s:if test="software">
+                        <s:if test="!viewData.contestStats.isStudio">
                             ${viewData.dashboard.predictedNumberOfSubmissions}
                         </s:if>
                         <s:else>
                             N/A
                         </s:else>
                     </p>
-                    <s:if test="!software">
+                    <s:if test="viewData.contestStats.isStudio">
                         </div>
                         <!-- End .column -->
                         <div class="clear"></div>
@@ -231,7 +232,7 @@
             <!-- End .content -->
         </div>
         <!-- End .dashboardModule -->
-        <s:if test="software">
+        <s:if test="!viewData.contestStats.isStudio">
         <div class="dashboardModule reviewsModule">
             <h1 class="heading">
                 <span class="tl"></span>
@@ -311,7 +312,7 @@
                     <s:if test="viewData.contestStats.issues.unresolvedIssuesNumber > 0">
                         <p>
                             <a href="
-                                <s:if test='software'><s:url action='contestIssuesTracking'>
+                                <s:if test='!viewData.contestStats.isStudio'><s:url action='contestIssuesTracking'>
                                     <s:param name='projectId' value='projectId'/><s:param name='subTab'>issues</s:param></s:url>
                                 </s:if>
                                 <s:else><s:url action='contestIssuesTracking'>

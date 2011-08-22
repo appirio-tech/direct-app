@@ -160,15 +160,14 @@ a:hover, a:active, a:focus, a:active {
 		margin-left:15px;
 	}
 	.name{
-	
-		padding-right:20px;
+	    line-height: 28px;
+	}
+	.fixWidthName {
 		float:left;
-		
+		width:120px;
 	}
 	.gray_name{
-	
 		padding-right:20px;
-		float:left;
 		color:#666;
 		font-size:12px;
 		
@@ -1804,3 +1803,7 @@ overflow: auto;
 		}
 
 
+.specForumInfo {
+	padding:10px;
+	font-size:0.8em;
+}

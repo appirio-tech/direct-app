@@ -1,11 +1,25 @@
 <%--
   - Author: TCSASSEMBLER
   - Version: 1.0.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
   - Version 1.0.1 (TC Direct Release Assembly 7) changes: added digital run input field.
+--%>
+<%--
+  - Author: TCSASSEMBER
+  - Version: 1.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Description: overview page for software contest.
+  -
+  - Version 1.1 - Direct - Repost and New Version Assembly Change Note
+  - - Change some attribute of file upload elements to make sure that file upload function can work fine for
+  - - both studio contest and software contest.
+  -
+  - Version 1.2 - TC Direct Replatforming Release 2 Change Note
+  - - Add milestone prizes section to support milestone prizes for software contest.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -101,10 +115,10 @@
         </div> <!-- end .uploadInner -->
 
         <div id="swFileTemplte" class="hide">
-         <div id="doc{0}" class="document">
+         <div class="doc{0}" class="document">
            <span class="fileInput">{1}</span>
            <a href="javascript:swRemoveDocument({0});" >remove</a> 
-           <span id="doc{0}spec" class="hide"> (Requirements Specification) </span>
+           <span class="doc{0}spec hide"> (Requirements Specification) </span>
          </div>
        </div>  
         
@@ -137,6 +151,31 @@
           <span id="swSecondPlace" class="prizeInfo"></span>
           
       	</div>
+      	
+      	<!-- Milestone Prizes -->
+	<div class="mPrizes hide" id="swMilestonePrizeDiv">
+    
+        <h3><span class="icon">Milestone Prizes:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
+        
+        <div class="mPrizesInner">
+        	<label class="first">Pay</label>
+            <span class="dw">$</span>
+            <input type="text" id="swMilestonePrize" class="prizesInput" value="" />
+            <strong>for each submission up to</strong>
+            <div class="numSelect">
+            	<select id="swMilestoneSubmissionNumber" >
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                </select>
+            </div>
+        </div>
+        
+    </div>
+    <!-- end .mPrizes -->
+    
           <br />
           <span class="head">
 			  <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
@@ -153,7 +192,7 @@
       </div>
   </div>
   <!-- end .prizes -->
-                                    
+  <div class="clear"></div>
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
         <a href="javascript:saveAsDraftOverview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>

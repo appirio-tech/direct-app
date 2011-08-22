@@ -71,7 +71,18 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
         CONTEST_STATUSES.put(ContestStatus.CANCELLED, "Cancelled");
 
         CONTEST_TYPES = new LinkedHashMap<ContestType, String>();
-        CONTEST_TYPES.put(ContestType.STUDIO, "Studio");
+                
+        CONTEST_TYPES.put(ContestType.WEB_DESIGN, "Web Design");
+        CONTEST_TYPES.put(ContestType.LOGO_DESIGN, "Logo Design");
+        CONTEST_TYPES.put(ContestType.BANNERS_ICONS, "Banners/Icons");
+        CONTEST_TYPES.put(ContestType.APP_FRONT_END_DESIGN, "Application Front-End Design");
+        CONTEST_TYPES.put(ContestType.WIDGET_MOBILE_SCREEN_DESIGN, "Widget or Mobile Screen Design");
+        CONTEST_TYPES.put(ContestType.FRONT_END_FLASH, "Front-End Flash");
+        CONTEST_TYPES.put(ContestType.PRINT_DESIGN, "Print/Presentation");
+        CONTEST_TYPES.put(ContestType.WIREFRAME, "Wireframes");
+        CONTEST_TYPES.put(ContestType.IDEA_GENERATION, "Idea Generation");
+        CONTEST_TYPES.put(ContestType.OTHER, "Other Studio");
+
         CONTEST_TYPES.put(ContestType.CONCEPTUALIZATION, "Conceptualization");
         CONTEST_TYPES.put(ContestType.SPECIFICATION, "Software Specification");
         CONTEST_TYPES.put(ContestType.ARCHITECTURE, "Architecture");

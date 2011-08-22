@@ -149,43 +149,25 @@ $(document).ready(function(){
         tinyMCE.init({
             mode : "exact",
             elements : obj,
-            plugins :"pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
+            plugins :"pagebreak,style,layer,table,save,advhr,advimage,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
 
             theme : "advanced",
-            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
+            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink,code",
             theme_advanced_buttons2 : "",
             theme_advanced_buttons3 : "",
             theme_advanced_statusbar_location : "bottom",
             theme_advanced_path : false,
             theme_advanced_resizing : true,
             theme_advanced_resize_horizontal : false,
+            valid_elements : tinyMCEValidElements,
             
             init_instance_callback : function() {
                 $('table.mceLayout').css('width','100%');
             },
-            
+            setup: function(ed) {setMaxCharsEventHandlerOnSetup(ed, maxChars);},
             handle_event_callback : maxCharsEventHandler(obj, maxChars)
         });
     }
-
-    tinyMCE.init({
-        mode : "exact",
-        elements : "contestDescription,contestIntroduction,round1Info,round2Info,swDetailedRequirements,swGuidelines",
-        plugins :"pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
-
-        theme : "advanced",
-        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink",
-        theme_advanced_buttons2 : "",
-        theme_advanced_buttons3 : "",
-        theme_advanced_statusbar_location : "bottom",
-        theme_advanced_path : false,
-        theme_advanced_resizing : true,
-        theme_advanced_resize_horizontal : false,
-        
-        init_instance_callback : function() {
-            $('table.mceLayout').css('width','100%');
-        }
-    });
     makeMaxCharsTinyMCE('allDescription', 12000);
     makeMaxCharsTinyMCE('privateDescription', 4096);
    

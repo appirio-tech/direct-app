@@ -12,11 +12,15 @@
   - Version 1.3 (TC Direct Release Assembly 7) change Notes: 
   - 1.Added hasContestWritePermission field.  
   -
+  - Version 1.4 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
+  -
   - Version 1.4 (TC Direct Contest Dashboard Update Assembly) change Notes: 
   - 1.Apply to new submission view.
   - 2.Add dashboard header.  
   -
-  - Version: 1.4
+  - Version 1.5 (TC Direct Replatforming Release 5  ) change notes: Add support to the Submission Declaration section.
+  -
+  - Version: 1.5
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
@@ -38,9 +42,11 @@
 </head>
 
 <s:set var="submission" value="viewData.submission" scope="page"/>
+<s:set var="submissionArtifactCount" value="viewData.submissionArtifactCount" scope="page"/>
 <s:set var="previousSubmissionId" value="viewData.previousSubmissionId" scope="page"/>
 <s:set var="nextSubmissionId" value="viewData.nextSubmissionId" scope="page"/>
 <s:set var="roundType" value="formData.roundType.toString()" scope="page"/>
+<s:set var="contestId" value="projectId" scope="page"/>
 
 <body id="page">
 <div id="wrapper">
@@ -92,7 +98,7 @@
                                                         <link:studioSubmission
                                                             id="navSubmissionSlideshowTopPrev"
                                                             submissionId="${previousSubmissionId}"
-                                                            contestId="${submission.contestId}"
+                                                            contestId="${contestId}"
                                                             roundType="${roundType}">
                                                             Previous Submission
                                                         </link:studioSubmission>
@@ -102,7 +108,7 @@
                                                         <link:studioSubmission
                                                             id="navSubmissionSlideshowTopNext"
                                                             submissionId="${nextSubmissionId}"
-                                                            contestId="${submission.contestId}"
+                                                            contestId="${contestId}"
                                                             roundType="${roundType}">
                                                             Next Submission
                                                         </link:studioSubmission>
@@ -124,30 +130,21 @@
                                                             For Wireframe contests only preview image is shown;
                                                             For other contests images carousel is shown
                                                             --%>
-                                                            <c:choose>
-                                                                <c:when test="${viewData.currentContest.contestType.id eq 25}">
-                                                                    <ui:studioCarouselSubmission
-                                                                            contestId="${submission.contestId}"
-                                                                            submission="${submission}"
-                                                                            artifactNum="0"/>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <ui:studioCarouselSubmission
-                                                                            contestId="${submission.contestId}"
-                                                                            submission="${submission}"
-                                                                            artifactNum="1"/>
-                                                                    <!-- Carousel images -->
-                                                                    <c:forEach begin="2" end="${submission.artifactCount}"
-                                                                               varStatus="status">
-                                                                        <ui:studioCarouselSubmission
-                                                                                contestId="${submission.contestId}"
-                                                                                submission="${submission}"
-                                                                                artifactNum="${status.index}"/>
-                                                                    </c:forEach>
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                            
+                                                            <ui:studioCarouselSubmission
+                                                                    contestId="${contestId}"
+                                                                    submission="${submission}"
+                                                                    artifactNum="1"/>
+                                                            <!-- Carousel images -->
+                                                            <c:forEach begin="2" end="${submissionArtifactCount}"
+                                                                       varStatus="status">
+                                                                <ui:studioCarouselSubmission
+                                                                        contestId="${contestId}"
+                                                                        submission="${submission}"
+                                                                        artifactNum="${status.index}"/>
+                                                            </c:forEach>
                                                         </ul>
-														<ui:submissionAction contestId="${submission.contestId}" submission="${submission}"/>
+                                                        <ui:submissionAction contestId="${contestId}" submission="${submission}"/>
                                                     </div>
                                                     <!-- End #singleSubmissionSlide -->
 
@@ -156,15 +153,12 @@
                                                             <table>
                                                                 <tr>
                                                                     <td class="label">Submission ID:</td>
-                                                                    <td><s:property value="submissionId"/></td>
+                                                                    <td><s:property value="id"/></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="label">Date Submitted:</td>
                                                                     <td>
-                                                                        <s:set var="submissionDate"
-                                                                               value="submittedDate.toGregorianCalendar().getTime()"
-                                                                               scope="page"/>
-                                                                        <fmt:formatDate value="${submissionDate}"
+                                                                        <fmt:formatDate value="${creationTimestamp}"
                                                                                         pattern="MMM dd, yyyy, hh:mm:ss aa"/>
                                                                     </td>
                                                                 </tr>
@@ -175,25 +169,20 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="label">Comment:</td>
-                                                                    <td>${viewData.submission.comment}</td>
+                                                                    <td><c:if test="${viewData.submission.submissionDeclaration != null}">${viewData.submission.submissionDeclaration.comment}</c:if></td>
                                                                 </tr>
-                                                                <s:if test="viewData.submission.fonts != null && viewData.submission.fonts.size() > 0">
                                                                 <tr>
                                                                     <td class="label">Fonts:</td>
-                                                                    <td><c:forEach items="${viewData.submission.fonts}" var="font"><a href="${font.url}" target="blank">${font.name}</a><br/></c:forEach></td>
+                                                                    <td><c:forEach items="${viewData.fonts}" var="font"><a href="${font['Url']}" target="_blank">${font['Name']}</a><br/></c:forEach></td>
                                                                 </tr>
-                                                                </s:if>
-                                                                <s:if test="viewData.submission.stockArts != null && viewData.submission.stockArts.size() > 0">
                                                                 <tr>
                                                                     <td class="label">Stock Art:</td>
-                                                                    <td><c:forEach items="${viewData.submission.stockArts}" var="stockArt"><a href="${stockArt.url}" target="blank">${stockArt.name}</a><br/></c:forEach></td>
+                                                                    <td><c:forEach items="${viewData.stockArts}" var="stockArt"><a href="${stockArt['Url']}" target="_blank">${stockArt['Name']}</a><br/></c:forEach></td>
                                                                 </tr>
-                                                                </s:if>
-                                                                <s:if test="viewData.submission.feedbackText != null && viewData.submission.feedbackText.length() > 0">
-                                                                    <if:isConfirmedStudioSubmission
-                                                                            submission="${viewData.submission}">
+                                                                <s:if test="viewData.feedbackText != null && viewData.feedbackText.length() > 0">
+                                                                    <if:isConfirmedStudioSubmission>
                                                                         <td class="label">Feedback:</td>
-                                                                        <td>${viewData.submission.feedbackText}</td>
+                                                                        <td>${viewData.feedbackText}</td>
                                                                     </if:isConfirmedStudioSubmission>
                                                                 </s:if>
                                                             </table>

@@ -1,13 +1,7 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
-
-import java.util.List;
-
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.configs.StudioContestType;
-
 
 /**
  * <p>
@@ -22,14 +16,25 @@ import com.topcoder.direct.services.configs.StudioContestType;
  * <p>
  * Change Note for 1.1 : Direct - View Edit Activate Studio Contests Assembly
  * <ul>
- *   <li>Adds getStudioContestTypes method.</li>
+ * <li>Adds getStudioContestTypes method.</li>
  * </ul>
  * </p>
- *
+ * <p>
+ * Change Note for 1.2 : TC Direct Replatforming Release 1 Assembly
+ * <ul>
+ * <li>Remove getStudioContestTypes method.</li>
+ * </ul>
+ * </p>
+ * 
  * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.1
+ * @version 1.2
  */
 public abstract class ContestAction extends BaseDirectStrutsAction {
+    /**
+     * <p>A <code>long</code> providing the id of the project.</p>
+     */
+    private long projectId;
+
     /**
      * <p>
      * Represents the unique serial version id.
@@ -46,14 +51,20 @@ public abstract class ContestAction extends BaseDirectStrutsAction {
     }
 
     /**
-     * <p>
-     * Gets a list of studio contest types.
-     * </p>
-     *
-     * @return the list of studio contest types.
-     * @since 1.1
+     * Gets the project id.
+     * 
+     * @return the project id.
      */
-    public List<StudioContestType> getStudioContestTypes() {
-        return ConfigUtils.getStudioContestTypes();
+    public long getProjectId() {
+        return projectId;
+    }
+
+    /**
+     * Sets the project id.
+     * 
+     * @param projectId the project id.
+     */
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 }

@@ -5,26 +5,21 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
-import org.apache.commons.collections.iterators.ArrayListIterator;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.SessionData;
-import org.apache.struts2.ServletActionContext;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.topcoder.security.TCSubject;
 
 /**
  * <p>
@@ -52,6 +47,11 @@ public class LaunchContestAction extends ContestAction {
     private SessionData sessionData;
 
     /**
+    * <p> Whether user is admin</p>
+    */
+    private boolean admin = false;
+
+    /**
      * <p>
      * Executes the action. Does nothing for now.
      * </p>
@@ -64,6 +64,9 @@ public class LaunchContestAction extends ContestAction {
         HttpSession session = request.getSession(false);
         if (session != null) {
             sessionData = new SessionData(session);
+
+            TCSubject user = sessionData.getCurrentUser();
+            admin = DirectUtils.isRole(user, "Administrator");
         }
 
         List<ProjectBriefDTO> projects = DataProvider.getUserProjects(sessionData.getCurrentUserId());
@@ -89,6 +92,13 @@ public class LaunchContestAction extends ContestAction {
      */
     public Date getCurrentServerDate() {
         return new Date();
+    }
+
+    /**
+    * <p>Property to determine whether user is admin</p>
+    */
+    public boolean isAdmin() {
+        return admin;
     }
 
     /**

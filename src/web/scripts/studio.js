@@ -59,14 +59,12 @@ $("a.thumbGrid").hover(function() {
 		});  
 
 	$("#checkAll").click(function() {   
-			$(".selectThumb").attr('checked' , true); 
-			updateSummary();
+			$(".selectThumb").attr('checked' , true);
 			return false;			  
 		}); 
 
 	$("#checkNone").click(function() {   
-			$(".selectThumb").attr('checked' , false); 
-			updateSummary();
+			$(".selectThumb").attr('checked' , false);
 			return false;			  
 		}); 
   

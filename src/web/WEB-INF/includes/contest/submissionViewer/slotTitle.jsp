@@ -1,6 +1,10 @@
 <%--
-  - Author: isv
-  - Version: 1.0 (Submission Viewer Release 1 assembly)
+  - Author: isv, TCSASSEMBER
+  - Version 1.1 (TC Direct Replatforming Release 3  ) change notes: Update the Download link to download from OR. 
+  - Version 1.2 (TC Direct Replatforming Release 5  ) chnage notes: Update the online review download submission link tag.
+  - 
+  - Version: 1.2
+  - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders Slot Title area to be displayed on Studio Submissions Grid, List and
@@ -23,7 +27,7 @@
                                     styleClass="toggleViewList">Switch to Grid View</link:studioSubmissionsGrid>
     </s:if>
     <s:if test="formData.viewType.toString() == 'SINGLE'">
-        <h3>Submission ID: <s:property value="formData.submissionId"/>(<a href="https://studio.topcoder.com/?module=DownloadSubmission&sbmid=<s:property value="formData.submissionId"/>">Download</a>)</h3>
+        <h3>Submission ID: <s:property value="formData.submissionId"/>(<link:studioSubmissionDownload submissionId="${viewData.submission.id}">Download</link:studioSubmissionDownload>)</h3>
         <link:studioSubmissionsGrid contestId="${contestId}" milestoneRound="${isCurrentMilestoneRound}"
                                     styleClass="toggleViewList">See More Submissions</link:studioSubmissionsGrid>
     </s:if>

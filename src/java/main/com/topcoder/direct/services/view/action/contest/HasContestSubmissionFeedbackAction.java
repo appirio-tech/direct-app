@@ -1,11 +1,7 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
-
-import java.util.List;
-
-import org.springframework.web.util.HtmlUtils;
 
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
@@ -16,25 +12,22 @@ import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
+import org.springframework.web.util.HtmlUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
- * A <code>Struts</code> action for handling requests for updating the feedback
+ * A <code>Struts</code> action for handling requests for checking the feedback
  * text for a contest submission.
  * </p>
  * 
- * <p>
- *   Version 1.1 (TC Direct Replatforming Release 3) change notes:
- *   <ul>
- *     <li>The {@link #executeAction()} method was totally updated to work for the new studio contest.</li>
- *   </ul>
- * </p>
- * 
- * @author flexme
- * @version 1.1
- * @since Direct Submission Viewer Release 2
+ * @author FireIce
+ * @version 1.0
  */
-public class UpdateContestSubmissionFeedbackAction extends ContestAction {
+public class HasContestSubmissionFeedbackAction extends ContestAction {
     /**
      * <p>
      * Represents the serial version unique id.
@@ -50,31 +43,22 @@ public class UpdateContestSubmissionFeedbackAction extends ContestAction {
     private long submissionId;
 
     /**
-     * <p>
-     * A <code>String</code> providing the content of the feedback text.
-     * </p>
-     */
-    private String feedbackText;
-
-    /**
      * Represents the round type.
-     * @since 1.1
      */
     private ContestRoundType roundType;
 
     /**
      * <p>
-     * Constructs new <code>UpdateContestSubmissionFeedbackAction</code> instance. This implementation does nothing.
+     * Constructs new <code>HasContestSubmissionFeedbackAction</code> instance. This implementation does nothing.
      * </p>
      */
-    public UpdateContestSubmissionFeedbackAction() {
+    public HasContestSubmissionFeedbackAction() {
 
     }
 
     /**
      * <p>
-     * Handles the incoming request. Update the feedback text for a contest
-     * submission.
+     * Handles the incoming request. Check whether submission has feedback.
      * </p>
      *
      * @throws Exception
@@ -84,9 +68,6 @@ public class UpdateContestSubmissionFeedbackAction extends ContestAction {
     protected void executeAction() throws Exception {
         long projectId = getProjectId();
         TCSubject currentUser = getCurrentUser();
-        if (!DirectUtils.hasWritePermission(this, currentUser, projectId, false)) {
-            throw new DirectException("Have no permission to update submission feedback.");
-        }
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
         PhaseType phaseType = (roundType == ContestRoundType.MILESTONE ? PhaseType.MILESTONE_REVIEW_PHASE : PhaseType.REVIEW_PHASE);
@@ -103,12 +84,14 @@ public class UpdateContestSubmissionFeedbackAction extends ContestAction {
             }
         }
         if (!find) {
-            throw new DirectException("Have no permission to update submission feedback.");
+            throw new DirectException("Have no permission to check submission feedback.");
         }
-        
-        String feedback = HtmlUtils.htmlEscape(feedbackText);
-        contestServiceFacade.saveStudioSubmisionWithRankAndFeedback(currentUser, projectId, submissionId, 1, feedback,
-                false, phaseType);
+
+        String feedbackText = contestServiceFacade.getStudioSubmissionFeedback(currentUser, projectId, submissionId, phaseType);
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("hasFeedback", feedbackText != null && feedbackText.trim().length() > 0);
+        setResult(result);
     }
 
     /**
@@ -136,34 +119,9 @@ public class UpdateContestSubmissionFeedbackAction extends ContestAction {
     }
 
     /**
-     * <p>
-     * Gets the content of the feedback text.
-     * </p>
-     *
-     * @return A <code>String</code> providing the content of the feedback text.
-     */
-    public String getFeedbackText() {
-        return feedbackText;
-    }
-
-    /**
-     * <p>
-     * Sets the content of the feedback text.
-     * </p>
-     *
-     * @param feedbackText
-     *            A <code>String</code> providing the content of the feedback
-     *            text.
-     */
-    public void setFeedbackText(String feedbackText) {
-        this.feedbackText = feedbackText;
-    }
-
-    /**
      * Gets the round type.
      * 
      * @return the round type.
-     * @since 1.1
      */
     public ContestRoundType getRoundType() {
         return roundType;
@@ -173,7 +131,6 @@ public class UpdateContestSubmissionFeedbackAction extends ContestAction {
      * Sets the round type.
      * 
      * @param roundType the round type
-     * @since 1.1
      */
     public void setRoundType(ContestRoundType roundType) {
         this.roundType = roundType;

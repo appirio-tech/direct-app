@@ -28,9 +28,14 @@ import java.util.List;
  *     <li>Refactored the class and made it a descendant of {@link ContestHealthDTO} class.</li>
  *   </ol>
  * </p>
+ * Version 1.2 (Direct Replatforming Release 4) Change notes:
+ *   <ol>
+ *     <li>Refactored the currentPhase being type of List.</li>
+ *   </ol>
+ * </p>
  *
  * <p>
- * Version 1.2 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
+ * Version 1.3 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
  *   <ol>
  *     <li>Add allPhases : List<ProjectPhaseDTO> field and corresponding get/set methods.</li>
  *     <li>Add startTime : Date field and corresponding get/set methods.</li>
@@ -38,9 +43,8 @@ import java.util.List;
  *     <li>Add regProgressPercent : int field and corresponding get/set methods.</li>
  *   </ol>
  * </p>
- *
- * @author isv, TCSDEVELOPER, TCSASSEMBLER
- * @version 1.2
+ * @author isv, TCSDEVELOPER, morehappiness
+ * @version 1.3
  */
 public class ContestDashboardDTO extends ContestHealthDTO implements Serializable {
 
@@ -90,9 +94,9 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
     private int numberOfRegistrants;
 
     /**
-     * <p>A <code>ProjectPhaseDTO</code> providing the details for current phase.</p>
+     * <p>A <code>ProjectPhaseDTO</code> list providing the details for current phase.</p>
      */
-    private ProjectPhaseDTO currentPhase;
+    private List<ProjectPhaseDTO> currentPhase;
 
     /**
      * <p>A <code>ProjectPhaseDTO</code> providing the details for next project phase.</p>
@@ -102,28 +106,28 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
     /**
      * <p>A list of <code>ProjectPhaseDTO</code> providing the details for all phases.</p>
      * 
-     * @since 1.2
+     * @since 1.3
      */
     private List<ProjectPhaseDTO> allPhases;
     
     /**
      * The start time.
      * 
-     * @since 1.2
+     * @since 1.3
      */
     private Date startTime;
     
     /**
      * The end time.
      * 
-     * @since 1.2
+     * @since 1.3
      */
     private Date endTime;
     
     /**
      * The registration progress percent data.
      * 
-     * @since 1.2
+     * @since 1.3
      */
     private int regProgressPercent;
     
@@ -322,16 +326,16 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      *
      * @return a <code>ProjectPhaseDTO</code> providing the details for current phase.
      */
-    public ProjectPhaseDTO getCurrentPhase() {
+    public List<ProjectPhaseDTO> getCurrentPhase() {
         return this.currentPhase;
     }
 
     /**
      * <p>Sets the details for current phase.</p>
      *
-     * @param currentPhase a <code>ProjectPhaseDTO</code> providing the details for current phase.
+     * @param currentPhase a <code>ProjectPhaseDTO</code> list providing the details for current phase.
      */
-    public void setCurrentPhase(ProjectPhaseDTO currentPhase) {
+    public void setCurrentPhase(List<ProjectPhaseDTO> currentPhase) {
         this.currentPhase = currentPhase;
     }
 
@@ -339,7 +343,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Gets the all phases field.
      * 
      * @return the allPhases
-     * @since 1.2
+     * @since 1.3
      */
     public List<ProjectPhaseDTO> getAllPhases() {
         return allPhases;
@@ -349,7 +353,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Sets the all phases field.
      *
      * @param allPhases the allPhases to set
-     * @since 1.2
+     * @since 1.
      */
     public void setAllPhases(List<ProjectPhaseDTO> allPhases) {
         this.allPhases = allPhases;
@@ -359,7 +363,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Gets the startTime field.
      * 
      * @return the startTime
-     * @since 1.2
+     * @since 1.3
      */
     public Date getStartTime() {
         return startTime;
@@ -369,7 +373,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Sets the startTime field.
      *
      * @param startTime the startTime to set
-     * @since 1.2
+     * @since 1.3
      */
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
@@ -379,7 +383,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Gets the endTime field.
      * 
      * @return the endTime
-     * @since 1.2
+     * @since 1.3
      */
     public Date getEndTime() {
         return endTime;
@@ -389,7 +393,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Sets the endTime field.
      *
      * @param endTime the endTime to set
-     * @since 1.2
+     * @since 1.3
      */
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
@@ -399,7 +403,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Gets the regProgressPercent field.
      * 
      * @return the regProgressPercent
-     * @since 1.2
+     * @since 1.3
      */
     public int getRegProgressPercent() {
         return regProgressPercent;
@@ -409,7 +413,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * Sets the regProgressPercent field.
      *
      * @param regProgressPercent the regProgressPercent to set
-     * @since 1.2
+     * @since 1.3
      */
     public void setRegProgressPercent(int regProgressPercent) {
         this.regProgressPercent = regProgressPercent;

@@ -156,7 +156,7 @@ $(function() {
     sendRequest = function(questionId, contestId, userName, action, commentId, comment) {
         var request = {
             "questionId" : questionId,
-            "contestId" : contestId,
+            "projectId" : contestId,
             "commentBy" : userName,
             "action" : action,
             "commentId" : commentId,
@@ -317,7 +317,7 @@ $(function() {
             url: '../ajax/resubmitSpecReview.action',
             data: {
                 "content": "content",
-                "contestId": contestId
+                "projectId": contestId
             },
             cache: false,
             dataType: 'json',
