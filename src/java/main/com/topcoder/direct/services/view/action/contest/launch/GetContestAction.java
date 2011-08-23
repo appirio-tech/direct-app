@@ -201,12 +201,12 @@ public class GetContestAction extends ContestAction {
         setResult(softwareCompetition);
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
-        if(contestStats.getIsStudio()) {
+        if(DirectUtils.isStudio(softwareCompetition)) {
             softwareCompetition.setType(CompetionType.STUDIO);
         }
         getViewData().setContestStats(contestStats);
-        getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, contestStats.getIsStudio(), false));
-        DirectUtils.setDashboardData(currentUser, projectId, getViewData(), getContestServiceFacade(), contestStats.getIsStudio());
+        getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
+        DirectUtils.setDashboardData(currentUser, projectId, getViewData(), getContestServiceFacade(), DirectUtils.isStudio(softwareCompetition));
         
         if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
         {
