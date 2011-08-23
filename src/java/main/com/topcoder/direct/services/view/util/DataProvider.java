@@ -2225,7 +2225,9 @@ public class DataProvider {
             double reliabilityTotal = getDouble(row, "reliability_total");
             long registrationPhaseStatus = getLong(row, "registration_phase_status");
 
-            if (registrationPhaseStatus == 2) {
+            if(isStudio) {
+            	dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+            } else if (registrationPhaseStatus == 2) {
                 if (reliabilityTotal >= 200) {
                     dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
                 } else {
@@ -2242,7 +2244,6 @@ public class DataProvider {
             }
             dto.setRegProgressPercent((int) Math.min(reliabilityTotal * 100 / 200, 100));
         }
-
 
         String latestHandle = "";
         long latestUserId = 0;
