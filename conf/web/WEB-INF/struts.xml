@@ -125,31 +125,38 @@
         </action>
         <action name="dashboardEnterpriseZoom" class="zoomEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="dashboardEnterpriseAJAX" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="dashboardGetOptionsForClientAJAX" method="getOptionsForClient" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="dashboardGetOptionsForBillingAJAX" method="getOptionsForBilling" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="dashboardGetCostBreakDownAJAX" method="getCostBreakDown" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="dashboardEnterpriseTableViewCall" class="enterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="dashboardEnterpriseDrillTableCall" class="enterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
@@ -273,14 +280,16 @@
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="getUser" class="searchUserAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="updateProjectPermissions" class="updateProjectPermissionsAction">
@@ -304,7 +313,8 @@
 
         <action name="updateNotifications" class="com.topcoder.direct.services.view.action.notification.UpdateNotificationsAction">
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="dashboardVMAction" class="dashboardVMAction">
@@ -313,15 +323,18 @@
         </action>
         <action name="launchVMInstance" class="launchVMInstanceAction">
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="terminateVMInstance" class="terminateVMInstanceAction">
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="showVMInstances" class="showVMInstancesAction">
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="dashboardReports" class="dashboardReportsAction">
@@ -388,7 +401,8 @@
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
     </package>
 
@@ -445,23 +459,28 @@
         </action>
 
         <action name="createProject" class="createProjectAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="saveDraftContest" class="saveDraftContestAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="getStudioConfigs" method="getStudioConfigs" class="commonAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="documentUpload" class="documentUploadAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="removeDocument" class="removeDocumentAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="downloadDocument" class="downloadDocumentAction">
@@ -475,23 +494,28 @@
         </action>
 
         <action name="getCategories" method="getCategories" class="commonAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="getCapacityFullDates" class="getCapacityFullDatesAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="getBillingProjectContestFees" method="getBillingProjectContestFees" class="commonAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="getDirectProjectCopilots" method="getDirectProjectCopilots" class="commonAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="getDesignComponents" method="getDesignComponents" class="commonAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
     </package>
 
@@ -505,15 +529,18 @@
         </action>
 
         <action name="detailJson" class="getContestAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="repostContest" class="repostAction">
             <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="newVersion" class="newVersionAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="submissions" class="contestSubmissionsAction">
@@ -536,7 +563,8 @@
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+			<result name="error" type="json" />
         </action>
 
         <action name="hasSubmissionFeedback" class="hasStudioSubmissionFeedbackAction">
@@ -595,7 +623,8 @@
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="hasGeneralSubmissionsFeedback" class="hasStudioGeneralFeedbackAction">
@@ -629,11 +658,13 @@
     
     <package name="ajax" namespace="/ajax" extends="base">
         <action name="saveSpecReviewComment" class="saveSpecReviewCommentAction">
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         
         <action name="resubmitSpecReview" class="resubmitSpecReviewAction">
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
     </package>
     
@@ -648,7 +679,8 @@
         </action>
         
         <action name="processCopilotProjects" class="copilotProjectAction">
-            <result type="json"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="listCopilotPostings" class="listCopilotContestsAction">
             <result>/WEB-INF/copilot-contests.jsp</result>
@@ -682,19 +714,23 @@
             </result>
         </action>
         <action name="documentUpload" class="documentUploadAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="saveDraftContest" class="saveDraftContestAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         <action name="createProject" class="createProjectAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
     </package>    
     
     <package name="preference" namespace="/preference" extends="base">                         
         <action name="updatePreferences" class="updateUserPreferencesAction">
-            <result type="json" />
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>            
     </package>
 </struts>
