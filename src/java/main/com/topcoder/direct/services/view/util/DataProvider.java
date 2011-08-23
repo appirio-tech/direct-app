@@ -2266,7 +2266,7 @@ public class DataProvider {
                 String frm = forumStats.getRow(0).getStringItem("forum_id");
                 forumId = new Long(frm);
             }
-            
+            System.out.print("LATEST_THREAD_ID = " + latestThreadId);
             totalForum = getInt(forumStats.getRow(0), "number_of_forum");
             unansweredForumPostsNumber = getInt(forumStats.getRow(0), "unanswered_threads");
             latestTime = getDate(forumStats.getRow(0), "latest_time");
