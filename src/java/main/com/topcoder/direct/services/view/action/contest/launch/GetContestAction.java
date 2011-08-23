@@ -206,7 +206,7 @@ public class GetContestAction extends ContestAction {
         }
         getViewData().setContestStats(contestStats);
         getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
-        DirectUtils.setDashboardData(currentUser, projectId, getViewData(), getContestServiceFacade(), DirectUtils.isStudio(softwareCompetition));
+        DirectUtils.setDashboardData(currentUser, projectId, getViewData(), getContestServiceFacade(), !DirectUtils.isStudio(softwareCompetition));
         
         if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
         {
