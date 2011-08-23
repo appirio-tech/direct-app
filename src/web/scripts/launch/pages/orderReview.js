@@ -203,8 +203,8 @@ function activateContest() {
    $( "#activateContestConfirmation" ).dialog({
 			autoOpen: true,
 			resizable: true,
-			height:240,
-			width: 520,
+			height:175,
+			width: 400,
 			modal: true,
 			buttons: {
 				"No": function() {

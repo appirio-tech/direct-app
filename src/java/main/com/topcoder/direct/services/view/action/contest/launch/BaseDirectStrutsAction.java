@@ -77,9 +77,15 @@ import com.topcoder.web.ejb.user.UserPreferenceHome;
  * <li>Add studio service and project services field.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.2.4 - Release Assembly - TopCoder Cockpit AJAX Revamp Change Note
+ * <ul>
+ * <li>Set the error message into JSON result, the previous one does not set error message right.</li>
+ * </ul>
+ * </p>
  *
- * @author fabrizyo, FireIce, murphydog, TCSASSEMBLER
- * @version 1.2.3
+ * @author fabrizyo, FireIce, murphydog, GreatKevin
+ * @version 1.2.4
  */
 public abstract class BaseDirectStrutsAction extends AbstractAction implements Preparable {
     /**
@@ -227,6 +233,12 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
             executeAction();
         } catch (Throwable e) {
             logger.error("Error when executing action : " + getAction() + " : " + e.getMessage(), e);
+
+            // set error result if aggregate model exists
+            if (getModel() != null) {
+                setResult(e);
+            }
+
             if (isJsonRequest()) {
                 setResult(e);
             } else {

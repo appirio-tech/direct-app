@@ -86,19 +86,16 @@ function updateSummary() {
 }
 
 $(document).ready(function(){
-    initDialog('msgDialog', 500);
+    initDialog('msgDialog', 300);
     // block ui before ajax calls
     function beforeAjax() {
-        $.blockUI({ message: '<div id=loading> loading.... </div>' });
+        modalPreloader();
     }
     // unblock ui after ajax calls
     function afterAjax() {
-        $.unblockUI();
+        modalClose();
     }
-    // set the timeout of ajax calls
-    jQuery.ajaxSetup({
-        timeout: 90000
-    });
+   
 
     // save feedback text
     $(".saveFeedback").click(function() {
@@ -149,7 +146,8 @@ $(document).ready(function(){
                 $("#ginfo").removeClass("errorinfo");
             },
             error: function (jsonResult) {
-                alert('Yo');
+                $('#msgDialog p').html("Error occurs when saving your feedback.");
+                $('#msgDialog').dialog('open');
             },
             beforeSend: beforeAjax,
             complete: afterAjax

@@ -281,6 +281,9 @@
         </tbody>
     </table>
     <!-- end tr template -->
+
+    <jsp:include page="includes/popups.jsp"/>
+
 </body>
 <!-- End #page -->
 

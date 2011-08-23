@@ -235,7 +235,7 @@ $(document).ready(function() {
                 onSubmit : function(file, ext) {
                     currentDocument['fileName'] = file;
                     uploader2.setData({contestFileDescription : currentDocument['description'], documentTypeId : 24, studio: false});
-                    $.blockUI({ message: '<div id=loading> loading.... </div>' });
+                    modalPreloader();
                 },
                 onComplete : function(file, jsonResult) {
                     handleJsonResult(jsonResult,
@@ -246,11 +246,11 @@ $(document).ready(function() {
                                          currentDocument = {};
                                          $('#fileDescription2').val('');
                                          $('#fakeTextInput2').val('');
-                                         $.unblockUI();
+                                         modalClose();
                                      },
                                      function(errorMessage) {
                                          showErrors(errorMessage);
-                                         $.unblockUI();
+                                         modalClose();
                                      });
                 }
             }, false);
@@ -635,10 +635,10 @@ function sendSaveDraftRequestToServer() {
         dataType: 'json',
         success: handleDraftSaving,
         beforeSend: function() {
-            $.blockUI({ message: '<div id=loading> loading.... </div>' });
+            modalPreloader();
         },
         complete: function() {
-            $.unblockUI();
+            modalClose();
         }
     });
 }

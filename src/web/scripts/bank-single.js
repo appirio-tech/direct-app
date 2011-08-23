@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Studio submission single view page.
@@ -14,8 +14,13 @@
  * - Apply to new prototype.
  * </p>
  *
- * @author tangzx
- * @version 1.0.2
+ * <p>
+ * Version 1.0.3 (Release Assembly - TopCoder Cockpit AJAX Revamp version 1.0) Change notes:
+ * - Update the ajax loading indicator.
+ * </p>
+ *
+ * @author tangzx, GreatKevin
+ * @version 1.0.3
  */
 var listLikes = new Array();
 var listDislikes = new Array();
@@ -561,19 +566,16 @@ if($.browser.msie && $.browser.version == 6.0){
 		}
 	});
 
-	initDialog('msgDialog', 500);
+	initDialog('msgDialog', 300);
 	// block ui before ajax calls
 	function beforeAjax() {
-		$.blockUI({ message: '<div id=loading> loading.... </div>' });
+        modalPreloader();
 	}
 	// unblock ui after ajax calls
 	function afterAjax() {
-		$.unblockUI();
+        modalClose();
 	}
-	// set the timeout of ajax calls
-	jQuery.ajaxSetup({
-		timeout: 90000
-	});
+
 	// update feedback text through ajax call
 	$("#updateFeedback").click(function() {
 		var feedback = $("#feedback").val();

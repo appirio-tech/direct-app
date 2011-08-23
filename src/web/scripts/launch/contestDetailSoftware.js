@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ */
 /**
  * Contest Detail Javascript
  *
@@ -1716,7 +1719,7 @@ function handleActivationResultEdit(jsonResult) {
         	canEditMultiRound = false;
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
-        showMessage("Contest " + contestName +" has been activated successfully!");
+        showMessage("Contest <b>" + contestName +"</b> has been activated successfully.");
     },
     function(errorMessage) {
         showErrors(errorMessage);

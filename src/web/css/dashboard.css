@@ -1804,6 +1804,11 @@ DIV.notif-div{
 .popupButtons{
 	overflow: hidden;
 	padding: 5px 0;
+    float:right;
+}
+
+.popupButtons a.button1 {
+	margin-right: 5px;
 }
 
 #TB_closeWindowButton, #TB_closeWindowButtonSingle{
@@ -5825,6 +5830,11 @@ Contest links
 .myCopilotsContestsList table.projectStats td a, table#ProjectContests td a {
     text-decoration: underline;
 }
+
+.myCopilotsContestsList table.projectStats td a, table#ProjectContests td a.addCopilotUsers {
+    text-decoration: none;
+}
+
 .myCopilotsContestsList table.projectStats td a.button1, table#ProjectContests td a.button1 {
     text-decoration:none;
 }
@@ -6647,5 +6657,9 @@ table.resultTable td a.button1:hover {
 
 .errorinfo {
     color: red;
+}
+
+#addProjectForm .fi {
+    margin-top:5px;
 }
 

@@ -174,35 +174,6 @@
             </div>
         </div>
     </div>
-
-    <!-- this area will contain the popups of this page -->
-    <div class="popups">
-        <!-- Add Project Dialog-->
-        <div id="addProjectDialog" title="Create New Project" class="dialog-box hide">
-          <div id="addProjectForm">
-            <div class="fi">
-               <label for="projectName">Name:</label>
-               <input id="projectName" name="projectName" type="text" width="30" maxlength="255" />
-            </div>
-            <div class="fi">
-               <label for="projectDescription">Description:</label>
-               <textarea id="projectDescription" name="projectDescription" rows="5" cols="30" ></textarea>
-            </div>
-            <div class="popupButtons">
-              <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
-              <a href="javascript:;" onclick="addNewProject();" class="button1"><span>Yes</span></a>
-            </div>
-          </div><!-- End #addProjectForm -->
-
-          <div id="addProjectResult">
-            <p></p>
-            <div class="popupButtons">
-              <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Close</span></a>
-            </div>
-          </div><!-- End #addProjectResult -->
-        </div><!-- End #addProjectDialog -->
-    </div>
-    <!-- End .popups -->    
     
     <jsp:include page="includes/popups.jsp"/>
     

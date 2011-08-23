@@ -73,10 +73,10 @@ function repostContest() {
       dataType: 'json',
       success: handleRepostContestResult,
       beforeSend: function(){
-      	 $.blockUI({ message: '<div id=loading> reposting .... </div>' });
+          modalPreloader();
       },
       complete: function(){
-      	 $.unblockUI();
+          modalClose();
       }       
    });
 }
@@ -202,10 +202,10 @@ function newVersionContest() {
       dataType: 'json',
       success: handleNewVersionContestResult,
       beforeSend: function(){
-      	 $.blockUI({ message: '<div id=loading> new versioning .... </div>' });
+          modalPreloader();
       },
       complete: function(){
-      	 $.unblockUI();
+          modalClose();
       }       
    });
 }

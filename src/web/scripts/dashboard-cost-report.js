@@ -263,7 +263,7 @@ $(document).ready(function() {
      */
     function loadBreakdownData(projectIds) {
         var data = {formData:{projectIds:projectIds}};
-        $.blockUI({ message: '<div id=loading> loading.... </div>' });
+        modalPreloader();
         $.ajax({
             type: 'get',
             url: "dashboardGetCostBreakDownAJAX",
@@ -274,7 +274,7 @@ $(document).ready(function() {
                 handleJsonResult(
                     jsonResult,
                     function(result){
-                        $.unblockUI();
+                        modalClose();
                         contestDViewApi.load();
                         breakdownLoaded = true;
                         var breakDownMap = [];

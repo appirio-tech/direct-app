@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * <p>
@@ -290,6 +290,8 @@ function processCopilotProjectOperations(operations, isRemove) {
         copilotProjectOperations : operations
     };
 
+    modalPreloader();
+
     $.ajax( {
         type : 'post',
         url : 'processCopilotProjects',
@@ -297,6 +299,7 @@ function processCopilotProjectOperations(operations, isRemove) {
         data : request,
         dataType : 'json',
         success : function(result) {
+            modalClose();
 			hanldeCopilotProjectOperationsResult(result, isRemove);
 		}
     });
@@ -344,7 +347,8 @@ function hanldeCopilotProjectOperationsResult(jsonResult, isRemove) {
             $('#makeSureDialog').dialog("open");
 		}
     } else {
-        alert("Error occurs when update copilot project.");
+        initDialog('errorDialog', 400);
+        showErrors(jsonResult.error.errorMessage);
     }
 };
 

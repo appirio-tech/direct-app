@@ -676,7 +676,7 @@ function savePrizeSection() {
       data: request,
       cache: false,
       dataType: 'json',
-      success: function(jsonResult) {
+      success: function(jsonResult, textStatus, jqXHR) {
          handleSaveAsDraftContestResult(jsonResult);
          populatePrizeSection();  
          showPrizeSectionDisplay();         			
@@ -891,7 +891,7 @@ function handleActivationResultEdit(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         var contestName = mainWidget.competition.contestData.name;
-        showMessage("Contest " + contestName +" has been activated successfully!");
+        showMessage("Contest <b>" + contestName +"</b> has been activated successfully.");
         $('#resubmit').hide();
     },
     function(errorMessage) {

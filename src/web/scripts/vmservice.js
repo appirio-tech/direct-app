@@ -109,7 +109,8 @@ if (!window.vmService) var vmService = {
         var actionArea = $('#launch_vm_button');
         var save = actionArea.html();
         actionArea.html('');
-        $('#loading').show();
+
+        modalPreloader();
 
         $.ajax({
             type: 'GET',
@@ -118,7 +119,7 @@ if (!window.vmService) var vmService = {
             dataType: "json",
             cache:false,
             success:function(r) {
-                $('#loading').hide();
+                modalClose();
                 actionArea.html(save);
                 r = r.result['return'];
                 var errors = r.errors;
@@ -146,7 +147,7 @@ if (!window.vmService) var vmService = {
 
     refresh : function() {
         $(".error").empty();
-        $('#loading').show();
+        modalPreloader();
 
         $.ajax({
             type: 'GET',
@@ -154,7 +155,7 @@ if (!window.vmService) var vmService = {
             dataType: "json",
             cache:false,
             success:function(r) {
-                $('#loading').hide();
+                modalClose();
                 r = r.result['return'];
                 var errors = r.errors;
                 if (errors) {
@@ -171,8 +172,8 @@ if (!window.vmService) var vmService = {
 
 
     terminate : function(instanceId, elem) {                         
-        if (window.confirm("Are you sure you want to terminate this VM?")) {                                    
-            $('#loading').show();
+        if (window.confirm("Are you sure you want to terminate this VM?")) {
+            modalPreloader();
             while (elem.parentNode && elem.parentNode.tagName != "TR"){
                 elem = elem.parentNode;
             }
@@ -186,7 +187,7 @@ if (!window.vmService) var vmService = {
                 dataType: "json",
                 cache: false,
                 success: function(r) {
-                    $('#loading').hide(); 
+                    modalClose();
                     $(rowElem).find('.vm_instance_status').html(r.result['return'][0]);                                       
                 }
             });

@@ -3,78 +3,102 @@
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
  * - Add some functions for modal pop ups
+ *
  * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
  * - Add character limitation for the input fields and input areas when creating contests.
  *
- * @author TCSDEVELOPER
- * @version 1.2(Direct Improvements Assembly Release 2)
+ * @version 1.2 (Direct Improvements Assembly Release 2)
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
-       /*BUGR-4512*/
-      adjustImageRatio();
+    adjustImageRatio();
 
-	 function limitFileDescriptionChars(maxChars) {
-			var ori="";
-			var timeId = -1;
-			return function(e) {
-				var textArea = $(this);
-				var content = textArea.val();
-				if (content.length <= maxChars) {
-					ori = content;
-				}
-				if (timeId != -1) {
-					timeId = clearTimeout(timeId);
-				}
-				timeId = setTimeout(function() {
-					timeId = -1;
-					if (textArea.val().length > maxChars) {
-						alert("You can only input max " + maxChars
-								+ " characters.");
-						textArea.val(ori);
-					}
-				}, 100);
-				return true;
-			};
-	}
-		
-	var invliadCharsRegExp = /[^a-zA-Z0-9\$!\- ]+/mg;
-	/**
-	 * Limits the allowed chars to alphanumeric, $, and !
-	 * https://apps.topcoder.com/bugs/browse/TCCC-3091
-	 */
-	function limitContestProjectNameChars(maxChars) {
-			var ori="";
-			var timeId = -1;
-			return function(e) {
-				var textArea = $(this);
-				var content = textArea.val();
-				var invalid = false;
-				if(content.search(invliadCharsRegExp, '') > -1) {
-					invalid = true;
-				}
-				if (content.length <= maxChars && !invalid) {
-					ori = content;
-				}
-				if (timeId != -1) {
-					timeId = clearTimeout(timeId);
-				}
-				timeId = setTimeout(function() {
-					timeId = -1;
-					if(invalid) {
-						alert("Only alphanumeric, $, -, ! and space characters are allowed.");
-						textArea.val(ori);
-						return;
-					}
-					if (textArea.val().length > maxChars) {
-						alert("You can only input max " + maxChars
-								+ " characters.");
-						textArea.val(ori);
-					}
-				}, 100);
-				return true;
-			};
-		}
+    // setup the global AJAX timeout to 20 seconds
+    jQuery.ajaxSetup({
+        timeout: 20 * 1000
+    });
+
+    $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
+        modalClose();
+        showGeneralError();
+    });
+
+    // initialize the dialogue to display response messages
+    initDialog('msgDialog', 300, {
+                Ok: function() {
+                    $(this).dialog("close");
+                }
+            });
+
+    // initialize the dialogue to display error messages
+    initDialog('errorDialog', 300, {
+                Ok: function() {
+                    $(this).dialog("close");
+                }
+            });
+
+    function limitFileDescriptionChars(maxChars) {
+        var ori = "";
+        var timeId = -1;
+        return function(e) {
+            var textArea = $(this);
+            var content = textArea.val();
+            if (content.length <= maxChars) {
+                ori = content;
+            }
+            if (timeId != -1) {
+                timeId = clearTimeout(timeId);
+            }
+            timeId = setTimeout(function() {
+                timeId = -1;
+                if (textArea.val().length > maxChars) {
+                    alert("You can only input max " + maxChars
+                        + " characters.");
+                    textArea.val(ori);
+                }
+            }, 100);
+            return true;
+        };
+    }
+
+    var invliadCharsRegExp = /[^a-zA-Z0-9\$!\- ]+/mg;
+
+    /**
+     * Limits the allowed chars to alphanumeric, $, and !
+     * https://apps.topcoder.com/bugs/browse/TCCC-3091
+     */
+    function limitContestProjectNameChars(maxChars) {
+        var ori = "";
+        var timeId = -1;
+        return function(e) {
+            var textArea = $(this);
+            var content = textArea.val();
+            var invalid = false;
+            if (content.search(invliadCharsRegExp, '') > -1) {
+                invalid = true;
+            }
+            if (content.length <= maxChars && !invalid) {
+                ori = content;
+            }
+            if (timeId != -1) {
+                timeId = clearTimeout(timeId);
+            }
+            timeId = setTimeout(function() {
+                timeId = -1;
+                if (invalid) {
+                    alert("Only alphanumeric, $, -, ! and space characters are allowed.");
+                    textArea.val(ori);
+                    return;
+                }
+                if (textArea.val().length > maxChars) {
+                    alert("You can only input max " + maxChars
+                        + " characters.");
+                    textArea.val(ori);
+                }
+            }, 100);
+            return true;
+        };
+    }
 
 	  // limits the characters for text inputs and text editors
 	  $("#contestName, #projectName").bind('keydown keyup paste', limitContestProjectNameChars(200));
@@ -188,15 +212,31 @@ var ctx = "/direct";
  * Initiate a dialog box using jQuery dialog.
  */
 function initDialog(dialogDivId, width) {
-    $("#"+dialogDivId).each(function() {
+    $("#" + dialogDivId).each(function() {
         $(this).dialog({
-          bgiframe: true,
-          width: width,
-          height:'auto',
-          modal: true,
-          autoOpen: false,
-          resizable: false,
-          zIndex: 10});
+            bgiframe: true,
+            width: width,
+            height:'auto',
+            modal: true,
+            autoOpen: false,
+            resizable: true,
+            zIndex: 10 });
+
+    });
+}
+
+function initDialog(dialogDivId, width, buttons) {
+    $("#" + dialogDivId).each(function() {
+        $(this).dialog({
+            bgiframe: true,
+            width: width,
+            height:'auto',
+            modal: true,
+            autoOpen: false,
+            resizable: true,
+            zIndex: 10,
+            buttons: buttons });
+
     });
 }
  
@@ -279,7 +319,7 @@ function handleJsonResult(jsonResult, successCallBack, failureCallBack) {
 }	
 
 /**
- * Functions to hanle message/error messages.
+ * Functions to handle message/error messages.
  */
 function showMessage(message) {
    $('#msgDialog p').html(message);
@@ -287,20 +327,29 @@ function showMessage(message) {
 }
 
 function showGeneralError() {
-   showErrors("Error occurred! Please retry it later.");
+   showErrors("Error occurred. Please retry the operation later.");
 }
 
 function showErrors(errors) {
+
    if(typeof errors == 'string') {
        var singleError = errors;
        errors = new Array();
        errors.push(singleError);
    }
 
-   $('#errorDialog p').html('<ul></ul>');
+   $('#errorDialog p').html('<ul style="padding-left:5px;margin-top: 5px"></ul>');
+
+   var isErrorSingle = errors.length == 1;
+
    $.each(errors,function(i, error) {
-        $('#errorDialog ul').append('<li>' + error + '</li>');
+       if (!isErrorSingle) {
+           $('#errorDialog ul').append('<li>' + error + '</li>');
+       } else {
+           $('#errorDialog ul').append(error);
+       }
    });
+
    $('#errorDialog').dialog('open');
 }
 

@@ -82,16 +82,6 @@ var swDocuments = [];
  * Configuration/General Set up
  */
 $(document).ready(function() {
-  jQuery.ajaxSetup({
-     timeout: 90000
-  });
-
-   $(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions, thrownError){
-       showGeneralError();
-   });
-
-   initDialog('msgDialog', 500);
-   initDialog('errorDialog', 500);
 
    // loading some configuration data
    $.ajax({
@@ -158,7 +148,7 @@ $(document).ready(function() {
 	         }
 	       );
 
-	       $.blockUI({ message: '<div id=loading> loading.... </div>' });
+	       modalPreloader();
 	    },
 	    onComplete : function(file, jsonResult){
 	            handleJsonResult(jsonResult,
@@ -177,12 +167,12 @@ $(document).ready(function() {
 
 	              swRefreshDocuments();
 
-	              $.unblockUI();
+	              modalClose();
 	              uploader._input = $("#uploadButtonDiv input[type='file']").get(0);
 	            },
 	            function(errorMessage) {
 	                showErrors(errorMessage);
-	                $.unblockUI();
+	                modalClose();
 	            });
 	    }
 	  }, true);
@@ -205,7 +195,7 @@ $(document).ready(function() {
          }
        );
 
-       $.blockUI({ message: '<div id=loading> loading.... </div>' });
+       modalPreloader();
     },
     onComplete : function(file, jsonResult){
             handleJsonResult(jsonResult,
@@ -224,11 +214,11 @@ $(document).ready(function() {
 
               swRefreshDocuments();
 
-              $.unblockUI();
+              modalClose();
             },
             function(errorMessage) {
                 showErrors(errorMessage);
-                $.unblockUI();
+                modalClose();
             });
     }
   }, false);
@@ -590,9 +580,9 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
           mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showMessage("Software Contest " + contestName +" has been saved successfully!");
+          showMessage("Software Contest <b>" + contestName +"</b> has been saved successfully.");
         } else {
-          showMessage("Software Contest " + contestName +" has been updated successfully!");
+          showMessage("Software Contest <b>" + contestName +"</b> has been updated successfully.");
         }
 
         //update endDate
@@ -610,9 +600,9 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
         	mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showMessage("Studio Contest " + contestName +" has been saved successfully!");
+          showMessage("Studio Contest <b>" + contestName +"</b> has been saved successfully.");
         } else {
-          showMessage("Studio Contest " + contestName +" has been updated successfully!");
+          showMessage("Studio Contest <b>" + contestName +"</b> has been updated successfully.");
         }
 
         //update admin fee, to be fixed
@@ -1551,9 +1541,9 @@ function isDesign() {
 
 
 function beforeAjax() {
-	 $.blockUI({ message: '<div id=loading> loading.... </div>' });
+	 modalPreloader();
 }
 
 function afterAjax() {
-	 $.unblockUI();
+	 modalClose();
 }

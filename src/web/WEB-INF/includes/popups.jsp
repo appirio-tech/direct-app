@@ -1,43 +1,42 @@
 <%--
-  - Author: TCSDEVELOPER, winsty
-  - Version: 1.2
+  - Author: winsty, GreatKevin
+  - Version: 1.3
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - add repost and new version pop ups .
+  -
   - Version 1.2 - TC Direct UI Improvement Assembly 1 Change Note
   - - add delete user confirmation
   -
+  - Version 1.3 - Release Assembly - TopCoder Cockpit AJAX Revamp Change Note
+  - - move all the popup windows into popups jsp
 --%>
 <div class="popups"><!-- this area will contain the popups of this page -->
 	  <!-- Help Popup -->
     <div id="helpPopup" class="hide">
         <div class="helpPopupInner details">
-            
-        </div><!-- End .helpPopupInner -->
-    </div><!-- End #helpPopup -->
-    
-	  <!-- Message Dialog-->
-		<div id="msgDialog" title="Message"  class="dialog-box hide">
-        <p>        	
+
+        </div>
+        <!-- End .helpPopupInner -->
+    </div>
+    <!-- End #helpPopup -->
+
+    <!-- Message Dialog-->
+    <div id="msgDialog" title="Message" class="dialog-box hide">
+        <p>
         </p>
 
-				<div class="popupButtons">
-					<a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>OK</span></a>
-				</div>
-    </div>		 
+    </div>
 
-	  <!-- Error Dialog-->
-		<div id="errorDialog" title="Errors"  class="dialog-box hide">
-        <p>        	
+    <!-- Error Dialog-->
+    <div id="errorDialog" title="Errors" class="dialog-box hide">
+        <p>
         </p>
 
-				<div class="popupButtons">
-					<a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>OK</span></a>
-				</div>
-    </div>		 
+    </div>
 
 	  <!-- Repost Dialog -->
     <div id="repostDialog" title="Repost" class="dialog-box hide">
@@ -125,4 +124,65 @@
  <div id="deleteUserConfirmation" title="Do you really want to delete the user?" style="display:none;">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will delete the user from the project. Please confirm you want to delete the user?</p>
     </div>
-</div><!-- End .popups -->
+
+    <!-- AJAX preloading indicator -->
+    <div id="modalBackground"></div>
+    <div id="new-modal">
+        <div class="outLay" id="preloaderModal" style="display: none;">
+            <div class="modalHeaderSmall">
+                <div class="modalHeaderSmallRight">
+                    <div class="modalHeaderSmallCenter"></div>
+                </div>
+            </div>
+            <div class="modalBody">
+                <img alt="Loading" src="/images/preloader-loading.gif">
+
+                <div class="preloaderTips">Loading...</div>
+            </div>
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter">
+                        <div class="&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <span class="hide">
+       <img src="/images/preloader-corner.png" />
+       <img src="/images/modal-header.png" />
+       <img src="/images/modal-body-normal.png" />
+       <img src="/images/preloader-body.png" />
+    </span>
+
+    <!-- Add Project Dialog-->
+    <div id="addProjectDialog" title="Create New Project" class="dialog-box hide">
+        <div id="addProjectForm">
+            <div class="fi">
+                <label for="projectName">Name:</label>
+                <input id="projectName" name="projectName" type="text" width="45" maxlength="255"/>
+            </div>
+            <div class="fi">
+                <label for="projectDescription">Description:</label>
+                <textarea id="projectDescription" name="projectDescription" rows="6" cols="45"></textarea>
+            </div>
+            <div class="popupButtons">
+                <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
+                <a href="javascript:;" onclick="addNewProject();" class="button1"><span>Yes</span></a>
+            </div>
+        </div>
+        <!-- End #addProjectForm -->
+
+        <div id="addProjectResult">
+            <p></p>
+
+            <div class="popupButtons">
+                <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Close</span></a>
+            </div>
+        </div>
+        <!-- End #addProjectResult -->
+    </div>
+    <!-- End #addProjectDialog -->
+</div>
+<!-- End .popups -->

@@ -14,7 +14,7 @@ if (!window.notifications) var notifications = {
      * Performs ajax call to update notification settings in back-end.
      */
     update: function() {
-        $('#loading').show();
+        modalPreloader();
         $.ajax({
             type: 'POST',
             url:'updateNotifications',
@@ -22,7 +22,7 @@ if (!window.notifications) var notifications = {
             dataType: "json",
             cache:false,
             success:function(r) {
-                $('#loading').hide();
+                modalClose();
             }
         });
     },
@@ -119,8 +119,8 @@ function savePreference() {
             value: value
         };
     });
-    
-    $('#loading').show();
+
+    modalPreloader();
     
     $.ajax({
         type: 'POST',
@@ -129,7 +129,7 @@ function savePreference() {
         dataType: "json",
         cache:false,
         success:function(r) {
-            $('#loading').hide();
+            modalClose();
         }
     });
     
