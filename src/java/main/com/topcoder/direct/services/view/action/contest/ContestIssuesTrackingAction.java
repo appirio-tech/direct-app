@@ -17,6 +17,8 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.SoftwareCompetition;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -80,21 +82,19 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         HttpServletRequest request = DirectUtils.getServletRequest();
         this.sessionData = new SessionData(request.getSession());
 
+        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
 
         // Set registrants data
-        long contestId;
-        if (isStudioCompetition()) {
-            contestId = getContestId();
-        } else {
-            contestId = getProjectId();
-        }
+        long contestId = getProjectId();
 
-
-        this.viewData = DataProvider.getContestIssues(contestId, isStudioCompetition());
+        SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, contestId);
+        boolean isStudio = DirectUtils.isStudio(competition);
+        
+        this.viewData = DataProvider.getContestIssues(contestId, isStudio);
 
         // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, isStudioCompetition());
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId);
         getViewData().setContestStats(contestStats);
 
         // Set projects data
@@ -113,7 +113,7 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         this.sessionData.setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
         
         DirectUtils.setDashboardData(currentUser, contestId, viewData,
-                getContestServiceFacade(), isSoftware());
+                getContestServiceFacade(), !isStudio);
     }
 
 

@@ -231,7 +231,7 @@ public class StudioSubmissionAction extends ContestAction {
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
 
             getViewData().setContestStats(contestStats);
 

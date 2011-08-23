@@ -76,15 +76,9 @@ public class GetDocumentsContestAction extends StudioOrSoftwareContestAction {
     public void executeAction() throws Exception {
         ActionHelper.checkInjectedFieldNull(getContestServiceFacade(), "contestServiceFacade");
 
-        if (isStudioCompetition()) {
-            StudioCompetition studioCompetition = getContestServiceFacade().getContest(null, getContestId());
-            ContestData contestData = studioCompetition.getContestData();
-            performLogic(contestData == null ? null : contestData.getDocumentationUploads());
-        } else {
-            SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(
-                null, getProjectId());
-            performLogic(softwareCompetition.getAssetDTO().getDocumentation());
-        }
+        SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(
+            null, getProjectId());
+        performLogic(softwareCompetition.getAssetDTO().getDocumentation());
     }
 
     /**

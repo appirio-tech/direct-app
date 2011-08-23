@@ -48,18 +48,6 @@ public abstract class StudioOrSoftwareContestAction extends ContestAction {
     private long projectId;
 
     /**
-     * <p>
-     * Represents the ID of contest.
-     * </p>
-     *
-     * <p>
-     * It's used to retrieve the studio competition. It can be 0 (means not present) or greater than 0 (if it's
-     * present). It's changed by the setter and returned by the getter.
-     * </p>
-     */
-    private long contestId;
-
-    /**
      * Default constructor, creates new instance.
      */
     protected StudioOrSoftwareContestAction() {
@@ -71,19 +59,10 @@ public abstract class StudioOrSoftwareContestAction extends ContestAction {
      *
      * @throws Exception if some error occurs during method execution
      */
-    @FieldExpressionValidator(key = KEY_PREFIX + "contestIdProjectIdNotBothSet",
-        fieldName = "contestIdProjectId", expression = "((projectId > 0) ^ (contestId > 0)) == 1",
-        message = "Either projectId or contestId must be > 0")
+    @FieldExpressionValidator(key = KEY_PREFIX + "ProjectIdNotSet",
+        fieldName = "ProjectId", expression = "projectId > 0",
+        message = "projectId must be > 0")
     public void executeAction() throws Exception {
-    }
-
-    /**
-     * Returns true if the competition is a studio competition, false otherwise.
-     *
-     * @return true if the competition is a studio competition, false otherwise
-     */
-    protected boolean isStudioCompetition() {
-        return contestId > 0;
     }
 
     /**
@@ -101,45 +80,10 @@ public abstract class StudioOrSoftwareContestAction extends ContestAction {
      *
      * @param projectId the project ID
      */
-    @FieldExpressionValidator(key = KEY_PREFIX + "projectIdNotNegative",
-        fieldName = "projectId", expression = "projectId >= 0",
-        message = ActionHelper.GREATER_THAN_OR_EQUAL_TO_ZERO)
+    @FieldExpressionValidator(key = KEY_PREFIX + "projectIdNotSet",
+        fieldName = "projectId", expression = "projectId > 0",
+        message = ActionHelper.GREATER_THAN_ZERO)
     public void setProjectId(long projectId) {
         this.projectId = projectId;
     }
-
-    /**
-     * Getter for the contest ID.
-     *
-     * @return the contest ID
-     */
-    public long getContestId() {
-        return contestId;
-    }
-
-    /**
-     * Setter for the contest ID. Struts 2 validation is used to check that the argument is greater than or
-     * equal to 0.
-     *
-     * @param contestId the contest ID
-     */
-    @FieldExpressionValidator(key = KEY_PREFIX + "contestIdNotNegative",
-        fieldName = "contestId", expression = "contestId >= 0",
-        message = ActionHelper.GREATER_THAN_OR_EQUAL_TO_ZERO)
-    public void setContestId(long contestId) {
-        this.contestId = contestId;
-    }
-
-    /**
-     * <p>
-     * Determines if it is software contest or not.
-     * </p>
-     *
-     * @return true if it is software contest
-     * @since 1.1
-     */
-    public boolean isSoftware() {
-        return !isStudioCompetition();
-    }
-
 }

@@ -127,20 +127,11 @@ public class PayByCreditCardAction extends PayContestAction {
         creditCardPaymentData.setIpAddress(request.getRemoteAddr());
         creditCardPaymentData.setSessionId(session.getId());
 
-        // get the studio competition or software competition, process the payment using credit card data,
-        // and return payment result
-        if (isStudioCompetition()) {
-            StudioCompetition studioCompetition = getContestServiceFacade().getContest(null, getContestId());
-            ContestPaymentResult result = getContestServiceFacade().processContestCreditCardPayment(null,
-                studioCompetition, creditCardPaymentData);
-            return result.getPaymentResult();
-        } else {
-            SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(null,
-                getProjectId());
-            SoftwareContestPaymentResult result = getContestServiceFacade().processContestCreditCardSale(null,
-                softwareCompetition, creditCardPaymentData);
-            return result.getPaymentResult();
-        }
+        SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(null,
+            getProjectId());
+        SoftwareContestPaymentResult result = getContestServiceFacade().processContestCreditCardSale(null,
+            softwareCompetition, creditCardPaymentData);
+        return result.getPaymentResult();
     }
 
     /**

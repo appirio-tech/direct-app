@@ -109,40 +109,38 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     @Override
     public void executeAction() throws Exception {
         getFormData().setProjectId(getProjectId());
-        if (!isStudioCompetition()) {
-            // Get current session
-            HttpServletRequest request = DirectUtils.getServletRequest();
-            this.sessionData = new SessionData(request.getSession());
+        // Get current session
+        HttpServletRequest request = DirectUtils.getServletRequest();
+        this.sessionData = new SessionData(request.getSession());
 
-            // Set submissions, winners, reviewers data
-            DataProvider.setSoftwareSubmissionsData(getViewData());
+        // Set submissions, winners, reviewers data
+        DataProvider.setSoftwareSubmissionsData(getViewData());
 
-            // For normal request flow prepare various data to be displayed to user
-            // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(getCurrentUser(), getProjectId(), false);
-            getViewData().setContestStats(contestStats);
+        // For normal request flow prepare various data to be displayed to user
+        // Set contest stats
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(getCurrentUser(), getProjectId());
+        getViewData().setContestStats(contestStats);
 
-            // Set projects data
-            TCSubject currentUser = getCurrentUser();
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
-            UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
-            userProjectsDTO.setProjects(projects);
-            getViewData().setUserProjects(userProjectsDTO);
+        // Set projects data
+        TCSubject currentUser = getCurrentUser();
+        List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
+        UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
+        userProjectsDTO.setProjects(projects);
+        getViewData().setUserProjects(userProjectsDTO);
 
-            // Set current project contests
-            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
-                    currentUser.getUserId(), contestStats.getContest().getProject().getId());
-            getSessionData().setCurrentProjectContests(contests);
+        // Set current project contests
+        List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
+                currentUser.getUserId(), contestStats.getContest().getProject().getId());
+        getSessionData().setCurrentProjectContests(contests);
 
-            // Set current project context based on selected contest
-            getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
-            
-            // set whether to show spec review
-            viewData.setShowSpecReview(getSpecificationReviewService()
-                    .getSpecificationReview(currentUser, getProjectId()) != null);
-            
-            DirectUtils.setDashboardData(currentUser, getProjectId(), viewData,
-                    getContestServiceFacade(), isSoftware());
-        }
+        // Set current project context based on selected contest
+        getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+        
+        // set whether to show spec review
+        viewData.setShowSpecReview(getSpecificationReviewService()
+                .getSpecificationReview(currentUser, getProjectId()) != null);
+        
+        DirectUtils.setDashboardData(currentUser, getProjectId(), viewData,
+                getContestServiceFacade(), true);
     }
 }

@@ -16,6 +16,7 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.user.Registrant;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,14 +122,9 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
 
         // Set registrants data
-        long contestId;
-        if (isStudioCompetition()) {
-            contestId = getContestId();
-        } else {
-            contestId = getProjectId();
-        }
-        List<Registrant> registrants = contestServiceFacade.getRegistrantsForProject(currentUser, contestId,
-                                                                                     isStudioCompetition());
+        long contestId = getProjectId();
+        SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, contestId);
+        List<Registrant> registrants = contestServiceFacade.getRegistrantsForProject(currentUser, contestId);
 
         getViewData().setContestId(contestId);
         getViewData().setContestRegistrants(registrants);
@@ -136,7 +132,7 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
         // For normal request flow prepare various data to be displayed to user
         if (!getFormData().isExcel()) {
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, isStudioCompetition());
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId);
             getViewData().setContestStats(contestStats);
 
             // Set projects data
@@ -160,7 +156,7 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
                 .getSpecificationReview(currentUser, contestId) != null);
         
         DirectUtils.setDashboardData(currentUser, contestId, viewData,
-                getContestServiceFacade(), isSoftware());
+                getContestServiceFacade(), !DirectUtils.isStudio(competition));
     }
 
     /**

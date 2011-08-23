@@ -249,7 +249,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, true);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
 
             getViewData().setContestStats(contestStats);
 

@@ -339,7 +339,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
             getViewData().setContestStats(contestStats);
 
             // set the number of prizes

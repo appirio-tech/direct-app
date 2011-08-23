@@ -289,7 +289,7 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             // user
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(
-                    getTCSubject(), getProjectId(), isStudio());
+                    getTCSubject(), getProjectId());
             result.setContestStats(contestStats);
 
             // Get current session

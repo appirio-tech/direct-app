@@ -455,7 +455,7 @@ public final class DirectUtils {
      * @throws Exception if an unexpected error occurs while accessing the persistent data store.
      * @since 1.1
      */
-    public static ContestStatsDTO getContestStats(TCSubject currentUser, long contestId, boolean isStudio)
+    public static ContestStatsDTO getContestStats(TCSubject currentUser, long contestId)
         throws Exception {
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
@@ -473,7 +473,7 @@ public final class DirectUtils {
         }
 
         int recordIndex = 0;
-
+        boolean isStudio = "Studio".equalsIgnoreCase(resultContainer.getStringItem(recordIndex, "type").trim());
         ProjectBriefDTO project = new ProjectBriefDTO();
         project.setId(resultContainer.getLongItem(recordIndex, "project_id"));
         project.setName(resultContainer.getStringItem(recordIndex, "project_name"));
@@ -519,7 +519,7 @@ public final class DirectUtils {
         }
 
         dto.setContest(contest);
-		dto.setIsStudio("Studio".equalsIgnoreCase(resultContainer.getStringItem(recordIndex, "type").trim()));
+		dto.setIsStudio(isStudio);
 
         // sets the issues of contests
         dto.setIssues(DataProvider.getContestIssues(contestId, isStudio));
@@ -1442,7 +1442,7 @@ public final class DirectUtils {
      */
     public static void setDashboardData(TCSubject currentUser, long contestId, BaseContestCommonDTO dto, ContestServiceFacade facade, boolean software) throws Exception {
         if (dto.getContestStats() == null) {
-            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId, !software));
+            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
         
@@ -1462,7 +1462,7 @@ public final class DirectUtils {
      */
     public static void setDashboardData(TCSubject currentUser, long contestId, ViewSpecificationReviewActionResultData dto, ContestServiceFacade facade, boolean software) throws Exception {
         if (dto.getContestStats() == null) {
-            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId, !software));
+            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
         

@@ -200,7 +200,7 @@ public class GetContestAction extends ContestAction {
                 .getTCSubjectFromSession(), projectId);
         setResult(softwareCompetition);
         // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, false);
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
         if(DirectUtils.isStudio(softwareCompetition)) {
             softwareCompetition.setType(CompetionType.STUDIO);
         }

@@ -155,7 +155,7 @@ public class StudioNoWinnerAction extends SaveContestSubmissionRankAction {
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, true);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
             getViewData().setContestStats(contestStats);
 
             // Set projects data
