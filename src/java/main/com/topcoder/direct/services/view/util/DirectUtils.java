@@ -1445,17 +1445,8 @@ public final class DirectUtils {
             dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId, !software));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
-
-        SoftwareCompetition softwareCompetition = facade.getSoftwareContestByProjectId(currentUser, contestId);
-        if (isStudio(softwareCompetition)) {
-            dto.getDashboard().setAllPhases(getStudioPhases(softwareCompetition));
-            dto.getDashboard().setStartTime(
-                dto.getDashboard().getAllPhases().get(0).getStartTime());
-            dto.getDashboard().setEndTime(
-                dto.getDashboard().getAllPhases()
-                    .get(dto.getDashboard().getAllPhases().size() - 1)
-                    .getEndTime());
-        }
+        
+        dto.setDashboard(adjustPhases(dto.getDashboard()));
     }
     
     /**
@@ -1475,86 +1466,10 @@ public final class DirectUtils {
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
         
-        SoftwareCompetition softwareCompetition = facade.getSoftwareContestByProjectId(currentUser, contestId);
-        if (isStudio(softwareCompetition)) {
-            dto.getDashboard().setAllPhases(getStudioPhases(softwareCompetition));
-            dto.getDashboard().setStartTime(
-                    dto.getDashboard().getAllPhases().get(0).getStartTime());
-            dto.getDashboard().setEndTime(
-                    dto.getDashboard().getAllPhases()
-                            .get(dto.getDashboard().getAllPhases().size() - 1)
-                            .getEndTime());
-        } else {
-            // adjust phases
-            dto.setDashboard(adjustSoftwarePhases(dto.getDashboard()));
-        }
+        dto.setDashboard(adjustPhases(dto.getDashboard()));
     }
     
-    /**
-     * Get all phases for studio contest.
-     * 
-     * @param competition the studio contest
-     * @return a list of phases
-     * @since 1.6.7
-     */
-    public static List<ProjectPhaseDTO> getStudioPhases(SoftwareCompetition competition) {
-        List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
-        
-        if (isMultiRound(competition)) {
-            // set r1 subs
-            phases.add(getPhase(getDate(competition.getStartTime()), getMultiRoundEndDate(competition), 
-                                ProjectPhaseType.MILESTONE_SUBMISSION));
-            
-            // set r1 feedback
-            phases.add(getPhase(getMultiRoundEndDate(competition), getDate(competition.getEndTime()),
-                                ProjectPhaseType.MILESTONE_REVIEW));
-            
-            // set r2 subs
-            phases.add(getPhase(getMultiRoundEndDate(competition), getDate(competition.getEndTime()),
-                                ProjectPhaseType.SUBMISSION));
-            
-        } else {
-            // set r1 subs
-            phases.add(getPhase(getDate(competition.getStartTime()),
-                                getDate(competition.getEndTime()), ProjectPhaseType.SUBMISSION));
-        }
-        
-        // set winner
-        phases.add(getPhase(getDate(competition.getEndTime()), getDate(competition.getEndTime()),
-                            ProjectPhaseType.REVIEW));
-        
-        return phases;
-    }
-    
-    /**
-     * Generate a single phase.
-     * 
-     * @param startTime the start time
-     * @param endTime the end time
-     * @param type the phase type
-     * @return generated phase
-     * @since 1.6.7
-     */
-    private static ProjectPhaseDTO getPhase(Date startTime, Date endTime, ProjectPhaseType type) {
-        ProjectPhaseDTO phase = new ProjectPhaseDTO();
-        
-        phase.setStartTime(startTime);
-        phase.setEndTime(endTime);
-        phase.setPhaseType(type);
-        
-        Date now = new Date();
-        if (startTime == null || startTime.after(now)) {
-            phase.setPhaseStatus(ProjectPhaseStatus.SCHEDULED);
-        } else if (endTime != null && endTime.before(now)) {
-            phase.setPhaseStatus(ProjectPhaseStatus.CLOSED);
-        } else {
-            phase.setPhaseStatus(ProjectPhaseStatus.OPEN);
-        }
-        
-        return phase;
-    }
-    
-    public static ContestDashboardDTO adjustSoftwarePhases(ContestDashboardDTO dashboard) {
+    public static ContestDashboardDTO adjustPhases(ContestDashboardDTO dashboard) {
         List<ProjectPhaseDTO> phases = dashboard.getAllPhases();
         List<ProjectPhaseDTO> adjustedPhases = new ArrayList<ProjectPhaseDTO>();
         Map<ProjectPhaseType, Integer> phaseIndex = new HashMap<ProjectPhaseType, Integer>();

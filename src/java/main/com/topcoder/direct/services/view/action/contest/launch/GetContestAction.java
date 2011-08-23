@@ -216,10 +216,7 @@ public class GetContestAction extends ContestAction {
         List<Prize> prizes = softwareCompetition.getProjectHeader().getPrizes();
         if (prizes != null) {
             Collections.sort(prizes, new PrizeSortByPlace());
-            
-            // adjust phases
-            getViewData().setDashboard(DirectUtils.adjustSoftwarePhases(getViewData().getDashboard()));
-            
+                        
             if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
             {
                 contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());
