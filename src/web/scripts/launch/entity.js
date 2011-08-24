@@ -152,7 +152,7 @@ var projectCategoryArray = [
 {id:30,                                name:'Widget or Mobile Screen Design',   label:'Widget or Mobile Screen Design',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:31,                                name:'Front-End Flash',   label:'Front-End Flash',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:21,                                name:'Print/Presentation',label:'Print/Presentation',         typeId:3, typeName:'Studio', hasMulti:true},
-{id:34,                                name:'Other',             label:'Other',                      typeId:3, typeName:'Studio', hasMulti:true},
+{id:34,                                name:'Studio Other',             label:'Studio Other',                      typeId:3, typeName:'Studio', hasMulti:true},
 {id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true}
 ];
