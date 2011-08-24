@@ -312,12 +312,8 @@
                     <s:if test="viewData.contestStats.issues.unresolvedIssuesNumber > 0">
                         <p>
                             <a href="
-                                <s:if test='!viewData.contestStats.isStudio'><s:url action='contestIssuesTracking'>
-                                    <s:param name='projectId' value='projectId'/><s:param name='subTab'>issues</s:param></s:url>
-                                </s:if>
-                                <s:else><s:url action='contestIssuesTracking'>
-                                    <s:param name='contestId' value='contestId'/><s:param name='subTab'>issues</s:param></s:url>
-                                </s:else>">
+                                <s:url action='contestIssuesTracking'>
+                                    <s:param name='projectId' value='projectId'/><s:param name='subTab'>issues</s:param></s:url>">
                                 View Details
                             </a>
                         </p>
