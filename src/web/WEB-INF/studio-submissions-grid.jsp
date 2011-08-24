@@ -57,8 +57,7 @@
                             </div>
                             <!-- End .areaHeader -->
 
-							<jsp:include page="includes/contest/dashboard.jsp"/>
-                            <jsp:include page="includes/contest/contestStats.jsp"/>
+                            <jsp:include page="includes/contest/dashboard.jsp"/>
 
                             <!-- End .projectsStats -->
 

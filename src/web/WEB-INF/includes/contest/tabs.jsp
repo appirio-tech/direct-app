@@ -24,12 +24,12 @@
                     <span class="left"><span class="right">Details</span></span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'specReview'}">class="on"</c:if>>
-				<a href="<s:url action="contest/viewSpecReview" namespace="/">
-					<s:param name="projectId" value="contest.id"/>
-					<s:param name="studio" value="viewData.contestStats.isStudio"/>
-				</s:url>" >
-			
-				<span class="left"><span class="right">Spec Review</span></span></a>
+                <a href="<s:url action="contest/viewSpecReview" namespace="/">
+                    <s:param name="projectId" value="contest.id"/>
+                    <s:param name="studio" value="viewData.contestStats.isStudio"/>
+                </s:url>" >
+            
+                <span class="left"><span class="right">Spec Review</span></span></a>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'registrants'}">class="on"</c:if>>
 
@@ -54,22 +54,15 @@
                 </if:isStudioContest>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'issueTracking'}">class="on"</c:if>>
-
-                 <s:if test="isStudio == true">
-                    <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="contestId" value="contest.id"/></s:url>">
-                    <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
-                </s:if>
-                <s:if test="isStudio == false">
-                    <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-                    <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
-                </s:if>
+                <a href="<s:url action="contest/contestIssuesTracking" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
+                <span class="left"><span class="right">Issue Tracking (<s:property value="totalJiraIssuesNumber"/>)</span></span></a>
             </li>
-			<li id="rReceiptTab" class="lastItem <c:choose>
-				<c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>
-				</c:choose>">
-					<a class="last" href="<s:url action="contest/receipt" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
-				<span class="left"><span class="right">Receipt</span></span></a>
-			</li>
+            <li id="rReceiptTab" class="lastItem <c:choose>
+                <c:when test="${requestScope.CURRENT_SUB_TAB eq 'receipt'}">on</c:when>
+                </c:choose>">
+                    <a class="last" href="<s:url action="contest/receipt" namespace="/"><s:param name="projectId" value="contest.id"/></s:url>">
+                <span class="left"><span class="right">Receipt</span></span></a>
+            </li>
 
         </ul>
     </div>

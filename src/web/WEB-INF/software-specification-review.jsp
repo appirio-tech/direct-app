@@ -88,8 +88,7 @@
                             </div>
                             <!-- End .areaHeader -->
                             
-							<jsp:include page="includes/contest/dashboard.jsp"/>
-                            <jsp:include page="includes/contest/contestStats.jsp"/>
+                            <jsp:include page="includes/contest/dashboard.jsp"/>
                     
                             <div class="container2 tabs3Container">
 

@@ -35,8 +35,6 @@
                             <s:property value="viewData.contestStats.contest.title"/></h2>
                     </div><!-- End .areaHeader -->
 
-                    <jsp:include page="includes/contest/contestStats.jsp"/>
-
                     <div class="container2 tabs3Container">
 
                         <jsp:include page="includes/contest/tabs.jsp"/>
