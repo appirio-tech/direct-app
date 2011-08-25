@@ -210,7 +210,26 @@ $(document).ready(function(){
 
         dropDown.find("li:odd").addClass("even");
     }
-
+    
+    
+    function compareProject(projectA, ProjectB) {
+        if (projectA.value.toLowerCase() < ProjectB.value.toLowerCase())
+            return -1;
+        if (projectA.value.toLowerCase() > ProjectB.value.toLowerCase())
+            return 1;
+        return 0;
+    }
+    
+    function compareCustomer(customerA, customerB) {
+        if (customerA.value.toLowerCase() == 'all customers') return -1;
+        if (customerB.value.toLowerCase() == 'all customers') return 1;
+        
+        if (customerA.value.toLowerCase() < customerB.value.toLowerCase())
+            return -1;
+        if (customerA.value.toLowerCase() > customerB.value.toLowerCase())
+            return 1;
+        return 0;
+    }
 
     var getCustomers = function(){
         var arr = [{"id":"","value":"All Customers"}];
@@ -232,6 +251,8 @@ $(document).ready(function(){
              }
         }
 
+        arr.sort(compareCustomer);
+        
         if (undefined != noCustomer) {
             arr.push(noCustomer);
         }
@@ -242,14 +263,6 @@ $(document).ready(function(){
     }
     var customerList = getCustomers();
     updateCustomerDropDown($(".customerSelectMask"),customerList);
-
-    function compareProject(projectA, ProjectB) {
-        if (projectA.value.toLowerCase() < ProjectB.value.toLowerCase())
-            return -1;
-        if (projectA.value.toLowerCase() > ProjectB.value.toLowerCase())
-            return 1;
-        return 0;
-    }
 
     var getProjects = function(id){
         var arr = [];
