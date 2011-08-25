@@ -54,7 +54,7 @@
           <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
-                <specReviewCost>30</specReviewCost>
+                <specReviewCost>75</specReviewCost>
         </subType>
         <subType contestTypeId="32"> <!-- Application Front-End Design -->
           <contestFee>3000</contestFee>
