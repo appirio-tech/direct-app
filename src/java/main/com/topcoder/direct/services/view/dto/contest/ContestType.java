@@ -164,14 +164,7 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Content Creation</code> contest type.</p>
      */
-    CONTENT_CREATION("Content Creation", "c", 35),
-
-    /**
-     * <p>A <code>ContestType</code> corresponding to group of <code>Studio</code> contest type.</p>
-     *
-     * @since 1.1
-     */
-    STUDIO("Studio", true, new ContestType[] {WIREFRAME, WEB_DESIGN, WIDGET_MOBILE_SCREEN_DESIGN, BANNERS_ICONS, FRONT_END_FLASH, APP_FRONT_END_DESIGN, PRINT_DESIGN, IDEA_GENERATION, LOGO_DESIGN, WEB_ELEMENTS});
+    CONTENT_CREATION("Content Creation", "c", 35);
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the
@@ -191,12 +184,6 @@ public enum ContestType {
     private long id;
     
     /**
-     * Whether the contest is studio type.
-     * @since BUGR-3913
-     */
-    private boolean isStudio;
-
-    /**
      * <p>A <code>ContestType[]</code> providing the types grouped into a single group.</p>
      *
      * @since 1.1
@@ -213,39 +200,12 @@ public enum ContestType {
      * @param isStudio <code>true</code> if this contest type is <code>Studio</code> contest type; <code>false</code>
      *        otherwise.
      */
-    private ContestType(String name, String letter, long id, boolean isStudio) {
+    private ContestType(String name, String letter, long id) {
         this.name = name;
         this.letter = letter;
         this.id = id;
-        this.isStudio = isStudio;
     }
     
-    /**
-     * <p>Constructs new <code>ContestType</code> instance with specified properties.</p>
-     *
-     * @param name a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
-     *             type.
-     * @param letter a <code>String</code> providing the type letter. Such a name serves as a identifier of the type.
-     * @param id a <code>long</code> providing the ID of the type.
-     */
-    private ContestType(String name, String letter, long id) {
-        this(name, letter, id, false);
-    }
-
-    /**
-     * <p>Constructs new <code>ContestType</code> instance with specified properties.</p>
-     *
-     * @param name a <code>String</code> providing the type name. Such a name serves as a textual presentation of the
-     *             type.
-     * @param isStudio <code>true</code> if this contest type is <code>Studio</code> contest type; <code>false</code>
-     *        otherwise.
-     * @param groupedTypes a <code>ContestType[]</code> providing the contest types grouped into a single group.
-     * @since 1.1
-     */
-    private ContestType(String name, boolean isStudio, ContestType[] groupedTypes) {
-        this(name, null, 0, isStudio);
-        this.types = groupedTypes;
-    }
 
     /**
      * <p>Gets the <code>ContestType</code> instance matching the specified name.</p>
@@ -259,7 +219,7 @@ public enum ContestType {
         ContestType[] types = ContestType.values();
         for (int i = 0; i < types.length; i++) {
             ContestType type = types[i];
-            if (type.id == id && type.isStudio == isStudio) {
+            if (type.id == id) {
                 return type;
             }
         }
@@ -293,16 +253,6 @@ public enum ContestType {
      */
     public long getId() {
         return id;
-    }
-
-    /**
-     * <p>Gets the studio flag of this type.</p>
-     *
-     * @return a <code>boolean</code> providing the studio flag. 
-     * @since BUGR-3913
-     */
-    public boolean isStudio() {
-        return isStudio;
     }
 
     /**
