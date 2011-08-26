@@ -7,60 +7,70 @@
             <firstPlaceCost>350</firstPlaceCost>
             <secondPlaceCost>70</secondPlaceCost>
             <specReviewCost>75</specReviewCost>
+            <reviewCost>100</reviewCost>
 		</subType>
 		<subType contestTypeId="20"> <!-- Logo Design -->
 			<contestFee>375</contestFee>
             <firstPlaceCost>350</firstPlaceCost>
             <secondPlaceCost>70</secondPlaceCost>
             <specReviewCost>75</specReviewCost>
+            <reviewCost>150</reviewCost>
 		</subType>
 		<subType contestTypeId="21"> <!-- Print/Presentation -->
           <contestFee>375</contestFee>
                 <firstPlaceCost>750</firstPlaceCost>
                 <secondPlaceCost>150</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
         <subType contestTypeId="34"> <!-- Other -->
           <contestFee>3000</contestFee>
                 <firstPlaceCost>750</firstPlaceCost>
                 <secondPlaceCost>150</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
         <subType contestTypeId="18"> <!-- Wireframes -->
           <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
         <subType contestTypeId="22"> <!-- Idea Generation -->
           <contestFee>3000</contestFee>
                 <firstPlaceCost>750</firstPlaceCost>
                 <secondPlaceCost>150</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
         <subType contestTypeId="31"> <!-- Front End Flash -->
           <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
         <subType contestTypeId="30"> <!-- Windget or Mobile Screen Design -->
           <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
         <subType contestTypeId="17"> <!-- Web Design -->
           <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
         <subType contestTypeId="32"> <!-- Application Front-End Design -->
           <contestFee>3000</contestFee>
                 <firstPlaceCost>1250</firstPlaceCost>
                 <secondPlaceCost>250</secondPlaceCost>
                 <specReviewCost>75</specReviewCost>
+                <reviewCost>100</reviewCost>
         </subType>
 	</contestType>
 	
