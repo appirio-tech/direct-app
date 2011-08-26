@@ -61,6 +61,14 @@ public class StudioSubtypeContestFee {
     private double specReviewCost;
 
     /**
+     * Represents the specification review cost.
+     *
+     * @since 1.1
+     */
+    @XmlElement
+    private double reviewCost;
+
+    /**
      * Gets the contest type id.
      *
      * @return the contest type id.
@@ -150,5 +158,25 @@ public class StudioSubtypeContestFee {
      */
     public void setSpecReviewCost(double specReviewCost) {
         this.specReviewCost = specReviewCost;
+    }
+
+     /**
+     * Gets the review cost.
+     *
+     * @return the review cost.
+     * @since 1.1
+     */
+    public double getReviewCost() {
+        return reviewCost;
+    }
+
+    /**
+     * Sets the review cost.
+     *
+     * @param reviewCost the review cost.
+     * @since 1.1
+     */
+    public void setReviewCost(double reviewCost) {
+        this.reviewCost = reviewCost;
     }
 }

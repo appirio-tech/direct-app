@@ -133,12 +133,14 @@ function updateOrderReviewStudio() {
    }
    
    var specificationReviewPayment = mainWidget.softwareCompetition.projectHeader.getSpecReviewCost();
+   var reviewPayment = mainWidget.softwareCompetition.projectHeader.getReviewCost();
    var copilotCost = parseFloat(mainWidget.softwareCompetition.copilotCost);
    $('#orSpecificationReviewPayment').html(specificationReviewPayment.formatMoney(2));
+   $('#orReviewPayment').html(reviewPayment.formatMoney(2));
    $('#orCopilotFee').html(copilotCost.formatMoney(2));
    var adminFee = mainWidget.softwareCompetition.projectHeader.contestAdministrationFee;
    $('#orAdminFee1').html('$'+adminFee.formatMoney(0));
-   $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost).formatMoney(0));
+   $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(0));
    
    var total = contestPrizesTotal + milestonePrizesTotal + adminFee + specificationReviewPayment + copilotCost;
    $('#orTotal').html('$' + total.formatMoney(0));

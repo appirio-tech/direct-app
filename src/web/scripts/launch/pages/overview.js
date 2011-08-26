@@ -240,10 +240,11 @@ function validateFieldsOverviewStudio() {
    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
    
    mainWidget.softwareCompetition.fileTypes = fileTypes.concat(otherFileTypes);
-   // set specification review cost
+   // set specification review and review/screening cost
    for (var i = 0; i < studioSubtypeFees.length; i++) {
 	   if (studioSubtypeFees[i].id == mainWidget.softwareCompetition.projectHeader.projectCategory.id) {
 		   mainWidget.softwareCompetition.projectHeader.setSpecReviewCost(studioSubtypeFees[i].specReviewCost);
+           mainWidget.softwareCompetition.projectHeader.setReviewCost(studioSubtypeFees[i].reviewCost);
 	   }
    }
    
