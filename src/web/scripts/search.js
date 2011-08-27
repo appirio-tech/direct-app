@@ -23,12 +23,15 @@
  *  Version 1.6 - (TC Direct Page Layout Update 24Hr Assembly)) changes:
  *  - Update the codes to initialize the pagination table to fix layout issues for dashboard active page.
  *
+ *  Version 1.6.1 - (Release Assembly - TC Direct UI Improvement Assembly 3) changes:
+ *  - Remove the duplicate submit pipeline form method.
+ * 
  *  Version 1.7 - (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
  *  - Update the codes to initialize the pagination table of active contests table
  *  - Add the filter feature to the active contests table
  * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin
- * @version 1.6
+ * @version 1.7
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -678,33 +681,6 @@ $(document).ready(function() {
         $(this).parent().remove();
     });
 
-    $('#submitPipelineForm').click(function() {
-        var v1 = -1;
-        var v2 = -1;
-        $('#validationErrors').html('');
-        if ($.trim($('#numericalFilterMinValue').val()) != '' && !isNumber($('#numericalFilterMinValue').val())) {
-            $('#validationErrors').append('Numerical filter minimum value must be non-negative number<br/>');
-        } else {
-            v1 = parseFloat($('#numericalFilterMinValue').val());
-        }
-        if ($.trim($('#numericalFilterMaxValue').val()) != '' && !isNumber($('#numericalFilterMaxValue').val())) {
-            $('#validationErrors').append('Numerical filter maximum value must be non-negative number');
-        } else {
-            v2 = parseFloat($('#numericalFilterMaxValue').val());
-        }
-        if (v1 > -1 && v2 > -1) {
-            if (v2 < v1) {
-                $('#validationErrors').append('Numerical filter maximum value must not be less than minimum value');
-            }
-        }
-        if ($('#validationErrors').html() == '') {
-            var currentPage = $.trim($('.paginate_active').html());
-            $('#pipelineDetailsPageNumber2').val(currentPage);
-            $('#formDataExcel').val("false");
-            document.DashboardSearchForm.submit();
-        }
-        return false;
-    });
 });
    
 /**

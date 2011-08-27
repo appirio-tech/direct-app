@@ -12,6 +12,7 @@
   -
   - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
   - Version 1.0.3 (Direct Improvements Assembly Release 2) changes: Add preview button.
+  - Version 1.0.4 (Release Assembly - TC Direct UI Improvement Assembly 3) changes: Fix typo and hide activation message.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -233,7 +234,7 @@
     </div>
 
     <div class="infoPanel descriptionInfo hide">
-        <h3><span class="icon">Conetst Prizes</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
+        <h3><span class="icon">Contest Prizes</span><a href="javascript:;" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png" /></a></h3>
         <div class="infoPanelMask">
             <table class="prizesTable">
             <tbody><tr>

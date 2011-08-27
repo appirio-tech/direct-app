@@ -1,4 +1,11 @@
-
+/*
+ * CSS for dashboard pages.
+ *
+ * Change logs:
+ *
+ * - (Release Assembly - TC Direct UI Improvement Assembly 3) changes:
+ * - adjust the height of the filter panel dropdown filter -  customer and billing account
+ */
 .chartCollapse a.expand{
   display:inline-block;
   background-position:left top;
@@ -236,9 +243,17 @@ a.fiterButton{
     width: 170px;
 }
 
+#customerNameFilter select {
+    margin-top: 3px;
+}
+
 #clientBillingProjectsFilter{
     width: 177px;
     margin-right:0px;
+}
+
+#clientBillingProjectsFilter select{
+   margin-top: 3px;
 }
 
 .filterContest .columnButton{
@@ -256,7 +271,6 @@ a.fiterButton{
 a.button6 span.right{
 	padding:4px 20px 0px;
 }
-
 
 .filterArea .datePicker{
   display:block;

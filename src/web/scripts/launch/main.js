@@ -25,11 +25,14 @@
  * Version 1.4 TC Direct Replatforming Release 4 change notes:
  * - Add support to set Maximum Submissions for studio contest.
  *
- * Version 1.1.4 (Direct Improvements Assembly Release 2) Change notes:
+ * Version 1.4.1 (Direct Improvements Assembly Release 2) Change notes:
  * - Change the previewContest function to preview the copilot contest correctly.
  *
+ * Version 1.5 (Release Assembly - TC Direct UI Improvement Assembly 3) Change notes:
+ * - Fix the styles of catalog selection dropdown.
+ *
  * @author TCSDEVELOPER
- * @version 1.4
+ * @version 1.5
  */
 
  /**
@@ -665,6 +668,13 @@ function showPage(pageId) {
        $('#milestonePrizeDiv div div div ul li:eq(4) a').addClass('hiLite');
        $('#milestonePrize').val('50');
    }
+   if (pageId == "overviewSoftwarePage") {
+
+       if (isDevOrDesign()) {
+           $('#catalogSelect').sSelect();
+       }
+   }
+
    if (pageId == "overviewSoftwarePage" && $("#swMilestonePrizeDiv").is(":visible") && !$("#swMilestonePrizeDiv .numSelect select").data('customized')){
         $("#swMilestonePrizeDiv .numSelect select").data('customized',true);
         $("#swMilestonePrizeDiv .numSelect select").sSelect();

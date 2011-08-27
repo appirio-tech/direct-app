@@ -16,6 +16,9 @@
  *
  * - (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
  * - Added the CSS style for customer dropdown in the right sidebar
+ *
+ * - (Release Assembly - TC Direct UI Improvement Assembly 3) changes:
+ * - Add css styles for fix the project activities in project overview
  */
 
 BODY#page{
@@ -6624,6 +6627,32 @@ table.resultTable td a.button1:hover {
 	   overflow:hidden;
 	}
 /* end */
+table.projectOverviewStats {
+  table-layout:fixed;
+}
+
+table.projectOverviewStats td {
+  word-wrap: break-word;
+}
+
+TABLE.projectActivities THEAD SPAN.left {
+    background: url(../images/th_left_bg.png) no-repeat left top;
+}
+
+TABLE.projectActivities THEAD SPAN.right {
+    background: url(../images/th_right_bg.png) no-repeat right top;
+}
+
+TABLE.projectActivities{
+	border-collapse: collapse;
+}
+
+div.rightColumn .activity TABLE {
+    border-left: 0px solid #bdbdbd;
+	border-right: 0px solid #bdbdbd;
+}
+
+
 .box .contestsList{
 	position:relative;
 	z-index:10;

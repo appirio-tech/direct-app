@@ -15,6 +15,8 @@
   - added Average Contest Duration 
   - Version 1.0.4 - Direct - TC Cockpit Project Health Update Assembly Change Note:
   - Added new columns to Project Health area; the data for Project Health area is loaded via AJAX call now 
+  - Version 1.0.5 - Release Assembly - TC Direct UI Improvement Assembly 3 Change Note:
+  - Added new CSS class for project stats and project activities tables
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -131,7 +133,7 @@
                                 <div class="areaHeader padding2">
                                         <h2 class="title">Project Stats</h2>
                                 </div><!-- End .areaHeader -->
-                                <table class="projectStats" cellpadding="0" cellspacing="0">
+                                <table class="projectStats projectOverviewStats" cellpadding="0" cellspacing="0">
                                     <s:push value="viewData.projectStats">
                                         <tbody>
                                             <tr>
@@ -223,7 +225,7 @@
                                 </div><!-- End .areaHeader -->
 
                                 <s:iterator value="viewData.latestProjectActivities.activities">
-                                    <table class="project" width="100%" cellpadding="0" cellspacing="0">
+                                    <table class="project projectActivities" width="100%" cellpadding="0" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th colspan="5"><span class="left"><span class="right">

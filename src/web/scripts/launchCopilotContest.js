@@ -11,9 +11,12 @@
  * - Add support to allow setting customer contest prizes.
  * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
  * - Add previw button for the copilot creation page.
- * 
+ *
+ * Version 1.3 Release Assembly - TC Direct UI Improvement Assembly 3 change note
+ * - remove event click for conditions modal window, it's not needed
+ *
  * @author TCSASSEMBLER
- * @version 1.2(Direct Improvements Assembly Release 2)
+ * @version 1.3 (Direct Improvements Assembly Release 2)
  */
 $(document).ready(function(){
     /**
@@ -99,19 +102,7 @@ $(document).ready(function(){
     $('#TB_overlay').bgiframe();
     //$('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
     
-    /**
-     * Show terms and conditions window when click.
-     */
-    $('.conditions').click(function(){
-        $('#TB_overlay').show();
-        $('#TB_window').show();
-        $('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
-        $('#TB_window').css({
-            'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window").width() / 2)) + 'px'
-        });
-        $('#placeHolder').hide();
-        $('#TB_ajaxContent').show();
-    });
+    
     
     /**
      * Handle TB window close button click event.

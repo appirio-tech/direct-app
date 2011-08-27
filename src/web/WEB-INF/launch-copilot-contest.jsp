@@ -6,6 +6,8 @@
   - Description: Launch copilot selection contest page.
   - Since: TC Direct - Launch Copilot Selection Contest assembly
   - Version 1.1 (TC Direct Manage Copilots Assembly) changes: set CURRENT_TAB parameter.
+  -
+  - Version 1.2 (Release Assembly - TC Direct UI Improvement Assembly 3) changes: remove modal.css.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,7 +19,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
-    <link rel="stylesheet" href="/css/modal.css" media="all" type="text/css" />
+    
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script> 
     <script type="text/javascript" src="/scripts/launch/entity.js?v=49"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=49"></script>
@@ -72,24 +74,7 @@
     </div>
     <!-- End #wrapper -->
 
-    <div id="TB_overlay" class="TB_overlayBG"></div>
-    <div id="TB_window">
-        <div id="TB_title">
-            <div id="TB_ajaxWindowTitle"></div>
-            <div id="TB_closeAjaxWindow">
-                <a href="javascript:;" id="TB_closeWindowButton"></a>
-            </div>
-        </div>
-        <div id="TB_ajaxContent">
-            <div class="helpPopupInner details">
-                
-                <div class="logoArea">
-                    <a href="javascript:;"><img src="images/TopCoder_logo.png" alt="TopCoder" /></a>
-                </div>
-            </div><!-- End .helpPopupInner -->
-        </div>
-        <div id="placeHolder">PlaceHoldertest</div>
-    </div>
+   
         
     
     <div id="allDescriptionIcon_help" class="tooltipContainer">

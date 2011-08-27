@@ -1609,6 +1609,10 @@ overflow: auto;
 
 /* end #preloaderModal */
 
+#errorDialog li {
+    list-style-type: disc;
+}
+
 
 			
 /*

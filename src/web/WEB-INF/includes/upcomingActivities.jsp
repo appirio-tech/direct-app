@@ -8,12 +8,15 @@
   -
   - Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
   - Add 'Upcoming Activity' in the header of table.
+  -
+  - Version 1.0.2 - Release Assembly - TC Direct UI Improvement Assembly 3 Change Note
+  - Add new class for upcoming activity table
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div class="activity"><!-- Upcoming Activity -->
     <!-- the class "rowsToHide" is necessary for the show/hide table rows functionnality -->
-    <table id="upcomingActivity" class="project rowsToHide" width="100%" cellpadding="0"
+    <table id="upcomingActivity" class="project rowsToHide projectActivities" width="100%" cellpadding="0"
            cellspacing="0">
         <thead>
         <tr>

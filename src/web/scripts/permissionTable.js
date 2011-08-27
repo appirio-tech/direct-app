@@ -17,8 +17,11 @@
  *  -Solve "checkbox exists when no data in Settings > Permissions"
  *  - User can't delete the permision of himself. When deleting other's permision, there is a dialog to make sure this action.
  *
+ * Version 1.0.3 - Release Assembly - TC Direct UI Improvement Assembly 3
+ * - Fix the li issue under error dialogue of notificaiton page
+ *
  * @author TCSASSEMBLER
- * @version 1.0.2 (TC Direct UI Improvement Assembly 1)
+ * @version 1.0.3 (Release Assembly - TC Direct UI Improvement Assembly 3)
  */
 //$(function() {
 	/**
@@ -157,6 +160,12 @@
 	function showDeleteOneselfError(){
 		initDialog('errorDialog', 300);
         showErrors("You cannot delete yourself!");
+
+		var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/chrome\/([\d.]+)/) != null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0] > 2) {
+            $('#errorDialog li').css('margin-left', '6px');
+        }
+
 		$("#errorDialog").parent().find(".ui-dialog-titlebar").show();
 	}
 

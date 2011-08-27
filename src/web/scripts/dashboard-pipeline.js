@@ -5,8 +5,11 @@
  * Version 1.2 updates: Toggle report type selection. Three reports are supported: pipeline ,
  * cost report and billing cost report.
  *
- * @author isv, Blues
- * @version 1.2
+ * Version 1.2.1 updates: Add js validation for start date and end date for pipeline report, end date must be larger than
+ * end date.
+ *
+ * @author isv, Blues, GreatKevin
+ * @version 1.2.1
  * @since Direct Pipeline Stats Update Assembly
  */
 var ctx = "/direct";
@@ -88,14 +91,20 @@ $(document).ready(function(){
             v1 = parseFloat($('#numericalFilterMinValue').val());
         }
         if ($.trim($('#numericalFilterMaxValue').val()) != '' && !isNumber($('#numericalFilterMaxValue').val())) {
-            $('#validationErrors').append('Numerical filter maximum value must be non-negative number');
+            $('#validationErrors').append('Numerical filter maximum value must be non-negative number<br/>');
         } else {
             v2 = parseFloat($('#numericalFilterMaxValue').val());
         }
         if (v1 > -1 && v2 > -1) {
             if (v2 < v1) {
-                $('#validationErrors').append('Numerical filter maximum value must not be less than minimum value');
+                $('#validationErrors').append('Numerical filter maximum value must not be less than minimum value<br/>');
             }
+        }
+		var startDate = new Date($("#startDate").val());
+        var endDate = new Date($("#endDate").val());
+
+        if (startDate >= endDate) {
+            $('#validationErrors').append("Start date should be smaller than end date<br/>");
         }
         if ($('#validationErrors').html() == '') {
             var currentPage = $.trim($('.paginate_active').html());

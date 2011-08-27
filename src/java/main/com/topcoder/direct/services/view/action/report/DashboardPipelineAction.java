@@ -46,9 +46,17 @@ import java.util.TreeSet;
  *     <li>Updated {@link #executeAction()} not to include co-pilot stats into manager stats.</li>
  *   </ol>
  * </p>
+  *
+ * <p>
+ * Version 1.0.2 (Release Assembly - TC Direct UI Improvement Assembly 3) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} to add server side validation for start and end date,
+ *     end date must be larger than the start date.</li>
+ *   </ol>
+ * </p>
  *
  * @author isv
- * @version 1.0.1 (Direct Pipeline Integration Assembly)
+ * @version 1.0.2 (Release Assembly - TC Direct UI Improvement Assembly 3)
  */
 public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
@@ -149,6 +157,11 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                 endDate = new Date(nearestSunday.getTime() + 4 * 7 * 24 * 3600 * 1000L);
                 form.setStartDate(dateFormat.format(startDate));
                 form.setEndDate(dateFormat.format(endDate));
+            }
+
+			// Validate the dates range
+            if (startDate.compareTo(endDate) > 0) {
+                addActionError("Start date should be smaller than end date");
             }
 
             // If numerical filter type was specified then add it to list of existing filters set so far

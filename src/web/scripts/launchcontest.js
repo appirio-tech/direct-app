@@ -16,9 +16,11 @@
  * Version 1.3 Direct Improvements Assembly Release 2 Assembly change note
  * - Add character limitation for the input fields and input areas when creating contests.
  *
+ * Version 1.3.1 Release Assembly - TC Direct UI Improvement Assembly 3 change note:
+ * - fix catalog dropdown style, term & conditions modal window
  *
- * @author TCSASSEMBER
- * @version 1.3
+ * @author TCSDEVELOPER
+ * @version 1.3.1 (Release Assembly - TC Direct UI Improvement Assembly 3)
  */
 $(document).ready(function() {
 
@@ -300,7 +302,7 @@ $(document).ready(function() {
     $('#TB_HideSelect').css("opacity", "0");
     $('#TB_overlay').hide();
     /* init help */
-    $('.helloUser .help,.tabContest .moreLink,.help .helpIcon,.conditions').click(function() {
+    $('.helloUser .help,.tabContest .moreLink,.help .helpIcon').click(function() {
         $('#TB_overlay').show();
         $('#TB_window').show();
         $('.TB_overlayBG').css('height', document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
@@ -362,7 +364,7 @@ $(document).ready(function() {
         $('.projectSelect select').sSelect(SelectOptions).change(function() {
              handleProjectDropDownChange();
         });
-        $('#catalogSelect').sSelect();
+        //$('#catalogSelect').sSelect();
         $('.selectDesing div.selectedTxt').html('Select Contest Type');
         $("#mileStoneDiv").hide();
     }

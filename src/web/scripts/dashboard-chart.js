@@ -6,6 +6,8 @@
  * - Add the codes to fill in data for the new summary panel
  * - Add ajax loading indicator of the chart view drill-in operation
  * - Change the AJAX loading indicator for the contest breakdown and market breakdown view
+ * - Version 1.2.1 (Release Assembly - TC Direct UI Improvement Assembly 3)
+ * - Add codes to set the default 'Group By' to week when the user zooms to week
  */
 
 // define google visualization charts
@@ -665,6 +667,16 @@ function drawChart() {
                                             $('#chart_div iframe').effect("highlight", {'color' : '#E1F2FF'}, 3000);
                                             if($("a.btnTable").hasClass("active")){
                                                 $(".top,.chartWrapper").hide();
+                                            }
+
+											if(formActionUrl == 'dashboardEnterpriseZoom') {
+                                                var vars = formData.split("&");
+                                                for (var i = 0; i < vars.length; i++) {
+                                                    var pair = vars[i].split("=");
+                                                    if (pair[0] == 'zoomType' && pair[1] == 'WEEK') {
+                                                        $("#timeDimension").val('week').change();
+                                                    }
+                                                }
                                             }
                                         },
                                         function(errorMessage) {

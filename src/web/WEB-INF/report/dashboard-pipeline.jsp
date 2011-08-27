@@ -8,6 +8,8 @@
   - Version 1.1 (Direct Pipeline Stats Update assembly) change notes: Added "Drafts To Lauched" column to "Launched
   - Contests" section.
   - Version 1.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
+  -
+  - Version 1.2.1 (Release Assembly - TC Direct UI Improvement Assembly 3) changes: Add jsp to show server side validation error
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -96,7 +98,9 @@
                                         <a href="javascript:" class="button1" id="submitPipelineForm">
                                             <span>Submit</span></a>
                                         <div class="clear"></div>
-                                        <div id="validationErrors"></div>
+											<div id="validationErrors">
+                                                <s:actionerror/>
+                                            </div>
                                         <div>
                                             <c:forEach items="${formData.numericalFilterTypes}" var="filterType"
                                                        varStatus="loop">
