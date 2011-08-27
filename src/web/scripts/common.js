@@ -253,6 +253,8 @@ function initDialog(dialogDivId, width, buttons) {
 function clearDialog(dialogId) {
     $('#'+dialogId+ ' input[type!="checkbox"][type!="hidden"]').val("");
     $('#'+dialogId+ ' input[type="checkbox"]').attr("checked",false);
+	$('#'+dialogId+ ' input[type="text"]').val("");
+    $('#'+dialogId+ ' textarea').val("");
 }
 
 function checkRequired(value) {
