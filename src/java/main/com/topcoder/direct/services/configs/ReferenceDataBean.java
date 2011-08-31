@@ -290,8 +290,6 @@ public class ReferenceDataBean implements InitializingBean {
                 continue;
             }
 
-            System.out.println("CATEGORY catalog name = " + category.getCatalogName() +" ;" +
-            		" descr = " + category.getDescription() + " ; name = " + category.getName());
             categories.add(category);
             categoryMap.put(category.getId(), category);
 
