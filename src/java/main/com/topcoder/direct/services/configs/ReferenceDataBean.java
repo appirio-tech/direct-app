@@ -64,6 +64,20 @@ public class ReferenceDataBean implements InitializingBean {
 
     /**
      * <p>
+     * Studio catalog.
+     * </p>
+     */
+    private Category studioCatalog;
+
+    /**
+     * <p>
+     * Studio category.
+     * </p>
+     */
+    private Category studioCategory;
+
+    /**
+     * <p>
      * Application catalog.
      * </p>
      */
@@ -170,6 +184,28 @@ public class ReferenceDataBean implements InitializingBean {
 
     /**
      * <p>
+     * Gets Studio category.
+     * </p>
+     *
+     * @return studio category
+     */
+    public Category getStudioCategory() {
+        return studioCategory;
+    }
+
+    /**
+     * <p>
+     * Gets studio catalog.
+     * </p>
+     *
+     * @return studio catalog
+     */
+    public Category getStudioCatalog() {
+        return studioCatalog;
+    }
+
+    /**
+     * <p>
      * Gets not set category.
      * </p>
      *
@@ -234,6 +270,7 @@ public class ReferenceDataBean implements InitializingBean {
         final String APPLICATION_DESCR = "Application";
         final String BUSINESS_LAYER_DESCR = "Business Layer";
         final String NOT_SET_DESCR = "Not Set";
+        final String STUDIO_DESCR = "Studio";
 
         // technologies
         technologies = getContestServiceFacade().getActiveTechnologies(null);
@@ -253,6 +290,8 @@ public class ReferenceDataBean implements InitializingBean {
                 continue;
             }
 
+            System.out.println("CATEGORY catalog name = " + category.getCatalogName() +" ;" +
+            		" descr = " + category.getDescription() + " ; name = " + category.getName());
             categories.add(category);
             categoryMap.put(category.getId(), category);
 
@@ -264,6 +303,8 @@ public class ReferenceDataBean implements InitializingBean {
                 } else if (category.getName().equals(NOT_SET_DESCR)) {
                     notSetCatalog = category;
                     catalogs.remove(category);
+                } else if (category.getName().equals(STUDIO_DESCR)) {
+                    studioCatalog = category;
                 }
             } else if (category.getParentCategory() != null) {
                 long catalogId = category.getParentCategory().getId();
@@ -278,6 +319,8 @@ public class ReferenceDataBean implements InitializingBean {
                 } else if (category.getName().equals(NOT_SET_DESCR)
                     && category.getParentCategory().getName().equals(NOT_SET_DESCR)) {
                     notSetCategory = category;
+                } else if (category.getName().equals(STUDIO_DESCR)) {
+                    studioCategory = category;
                 }
             }
         }

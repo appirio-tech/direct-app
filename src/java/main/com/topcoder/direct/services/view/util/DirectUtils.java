@@ -35,8 +35,6 @@ import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.management.deliverable.Submission;
@@ -652,9 +650,11 @@ public final class DirectUtils {
         if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
             return null;
         }
+
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
             if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
-                return phase.getActualEndDate() != null ? phase.getActualEndDate() : phase.getScheduledEndDate();
+                return phase.getActualEndDate() != null ? phase.getActualEndDate() : 
+                    new Date(getRegistrationPhase(softwareCompetition).getFixedStartDate().getTime() + phase.getLength());
             }
         }
         return null;
@@ -670,9 +670,26 @@ public final class DirectUtils {
         if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
             return null;
         }
+
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
             if (phase.getPhaseType().getId() == PhaseType.SUBMISSION_PHASE.getId()) {
-                return phase.getActualEndDate() != null ? phase.getActualEndDate() : phase.getScheduledEndDate();
+                return phase.getActualEndDate() != null ? phase.getActualEndDate() : 
+                    new Date(getRegistrationPhase(softwareCompetition).getFixedStartDate().getTime() + phase.getLength());
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * <p>Gets the submission phase of the competition.
+     * 
+     * @param softwareCompetition the contest
+     * @return the submission phase of the contest. null if not found.
+     */
+    public static Phase getRegistrationPhase(SoftwareCompetition softwareCompetition) {
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
+                return phase;
             }
         }
         return null;

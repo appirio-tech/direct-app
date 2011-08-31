@@ -717,8 +717,8 @@ public class SaveDraftContestAction extends ContestAction {
     private void initializeStudioCompetition(SoftwareCompetition studioCompetition) {
         // asset DTO
         AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
-        assetDTOTemp.setRootCategory(getReferenceDataBean().getNotSetCatalog());
-        assetDTOTemp.getCategories().add(getReferenceDataBean().getNotSetCategory());
+        assetDTOTemp.setRootCategory(getReferenceDataBean().getStudioCategory());
+        assetDTOTemp.getCategories().add(getReferenceDataBean().getStudioCategory());
         
         if (softwareCompetition.getProjectHeader().getProjectStudioSpecification() == null) {
             softwareCompetition.getProjectHeader().setProjectStudioSpecification(new ProjectStudioSpecification());
