@@ -214,7 +214,7 @@ $(document).ready(function(){
             cursor: 'move',  
             cursorAt: { top: 0, left: 35 },
             helper: function(event) { 
-                    return $('<div class="excerpt"><img src="' + $(this).children(".statusSubmissionWrap").children("div").children("img.submissionIMG").attr("src") + '" /></div>');
+                    return $('<div class="excerpt"><img width="60px" height="60px"  src="' + $(this).children(".statusSubmissionWrap").children("div").children("img.submissionIMG").attr("src") + '" /></div>');
                 } 
         }); 
 
