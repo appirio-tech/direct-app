@@ -10,12 +10,13 @@
  *
  * @author TCSDEVELOPER
  * @version 1.2 (Direct Copilot Posting Contest Launching assembly)
- */
-
+ */ 
+ 
 var currentDocument = {};
 var exsitingDocuments = [];
 var newDocuments = [];
 var uploadedDocuments = [];
+var prizes = [];
 var projectId = -1;
 
 $(document).ready(function() {
@@ -559,6 +560,7 @@ function saveAsDraftRequest() {
 
     request['docUploadIds'] = getDocumentIds();
     request['docCompIds'] = getExistingDocumentIds();
+    request['projectHeader.prizes'] = prizes;
 
     return request;
 }

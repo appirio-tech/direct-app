@@ -30,6 +30,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js"></script>
     <script type="text/javascript" src="/scripts/copilots.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script> 
     <script type="text/javascript">
@@ -51,6 +52,9 @@
                 d['description'] = '${doc.documentName}';
                 exsitingDocuments.push(d);
                 // documents2.push(d);
+            </c:forEach>
+            <c:forEach items="${projectHeader.prizes}" var="p" varStatus="loop" >
+                prizes.push(new com.topcoder.direct.Prize(${p.place}, ${p.prizeAmount}, CONTEST_PRIZE_TYPE_ID, ${p.numberOfSubmissions}));
             </c:forEach>
         <c:forEach items="${assetDTO.compUploadedFiles}" var="doc" varStatus="loop">
             <!-- ${doc.uploadedFileName} ${doc.uploadedFileDesc} -->
