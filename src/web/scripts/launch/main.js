@@ -550,6 +550,7 @@ function saveAsDraftRequestStudio() {
    request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
    request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
 
+   updateStudioPrizes();
    // add copilot cost into project header
    mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
 
@@ -1124,6 +1125,32 @@ function updateSoftwarePrizes() {
 }
 
 /**
+ * This method fills and updates the prizes in softwareCompetition object depending on the current Studio contest type.
+ * Once contest type is defined, all values are determined.
+ */
+function updateStudioPrizes() {
+   //update all fees
+   var projectHeader = mainWidget.softwareCompetition.projectHeader;
+   var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+   var feeObject = getStudioContestCost(projectCategoryId);
+   
+   projectHeader.setFirstPlaceCost(feeObject.firstPlaceCost);
+   projectHeader.setSecondPlaceCost(feeObject.secondPlaceCost);
+   projectHeader.setReviewCost(feeObject.reviewCost);
+   projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25);
+   projectHeader.setAdminFee(feeObject.contestFee);
+   projectHeader.setSpecReviewCost(feeObject.specReviewCost);
+   
+   var prizes = [];
+   prizes.push(new com.topcoder.direct.Prize(1, feeObject.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
+   prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
+   if(mainWidget.softwareCompetition.multiRound) {
+      prizes.push(new com.topcoder.direct.Prize(1, parseFloat($('#milestonePrize').val()), MILESTONE_PRIZE_TYPE_ID, parseInt($('#milestoneSubmissionNumber').val())));
+   }
+   mainWidget.softwareCompetition.projectHeader.prizes = prizes;   
+}
+
+/**
  * determine if the prize is editable or not
  * if the billing project is not selected, then it is not editable
  */
@@ -1346,6 +1373,15 @@ function getContestCost(feeObject,prizeType) {
         return cost.id == prizeType;
     })[0];
 }
+
+function getStudioContestCost(projectCategoryId) {
+    for (var i = 0; i < studioSubtypeFees.length; i++) {
+        if (studioSubtypeFees[i].id == projectCategoryId) {
+            return studioSubtypeFees[i];
+        }
+    } 
+}
+
 
 /**
  * Software Technology/Category functions
