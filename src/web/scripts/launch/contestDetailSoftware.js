@@ -373,6 +373,7 @@ function initContest(contestJson) {
    }
    mainWidget.softwareCompetition.projectHeader.id = contestJson.contestId;
    mainWidget.softwareCompetition.projectHeader.projectCategory= contestJson.projectCategory;
+   mainWidget.softwareCompetition.projectHeader.projectStatus = contestJson.projectStatus;
    mainWidget.softwareCompetition.assetDTO.name = contestJson.contestName;
    mainWidget.softwareCompetition.endDate = parseDate(contestJson.endDate);
    mainWidget.softwareCompetition.paidFee = contestJson.paidFee;
@@ -559,7 +560,7 @@ function initContest(contestJson) {
     } else if(contestJson.phaseOpen) {
         $('a.button11').hide();
         // open prize edit section if project is active
-        if (contestJson.projectStatus != null && contestJson.projectStatus.id == ACTIVE_PROJECT_STATUS) {
+        if (contestJson.projectStatus != null && contestJson.projectStatus.name == DRAFT_STATUS) {
             isActiveContest = true;
             $(".edit_prize").parent().show();
         }
@@ -1094,7 +1095,7 @@ function populatePrizeSection(initFlag) {
     
 	if(initFlag) {
 		//show activate button if it needs to : the fee is not paied up fully
-		if(getCurrentContestTotal() > mainWidget.softwareCompetition.paidFee) {
+		if(mainWidget.softwareCompetition.projectHeader.projectStatus.name == DRAFT_STATUS) {
 			$('#resubmit').show(); 
             startedContest = false;
 		}         
@@ -1710,16 +1711,12 @@ function handleActivationResultEdit(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         mainWidget.softwareCompetition.paidFee = result.paidFee;
-        if(getCurrentContestTotal() > mainWidget.softwareCompetition.paidFee) {
-        	  $('#resubmit').show(); 
-        } else {                 
-            $('#resubmit').hide();
-        }
         showSpecReview(result);
 
         // can't change the multi round type if conetst is not draft 
-        if (result.projectStatus.name != "Draft") {
-        	canEditMultiRound = false;
+        if (result.projectStatus.name != DRAFT_STATUS) {
+            canEditMultiRound = false;
+            $('#resubmit').hide();
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         showMessage("Contest <b>" + contestName +"</b> has been activated successfully.");

@@ -697,7 +697,7 @@ function validateFieldsPrizeSection() {
        return false;
    }
    
-   mainWidget.competition.contestData.prizes = prizes;
+   mainWidget.softwareCompetition.prizes = prizes;
 
    return true;	
 }

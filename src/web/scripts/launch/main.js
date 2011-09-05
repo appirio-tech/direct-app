@@ -1133,21 +1133,19 @@ function updateStudioPrizes() {
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
    var feeObject = getStudioContestCost(projectCategoryId);
-   
-   projectHeader.setFirstPlaceCost(feeObject.firstPlaceCost);
-   projectHeader.setSecondPlaceCost(feeObject.secondPlaceCost);
+   if (projectHeader.prizes.length == 0) {
+       projectHeader.setFirstPlaceCost(feeObject.firstPlaceCost);
+       projectHeader.setSecondPlaceCost(feeObject.secondPlaceCost);
+       var prizes = [];
+       prizes.push(new com.topcoder.direct.Prize(1, feeObject.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
+       prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
+       prizes.push(new com.topcoder.direct.Prize(1, 0, MILESTONE_PRIZE_TYPE_ID, 1));
+       projectHeader.prizes = prizes;
+   }
    projectHeader.setReviewCost(feeObject.reviewCost);
    projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25);
    projectHeader.setAdminFee(feeObject.contestFee);
-   projectHeader.setSpecReviewCost(feeObject.specReviewCost);
-   
-   var prizes = [];
-   prizes.push(new com.topcoder.direct.Prize(1, feeObject.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
-   prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
-   if(mainWidget.softwareCompetition.multiRound) {
-      prizes.push(new com.topcoder.direct.Prize(1, parseFloat($('#milestonePrize').val()), MILESTONE_PRIZE_TYPE_ID, parseInt($('#milestoneSubmissionNumber').val())));
-   }
-   mainWidget.softwareCompetition.projectHeader.prizes = prizes;   
+   projectHeader.setSpecReviewCost(feeObject.specReviewCost);   
 }
 
 /**

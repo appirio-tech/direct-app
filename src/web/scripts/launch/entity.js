@@ -130,6 +130,8 @@ var SOFTWARE_CATEGORY_ID_DEVELOPMENT = 2;
 var SOFTWARE_CATEGORY_ID_CONCEPT = 23;
 var SOFTWARE_CATEGORY_ID_SPEC = 6;
 var SOFTWARE_CATEGORY_ID_CONTENT = 35;
+
+var DRAFT_STATUS = "Draft";
  
 var projectCategoryArray = [
 {id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application', hasMulti:true},
@@ -250,7 +252,8 @@ com.topcoder.direct.AssetDTO = function() {
 com.topcoder.direct.Project = function() {
 	  this.id = -1;
 	  
-	  this.tcDirectProjectId = -1;	
+	  this.tcDirectProjectId = -1;
+	  
 	  
 	  this.projectSpec = new com.topcoder.direct.ProjectSpec();
 	  
