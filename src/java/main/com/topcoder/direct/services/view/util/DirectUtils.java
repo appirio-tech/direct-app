@@ -725,7 +725,7 @@ public final class DirectUtils {
      * </p>
      *
      * @param softwareCompetition the software competition
-     * @return true if any phase is open; false if none is open
+     * @return true if any phase is open or closed; false if none is open or closed.
      */
     public static boolean isPhaseOpen(SoftwareCompetition softwareCompetition) {
         if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
@@ -733,7 +733,8 @@ public final class DirectUtils {
         }
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
-            if (PhaseStatus.OPEN.getId() == phase.getPhaseStatus().getId()
+            if ((PhaseStatus.OPEN.getId() == phase.getPhaseStatus().getId() 
+                || PhaseStatus.CLOSED.getId() == phase.getPhaseStatus().getId())
                 && !SPECIFICATION_SUBMISSION.equals(phase.getPhaseType().getName())
                 && !SPECIFICATION_REVIEW.equals(phase.getPhaseType().getName())) {
                 return true;
