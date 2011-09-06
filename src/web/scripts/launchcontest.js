@@ -567,6 +567,16 @@ function onContestTypeChange() {
     	  $("#mileStoneDiv").hide();
     	  mainWidget.softwareCompetition.multiRound = false;
       }
+
+      if (!copilotDropdownFlag) {
+        // copilot dropdown has never been initialized, do it
+        $('.copilotSelect select').sSelect(SelectOptions);
+        copilotDropdownFlag = true;
+      } else {
+        // initialized before, we only do the reset to update the data
+        $('.copilotSelect select').resetSS();
+      }         
+
       /// Studio Contest
       if(mainWidget.isSoftwareContest()) {
          //Software Contest
@@ -578,15 +588,6 @@ function onContestTypeChange() {
             ddMaxHeight: '220px',
             yscroll: true
         };
-
-        if (!copilotDropdownFlag) {
-            // copilot dropdown has never been initialized, do it
-            $('.copilotSelect select').sSelect(SelectOptions);
-            copilotDropdownFlag = true;
-        } else {
-            // initialized before, we only do the reset to update the data
-            $('.copilotSelect select').resetSS();
-        }         
 
          if(typeId == SOFTWARE_CATEGORY_ID_DEVELOPMENT) {
          	  $('#contestName').hide();

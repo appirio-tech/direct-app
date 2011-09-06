@@ -59,7 +59,7 @@
           </div><!-- End .caption -->                                               
           
       <div class="detailsContent_det_type_edit">
-                    <div class="det_font" style="border:1px solid #BDBDBD; height:240px;padding-left:10px;">                                              
+                    <div class="det_font" style="border:1px solid #BDBDBD; height:250px;padding-left:10px;">                                              
             <div id="launchContestOut">                                                         
                          <div class="tabOut">                                    
                  <!-- tab contest -->
@@ -115,7 +115,8 @@
                  </div>
                  </div>
                  <br /><br />
-				 <div id="copilotEditDiv">
+                 <div id="copilotEditDiv">
+                 <br />
                  <span class="name fixWidthName"><strong>Copilot</strong></span>
                 <div class="copilotsSelect" style="float:left">
                       <select id="copilots" name="copilots" class="bigin">
