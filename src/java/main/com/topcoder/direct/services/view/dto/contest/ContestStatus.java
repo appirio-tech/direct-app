@@ -178,6 +178,21 @@ public enum ContestStatus {
      * <p>A <code>ContestStatus</code> corresponding to <code>Final Review</code> contest status.</p>
      */
     PASSED_SPEC_REVIEW("Passed Spec Review", "running", "View"),
+    
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Milestone Submission</code> contest status.</p>
+     */
+    MILESTONE_SUBMISSION("Milestone Submission", "running", "View"),
+    
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Milestone Screening</code> contest status.</p>
+     */
+    MILESTONE_SCREENING("Milestone Screening", "running", "View"),
+    
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to <code>Milestone Review</code> contest status.</p>
+     */
+    MILESTONE_REVIEW("Milestone Review", "running", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Approval</code> contest status.</p>
