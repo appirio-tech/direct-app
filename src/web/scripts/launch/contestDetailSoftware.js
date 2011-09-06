@@ -762,7 +762,7 @@ function getMilestonePrizes() {
 }
 
 function getDurationDayHour(start, end) {
-	var t = end.getTime() - start.getTime();
+	var t = end.getTime() - start.getTime() + 5 * 60 * 1000; // add 5 mintues due to diff between reg and sub
 	t = parseInt(t / 1000 / 60 / 60);
 	return [parseInt(t / 24), t % 24];
 }
