@@ -154,7 +154,6 @@ $(document).ready(function(){
        // billing projects
        $('#billingProjects').bind("change", function() {
            updateContestFee();
-           $('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
        });  
 
    	//Get the contest and populate each section

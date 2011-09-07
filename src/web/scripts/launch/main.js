@@ -303,11 +303,13 @@ function updateContestFee( ) {
     	  //for studio        
         if(billingContestFee >= 0) {
         	 mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = billingContestFee;
+             mainWidget.softwareCompetition.adminFee = billingContestFee;
         } else {
            $.each(studioSubtypeFees, function(i, feeItem) {
                if(feeItem.id == contestTypeId) {
                   // update contest fees
             	   mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = feeItem.contestFee;
+				   mainWidget.softwareCompetition.adminFee = feeItem.contestFee;
                }
            });        	
         }        
