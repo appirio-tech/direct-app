@@ -658,7 +658,7 @@ if($.browser.msie && $.browser.version == 6.0){
 		// set prize bank data from cookie
 		$("#bankSelectionItemList li:not(:last-child)").each(function(index) {
 			var $itemlabel = bankData[arrPrize[index]];
-			var $item = "https://www.topcoder.com/impersonation/cockpitStudio.do?&sbmid=" + $itemlabel + "&sbt=thumb";
+			var $item = "https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=" + $itemlabel + "&sbt=thumb";
 			var $slotId = arrPrize[index];
 			if ($itemlabel) {
 				if ($itemlabel != submissionId) {

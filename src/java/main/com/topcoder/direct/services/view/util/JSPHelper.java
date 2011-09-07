@@ -188,10 +188,10 @@ public class JSPHelper {
                                                       HttpServletRequest request) {
         String protocol = request.isSecure() ? "https" : "http";
         if (artifactNum <= 0) {
-            return protocol + "://www.topcoder.com/impersonation/cockpitStudio.do?&amp;sbmid="
+            return protocol + "://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&amp;sbmid="
                    + submissionId + "&amp;sbt=" + previewType;
         } else {
-            return protocol + "://www.topcoder.com/impersonation/cockpitStudio.do?&amp;sbmid="
+            return protocol + "://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&amp;sbmid="
                    + submissionId + "&amp;sbt=" + previewType + "&amp;sfi=" + artifactNum;
         }
     }
