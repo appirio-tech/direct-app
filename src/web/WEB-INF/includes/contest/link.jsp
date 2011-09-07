@@ -65,7 +65,7 @@
         <li class="splitter"></li>
         <li>
         <s:if test="!viewData.contestStats.isStudio">
-        <a href="https://forums.topcoder.com/?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
+        <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.contestStats.forumId}" target="_blank"  class="contestLinkIcon linkIconForum" >Forum</a>
         </s:if>
         <s:else>
         <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank" class="contestLinkIcon linkIconForum">Forum</a>

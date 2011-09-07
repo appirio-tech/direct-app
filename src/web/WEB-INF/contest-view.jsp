@@ -140,7 +140,7 @@
                                                 <td>
                                                 <s:if test="forumId != -1">
                                                     <s:if test="isStudio == true"><a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${forumId}" target="_blank"></s:if>
-                                                    <s:if test="isStudio == false"><a href="https://forums.topcoder.com/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
+                                                    <s:if test="isStudio == false"><a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${forumId}" target="_blank"></s:if>
                                                 </s:if>
                                                 <s:property value="forumPostsNumber"/>
                                                 <s:if test="forumId != -1"></a></s:if>

@@ -37,7 +37,7 @@
 
 
         <li>
-            <a href="http://forums.topcoder.com/?module=Category&categoryID=${viewData.contestStats.forumId}"
+            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.contestStats.forumId}"
                target="_blank" class="contestLinkIcon linkIconForum">Forum</a>
 
         </li>

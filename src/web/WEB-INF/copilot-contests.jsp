@@ -123,7 +123,7 @@
                                                     </td>
                                                     <td>
                                                         <s:if test="%{#attr['contest'].forumId != -1}">
-                                                            <a href="http://forums.topcoder.com/?module=Category&categoryID=${contest.forumId}" target="_blank">
+                                                            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${contest.forumId}" target="_blank">
                                                                 ${contest.forumPostsNumber}
                                                             </a>
                                                         </s:if>

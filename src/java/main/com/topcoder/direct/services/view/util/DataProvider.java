@@ -2279,7 +2279,7 @@ public class DataProvider {
         ForumPostDTO latestForumPost = new ForumPostDTO();
         latestForumPost.setAuthor(latestForumPostAuthor);
         if (!isStudio) {
-            latestForumPost.setUrl("http://forums.topcoder.com/?module=Thread&threadID=" + latestThreadId);
+            latestForumPost.setUrl("https://apps.topcoder.com/forums/?module=Thread&threadID=" + latestThreadId);
         } else {
             latestForumPost.setUrl("http://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
         }
@@ -2291,7 +2291,7 @@ public class DataProvider {
         }
         
         if (!isStudio) {
-            dto.setForumURL("http://forums.topcoder.com/?module=Category&categoryID=" + forumId);
+            dto.setForumURL("https://apps.topcoder.com/forums/?module=Category&categoryID=" + forumId);
         } else {
             dto.setForumURL("http://studio.topcoder.com/forums?module=ThreadList&forumID=" + forumId);
         }
