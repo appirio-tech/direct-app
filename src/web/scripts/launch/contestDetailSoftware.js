@@ -151,6 +151,10 @@ $(document).ready(function(){
 			 populateDocumentSection();
 			 showDocumentSectionDisplay();
 		});
+       // billing projects
+       $('#billingProjects').bind("change", function() {
+           updateContestFee();
+       });  
 
    	//Get the contest and populate each section
    // loading some configuration data

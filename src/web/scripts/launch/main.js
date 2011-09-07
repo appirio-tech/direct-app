@@ -297,7 +297,7 @@ function updateContestFee( ) {
     var contestTypeId = getContestType(true)[1];	
     var billingProjectId = $('select#billingProjects').val();
     
-    var billingContestFee = getBillingContestFee(billingProjectId, isStudio, contestTypeId);
+    var billingContestFee = getBillingContestFee(billingProjectId, contestTypeId);
     
     if(isStudio) {    	
     	  //for studio        
@@ -336,7 +336,7 @@ function updateContestFee( ) {
  * initiate contest fee in edit page
  */
 function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {    
-    var billingContestFee = getBillingContestFee(billingProjectId, isStudio, contestTypeId);
+    var billingContestFee = getBillingContestFee(billingProjectId, contestTypeId);
 
     if(isStudio) {    	
     	  //for studio        
@@ -353,7 +353,7 @@ function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {
     }
 }
 
-function getBillingContestFee(billingProjectId,isStudio, contestTypeId) {
+function getBillingContestFee(billingProjectId, contestTypeId) {
     if(billingProjectId <=0 ) {
        return -1;
     }
@@ -364,7 +364,7 @@ function getBillingContestFee(billingProjectId,isStudio, contestTypeId) {
 	  
 	  $.each(fees, function(i,feeItem){
 		  // here studio contest is the same as software competition, they are both different with the original studio contest.
-	  	 if(!feeItem.studio && feeItem.contestTypeId == contestTypeId) {
+	  	 if(feeItem.contestTypeId == contestTypeId) {
 	  	 	   fee = feeItem.contestFee;
 	  	 } 	  	 
 	  });
@@ -1141,10 +1141,9 @@ function updateStudioPrizes() {
        prizes.push(new com.topcoder.direct.Prize(2, feeObject.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
        prizes.push(new com.topcoder.direct.Prize(1, 0, MILESTONE_PRIZE_TYPE_ID, 1));
        projectHeader.prizes = prizes;
+       projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25); 
    }
    projectHeader.setReviewCost(feeObject.reviewCost);
-   projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25);
-   projectHeader.setAdminFee(feeObject.contestFee);
    projectHeader.setSpecReviewCost(feeObject.specReviewCost);   
 }
 
