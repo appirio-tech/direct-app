@@ -1190,7 +1190,7 @@ function isBillingViewable() {
 }
 
 function isBillingEditable() {
-	 var darft = (DRAFT_STATUS == mainWidget.softwareCompetition.projectHeader.name);
+	 var draft = (DRAFT_STATUS == mainWidget.softwareCompetition.projectHeader.projectStatus.name);
 	 return isBillingViewable() && draft;
 }
 
