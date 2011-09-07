@@ -1190,8 +1190,8 @@ function isBillingViewable() {
 }
 
 function isBillingEditable() {
-	 var notePaid = (mainWidget.softwareCompetition.paidFee == 0);
-	 return isBillingViewable() && notePaid;
+	 var darft = (DRAFT_STATUS == mainWidget.softwareCompetition.projectHeader.name);
+	 return isBillingViewable() && draft;
 }
 
 function savePrizeSection() {
