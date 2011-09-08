@@ -13,6 +13,7 @@
 <c:set var="CURRENT_TAB" value="copilotPostings" scope="request"/>
 <c:set var="CURRENT_SUB_TAB" value="copilotContestSubmissions" scope="request"/>
 
+<c:set var="copilotProfilesMap" value="${requestScope.copilotProfilesMap}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -92,7 +93,7 @@
                                                             <tr>
                                                                 <td class="photo">
                                                                     <img src="/images/photo_people.png" alt="photo"/>
-                                                                    <span><c:out value="${submitter.handle}"/></span>
+                                                                    <span><link:user userId="${submitter.id}" handle="${submitter.handle}"/> </span>
                                                                 </td>
                                                                 <td>
                                                                     <a rel="_blank"
@@ -121,7 +122,7 @@
                                                                         <c:choose>
                                                                             <c:when test="${firstPlaceWinner eq null}">
                                                                                 <a href="#" 
-                                                                                   onclick="setCopilotSelection(${submission.submissionId}, ${submitter.id}, 1, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
+                                                                                   onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 1, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
                                                                                    class="chooseCopilotButton"><span
                                                                                     class="profileLeft">Choose This Copilot</span></a>
                                                                             </c:when>
@@ -129,7 +130,7 @@
                                                                                 The Chosen Copilot
                                                                             </c:when>
                                                                             <c:when test="${secondPlaceWinner eq null}">
-                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId}, ${submitter.id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
+                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
                                                                                    class="chooseCopilotButton"><span
                                                                                     class="profileLeft">Choose as 2nd place</span></a>
                                                                             </c:when>
