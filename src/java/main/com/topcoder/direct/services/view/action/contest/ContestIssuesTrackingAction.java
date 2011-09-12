@@ -91,7 +91,7 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, contestId);
         boolean isStudio = DirectUtils.isStudio(competition);
         
-        this.viewData = DataProvider.getContestIssues(contestId, isStudio);
+        this.viewData = DataProvider.getContestIssues(contestId);
 
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId);

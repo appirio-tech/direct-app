@@ -520,7 +520,7 @@ public final class DirectUtils {
 		dto.setIsStudio(isStudio);
 
         // sets the issues of contests
-        dto.setIssues(DataProvider.getContestIssues(contestId, isStudio));
+        dto.setIssues(DataProvider.getContestIssues(contestId));
 
         // gets the number of issues and bug races for contest
         dto.setTotalJiraIssuesNumber(dto.getIssues().getIssuesNumber() + dto.getIssues().getBugRacesNumber());

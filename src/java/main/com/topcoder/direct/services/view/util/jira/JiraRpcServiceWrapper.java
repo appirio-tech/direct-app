@@ -113,7 +113,7 @@ public class JiraRpcServiceWrapper {
      * @return the list of all the issues of the contest.
      * @throws Exception if any error occurs.
      */
-    public static List<TcJiraIssue> getIssuesForContest(long contestId, boolean isStudio) throws Exception {
+    public static List<TcJiraIssue> getIssuesForContest(long contestId) throws Exception {
 
         long time = System.currentTimeMillis();
 
@@ -125,7 +125,7 @@ public class JiraRpcServiceWrapper {
         // build the JQL query first
         String softwareQuery = ConfigUtils.getIssueTrackingConfig().getSoftwareContestJQLQuery();
         String studioQuery = ConfigUtils.getIssueTrackingConfig().getStudioContestJQLQuery();
-        String jqlQuery = (isStudio ? studioQuery : softwareQuery) + contestId;
+        String jqlQuery = (softwareQuery) + contestId;
 
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
 

@@ -3705,10 +3705,10 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs.
      * @since 2.6.2
      */
-    public static ContestIssuesTrackingDTO getContestIssues(long contestId, boolean isStudio) throws Exception {
+    public static ContestIssuesTrackingDTO getContestIssues(long contestId) throws Exception {
 
         // get issues and bug races from the Jira RPC soap service
-        List<TcJiraIssue> results = JiraRpcServiceWrapper.getIssuesForContest(contestId, isStudio);
+        List<TcJiraIssue> results = JiraRpcServiceWrapper.getIssuesForContest(contestId);
 
         // use one list to store issues, another list to store bug races
         List<TcJiraIssue> issues = new ArrayList<TcJiraIssue>();
