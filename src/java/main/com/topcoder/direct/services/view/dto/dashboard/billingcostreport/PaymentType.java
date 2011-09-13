@@ -19,7 +19,7 @@ public enum PaymentType {
     /**
      * Prizes payment type.
      */
-    PRIZES(2, "Prizes"),
+    PRIZES(2, "Winner"),
 
     /**
      * Spec review payment type.
