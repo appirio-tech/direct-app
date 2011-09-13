@@ -1,12 +1,13 @@
 <%--
-  - Author: greatKevin, winsty
-  - Version: 1.2
+  - Author: greatKevin, winsty, TCSASSEMBLER
+  - Version: 1.2.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
   -
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Version 1.2 (TC Direct UI Improvement Assembly 1) changes: Solve "Project is not highlight when select Project"
+  - Version 1.2.1 (Release Assembly - TopCoder Cockpit Project Status Management) changes: add direct project manage JS into head.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -23,6 +24,7 @@
         <ui:projectPageType tab="overview"/>
     </s:if>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <script type="text/javascript" src="/scripts/directProjectManage.js"></script>
 </head>
 
 <body id="page">

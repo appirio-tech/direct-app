@@ -29,9 +29,12 @@
  *  Version 1.7 - (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
  *  - Update the codes to initialize the pagination table of active contests table
  *  - Add the filter feature to the active contests table
+ *
+ *  Version 1.7.1 - (Release Assembly - TopCoder Cockpit Project Status Management) changes:
+ *  - Update the codes to initialize the project result table, two columns added
  * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin
- * @version 1.7
+ * @version 1.7.1
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -200,6 +203,41 @@ $(document).ready(function() {
         return ((x < y) ? 1 : ((x > y) ? -1 : 0));
     };
 
+
+    jQuery.fn.dataTableExt.oSort['project-status-asc'] = function (a, b) {
+       var x = getProjectStatus(a);
+       var y = getProjectStatus(b);
+
+       //alert("status A:" + x + " status B:" + y);
+
+       return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['project-status-desc'] = function (a, b) {
+       var x = getProjectStatus(a);
+       var y = getProjectStatus(b);
+       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    function getProjectStatus(text) {
+        text = text.toLowerCase();
+
+        if (text == null || text.length == 0) {
+            return "";
+        }
+
+        var end = text.indexOf("</span>");
+        var s1 = text.substring(0, end);
+        var start = s1.indexOf(">");
+        var status = $.trim(s1.substring(start + 1)).toLowerCase();
+
+        if (status.length == 0) {
+            return "";
+        } else {
+            return status;
+        }
+    }
+
     function getReliability(text) {
         if (text == null || text.length == 0) {
             return 0;
@@ -212,6 +250,17 @@ $(document).ready(function() {
             return f;
         }
     }
+
+
+    if ($("#projectsResult")) {
+        $("#projectsResult td.last a").each(function() {
+            if (!$(this).hasClass('show')) {
+                $(this).hide();
+            }
+
+        });
+    }
+
 
     $("#projectsResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
@@ -231,7 +280,9 @@ $(document).ready(function() {
 				{ "sType": "direct-projectNumber" },
 				{ "sType": "direct-projectNumber" },
 				{ "sType": "direct-projectNumber" },
-                { "sType": "direct-projectNumber" }
+                { "sType": "direct-projectNumber" },
+                { "sType": "project-status" },
+                null
 			]
 
     });

@@ -170,6 +170,12 @@
                 <param name="namespace">/</param>
             </result>
         </action>
+        <action name="updateDirectProjectStatus" class="com.topcoder.direct.services.view.action.project.UpdateProjectStatusAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="createProjectAndContest" class="com.topcoder.direct.services.view.action.project.CreateProjectAndAddContestAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="redirectAction">

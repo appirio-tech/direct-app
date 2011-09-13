@@ -1,11 +1,12 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard;
 
 import java.io.Serializable;
 
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatusType;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
 
 /**
@@ -15,9 +16,13 @@ import com.topcoder.service.facade.contest.ProjectSummaryData;
  * <p>
  * Version 2.0 - use summary data as internal data
  * </p>
+ * <p>
+ * Version 2.1 (Release Assembly - TopCoder Cockpit Project Status Management) changes:
+ * - Add the getter method {@link #getProjectStatusType()} to get the project status.
+ * </p>
  *
- * @author isv, BeBetter
- * @version 2.0
+ * @author isv, BeBetter, GreatKevin
+ * @version 2.1
  */
 public class DashboardProjectSearchResultDTO implements Serializable {
     /**
@@ -65,4 +70,13 @@ public class DashboardProjectSearchResultDTO implements Serializable {
         return project;
     }
 
+    /**
+     * Gets the project status type (enum) of the project.
+     *
+     * @return the project status type.
+     * @since 2.1
+     */
+    public ProjectStatusType getProjectStatusType() {
+        return ProjectStatusType.getProjectStatusType(data.getDirectProjectStatusId());
+    }
 }

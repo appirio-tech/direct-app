@@ -19,6 +19,9 @@
  *
  * - (Release Assembly - TC Direct UI Improvement Assembly 3) changes:
  * - Add css styles for fix the project activities in project overview
+ *
+ * - (Release Assembly - TopCoder Cockpit Project Status Management) changes:
+ * - Added the CSS styles for buttons and project status in show all projects page.
  */
 
 BODY#page{
@@ -5906,7 +5909,7 @@ Contest links
 }
 
 
-.myProjectContests table#ProjectContests td a.button1, #activeContests table.projectStats  td a.button1 {
+.myProjectContests table#ProjectContests td a.button1, #activeContests table.projectStats  td a.button1, #projectsResult table.projectStats  td a.button1{
     background: url("../images/button1.png") no-repeat scroll left top transparent;
     color: #313131;
     display: inline-block;
@@ -5915,19 +5918,25 @@ Contest links
     text-decoration: none;
 	float: none;
 }
-.myProjectContests table#ProjectContests td a.button1 span, #activeContests table.projectStats  td a.button1 span {
+
+
+#projectsResult table.projectStats td a.hide {
+    display: none;
+}
+
+.myProjectContests table#ProjectContests td a.button1 span, #activeContests table.projectStats  td a.button1 span, #projectsResult table.projectStats  td a.button1 span {
 	font-weight: normal;
     padding-left: 0;
 	width: auto;
 }
-.myProjectContests table#ProjectContests td a.button1 .btnR, #activeContests table.projectStats  td a.button1 .btnR {
+.myProjectContests table#ProjectContests td a.button1 .btnR, #activeContests table.projectStats  td a.button1 .btnR, #projectsResult table.projectStats  td a.button1 .btnR {
     background: url("../images/button1.png") no-repeat scroll right -50px transparent;
     cursor: pointer;
     float: left;
     height: 18px;
     padding-right: 2px;
 }
-.myProjectContests table#ProjectContests td a.button1 .btnR .btnC, #activeContests table.projectStats  td a.button1 .btnR .btnC {
+.myProjectContests table#ProjectContests td a.button1 .btnR .btnC, #activeContests table.projectStats  td a.button1 .btnR .btnC , #projectsResult table.projectStats  td a.button1 .btnR .btnC{
     background: url("../images/button1.png") repeat-x scroll left -25px transparent;
     cursor: pointer;
     float: left;
@@ -5935,7 +5944,7 @@ Contest links
     padding: 0 8px;
 	margin-top: -5px;
 }
-.myProjectContests table#ProjectContests td a.button1 .btnR .btnC .btnIcon, #activeContests table.projectStats  td a.button1 .btnR .btnC .btnIcon {
+.myProjectContests table#ProjectContests td a.button1 .btnR .btnC .btnIcon, #activeContests table.projectStats  td a.button1 .btnR .btnC .btnIcon, #projectsResult table.projectStats  td a.button1 .btnR .btnC .btnIcon {
     background: url("../images/button1-icon.gif") no-repeat scroll left center transparent;
     cursor: pointer;
     float: left;
@@ -5945,13 +5954,13 @@ Contest links
     padding: 0 2px 0 15px;
 }
 
-.myProjectContests table#ProjectContests td a.button1:hover, #activeContests table.projectStats  td a.button1:hover{
+.myProjectContests table#ProjectContests td a.button1:hover, #activeContests table.projectStats  td a.button1:hover, , #projectsResult table.projectStats  td a.button1:hover{
 		background-position:left -75px;
 	}
-		.myProjectContests table#ProjectContests td a.button1:hover .btnR, #activeContests table.projectStats  td a.button1:hover .btnR{
+		.myProjectContests table#ProjectContests td a.button1:hover .btnR, #activeContests table.projectStats  td a.button1:hover .btnR, , #projectsResult table.projectStats  td a.button1:hover .btnR{
 			background-position:right -125px;
 		}
-			.myProjectContests table#ProjectContests td a.button1:hover .btnR .btnC, #activeContests table.projectStats  td a.button1:hover .btnR .btnC{
+			.myProjectContests table#ProjectContests td a.button1:hover .btnR .btnC, #activeContests table.projectStats  td a.button1:hover .btnR .btnC, #projectsResult table.projectStats  td a.button1:hover .btnR .btnC{
 				background-position:left -100px;
 			}
 	
@@ -6690,5 +6699,30 @@ div.rightColumn .activity TABLE {
 
 #addProjectForm .fi {
     margin-top:5px;
+}
+
+#projectsResult TABLE.resultTable   TD SPAN.completed {
+    color: #00c600;
+    background: url(../images/dot-green.png) no-repeat left 1px;
+}
+
+#projectsResult TABLE.resultTable   TD SPAN.active {
+    color: #177de3;
+    background: url(../images/dot-blue.png) no-repeat left 1px;
+}
+
+#projectsResult TABLE.resultTable   TD SPAN.archived {
+    color: #ffb000;
+    background: url(../images/dot-yellow.png) no-repeat left 1px;
+}
+
+#projectsResult TABLE.resultTable   TD SPAN.deleted {
+    color: #dc0000;
+    background: url(../images/dot-red.png) no-repeat left 1px;
+}
+
+#projectsResult TABLE.resultTable TD SPAN {
+    font-weight: bold;
+    padding-left: 14px;
 }
 

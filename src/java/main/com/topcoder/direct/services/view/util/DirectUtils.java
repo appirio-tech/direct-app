@@ -49,6 +49,7 @@ import com.topcoder.search.builder.SearchBuilderException;
 import com.topcoder.security.RolePrincipal;
 import com.topcoder.security.TCPrincipal;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.permission.Permission;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
@@ -230,9 +231,16 @@ import com.topcoder.shared.util.DBMS;
  *     <li>Updated <code>setDashboardData</code> methods to properly analyze the types of the contest.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.7.5 (Release Assembly - TopCoder Cockpit Project Status Management) Change notes:
+ *   <ol>
+ *     <li>Updated <code>setDashboardData</code> methods to properly analyze the types of the contest.</li>
+ *   </ol>
+ * </p>
  * 
- * @author BeBetter, isv, flexme, Blues, Veve, TCSDEVELOPER
- * @version 1.7.4
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin
+ * @version 1.7.5
  */
 public final class DirectUtils {
     /**
@@ -1486,6 +1494,37 @@ public final class DirectUtils {
         
         dto.setDashboard(adjustPhases(dto.getDashboard()));
     }
+
+    /**
+     * Checks whether the given user has write permission to the given project.
+     *
+     * @param action the action invokes this method.
+     * @param tcSubject the TCSubject instance which represents an user
+     * @param directProjectId the id of the direct project
+     * @return true if has write permission, false otherwise
+     * @throws PermissionServiceException
+     * @since 1.7.1
+     */
+    public static boolean hasProjectWritePermission(BaseDirectStrutsAction action,
+                                                    TCSubject tcSubject, long directProjectId) throws PermissionServiceException {
+        if (!isRole(tcSubject, ADMIN_ROLE)) {
+
+            List<Permission> permissions = action.getContestServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
+
+            for (Permission p : permissions) {
+
+                if (p.getPermissionType().getPermissionTypeId() == 2L || p.getPermissionType().getPermissionTypeId() == 3L) {
+                    return true;
+                }
+            }
+
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
     
     public static ContestDashboardDTO adjustPhases(ContestDashboardDTO dashboard) {
         List<ProjectPhaseDTO> phases = dashboard.getAllPhases();
