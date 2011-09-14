@@ -74,7 +74,7 @@
                                                                         <tr>
                                                                             <th>Copilot</th>
                                                                             <th>Profiles</th>
-                                                                            <th>Regisration Time</th>
+                                                                            <th>Registration Time</th>
                                                                             <th>Submission Time</th>
                                                                         </tr>
                                                                         </thead>
