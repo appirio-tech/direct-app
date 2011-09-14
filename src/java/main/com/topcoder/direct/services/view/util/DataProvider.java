@@ -2957,6 +2957,13 @@ public class DataProvider {
             return data;
         }
 
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(endDate);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        endDate = calendar.getTime();
+
         // concatenate the filters
         String projectCategoryIDsList = "-1";
         if (projectCategoryIds != null && projectCategoryIds.length > 0) {
