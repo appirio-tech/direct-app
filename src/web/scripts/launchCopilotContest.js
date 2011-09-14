@@ -173,21 +173,12 @@ $(document).ready(function(){
     initPanel();
 
     /**
-     * Handle dialog open event.
-     */
-    $('#addProjectDialog').bind('dialogopen', function(event,ui) {
-        $('#addProjectForm').show();
-        clearDialog('addProjectForm');
-
-        $('#addProjectResult').hide();
-        $('#addProjectResult').find('p').html('');
-    });
-
-    /**
      * Handle add new project button click event.
      */
     $('#addNewProject').click(function(){
-        $('#addProjectDialog').dialog('open');
+        clearAddNewProjectForm();
+        modalLoad("#addNewProjectModal");
+        $('#addNewProjectModal').find('input[name="newProjectName"]').focus();
     });
     
     /**
@@ -328,48 +319,51 @@ $(document).ready(function(){
  * Adds a new project.
  */
 function addNewProject() {
-   var projectName = $('#addProjectForm').find('input[name="projectName"]').val();
-   var projectDescription =  $('#addProjectForm').find('input[name="projectDescription"]').val();
+    var projectName = $('#addNewProjectModal').find('input[name="newProjectName"]').val();
+    var projectDescription = $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val();
 
-   var errors = [];
+    var errors = [];
 
-   if(!checkRequired(projectName)) {
-       errors.push('project name is empty.');
-   }
+    if (!checkRequired(projectName)) {
+        errors.push('Project name is empty.');
+    }
+
+    if (!checkRequired(projectDescription)) {
+        errors.push('Project description is empty.');
+    }
 
    if(errors.length > 0) {
        showErrors(errors);
+       $("#modal-background").hide();
        return;
    }
 
 
-   $.ajax({
-      type: 'POST',
-      url:  "../launch/createProject",
-      data: {'projectName':projectName,
-             'projectDescription':projectDescription},
-      cache: false,
-      dataType: 'json',
-      success: function(jsonResult) {
-          handleJsonResult(jsonResult,
-          function(result) {
-             var projectData = result;
-             $("<option/>").val(projectData.projectId).text(projectData.name).appendTo("#projects");
-             $('#projects').resetSS();
-             $('#projects').getSetSSValue(projectData.projectId);
+    $.ajax({
+        type: 'POST',
+        url:  "../launch/createProject",
+        data: {'projectName':projectName,
+            'projectDescription':projectDescription},
+        cache: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    var projectData = result;
+                    $("<option/>").val(projectData.projectId).text(projectData.name).appendTo("#projects");
+                    $('#projects').resetSS();
+                    $('#projects').getSetSSValue(projectData.projectId);
 
-              $('#addProjectForm').hide();
-              $('#addProjectResult').show();
-              $('#addProjectResult').find('p').html('Project is created successfully.');
+                    modalCloseAddNewProject();
+                    showSuccessfulMessage('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.');
 
-          },
-          function(errorMessage) {
-              $('#addProjectForm').hide();
-              $('#addProjectResult').show();
-              $('#addProjectResult').find('p').html(errorMessage);
-          });
-      }
-   });
+                },
+                function(errorMessage) {
+                    modalCloseAddNewProject();
+                    showServerError(errorMessage);
+                });
+        }
+    });
 };
 
 /**
@@ -566,61 +560,51 @@ function handleCopilotContestSaveAsDraftResult(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) { 
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
-        var messageToShow = "Your Copilot Selection Contest " + contestName;
+        var messageToShow = "Your Copilot Posting <span class='messageContestName'>" + contestName + "</span>";
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-            messageToShow += " has been saved as draft successfully!";
+            messageToShow += " has been saved as draft successfully.";
         } else {
-            messageToShow += " has been updated as draft successfully!";
+            messageToShow += " has been updated as draft successfully.";
         }
         
         //update paid fee
         mainWidget.softwareCompetition.paidFee = result.paidFee;
-        
-        $('#saveAsDraft dt').html(messageToShow);
-        $('#draftPanelTrigger').overlay().load();
+
+        showSuccessfulMessage(messageToShow);
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });
 };
 
 function submitCompetition() {
-	$( "#activateContestConfirmation" ).dialog({
-			autoOpen: false,
-			resizable: true,
-			height:200,
-			width: 500,
-			modal: true,
-			buttons: {
-				"No": function() {
-					$( this ).dialog( "close" );
-				},
-				"Yes": function() {
-					$( this ).dialog("close");
-					// construct request data
-					var request = saveAsDraftRequestSoftware();
-					request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
-					request['activationFlag'] = true;
-					
-					$.ajax({
-						type: 'POST',
-						url: '../launch/saveDraftContest',
-						data: request,
-						cache: false,
-						dataType: 'json',
-						success: handleCopilotContestActivateResult,
-						beforeSend: beforeAjax,
-						complete: afterAjax   
-					});
-				}
-			}
-	});
-    // confirm that user want to activate the contest
-	// if it's confirmed, a new contest will be saved
-	if(!$( "#activateContestConfirmation" ).dialog( "isOpen" )) {
-		$( "#activateContestConfirmation" ).dialog( "open" );
-	}
+
+    showConfirmation("Do you really want to activate the copilot posting ?",
+        "This will create a new copilot posting <span class='messageContestName'>" + mainWidget.softwareCompetition.projectHeader.getProjectName()
+            + "</span> for you and then activate the created contest. " +
+            "Please confirm you want to create the contest and activate it. After activation,"
+            + " you will start the contest specification review.",
+        "YES",
+        function() {
+            closeModal();
+            // construct request data
+            var request = saveAsDraftRequestSoftware();
+            request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
+            request['activationFlag'] = true;
+
+            $.ajax({
+                type: 'POST',
+                url: '../launch/saveDraftContest',
+                data: request,
+                cache: false,
+                dataType: 'json',
+                success: handleCopilotContestActivateResult,
+                beforeSend: beforeAjax,
+                complete: afterAjax
+            });
+        }
+    );
 }
 
 /**
@@ -651,7 +635,7 @@ function handleCopilotContestActivateResult(jsonResult) {
         $('#receiptCopilotPage').show();
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });   
 };
 

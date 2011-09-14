@@ -581,8 +581,7 @@ if($.browser.msie && $.browser.version == 6.0){
 		var feedback = $("#feedback").val();
 		feedback = $.trim(feedback);
 		if (feedback.length == 0) {
-			$('#msgDialog p').html("Feedback content can't be empty.");
-			$('#msgDialog').dialog('open');
+			ShowErrors("Feedback content can't be empty.");
 			return false;
 		}
 		$.ajax({

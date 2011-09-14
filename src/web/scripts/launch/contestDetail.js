@@ -113,7 +113,7 @@ $(document).ready(function(){
             showTypeSectionDisplay();
           },
           function(errorMessage) {
-              showErrors(errorMessage);
+              showServerError(errorMessage);
           })
       }
    });
@@ -393,7 +393,7 @@ function isBillingEditable() {
 function saveTypeSection() {
    // only handle studio type
    if("SOFTWARE" == getContestType()[0]) {
-        alert("it is studio contest and you can not switch to software contest.");
+        showErrors("it is studio contest and you can not switch to software contest.");
         return;
    }
 	
@@ -536,7 +536,7 @@ function populateRoundSection() {
 function saveRoundSection() {
    // only handle studio type
    if("SOFTWARE" == getContestType()[0]) {
-        alert("it is studio contest and you can not switch to software contest.");
+        showErrors("it is studio contest and you can not switch to software contest.");
         return;
    }
 	
@@ -891,11 +891,11 @@ function handleActivationResultEdit(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         var contestName = mainWidget.competition.contestData.name;
-        showMessage("Contest <b>" + contestName +"</b> has been activated successfully.");
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully.");
         $('#resubmit').hide();
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });
 }
  

@@ -8,10 +8,13 @@
  * - Add support to restrict the max characters of private description and public description.
  * - Fix bug TCCC-2900.
  *
- * @author TCSDEVELOPER
- * @version 1.2 (Direct Copilot Posting Contest Launching assembly)
- */ 
- 
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) changes notes:
+ * - Update to user the new "add new project" modal window
+ *
+ * @author TCSASSEMBLER
+ * @version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp)
+ */
+
 var currentDocument = {};
 var exsitingDocuments = [];
 var newDocuments = [];
@@ -210,20 +213,11 @@ $(document).ready(function() {
         return false;
     });
 
-    // add project
-    initDialog('addProjectDialog', 500);
-
-    $('#addProjectDialog').bind('dialogopen', function(event, ui) {
-        $('#addProjectForm').show();
-        clearDialog('addProjectForm');
-
-        $('#addProjectResult').hide();
-        $('#addProjectResult').find('p').html('');
-    });
 
     $('#addNewProject2').click(function() {
-        $('#addProjectDialog').dialog('open');
-        return false;
+        clearAddNewProjectForm();
+        modalLoad("#addNewProjectModal");
+        $('#addNewProjectModal').find('input[name="newProjectName"]').focus();
     });
 
     // Upload file
@@ -250,7 +244,7 @@ $(document).ready(function() {
                                          modalClose();
                                      },
                                      function(errorMessage) {
-                                         showErrors(errorMessage);
+                                         showServerError(errorMessage);
                                          modalClose();
                                      });
                 }
@@ -310,17 +304,22 @@ $(document).ready(function() {
  * Adds a new project.
  */
 function addNewProject() {
-    var projectName = $('#addProjectForm').find('input[name="projectName"]').val();
-    var projectDescription = $('#addProjectForm').find('input[name="projectDescription"]').val();
+    var projectName = $('#addNewProjectModal').find('input[name="newProjectName"]').val();
+    var projectDescription = $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val();
 
     var errors = [];
 
     if (!checkRequired(projectName)) {
-        errors.push('project name is empty.');
+        errors.push('Project name is empty.');
+    }
+
+    if (!checkRequired(projectDescription)) {
+        errors.push('Project description is empty.');
     }
 
     if (errors.length > 0) {
         showErrors(errors);
+        $("#modal-background").hide();
         return;
     }
 
@@ -333,6 +332,7 @@ function addNewProject() {
         success: function(jsonResult) {
             handleJsonResult(jsonResult,
                              function(result) {
+                                 var projectData = result;
                                  $("<option/>").val(result.projectId).text(result.name).appendTo("#projects");
                                  $('#projects').resetSS();
                                  $('#projects').getSetSSValue(result.projectId);
@@ -341,15 +341,13 @@ function addNewProject() {
                                  $('#projects2').resetSS();
                                  $('#projects2').getSetSSValue(result.projectId);
 
-                                 $('#addProjectForm').hide();
-                                 $('#addProjectResult').show();
-                                 $('#addProjectResult').find('p').html('Project is created successfully.');
+                                 modalCloseAddNewProject();
+                                 showSuccessfulMessage('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.');
 
                              },
                              function(errorMessage) {
-                                 $('#addProjectForm').hide();
-                                 $('#addProjectResult').show();
-                                 $('#addProjectResult').find('p').html(errorMessage);
+                                 modalCloseAddNewProject();
+                                 showServerError(errorMessage);
                              });
         }
     });
@@ -595,7 +593,7 @@ function handleActivation(jsonResult) {
                          $('.orderReviewPage').show();
                      },
                      function(errorMessage) {
-                         showErrors(errorMessage);
+                         showServerError(errorMessage);
                      });
 }
 
@@ -608,22 +606,11 @@ function handleDraftSaving(jsonResult) {
     handleJsonResult(jsonResult,
                      function(result) {
                          projectId = result.projectId;
-                         $("#saveAsDraft").overlay({
-                             closeOnClick:false,
-                             mask: {
-                                 color: '#000000',
-                                 loadSpeed: 200,
-                                 opacity: 0.6
-                             },
-                             top:"20%",
-                             close :"#saveAsDraftOK",
-                             fixed : true,
-                             load: true
-                         });
+                         showSuccessfulMessage("Your copilot posting has been saved successfully.");
 
                      },
                      function(errorMessage) {
-                         showErrors(errorMessage);
+                         showServerError(errorMessage);
                      });
 }
 function sendSaveDraftRequestToServer() {

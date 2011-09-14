@@ -1,6 +1,6 @@
 <%--
   - Author: isv, tangzx, Veve, winsty, Blues
-  - Version: 1.5.4
+  - Version: 1.6.0
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -17,6 +17,7 @@
   - version 1.5.3 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly) changes notes: linked "Issue Tracking" tab
   - Version 1.5.4 (TC Direct UI Improvement Assembly 1) changes notes: Solve '"Project" tab is not highlight when select Project'
   - version 1.5.5 (Release Assembly - TC Cockpit Sidebar Header and Footer Update) changes notes: add link to topcoder community site in header
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) changes note: add include to the new modal window template jsp
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -227,3 +228,5 @@
         </ul>
     </div><!-- End #tabs2 -->
 </div><!-- End #header -->
+
+<jsp:include page="modalWindows.jsp"/>

@@ -285,10 +285,11 @@ function continueOverview() {
    }
 
    if(mainWidget.isSoftwareContest()) {
-       showPage('reviewSoftwarePage');
        if(!hasRequirementDocument()) {
-          alert("Warning: Requirement Specification document was not attached.");
+          showWarningMessage("Requirements Specification Document was not attached, continue?", "YES", function(){showPage('reviewSoftwarePage');closeModal();});
+          return;
        }
+       showPage('reviewSoftwarePage');
    } else {
        showPage('reviewPage');
    }

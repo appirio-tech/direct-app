@@ -343,7 +343,7 @@ $(document).ready(function() {
                         });
                     },
                     function(errorMessage) {
-                        showErrors(errorMessage);
+                        showServerError(errorMessage);
                     });
             }
         });

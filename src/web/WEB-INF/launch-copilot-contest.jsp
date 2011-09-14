@@ -19,7 +19,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
-    
+    <link rel="stylesheet" href="/css/modal.css" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script> 
     <script type="text/javascript" src="/scripts/launch/entity.js?v=49"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=49"></script>
@@ -34,7 +34,7 @@
 
                     <jsp:include page="includes/header.jsp"/>
 
-                    <div id="mainContent" style="overflow:visible">
+                    <div id="mainContent">
 
                         <jsp:include page="includes/right.jsp"/>
 

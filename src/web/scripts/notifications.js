@@ -23,6 +23,7 @@ if (!window.notifications) var notifications = {
             cache:false,
             success:function(r) {
                 modalClose();
+                showSuccessfulMessage("Your notification settings have been updated.");
             }
         });
     },
@@ -130,6 +131,7 @@ function savePreference() {
         cache:false,
         success:function(r) {
             modalClose();
+            showSuccessfulMessage("Your notification preferences have been saved.");
         }
     });
     

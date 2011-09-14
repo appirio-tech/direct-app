@@ -1811,3 +1811,96 @@ overflow: auto;
 	padding:10px;
 	font-size:0.8em;
 }
+
+.newButton1 {
+    display: inline-block;
+    background: url(../images/button-new-1.png) no-repeat left top;
+    height: 24px;
+    padding-left: 4px;
+    color: #fffffe;
+    font-size: 12px;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    line-height: 24px;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.newButton1 .btnR {
+    display: inline-block;
+    background: url(../images/button-new-1.png) no-repeat right -48px;
+    padding-right: 4px;
+    cursor: pointer;
+}
+
+.newButton1 .btnC {
+    display: inline-block;
+    background: url(../images/button-new-1.png) left -24px repeat-x;
+    height: 24px;
+    padding: 0 18px;
+    cursor: pointer;
+}
+
+.newButton1:hover {
+    background-position: left -72px;
+}
+
+.newButton1:hover .btnR {
+    background-position: right -120px;
+}
+
+.newButton1:hover .btnC {
+    background-position: left -96px;
+}
+
+#addNewProjectModal .modalBody .noticeContent {
+    padding-top: 35px;
+    height: 184px;
+    width: auto;
+    padding-left: 26px;
+}
+
+#addNewProjectModal .modalBody .noticeContent .modalRow {
+    padding-bottom: 8px;
+    min-height: 10px;
+}
+
+#addNewProjectModal .modalBody .noticeContent .modalRow label {
+    float: left;
+    width: 80px;
+    line-height: 22px;
+    font-weight: bold;
+    display: inline;
+}
+
+#addNewProjectModal .modalBody .noticeContent .modalRow input.text {
+    float: left;
+    width: 280px;
+    display: inline;
+}
+
+#addNewProjectModal .modalBody .noticeContent .modalRow .textField {
+    float: left;
+    width: 280px;
+    margin: 0;
+    height: 115px;
+    display: inline;
+    margin-top:6px;
+}
+
+#addNewProjectModal .modalBody .modalCommandBox {
+    text-align: left;
+    padding-left: 130px;
+}
+
+#addNewProjectModal .modalBody .modalCommandBox .newButtonCancel {
+    margin-left: 6px;
+}
+
+#addNewProjectModal .modalBody .modalCommandBox .newButtonCancel .btnC {
+    padding: 0 24px;
+}
+
+#addNewProjectModal.outLay {
+    width: 450px;
+}

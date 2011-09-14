@@ -788,7 +788,7 @@ function drawChart() {
                         renderMarketBreakDown();
                     },
                     function(errorMessage) {
-                        showErrors(errorMessage);
+                        showServerError(errorMessage);
                     });
             }
         });

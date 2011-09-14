@@ -24,6 +24,9 @@
  *  Version 1.6 - Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination
  *  - Add javascript codes for the customer dropdown in the right sidebar
  *
+ *  Version 1.7 - Release Assembly - TopCoder Cockpit Modal Windows Revamp changes notes:
+ *  - Add methods for closing new "add new project" modal window
+ *
  * @author tangzx, Blues, GreatKevin
  * @version 1.6
  */
@@ -1272,15 +1275,28 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	/* close modal */
 	modalClose = function() {
         $('#modalBackground').hide();
-		$('.outLay').hide();
+		$('#new-modal #preloaderModal').hide();
+    }
+
+    /**
+     * Close the add new project modal window.
+     */
+    modalCloseAddNewProject = function() {
+        $('#modalBackground').hide();
+		$('#new-modal #addNewProjectModal').hide();
     }
 
 	/* load modal (string itemID )*/
 	modalLoad = function(itemID) {
 		modalClose();
         $('#modalBackground').show();
-		$(itemID).show();
-		modalPosition();
+
+        // setTimeout($("#loadingImg").attr('src', '/images/preloader-loadingie.gif?time=23213213213'), 50000);
+
+        $(itemID).show();
+
+        modalPosition();
+
     }
 
 
@@ -1293,6 +1309,12 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	 *
 	 */
 	modalPreloader = function(itemID,strMarginTop,callback){
+
+//        if($.browser.msie) {
+//            $('#new-modal #preloaderModal').remove();
+//        }
+
+
 		if($('#new-modal #preloaderModal').length == 0){
 			var preloaderHtml = '';
 			preloaderHtml += '<div id="preloaderModal" class="outLay">';
@@ -1302,7 +1324,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 			preloaderHtml += 	'</div></div></div>';
 
 			preloaderHtml += 	'<div class="modalBody">';
-			preloaderHtml += 	'<img src="../images/preloader-loading.gif" alt="Loading" />';
+			preloaderHtml += 	'<img id="loadingImg" src="/images/preloader-loading.gif" alt="Loading" />';
 			preloaderHtml += 	'<div class="preloaderTips">';
 			preloaderHtml += 	strTip;
 			preloaderHtml += 	'</div></div>';
@@ -1315,17 +1337,18 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 
 			$('#new-modal').append(preloaderHtml);
 		}
-		modalLoad('#preloaderModal');
 
-		if(objPreloaderTimmer) clearTimeout(objPreloaderTimmer);
-	    objPreloaderTimmer = setTimeout(function(){
-			$('#new-modal #preloaderModal').hide();
-			modalClose();
-        },intPreloaderTimmer);
+        modalLoad('#preloaderModal');
+	
 	}
 
 	$('#new-modal .outLay .closeModal').live('click', function(){
 		modalClose();
+		return false;
+	});
+
+    $('#new-modal .outLay .closeProjectModal').live('click', function(){
+		modalCloseAddNewProject();
 		return false;
 	});
 

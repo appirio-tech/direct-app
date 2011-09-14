@@ -131,41 +131,25 @@
 		}
 		
 		var id = $(this).attr('userid');
-		$( "#deleteUserConfirmation" ).dialog({
-			autoOpen: true,
-			resizable: true,
-			height:200,
-			width: 500,
-			modal: true,
-			buttons: {
-				"No": function() {
-					$( this ).dialog( "close" );
-					return false;
-				},
-				"Yes": function() {
-					$( this ).dialog("close");
+        var userName = $.trim($(this).parent().parent().children(':first').find("div").html());
+
+        showConfirmation("Do you really want to delete the user ?",
+            "This will delete the user <span class='messageContestName'>" + userName + "</span> from the project. Please confirm you want to delete ?",
+            "YES",
+            function() {
+					modalClose();
 					$.permission.removeSingleUser(id);
 					pbutton_submit();
 					return true;
-				}
 			}
-		});
-		$( "#deleteUserConfirmation" ).parent().find('.ui-dialog-titlebar').show();
-		if(!$( "#deleteUserConfirmation" ).dialog( "isOpen" )) {
-			$( "#deleteUserConfirmation" ).dialog( "open" );
-		}
-		
+        );
+
+
 	});
 	
 	function showDeleteOneselfError(){
 		initDialog('errorDialog', 300);
-        showErrors("You cannot delete yourself!");
-
-		var ua = navigator.userAgent.toLowerCase();
-        if (ua.match(/chrome\/([\d.]+)/) != null && ua.match(/chrome\/([\d.]+)/)[1].split('.')[0] > 2) {
-            $('#errorDialog li').css('margin-left', '6px');
-        }
-
+        showErrors("You cannot delete yourself in permission setting.");
 		$("#errorDialog").parent().find(".ui-dialog-titlebar").show();
 	}
 
@@ -295,7 +279,7 @@
 		 *            the error to show
 		 */
 		showErrors : function(errMsg) {
-			alert("Error occurs: " + errMsg);
+			showErrors("Error occurs: " + errMsg);
 		},
 
 		/**

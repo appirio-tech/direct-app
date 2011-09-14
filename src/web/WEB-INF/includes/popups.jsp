@@ -119,10 +119,6 @@
         <a class="review-later" href="../contest/startSpecReview.action?startMode=later"></a>
         <p class="note">*48 hours prior to the scheduled contest start time.</p>
     </div>
-    
- <div id="deleteUserConfirmation" title="Do you really want to delete the user?" style="display:none;">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will delete the user from the project. Please confirm you want to delete the user?</p>
-    </div>
 
     <!-- AJAX preloading indicator -->
     <div id="modalBackground"></div>
@@ -134,8 +130,9 @@
                 </div>
             </div>
             <div class="modalBody">
+                <span id="preloaderAnimation">
                 <img alt="Loading" src="/images/preloader-loading.gif">
-
+                </span>
                 <div class="preloaderTips">Loading...</div>
             </div>
             <div class="modalFooter">
@@ -146,13 +143,66 @@
                 </div>
             </div>
         </div>
+
+        <!-- #addNewProjectModal -->
+        <div id="addNewProjectModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        CREATE NEW PROJECT
+                        <a href="javascript:;" class="closeModal closeProjectModal" title="Close" onclick="modalCloseAddNewProject();">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+
+            <div class="modalBody">
+                <div class="noticeContent">
+                    <div class="modalRow">
+                        <label>Name:</label>
+                        <input type="text" class="text" id="newProjectName" name="newProjectName"/>
+
+                        <div class="clearFix"></div>
+                    </div>
+                    <div class="modalRow">
+                        <label>Description:</label>
+                        <textarea id="newProjectDescription" name="newProjectDescription" class="textField" rows=""
+                                  cols=""></textarea>
+                    </div>
+                </div>
+
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1"><span class="btnR"><span class="btnC"
+                                                                                       onclick="addNewProject();">YES</span></span></a>
+                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal closeProjectModal"
+                       onclick="modalCloseAddNewProject();"><span class="btnR"><span
+                            class="btnC">CANCEL</span></span></a>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+		<!-- end .modalFooter -->
+	</div>
+	<!-- end #addNewProjectModal -->
+
     </div>
 
     <span class="hide">
-       <img src="/images/preloader-corner.png" />
-       <img src="/images/modal-header.png" />
-       <img src="/images/modal-body-normal.png" />
-       <img src="/images/preloader-body.png" />
+       <img src="/images/preloader-corner.png"/>
+       <img src="/images/modal-header.png"/>
+       <img src="/images/modal-body-normal.png"/>
+       <img src="/images/preloader-body.png"/>
+       <img src="/images/modal-warning.png"/>
+       <img src="/images/modal-error.png"/>
+       <img src="/images/modal-success.png"/>
+       <img src="/images/modal-confirmation.png"/>
+       <img src="/images/modal-arrow.png"/>
+       <img src="/images/button-new-1.png"/>
     </span>
 
     <!-- Add Project Dialog-->

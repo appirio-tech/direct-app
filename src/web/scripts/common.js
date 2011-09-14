@@ -7,7 +7,10 @@
  * Version 1.2 Direct Improvements Assembly Release 2 Assembly change note
  * - Add character limitation for the input fields and input areas when creating contests.
  *
- * @version 1.2 (Direct Improvements Assembly Release 2)
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) change notes:
+ * - Add methods to show different modal windows.
+ *
+ * @version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp)
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
@@ -52,7 +55,7 @@ $(document).ready(function() {
             timeId = setTimeout(function() {
                 timeId = -1;
                 if (textArea.val().length > maxChars) {
-                    alert("You can only input max " + maxChars
+                    showErrors("You can only input max " + maxChars
                         + " characters.");
                     textArea.val(ori);
                 }
@@ -86,12 +89,12 @@ $(document).ready(function() {
             timeId = setTimeout(function() {
                 timeId = -1;
                 if (invalid) {
-                    alert("Only alphanumeric, $, -, ! and space characters are allowed.");
+                    showErrors("Only alphanumeric, $, -, ! and space characters are allowed.");
                     textArea.val(ori);
                     return;
                 }
                 if (textArea.val().length > maxChars) {
-                    alert("You can only input max " + maxChars
+                    showErrors("You can only input max " + maxChars
                         + " characters.");
                     textArea.val(ori);
                 }
@@ -313,12 +316,13 @@ function sortSelectOptions(selectId) {
  * Common function to handle JSON result.
  */
 function handleJsonResult(jsonResult, successCallBack, failureCallBack) {
+   modalClose(); // close the potentical preloading modal first
    if(jsonResult.result) {
        successCallBack(jsonResult.result['return']);
    } else {
        failureCallBack(jsonResult.error.errorMessage);
    }
-}	
+}
 
 /**
  * Functions to handle message/error messages.
@@ -328,31 +332,92 @@ function showMessage(message) {
    $('#msgDialog').dialog('open');
 }
 
-function showGeneralError() {
-   showErrors("Error occurred. Please retry the operation later.");
+/**
+ * Shows the sucessful message after operation finished.
+ *
+ * @param message the message to show.
+ * @since 1.3
+ */
+function showSuccessfulMessage(message) {
+    displayOperationSuccess("#demoModal", "Message", message);
 }
 
-function showErrors(errors) {
+/**
+ * Shows the warning message after operation finishes
+ *
+ * @param message the message to show
+ * @param buttonText the button text for confirming warning YES button
+ * @param buttonEvent the button event for confirming warning YES button
+ * @since 1.3
+ */
+function showWarningMessage(message, buttonText, buttonEvent) {
+    displayWarning("#demoModal", "Warning", message, buttonText, buttonEvent);
+}
 
+/**
+ * Shows the general error if an error happends
+ */
+function showGeneralError() {
+   showServerError("Error occurred. Please retry the operation later.");
+}
+
+/**
+ * Show client side validation errors.
+ *
+ * @param errors the error message array
+ */
+function showErrors(errors) {
    if(typeof errors == 'string') {
        var singleError = errors;
        errors = new Array();
        errors.push(singleError);
    }
 
-   $('#errorDialog p').html('<ul style="padding-left:5px;margin-top: 5px"></ul>');
+    if(errors.length == 0) {
+        errors.push("Error occurred. Please retry the operation later.")
+    }
 
-   var isErrorSingle = errors.length == 1;
+    if (errors.length == 1) {
+        $("#demoModal li").css('padding-top', '10px');
+    }
 
-   $.each(errors,function(i, error) {
-       if (!isErrorSingle) {
-           $('#errorDialog ul').append('<li>' + error + '</li>');
-       } else {
-           $('#errorDialog ul').append(error);
-       }
-   });
+   displayClientSideError("#demoModal", "Errors", errors);
+}
 
-   $('#errorDialog').dialog('open');
+/**
+ * Shows the server error modal window when an error raised on server side.
+ *
+ * @param message the message to display
+ * @since 1.3
+ */
+function showServerError(message) {
+    if($.trim(message).length <= 0) {
+        message = "Server Error occurred. Please retry the operation later."
+    }
+    displayServerError("#demoModal", "Server Error", message);
+}
+
+/**
+ * Shows the confirmation modal window when needs user's confirmation.
+ *
+ * @param title the title of the modal window
+ * @param message the message to display to user
+ * @param yesText the button text for the confirmation YES
+ * @param yesHandler the button event for the confirmation YES
+ * @since 1.3
+ */
+function showConfirmation(title, message, yesText, yesHandler) {
+    displayUserConfirmation("#demoModal", title, message, yesText, yesHandler);
+}
+
+/**
+ * Clear the add new project modal window.
+ *
+ * @since 1.3
+ */
+function clearAddNewProjectForm() {
+    $('#addNewProjectModal').find('input[name="newProjectName"]').val('');
+    $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val('');
 }
 
 /*BUGR-4512*/

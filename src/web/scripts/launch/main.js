@@ -106,7 +106,7 @@ $(document).ready(function() {
 			copilotFees = result.copilotFees;
           },
           function(errorMessage) {
-              showErrors(errorMessage);
+              showServerError(errorMessage);
           })
       }
    });
@@ -124,7 +124,7 @@ $(document).ready(function() {
       if(isExtraPrizesEmpty()) {
          $('#extraPrizes').hide();
       } else {
-          alert("there is prize still set in this row.");
+          showErrors("there is prize still set in this row.");
       }
    });//click
 
@@ -174,7 +174,7 @@ $(document).ready(function() {
 	              uploader._input = $("#uploadButtonDiv input[type='file']").get(0);
 	            },
 	            function(errorMessage) {
-	                showErrors(errorMessage);
+	                showServerError(errorMessage);
 	                modalClose();
 	            });
 	    }
@@ -220,7 +220,7 @@ $(document).ready(function() {
               modalClose();
             },
             function(errorMessage) {
-                showErrors(errorMessage);
+                showServerError(errorMessage);
                 modalClose();
             });
     }
@@ -403,7 +403,7 @@ function getContestFeesForBillingProject(billingProjectId) {
                }
            },
            function(errorMessage) {
-               showErrors(errorMessage);
+               showServerError(errorMessage);
            });
        }
     });
@@ -440,7 +440,7 @@ function getCopilotsByDirectProjectId(directProjectId) {
                returnValue.selected = result.selected;
            },
            function(errorMessage) {
-               showErrors(errorMessage);
+               showServerError(errorMessage);
            });
        }
     });
@@ -586,9 +586,11 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
           mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showMessage("Software Contest <b>" + contestName +"</b> has been saved successfully.");
+          modalClose();
+          showSuccessfulMessage("Software Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.");
         } else {
-          showMessage("Software Contest <b>" + contestName +"</b> has been updated successfully.");
+          modalClose();
+          showSuccessfulMessage("Software Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.");
         }
 
         //update endDate
@@ -596,7 +598,7 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
         mainWidget.softwareCompetition.paidFee = result.paidFee;
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });
 }
 
@@ -606,9 +608,9 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         if(mainWidget.softwareCompetition.projectHeader.id < 0 ) {
         	mainWidget.softwareCompetition.projectHeader.id = result.projectId;
-          showMessage("Studio Contest <b>" + contestName +"</b> has been saved successfully.");
+          showSuccessfulMessage("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been saved successfully.");
         } else {
-          showMessage("Studio Contest <b>" + contestName +"</b> has been updated successfully.");
+          showSuccessfulMessage("Studio Contest <span class='messageContestName'>" + contestName +"</span> has been updated successfully.");
         }
 
         //update admin fee, to be fixed
@@ -616,7 +618,7 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
 
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });
 }
 
@@ -933,7 +935,7 @@ function swHandleRemoveDocumentResult(jsonResult) {
       removeSoftwareDocument(documentId);
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });
 }
 
@@ -992,7 +994,7 @@ function fillPrizes() {
    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
    var feeObject = softwareContestFees[projectCategoryId];
    if(!feeObject) {
-        alert('no fee found for project category ' + projectCategoryId);
+        showErrors('no fee found for project category ' + projectCategoryId);
         return;
    }
    var contestCost = getContestCost(feeObject, prizeType);
@@ -1056,7 +1058,7 @@ function getCurrentContestTotal(useDomElem) {
    }
 	   
    if(!feeObject) {
-        alert('no fee found for project category ' + projectCategoryId);
+        showErrors('no fee found for project category ' + projectCategoryId);
         return 0;
    }
    
@@ -1428,7 +1430,7 @@ function updateCategories(callback) {
              }
           },
           function(errorMessage) {
-              showErrors(errorMessage);
+              showServerError(errorMessage);
           })
       }
    });

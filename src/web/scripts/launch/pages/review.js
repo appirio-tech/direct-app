@@ -175,6 +175,8 @@ function saveAsDraftReview() {
    //construct request data
    var request = saveAsDraftRequest();
 
+   modalPreloader();
+
    $.ajax({
       type: 'POST',
       url:  "saveDraftContest",

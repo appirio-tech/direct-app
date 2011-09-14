@@ -94,7 +94,7 @@ function handleRepostContestResult(jsonResult) {
     },
     function(errorMessage) {    	
        $('#repostDialog').dialog('close');
-       showErrors(errorMessage);    	
+       showServerError(errorMessage);
     });
 }
 
@@ -221,7 +221,7 @@ function handleNewVersionContestResult(jsonResult) {
     },
     function(errorMessage) {    	
        $('#newVersionDialog').dialog('close');
-       showErrors(errorMessage);    	
+       showServerError(errorMessage);
     });
 }
 

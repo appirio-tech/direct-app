@@ -201,28 +201,21 @@ function backOrderReview() {
 /**
  * Activate contest.
  */
-function activateContest() {	
-   $( "#activateContestConfirmation" ).dialog({
-			autoOpen: true,
-			resizable: true,
-			height:175,
-			width: 400,
-			modal: true,
-			buttons: {
-				"No": function() {
-					$( this ).dialog( "close" );
-				},
-				"Yes": function() {
-					$( this ).dialog("close");
-					activateContestSoftware();
-				}
-			}
-	});
-	// confirm that user want to activate the contest
-	// if it's confirmed, a new contest will be saved
-	if(!$( "#activateContestConfirmation" ).dialog( "isOpen" )) {
-		$( "#activateContestConfirmation" ).dialog( "open" );
-	}   	
+function activateContest() {
+
+    showConfirmation("Do you really want to activate the contest ?",
+        "This will create the new contest <span class='messageContestName'>" + mainWidget.softwareCompetition.projectHeader.getProjectName()
+            + "</span> for you and then activate it. " +
+            "Please confirm you want to create the contest and activate it. After activation, "
+            + "you will start the contest specification review.",
+        "YES",
+        function() {
+            closeModal();
+            // construct request data
+            activateContestSoftware();
+        }
+    );
+
 }
 
 /**
@@ -291,7 +284,7 @@ function handleActivationResult(jsonResult) {
         $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });
 }
 

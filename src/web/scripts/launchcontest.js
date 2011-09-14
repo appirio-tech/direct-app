@@ -404,19 +404,10 @@ $(document).ready(function() {
         updateContestFee();
     });
 
-    // add project
-    initDialog('addProjectDialog', 500);
-
-    $('#addProjectDialog').bind('dialogopen', function(event, ui) {
-        $('#addProjectForm').show();
-        clearDialog('addProjectForm');
-
-        $('#addProjectResult').hide();
-        $('#addProjectResult').find('p').html('');
-    });
-
     $('#addNewProject').click(function() {
-        $('#addProjectDialog').dialog('open');
+        clearAddNewProjectForm();
+        modalLoad("#addNewProjectModal");
+        $('#addNewProjectModal').find('input[name="newProjectName"]').focus();
     });
 
     // round types
@@ -539,7 +530,7 @@ function onContestTypeChange() {
        }
 
     if (isContestSaved() && mainWidget.competitionType != contestType) {
-        alert("You can not switch between studio and software after it is saved.");
+        showErrors("You can not switch between studio and software after it is saved.");
 
         return;
     }
@@ -656,18 +647,23 @@ function resetFileTypes(studioSubtypeId) {
  * Adds a new project.
  */
 function addNewProject() {
-    var projectName = $('#addProjectForm').find('input[name="projectName"]').val();
-    projectName = jQuery.trim(projectName);
-    var projectDescription = $('#addProjectForm').find('input[name="projectDescription"]').val();
+    var projectName = $('#addNewProjectModal').find('input[name="newProjectName"]').val();
+    var projectDescription = $('#addNewProjectModal').find('textarea[name="newProjectDescription"]').val();
 
     var errors = [];
 
     if (!checkRequired(projectName)) {
-        errors.push('project name is empty.');
+        errors.push('Project name is empty.');
     }
+
+    if (!checkRequired(projectDescription)) {
+        errors.push('Project description is empty.');
+    }
+
 
     if (errors.length > 0) {
         showErrors(errors);
+        $("#modal-background").hide();
         return;
     }
 
@@ -690,9 +686,8 @@ function addNewProject() {
                                 });
                                 $('#projects').getSetSSValue(projectData.projectId);
 
-                                $('#addProjectForm').hide();
-                                $('#addProjectResult').show();
-                                $('#addProjectResult').find('p').html('Project is created successfully.');
+                                modalCloseAddNewProject();
+                                showSuccessfulMessage('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.');
 
                                 // we need to clear the copilots options and set to unassigned for new created project
                                 $("#contestCopilot").html("");
@@ -702,9 +697,8 @@ function addNewProject() {
                                 copilotDropdownFlag = true;
                             },
                             function(errorMessage) {
-                                $('#addProjectForm').hide();
-                                $('#addProjectResult').show();
-                                $('#addProjectResult').find('p').html(errorMessage);
+                                modalCloseAddNewProject();
+                                showServerError(errorMessage);
                             });
         }
     });
@@ -736,7 +730,7 @@ function handleGetCapacityResult(jsonResult) {
 
                     },
                     function(errorMessage) {
-                        showErrors(errorMessage);
+                        showServerError(errorMessage);
                     });
 }
 

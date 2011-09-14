@@ -183,7 +183,7 @@ function fillDevFromSelectedDesign(designContestId) {
           	initDevContestFromDesign(result);
           },
           function(errorMessage) {
-              showErrors(errorMessage);
+              showServerError(errorMessage);
           })
       },
       beforeSend: beforeAjax,
@@ -325,7 +325,7 @@ function initContestNamesFromDesign() {
           	handleGetDesignComponentsResult(result);
           },
           function(errorMessage) {
-              showErrors(errorMessage);
+              showServerError(errorMessage);
           })
       }
    });

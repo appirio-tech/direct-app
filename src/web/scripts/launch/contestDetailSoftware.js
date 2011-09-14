@@ -181,7 +181,7 @@ $(document).ready(function(){
             //onContestTypeChange();
           },
           function(errorMessage) {
-              showErrors(errorMessage);
+              showServerError(errorMessage);
           })
       }
    });
@@ -329,7 +329,7 @@ function onContestTypeChange() {
    	  }   	  
  
    	  if(isContestSaved() && mainWidget.competitionType != contestType) {   	  	
-   	  	   alert("You can not switch between studio and software after it is saved.");   	  	   
+   	  	   showErrors("You can not switch between studio and software after it is saved.");
    	  	 
    	  	   return;
    	  }
@@ -1119,7 +1119,7 @@ function updateContestCostData() {
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
     var feeObject = softwareContestFees[projectCategoryId];
     if (!feeObject) {
-        alert('no fee found for project category ' + projectCategoryId);
+        showErrors('no fee found for project category ' + projectCategoryId);
         return;
     }
 
@@ -1671,7 +1671,7 @@ function saveDocumentSection() {
 				 showDocumentSectionDisplay();    
 			  },
 			  function(errorMessage) {
-				  showErrors(errorMessage);
+				  showServerError(errorMessage);
 			  })
 		  }
 	   });			
@@ -1723,10 +1723,10 @@ function handleActivationResultEdit(jsonResult) {
             $('#resubmit').hide();
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
-        showMessage("Contest <b>" + contestName +"</b> has been activated successfully.");
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully.");
     },
     function(errorMessage) {
-        showErrors(errorMessage);
+        showServerError(errorMessage);
     });
 }
 
@@ -1789,7 +1789,7 @@ function getCopilotsByDirectProjectId(directProjectId) {
                returnValue.selected = result.selected;
            },
            function(errorMessage) {
-               showErrors(errorMessage);
+               showServerError(errorMessage);
            });
        }
     });

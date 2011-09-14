@@ -71,7 +71,7 @@
  */
 $.fn.bgIframe = $.fn.bgiframe = function(s) {
 	// This is only for IE6
-	if ( $.browser.msie && /6.0/.test(navigator.userAgent) ) {
+	if ( $.browser.msie && $.browser.version=="6.0" ) {
 		s = $.extend({
 			top     : 'auto', // auto == .currentStyle.borderTopWidth
 			left    : 'auto', // auto == .currentStyle.borderLeftWidth

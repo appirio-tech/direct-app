@@ -348,7 +348,7 @@ function hanldeCopilotProjectOperationsResult(jsonResult, isRemove) {
 		}
     } else {
         initDialog('errorDialog', 400);
-        showErrors(jsonResult.error.errorMessage);
+        showServerError(jsonResult.error.errorMessage);
     }
 };
 

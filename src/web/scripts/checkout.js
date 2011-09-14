@@ -4,6 +4,9 @@
  * - Version 1.1 (TC Direct Replatforming Release 5) Change notes:
  * - - This file was refactoring to work for the new Studio contest type which work on the Online Review System.
  *
+ * - Version 1.2 (Release Assembly - TopCoder Cockpit Modal Windows Revamp version) changes note:
+ * -  Update the modal windows of success and error
+ *
  * @author flexme
  * @version 1.1
  */
@@ -103,8 +106,7 @@ $(document).ready(function(){
         var feedback = $("#feedbackText" + submissionId).val();
         feedback = $.trim(feedback);
         if (feedback.length == 0) {
-            $('#msgDialog p').html("Feedback content can't be empty.");
-            $('#msgDialog').dialog('open');
+            showErrors("Feedback content can't be empty.");
             return false;
         }
         $.ajax({
@@ -115,7 +117,8 @@ $(document).ready(function(){
             dataType: 'json',
             async : false,
             success: function (jsonResult) {
-                $("#info" + submissionId).html("Feedback saved!");
+                modalClose();
+                showSuccessfulMessage("Your feedback has been saved.");
                 $("#info" + submissionId).removeClass("errorinfo");
             },
             beforeSend: beforeAjax,
@@ -130,8 +133,7 @@ $(document).ready(function(){
         var feedback = $("#feedbackTextMilestoneRound").val();
         feedback = $.trim(feedback);
         if (feedback.length == 0) {
-            $('#msgDialog p').html("Feedback content can't be empty.");
-            $('#msgDialog').dialog('open');
+            showErrors("Feedback content can't be empty.");
             return false;
         }
         $.ajax({
@@ -146,8 +148,7 @@ $(document).ready(function(){
                 $("#ginfo").removeClass("errorinfo");
             },
             error: function (jsonResult) {
-                $('#msgDialog p').html("Error occurs when saving your feedback.");
-                $('#msgDialog').dialog('open');
+                showServerError("Error occurs when saving your feedback.");
             },
             beforeSend: beforeAjax,
             complete: afterAjax
@@ -307,8 +308,7 @@ $(document).ready(function(){
                 if (!bankData || !bankData[arrPrize[i]]) {
                     prizesChosen++;
                     if (reachLast) {
-                        $('#msgDialog p').html("Prize slots must be filled.");
-                        $('#msgDialog').dialog('open');
+                        showErrors.html("Prize slots must be filled.");
                         return false;
                     }
                 } else {
@@ -337,8 +337,7 @@ $(document).ready(function(){
             }
 
             if (prizesChosen < prizeNumber && additionalPurchases.length > 0) {
-                $('#msgDialog p').html("Prize slots must be filled before chosing extra purchases.");
-                $('#msgDialog').dialog('open');
+                showErrors("Prize slots must be filled before choosing extra purchases.");
                 return false;
             }
             $("#additionalPurchases").val(additionalPurchases);

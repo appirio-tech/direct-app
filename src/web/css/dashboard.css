@@ -6670,10 +6670,10 @@ div.rightColumn .activity TABLE {
     position:relative;
 }
 .box .customerSelectMask{
-	z-index:999;
+	z-index:99;
 }
 .box .projectSelectMask{
-	z-index:998;
+	z-index:98;
 }
     .box .selectMask .contestsDropDown{
         max-height:200px;
@@ -6725,4 +6725,15 @@ div.rightColumn .activity TABLE {
     font-weight: bold;
     padding-left: 14px;
 }
+
+.messageContestName {
+    font-weight:bold;
+    color: #cc0000;
+}
+
+textarea#newProjectDescription {
+    max-width: 315px;
+    max-height: 130px;
+}
+
 
