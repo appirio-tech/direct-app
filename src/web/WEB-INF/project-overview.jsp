@@ -162,9 +162,9 @@
 									<div class="projectCopilotsProblem">
 										<dl>
 											<dt>Want to know more about Copilot?</dt>
-											<dd><a href="http://topcoder.com/home/help/?p=301">What's Copilot?</a></dd>
-											<dd><a href="http://topcoder.com/home/help/?p=301">How can Copilot benefit my project?</a></dd>
-											<dd><a href="http://topcoder.com/home/help/?p=301">How to hire a CoPilot</a></dd>
+											<dd><a href="http://www.topcoder.com/help/2011/03/10/how-can-i-get-a-copilot/">What's Copilot?</a></dd>
+											<dd><a href="http://www.topcoder.com/help/2011/03/10/how-will-using-a-copilot-benefit-the-user-and-the-users-project/">How can Copilot benefit my project?</a></dd>
+											<dd><a href="http://www.topcoder.com/help/2011/05/11/how-to-launch-a-copilot-contest/">How to hire a CoPilot</a></dd>
 										</dl>
 									</div>
 									<!-- End .projectCopilotsProblem -->
@@ -231,7 +231,7 @@
                                                                     </dl>
                                                                     <div class="mailTo"><a
                                                                             href="mailTo:${copilotInfo.email}">Contact
-                                                                        copilot</a></div>
+                                                                        Copilot</a></div>
                                                                 </div>
                                                             </div>
                                                             <div class="clearFix"></div>
@@ -359,9 +359,9 @@
                                 </s:if>
                                 <s:else>
                                      <div class="projectForumLeader">
-                                        <h3>Start project discussion!</h3>
-                                        <p>If you have a question / problem about your project, We can talk ! </p>
-                                        <p>Please use project forum to communicate with Topcoder PM or your copilots.</p>
+                                        <h3>Discuss This Project!</h3>
+                                        <p>Need to discuss this project?</p>
+                                        <p> Share information, requirements, comments, etc. with fellow team members, copilots and TopCoder managers.</p>
                                         <div class="projectForumLeaderButton">
                                             <a href="http://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1"><span>LET'S TALK</span></a>
                                         </div>
