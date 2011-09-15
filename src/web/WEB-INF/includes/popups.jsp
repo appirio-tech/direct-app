@@ -16,6 +16,9 @@
   -
   - Version 1.3 - Release Assembly - TopCoder Cockpit AJAX Revamp Change Note
   - - move all the popup windows into popups jsp
+  -
+  - Version 1.4 - Release Assembly - Release Assembly - TopCoder Cockpit Project Overview Update 1 Changes Note
+  - - add the copilot management widget modal window
 --%>
 <div class="popups"><!-- this area will contain the popups of this page -->
 	  <!-- Help Popup -->
@@ -189,6 +192,85 @@
 		<!-- end .modalFooter -->
 	</div>
 	<!-- end #addNewProjectModal -->
+
+  <!-- copilot manage modal -->
+    <div id="copilotManageModal" class="outLay">
+        <div class="inner">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        COPILOT MANAGEMENT
+                        <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+
+            <!-- content -->
+            <div class="modalBody">
+                <div class="addUserForm">
+                    <div class="addUserLeft">
+                        <!-- title -->
+                        <div class="addUserTitle">
+                            <p>Available Copilots</p>
+                            <a href="javascript:;" class="selectAll">Select All</a>
+                        </div>
+                        <!-- End .addUserTitle -->
+                        <!-- search -->
+                        <div class="searchBox">
+                            <input type="text" class="text"/>
+                            <a href="javascript:;" class="downloadProfile searchCopilot"><span
+                                    class="profileLeft">Search</span></a>
+                        </div>
+                        <!-- End .searchBox -->
+                        <!-- list -->
+                        <div class="addUserList">
+                            <ul>
+
+                            </ul>
+                        </div>
+                        <!-- End .addUserList -->
+                    </div>
+                    <div class="addUserButton">
+                        <a href="javascript:;" class="addItem">Add</a>
+                        <a href="javascript:;" class="removeItem">Add</a>
+                    </div>
+                    <div class="addUserRight">
+                        <!-- title -->
+                        <div class="addUserTitle">
+                            <p>Chosen Copilots</p>
+                            <a href="javascript:;" class="removeAll">Remove All</a>
+                        </div>
+                        <!-- End .addUserTitle -->
+                        <!-- list -->
+                        <div class="addUserList">
+                            <ul>
+
+                            </ul>
+                        </div>
+                        <!-- End .addUserList -->
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="buttonArea">
+                    <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span
+                            class="right">SAVE</span></span></a>
+                    <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span
+                            class="left"><span class="right">CANCEL</span></span></a>
+
+                    <div class="clearFix"></div>
+                </div>
+            </div>
+            <!-- End .content -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+    </div>
 
     </div>
 

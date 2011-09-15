@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
@@ -12,8 +12,12 @@ import java.io.Serializable;
  * - Add properties customerId and customerName.
  * </p>
  *
+ * <p>Version 1.2 (Release Assembly - TopCoder Cockpit Project Overview Update 1) change notes:
+ * - Add property <code>projectForumCategoryId</code>.
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public class ProjectBriefDTO implements Serializable {
 
@@ -40,6 +44,13 @@ public class ProjectBriefDTO implements Serializable {
      * @since 1.1
      */
     private String customerName;
+
+
+    /**
+     * The project forum category id.
+     * @since 1.2
+     */
+    private String projectForumCategoryId;
 
     /**
      * <p>Constructs new <code>ProjectBriefDTO</code> instance. This implementation does nothing.</p>
@@ -121,5 +132,25 @@ public class ProjectBriefDTO implements Serializable {
      */
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    /**
+     * Gets the project forum category id.
+     *
+     * @return the project forum category id.
+     * @since 1.2
+     */
+    public String getProjectForumCategoryId() {
+        return projectForumCategoryId;
+    }
+
+    /**
+     * Sets the project forum category id.
+     *
+     * @param projectForumCategoryId the project forum category id.
+     * @since 1.2
+     */
+    public void setProjectForumCategoryId(String projectForumCategoryId) {
+        this.projectForumCategoryId = projectForumCategoryId;
     }
 }

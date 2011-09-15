@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.util;
 
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.copilot.model.CopilotProject;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.*;
 import com.topcoder.direct.services.view.dto.contest.*;
@@ -259,10 +260,18 @@ import java.util.Map.Entry;
  *      direct_active_contests_replatforming query</li>
  *   </ol>
  * </p>
+ *
+ * <p>Version 2.8.0 (Release Assembly - TopCoder Cockpit Project Overview Update 1) change notes:
+ * <ul>
+ *     <li>Add method {@link #getDirectProjectCopilotStats(long)} to get copilots statistics
+ *     for project overview page </li>
+ *     <li>Add method {@link #getCopilotProject(long, long)} to get copilots data of direct project</li>
+ *     <li>Update method {@link #getCopilotProjects(long)}</li>
+ * </ul>
+ * </p>
  * 
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve
- * @version 2.7.0
- * @since 1.0
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin
+ * @version 2.8.0
  */
 public class DataProvider {
 
@@ -348,6 +357,113 @@ public class DataProvider {
         CoPilotStatsDTO result = new CoPilotStatsDTO();
         result.setAvailableCopilots(coPilotStatsResult.getIntItem(0, "available_copilots_count"));
         result.setAvailableCopilotProjects(coPilotStatsResult.getIntItem(0, "available_copilot_projects_count"));
+        return result;
+    }
+
+
+    /**
+     * Gets the copilot statistics of all the copilots of the given direct project.
+     *
+     * @param directProjectId the id of the direct project.
+     * @return the list of <code>ProjectCopilotStatDTO</code>
+     * @throws Exception if any error happends during execution.
+     * @since 2.8.0
+     */
+    public static List<ProjectCopilotStatDTO> getDirectProjectCopilotStats(long directProjectId) throws Exception {
+        // result list
+        List<ProjectCopilotStatDTO> result = new ArrayList<ProjectCopilotStatDTO>();
+        Set<Long> copilotsSet = new HashSet<Long>();
+
+        // current user in session
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        // get all the copilots belong to the direct project
+        List<CopilotBriefDTO> copilots = DataProvider.getCopilotProject(currentUser.getUserId(), directProjectId).getCopilots();
+
+        // initialize the result
+        for (CopilotBriefDTO copilot : copilots) {
+
+            ProjectCopilotStatDTO stat = new ProjectCopilotStatDTO();
+            ProjectCopilotDTO pc = new ProjectCopilotDTO();
+
+            // set the basic copilot information into ProjectCopilotDTO
+            pc.setUserId(copilot.getUserId());
+            pc.setHandle(copilot.getHandle());
+            pc.setHandleLower(copilot.getHandle().toLowerCase());
+            pc.setCopilotProfileId(copilot.getCopilotProfileId());
+
+            stat.setCopilotInfo(pc);
+
+            if(!copilotsSet.contains(Long.valueOf(pc.getUserId()))) {
+                result.add(stat);
+                copilotsSet.add(pc.getUserId());
+            }
+
+        }
+
+
+        // use cached access to store the basic copilot information because it does not change refrequently
+        CachedDataAccess cachedAccess = new CachedDataAccess(MaxAge.THREE_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request profileRequest = new Request();
+        profileRequest.setContentHandle("copilot_profile_info");
+        ResultSetContainer profileResult;
+        Map<Long, ProjectCopilotStatDTO> helperMap = new HashMap<Long, ProjectCopilotStatDTO>();
+
+        // add copilot general info - avatar image path and email
+        for (ProjectCopilotStatDTO stat : result) {
+            long copilotProfileId = stat.getCopilotInfo().getCopilotProfileId();
+
+            profileRequest.setProperty("uid", String.valueOf(copilotProfileId));
+
+            profileResult = cachedAccess.getData(profileRequest).get("copilot_profile_info");
+
+            stat.getCopilotInfo().setAvatarPath(profileResult.getStringItem(0, "image_path"));
+
+            stat.getCopilotInfo().setEmail(profileResult.getStringItem(0, "email"));
+
+            // add the mapping of copilot user id to ProjectCopilotStatDTO
+            helperMap.put(stat.getCopilotInfo().getUserId(), stat);
+        }
+
+        // add copilot statistics by counting all the contests with copilots in the project
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_project_copilot_contests");
+        request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+        request.setProperty("tcdirectid", String.valueOf(directProjectId));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_project_copilot_contests");
+
+        final int recordNum = resultContainer.size();
+
+        for (int i = 0; i < recordNum; i++) {
+            long copilotUserId = Long.valueOf(resultContainer.getStringItem(i, "copilot_user_id"));
+            long statusId = resultContainer.getLongItem(i, "status_id");
+            String status = resultContainer.getStringItem(i, "status");
+
+            ProjectCopilotStatDTO currentStat = helperMap.get(copilotUserId);
+
+            if (currentStat == null) continue;
+
+            if (status.toLowerCase().equals("draft") || statusId == 2L) {
+                // count the status id draft and status name draft
+                currentStat.setDraftContestsNumber(currentStat.getDraftContestsNumber() + 1);
+                continue;
+            } else if (status.toLowerCase().equals("completed")) {
+                // count the finished contests
+                currentStat.setFinishedContestsNumber(currentStat.getFinishedContestsNumber() + 1);
+                continue;
+            } else if (statusId == 1L) {
+                // count the active contests
+                currentStat.setActiveContestsNumber(currentStat.getActiveContestsNumber() + 1);
+                continue;
+            } else if (statusId == 4L || statusId == 5L || statusId == 8L || statusId == 11L || statusId == 6L) {
+                // failed contests
+                currentStat.setFailuresContestsNumber(currentStat.getFailuresContestsNumber() + 1);
+                continue;
+            }
+        }
+
         return result;
     }
 
@@ -967,7 +1083,7 @@ public class DataProvider {
              }
             
              tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
-            
+
              if(DirectUtils.ACTIVE_STATUS.contains(statusName)) {
                  activeNum++;
                  activeFee += fee;
@@ -2361,6 +2477,67 @@ public class DataProvider {
 
         return dto;
     }
+
+    /**
+     * Gets the copilots information of the given direct project.
+     *
+     * @param userId the user id of the current user.
+     * @param tcDirectProjectid the id the direct project.
+     * @return the copilot projects
+     * @throws Exception if any error happends during execution.
+     * @since 2.8.0
+     */
+    public static CopilotProjectDTO getCopilotProject(long userId, long tcDirectProjectid) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("tc_direct_project_copilots");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("tcdirectid", String.valueOf(tcDirectProjectid));
+
+        ResultSetContainer resultContainer = dataAccessor.getData(request).get(
+                "tc_copilot_projects");
+
+        CopilotProjectDTO result = new CopilotProjectDTO();
+        result.setCopilots(new ArrayList<CopilotBriefDTO>());
+
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+            long tcDirectProjectId = row.getLongItem("tc_direct_project_id");
+            String tcDirectProjectName = row.getStringItem("tc_direct_project_name");
+
+            if (row.getItem("handle").getResultData() == null) {
+                continue;
+            }
+
+            String handle = row.getStringItem("handle");
+            String copilotType = row.getStringItem("name");
+            long copilotUserId = row.getLongItem("user_id");
+            String copilotProjectId = row.getStringItem("copilot_project_id");
+            String copilotProfileId = row.getStringItem("copilot_profile_id");
+
+            if (result.getProject() == null) {
+                // set ProjectBrieftDTO if not set
+                ProjectBriefDTO project = new ProjectBriefDTO();
+                project.setId(tcDirectProjectId);
+                project.setName(tcDirectProjectName);
+
+                result.setProject(project);
+            }
+
+            // stores the copilot data
+            CopilotBriefDTO copilot = new CopilotBriefDTO();
+            copilot.setCopilotProfileId(Long.parseLong(copilotProfileId.trim()));
+            copilot.setCopilotProjectId(Long.parseLong(copilotProjectId.trim()));
+            copilot.setCopilotType(copilotType);
+            copilot.setHandle(handle);
+            copilot.setUserId(copilotUserId);
+
+            // add to result
+            result.getCopilots().add(copilot);
+        }
+
+        return result;
+    }
     
 
     /**
@@ -2378,6 +2555,7 @@ public class DataProvider {
         Request request = new Request();
         request.setContentHandle("tc_copilot_projects");
         request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("tcdirectid", "0");
 
         // set copilot project
         ResultSetContainer resultContainer = dataAccessor.getData(request).get(

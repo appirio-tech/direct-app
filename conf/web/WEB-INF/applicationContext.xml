@@ -243,6 +243,13 @@
         <property name="userPreferenceHome" ref="userPreferenceHome"/>
     </bean>
 
+    <bean id="projectOverviewAction"
+          class="com.topcoder.direct.services.view.action.project.CurrentProjectOverviewAction"
+          abstract="true">
+        <property name="projectServiceFacade" ref="projectServiceFacade"/>
+
+    </bean>
+
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
           parent="baseDirectStrutsAction">
     </bean>

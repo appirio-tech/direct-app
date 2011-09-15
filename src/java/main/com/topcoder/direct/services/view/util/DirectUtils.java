@@ -35,6 +35,8 @@ import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.management.deliverable.Submission;

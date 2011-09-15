@@ -134,6 +134,17 @@ function displayServerError(modal, title, message, buttonText, buttonHandler) {
 	adjustAndShow(modal);
 }
 
+function displayComingSoon(modal, title, message, buttonText, buttonHandler) {
+	buttonText = buttonText || "OK";
+	buttonHandler = buttonHandler || closeModal;
+	$(modal + " .modalHeader .modalHeaderCenter h2").text(title);
+	$(modal + " .modalBody").addClass("comingsoon");
+	$(modal + " .modalBody .modalContent").html("<li>" + message + "</li>");
+	$(modal + " .modalCommandBox .defaultBtn .btnC").text(buttonText);
+	$(modal + " .modalCommandBox .defaultBtn").bind("click", buttonHandler);
+	adjustAndShow(modal);
+}
+
 /**
  * Display warning modal window
  *

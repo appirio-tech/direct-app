@@ -7,9 +7,11 @@
  * 3) Added new styles for header and footer.
  * 4) Added new styles for right sidebar.
  *
- *
  * Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1
  * 1) Added new styles for AJAX preloader and modal window
+ *
+ * Release Assembly - TopCoder Cockpit Project Overview Update 1
+ * 1) Added new CSS styles for project copilot and project forum modules in the project overview page.
  */
 
 html,body{
@@ -1614,6 +1616,703 @@ overflow: auto;
 }
 
 
+/* START - Release Assembly - TopCoder Cockpit Project Overview Update 1  */
+
+	#new-modal .buttonArea{
+		height:52px;
+		background:#e8e8e8;
+		border-top:#cccccc solid 1px;
+		}
+
+		#new-modal .buttonArea .button6{
+			width:60px;
+			float:none;
+			display:block;
+			margin:0 auto;
+			margin-top:16px;
+			}
+
+		#new-modal .buttonArea .closeButton{
+			width:82px;
+			}
+
+			#new-modal .buttonArea .button6 span.right{
+				padding:4px 20px 0 20px;
+				}
+
+			#new-modal .buttonArea .closeButton span.right{
+				padding:4px 24px 0 24px;
+				}
+
+.projectTableContainer {
+	position:relative;
+	min-height:50px;
+	width:100%;
+	overflow:hidden;
+	margin-bottom:8px;
+	}
+.projectTableContainer TABLE.project{
+	margin-bottom:0;
+	}
+
+.projectTableContainer SPAN.leftCorner{
+	position:absolute;
+	background: url(../images/th_left_bg.png) no-repeat left top;
+	display: block;
+	height:25px;
+	width:2px;
+	left:0px;
+	top:0px;
+	}
+
+.projectTableContainer SPAN.rightCorner{
+	position:absolute;
+	background: url(../images/th_right_bg.png) no-repeat right top;
+	display: block;
+	height:25px;
+	width:2px;
+	right:0px;
+	top:0px;
+	}
+.projectTableContainer TABLE.project THEAD SPAN.left{
+	display: block;
+	height:25px;
+	position:static;
+	margin-left:0px;
+	background:none;
+}
+
+.projectTableContainer TABLE.project THEAD SPAN.right{
+	background:none;
+	display: block;
+	position:static;
+	right:0px;
+}
+
+#area1 .titleProjectCopilots H2.title{
+	background:url(../images/project_copilot_icon.png) left top no-repeat;
+	}
+#area1 .titleProjectStats H2.title{
+	background-image:url(../images/project_stats_icon.png);
+	}
+#area1 .titleProjectForum H2.title{
+	background:url(../images/project_forum_icon.png) left top no-repeat;
+	}
+
+/* Project Copilots area */
+.projectCopilotsLeader{
+	border:1px solid #bdbdbd;
+	margin-bottom:15px;
+	}
+	.projectCopilotsLeader .goForCopilot{
+		padding:12px 10px;
+		}
+		.projectCopilotsLeader .goForCopilot h3{
+			font-size:14px;
+			font-weight:normal;
+			padding-bottom:12px;
+			}
+		.projectCopilotsLeader .goForCopilot .goForCopilotBox{
+			min-height:10px;
+			overflow:hidden;
+			font-size:11px;
+			line-height:14px;
+			color:#666667;
+			}
+			.projectCopilotsLeader .goForCopilot .goForCopilotBox p{
+				padding-top:4px;
+				}
+			.projectCopilotsLeader .goForCopilot .goForCopilotBox .leftBox{
+				float:left;
+				width:48%;
+				display:inline;
+				}
+			.projectCopilotsLeader .goForCopilot .goForCopilotBox .rightBox{
+				float:right;
+				width:48%;
+				display:inline;
+				}
+
+	.projectCopilotsLeader .projectCopilotsProblem{
+		padding:20px 12px 26px;
+		font-size:11px;
+		background-color:#f5f5f5;
+		border-top:1px solid #bdbdbd;
+		}
+		.projectCopilotsLeader .projectCopilotsProblem dt{
+			font-weight:bold;
+			}
+		.projectCopilotsLeader .projectCopilotsProblem dl a{
+			text-decoration:none;
+			color:#ff0001;
+			padding-left:8px;
+			line-height:13px;
+			background:url(../images/arrow-link.gif) left center no-repeat;
+			}
+		.projectCopilotsLeader .projectCopilotsProblem dl a:hover{
+			text-decoration:underline;
+			}
+
+/* Project Forum area */
+.projectForumLeader{
+	border:1px solid #bdbdbd;
+	min-height:10px;
+	margin-bottom:15px;
+	background:url(../images/img-forum-person.png) 14px 22px no-repeat;
+	padding-left:300px;
+	padding-top:14px;
+	padding-right:10px;
+	padding-bottom:14px;
+	font-size:12px;
+	color:#333333;
+	line-height:18px;
+	}
+	.projectForumLeader h3{
+		font-size:14px;
+		color:#000000;
+		font-weight:normal;
+		line-height:32px;
+		}
+	.projectForumLeader .projectForumLeaderButton{
+		padding-top:10px;
+		}
+		.projectForumLeader .projectForumLeaderButton .buttonRed1,
+		.projectForumLeader .projectForumLeaderButton .buttonRed1 span{
+			display:inline-block;
+			font-size:12px;
+			}
+		.projectForumLeader .projectForumLeaderButton .buttonRed1 span{
+			width:112px;
+			}
+
+		.projectForumLeader .projectForumLeaderButton .createForumButton span{
+			width:150px;
+			}
+
+	/* copilotManageModal */
+	#copilotManageModal{
+		width:660px;
+		display:none;
+		}
+
+		#copilotManageModal .addUserForm{
+			padding-top:30px;
+			padding-bottom:36px;
+			}
+
+			/* left */
+			#copilotManageModal .addUserForm .addUserLeft{
+				width:220px;
+				height:300px;
+				float:left;
+				display:inline;
+				margin-left:67px;
+				border:#bcbcbc solid 1px;
+				background:#eeeeee;
+				}
+
+			#copilotManageModal .addUserForm .addUserButton{
+				width:74px;
+				height:300px;
+				float:left;
+				display:inline;
+				}
+
+			/* right */
+			#copilotManageModal .addUserForm .addUserRight{
+				width:220px;
+				height:300px;
+				float:left;
+				display:inline;
+				border:#bcbcbc solid 1px;
+				background:#eeeeee;
+				}
+
+				/* addUserTitle */
+				#copilotManageModal .addUserForm .addUserTitle{
+					height:33px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					line-height:33px;
+					background:#3e3532;
+					}
+
+					#copilotManageModal .addUserForm .addUserTitle p{
+						width:auto;
+						float:left;
+						display:inline;
+						margin-left:10px;
+						font-size:12px;
+						font-weight:bold;
+						color:#fffffe;
+						}
+
+					#copilotManageModal .addUserForm .addUserTitle a{
+						width:auto;
+						float:right;
+						display:inline;
+						margin-right:5px;
+						font-size:12px;
+						color:#c9c9c9;
+						text-decoration:none;
+						}
+
+					#copilotManageModal .addUserForm .addUserTitle a:hover{
+						text-decoration:underline;
+						}
+
+				/* search box */
+				#copilotManageModal .addUserForm .searchBox{
+					height:47px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					border-bottom:#c6c6c6 solid 1px;
+					}
+
+					#copilotManageModal .addUserForm .searchBox .text{
+						width:108px;
+						height:17px;
+						float:left;
+						display:inline;
+						margin-top:12px;
+						margin-left:10px;
+						margin-right:10px;
+						padding:2px;
+						background:#f8f8f8;
+						font-size:12px;
+						border:#a2a1a5 solid 1px;
+						}
+
+					#copilotManageModal .addUserForm .searchBox .downloadProfile{
+						width:64px;
+						float:left;
+						display:inline;
+						margin-top:13px;
+						}
+
+						#copilotManageModal .addUserForm .searchBox .downloadProfile .profileLeft{
+							width:64px;
+							font-size:12px;
+							text-align:center;
+							text-indent:-2px;
+							}
+
+				/* copilotManageList */
+				#copilotManageModal .addUserForm .addUserLeft .addUserList{
+					height:219px;
+					}
+
+				#copilotManageModal .addUserForm .addUserRight .addUserList{
+					height:266px;
+					}
+
+				#copilotManageModal .addUserForm .addUserList li{
+					margin-bottom:1px;
+					padding-left:10px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					font-size:12px;
+					line-height:20px;
+					height:20px;
+					list-style:none;
+					border-bottom:#c3c4c6 dotted 1px;
+					cursor:pointer;
+					}
+
+				#copilotManageModal .addUserForm .addUserList li.selected{
+					background:#c1c1c1;
+					}
+
+				/* button */
+				#copilotManageModal .addUserForm .addItem{
+					width:34px;
+					height:19px;
+					display:block;
+					margin:0 auto;
+					margin-top:136px;
+					text-indent:-9999px;
+					background:url(../images/add_tech.png) no-repeat left top;
+					}
+
+				#copilotManageModal .addUserForm .addItem:hover{
+					background:url(../images/add_tech_hover.png) no-repeat left top;
+					}
+
+				#copilotManageModal .addUserForm .removeItem{
+					width:34px;
+					height:19px;
+					display:block;
+					margin:0 auto;
+					margin-top:5px;
+					text-indent:-9999px;
+					background:url(../images/remove_tech.png) no-repeat left top;
+					}
+
+				#copilotManageModal .addUserForm .removeItem:hover{
+					background:url(../images/remove_tech_hover.png) no-repeat left top;
+					}
+
+				#copilotManageModal .buttonArea .button6{
+					width:100px;
+					float:left;
+					display:inline;
+					margin-left:206px;
+					margin-right:40px;
+					}
+
+				#copilotManageModal .buttonArea .cancelButton{
+					margin-left:0;
+					}
+
+					#copilotManageModal .buttonArea .button6 span.right{
+						padding:4px 0 0 0;
+						text-align:center;
+						}
+
+
+/* projectCopilotsList */
+.projectCopilotsList{
+	min-height:10px;
+	border:1px solid #bdbdbd;
+	margin-bottom:15px;
+	}
+	.projectCopilotsList .copilotsListHeader{
+		height:24px;
+		background:url(../images/project_th_bg.png) left -1px repeat-x;
+		border-bottom:1px solid #bdbdbd;
+		line-height:24px;
+		}
+		.projectCopilotsList .copilotsListHeader h3{
+			font-size:14px;
+			font-weight:normal;
+			color:#000000;
+			text-indent:10px;
+			}
+		.projectCopilotsList .copilotsListHeader .red{
+			color:#ff0001;
+			}
+	.projectCopilotsList .copilotsListBody{
+		width:100%;
+		overflow:hidden;
+		}
+	.projectCopilotsList ul li{
+		list-style:none;
+		font-size:11px;
+		color:#333333;
+		}
+
+    .projectCopilotsList .projectCopilotPhoto {
+        width: 77px;
+        height: 85px;
+    }
+	#projectCopilotsCarousel{
+		min-height:155px;
+		width:100%;
+		}
+		#projectCopilotsCarousel .itemContainer{
+			min-height:145px;
+			padding-bottom:10px;
+			overflow:hidden;
+			}
+			#projectCopilotsCarousel .itemContainer .userPhoto{
+				float:left;
+				width:28%;
+				padding-top:15px;
+				min-width:78px;
+				display:inline;
+				text-align:right;
+				}
+			.copilotsAlignCenter #projectCopilotsCarousel .itemContainer .userPhoto{
+				float:none;
+				width:100%;
+				display:block;
+				text-align:center;
+				}
+				.copilotsAlignCenter #projectCopilotsCarousel .itemContainer .userPhoto .userPhotoInner{
+					float:none;
+					display:block;
+					}
+				.copilotsAlignCenter #projectCopilotsCarousel .itemContainer .userPhoto .userPhotoInner .handleLink{
+					width:auto;
+					}
+				#projectCopilotsCarousel .itemContainer .userPhoto .userPhotoInner{
+					float:right;
+					width:auto;
+					display:inline;
+					}
+					#projectCopilotsCarousel .itemContainer .userPhoto .userPhotoInner .handleLink{
+						width:68px;
+						text-align:center;
+						padding-top:6px;
+						}
+						#projectCopilotsCarousel .itemContainer .userPhoto .userPhotoInner .handleLink a{
+							font-weight:bold;
+							text-decoration:none;
+							}
+						#projectCopilotsCarousel .itemContainer .userPhoto .userPhotoInner .handleLink a:hover{
+							text-decoration:underline;
+							}
+			#projectCopilotsCarousel .itemContainer .userInfor{
+				float:left;
+				width:72%;
+				min-width:200px;
+				display:inline;
+				line-height:18px;
+				padding-top:15px;
+				}
+				#projectCopilotsCarousel .itemContainer .userInfor .userInforInner{
+					padding-left:15px;
+					}
+				#projectCopilotsCarousel .itemContainer .userInfor dt{
+					float:left;
+					width:104px;
+					display:inline;
+					clear:left;
+					}
+				#projectCopilotsCarousel .itemContainer .userInfor dd{
+					float:left;
+					width:80px;
+					display:inline;
+					font-weight:bold;
+					}
+				#projectCopilotsCarousel .itemContainer .userInfor .mailTo{
+					clear:both;
+					background:url(../images/icon-email.png) left 4px no-repeat;
+					padding-left:18px;
+					}
+					#projectCopilotsCarousel .itemContainer .userInfor .mailTo a{
+						color:#333333;
+						text-decoration:underline;
+						}
+					#projectCopilotsCarousel .itemContainer .userInfor .mailTo a:hover{
+						text-decoration:none;
+						}
+
+				.copilotsAlignCenter #projectCopilotsCarousel .itemContainer .userInfor{
+					float:none;
+					display:block;
+					margin:0 auto;
+					}
+
+			.noCopilotType #projectCopilotsCarousel .itemContainer .userPhoto{
+				margin-left:10%;
+				padding-top:25px;
+				}
+			.noCopilotType #projectCopilotsCarousel .itemContainer .userInfor{
+				width:62%;
+				min-width:160px;
+				padding-top:25px;
+				}
+			.noCopilotType #projectCopilotsCarousel .itemContainer .userInfor dd{
+				width:40px;
+				}
+
+			.copilotsAlignCenter .noCopilotType #projectCopilotsCarousel .itemContainer .userPhoto{
+				margin-left:0;
+				}
+
+
+
+	.projectCopilotsList .copilotsListButtonBox{
+		background-color:#f5f5f5;
+		border-top:1px solid #bdbdbd;
+		padding-top:9px;
+		padding-bottom:10px;
+		height:24px;
+		text-align:center;
+		}
+		.projectCopilotsList .copilotsListButtonBox .buttonRed1{
+			display:inline-block;
+			font-size:12px;
+			}
+			.projectCopilotsList .copilotsListButtonBox .buttonRed1 span{
+				display:inline-block;
+				padding:0 32px 0 28px;
+				}
+
+
+/* #projectForumTable */
+#projectForumTable{
+	border:1px solid #bdbdbd;
+	font-size:11px;
+	margin-bottom:15px;
+	}
+	#projectForumTable .projectForumTableHeader{
+		height:24px;
+		background:url(../images/project_th_bg.png) left -1px repeat-x;
+		border-bottom:1px solid #bdbdbd;
+		line-height:24px;
+		padding-right:16px;
+		text-align:left;
+		overflow:hidden;
+		}
+		#projectForumTable .projectForumTableHeader div{
+			float:left;
+			display:inline;
+			font-weight:bold;
+			}
+		#projectForumTable .projectForumTableHeader div.colTab1{
+			text-align:left;
+			text-indent:10px;
+			}
+		#projectForumTable .projectForumTableHeader div.colTab3{
+			text-align:center;
+			}
+		#projectForumTable .projectForumTableBody td.colTab1 div{
+			padding-left:5px;
+			}
+		#projectForumTable .projectForumTableBody td.colTab2 div{
+			padding-top:2px;
+			}
+	#projectForumTable .projectForumTableBody{
+		height:199px;
+		overflow:auto;
+		}
+		#projectForumTable .projectForumTableBody .projectForumTableBodyInner{
+			width:auto;
+			}
+	#projectForumTable .projectForumTableBody table{
+		width:100%;
+		}
+		#projectForumTable .projectForumTableBody table td{
+			border-bottom:1px solid #bdbdbd;
+			vertical-align:top;
+			padding:6px 5px 5px !important;
+			}
+		#projectForumTable .projectForumTableBody table tr.odd td{
+			background-color:#f5f5f5;
+			}
+		#projectForumTable .projectForumTableBody table td h3{
+			font-size:11px;
+			font-weight:normal;
+			}
+		#projectForumTable .projectForumTableBody table td h3.isNew{
+			font-weight:bold;
+			}
+			#projectForumTable .projectForumTableBody table td h3 a{
+				text-decoration:underline;
+				color:#000000;
+				}
+			#projectForumTable .projectForumTableBody table td h3 a:hover{
+				text-decoration:none;
+				}
+			#projectForumTable .projectForumTableBody table td p{
+				color:#000000;
+				}
+			#projectForumTable .projectForumTableBody table td a.author{
+				color:#ee0000;
+				font-weight:bold;
+				text-decoration:none;
+				}
+			#projectForumTable .projectForumTableBody table td a.author:hover{
+				text-decoration:underline;
+				}
+
+		#projectForumTable .projectForumTableBody .ajaxTableLoader{
+			text-align:center;
+			padding-top:94px;
+			}
+#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd td{
+	background-color:#f5f5f5;
+	}
+
+#projectForumTable .colTab1{
+	width:72%;
+	}
+#projectForumTable .colTab2{
+	width:12%;
+	text-align:center;
+	}
+#projectForumTable .colTab3{
+	width:16%;
+	}
+
+
+/**
+ *  Horizontal Buttons
+ */
+.jcarousel-skin-tango .jcarousel-next-horizontal {
+    position: absolute;
+    top: 40%;
+    right: 0px;
+    width: 21px;
+    height: 32px;
+    cursor: pointer;
+    background: transparent url(../images/next-horizontal.png) no-repeat 0 0;
+}
+
+.jcarousel-skin-tango .jcarousel-next-horizontal:hover {
+    background-position: 0 -32px;
+}
+
+.jcarousel-skin-tango .jcarousel-next-horizontal:active {
+    background-position: 0px 0;
+}
+
+.jcarousel-skin-tango .jcarousel-next-disabled-horizontal,
+.jcarousel-skin-tango .jcarousel-next-disabled-horizontal:hover,
+.jcarousel-skin-tango .jcarousel-next-disabled-horizontal:active{
+	display:none !important;
+}
+
+.jcarousel-skin-tango .jcarousel-prev-horizontal {
+    position: absolute;
+    top: 40%;
+    left: 0px;
+    width: 21px;
+    height: 32px;
+    cursor: pointer;
+    background: transparent url(../images/prev-horizontal.png) no-repeat 0 0;
+}
+
+.jcarousel-skin-tango .jcarousel-prev-horizontal:hover {
+    background-position: 0 -32px;
+}
+
+.jcarousel-skin-tango .jcarousel-prev-horizontal:active {
+    background-position: 0px 0;
+}
+
+.jcarousel-skin-tango .jcarousel-prev-disabled-horizontal,
+.jcarousel-skin-tango .jcarousel-prev-disabled-horizontal:hover,
+.jcarousel-skin-tango .jcarousel-prev-disabled-horizontal:active{
+    display:none !important;
+}
+.copilotsAlignCenter .jcarousel-skin-tango .jcarousel-next-horizontal,
+.copilotsAlignCenter .jcarousel-skin-tango .jcarousel-prev-horizontal{
+	top:36%;
+	}
+
+
+A.buttonRed1{
+	display:block;
+	background: transparent url(../images/button-left.png) left top no-repeat;
+	font-size: 11px;
+	color: #ffffff;
+	line-height:24px;
+	font-weight:bold;
+	text-align:center;
+	padding-left:4px;
+	font-family:"Myriad Pro", Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+	A.buttonRed1 span{
+		display:block;
+		background: transparent url(../images/button-right.png) right top no-repeat;
+		cursor: pointer;
+		height:24px;
+		padding-right:4px;
+	}
+
+	A.buttonRed1:hover{
+		background-position:left -24px;
+	}
+		A.buttonRed1:hover span{
+			background-position:right -24px;
+		}
+
+
+/* END - Release Assembly - TopCoder Cockpit Project Overview Update 1  */
 			
 /*
  * IE6 Notification styles

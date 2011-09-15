@@ -326,6 +326,18 @@ position: absolute;
     background-image: url(../images/modal-error.png);
 }
 
+#new-modal-window .outLay .modalBody.comingsoon .modalContent {
+    background: none;
+    padding: 0 25px 11px 30px;
+    width: 260px;
+}
+
+#new-modal-window .mailTo {
+    background: url("/images/icon-email.png") no-repeat scroll left 4px transparent;
+    padding-left: 18px;
+    padding-top: 2px;
+}
+
 #new-modal-window .outLay .modalBody.warning .modalContent {
     background-image: url(../images/modal-warning.png);
 }

@@ -384,6 +384,10 @@ function showErrors(errors) {
    displayClientSideError("#demoModal", "Errors", errors);
 }
 
+function showComingSoon(message) {
+    displayComingSoon("#demoModal", "Coming Soon", message);
+}
+
 /**
  * Shows the server error modal window when an error raised on server side.
  *

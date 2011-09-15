@@ -10,11 +10,12 @@ import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectOverviewDTO;
+import com.topcoder.direct.services.view.dto.project.*;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.util.logging.Logger;
 
@@ -30,7 +31,7 @@ import java.util.Map;
  * <p>
  * Version 1.0.1 - Direct - Project Dashboard Assembly Change Note
  * <ul>
- * <li>Added {@link #setDashboardProjectStat()} and {@link #setDashboardContests()} method. Updated
+ * <li>Added {@link #setDashboardProjectStat()} method. Updated
  * {@link #execute()} method to set dashboard project data and dashboard contests data.</li>
  * </ul>
  * </p>
@@ -69,9 +70,16 @@ import java.util.Map;
  *     separately via AJAX call.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Project Overview Update 1) Change notes:
+ *   <ol>
+ *     <li></li>
+ *   </ol>
+ * </p>
  * 
  * @author isv, Veve
- * @version 1.0.6
+ * @version 1.1
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -91,6 +99,61 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      * view.</p>
      */
     private ProjectOverviewDTO viewData = new ProjectOverviewDTO();
+
+    /**
+     * The statistics of the copilots of the project.
+     *
+     * @since 1.1
+     */
+    private List<ProjectCopilotStatDTO> copilotStats;
+
+    /**
+     * The project service facade. It will be set via spring injection.
+     *
+     * @since 1.1
+     */
+    private ProjectServiceFacade projectServiceFacade;
+
+
+    /**
+     * Gets the project service facade.
+     *
+     * @return the project service facade.
+     * @since 1.1
+     */
+    public ProjectServiceFacade getProjectServiceFacade() {
+        return projectServiceFacade;
+    }
+
+    /**
+     * Sets the project service facade.
+     *
+     * @param projectServiceFacade the project service facade.
+     * @since 1.1
+     */
+    public void setProjectServiceFacade(ProjectServiceFacade projectServiceFacade) {
+        this.projectServiceFacade = projectServiceFacade;
+    }
+
+    /**
+     * Gets the statistics of the copilots of the project.
+     *
+     * @return The statistics of the copilots of the project.
+     * @since 1.1
+     */
+    public List<ProjectCopilotStatDTO> getCopilotStats() {
+        return copilotStats;
+    }
+
+    /**
+     * Sets the statistics of the copilots of the project.
+     *
+     * @param copilotStats The statistics of the copilots of the project.
+     * @since 1.1
+     */
+    public void setCopilotStats(List<ProjectCopilotStatDTO> copilotStats) {
+        this.copilotStats = copilotStats;
+    }
 
     /**
      * <p>Constructs new <code>ProjectOverviewAction</code> instance. This implementation does nothing.</p>
@@ -165,6 +228,17 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
 
                 getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
                 getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
+
+                // gets and sets the statistics of the project copiolots
+                setCopilotStats(DataProvider.getDirectProjectCopilotStats(formData.getProjectId()));
+
+                // get the project forum information and update the project name and project id
+                // because they are not shown when the project has no contests
+                ProjectData project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), formData.getProjectId());
+
+                getViewData().getProjectStats().getProject().setName(project.getName());
+                getViewData().getProjectStats().getProject().setId(project.getProjectId());
+                getViewData().getProjectStats().getProject().setProjectForumCategoryId(project.getForumCategoryId());
 
 
             } catch (Exception e) {

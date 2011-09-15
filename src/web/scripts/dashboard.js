@@ -27,8 +27,11 @@
  *  Version 1.7 - Release Assembly - TopCoder Cockpit Modal Windows Revamp changes notes:
  *  - Add methods for closing new "add new project" modal window
  *
+ *  Version 1.8 - Release Assembly - TopCoder Cockpit Project Overview Update 1
+ *  - Add javascript codes to adjust the the project copilot box when resizing browser
+ *
  * @author tangzx, Blues, GreatKevin
- * @version 1.6
+ * @version 1.8
  */
 $(document).ready(function(){
 						   
@@ -964,9 +967,27 @@ $(document).ready(function(){
              $(".resultTable th.truncateSubs").text("Submissions");
         }
     }
+
+
+    /**
+     * Aligns the copilots list in the project overview page.
+     */
+    function alignProjectCopilots() {
+        var width = $(window).width();
+
+        // align to center when the browser width is less than 1400
+        if (width < 1300) {
+            $(".projectCopilotsList").addClass("copilotsAlignCenter");
+        } else {
+            $(".projectCopilotsList").removeClass("copilotsAlignCenter");
+        }
+    }
+
+
     $(window).resize(function(){
           truncateTH();
-	  truncateTableHeaderNames();
+	      truncateTableHeaderNames();
+          alignProjectCopilots();
     }) ;
 
     truncateTH();
@@ -1278,6 +1299,11 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		$('#new-modal #preloaderModal').hide();
     }
 
+    modalAllClose = function() {
+        $('#modalBackground').hide();
+		$('#new-modal .outLay').hide();
+    }
+
     /**
      * Close the add new project modal window.
      */
@@ -1343,7 +1369,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	}
 
 	$('#new-modal .outLay .closeModal').live('click', function(){
-		modalClose();
+		modalAllClose();
 		return false;
 	});
 

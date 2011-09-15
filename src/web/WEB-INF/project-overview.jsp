@@ -1,7 +1,7 @@
 <%--
   - Author: Veve, isv
   -
-  - Version: 1.0.4
+  - Version: 1.0.6
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -17,6 +17,8 @@
   - Added new columns to Project Health area; the data for Project Health area is loaded via AJAX call now 
   - Version 1.0.5 - Release Assembly - TC Direct UI Improvement Assembly 3 Change Note:
   - Added new CSS class for project stats and project activities tables
+  - Version 1.0.6 - Release Assembly - Release Assembly - TopCoder Cockpit Project Overview Update 1 Change Note:
+  - Added new JSP codes for project copilots and project forum
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -35,6 +37,8 @@
     <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js"></script>
+    <script type="text/javascript" src="/scripts/directProjectOverview.js"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>
@@ -130,9 +134,128 @@
 
 
                             <div class="leftColumn">
-                                <div class="areaHeader padding2">
-                                        <h2 class="title">Project Stats</h2>
+                                <div class="areaHeader padding2 titleProjectCopilots">
+
+                                        <h2 class="title">Project Copilots</h2>
                                 </div><!-- End .areaHeader -->
+
+                            <s:if test="copilotStats.size == 0">
+
+                                <!-- start .projectCopilotsLeader -->
+                                <div class="projectCopilotsLeader">
+
+									<div class="goForCopilot">
+										<h3>There is currently no copilot hired for this project.</h3>
+										<div class="goForCopilotBox">
+											<div class="leftBox">
+												<a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="buttonRed1"><span>GET A COPILOT</span></a>
+												<p>If you do not have a clear choice for a copilot, post the offer to available copilots.</p>
+											</div>
+											<div class="rightBox">
+												<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>MANAGE COPILOT</span></a>
+												<p>If you already have a copilot that you would like to assign. </p>
+											</div>
+										</div>
+									</div>
+									<!-- End .goForCopilot -->
+
+									<div class="projectCopilotsProblem">
+										<dl>
+											<dt>Want to know more about Copilot?</dt>
+											<dd><a href="http://topcoder.com/home/help/?p=301">What's Copilot?</a></dd>
+											<dd><a href="http://topcoder.com/home/help/?p=301">How can Copilot benefit my project?</a></dd>
+											<dd><a href="http://topcoder.com/home/help/?p=301">How to hire a CoPilot</a></dd>
+										</dl>
+									</div>
+									<!-- End .projectCopilotsProblem -->
+
+								</div><!-- End .projectCopilotsLeader -->
+                            </s:if>
+                            <s:else>
+                               <div class="projectCopilotsList">
+									<div class="copilotsListHeader">
+										<h3><strong class="red"><s:property value="copilotStats.size"/></strong> copilot working on this project.</h3>
+									</div>
+									<div class="copilotsListBody">
+										<div id="projectCopilotsCarouselWrapper" class="noCopilotType">
+											<ul id="projectCopilotsCarousel" class="jcarousel-skin-tango">
+
+                                                <s:iterator value="copilotStats">
+                                                    <!-- item -->
+                                                    <li>
+                                                        <div class="itemContainer">
+                                                            <div class="userPhoto">
+                                                                <div class="userPhotoInner">
+                                                                    <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=<s:property value='copilotInfo.userId'/>">
+                                                                        <s:if test="copilotInfo.avatarPath == null || copilotInfo.avatarPath.length == 0">
+                                                                            <img class="projectCopilotPhoto" src="/images/user-photo-placeholder.png"
+                                                                                 alt="Copilot Photo"/>
+                                                                        </s:if>
+                                                                        <s:else>
+                                                                            <img class="projectCopilotPhoto" src="<s:property value='copilotInfo.avatarPath'/>"
+                                                                                 alt="Copilot Photo"/>
+                                                                        </s:else>
+                                                                    </a>
+
+                                                                    <div class="handleLink">
+                                                                        <link:user userId="${copilotInfo.userId}"
+                                                                                   handle="${copilotInfo.handle}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="userInfor">
+                                                                <div class="userInforInner">
+                                                                    <dl>
+                                                                        <dt># of Drafts:</dt>
+                                                                        <dd><s:property
+                                                                                value="draftContestsNumber"/></dd>
+                                                                        <dt># Active Contests :</dt>
+                                                                        <dd><s:property
+                                                                                value="activeContestsNumber"/></dd>
+                                                                        <dt># Finished Contests :</dt>
+                                                                        <dd><s:property
+                                                                                value="finishedContestsNumber"/></dd>
+                                                                        <dt># Failures :</dt>
+                                                                        <dd><s:property
+                                                                                value="failuresContestsNumber"/></dd>
+                                                                        <dt>Fulfillment :</dt>
+                                                                        <dd>
+                                                                            <s:if test="finishedContestsNumber + failuresContestsNumber <= 0">
+                                                                                N/A
+                                                                            </s:if>
+                                                                            <s:else>
+                                                                                <s:property value="getText('{0,number, #0.00%}',{fulfillment})"/>
+                                                                            </s:else>
+
+                                                                        </dd>
+                                                                    </dl>
+                                                                    <div class="mailTo"><a
+                                                                            href="mailTo:${copilotInfo.email}">Contact
+                                                                        copilot</a></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearFix"></div>
+                                                        </div>
+                                                    </li>
+                                                    <!-- End .item -->
+                                                </s:iterator>
+
+
+											</ul>
+										</div>
+									</div>
+									<div class="copilotsListButtonBox">
+										<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>MANAGE COPILOT</span></a>
+									</div>
+								</div>
+                            </s:else>
+
+                                <div class="areaHeader padding2 titleProjectStats">
+                                    <h2 class="title">Project Stats</h2>
+                                </div>
+                                <!-- End .areaHeader -->
+
+
                                 <table class="projectStats projectOverviewStats" cellpadding="0" cellspacing="0">
                                     <s:push value="viewData.projectStats">
                                         <tbody>
@@ -220,53 +343,89 @@
                             </div>
 
                             <div class="rightColumn">
+
+                                <div class="areaHeader padding2 titleProjectForum">
+                                    <h2 class="title">Project Forum</h2>
+                                </div><!-- End .areaHeader -->
+
+                                <s:if test='viewData.projectStats.project.projectForumCategoryId == null || viewData.projectStats.project.projectForumCategoryId.equals("")'>
+                                    <div class="projectForumLeader">
+                                        <h3>Create a project forum to start communication</h3>
+                                        <p>If you have a question / problem about your project, you can create a project forum to start the discussion with TopCoder PM and your copilots</p>
+                                        <div class="projectForumLeaderButton">
+                                            <a href="javascript:;" class="buttonRed1 createForumButton"><span>CREATE PROJECT FORUM</span></a>
+                                        </div>
+                                    </div>
+                                </s:if>
+                                <s:else>
+                                     <div class="projectForumLeader">
+                                        <h3>Start project discussion!</h3>
+                                        <p>If you have a question / problem about your project, We can talk ! </p>
+                                        <p>Please use project forum to communicate with Topcoder PM or your copilots.</p>
+                                        <div class="projectForumLeaderButton">
+                                            <a href="http://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1"><span>LET'S TALK</span></a>
+                                        </div>
+                                    </div>
+                                </s:else>
+
+
                                 <div class="areaHeader padding2">
                                     <h2 class="title">Project Activities</h2>
                                 </div><!-- End .areaHeader -->
 
+
                                 <s:iterator value="viewData.latestProjectActivities.activities">
-                                    <table class="project projectActivities" width="100%" cellpadding="0" cellspacing="0">
-                                        <thead>
+                                    <div class="projectTableContainer">
+                                        <span class="leftCorner"></span>
+                                        <span class="rightCorner"></span>
+                                        <table class="project projectActivities" width="100%" cellpadding="0"
+                                               cellspacing="0">
+                                            <thead>
                                             <tr>
                                                 <th colspan="5"><span class="left"><span class="right">
-                                                    <a href="javascript:;"><s:property value="key.title"/></a></span></span>
+                                                    <a href="javascript:;"><s:property
+                                                            value="key.title"/></a></span></span>
                                                 </th>
                                             </tr>
-                                        </thead>
-                                    
-                                        <tbody>
-                                        <s:iterator value="value" status="status">
-                                            <s:set value="originatorId" var="originatorId" scope="page"/>
-                                            <s:set value="originatorHandle" var="originatorHandle" scope="page"/>
-                                            <s:set value="contest" var="contest" scope="page"/>
-                                            <s:set value="date" var="date" scope="page"/>
-                                            
-                                            <tr class="<s:property value='type.shortName'/> <s:if test='#status.index == 4'>hideStart</s:if>">
-                                                <td class="first <s:property value="type.shortName"/>"></td>
-                                                <td class="second">
+                                            </thead>
+
+                                            <tbody>
+                                            <s:iterator value="value" status="status">
+                                                <s:set value="originatorId" var="originatorId" scope="page"/>
+                                                <s:set value="originatorHandle" var="originatorHandle" scope="page"/>
+                                                <s:set value="contest" var="contest" scope="page"/>
+                                                <s:set value="date" var="date" scope="page"/>
+
+                                                <tr class="<s:property value='type.shortName'/> <s:if test='#status.index == 4'>hideStart</s:if>">
+                                                    <td class="first <s:property value="type.shortName"/>"></td>
+                                                    <td class="second">
                                                     <span class="ico <s:property value="type.shortName"/>">
                                                         <s:property value="type.name"/></span>
-                                                </td>
-                                                <td>
-                                                    <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
-                                                        <c:out value="${contest.title}"/></a>
-                                                </td>
-                                                <td class="posted">
-                                                    <s:property value="type.actionText"/> :
-                                                    <link:user userId="${originatorId}" handle="${originatorHandle}"/>
-                                                </td>                                                
-                                                <td class="date">
-                                                    <c:out value="${tcdirect:getDateText(date, 'MM/dd/yyyy')}"/>
-                                                </td>
-                                            </tr>
-                                            
-                                        </s:iterator>
-                                        </tbody>
-                                    </table>
+                                                    </td>
+                                                    <td>
+                                                        <a class="longWordsBreak"
+                                                           href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
+                                                            <c:out value="${contest.title}"/></a>
+                                                    </td>
+                                                    <td class="posted">
+                                                        <s:property value="type.actionText"/> :
+                                                        <link:user userId="${originatorId}"
+                                                                   handle="${originatorHandle}"/>
+                                                    </td>
+                                                    <td class="date">
+                                                        <c:out value="${tcdirect:getDateText(date, 'MM/dd/yyyy')}"/>
+                                                    </td>
+                                                </tr>
+
+                                            </s:iterator>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </s:iterator>
                                 
                                 <jsp:include page="includes/upcomingActivities.jsp"/>
                             </div><!-- End .rightColumn -->
+                        <div class="clearFix"></div>
 
                         </div>
                     </div>

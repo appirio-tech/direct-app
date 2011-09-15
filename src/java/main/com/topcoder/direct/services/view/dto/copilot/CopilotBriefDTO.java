@@ -9,9 +9,14 @@ import java.io.Serializable;
  * <p>
  * A DTO used to store information about a copilot.
  * </p>
+ *
+ * <p>
+ *     Version 1.1 (Release Assembly - TopCoder Cockpit Project Overview Update 1) change note:
+ *     - Add the property userId to store the TopCoder user id of the copilot
+ * </p>
  * 
- * @author TCSASSEMBLER
- * @version 1.0
+ * @author GreatKevin
+ * @version 1.1
  * @since TC Direct Manage Copilots Assembly
  */
 public class CopilotBriefDTO implements Serializable, Comparable<CopilotBriefDTO> {
@@ -29,6 +34,13 @@ public class CopilotBriefDTO implements Serializable, Comparable<CopilotBriefDTO
      * The copilot project id.
      */
     private long copilotProjectId;
+
+    /**
+     * The TopCoder user id of the copilot.
+     *
+     * @since 1.1
+     */
+    private long userId;
 
     /**
      * The handle of copilot.
@@ -118,10 +130,29 @@ public class CopilotBriefDTO implements Serializable, Comparable<CopilotBriefDTO
     /**
      * The compare to method.
      * 
-     * @param CopilotBriefDTO the copilot brief dto to compare
+     * @param o the copilot brief dto to compare
      */
     public int compareTo(CopilotBriefDTO o) {
         return handle.compareTo(o.handle);
     }
 
+    /**
+     * Gets the user id of the copilot.
+     *
+     * @return the user id of the copilot.
+     * @since 1.1
+     */
+    public long getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets the user id of the copilot.
+     *
+     * @param userId the user id to set.
+     * @since 1.1
+     */
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 }
