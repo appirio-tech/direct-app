@@ -152,7 +152,7 @@
 												<p>If you do not have a clear choice for a copilot, post the offer to available copilots.</p>
 											</div>
 											<div class="rightBox">
-												<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>MANAGE COPILOT</span></a>
+												<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>Add/Remove Copilots</span></a>
 												<p>If you already have a copilot that you would like to assign. </p>
 											</div>
 										</div>
