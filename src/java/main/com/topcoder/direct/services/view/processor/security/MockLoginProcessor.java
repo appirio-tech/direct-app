@@ -14,6 +14,15 @@ import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.shared.util.logging.Logger;
+
+import com.topcoder.shared.security.SimpleResource;
+import com.topcoder.shared.security.SimpleUser;
+import com.topcoder.web.common.SimpleRequest;
+import com.topcoder.web.common.SimpleResponse;
+import com.topcoder.web.common.security.LightAuthentication;
+import com.topcoder.web.common.security.SessionPersistor;
+import org.apache.struts2.ServletActionContext;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -36,10 +45,22 @@ import java.util.Set;
  * <p>This processor expects the actions of {@link com.topcoder.direct.services.view.action.LoginAction} type to be passed to it. It gets the submitted user
  * credentials from action's form and uses them to authenticate user using config file.</p>
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * <p>
+ * Version 1.1 (System Assembly - Direct Topcoder Scorecard Tool Integration) changes notes: 
+ *    <ul>
+ *       <li>Set cookie to be used by scorecard application.</li>
+ *    </ul> 
+ * </p>
+ *
+ * @author TCSASSEMBLER, pvmagacho
+ * @version 1.1
  */
 public class MockLoginProcessor implements RequestProcessor<LoginAction> {
+
+    /**
+     * The SSO cookie to be for use by the Scorecard Tool.
+     */
+    private static final String SSO_COOKIE = "direct_sso";
 
     /**
      * The users x ID map.
@@ -132,6 +153,18 @@ public class MockLoginProcessor implements RequestProcessor<LoginAction> {
             action.getSessionData().setCurrentUserHandle(username);
             action.setResultCode(LoginAction.RC_SUCCESS);
             log.info("User " + username + "  has been authenticated successfully");
+
+	    try {
+		// added by System Assembly - Direct Topcoder Scorecard Tool Integration (TC SSO cookie)
+		LightAuthentication auth = new LightAuthentication(
+                    new SessionPersistor(ServletActionContext.getRequest().getSession()),
+                    new SimpleRequest(ServletActionContext.getRequest()),
+                    new SimpleResponse(ServletActionContext.getResponse()));
+		auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
+	    } catch (Exception e) {
+		log.error("User " + username + " could not set cookie"); 
+		action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);
+	    }
         }
     }
 

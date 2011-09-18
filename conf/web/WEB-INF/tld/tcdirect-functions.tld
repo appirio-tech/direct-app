@@ -93,4 +93,10 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>java.lang.String getDurationTextInDays(double)</function-signature>
     </function>
+
+    <function>
+        <name>isScorecardAdmin</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isScorecardAdmin()</function-signature>
+    </function>
 </taglib>

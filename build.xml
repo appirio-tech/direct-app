@@ -75,6 +75,10 @@
     <property name="design_dist.jar" value="${distfilename}_${component_version}_design_dist.jar"/>
     <property name="jboss_deploy_dir" value="${jboss.home}/server/${server.name}/deploy" />
 
+    <!-- SCORECARD WAR -->
+    <property name="scorecard_dir" value="${basedir}/scorecard_tool"/>
+    <property name="scorecard.war" value="${build_distdir}/scorecard.war" />
+
     <!-- DOCUMENT PACKAGE -->
     <property name="dist_docpackage" value="${builddir}/doc_package"/>
     <property name="docpackage.jar" value="${distfilename}_docs.jar"/>
@@ -123,7 +127,7 @@
     <property name="temp_dist_ear" value="${build_distdir}/temp_dist_ear"/>
     <property name="ear_shared_libdir" value="${build_distdir}/lib"/>
 
-    <target name="ear" depends="war" description="create the ear tarball for direct application">
+    <target name="ear" depends="war, scorecard_war" description="create the ear tarball for direct application">
         <!-- Copy the libraries -->
         <mkdir dir="${build_distdir}"/>
         <mkdir dir="${build_distdir}/lib"/>
@@ -532,7 +536,29 @@
         <delete file="temp.war"/>
     </target>
 
-    <!-- ************************************************************************** -->
+    <!-- =================================
+          target: scorecard
+         ================================= -->
+    <target name="scorecard_war" description="--> Creates a WAR of a Grails application">
+       <ant antfile="build.xml" target="war" dir="${scorecard_dir}" inheritall="false">
+	 <propertyset>
+	   <propertyref builtin="commandline"/>
+	 </propertyset>
+       </ant>
+       <unzip src="${scorecard_dir}/scorecard.war" dest="${scorecard.war}"/>
+       <delete file="${scorecard_dir}/scorecard.war"/>
+    </target>
+
+    <target name="scorecard_clean" description="--> Clean all files of a Grails application">
+       <ant antfile="build.xml" target="clean" dir="${scorecard_dir}" inheritall="false">
+	 <propertyset>
+	   <propertyref builtin="commandline"/>
+	 </propertyset>
+       </ant>
+       <delete dir="target"/>
+    </target>
+    
+<!-- ************************************************************************** -->
     <!-- ************ END DEPLOYMENT RELATED TARGETS  *************************** -->
     <!-- ************************************************************************** -->
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
@@ -16,10 +16,22 @@ import javax.servlet.http.HttpSession;
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for logging the users ouf of application.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 (System Assembly - Direct Topcoder Scorecard Tool Integration) changes notes: 
+ *    <ul>
+ *       <li>Remove cookie used by scorecard application.</li>
+ *    </ul> 
+ * </p>
+ *
+ * @author isv, pvmagacho
+ * @version 1.1
  */
 public class LogoutAction extends AbstractAction {
+
+    /**
+     * The SSO cookie to be for use by the Scorecard Tool.
+     */
+    private static final String SSO_COOKIE = "direct_sso";
 
     /**
      * <p>Constructs new <code>LogoutAction</code> instance. This implementation does nothing.</p>
@@ -41,13 +53,16 @@ public class LogoutAction extends AbstractAction {
         if (session != null) {
             session.invalidate();
         }
-        BasicAuthentication auth = new BasicAuthentication(
+
+        // Changed to use the TC SSO cookie
+	BasicAuthentication auth = new BasicAuthentication(
             new SessionPersistor(ServletActionContext.getRequest().getSession()),
             new SimpleRequest(ServletActionContext.getRequest()),
             new SimpleResponse(ServletActionContext.getResponse()),
-            new SimpleResource("direct"),
+            BasicAuthentication.MAIN_SITE,
             DBMS.JTS_OLTP_DATASOURCE_NAME);
         auth.logout();
+
         return SUCCESS;
     }
 }

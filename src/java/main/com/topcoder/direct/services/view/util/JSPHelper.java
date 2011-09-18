@@ -62,8 +62,15 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.1.4
+ * <p>
+ * Version 1.1.5 (System Assembly - Direct TopCoder Scorecard Tool Integration) change notes:
+ *   <ol>
+ *      <li>Added Scorecard administrator role checking.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, pvmagacho
+ * @version 1.1.5
  */
 public class JSPHelper {
 
@@ -410,5 +417,17 @@ public class JSPHelper {
      */
     private static boolean isSameDay(Date d1, Date d2) {
         return (getDay(d1) == getDay(d2)) & (getMonth(d1) == getMonth(d2)) && (getYear(d1) == getYear(d2));
+    }
+
+    /**
+     * <p>
+     * Checks if the user is scorecard administrator.
+     * </p>
+     *
+     * @return true if the user is scorcard administrator and false otherwise.
+     * @since 1.1.5
+     */
+    public static boolean isScorecardAdmin() {
+        return DirectUtils.isScorecardAdmin();
     }
 }

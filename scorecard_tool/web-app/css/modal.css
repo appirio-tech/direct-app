@@ -1,0 +1,308 @@
+*{padding: 0; margin: 0;}
+#TB_window {
+	font: 12px Arial, Helvetica, sans-serif;
+	color: #333333;
+}
+
+#TB_secondLine {
+	font: 10px Arial, Helvetica, sans-serif;
+	color:#666666;
+}
+
+
+/* ----------------------------------------------------------------------------------------------------------------*/
+/* ---------->>> modal settings <<<-----------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------------------------------------------*/
+#TB_overlay {
+	position:absolute;
+	z-index:100;
+	top: 0px;
+	left: 0px;
+	height:100%;
+	width:100%;
+	display:none;
+}
+
+.TB_overlayMacFFBGHack {background: url(macFFBgHack.png) repeat;}
+.TB_overlayBG {
+	background:#000000;
+}
+
+* html #TB_overlay { /* ie6 hack */
+     position: absolute;
+}
+
+#TB_window {
+	width:830px;
+	height:424px !important;
+	position:absolute;
+	background: #ffffff;
+	z-index: 102;
+	color:#000000;
+	display:none;
+	top:0;
+	left:0;
+	border: 1px solid #000;
+	text-align:left;
+	overflow:hidden;
+}
+
+* html #TB_window { /* ie6 hack */
+position: absolute;
+}
+
+#TB_window img#TB_Image {
+	display:block;
+	margin: 15px 0 0 15px;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #666;
+	border-left: 1px solid #666;
+}
+
+#TB_caption{
+	height:25px;
+	padding:7px 30px 10px 25px;
+	float:left;
+}
+
+#TB_closeWindow{
+	height:25px;
+	padding:11px 25px 10px 0;
+	float:right;
+}
+
+#TB_closeAjaxWindow{
+	padding:7px 10px 5px 0;
+	margin-bottom:1px;
+	text-align:right;
+	float:right;
+}
+
+#TB_ajaxWindowTitle{
+	float:left;
+	padding:7px 0 5px 10px;
+	margin-bottom:1px;
+}
+
+#TB_title{
+	background-color:#e8e8e8;
+	height:27px;
+}
+
+#TB_ajaxContent{
+	height:395px;
+	clear:both;
+	padding:2px 15px 0 15px;
+	overflow:auto;
+	text-align:left;
+	line-height:1.4em;
+}
+
+#TB_ajaxContent.TB_modal{
+	padding:15px;
+}
+
+#TB_ajaxContent p{
+	padding:5px 0px 5px 0px;
+}
+
+#TB_load{
+	position: fixed;
+	display:none;
+	height:13px;
+	width:208px;
+	z-index:103;
+	top: 50%;
+	left: 50%;
+	margin: -6px 0 0 -104px; /* -height/2 0 0 -width/2 */
+}
+
+* html #TB_load { /* ie6 hack */
+position: absolute;
+}
+
+#TB_HideSelect{
+	z-index:99;
+	position:fixed;
+	top: 0;
+	left: 0;
+	background-color:#fff;
+	border:none;
+	height:100%;
+	width:100%;
+}
+
+* html #TB_HideSelect { /* ie6 hack */
+     position: absolute;
+}
+
+#TB_iframeContent{
+	clear:both;
+	border:none;
+	margin-bottom:-1px;
+	margin-top:1px;
+}
+
+/* OVERRIDE! */
+#TB_window_custom {
+	position:absolute;
+	z-index: 102;
+	color:#000000;
+	display:none;
+	top:0;
+	left:0;
+	overflow:hidden;
+	background-color: inherit;
+}
+
+* html #TB_window_custom { /* ie6 hack */
+position: absolute;
+}
+	.specrev-window {
+		width:360px !important;
+		height:211px !important;
+		border: none !important;
+		background: transparent url(../images/specplan_window.gif) no-repeat top left !important;
+		text-align:center !important;
+		position:absolute;
+		overflow:hidden;
+	}
+	.specrev-window a {
+		display: block;
+		margin: auto;
+		width: 191px;
+		height: 25px;
+	}
+	.specrev-window a.review-now { background: url(../images/specplan_btn_now.gif) no-repeat top left; }
+	.specrev-window a.review-later { background: url(../images/specplan_btn_l8r.gif) no-repeat top left; }
+	.specrev-window a:hover {
+		background-position: 0 -25px;
+	}
+	.specrev-window h1 {
+		font-size: 19px !important;
+		margin: 25px 0 20px 0;
+	}
+	.specrev-window p {
+		font-size: 12px;
+		color: #747474;
+	}
+	.specrev-window p.or {
+		margin: 10px 0;
+	}
+	.specrev-window p.note {
+		margin: 5px 0 0 0;
+	}
+
+/* add Manually window*/
+.addWindow.ui-dialog-content.ui-widget-content{
+	margin: 0;
+	padding: 0;
+}
+	.addWindow.ui-dialog-content.ui-widget-content .header{
+		height: 42px;
+		background-color: #f0f0f0;
+		border-bottom: #bdbdbd 1px solid;
+	}
+		.addWindow.ui-dialog-content.ui-widget-content .header p.title{
+			padding: 0;
+			margin: 0 20px;
+			font-size: 16px;
+			color:#333;
+			line-height: 42px;
+		}
+	.addWindow.ui-dialog-content.ui-widget-content .body{
+		padding: 20px;
+		color: #333;
+		font-size: 11px;
+	}
+		#addMatch.addWindow.ui-dialog-content.ui-widget-content .body{
+			padding: 0 0 0 20px;
+		}
+		#addMatch.addWindow.ui-dialog-content.ui-widget-content .body .card{
+			margin-right: 0px;
+		}
+		.addWindow.ui-dialog-content.ui-widget-content .body textarea{
+			width: 400px;
+			padding: 0 3px;
+			font-family: Arial;
+			margin: 5px 0;
+			padding: 0 3px;
+		}
+			#addManually.addWindow .body textarea.question{height:30px;}
+			#addManually.addWindow .body textarea.guideline,
+			#addReq.addWindow .body textarea.guideline{height:130px;}
+		#addManually.addWindow .body label,
+		#addReq.addWindow .body label{
+			display: block;
+			width: 70px;
+			float: left;
+		}
+		#addManually.addWindow .body p,
+		#addReq.addWindow .body p{
+			line-height: 18px;
+		}
+			#addManually.addWindow .body p.higher,
+			#addReq.addWindow .body p.higher{
+				line-height: 25px;
+			}
+			#addReq.addWindow .body p.note{
+				color: #666;
+			}
+		#addScorecard2.addWindow .body select,
+		#addManually.addWindow .body select,
+		#addReq.addWindow .body select{
+			height: 20px;
+			font-size: 11px;
+			color: #333;
+		}
+			#addManually.addWindow .body select.medium,
+			#addReq.addWindow .body select.medium{width:130px;}
+			#addManually.addWindow .body select.long,
+			#addReq.addWindow .body select.long{width:338px;}
+	
+	.addWindow.ui-dialog-content.ui-widget-content .foot{
+		height: 54px;
+		width: 100%;
+		background-color: #f0f0f0;
+		border-top: #bdbdbd 1px solid;
+	}
+		#addScorecard2.addWindow a.clearBtn,
+		#addManually.addWindow a.moreQuestions,
+		#addReq.addWindow a.moreQuestions{
+			padding: 15px 10px;
+			color: #ec1c23;
+			font-size: 11px;
+			font-weight: bold;
+			text-decoration: none; 
+		}
+			#addReq.addWindow a.moreQuestions{
+				padding: 0px;
+				line-height: 30px;
+			}
+			#addScorecard2.addWindow a.clearBtn:hover,
+			#addManually.addWindow a.moreQuestions:hover,
+			#addReq.addWindow a.moreQuestions:hover{
+				text-decoration: underline; 
+			}
+		.addWindow.ui-dialog-content.ui-widget-content .foot .buttons{
+			margin: 15px 15px 0 0;
+			padding:0;
+			float: right;
+		}
+#addScorecard .tabHead a.button6 span.right{
+	padding: 4px 27px 0 27px;
+	margin: 0;
+	width: 41px;
+	height: 20px;
+	border: none;
+}
+#addScorecard .tabHead a.button6 span.left{
+	padding: 0;
+	margin: 0;
+	border: none;
+	height: 24px;
+	width: 94px;
+	color: #fff;
+	background-color: inherit;
+}

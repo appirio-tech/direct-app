@@ -102,10 +102,11 @@
             <result name="input">/WEB-INF/index.jsp</result>
         </action>
         <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">
-            <result name="success" type="redirectAction">
+            <result name="success" type="redirect">/scorecard/logout</result>
+	    <!-- type="redirectAction">
                 <param name="actionName">home</param>
                 <param name="namespace">/</param>
-            </result>
+            </result> -->
         </action>
         <action name="dashboard" class="com.topcoder.direct.services.view.action.dashboard.DashboardAction">
             <interceptor-ref name="securedPreProcessorStack"/>

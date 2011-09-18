@@ -87,16 +87,6 @@ public class LoginAction extends LandingPage implements FormAction<LoginForm> {
     public String execute() throws Exception {
         String result = super.execute();
         if (SUCCESS.equals(result)) {
-            if (this.formData.isRemember()) {
-                BasicAuthentication auth = new BasicAuthentication(
-                    new SessionPersistor(ServletActionContext.getRequest().getSession()),
-                    new SimpleRequest(ServletActionContext.getRequest()),
-                    new SimpleResponse(ServletActionContext.getResponse()),
-                    new SimpleResource("direct"),
-                    DBMS.JTS_OLTP_DATASOURCE_NAME);
-                auth.setCookie(getSessionData().getCurrentUserId(), true);
-            }
-            // clear redirect URL from session
             getSessionData().getSession().removeAttribute("redirectBackUrl");
             forwardUrl = ServletActionContext.getRequest().getParameter("forwardUrl");
             if (forwardUrl != null && forwardUrl.trim().length() > 0) {

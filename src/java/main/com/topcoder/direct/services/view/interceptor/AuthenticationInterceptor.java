@@ -74,9 +74,9 @@ public class AuthenticationInterceptor implements Interceptor {
             HttpServletResponse response = ServletActionContext.getResponse();
             BasicAuthentication auth = new BasicAuthentication(
                 new SessionPersistor(request.getSession()), new SimpleRequest(request),
-                new SimpleResponse(response), new SimpleResource("direct"), DBMS.JTS_OLTP_DATASOURCE_NAME);
-            User user = auth.checkCookie();
-            if (user != null  && user.getId() > 0) {
+                new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
+            User user = auth.getActiveUser();
+            if (user != null  && !user.isAnonymous()) {
                 TCSubject tcSubject = new TCSubject(user.getId());
                 if (sessionData == null) {
                     sessionData = new SessionData(request.getSession());

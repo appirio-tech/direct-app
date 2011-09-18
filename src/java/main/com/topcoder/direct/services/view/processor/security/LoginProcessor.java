@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.processor.security;
 
@@ -12,16 +12,37 @@ import com.topcoder.security.login.LoginRemote;
 import com.topcoder.shared.util.logging.Logger;
 import com.topcoder.web.common.security.Constants;
 
+import com.topcoder.shared.security.SimpleResource;
+import com.topcoder.shared.security.SimpleUser;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.SimpleRequest;
+import com.topcoder.web.common.SimpleResponse;
+import com.topcoder.web.common.security.BasicAuthentication;
+import com.topcoder.web.common.security.SessionPersistor;
+import org.apache.struts2.ServletActionContext;
+
 /**
  * <p>A processor to be used for handling requests for user authentication to application.</p>
  *
  * <p>This processor expects the actions of {@link LoginAction} type to be passed to it. It gets the submitted user
  * credentials from action's form and uses them to authenticate user using <code>Security Manager EJB</code>.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 (System Assembly - Direct Topcoder Scorecard Tool Integration) changes notes: 
+ *    <ul>
+ *       <li>Set cookie to be used by scorecard application.</li>
+ *    </ul> 
+ * </p>
+ *
+ * @author isv, pvmagacho
+ * @version 1.1
  */
 public class LoginProcessor implements RequestProcessor<LoginAction> {
+
+    /**
+     * The SSO cookie to be for use by the Scorecard Tool.
+     */
+    private static final String SSO_COOKIE = "direct_sso";
 
     /**
      * <p>A <code>Logger</code> to be used for logging the events encountered while processing the requests.</p>
@@ -50,6 +71,24 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
             action.getSessionData().setCurrentUserHandle(username);
             action.setResultCode(LoginAction.RC_SUCCESS);
             log.info("User " + username + "  has been authenticated successfully");
+
+	    // Changed to use the TC SSO cookie
+	    BasicAuthentication auth = new BasicAuthentication(
+                    new SessionPersistor(ServletActionContext.getRequest().getSession()),
+                    new SimpleRequest(ServletActionContext.getRequest()),
+                    new SimpleResponse(ServletActionContext.getResponse()),
+		    BasicAuthentication.MAIN_SITE,
+                    DBMS.JTS_OLTP_DATASOURCE_NAME);
+	    auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
+
+	    // added by System Assembly - Direct Topcoder Scorecard Tool Integration
+	    auth = new BasicAuthentication(
+                    new SessionPersistor(ServletActionContext.getRequest().getSession()),
+                    new SimpleRequest(ServletActionContext.getRequest()),
+                    new SimpleResponse(ServletActionContext.getResponse()),
+		    new SimpleResource(SSO_COOKIE),
+                    DBMS.JTS_OLTP_DATASOURCE_NAME);
+	    auth.login(new SimpleUser(tcSubject.getUserId(), username, password), true);
         } catch (AuthenticationException e) {
             log.error("User " + username + " failed to authenticate successfully due to invalid credentials", e);
             action.setResultCode(LoginAction.RC_INVALID_CREDENTIALS);

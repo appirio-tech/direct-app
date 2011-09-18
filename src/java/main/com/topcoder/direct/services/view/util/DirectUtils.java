@@ -163,7 +163,13 @@ import com.topcoder.shared.util.DBMS;
  * <ul>
  *      <li>Change method getContestStats to add contest issues into contest stats</li>
  * </ul>
- * </p
+ * </p>
+ * <p>
+ * Version 1.6.7 (System Assembly - Direct TopCoder Scorecard Tool Integration) change notes:
+ * <ul>
+ *      <li>Added Scorecard administrator role checking.</li>
+ * </ul>
+ * </p>
  *
  * <p>
  * Version 1.6.7 (TC Direct Contest Dashboard Update Assembly) change notes:
@@ -308,6 +314,14 @@ public final class DirectUtils {
      * Private constant specifying TC operations role.
      */
     private static final String TC_STAFF_ROLE = "TC Staff";
+
+    /**
+
+     * Private constant specifying TC operations role.
+     *
+     * 
+     */
+    private static final String SCORECARD_ADMIN_ROLE = "Scorecard Administrator";
 
 	/**
      * The project name to use when the direct project name is not available, usually this will not happen.
@@ -1166,6 +1180,19 @@ public final class DirectUtils {
      */
     public static boolean isTcStaff(TCSubject tcSubject) {
         return isRole(tcSubject, TC_STAFF_ROLE);
+    }
+
+    /**
+
+     * <p>
+     * Checks if the user is scorecard administrator.
+     * </p>
+     *
+     * @return true if the user is scorcard administrator and false otherwise.
+     * @since 1.6.7
+     */
+    public static boolean isScorecardAdmin() {
+        return isRole(getTCSubjectFromSession(), SCORECARD_ADMIN_ROLE);
     }
 
     /**

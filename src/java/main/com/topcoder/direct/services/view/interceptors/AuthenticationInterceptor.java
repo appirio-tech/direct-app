@@ -254,11 +254,11 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
 
         if (sessionData.isAnonymousUser()) {
             HttpServletResponse response = ServletActionContext.getResponse();
-            BasicAuthentication auth = new BasicAuthentication(new SessionPersistor(request.getSession()),
-                new SimpleRequest(request), new SimpleResponse(response), new SimpleResource("direct"),
-                DBMS.JTS_OLTP_DATASOURCE_NAME);
+            BasicAuthentication auth = new BasicAuthentication(
+                new SessionPersistor(request.getSession()), new SimpleRequest(request),
+                new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
             User user = auth.checkCookie();
-            if (user != null && user.getId() > 0) {
+            if (user != null  && !user.isAnonymous()) {
                  // get user roles for the user id
                 Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());
                 TCSubject tcSubject = new TCSubject(roles, user.getId());

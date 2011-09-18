@@ -20,6 +20,7 @@
   - Version 1.6 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) changes note: add include to the new modal window template jsp
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
+<%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div id="header">
@@ -69,7 +70,12 @@
                 <li>
                      <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
                 </li>
-               
+
+		<c:if test="${tcdirect:isScorecardAdmin()}" >
+		   <li>
+                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                   </li>
+               </c:if>
             </ul>
         </ui:isDashboardPage>
         <ui:isProjectPage>
@@ -85,7 +91,12 @@
                 <li>
                      <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
                 </li>
-               
+
+		<c:if test="${tcdirect:isScorecardAdmin()}" >
+		   <li>
+                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                   </li>
+               </c:if>               
             </ul>
         </ui:isProjectPage>
 	<ui:isCopilotPage>
@@ -101,6 +112,12 @@
                 <li class="on">
                      <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
                 </li>
+
+		<c:if test="${tcdirect:isScorecardAdmin()}" >
+		   <li>
+                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                   </li>
+               </c:if>   
                 <!--
                 <li><a href="#"><span>Messages (0)</span></a></li>
                 -->
@@ -119,7 +136,12 @@
                 <li>
                      <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
                 </li>
-                
+
+		<c:if test="${tcdirect:isScorecardAdmin()}" >
+		   <li>
+                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                   </li>
+               </c:if>                   
             </ul>
         </c:if>
     </div><!-- End #tabs0 -->
