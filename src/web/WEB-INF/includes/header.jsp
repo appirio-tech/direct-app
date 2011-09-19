@@ -73,7 +73,7 @@
 
 		<c:if test="${tcdirect:isScorecardAdmin()}" >
 		   <li>
-                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                      <a href="/direct/scorecard/"><span>Scorecard</span></a>
                    </li>
                </c:if>
             </ul>
@@ -94,7 +94,7 @@
 
 		<c:if test="${tcdirect:isScorecardAdmin()}" >
 		   <li>
-                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                      <a href="/direct/scorecard/"><span>Scorecard</span></a>
                    </li>
                </c:if>               
             </ul>
@@ -115,7 +115,7 @@
 
 		<c:if test="${tcdirect:isScorecardAdmin()}" >
 		   <li>
-                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                      <a href="/direct/scorecard/"><span>Scorecard</span></a>
                    </li>
                </c:if>   
                 <!--
@@ -139,7 +139,7 @@
 
 		<c:if test="${tcdirect:isScorecardAdmin()}" >
 		   <li>
-                      <a href="/direct/scorecard"><span>Scorecard</span></a>
+                      <a href="/direct/scorecard/"><span>Scorecard</span></a>
                    </li>
                </c:if>                   
             </ul>
