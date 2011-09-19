@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <div class="receipt" id="launchContestOut">
@@ -93,7 +94,7 @@
                                                             <s:if test="contestReceipt.milestonePrize > 0">
                                                             <td>Milestone Prize : $${milestonePrize}</td>
                                                             </s:if>
-                                                            <td class="last">$${firstPrize + secondPrize + thirdPrize + fourthPrize + fifthPrize + drPoints + milestonePrize}</td>
+                                                            <td class="last">$<fmt:formatNumber value="${firstPrize + secondPrize + thirdPrize + fourthPrize + fifthPrize + drPoints + milestonePrize}" pattern="0.00"/></td>
                                                         </tr>
                                                     </tbody></table>
                                                     
@@ -108,7 +109,7 @@
                                                             <s:if test="contestReceipt.finished == true && #attr['otherPayment'] > 0">
                                                             <td>Other : $${otherPayment}</td>
                                                             </s:if>
-                                                            <td class="last">$${contestFee + specificationReviewPayment + reviewPayment + copilotCost + bugRacePayment + otherPayment}</td>
+                                                            <td class="last">$<fmt:formatNumber value="${contestFee + specificationReviewPayment + reviewPayment + copilotCost + bugRacePayment + otherPayment}" pattern="0.00"/></td>
                                                         </tr>
                                                     </tbody></table>
                                                     
@@ -175,7 +176,7 @@
                                                             <td>Second Place Cost : $${secondPrize}</td>
                                                             <td>DR points : $${drPoints}</td>
                                                             <td>Reliability Bonus Cost : $${reliabilityBonusCost}</td>
-                                                            <td class="last">$${firstPrize + secondPrize + drPoints + reliabilityBonusCost}</td>
+                                                            <td class="last">$<fmt:formatNumber value="${firstPrize + secondPrize + drPoints + reliabilityBonusCost}" pattern="0.00"/></td>
                                                         </tr>
                                                     </tbody></table>
                                                     <h3>Additional Costs:</h3>
@@ -189,7 +190,9 @@
                                                             <s:if test="contestReceipt.finished == true && #attr['otherPayment'] > 0">
                                                             <td>Other : $${otherPayment}</td>
                                                             </s:if>
-                                                            <td class="last">$${contestFee + specificationReviewPayment + reviewPayment + copilotCost + bugRacePayment + otherPayment}</td>
+                                                            <td class="last">$  
+                                                            <fmt:formatNumber value="${(contestFee + specificationReviewPayment + reviewPayment + copilotCost + bugRacePayment + otherPayment)}" pattern="0.00"/>
+                                                            </td>
                                                         </tr>
                                                     </tbody></table>
                                                     <table class="total">
