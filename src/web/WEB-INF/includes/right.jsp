@@ -153,7 +153,7 @@
                 <!-- End .contestsList -->
             </ui:isProjectContextSet>
 
-            <p class="projectArchive"><a href="javascript:;">Projects Archive</a></p>
+            <p class="projectArchive"><a href="<s:url action='allProjects'/>">Project Archive</a></p>
         </div>
         <!-- End .contestsContainer -->
 
