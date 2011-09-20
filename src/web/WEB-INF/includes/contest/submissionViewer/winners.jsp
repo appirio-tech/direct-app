@@ -33,7 +33,7 @@
                         </c:otherwise>
                     </c:choose>
                     <div class="winnerCol">
-                        <link:studioSubmissionDownload submissionId="${submission.id}" styleClass="downloadFile" />
+                        <link:studioSubmissionDownload submissionId="${submission.id}" styleClass="downloadFile" original="true" />
                         <div class="winnerData">
                             <c:if test="${not submission.extra}">
                                 <h3>${submission.placement}${suffix} Place Winner</h3>
