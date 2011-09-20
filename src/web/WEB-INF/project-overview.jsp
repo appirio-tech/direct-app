@@ -152,7 +152,7 @@
 												<p>If you do not have a clear choice for a copilot, post the offer to available copilots.</p>
 											</div>
 											<div class="rightBox">
-												<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>Add/Remove Copilots</span></a>
+												<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
 												<p>If you already have a copilot that you would like to assign. </p>
 											</div>
 										</div>
@@ -206,31 +206,40 @@
                                                             <div class="userInfor">
                                                                 <div class="userInforInner">
                                                                     <dl>
-                                                                        <dt># of Drafts:</dt>
-                                                                        <dd><s:property
-                                                                                value="draftContestsNumber"/></dd>
-                                                                        <dt># Active Contests :</dt>
-                                                                        <dd><s:property
-                                                                                value="activeContestsNumber"/></dd>
-                                                                        <dt># Finished Contests :</dt>
-                                                                        <dd><s:property
-                                                                                value="finishedContestsNumber"/></dd>
-                                                                        <dt># Failures :</dt>
-                                                                        <dd><s:property
-                                                                                value="failuresContestsNumber"/></dd>
-                                                                        <dt>Fulfillment :</dt>
                                                                         <dd>
-                                                                            <s:if test="finishedContestsNumber + failuresContestsNumber <= 0">
+                                                                            <span class="dt"># of Drafts:</span>
+                                                                            <span class="dd"><s:property
+                                                                                value="draftContestsNumber"/></span>
+                                                                        </dd>
+                                                                        <dd>
+                                                                            <span class="dt"># Active Contests :</span>
+                                                                            <span class="dd"><s:property
+                                                                                value="activeContestsNumber"/></span>
+                                                                        </dd>
+                                                                        <dd>
+                                                                            <span class="dt"># Finished Contests :</span>
+                                                                            <span class="dd"><s:property
+                                                                                value="finishedContestsNumber"/></span>
+                                                                        </dd>
+                                                                        <dd>
+                                                                            <span class="dt"># Failures :</span>
+                                                                            <span class="dd"><s:property
+                                                                                value="failuresContestsNumber"/></span>
+                                                                        </dd>
+                                                                        <dd>
+                                                                            <span class="dt">Fulfillment :</span>
+                                                                            <span class="dd"><s:if test="finishedContestsNumber + failuresContestsNumber <= 0">
                                                                                 N/A
                                                                             </s:if>
                                                                             <s:else>
                                                                                 <s:property value="getText('{0,number, #0.00%}',{fulfillment})"/>
-                                                                            </s:else>
-
+                                                                            </s:else></span>
                                                                         </dd>
+
+
                                                                     </dl>
                                                                     <div class="mailTo"><a
-                                                                            href="mailTo:${copilotInfo.email}">Contact
+                                                                            href="mailTo:${copilotInfo.handle}@copilots.topcoder.com">Contact
                                                                         Copilot</a></div>
                                                                 </div>
                                                             </div>
@@ -245,7 +254,7 @@
 										</div>
 									</div>
 									<div class="copilotsListButtonBox">
-										<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>MANAGE COPILOT</span></a>
+										<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
 									</div>
 								</div>
                             </s:else>

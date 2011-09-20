@@ -225,6 +225,10 @@ position: absolute;
     width: 450px;
 }
 
+#new-modal-window .large2 {
+    width: 530px;
+}
+
 #new-modal-window .outLay .modalHeader .closeModal {
     position: absolute;
     top: 0;
@@ -326,12 +330,6 @@ position: absolute;
     background-image: url(../images/modal-error.png);
 }
 
-#new-modal-window .outLay .modalBody.comingsoon .modalContent {
-    background: none;
-    padding: 0 25px 11px 30px;
-    width: 260px;
-}
-
 #new-modal-window .mailTo {
     background: url("/images/icon-email.png") no-repeat scroll left 4px transparent;
     padding-left: 18px;
@@ -376,3 +374,19 @@ position: absolute;
     display: inline-block;
     margin: 0 24px 0 2px;
 }
+
+#new-modal-window .outLay .modalBody.comingSoon{
+	min-width: 512px;
+	min-height: 10px;
+}
+#new-modal-window .outLay .modalBody.comingSoon .modalContent {
+		background-image: url(/images/modal_coming_soon.png);
+		width: 360px;
+		min-height:86px;
+		margin-left:29px;
+		padding-left:127px;
+	}
+#new-modal-window .outLay .modalBody.comingSoon .modalContent span{
+		color:#ff0000;
+	}
+

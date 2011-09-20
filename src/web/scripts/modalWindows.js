@@ -7,6 +7,7 @@ function closeModal() {
 	$("#new-modal-window .outLay .modalBody").removeClass("confirmation operationSuccess serverError warning");
 	$("#new-modal-window .outLay .modalCommandBox .defaultBtn, .outLay .modalCommandBox .noBtn").unbind("click");
     $("#new-modal-window .large").removeClass("large");
+    $("#new-modal-window .large2").removeClass("large2");
 	$("#modal-background, #new-modal-window .outLay").hide();
 }
 
@@ -134,17 +135,6 @@ function displayServerError(modal, title, message, buttonText, buttonHandler) {
 	adjustAndShow(modal);
 }
 
-function displayComingSoon(modal, title, message, buttonText, buttonHandler) {
-	buttonText = buttonText || "OK";
-	buttonHandler = buttonHandler || closeModal;
-	$(modal + " .modalHeader .modalHeaderCenter h2").text(title);
-	$(modal + " .modalBody").addClass("comingsoon");
-	$(modal + " .modalBody .modalContent").html("<li>" + message + "</li>");
-	$(modal + " .modalCommandBox .defaultBtn .btnC").text(buttonText);
-	$(modal + " .modalCommandBox .defaultBtn").bind("click", buttonHandler);
-	adjustAndShow(modal);
-}
-
 /**
  * Display warning modal window
  *
@@ -169,6 +159,28 @@ function displayWarning(modal, title, message, yesButtonText, yesButtonHandler, 
 	$(modal + " .modalCommandBox .noBtn").bind("click", noButtonHandler);
 	adjustAndShow(modal);
 }
+
+/**
+ * Display coming soon modal window
+ *
+ * modal : The id of the modal window
+ * title : The title of the modal window
+ * message : The message to be displayed, can be HTML code
+ * buttonText : The text of the button(default: OK)
+ * buttonHandler : The event handler of the button(default: closeModal)
+ */
+function displayComingSoonMessage(modal, title, message, buttonText, buttonHandler) {
+	buttonText = buttonText || "OK";
+	buttonHandler = buttonHandler || closeModal;
+	$(modal + " .modalHeader .modalHeaderCenter h2").text(title);
+	$(modal + " .modalBody").addClass("comingSoon");
+    $(modal).addClass("large2");
+	$(modal + " .modalBody .modalContent").html("<li>" + message + "</li>");
+	$(modal + " .modalCommandBox .defaultBtn .btnC").text(buttonText);
+	$(modal + " .modalCommandBox .defaultBtn").bind("click", buttonHandler);
+	adjustAndShow(modal);
+}
+
 
 $(function() {
 	$("#modal-background").css("opacity", "0.6");

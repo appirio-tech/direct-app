@@ -385,7 +385,7 @@ function showErrors(errors) {
 }
 
 function showComingSoon(message) {
-    displayComingSoon("#demoModal", "Coming Soon", message);
+    displayComingSoonMessage("#demoModal", "Coming Soon", message);
 }
 
 /**

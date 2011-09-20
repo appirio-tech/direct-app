@@ -2060,13 +2060,17 @@ overflow: auto;
 				#projectCopilotsCarousel .itemContainer .userInfor .userInforInner{
 					padding-left:15px;
 					}
-				#projectCopilotsCarousel .itemContainer .userInfor dt{
+				#projectCopilotsCarousel .itemContainer .userInfor dl dd{
+					min-height:18px;
+					overflow:hidden;
+					}
+				#projectCopilotsCarousel .itemContainer .userInfor dl .dt{
 					float:left;
 					width:104px;
 					display:inline;
 					clear:left;
 					}
-				#projectCopilotsCarousel .itemContainer .userInfor dd{
+				#projectCopilotsCarousel .itemContainer .userInfor dl .dd{
 					float:left;
 					width:80px;
 					display:inline;
@@ -2100,7 +2104,7 @@ overflow: auto;
 				min-width:160px;
 				padding-top:25px;
 				}
-			.noCopilotType #projectCopilotsCarousel .itemContainer .userInfor dd{
+			.noCopilotType #projectCopilotsCarousel .itemContainer .userInfor dl .dd{
 				width:40px;
 				}
 

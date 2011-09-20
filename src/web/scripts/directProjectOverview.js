@@ -69,6 +69,7 @@ $(document).ready(function() {
 
         showComingSoon( "This feature is coming soon. If you would like a project forum created in the meantime," +
             ' or already have a forum that you would like to add here please contact <span class="mailTo"><a href="mailTo:support@topcoder.com">TopCoder Support</a></span>');
+
         return;
 
         modalPreloader();
