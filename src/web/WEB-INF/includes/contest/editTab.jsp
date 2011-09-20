@@ -43,7 +43,7 @@
          <span class="name2"><strong>Copilot</strong></span>
          <span class="value"><strong>: <span id="rCopilots"></span></strong></span>
          <br /> <br />
-         <span class="name2 adminFeeDisplay"><strong>Admin Fee</strong></span>
+         <span class="name2 adminFeeDisplay"><strong>Contest Fee</strong></span>
          <span class="value adminFeeDisplay"><strong>: $<span id="rAdminFee"></span></strong></span>
       </p>
     </div><!-- End .detailsContent -->                                              
