@@ -6735,5 +6735,113 @@ textarea#newProjectDescription {
     max-width: 315px;
     max-height: 130px;
 }
+.contestViews .areaHeader .viewBtns{
+    position:absolute;
+    right:0;
+    top:40px;
+}
+    .contestViews .areaHeader .viewBtns a.listViewBtn{
+         font-size:11px;
+         color:#333;
+         text-decoration:none;
+         padding-left:8px;
+         width:74px;
+         float :left;
+         line-height:19px;
+         height:21px;
+         background:url(../images/left-view-button.gif) no-repeat left -21px;
+    }
+        .contestViews .areaHeader .viewBtns a.listViewBtn span{
+            display:inline-block;
+            background:url(../images/list-icon.gif) no-repeat left center;
+            padding-left:13px;
+            cursor:pointer;
+        }
+    .contestViews .areaHeader .viewBtns a.calendarViewBtn{
+         font-size:11px;
+         color:#333;
+         text-decoration:none;
+         padding-left:8px;
+         width:67px;
+         float :left;
+         line-height:19px;
+         height:21px;
+         background:url(../images/right-view-button.gif) no-repeat left -21px;
+    }
+        .contestViews .areaHeader .viewBtns a.calendarViewBtn span{
+            display:inline-block;
+            background:url(../images/calendar-icon.gif) no-repeat left center;
+            padding-left:13px;
+            cursor:pointer;
+        }
+    .contestViews .areaHeader .viewBtns a:hover{
+        background-position:0 -42px;
+    }
+    .contestViews .areaHeader .viewBtns a.active{
+        background-position:0 0;
+    }
+    .contestViews .areaHeader .viewBtns a.active:hover{
+        background-position:0 0;
+    }
+
+.contestViews .fc-header .fc-header-center{
+    text-align:center;
+    vertical-align:middle;
+}
+.contestViews .contestCView{
+    position:relative;
+}
+    .contestViews  .contestCView .loading{
+        position:absolute;
+        left:0;
+        top:0;
+        height:100%;
+        width:100%;
+        background-color:#fff;
+        z-index:100;
+        text-align:center;
+    }
+        .contestViews  .contestCView .loading img{
+            display:inline-block;
+            margin-top:260px;
+        }
+
+.calendarLegends {
+    position:absolute;
+    font-size:14px;
+    left:0;
+    top:25px;
+    height:100%;
+    width:100%;
+    background-color:transparent;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom:5px;
+    padding-top:20px;
+    //left:0;
+}
+    .calendarLegends .legendColor {
+        display:inline-block;
+        width:12px;
+        height:8px;
+        border: #000 solid 1px;
+    }
+    .calendarLegends .draftLegendColor {
+        background-color:#64992c;
+    }
+    .calendarLegends .activeLegendColor {
+        background-color:#206cff;
+    }
+    .calendarLegends .completedLegendColor {
+        background-color:#c94a4a;
+    }
+    .calendarLegends .cancelledLegendColor {
+        background-color:#f7c480;
+    }
+    .calendarLegends .legendText {
+        padding-left: 5px;
+        padding-right: 7px;
+        display:inline-block;
+    }
 
 

@@ -1,6 +1,6 @@
 <%--
-  - Author: BeBetter, isv, tangzx
-  - Version: 1.5
+  - Author: BeBetter, isv, tangzx, Blues
+  - Version: 1.6
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of contests for a single selected project.
@@ -18,7 +18,10 @@
   - Apply to new prototype.  
   -
   - Version 1.5 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
-  - Change the  style for the View/Edit buttons. 
+  - Change the  style for the View/Edit buttons.
+  -
+  - Version 1.6 (Release Assembly - 24hrs TopCoder Cockpit Project Contests Calendar View) changes:
+  - Add a new view project contests calendar view.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -30,7 +33,9 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="contests"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <link rel="stylesheet" href="/css/fullcalendar-1.5.2.css" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/repostcontest.js?v=4"></script>
+    <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js"></script>
 </head>
 
 <body id="page">
@@ -45,20 +50,39 @@
 
                     <jsp:include page="includes/right.jsp"/>
 
-                    <div id="area1"><!-- the main area -->
+                     <div id="area1"><!-- the main area -->
                         <div class="area1Content">
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <strong><s:property value="sessionData.currentProjectContext.name"/></strong>
+                                <span id="currentDirectProjectID" class="hide"><s:property value="sessionData.currentProjectContext.id"/></span>
                             </div>
+
+
+                          <div class="contestViews">
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Contests</h2>
+
+                                <div class="calendarLegends hide">
+                                    <span class="legendColor draftLegendColor"></span><span class="legendText">Draft</span>
+                                    <span class="legendColor activeLegendColor"></span><span class="legendText">Active</span>
+                                    <span class="legendColor completedLegendColor"></span><span class="legendText">Completed</span>
+                                    <span class="legendColor cancelledLegendColor"></span><span class="legendText">Cancelled</span>
+                                </div>
+                                <div class="viewBtns">
+                                    <a href="javascript:;" class="listViewBtn active">
+                                        <span>List View</span>
+                                    </a>
+                                    <a href="javascript:;" class="calendarViewBtn">
+                                        <span>Calendar</span>
+                                    </a>
+                                </div>
                             </div>
                             <!-- End .areaHeader -->
 
                             <jsp:include page="includes/project/projectStats.jsp"/>
 
-                            <div class="container2"  id="ProjectContests">
+                            <div class="container2 contestTView"  id="ProjectContests">
                                 <div class="myProjectContests">                                    
                                     <table id="ProjectContests" class="projectStats contests paginatedDataTable" width="auto"
                                            cellpadding="0"
@@ -186,10 +210,23 @@
                                     </div>
                                 </div>          
                             </div>
+
+                              <span id="calendarToday" class="hide"><s:date name="calendarToday" format="MM/dd/yyyy"/></span>
+                              <div class="contestCView hide">
+                                <div class="loading">
+                                    <img src="/images/loadingAnimation.gif" alt=""/>
+                                </div>
+                                <div class="calendar"></div>
+                            </div>
+
+                          </div>
                             <!-- End .container2 -->
                         </div>
                     </div>
                 </div>
+
+<div class="clear"></div>
+
 
             </div>
             <!-- End #mainContent -->

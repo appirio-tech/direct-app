@@ -428,6 +428,14 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="projectContestsCalendarView" class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
     </package>
 
     <package name="base" namespace="/base" extends="default">

@@ -11,14 +11,20 @@ import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Project Contests</code> page
  * for requested project.</p>
  *
+ * <p>
+ *     Version 1.1 - Release Assembly - 24hrs TopCoder Cockpit Project Contests Calendar View change:
+ *     - Add getter to return current date on server
+ * </p>
+ *
  * @author isv
- * @version 1.0
+ * @version 1.1
  */
 public class ProjectContestsAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectContestsDTO> {
@@ -56,6 +62,16 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
      */
     public ProjectContestsDTO getViewData() {
         return this.viewData;
+    }
+
+    /**
+     * Gets current date on server.
+     *
+     * @return current date on server.
+     * @since 1.1
+     */
+    public Date getCalendarToday() {
+        return new Date();
     }
 
     /**

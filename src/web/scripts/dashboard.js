@@ -1191,6 +1191,128 @@ $(document).ready(function(){
 		$(".appositeContainer .registrationModule .statusP .helpBtn").css("top","0");
 	} 
 	/* end */
+
+
+    $(" .contestViews  .contestCView .loading").css("opacity", "0.8");
+
+    var isInitView = true;
+
+    $(".contestViews .areaHeader .viewBtns a").click(function() {
+
+
+        if ($(this).hasClass("active")) return;
+        $(this).parent().find("a").removeClass("active");
+        $(this).addClass("active");
+        var views = $(this).parents(".contestViews");
+        if (views.find(".contestTView").is(":hidden")) {
+            views.find(".contestTView").show();
+            views.find(".contestCView").hide();
+            views.find(".calendarLegends").hide();
+        } else {
+            views.find(".contestTView").hide();
+            views.find(".contestCView").show();
+            views.find(".calendarLegends").show();
+
+            // get direct project ID
+            var directProjectId = $.trim($("#currentDirectProjectID").html());
+            var request = {"directProjectId":directProjectId};
+
+
+            if ($.browser.msie && $.browser.version == 7.0) {
+                $(".contestViews .calendar .fc-header").css("margin-left", "0");
+            }
+
+            var loaded = false;
+
+            var fc = views.find(".calendar");
+            if (!fc.hasClass("fc")) {
+                fc.fullCalendar({
+                    header: {
+                        left: 'prev',
+                        center: 'title',
+                        right: 'next'
+                    },
+                    dayNamesShort: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+                    eventClick : function(calEvent, jsEvent, view) {
+                        window.open(calEvent.url, "_blank");
+                        return false;
+                    },
+                    viewDisplay : function(view) {
+
+                        // the json data
+                        var calendarJsonData;
+
+                        if (!loaded) {
+
+                            // show ajax loading
+                            views.find(".loading").show();
+
+                            // get data via ajax
+                            $.ajax({
+                                type: 'POST',
+                                url:'projectContestsCalendarView',
+                                data: request,
+                                dataType: "json",
+                                cache:false,
+                                async:true,
+                                success: function(jsonResult) {
+                                    handleJsonResult(jsonResult,
+                                        function(result) {
+
+                                            // set the result
+                                            calendarJsonData = result;
+
+                                            // hide the loading
+                                            views.find(".loading").hide();
+
+                                            $.each(calendarJsonData.events, function(index, item) {
+                                                fc.fullCalendar("renderEvent", item, true);
+                                            })
+
+
+                                            /* fix the bug in IE7 */
+                                            if ($.browser.msie && $.browser.version == 7.0) {
+                                                $(".contestViews .calendar .fc-header").css("margin-left", "-4px");
+                                            }
+
+                                            loaded = true;
+                                        },
+                                        function(errorMessage) {
+
+                                            // hide loading and show error
+                                            views.find(".loading").hide();
+                                            showServerError(errorMessage);
+                                        })
+                                }
+                            });
+
+                        }
+
+                    },
+                    eventRender: function(event, element) {
+                        switch (event["status"]) {
+                            case 'completed':
+                                element.addClass("fc-completed");
+                                break;
+                            case 'cancelled':
+                                element.addClass("fc-cancelled");
+                                break;
+                            case 'active':
+                                element.addClass("fc-active");
+                                break;
+                            case 'draft':
+                                element.addClass("fc-draft");
+                                break;
+                        }
+                    },
+                    editable: false
+                });
+            }
+        }
+    });
+
+
+
 });
 
 /*
@@ -1228,11 +1350,9 @@ $('#addExistContest').live('click', function(){
 	if (checkProjectName()){
 		$('#CreateProjectForm').submit();
 	}
-
-
-
-
 });
+
+
 
 function exportContestRegistrantsToExcel() {
     $('#formDataExcel').val("true");
