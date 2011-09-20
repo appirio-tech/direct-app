@@ -11,8 +11,13 @@
 
 <%@ attribute name="submissionId" required="true" type="java.lang.Long" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
+<%@ attribute name="original" required="false" type="java.lang.Boolean" %>
 
-<a href="http://studio.topcoder.com/?module=DownloadSubmission&sbmid=${submissionId}"
+<c:set var="link" value="http://studio.topcoder.com/?module=DownloadSubmission&sbmid=${submissionId}" />
+<c:if test="${original}" >
+    <c:set var="link" value="${link}&sbt=original" />
+</c:if>
+<a href="${link}"
    class="${styleClass}">
     <jsp:doBody/>
 </a>
