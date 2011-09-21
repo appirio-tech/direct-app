@@ -5598,15 +5598,14 @@ Contest links
 }
 
 .issueContest .contestNameTd a {
-    margin-left: 16px;
-    line-height: 40px;
+
 }
 
 .issueContest .contestNameLink {
 
     padding-left: 16px;
     padding-right: 10px;
-    padding-top: 15px;
+    padding-top: 25px;
     text-align: left;
 }
 
