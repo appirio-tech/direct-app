@@ -5789,10 +5789,7 @@ Contest links
     margin-bottom:10px;
 }
 /* ADDED CSS CODE */ 
-.myCopilotsContestsList, .myProjectContests {
-    border-left:1px solid #A8ABAD;
-    border-right:1px solid #A8ABAD;
-}
+
 .myCopilotsContestsList table.contests, table#ProjectContests {
     border:0px;
     margin-bottom:0px;

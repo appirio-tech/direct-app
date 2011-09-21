@@ -524,7 +524,7 @@ function validateContestInput() {
  */
 function activateContest() {
     var request = saveAsDraftRequest();
-    request['activation'] = true;
+    request['activationFlag'] = true;
 
     $.ajax({
         type: 'POST',
@@ -532,11 +532,21 @@ function activateContest() {
         data: request,
         cache: false,
         dataType: 'json',
-        success: handleActivationResult,
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    showSuccessfulMessage("Your copilot posting <span class='messageContestName'>" +  request['assetDTO.name'] + "</span> has been activated.");
+                    $("#resubmit").hide();
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        },
         beforeSend: beforeAjax,
         complete: afterAjax
     });
 }
+
 
 function saveAsDraftRequest() {
     var request = {};
@@ -631,4 +641,14 @@ function sendSaveDraftRequestToServer() {
         }
     });
 }
+
+
+function beforeAjax() {
+	 modalPreloader();
+}
+
+function afterAjax() {
+	 modalClose();
+}
+
 

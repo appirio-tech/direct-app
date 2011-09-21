@@ -19,6 +19,7 @@
 <c:set var="CURRENT_TAB" value="copilotPostings" scope="request"/>
 <c:set var="CURRENT_SUB_TAB" value="copilotContestDetails" scope="request"/>
 
+<c:set var="contestDTO" value="${viewData.contestStats.contest}"/>
 <c:set var="contest" value="${result}"/>
 <c:set var="projectHeader" value="${contest.projectHeader}"/>
 <c:set var="assetDTO" value="${contest.assetDTO}"/>
@@ -32,7 +33,7 @@
     <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
     <script type="text/javascript" src="/scripts/launch/entity.js"></script>
     <script type="text/javascript" src="/scripts/copilots.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script> 
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#projects2').getSetSSValue('${projectHeader.tcDirectProjectId}');
@@ -54,11 +55,13 @@
                 // documents2.push(d);
             </c:forEach>
             <c:forEach items="${projectHeader.prizes}" var="p" varStatus="loop" >
-                prizes.push(new com.topcoder.direct.Prize(${p.place}, ${p.prizeAmount}, CONTEST_PRIZE_TYPE_ID, ${p.numberOfSubmissions}));
+            prizes.push(new com.topcoder.direct.Prize(${p.place}, ${p.prizeAmount}, CONTEST_PRIZE_TYPE_ID, ${p.numberOfSubmissions}));
             </c:forEach>
-        <c:forEach items="${assetDTO.compUploadedFiles}" var="doc" varStatus="loop">
-            <!-- ${doc.uploadedFileName} ${doc.uploadedFileDesc} -->
-        </c:forEach>
+            <c:forEach items="${assetDTO.compUploadedFiles}" var="doc" varStatus="loop">
+            <!--
+            ${doc.uploadedFileName}
+            ${doc.uploadedFileDesc} -->
+            </c:forEach>
         });
     </script>
 </head>
@@ -81,7 +84,7 @@
 <div class="currentPage">
     <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-    <strong>My Copilot Selection Contests</strong>
+    <strong>My Copilot Posting</strong>
 </div>
 <!-- End .currentPage -->
 
@@ -112,13 +115,15 @@
 <div class="editMask">
     <div class="addNewContestInfo infoPanel ">
         <h3><span class="icon">General Information</span>
-            <a href="javascript:" class="editLink">
-                <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            <if:isEditable typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
             <ul>
-                <li><label>Contest Name :</label>
+                <li><label>Copilot Posting Name :</label>
                     <strong id="contestNameTextLabel"><c:out value="${assetDTO.name}"/></strong>
                 </li>
                 <li>
@@ -207,8 +212,11 @@
 <div class="editMask greybg">
     <div class="infoPanel scheduleInfo ">
         <h3>
-            <span class="icon">Contest Schedule</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <span class="icon">Copilot Posting Schedule</span>
+            <if:isEditable typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -262,7 +270,10 @@
     <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that you want everyone to see</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <if:isEditable typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -295,7 +306,10 @@
     <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that is only viewable to copilots that register for this posting</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <if:isEditable typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -329,7 +343,10 @@
     <div class="infoPanel fileUploadInfo ">
         <h3>
             <span class="icon">Files</span>
-            <a href="javascript:" class="editLink"><img class="edit_type" alt="edit" src="/images/edit.png"/></a>
+            <if:isEditable typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
+            </if:isEditable>
         </h3>
 
         <div class="infoPanelMask">
@@ -392,9 +409,14 @@
 </div>
 <!-- end .fileUpload -->
 
-
 </div>
 <!-- end #launchContestOut -->
+<if:isDraft typedContestBrief="${contestDTO}">
+    <div id="resubmit">
+          <a href="javascript:activateContest();" class="button4">Activate</a>
+    </div>
+</if:isDraft>
+
 
 </div>
 </div>
@@ -437,9 +459,24 @@
             <div class="popupContent">
                 <dl>
                     <dt>Your Copilot Selection Contest has been saved as draft</dt>
-                         
+
                     <dd class="yesno">
                          <a href="#" class="button6" id="saveAsDraftOK"><span class="left"><span class="right">OK</span></span></a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="savedAsDraftAndActivated" class="acceptRejectPopup hide">
+    <div class="popupMask">
+        <div class="popupWrap">
+            <div class="popupContent">
+                <dl>
+                    <dt>Your Copilot Selection Contest has been activated successfully</dt>
+
+                    <dd class="yesno">
+                         <a href="#" class="button6" id="saveAsDraftOK2"><span class="left"><span class="right">OK</span></span></a>
                     </dd>
                 </dl>
             </div>
