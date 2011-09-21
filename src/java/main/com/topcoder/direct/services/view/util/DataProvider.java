@@ -2399,7 +2399,15 @@ public class DataProvider {
         } else {
             latestForumPost.setUrl("http://studio.topcoder.com/forums?module=Thread&threadID=" + latestThreadId);
         }
-        latestForumPost.setTimestamp(new Date());
+
+        if (latestTime != null)
+        {
+            latestForumPost.setTimestamp(latestTime);
+        }
+        else 
+        {
+            latestForumPost.setTimestamp(new Date());
+        }
         
         if (latestUserId != 0)
         {
@@ -3690,7 +3698,7 @@ public class DataProvider {
         DataAccess dataAccessor;
 
         if (cached) {
-            dataAccessor = new CachedDataAccess(MaxAge.HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+            dataAccessor = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
         } else {
             dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         }
