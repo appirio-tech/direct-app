@@ -24,7 +24,10 @@ public class DashboardPipelineReportForm implements Serializable {
      * <p>A <code>ContestType</code> array listing the contest types to be selected by default.</p>
      */
     private static final ContestType[] DEFAULT_CONTEST_TYPES_SELECTION
-        = new ContestType[] {ContestType.CONCEPTUALIZATION, ContestType.SPECIFICATION,
+        = new ContestType[] {ContestType.WEB_DESIGN, ContestType.LOGO_DESIGN, ContestType.BANNERS_ICONS,
+                             ContestType.APP_FRONT_END_DESIGN, ContestType.WIDGET_MOBILE_SCREEN_DESIGN, ContestType.FRONT_END_FLASH,
+                             ContestType.PRINT_DESIGN, ContestType.WIREFRAME, ContestType.IDEA_GENERATION, 
+                             ContestType.CONCEPTUALIZATION, ContestType.SPECIFICATION, ContestType.OTHER,
                              ContestType.ARCHITECTURE, ContestType.COMPONENT_DESIGN, ContestType.COMPONENT_DEVELOPMENT,
                              ContestType.RIA_COMPONENT, ContestType.RIA_BUILD, ContestType.UI_PROTOTYPE,
                              ContestType.ASSEMBLY, ContestType.TEST_SUITES, ContestType.TEST_SCENARIOS,
