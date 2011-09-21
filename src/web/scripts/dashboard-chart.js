@@ -283,12 +283,7 @@ function drawChart() {
         }
         var display = true , colspan="";
         var projectLink = "/direct/projectOverview.action?formData.projectId="+elem.directProjectId;
-        var contestLink = "";
-        if(parseInt(elem.projectId) > 30000000) {
-            contestLink = "/direct/contest/detail.action?projectId="+elem.projectId;
-        } else {
-            contestLink = "/direct/contest/detail.action?contestId="+elem.projectId;
-        }
+        var contestLink = "/direct/contest/detail.action?projectId="+elem.projectId;
         if(type == "Market" && !isAdmin) {
             display = false;
         }
