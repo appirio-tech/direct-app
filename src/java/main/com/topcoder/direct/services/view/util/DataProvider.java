@@ -3690,7 +3690,7 @@ public class DataProvider {
         DataAccess dataAccessor;
 
         if (cached) {
-            dataAccessor = new CachedDataAccess(MaxAge.HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+        	dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         } else {
             dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         }
