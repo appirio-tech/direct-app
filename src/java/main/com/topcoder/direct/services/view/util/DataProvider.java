@@ -3696,13 +3696,13 @@ public class DataProvider {
         }
 
         Request request = new Request();
-        request.setContentHandle("direct_project_overview_contests_health");
+        request.setContentHandle("direct_project_overview_contests_health_replatforming");
         request.setProperty("uid", String.valueOf(userId));
         request.setProperty("tcdirectid", String.valueOf(projectId));
 
         final Map<Long, ProjectBriefDTO> projects = new HashMap<Long, ProjectBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_project_overview_contests_health");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_project_overview_contests_health_replatforming");
         final int recordNum = resultContainer.size();
 
         Map<ContestBriefDTO, ContestHealthDTO> contests = new HashMap<ContestBriefDTO, ContestHealthDTO>();
@@ -3710,7 +3710,7 @@ public class DataProvider {
 
                 ContestHealthDTO contestHealthDTO = new ContestHealthDTO();
 
-                boolean isStudio = (resultContainer.getIntItem(i, "is_studio") == 1);
+                boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
 
                 if (isStudio) {
                     contestHealthDTO.setRegistrationStatus(RegistrationStatus.HEALTHY);
