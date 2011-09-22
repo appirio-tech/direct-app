@@ -94,9 +94,9 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
     private int numberOfRegistrants;
 
     /**
-     * <p>A <code>ProjectPhaseDTO</code> list providing the details for current phase.</p>
+     * <p>A <code>ProjectPhaseDTO</code> providing the details for current phase.</p>
      */
-    private List<ProjectPhaseDTO> currentPhase;
+    private ProjectPhaseDTO currentPhase;
 
     /**
      * <p>A <code>ProjectPhaseDTO</code> providing the details for next project phase.</p>
@@ -326,16 +326,16 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      *
      * @return a <code>ProjectPhaseDTO</code> providing the details for current phase.
      */
-    public List<ProjectPhaseDTO> getCurrentPhase() {
+    public ProjectPhaseDTO getCurrentPhase() {
         return this.currentPhase;
     }
 
     /**
      * <p>Sets the details for current phase.</p>
      *
-     * @param currentPhase a <code>ProjectPhaseDTO</code> list providing the details for current phase.
+     * @param currentPhase a <code>ProjectPhaseDTO</code> providing the details for current phase.
      */
-    public void setCurrentPhase(List<ProjectPhaseDTO> currentPhase) {
+    public void setCurrentPhase(ProjectPhaseDTO currentPhase) {
         this.currentPhase = currentPhase;
     }
 

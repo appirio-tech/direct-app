@@ -2273,7 +2273,7 @@ public class DataProvider {
         // Analyze current and next phases
         final ResultSetContainer projectPhasesStats = results.get("project_phases_status_replatforming");
         
-        dto.setCurrentPhase(new ArrayList<ProjectPhaseDTO> ());
+        dto.setCurrentPhase(new ProjectPhaseDTO());
         
         if (!projectPhasesStats.isEmpty()) {
             List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
@@ -2301,7 +2301,7 @@ public class DataProvider {
                 if (row.getIntItem("phase_status_id") == 2) {
                     // find current phase 
                     findCurrPhase = true;
-                    dto.getCurrentPhase().add(phase);
+                    dto.setCurrentPhase(phase);
                     
                     // set current phase status
                     Date now = new Date();
@@ -3734,38 +3734,38 @@ public class DataProvider {
                     double reliabilityTotal = getDouble(resultContainer.getRow(i), "reliability_total");
                     long registrationPhaseStatus = getLong(resultContainer.getRow(i), "registration_phase_status");
                     setRegistrationPhaseStatus(contestHealthDTO, reliabilityTotal, registrationPhaseStatus);
+                }
 
-                    // Evaluate current phase status
-                    Date currentPhaseEndTime = null;
-                    if (resultContainer.getItem(i, "current_phase_end_time").getResultData() != null) {
-                        currentPhaseEndTime = resultContainer.getTimestampItem(i, "current_phase_end_time");
-                    }
-                    setCurrentPhaseStatus(contestHealthDTO, currentPhaseEndTime);
+                // Evaluate current phase status
+                Date currentPhaseEndTime = null;
+                if (resultContainer.getItem(i, "current_phase_end_time").getResultData() != null) {
+                    currentPhaseEndTime = resultContainer.getTimestampItem(i, "current_phase_end_time");
+                }
+                setCurrentPhaseStatus(contestHealthDTO, currentPhaseEndTime);
 
-                    // Evaluate forum activity status
-                    int unAnsweredThreadsCount = getInt(resultContainer.getRow(i), "unanswered_threads");
-                    contestHealthDTO.setUnansweredForumPostsNumber(unAnsweredThreadsCount);
+                // Evaluate forum activity status
+                int unAnsweredThreadsCount = getInt(resultContainer.getRow(i), "unanswered_threads");
+                contestHealthDTO.setUnansweredForumPostsNumber(unAnsweredThreadsCount);
 
-                    // Evaluate review sign-up status
-                    int requiredReviewersCount = getInt(resultContainer.getRow(i), "required_reviewers_count");
-                    int registeredReviewersCount = getInt(resultContainer.getRow(i), "registered_reviewers_count");
-                    long hoursLeft = getInt(resultContainer.getRow(i), "review_hours_left");
-                    setReviewSignupStatus(contestHealthDTO, hoursLeft, requiredReviewersCount,
-                                          registeredReviewersCount);
+                // Evaluate review sign-up status
+                int requiredReviewersCount = getInt(resultContainer.getRow(i), "required_reviewers_count");
+                int registeredReviewersCount = getInt(resultContainer.getRow(i), "registered_reviewers_count");
+                long hoursLeft = getInt(resultContainer.getRow(i), "review_hours_left");
+                setReviewSignupStatus(contestHealthDTO, hoursLeft, requiredReviewersCount,
+                                      registeredReviewersCount);
 
-                    // Evaluate dependencies status
-                    Integer dependenciesCount
-                        = resultContainer.getIntItem(i, "dependencies_count");
-                    Integer incompleteDependenciesCount
-                        = resultContainer.getIntItem(i, "incomplete_dependencies_count");
+                // Evaluate dependencies status
+                Integer dependenciesCount
+                    = resultContainer.getIntItem(i, "dependencies_count");
+                Integer incompleteDependenciesCount
+                    = resultContainer.getIntItem(i, "incomplete_dependencies_count");
 
-                    if (dependenciesCount == 0) {
-                        contestHealthDTO.setDependenciesStatus(DependenciesStatus.NO_DEPENDENCIES);
-                    } else if (incompleteDependenciesCount > 0) {
-                        contestHealthDTO.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_NON_SATISFIED);
-                    } else {
-                        contestHealthDTO.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_SATISFIED);
-                    }
+                if (dependenciesCount == 0) {
+                    contestHealthDTO.setDependenciesStatus(DependenciesStatus.NO_DEPENDENCIES);
+                } else if (incompleteDependenciesCount > 0) {
+                    contestHealthDTO.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_NON_SATISFIED);
+                } else {
+                    contestHealthDTO.setDependenciesStatus(DependenciesStatus.DEPENDENCIES_SATISFIED);
                 }
 
                 // Set colors based on evaluated statuses
