@@ -180,6 +180,12 @@
 @createComment@=false
 
 
+#################################################################################
+# SpecReviewService.xml for spec review service component                       #
+#################################################################################
+@defaultSpecReviewerContestType1@=14
+@defaultSpecReviewerUserId1@=132456
+
 ##########################
 # applicationContext.xml #
 ##########################
