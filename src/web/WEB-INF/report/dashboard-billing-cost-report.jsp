@@ -65,7 +65,7 @@
                 <div class="firstRow">
                     <div class="datePicker">
                         <div class="columns contestType">
-                            <strong>Status</strong><br/>
+                            <strong>Payment Date</strong><br/>
                             <div>
                                 <span class="label">Start: </span>
                                 <s:textfield name="formData.startDate" readonly="true"
@@ -87,7 +87,7 @@
 
                     <div class="timeDimension">
                         <div class="columns contestType">
-                            <strong>Status</strong><br/>
+                            <strong>Contest Status</strong><br/>
                             <s:select list="viewData.contestStatus" multiple="true"
                                       cssClass="multiselect"
                                       id="formData.statusIds"

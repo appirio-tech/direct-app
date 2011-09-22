@@ -97,7 +97,7 @@
 
                     <div class="timeDimension">
                         <div class="columns contestType">
-                            <strong>Status</strong><br/>
+                            <strong>Contest Status</strong><br/>
                             <s:select list="viewData.contestStatus" multiple="true"
                                       cssClass="multiselect"
                                       id="formData.statusIds"
