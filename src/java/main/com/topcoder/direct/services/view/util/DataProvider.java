@@ -2385,6 +2385,13 @@ public class DataProvider {
             totalForum = getInt(forumStats.getRow(0), "number_of_forum");
             unansweredForumPostsNumber = getInt(forumStats.getRow(0), "unanswered_threads");
             latestTime = getDate(forumStats.getRow(0), "latest_time");
+
+            //time from jive is UTC
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTime(latestTime);  
+            calendar.set(Calendar.ZONE_OFFSET, 0);
+            latestTime = calendar.getTime();
+
         }
 
 
