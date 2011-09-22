@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="firstRow">
-                    <div class="datePicker">
+                    <div class="datePicker"> <strong>Payment Date</strong><br>
                         <div>
                             <span class="label">Start: </span>
                             <s:textfield name="formData.startDate" readonly="true"

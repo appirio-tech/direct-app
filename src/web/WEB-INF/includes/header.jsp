@@ -49,9 +49,9 @@
         <c:otherwise>
             <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo">
             <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
-            <span id="projectTitleSpan">Projects</span>
+            <span id="projectTitleSpan"> <s:property value="sessionData.currentProjectContext.name"/></span>
             <c:if test="${requestScope.CURRENT_TAB != 'overview'}">
-                <s:property value="sessionData.currentProjectContext.name"/>
+
             </c:if>
             </a>
         </c:otherwise>
