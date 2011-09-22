@@ -73,7 +73,7 @@
 
 		<c:if test="${tcdirect:isScorecardAdmin()}" >
 		   <li>
-                      <a href="/direct/scorecard/"><span>Scorecard</span></a>
+                      <a href="/direct/scorecard/"><span>Scorecards</span></a>
                    </li>
                </c:if>
             </ul>
