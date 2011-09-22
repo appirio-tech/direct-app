@@ -996,9 +996,9 @@ function validateFieldsRoundSection() {
 	}
 
 	// check total payment
-	if(getCurrentContestTotal(true) < mainWidget.softwareCompetition.paidFee) {
+	/**if(getCurrentContestTotal(true) < mainWidget.softwareCompetition.paidFee) {
 		errors.push('Your payment can not be lower than paid amount.');
-	}
+	}*/
 	
    if(errors.length > 0) {
        showErrors(errors);
