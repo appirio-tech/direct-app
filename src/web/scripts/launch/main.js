@@ -31,8 +31,11 @@
  * Version 1.5 (Release Assembly - TC Direct UI Improvement Assembly 3) Change notes:
  * - Fix the styles of catalog selection dropdown.
  *
+ * Version 1.6 TC Cockpit Post a Copilot Assembly  change notes:
+ * - Add more checks.
+ *
  * @author TCSDEVELOPER
- * @version 1.5
+ * @version 1.6
  */
 
  /**
@@ -947,6 +950,14 @@ function removeSoftwareDocument(documentId) {
       });
 
       swRefreshDocuments();
+
+	  if ($(".copilotFileUploadDiv").length > 0) {
+        var p = $(".copilotFileUploadDiv input[type=hidden][value=" + documentId + "]").parent().parent();
+        if ($(".copilotFileUploadDiv .rowItem p").length == 1) {
+            p.find(".addButton").click();
+        }
+        p.remove();
+    }
 }
 
 /**
@@ -998,6 +1009,10 @@ function fillPrizes() {
         return;
    }
    var contestCost = getContestCost(feeObject, prizeType);
+
+   if (contestCost == undefined) {
+        return;
+   }
 
    var firstPlaceAmount = contestCost.firstPlaceCost.formatMoney(2);
    $('#swFirstPlace').val(firstPlaceAmount);
@@ -1107,6 +1122,10 @@ function updateSoftwarePrizes() {
    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
    var feeObject = softwareContestFees[projectCategoryId];
    var contestCost = getContestCost(feeObject, prizeType);
+
+   if (contestCost == undefined) {
+        return;
+   }
 
    projectHeader.setFirstPlaceCost(contestCost.firstPlaceCost);
    projectHeader.setSecondPlaceCost(contestCost.secondPlaceCost);

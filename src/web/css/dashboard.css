@@ -5801,7 +5801,7 @@ Contest links
     padding-left:6px; 
 }
 .myCopilotsContestsList table.projectStats td, table#ProjectContests td {
-    width:inherit;
+    width:auto;
     text-align:center;
     padding:12px 4px;
 }

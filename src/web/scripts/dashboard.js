@@ -30,8 +30,11 @@
  *  Version 1.8 - Release Assembly - TopCoder Cockpit Project Overview Update 1
  *  - Add javascript codes to adjust the the project copilot box when resizing browser
  *
+ *  Version 1.9 - TC Cockpit Post a Copilot Assembly 
+ *  - Update the img src of pre loading modal.
+ *
  * @author tangzx, Blues, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 $(document).ready(function(){
 						   
@@ -184,7 +187,7 @@ $(document).ready(function(){
 
         if (!hasCurrentProject) input.val("Select a project here");
 
-        if (!isInProjectScope) {
+        if (typeof isInProjectScope != 'undefined' && !isInProjectScope) {
 
             if (hasCurrentProject) {
                 if ((undefined != currentProjectContests) && $("#contestsTable tbody tr").length <= 0) {
@@ -241,20 +244,22 @@ $(document).ready(function(){
         var arr = [{"id":"","value":"All Customers"}];
         var count = 0;
         var noCustomer;
-        for(var p in rightSidebarData){
-             if(typeof(rightSidebarData[p])!="function"){
-                count ++;
-                var obj = new Object();
-                 obj.value = p;
-                 obj.id = rightSidebarData[p]["id"];
-                 obj.projects = rightSidebarData[p]["projects"];
+        if (typeof rightSidebarData != 'undefined' && rightSidebarData) {
+            for(var p in rightSidebarData){
+                 if(typeof(rightSidebarData[p])!="function"){
+                    count ++;
+                    var obj = new Object();
+                     obj.value = p;
+                     obj.id = rightSidebarData[p]["id"];
+                     obj.projects = rightSidebarData[p]["projects"];
 
-                 if (!(obj.id == "none")) {
-                    arr.push(obj);
-                 } else {
-                    noCustomer = obj;
+                     if (!(obj.id == "none")) {
+                        arr.push(obj);
+                     } else {
+                        noCustomer = obj;
+                     }
                  }
-             }
+            }
         }
 
         arr.sort(compareCustomer);
@@ -1424,6 +1429,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 		$('#new-modal .outLay').hide();
     }
 
+
     /**
      * Close the add new project modal window.
      */
@@ -1431,6 +1437,7 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
         $('#modalBackground').hide();
 		$('#new-modal #addNewProjectModal').hide();
     }
+
 
 	/* load modal (string itemID )*/
 	modalLoad = function(itemID) {

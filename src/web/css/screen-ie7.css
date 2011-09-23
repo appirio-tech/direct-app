@@ -53,3 +53,15 @@
 #helpCenterWidget .contactUs {
     margin-top: 13px;
 }
+
+.customUploadWrap {
+	width:525px;
+}
+
+.postFrame {
+	width:431px;
+}
+
+.stepNav {
+		padding:25px 0 0;
+}

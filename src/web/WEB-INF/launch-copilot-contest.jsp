@@ -1,13 +1,12 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
-  - Description: Launch copilot selection contest page.
+  - Description: provide two ways to select a copilot.
   - Since: TC Direct - Launch Copilot Selection Contest assembly
   - Version 1.1 (TC Direct Manage Copilots Assembly) changes: set CURRENT_TAB parameter.
-  -
-  - Version 1.2 (Release Assembly - TC Direct UI Improvement Assembly 3) changes: remove modal.css.
+  - Version 1.2 (TC Cockpit Post a Copilot Assembly 1) changes: apply to new prototype.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -19,15 +18,20 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
+    
     <link rel="stylesheet" href="/css/modal.css" media="all" type="text/css" />
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script> 
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=49"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=49"></script>
-    <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=49"></script>
+    <link rel="stylesheet" href="/css/newProject.css" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/get-a-copilot.css" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/jquery.jcarousel.css" media="all" type="text/css" />
+
+    <script type="text/javascript" src="/scripts/newProject.js"></script>
+    <script type="text/javascript" src="/scripts/get-a-copilot.js"></script> 
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js"></script>   
+    
 </head>
 
 <body id="page">
-    <div id="wrapper">
+    <div id="wrapper" class="stepPage get-a-copilot">
         <div id="wrapperInner">
             <div id="container">
                 <div id="content">
@@ -35,30 +39,348 @@
                     <jsp:include page="includes/header.jsp"/>
 
                     <div id="mainContent">
-
-                        <jsp:include page="includes/right.jsp"/>
-
                         <div id="area1"><!-- the main area -->
-                        <div class="area1Content">
 
-                                <div class="currentPage">
-                                    <a href="${ctx}/dashboard" class="home">Dashboard</a> &gt;
-                                    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a> &gt;
-                                    <strong>Launch Copilot Selection Contest</strong>
-                                </div> <!-- End .currentPage -->
-
-                                <div id="launchContestOut" class="launchCopilotContest">
-
-                                     <div id="launchCopilotPage" class="launchpage">
-                                       <jsp:include page="includes/launchCopilot/launchCopilot.jsp"/>
-                                     </div>
-
-                                     <div id="receiptCopilotPage" class="launchpage hide">
-                                       <jsp:include page="includes/launchCopilot/receiptCopilot.jsp"/>
-                                     </div>
+                            <!-- the main area -->
+                            <div class="area1Content">
+                                <div class="currentPage"> 
+                                    <a href="/direct/dashboardActive.action" class="home">Dashboard</a>
+                                    &gt;
+                                    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>">Copilots</a>
+                                    &gt;<strong> Introduction Get a Copilot</strong> </div>
+                                 
+                                <!-- container -->
+                                <div id="stepContainer">
+                                
+                                    <!-- step title -->
+                                    <div class="stepTitle">
+                                        <h3 class="infoIcon">Introduction</h3>
+                                       
+                                    </div>
+                                    <!-- End .stepTitle -->
+                                    
+                                    <!-- step -->
+                                    <div class="stepBar">
+                                    
+                                        <ul>
+                                            <li class="first"><span class="istatus inext"><span class="arrow"><span class="bg">Step 1</span></span></span></li>
+                                            <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 2</span></span></span></li>
+                                            <!--<li><span class="istatus inext"><span class="arrow"><span class="bg">Step 3</span></span></span></li>
+                                            <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 4</span></span></span></li>-->
+                                            <li class="last"><span class="istatus inext"><span class="arrow"><span class="bg">Step 3</span></span></span></li>
+                                        </ul>
+                                    
+                                    </div>
+                                    <!-- End .stepBar -->
+                                    
+                                    
+                                    
+                                    <div class="mainContent">
+                                    
+                                        <div class="rightColumn">
+                                            <div class="title">
+                                                    <div class="titleLeft"><div class="titleRight">
+                                                        <h2>Video Tutorial</h2>
+                                                    </div></div>
+                                            </div><!-- End .title -->
+                                            
+                                            <!-- video wrapper --> 
+                                            <div class="videoWrap">
+                                                <object type="application/x-shockwave-flash" data="http://www.youtube.com/v/y4TjXnpgVow" width="327" height="208">
+                                                    <param name="movie"  value="http://www.youtube.com/v/y4TjXnpgVow" />
+                                                    <param name="FlashVars" value="playerMode=embedded" />
+                                                </object>
+                                            </div>
+                                            
+                                            <div class="grayTextArea">
+                                                <p>
+                                                    Copilot has its own payment rates are adjusted to the type of contest and may change depending on the needs of the contest.
+                                                    <a href="javascript:;" class="blue">view rate</a>
+                                                </p>
+                                                
+                                                <span class="corner tl"></span>
+                                                <span class="corner tr"></span>
+                                                <span class="corner bl"></span>
+                                                <span class="corner br"></span>
+                                            </div>
+                                            <!--End .grayTextArea-->
+                                            
+                                            <a href="javascript:;" title="View All Videos" class="redText viewVideo"><strong>View All Videos</strong></a>
+                                            
+                                            <div class="grayTextAreaCustom">
+                                                <p>
+                                                    <strong>It is important to note</strong> that the Copilot is responsible for running contests, but more importantly they are responsible for delivering the "product" to the customer. Many customers will not want to know the details of what contests you are running. In fact, the concept of a contest will not be important to them. They just want their product completed. So, it is the Copilot's responsibility to work with the customer at an appropriate level of detail.
+                                                </p>
+                                                
+                                                <span class="corner tl"></span>
+                                                <span class="corner tr"></span>
+                                                <span class="corner bl"></span>
+                                                <span class="corner br"></span>
+                                            </div>
+                                            <!--End .grayTextAreaCustom-->
+                                            
+                                            
+                                        </div><!-- End .rightColumn -->
+                                        
+                                        <div class="leftColumn">
+                                            <div class="copilot-carousel">
+                                                <span class="corner tl"></span>
+                                                <span class="corner tr"></span>
+                                                <div class="carousel-content">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="/images/copilot_img.png" alt="handle" />
+                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
+                                                                    <p><span>0</span>Project :</p>
+                                                                    <p><span>0</span>Contest :</p>
+                                                                    <p><span>0</span>Report :</p>
+                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="foot-bar">
+                                                    <a href="javascript:;" class="next">&gt;</a>
+                                                    <a href="javascript:;" class="prev">&lt;</a>
+                                                    <strong>1</strong> / 8
+                                                </div>
+                                                <!-- .foot-bar -->
+                                                
+                                            </div>
+                                            <!--End .copilot-carousel-->
+                                            <a href="javascript:;" class="redText"><strong>View All Copilots</strong></a>
+                                            
+                                            
+                                            <div class="item">
+                                                <div class="title">
+                                                    <div class="titleLeft"><div class="titleRight">
+                                                        <h2>Copilot Overview</h2>
+                                                    </div></div>
+                                                </div><!-- End .title -->
+                                                <p>
+                                                    A Copilot is a TopCoder Member who manages the TopCoder process for a customer in order to deliver a requested asset. For example, a customer may ask to build a website. A Copilot will work with that customer to agree on a plan and pricing to build that website and then they would manage the process using the TopCoder Platform to deliver the website back to the customer.
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="item">
+                                                <div class="title">
+                                                    <div class="titleLeft"><div class="titleRight">
+                                                        <h2>Project Rule</h2>
+                                                    </div></div>
+                                                </div><!-- End .title -->
+                                                <p>
+                                                    Please select the way you want to get cooperate with a Copilot in this project, choose option below:
+                                                </p>
+                                                
+                                                <div class="buttonArea">
+                                                    <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2">
+                                                        <span class="left"><span class="right">Post a Copilot</span></span>
+                                                    </a>
+                                                </div>
+                                                <!--End .buttonArea-->
+                                            </div>
+                                            
+                                            
+                                        </div><!-- End .leftColumn -->
+                                        
+                                        
+                                        <div class="clear"></div>
+                                    </div>
+                                    <!--End .mainContent-->
+                                    
+                                    
+                                  
+                                    
                                 </div>
-                                <!-- end #launchContestOut -->
-                        </div> <!-- End.area1Content -->
+                                <!-- End #stepContainer -->
+                                
+                            </div>                        
+                        
+                        
+                        
                         </div> <!-- End #area1 -->
 
                     </div>
@@ -74,7 +396,24 @@
     </div>
     <!-- End #wrapper -->
 
-   
+    <div id="TB_overlay" class="TB_overlayBG"></div>
+    <div id="TB_window">
+        <div id="TB_title">
+            <div id="TB_ajaxWindowTitle"></div>
+            <div id="TB_closeAjaxWindow">
+                <a href="javascript:;" id="TB_closeWindowButton"></a>
+            </div>
+        </div>
+        <div id="TB_ajaxContent">
+            <div class="helpPopupInner details">
+                
+                <div class="logoArea">
+                    <a href="javascript:;"><img src="/images/TopCoder_logo.png" alt="TopCoder" /></a>
+                </div>
+            </div><!-- End .helpPopupInner -->
+        </div>
+        <div id="placeHolder">PlaceHoldertest</div>
+    </div>
         
     
     <div id="allDescriptionIcon_help" class="tooltipContainer">

@@ -90,8 +90,16 @@ $.fn.bgIframe = $.fn.bgiframe = function(s) {
 					       'height:'+(s.height=='auto'?'expression(this.parentNode.offsetHeight+\'px\')':prop(s.height))+';'+
 					'"/>';
 		return this.each(function() {
-			if ( $('> iframe.bgiframe', this).length == 0 )
-				this.insertBefore( document.createElement(html), this.firstChild );
+			if ( $('> iframe.bgiframe', this).length == 0 ) {
+                var tmp = null;
+                
+                try {
+                    tmp = document.createElement(html);
+                } catch(e) {
+                    tmp = $(html)[0];
+                }
+				this.insertBefore( tmp, this.firstChild );
+            }
 		});
 	}
 	return this;

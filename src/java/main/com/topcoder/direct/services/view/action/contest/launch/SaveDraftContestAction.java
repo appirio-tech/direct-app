@@ -26,6 +26,7 @@ import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.CopilotFee;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.management.project.FileType;
@@ -111,8 +112,15 @@ import com.topcoder.service.project.StudioCompetition;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, TCSDEVELOPER
- * @version 1.5
+ * <p>
+ * Version 1.6 - TC Cockpit Post a Copilot Assembly 1 Change Note
+ * <ul>
+ * <li>Sets the forum url.</li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.6
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -578,12 +586,14 @@ public class SaveDraftContestAction extends ContestAction {
         // Set prizes
         List<Prize> prizes = projectHeader.getPrizes();
         List<Prize> newPrizes = new ArrayList<Prize>();
-        for (Prize prize : prizes) {
-            if (prize.getPrizeAmount() > 0) {
-                newPrizes.add(prize);
+        if (prizes != null) {
+            for (Prize prize : prizes) {
+                if (prize.getPrizeAmount() > 0) {
+                    newPrizes.add(prize);
+                }
             }
+            softwareCompetition.getProjectHeader().setPrizes(newPrizes);
         }
-        softwareCompetition.getProjectHeader().setPrizes(newPrizes);
         
         if (DirectUtils.isStudio(softwareCompetition)) {
             populateStudioCompetition(softwareCompetition);
@@ -717,8 +727,8 @@ public class SaveDraftContestAction extends ContestAction {
     private void initializeStudioCompetition(SoftwareCompetition studioCompetition) {
         // asset DTO
         AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
-        assetDTOTemp.setRootCategory(getReferenceDataBean().getStudioCatalog());
-        assetDTOTemp.getCategories().add(getReferenceDataBean().getStudioCategory());
+        assetDTOTemp.setRootCategory(getReferenceDataBean().getNotSetCatalog());
+        assetDTOTemp.getCategories().add(getReferenceDataBean().getNotSetCategory());
         
         if (softwareCompetition.getProjectHeader().getProjectStudioSpecification() == null) {
             softwareCompetition.getProjectHeader().setProjectStudioSpecification(new ProjectStudioSpecification());
@@ -1009,7 +1019,7 @@ public class SaveDraftContestAction extends ContestAction {
      *            Software competition object
      * @return the result map
      */
-    private Map<String, Object> getSoftwareResult(SoftwareCompetition softwareCompetition) {
+    private Map<String, Object> getSoftwareResult(SoftwareCompetition softwareCompetition) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("projectId", softwareCompetition.getProjectHeader().getId());
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition)));
@@ -1018,6 +1028,12 @@ public class SaveDraftContestAction extends ContestAction {
         result.put("hasSpecReview", DirectUtils.hasSpecReview(softwareCompetition));
         result.put("isSpecReviewStarted", DirectUtils.isSpecReviewStarted(softwareCompetition));
         result.put("contestId", softwareCompetition.getProjectHeader().getId());
+        
+        String forumUrl = DataProvider.getContestDashboardData(
+                softwareCompetition.getProjectHeader().getId(), false, false)
+                .getForumURL();
+        result.put("forumUrl", forumUrl);
+
         return result;
     }
 

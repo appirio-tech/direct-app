@@ -3,6 +3,9 @@
  * Copyright (c) Andris Valums
  * Licensed under the MIT license ( http://valums.com/mit-license/ )
  * Thanks to Gary Haran, David Mark, Corey Burns and others for contributions 
+ *
+ *  Version 1.1 - TC Cockpit Post a Copilot Assembly 
+ *  - Update to set the file input. 
  */
 (function () {
     /* global window */
@@ -712,6 +715,10 @@
                     this._input = getFileInput(this.studio);
                 }
             }
+        },
+        
+        setInput: function(input) {
+            this._input = input;
         }
     };
 })(); 

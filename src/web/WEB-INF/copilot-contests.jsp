@@ -63,15 +63,15 @@
                                                cellpadding="0" cellspacing="0">
 
                                             <colgroup>
-                                                <col width="24%" />
-                                                <col width="18%" />
+                                                <col width="22%" />
+                                                <col width="16%" />
                                                 <col width="9%" />
                                                 <col width="9%" />
                                                 <col width="8%" />
                                                 <col width="8%" />
                                                 <col width="8%" />
                                                 <col width="9%" />
-                                                <col width="9%" />
+                                                <col width="13%" />
 
                                             </colgroup>                                               
                                             
@@ -135,7 +135,9 @@
                                                         <s:if test="%{#attr['contest'].status.name == 'Completed'}">
                                                             Completed
                                                         </s:if>
-                                                        <s:if test="%{#attr['contest'].status.shortName == 'draft' || #attr['contest'].status.shortName == 'running'}">
+                                                        <s:if test="%{#attr['contest'].status.shortName == 'draft' 
+                                                            || #attr['contest'].status.shortName == 'running'
+                                                            || #attr['contest'].status.shortName == 'scheduled'}">
                                                             <span class="${contest.status.shortName}">
                                                                 ${contest.status.name}
                                                             </span>

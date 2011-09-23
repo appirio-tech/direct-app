@@ -15,125 +15,14 @@
  * Version 1.3 Release Assembly - TC Direct UI Improvement Assembly 3 change note
  * - remove event click for conditions modal window, it's not needed
  *
+ * Version 1.4 TC Cockpit Post a Copilot Assembly 1 change note
+ * - Apply to new prototype.
+ *
  * @author TCSASSEMBLER
- * @version 1.3 (Direct Improvements Assembly Release 2)
+ * @version 1.4 (Direct Improvements Assembly Release 2)
  */
 $(document).ready(function(){
-    /**
-     * Initiate select elements.
-     */
-    if($('select').length > 0){
-        $('.selectSoftware select,.selectDesign select,.catalogSelect select,.roundelect select,.startSelect select,.milestoneSelect select,.endSelect select,.milestoneEtSelect select,.numSelect select, .cardSelect select, .selectMonth select, .selectYear select').sSelect(); 
-        $('.selectDesign div.selectedTxt').html('Select Contest Type');
-        $('.startEtSelect select').focus();
-        
-        var SelectOptions = {
-            ddMaxHeight: '220px',
-            yscroll: true
-        };
-        $('.startEtSelect select, .endEtSelect select, .projectSelect select, .billingSelect select').sSelect(SelectOptions);
-    }
-    
-    /**
-     * Initiate date pick.
-     */
-    if($('.date-pick').length > 0){
-        $(".date-pick").datePicker().val($.trim($("#currentCopilotDate").val())).trigger('change');
-    }
-
-    /**
-     * Represent prev popup window.
-     */
-    var prevPopup = null;
-    
-    /**
-     * Show popup window with specified id.
-     * 
-     * @param myLink the link
-     * @param myPopupId the id of popup window.
-     */
-    showPopup = function(myLink,myPopupId){
-        var myLinkLeft = myLinkTop  = 0;
-        
-        /* hide the previous popup */
-        if( prevPopup )
-            $(prevPopup).css("display","none");
-            
-        prevPopup = $('#'+myPopupId);
-        
-        /* get the position of the current link */
-        do{
-            myLinkLeft += myLink.offsetLeft;
-            myLinkTop += myLink.offsetTop;
-        }while( myLink = myLink.offsetParent );
-        
-        /* set the position of the popup */
-        var popUpHeight2 = $('#'+myPopupId).height()/2;
-        
-        myLinkTop -= popUpHeight2;
-    
-        $('#'+myPopupId).css("top",(myLinkTop+4)+'px');
-        $('#'+myPopupId).css("left",( myLinkLeft+22 )+'px');
-        
-        /* set the positio of the arrow inside the popup */
-        $(".tooltipContainer SPAN.arrow").css("top",popUpHeight2+'px');
-        
-        /* show the popup */
-        $('#'+myPopupId).css("display","block");
-        
-    }
-    
-    /**
-     * Show popup window when help icon is hovered.
-     */
-    $('#launchContestOut .helpIcon, .help').hover(function(){
-        showPopup(this, $(this).attr("id") + "_help");
-    }, function(){
-        $('#' + $(this).attr("id") + "_help").hide();
-    });
-    
-    /**
-     * Initiate TB section.
-     */
-    $('.TB_overlayBG').css("opacity", "0.6");
-    $('#TB_HideSelect').css("opacity", "0");
-    $('#TB_overlay').hide();
-    $('#TB_window_custom').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window_custom").css('height')) / 2))});
-    $('#TB_overlay').bgiframe();
-    //$('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
-    
-    
-    
-    /**
-     * Handle TB window close button click event.
-     */
-    $('#TB_closeWindowButton').click(function(){
-        $('#TB_overlay').hide();
-        $('#TB_window').hide();                                          
-    });
-    
-    /**
-     * Handle edit panel.
-     */
-    $(".editMask .editPanel").hide(); 
-
-    /**
-     * Save as draft dialog.
-     */
-    $('#draftPanelTrigger').overlay({
-        closeOnClick:false,
-        mask: {
-            color: '#000000',
-            loadSpeed: 200,
-            opacity: 0.6
-        },
-        top:"20%",
-        close :"#saveAsDraftOK",
-        fixed : true,
-        target : $("#saveAsDraft")
-    });
-
-    /**
+	/**
      * Initiate mce elements.
      */
     function makeMaxCharsTinyMCE(obj, maxChars) {
@@ -161,18 +50,10 @@ $(document).ready(function(){
     }
     makeMaxCharsTinyMCE('allDescription', 12000);
     makeMaxCharsTinyMCE('privateDescription', 4096);
-   
-    /**
-     * Initiate add project dialog.
-     */
-    initDialog('addProjectDialog', 500);
-    
-    /**
-     * Initiate other elements in panel.
-     */
+
     initPanel();
 
-    /**
+	/**
      * Handle add new project button click event.
      */
     $('#addNewProject').click(function(){
@@ -182,78 +63,35 @@ $(document).ready(function(){
     });
     
     /**
-     * Handle continue button click event.
+     * Initiate date pick.
      */
-    $('#continue').click(function() {
-        if (!fillInValues()) {
-            return;
-        }
-    
-        // initiate add contest section
-        $(".addNewContestSection").addClass("editMask");
-        $(".addNewContestSection .addNewContest").addClass("editPanel");
-        $(".addNewContestSection .addNewContest a").removeClass("hide");
-        $(".addNewContestSection .addNewContest .save").removeClass("hide");
-        $(".addNewContestSection .addNewContest").hide();
-        $(".addNewContestSection .addNewContestInfo").show();
-        
-        // initiate schedule section
-        initiateSpecifyPanel("scheduleSection", "schedule", true);
-        
-        // initiate all description section
-        initiateSpecifyPanel("allDescriptionSection", "description", false);
-        
-        // initiate private description section
-        initiateSpecifyPanel("privateDescriptionSection", "description", true);
+    if($('.date-pick').length > 0){
+        $(".date-pick").datePicker().val($.trim($("#currentCopilotDate").val())).trigger('change');
+    }
 
-        initiateSpecifyPanel("costs", "description", false);
-        
-     
-        
-        // initiate upload section
-        initiateSpecifyPanel("uploadSection", "fileupload", true);
-        
-        // initiate bottom button section
-        $(".bottomButton .conditions").hide();
-        $(".bottomButton #continue").hide();
-        $(".bottomButton #submitButton").removeClass("hide");
-        $(".bottomButton #previewButton").removeClass("hide");
-        $('html, body').animate({scrollTop:0}, 'fast');
-    });
+    /**
+     * Represent prev popup window.
+     */
+    var prevPopup = null;
     
     /**
-     * Handle edit button click event.
+     * Initiate TB section.
      */
-    $(".edit_type").click(function() {
-        popValuesToInputs();
-    
-        var editPanel = $(this).parent().parent().parent().parent().find(".editPanelMask");
-        editPanel.parent().show();
-        editPanel.parent().next().hide();
-    });
+    $('.TB_overlayBG').css("opacity", "0.6");
+    $('#TB_HideSelect').css("opacity", "0");
+    $('#TB_overlay').hide();
+    $('#TB_window_custom').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window_custom").css('height')) / 2))});
+    $('#TB_overlay').bgiframe();
+    //$('#TB_window').scrollFollow({offset: parseInt((document.documentElement.clientHeight / 2) - (parseInt($("#TB_window").css('height')) / 2))});
     
     /**
-     * Handle cancel button click event.
+     * Handle TB window close button click event.
      */
-    $(".cancel_text").click(function() {
-        var editPanel = $(this).parent().parent().parent().find(".editPanelMask");
-        editPanel.parent().hide();
-        editPanel.parent().next().show();
+    $('#TB_closeWindowButton').click(function(){
+        $('#TB_overlay').hide();
+        $('#TB_window').hide();                                          
     });
-    
-    /**
-     * Handle save button click event.
-     */
-    $(".save_btn").click(function() {
-        if (!fillInValues()) {
-            return;
-        }
-        
-        var editPanel = $(this).parent().parent().parent().parent().find(".editPanelMask");
-        editPanel.parent().hide();
-        editPanel.parent().next().show();
-    });
-    
+
     /**
      * Bind save as draft action to save button click event.
      */
@@ -267,26 +105,185 @@ $(document).ready(function(){
     $("#submitButton").click(function() {
         submitCompetition();
     });
-
-    $('#swFirstPlace').bind('keyup',function() {
-        onFirstPlaceChangeKeyUp();
-        var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
-        var feeObject = softwareContestFees[projectCategoryId];
-        var contestCost = getContestCost(feeObject, 'custom');
-        contestCost.reviewBoardCost = 0;
-        contestCost.reliabilityBonusCost = 0;
-        contestCost.drCost = 0;
-        fillPrizes();
-     });
-
-     $('input[name="prizeRadio"]').click(function(){
-        fillPrizes();
-    });
+    
 	/**
      * Bind preview action to preview button click event.
      */
     $("#previewButton").click(function() {
         previewContest();
+    });    
+    
+    changeStep(1);
+    
+    $(".stepContainer .prevStepButton").click(function() {
+		if(currStep == 4)
+			changeStep(1);
+		else
+			changeStep(currStep - 1);
+    });
+    
+    $(".stepContainer .nextStepButton").click(function() {
+		if(currStep == 1)
+			changeStep(4);
+		else
+	        changeStep(currStep + 1);
+    });
+    
+    $(".stepBar li span.istatus a").click(function() {
+        var c = $(this).attr("id").substring("stepLink_".length);
+        changeStep(parseInt(c));
+    });    
+    
+	$(".proceedRadio").click(function() {
+        $(this).parent().parent().find(".amountText").attr("disabled", true);
+    });
+    $(".useAmountRadio").click(function() {
+        $(this).parent().find(".amountText").attr("disabled", false);
+    });
+    
+    var currentUploadInput;
+    
+	$(".customUpload").css({filter:"alpha(opacity:0)",opacity:"0"});
+	$(".customUpload").live("change",function(){
+		$(this).siblings(".uploadInput").val($(this).val());
+	});
+    
+    
+    $(".customUpload").siblings(".button6").click(function() {
+        currentUploadInput = $(this).parent();
+        $(this).siblings(".customUpload").trigger('click');
+        $(this).siblings(".uploadInput").val($(this).siblings(".customUpload").val());
+    });
+    /*
+	$(".customUpload").siblings(".text").click(function(){
+        currentUploadInput = $(this).parent();
+        $(this).siblings(".customUpload").trigger('click');
+        $(this).val($(this).siblings(".customUpload").val());
+	});
+    
+	if ($.browser.msie) {
+		$(".customUpload").css("width","100px");
+    }  */  
+    
+	$(".get-a-copilot .customUploadWrap").hover( 
+		function(){
+			$(this).children(".draft").css("background-position","left bottom");
+			$(this).children(".draft").children("span.left").css("background-position","left bottom");
+			$(this).children(".draft").children("span.left").children("span.right").css("background-position","right bottom");
+		},
+		function(){
+			$(this).children(".draft").css("background-position","left top");
+			$(this).children(".draft").children("span.left").css("background-position","left top");
+			$(this).children(".draft").children("span.left").children("span.right").css("background-position","right top");
+		}
+    );
+    
+    // copilot contest uploader
+    var swUploader =
+        new AjaxUpload(null, {
+            action: ctx + '/launch/documentUpload',
+            name : 'document',
+            responseType : 'json',
+            onSubmit : function(file , ext){
+                //software document
+                swCurrentDocument['fileName'] = file;
+
+                swUploader.setData(
+                {
+                    studio:false,
+                    contestFileDescription:swCurrentDocument['description'],
+                    documentTypeId:swCurrentDocument['documentTypeId']
+                    }
+                );
+
+                modalPreloader();
+            },
+            onComplete : function(file, jsonResult){ handleJsonResult(jsonResult,
+                    function(result) {
+                        var documentId = result.documentId;
+                        swCurrentDocument['documentId'] = documentId;
+                        swDocuments.push(swCurrentDocument);
+
+                        swCurrentDocument = {};
+
+                        currentUploadInput.parent().find(".uploadBtnRed").addClass("hide");
+                        currentUploadInput.find(".draft").addClass("hide");
+                        currentUploadInput.find(".uploadInput").unbind("click");
+                        currentUploadInput.parent().find(".removeButton").removeClass("hide");
+                        currentUploadInput.append("<input type='hidden'>");
+                        currentUploadInput.find("input[type=hidden]").val(documentId);
+                        
+                        currentUploadInput.parent().find(".removeButton").click(function() {
+                            swRemoveDocument(documentId);
+                        });
+                        
+                        modalClose();
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                        modalClose();
+                    });
+            }
+        }, false);    
+    
+    $(".uploadBtnRed").live("click", function() {
+        swUploader.setInput($(this).prev().find("input[type=file]").get(0));
+        
+        var fileName = swUploader._input.value;
+        var description = "";
+
+        var errors = [];
+
+        if(!checkRequired(fileName)) {
+            errors.push('No file is selected.');
+        }
+
+        if(errors.length > 0) {
+            showErrors(errors);
+            return false;
+        }
+        
+        currentUploadInput = $(this).prev();
+
+        swCurrentDocument['description'] = description;
+        swCurrentDocument['documentTypeId'] = SUPPORTING_DOCUMENTATION_DOCUMENT_TYPE_ID;
+        swUploader.submit();
+    });
+	
+	
+	/* add button */
+	$('.uploadContent .addButton').live("click",function(){
+		var inputLine = $(".uploadCopySource").html();
+        
+		$(this).parent().parent().append(inputLine);
+        
+        var lastP = $(this).parent().parent().find("p").last();
+		lastP.find(".customUploadWrap").hover(
+            function(){
+                $(this).children(".draft").css("background-position","left bottom");
+                $(this).children(".draft").children("span.left").css("background-position","left bottom");
+                $(this).children(".draft").children("span.left").children("span.right").css("background-position","right bottom");
+            },
+            function(){
+                $(this).children(".draft").css("background-position","left top");
+                $(this).children(".draft").children("span.left").css("background-position","left top");
+                $(this).children(".draft").children("span.left").children("span.right").css("background-position","right top");
+            }
+        );
+        
+        lastP.find(".customUploadWrap .uploadInput, .customUploadWrap .draft").click(function() {
+            currentUploadInput = $(this).parent();
+            currentUploadInput.find("input[type=file]").click();
+        });        
+        
+	}); 
+    
+    $(".postCopilotStep1 #contestName").val('');
+    $(".postCopilotStep1 textarea").val('');
+    
+    $(".postCopilotStep6 .edit").click(function() {
+        var name = $(this).attr("name");
+        changeStep(parseInt(name.substring("editStep".length)));
     });
 });
 
@@ -350,9 +347,9 @@ function addNewProject() {
             handleJsonResult(jsonResult,
                 function(result) {
                     var projectData = result;
-                    $("<option/>").val(projectData.projectId).text(projectData.name).appendTo("#projects");
-                    $('#projects').resetSS();
-                    $('#projects').getSetSSValue(projectData.projectId);
+                    $("<option/>").val(projectData.projectId).text(projectData.name).attr("selected", true).appendTo("#projects");
+                    //$('#projects').resetSS();
+                    //$('#projects').getSetSSValue(projectData.projectId);
 
                     modalCloseAddNewProject();
                     showSuccessfulMessage('Project <span class="messageContestName">' + projectData.name + '</span> is created successfully.');
@@ -366,6 +363,318 @@ function addNewProject() {
     });
 };
 
+/**
+ * The current step page.
+ */
+var currStep = 1;
+
+/**
+ * The class of step pages.
+ */
+var stepContainerClasses = [
+    "",
+    "stepFirst stepContainer",
+    //"stepSecond stepContainer",
+    //"stepThird stepContainer budget",
+    "stepForth stepContainer",
+    "stepFifth stepContainer",
+    "stepSix stepContainer summary",
+    "stepSeven stepContainer summary"
+];
+
+/**
+ * The tile of step pages.
+ */
+var stepTiles = [
+    "",
+    "Basic",
+    //"Copilot Experience",
+    //"Budget",
+    "Schedule",
+    "Billing"
+];
+
+mainWidget.competitionType = "SOFTWARE";
+
+/**
+ * Validate step inputs.
+ *
+ * @return true if pass, false otherwise
+ */
+function validateStepInputs() {
+    var errors = [];
+    
+    switch(currStep) {
+        case 1:
+            var contestName = $('input#contestName').val();
+            var tcProjectId = parseInt($('select#projects').val());
+            var allDescription = tinyMCE.get('allDescription').getContent();
+            var privateDescription = tinyMCE.get('privateDescription').getContent();
+
+            
+            if(tcProjectId < 0) {
+                errors.push('Project name could not be empty.');
+            } 
+            if(!checkRequired(contestName)) {
+                errors.push('Copilot Opportunity Title could not be empty.');
+            }
+            
+            if(errors.length > 0) {
+                break;
+            }
+            
+            mainWidget.softwareCompetition.assetDTO.name = contestName;
+            mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $("#projects option[value="+ tcProjectId +"]").text();
+            mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
+            mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = allDescription;
+            mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
+            mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
+            
+            $("#projectNameSummary").html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
+            $("#contestNameSummary").html(contestName);
+            $("#publicDescriptionSummary").html(allDescription + "&nbsp;");
+            $("#specificDescriptionSummary").html(privateDescription + "&nbsp;");
+            
+            $("#uploadFilesSummary").html("");
+            $.each(swDocuments, function() {
+                $("#uploadFilesSummary").append('<li><a href="javascript:;" class="uploadDoc">' + this.fileName + '</a></li>');
+            });
+            
+            break;
+        case 2:
+            // validate and store experience
+            // left to next assembly
+            
+            break;
+        case 3:
+            // validate and store budget
+            // left to next assembly
+            break;
+        case 4:
+            if ($(".lineItem.inputItem .postFrame.hide").length == 2) {
+                errors.push("You haven't posted the opportunity to the Copilots.");
+            } else {
+                var startDate;
+                var lineItem;
+                var amount;
+                var startNow;
+                
+                if ($(".lineItem.amountItem .postFrame").hasClass("hide")) {
+                    // do it later
+                    startDate = getDateByIdPrefix('start');
+                    
+                    lineItem = $(".lineItem.dateItem .postFrame");
+                    startNow = false;
+                    
+                    if (startDate.compareTo(new Date()) < 0) {
+                        errors.push("The start date should after current time.");
+                    }
+                } else {
+                    // post now
+                    startDate = new Date();
+                    startDate.setMinutes(startDate.getMinutes() + 30);
+                    
+                    lineItem = $(".lineItem.amountItem .postFrame");
+                    startNow = true;
+                }
+                
+                if (lineItem.find(".proceedRadio").attr('checked')) {
+                    var feeObject = softwareContestFees[29];
+                    var contestCost = getContestCost(feeObject, 'medium'); 
+                    var firstPlaceCost = contestCost.firstPlaceCost;
+                            
+                    amount = firstPlaceCost;
+                } else if (lineItem.find(".useAmountRadio").attr('checked')) {
+                    var value = lineItem.find(".amountText").val();
+                    if(!checkRequired(value) || !checkNumber(value)) {
+                        errors.push("The amount is invalid.");
+                    }
+                    
+                    amount = parseFloat(value);
+                } else {
+                    errors.push("Please set the amount.");
+                }
+                
+                if(errors.length > 0) {
+                    break;
+                }
+                
+                mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
+                mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);  
+                
+                var projectHeader = mainWidget.softwareCompetition.projectHeader;
+                projectHeader.setFirstPlaceCost(amount);
+                
+                // set all prize to 0 except first place cost
+                projectHeader.setSecondPlaceCost(0);
+                projectHeader.setReviewCost(0);
+                projectHeader.setReliabilityBonusCost(0);
+                projectHeader.setDRPoints(0);
+                projectHeader.setMilestoneBonusCost(0);
+                projectHeader.setAdminFee(0);
+                projectHeader.setSpecReviewCost(0);                
+                
+                var prizes = [];
+                prizes.push(new com.topcoder.direct.Prize(1, amount, CONTEST_PRIZE_TYPE_ID, 1));
+                mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+                
+                if (startNow) {
+                    $("#startTimeSummary").html("Post Now");
+                } else {
+                    $("#startTimeSummary").html("Post at " + startDate);
+                }
+                
+                $("#amountSummary").html("$" + amount);
+            }
+            break;
+        case 5:
+            var billingProjectId = parseInt($('select#billingProjects').val()); 
+            mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
+            
+            if (billingProjectId > 0) {
+                $("#billingSummary").html($("#billingProjects option[value="+ billingProjectId +"]").text());
+            } else {
+                $("#billingSummary").html("");
+            }
+            break;
+            
+    }
+
+    if(errors.length > 0) {
+        showErrors(errors);
+        return false;
+    }    
+    return true;
+}
+
+/**
+ * Show errors.
+ *
+ * @param errors the errors to show
+ */
+function showErrors(errors) {
+    $("#errortModal .modalContainer dl").hide().find("dd").remove();
+    $("#errortModal .modalContainer p").hide().html("");
+    
+    if (typeof errors == "string") {
+        errors = [errors];
+    }
+    
+    if(errors.length > 0) {
+        if (errors.length > 1) {
+            $.each(errors, function(index, item) {
+                $("#errortModal .modalContainer dl").append("<dd>" + item + "</dd>");
+            });
+            $("#errortModal .modalContainer dl").show();
+        } else {
+            $("#errortModal .modalContainer p").html(errors[0]);
+            $("#errortModal .modalContainer p").show()
+        }
+        addresscloseModal();
+        addressLoadModal('#errortModal');
+    }
+    
+}
+
+/**
+ * Move to targeted step.
+ *
+ * @param target the target step
+ * @param forumUrl the forum id, optional
+ */
+function changeStep(target, forumUrl) {
+    if (target > currStep) {
+        if (!validateStepInputs()) {
+            return;
+        }
+    }
+
+    $(".stepContainer .stepDiv").hide();
+    $(".stepContainer .stepDiv.postCopilotStep" + target).show();
+    
+    currStep = target;
+    
+    if (currStep == 1) {
+        $(".stepContainer .prevStepButton").hide();
+    } else {
+        $(".stepContainer .prevStepButton").show();
+    }
+    
+    if (currStep == 4) {
+        var feeObject = softwareContestFees[29];
+        var contestCost = getContestCost(feeObject, 'medium'); 
+        var firstPlaceCost = contestCost.firstPlaceCost;
+        
+        $(".defaultFirstPlaceCost").html(firstPlaceCost);
+    }
+    
+    if (currStep == 6) {
+        $(".stepContainer .topBar, .stepContainer .BottomBar").hide();
+        
+        if (mainWidget.softwareCompetition.projectHeader.getBillingProject() > 0) {
+            $(".stepNav .submitButton").show();
+        }
+        $(".buttonBottom .viewContest").show();
+    } else {
+        $(".stepContainer .topBar, .stepContainer .BottomBar").show();
+        $(".stepNav .submitButton").hide();
+        $(".buttonBottom .viewContest").hide();
+    }
+    
+    if (currStep == 7) {
+        $(".stepBar").hide();
+        
+        $(".backDashboardBtn").unbind("click");
+        $(".stepTitle").append($(".backDashboardBtn"));
+        $(".stepNav").hide();
+        $(".BottomBar, .topBar").hide();
+        $(".buttonBottom .viewContest").show();
+        
+        $(".buttonBottom .viewContest").attr("href", "http://www.topcoder.com/tc?module=ProjectDetail&pj=" + mainWidget.softwareCompetition.projectHeader.id);
+        
+        if (forumUrl) {
+            $(".buttonBottom .forumIcon").attr("href", forumUrl);
+            $(".buttonBottom .forumIcon").show();    
+        }
+        
+        $(".buttonBottom .viewContest span").removeClass("noBorderRight");
+    } else {
+        $(".buttonBottom .forumIcon").hide();
+        $(".buttonBottom .viewContest span").addClass("noBorderRight");
+    }
+
+	var tempCurrStep = 1;
+	if(currStep > 3)
+		tempCurrStep = currStep - 2;
+    
+    $(".stepBar li span.istatus").each(function(index, item) {
+        $(item).removeClass("complete active inext");
+        $(item).find("a, .stepText").hide();
+       
+        if (index + 1 < tempCurrStep) {
+            $(item).addClass("complete");
+            $(item).find("a").show();
+        } else if (index + 1 == tempCurrStep) {
+            $(item).addClass("active");
+            $(item).find("a").show();
+        } else {
+            $(item).addClass("inext");
+            $(item).find(".stepText").show();
+        }
+    });
+    
+    $(".stepContainer").attr("class", stepContainerClasses[tempCurrStep]);
+
+	if (currStep < 6) {
+        $(".stepTitle h3").html('<span class="small">' + tempCurrStep + '</span>' + stepTiles[tempCurrStep]);
+    } else if (currStep == 6) {
+        $(".stepTitle h3").html('Summary').attr("class", "infoIcon");
+    } else {
+        $(".stepTitle h3").html('Confirmation').attr("class", "tickIcon");
+    }
+    $(window).resize();
+}
+    
 /**
  * Initiate the panel, and set some parameters.
  */
@@ -383,161 +692,27 @@ function initPanel() {
     mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
     
     // update prize fields
-    updateSoftwarePrizes();
+    //updateSoftwarePrizes();
     fillPrizes();
-};
-
-/**
- * Populate values to inputs from main widget.
- */
-function popValuesToInputs() {
-    $('input#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
-    $('select#projects').getSetSSValue(mainWidget.softwareCompetition.projectHeader.tcDirectProjectId);
-    $('select#billingProjects').getSetSSValue(mainWidget.softwareCompetition.projectHeader.getBillingProject());
-   
-    $('#startDate').val(getDatePart(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
-    $('#startTime').getSetSSValue(getTimePart(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
-    
-    tinyMCE.get('allDescription').setContent(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
-    tinyMCE.get('privateDescription').setContent(mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription);        
-};
-
-/**
- * Fill values into panel for display from main widget.
- *
- * @return whether these fields are valid
- */
-function fillInValues() {
-    if (!validateFields()) {
-        return false;
-    };
-    
-    $('#copilotPostingNameEdit').text(mainWidget.softwareCompetition.assetDTO.name);
-    $('#projectNameEdit').text(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
-    $('#billingAccountEdit').text($("#billingProjects option[value="+ mainWidget.softwareCompetition.projectHeader.getBillingProject() +"]").text());
-    
-    $('#startDateEdit').text(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
-    
-    $('#allDescriptionEdit').html(mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements);
-    $('#privateDescriptionEdit').html(mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription);
-
-    // prizes
-    var contestFee = mainWidget.softwareCompetition.projectHeader.getAdminFee();
-    $("#sworContestFee").html(contestFee.formatMoney(2));
-    var firstPrize = mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost();
-    $('#sworFirstPlace').html(firstPrize.formatMoney(2));
-    var secondPrize = mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost();
-    $('#sworSecondPlace').html(secondPrize.formatMoney(2));
-    $('#sworTotal').html((contestFee + firstPrize + secondPrize).formatMoney(2));
-    
-    $('#fileUploadTableEdit').find('tr').remove();
-    $.each(swDocuments, function(index, item) {
-        var tr = $("<tr>");
-        
-        var tdName = $("<td>");
-        tdName.attr("class", "fileName");
-        tdName.html(index + 1 + ". <a href='#'>" + item.fileName + "</a>");
-        tr.append(tdName);
-        
-        var tdDesc = $("<td>");
-        tdDesc.attr("class", "fileDesc");
-        tdDesc.html($('<div>').text(item.description).html());
-        tr.append(tdDesc);
-        
-        $('#fileUploadTableEdit').append(tr);
-    });
-
-    return true;
-};
-
-/**
- * Validate fields.
- * 
- * @return whether these fields are valid
- */
-function validateFields() {
-    var contestName = $('input#contestName').val();
-    var tcProjectId = parseInt($('select#projects').val());
-    var billingProjectId = parseInt($('select#billingProjects').val());
-    var startDate = getDateByIdPrefix('start');
-    var allDescription = tinyMCE.get('allDescription').getContent();
-    var privateDescription = tinyMCE.get('privateDescription').getContent();    
-    
-    // validation
-    var errors = [];
-
-    if(tcProjectId < 0) {
-        errors.push('Project must be selected.');
-    } 
-    if(!checkRequired(contestName)) {
-        errors.push('Copilot posting name should not be empty.');
-    } 
-    
-    var prizeType = $('input[name="prizeRadio"]:checked').val();
-    if(prizeType == 'custom') {
-        var value = $('#swFirstPlace').val();
-        if(!checkRequired(value) || !checkNumber(value)) {
-            errors.push('first place value is invalid.');
-        }
-    }
-    if (allDescription.length > 12000) {
-        errors.push('Public Description can haave at most 12000 characters.');
-    }
-    if (privateDescription.length > 4096) {
-        errors.push('Private Description can haave at most 4096 characters.');
-    }
-
-    if(errors.length > 0) {
-        showErrors(errors);
-        return false;
-    }
-
-    mainWidget.softwareCompetition.assetDTO.name = contestName;      
-    mainWidget.softwareCompetition.assetDTO.directjsProductionDate = startDate;
-    mainWidget.softwareCompetition.assetDTO.productionDate = formatDateForRequest(startDate);
-    
-    mainWidget.softwareCompetition.projectHeader.tcDirectProjectId = tcProjectId;
-    mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = $("#projects option[value="+ tcProjectId +"]").text();
-    mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
-    mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
-    mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = allDescription;
-    mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = privateDescription;
-    
-    updateSoftwarePrizes();
-    return true;
-};
-
-/**
- * Initiate a specified section.
- * 
- * @param sectionName the section name
- * @param subName the sub section name
- * @param withGrey should be grey or not
- */
-function initiateSpecifyPanel(sectionName, subName, withGrey) {
-    $("." + sectionName).addClass("editMask");
-    if (withGrey) {
-        $("." + sectionName).addClass("greybg");
-    }
-    $("." + sectionName + " ." + subName).addClass("editPanel");
-    $("." + sectionName + " .iconDiv").removeClass("hide");
-    $("." + sectionName + " ." + subName + " .save").removeClass("hide");
-    $("." + sectionName + " .iconDivToHide").hide();
-    $("." + sectionName + " ." + subName).hide();
-    $("." + sectionName + " ." + subName + "Info").show();
 };
 
 /**
  * Handle save as draft action.
  */
 function saveAsDraft() {
-    if (!validateFields()) {
+    if (!validateStepInputs()) {
         return;
     }
     
     // construct request data
     var request = saveAsDraftRequestSoftware();
-    request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
+    
+    if (!request['assetDTO']['productionDate']) {
+        delete request['assetDTO']['productionDate'];
+    }
+    if (!request['startDate']) {
+        delete request['startDate'];
+    }
     
     $.ajax({
         type: 'POST',
@@ -578,33 +753,24 @@ function handleCopilotContestSaveAsDraftResult(jsonResult) {
     });
 };
 
+/**
+ * Submit competition. 
+ */
 function submitCompetition() {
-
-    showConfirmation("Do you really want to activate the copilot posting ?",
-        "This will create a new copilot posting <span class='messageContestName'>" + mainWidget.softwareCompetition.projectHeader.getProjectName()
-            + "</span> for you and then activate the created contest. " +
-            "Please confirm you want to create the contest and activate it. After activation,"
-            + " you will start the contest specification review.",
-        "YES",
-        function() {
-            closeModal();
-            // construct request data
-            var request = saveAsDraftRequestSoftware();
-            request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
-            request['activationFlag'] = true;
-
-            $.ajax({
-                type: 'POST',
-                url: '../launch/saveDraftContest',
-                data: request,
-                cache: false,
-                dataType: 'json',
-                success: handleCopilotContestActivateResult,
-                beforeSend: beforeAjax,
-                complete: afterAjax
-            });
-        }
-    );
+    var request = saveAsDraftRequestSoftware();
+    request['startDate'] = formatDateForRequest(mainWidget.softwareCompetition.assetDTO.directjsProductionDate);
+    request['activationFlag'] = true;
+    
+    $.ajax({
+        type: 'POST',
+        url: '../launch/saveDraftContest',
+        data: request,
+        cache: false,
+        dataType: 'json',
+        success: handleCopilotContestActivateResult,
+        beforeSend: beforeAjax,
+        complete: afterAjax   
+    });
 }
 
 /**
@@ -619,26 +785,16 @@ function handleCopilotContestActivateResult(jsonResult) {
             mainWidget.softwareCompetition.projectHeader.id = result.projectId;
         } 
 
-        // render content to receipt page
-        $('#idReceipt').html("No." + mainWidget.softwareCompetition.projectHeader.id);
-        $('#contestNameReceipt').html(mainWidget.softwareCompetition.assetDTO.name);
-        $('#projectNameReceipt').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
-        $('#paymentMethodReceipt').html("Billing Account - " + $("#billingProjects option[value="+ mainWidget.softwareCompetition.projectHeader.getBillingProject() +"]").text());
-        $('#startTimeReceipt').html(formatDateForReview(mainWidget.softwareCompetition.assetDTO.directjsProductionDate));
-        $('#adminFeeReceipt').html(mainWidget.softwareCompetition.projectHeader.getAdminFee().formatMoney(0));
-        $('#firstFeeReceipt').html(mainWidget.softwareCompetition.projectHeader.getFirstPlaceCost().formatMoney(0));
-        $('#secondFeeReceipt').html(mainWidget.softwareCompetition.projectHeader.getSecondPlaceCost().formatMoney(0));      
-        $('.totalFeeReceipt').html("$" + getCurrentContestTotal().formatMoney(0));
-        $('#contestDetailLinkDiv a').attr("href", "../contest/detail?projectId=" + mainWidget.softwareCompetition.projectHeader.id);
-
-        $('#launchCopilotPage').hide();
-        $('#receiptCopilotPage').show();
+        changeStep(7, result.forumUrl);
     },
     function(errorMessage) {
         showServerError(errorMessage);
     });   
 };
 
+/**
+ * Close tb box. 
+ */
 function closeTBBox() {
     $('#TB_overlay').hide();
     $('#TB_window').hide();
