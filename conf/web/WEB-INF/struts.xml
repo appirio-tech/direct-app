@@ -102,10 +102,11 @@
             <result name="input">/WEB-INF/index.jsp</result>
         </action>
         <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">
-            <result name="success" type="redirectAction">
+            <result name="success" type="redirect">/scorecard/logout</result>
+	    <!-- type="redirectAction">
                 <param name="actionName">home</param>
                 <param name="namespace">/</param>
-            </result>
+            </result> -->
         </action>
         <action name="dashboard" class="com.topcoder.direct.services.view.action.dashboard.DashboardAction">
             <interceptor-ref name="securedPreProcessorStack"/>
@@ -170,7 +171,11 @@
                 <param name="namespace">/</param>
             </result>
         </action>
-        
+        <action name="updateDirectProjectStatus" class="com.topcoder.direct.services.view.action.project.UpdateProjectStatusAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
 
         <action name="createProjectAndContest" class="com.topcoder.direct.services.view.action.project.CreateProjectAndAddContestAction">
             <interceptor-ref name="securedPreProcessorStack"/>
@@ -407,7 +412,29 @@
             <result name="error" type="json" />
         </action>
 
-        
+        <action name="getProjectCopilotsWidgetData" method="getProjectCopilotsWidgetData" class="com.topcoder.direct.services.view.action.project.ProjectCopilotsWidgetAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="createProjectForum" class="com.topcoder.direct.services.view.action.project.CreateProjectForumAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="projectContestsCalendarView" class="com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
 
     </package>
 
