@@ -1,9 +1,13 @@
+/*
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ */
 package com.topcoder.direct.services.view.action.project;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.ProjectData;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,15 +15,33 @@ import java.util.Map;
 /**
  * Action which creates the project forum for the direct project.
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * <p>
+ * Version 1.1 (TopCoder Cockpit Project Overview R2 Project Forum Backend Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to implement the logic for forum creation.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author GreatKevin, isv
+ * @version 1.1
  */
 public class CreateProjectForumAction extends BaseDirectStrutsAction {
+
+    /**
+     * Logger for this class
+     */
+    private static final Logger logger = Logger.getLogger(CreateProjectForumAction.class);
 
     /**
      * The direct project id.
      */
     private long tcDirectProjectId;
+
+    /**
+     * <p>Constructs new <code>CreateProjectForumAction</code> instance. This implementation does nothing.</p>
+     */
+    public CreateProjectForumAction() {
+    }
 
     /**
      * Gets the direct project id.
@@ -71,16 +93,19 @@ public class CreateProjectForumAction extends BaseDirectStrutsAction {
         boolean hasWritePermission = DirectUtils.hasProjectWritePermission(this, currentUser, getTcDirectProjectId());
 
         if (hasWritePermission) {
-            // add project forum creation / permission setting logic here
-            // PLACEHOLDER for following assembly
+            // Create project forums
+            logger.debug("Calling Forums EJB for creating the forum for project " + getTcDirectProjectId());
+            long forumId = getContestServiceFacade().createTopCoderDirectProjectForum(currentUser, 
+                                                                                      projectData.getProjectId(), null);
 
             // use direct project id as forum id to test
-            projectData.setForumCategoryId(String.valueOf(getTcDirectProjectId()));
+            projectData.setForumCategoryId(String.valueOf(forumId));
 
             getProjectServiceFacade().updateProject(currentUser, projectData);
 
             result.put("projectForumId", projectData.getForumCategoryId());
         } else {
+            logger.error("User does not have write permission for project " + getTcDirectProjectId());
             throw new Exception("You don't have permission to create project forum.");
         }
 

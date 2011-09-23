@@ -267,10 +267,12 @@ import java.util.Map.Entry;
  *     for project overview page </li>
  *     <li>Add method {@link #getCopilotProject(long, long)} to get copilots data of direct project</li>
  *     <li>Update method {@link #getCopilotProjects(long)}</li>
+ *     <li>Added method {@link #getTopCoderDirectProjectForumThreadsCount(Long)}.</li>
+ *     <li>Added method {@link #getProjectForumStatus(long, long)}.</li>
  * </ul>
  * </p>
  * 
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv
  * @version 2.8.0
  */
 public class DataProvider {
@@ -4007,6 +4009,69 @@ public class DataProvider {
         }
 
         return issuesMap;
+    }
+
+    /**
+     * <p>Gets the number of forum messages for the specified <code>TC Direct</code> project.</p>
+     * 
+     * @param tcDirectProjectId a <code>long</code> providing the ID of TC Direct projects.
+     * @return a <code>long</code> providing the number of forum messages for specified project.
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.8.0
+     */
+    public static long getTopCoderDirectProjectForumThreadsCount(Long tcDirectProjectId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("tc_direct_project_forum_threads_count");
+        request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
+
+        final ResultSetContainer resultContainer 
+            = dataAccessor.getData(request).get("tc_direct_project_forum_threads_count");
+
+        return resultContainer.getLongItem(0, "forum_messages_count");
+    }
+
+    /**
+     * <p>Gets the list of records with statuses for forums for specified <code>TC Direct</code> project.</p>
+     * 
+     *
+     * @param tcDirectProjectId a <code>long</code> providing the ID of the TC Direct project.
+     * @param userId a <code>long</code> providing the ID of current user.
+     * @return a <code>List</code> of records for forums statuses for project. 
+     * @throws Exception if an unexpected error occurs.
+     * @since 2.8.0
+     */
+    public static List<ProjectForumStatusDTO> getProjectForumStatus(long tcDirectProjectId, long userId) 
+        throws Exception {
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        List<ProjectForumStatusDTO> result = new ArrayList<ProjectForumStatusDTO>();
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("tc_direct_project_forum_status");
+        request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
+        request.setProperty("uid", String.valueOf(userId));
+
+        final ResultSetContainer resultContainer 
+            = dataAccessor.getData(request).get("tc_direct_project_forum_status");
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+            ProjectForumStatusDTO entry = new ProjectForumStatusDTO();
+            entry.setIsRead(row.getLongItem("unread_messages_count") == 0);
+            entry.setThreadNumber(row.getLongItem("threads_number"));
+            entry.setMessageNumber(row.getLongItem("messages_number"));
+            if (row.getItem("latest_handle").getResultData() != null) {
+                entry.setLastPostHandle(row.getStringItem("latest_handle"));
+            }
+            if (row.getItem("latest_time").getResultData() != null) {
+                Timestamp timestamp = row.getTimestampItem("latest_time");
+                entry.setLastPostTime(format.format(timestamp));
+            }
+            entry.setThreadID(row.getLongItem("forum_id"));
+            entry.setThreadTitle(row.getStringItem("name"));
+            entry.setSummary(row.getStringItem("description"));
+            result.add(entry);
+        }
+        
+        return result;
     }
 }
 

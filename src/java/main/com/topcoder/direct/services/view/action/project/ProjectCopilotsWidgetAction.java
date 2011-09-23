@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ */
 package com.topcoder.direct.services.view.action.project;
 
 import com.topcoder.direct.services.copilot.dao.CopilotProfileDAO;

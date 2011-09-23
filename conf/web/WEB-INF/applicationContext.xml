@@ -652,4 +652,14 @@
      class="com.topcoder.direct.services.view.action.project.ProjectContestsHealthAction"
      scope="prototype" parent="baseDirectStrutsAction">
    </bean>
+
+    <bean id="createProjectForumAction"
+          class="com.topcoder.direct.services.view.action.project.CreateProjectForumAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="getProjectForumsStatusAction"
+          class="com.topcoder.direct.services.view.action.project.GetProjectForumsStatusAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
 </beans>

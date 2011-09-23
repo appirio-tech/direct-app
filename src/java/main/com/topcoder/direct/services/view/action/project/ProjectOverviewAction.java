@@ -74,7 +74,7 @@ import java.util.Map;
  * <p>
  * Version 1.1 (Release Assembly - TopCoder Cockpit Project Overview Update 1) Change notes:
  *   <ol>
- *     <li></li>
+ *     <li>Updated {@link #execute()} method to retrieve project forum category and forum messages count.</li>
  *   </ol>
  * </p>
  * 
@@ -240,7 +240,9 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 getViewData().getProjectStats().getProject().setId(project.getProjectId());
                 getViewData().getProjectStats().getProject().setProjectForumCategoryId(project.getForumCategoryId());
 
-
+                // Check if the project's forum has any threads
+                long forumThreadsCount = DataProvider.getTopCoderDirectProjectForumThreadsCount(project.getProjectId());
+                getViewData().setHasForumThreads(forumThreadsCount > 0);
             } catch (Exception e) {
                 log.error("Project Overview error: ", e);
                 return ERROR;

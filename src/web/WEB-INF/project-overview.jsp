@@ -356,8 +356,24 @@
                                 <div class="areaHeader padding2 titleProjectForum">
                                     <h2 class="title">Project Forum</h2>
                                 </div><!-- End .areaHeader -->
-
-                                <s:if test='viewData.projectStats.project.projectForumCategoryId == null || viewData.projectStats.project.projectForumCategoryId.equals("")'>
+                                
+                                <s:if test='viewData.hasForumThreads'>
+                                    <div id="projectForumTable">
+                                        <div class="projectForumTableHeader">
+                                            <div class="colTab1">Project Discussions</div>
+                                            <div class="colTab2">T./M.</div>
+                                            <div class="colTab3">Last post</div>
+                                        </div>
+                                        <div class="projectForumTableBody">
+                                            <div class="projectForumTableBodyInner">
+                                                <div class="ajaxTableLoader">
+                                                    <img src="/images/loadingAnimation.gif" alt="loading"/></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End #projectForumTable -->
+                                </s:if>
+                                <s:elseif test='viewData.projectStats.project.projectForumCategoryId == null || viewData.projectStats.project.projectForumCategoryId.equals("")'>
                                     <div class="projectForumLeader">
                                         <h3>Create a project forum to start communication</h3>
                                         <p>If you have a question / problem about your project, you can create a project forum to start the discussion with TopCoder PM and your copilots</p>
@@ -365,7 +381,7 @@
                                             <a href="javascript:;" class="buttonRed1 createForumButton"><span>CREATE PROJECT FORUM</span></a>
                                         </div>
                                     </div>
-                                </s:if>
+                                </s:elseif>
                                 <s:else>
                                      <div class="projectForumLeader">
                                         <h3>Discuss This Project!</h3>

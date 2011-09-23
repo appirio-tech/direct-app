@@ -38,8 +38,15 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.3 (TopCoder Cockpit Project Overview R2 Project Forum Backend Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #hasForumThreads} property with respective accessor/mutator methods.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv
- * @version 1.2
+ * @version 1.3
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
                                                              UpcomingActivitiesDTO.Aware,
@@ -60,6 +67,13 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * <p>A <code>LatestProjectActivitiesDTO</code> providing details on latest activities on requested project.</p>
      */
     private LatestProjectActivitiesDTO latestProjectActivities;
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether the project forum has any threads or not.</p>
+     * 
+     * @since 1.3
+     */
+    private boolean hasForumThreads;
 
     /**
      * <p>
@@ -157,5 +171,26 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
     public void setDashboardProjectStat(
             EnterpriseDashboardProjectStatDTO dashboardProjectStat) {
         this.dashboardProjectStat = dashboardProjectStat;
+    }
+
+    /**
+     * <p>Gets the flag indicating whether the project forum has any threads or not.</p>
+     *
+     * @return a <code>boolean</code> providing the flag indicating whether the project forum has any threads or not.
+     * @since 1.3
+     */
+    public boolean getHasForumThreads() {
+        return this.hasForumThreads;
+    }
+
+    /**
+     * <p>Sets the flag indicating whether the project forum has any threads or not.</p>
+     *
+     * @param hasForumThreads a <code>boolean</code> providing the flag indicating whether the project forum has any
+     *                        threads or not.
+     * @since 1.3
+     */
+    public void setHasForumThreads(boolean hasForumThreads) {
+        this.hasForumThreads = hasForumThreads;
     }
 }

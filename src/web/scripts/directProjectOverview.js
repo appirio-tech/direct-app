@@ -11,54 +11,57 @@
  */
 $(document).ready(function() {
 
-//    if ($("#projectForumTable").length > 0) {
-//
-//        var ajaxTableTimer = 2000; // timer for ajax table list
-//        var ajaxTableLoader, strTableData = '', isReadStatus = '';
-//        var strTmp = '';
-//
-//        $.ajax({
-//            type: "GET",
-//            url: "./data/dataProjectForumThreads.json",
-//            dataType: "json",
-//            success: function(json) {
-//                $.each(json.projectForumThreads, function(idx, item) {
-//                    strTableData += '<tr>';
-//                    strTableData += '<td class="colTab1">';
-//                    strTableData += '<div>';
-//
-//                    isReadStatus = (item.isRead == 'false' ? "isNew" : " ");
-//
-//                    strTableData += '<h3 class="' + isReadStatus + '"><a href="http://apps.topcoder.com/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
-//                    strTableData += '<p>' + item.summary + '</p>';
-//                    strTableData += '</div>';
-//                    strTableData += '</td>';
-//                    strTableData += '<td class="colTab2">';
-//                    strTableData += '<div>' + item.threadNumber + '/' + item.messageNumber + '</div>';
-//                    strTableData += '</td>';
-//                    strTableData += '<td class="colTab3">';
-//                    strTableData += '<a href="#" class="author">' + item.lastPostHandle + '</a>';
-//                    strTableData += '<p>' + item.lastPostTime + '</p>';
-//                    strTableData += '</td>';
-//                    strTableData += '</tr>';
-//                });
-//                strTmp += '<table cellpadding="0" cellspacing="0"><tbody>';
-//                strTmp += strTableData;
-//                strTmp += '</tbody></table>';
-//
-//                ajaxTableLoader = setTimeout(function() {
-//
-//                    $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
-//                    $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
-//                }, ajaxTableTimer);
-//            }
-//        });
-//    }
-//
-//    $('.projectForumLeader .projectForumLeaderButton .buttonRed1').attr('target', '_blank');
-//
-//
-//    }
+    if ($("#projectForumTable").length > 0) {
+
+        var ajaxTableTimer = 2000; // timer for ajax table list
+        var ajaxTableLoader, strTableData = '', isReadStatus = '';
+        var strTmp = '';
+        var request = {};
+        request['tcDirectProjectId'] = tcDirectProjectId;
+        
+        $.ajax({
+            type: "GET",
+            url: "getProjectForumsStatusAJAX",
+            data: request,
+            dataType: "json",
+            success: function(json) {
+                strTableData = "";
+                strTmp = "";
+                $.each(json.result['return'].projectForumThreads, function(idx, item) {
+                    strTableData += '<tr>';
+                    strTableData += '<td class="colTab1">';
+                    strTableData += '<div>';
+
+                    isReadStatus = (item.isRead == false ? "isNew" : " ");
+
+                    strTableData += '<h3 class="' + isReadStatus + '"><a href="http://apps.topcoder.com/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
+                    strTableData += '<p>' + item.summary + '</p>';
+                    strTableData += '</div>';
+                    strTableData += '</td>';
+                    strTableData += '<td class="colTab2">';
+                    strTableData += '<div>' + item.threadNumber + '/' + item.messageNumber + '</div>';
+                    strTableData += '</td>';
+                    strTableData += '<td class="colTab3">';
+                    strTableData += '<a href="#" class="author">' + item.lastPostHandle + '</a>';
+                    strTableData += '<p>' + item.lastPostTime + '</p>';
+                    strTableData += '</td>';
+                    strTableData += '</tr>';
+                });
+                strTmp += '<table cellpadding="0" cellspacing="0"><tbody>';
+                strTmp += strTableData;
+                strTmp += '</tbody></table>';
+                
+                $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
+                $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
+
+                ajaxTableLoader = setTimeout(function() {
+
+                    $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
+                    $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
+                }, ajaxTableTimer);
+            }
+        });
+    }
 
     // the event handler of project forum creation button
     $(".projectForumLeader .createForumButton").live('click', function() {
@@ -67,10 +70,10 @@ $(document).ready(function() {
             tcDirectProjectId : tcDirectProjectId
         };
 
-        showComingSoon( "This feature is coming soon. If you would like a project forum created in the meantime," +
-            ' or already have a forum that you would like to add here please contact <span class="mailTo"><a href="mailTo:support@topcoder.com">TopCoder Support</a></span>');
-
-        return;
+//        showComingSoon( "This feature is coming soon. If you would like a project forum created in the meantime," +
+//            ' or already have a forum that you would like to add here please contact <span class="mailTo"><a href="mailTo:support@topcoder.com">TopCoder Support</a></span>');
+//
+//        return;
 
         modalPreloader();
 

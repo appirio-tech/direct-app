@@ -1768,9 +1768,9 @@ overflow: auto;
 	line-height:18px;
 	}
 	.projectForumLeader h3{
-		font-size:15px;
+		font-size:14px;
 		color:#000000;
-		font-weight:bold;
+		font-weight:normal;
 		line-height:32px;
 		}
 	.projectForumLeader .projectForumLeaderButton{

@@ -246,9 +246,16 @@ import com.topcoder.shared.util.DBMS;
  *     <li>Updated <code>setDashboardData</code> methods to properly analyze the types of the contest.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.7.6 (TopCoder Cockpit Project Overview R1 Project Forum Backend Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #hasProjectReadPermission(BaseDirectStrutsAction, TCSubject, long)} method.</li>
+ *   </ol>
+ * </p>
  * 
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin
- * @version 1.7.5
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv
+ * @version 1.7.6
  */
 public final class DirectUtils {
     /**
@@ -1549,6 +1556,34 @@ public final class DirectUtils {
 
             return false;
 
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Checks whether the given user has write permission to the given project.
+     *
+     * @param action the action invokes this method.
+     * @param tcSubject the TCSubject instance which represents an user
+     * @param directProjectId the id of the direct project
+     * @return true if has write permission, false otherwise
+     * @throws PermissionServiceException
+     * @since 1.7.6
+     */
+    public static boolean hasProjectReadPermission(BaseDirectStrutsAction action,
+                                                   TCSubject tcSubject, long directProjectId) throws PermissionServiceException {
+        if (!isRole(tcSubject, ADMIN_ROLE)) {
+            List<Permission> permissions = action.getContestServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
+            for (Permission p : permissions) {
+                if (p.getPermissionType().getPermissionTypeId() == 1L 
+                    || p.getPermissionType().getPermissionTypeId() == 2L 
+                    || p.getPermissionType().getPermissionTypeId() == 3L) {
+                    return true;
+                }
+            }
+
+            return false;
         } else {
             return true;
         }
