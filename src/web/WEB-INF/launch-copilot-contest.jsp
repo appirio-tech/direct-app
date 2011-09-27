@@ -131,16 +131,114 @@
                                                         <li>
                                                             <div class="copilot-wrapper">
                                                                 <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                    <img src="http://www.topcoder.com/i/m/Ghostar.jpeg" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=151743" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
-                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=151743">Ghostar</a></p>
+                                                                    <p><span>68</span>Project :</p>
+                                                                    <p><span>598</span>Contest :</p>
+                                                                    <p><span>91</span>Repost :</p>
+                                                                    <p><span>89</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">10</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">14</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="http://www.topcoder.com/i/m/iRabbit_big.jpg" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=15992135" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=15992135">iRabbit</a></p>
+                                                                    <p><span>39</span>Project :</p>
+                                                                    <p><span>289</span>Contest :</p>
+                                                                    <p><span>40</span>Repost :</p>
+                                                                    <p><span>42</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">10</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">16</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="http://www.topcoder.com/i/copilots/person-01.png" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=21832874" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=21832874">lmmortal</a></p>
+                                                                    <p><span>39</span>Project :</p>
+                                                                    <p><span>206</span>Contest :</p>
+                                                                    <p><span>24</span>Repost :</p>
+                                                                    <p><span>31</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">3</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">3</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="http://www.topcoder.com/i/m/hello-c.jpeg" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22691760" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="#">&nbsp;</a><tc-webtag:handle coderId='22691760' darkBG="true" /></p>
+                                                                    <p><span>16</span>Project :</p>
+                                                                    <p><span>146</span>Contest :</p>
+                                                                    <p><span>31</span>Repost :</p>
+                                                                    <p><span>25</span>Failure :</p>
+                                                                    <p><span>n/a</span>Bugrace :</p>
+                                                                    <div class="current">
+                                                                        <p><a href="javascript:;" class="link">4</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">6</a>Current Contests :</p>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- .info -->
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </li>
+                                                        
+                                                        
+                                                        
+                                                        <li>
+                                                            <div class="copilot-wrapper">
+                                                                <div class="photo">
+                                                                    <img src="http://www.topcoder.com/i/m/murphydog.jpeg" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22630508" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                </div>
+                                                                <!-- .photo -->
+                                                                <div class="info">
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22630508">murphydog</a></p>
+                                                                    <p><span>8</span>Project :</p>
+                                                                    <p><span>94</span>Contest :</p>
+                                                                    <p><span>21</span>Repost :</p>
+                                                                    <p><span>27</span>Failure :</p>
                                                                     <p><span>n/a</span>Bugrace :</p>
                                                                     <div class="current">
                                                                         <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
@@ -155,20 +253,20 @@
                                                         <li>
                                                             <div class="copilot-wrapper">
                                                                 <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                    <img src="http://www.topcoder.com/i/copilots/person-01.png" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706667" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
-                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706667">microwishing</a></p>
+                                                                    <p><span>16</span>Project :</p>
+                                                                    <p><span>86</span>Contest :</p>
+                                                                    <p><span>0</span>Repost :</p>
+                                                                    <p><span>4</span>Failure :</p>
                                                                     <p><span>n/a</span>Bugrace :</p>
                                                                     <div class="current">
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                        <p><a href="javascript:;" class="link">5</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">7</a>Current Contests :</p>
                                                                     </div>
                                                                 </div>
                                                                 <!-- .info -->
@@ -179,20 +277,20 @@
                                                         <li>
                                                             <div class="copilot-wrapper">
                                                                 <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                    <img src="http://www.topcoder.com/i/m/lunarkid.jpeg" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">lunarkid</a></p>
+                                                                    <p><span>10</span>Project :</p>
+                                                                    <p><span>76</span>Contest :</p>
+                                                                    <p><span>0</span>Repost :</p>
                                                                     <p><span>0</span>Failure :</p>
                                                                     <p><span>n/a</span>Bugrace :</p>
                                                                     <div class="current">
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                        <p><a href="javascript:;" class="link">3</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">5</a>Current Contests :</p>
                                                                     </div>
                                                                 </div>
                                                                 <!-- .info -->
@@ -203,116 +301,20 @@
                                                         <li>
                                                             <div class="copilot-wrapper">
                                                                 <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
+                                                                    <img src="http://www.topcoder.com/i/m/Luca_big.jpg" alt="handle" />
+                                                                    <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=10348862" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
-                                                                    <p><span>0</span>Failure :</p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=10348862">Luca</a></p>
+                                                                    <p><span>7</span>Project :</p>
+                                                                    <p><span>71</span>Contest :</p>
+                                                                    <p><span>14</span>Repost :</p>
+                                                                    <p><span>14</span>Failure :</p>
                                                                     <p><span>n/a</span>Bugrace :</p>
                                                                     <div class="current">
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- .info -->
-                                                                <div class="clear"></div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                        <li>
-                                                            <div class="copilot-wrapper">
-                                                                <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
-                                                                </div>
-                                                                <!-- .photo -->
-                                                                <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
-                                                                    <p><span>0</span>Failure :</p>
-                                                                    <p><span>n/a</span>Bugrace :</p>
-                                                                    <div class="current">
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- .info -->
-                                                                <div class="clear"></div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                        <li>
-                                                            <div class="copilot-wrapper">
-                                                                <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
-                                                                </div>
-                                                                <!-- .photo -->
-                                                                <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
-                                                                    <p><span>0</span>Failure :</p>
-                                                                    <p><span>n/a</span>Bugrace :</p>
-                                                                    <div class="current">
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- .info -->
-                                                                <div class="clear"></div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                        <li>
-                                                            <div class="copilot-wrapper">
-                                                                <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
-                                                                </div>
-                                                                <!-- .photo -->
-                                                                <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
-                                                                    <p><span>0</span>Failure :</p>
-                                                                    <p><span>n/a</span>Bugrace :</p>
-                                                                    <div class="current">
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- .info -->
-                                                                <div class="clear"></div>
-                                                            </div>
-                                                        </li>
-                                                        
-                                                        <li>
-                                                            <div class="copilot-wrapper">
-                                                                <div class="photo">
-                                                                    <img src="/images/copilot_img.png" alt="handle" />
-                                                                    <a href="javascript:;" class="black-button"><span class="right"><span class="middle">View Profile</span></span></a>
-                                                                </div>
-                                                                <!-- .photo -->
-                                                                <div class="info">
-                                                                    <p class="handle">Handle : <a href="javascript:;">AcmeName</a></p>
-                                                                    <p><span>0</span>Project :</p>
-                                                                    <p><span>0</span>Contest :</p>
-                                                                    <p><span>0</span>Report :</p>
-                                                                    <p><span>0</span>Failure :</p>
-                                                                    <p><span>n/a</span>Bugrace :</p>
-                                                                    <div class="current">
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Projects :</p>
-                                                                        <p><a href="javascript:;" class="link">0</a>Current Contests :</p>
+                                                                        <p><a href="javascript:;" class="link">1</a>Current Projects :</p>
+                                                                        <p><a href="javascript:;" class="link">1</a>Current Contests :</p>
                                                                     </div>
                                                                 </div>
                                                                 <!-- .info -->
