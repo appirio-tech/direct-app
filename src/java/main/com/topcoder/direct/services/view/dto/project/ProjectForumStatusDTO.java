@@ -54,6 +54,11 @@ public class ProjectForumStatusDTO implements Serializable {
     private String summary;
 
     /**
+     * <p>A <code>String</code> providing the link to profile for latest forum post author.</p>
+     */
+    private String latestPostAuthorLink;
+
+    /**
      * <p>Constructs new <code>ProjectForumStatusDTO</code> instance. This implementation does nothing.</p>
      */
     public ProjectForumStatusDTO() {
@@ -202,5 +207,23 @@ public class ProjectForumStatusDTO implements Serializable {
      */
     public void setThreadID(long threadID) {
         this.threadID = threadID;
+    }
+
+    /**
+     * <p>Gets the link to profile for latest forum post author.</p>
+     *
+     * @return a <code>String</code> providing the link to profile for latest forum post author.
+     */
+    public String getLatestPostAuthorLink() {
+        return this.latestPostAuthorLink;
+    }
+
+    /**
+     * <p>Sets the link to profile for latest forum post author.</p>
+     *
+     * @param latestPostAuthorLink a <code>String</code> providing the link to profile for latest forum post author.
+     */
+    public void setLatestPostAuthorLink(String latestPostAuthorLink) {
+        this.latestPostAuthorLink = latestPostAuthorLink;
     }
 }

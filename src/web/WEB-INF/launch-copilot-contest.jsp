@@ -331,7 +331,7 @@
                                                 
                                             </div>
                                             <!--End .copilot-carousel-->
-                                            <a href="javascript:;" class="redText"><strong>View All Copilots</strong></a>
+                                            <a href="http://community.topcoder.com/tc?module=ViewCopilotPool&size=20&view=0&sort=12" class="redText"><strong>View All Copilots</strong></a>
                                             
                                             
                                             <div class="item">
@@ -346,18 +346,11 @@
                                             </div>
                                             
                                             <div class="item">
-                                                <div class="title">
-                                                    <div class="titleLeft"><div class="titleRight">
-                                                        <h2>Project Rule</h2>
-                                                    </div></div>
-                                                </div><!-- End .title -->
-                                                <p>
-                                                    Please select the way you want to get cooperate with a Copilot in this project, choose option below:
-                                                </p>
+                                               
                                                 
                                                 <div class="buttonArea">
                                                     <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2">
-                                                        <span class="left"><span class="right">Post a Copilot</span></span>
+                                                        <span class="left"><span class="right">Find a Copilot</span></span>
                                                     </a>
                                                 </div>
                                                 <!--End .buttonArea-->

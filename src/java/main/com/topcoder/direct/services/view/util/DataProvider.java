@@ -30,6 +30,7 @@ import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
+import com.topcoder.web.common.tag.HandleTag;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -4060,6 +4061,8 @@ public class DataProvider {
             entry.setMessageNumber(row.getLongItem("messages_number"));
             if (row.getItem("latest_handle").getResultData() != null) {
                 entry.setLastPostHandle(row.getStringItem("latest_handle"));
+                long lastPostUserId = row.getLongItem("latest_user_id");
+                entry.setLatestPostAuthorLink(HandleTag.getLink(lastPostUserId, "", "", null, null, new String[]{"coderTextOrange", "coderTextWhite", "coderTextGray", "coderTextGreen", "coderTextBlue", "coderTextYellow", "coderTextRed"}, new String[]{"coderTextOrange", "coderTextBlack", "coderTextGray", "coderTextGreen", "coderTextBlue", "coderTextYellow", "coderTextRed"}, false));
             }
             if (row.getItem("latest_time").getResultData() != null) {
                 Timestamp timestamp = row.getTimestampItem("latest_time");

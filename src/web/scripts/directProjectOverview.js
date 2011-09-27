@@ -42,7 +42,8 @@ $(document).ready(function() {
                     strTableData += '<div>' + item.threadNumber + '/' + item.messageNumber + '</div>';
                     strTableData += '</td>';
                     strTableData += '<td class="colTab3">';
-                    strTableData += '<a href="#" class="author">' + item.lastPostHandle + '</a>';
+//                    strTableData += '<a href="#" class="author">' + item.lastPostHandle + '</a>';
+                    strTableData += item.latestPostAuthorLink;
                     strTableData += '<p>' + item.lastPostTime + '</p>';
                     strTableData += '</td>';
                     strTableData += '</tr>';
