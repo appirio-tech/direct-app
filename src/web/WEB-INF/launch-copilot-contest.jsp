@@ -94,8 +94,8 @@
                                             
                                             <div class="grayTextArea">
                                                 <p>
-                                                    Copilot has its own payment rates are adjusted to the type of contest and may change depending on the needs of the contest.
-                                                    <a href="javascript:;" class="blue">view rate</a>
+                                                    Copilots are paid per contest based on outcomes, not hours.
+                                                    <a href="http://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">View More</a>
                                                 </p>
                                                 
                                                 <span class="corner tl"></span>
@@ -136,7 +136,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=151743">Ghostar</a></p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=151743" class="coderTextYellow">Ghostar</a></p>
                                                                     <p><span>68</span>Project :</p>
                                                                     <p><span>598</span>Contest :</p>
                                                                     <p><span>91</span>Repost :</p>
@@ -160,7 +160,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=15992135">iRabbit</a></p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=15992135" class="coderTextRed">iRabbit</a></p>
                                                                     <p><span>39</span>Project :</p>
                                                                     <p><span>289</span>Contest :</p>
                                                                     <p><span>40</span>Repost :</p>
@@ -184,7 +184,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=21832874">lmmortal</a></p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=21832874" class="coderTextBlue">lmmortal</a></p>
                                                                     <p><span>39</span>Project :</p>
                                                                     <p><span>206</span>Contest :</p>
                                                                     <p><span>24</span>Repost :</p>
@@ -208,7 +208,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="#">&nbsp;</a><tc-webtag:handle coderId='22691760' darkBG="true" /></p>
+                                                                    <p class="handle">Handle :<a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22691760" class="coderTextGreen">hello-c</a></p>
                                                                     <p><span>16</span>Project :</p>
                                                                     <p><span>146</span>Contest :</p>
                                                                     <p><span>31</span>Repost :</p>
@@ -234,7 +234,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22630508">murphydog</a></p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22630508" class="coderTextYellow">murphydog</a></p>
                                                                     <p><span>8</span>Project :</p>
                                                                     <p><span>94</span>Contest :</p>
                                                                     <p><span>21</span>Repost :</p>
@@ -258,7 +258,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706667">microwishing</a></p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706667" class="coderTextGreen">microwishing</a></p>
                                                                     <p><span>16</span>Project :</p>
                                                                     <p><span>86</span>Contest :</p>
                                                                     <p><span>0</span>Repost :</p>
@@ -282,7 +282,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">lunarkid</a></p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873" class="coderTextGreen">lunarkid</a></p>
                                                                     <p><span>10</span>Project :</p>
                                                                     <p><span>76</span>Contest :</p>
                                                                     <p><span>0</span>Repost :</p>
@@ -306,7 +306,7 @@
                                                                 </div>
                                                                 <!-- .photo -->
                                                                 <div class="info">
-                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=10348862">Luca</a></p>
+                                                                    <p class="handle">Handle : <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=10348862" class="coderTextBlue">Luca</a></p>
                                                                     <p><span>7</span>Project :</p>
                                                                     <p><span>71</span>Contest :</p>
                                                                     <p><span>14</span>Repost :</p>

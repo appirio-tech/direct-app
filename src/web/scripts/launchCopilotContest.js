@@ -285,6 +285,16 @@ $(document).ready(function(){
         var name = $(this).attr("name");
         changeStep(parseInt(name.substring("editStep".length)));
     });
+
+	$('.amountText').bind('keyup',function() {
+		var value = $('.amountText').val();
+		if(!checkRequired(value) || !checkNumber(value)) {
+			errors.push("The amount is invalid.");
+		} else {
+			var secondPrize = parseFloat(value / 2);
+			$('.postFrame .prizeInfo').html(secondPrize);
+		}
+    });
 });
 
 (function($) {
@@ -524,7 +534,9 @@ function validateStepInputs() {
                     $("#startTimeSummary").html("Post at " + startDate);
                 }
                 
-                $("#amountSummary").html("$" + amount);
+                $("#amountSummaryFirst").html("$" + amount);
+				$("#amountSummarySecond").html("$" + parseFloat(amount / 2));
+				$("#amountSummaryTotal").html("$" + parseFloat(amount * 3 / 2));
             }
             break;
         case 5:
@@ -602,10 +614,12 @@ function changeStep(target, forumUrl) {
     
     if (currStep == 4) {
         var feeObject = softwareContestFees[29];
-        var contestCost = getContestCost(feeObject, 'medium'); 
+        var contestCost = getContestCost(feeObject, 'high'); 
         var firstPlaceCost = contestCost.firstPlaceCost;
         
         $(".defaultFirstPlaceCost").html(firstPlaceCost);
+		$(".defaultSecondPlaceCost").html(parseInt(firstPlaceCost / 2, 10));
+		$(".defaultTotalPlaceCost").html(parseInt(firstPlaceCost * 3 / 2, 10));
     }
     
     if (currStep == 6) {

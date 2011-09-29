@@ -372,6 +372,11 @@ $(document).ready(function(){
 			currentIndex--;
 			render();
 		}
+		if(currentIndex == 1 && now - lastAnimateTime > 350){
+			lastAnimateTime = new Date().getTime();
+			currentIndex = $(".carousel-content ul li").length;
+			render();
+		} 
 	});
 	$(".foot-bar .next").click(function(){
 		var now = new Date().getTime();
@@ -379,7 +384,12 @@ $(document).ready(function(){
 			lastAnimateTime = new Date().getTime();
 			currentIndex++;
 			render();
-		}
+		} 
+		if(currentIndex == $(".carousel-content ul li").length && now - lastAnimateTime > 350){
+			lastAnimateTime = new Date().getTime();
+			currentIndex = 1;
+			render();
+		} 
 	});
 	
 	 //fix browsers

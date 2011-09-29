@@ -76,7 +76,7 @@
                     <label>Specific Description</label>
                     <textarea rows="10" cols="10" id="privateDescription"></textarea>
                     
-                    <span class="tips">Enter a description that you want everyone to see</span>
+                    <span class="tips">Enter a description that is only viewable to copilots that register for this posting</span>
                 </p>
             </div>
             <!--End .rowItem-->

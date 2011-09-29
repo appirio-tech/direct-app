@@ -171,9 +171,21 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label>Amount:</label></td>
+                        <td><label>1ST place:</label></td>
                         <td>
-                            <span id="amountSummary"></span>
+                            <span id="amountSummaryFirst"></span>
+                        </td>
+                    </tr>
+					<tr>
+                        <td><label>2ND place:</label></td>
+                        <td>
+                            <span id="amountSummarySecond"></span>
+                        </td>
+                    </tr>
+					<tr>
+                        <td><label>Total:</label></td>
+                        <td>
+                            <span id="amountSummaryTotal"></span>
                         </td>
                     </tr>
                     

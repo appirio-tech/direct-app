@@ -622,9 +622,53 @@ a.smallRed span.right {
 						float:none;
 						margin-right:10px;
 					}
+				
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame label.first{
+						margin-left:12px;
+						float:left;
+						display:inline;
+						font-weight:bold;
+						line-height:22px;
+					}
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame label.second{
+						margin-left:25px;
+						float:left;
+						display:inline;
+						font-weight:bold;
+						line-height:22px;
+					}
+
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .dw{
+						float:left;
+						display:inline;
+						font-weight:normal;
+						line-height:22px;
+					}
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .prizeInfo {
+						float:left;
+						display:inline;
+						font-weight:normal;
+						line-height:22px;
+						margin-left:4px;
+					}
+
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .useAmountLabel {
+						float:left;
+					}
+
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .useAmountRadio {
+						float:left;
+						margin-top:4px;
+					}
+
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .amountText {
+						float:left;
+						width: 50px;
+						margin-top: 2px;
+						margin-left:4px;
+					}
 					
 					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .radio2 {
-						float:none;
 						margin-right:7px;
 					}
 					
@@ -1454,7 +1498,6 @@ a.smallRed span.right {
 		padding-bottom: 6px;
 	}
 		.copilot-wrapper .info p.handle a {
-			color: #ff0000;
 			font-weight: bold;
 			text-decoration: none;
 		}
@@ -1466,6 +1509,39 @@ a.smallRed span.right {
 		border-bottom: 1px solid #c3c3c3;
 		padding: 3px 0 4px;
 	}
+	.coderTextRed, .coderTextYellow, .coderTextBlue, .coderTextGreen, .coderTextGray, .coderTextOrange { 
+		font-weight: bold; 
+		background-color: transparent;
+	}
+	.coderTextRed:link, .coderTextYellow:link, .coderTextBlue:link, .coderTextGreen:link, .coderTextGray:link, .coderTextOrange:link, .coderTextWhite:link, .coderTextBlack:link { 
+		text-decoration: none;
+	}
+	.coderTextRed:visited, .coderTextYellow:visited, .coderTextBlue:visited, .coderTextGreen:visited, .coderTextGray:visited, .coderTextOrange:visited, .coderTextWhite:visited, .coderTextBlack:visited { 
+		text-decoration: none;
+	}
+	.coderTextRed:hover, .coderTextYellow:hover, .coderTextBlue:hover, .coderTextGreen:hover, .coderTextGray:hover, .coderTextOrange:hover, .coderTextWhite:hover, .coderTextBlack:hover { 
+		text-decoration: underline;
+	}
+	.coderTextRed:active, .coderTextYellow:active, .coderTextBlue:active, .coderTextGreen:active, .coderTextGray:active, .coderTextOrange:active, .coderTextWhite:active, .coderTextBlack:active { 
+		text-decoration: underline;
+	}
+
+	/* Orange */
+	.coderTextOrange, .coderTextOrange:link, .coderTextOrange:visited, .coderTextOrange:hover, .coderTextOrange:active { color: #FF9900; }
+	/* Red */
+	.coderTextRed, .coderTextRed:link, .coderTextRed:visited, .coderTextRed:hover, .coderTextRed:active { color: #EE0000; }
+	/* Yellow */
+	.coderTextYellow, .coderTextYellow:link, .coderTextYellow:visited, .coderTextYellow:hover, .coderTextYellow:active { color: #DDCC00; }
+	/* Blue */
+	.coderTextBlue, .coderTextBlue:link, .coderTextBlue:visited, .coderTextBlue:hover, .coderTextBlue:active { color: #6666FF; }
+	/* Green */
+	.coderTextGreen, .coderTextGreen:link, .coderTextGreen:visited, .coderTextGreen:hover, .coderTextGreen:active { color: #00A900; }
+	/* Gray */
+	.coderTextGray, .coderTextGray:link, .coderTextGray:visited, .coderTextGray:hover, .coderTextGray:active { color: #999999; }
+	/* White */
+	.coderTextWhite, .coderTextWhite:link, .coderTextWhite:visited, .coderTextWhite:hover, .coderTextWhite:active { color: #FFFFFF; }
+	/* Black */
+	.coderTextBlack, .coderTextBlack:link, .coderTextBlack:visited, .coderTextBlack:hover, .coderTextBlack:active { color: #000000; }
 		
 .videoWrap {
 	 width:327px;
