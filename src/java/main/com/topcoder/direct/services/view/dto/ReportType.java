@@ -8,9 +8,10 @@ package com.topcoder.direct.services.view.dto;
  *
  * Version 1.1: add report type: COST - (Direct Cockpit - Cost Report Assembly)
  * Version 1.2: add report type: BILLING_COST (TC Cockpit Billing Cost Report Assembly )
+ * Version 1.3: add report type: PARTICIPATION (TC Cockpit Participation Metrics Report Part One Assembly 1 )
  *
  * @author TCSDEVELOPER
- * @version 1.2 (TC Cockpit Billing Cost Report Assembly)
+ * @version 1.3 (TC Cockpit Billing Cost Report Assembly)
  */
 public enum ReportType {
 
@@ -25,5 +26,9 @@ public enum ReportType {
     /**
      * <p>A <code>ReportType</code> corresponding to <code>Billing Cost</code> report.</p>
      */
-    BILLING_COST
+    BILLING_COST,
+    /**
+     * <p>A <code>ReportType</code> corresponding to <code>Participation Metrics</code> report.</p>
+     */
+    PARTICIPATION
 }

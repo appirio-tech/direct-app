@@ -33,13 +33,29 @@
  *  Version 1.9 - TC Cockpit Post a Copilot Assembly 
  *  - Update the img src of pre loading modal.
  *
- * @author tangzx, Blues, GreatKevin
- * @version 1.9
+ *  Version 2.0 - TC Cockpit Participation Metrics Report Part One Assembly 1 
+ *  - Add the click handler for the "Select Report Type" drop down.
+ * 
+ * @author tangzx, Blues, GreatKevin, TCSASSEMBER
+ * @version 2.0
  */
 $(document).ready(function(){
 						   
 	var Sys = {};
 	var ua = navigator.userAgent.toLowerCase();
+	
+    $("#selectReport").change(function() {
+        var reportType = $(this).val();
+        if (reportType == 'COST') {
+            window.location.href = '/direct/dashboardCostReport';
+        } else if (reportType == 'PIPELINE') {
+            window.location.href = '/direct/dashboardReports';
+        } else if (reportType == 'BILLING_COST') {
+           window.location.href = '/direct/dashboardBillingCostReport';
+        } else if (reportType == 'PARTICIPATION') {
+           window.location.href = '/direct/dashboardParticipationReport';
+        }
+    });
 	
 	//------------------------------------------------- Contests List
 	

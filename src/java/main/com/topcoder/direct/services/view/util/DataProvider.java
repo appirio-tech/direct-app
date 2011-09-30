@@ -14,6 +14,8 @@ import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
 import com.topcoder.direct.services.view.dto.dashboard.*;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestCopilotDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestDetailDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.direct.services.view.dto.project.*;
@@ -273,8 +275,17 @@ import java.util.Map.Entry;
  * </ul>
  * </p>
  * 
+ * <p>
+ * Version 2.9.0 (TC Cockpit Participation Metrics Report Part One Assembly 1) change notes:
+ *   <ol>
+ *     <li>Added {@link #getDashboardParticipationReport(long, long[], long, long, String[], Date, Date, List, List)}
+ *     method to get the participation metrics report.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv
- * @version 2.8.0
+ * @version 2.9.0
+ * @since 1.0
  */
 public class DataProvider {
 
@@ -2919,6 +2930,147 @@ public class DataProvider {
         return result;
     }
 
+    /**
+     * Gets the contest participation metrics report with the given paramters. The method will retrieve the contest copilots data
+     * into parameter <code>contestCopilots</code>, and retrieve the contest participation details data into parameter contestDetails.
+     *
+     * @param projectId the direct project id.
+     * @param projectCategoryIds the project category ids.
+     * @param clientId the client id.
+     * @param billingAccountId the billing accounts id.
+     * @param projectStatus the allowed project status.
+     * @param startDate the start date.
+     * @param endDate the end date.
+     * @param contestCopilots the <code>List</code> to store baisc metrics report.
+     * @param contestDetails the <code>List</code> to store contest participation details data.
+     * @throws Exception if any error occurs.
+     * @since 2.8.0
+     */
+    public static void getDashboardParticipationReport(long projectId, long[] projectCategoryIds, long clientId, long billingAccountId,
+            String[] projectStatus, Date startDate, Date endDate,
+            List<ParticipationContestCopilotDTO> contestCopilots, List<ParticipationContestDetailDTO> contestDetails) throws Exception {
+        
+        if (projectCategoryIds == null || projectCategoryIds.length == 0) {
+            return;
+        }
+        if (projectStatus == null || (projectStatus.length == 0)) {
+            return;
+        }
+        
+        // concatenate the filters
+        String projectCategoryIDsList = concatenate(projectCategoryIds, ", ");
+        Set<String> projectStatusSet = new HashSet<String>();
+        for (String status : projectStatus) {
+            projectStatusSet.add(status);
+        }
+        
+        // date format to prepare date for query input
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        
+        if (projectId != 0) {
+            // filter by project id
+            request.setProperty("tcdirectid", String.valueOf(projectId));
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+        } else if (billingAccountId != 0) {
+            // filter by billing project
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", String.valueOf(billingAccountId));
+            request.setProperty("clientid", "0");
+        } else if (clientId != 0) {
+            // filter by client
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", String.valueOf(clientId));
+        } else {
+            return;
+        }
+        
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+        // Command name: dashboard_participation_report
+        request.setContentHandle("dashboard_participation_report");
+        final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
+        
+        // Get the contest copilots 
+        final ResultSetContainer conetstCopilotsResult = queryData.get("dashboard_participation_copilots");
+        for (ResultSetRow row : conetstCopilotsResult) {
+            if (!projectStatusSet.contains(row.getStringItem("contest_status").trim())) {
+                continue;
+            }
+            ParticipationContestCopilotDTO copilot = new ParticipationContestCopilotDTO();
+            copilot.setProjectId(row.getLongItem("project_id"));
+            copilot.setContestId(row.getLongItem("contest_id"));
+            if (row.getItem("copilot").getResultData() != null) {
+                copilot.setCopilot(row.getLongItem("copilot"));
+            }
+            contestCopilots.add(copilot);
+        }
+        
+        // Gets the contest participation details
+        final ResultSetContainer conetestDetailsResult = queryData.get("dashboard_participation_contest_details");
+        for (ResultSetRow row : conetestDetailsResult) {
+            if (!projectStatusSet.contains(row.getStringItem("contest_status").trim())) {
+                continue;
+            }
+            IdNamePair client = new IdNamePair();
+            IdNamePair billing = new IdNamePair();
+            IdNamePair directProject = new IdNamePair();
+            IdNamePair contest = new IdNamePair();
+            IdNamePair contestCategory = new IdNamePair();
+            
+            ParticipationContestDetailDTO contestDetail = new ParticipationContestDetailDTO();
+            if (row.getItem("client_id").getResultData() != null) {
+                client.setId(row.getLongItem("client_id"));
+            }
+            if (row.getItem("client").getResultData() != null) {
+                client.setName(row.getStringItem("client"));
+            }
+            if (row.getItem("billing_project_id").getResultData() != null) {
+                billing.setId(row.getLongItem("billing_project_id"));
+            }
+            if (row.getItem("billing_project_name").getResultData() != null) {
+                billing.setName(row.getStringItem("billing_project_name"));
+            }
+            if (row.getItem("direct_project_id").getResultData() != null) {
+                directProject.setId(row.getLongItem("direct_project_id"));
+            }
+            if (row.getItem("direct_project_name").getResultData() != null) {
+                directProject.setName(row.getStringItem("direct_project_name"));
+            }
+            if (row.getItem("project_id").getResultData() != null) {
+                 contest.setId(row.getLongItem("project_id"));
+            }
+            if (row.getItem("contest_name").getResultData() != null) {
+                contest.setName(row.getStringItem("contest_name"));
+            }
+            if (row.getItem("project_category_id").getResultData() != null) {
+                contestCategory.setId(row.getLongItem("project_category_id"));
+            }
+            if (row.getItem("category").getResultData() != null) {
+                contestCategory.setName(row.getStringItem("category"));
+            }
+            contestDetail.setClient(client);
+            contestDetail.setBilling(billing);
+            contestDetail.setProject(directProject);
+            contestDetail.setContest(contest);
+            contestDetail.setContestType(contestCategory);
+            if (row.getItem("registrant").getResultData() == null) {
+                contestDetail.setRegistrant(0L);
+            } else {
+                contestDetail.setRegistrant(row.getLongItem("registrant"));
+            }
+            contestDetail.setCountry(row.getStringItem("country"));
+            contestDetail.setHasSubmit(row.getIntItem("has_submit") > 0);
+            contestDetail.setHasWin(row.getIntItem("has_win") > 0);
+            contestDetail.setStatus(row.getStringItem("contest_status").trim());
+            contestDetails.add(contestDetail);
+        }
+    }
+    
     /**
      * Gets the cost report details with the given paramters. The method returns a list of CostDetailsDTO. Each
      * CostDetailDTO represents cost details of one contest.

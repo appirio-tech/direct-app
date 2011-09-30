@@ -2013,16 +2013,6 @@ table.jCalendar td.unselectable.dp-hover {
 
 /* NOTE - you will probably want to style a.dp-choose-date - see how I did it in demo.css */
 
-div.dp-popup {
-	position: relative;
-	background: #ededed;
-	font-size: 10px;
-	font-family: arial, sans-serif;
-	padding: 1px;
-	line-height: 1.2em;
-	border:#333 solid 1px;
-}
-
 div#dp-popup {
 	position: absolute;
 	z-index: 199;

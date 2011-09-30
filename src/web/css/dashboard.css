@@ -593,15 +593,6 @@ BODY#page{
 	padding-top: 5px;
 	font-weight: bold;
 }
-#area1 .select{
-	float:right;
-	font-size: 12px;
-	padding: 5px 10px 5px 10px;
-	background-color: #F8F8F8;
-	border:1px solid #ccc;
-	position:relative;
-	top:-30px
-}
 
 #area1 H2.contestTitle{
 	background: no-repeat left center;
@@ -4718,10 +4709,17 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     text-align: right;
     padding-right: 5px;
 }
-
+TABLE.pipelineStats TH.tableTitle .expand{
+    float:left;
+    display:inline;
+}
 TABLE.pipelineStats TH.tableTitle span {
-    vertical-align: middle;
-    padding-top: 12px;
+    padding-top:0;
+    float:left;
+    vertical-align:baseline;
+    height:32px;
+    line-height:32px;
+    display:inline;
 }
 
 
@@ -6841,3 +6839,499 @@ textarea#newProjectDescription {
     }
 
 
+
+/* Report select box */
+#area1 .select{
+    float:right;
+    margin-top:-38px;
+    display:inline;
+}
+    #area1 .select select{
+        font-family:Arial, Helvetica, sans-serif;
+        font-size:11px;
+        color:#000001;
+    }
+    #area1 .select .selectInnerBox{
+        position:relative;
+        height:36px;
+        font-size:12px;
+        color:#333333;
+    }
+        #area1 .select .selectInnerBox .selectInner{
+            height:34px;
+            border:1px solid #bdbdbd;
+        }
+            #area1 .select .selectInnerBox .selectInner label{
+                height:34px;
+                line-height:34px;
+                border-right:1px solid #bdbdbd;
+                background:url(../images/bg-report.png) left top repeat-x;
+                float:left;
+                width:auto;
+                display:inline;
+                padding-left:12px;
+                padding-right:16px;
+                font-weight:bold;
+            }
+            #area1 .select .selectInnerBox .selectInner .settingPanel{
+                float:left;
+                width:auto;
+                display:inline;
+                height:26px;
+                padding:8px 20px 0px;
+            }
+                #area1 .select .selectInnerBox .selectInner .settingPanel select{
+                    float:left;
+                    width:140px;
+                    display:inline;
+                }
+        #area1 .select .selectInnerBox .corner{
+            display:block;
+            width:3px;
+            height:3px;
+            overflow:hidden;
+            position:absolute;
+            background-image:url(../images/corner-report.gif);
+        }
+        #area1 .select .selectInnerBox .tl{
+            left:0;
+            top:0;
+            background-position:left top;
+        }
+        #area1 .select .selectInnerBox .tr{
+            right:0;
+            top:0;
+            background-position:-3px top;
+        }
+        #area1 .select .selectInnerBox .bl{
+            left:0;
+            bottom:0;
+            background-position:left -3px;
+        }
+        #area1 .select .selectInnerBox .br{
+            right:0;
+            bottom:0;
+            background-position:-3px -3px;
+        }
+
+/* costDetails Page and costReports Page */
+#participationMetricsReports{
+    margin-bottom:20px;
+}
+#participationMetricsReports select{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000001;
+}
+#participationMetricsReports .filterContainer{
+    position:relative;
+    padding-top:8px;
+    min-height:260px;
+}
+#participationMetricsReports .filterLeftTwoParts{
+    display:block;
+    padding-right:380px;
+    min-height:50px;
+    overflow:hidden;
+    min-width:360px;
+}
+    #participationMetricsReports .filterContainer .filterColumnPart{
+        float:left;
+        width:49.9%;
+        display:inline;
+        overflow:hidden;
+    }
+    #participationMetricsReports .filterContainer .filterColumnThird{
+        position:absolute;
+        right:19px;
+        top:8px;
+        width:380px;
+        min-height:10px;
+        z-index:99;
+    }
+    #participationMetricsReports .filterContainer .mainContentForFilter{
+        padding-top:63px;
+        min-height:50px;
+        overflow:hidden;
+    }
+        #participationMetricsReports .filterContainer .mainContentForFilter .leftFilterContent{
+            width:200px;
+        }
+        #participationMetricsReports .filterContainer .mainContentForFilter .rightFilterContent{
+            margin-top:0px;
+        }
+        #participationMetricsReports .filterContainer .filterProject2 label,
+        #participationMetricsReports .filterContainer .filterCustomerName label,
+        #participationMetricsReports .filterContainer .filterBillingAccount label{
+            line-height:22px;
+            font-weight:bold;
+            padding-bottom:8px;
+            display:block;
+        }
+        #participationMetricsReports .filterContainer .filterProject2 select{
+            width:380px;
+        }
+        #participationMetricsReports .filterContainer .filterCustomerName select,
+        #participationMetricsReports .filterContainer .filterBillingAccount select{
+            width:170px;
+        }
+        
+        #participationMetricsReports .filterContainer #datefilter .filterRow{
+            clear:left;
+            float:none;
+            width:174px;
+            min-width:174px;
+            display:block;
+            min-height:20px;
+            overflow:hidden;
+        }
+        #participationMetricsReports .filterContainer .filterRow{
+            padding-bottom:10px;
+        }
+        #participationMetricsReports .filterContainer #datefilter .firstFilterRow{
+            padding-bottom:19px;
+        }
+        #participationMetricsReports .filterContainer #datefilter .text{
+            width:128px;
+        }
+        #participationMetricsReports .filterContainer #datefilter label{
+            font-size:12px;
+            font-weight:bold;
+            color:#333333;
+            padding-bottom:12px;
+            display:block;
+            line-height:normal;
+            width:auto;
+        }
+        #participationMetricsReports .filterContainer #datefilter .firstFilterRow label{
+            padding-top:16px;
+        }
+        #participationMetricsReports .filterColumnPart .multiSelectArea{
+            width:170px;
+            float:none;
+            display:block;
+        }
+            #participationMetricsReports .filterColumnPart .multiSelectArea .multiSelectAreaInner{
+                width:170px;
+                float:none;
+                display:block;
+            }
+            #participationMetricsReports .multiSelectArea .multiSelectAreaInner label.multiSelectAreaTitle{
+                padding-top:16px;
+            }
+            #participationMetricsReports .filterColumnPart .multiSelectArea .multiSelectBox{
+                width:168px;
+            }
+                #participationMetricsReports .filterColumnPart .multiSelectArea .multiSelectBox .multiOptionRow{
+                    width:146px;
+                }
+                #participationMetricsReports .filterColumnPart .multiSelectArea .multiSelectBox  label{
+                    width:114px;
+                }
+        #participationMetricsReports .filterColumnThird .multiSelectArea{
+            width:380px;
+            float:none;
+            display:block;
+        }
+            #participationMetricsReports .filterColumnThird .multiSelectArea .multiSelectAreaInner{
+                width:380px;
+                float:none;
+                display:block;
+            }
+            #participationMetricsReports .filterColumnThird .multiSelectArea .multiSelectBox{
+                width:378px;
+            }
+                #participationMetricsReports .filterColumnThird .multiSelectArea .multiSelectBox .multiOptionRow{
+                    width:356px;
+                }
+                #participationMetricsReports .filterColumnThird .multiSelectArea .multiSelectBox  label{
+                    width:324px;
+                }
+                
+                #participationMetricsReports a.button6 span.right{
+                    padding:4px 27px 0px;
+                }
+
+
+#participationMetricsReportsSection table.pipelineStats{
+    margin-bottom:20px;
+    }
+#participationMetricsReportsSection th.tableTitle a.expand{
+    background: url(../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#fffffe;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+#participationMetricsReportsSection th.tableTitle a.collapse{
+    background: url(../images/icon-collapse.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#fffffe;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+#participationMetricsReportsSection TABLE.pipelineStats TH.tableTitle span{
+    margin-left:6px;
+}
+#participationMetricsReportsSection th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+#participationMetricsReportAggregationArea th.viewType{
+    text-align: right;
+    padding-right: 5px;
+}
+
+#participationMetricsReportsSection .pipelineStats thead tr.scData th,
+#participationMetricsReportsSection .pipelineStats thead tr.subTheadRow th{
+    background:#eaeaea url(../images/bg-sub-table-header.png) left top repeat-x;
+    border-right:1px solid #bdbdbd;
+    font-size:12px;
+    padding-left:2px;
+    padding-right:2px;
+}
+
+#participationMetricsReportBasicMetrics tbody td{
+    font-size:32px;
+    font-weight:bold;
+}
+#participationMetricsReportAggregationArea thead tr.scData th,
+#participationMetricsReportDetails thead tr.subTheadRow th{
+    padding:3px 0 2px;
+}
+#participationMetricsReportAggregationArea tbody td{
+    font-size:12px;
+    padding:6px 0px;
+    vertical-align:middle;
+    border:1px solid #ced0d1;
+	border-bottom:none;
+}
+#participationMetricsReportDetails tbody td.alignLeft{
+    text-align:left;
+    padding-left:5px;
+    padding-right:2px;
+    vertical-align:top;
+}
+#participationMetricsReportDetails tbody td a{
+    text-decoration:underline;
+    }
+#participationMetricsReportDetails tbody td a:hover{
+    text-decoration:none;
+    }
+#participationMetricsReportDetails tbody tr TD{
+    width:auto;
+    padding-left:4px;
+    padding-right:4px;
+}
+#participationMetricsReportDetails tbody tr td.nameTableColumn{
+    width:15%;
+}
+#participationMetricsReportDetails tbody tr td.lastTableColumn{
+    width:5%;
+    min-width:40px;
+}
+#participationMetricsReportDetails tbody .customerNameTd{
+    padding-left:20px;
+    text-align:left;
+}
+/* END ADD 09/08 2011 BUGR-5250 */
+
+/* pipelineReports Page */
+/* .pipelineFilter */
+.pipelineFilter{
+    margin-top:3px;
+    min-height:10px;
+    font-size:12px;
+    color:#333333;
+}
+/* .filterTitle */
+.filterTitle{
+    height:36px;
+    padding-left:4px;
+    background:url(../images/bg-newbox-header.png) left top no-repeat;
+    overflow:hidden;
+}
+.filterTitle .filterTitleRight{
+    height:36px;
+    padding-right:4px;
+    background:url(../images/bg-newbox-header.png) right -72px no-repeat;
+}
+    .filterTitle .filterTitleCenter{
+        height:36px;
+        background:url(../images/bg-newbox-header.png) left -36px repeat-x;
+    }
+.filterTitleCollapsed{
+    background-position:left -108px;
+}
+    .filterTitleCollapsed .filterTitleRight{
+        background-position:right -144px;
+    }
+.filterTitle .expanded{
+    float:left;
+    height:21px;
+    width:21px;
+    margin-left:4px;
+    margin-top:8px;
+    background:url(../images/icon-new-expand.png) left top no-repeat;
+    display:inline;
+    overflow:hidden;
+}
+.filterTitle .collapsed{
+    background-position:left -21px;
+}
+.filterTitle h4{
+    float:left;
+    min-height:10px;
+    line-height:36px;
+    margin-left:9px;
+    display:inline;
+    font-weight:normal;
+    font-size:12px;
+}
+
+/* .filterContainer */
+.filterContainer{
+    border:1px solid #bdbdbd;
+    border-top-width:0;
+    padding:13px 19px;
+    min-height:10px;
+    overflow:hidden;
+}
+
+.filterContainer .leftFilterContent{
+        float:left;
+        width:192px;
+        display:inline;
+ }     
+ .filterContainer .filterRow{
+     min-height:10px;
+     padding-bottom:19px;
+     float:left;
+     min-width:186px;
+     display:inline;
+ }     
+ .filterContainer #datefilter label{
+     width:42px;
+     line-height:22px;
+     font-weight:bold;
+ }
+ .filterContainer #datefilter .text{
+     width:100px;
+     color:#6c6c6c;
+     font-size:12px;
+     height:20px;
+     line-height:20px;
+     border:1px solid #BDBDBD;
+     padding:0 6px;
+     font-family:Arial, Helvetica, sans-serif;
+ }
+ .filterContainer #pipelineDataFilter .filterRowLeft{
+     width:112px;
+     line-height:22px;
+     font-weight:bold;
+     float:left;
+     display:inline;
+ }
+ .filterContainer #pipelineDataFilter .text{
+     float:left;
+     display:inline;
+     width:58px;
+     color:#6c6c6c;
+     font-size:12px;
+     height:20px;
+     line-height:20px;
+     border:1px solid #BDBDBD;
+     padding:0 6px;
+     font-family:Arial, Helvetica, sans-serif;
+ }
+ .filterContainer #pipelineDataFilter .checkbox{
+     float:left;
+     width:13px;
+     height:13px;
+     margin-top:4px;
+     display:inline;
+ }
+ .filterContainer #pipelineDataFilter select{
+     font-family:Arial, Helvetica, sans-serif;
+     font-size:11px;
+     color:#000001;
+     width:100px;
+ }
+            
+ .filterContainer .rightFilterContent{
+     float:right;
+     width:564px;
+     display:inline;
+     margin-top:-2px;
+ }
+ .multiSelectArea{
+     float:left;
+     width:33.3%;
+     display:inline;
+ }
+ .multiSelectArea .multiSelectAreaInner{
+     float:right;
+     width:165px;
+     display:inline;
+ }
+ .multiSelectArea label.multiSelectAreaTitle{
+     font-size:12px;
+     font-weight:bold;
+     color:#333333;
+     padding-bottom:12px;
+     display:block;
+ }
+ .multiSelectArea .multiSelectBox{
+     width:163px;
+     height:126px;
+     border:1px solid #bdbdbd;
+     overflow:scroll;
+     background-color:#fffffc;
+ }
+ .multiSelectArea .multiSelectBox .multiOptionRow{
+     clear:left;
+     padding-left:5px;
+     min-height:13px;
+     padding-top:4px;
+     padding-bottom:4px;
+     width:141px;
+ }
+ .multiSelectArea .multiSelectBox .multiOptionRowChecked{
+     background-color:#dee7f7;
+ }
+ .multiSelectArea .multiSelectBox input{
+     width:13px;
+     height:13px;
+     float:left;
+     display:inline;
+ }
+ .multiSelectArea .multiSelectBox label{
+     float:left;
+     width:122px;
+     padding-left:5px;
+     display:inline;
+     line-height:13px;
+     white-space:nowrap;
+     overflow:hidden;
+     font-weight:bold;
+     cursor:pointer;
+ }
+                    
+  .applyButtonBox{
+      padding-top:15px;
+      min-height:10px;
+  }
+        
+ .applyButtonBox .button6{
+     font-size:11px;
+     font-weight:bold;
+     margin-right:0;
+ }

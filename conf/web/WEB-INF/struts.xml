@@ -364,11 +364,25 @@
             </result>
         </action>
 
-         <action name="dashboardCostReport" class="dashboardShowCostReportAction">
+        <action name="dashboardCostReport" class="dashboardShowCostReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-cost-report.jsp</result>
+        </action>
+        
+        <action name="dashboardParticipationReport" class="dashboardShowParticipationReportAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-participation-report.jsp</result>
+        </action>
+        
+        <action name="dashboardGetParticipationReport" class="dashboardParticipationReportAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-participation-report.jsp</result>
         </action>
 
         <action name="dashboardGetBillingCostReport" class="dashboardBillingCostReportAction">

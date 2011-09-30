@@ -53,17 +53,6 @@ $(document).ready(function(){
         }
     });
 
-    $("#selectReport").change(function() {
-        var reportType = $(this).val();
-        if (reportType == 'COST') {
-            window.location.href = '/direct/dashboardCostReport';
-        } else if (reportType == 'PIPELINE') {
-            window.location.href = '/direct/dashboardReports';
-        } else if (reportType == 'BILLING_COST') {
-           window.location.href = '/direct/dashboardBillingCostReport';
-        }
-    });
-
     $("#pipelineDetails .expand").click(function(){
         $(this).blur();
         if($(this).hasClass("collapse")){

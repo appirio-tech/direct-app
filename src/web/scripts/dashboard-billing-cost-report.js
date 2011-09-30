@@ -37,18 +37,6 @@ $(document).ready(function() {
         }
     });
 
-    /* Toggle the selection for report type */
-    $("#selectReport").change(function() {
-        var reportType = $(this).val();
-        if (reportType == 'COST') {
-            window.location.href = '/direct/dashboardCostReport';
-        } else if (reportType == 'PIPELINE') {
-            window.location.href = '/direct/dashboardReports';
-        } else if (reportType == 'BILLING_COST') {
-           window.location.href = '/direct/dashboardBillingCostReport';
-        }
-    });
-
     /* Apply button action */
     $('a.applyButton').click(function(event) {
         $('#formDataExcel').val("false");

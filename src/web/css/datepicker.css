@@ -1,15 +1,17 @@
 /*************************************************************** date pick *********************************************/
 a.dp-choose-date {
-	width:21px;
-	height:19px;
+	width:23px;
+	height:22px;
 	float:left;
 	display:inline;
-	margin-top:1px;
+	margin-top:0px;
 	margin-left:6px;
-	margin-right:22px;
 	overflow:hidden;
 	text-indent:-2000px;
-	background:url(/images/date_icon.gif) no-repeat;
+	background:url(../images/calendar.png) no-repeat;
+}
+a.dp-choose-date:hover{
+	background-position:left -22px;
 }
 
 .dp-choose-date{
@@ -17,49 +19,55 @@ a.dp-choose-date {
 }
 
 table.jCalendar {
-	background: #ededed;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width:100%;
 }
 
+table.jCalendar thead th {
+	border-top:#bdc2c5 solid 2px;
+}
 table.jCalendar th {
-	color: #2f3338;
-	font-family:"Arial Rounded MT Bold";
-	padding:8px 3px;
+	font-family:Arial, Helvetica, sans-serif;
+	padding:5px 0px;
+	text-align:center;
+	font-size:11px;
+	color:#fffffe;
+	background-color:#d2080b;
 }
 
 table.jCalendar td {
-	background: #dfe1e3;
-	color: #333;
+	color: #555555;
 	padding:6px;
 	font-weight:bold;
 	text-align: center;
-	border:#bdc2c5 solid 1px;
-	font-family:"Arial Rounded MT Bold";
+	border:#bdc2c5 solid 2px;
+	font-family:Arial, Helvetica, sans-serif;
 }
 
 table.jCalendar tr td.other-month {
-	background: #dfe1e3;
-	color: #bdc2c5;
+	color: #cacaca;
 }
 
 table.jCalendar td.today {
-	background: #4c92d8;
+	background: #f89a9b;
 	color: #ffffff;
 	font-weight:bold;
 }
 
 table.jCalendar td.selected {
-	background: #f66;
+	background: #d2080b;
 	color: #fff;
 }
 
 table.jCalendar td.selected.dp-hover {
-	background: #ccc;
-	color: #000;
+	background: #d2080b;
+	color: #fff;
 }
 
 table.jCalendar td.dp-hover,
 table.jCalendar tr.activeWeekHover td {
-	background: #ccc;
+	background: #878787;
 	color: #fff;
 }
 
@@ -85,13 +93,28 @@ table.jCalendar td.unselectable.dp-hover {
 /* NOTE - you will probably want to style a.dp-choose-date - see how I did it in demo.css */
 
 div.dp-popup {
-	position: relative;
-	background: #ededed;
-	font-size: 10px;
+	font-size: 11px;
 	font-family: arial, sans-serif;
-	padding: 1px;
 	line-height: 1.2em;
-	border:#333 solid 1px;
+}
+div.dp-popup .datePickerWrapper{
+	padding-top:4px;
+	background:url(../images/datePicker-bg-top.png) left top no-repeat;
+}
+div.dp-popup .datePickerWrapper .datePickerBottom{
+	padding-bottom:6px;
+	background:url(../images/datePicker-bg-bottom.png) left bottom no-repeat;
+}
+div.dp-popup .datePickerWrapper .datePickerCenter{
+	width:208px;
+	padding:0 2px;
+	background:url(../images/datePicker-bg-center.png) left top repeat-y;
+}
+div.dp-popup .datePickerWrapper .datePickerCenterInner{
+	position: relative;
+	width:198px;
+	padding:3px 5px;
+	background:#ffffff url(../images/datePicker-bg-center-repeat.png) left top repeat-x;
 }
 
 div#dp-popup {
@@ -100,10 +123,10 @@ div#dp-popup {
 }
 
 div.dp-popup h2 {
-	font-size: 12px;
+	font-size: 11px;
 	text-align: center;
-	margin: 4px 0;
-	padding: 0;
+	padding: 4px 0 10px;
+	color:#555555;
 }
 
 a#dp-close {
@@ -120,7 +143,8 @@ a#dp-close:hover {
 div.dp-popup a {
 	color: #000;
 	text-decoration: none;
-	padding: 3px 2px 0;
+	padding: 3px 1px 0;
+	margin-top:3px;
 }
 
 div.dp-popup div.dp-nav-prev {
@@ -131,7 +155,13 @@ div.dp-popup div.dp-nav-prev {
 }
 
 div.dp-popup div.dp-nav-prev a {
-	width:auto;
+	width:17px !important;
+	height:17px !important;
+	padding:0;
+	margin-top:3px;
+	margin-left:1px;
+	margin-right:1px;
+	overflow:hidden;
 	float: left;
 	display:inline;
 }
@@ -153,7 +183,13 @@ div.dp-popup div.dp-nav-next {
 }
 
 div.dp-popup div.dp-nav-next a {
-	width:auto;
+	width:17px !important;
+	height:17px !important;
+	padding:0;
+	margin-top:3px;
+	margin-left:1px;
+	margin-right:1px;
+	overflow:hidden;
 	float: right;
 	display:inline;
 }
@@ -170,7 +206,24 @@ div.dp-popup td {
 div.dp-popup td.disabled {
 	cursor: default;
 }
-
+.dp-nav-prev-year{
+	background:url(../images/datePicker-year-prev.png) left top no-repeat;
+}
+.dp-nav-next-year{
+	background:url(../images/datePicker-year-next.png) left top no-repeat;
+}
+.dp-nav-prev-month{
+	background:url(../images/datePicker-month-prev.png) left top no-repeat;
+}
+.dp-nav-next-month{
+	background:url(../images/datePicker-month-next.png) left top no-repeat;
+}
+.dp-nav-prev-year:hover,
+.dp-nav-next-year:hover,
+.dp-nav-prev-month:hover,
+.dp-nav-next-month:hover{
+	background-position:left -17px;
+}
 .dp-nav-prev-year,.dp-nav-next-year{
 	display:none;
 }

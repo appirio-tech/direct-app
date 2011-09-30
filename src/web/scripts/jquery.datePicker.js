@@ -64,6 +64,8 @@
 						jQuery(dc('th')).attr({'scope':'col', 'abbr':day, 'title':day, 'class':(weekday == 0 || weekday == 6 ? 'weekend' : 'weekday')}).html(s.showHeader == $.dpConst.SHOW_HEADER_SHORT ? day.substr(0, 3) : day)
 					);
 				}
+				headRow.find('th:first').css("border-left","2px solid #bdc2c5");
+				headRow.find('th:last').css("border-right","2px solid #bdc2c5");
 			};
 			
 			var calendarTable = $(dc('table'))
@@ -779,7 +781,7 @@
 					};
 					cssRules = {
 						'top'	:	eleOffset.top + c.verticalOffset,
-						'left'	:	eleOffset.left + c.horizontalOffset
+						'left'	:	eleOffset.left + c.horizontalOffset + 30
 					};
 					
 					var _checkMouse = function(e)
@@ -820,55 +822,58 @@
 						this.setDisplayedMonth(selectedDate.getMonth(), selectedDate.getFullYear(), false);
 					}
 				}
+				var $datePickerWrapper = $('<div class="datePickerWrapper"></div>');
+				$datePickerWrapper.append('<div class="datePickerBottom"><div class="datePickerCenter"><div class="datePickerCenterInner"></div></div></div>');
+				$datePickerWrapper.find('.datePickerCenterInner').append(
+					$('<h2></h2>'),
+					$('<div class="dp-nav-prev"></div>')
+						.append(
+							$('<a class="dp-nav-prev-year" href="javascript:;" title="' + $.dpText.TEXT_PREV_YEAR + '"></a>')
+								.bind(
+									'click',
+									function()
+									{
+										return c._displayNewMonth.call(c, this, 0, -1);
+									}
+								),
+							$('<a class="dp-nav-prev-month" href="javascript:;" title="' + $.dpText.TEXT_PREV_MONTH + '"></a>')
+								.bind(
+									'click',
+									function()
+									{
+										return c._displayNewMonth.call(c, this, -1, 0);
+									}
+								)
+						),
+					$('<div class="dp-nav-next"></div>')
+						.append(
+							$('<a class="dp-nav-next-year" href="javascript:;" title="' + $.dpText.TEXT_NEXT_YEAR + '"></a>')
+								.bind(
+									'click',
+									function()
+									{
+										return c._displayNewMonth.call(c, this, 0, 1);
+									}
+								),
+							$('<a class="dp-nav-next-month" href="javascript:;" title="' + $.dpText.TEXT_NEXT_MONTH + '"></a>')
+								.bind(
+									'click',
+									function()
+									{
+										return c._displayNewMonth.call(c, this, 1, 0);
+									}
+								)
+						),
+					$('<div class="dp-calendar"></div>')
+				)
+
 				
 				$createIn
 					.append(
 						$('<div></div>')
 							.attr(attrs)
 							.css(cssRules)
-							.append(
-//								$('<a href="javascript:;" class="selecteee">aaa</a>'),
-								$('<h2></h2>'),
-								$('<div class="dp-nav-prev"></div>')
-									.append(
-										$('<a class="dp-nav-prev-year" href="javascript:;" title="' + $.dpText.TEXT_PREV_YEAR + '">&lt;&lt;</a>')
-											.bind(
-												'click',
-												function()
-												{
-													return c._displayNewMonth.call(c, this, 0, -1);
-												}
-											),
-										$('<a class="dp-nav-prev-month" href="javascript:;" title="' + $.dpText.TEXT_PREV_MONTH + '"><img src="/images/perMoon.gif" /></a>')
-											.bind(
-												'click',
-												function()
-												{
-													return c._displayNewMonth.call(c, this, -1, 0);
-												}
-											)
-									),
-								$('<div class="dp-nav-next"></div>')
-									.append(
-										$('<a class="dp-nav-next-year" href="javascript:;" title="' + $.dpText.TEXT_NEXT_YEAR + '">&gt;&gt;</a>')
-											.bind(
-												'click',
-												function()
-												{
-													return c._displayNewMonth.call(c, this, 0, 1);
-												}
-											),
-										$('<a class="dp-nav-next-month" href="javascript:;" title="' + $.dpText.TEXT_NEXT_MONTH + '"><img src="/images/nextMoon.gif" /></a>')
-											.bind(
-												'click',
-												function()
-												{
-													return c._displayNewMonth.call(c, this, 1, 0);
-												}
-											)
-									),
-								$('<div class="dp-calendar"></div>')
-							)
+							.append($datePickerWrapper)
 							.bgIframe()
 						);
 					
