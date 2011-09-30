@@ -352,7 +352,7 @@
                                                 
                                                 <div class="buttonArea">
                                                     <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2">
-                                                        <span class="left"><span class="right">Find a Copilot</span></span>
+                                                        <span class="left"><span class="right">Work with a Copilot</span></span>
                                                     </a>
                                                 </div>
                                                 <!--End .buttonArea-->
