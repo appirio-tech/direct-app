@@ -375,6 +375,17 @@
         </versions>
     </project>
 
+
+     <project
+        name="copilot_pool_and_profiles_dao"
+        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/copilot_pool_and_profiles_dao"
+        buildfile="build.xml">
+        <versions>
+            <version name="TRUNK" path="branches/cockpit_trunk"/>
+            <version name="RELEASE" path="release"/>
+        </versions>
+    </project>
+
     <project
         name="project_service_facade"
         svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/project_service_facade"
