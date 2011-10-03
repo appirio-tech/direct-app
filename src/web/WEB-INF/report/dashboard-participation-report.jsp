@@ -218,12 +218,12 @@
     
         <tr class="projectAggregationCostReport scData subTheadRow">
             <th class="tableColumn">Project</th>
-            <th class="tableColumn">Total<br />Registrants</th>
+            <th class="tableColumn">Total<br />Registrations</th>
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
-            <th class="tableColumn">Total<br />submitters</th>
-            <th class="tableColumn">Unique<br />submitters</th>
-            <th class="tableColumn">submitter<br />Countries</th>
+            <th class="tableColumn">Total<br />Submissions</th>
+            <th class="tableColumn">Unique<br />Submitters</th>
+            <th class="tableColumn">Submitter<br />Countries</th>
             <th class="tableColumn">Total<br />Winners</th>
             <th class="tableColumn">Winner<br />Countries</th>
         </tr>
