@@ -215,7 +215,7 @@
      <ui:isCopilotPage>
         <div id="tabs1" class="copilotsTabs1">
             <ul>
-                <li ><a href="https://www.topcoder.com/wiki/display/tc/Copilot+Overview" target="_blank"><span>Introduction To Copilots</span></a></li>
+                
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'launchCopilot'}">class="on"</c:if>><a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Get a Copilot</span></a></li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'copilotPostings'}">class="on"</c:if>>
                     <a href="<s:url action='listCopilotPostings' namespace='/copilot'/>"><span>My Copilot Postings</span></a>
