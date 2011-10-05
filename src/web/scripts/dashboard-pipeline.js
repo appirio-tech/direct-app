@@ -101,6 +101,9 @@ $(document).ready(function(){
             $('#formDataExcel').val("false");
             document.DashboardSearchForm.submit();
         }
+
+        modalPreloader();
+
         return false;
     });
 });

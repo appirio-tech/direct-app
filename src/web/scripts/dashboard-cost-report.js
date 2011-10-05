@@ -53,6 +53,7 @@ $(document).ready(function() {
     $('a.applyButton').click(function(event) {
         $('#formDataExcel').val("false");
         $('#dashboardCostReportForm').submit();
+        modalPreloader();
     });
 
     $('.dateRange a').click(function() {

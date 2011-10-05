@@ -120,6 +120,7 @@ $(document).ready(function() {
 
     $("#participationReportSubmit").click(function() {
         $("#dashboardParticipationReportForm").submit();
+        modalPreloader();
     });
 
     function sortDropDown(dropDownId) {

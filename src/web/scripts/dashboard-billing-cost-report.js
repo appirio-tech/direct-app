@@ -41,6 +41,7 @@ $(document).ready(function() {
     $('a.applyButton').click(function(event) {
         $('#formDataExcel').val("false");
         $('#dashboardBillingCostReportForm').submit();
+        modalPreloader();
     });
 
     $('.dateRange a').click(function() {
