@@ -21,10 +21,13 @@ import java.util.Map;
  * <p>
  *     Change notes - version 1.1 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination)
  *     <li>Add getters for project customers and the json representation of user projects</li>
+ *
+ *     Version 1.1.1 changes
+ *     - Add method getJsonDataMap
  * </p>
  *
- * @author isv, GreatKevin
- * @version 1.1
+ * @author isv, GreatKevin, hohosky
+ * @version 1.1.1
  */
 public class UserProjectsDTO implements Serializable {
 
@@ -97,6 +100,19 @@ public class UserProjectsDTO implements Serializable {
      * @since 1.1
      */
     public String getJsonResult() {
+        // generate the json from the result map
+        JSON json = JSONSerializer.toJSON(getJsonDataMap());
+
+        return json.toString();
+    }
+
+    /**
+     * Gets the json represents of user projects data via a map.
+     *
+     * @return the map instance which contains the projects - customer data.
+     * @since 1.1.1
+     */
+    public Map getJsonDataMap() {
         Map<String, Map<String, Object>> data = new HashMap<String, Map<String, Object>>();
         Map<Long, String> customers = getProjectsCustomers();
         Map<String, Object> noCustomerData = new HashMap<String, Object>();
@@ -127,10 +143,7 @@ public class UserProjectsDTO implements Serializable {
         noCustomerData.put("projects", noCustomerProjects);
         data.put("No Customer", noCustomerData);
 
-        // generate the json from the result map
-        JSON json = JSONSerializer.toJSON(data);
-
-        return json.toString();
+        return data;
     }
 
 }
