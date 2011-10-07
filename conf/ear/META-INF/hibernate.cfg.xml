@@ -11,6 +11,6 @@
         <property name="current_session_context_class">org.hibernate.context.JTASessionContext</property>
         <property name="transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
         <property name="transaction.factory_class">org.hibernate.transaction.CMTTransactionFactory</property>
-
+        <mapping resource="META-INF/mapping.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
