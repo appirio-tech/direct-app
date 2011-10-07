@@ -110,11 +110,6 @@
   <property name="confluence_user_soap_client.path" value="confluence_user_soap_client/${confluence_user_soap_client.version}" />
   <property name="confluence_user_soap_client.jar" value="${tcs_libdir}/${confluence_user_soap_client.path}/${confluence_user_soap_client.jar.name}" />
 
-  <property name="contest_and_submission_entities.version" value="1.2.0" />
-  <property name="contest_and_submission_entities.jar.name" value="contest_and_submission_entities.jar" />
-  <property name="contest_and_submission_entities.path" value="contest_and_submission_entities/${contest_and_submission_entities.version}" />
-  <property name="contest_and_submission_entities.jar" value="${tcs_libdir}/${contest_and_submission_entities.path}/${contest_and_submission_entities.jar.name}" />
-
   <property name="contest_eligibility_persistence.version" value="1.0.0" />
   <property name="contest_eligibility_persistence.jar.name" value="contest_eligibility_persistence.jar" />
   <property name="contest_eligibility_persistence.path" value="contest_eligibility_persistence/${contest_eligibility_persistence.version}" />
@@ -429,21 +424,6 @@
   <property name="specification_review_comment_service.path" value="specification_review_comment_service/${specification_review_comment_service.version}" />
   <property name="specification_review_comment_service.jar" value="${tcs_libdir}/${specification_review_comment_service.path}/${specification_review_comment_service.jar.name}" />
 
-  <property name="studio_contest_manager.version" value="1.3.0" />
-  <property name="studio_contest_manager.jar.name" value="studio_contest_manager.jar" />
-  <property name="studio_contest_manager.path" value="studio_contest_manager/${studio_contest_manager.version}" />
-  <property name="studio_contest_manager.jar" value="${tcs_libdir}/${studio_contest_manager.path}/${studio_contest_manager.jar.name}" />
-
-  <property name="studio_service.version" value="1.3.0" />
-  <property name="studio_service.jar.name" value="studio_service.jar" />
-  <property name="studio_service.path" value="studio_service/${studio_service.version}" />
-  <property name="studio_service.jar" value="${tcs_libdir}/${studio_service.path}/${studio_service.jar.name}" />
-
-  <property name="submission_manager.version" value="1.2.0" />
-  <property name="submission_manager.jar.name" value="submission_manager.jar" />
-  <property name="submission_manager.path" value="submission_manager/${submission_manager.version}" />
-  <property name="submission_manager.jar" value="${tcs_libdir}/${submission_manager.path}/${submission_manager.jar.name}" />
-
   <property name="team_management.version" value="1.0.1" />
   <property name="team_management.jar.name" value="team_management.jar" />
   <property name="team_management.path" value="team_management/${team_management.version}" />
@@ -654,7 +634,6 @@
     <pathelement location="${shared.jar}" />
     <pathelement location="${tcwebcommon.jar}" />
     <pathelement location="${online_review_upload_services.jar}" />
-    <pathelement location="${contest_and_submission_entities.jar}" />
     <pathelement location="${catalog_entities.jar}" />
     <pathelement location="${catalog_services.jar}" />
     <pathelement location="${admin_service_facade.jar}" />
@@ -671,13 +650,11 @@
     <pathelement location="${review_data_structure.jar}" />
     <pathelement location="${review_management.jar}" />
     <pathelement location="${scorecard_data_structure.jar}" />
-    <pathelement location="${studio_service.jar}" />
     <pathelement location="${team_management.jar}" />
     <pathelement location="${user_service_facade.jar}" />
     <pathelement location="${user_service.jar}" />
     <pathelement location="${workdays.jar}" />
     <pathelement location="${file_upload.jar}" />
-    <pathelement location="${studio_contest_manager.jar}" />
     <pathelement location="${game_plan_service.jar}" />
     <pathelement location="${cockpit_facade_util.jar}" />
     <pathelement location="${specification_review_service.jar}" />

@@ -7,8 +7,9 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.studio.contest.User;
+import com.topcoder.service.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,9 +39,7 @@ public class SearchUserAction extends BaseDirectStrutsAction {
      */
     @Override
     protected void executeAction() throws Exception {
-        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
-        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-        List<User> users = contestServiceFacade.searchUser(tcSubject, getSearchText());
+        List<User> users = getUserService().searchUser(getSearchText());
         setResult(users);
     }
 

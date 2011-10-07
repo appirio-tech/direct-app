@@ -15,7 +15,6 @@ import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.studio.UploadedDocument;
 import com.topcoder.util.errorhandling.ExceptionUtils;
 
 /**
@@ -159,11 +158,7 @@ public class DocumentUploadAction extends ContestAction {
      *             been injected
      */
     public void executeAction() throws Exception {
-        if(studio){
-            executeActionStudio();
-        } else {
-            executeActionSoftware();
-        }
+        executeActionSoftware();
     }
 
 
@@ -206,61 +201,6 @@ public class DocumentUploadAction extends ContestAction {
     private Map<String, Object> getFileResult(long fileId) {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("documentId", fileId);
-        return result;
-    }
-
-    /**
-     * Executes the action. Saves the document and attaches it to the contest.
-     *
-     * @throws Exception if some error occurs during method execution
-     * @throws IllegalStateException if <code>contestServiceFacade</code> or <code>mimeTypeRetriever</code> haven't
-     *             been injected
-     */
-    private void executeActionStudio() throws Exception {
-        ActionHelper.checkInjectedFieldNull(getContestServiceFacade(), "contestServiceFacade");
-        ActionHelper.checkInjectedFieldNull(mimeTypeRetriever, "mimeTypeRetriever");
-
-        // populate the document information
-        UploadedDocument uploadedDocument = new UploadedDocument();
-        uploadedDocument.setDescription(contestFileDescription);
-        uploadedDocument.setFileName(documentFileName);
-        uploadedDocument.setContestId(contestId);
-        uploadedDocument.setDocumentTypeId(documentTypeId);
-        uploadedDocument.setMimeTypeId(mimeTypeRetriever.getMimeTypeIdFromFileName(documentFileName));
-
-        // get the file contents as byte array and load them to the uploadedDocument
-        InputStream stream = null;
-        try {
-            stream = new FileInputStream(document);
-            uploadedDocument.setFile(IOUtils.toByteArray(stream));
-        } finally {
-            IOUtils.closeQuietly(stream);
-        }
-
-        // get the TCSubject from session
-        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-
-        // persist the document
-        if (contestId < 0) {
-            uploadedDocument = getContestServiceFacade().uploadDocument(tcSubject, uploadedDocument);
-        } else {
-            uploadedDocument = getContestServiceFacade().uploadDocumentForContest(tcSubject, uploadedDocument);
-        }
-
-        setResult(getDocumentResult(uploadedDocument));
-    }
-
-    /**
-     * <p>
-     * Creates a result map so it could be serialized by JSON serializer.
-     * </p>
-     *
-     * @param document uploaded document
-     * @return the result map
-     */
-    private Map<String, Object> getDocumentResult(UploadedDocument document) {
-        Map<String, Object> result = new HashMap<String, Object>();
-        result.put("documentId", document.getDocumentId());
         return result;
     }
 

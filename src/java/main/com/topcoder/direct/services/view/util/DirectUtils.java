@@ -31,7 +31,6 @@ import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.ProjectData;
-import com.topcoder.service.studio.SubmissionData;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -55,8 +54,6 @@ import com.topcoder.service.permission.Permission;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.project.StudioCompetition;
-import com.topcoder.service.studio.PersistenceException;
 import com.topcoder.shared.common.TCContext;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
@@ -992,17 +989,6 @@ public final class DirectUtils {
     }
 
     /**
-     * Sets the direct project name of the given StudioCompetition
-     *
-     * @param studioCompetition the studio competition to set.
-     * @param projects all the direct projects the user has.
-     * @since 1.6.7
-     */
-    public static void setStudioCompetitionDirectProjectName(StudioCompetition studioCompetition, List<ProjectData> projects) {
-        studioCompetition.getContestData().setTcDirectProjectName(getDirectProjectName(studioCompetition.getContestData().getTcDirectProjectId(), projects));
-    }
-
-    /**
      * Gets the name of the direct project by comparing the direct project id.
      *
      * @param directProjectId the direct project id
@@ -1021,29 +1007,6 @@ public final class DirectUtils {
         return DIRECT_PROJECT_NOT_AVAILABLE;
     }
 
-
-    /**
-     * <p>Gets a flag indicating whether the submissions have already been checked out.</p>
-     *
-     * @param submissions the submissions to check.
-     * @param roundType a <code>ContestRoundType</code> providing the type of the contest round.
-     * @return a flag indicating whether the submissions have already been checked out.
-     * @since 1.6
-     */
-    public static boolean getSubmissionsCheckout(List<SubmissionData> submissions, ContestRoundType roundType) {
-        for (SubmissionData submission : submissions) {
-            if (roundType == ContestRoundType.MILESTONE) {
-                if (submission.isAwardMilestonePrize() != null && submission.isAwardMilestonePrize()) {
-                    return true;
-                }
-            } else {
-                if (submission.getUserRank() > 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     /**
      * Checks whether a specified round type of a contest is checked out. If the corresponding phase is closed,
@@ -1067,25 +1030,6 @@ public final class DirectUtils {
             }
         }
         return false;
-    }
-
-    /**
-     * <p>Gets the additional prize for a studio competition.</p>
-     *
-     * @param studioCompetition the studio competition
-     * @return the additional prize for the studio competition
-     * @since 1.6
-     */
-    public static double getAdditionalPrize(StudioCompetition studioCompetition) {
-        List<CompetitionPrize> prizes = studioCompetition.getPrizes();
-        if (prizes.size() == 0) {
-            return 0.0;
-        }
-        double prize = prizes.get(0).getAmount();
-        for (int i = 1; i < prizes.size(); i++) {
-            prize = Math.min(prize, prizes.get(i).getAmount());
-        }
-        return prize;
     }
 
      /**
@@ -1137,16 +1081,10 @@ public final class DirectUtils {
      * @since 1.6.2
      */
     public static boolean hasWritePermission(BaseDirectStrutsAction action,
-            TCSubject tcSubject, long contestId, boolean isStudio)
-            throws PersistenceException {
+            TCSubject tcSubject, long contestId, boolean isStudio) {
         if (!isRole(tcSubject, ADMIN_ROLE)) {
-            if (isStudio) {
-                return action.getStudioService().checkContestPermission(
+            return action.getProjectServices().checkContestPermission(
                         contestId, false, tcSubject.getUserId());
-            } else {
-                return action.getProjectServices().checkContestPermission(
-                        contestId, false, tcSubject.getUserId());
-            }
         } else {
             return true;
         }

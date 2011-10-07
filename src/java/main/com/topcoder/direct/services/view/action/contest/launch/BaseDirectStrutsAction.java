@@ -26,8 +26,6 @@ import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.review.specification.SpecificationReviewService;
-import com.topcoder.service.studio.StudioService;
-import com.topcoder.service.studio.contest.ContestManager;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
@@ -144,13 +142,6 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      */
     private PipelineServiceFacade pipelineServiceFacade;
 
-    /**
-     * <p>
-     * Contest manager interface.
-     * </p>
-     */
-    private ContestManager contestManager;
-
     private AdminServiceFacade adminServiceFacade;
 
     /**
@@ -159,13 +150,6 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      * @since 1.2.1
      */
     private UserService userService;
-    
-    /**
-     * Represents the StudioService object. It has getter & setter. Can be any value.
-     *
-     * @since 1.2.3
-     */
-    private StudioService studioService;
     
     /**
      * Represents the ProjectServices object. It has getter & setter. Can be any value.
@@ -372,28 +356,6 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
         this.pipelineServiceFacade = pipelineServiceFacade;
     }
 
-    /**
-     * <p>
-     * Gets the contest manager.
-     * </p>
-     *
-     * @return the contest manager
-     */
-    public ContestManager getContestManager() {
-        return contestManager;
-    }
-
-    /**
-     * <p>
-     * Sets the contest manager.
-     * </p>
-     *
-     * @param contestManager the contest manager
-     */
-    public void setContestManager(ContestManager contestManager) {
-        this.contestManager = contestManager;
-    }
-
     public AdminServiceFacade getAdminServiceFacade() {
         return adminServiceFacade;
     }
@@ -539,26 +501,6 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    /**
-     * Getter for the namesake instance variable. Simply return the namesake instance variable.
-     * 
-     * @return the studioService
-     * @since 1.2.3
-     */
-    public StudioService getStudioService() {
-        return studioService;
-    }
-
-    /**
-     * Setter for the namesake instance variable. Simply set the value to the namesake instance variable.
-     * 
-     * @param studioService the studioService to set
-     * @since 1.2.3
-     */
-    public void setStudioService(StudioService studioService) {
-        this.studioService = studioService;
     }
 
     /**

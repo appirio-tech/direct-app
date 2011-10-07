@@ -227,9 +227,6 @@
         <copy file="${catalog_services.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${client_project_entities_dao.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${cloud_vm_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${contest_and_submission_entities.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${submission_manager.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${studio_contest_manager.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${auto_screening_management.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${online_review_upload_services.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${phase_management.jar}" todir="${build_distdir}" overwrite="true"/>
@@ -252,7 +249,6 @@
         <copy file="${team_management_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${user_project_data_store.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${game_plan_service.jar}" todir="${build_distdir}" overwrite="true"/>
-        <copy file="${studio_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${contest_eligibility_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${contest_eligibility_validation.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${project_services.jar}" todir="${build_distdir}" overwrite="true"/>
@@ -419,7 +415,6 @@
                 <include name="hibernate.cfg.xml" />
                 <include name="ContestCapacity.xml" />
                 <include name="ContestServiceFacade.xml" />
-                <include name="StudioService.xml" />
                 <include name="SpecReviewCommentService.xml" />
                 <include name="SpecReviewService.xml" />
                 <include name="ContestEligibilityValidationManagerBean.xml" />

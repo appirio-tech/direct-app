@@ -13,7 +13,6 @@ import com.topcoder.service.payment.PaymentResult;
 import com.topcoder.service.payment.PaymentType;
 import com.topcoder.service.payment.TCPurhcaseOrderPaymentData;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.project.StudioCompetition;
 
 /**
  * <p>

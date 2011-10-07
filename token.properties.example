@@ -290,14 +290,3 @@
 @ApplicationServer.TRANS_FACTORY@=javax.transaction.UserTransaction
 @ApplicationServer.TRANS_MANAGER@=java:/TransactionManager
 @ApplicationServer.SECURITY_CONTEXT_FACTORY@=org.jnp.interfaces.NamingContextFactory
-
-@ApplicationServer.STUDIO_SERVICES_PROVIDER_URL@=jnp://localhost:1399
-@ApplicationServer.STUDIO_SERVICES_USERNAME@=user
-@ApplicationServer.STUDIO_SERVICES_PASSWORD@=password
-@ApplicationServer.STUDIO_SERVICES_PROTOCOL@=cockpitDomain
-@ApplicationServer.STUDIO_SERVICES_CONTEXT_FACTORY@=org.jboss.security.jndi.LoginInitialContextFactory
-@ApplicationServer.STUDIO_SERVICES_PKG_PREFIXES@=org.jboss.naming:org.jnp.interfaces
-@ApplicationServer.STUDIO_SERVICES_JNDI_NAME@=StudioServiceBean/remote
-
-
-

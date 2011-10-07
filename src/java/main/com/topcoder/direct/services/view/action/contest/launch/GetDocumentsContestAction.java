@@ -8,8 +8,6 @@ import java.util.List;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.project.StudioCompetition;
-import com.topcoder.service.studio.ContestData;
 
 /**
  * <p>

@@ -18,19 +18,7 @@
     <module>
         <ejb>catalog_services_id_generator.jar</ejb>
     </module>
-    
-    <module>
-        <ejb>contest_and_submission_entities.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>submission_manager.jar</ejb>
-    </module>
-    
-    <module>
-        <ejb>studio_contest_manager.jar</ejb>
-    </module>
-    
+        
     <module>
         <ejb>auto_screening_management.jar</ejb>
     </module>
@@ -127,10 +115,6 @@
         <ejb>game_plan_service.jar</ejb>
     </module>
  
-    <module>
-        <ejb>studio_service.jar</ejb>
-    </module>
-
     <module>
         <ejb>contest_eligibility_persistence.jar</ejb>
     </module>

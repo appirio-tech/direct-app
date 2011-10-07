@@ -135,34 +135,6 @@
         </metadata>
     </no-tx-datasource>
 
-    <xa-datasource>
-        <jndi-name>JTS_STUDIO_OLTP</jndi-name>
-        
-        <track-connection-by-tx>true</track-connection-by-tx> 
-        <isSameRM-override-value>false</isSameRM-override-value>
-        <no-tx-separate-pools>true</no-tx-separate-pools>
-
-        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
-        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
-        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
-        <xa-datasource-property name="DatabaseName">studio_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
-
-        <!-- sql to call when connection is created -->
-        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
-
-        <!-- sql to call on an existing pooled connection when it is obtained from pool
-        <check-valid-connection-sql>select '1' from dual</check-valid-connection-sql>
-         -->
-		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
-         <user-name>@database.username@</user-name>
-        <password>@database.password@</password>
-		<metadata>
-            <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </xa-datasource>
-
     <local-tx-datasource>
         <jndi-name>BUGS</jndi-name>
         <connection-url>@bugs.connection.string@</connection-url>
@@ -183,38 +155,6 @@
     <track-statements>true</track-statements>
     -->
     </local-tx-datasource>
-
-    <xa-datasource>
-        <jndi-name>StudioDS</jndi-name>
-        
-        <track-connection-by-tx>true</track-connection-by-tx> 
-        <isSameRM-override-value>false</isSameRM-override-value>
-        <no-tx-separate-pools>true</no-tx-separate-pools>
-
-        <xa-datasource-class>com.informix.jdbcx.IfxXADataSource</xa-datasource-class>
-        <xa-datasource-property name="IfxIFXHOST">@database.server@</xa-datasource-property>
-        <xa-datasource-property name="PortNumber">@database.port@</xa-datasource-property>
-        <xa-datasource-property name="DatabaseName">studio_oltp</xa-datasource-property>
-        <xa-datasource-property name="ServerName">informixoltp_tcp</xa-datasource-property>
-
-        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter</exception-sorter-class-name>
-        <!-- sql to call when connection is created -->
-        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
-     
-        <!-- sql to call on an existing pooled connection when it is obtained from pool
-          -->
-        <check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
-     
-        <prepared-statement-cache-size>25</prepared-statement-cache-size>
-        <share-prepared-statements>true</share-prepared-statements>
-
-         <user-name>@database.username@</user-name>
-            <password>@database.password@</password>
-        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml -->
-        <metadata>
-           <type-mapping>InformixDB</type-mapping>
-        </metadata>
-    </xa-datasource>
 
     <xa-datasource>
         <jndi-name>JTS_CORPORATE_OLTP</jndi-name>

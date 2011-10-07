@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import com.topcoder.service.project.CompetitionPrize;
-import com.topcoder.service.studio.MilestonePrizeData;
 
 /**
  * <p>A DTO providing the statistics on requested contest.</p>
@@ -82,8 +81,6 @@ public class ContestStatsDTO implements Serializable {
     private long forumId;
 	
 	private List<CompetitionPrize> prizes;
-	
-	private MilestonePrizeData milestonePrizes;
 	
 	private Double adminFees;
 	
@@ -293,23 +290,7 @@ public class ContestStatsDTO implements Serializable {
 		}
 		return adminFees;
 	}
-	
-	public void setMilestonePrizes(MilestonePrizeData milestonePrizes){
-		this.milestonePrizes = milestonePrizes;
-	}
-	
-	public MilestonePrizeData getMilestonePrizes(){
-		return milestonePrizes;
-	}
-	
-	public Double getTotalFees(){
-		Double totalMilestone = 0.0;
-		if(getMilestonePrizes() != null){
-			totalMilestone = getMilestonePrizes().getAmount() * getMilestonePrizes().getNumberOfSubmissions();
-		}
-		return getTotalMainPrizes() + totalMilestone  + getAdminFees();
-	}
-	
+		
 	public Double getTotalMainPrizes(){
 		Double totalMainPrizes = 0.0;
 		for (int i=0; i < prizes.size(); i++ ) {

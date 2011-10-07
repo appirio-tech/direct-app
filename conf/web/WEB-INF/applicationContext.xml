@@ -64,22 +64,6 @@
         <property name="proxyInterface" value="com.topcoder.service.pipeline.PipelineServiceFacade"/>
     </bean>
 
-    <bean id="contestManager" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="ContestManagerBean"/>
-        <property name="cache" value="true"/>
-        <property name="lookupOnStartup" value="false"/>
-        <property name="jndiEnvironment">
-            <props>
-                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-                </prop>
-                <prop key="java.naming.provider.url">${service.provder.url}</prop>
-                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-                </prop>
-            </props>
-        </property>
-        <property name="proxyInterface" value="com.topcoder.service.studio.contest.ContestManager"/>
-    </bean>
-
     <bean id="adminServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="remote/AdminServiceFacadeBean"/>
         <property name="cache" value="true"/>
@@ -142,22 +126,6 @@
             </props>
         </property>
         <property name="proxyInterface" value="com.topcoder.service.gameplan.GamePlanService"/>
-    </bean>
-
-    <bean id="studioService" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="StudioServiceBean/remote"/>
-        <property name="cache" value="true"/>
-        <property name="lookupOnStartup" value="false"/>
-        <property name="jndiEnvironment">
-            <props>
-                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
-                </prop>
-                <prop key="java.naming.provider.url">${service.provder.url}</prop>
-                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
-                </prop>
-            </props>
-        </property>
-        <property name="proxyInterface" value="com.topcoder.service.studio.StudioService"/>
     </bean>
 
     <bean id="projectServices" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -233,11 +201,9 @@
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
         <property name="contestServiceFacade" ref="contestServiceFacade"/>
         <property name="pipelineServiceFacade" ref="pipelineServiceFacade"/>
-        <property name="contestManager" ref="contestManager"/>
         <property name="adminServiceFacade" ref="adminServiceFacade"/>
         <property name="referenceDataBean" ref="referenceDataBean"/>
         <property name="userService" ref="userService"/>
-        <property name="studioService" ref="studioService"/>
         <property name="projectServices" ref="projectServices"/>
         <property name="specificationReviewService" ref="specificationReviewService"/>
         <property name="userPreferenceHome" ref="userPreferenceHome"/>
@@ -570,7 +536,6 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mappingResources">
             <list>
-                <value>/META-INF/mapping.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">

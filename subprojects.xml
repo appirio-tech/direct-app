@@ -22,8 +22,6 @@
         </versions>
     </project>
 
-
-
     <project
         name="auto_screening_management"
         svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/auto_screening_management"
@@ -135,37 +133,8 @@
     </project>
 
     <project
-        name="contest_and_submission_entities"
-        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/contest_and_submission_entities"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-
-    <project
         name="client_project_entities_dao"
         svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/client_project_entities_dao"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-
-    <project
-        name="studio_contest_manager"
-        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/studio_contest_manager"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-    <project
-        name="submission_manager"
-        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/submission_manager"
         buildfile="build.xml">
         <versions>
             <version name="TRUNK" path="branches/cockpit_trunk"/>
@@ -192,16 +161,6 @@
     </project>
 
     <project
-        name="studio_service"
-        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/studio_service"
-        buildfile="build.xml">
-        <versions>
-            <version name="TRUNK" path="branches/cockpit_trunk"/>
-            <version name="RELEASE" path="release"/>
-        </versions>
-    </project>
-
-        <project
         name="catalog_entities"
         svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/catalog_entities"
         buildfile="build.xml">

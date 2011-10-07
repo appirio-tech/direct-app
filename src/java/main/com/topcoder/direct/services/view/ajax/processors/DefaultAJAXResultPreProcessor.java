@@ -6,7 +6,6 @@ package com.topcoder.direct.services.view.ajax.processors;
 import java.util.List;
 
 import com.topcoder.direct.services.view.ajax.AJAXResultPreProcessor;
-import com.topcoder.service.studio.UploadedDocument;
 
 /**
  * <p>
@@ -36,8 +35,7 @@ public class DefaultAJAXResultPreProcessor implements AJAXResultPreProcessor {
     /**
      * <p>
      * Pre-process the given object. In this implementation, it will treat some specific object types and
-     * process some data pruning from these elements. Currently this will modify the following object types:
-     * UploadedDocument and List of UploadedDocument.
+     * process some data pruning from these elements. No modifications will be made in this implementation.
      * </p>
      *
      * @param data
@@ -45,15 +43,6 @@ public class DefaultAJAXResultPreProcessor implements AJAXResultPreProcessor {
      * @return The pre-processed object.
      */
     public Object preProcessData(Object data) {
-        if (data instanceof List<?>) {
-            for (Object obj : (List<?>) data) {
-                if (obj instanceof UploadedDocument) {
-                    ((UploadedDocument) obj).setFile(null);
-                }
-            }
-        } else if (data instanceof UploadedDocument) {
-            ((UploadedDocument) data).setFile(null);
-        }
         return data;
     }
 }

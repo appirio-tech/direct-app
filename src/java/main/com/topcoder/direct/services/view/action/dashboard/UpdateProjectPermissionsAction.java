@@ -7,14 +7,12 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.ajax.DirectJsonBeanProcessorMatcher;
 import com.topcoder.direct.services.view.ajax.SoftwareCompetitionBeanProcessor;
-import com.topcoder.direct.services.view.ajax.StudioCompetitionBeanProcessor;
 import com.topcoder.direct.services.view.ajax.XMLGregorianCalendarBeanProcessor;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.permission.ProjectPermission;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.project.StudioCompetition;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

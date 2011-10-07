@@ -10,7 +10,6 @@ import java.util.GregorianCalendar;
 
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.service.project.StudioCompetition;
 import com.topcoder.service.review.specification.SpecificationReviewService;
 import com.topcoder.util.errorhandling.ExceptionUtils;
 

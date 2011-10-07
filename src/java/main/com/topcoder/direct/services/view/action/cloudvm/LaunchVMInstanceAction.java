@@ -90,10 +90,8 @@ public class LaunchVMInstanceAction extends AbstractVMAction {
         if (!errors.containsKey("contestId")) {
             Object result = null;
             try {
-                if (instance.getContestTypeId() == softwareContestTypeId) {
+                if (instance.getContestTypeId() == softwareContestTypeId || instance.getContestTypeId() == studioContestTypeId) {
                     result = contestServiceFacade.getSoftwareContestByProjectId(getUser(), instance.getContestId());
-                } else if (instance.getContestTypeId() == studioContestTypeId) {
-                    result = contestServiceFacade.getContest(getUser(), instance.getContestId());
                 } else if (instance.getContestTypeId() == bugRaceContestTypeId) {
                     result = 1;
                     // no check for bug races
