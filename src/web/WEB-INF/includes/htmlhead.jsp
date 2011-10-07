@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="/css/jScrollPane.css" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/jquery-ui-1.7.2.custom.css" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/modal.css" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/datepicker.css" media="all" type="text/css"/>
 
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie6.css" />

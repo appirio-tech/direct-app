@@ -19,7 +19,6 @@
     <script type="text/javascript" src="/scripts/dashboard-participation-report.js"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <link rel="stylesheet" href="/css/dashboard-enterprise.css" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/datepicker.css" media="all" type="text/css"/>
 </head>
 
 <body id="page">
@@ -42,9 +41,9 @@
     <jsp:param name="reportTitle" value="Participation Metrics Report"/>
 </jsp:include>
 
-<!-- .pipelineFilter --> 
+<!-- .pipelineFilter -->
 <div class="pipelineFilter" id="participationMetricsReports">
-    
+
     <!-- .filterTitle -->
     <div class="filterTitle">
         <div class="filterTitleRight">
@@ -55,7 +54,7 @@
         </div><!-- End .filterTitleRight -->
     </div>
     <!-- End .filterTitle -->
-    
+
     <!-- .filterContainer -->
     <s:form method="get" action="dashboardGetParticipationReport" namespace="/"
             id="dashboardParticipationReportForm">
@@ -69,9 +68,9 @@
                         name="formData.customerId"/>
                 </div>
                 <!-- end .filterCustomerName -->
-                
+
                 <div id="datefilter">
-                
+
                     <div class="filterRow firstFilterRow">
                         <label for="startDate">Start:</label>
                         <s:textfield name="formData.startDate" readonly="true"
@@ -79,7 +78,7 @@
                                          cssClass="text date-pick fLeft dp-applied"/>
                         <div class="clearFix"></div>
                     </div><!-- end .filterRow -->
-                    
+
                     <div class="filterRow">
                         <label for="endDate">End:</label>
                         <s:textfield name="formData.endDate" readonly="true"
@@ -91,11 +90,11 @@
                         </s:if>
                         <div class="clearFix"></div>
                     </div><!-- end .filterRow -->
-                    
+
                 </div>
                 <!-- end .datefilter -->
             </div>
-                
+
             <div class="filterColumnPart">
                 <!-- .filterBillingAccount -->
                 <div class="filterBillingAccount">
@@ -103,7 +102,7 @@
                     <s:select list="viewData.clientBillingProjects"
                                       id="formData.billingAccountId"
                                       name="formData.billingAccountId"/>
-        
+
                 </div>
                 <!-- end .filterBillingAccount -->
                 <div class="multiSelectArea">
@@ -119,7 +118,7 @@
             </div>
             <div class="clearFix"></div>
         </div>
-        
+
         <div class="filterColumnThird">
             <!-- .filterProject -->
             <div class="filterProject2">
@@ -128,7 +127,7 @@
                               id="formData.projectId"/>
             </div>
             <!-- end .filterProject -->
-            
+
             <div class="multiSelectArea">
                 <div class="multiSelectAreaInner">
                     <label class="multiSelectAreaTitle">Contest Type:</label>
@@ -140,19 +139,19 @@
             </div>
             <!-- end .multiSelectArea -->
             <div class="clearFix"></div>
-            
+
         </div>
-        
+
         <div class="applyButtonBox">
             <a class="button6 applyButton" href="javascript:;" id="participationReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
             <div class="clearFix"></div>
         </div>
         <!-- end .applyButtonBox -->
-        
+
     </div>
     </s:form>
     <!-- End .filterContainer -->
-    
+
 </div>
 <!-- End .pipelineFilter -->
 
@@ -168,12 +167,12 @@
                 <span>Basic Metrics</span>
             </th>
         </tr>
-    
+
         <tr class="subTheadRow">
             <th class="tableColumn">Projects</th>
             <th class="tableColumn">Contests</th>
             <th class="tableColumn">Copilots</th>
-    
+
         </tr>
     </thead>
     <tbody>
@@ -184,7 +183,7 @@
         </tr>
     </tbody>
 </table>
-   
+
 <table id="participationMetricsReportAggregationArea" class="pipelineStats" cellpadding="0" cellspacing="0">
     <colgroup>
         <col width="21%" />
@@ -215,7 +214,7 @@
                 </div>
             </th>
         </tr>
-    
+
         <tr class="projectAggregationCostReport scData subTheadRow">
             <th class="tableColumn">Project</th>
             <th class="tableColumn">Total<br />Registrations</th>

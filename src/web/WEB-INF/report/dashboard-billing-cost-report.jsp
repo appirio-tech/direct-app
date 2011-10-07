@@ -19,7 +19,6 @@
     <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js"></script>
     <link rel="stylesheet" href="/css/dashboard-enterprise.css" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/datepicker.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.multiSelect.css" media="all" type="text/css"/>
 
 </head>
@@ -50,7 +49,7 @@
             id="dashboardBillingCostReportForm">
         <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
         <div id="costReportFilters" class="filterLinkArea">
-        	<div id="costReportFilterShowControl">
+          <div id="costReportFilterShowControl">
             <a class="fiterButton" href="javascript:">Filters</a>
           </div>
 

@@ -23,9 +23,8 @@
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-cost-report.js"></script>
-	<script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
+  <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
     <link rel="stylesheet" href="/css/dashboard-enterprise.css" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/datepicker.css" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.multiSelect.css" media="all" type="text/css"/>
 
 </head>
@@ -57,13 +56,13 @@
         <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
         <s:hidden name="formData.showBreakdown" id="formDataShowBreakdown" value="false"/>
         <div id="costReportFilters" class="filterLinkArea">
-        	<div id="costReportFilterShowControl">
+          <div id="costReportFilterShowControl">
             <a class="fiterButton" href="javascript:">Filters</a>
           </div>
 
             <div class="filterArea">
 
-				<div class="filterCustomName" id="customerNameFilter">
+        <div class="filterCustomName" id="customerNameFilter">
                     <span class="label">Customer Name</span>
                     <s:select list="viewData.clientAccounts" id="formData.customerIds"
                         name="formData.customerIds" size="1"/>
