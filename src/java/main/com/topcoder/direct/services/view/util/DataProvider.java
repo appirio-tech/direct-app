@@ -943,8 +943,11 @@ public class DataProvider {
      * @return true if matched otherwise false
      */
     private static boolean isMatched(CommonProjectContestData contest, String searchFor, Date begin, Date end) {
+
+        String searchForLower = searchFor.toLowerCase();
+
         if (!StringUtils.isBlank(searchFor) && contest.getCname() != null
-            && !contest.getCname().toLowerCase().contains(searchFor)) {
+            && !contest.getCname().toLowerCase().contains(searchForLower)) {
             return false;
         }
 

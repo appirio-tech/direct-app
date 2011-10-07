@@ -740,6 +740,7 @@ $(document).ready(function() {
 function directSearch() {
 	$('#formDataExcel').val("false");
 	document.DashboardSearchForm.submit();
+    modalPreloader();
 }    
 
 /**
