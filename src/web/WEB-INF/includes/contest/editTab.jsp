@@ -559,7 +559,6 @@
                    <div class="clear"></div>
                </div>
            </div> <!-- end .stockArts -->
-           <c:if test="${admin}">
            <div class="submissionVisibility">
                <h3><span class="icon">Submissions Visibility</span><a class="helpIcon" href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Submissions+Visibility" target="_blank"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInnerSa">
@@ -581,7 +580,6 @@
                    <div class="clear"></div>
                </div>
            </div> <!-- end .maxSubmissions -->
-           </c:if>
         </div> <!-- End .launchContestOut -->
                     
         <p class="save">                
