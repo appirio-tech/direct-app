@@ -481,7 +481,6 @@
                                 <br /><br />
                                 <span class="small_info_spec" id="rContestStockArt"></span>
                                 </p>
-                                <c:if test="${admin}">
                 <div class="bottom_spec"></div>
 
                                 <p class="det_font">
@@ -497,7 +496,6 @@
                                 <br /><br />
                                 <span class="small_info_spec" id="rMaxSubmissions"></span>
                                 </p>
-                                </c:if>
                     </div><!-- End .detailsContent -->                                              
 </div><!-- End .details -->
 <!-- END Spec Display -->

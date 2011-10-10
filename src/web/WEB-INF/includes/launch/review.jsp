@@ -149,7 +149,7 @@
     </div>    
 </div>
 <!-- end .stockArts -->
-<c:if test="${admin}">
+
 <!-- Submission Visibility -->
 <div class="submissionVisibility">
     <h3>Submission Visibility:</h3>
@@ -173,7 +173,7 @@
     </div>
 </div>
 <!-- end .submissionVisibility -->
-</c:if>
+
 <div class="buttonBox"> 
     <a href="javascript:continueReview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
     <a href="javascript:saveAsDraftReview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>

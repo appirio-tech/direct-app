@@ -150,7 +150,6 @@
         
     </div>
     <!-- end .stockArts -->
-    <c:if test="${admin}">
     <div class="submissionVisibility">
                <h3><span class="icon">Submissions Visibility</span><a class="helpIcon" href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Submissions+Visibility" target="_blank"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInnerSa">
@@ -172,7 +171,6 @@
            <div class="clear"></div>
        </div>
    </div> <!-- end .maxSubmissions -->
-   </c:if>
     <div class="buttonBox">
         <a href="javascript:continueOverview();" class="button6 contiune"><span class="left"><span class="right">CONTINUE</span></span></a>
         <a href="javascript:saveAsDraftOverview();" class="button6 draft"><span class="left"><span class="right">SAVE AS DRAFT</span></span></a>
