@@ -351,7 +351,7 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
             // set the actual total member cost, the 'active' and 'scheduled' contest does not have actual member cost
             //if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
                 row.getCell(12).setStringValue(moneyFormatter.format(costDetail.getActualTotalMemberCost()));
-            //}
+            
 
             // set the payment type
             row.getCell(13).setStringValue(costDetail.getPaymentType());
