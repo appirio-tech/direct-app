@@ -182,20 +182,35 @@
                                                         <fmt:formatDate value="${endTime}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
                                                     </td>                                                    
                                                     <td>
-                                                        <a href="contest/contestRegistrants.action?projectId=${contest.id}">
-                                                            <s:property value="registrantsNumber"/>
-                                                        </a>
+                                                        <s:if test="contestType.name == 'Copilot Posting'">
+                                                            <a href="copilot/listCopilotContestRegistrants.action?projectId=${contest.id}">
+                                                                <s:property value="registrantsNumber"/>
+                                                            </a>
+                                                        </s:if>
+                                                        <s:if test="contestType.name != 'Copilot Posting'">
+                                                            <a href="contest/contestRegistrants.action?projectId=${contest.id}">
+                                                                <s:property value="registrantsNumber"/>
+                                                            </a>
+                                                        </s:if>
+                                                       
                                                     </td>
                                                     <td>
-                                                        <s:if test="isStudio == true">
-                                                        <link:studioSubmissionsGrid contestId="${contest.id}">
+                                                        <s:if test="contestType.name == 'Copilot Posting'">
+                                                            <a href="copilot/listCopilotContestSubmissions.action?projectId=${contest.id}">
                                                                 <s:property value="submissionsNumber"/>
-                                                        </link:studioSubmissionsGrid>
+                                                            </a>
                                                         </s:if>
-                                                        <s:if test="isStudio == false">
-                                                        <link:softwareSubmissionsList contestId="${contest.id}">
-                                                                <s:property value="submissionsNumber"/>
-                                                        </link:softwareSubmissionsList>
+                                                        <s:if test="contestType.name != 'Copilot Posting'">
+                                                            <s:if test="isStudio == true">
+                                                            <link:studioSubmissionsGrid contestId="${contest.id}">
+                                                                    <s:property value="submissionsNumber"/>
+                                                            </link:studioSubmissionsGrid>
+                                                            </s:if>
+                                                            <s:if test="isStudio == false">
+                                                            <link:softwareSubmissionsList contestId="${contest.id}">
+                                                                    <s:property value="submissionsNumber"/>
+                                                            </link:softwareSubmissionsList>
+                                                            </s:if>
                                                         </s:if>
                                                     </td>
                                                     <td>
