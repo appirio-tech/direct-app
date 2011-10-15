@@ -1165,7 +1165,7 @@
 		horizontalPosition	: $.dpConst.POS_LEFT,
 		verticalOffset		: 0,
 		horizontalOffset	: 0,
-		hoverClass			: 'dp-hover'
+		hoverClass			: 'dp-hover' 
 	};
 
 	function _getController(ele)
@@ -1189,6 +1189,11 @@
 				$(els[i].ele)._dpDestroy();
 			}
 		});
-		
+	
+	
 	
 })(jQuery);
+
+	//override datepicker function 
+	//Date.format = 'mmmm/dd/yyyy';	
+	Date.firstDayOfWeek = 0;
