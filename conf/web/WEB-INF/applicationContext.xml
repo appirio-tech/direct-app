@@ -621,6 +621,12 @@
         <property name="fileUpload" ref="fileUpload"/>
     </bean>
 
+    <bean id="downloadFinalFix"
+          class="com.topcoder.direct.services.view.action.contest.DownloadFinalFixAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="fileUpload" ref="fileUpload"/>
+    </bean>
+
      <bean id="updateUserPreferencesAction"
       class="com.topcoder.direct.services.view.action.notification.UpdateUserPreferencesAction"
       scope="prototype" parent="baseDirectStrutsAction">

@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.contest;
 
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
@@ -21,26 +22,26 @@ import java.util.List;
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a list of submissions for
  * <code>Software</code> contest.</p>
- *
+ * <p/>
  * <p>
  * Version 1.0.1 (Direct Release 6 Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Updated {@link #executeAction()} method to use appropriate method for calculating contest stats.</li>
- *   </ol>
+ * <ol>
+ * <li>Updated {@link #executeAction()} method to use appropriate method for calculating contest stats.</li>
+ * </ol>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.0.2 (Direct Manage Copilot Postings Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Updated {@link #executeAction()} method to user appropriate method for calculating contest stats.</li>
- *   </ol>
+ * <ol>
+ * <li>Updated {@link #executeAction()} method to user appropriate method for calculating contest stats.</li>
+ * </ol>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.0.3 (TC Direct Contest Dashboard Update Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Updated {@link #executeAction()} method to set contest dashboard data.</li>
- *   </ol>
+ * <ol>
+ * <li>Updated {@link #executeAction()} method to set contest dashboard data.</li>
+ * </ol>
  * </p>
  *
  * @author TCSDEVELOPER, TCSASSEMBLER
@@ -63,6 +64,16 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      * Submissions</code> view.</p>
      */
     private SoftwareContestSubmissionsDTO viewData;
+
+    private List<ContestFinalFixDTO> finalFixes;
+
+    public List<ContestFinalFixDTO> getFinalFixes() {
+        return finalFixes;
+    }
+
+    public void setFinalFixes(List<ContestFinalFixDTO> finalFixes) {
+        this.finalFixes = finalFixes;
+    }
 
     /**
      * <p>Constructs new <code>SoftwareContestSubmissionsAction</code> instance. This implementation does nothing.</p>
@@ -135,12 +146,15 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
         // Set current project context based on selected contest
         getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
-        
+
         // set whether to show spec review
         viewData.setShowSpecReview(getSpecificationReviewService()
                 .getSpecificationReview(currentUser, getProjectId()) != null);
-        
+
         DirectUtils.setDashboardData(currentUser, getProjectId(), viewData,
                 getContestServiceFacade(), true);
+
+        // add final fixes of the contest if exist
+        setFinalFixes(DataProvider.getContestFinalFixes(getProjectId()));
     }
 }

@@ -55,7 +55,72 @@
                                     <div class="container2Right">
                                         <div class="container2BottomClear">
                                             <div class="containerNoPadding">
-                                                <s:set var="firstPlaceWinner" value="viewData.firstPlaceWinner" scope="page"/>
+
+                                            <s:if test="finalFixes.size > 0">
+
+                                                <h2>Final Fixes</h2>
+                                                <table class="softwareStats" cellpadding="0" cellspacing="0">
+                                                    <colgroup>
+                                                        <col width="10%"/>
+                                                        <col width="20%"/>
+                                                        <col width="15%"/>
+                                                        <col width="15%"/>
+                                                        <col width="15%"/>
+                                                        <col width="15%"/>
+                                                        <col width="10%"/>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th rowspan="2"><span class="icoTHDownload"></span></th>
+                                                        <th rowspan="2" class="left">Handle</th>
+                                                        <th rowspan="2" class="left">Version</th>
+                                                        <th rowspan="2">Final Fix ID</th>
+                                                        <th rowspan="2">Final Fix Date</th>
+                                                        <th rowspan="2">Status</th>
+                                                        <th rowspan="2">Download</th>
+
+                                                    </tr>
+
+                                                    </thead>
+                                                    <tbody>
+                                                       <s:iterator value="finalFixes" status="rowStatus">
+                                                           <tr>
+                                                               <td>
+                                                                <link:downloadFinalFix contestId="${contestId}"
+                                                                    finalFix="${finalFixSub}" version="${versionNumber}" styleClass="icoZip normal"></link:downloadFinalFix>
+                                                                </td>
+                                                                <td class="left">
+                                                                <link:user userId="${finalFixerUserId}"
+                                                                           handle="${finalFixerHandle}/>"
+                                                                           styleClass="handle"/>
+                                                                </td>
+                                                               <td class="left">
+                                                                  Version <s:property value="versionNumber"/>
+                                                                </td>
+                                                                <td>
+                                                                  <s:property value="uploadId"/>
+                                                                </td>
+                                                               <td>
+                                                                   <s:date name="finalFixDate" format="MM.dd.yyyy" />
+                                                               </td>
+                                                               <td>
+                                                                  <s:if test='approved == false && reviewed == true'>Rejected</s:if><s:else></s:else>
+                                                                </td>
+                                                               <td>
+                                                                    <link:downloadFinalFix contestId="<s:property value='contestId'/>"
+                                                                    finalFix="<s:property value='finalFixSub'/>" styleClass="icoZip normal"></link:downloadFinalFix>
+                                                                </td>
+
+                                                           </tr>
+                                                       </s:iterator>
+                                                    </tbody>
+
+                                                </table>
+
+                                            </s:if>
+
+
+                                            <s:set var="firstPlaceWinner" value="viewData.firstPlaceWinner" scope="page"/>
                                                 <s:set var="secondPlaceWinner" value="viewData.secondPlaceWinner" scope="page"/>
                                                 <c:if test="${firstPlaceWinner != null}">
                                                     <div id="winnerPanel">

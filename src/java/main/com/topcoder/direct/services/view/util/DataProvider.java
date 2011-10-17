@@ -1602,6 +1602,59 @@ public class DataProvider {
         dto.setSubmissions(submissions);
     }
 
+
+    /**
+     *
+     *
+     * @param contestId
+     * @return
+     * @throws Exception
+     */
+    public static List<ContestFinalFixDTO> getContestFinalFixes(long contestId) throws Exception {
+        final String queryName = "direct_contest_final_fixes";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("pj", String.valueOf(contestId));
+
+        final ResultSetContainer results
+            = dataAccessor.getData(request).get("direct_contest_final_fixes");
+
+        List<ContestFinalFixDTO> finalFixes = new ArrayList<ContestFinalFixDTO>();
+
+        int count = 0;
+
+        for (ResultSetContainer.ResultSetRow finalFixRow : results) {
+            ContestFinalFixDTO finalFix = new ContestFinalFixDTO();
+            finalFix.setContestId(contestId);
+            finalFix.setFinalFixDate(finalFixRow.getTimestampItem("final_fix_upload_time"));
+            finalFix.setFinalFixerHandle(finalFixRow.getStringItem("final_fixer_handle"));
+            finalFix.setFinalFixerUserId(Long.valueOf(finalFixRow.getStringItem("final_fixer_user_id")));
+            finalFix.setUploadId(finalFixRow.getLongItem("upload_id"));
+            count++;
+
+            // set old ones reviewed to true, approved to false because they are rejected
+            if (count > 1) {
+                finalFix.setReviewed(true);
+                finalFix.setApproved(false);
+            }
+
+            finalFix.setFinalFixSub(finalFixRow.getStringItem("upload_parameter"));
+
+            finalFixes.add(finalFix);
+        }
+
+        int versionNumber = finalFixes.size();
+
+        // insert version number
+        for (ContestFinalFixDTO ff : finalFixes) {
+            ff.setVersionNumber(versionNumber);
+            versionNumber--;
+        }
+
+        return finalFixes;
+    }
+
     /**
      * <p>Gets the enterprise level statistics for projects assigned to current user.</p>
      *
