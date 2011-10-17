@@ -85,9 +85,11 @@
                                                     <tbody>
                                                        <s:iterator value="finalFixes" status="rowStatus">
                                                            <tr>
+                                                               <s:if test='#rowStatus.count == 1'><s:set var="iconStyle" value="'gold'" scope="page"/></s:if>
+                                                               <s:else><s:set var="iconStyle" value="'normal'" scope="page"/></s:else>
                                                                <td>
                                                                 <link:downloadFinalFix contestId="${contestId}"
-                                                                    finalFix="${finalFixSub}" version="${versionNumber}" styleClass="icoZip normal"></link:downloadFinalFix>
+                                                                    finalFix="${finalFixSub}" version="${versionNumber}" styleClass="icoZip ${iconStyle}"></link:downloadFinalFix>
                                                                 </td>
                                                                 <td class="left">
                                                                 <link:user userId="${finalFixerUserId}"
@@ -107,8 +109,8 @@
                                                                   <s:if test='approved == false && reviewed == true'>Rejected</s:if><s:else></s:else>
                                                                 </td>
                                                                <td>
-                                                                    <link:downloadFinalFix contestId="<s:property value='contestId'/>"
-                                                                    finalFix="<s:property value='finalFixSub'/>" styleClass="icoZip normal"></link:downloadFinalFix>
+                                                                       <link:downloadFinalFix contestId="${contestId}"
+                                                                    finalFix="${finalFixSub}" version="${versionNumber}" styleClass="icoZip ${iconStyle}"></link:downloadFinalFix>
                                                                 </td>
 
                                                            </tr>
