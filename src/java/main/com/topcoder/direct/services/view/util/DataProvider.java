@@ -3340,7 +3340,7 @@ public class DataProvider {
         // create an empty map first to store the result data
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
 
-        if (contestId > 0) {
+        if (contestId <= 0) {
 
             if ((projectIds == null) || (projectIds.length == 0)) {
                 return data;
@@ -3388,17 +3388,17 @@ public class DataProvider {
 
         String clientIdsList = "-1";
         if (clientIds != null && clientIds.length > 0) {
-            concatenate(clientIds, ", ");
+            clientIdsList = concatenate(clientIds, ", ");
         }
 
         String billingAccountIdsList = "-1";
         if (billingAccountIds != null && billingAccountIds.length > 0) {
-            concatenate(billingAccountIds, ", ");
+            billingAccountIdsList = concatenate(billingAccountIds, ", ");
         }
 
         String projectIDsList = "-1";
         if(projectIds != null && projectIds.length > 0) {
-            concatenate(projectIds, ", ");
+            projectIDsList = concatenate(projectIds, ", ");
         }
 
         // date format to prepare date for query input
