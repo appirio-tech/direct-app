@@ -376,7 +376,7 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
             return;
         }
 
-        if (!getViewData().isShowJustForm()) {
+        if (!getViewData().isShowJustForm() && form.getContestId() != null && form.getContestId().trim().length() > 0) {
 
             try {
                 contestId = Long.parseLong(form.getContestId());
