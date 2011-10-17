@@ -62,6 +62,8 @@ public class DashboardCostReportForm implements Serializable {
      */
     private boolean excel;
 
+    private String contestId;
+
     /**
      * <p>A <code>boolean</code> providing the flag indicating whether the cost break down data should display in
      * the cost report.</p>
@@ -239,5 +241,13 @@ public class DashboardCostReportForm implements Serializable {
      */
     public void setShowBreakdown(boolean showBreakdown) {
         this.showBreakdown = showBreakdown;
+    }
+
+    public String getContestId() {
+        return contestId;
+    }
+
+    public void setContestId(String contestId) {
+        this.contestId = contestId;
     }
 }

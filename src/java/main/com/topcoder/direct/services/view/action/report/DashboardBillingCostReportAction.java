@@ -200,6 +200,9 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
         long[] customerIds = form.getCustomerIds();
         long[] statusIds = form.getStatusIds();
         long[] paymentTypeIds = form.getPaymentTypeIds();
+
+        long contestId = 0;
+
         Date startDate = DirectUtils.getDate(form.getStartDate());
         Date endDate = DirectUtils.getDate(form.getEndDate());
 
@@ -373,6 +376,17 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
             return;
         }
 
+        if (!getViewData().isShowJustForm()) {
+
+            try {
+                contestId = Long.parseLong(form.getContestId());
+            } catch (Exception ex) {
+                addActionError("Contest Id is not valid");
+                return;
+            }
+        }
+
+
         // parse out studio categories ids
         List<Long> softwareProjectCategoriesList = new ArrayList<Long>();
         List<Long> studioProjectCategoriesList = new ArrayList<Long>();
@@ -393,7 +407,7 @@ public class DashboardBillingCostReportAction extends BaseDirectStrutsAction {
             Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
                     (projectIds,
                     softwareProjectCategories, studioProjectCategories, paymentTypeIds,
-                    customerIds, billingAccountIds, statusIds, startDate, endDate,
+                    customerIds, billingAccountIds, statusIds, contestId, startDate, endDate,
                     BILLING_COST_REPORT_CONTEST_STATUS_IDS, BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
 
             List<BillingCostReportEntryDTO> viewData = new ArrayList<BillingCostReportEntryDTO>();

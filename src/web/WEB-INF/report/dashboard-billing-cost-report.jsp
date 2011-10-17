@@ -93,6 +93,14 @@
                                       name="formData.statusIds" size="3"/>
                         </div>
                     </div>
+
+                    <div class="timeDimension">
+                        <div class="columns contestType">
+                            <strong>Contest ID</strong><br/>
+                            <s:textfield id="formData.contestId" name="formData.contestId"/>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="spacer"></div>
                 <div class="secondRow">

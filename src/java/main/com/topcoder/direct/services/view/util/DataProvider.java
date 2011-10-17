@@ -3321,6 +3321,7 @@ public class DataProvider {
      * @param clientIds the client ids.
      * @param billingAccountIds the billing accounts ids.
      * @param projectStatusIds the project status ids.
+     * @param contestId the contest id
      * @param startDate the start date.
      * @param endDate the end date.
      * @param statusMapping the mapping of all the contest status.
@@ -3333,35 +3334,39 @@ public class DataProvider {
                                                                                            long[] projectCategoryIds,
                                                                                            long[] studioProjectCategoryIds,
                                                                                            long[] paymentTypeIds,
-                                                                                           long[] clientIds, long[] billingAccountIds, long[] projectStatusIds, Date startDate, Date endDate,
+                                                                                           long[] clientIds, long[] billingAccountIds, long[] projectStatusIds,
+                                                                                           long contestId, Date startDate, Date endDate,
                                                                                            Map<String, Long> statusMapping, Map<String, Long> paymentTypesMapping) throws Exception {
         // create an empty map first to store the result data
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
 
+        if (contestId > 0) {
 
-        if ((projectIds == null) || (projectIds.length == 0)) {
-            return data;
-        }
-        if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
-            return data;
-        }
+            if ((projectIds == null) || (projectIds.length == 0)) {
+                return data;
+            }
+            if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
+                return data;
+            }
 
-        if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
-            return data;
-        }
+            if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
+                return data;
+            }
 
-        if (paymentTypeIds == null || paymentTypeIds.length == 0) {
-            return data;
-        }
+            if (paymentTypeIds == null || paymentTypeIds.length == 0) {
+                return data;
+            }
 
-        if ((clientIds == null) || (clientIds.length == 0)) {
-            return data;
-        }
-        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
-            return data;
-        }
-        if (projectStatusIds == null || (projectStatusIds.length == 0)) {
-            return data;
+            if ((clientIds == null) || (clientIds.length == 0)) {
+                return data;
+            }
+            if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
+                return data;
+            }
+            if (projectStatusIds == null || (projectStatusIds.length == 0)) {
+                return data;
+            }
+
         }
 
         GregorianCalendar calendar = new GregorianCalendar();
@@ -3381,9 +3386,20 @@ public class DataProvider {
             studioProjectCategoryIdsList = concatenate(studioProjectCategoryIds, ", ");
         }
 
-        String clientIdsList = concatenate(clientIds, ", ");
-        String billingAccountIdsList = concatenate(billingAccountIds, ", ");
-        String projectIDsList = concatenate(projectIds, ", ");
+        String clientIdsList = "-1";
+        if (clientIds != null && clientIds.length > 0) {
+            concatenate(clientIds, ", ");
+        }
+
+        String billingAccountIdsList = "-1";
+        if (billingAccountIds != null && billingAccountIds.length > 0) {
+            concatenate(billingAccountIds, ", ");
+        }
+
+        String projectIDsList = "-1";
+        if(projectIds != null && projectIds.length > 0) {
+            concatenate(projectIds, ", ");
+        }
 
         // date format to prepare date for query input
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -3392,22 +3408,31 @@ public class DataProvider {
 
         String queryName = "dashboard_billing_cost_report";
 
-        if (projectIds[0] != 0) {
+        if(contestId > 0) {
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+            request.setProperty("pj", String.valueOf(contestId));
+
+        } else if (projectIds != null && projectIds[0] != 0) {
 
             request.setProperty("tcdirectid", projectIDsList);
             request.setProperty("billingaccountid", "0");
             request.setProperty("clientid", "0");
+            request.setProperty("pj", "0");
 
-        } else if (billingAccountIds[0] != 0) {
+        } else if (billingAccountIds != null && billingAccountIds[0] != 0) {
 
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", billingAccountIdsList);
             request.setProperty("clientid", "0");
+            request.setProperty("pj", "0");
 
-        } else if (clientIds[0] >= 0) {
+        } else if (clientIds != null && clientIds[0] >= 0) {
 
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", "0");
+            request.setProperty("pj", "0");
 
             if(clientIds[0] == 0) {
                 request.setProperty("clientid", "0");
@@ -3420,8 +3445,15 @@ public class DataProvider {
         }
 
         request.setContentHandle(queryName);
-        request.setProperty("sdt", dateFormatter.format(startDate));
-        request.setProperty("edt", dateFormatter.format(endDate));
+
+        if (contestId > 0) {
+            request.setProperty("sdt", dateFormatter.format(new GregorianCalendar(1900, 1, 1).getTime()));
+            request.setProperty("edt", dateFormatter.format(new GregorianCalendar(9999, 1, 1).getTime()));
+        } else {
+            request.setProperty("sdt", dateFormatter.format(startDate));
+            request.setProperty("edt", dateFormatter.format(endDate));
+        }
+
         request.setProperty("pcids", projectCategoryIDsList);
         request.setProperty("scids", studioProjectCategoryIdsList);
 
