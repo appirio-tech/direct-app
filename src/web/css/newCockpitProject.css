@@ -1300,6 +1300,13 @@ a{
 				padding:3px;
 				border:#a8abad solid 1px;
 				}
+            .stepSecond .projectItem .projectContainer .comingSoon{
+				width:262px;
+				margin:0 auto;
+                margin-top: -12px;
+				padding:3px;
+				border:none;
+				}
 				
 			/* table */
 			.stepSecond .projectItem .projectContainer table{
@@ -1758,13 +1765,16 @@ a{
                     }
                         .stepSixth .projectOverView .bottomLine p{
                             padding:4px 0 0;
-                            font-size:11px;
-                            line-height:1em;
+                            font-size:14px;
+							line-height:24px;
                             width:auto;
+							clear:both;
+							margin-left:28px;
                         }
                         .stepSixth .projectOverView .bottomLine a.button6{
-                             float:right;
+                             float:left;
                              margin:0;
+							 margin-left:28px;
                         }
                             .stepSixth .projectOverView .bottomLine a.button6 span.right{
                                 padding:5px 13px 0;
@@ -2119,9 +2129,11 @@ a{
          #gamePlanBigModal .buttonArea{
             text-align:center;
          }
-             #gamePlanBigModal a.button6{
+             #gamePlanBigModal .buttonArea a.button6{
                 float:none;
                 display:inline-block;
+                marigni:0px;
+                width:auto;
              }
 			
 	/* addUserModal */

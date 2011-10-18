@@ -29,6 +29,25 @@
             </div>
             <!-- End .topBar -->
 
+            <!-- .noteMask -->
+            <div class="noteMask">
+                <dl>
+                    <dt>
+                        <strong>Note:</strong>
+                        <a href="javascript:void(0)">Hide</a>
+                    </dt>
+                    <dd>A project is a way to organize work in the TopCoder Platform. How you organize your projects is
+                        up to you. Keep in mind that you set permissions and see financials based on projects.
+                    </dd>
+                    <dd>Your project name and description will not be visible to members participating in the
+                        competition process. It is only visible to you, and anyone you give permission to during project creation or set via the
+                        Settings tab.
+                    </dd>
+                    <dd>After finish creating your new project, you will be able to add contests to this project to start.</dd>
+                </dl>
+            </div>
+            <!-- End .noteMask -->
+
             <!-- form -->
             <div class="form">
 
