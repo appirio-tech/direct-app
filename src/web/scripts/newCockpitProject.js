@@ -1220,8 +1220,6 @@ $(document).ready(function() {
 
             var userIdsMap = widgetResult.userIdsMap;
 
-            console.log(userIdsMap);
-
             $.each(copilotsData, function(index, value){
                 $("#selectionConfirmationModal .modalContainer dt").append('<dd><span>' + value.copilotHandle + '</span><a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr='
                     + userIdsMap[value.copilotProfileId] + '">View Copilot Profile</a></dd>');
