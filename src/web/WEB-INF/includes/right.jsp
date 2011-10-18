@@ -1,6 +1,6 @@
 <%--
   - Author: Blues, GreatKevin
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: The footer of the topcoder cockpit.
@@ -13,6 +13,9 @@
   - Version 1.2 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
   - 1) Add a new customer dropdown.
   - 2) updated the logic of showing project dropdown
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1) changes:
+  - 1) Change create a new project button to new one.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -34,7 +37,28 @@
     <!-- End .box -->
     <div class="box">
         <h2 class="title">My Projects</h2>
-        <a href="<s:url action="createProjectView" namespace="/"/>" class="button2">Create a New Project</a>
+        <!-- solve your problem -->
+        <div class="solveProblem">
+
+            <div class="inner">
+                <h3>We can solve your problem!</h3>
+
+                <p>We represents an entirely new way to get your things done. Click button below to start your
+                    project.</p>
+
+                <div class="startButtonBox">
+                    <a href="<s:url action="createNewProject" namespace="/"/>" class="button2">Start Your New Project Now</a>
+                </div>
+            </div>
+
+            <!-- corner -->
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+
+        </div>
+        <!-- End .solveProblem -->
 
         <div class="contestsContainer">
 

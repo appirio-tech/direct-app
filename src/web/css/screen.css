@@ -1790,15 +1790,20 @@ overflow: auto;
 			}
 
 	/* copilotManageModal */
-	#copilotManageModal{
+	#copilotManageModal {
 		width:660px;
 		display:none;
 		}
 
 		#copilotManageModal .addUserForm{
 			padding-top:30px;
-			padding-bottom:36px;
 			}
+        #copilotManageModal .errorMessage {
+            color: #ff0001;;
+            font-size: 12px;
+            line-height: 40px;
+            padding-left: 190px;
+        }
 
 			/* left */
 			#copilotManageModal .addUserForm .addUserLeft{
@@ -1920,6 +1925,11 @@ overflow: auto;
 					background:#c1c1c1;
 					}
 
+                #copilotManageModal.outLay .inner {
+                    background: none;
+                    margin: 0 0 0 0;
+                }
+
 				/* button */
 				#copilotManageModal .addUserForm .addItem{
 					width:34px;
@@ -1949,7 +1959,7 @@ overflow: auto;
 					background:url(../images/remove_tech_hover.png) no-repeat left top;
 					}
 
-				#copilotManageModal .buttonArea .button6{
+				#copilotManageModal .modalBody .buttonArea .button6{
 					width:100px;
 					float:left;
 					display:inline;
@@ -1957,11 +1967,11 @@ overflow: auto;
 					margin-right:40px;
 					}
 
-				#copilotManageModal .buttonArea .cancelButton{
+				#copilotManageModal .modalBody .buttonArea .cancelButton{
 					margin-left:0;
 					}
 
-					#copilotManageModal .buttonArea .button6 span.right{
+					#copilotManageModal .modalBody .buttonArea .button6 span.right{
 						padding:4px 0 0 0;
 						text-align:center;
 						}

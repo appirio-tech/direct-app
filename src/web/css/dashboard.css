@@ -22,6 +22,9 @@
  *
  * - (Release Assembly - TopCoder Cockpit Project Status Management) changes:
  * - Added the CSS styles for buttons and project status in show all projects page.
+ *
+ * - (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1) changes:
+ * - Add css styles for the new create project button in the right sidebar
  */
 
 BODY#page{
@@ -7335,3 +7338,83 @@ textarea#newProjectDescription {
      font-weight:bold;
      margin-right:0;
  }
+
+.solveProblem{
+	margin-right:10px;
+	position:relative;
+	}
+	
+	.solveProblem .inner{
+		padding:3px 10px;
+		border:#000000 solid 1px;
+		background:url(/images/problem_bg.png) repeat-x left top #d2d2d2;
+		}
+		
+	/* corner */
+	.solveProblem .corner{
+		width:5px;
+		height:5px;
+		overflow:hidden;
+		position:absolute;
+		background-image:url(/images/problem_corner.png);
+		background-repeat:no-repeat;
+		}
+		
+	.solveProblem .tl{
+		top:0px;
+		left:0;
+		background-position:0 0;
+		}
+		
+	.solveProblem .tr{
+		top:0px;
+		right:0;
+		background-position:-5px 0;
+		}
+		
+	.solveProblem .bl{
+		bottom:0px;
+		left:0;
+		background-position:0 -5px;
+		}
+		
+	.solveProblem .br{
+		bottom:0px;
+		right:0;
+		background-position:-5px -5px;
+		}
+		
+		.solveProblem .inner h3{
+			margin:0 3px;
+			font-size:16px;
+			color:#1a1a1a;
+			line-height:29px;
+			text-indent:4px;
+			background:url(/images/problem_line.png) repeat-x left bottom;
+			}
+			
+		.solveProblem .inner p{
+			width:225px;
+			margin:8px auto 10px auto;
+			font-size:11px;
+			color:#666666;
+			line-height:13px;
+			text-align:center;
+			}
+		
+		/* button */
+		.solveProblem .startButtonBox{
+			padding-bottom:10px;
+			}
+		
+		.solveProblem a.button2{
+			width:100%;
+			background:url(/images/problem-button.png) no-repeat left top;
+			}
+			
+		.solveProblem a.button2:hover{
+			background:url(/images/problem-button.png) no-repeat left -30px;
+			}
+
+
+

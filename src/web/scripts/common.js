@@ -324,6 +324,14 @@ function handleJsonResult(jsonResult, successCallBack, failureCallBack) {
    }
 }
 
+function handleJsonResult2(jsonResult, successCallBack, failureCallBack) {
+   if(jsonResult.result) {
+       successCallBack(jsonResult.result['return']);
+   } else {
+       failureCallBack(jsonResult.error.errorMessage);
+   }
+}
+
 /**
  * Functions to handle message/error messages.
  */

@@ -120,6 +120,7 @@ public class ProjectCopilotsWidgetAction extends BaseDirectStrutsAction {
             List<CopilotProfile> copilotProfiles = getCopilotProfileDAO().retrieveAll();
 
             Map<String, Object> otherCopilots = new HashMap<String, Object>();
+            Map<String, Object> userIdsMap = new HashMap<String, Object>();
 
             for(CopilotProfile cp : copilotProfiles) {
                 if(!projectCopilots.containsKey(String.valueOf(cp.getId()))) {
@@ -127,12 +128,13 @@ public class ProjectCopilotsWidgetAction extends BaseDirectStrutsAction {
                     if (cp.getStatus().getId() == 1L) {
                         // only add active copilots into the left list
                         otherCopilots.put(String.valueOf(cp.getId()), getUserService().getUserHandle(cp.getUserId()));
-
+                        userIdsMap.put(String.valueOf(cp.getId()), String.valueOf(cp.getUserId()));
                     }
                 }
             }
 
             result.put("allCopilots", otherCopilots);
+            result.put("userIdsMap", userIdsMap);
 
 
             setResult(result);

@@ -118,8 +118,18 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, TCSDEVELOPER, TCSASSEMBLER
- * @version 1.6
+ * <p>
+ * Version 1.6.1 - Release Assembly - TopCoder Cockpit Start A New Project Revamp R2 Change Note
+ * <ul>
+ * <li>
+ *     Change methods populateCompetition, getAssetDTOForNewSoftware, initializeCompetition so that
+ *     they can be used by subclass (action) which extends SaveDraftContestAction.
+ * </li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, Veve
+ * @version 1.6.1
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -554,7 +564,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @since TC Direct Replatforming Release 1
      */
     @SuppressWarnings("all")
-    private void populateCompetition(SoftwareCompetition softwareCompetition) throws ContestServiceException {
+    protected void populateCompetition(SoftwareCompetition softwareCompetition) throws ContestServiceException {
         AssetDTO assetDTO = softwareCompetition.getAssetDTO();
         if (assetDTO.getDetailedDescription() == null) {
             assetDTO.setDetailedDescription("NA");
@@ -641,7 +651,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @throws Exception
      *             if any error occurs
      */
-    private AssetDTO getAssetDTOForNewSoftware() throws Exception {
+    protected AssetDTO getAssetDTOForNewSoftware() throws Exception {
         if (selectedDesignId <= 0) {
             return assetDTO;
         } else {
@@ -669,7 +679,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @param softwareCompetition software competition
      * @since Direct Launch Software Contests Assembly
      */
-    private void initializeCompetition(SoftwareCompetition softwareCompetition) {
+    protected void initializeCompetition(SoftwareCompetition softwareCompetition) {
         // asset DTO
         AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
         if (assetDTOTemp.getVersionNumber() == null) {
