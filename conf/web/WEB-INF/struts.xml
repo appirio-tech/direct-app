@@ -164,6 +164,12 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
         </action>
+
+         <action name="createNewProject" class="com.topcoder.direct.services.view.action.ForwardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
+        </action>
+
         <action name="createProject" class="com.topcoder.direct.services.view.action.project.CreateProjectAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="redirectAction">
@@ -467,6 +473,13 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="createNewCockpitProjectAjax" class="com.topcoder.direct.services.view.action.CreateNewProjectAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
 
     </package>
 
