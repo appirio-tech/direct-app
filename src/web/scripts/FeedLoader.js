@@ -22,12 +22,36 @@ function loadFeed(rss, template, element, errorMessage) {
     try {
         var processor = new js.topcoder.rss.template.RSSProcessor(false, template);
 //        document.getElementById(element).innerHTML = (processor.transformRSSFeed(rss));
-        $("#" + element).html((processor.transformRSSFeed(rss)));
+
+         $.ajax({
+            url: rss,
+            dataType: "text",
+            beforeSend: function(xhr) {
+                $("#newsColumn").show();
+            },
+            success: function(data) {
+               $("#rssLoading").hide();
+
+                if(data.length > 0) {
+                    $("#" + element).html((processor.transformRSSText(data)));
+                } else {
+                    $("#" + element).html(errorMessage);
+                }
+
+
+            }
+        });
+
+
+        // $("#" + element).html((processor.transformRSSFeed(rss)));
     } catch (e) {
         document.getElementById(element).innerHTML = errorMessage;
         throw e;
     }
 }
+
+
+
 
 /**
  * <p>This method loads the three RSS feeds in the studio home page.</p>
@@ -38,12 +62,12 @@ function loadHomePageFeeds() {
 
     // NOTE: The following block is commented out for testing/review purposes only. It should be
     // uncommented when deploying to Production environment
-    loadFeed("https://www.topcoder.com/feed/", "/scripts/DirectNewsTemplate.txt", "newsColumn", 
+    loadFeed("https://www.topcoder.com/feed/", "/scripts/DirectNewsTemplate.txt", "newsColumn",
         "Error reading Direct News feed.");
 
     // NOTE: The following block is provided for testing/review purposes only. It should be
     // removed when deploying to Production environment 
-//    loadFeed("/scripts/mockDirectNews.xml", "/scripts/DirectNewsTemplate.txt", "newsColumn",
-//             "Error reading Direct News feed.");
+    // loadFeed("/scripts/mockDirectNews.xml", "/scripts/DirectNewsTemplate.txt", "newsColumn",
+       //      "Error reading Direct News feed.");
 
 }

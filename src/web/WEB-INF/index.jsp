@@ -204,7 +204,10 @@
 							<div class="area1content">
 							
 								<!-- this area will contain the news -->
-								<div class="newsColumn" id="newsColumn">
+								<div class="newsColumn hide" id="newsColumn">
+                                    <div id="rssLoading" style="padding-left:100px;padding-top:100px;">
+                                        <img src="/images/rss_loading.gif" alt="loading">
+                                    </div>
 								</div><!-- End .newsColumn -->
 								
 								<div class="statColumn">
