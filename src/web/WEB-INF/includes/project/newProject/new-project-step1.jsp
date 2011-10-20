@@ -62,7 +62,7 @@
 
                     <div class="clear"></div>
                     <p class="message">
-                        <span class="remaning"><span class="num">60</span> char remained.</span>
+                        <span class="remaning"><span class="num">60</span> characters remaining.</span>
                     </p>
 
                 </div>
