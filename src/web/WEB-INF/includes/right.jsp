@@ -41,7 +41,7 @@
         <div class="solveProblem">
 
             <div class="inner">
-                <h3>We can solve your problem!</h3>
+                <h3>We can help you!</h3>
 
                 <p>Click below to start working with the community.</p>
 
