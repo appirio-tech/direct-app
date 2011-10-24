@@ -75,7 +75,7 @@
                     <div class="info">
                         <span></span>
 
-                        <p>of our projects run more effectively with the help of copilots.</p>
+                        <p>our projects use copilots, which helps them run more effectively.</p>
                     </div>
                     <div class="selection hide">
                         <dl>
