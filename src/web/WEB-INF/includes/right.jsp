@@ -43,8 +43,7 @@
             <div class="inner">
                 <h3>We can solve your problem!</h3>
 
-                <p>We represents an entirely new way to get your things done. Click button below to start your
-                    project.</p>
+                <p>Click below to start working with the community.</p>
 
                 <div class="startButtonBox">
                     <a href="<s:url action="createNewProject" namespace="/"/>" class="button2">Start Your New Project Now</a>
