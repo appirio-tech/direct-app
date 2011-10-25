@@ -157,7 +157,7 @@ var projectCategoryArray = [
 {id:34,                                name:'Studio Other',             label:'Studio Other',                      typeId:3, typeName:'Studio', hasMulti:true},
 {id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
-{id:36,                                name:'Reporting',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:false}
+{id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:false}
 ];
 
 /**

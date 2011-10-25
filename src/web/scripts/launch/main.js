@@ -83,7 +83,8 @@ var swCurrentDocument = {};
 // It is added for edit handling where comDocument is handled differently
 var swDocuments = [];
 
-
+// represents project id of reporting contest type. 
+var REPORTING_ID = "36"
 /**
  * Configuration/General Set up
  */
@@ -1242,8 +1243,14 @@ function onFirstPlaceChange() {
    contestCost.firstPlaceCost = firstPlace;
    contestCost.secondPlaceCost = calculateSecondPlacePrize(contestCost.firstPlaceCost);
    contestCost.reviewBoardCost = calculateReviewCost(contestCost.firstPlaceCost,categoryId);
-   contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
-   contestCost.drCost = calculateDRPoint(contestCost.firstPlaceCost, contestCost.secondPlaceCost, contestCost.reliabilityBonusCost);
+   if (projectCategoryId != REPORTING_ID) 
+   {
+       contestCost.reliabilityBonusCost = calculateReliabilityPrize(contestCost.firstPlaceCost,contestCost.secondPlaceCost,categoryId);
+       contestCost.drCost = calculateDRPoint(contestCost.firstPlaceCost, contestCost.secondPlaceCost, contestCost.reliabilityBonusCost);
+   } else {
+       contestCost.reliabilityBonusCost = 0;
+       contestCost.drCost = 0;
+   }
    fillPrizes();
 }
 
@@ -1297,7 +1304,8 @@ function calculateReviewCost(firstPlacePrize, categoryId) {
                       || categoryId == getProjectCategoryIdByName('TESTSCENARIOS')
                       || categoryId == getProjectCategoryIdByName('RIACOMPONENT')
                       || categoryId == getProjectCategoryIdByName('RIABUILD')
-                      || categoryId == getProjectCategoryIdByName('UIPROTOTYPE')) {
+                      || categoryId == getProjectCategoryIdByName('UIPROTOTYPE')
+                      || categoryId == getProjectCategoryIdByName('REPORTING')) {
           // calculate as per application reviewer calculator logic.
           return getApplicationReviewCost(firstPlacePrize, STANDARD_SUBMISSION_COUNT, STANDARD_PASSED_SCREENING_COUNT);
       } else {
