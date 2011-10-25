@@ -36,7 +36,7 @@
         <a href="javascript:window.open('${tcdirect:getSubmissionPreviewImageURL(submissionId, 'full', artifactNum, pageContext.request)}' ,'Submission', 'width=' + screen.width + ', height=' + screen.height + ', fullscreen=yes');void(0);" class="thumbSingle">
             <span></span>
             <ui:studioSubmissionImage submissionId="${submissionId}" imageType="full"
-                                      artifactNum="${artifactNum}" width="659" height="478"
+                                      artifactNum="${artifactNum}" width="746" height="544"
                                       longdesc="${tcdirect:getSubmissionPreviewImageURL(submissionId, 'full', artifactNum, pageContext.request)}"/>
         </a>
     </div>
