@@ -164,7 +164,12 @@ public enum ContestType {
     /**
      * <p>A <code>ContestType</code> corresponding to <code>Content Creation</code> contest type.</p>
      */
-    CONTENT_CREATION("Content Creation", "c", 35);
+    CONTENT_CREATION("Content Creation", "c", 35),
+
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Content Creation</code> contest type.</p>
+     */
+    REPORTING("Reporting", "Rp", 36);
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the

@@ -49,6 +49,10 @@
         <copilotFee>600</copilotFee>
 	</contestType>
 
+	<contestType contestTypeId="36"><!-- Reporting -->
+        <copilotFee>600</copilotFee>
+	</contestType>
+
     <contestType contestTypeId="16"><!-- Banners/Icons -->
         <copilotFee>600</copilotFee>
     </contestType>
