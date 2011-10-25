@@ -7389,13 +7389,13 @@ textarea#newProjectDescription {
 			font-size:16px;
 			color:#1a1a1a;
 			line-height:29px;
-			text-indent:4px;
+			text-align:center;
 			background:url(/images/problem_line.png) repeat-x left bottom;
 			}
 			
 		.solveProblem .inner p{
-			width:225px;
-			margin:8px auto 10px auto;
+			width:240px;
+			margin:8px auto 10px -2px;
 			font-size:11px;
 			color:#666666;
 			line-height:13px;
