@@ -1196,4 +1196,4 @@
 
 	//override datepicker function 
 	//Date.format = 'mmmm/dd/yyyy';	
-	Date.firstDayOfWeek = 1;
+	Date.firstDayOfWeek = 0;
