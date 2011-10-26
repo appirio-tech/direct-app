@@ -100,6 +100,12 @@
                         <input type="text" readonly="readonly" class="text uploadInput">
                         <a href="javascript:;" class="draft button6"><span class="left"><span class="right">BROWSE</span></span></a>
                     </span>
+				</p>
+				<p>
+					<label>Description</label>
+                    <span>
+                        <input type="text" id="fileDescription" class="text" name="fileDescription"/>
+                    </span>
                     <a href="javascript:;" class="button6 uploadBtnRed"><span class="left"><span class="right">UPLOAD</span></span></a>
                     <a href="javascript:;" class="addButton"></a>
                     <a href="javascript:;" class="removeButton hide"></a>
@@ -115,9 +121,15 @@
                         <input type="text" readonly="readonly" class="text uploadInput">
                         <a href="javascript:;" class="draft button6"><span class="left"><span class="right">BROWSE</span></span></a>
                     </span>
+				</p>
+				<p>
+					<label>Description</label>
+                    <span>
+                        <input type="text" id="fileDescription" class="text" name="fileDescription"/>
+                    </span>
                     <a href="javascript:;" class="button6 uploadBtnRed"><span class="left"><span class="right">UPLOAD</span></span></a>
                     <a href="javascript:;" class="addButton"></a>
-                    <a href="javascript:;" class="removeButton hide"></a>
+                    <a href="javascript:;" class="removeButton"></a>
                 </p>
             </div>
             

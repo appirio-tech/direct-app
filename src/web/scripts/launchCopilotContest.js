@@ -227,10 +227,10 @@ $(document).ready(function(){
         }, false);    
     
     $(".uploadBtnRed").live("click", function() {
-        swUploader.setInput($(this).prev().find("input[type=file]").get(0));
+        swUploader.setInput($(this).parent().prev().find("input[type=file]").get(0));
         
         var fileName = swUploader._input.value;
-        var description = "";
+	var description = $(this).parent().find("#fileDescription").val();
 
         var errors = [];
 
@@ -278,6 +278,12 @@ $(document).ready(function(){
         
 	}); 
     
+	/* remove  button */
+	$('.uploadContent .removeButton').live("click",function(){
+		$(this).parent().prev().remove();
+		$(this).parent().remove();
+	}); 
+	
     $(".postCopilotStep1 #contestName").val('');
     $(".postCopilotStep1 textarea").val('');
     
