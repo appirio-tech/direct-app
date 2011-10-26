@@ -496,7 +496,7 @@ function validateStepInputs() {
                 
                 if (lineItem.find(".proceedRadio").attr('checked')) {
                     var feeObject = softwareContestFees[29];
-                    var contestCost = getContestCost(feeObject, 'medium'); 
+                    var contestCost = getContestCost(feeObject, 'high'); 
                     var firstPlaceCost = contestCost.firstPlaceCost;
                             
                     amount = firstPlaceCost;
@@ -520,9 +520,9 @@ function validateStepInputs() {
                 
                 var projectHeader = mainWidget.softwareCompetition.projectHeader;
                 projectHeader.setFirstPlaceCost(amount);
-                
+                projectHeader.setSecondPlaceCost(parseFloat(amount/2));
+
                 // set all prize to 0 except first place cost
-                projectHeader.setSecondPlaceCost(0);
                 projectHeader.setReviewCost(0);
                 projectHeader.setReliabilityBonusCost(0);
                 projectHeader.setDRPoints(0);
@@ -532,6 +532,7 @@ function validateStepInputs() {
                 
                 var prizes = [];
                 prizes.push(new com.topcoder.direct.Prize(1, amount, CONTEST_PRIZE_TYPE_ID, 1));
+                prizes.push(new com.topcoder.direct.Prize(2, parseFloat(amount/2), CONTEST_PRIZE_TYPE_ID, 2));
                 mainWidget.softwareCompetition.projectHeader.prizes = prizes;
                 
                 if (startNow) {
