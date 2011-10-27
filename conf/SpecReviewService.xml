@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
 <CMConfig>
     <Config name="com.topcoder.service.review.specification.ejb.SpecificationReviewServiceBean">
-       <!-- <Property name="defaultSpecReviewers">
+        <Property name="defaultSpecReviewers">
             <Property name="@defaultSpecReviewerContestType1@">
                 <Value>@defaultSpecReviewerUserId1@</Value>
             </Property>
-        </Property> -->
+        </Property>
     </Config>
 </CMConfig>
