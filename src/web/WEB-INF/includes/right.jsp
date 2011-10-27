@@ -150,7 +150,15 @@
                             </thead>
                             <tbody>
                             <s:iterator value="sessionData.currentProjectContests" status="status" var="contest">
-                            	<tr <s:if test="#status.even">class="even"</s:if> onclick="document.location.href = '<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; this.style.cursor='pointer';">
+                            	<tr <s:if test="#status.even">class="even"</s:if> 
+                                <s:if test="contestType.name == 'Copilot Posting'">
+                                onclick="document.location.href = '<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; 
+                                </s:if>
+                                <s:if test="contestType.name != 'Copilot Posting'">
+                                onclick="document.location.href = '<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; 
+                                </s:if>
+                                
+                                this.style.cursor='pointer';">
                                     <td class="status" width="15%">
                                         <span class="<s:property value="status.shortName"/>"><span>a</span></span>
                                     </td>
