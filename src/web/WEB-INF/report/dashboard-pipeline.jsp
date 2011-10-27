@@ -21,7 +21,7 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <script type="text/javascript" src="/scripts/dashboard-pipeline.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard-pipeline.js?v=208327"></script>
 
     <c:if test="${not viewData.showJustForm}">
         <script type="text/javascript">

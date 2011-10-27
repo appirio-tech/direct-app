@@ -24,7 +24,7 @@
         <ui:projectPageType tab="overview"/>
     </s:if>
     <jsp:include page="includes/paginationSetup.jsp"/>
-    <script type="text/javascript" src="/scripts/directProjectManage.js"></script>
+    <script type="text/javascript" src="/scripts/directProjectManage.js?v=207404"></script>
 </head>
 
 <body id="page">

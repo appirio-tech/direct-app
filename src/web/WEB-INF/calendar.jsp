@@ -15,8 +15,8 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
-    <script type="text/javascript" src="/scripts/fullcalendar.min.js"></script>
-    <link rel="stylesheet" href="/css/fullcalendar.css" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/fullcalendar.min.js?v=205096"></script>
+    <link rel="stylesheet" href="/css/fullcalendar.css?v=176771" media="all" type="text/css" />
     <script type="text/javascript">
         function getCalendarConfig() {
 			var currentDate = new Date($.trim($("#calendarToday").text()));

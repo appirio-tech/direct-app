@@ -30,15 +30,15 @@
     <jsp:include page="includes/htmlhead.jsp"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=204265" />
     <![endif]-->
     <ui:projectPageType tab="overview"/>
-    <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
-    <script type="text/javascript" src="/scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js"></script>
-    <script type="text/javascript" src="/scripts/dashboard-view.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js"></script>
-    <script type="text/javascript" src="/scripts/directProjectOverview.js"></script>
+    <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
+    <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js?v=203928"></script>
+    <script type="text/javascript" src="/scripts/dashboard-view.js?v=204700"></script>
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=207547"></script>
+    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=208052"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>

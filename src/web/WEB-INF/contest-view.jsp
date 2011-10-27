@@ -33,9 +33,9 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="contests"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
-    <link rel="stylesheet" href="/css/fullcalendar-1.5.2.css" media="all" type="text/css" />
-    <script type="text/javascript" src="/scripts/repostcontest.js?v=4"></script>
-    <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js"></script>
+    <link rel="stylesheet" href="/css/fullcalendar-1.5.2.css?v=207789" media="all" type="text/css" />
+    <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
+    <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js?v=207789"></script>
 </head>
 
 <body id="page">

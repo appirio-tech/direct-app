@@ -18,7 +18,7 @@
     <ui:projectPageType tab="specReview"/>
     <ui:contestPageType tab="specReview"/>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <script type="text/javascript" src="/scripts/specReview.js"></script>
+    <script type="text/javascript" src="/scripts/specReview.js?v=206299"></script>
     <script type="text/javascript">
         var questionNames = {};
         var contestId = ${viewData.contestStats.contest.id};

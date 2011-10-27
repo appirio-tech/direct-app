@@ -16,9 +16,9 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <script type="text/javascript" src="/scripts/dashboard-participation-report.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js"></script>
-    <link rel="stylesheet" href="/css/dashboard-enterprise.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/dashboard-participation-report.js?v=208327"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208746" media="all" type="text/css"/>
 </head>
 
 <body id="page">

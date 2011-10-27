@@ -27,7 +27,7 @@
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="css/dashboard-ie7.css" />
     <![endif]-->    
-    <link rel="stylesheet" href="/css/dashboard-view.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css" />
     
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="details"/>
@@ -39,10 +39,10 @@
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
     //]]>
     </script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=45"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=45"></script>
-    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=46"></script>
-    <script type="text/javascript" src="/scripts/repostcontest.js?v=45"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=209174"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=209174"></script>
+    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=207879"></script>
+    <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
 </head>
 
 <body id="page">

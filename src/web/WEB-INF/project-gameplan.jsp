@@ -6,10 +6,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <link rel="stylesheet" href="/css/ganttchart.css" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/dhtmlxcommon.js"></script>
-    <script type="text/javascript" src="/scripts/dhtmlxgantt.js"></script>
-    <script type="text/javascript" src="/scripts/directgantt.js"></script>
+    <link rel="stylesheet" href="/css/ganttchart.css?v=198728" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=185881"></script>
+    <script type="text/javascript" src="/scripts/dhtmlxgantt.js?v=198818"></script>
+    <script type="text/javascript" src="/scripts/directgantt.js?v=198728"></script>
     <ui:projectPageType tab="gameplan"/>
 </head>
 

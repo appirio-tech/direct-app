@@ -19,14 +19,14 @@
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
     
-    <link rel="stylesheet" href="/css/modal.css" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/newProject.css" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/get-a-copilot.css" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/jquery.jcarousel.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/modal.css?v=207790" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/newProject.css?v=207894" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/get-a-copilot.css?v=208132" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
 
-    <script type="text/javascript" src="/scripts/newProject.js"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js"></script> 
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js"></script>   
+    <script type="text/javascript" src="/scripts/newProject.js?v=207894"></script>
+    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=208132"></script> 
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>   
     
 </head>
 
