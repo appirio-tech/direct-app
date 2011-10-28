@@ -41,9 +41,9 @@
         <div class="solveProblem">
 
             <div class="inner">
-                <h3>We can help you!</h3>
+                <h3>We can help you</h3>
 
-                <p>Click below to start working with the community.</p>
+                <p>Click below to start working with the community</p>
 
                 <div class="startButtonBox">
                     <a href="<s:url action="createNewProject" namespace="/"/>" class="button2">Start Your New Project Now</a>
