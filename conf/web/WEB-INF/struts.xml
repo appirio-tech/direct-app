@@ -784,6 +784,11 @@
                 <param name="namespace">/copilot</param>
             </result>
         </action>
+
+        <action name="copilotPostingReceipt" class="getContestReceiptAction">
+                 <result>/WEB-INF/copilot-receipt.jsp</result>
+        </action>
+
         <action name="listCopilotContestSubmissions" class="copilotPostingContestSubmissionsAction">
             <result type="chain">
                 <param name="actionName">setCopilotContestSubmissionProfiles</param>

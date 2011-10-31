@@ -156,6 +156,21 @@ $(document).ready(function() {
         return false;
     });
 
+
+    $('#cancelPrize').click(function() {
+        hideEdit($(this));
+        // restore
+        $("input[name='firstPlacePrize']").val($("#rswFirstPlace").html());
+        $("#swSecondPlace").html($("#rswSecondPlace").html());
+        $("#swTotal").html($("#rswTotal").html());
+        return false;
+    });
+
+    $('#savePrize').click(function() {
+        hideEdit($(this));
+        updatePrize();
+    });
+
     $('#cancelDates').click(function() {
         hideEdit($(this));
         $('#start2DateInput').val(getDatePart($('#mainContent').data('p3')));
@@ -212,6 +227,19 @@ $(document).ready(function() {
         updateProjectFiles();
         return false;
     });
+
+
+    $('input[name=firstPlacePrize]').keyup(function() {
+        var amount = parseFloat($(this).val());
+
+        if(isNaN(amount)) return;
+
+        var second = ((amount) / 2).toFixed(1);
+        var total = (amount + parseFloat(second)).toFixed(1);
+        $("#swSecondPlace").text(second);
+        $("#swTotal").text(total);
+    });
+
 
 
     $('#addNewProject2').click(function() {
@@ -463,6 +491,19 @@ function updatePrivateDesc() {
     sendSaveDraftRequestToServer();
 }
 
+function updatePrize() {
+    var amount = parseFloat($('input[name=firstPlacePrize]').val());
+    if(isNaN(amount)) showErrors('Prize should be a number.');
+    if(amount < 0 ) showErrors('Prize should be positive.');
+    sendSaveDraftRequestToServer();
+
+    $("#rswFirstPlace").html(amount.toFixed(1));
+    $("#rswSecondPlace").html((amount/2).toFixed(1))
+
+    var total = parseFloat($("#rswFirstPlace").text()) + parseFloat($("#rswSecondPlace").text()) + parseFloat($("#rswContestFee").text());
+    $("#rswTotal").text(total.toFixed(1));
+}
+
 function updateProjectFiles() {
     // $('#uploadedDocumentsTable').html('');
     $('#fileUpload dl').html('');
@@ -563,11 +604,22 @@ function saveAsDraftRequest() {
     request['projectHeader.id'] = projectId;
     request['projectHeader.tcDirectProjectId'] = $('#projects2').val();
     request["projectHeader.properties['Billing Project']"] = $('#billingProjects2').val();
+    request["projectHeader.properties['First Place Cost']"] = parseFloat($('input[name=firstPlacePrize]').val());
+    request["projectHeader.properties['Second Place Cost']"] = (request["projectHeader.properties['First Place Cost']"] / 2).toFixed(1);
     request['projectHeader.projectSpec.detailedRequirements'] = tinyMCE.get('publicCopilotPostingDescription2').getContent();
     request['projectHeader.projectSpec.privateDescription'] = tinyMCE.get('privateCopilotPostingDescription2').getContent();
 
     request['docUploadIds'] = getDocumentIds();
     request['docCompIds'] = getExistingDocumentIds();
+
+    $.each(prizes, function(index, value){
+       if(value.place == 1) {
+            value.prizeAmount = request["projectHeader.properties['First Place Cost']"];
+       } else if (value.place ==2) {
+             value.prizeAmount = request["projectHeader.properties['Second Place Cost']"];
+       }
+    });
+
     request['projectHeader.prizes'] = prizes;
 
     return request;

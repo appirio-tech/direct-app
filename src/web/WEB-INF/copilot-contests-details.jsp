@@ -206,10 +206,93 @@
     </div>
 </div>
 <!-- end .addNewContest -->
+<div class="editMask greybg">
+<!-- Prize Display -->
+<div class="no_details contest_prize infoPanel">
+    <div class="caption_det_prize">
+         <if:isEditable typedContestBrief="${contestDTO}">
+                <a href="javascript:" class="editLink">
+                    <img class="edit_type" style="padding-top:20px; padding-right:8px" alt="edit" src="/images/edit.png"/> </a>
+            </if:isEditable>
+        <div style="height:30px">
+            <h2>Prizes </h2>
 
+        </div>
+    </div>
+    <!-- End .caption -->
+    <div class="detailsContent_det_prize">
+
+        <table cellspacing="10" class="det_font_tab">
+            <tr class="rightbor">
+                <td style="width:120px" align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"> <c:out value="${projectHeader.properties['First Place Cost']}"/></span></td>
+                </td>
+                <td style="width:120px" align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"> <c:out value="${projectHeader.properties['Second Place Cost']}"/></span></td>
+                <td style="width:120px"><strong>Contest Fee:</strong> $<span id="rswContestFee"><c:out value="${projectHeader.properties['Admin Fee']}"/></span></td>
+
+                <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal">
+                 <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/>
+
+                </span></td>
+            </tr>
+
+        </table>
+    </div>
+    <!-- End .detailsContent -->
+</div>
+<!-- End .details -->
+<!-- End Prize Display -->
+
+<!-- Prize Edit -->
+<div class="no_details contest_prize_edit editPanel">
+    <div class="caption_det_prize_edit">
+        <div class="captionInner">
+            <h2>Prizes</h2>
+        </div>
+    </div>
+    <!-- End .caption -->
+
+    <div class="detailsContent_det_prize_edit">
+
+
+        <div class="prizes">
+            <div style="height:120px;padding:6px;">
+                <span class="head"><p>Please Set the prize below:</p></span>
+                <br/>
+
+                <div class="prizesInner">
+                    <label class="first">1st Place</label>
+                    <span class="dw">$</span>
+                    <input type="text" class="prizesInput" name="firstPlacePrize" value='<c:out value="${projectHeader.properties['First Place Cost']}"/>'
+                          />
+                    <label class="second">2nd Place</label>
+                    <span class="dw">$</span>
+                    <span id="swSecondPlace" class="prizeInfo" style="line-height:30px;"><c:out value="${projectHeader.properties['Second Place Cost']}"/></span>
+                    <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"><c:out
+                            value="${projectHeader.properties['Admin Fee']}"/></span></span>
+                </div>
+                <br/>
+                <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$ <span id="swTotal"> <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/></span></strong></span>
+                </span>
+            </div>
+        </div>
+        <!-- end .prizes -->
+
+        <p class="save">
+            <a class="cancel_text" href="javascript:" id="cancelPrize">cancel</a>
+            <a href="javascript:" id="savePrize">
+                <img class="save_btn" alt="save" src="/images/save_change.png"/></a>
+        </p>
+
+    </div>
+    <!-- End .detailsContent -->
+</div>
+<!-- End .details -->
+<!-- End Prize Edit -->
+
+</div>
 
 <!-- Contest Schedule -->
-<div class="editMask greybg">
+<div class="editMask">
     <div class="infoPanel scheduleInfo ">
         <h3>
             <span class="icon">Copilot Posting Schedule</span>
@@ -266,7 +349,7 @@
 
 <!-- Contest Description -->
 
-<div class="editMask">
+<div class="editMask greybg">
     <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that you want everyone to see</span>
@@ -302,7 +385,7 @@
 </div>
 <!-- end .description -->
 
-<div class="editMask greybg">
+<div class="editMask">
     <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that is only viewable to copilots that register for this posting</span>
@@ -339,7 +422,7 @@
 
 
 <!-- fileUpload -->
-<div class="editMask">
+<div class="editMask greybg">
     <div class="infoPanel fileUploadInfo ">
         <h3>
             <span class="icon">Files</span>

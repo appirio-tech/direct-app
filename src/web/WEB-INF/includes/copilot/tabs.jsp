@@ -19,8 +19,13 @@
                      </s:url>">
                 <span class="left"><span class="right">Submissions</span></span></a>
         </li>
-        <li class="lastItem">
-            <a href="javascript:" class="last"><span class="left"><span class="right">Receipt</span></span></a></li>
+        <li class="lastItem ${requestScope.CURRENT_SUB_TAB eq 'copilotReceipt' ? 'on' : ''}">
+            <a class="last" href="<s:url namespace="/copilot" action="copilotPostingReceipt">
+                         <s:param name="projectId" value="%{#attr['contest'].id}"/>
+                     </s:url>">
+                <span class="left"><span class="right">Receipt</span></span>
+            </a>
+        </li>
     </ul>
 </div>
 <!-- End #tabs3 -->
