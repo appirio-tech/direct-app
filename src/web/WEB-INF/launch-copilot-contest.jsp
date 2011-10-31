@@ -23,11 +23,11 @@
     
     <link rel="stylesheet" href="/css/modal.css?v=207790" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/newProject.css?v=207894" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/get-a-copilot.css?v=208132" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/get-a-copilot.css?v=209437" media="all" type="text/css"/> 
     <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
 
     <script type="text/javascript" src="/scripts/newProject.js?v=207894"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=208132"></script> 
+    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=209437"></script> 
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script> 
     
 </head>

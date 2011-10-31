@@ -30,10 +30,10 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css"/>
-	<link rel="stylesheet" href="/css/copilotDetails.css" media="all" type="text/css"/>
+	<link rel="stylesheet" href="/css/copilotDetails.css?v=209437" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=204700"></script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=209174"></script>
-    <script type="text/javascript" src="/scripts/copilots.js?v=207804"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=209437"></script>
+    <script type="text/javascript" src="/scripts/copilots.js?v=209437"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
     <script type="text/javascript">
         $(document).ready(function() {
