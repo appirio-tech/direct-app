@@ -164,11 +164,18 @@ import java.util.Set;
  * </p>
  *
  * <p>
+ * Version 2.2 (BUG TCCC-3698) Change notes:
+ *  <ul>
+ *      <li>Change the method used to check for cookie from <code>checkCookie</code> to <code>getActiveUser()</code>.</li>
+ *  </ul>
+ * </p>
+ *
+ * <p>
  * <b>Thread safety:</b> This class is mutable and not thread safe.
  * </p>
  *
- * @author woodjhon, TCSDEVELOPER
- * @version 2.1
+ * @author woodjhon, TCSDEVELOPER, pvmagacho
+ * @version 2.2
  */
 public class AuthenticationInterceptor extends AbstractInterceptor {
 
@@ -257,7 +264,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
             BasicAuthentication auth = new BasicAuthentication(
                 new SessionPersistor(request.getSession()), new SimpleRequest(request),
                 new SimpleResponse(response), BasicAuthentication.MAIN_SITE, DBMS.JTS_OLTP_DATASOURCE_NAME);
-            User user = auth.checkCookie();
+            User user = auth.getActiveUser();
             if (user != null  && !user.isAnonymous()) {
                  // get user roles for the user id
                 Set<TCPrincipal> roles = DirectUtils.getUserRoles(user.getId());

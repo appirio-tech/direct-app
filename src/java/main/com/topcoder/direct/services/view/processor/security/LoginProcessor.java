@@ -31,6 +31,8 @@ import org.apache.struts2.ServletActionContext;
  * Version 1.1 (System Assembly - Direct Topcoder Scorecard Tool Integration) changes notes: 
  *    <ul>
  *       <li>Set cookie to be used by scorecard application.</li>
+ *       <li>Use MAIN_SITE cookie for direct application.</li>
+ *       <li>Use 1 day as expiration time for MAIN_SITE cookie if remember me flag is not set.</li>
  *    </ul> 
  * </p>
  *
@@ -39,6 +41,13 @@ import org.apache.struts2.ServletActionContext;
  */
 public class LoginProcessor implements RequestProcessor<LoginAction> {
 
+    /**
+     * The expire time for main site when 'remember me' flag is not set. Is set to 1 day.
+     *
+     * @since 1.1
+     */
+    private static final int MAIN_COOKIE_TIME = 60 * 60 * 24;
+    
     /**
      * The SSO cookie to be for use by the Scorecard Tool.
      */
@@ -79,7 +88,8 @@ public class LoginProcessor implements RequestProcessor<LoginAction> {
                     new SimpleResponse(ServletActionContext.getResponse()),
 		    BasicAuthentication.MAIN_SITE,
                     DBMS.JTS_OLTP_DATASOURCE_NAME);
-	    auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
+            auth.setBigCookieTime(MAIN_COOKIE_TIME);
+            auth.login(new SimpleUser(tcSubject.getUserId(), username, password), action.getFormData().isRemember());
 
 	    // added by System Assembly - Direct Topcoder Scorecard Tool Integration
 	    auth = new BasicAuthentication(
