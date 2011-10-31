@@ -17,9 +17,12 @@
  *
  * Version 1.4 TC Cockpit Post a Copilot Assembly 1 change note
  * - Apply to new prototype.
- *
- * @author TCSASSEMBLER
- * @version 1.4 (Direct Improvements Assembly Release 2)
+ * 
+ * Changes in version 1.5 (TC Cockpit Post a Copilot Assembly 2):
+ * - Finished the logic in step 2 and 3.
+ * 
+ * @author TCSASSEMBLER, duxiaoyang
+ * @version 1.5 (TC Cockpit Post a Copilot Assembly 2)
  */
 $(document).ready(function(){
 	/**
@@ -116,26 +119,20 @@ $(document).ready(function(){
     changeStep(1);
     
     $(".stepContainer .prevStepButton").click(function() {
-		if(currStep == 4)
-			changeStep(1);
-		else
-			changeStep(currStep - 1);
+        changeStep(currStep - 1);
     });
     
     $(".stepContainer .nextStepButton").click(function() {
-		if(currStep == 1)
-			changeStep(4);
-		else
-	        changeStep(currStep + 1);
+        changeStep(currStep + 1);
     });
-    
+
     $(".stepBar li span.istatus a").click(function() {
         var c = $(this).attr("id").substring("stepLink_".length);
         changeStep(parseInt(c));
     });    
     
 	$(".proceedRadio").click(function() {
-        $(this).parent().parent().find(".amountText").attr("disabled", true);
+        $(this).parent().parent().find(".amountText").attr("disabled", false);
     });
     $(".useAmountRadio").click(function() {
         $(this).parent().find(".amountText").attr("disabled", false);
@@ -390,8 +387,8 @@ var currStep = 1;
 var stepContainerClasses = [
     "",
     "stepFirst stepContainer",
-    //"stepSecond stepContainer",
-    //"stepThird stepContainer budget",
+    "stepSecond stepContainer",
+    "stepThird stepContainer budget",
     "stepForth stepContainer",
     "stepFifth stepContainer",
     "stepSix stepContainer summary",
@@ -404,8 +401,8 @@ var stepContainerClasses = [
 var stepTiles = [
     "",
     "Basic",
-    //"Copilot Experience",
-    //"Budget",
+    "Copilot Experience",
+    "Budget",
     "Schedule",
     "Billing"
 ];
@@ -458,13 +455,68 @@ function validateStepInputs() {
             
             break;
         case 2:
-            // validate and store experience
-            // left to next assembly
+            var typeSelected = false;
+        	var copilotTypesSummary = "";
+        	var copilotTypes = [];
+            $('.postCopilotStep2 .rowItem input:checked').each(function(){
+            	typeSelected = true;
+            	copilotTypes.push(new com.topcoder.direct.ProjectCopilotType($(this).val(), $(this).attr('id'), $(this).attr('id')));
+            	if (copilotTypesSummary.length > 0) {
+            		copilotTypesSummary = copilotTypesSummary + ", ";
+            	}
+            	copilotTypesSummary = copilotTypesSummary + $(this).attr('id');
+            });
+            removeCopilotExtraInfo(OTHER_EXTRA_INFO_TYPE);
+            var other = $('.postCopilotStep2 .rowItem input#other').val();
+            if (other.length > 0) {
+            	typeSelected = true;
+            	var infoType = new com.topcoder.direct.CopilotContestExtraInfo();
+            	infoType.type = OTHER_EXTRA_INFO_TYPE;
+            	infoType.value = other;
+            	mainWidget.softwareCompetition.projectHeader.copilotContestExtraInfos.push(infoType);
+            	if (copilotTypesSummary.length > 0) {
+            		copilotTypesSummary = copilotTypesSummary + "<br/>";
+            	}
+            	copilotTypesSummary = copilotTypesSummary + other;
+            }
+            if (!typeSelected) {
+            	errors.push("There's no selected type(s) of projects! You must select 1(one) before continue to next step.");
+            	break;
+            }
+            mainWidget.softwareCompetition.projectHeader.projectCopilotTypes = copilotTypes;
+            $("#copilotTypes").html(copilotTypesSummary);
             
             break;
         case 3:
-            // validate and store budget
-            // left to next assembly
+            if ($('.postCopilotStep3 .rowItem input:checked').length == 0) {
+            	errors.push('Please select your budget options for this contest.');
+            	break;
+            }
+        	removeCopilotExtraInfo(BUDGET_EXTRA_INFO_TYPE);
+            if ($('.postCopilotStep3 .rowItem input#haveBudget:checked').length > 0) {
+            	var budget = $('.postCopilotStep3 .rowItem input#budget').val();
+            	if (budget.length == 0 || (budget.length == 1 && budget.charAt(0) == '$')) {
+            		errors.push('Please enter your budget for this contest.');
+            		break;
+            	}
+            	var infoType = new com.topcoder.direct.CopilotContestExtraInfo();
+            	infoType.type = BUDGET_EXTRA_INFO_TYPE;
+            	if (budget.charAt(0) == '$') {
+            		infoType.value = budget.substring(1);
+            	} else {
+            		infoType.value = budget;
+            		budget = "$" + budget;
+            	}
+            	if (!checkRequired(infoType.value) || !checkNumber(infoType.value)) {
+            		errors.push('The budget is invalid.');
+            		break;
+            	}
+            	mainWidget.softwareCompetition.projectHeader.copilotContestExtraInfos.push(infoType);
+            	$("#copilotContestBudget").html(budget);
+            } else {
+        		$("#copilotContestBudget").html('N/A');
+        	}
+        	
             break;
         case 4:
             if ($(".lineItem.inputItem .postFrame.hide").length == 2) {
@@ -488,7 +540,7 @@ function validateStepInputs() {
                 } else {
                     // post now
                     startDate = new Date();
-                    startDate.setMinutes(startDate.getMinutes() + 30);
+                    startDate.setMinutes(startDate.getMinutes() + 5);
                     
                     lineItem = $(".lineItem.amountItem .postFrame");
                     startNow = true;
@@ -564,6 +616,28 @@ function validateStepInputs() {
         return false;
     }    
     return true;
+}
+
+/**
+ * Remove copilot contest extra info with specified type from project header. This function is needed because user may
+ * modify the extra info several times and It is impossible to remove all such items because both step 2 and 3 can add
+ * such extra info.
+ *
+ * @param infoType the type of the copilot contest extra info to remove.
+ */
+function removeCopilotExtraInfo(infoType) {
+	if (typeof infoType == "undefined" || typeof infoType.id == "undefined") {
+		return;
+	}
+	var length = mainWidget.softwareCompetition.projectHeader.copilotContestExtraInfos.length;
+	for (var i = 0; i < length; ++i) {
+		var info = mainWidget.softwareCompetition.projectHeader.copilotContestExtraInfos.shift();
+		if (info.type.id == infoType.id) {
+			return;
+		} else {
+			mainWidget.softwareCompetition.projectHeader.copilotContestExtraInfos.push(info);
+		}
+	}
 }
 
 /**
@@ -652,7 +726,8 @@ function changeStep(target, forumUrl) {
         $(".buttonBottom .viewContest").show();
         
         $(".buttonBottom .viewContest").attr("href", "http://www.topcoder.com/tc?module=ProjectDetail&pj=" + mainWidget.softwareCompetition.projectHeader.id);
-        
+		$(".buttonBottom .viewProjectOverview").show();
+		$(".buttonBottom .viewProjectOverview").attr("href", "/direct/projectOverview?formData.projectId=" + mainWidget.softwareCompetition.projectHeader.tcDirectProjectId);
         if (forumUrl) {
             $(".buttonBottom .forumIcon").attr("href", forumUrl);
             $(".buttonBottom .forumIcon").show();    
@@ -660,22 +735,20 @@ function changeStep(target, forumUrl) {
         
         $(".buttonBottom .viewContest span").removeClass("noBorderRight");
     } else {
+		$(".buttonBottom .viewProjectOverview").hide();
         $(".buttonBottom .forumIcon").hide();
         $(".buttonBottom .viewContest span").addClass("noBorderRight");
     }
 
-	var tempCurrStep = 1;
-	if(currStep > 3)
-		tempCurrStep = currStep - 2;
     
     $(".stepBar li span.istatus").each(function(index, item) {
         $(item).removeClass("complete active inext");
         $(item).find("a, .stepText").hide();
        
-        if (index + 1 < tempCurrStep) {
+        if (index + 1 < currStep) {
             $(item).addClass("complete");
             $(item).find("a").show();
-        } else if (index + 1 == tempCurrStep) {
+        } else if (index + 1 == currStep) {
             $(item).addClass("active");
             $(item).find("a").show();
         } else {
@@ -684,10 +757,11 @@ function changeStep(target, forumUrl) {
         }
     });
     
-    $(".stepContainer").attr("class", stepContainerClasses[tempCurrStep]);
+    $(".stepContainer").attr("class", stepContainerClasses[currStep]);
 
-	if (currStep < 6) {
-        $(".stepTitle h3").html('<span class="small">' + tempCurrStep + '</span>' + stepTiles[tempCurrStep]);
+    if (currStep < 6) {
+		$(".stepTitle h3").removeClass("infoIcon");
+        $(".stepTitle h3").html('<span class="small">' + currStep + '</span>' + stepTiles[currStep]);
     } else if (currStep == 6) {
         $(".stepTitle h3").html('Summary').attr("class", "infoIcon");
     } else {
@@ -767,10 +841,11 @@ function handleCopilotContestSaveAsDraftResult(jsonResult) {
         //update paid fee
         mainWidget.softwareCompetition.paidFee = result.paidFee;
 
-        showSuccessfulMessage(messageToShow);
+        $('#saveAsDraft dt').html(messageToShow);
+        $('#draftPanelTrigger').overlay().load();
     },
     function(errorMessage) {
-        showServerError(errorMessage);
+        showErrors(errorMessage);
     });
 };
 
@@ -809,7 +884,7 @@ function handleCopilotContestActivateResult(jsonResult) {
         changeStep(7, result.forumUrl);
     },
     function(errorMessage) {
-        showServerError(errorMessage);
+        showErrors(errorMessage);
     });   
 };
 

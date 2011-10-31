@@ -6,9 +6,11 @@
  * 
  * Version 1.0 TC Cockpit Post a Copilot Assembly 1 change note
  * - Apply to new prototype.
+ * Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
+ * - Refined the function for step 3 fluid checkboxes.
  * 
- * @author TCSASSEMBLER
- * @version 1.0(TC Cockpit Post a Copilot Assembly 1)
+ * @author TCSASSEMBLER, duxiaoyang
+ * @version 1.1
  */
 $(document).ready(function(){
 	//z-index for step bar
@@ -17,17 +19,25 @@ $(document).ready(function(){
 		var iNum = $('.stepBar li').index(this);
 		$(this).css('z-index',totalStep-iNum);					   
 	});
-	
+	$('#budget').click(function(){
+		$('#haveBudget').attr("checked", true);
+	});
+	$('#amountText1').click(function(){
+		$('#useAmount1').attr("checked", true);
+	});
+	$('#amountText2').click(function(){
+		$('#useAmount2').attr("checked", true);
+	});
 	//textarea
 	$('.stepFirst textarea').css('min-width',$('.stepFirst .row').width()-272);
 	
 	//width for step bar 
-	$('.stepBar li').css('width',($('.stepBar').width()/3)+10); 
-	$('.stepBar li:first').css('width',($('.stepBar').width()/3)+14);
+	$('.stepBar li').css('width',($('.stepBar').width()/5)+16); 
+	$('.stepBar li:first').css('width',($('.stepBar').width()/5)+14);
 	$(window).resize(function(){
-		$('.stepBar li').css('width',($('.stepBar').width()/3)+10);
-		$('.stepBar li:first').css('width',($('.stepBar').width()/3)+14);
-		$('.stepFirst textarea').css('min-width',$('.stepFirst .row').width()-272);
+		$('.stepBar li').css('width',($('.stepBar').width()/5)+16);
+		$('.stepBar li:first').css('width',($('.stepBar').width()/5)+14);
+		$('.stepFirst textarea').css('width',$('.stepFirst .row').width()-272);
 	});
 	
 	//modal
@@ -101,16 +111,27 @@ $(document).ready(function(){
 		if(width > 1100 ) {
 			if ($(".type2").length < 1) {
 				var middleUL = $('<ul class="type2"></ul>');
-				$(".type1 li:eq(3)").appendTo(middleUL);
-				$(".type1 li:eq(3)").appendTo(middleUL);
-				$(".type3 li:eq(0)").appendTo(middleUL);
+				var type1 = $('.type1 li').length;
+				var type3 = $('.type3 li').length;
+				
+				for (var i = (type1 + type3) / 3 + 0.5; i < type1; i = i + 1) {
+					$(".type1 li:eq(" + parseInt((type1 + type3) / 3 + 0.5) + ")").appendTo(middleUL);
+				}
+				
+				for (var i = (type1 + type3) / 3; i < type3; i = i + 1) {
+					$(".type3 li:eq(0)").appendTo(middleUL);
+				}
 				$(".type1").after(middleUL);
 			}
 		}
-		else if($(".type2").length > 0){
-			$(".type2 li:eq(0)").appendTo(".type1");
-			$(".type2 li:eq(0)").appendTo(".type1");
-			$(".type2 li:eq(0)").prependTo(".type3");
+		else if($(".type2").length > 0) {
+			var type2 = $('.type2 li').length;
+			for (var i = 0; i < type2 / 2 + 0.5; i = i + 1) {
+				$(".type2 li:eq(0)").appendTo(".type1");
+			}
+			while ($('.type2 li').length > 0) {
+				$(".type2 li:eq(0)").prependTo(".type3");
+			}
 			$(".type2").remove();
 		}
 	}
@@ -126,7 +147,7 @@ $(document).ready(function(){
 		
 	})
 	$(".radio:eq(1)").click(function() {
-		$(".radio:eq(0)").siblings(".text").attr("disabled",true);
+		$(".radio:eq(0)").siblings(".text").attr("disabled",false);
 		
 	})
 	

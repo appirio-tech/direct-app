@@ -22,6 +22,13 @@ var uploadedDocuments = [];
 var prizes = [];
 var projectId = -1;
 
+var experiences = [];
+var extraExperience = '';
+var budget = '';
+
+var copilotTypes = [];
+var extraInfos = [];
+
 $(document).ready(function() {
 
     initDialog('errorDialog', 500);
@@ -130,6 +137,18 @@ $(document).ready(function() {
         $('#projects2').getSetSSValue($('#mainContent').data('p1'));
         $('#billingProjects2').getSetSSValue($('#mainContent').data('p2'));
         
+        $('.experienceDiv input[type=checkbox]').attr('checked', '');
+        $.each(experiences, function(index, item) {
+            $('.experienceDiv input[type=checkbox][value=' + item + ']').attr('checked', 'checked');
+        });
+        $('#otherExperience').val(extraExperience);
+        
+        if (budget == '') {
+            $("#notHaveBudget").attr("checked", true);
+        } else {
+            $("#haveBudget").attr("checked", true);
+        }
+        $('#projectBudgetInput').val(budget);
         return false;
     });
 
@@ -144,6 +163,10 @@ $(document).ready(function() {
         }
         if ($('#billingProjects2').val() == '0') {
             errors.push('Billing account is not selected');
+        }
+        
+        if (!checkNumber($('#projectBudgetInput').val())) {
+            errors.push('Budget is not an valid number.');
         }
 
         if (errors.length > 0) {
@@ -301,7 +324,21 @@ $(document).ready(function() {
 
         uploader2.submit();
     });
-
+    
+    $("#haveBudget").click(function() {
+        //$("#projectBudgetInput").attr("disabled", "");
+    });
+    
+    $("#notHaveBudget").click(function() {
+        $("#projectBudgetInput").val("");
+        //$("#projectBudgetInput").attr("disabled", "disabled");
+    });
+    
+    $("#projectBudgetInput").click(function() {
+        $("#haveBudget").attr("checked", "checked");
+    });
+    
+    updateProjectGeneralInfo(true);
 });
 
 /* function to style the input file */
@@ -441,13 +478,60 @@ function restorePrevData() {
     }
 }
 
-function updateProjectGeneralInfo() {
+function updateProjectGeneralInfo(notSendToServer) {
     var contestName = $('#contestNameInput2').val();
     var projectName = $('#projects2 option:selected').text();
     var accountName = $('#billingProjects2 option:selected').text();
     var projectId = $('#projects2').val();
     var accountId = $('#billingProjects2').val();
+    
+    copilotTypes = [];
+    extraInfos = [];
+    
+    var exp = '';
+    
+    experiences = [];
+    
+    var tmpExp = [];
+    $.each($('.experienceDiv input[type=checkbox]:checked'), function(index, item) {
+        tmpExp.push($(item).next().html());
+        experiences.push($(item).val());
+        copilotTypes.push(new com.topcoder.direct.ProjectCopilotType($(this).val(), $(this).attr('id'), $(this).attr('id')));
+    });
+    
+    removeCopilotExtraInfo(OTHER_EXTRA_INFO_TYPE);
+    var other = $('#otherExperience').val();
+    extraExperience = other;
+    if (other.length > 0) {
+        var infoType = new com.topcoder.direct.CopilotContestExtraInfo();
+        infoType.type = OTHER_EXTRA_INFO_TYPE;
+        infoType.value = other;
+        extraInfos.push(infoType);
+        
+        tmpExp.push(other);
+    }    
+    
+    for (var i = 0; i < tmpExp.length; i++) {
+        exp += tmpExp[i];
+        if (i < tmpExp.length - 1) {
+            exp += ", ";
+        }
+    }
+    
+    var bud = $('#projectBudgetInput').val();
+    budget = bud;
 
+    removeCopilotExtraInfo(BUDGET_EXTRA_INFO_TYPE);
+    if ($('#haveBudget:checked').length > 0) {
+        var infoType = new com.topcoder.direct.CopilotContestExtraInfo();
+        infoType.type = BUDGET_EXTRA_INFO_TYPE;
+        infoType.value = bud;
+        
+        extraInfos.push(infoType);
+    } else {
+        bud = "Don't have a budget yet.";
+    }
+            
     $('#contestNameTextLabel').html(contestName);
     $('#projectNameTextLabel').html(projectName);
     $('#billingProjectNameTextLabel').html(accountName);
@@ -455,7 +539,12 @@ function updateProjectGeneralInfo() {
     $('#contestNameInput').val(contestName);
     $('#billingProjects').val(accountId);
     
-    sendSaveDraftRequestToServer();
+    $('#copilotTypesTextLabel').html(exp);
+    $('#budgetTextLabel').html("$ " + bud);
+    
+    if (typeof notSendToServer == "undefined" || !notSendToServer) {
+        sendSaveDraftRequestToServer();
+    }
 }
 
 function updateProjectDate() {
@@ -621,7 +710,10 @@ function saveAsDraftRequest() {
     });
 
     request['projectHeader.prizes'] = prizes;
-
+    
+    request['projectHeader.projectCopilotTypes'] = copilotTypes;
+    request['projectHeader.copilotContestExtraInfos'] = extraInfos;
+    
     return request;
 }
 
@@ -703,4 +795,17 @@ function afterAjax() {
 	 modalClose();
 }
 
-
+function removeCopilotExtraInfo(infoType) {
+	if (typeof infoType == "undefined" || typeof infoType.id == "undefined") {
+		return;
+	}
+	var length = extraInfos.length;
+	for (var i = 0; i < length; ++i) {
+		var info = extraInfos.shift();
+		if (info.type.id == infoType.id) {
+			return;
+		} else {
+			extraInfos.push(info);
+		}
+	}
+}

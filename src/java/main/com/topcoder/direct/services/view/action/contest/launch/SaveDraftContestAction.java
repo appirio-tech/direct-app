@@ -1079,6 +1079,8 @@ public class SaveDraftContestAction extends ContestAction {
             projectHeader = new com.topcoder.management.project.Project();
         }
         projectHeader.setPrizes(null);
+		projectHeader.setProjectCopilotTypes(null);
+        projectHeader.setCopilotContestExtraInfos(null);
     }
 
     /**

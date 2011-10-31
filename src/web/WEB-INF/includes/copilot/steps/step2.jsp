@@ -1,11 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, duxiaoyang
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: The step 2 of post a copilot.
+  - Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
+  -   Retrieve copilot types from action and display on the page.
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.0 (TC Cockpit Post a Copilot Assembly 1).
+  - Version 1.1 (TC Cockpit Post a Copilot Assembly 2).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -25,7 +27,7 @@
             
             <div class="title"><!-- columns title -->
                 <div class="titleLeft"><div class="titleRight">
-                    <h2>Managing Project Experience</h2>
+                    <h2>Experience</h2>
                 </div></div>
             </div><!-- End .title -->
             
@@ -36,57 +38,27 @@
                     
                     <div class="normal">
                         <ul class="type1">
+                            <c:forEach var="copilotType" items="${allProjectCopilotTypes}" end="${fn:length(allProjectCopilotTypes) / 2 - 0.5}">
                             <li>
-                                <input type="checkbox" id="Graphic" />
-                                <label for="Graphic">Design Graphic</label>
+                                <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" />
+                                <label for="${copilotType.value}">${copilotType.value}</label>
                             </li>
-                            <li>
-                                <input type="checkbox" id="Animation"  />
-                                <label for="Animation">Animation</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="Mobile"  />
-                                <label for="Mobile">Mobile</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="WebApplications"  />
-                                <label for="WebApplications">Small Scale Web Applications</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="LargeScale"  />
-                                <label for="LargeScale">Large Scale Web Applications</label>
-                            </li>
+                            </c:forEach>
                         </ul>
                         <ul class="type3">
+                            <c:forEach var="copilotType" items="${allProjectCopilotTypes}" begin="${fn:length(allProjectCopilotTypes) / 2 + 0.5}">
                             <li>
-                                <input type="checkbox" id="Applications"  />
-                                <label for="Applications">Desktop Applications</label>
+                                <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" />
+                                <label for="${copilotType.value}">${copilotType.value}</label>
                             </li>
-                            
-                            <li>
-                                <input type="checkbox" id="Transactional"  />
-                                <label for="Transactional">High Transactional Systems</label>
-                            </li>
-                            
-                            <li>
-                                <input type="checkbox" id="Warehousing"   />
-                                <label for="Warehousing">Data Warehousing</label>
-                            </li>
-                            
-                            <li>
-                                <input type="checkbox" id="Campaigns"  />
-                                <label for="Campaigns">Marketing Campaigns</label>
-                            </li>
+                            </c:forEach>
                         </ul>
                         <div class="clear"></div>
                         
                         <label class="other">Other:</label>
-                        <input type="text" class="text" />
+                        <input type="text" class="text" id="other" />
                         
                     </div>
-                    
-                    
-                    
                     <div class="clear"></div>
                 </div>
                 <!--End .checkType-->

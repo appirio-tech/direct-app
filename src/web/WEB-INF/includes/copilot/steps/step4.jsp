@@ -47,13 +47,13 @@
                         
                         <ul>
                             <li>
-                                <input type="radio" class="radio2 proceedRadio" name="amount"/><label for="proceed">Proceed</label>
+                                <input type="radio" class="radio2 proceedRadio" name="amount" id="proceed1"/><label for="proceed1">Proceed</label>
                             </li>
                             <li>
-                                <input type="radio"  class="radio2 useAmountRadio" name="amount"/><label for="useAmount"  class="useAmountLabel">Use this amount</label> 
+                                <input type="radio"  class="radio2 useAmountRadio" name="amount" id="useAmount1"/><label for="useAmount1"  class="useAmountLabel">Use this amount</label> 
 								<label class="first">1st Place</label>
 							    <span class="dw">$</span>
-							    <input type="text" class="amountText" value="" disabled="disabled" />
+							    <input type="text" class="amountText" id="amountText1" value=""/>
 							    <label class="second">2nd Place</label>
 							    <span class="dw">$</span>
 							    <span class="prizeInfo"></span>
@@ -79,10 +79,10 @@
                         
                         <ul>
                             <li>
-                                <input type="radio" class="radio2 proceedRadio" name="amount"/><label for="proceed">Proceed</label>
+                                <input type="radio" class="radio2 proceedRadio" name="amount" id="proceed2"/><label for="proceed2">Proceed</label>
                             </li>
                             <li>
-                                <input type="radio"  class="radio2 useAmountRadio" name="amount"/><label for="useAmount">Use this amount</label> <input type="text" class="text amountText"  disabled="disabled"/>
+                                <input type="radio"  class="radio2 useAmountRadio" name="amount" id="useAmount2"/><label for="useAmount2">Use this amount</label> <input type="text" class="text amountText2" id="amountText2" />
                             </li>
                         </ul>                            
                         

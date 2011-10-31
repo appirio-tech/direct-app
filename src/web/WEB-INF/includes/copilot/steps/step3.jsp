@@ -1,11 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, duxiaoyang
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: The step 3 of post a copilot.
+  - Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
+  -   Added id attribute for budget selection.
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.0 (TC Cockpit Post a Copilot Assembly 1).
+  - Version 1.1 (TC Cockpit Post a Copilot Assembly 2).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -32,14 +34,14 @@
             
             
             <div class="rowItem">
-                <label>If you have prepared a <br />budget for this project<span class="red">*</span></label>
+                <label>Do you have a budget?<span class="red">*</span></label>
                     
                 <ul>
                     <li>
-                        <input type="radio" class="radio" name="budget" id="haveBudget"/> <label for="haveBudget">a. I have a budget</label> <input type="text" class="text" value="$" disabled="disabled" />
+                        <input type="radio" class="radio" name="budget" id="haveBudget"/> <label for="haveBudget">a. I have a budget</label> <input id="budget" type="text" class="text" value="$" />
                     </li>
                     <li>
-                        <input type="radio" class="radio" name="budget" id="notHaveBudget"/> <label for="notHaveBudget">b. I dont have a budget yet.</label> 
+                        <input type="radio" class="radio" name="budget" id="notHaveBudget"/> <label for="notHaveBudget">b. I don't have a budget yet.</label> 
                     </li>
                 </ul>
             </div>

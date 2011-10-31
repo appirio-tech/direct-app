@@ -5,7 +5,10 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,7 +28,11 @@ import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.project.CopilotContestExtraInfo;
+import com.topcoder.management.project.CopilotContestExtraInfoType;
 import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.Project;
+import com.topcoder.management.project.ProjectCopilotType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.CompetionType;
@@ -161,7 +168,13 @@ public class GetContestAction extends ContestAction {
     * <p> Whether user is admin </p>
     */
     private boolean admin;
-
+    
+    private Set<Long> copilotProjectTypes;
+    
+    private String budget;
+    
+    private String otherManagingExperienceString;
+    
     /**
      * <p>
      * Creates a <code>GetContestAction</code> instance.
@@ -239,6 +252,24 @@ public class GetContestAction extends ContestAction {
         // calculate the contest issues tracking health
         getViewData().getDashboard().setUnresolvedIssuesNumber(getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
         DashboardHelper.setContestStatusColor(getViewData().getDashboard());
+        
+        // set project
+        Project project = getProjectServices().getProject(projectId);
+        copilotProjectTypes = new HashSet<Long>();
+        for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
+            copilotProjectTypes.add(type.getId());
+        }
+        
+        budget = null;
+        otherManagingExperienceString = null;
+        for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
+            if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
+                budget = extraInfo.getValue();
+            }
+            if (extraInfo.getType().getId() == CopilotContestExtraInfoType.OTHER_MANAGING_EXPERIENCE.getId()) {
+                otherManagingExperienceString = extraInfo.getValue();
+            }
+        }
     }
 
     /**
@@ -433,4 +464,38 @@ public class GetContestAction extends ContestAction {
     public boolean isAdmin() {
         return admin;
     }
+
+    /**
+     * <p>
+     * Gets the mapping to be used for looking up the project copilot types by IDs.
+     * </p>
+     * @return a <code>Map</code> mapping the project copilot type ids to category names.
+     * @throws Exception
+     *             if an unexpected error occurs.
+     * @since 1.5
+     */
+    public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
+        return DataProvider.getAllProjectCopilotTypes();
+    }
+
+    /**
+     * @return the copilotProjectTypes
+     */
+    public Set<Long> getCopilotProjectTypes() {
+        return copilotProjectTypes;
+    }
+
+    /**
+     * @return the budget
+     */
+    public String getBudget() {
+        return budget;
+    }
+
+    /**
+     * @return the otherManagingExperienceString
+     */
+    public String getOtherManagingExperienceString() {
+        return otherManagingExperienceString;
+    }    
 }

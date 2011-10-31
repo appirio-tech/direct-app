@@ -283,8 +283,15 @@ import java.util.Map.Entry;
  *   </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv
- * @version 2.9.0
+ * <p>
+ * Changes in version 2.9.1 (TC Cockpit Post a Copilot Assembly 2):
+ * <ol>
+ * <li>Added {@link #getAllProjectCopilotTypes()} method.</li>
+ * </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
+ * @version 2.9.1
  * @since 1.0
  */
 public class DataProvider {
@@ -4315,6 +4322,31 @@ public class DataProvider {
         }
         
         return result;
+    }
+
+	/**
+     * <p>
+     * Gets the mapping to be used for looking up the project copilot types by IDs.
+     * </p>
+     * @return a <code>Map</code> mapping the project copilot type ids to category names.
+     * @throws Exception
+     *             if an unexpected error occurs.
+     * @since 2.9.1
+     */
+    public static Map<Long, String> getAllProjectCopilotTypes() throws Exception {
+        Map<Long, String> map = new LinkedHashMap<Long, String>();
+
+        final String queryName = "project_copilot_types";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            map.put(row.getLongItem("project_copilot_type_id"), row.getStringItem("name"));
+        }
+
+        return map;
     }
 }
 

@@ -1,11 +1,12 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,9 +38,15 @@ import com.topcoder.security.TCSubject;
  * Version 1.2.1 - Release Assembly - Direct Improvements Assembly Release 3 Change Note
  * - add method getCurrentServerDate to return current server date.
  * </p>
+ * <p>
+ * Changes in version 1.2.2 (TC Cockpit Post a Copilot Assembly 2):
+ * <ol>
+ * <li>Added {@link #getAllProjectCopilotTypes()} method.</li>
+ * </ol>
+ * </p>
  *
- * @author BeBetter,TCSDEVELOPER
- * @version 1.2.1
+ * @author BeBetter, TCSDEVELOPER, duxiaoyang
+ * @version 1.2.2
  */
 public class LaunchContestAction extends ContestAction {
     private CommonDTO viewData =  new CommonDTO();
@@ -127,5 +134,18 @@ public class LaunchContestAction extends ContestAction {
         }
 
         return result;
+    }
+
+    /**
+     * <p>
+     * Gets the mapping to be used for looking up the project copilot types by IDs.
+     * </p>
+     * @return a <code>Map</code> mapping the project copilot type ids to category names.
+     * @throws Exception
+     *             if an unexpected error occurs.
+     * @since 1.2.2
+     */
+    public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
+        return DataProvider.getAllProjectCopilotTypes();
     }
 }

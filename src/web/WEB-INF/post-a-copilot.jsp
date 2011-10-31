@@ -74,7 +74,7 @@
                                             </span>
                                         </span></span></li>
                                         
-										<!--<li><span class="istatus inext"><span class="arrow">
+										<li><span class="istatus inext"><span class="arrow">
                                             <span class="bg">
                                                 <a href="javascript:;" id="stepLink_2">Step 2</a>
                                                 <span class="stepText">Step 2</span>
@@ -86,19 +86,19 @@
                                                 <a href="javascript:;" id="stepLink_3">Step 3</a>
                                                 <span class="stepText">Step 3</span>
                                             </span>
-                                        </span></span></li>-->
+                                        </span></span></li>
                                         
 										<li><span class="istatus inext"><span class="arrow">
                                             <span class="bg">
-                                                <a href="javascript:;" id="stepLink_4">Step 2</a>
-                                                <span class="stepText">Step 2</span>
+                                                <a href="javascript:;" id="stepLink_4">Step 4</a>
+                                                <span class="stepText">Step 4</span>
                                             </span>
                                         </span></span></li>
                                         
 										<li class="last"><span class="istatus inext"><span class="arrow">
                                             <span class="bg">
-                                                <a href="javascript:;" id="stepLink_5">Step 3</a>
-                                                <span class="stepText">Step 3</span>
+                                                <a href="javascript:;" id="stepLink_5">Step 5</a>
+                                                <span class="stepText">Step 5</span>
                                             </span>
                                         </span></span></li>
 									</ul>
@@ -154,6 +154,9 @@
                                         <ul>
                                             <li>
                                                 <a href="javascript:;" class="viewContest" id="previewButton"><span>View Contest</span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" class="viewProjectOverview" id="projectOverviewButton"><span>Project Overview</span></a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;" class="forumIcon" id="forumButton"><span>Forum</span></a>

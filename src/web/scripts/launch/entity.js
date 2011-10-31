@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file defines classes to store informations about contest.
@@ -12,8 +12,6 @@
  * Changes in v1.0.2 (TC Direct - Software Creation Update assembly): 
  *  - Add copilotUserId and copilotUserName to SoftwareCompetition
  * </p>
- * @author TCSASSEMBLER, TCSDEVELOPER
- * @version 1.0.2
  * <p>
  * Changes in 1.1 TC Direct Replatforming Release 1 change note
  * - Many changes were made to work for the new studio contest type and multiround type.
@@ -22,9 +20,17 @@
  * Changes in 1.2 TC Direct Replatforming Release 4 change note
  * - Change com.topcoder.direct.Projec to support art stocks and maximal submission limitation.
  * </p>
+ * <p>
+ * Changes in version 1.3 (TC Cockpit Post a Copilot Assembly 2):
+ * <ul>
+ * <li>Added ProjectCopilotType, CopilotContestExtraInfoType, and CopilotContestExtraInfo classes.</li>
+ * <li>Added projectCopilotTypes and copilotContestExtraInfos fields to Project class.</li>
+ * <li>Added two constant CopilotContestExtraInfoTypes.</li>
+ * </ul>
+ * </p>
  * 
- * @author TCSASSEMBLER
- * @version 1.2
+ * @author TCSASSEMBLER, duxiaoyang
+ * @version 1.3
  */
 if(!com) {
    var com = {};
@@ -253,14 +259,17 @@ com.topcoder.direct.AssetDTO = function() {
 com.topcoder.direct.Project = function() {
 	  this.id = -1;
 	  
-	  this.tcDirectProjectId = -1;
-	  
+	  this.tcDirectProjectId = -1;	
 	  
 	  this.projectSpec = new com.topcoder.direct.ProjectSpec();
 	  
 	  this.projectStudioSpecification = new com.topcoder.direct.ProjectStudioSpecification();
 	  
 	  this.prizes = [];
+	  
+	  this.projectCopilotTypes = [];
+	  
+	  this.copilotContestExtraInfos = [];
 
 	  this.properties = {};
 	  
@@ -424,6 +433,39 @@ com.topcoder.direct.ProjectSpec = function() {
       this.privateDescription = "";
 }
 
+/**
+ * Project copilot type class.
+ */
+com.topcoder.direct.ProjectCopilotType = function(id, name, description) {
+    this.id = id;
+    
+    this.name = name;
+    
+    this.description = description;
+}
+
+/**
+ * Copilot contest extra info type class.
+ */
+com.topcoder.direct.CopilotContestExtraInfoType = function(id, name, description) {
+    this.id = id;
+    
+    this.name = name;
+    
+    this.description = description;
+}
+
+var BUDGET_EXTRA_INFO_TYPE = new com.topcoder.direct.CopilotContestExtraInfoType(1, 'Budget', 'Budget');
+var OTHER_EXTRA_INFO_TYPE = new com.topcoder.direct.CopilotContestExtraInfoType(2, 'Other Managing Experience', 'Other Managing Experience');
+
+/**
+ * Copilot contest extra info class.
+ */
+com.topcoder.direct.CopilotContestExtraInfo = function(type, value) {
+    this.type = type;
+    
+    this.value = value;
+}
 
 /**
  * Main Widget

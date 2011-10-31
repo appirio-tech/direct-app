@@ -349,7 +349,7 @@ a.smallRed span.right {
 						width:170px;
 						padding-right:30px;
 						font-size:12px;
-						float:left;
+						/*float:left;*/
 					}
 					
 					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem label {
@@ -667,6 +667,13 @@ a.smallRed span.right {
 						margin-top: 2px;
 						margin-left:4px;
 					}
+
+					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .amountText2 {
+						float:none;
+						width: 50px;
+						margin-top: 2px;
+						margin-left:4px;
+					}
 					
 					.get-a-copilot .stepContainer .geryContent .rowItem .lineItem .postFrame .radio2 {
 						margin-right:7px;
@@ -766,7 +773,23 @@ a.smallRed span.right {
                     .get-a-copilot li a.viewContest span.noBorderRight {
                         border-right:0px;
                     }
-					.get-a-copilot li a.viewContest:hover span, .get-a-copilot li a.forumIcon:hover span{ text-decoration:underline;}
+					.get-a-copilot li a.viewContest:hover span, .get-a-copilot li a.forumIcon:hover span, .get-a-copilot li a.viewProjectOverview:hover span{ text-decoration:underline;}
+					.get-a-copilot li a.viewProjectOverview,.get-a-copilot li a.viewProjectOverview:visited {
+						background:url(../images/project_overview_icon.png) 0 0 no-repeat;
+						font-size:11px;
+						font-family:Arial, Helvetica, sans-serif;
+						text-decoration:none;
+						line-height:19px;
+						height:19px;
+						padding-left:24px;
+						display:inline-block;
+					}
+					.get-a-copilot li a.viewProjectOverview span {
+						border-right:1px solid #d6d6d6;
+						display:inline-block;
+						padding-right:9px;
+						cursor:pointer;
+					}
 					.get-a-copilot li a.forumIcon,
 					.get-a-copilot li a.forumIcon:visited {
 						background:url(../images/forum_ico.png) 0 0 no-repeat;

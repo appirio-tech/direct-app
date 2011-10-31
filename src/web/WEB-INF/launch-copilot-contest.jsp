@@ -1,12 +1,14 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.2
+  - Author: TCSASSEMBLER, duxiaoyang
+  - Version: 1.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: provide two ways to select a copilot.
   - Since: TC Direct - Launch Copilot Selection Contest assembly
   - Version 1.1 (TC Direct Manage Copilots Assembly) changes: set CURRENT_TAB parameter.
   - Version 1.2 (TC Cockpit Post a Copilot Assembly 1) changes: apply to new prototype.
+  - Changes in version 1.3 (TC Cockpit Post a Copilot Assembly 2):
+  -  Remove "Select from Copilot Pool" button.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -26,7 +28,7 @@
 
     <script type="text/javascript" src="/scripts/newProject.js?v=207894"></script>
     <script type="text/javascript" src="/scripts/get-a-copilot.js?v=208132"></script> 
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>   
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script> 
     
 </head>
 
@@ -65,9 +67,9 @@
                                         <ul>
                                             <li class="first"><span class="istatus inext"><span class="arrow"><span class="bg">Step 1</span></span></span></li>
                                             <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 2</span></span></span></li>
-                                            <!--<li><span class="istatus inext"><span class="arrow"><span class="bg">Step 3</span></span></span></li>
-                                            <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 4</span></span></span></li>-->
-                                            <li class="last"><span class="istatus inext"><span class="arrow"><span class="bg">Step 3</span></span></span></li>
+                                            <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 3</span></span></span></li>
+                                            <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 4</span></span></span></li>
+                                            <li class="last"><span class="istatus inext"><span class="arrow"><span class="bg">Step 5</span></span></span></li>
                                         </ul>
                                     
                                     </div>

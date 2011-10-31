@@ -1,11 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Author: TCSASSEMBLER, duxiaoyang
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: The step 6 of post a copilot.
+  - Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
+  -   Finished step 2 and 3.
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.0 (TC Cockpit Post a Copilot Assembly 1).
+  - Version 1.1 (TC Cockpit Post a Copilot Assembly 2).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -100,12 +102,12 @@
         <!-- End .row -->
         
         <!-- row -->
-        <div class="row hide">
+        <div class="row">
             
             <div class="title"><!-- columns title -->
                 <div class="titleLeft"><div class="titleRight">
                     <a href="javascript:;" class="edit" name="editStep2"></a>
-                    <h2>Managing Project Experiences</h2>
+                    <h2>Experiences</h2>
                 </div></div>
             </div><!-- End .title -->
             
@@ -115,8 +117,7 @@
                     <tr>
                         <td><label>Type of projects:</label></td>
                         <td>
-                            <!-- left to next assembly -->
-                            <span>Design Graphic, Large scale web applications</span>
+                            <span id="copilotTypes"></span>
                         </td>
                     </tr>
                     
@@ -127,7 +128,7 @@
         <!-- End .row -->
         
         <!-- row -->
-        <div class="row hide">
+        <div class="row">
             <div class="title"><!-- columns title -->
                 <div class="titleLeft"><div class="titleRight">
                     <a href="javascript:;" class="edit" name="editStep3"></a>
@@ -141,8 +142,7 @@
                     <tr>
                         <td><label>Budget:</label></td>
                         <td>
-                            <!-- left to next assembly -->
-                            <span>30.000 US</span>
+                            <span id="copilotContestBudget"></span>
                         </td>
                     </tr>
                     

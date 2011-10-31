@@ -30,6 +30,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css"/>
+	<link rel="stylesheet" href="/css/copilotDetails.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=204700"></script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=209174"></script>
     <script type="text/javascript" src="/scripts/copilots.js?v=207804"></script>
@@ -62,6 +63,12 @@
             ${doc.uploadedFileName}
             ${doc.uploadedFileDesc} -->
             </c:forEach>
+            
+            <c:forEach items="${copilotProjectTypes}" var="type" varStatus="loop" >
+                experiences.push('${type}');
+            </c:forEach>
+            extraExperience = '${otherManagingExperienceString}';
+            budget = '${budget}';
         });
     </script>
 </head>
@@ -146,6 +153,33 @@
                         </c:forEach>
                     </strong>
                 </li>
+                <li>
+                    <label>Experience :</label>
+                    
+                    <strong id="copilotTypesTextLabel">
+                        <c:forEach var="copilotType" items="${allProjectCopilotTypes}" >
+                            <c:if test="${fn:contains(copilotProjectTypes, copilotType.key)}">
+                                ${copilotType.value}&nbsp;
+                            </c:if>                               
+                        </c:forEach>
+                        
+                        <c:if test="${not empty otherManagingExperienceString}">
+                            ${otherManagingExperienceString}
+                        </c:if>
+                    </strong>
+                </li>
+                <li>
+                    <label>Budget :</label>
+                    
+                    <strong id="budgetTextLabel">
+                        <c:if test="${not empty budget}">
+                            $ ${budget}
+                        </c:if>
+                        <c:if test="${empty budget}">
+                            Don't have a budget yet.
+                        </c:if>
+                    </strong>
+                </li>                
             </ul>
         </div>
     </div>
@@ -197,6 +231,52 @@
                     </select>
                 </div>
             </div>
+            
+            <!-- Experience -->
+            <div class="row experienceRow">
+                <label>Select Copilot Experience :</label>
+                <div class="billingSelect experienceDiv">
+                    <ul class="type1">
+                        <c:forEach var="copilotType" items="${allProjectCopilotTypes}" end="${fn:length(allProjectCopilotTypes) / 2 - 0.5}">
+                        <li>
+                            <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" <c:if test="${fn:contains(copilotProjectTypes, copilotType.key)}">checked='checked'</c:if> />
+                            <label for="${copilotType.value}">${copilotType.value}</label>
+                        </li>
+                        </c:forEach>      
+                    </ul>
+                    <ul class="type3">
+                        <c:forEach var="copilotType" items="${allProjectCopilotTypes}" begin="${fn:length(allProjectCopilotTypes) / 2 + 0.5}">
+                        <li>
+                            <input type="checkbox" id="${copilotType.value}" value="${copilotType.key}" <c:if test="${fn:contains(copilotProjectTypes, copilotType.key)}">checked='checked'</c:if> />
+                            <label for="${copilotType.value}">${copilotType.value}</label>
+                        </li>
+                        </c:forEach>
+                    </ul>  
+                    
+                    <div class="clear"></div>
+                    
+                    <label class="otherExperience">Other:</label>
+                    <input type="text" class="text" id="otherExperience" value='${otherManagingExperienceString}'/>                    
+                </div>
+            </div>            
+            
+            <!-- Budget -->
+            <div class="row budgetRow experienceRow">
+                <label for="projectBudgetInput">Set Budget :</label>
+                
+                <ul>
+                    <li>
+                        <input type="radio" class="radio" name="budget" id="haveBudget" <c:if test="${not empty budget}">checked='checked'</c:if> /> 
+                        <label for="haveBudget">a. I have a budget</label>
+                         $&nbsp;<input id="projectBudgetInput" type="text" class="text" value="${budget}" />
+                    </li>
+                    <li>
+                        <input type="radio" class="radio" name="budget" id="notHaveBudget" <c:if test="${empty budget}">checked='checked'</c:if>/> 
+                        <label for="notHaveBudget">b. I don't have a budget yet.</label> 
+                    </li>
+                </ul>                
+            </div>   
+            
             <p class="save">
                 <a class="cancel_text" href="javascript:" id="cancelContestInfo">cancel</a>
                 <a href="javascript:" id="saveContestInfo">
