@@ -4222,7 +4222,7 @@ public class DataProvider {
         // Puts result into the map
         for(TcJiraIssue issue : issues) {
             Long projectId = issue.getProjectID();
-            Long studioId = issue.getStudioID();
+           
             ContestIssuesTrackingDTO dto;
 
             if(issue.isBugRace()) {
@@ -4232,12 +4232,7 @@ public class DataProvider {
                         dto.getBugRaces().add(issue);
                     }
                 }
-                if (studioId != null) {
-                     dto = idsMap.get(studioId);
-                     if (dto != null) {
-                        dto.getBugRaces().add(issue);
-                     }
-                }
+               
             } else {
                  if(projectId != null) {
                     dto = idsMap.get(projectId);
@@ -4245,12 +4240,7 @@ public class DataProvider {
                         dto.getIssues().add(issue);
                     }
                 }
-                if (studioId != null) {
-                    dto = idsMap.get(studioId);
-                    if (dto != null) {
-                        dto.getIssues().add(issue);
-                    }
-                }
+               
             }
 
 

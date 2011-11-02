@@ -15,7 +15,7 @@ import java.util.List;
  *
  * <p>
  *     Version 1.1 TC Cockpit Bug Tracking R1 Cockpit Project Tracking change notes:
- *     - Added projectIDField, studioIDField, and badContestHealthIssuesNumber.
+ *     - Added projectIDField, and badContestHealthIssuesNumber.
  * </p>
  *
  * @author Veve
@@ -87,13 +87,6 @@ public class IssueTrackingConfig {
     @XmlElement
     private String projectIDField;
 
-    /**
-     * The custom field id for studioID.
-     *
-     * @since 1.1
-     */
-    @XmlElement
-    private String studioIDField;
 
     /**
      * A list of status id that represents an issue is resolved or closed.
@@ -107,11 +100,6 @@ public class IssueTrackingConfig {
     @XmlElement
     private String softwareContestJQLQuery;
 
-    /**
-     * JQL query for studio contest.
-     */
-    @XmlElement
-    private String studioContestJQLQuery;
 
     /**
      * The max limit size of the result returned by Jira RPC soap service.
@@ -325,23 +313,6 @@ public class IssueTrackingConfig {
         this.softwareContestJQLQuery = softwareContestJQLQuery;
     }
 
-    /**
-     * Gets the JQL query for studio contest.
-     *
-     * @return the JQL query for studio contest.
-     */
-    public String getStudioContestJQLQuery() {
-        return studioContestJQLQuery;
-    }
-
-    /**
-     * Sets the JQL query for studio contests.
-     *
-     * @param studioContestJQLQuery the JQL query for studio contest.
-     */
-    public void setStudioContestJQLQuery(String studioContestJQLQuery) {
-        this.studioContestJQLQuery = studioContestJQLQuery;
-    }
 
     /**
      * Gets the max result number returned by the Jira RPC Service.
@@ -401,23 +372,5 @@ public class IssueTrackingConfig {
         this.projectIDField = projectIDField;
     }
 
-    /**
-     * Gets the custom studioIDField.
-     *
-     * @return the custom studioIDField.
-     * @since 1.1
-     */
-    public String getStudioIDField() {
-        return studioIDField;
-    }
-
-    /**
-     * Sets the custom studioIDField
-     *
-     * @param studioIDField the custom studioIDField.
-     * @since 1.1
-     */
-    public void setStudioIDField(String studioIDField) {
-        this.studioIDField = studioIDField;
-    }
+  
 }

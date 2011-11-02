@@ -109,7 +109,6 @@ public class JiraRpcServiceWrapper {
      * Gets all the issues for specified contest id.
      *
      * @param contestId the id of the contest.
-     * @param isStudio the flag to indicate whether the contest is a studio contest.
      * @return the list of all the issues of the contest.
      * @throws Exception if any error occurs.
      */
@@ -124,7 +123,6 @@ public class JiraRpcServiceWrapper {
 
         // build the JQL query first
         String softwareQuery = ConfigUtils.getIssueTrackingConfig().getSoftwareContestJQLQuery();
-        String studioQuery = ConfigUtils.getIssueTrackingConfig().getStudioContestJQLQuery();
         String jqlQuery = (softwareQuery) + contestId;
 
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
@@ -150,12 +148,11 @@ public class JiraRpcServiceWrapper {
 
         // build the JQL query first
         String softwareQuery = ConfigUtils.getIssueTrackingConfig().getSoftwareContestJQLQuery();
-        String studioQuery = ConfigUtils.getIssueTrackingConfig().getStudioContestJQLQuery();
 
         StringBuffer jqlQueryBuilder = new StringBuffer();
 
         for(ContestBriefDTO contest : contests) {
-            jqlQueryBuilder.append((contest.isSoftware() ? softwareQuery : studioQuery) + contest.getId());
+            jqlQueryBuilder.append((softwareQuery ) + contest.getId());
             jqlQueryBuilder.append(" OR ");
         }
 

@@ -16,7 +16,7 @@ import java.util.Date;
  * The DTO class which is used to store the data for a Jira issue of TopCoder.
  *
  * <p>Version 1.1 TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 assembly change note:
- * - Add getProjectID, getStudioId, and isBugRace.
+ * - Add getProjectID, and isBugRace.
  * </p>
  *
  * @author Veve
@@ -320,24 +320,7 @@ public class TcJiraIssue implements Serializable {
         return null;
     }
 
-    /**
-     * Gets the studio id of the jira issue.
-     *
-     * @return the studio id the jira issue.
-     * @since 1.1
-     */
-    public Long getStudioID() {
-         RemoteCustomFieldValue[] values = this.issue.getCustomFieldValues();
-
-        for(RemoteCustomFieldValue value : values) {
-            if(value.getCustomfieldId().trim().toLowerCase().equals(ConfigUtils.getIssueTrackingConfig().getStudioIDField().trim().toLowerCase())) {
-                return Long.parseLong(value.getValues()[0].trim());
-            }
-        }
-
-        return null;
-    }
-
+   
     /**
      * Check if the issue is a bug race.
      *
