@@ -43,14 +43,10 @@
 	<!-- the custom field id fo custom filed 'project ID Field' -->
 	<projectIDField>customfield_10093</projectIDField>
 
-	<!-- the custom field id fo custom filed 'studio ID Field' -->
-	<studioIDField>customfield_10094</studioIDField>
 
 	<!-- the JQL query used for software contest -->
 	<softwareContestJQLQuery>ProjectID ~ </softwareContestJQLQuery>
 
-	<!-- the JQL query used for studio contest -->
-	<studioContestJQLQuery>StudioID ~ </studioContestJQLQuery>
 
 	<!-- the max result number -->
 	<maxResultNumber>10000</maxResultNumber>
