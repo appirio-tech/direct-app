@@ -304,15 +304,14 @@ $(document).ready(function(){
             var ranks = "";
             var prizesChosen = 0;
             var reachLast = false;
-            for (var i = number - 1; i >= 0; i--) {
+            for (var i = 0; i < number; i++) {
                 if (!bankData || !bankData[arrPrize[i]]) {
-                    prizesChosen++;
-                    if (reachLast) {
-                        showErrors.html("Prize slots must be filled.");
-                        return false;
-                    }
+                    
+                    showErrors.html("Prize slots must be filled.");
+                    return false;
+                    
                 } else {
-                    reachLast = true;
+                    prizesChosen++;
                 }
             }
             

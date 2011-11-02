@@ -64,6 +64,7 @@
 <script type="text/javascript" src="/scripts/ui.droppable.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/ui.accordion.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/thickbox-compressed.js?v=186145"></script>
+<script type="text/javascript" src="/scripts/modalWindows.js?v=207790"></script>
 
 
 <s:if test="formData.viewType.toString() == 'GRID'">
