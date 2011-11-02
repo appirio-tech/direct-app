@@ -87,7 +87,7 @@
 <s:if test="formData.viewType.toString() == 'CHECKOUT'">
     <script type="text/javascript" src="/scripts/common.js?v=208807"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
-    <script type="text/javascript" src="/scripts/checkout.js?v=207440"></script>
+    <script type="text/javascript" src="/scripts/checkout.js?v=209530"></script>
 </s:if>
 <s:if test="formData.viewType.toString() == 'CHECKOUT_CONFIRM'">
     <script type="text/javascript" src="/scripts/common.js?v=208807"></script>

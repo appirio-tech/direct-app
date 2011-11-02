@@ -16,7 +16,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=209174"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=209437"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=209174"></script>
     <script type="text/javascript" src="/scripts/launchcontest.js?v=207440"></script>
     <script type="text/javascript" src="/scripts/launch/pages/selection.js?v=207440"></script>

@@ -39,7 +39,7 @@
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
     //]]>
     </script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=209174"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=209437"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=209174"></script>
     <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=207879"></script>
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
