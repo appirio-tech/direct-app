@@ -518,4 +518,35 @@
             </else>
         </if>
     </target>
+
+     <target name="update-single-revision-number" description="update revision number for each single file">
+        <pathconvert property="pathInPage" pathsep="/" dirsep="/">
+            <path location="${file}"/>
+            <map from="${basedir}/src/web" to="" />
+        </pathconvert>
+
+        <svnex>
+            <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev" />
+        </svnex>
+
+        <replaceregexp byline="true">
+            <regexp pattern='([href|src])="(.*${pathInPage})(\?v=\d+)?"'/>
+            <substitution expression='\1="\2?v=${svn.info.lastRev}"'/>
+            <fileset dir="${webdir}">
+                <include name="**/*.jsp"/>
+            </fileset>
+        </replaceregexp>
+    </target>
+
+    <target name="update-revision-numbers" description="update revision number for static files">
+        <foreach param="file" target="update-single-revision-number" >
+            <path>
+                <fileset dir="${webdir}">
+                    <include name="**/*.css" />
+                    <include name="**/*.js" />
+                </fileset>
+            </path>
+        </foreach>
+
+    </target>
 </project>
