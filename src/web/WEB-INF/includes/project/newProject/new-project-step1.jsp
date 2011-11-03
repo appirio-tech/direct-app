@@ -57,7 +57,7 @@
                     <a href="javascript:;" class="toolTip" id="toolTip1"
                        rel='&lt;p&gt;&lt;b&gt;60 characters max.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Examples: "XYZ System Upgrade",&lt;/p&gt; &lt;p&gt;"ABC Refactoring", "XYZ Website" etc.&lt;/p&gt;'></a>
                     <label>Project Name <span class="red">*</span></label>
-                    <input id="newCockpitProjectName" type="text" class="text" maxlength="60"/>
+                    <input id="newProjectName" type="text" class="text" maxlength="60"/>
                     <span class="intro">All fields marked with <span class="red">*</span> are mandatory</span>
 
                     <div class="clear"></div>
@@ -74,7 +74,7 @@
                     <a href="javascript:;" class="toolTip" id="toolTip2"
                        rel="&lt;p&gt;&lt;b&gt;A short description about the project,&lt;/b&gt; such as:&lt;/p&gt;&lt;p&gt;Is this a new application or an upgrade of an existing application ?&lt;/p&gt; &lt;p&gt;What is the scope of your project ?&lt;/p&gt;&lt;p&gt;What application do you want to build ?&lt;/p&gt;&lt;p&gt;What is your main objective for building the application ?&lt;/p&gt;"></a>
                     <label>Project Description<span class="red">*</span></label>
-                    <textarea id="newCockpitProjectDescription" rows="10" cols="10"></textarea>
+                    <textarea id="newProjectDescription" rows="10" cols="10"></textarea>
 
                     <div class="clear"></div>
                     <p class="message">

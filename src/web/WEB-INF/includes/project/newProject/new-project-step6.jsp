@@ -1,10 +1,11 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 6.
   -
+  - Version 1.1 change noets: Added informations for presentation project type.
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1 v1.0)
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -73,7 +74,7 @@
                         <dt>Steps already completed:</dt>
                         <dd class="step1"><span class="icon">1</span>
 
-                            <p>Create project</p></dd>
+                            <p>Create Project</p></dd>
                         <dd class="step2 createStep hide"><span class="icon">2</span>
 
                             <p>Create draft copilot posting</p></dd>
@@ -84,6 +85,9 @@
 
                             <p class="twoLine">Select copilot<br/><span class="smallText">Username1, iamcopilot</span>
                             </p></dd>
+                        <dd class="step2 pptStep hide"><span class="icon">2</span>
+
+                            <p>Provide Presentation Details Information</p></dd>
                         <dd class="step3 selectStep hide"><span class="icon">3</span>
 
                             <p class="twoLine">Select copilot<br/><span class="smallText">Username1, iamcopilot</span>
@@ -107,6 +111,9 @@
                         <dd class="step3 launchStep hide"><span class="icon">3</span>
 
                             <p>Complete and launch copilot posting</p></dd>
+                        <dd class="step3 pptStep hide"><span class="icon">3</span>
+
+                            <p>Project Manger review your project</p></dd>
                         <dd class="step4 completeStep hide"><span class="icon">4</span>
 
                             <p>Complete contest specifications and schedule contests</p></dd>
@@ -121,6 +128,9 @@
                             <p class="twoLine">Select copilot from copilot posting submitters<br/><span
                                     class="smallText">Copilot will help you to complete the other processes</span></p>
                         </dd>
+                        <dd class="step4 pptStep hide"><span class="icon">4</span>
+
+                            <p>Launch Copilot Opportunity and Pick Copilot</p></dd>
                         <dd class="step5 launchFirstStep hide"><span class="icon">5</span>
 
                             <p>Launch first contest</p></dd>
@@ -129,6 +139,9 @@
                             <p class="twoLine">Select copilot from copilot posting submitters<br/><span
                                     class="smallText">Copilot will help you to complete the other processes</span></p>
                         </dd>
+                        <dd class="step5 pptStep hide"><span class="icon">5</span>
+
+                            <p>Launch first contest</p></dd>
                     </dl>
                     <!-- End .list -->
 

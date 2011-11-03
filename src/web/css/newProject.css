@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ *
+ * Used for the new project creation process, included by the JSP file dashboard-create-new-project.jsp
+ *
+ * @version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1)
+ *
+ */
 @charset "utf-8";
 /* CSS Document */
 *{
@@ -10,7 +18,8 @@
 	line-height:0;
 	overflow:hidden;
 	clear:both;
-	}
+    display:block;
+    }
 	
 body#page{
 	margin:0;
@@ -35,7 +44,10 @@ a{
 .hide{
 	display:none;
 }
-
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 /*------------
 	WRAPPER
 ---------------*/
@@ -50,7 +62,7 @@ a{
 
 #header{
 	height:120px;
-	background:url(../images/header_dash_bg.png) repeat-x;
+	background:url(/images/header_dash_bg.png) repeat-x;
 	position:relative;
 	}
 
@@ -68,7 +80,7 @@ a{
 	padding-left:40px;
 	padding-top:7px;
 	padding-bottom:3px;
-	background:url(../images/project_logo.png) no-repeat left;
+	background:url(/images/project_logo.png) no-repeat left;
 	}
 
 #header .helloUser{ /* this area will contain the logout, help links*/
@@ -110,14 +122,14 @@ a{
 		}
 		
 	#header .helloUser a.help{
-		background:url(../images/help_ico6.png) no-repeat right 0;
+		background:url(/images/help_ico6.png) no-repeat right 0;
 		padding-right:20px;
 		padding-top:2px;
 		font-weight:bold;
 		}
 	
 	#header .helloUser a.help:hover{
-		background:url(../images/help_ico6.png) no-repeat right -17px;
+		background:url(/images/help_ico6.png) no-repeat right -17px;
 		}
 		
 /*-----------------
@@ -169,23 +181,23 @@ a{
 	
 	#tabs0 ul li.on a{
 		color:#262626;
-		background:url(../images/top_nav_button_left.png) left top no-repeat;
+		background:url(/images/top_nav_button_left.png) left top no-repeat;
 		}
 	
 	#tabs0 ul li.on a:hover {
 		}
 
 	#tabs0 ul li.on a span{
-		background:url(../images/top_nav_button.png) right top no-repeat;
+		background:url(/images/top_nav_button.png) right top no-repeat;
 		}
 
 	#tabs0 ul li a:hover{
 		color:#262626;
-		background:url(../images/top_nav_button_left.png) 0 -21px no-repeat;
+		background:url(/images/top_nav_button_left.png) 0 -21px no-repeat;
 		}
 	
 	#tabs0 ul li a:hover span{
-		background:url(../images/top_nav_button.png) right -21px no-repeat;
+		background:url(/images/top_nav_button.png) right -21px no-repeat;
 		}
 /* tabs1 ( the main tabs )*/
 #tabs1{
@@ -210,12 +222,12 @@ a{
 		font-size:12px;
 		font-weight:bold;
 		text-decoration:none;
-		background:#000 url(../images/tabs_left.png) no-repeat left top; /* left corner */
+		background:#000 url(/images/tabs_left.png) no-repeat left top; /* left corner */
 		float:left;
 		}
 	
 	#tabs1 ul li a span{
-		background:url(../images/tabs_right.png) no-repeat right top; /* right corner */
+		background:url(/images/tabs_right.png) no-repeat right top; /* right corner */
 		float:left;
 		height:20px;
 		width:100px;
@@ -241,11 +253,11 @@ a{
 	
 	#tabs1 ul li.on a{
 		color:#ec1c23;
-		background:url(../images/tabs_left_on.png) no-repeat left; /* left corner */
+		background:url(/images/tabs_left_on.png) no-repeat left; /* left corner */
 		}
 	
 	#tabs1 ul li.on a span{
-		background:url(../images/tabs_right_on.png) no-repeat right; /* left corner */
+		background:url(/images/tabs_right_on.png) no-repeat right; /* left corner */
 		}
 
 /* tabs2 ( the right side tabs ) */
@@ -276,12 +288,12 @@ a{
 		font-size:12px;
 		font-weight:bold;
 		text-decoration:none;
-		background:#000 url(../images/tabs2_left.png) no-repeat left top; /* left corner */
+		background:#000 url(/images/tabs2_left.png) no-repeat left top; /* left corner */
 		float:left;
 		}
 	
 	#tabs2 ul li a span{
-		background:url(../images/tabs2_right.png) no-repeat right top; /* right corner */
+		background:url(/images/tabs2_right.png) no-repeat right top; /* right corner */
 		float:left;
 		height:20px;
 		width:100px;
@@ -326,7 +338,7 @@ a{
 
 #tabs3 ul{
 	height:40px;
-	background:url(../images/tabs3_bg.png) repeat-x top;
+	background:url(/images/tabs3_bg.png) repeat-x top;
 	list-style:none;
 	margin:0;
 	padding:0;
@@ -358,7 +370,7 @@ a{
 			}
 		
 		#tabs3 ul li a:hover{
-			background:url(../images/tabs3_bg_hover.png) repeat-x;
+			background:url(/images/tabs3_bg_hover.png) repeat-x;
 			}
 			
 			#tabs3 ul li a span{
@@ -369,11 +381,11 @@ a{
 				}
 			
 			#tabs3 ul li a.first span.left{ /* tabs left corner */
-				background:url(../images/tabs3_left.png) no-repeat left top;
+				background:url(/images/tabs3_left.png) no-repeat left top;
 				}
 			
 			#tabs3 ul li a.last span.left{ /* tabs right corner */
-				background:url(../images/tabs3_right.png) no-repeat right top;
+				background:url(/images/tabs3_right.png) no-repeat right top;
 				}
 			
 			#tabs3 ul li a.last span.right{
@@ -384,7 +396,7 @@ a{
 				height:30px;
 				padding-top:10px;
 				text-align:center;
-				background:url(../images/tabs3_border.png) no-repeat top right;
+				background:url(/images/tabs3_border.png) no-repeat top right;
 				}
 			
 			#tabs3 ul li a.first:hover span.left{
@@ -396,7 +408,7 @@ a{
 				}
 		
 		#tabs3 ul li.on a{
-			background:transparent url(../images/tabs3_on.png) repeat-x top !important;
+			background:transparent url(/images/tabs3_on.png) repeat-x top !important;
 			color:#FFF;
 			font-family:Verdana, Geneva, sans-serif;
 			}
@@ -408,15 +420,15 @@ a{
 			#tabs3 ul li.on a span.right{
 				height:32px;
 				padding-top:8px;
-				background:url(../images/tabs3_arrow.png) no-repeat center bottom;
+				background:url(/images/tabs3_arrow.png) no-repeat center bottom;
 				}
 			
 			#tabs3 ul li.on a.first span.left{
-				background:url(../images/tabs3_left_on.png) no-repeat left;
+				background:url(/images/tabs3_left_on.png) no-repeat left;
 				}
 			
 			#tabs3 ul li.on a.last span.left{
-				background:url(../images/tabs3_right_on.png) no-repeat right;
+				background:url(/images/tabs3_right_on.png) no-repeat right;
 				}
 				
             .tabs3Special #tabs3 ul li{
@@ -438,7 +450,7 @@ a{
 		margin:0;
 		padding:0;
 		height:21px;
-		background:url(../images/content_border.png) repeat-x bottom;
+		background:url(/images/content_border.png) repeat-x bottom;
 		}
 	
 		.tabs4 ul li{
@@ -449,7 +461,7 @@ a{
 		
 			.tabs4 ul li a{
 				float:left;
-				background:url(../images/tabs4_left.png) no-repeat left;
+				background:url(/images/tabs4_left.png) no-repeat left;
 				font-size:12px;
 				text-decoration:none;
 				cursor:pointer;
@@ -457,18 +469,18 @@ a{
 			
 			.tabs4 ul li a span{
 				float:left;
-				background:url(../images/tabs4_right.png) no-repeat right;
+				background:url(/images/tabs4_right.png) no-repeat right;
 				padding:3px 10px 3px 10px;
 				cursor:pointer;
 				}
 			
 			.tabs4 ul li.on a{
-				background:url(../images/tabs4_left_on.png) no-repeat left;
+				background:url(/images/tabs4_left_on.png) no-repeat left;
 				font-weight:bold;
 				}
 			
 			.tabs4 ul li.on a span{
-				background:url(../images/tabs4_right_on.png) no-repeat right;
+				background:url(/images/tabs4_right_on.png) no-repeat right;
 				}
 			
 .tabs4Content{
@@ -511,7 +523,7 @@ a{
 		}
 	
 	#area1 .currentPage a.home{
-		background:url(../images/home_ico.png) no-repeat left 2px;
+		background:url(/images/home_ico.png) no-repeat left 2px;
 		padding-left:15px;
 		}
 	
@@ -584,7 +596,7 @@ a{
 		
 	#footer .socialNetwork a,
 	#footer .socialNetwork a:visited{
-		background-image:url(../images/followIcon.gif);
+		background-image:url(/images/followIcon.gif);
 		background-repeat:no-repeat;
 		width:16px;
 		height:16px;
@@ -620,7 +632,7 @@ a{
 			
 		#footer .copyright a,
 		#footer .copyright a:visited{
-			background:url(../images/footerSeparator.gif) no-repeat left center;
+			background:url(/images/footerSeparator.gif) no-repeat left center;
 			color:#333;
 			text-decoration:none;
 			display:inline-block;
@@ -636,7 +648,7 @@ a{
 -----------------*/
 
 #mainContent{
-	background:#FFF url(../images/area2_bg2.png) repeat-y right;
+	background:#FFF url(/images/area2_bg2.png) repeat-y right;
 	width:100%;
 	overflow:hidden;
 	color:#333;
@@ -694,6 +706,12 @@ a{
 		.stepBar li span.complete a{
 			color:#A8B485;
 			}
+        .stepBar li span.finished a:hover{
+			text-decoration: none;
+			}
+        .stepBar li span.finished a{
+			cursor:default;
+			}
 			
 		.stepBar li.first{
 			margin-left:0;
@@ -706,7 +724,7 @@ a{
 			.stepBar li span.arrow{
 				display:block;
 				padding-right:20px;
-				background:url(../images/step-next-arrow.png) no-repeat right top;
+				background:url(/images/step-next-arrow.png) no-repeat right top;
 				}
 				
 			.stepBar li span.bg{
@@ -720,23 +738,23 @@ a{
 				text-align:center;
 				text-indent:-20px;
 				text-transform:uppercase;
-				background:url(../images/step-next-bg.png) repeat-x left top;
+				background:url(/images/step-next-bg.png) repeat-x left top;
 				}
 			
 			.stepBar li span.active span.arrow{
-				background:url(../images/step-active-arrow.png) no-repeat right top;
+				background:url(/images/step-active-arrow.png) no-repeat right top;
 				}
 				
 			.stepBar li span.active span.bg{
-				background:url(../images/step-active-bg.png) repeat-x left top;
+				background:url(/images/step-active-bg.png) repeat-x left top;
 				}
 				
 			.stepBar li span.complete span.arrow{
-				background:url(../images/step-complete-arrow.png) no-repeat right top;
+				background:url(/images/step-complete-arrow.png) no-repeat right top;
 				}
 				
 			.stepBar li span.complete span.bg{
-				background:url(../images/step-complete-bg.png) repeat-x left top;
+				background:url(/images/step-complete-bg.png) repeat-x left top;
 				}
 				
 			.stepBar li.last span.istatus span.arrow{
@@ -746,37 +764,38 @@ a{
 				
 			.stepBar li.first span.active{
 				padding-left:5px;
-				background:url(../images/step-first-active.png) no-repeat left top;
+				background:url(/images/step-first-active.png) no-repeat left top;
 				}
 				
 			.stepBar li.first span.complete{
 				padding-left:5px;
-				background:url(../images/step-first-complete.png) no-repeat left top;
+				background:url(/images/step-first-complete.png) no-repeat left top;
 				}
-			.stepBar li.first span.inext{
+            .stepBar li.first span.inext{
 				height:35px;
-				background:url(../images/step-first-next.png) no-repeat left top;
+				background:url(/images/step-first-next.png) no-repeat left top;
 				padding-left:5px;
 				}	
 				
 			.stepBar li.last span.inext{
 				height:35px;
-				background:url(../images/step-last-next.png) no-repeat right top;
+				background:url(/images/step-last-next.png) no-repeat right top;
 				}
 				
 			.stepBar li.last span.active{
 				height:35px;
-				background:url(../images/step-last-active.png) no-repeat right top;
+				background:url(/images/step-last-active.png) no-repeat right top;
 				}
-			.stepBar li.last span.complete{
+            .stepBar li.last span.complete{
 				height:35px;
-				background:url(../images/step-last-complete.png) no-repeat right top;
-				}	
+				background:url(/images/step-last-complete.png) no-repeat right top;
+				}
 				
 	/* step title */
 	#stepContainer{
 		margin-right:25px;
-		}
+        min-height:660px;
+        }
 	
 	.stepTitle{
 		height:31px;
@@ -802,7 +821,7 @@ a{
 			font-size:22px;
 			font-family:Arial, Helvetica, sans-serif;
 			text-align:center;
-			background:url(../images/stepIcon.png) no-repeat left top;
+			background:url(/images/stepIcon.png) no-repeat left top;
 			}
 			
 		.stepTitle .button4{
@@ -823,13 +842,13 @@ a{
 			font-weight:bold;
 			color:#fffffe;
 			line-height:24px;
-			background:url(../images/nextStep_button.png) no-repeat left top;
+			background:url(/images/nextStep_button.png) no-repeat left top;
 			text-indent:8px;
 			text-decoration:none;
 			}
 			
 		.nextStepButton:hover{
-			background:url(../images/nextStep_button.png) no-repeat left -24px;
+			background:url(/images/nextStep_button.png) no-repeat left -24px;
 			}
 			
 		.prevStepButton{
@@ -841,61 +860,72 @@ a{
 			font-weight:bold;
 			color:#fffffe;
 			line-height:24px;
-			background:url(../images/prevStep_button.png) no-repeat left top;
+			background:url(/images/prevStep_button.png) no-repeat left top;
 			text-indent:32px;
 			text-decoration:none;
 			}
 			
 		.prevStepButton:hover{
-			background:url(../images/prevStep_button.png) no-repeat left -24px;
+			background:url(/images/prevStep_button.png) no-repeat left -24px;
 			}	
 			
 		/* toolTip */
 		.toolTip{
-			width:24px;
-			height:24px;
+			width:16px;
+			height:16px;
 			float:left;
 			display:inline;
 			position:relative;
 			text-decoration:none;
-			background:url(../images/iconToolTip.png) no-repeat left top;
-			}
+			background:url(/images/iconToolTip.png) no-repeat left top;
+            margin-top:4px;
+			z-index:999;
+            }
 			
 		.toolTip:hover{
-			background:url(../images/iconToolTip.png) no-repeat left -24px;
+			background:url(/images/iconToolTip.png) no-repeat left -16px;
 			}
 			
 			.toolTip .toolTipContainer{
-				width:263px;
+				width:203px;
 				position:absolute;
-				margin-top:35px;
+				margin-top:27px;
 				border:#bdbdbd solid 1px;
-				background:url(../images/toolTip_bgs.png) repeat-x left top #e7e7e7;
-				}
+				background:url(/images/toolTip_bgs.png) repeat-x left top #e7e7e7;
+                left:-32px;
+                }
 				
 			.toolTip .toolTipContainer .arrow{
 				width:11px;
 				height:7px;
 				overflow:hidden;
 				margin-top:-7px;
-				margin-left:7px;
-				background:url(../images/toolTip_arrow.png) no-repeat left top;
+				margin-left:33px;
+				background:url(/images/toolTip_arrow.png) no-repeat left top;
 				}
 			
 			.toolTip .toolTipContainer p{
-				padding:8px 10px;
+				 padding:0;
+                 width:auto;
+                }
+			.toolTip .toolTipContainer p.textBox{
+				padding:8px 5px 8px 10px;
 				font-size:11px;
-				color:#000001;
+				color:#333;
 				text-decoration:none;
-				}
+                font-family:Tahoma, Arial, Helvetica, sans-serif;
+		     }
 				
-			#toolTip1{
+			#toolTip1, #toolTip3, #toolTip4, #toolTip5{
 				z-index:10;
 				}
 				
 			#toolTip2{
 				z-index:1;
 				}
+                #toolTip2 .toolTipContainer{
+                    width:336px;
+                }
 			
 /* stepFirst */
 .stepContainer .geryContent{
@@ -903,10 +933,10 @@ a{
 	position:relative;
 	border:#bdbdbd solid 1px;
 	}
-	
+/*
 .stepContainer .form{
 	min-height:465px;
-	}
+	}*/
 	
 	.stepContainer .geryContent .topBar,.stepContainer .geryContent .BottomBar{
 		height:35px;
@@ -935,19 +965,17 @@ a{
 		
 	/* form */
 	.stepFirst .geryContent .form{
-		padding:0;
-		padding-top:20px;
-		padding-bottom:32px;
+		padding:20px 0 18px; 
 		}
 		
 		.stepFirst .geryContent .row{
 			clear:both;
-			margin-left:38px;
-			padding-bottom:26px;
+			margin-left:46px;
+			padding-bottom:7px;
 			}
 			
 			.stepFirst .geryContent .row .toolTip{
-				margin-right:8px;
+				margin-right:7px;
 				}
 				
 			.stepFirst .geryContent .row label{
@@ -972,29 +1000,43 @@ a{
 				font-size:11px;
 				color:#666666;
 				line-height:25px;
-				}
-				
-			.stepFirst .geryContent .row .examples{
-				width:auto;
-				margin-top:2px;
-				margin-left:166px;
-				font-family:Tahoma, Arial, Helvetica, sans-serif;
+				} 
+
+            .stepFirst .geryContent .row .message{
+                background: #ffffff;
+				width:373px; 
+				margin-left:157px; 
 				font-size:11px;
-				color:#666666;
-				line-height:13px;
-				}
-				
-				.stepFirst .geryContent .row .examples strong{
-					line-height:16px;
-					}
-			
-			/* input */	
+				color:#999999; 
+                overflow:hidden;
+                padding:2px 0 0 0;
+                height:14px;
+                }
+				.stepFirst .geryContent .row .message .remaning{
+					float:right;
+				 }
+				.stepFirst .geryContent .row .message .errorText{
+					color:#ec1c23;
+				 }
+                .stepFirst .geryContent .row .errorIcon{
+                    background:url(/images/error-icon.png) no-repeat left center;
+                    height:10px;
+                    width:10px;
+                    float:left;
+                    margin-left:7px;
+                    margin-top:7px;
+                 }
+                .stepFirst .geryContent .descProject .errorIcon{
+                    margin-top:57px;
+                 }
+
+            /* input */
 			.stepFirst .geryContent .row .text{
 				width:353px;
 				height:19px;
 				float:left;
 				display:inline;
-				padding:2px 7px;
+				padding:2px 7px !important;
 				background:#ffffff;
 				border:#a8abad solid 1px;
 				font-family:Tahoma, Arial, Helvetica, sans-serif;
@@ -1006,14 +1048,83 @@ a{
 			.stepFirst .geryContent .row textarea{
 				width:auto;
 				height:127px;
-				padding:2px 7px;
+				padding:2px 7px !important;
 				border:#a8abad solid 1px;
 				font-family:Tahoma, Arial, Helvetica, sans-serif;
 				font-size:12px;
 				color:#6c6c6c;
-				}
-				
-			.stepContainer .geryContent .noteContainer{
+                float:left;
+                overflow:auto;
+                }
+		    .stepFirst .geryContent .row input.error,.stepFirst .geryContent .row textarea.error{
+                background:#ffe4e4;
+            }
+
+            .stepContainer .geryContent .noteMask{ 
+				padding:9px 10px 16px 20px;
+                background:url(/images/note-bg-01.png) #e9e9e9 repeat-x left top; 
+                font-family:Tahoma, Arial, Helvetica, sans-serif;
+                font-size:11px;
+                border-bottom:1px solid #bdbdbd;
+            }
+            .stepContainer .geryContent .noteMask.collapse{
+                background:url(/images/note-bg-02.png) #e9e9e9 repeat-x left top;
+                padding-bottom:4px;
+             }
+            .stepFifth .geryContent .noteMask{
+                background:url(/images/note-bg-03.png) #e9e9e9 repeat-x left top; 
+             }
+                .stepContainer .geryContent .noteMask dt{
+                    overflow:hidden;
+                    line-height:16px;
+                    padding-bottom:6px;
+                }
+                    .stepContainer .geryContent .noteMask dt strong{
+                        background:url(/images/note-icon.png) no-repeat left center;
+                        padding-left:18px;
+                        font-size:12px;
+                        float:left;
+                    }
+                    .stepContainer .geryContent .noteMask dt a{
+                        background:url(/images/minus.png) no-repeat left center;
+                        padding-left:16px;
+                        float:right;
+                        width:26px;
+                    }
+                    .stepContainer .geryContent .noteMask dt a:hover{
+                        text-decoration:none;
+                    }
+                    .stepContainer .geryContent .noteMask.collapse dt a{
+                        background:url(/images/plus.png) no-repeat left center;
+                    }
+                .stepContainer .geryContent .noteMask dd{
+                    background:url(/images/bullet.png) no-repeat left top;
+                    margin-top:6px;
+                    padding-left:12px;
+                    padding-right:80px;
+                }
+                 .stepThird .geryContent .noteMask dd{
+                     margin-top:10px;
+                 }
+                 .stepThird .geryContent .noteMask dd.first{
+                     margin-top:6px;
+                 }
+                 .stepForth .geryContent .noteMask dd{
+                     margin-top:9px;
+                     padding-right:15px;
+                 }
+                 .stepForth .geryContent .noteMask dd.first{
+                     margin-top:6px;
+                 }
+                .stepContainer .geryContent .noteMask.collapse dd{
+                    display:none;    
+                }
+                    .stepContainer .geryContent .noteMask dd a:hover{
+                        text-decoration:none;
+                    }
+
+
+            .stepContainer .geryContent .noteContainer{
 				margin:0 28px;
 				padding:6px 15px;
 				}
@@ -1032,7 +1143,7 @@ a{
 					font-family:Tahoma, Arial, Helvetica, sans-serif;
 					font-size:11px;
 					line-height:12px;
-					background:url(../images/dd-icon.png) no-repeat left 5px;
+					background:url(/images/dd-icon.png) no-repeat left 5px;
 					}
 					
 					.stepContainer .geryContent .noteContainer dd a{
@@ -1061,7 +1172,7 @@ a{
 		display:block;
 		overflow:hidden;
 		position:absolute;
-		background-image:url(../images/grey_corner.png);
+		background-image:url(/images/grey_corner.png);
 		background-repeat:no-repeat;
 		}
 		
@@ -1091,9 +1202,7 @@ a{
 		
 /* stepSecond */
 .stepSecond .geryContent .form{
-	padding:0;
-	padding-top:20px;
-	padding-bottom:32px;
+	padding:23px 0 32px; 
 	}
 
 	.stepSecond .projectTypeSelect{
@@ -1130,51 +1239,51 @@ a{
 		.stepSecond .projectItem .projectContainer .top{
 			width:273px;
 			padding-top:12px;
-			background:url(../images/selectProject_top.png) no-repeat left top;
+			background:url(/images/selectProject_top.png) no-repeat left top;
 			}
 			
 		.stepSecond .projectItem .projectContainer .bottom{
 			width:100%;
 			padding-bottom:12px;
-			background:url(../images/selectProject_bottom.png) no-repeat left bottom;
+			background:url(/images/selectProject_bottom.png) no-repeat left bottom;
 			}
 			
 		.stepSecond .projectItem .projectContainer .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
-			background:url(../images/selectProject_bg.png) repeat-y left top;
+			background:url(/images/selectProject_bg.png) repeat-y left top;
 			}
 			
 		.stepSecond .projectItem .hover .top{
 			width:273px;
 			padding-top:12px;
-			background:url(../images/selectProject_top_hover.png) no-repeat left top;
+			background:url(/images/selectProject_top_hover.png) no-repeat left top;
 			}
 			
 		.stepSecond .projectItem .hover .bottom{
 			width:100%;
 			padding-bottom:12px;
-			background:url(../images/selectProject_bottom_hover.png) no-repeat left bottom;
+			background:url(/images/selectProject_bottom_hover.png) no-repeat left bottom;
 			}
 			
 		.stepSecond .projectItem .hover .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
-			background:url(../images/selectProject_bg_hover.png) repeat-y left top;
+			background:url(/images/selectProject_bg_hover.png) repeat-y left top;
 			}
 			
 		.stepSecond .projectItem .projectContainer .custom{
 			width:273px;
 			height:285px;
-			background:url(../images/custom.png) no-repeat center 4px;
+			background:url(/images/custom.png) no-repeat center 4px;
 			}
 			
 		.stepSecond .projectItem .hover .custom{
 			width:273px;
 			height:285px;
-			background:url(../images/custom_hover.png) no-repeat center top;
+			background:url(/images/custom_hover.png) no-repeat center top;
 			}
 			
 			/* radioBox */
@@ -1203,6 +1312,13 @@ a{
 				margin-bottom:10px;
 				padding:3px;
 				border:#a8abad solid 1px;
+				}
+            .stepSecond .projectItem .projectContainer .comingSoon{
+				width:262px;
+				margin:0 auto;
+                margin-top: -12px;
+				padding:3px;
+				border:none;
 				}
 				
 			/* table */
@@ -1252,11 +1368,11 @@ a{
 					line-height:21px;
 					text-align:center;
 					text-decoration:none;
-					background:url(../images/blackButton.png) no-repeat left top;
+					background:url(/images/blackButton.png) no-repeat left top;
 					}
 					
 				.stepSecond .projectItem .projectContainer .buttonArea .blackButton:hover{
-					background:url(../images/blackButton.png) no-repeat left -21px;
+					background:url(/images/blackButton.png) no-repeat left -21px;
 					}
 				
 				.stepSecond .projectItem .projectContainer .buttonArea .detailButton{
@@ -1265,9 +1381,8 @@ a{
 					}
 					
 /* stepThird */
-.stepThird .form{
-	min-height:620px;
-	padding:38px;
+.stepThird .form{ 
+	padding:26px 36px;
 	}
 	
 	.stepThird .tableOut{
@@ -1295,18 +1410,172 @@ a{
 		margin:0;
 		margin-top:24px;
 		}
+.red{
+	color:#ff0000;
+	}
+.stepThird .speciealForm{
+	padding-top:0;
+	padding-bottom:120px;
+	}
+	.redError{
+		display:none;
+		font-style:normal;
+		color:#ec1c23;
+		font-size:11px;
+		padding-left:15px;
+		background:url(/images/error-icon.png) left center no-repeat;
+		}
+	.stepThird .speciealForm .topNotice{
+		height:24px;
+		padding-top:8px;
+		line-height:24px;
+		color:#666666;
+		overflow:hidden;
+		}
+		.stepThird .speciealForm .topNotice .noticeLeft{
+			float:left;
+			width:auto;
+			display:inline;
+			}
+		.stepThird .speciealForm .topNotice .noticeRight{
+			float:right;
+			font-size:11px;
+			}
+			.stepThird .speciealForm .topNotice .noticeRight .red{
+				font-size:12px;
+				}
+.stepThird .form .tableWrapper{
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#333333;
+	}
+	.stepThird .form .tableWrapper table{
+		width:100%;
+		}
+		.stepThird .form .tableWrapper table th{
+			width:100%;
+			height:33px;
+			border:0;
+			color:#ffffff;
+			border:1px solid #534741;
+			background:transparent url(/images/bg-table-header.png) left top repeat-x;
+			}
+		.stepThird .form .tableWrapper table th.firstTh{
+			border-right:0;
+			width:50%
+			}
+		.stepThird .form .tableWrapper table th.lastTh{
+			border-left:0;
+			width:50%
+			}
+		.stepThird .form .tableWrapper table td{
+			height:32px;
+			vertical-align:middle;
+			border:1px solid #bdbdbd;
+			}
+		.stepThird .form .tableWrapper table td.labelTd{
+			font-weight:bold;
+			text-indent:30px;
+			}
+			.stepThird .form .tableWrapper table td label{
+				width:86px;
+				padding-left:8px;
+				cursor:pointer;
+				}
+			.stepThird .form .tableWrapper table td input.radio{
+				width:13px;
+				height:13px;
+				float:left;
+				margin:0;
+				padding:0;
+				display:inline;
+				}
+			.stepThird .form .tableWrapper table td .selectRadioBox{
+				padding-left:3%;
+				height:18px;
+				line-height:14px;
+				padding-top:2px;
+				overflow:hidden;
+				}
+		.stepThird .form .tableWrapper table .tfooter td{
+			height:40px;
+			background-color:#e8e8e8;
+			}
+			.stepThird .form .tableWrapper table .tfooter td .toolTip{
+				margin-top:0;
+				margin-left:6px;
+				}
+			.stepThird .form .tableWrapper table .tfooter td label{
+				width:auto;
+				cursor:default;
+				}
+			.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox{
+				padding-left:2%;
+				position:relative;
+				height:25px;
+				z-index:100;
+				}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .text{
+					height:19px;
+					color:#333;
+					font-family:Arial, Helvetica, sans-serif;
+					border:1px solid #a8abad;
+					padding:2px 4px;
+					float:left;
+					display:inline;
+					}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorStatus{
+					width:24px;
+					height:24px;
+					float:left;
+					display:inline;
+					}
+					.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorStatus div{
+						width:24px;
+						height:24px;
+						display:none;
+						background:url(/images/error-icon.png) 4px center no-repeat;
+						}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .button12{
+					margin-top:2px;
+					}
+				.errorInput{
+					background-color:#ffe4e4 !important;
+					}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorStatusTips{
+					position:absolute;
+					bottom:-28px;
+					left:2%;
+					height:16px;
+					font-size:11px;
+					color:#ec1c23;
+					display:none;
+					background:transparent;
+					}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorNameExist{
+					position:absolute;
+					bottom:-28px;
+					left:2%;
+					height:16px;
+					font-size:11px;
+					color:#ec1c23;
+					display:none;
+					background:transparent;
+					}
 					
 /* stepForth */
 .stepForth .form{
-	padding:0;
-	padding-top:20px;
-	padding-bottom:32px;
-	}
+	padding:27px 0 32px;
+    min-height:315px;
+    }
 
 	.stepForth .form dl.radioList{
 		margin-left:38px;
-		padding-bottom:34px;
-		}	
+		padding-bottom:15px;
+        background:url(/images/dot-line.png) repeat-y right top;
+        width:308px;
+        float:left;
+        }
 		
 		.stepForth .form dl.radioList dt .toolTip{
 			margin-right:8px;
@@ -1326,9 +1595,10 @@ a{
 			font-size:12px;
 			}		
 			
-		.stepForth .form dl.radioList dd span{
+		.stepForth .form dl.radioList dd label{
 			cursor:pointer;
-			}
+            width:auto;
+            }
 			
 		.stepForth .form dl.radioList dd .radio{
 			width:auto;
@@ -1336,14 +1606,321 @@ a{
 			display:inline;
 			margin-top:1px;
 			margin-right:6px;
+			}
+
+    .stepForth .form .chooseCopilot{
+		margin-left:380px;
+		padding-bottom:34px;
+		font-family:Tahoma, Arial, Helvetica, sans-serif;
+        color:#222;
+        font-size:12px;
+     }
+        .stepForth .form .chooseCopilot .info{
+            overflow:hidden;
+            width:320px;
+            padding-top:12px;
+        }
+            .stepForth .form .chooseCopilot .info span{
+                float:left;
+                background:url(/images/percent95.png) no-repeat left top;
+                height:33px;
+                width:94px;
+                margin-top:15px;
+            }
+            .stepForth .form .chooseCopilot .info p{
+                width:auto;
+                padding:17px 0 0 10px;
+                line-height:16px;
+            }
+        .stepForth .form .chooseCopilot .selection{
+            font-size:11px;
+            color:#666;
+            padding-left:3px;
+        }
+            .stepForth .form .chooseCopilot dt{
+                overflow:hidden;
+            }
+                .stepForth .form .chooseCopilot dt a{
+                    float:left;
+                    margin:0;
+                    width:210px;
+                }
+                    .stepForth .form .chooseCopilot dt a.button6 span.right{
+                        padding:5px 10px 0;
+                        height:19px;
+                        text-align:center;
+                        font-size:11px;
+                    }
+            .stepForth .form .chooseCopilot dd{
+                padding:3px 0 12px 1px;
+                line-height:16px;
+            }
+                .stepForth .form .chooseCopilot dd div{
+                    padding-top:4px;
+                 }
+                .stepForth .form .chooseCopilot dd span.red{
+                    color:#ed1c24;
+                 }
+	.stepForth .speciealForm {
+	padding-top:0;
+	font-family:Tahoma,Arial, Helvetica, sans-serif;
+	color:#333333;
+	font-size:12px;
+	}
+.stepForth .geryContent .noteMask .speciealDl dd{
+	padding-bottom:4px;
+	}
+.stepForth .speciealForm .topNotice{
+		height:24px;
+		line-height:24px;
+		color:#666666;
+		overflow:hidden;
+		padding-top:8px;
+		padding-right:6px;
+		padding-left:6px;
+		}
+		.stepForth .speciealForm .topNotice .noticeRight{
+			text-align:right;
+			padding-right:73px;
+			font-size:11px;
+			}
+			.stepForth .speciealForm .topNotice .noticeRight .red{
+				font-size:12px;
+				}
+	.stepForth .speciealForm .barTitle{
+		margin:0 50px;
+		height:14px;
+		line-height:14px;
+		padding:6px 0 20px;
+		text-indent:7px;
+		}
+	.stepForth .speciealForm .toolTip{
+		margin-top:0;
+		text-indent:0;
+		}
+	.stepForth .speciealForm .row{
+		clear:both;
+		margin-left:73px;
+		margin-right:70px;
+		padding-bottom:18px;
+		}
+	.stepForth .speciealForm .row label{
+		width:203px;
+		float:left;
+		display:inline;
+		line-height:25px;
+		font-family:Tahoma, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		text-indent:13px;
+		}
+	/* textarea */
+	.stepForth .speciealForm .row textarea{
+		width:100%;
+		height:94px;
+		padding:2px 0px;
+		border:#a8abad solid 1px;
+		font-family:Tahoma, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		color:#6c6c6c;
+		overflow:auto;
+		position:absolute;
+		left:0;
+		top:0;
+		}
+	.stepForth .speciealForm .pageLengthSetArea{
+		padding-top:5px;
+		height:14px;
+		line-height:13px;
+		padding-right:146px;
+		position:relative;
+		z-index:1;
+		}
+		.stepForth .speciealForm .pageLengthSetArea input{
+			float:left;
+			width:13px;
+			height:13px;
+			display:inline;
+			}
+		.stepForth .speciealForm .pageLengthSetArea label{
+			line-height:normal;
+			text-indent:10px;
+			cursor:pointer;
+			float:left;
+			width:auto;
+			display:inline;
+			}
+		.stepForth .speciealForm .pageLengthSetArea .part{
+			float:left;
+			width:50%;
+			display:inline;
+			}
+		.stepForth .speciealForm .pageLengthSetArea .rightPart{
+			position:absolute;
+			right:0;
+			top:5px;
+			height:14px;
+			line-height:14px;
+			width:146px;
 			}	
+	/* .styleSelectList */
+	.styleSelectList{
+		margin:0px 0px 18px 10px;
+		min-height:300px;
+		}
+		.styleSelectList .styleItem {
+			float:left;
+			width:242px;
+			margin-left:59px;
+			display:inline;
+			padding-bottom:20px;
+			}
+		.styleItem .boxHeader{
+			height:15px;
+			overflow:hidden;
+			padding-left:16px;
+			background:url(/images/style-header-bg.png) left top no-repeat;
+			}
+			.styleItem .boxHeader .boxHeaderR{
+				height:15px;
+				padding-right:16px;
+				background:url(/images/style-header-bg.png) right -30px no-repeat;
+				}
+				.styleItem .boxHeader .boxHeaderC{
+					height:15px;
+					background:url(/images/style-header-bg.png) left -15px repeat-x;
+					}
+		.styleItem .boxFooter{
+			height:15px;
+			overflow:hidden;
+			padding-left:16px;
+			background:url(/images/style-footer-bg.png) left top no-repeat;
+			}
+			.styleItem .boxFooter .boxFooterR{
+				height:15px;
+				padding-right:16px;
+				background:url(/images/style-footer-bg.png) right -30px no-repeat;
+				}
+				.styleItem .boxFooter .boxFooterC{
+					height:15px;
+					background:url(/images/style-footer-bg.png) left -15px repeat-x;
+					}
+		.styleItem .boxBody{
+			padding-left:17px;
+			background:url(/images/style-body-left.png) left top repeat-y;
+			}
+			.styleItem .boxBody .boxBodyR{
+				padding-right:17px;
+				background:url(/images/style-body-right.png) right top repeat-y;
+				}
+				.styleItem .boxBody .boxInner{
+					border:1px solid #a8abad;
+					text-align:center;
+					padding-top:3px;
+					padding-bottom:3px;
+					height:141px;
+					cursor:pointer;
+					}
+		.itemHover .boxHeader,
+		.styleItem .styleContainer:hover .boxHeader{
+			background-position:left -45px;
+			}
+			.itemHover .boxHeader .boxHeaderR,
+			.styleItem .styleContainer:hover .boxHeader .boxHeaderR{
+				background-position:right -75px;
+				}
+				.itemHover .boxHeader .boxHeaderC,
+				.styleItem .styleContainer:hover .boxHeader .boxHeaderC{
+					background-position:left -60px;
+					}
+		.itemHover .boxBody,
+		.styleItem .styleContainer:hover .boxBody{
+			background:url(/images/style-body-left-hover.png) left top repeat-y;
+			}
+			.itemHover .boxBody .boxBodyR,
+			.styleItem .styleContainer:hover .boxBody .boxBodyR{
+				background:url(/images/style-body-right-hover.png) right top repeat-y;
+				}
+		.itemHover .boxFooter,
+		.styleItem .styleContainer:hover .boxFooter{
+			background-position:left -45px;
+			}
+			.itemHover .boxFooter .boxFooterR,
+			.styleItem .styleContainer:hover .boxFooter .boxFooterR{
+				background-position:right -75px;
+				}
+				.itemHover .boxFooter .boxFooterC,
+				.styleItem .styleContainer:hover .boxFooter .boxFooterC{
+					background-position:left -60px;
+					}
+		
+	/* radioBox */
+	.styleSelectList .styleItem .radioBox{
+		height:17px;
+		width:238px;
+		padding:0 0 4px 4px;
+		overflow:hidden;
+		}
+		
+		.styleSelectList .styleItem .radioBox .radio{
+			width:13px;
+			height:13px;
+			float:left;
+			display:inline;
+			margin-right:6px;
+			}
 			
+		.styleSelectList .styleItem .radioBox label{
+			font-family:Tahoma, Arial, Helvetica, sans-serif;
+			font-size:12px;
+			cursor:pointer;
+			width:auto;
+			float:left;
+			display:inline;
+			}
+		
+		.stepForth .speciealForm .textFieldWrapper{
+			width:100%;
+			height:100px;
+			position:relative;
+			z-index:1;
+			}
+		.stepForth .speciealForm .errorStatusTips{
+			display:none;
+			margin-left:10px;
+			padding-left:20px;
+			font-size:11px;
+			color:#ec1c23;
+			background:url(/images/error-icon.png) 0px center no-repeat;
+			}
+			.stepForth .speciealForm .errorInput{
+				background-color:#ffe4e4;
+				}
+			.stepForth .speciealForm .textFieldWrapper .errorIcon{
+				position:absolute;
+				background:url(/images/error-icon.png) left top no-repeat;
+				width:10px;
+				height:10px;
+				overflow:hidden;
+				right:-24px;
+				top:46px;
+				display:none;
+				}
+			.stepForth .speciealForm .textFieldWrapper .errorText{
+				overflow:hidden;
+				position:absolute;
+				left:0px;
+				bottom:-16px;
+				height:14px;
+				line-height:14px;
+				font-size:11px;
+				color:#ec1c23;
+				display:none;
+				}
 /* stepFifth */
 .stepFifth .form{
-	padding:0;
-	padding-top:20px;
-	padding-bottom:32px;
-	}
+	padding:25px 0 32px;
+    min-height:566px;
+    }
 	
 	.stepFifth h3{
 		margin-left:38px;
@@ -1376,11 +1953,11 @@ a{
 			margin-bottom:32px;
 			}
 			
-		.stepFifth .geryContent .downloadProfile{
+		.stepFifth .geryContent .searchUserHandle{
 			width:100px;
 			}
 			
-		.stepFifth .geryContent .downloadProfile .profileLeft{
+		.stepFifth .geryContent .searchUserHandle .profileLeft{
 			width:100px;
 			font-size:12px;
 			}
@@ -1414,7 +1991,7 @@ a{
 				border:0px solid #FFFFFF;
 				padding:3px 8px;	
 				font-size:10px;
-				background:transparent url(../images/dot.png) repeat-x scroll bottom center;
+				background:transparent url(/images/dot.png) repeat-x scroll bottom center;
 				}
 				
 			.stepFifth #projects table tr.applyForAll td{
@@ -1435,11 +2012,11 @@ a{
 				height:23px;
 				margin:0 5px;
 				display:inline-block;
-				background:url(../images/folder.png) no-repeat left top;
+				background:url(/images/folder.png) no-repeat left top;
 				}
 				
 			.stepFifth #projects table td .folderIcon:hover{
-				background:url(../images/folder_active.png) no-repeat left top;
+				background:url(/images/folder_active.png) no-repeat left top;
 				}
 				
 			.stepFifth #projects table td .deleteIcon{
@@ -1447,20 +2024,20 @@ a{
 				height:23px;
 				margin:0 5px;
 				display:inline-block;
-				background:url(../images/deleteIcon.png) no-repeat left top;
+				background:url(/images/deleteIcon.png) no-repeat left top;
 				}
 				
 			.stepFifth #projects table td .deleteIcon:hover{
-				background:url(../images/deleteIcon.png) no-repeat left -23px;
+				background:url(/images/deleteIcon.png) no-repeat left -23px;
 				}
 				
-			.stepFifth #projects table td .downloadProfile{
+			.stepFifth #projects table td .searchUserHandle{
 				width:118px;
 				margin:0 5px;
 				display:inline-block;
 				}
 				
-				.stepFifth #projects table td .downloadProfile .profileLeft{
+				.stepFifth #projects table td .searchUserHandle .profileLeft{
 					width:113px;
 					text-align:center;
 					padding-left:0;
@@ -1471,35 +2048,515 @@ a{
 			.stepFifth .addUserPlan{
 				display:none;
 				}
+.stepFifth .speciealForm{
+	padding-top:0;
+	font-family:Tahoma,Arial, Helvetica, sans-serif;
+	color:#333333;
+	font-size:12px;
+	padding-left:36px;
+	padding-right:36px;
+	}
+.stepFifth .geryContent .noteMask .speciealDl dd{
+	padding-bottom:4px;
+	}
+.stepFifth .speciealForm .topNotice{
+		height:24px;
+		line-height:24px;
+		color:#666666;
+		overflow:hidden;
+		padding-top:8px;
+		}
+		.stepFifth .speciealForm .topNotice .noticeRight{
+			text-align:right;
+			font-size:11px;
+			}
+			.stepFifth .speciealForm .topNotice .noticeRight .red{
+				font-size:12px;
+				}
+	.stepFifth .form .tableWrapper table{
+		width:100%;
+		}
+		.stepFifth .form .tableWrapper table th{
+			width:100%;
+			height:33px;
+			border:0;
+			color:#ffffff;
+			padding-left:6px;
+			text-align:left;
+			text-indent:6px;
+			border:1px solid #534741;
+			background:transparent url(/images/bg-table-header.png) left top repeat-x;
+			}
+			.stepFifth .form .tableWrapper table th .toolTip{
+				text-align:left;
+				font-weight:normal;
+				text-indent:0;
+				}
+		.stepFifth .form .tableWrapper table td{
+			height:32px;
+			vertical-align:middle;
+			border:1px solid #bdbdbd;
+			}
+			.stepFifth .form .tableWrapper table td.deleteTd{
+				width:10%;
+				text-align:center;
+				}
+			.stepFifth .form .tableWrapper table .noMediaAsset{
+				display:none;
+				}
+			.stepFifth .form .tableWrapper table .noMediaAsset td{
+				text-align:center;
+				}
+			.stepFifth .form .tableWrapper .mediaAssetTableWrapper table{
+				font-family:Arial, Helvetica, sans-serif;
+				}
+			.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd{
+				text-indent:17px;
+				width:90%;
+				}
+				.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd a{
+					font-weight:bold;
+					color:#333333;
+					text-decoration:underline;
+					}
+				.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd a:hover{
+					text-decoration:none;
+					}
+				.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd span{
+					margin-left:10px;
+					}
+				.deleteRowIcon{
+					width:23px;
+					height:23px;
+					display:inline-block;
+					background:url(/images/icon-td-delete.png) left top no-repeat;
+					}
+				.deleteRowIcon:hover{
+					background-position:left -23px;
+					}
+		.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td{
+			height:78px;
+			background-color:#e8e8e8;
+			vertical-align:top;
+			}
+		.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper table .tfooter td{
+			height:40px;
+			vertical-align:top;
+			background-color:#e8e8e8;
+			}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts{
+				width:45%;
+				float:left;
+				display:inline;
+				border-right:1px solid #bdbdbd;
+				height:100%;
+				}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .topRowWrapper{
+					height:38px;
+					padding-top:7px;
+					padding-left:17px;
+					padding-right:23px;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts .topRowWrapper{
+					position:relative;
+					overflow:hidden;
+					z-index:1;
+					}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts .topRowWrapper .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:8px;
+						top:14px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts .topRowWrapper .errorText{
+						overflow:hidden;
+						position:absolute;
+						left:17px;
+						top:32px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox{
+					padding-left:17px;
+					padding-right:23px;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  .addMoreParts .subButtonBox{
+					padding-right:0px;
+					height:26px;
+					position:relative;
+					z-index:1;
+					}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  .addMoreParts .subButtonBox .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:94px;
+						top:7px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  .addMoreParts .subButtonBox .errorText{
+						overflow:hidden;
+						position:absolute;
+						left:17px;
+						top:34px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+					.stepFifth .speciealForm .text{
+						padding:2px 12px;
+						height:19px;
+						line-height:19px;
+						width:auto;
+						font-size:12px;
+						color:#666666;
+						font-family:Arial, Helvetica, sans-serif;
+						border:1px solid #a8abad;
+						}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox .summeryForBrowse{
+				float:left;
+				width:auto;
+				display:inline;
+				font-size:11px;
+				color:#666666;
+				}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox .rightPart{
+				float:right;
+				width:auto;
+				display:inline;
+				}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox .browserWrapper{
+					float:left;
+					width:100px;
+					height:24px;
+					display:inline;
+					position:relative;
+					z-index:1;
+					overflow:hidden;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td #uploadFile{
+					position:absolute;
+					left:0px;
+					top:2px;
+					height:20px;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .selectWrapper{
+						border:1px solid #A8ABAD;
+						height:16px;
+						padding:3px 1px;
+						float:left;
+						width:auto;
+						display:inline;
+						background-color:#ffffff;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td select{
+						width:auto;
+						display:block;
+						font-size:11px;
+						font-family:Arial, Helvetica, sans-serif;
+						border:0;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  #customFileDescription{
+						float:left;
+						display:inline;
+						font-size:12px;
+						font-family:Arial, Helvetica, sans-serif;
+						border:1px solid #a8abad;
+						}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .addMoreParts{
+				float:left;
+				display:inline;
+				width:54%;
+				}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .button12{
+					float:right;
+					margin-top:2px;
+					display:inline;
+					}
+				
+					
+	.stepFifth .speciealForm .barTitle{
+		height:14px;
+		line-height:14px;
+		padding:20px 0 20px 6px;
+		text-indent:7px;
+		}
+		.stepFifth .speciealForm .errorStatusTips{
+			margin-left:10px;
+			padding-left:20px;
+			font-size:11px;
+			color:#ec1c23;
+			display:none;
+			background:url(/images/error-icon.png) 0px center no-repeat;
+			}
+	.stepFifth .speciealForm .toolTip{
+		margin-top:0;
+		}
+	.stepFifth .speciealForm .row{
+		clear:both;
+		margin-left:73px;
+		margin-right:70px;
+		padding-bottom:18px;
+		}
+		.stepFifth .speciealForm .row label{
+			width:203px;
+			float:left;
+			display:inline;
+			line-height:25px;
+			font-family:Tahoma, Arial, Helvetica, sans-serif;
+			font-size:12px;
+			text-indent:13px;
+			}
+
+
+	/* .deliverablesTypesList */
+	.deliverablesTypesList{
+		margin:0 0 16px;
+		min-height:40px;
+		}
+		.deliverablesTypesList .deliverablesTypeItem {
+			float:left;
+			width:22%;
+			display:inline;
+			padding-bottom:10px;
+			}
+			.deliverablesTypesList .firstDeliverablesTypeItem{
+				width:24%;
+				}
+				.deliverablesTypesList .deliverablesTypeItem .typeContainer{
+					width:143px;
+					float:right;
+					display:inline;
+					}
+					.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxTop{
+						padding-top:13px;
+						background:url(/images/type-item-bg.png) left top no-repeat;
+						}
+					.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxBottom{
+						padding-bottom:13px;
+						background:url(/images/type-item-bg.png) -286px bottom no-repeat;
+						}
+					.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxBody{
+						background:url(/images/type-item-bg.png) -143px top repeat-y;
+						text-align:center;
+						height:102px;
+						}
+					.deliverablesTypeItem .typeContainer:hover .boxTop{
+						background-position:-429px top;
+						}
+					.deliverablesTypeItem .typeContainer:hover .boxBottom{
+						background-position:-715px bottom;
+						}
+					.deliverablesTypeItem .typeContainer:hover .boxBody{
+						background-position:-572px top;
+						}
+					.deliverablesTypesList .itemHover .typeContainer .boxTop{
+						background-position:-429px top;
+						}
+					.deliverablesTypesList .itemHover .typeContainer .boxBottom{
+						background-position:-715px bottom;
+						}
+					.deliverablesTypesList .itemHover .typeContainer .boxBody{
+						background-position:-572px top;
+						}
+						.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxBody img{
+							cursor:pointer;
+							}
+					
+					
+	/* radioBox */
+	.deliverablesTypesList .deliverablesTypeItem .checkboxBox{
+		clear:right;
+		height:17px;
+		width:143px;
+		text-align:center;
+		padding-top:4px;
+		float:right;
+		display:inline;
+		}
+		
+		.deliverablesTypesList .deliverablesTypeItem .checkboxBox input{
+			width:13px;
+			height:13px;
+			float:none;
+			margin-right:6px;
+			display:inline-block;
+			}
 			
+		.deliverablesTypesList .deliverablesTypeItem .checkboxBox label{
+			font-family:Tahoma, Arial, Helvetica, sans-serif;
+			font-size:12px;
+			line-height:12px;
+			cursor:pointer;
+			width:auto;
+			float:none;
+			display:inline-block;
+			top:-2px;
+			position:relative;
+			}
+				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .leftPart{
+					width:96px;
+					height:40px;
+					line-height:40px;
+					float:left;
+					display:inline;
+					border-right:1px solid #bdbdbd;
+					text-indent:17px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					font-size:14px;
+					}
+				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart{
+					padding:8px 0 7px;
+					height:25px;
+					}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .text{
+						float:left;
+						display:inline;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .period{
+						font-weight:bold;
+						padding-left:12px;
+						line-height:24px;
+						padding-right:4px;
+						float:left;
+						display:inline;
+						}
+					
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .button12{
+						margin-right:12px;
+						float:right;
+						margin-top:2px;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart strong{
+						padding:0px 8px 0 22px;
+						float:left;
+						display:inline;
+						line-height:24px;
+						}
+					#fileType{
+						width:50px;
+						}
+			.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension{
+				padding-left:17px;
+				}
+			.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .strExtension{
+				padding:0 0px 0 24px;
+				display:inline-block;
+				min-width:60px;
+				}
+				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension strong.textLabel{
+					padding-right:10px;
+					}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper,
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper{
+						position:relative;
+						z-index:1;
+						height:25px;
+						min-width:10px;
+						overflow:visible;
+						float:left;
+						display:inline;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:-13px;
+						top:7px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorText{
+						overflow:hidden;
+						width:160px;
+						position:absolute;
+						left:0px;
+						top:34px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:-13px;
+						top:7px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorText{
+						overflow:hidden;
+						width:160px;
+						position:absolute;
+						left:0px;
+						top:34px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+						
 /* stepSixth */
 .stepSixth .form{
-	padding:0;
-	min-height:590px;
-	padding-top:24px;
-	padding-bottom:32px;
+	padding:0 0 32px;
+	min-height:590px; 
 	}
 	
-	.stepSixth .successDiv{
-		margin:0 28px;
-		padding:10px 11px;
-		border:#fbcc00 solid 1px;
-		background:#fffecd;
-		}
+	.stepSixth .successDiv{ 
+		padding:15px 20px 14px 11px;
+		border-bottom:#bdbdbd solid 1px; 
+        background:url(/images/gray-bg-01.gif) #eaeaea repeat-x 0  0;
+        overflow:hidden;
+        }
 		
 		.stepSixth .successDiv p{
 			width:auto;
-			padding:0;
-			padding-left:26px;
+			padding:0 50px 0 26px; 
 			font-family:Tahoma, Arial, Helvetica, sans-serif;
 			font-size:14px;
 			line-height:20px;
-			background:url(../images/ico_true.png) no-repeat left 4px;
-			}
+			background:url(/images/ico_true.png) no-repeat left 4px;
+            
+            }
+		.stepSixth .successDiv .communicate{
+			 float:right;
+             background:url(/images/forum-icon.png) no-repeat left top;
+            font-size:11px;
+            padding-left:26px;
+            margin-top:6px;
+         }
+            .stepSixth .successDiv .communicate span{
+                display:block;
+             }
+            .stepSixth .successDiv .communicate a{
+                color:#ff0000;
+                text-decoration:none;
+                font-weight:bold;
+             }
+            .stepSixth .successDiv .communicate a:hover{
+                text-decoration:underline;
+             }
 			
 		.stepSixth .projectOverView{
-			margin:0 28px;
-			padding-top:14px;
+			margin:0 20px;
+			padding-top:32px;
 			}
 			
 			.stepSixth .projectOverView p{
@@ -1517,7 +2574,11 @@ a{
 				
 			.stepSixth .projectOverView dl{
 				padding-top:16px;
-				}
+                padding-left:8px;
+                }
+			.stepSixth .projectOverView dl.completedSteps{
+				padding-top:1px; 
+                }
 				
 				.stepSixth .projectOverView dl dt{
 					padding-bottom:10px;
@@ -1538,12 +2599,12 @@ a{
 						padding-right:1px;
 						float:left;
 						display:inline;
-						margin-right:8px;
+						margin-right:4px;
 						font-size:22px;
 						font-family:Arial, Helvetica, sans-serif;
 						text-align:center;
 						line-height:31px;
-						background:url(../images/stepIcon.png) no-repeat left top;
+						background:url(/images/stepIcon.png) no-repeat left top;
 						}
 					
 					.stepSixth .projectOverView dl.topStep dd span.icon{
@@ -1552,13 +2613,13 @@ a{
 						padding-right:1px;
 						float:left;
 						display:inline;
-						margin-right:8px;
+						margin-right:4px;
 						font-size:22px;
 						font-family:Arial, Helvetica, sans-serif;
 						text-align:center;
 						line-height:31px;
 						color:#fffffe;
-						background:url(../images/stepRedIcon.png) no-repeat left top;
+						background:url(/images/stepRedIcon.png) no-repeat left top;
 						}
 						
 					.stepSixth .projectOverView dl dd p{
@@ -1566,7 +2627,8 @@ a{
 						padding:0;
 						display:inline-block;
 						line-height:31px;
-						}
+                        font-size:13px;
+                        }
 						
 					.stepSixth .projectOverView dl dd p.twoLine{
 						padding-top:8px;
@@ -1577,7 +2639,41 @@ a{
 						font-size:10px;
 						color:#949494;
 						line-height:1em;
-						}	
+						}
+					.stepSixth .projectOverView .bottomLine{
+                        padding:10px 0;
+                        border-top:4px solid #bdbdbd;
+                        font-family:Tahoma, Arial, Helvetica, sans-serif;
+                        margin-top:20px;
+                    }
+                        .stepSixth .projectOverView .bottomLine p{
+                            padding:4px 0 0;
+                            font-size:11px;
+                            line-height:1em;
+                            width:auto;
+                        }
+                        .stepSixth .projectOverView .bottomLine a.button6{
+                             float:right;
+                             margin:0;
+                        }
+                            .stepSixth .projectOverView .bottomLine a.button6 span.right{
+                                padding:5px 13px 0;
+                                height:19px;
+                            }
+
+
+        .stepSixth table.projectStats th{
+            font-family:Tahoma, Arial, Helvetica, sans-serif;
+            font-size:12px;
+            font-weight:bold;
+            }
+
+        .stepSixth table.projectStats td{
+            font-family:Tahoma, Arial, Helvetica, sans-serif;
+            font-size:20px;
+            font-weight:bold;
+            }
+
 					
 /* modal */
 #modalBackground{
@@ -1597,75 +2693,114 @@ a{
 	position:fixed;
 	z-index:10001; 
 	}
-	
-	#new-modal .outLay{
+
+    .newModal .barTop{
+            background: url( /images/modal-corner.png) no-repeat left top;
+            padding-left:8px;
+        }
+             .newModal .barTopR{
+                background: url( /images/modal-corner.png) no-repeat right top;
+                padding-right:8px;
+            }
+                 .newModal .barTopM{
+                    background: url( /images/modal-bg-horizontal.png) repeat-x left top;
+                    height:9px;
+                    overflow:hidden;
+                }
+     .newModal .barMid{
+        background-color:#000;
+        padding-left:4px;
+    }
+         .newModal .barMidR{
+            background-color:#000;
+            padding-right:4px;
+        }
+            .newModal .barMidM{
+                background:url("/images/modalBg.png") repeat-x scroll left top #E8E8E8;    
+            }
+
+     .newModal .barBot{
+        background: url( /images/modal-corner.png) no-repeat left -9px;
+        padding-left:8px;
+    }
+         .newModal .barBotR{
+            background: url( /images/modal-corner.png) no-repeat right -9px;
+            padding-right:8px;
+        }
+             .newModal .barBotM{
+                background: url( /images/modal-bg-horizontal.png) repeat-x left -9px;
+                height:9px;
+                overflow:hidden;
+            }
+
+    #new-modal .outLay{
 		position:relative;
 		}
 		
 		#new-modal .inner{
 			margin:0 4px;
-			background:url(../images/modalBg.png) repeat-x left top #e8e8e8;
-			}	
-		
-		#new-modal .smallModal .modalTop{
+			background:url(/images/modalBg.png) repeat-x left top #e8e8e8;
+			} 
+
+        #new-modal .smallModal .modalTop{
 			padding-top:8px;
-			background:url(../images/small_modal_top.png) no-repeat left top;
+			background:url(/images/small_modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .smallModal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/small_modal_bottom.png) no-repeat left bottom;
+			background:url(/images/small_modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .smallModal .modalBg{
-			background:url(../images/small_modal_bg.png) repeat-y left top;
+			background:url(/images/small_modal_bg.png) repeat-y left top;
 			}
 			
 		#new-modal .modal .modalTop{
 			padding-top:8px;
-			background:url(../images/modal_top.png) no-repeat left top;
+			background:url(/images/modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .modal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/modal_bottom.png) no-repeat left bottom;
+			background:url(/images/modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .modal .modalBg{
-			background:url(../images/modal_bg.png) repeat-y left top;
+			background:url(/images/modal_bg.png) repeat-y left top;
 			}
 			
 		#new-modal .largeModal .modalTop{
 			padding-top:8px;
-			background:url(../images/large_modal_top.png) no-repeat left top;
+			background:url(/images/large_modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .largeModal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/large_modal_bottom.png) no-repeat left bottom;
+			background:url(/images/large_modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .largeModal .modalBg{
-			background:url(../images/large_modal_bg.png) repeat-y left top;
+			background:url(/images/large_modal_bg.png) repeat-y left top;
 			}
 			
 		#new-modal .minModal .modalTop{
 			padding-top:8px;
-			background:url(../images/min_modal_top.png) no-repeat left top;
+			background:url(/images/min_modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .minModal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/min_modal_bottom.png) no-repeat left bottom;
+			background:url(/images/min_modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .minModal .modalBg{
-			background:url(../images/min_modal_bg.png) repeat-y left top;
+			background:url(/images/min_modal_bg.png) repeat-y left top;
 			}
 		
 	#new-modal .modal-title{
 		height:32px;
-		background:url(../images/modal_title.png) repeat-x left top;
+		background:url(/images/modal_title.png) repeat-x left top;
 		}
 		
 		#new-modal .modal-title h2{
@@ -1676,9 +2811,13 @@ a{
 			font-size:14px;
 			color:#000001;
 			line-height:32px;
-			}
-			
-		#new-modal .modal-title .closeModal{
+            text-transform:uppercase;
+            }
+        #new-modal .newModal .modal-title h2{
+            line-height:26px;   
+        }
+
+        #new-modal .modal-title .closeModal{
 			width:30px;
 			height:30px;
 			float:right;
@@ -1686,11 +2825,11 @@ a{
 			text-indent:-9999px;
 			margin-top:-8px;
 			margin-right:-4px;
-			background:url(../images/modal_close.png) no-repeat left top;
+			background:url(/images/modal_close.png) no-repeat left top;
 			}
 			
 		#new-modal .modal-title .closeModal:hover{
-			background:url(../images/modal_close.png) no-repeat left -30px;
+			background:url(/images/modal_close.png) no-repeat left -30px;
 			}
 			
 		/* buttonArea */
@@ -1721,16 +2860,16 @@ a{
 					}
 			
 	/* errortModal */
-	#errortModal{
+	#errortModal,#errorcModal,#errortModalStep4{
 		width:360px;
 		display:none;
 		}
 		
-		#errortModal .modal-content{
+		#errortModal .modal-content,#errorcModal .modal-content,#errortModalStep4 .modal-content{
 			padding-top:34px;
 			}
 		
-		#errortModal .errorIcon{
+		#errortModal .errorIcon,#errorcModal .errorIcon,#errortModalStep4 .errorIcon{
 			width:50px;
 			height:50px;
 			float:left;
@@ -1738,7 +2877,7 @@ a{
 			margin-left:18px;
 			}
 			
-		#errortModal p{
+		#errortModal p,#errorcModal p,#errortModalStep4 p{
 			width:216px;
 			float:left;
 			display:inline;
@@ -1749,13 +2888,17 @@ a{
 			line-height:18px;
 			text-align:center;
 			}
-			
-		#errortModal p.twoLine{
+        #errorcModal p{
+            width:250px;
+            margin-left:3px;
+        }
+
+        #errortModal p.twoLine,#errorcModal p.twoLine,#errortModalStep4 p.twoLine{
 			margin-top:2px;
 			padding-bottom:36px;
 			}
 			
-		#errortModal dl{
+		#errortModal dl,#errorcModal dl,#errortModalStep4 dl{
 			width:auto;
 			float:left;
 			display:inline;
@@ -1764,12 +2907,12 @@ a{
 			padding-bottom:24px;
 			}
 			
-		#errortModal dd{
+		#errortModal dd,#errorcModal dd,#errortModalStep4 dd{
 			margin-left:12px;
 			padding-left:15px;
 			font-size:12px;
 			line-height:20px;
-			background:url(../images/modal_bullet.png) no-repeat left 5px;
+			background:url(/images/modal_bullet.png) no-repeat left 5px;
 			}
 			
 	/* detailModal */
@@ -1814,6 +2957,10 @@ a{
 					float:left;
 					display:inline;
 					}
+				#detailModal .tableOut td span.dataContest{
+					float:none;
+					display:inline;
+					}
 				
 			#detailModal .tableOut td.firstTd{
 				font-weight:bold;
@@ -1823,17 +2970,49 @@ a{
 				
 	/* gamePlanModal */
 	#gamePlanModal{
-		width:840px;
+		width:1006px;
+		display:none;
+		}
+	#gamePlanBigModal{
+		width:100%;
 		display:none;
 		}
 		
-		#gamePlanModal #ganttChartDiv{
-			width:780px;
-			min-height:150px;
+		#gamePlanModal .actions{
+			 text-align:right;
+             padding:16px 25px 0 0 ;
+            }
+
+        #gamePlanModal #ganttChartDiv{
+			width:946px;
+			min-height:245px;
 			margin:0 auto;
-			padding-top:50px;
+			padding-top:10px;
 			margin-bottom:40px;
 			}
+         #gamePlanBigModal h2{
+             text-transform:uppercase;
+             font-size:14px;
+             color:#000001;
+             background:url("/images/modal_title.png") repeat-x scroll left top transparent;
+             line-height:32px;
+             height:32px;
+             padding-left:20px;
+         }
+        #gamePlanBigModal #ganttChartBigDiv{
+			width:946px; 
+			margin:0 auto;
+			padding-top:16px;
+			margin-bottom:20px;
+			min-height:245px;
+			}
+         #gamePlanBigModal .buttonArea{
+            text-align:center;
+         }
+             #gamePlanBigModal a.button6{
+                float:none;
+                display:inline-block;
+             }
 			
 	/* addUserModal */
 	#addUserModal{
@@ -1927,14 +3106,14 @@ a{
 						border:#a2a1a5 solid 1px;
 						}
 						
-					#addUserModal .addUserForm .searchBox .downloadProfile{
+					#addUserModal .addUserForm .searchBox .searchUserHandle{
 						width:67px;
 						float:left;
 						display:inline;
 						margin-top:15px;
 						}
 						
-						#addUserModal .addUserForm .searchBox .downloadProfile .profileLeft{
+						#addUserModal .addUserForm .searchBox .searchUserHandle .profileLeft{
 							width:67px;
 							font-size:12px;
 							text-align:center;
@@ -1973,11 +3152,11 @@ a{
 					margin:0 auto;
 					margin-top:136px;
 					text-indent:-9999px;
-					background:url(../images/add_tech.png) no-repeat left top;
+					background:url(/images/add_tech.png) no-repeat left top;
 					}
 					
 				#addUserModal .addUserForm .addItem:hover{
-					background:url(../images/add_tech_hover.png) no-repeat left top;
+					background:url(/images/add_tech_hover.png) no-repeat left top;
 					}
 					
 				#addUserModal .addUserForm .removeItem{
@@ -1987,11 +3166,11 @@ a{
 					margin:0 auto;
 					margin-top:5px;
 					text-indent:-9999px;
-					background:url(../images/remove_tech.png) no-repeat left top;
+					background:url(/images/remove_tech.png) no-repeat left top;
 					}
 					
 				#addUserModal .addUserForm .removeItem:hover{
-					background:url(../images/remove_tech_hover.png) no-repeat left top;
+					background:url(/images/remove_tech_hover.png) no-repeat left top;
 					}
 					
 				#addUserModal .buttonArea .button6{
@@ -2058,12 +3237,12 @@ a{
 			}
 			
 	/* alertModal */
-	#alertModal{
+	#alertModal, #createProjectConfirm {
 		width:360px;
 		display:none;
 		}
 		
-		#alertModal p{
+		#alertModal p, #createProjectConfirm p{
 			width:288px;
 			margin:0 auto;
 			padding-top:44px;
@@ -2073,11 +3252,11 @@ a{
 			text-align:center;
 			}
 			
-		#alertModal .buttonArea{
+		#alertModal .buttonArea, #createProjectConfirm .buttonArea {
 			text-align:center;
 			}
 			
-		#alertModal .buttonArea .button6{
+		#alertModal .buttonArea .button6, #createProjectConfirm .buttonArea .button6 {
 			width:60px;
 			margin:16px 5px 0 5px;
 			display:inline-block;
@@ -2087,11 +3266,47 @@ a{
 	BUTTONS
 -------------*/
 
+a.whiteBtn {
+    background: url( /images/white-button-bg.png) no-repeat left top;
+    display: inline-block;
+    padding-left: 4px;
+    text-decoration:none;
+}
 
+    a.whiteBtn .buttonMask {
+        background: url( /images/white-button-bg.png ) no-repeat right -100px;
+        padding-right: 4px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+        a.whiteBtn .text {
+            background: url( /images/white-button-bg.png ) repeat-x left -50px;
+            display: inline-block;
+            height: 25px;
+            line-height: 25px;
+            color: #000001;
+            font-size: 11px;
+            text-align: center; 
+            padding: 0 7px;
+            cursor: pointer;
+        }
+    a.whiteBtn:hover {
+        background-position: 0 -25px;
+		text-decoration:none;
+    }
+
+        a.whiteBtn:hover .buttonMask {
+            background-position: right -125px;
+        }
+
+            a.whiteBtn:hover .text {
+                background-position: 0 -75px;
+            }
 
 a.button1{
 	float:left;
-	background:transparent url(../images/button_left.png) no-repeat left;
+	background:transparent url(/images/button_left.png) no-repeat left;
 	font-size:12px;
 	font-weight:bold;
 	color:#362f2d;
@@ -2100,7 +3315,7 @@ a.button1{
 
 	a.button1 span{
 		float:left;
-		background:transparent url(../images/button_right.png) no-repeat right;
+		background:transparent url(/images/button_right.png) no-repeat right;
 		padding:5px 10px 2px 10px;
 		cursor:pointer;
 		height:20px;
@@ -2113,7 +3328,7 @@ a.button1{
 	
 a.button2{
 	display:block;
-	background:transparent url(../images/button.png) no-repeat top;
+	background:transparent url(/images/button.png) no-repeat top;
 	width:253px;
 	height:24px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -2126,7 +3341,7 @@ a.button2{
 }
 
 	a.button2:hover{
-		background:transparent url(../images/button.png) no-repeat bottom;
+		background:transparent url(/images/button.png) no-repeat bottom;
 	}
 
 a.button3{
@@ -2134,7 +3349,7 @@ a.button3{
 	text-align:center;
 	margin:0 auto;
 	text-decoration:none;
-	background:url(../images/button2.png) no-repeat top;
+	background:url(/images/button2.png) no-repeat top;
 	width:232px;
 	height:25px;
 	color:#333333;
@@ -2150,7 +3365,7 @@ a.button3:hover{
 
 a.button4{
 	display:block;
-	background:transparent url(../images/button3.png) no-repeat top;
+	background:transparent url(/images/button3.png) no-repeat top;
 	width:144px;
 	height:18px;
 	padding-top:3px;
@@ -2168,7 +3383,7 @@ a.button4:hover{
 
 a.button5{
 	display:block;
-	background:transparent url(../images/button4.png) no-repeat top;
+	background:transparent url(/images/button4.png) no-repeat top;
 	width:144px;
 	height:18px;
 	padding-top:3px;
@@ -2187,7 +3402,7 @@ a.button6,
 a.button7,
 a.button8{
 	float:right;
-	background:url(../images/button5_left.png) no-repeat left top;
+	background:url(/images/button5_left.png) no-repeat left top;
 	font-weight:bold;
 	font-size:12px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -2209,48 +3424,48 @@ a.button8{
 	}
 
 a.button7{
-	background:url(../images/button7_bg.png) repeat-x top;
+	background:url(/images/button7_bg.png) repeat-x top;
 	color:#333;
 }
 
 	a.button7 span.left{
 		display:block;
-		background:url(../images/button7_left.png) no-repeat left top;
+		background:url(/images/button7_left.png) no-repeat left top;
 		padding:0;
 	}
 	
 	a.button7 span.right{
 		display:block;
-		background:url(../images/button7_right.png) no-repeat right top;
+		background:url(/images/button7_right.png) no-repeat right top;
 	}
 
 a.button8{
-	background:url(../images/button8_bg.png) repeat-x top;
+	background:url(/images/button8_bg.png) repeat-x top;
 	color:#fffffd !important;
 }
 
 	a.button8 span.left{
-		background:url(../images/button8_left.png) no-repeat left top;
+		background:url(/images/button8_left.png) no-repeat left top;
 		padding:0;
 	}
 	
 	a.button8 span.right{
-		background:url(../images/button8_right.png) no-repeat right top;
+		background:url(/images/button8_right.png) no-repeat right top;
 		padding:5px 27px 0 27px;
 		height:21px;
 	}
 
 a.button6{
-	background:url(../images/button5_bg.png) repeat-x top;
+	background:url(/images/button5_bg.png) repeat-x top;
 }
 
 	a.button6 span.left{
-		background:url(../images/button5_left.png) no-repeat left top;
+		background:url(/images/button5_left.png) no-repeat left top;
 		padding:0;
 	}
 	
 	a.button6 span.right{
-		background:url(../images/button5_right.png) no-repeat right top;
+		background:url(/images/button5_right.png) no-repeat right top;
 		padding:4px 27px 0 27px;
 		height:20px;
 	}
@@ -2294,7 +3509,7 @@ a.button8:hover{
 
 a.button9{
 	display:block;
-	background:transparent url(../images/button9.png) no-repeat top;
+	background:transparent url(/images/button9.png) no-repeat top;
 	width:126px;
 	height:15px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -2306,8 +3521,8 @@ a.button9{
 	}
 
 	a.button9:hover{
-		background:transparent url(../images/button9.png) no-repeat bottom;
-	}
+		background:transparent url(/images/button9.png) no-repeat bottom;
+	} 
 
 a.button10{
 	float:left;
@@ -2346,13 +3561,13 @@ a.button10{
 	a.button10:hover span.right{
 		background-position:left -96px;
 	}
-
+    
 /*----------------
 	edit 5/1/2011
 ----------------*/
 a.button11{
 	display:inline-block;
-	background:transparent url(../images/button11.png) left top no-repeat;
+	background:transparent url(/images/button11.png) left top no-repeat;
 	font-size:11px;
 	color:#313131;
 	padding-left:2px;
@@ -2361,21 +3576,21 @@ a.button11{
 
 	a.button11 .btnR{
 		float:left;
-		background:transparent url(../images/button11.png) right -50px no-repeat;
+		background:transparent url(/images/button11.png) right -50px no-repeat;
 		cursor:pointer;
 		padding-right:2px;
 		height:25px;
 	}	
 		a.button11 .btnR .btnC{
 			float:left;
-			background:transparent url(../images/button11.png) left -25px repeat-x;
+			background:transparent url(/images/button11.png) left -25px repeat-x;
 			cursor:pointer;
 			height:25px;
 			padding:0 8px;
 		}	
 			a.button11 .btnR .btnC .btnIcon{
 				float:left;
-				background:url(../images/button11-icon.gif) left center no-repeat;
+				background:url(/images/button11-icon.gif) left center no-repeat;
 				line-height:24px;
 				cursor:pointer;
 				height:25px;
@@ -2393,13 +3608,129 @@ a.button11{
 				background-position:left -100px;
 			}
 			
-.downloadProfile{
+a.button12{
+	display:inline-block;
+	background:transparent url(/images/button12.png) left top no-repeat;
+	font-size:12px;
+	color:#362f2d;
+	font-weight:bold;
+	line-height:21px;
+	padding-left:2px;
+	text-decoration:none;
+}	
+
+	a.button12 .btnR{
+		float:left;
+		background:transparent url(/images/button12.png) right -42px no-repeat;
+		cursor:pointer;
+		padding-right:2px;
+		height:21px;
+	}	
+		a.button12 .btnR .btnC{
+			float:left;
+			background:transparent url(/images/button12.png) left -21px repeat-x;
+			cursor:pointer;
+			height:21px;
+			padding:0 13px;
+		}	
+	
+	a.button12:hover{
+		background-position:left -63px;
+		text-decoration:none;
+	}
+		a.button12:hover .btnR{
+			background-position:right -105px;
+		}	
+			a.button12:hover .btnR .btnC{
+				background-position:left -84px;
+			}
+/* button13 */
+a.button13{
+	float:left;
+	background:transparent url(/images/button13.png) left top no-repeat;
+	font-size:11px;
+	color:#fffffe;
+	line-height:24px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	padding-left:4px;
+	text-decoration:none;
+	text-transform:uppercase;
+	white-space:nowrap;
+}	
+
+	a.button13 .btnR{
+		float:left;
+		background:transparent url(/images/button13.png) right -48px no-repeat;
+		cursor:pointer;
+		padding-right:4px;
+		height:24px;
+	}	
+		a.button13 .btnR .btnC{
+			float:left;
+			background:transparent url(/images/button13.png) left -24px repeat-x;
+			cursor:pointer;
+			height:24px;
+			padding:0 18px;
+		}	
+	
+	a.button13:hover{
+		background-position:left -72px;
+	}
+		a.button13:hover .btnR{
+			background-position:right -120px;
+		}	
+			a.button13:hover .btnR .btnC{
+				background-position:left -96px;
+			}
+
+/* button14 */
+a.button14{
+	float:left;
+	margin-left:16px;
+	background:transparent url(/images/button-new-1.png) left top no-repeat;
+	font-size:11px;
+	color:#fffffe;
+	line-height:24px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	padding-left:4px;
+	text-decoration:none;
+	text-transform:uppercase;
+}	
+
+	a.button14 .btnR{
+		float:left;
+		background:transparent url(/images/button-new-1.png) right -48px no-repeat;
+		cursor:pointer;
+		padding-right:4px;
+		height:24px;
+	}	
+		a.button14 .btnR .btnC{
+			float:left;
+			background:transparent url(/images/button-new-1.png) left -24px repeat-x;
+			cursor:pointer;
+			height:24px;
+			padding:0 18px;
+		}	
+	
+	a.button14:hover{
+		background-position:left -72px;
+	}
+		a.button14:hover .btnR{
+			background-position:right -120px;
+		}	
+			a.button14:hover .btnR .btnC{
+				background-position:left -96px;
+			}
+			
+.searchUserHandle{
 	margin:0 auto;
 	display:block;
 	width:94px;
 	height:21px;
 	padding-left:3px;
-	background:url(../images/button-sm-left.png) left top no-repeat;
+	background:url(/images/button-sm-left.png) left top no-repeat;
 	overflow:hidden;
 	line-height:20px;
 	text-decoration:none;
@@ -2407,19 +3738,19 @@ a.button11{
 	font-weight:bold;
 	}
 	
-	.downloadProfile span.profileLeft{
+	.searchUserHandle span.profileLeft{
 		display:block;
 		height:21px;
 		width:94px;
-		background:url(../images/button-sm-right.png) right top no-repeat;
+		background:url(/images/button-sm-right.png) right top no-repeat;
 		overflow:hidden;
 		}
 		
-.downloadProfile:hover{
+.searchUserHandle:hover{
 	background-position:left -21px;
 	}
 	
-	.downloadProfile:hover span.profileLeft{
+	.searchUserHandle:hover span.profileLeft{
 		background-position:right -21px;
 		}
 			
@@ -2597,18 +3928,25 @@ table.projectStats{
 	border:1px solid #bdbdbd;
 	}
 
-	table.projectStats th{
+.stepFifth  table.projectStats,.stepSixth  table.projectStats{
+    border:0;
+}
+
+    table.projectStats th{
 		color:#FFF;
 		font-size:11px;
 		height:33px;
-		background:transparent url(../images/calendar_header.png) repeat-x;
+		background:transparent url(/images/calendar_header.png) repeat-x;
 		}
 	
 	table.projectStats th.first{
 		border-left:1px solid #37302d;
 		}
-	
-	table.projectStats td{
+    table.projectStats th.last{
+       border-right:1px solid #37302d; 
+    }
+
+    table.projectStats td{
 		/*font-size:30px;*/
 		/*font-weight:bold;*/
 		text-align:center;
@@ -2669,7 +4007,7 @@ table.notifications tr.alternate{
 	}
 
 table.notifications td{
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: normal;
 	text-align: left;
 	padding-left: 10px;
@@ -2718,21 +4056,12 @@ table.notifications a.collapse{
 	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
 	}
 
-table.notifications .group{
-	padding-left: 22px;
+table.notifications .group{ 
 	text-decoration: none;
 	font-weight: bold;
-	}
-
-table.notifications .expand{
-	text-decoration: none;
-	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
-	}
-
-table.notifications .collapse{
-	text-decoration: none;
-	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
-	}
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+    }
+ 
 
 table.notifications TH.permCol{
 	width: 19%;
@@ -2754,7 +4083,7 @@ table.notifications TH.permCol2{
 	.solveProblem .inner{
 		padding:3px 10px;
 		border:#000000 solid 1px;
-		background:url(../images/problem_bg.png) repeat-x left top #d2d2d2;
+		background:url(/images/problem_bg.png) repeat-x left top #d2d2d2;
 		}
 		
 	/* corner */
@@ -2763,7 +4092,7 @@ table.notifications TH.permCol2{
 		height:5px;
 		overflow:hidden;
 		position:absolute;
-		background-image:url(../images/problem_corner.png);
+		background-image:url(/images/problem_corner.png);
 		background-repeat:no-repeat;
 		}
 		
@@ -2797,7 +4126,7 @@ table.notifications TH.permCol2{
 			color:#1a1a1a;
 			line-height:29px;
 			text-indent:4px;
-			background:url(../images/problem_line.png) repeat-x left bottom;
+			background:url(/images/problem_line.png) repeat-x left bottom;
 			}
 			
 		.solveProblem .inner p{
@@ -2816,14 +4145,123 @@ table.notifications TH.permCol2{
 		
 		.solveProblem a.button2{
 			width:100%;
-			background:url(../images/problem-button.png) no-repeat left top;
+			background:url(/images/problem-button.png) no-repeat left top;
 			}
 			
 		.solveProblem a.button2:hover{
-			background:url(../images/problem-button.png) no-repeat left -30px;
+			background:url(/images/problem-button.png) no-repeat left -30px;
 			}
-            
-#launchContestOut.noBorder .schedule  {
-    padding-bottom: 5px;
-    border: none;
-}          
+
+#selectionConfirmationModal,#createPostingModal,#customConfirmModal{
+    width:609px;
+    display:none;
+}
+    #selectionConfirmationModal .modalContainer, #createPostingModal .modalContainer,#customConfirmModal .modalContainer{
+        background:url(/images/gray-bg.gif) #ececec repeat-x left top;
+        padding:10px 0 10px 24px;
+	    font-family:Tahoma, Arial, Helvetica, sans-serif;
+        font-size:12px;
+    }
+        #selectionConfirmationModal .modalContainer dl,#createPostingModal .modalContainer dl{
+            background:url(/images/selection-bg.png) no-repeat left top;
+            min-height:100px;
+            padding-left:117px;
+        }
+        #customConfirmModal .modalContainer dl{
+            background:url(/images/custom-confirm-bg.png) no-repeat left top;
+            min-height:100px;
+            padding-left:86px; 
+        }
+        #selectionConfirmationModal .modalContainer dt{
+            color:#666;
+            padding:17px 0 12px;
+        }
+        #selectionConfirmationModal .modalContainer dd{
+            padding-bottom:6px;
+            font-size:11px;
+        }
+        #customConfirmModal .modalContainer dd{
+            color:#666;
+            padding:17px 60px 0 6px;
+        }
+        #createPostingModal .modalContainer dd{
+            color:#666;
+            padding:17px 110px 0 6px;
+        }
+            #createPostingModal .modalContainer dd span{
+                color:#333;
+            }
+            #selectionConfirmationModal .modalContainer dd span{
+                background:url(/images/modal_bullet.png) no-repeat left center;
+                padding-left:10px;
+                display:inline-block;
+                width:145px;
+            }
+            #selectionConfirmationModal .modalContainer dd a:hover{
+                text-decoration:none;
+            }
+        #new-modal #selectionConfirmationModal .buttonArea{
+            padding-left:178px;
+            background-color:#eaeaea;
+        }
+            #new-modal #selectionConfirmationModal .buttonArea .button6{
+                width:100px;
+                text-align:center;
+                float:left;
+                margin-right:40px;
+                /*font-family:"Myriad Pro", Arial, Helvetica, Tahoma, sans-serif;*/
+            }
+            #new-modal #customConfirmModal .buttonArea .button6{
+                width:156px;
+                text-align:center;
+            }
+                #new-modal #customConfirmModal .buttonArea .button6 span.right{
+                    padding:5px 0 0;
+                    height:19px;
+                }
+
+.newProjectName {
+    font-weight: bold;
+    color: #EC1C23;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

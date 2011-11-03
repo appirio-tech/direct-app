@@ -3,15 +3,21 @@
  */
 package com.topcoder.direct.services.view.action;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.datatype.DatatypeFactory;
+
 import com.topcoder.direct.services.copilot.model.CopilotProject;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestAction;
-import com.topcoder.direct.services.view.dto.copilot.CopilotProjectOperationDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotProjectOperationType;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.project.*;
-
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
@@ -28,16 +34,51 @@ import java.util.*;
  * This action creates a new direct project and assigns permissions for the new project.
  *
  * <p>
+ * Version 1.1 Change notes:
+ * <ul>
+ * <li>Change the base class from <code>BaseDirectStrutsAction</code> to <code>SaveDraftContestAction</code>.</li>
+ * <li>Added {@link #createCopilotDraftPosting(ProjectData)} to create a draft copilot contest for the new created Presentation Project.</li>
+ * <li>Updated {@link #executeAction()} method to create a draft copilot contest if the new created project is Presentation Project.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
  *     Version 1.1 updates:
  *     - Add new logic to add copilots for the new project.
  *     - Add new logic to create draft copilot posting for the new project.
  * </p>
  *
  * @author TCSASSEMBLER
- * @version 1.1 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R2)
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1)
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
+    /**
+     * The lag between of the start date of the draft copilot contest.
+	 * @since 1.1
+     */
+    private static final long COPILOT_CONTEST_START_DATE_LAG = 48 * 60 * 60 * 1000;
+    
+    /**
+     * The JIRA project to create issue for PPT project. 
+     */
+    private String pptJIRAProject;
+    
+    /**
+     * The id of JIRA issue type when creating issue for PPT project. 
+     */
+    private int pptJIRAIssueTypeId;
+    
+    /**
+     * The JIRA issue reporter  when creating issue for PPT project. 
+     */
+    private String pptJIRAIssueReporter;
+
+    /**
+     * The URL prefix of copilot contest page. 
+     */
+    private String copilotURLPrefix;
+    
     /**
      * The name of the new project.
      */
@@ -54,19 +95,25 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     private List<ProjectPermission> permissions;
 
     /**
+     * A flag indicates whether the project is presentation project.
+	 * @since 1.1
+     */
+    private boolean presentationProject = false;
+    
+    /**
      * The copilot profile ids to represents the copilots of the new project.
      *
      * @since 1.1
      */
     private long[] copilotIds;
-
+    
     /**
      * Boolean to represent whether need to create a draft copilot posting.
      *
      * @since 1.1
      */
     private boolean createCopilotPosting;
-
+    
     /**
      * Gets whether to create draft copilot posting.
      *
@@ -106,7 +153,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     public void setCopilotIds(long[] copilotIds) {
         this.copilotIds = copilotIds;
     }
-
+    
     /**
      * Gets the project name
      *
@@ -162,6 +209,62 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     }
 
     /**
+     * Gets the flag indicates whether the project is presentation project.
+     * 
+     * @return true if the project is presentation project, false otherwise.
+	 * @since 1.1
+     */
+    public boolean isPresentationProject() {
+        return presentationProject;
+    }
+
+    /**
+     * Sets the flag indicates whether the project is presentation project.
+     * 
+     * @param presentationProject true if the project is presentation project, false otherwise.
+	 * @since 1.1
+     */
+    public void setPresentationProject(boolean presentationProject) {
+        this.presentationProject = presentationProject;
+    }
+
+    /**
+     * Sets the JIRA project to create issue for PPT project.
+     * 
+     * @param pptJIRAProject the JIRA project to create issue for PPT project. 
+     */
+    public void setPptJIRAProject(String pptJIRAProject) {
+        this.pptJIRAProject = pptJIRAProject;
+    }
+
+    /**
+     * Sets the id of JIRA issue type when creating issue for PPT project.
+     *  
+     * @param pptJIRAIssueTypeId the id of JIRA issue type when creating issue for PPT project. 
+     */
+    public void setPptJIRAIssueTypeId(int pptJIRAIssueTypeId) {
+        this.pptJIRAIssueTypeId = pptJIRAIssueTypeId;
+    }
+
+    /**
+     * Sets the JIRA issue reporter  when creating issue for PPT project. 
+     * 
+     * @param pptJIRAIssueReporter the JIRA issue reporter  when creating issue for PPT project. 
+     */
+    public void setPptJIRAIssueReporter(String pptJIRAIssueReporter) {
+        this.pptJIRAIssueReporter = pptJIRAIssueReporter;
+    }
+
+    /**
+     * Sets the URL prefix of copilot contest page. 
+     * 
+     * @param copilotURLPrefix the URL prefix of copilot contest page. 
+     */
+    public void setCopilotURLPrefix(String copilotURLPrefix) {
+        this.copilotURLPrefix = copilotURLPrefix;
+    }
+
+    /**
      * The main logic to create the new project and assign permissions to the new project.
      *
      * @throws Exception if there is any error.
@@ -190,8 +293,6 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         // put data into result
         result.put("projectName", projectData.getName());
         result.put("projectId", String.valueOf(projectData.getProjectId()));
-
-        setResult(result);
 
         if (getPermissions() != null) {
 
@@ -223,7 +324,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
             }
 
         }
-
+        
         if (!isCreateCopilotPosting()) {
             // check whether has copilots to add
             if (getCopilotIds() != null && getCopilotIds().length > 0) {
@@ -248,12 +349,40 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
                                 removeFlags);
 
             }
+            
+            if (presentationProject) {
+                // create the draft copilot contest
+                createPPTCopilotDraftPosting(projectData);
+                // create JIRA issue
+                Map<String, Object> conetstResult = (Map<String, Object>) getResult();
+                String description = "Copilot Opportunities: " + copilotURLPrefix + conetstResult.get("projectId");
+                JiraRpcServiceWrapper.createIssue(pptJIRAProject, pptJIRAIssueTypeId, projectName, description, pptJIRAIssueReporter);
+            }
         } else {
             createCopilotDraftPosting(projectData);
         }
+        
+        setResult(result);
     }
-
-
+    
+	/**
+	 * Create a draft copilot contest for the new created Presentation Project.
+	 *
+	 * @param projectData the new created Presentation Project.
+	 * @throws Exception if any error occurs.
+	 */
+    private void createPPTCopilotDraftPosting(ProjectData projectData) throws Exception {
+        setTcDirectProjectId(projectData.getProjectId());
+        Date startDate = new Date();
+        startDate.setTime(new Date().getTime() + COPILOT_CONTEST_START_DATE_LAG);
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTimeInMillis(startDate.getTime());
+        DatatypeFactory df = DatatypeFactory.newInstance();
+        getAssetDTO().setProductionDate(df.newXMLGregorianCalendar(gc));
+        
+        super.executeAction();
+    }
+    
     /**
      * Creates draft copilot posting for the newly created contest.
      *
@@ -327,5 +456,4 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
 
         return cp;
     }
-
 }

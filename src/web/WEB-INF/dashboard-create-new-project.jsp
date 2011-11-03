@@ -5,8 +5,8 @@
   -
   - Description: This page provides the new create new project process which contains 6 steps.
   -
+  - Version 1.1 change notes: Added pages for steps of creating Presentation Project.
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1 v1.0)
-  - Version 1.1 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R2 v1.0)
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -18,18 +18,20 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="createNewProject"/>
-    <link rel="stylesheet" href="/css/newCockpitProject.css?v=208808" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/newProject.css" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/newCockpitProject-ie7.css?v=208807"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/newProject-ie7.css"/>
     <![endif]-->
-    <link rel="stylesheet" href="/css/ganttchart.css?v=198728" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=185881"></script>
-    <script type="text/javascript" src="/scripts/dhtmlxgantt.js?v=198818"></script>
+    <link rel="stylesheet" href="/css/ganttchart.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/dhtmlxcommon.js"></script>
+    <script type="text/javascript" src="/scripts/dhtmlxgantt.js"></script>
+	<script type="text/javascript" src="/scripts/launch/entity.js?v=49"></script>
+	<script type="text/javascript" src="/scripts/launch/main.js?v=49"></script>
     <script type="text/javascript">
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
     </script>
-    <script type="text/javascript" src="/scripts/newCockpitProject.js?v=208815"></script>
+    <script type="text/javascript" src="/scripts/newProject.js"></script>
 </head>
 
 <body id="page">
@@ -74,8 +76,11 @@
                             <div id="stepContainer">
                                 <jsp:include page="includes/project/newProject/new-project-step1.jsp"/>
                                 <jsp:include page="includes/project/newProject/new-project-step2.jsp"/>
+                                <jsp:include page="includes/project/newProject/new-presentation-project-step3.jsp"/>
                                 <jsp:include page="includes/project/newProject/new-project-step4.jsp"/>
+                                <jsp:include page="includes/project/newProject/new-presentation-project-step4.jsp"/>
                                 <jsp:include page="includes/project/newProject/new-project-step5.jsp"/>
+                                <jsp:include page="includes/project/newProject/new-presentation-project-step5.jsp"/>
                                 <jsp:include page="includes/project/newProject/new-project-step6.jsp"/>
                             </div>
 

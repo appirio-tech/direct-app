@@ -3,18 +3,23 @@
  */
 package com.topcoder.direct.services.view.util.jira;
 
-import com.atlassian.jira.rpc.soap.client.*;
-import com.atlassian.jira_soapclient.SOAPSession;
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import org.apache.log4j.Logger;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import com.atlassian.jira.rpc.soap.client.JiraSoapService;
+import com.atlassian.jira.rpc.soap.client.RemoteAuthenticationException;
+import com.atlassian.jira.rpc.soap.client.RemoteIssue;
+import com.atlassian.jira.rpc.soap.client.RemoteResolution;
+import com.atlassian.jira.rpc.soap.client.RemoteStatus;
+import com.atlassian.jira_soapclient.SOAPSession;
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 
 /**
  * <p>The class provides a wrapper for the JiraSoapService. And it provides various methods to get issue data using
@@ -104,7 +109,33 @@ public class JiraRpcServiceWrapper {
 
     }
 
-
+    /**
+     * <p>Create a new JIRA issue.</p>
+     *  
+     * @param project the JIRA project the new issue belongs to.
+     * @param issueTypeId the type id of the new created issue.
+     * @param summary the summary of the issue.
+     * @param description the description of the issue.
+     * @param reporter the reporter of the issue.
+     * @throws Exception if any error occurs.
+     */
+    public static void createIssue(String project, int issueTypeId, String summary, String description, String reporter) throws Exception {
+        // if soap session is not established, initialize a soap session first
+        if (soapSession == null) {
+            initializeSoapSession();
+        }
+        
+        JiraSoapService service = soapSession.getJiraSoapService();
+        String token = soapSession.getAuthenticationToken();
+        RemoteIssue issue = new RemoteIssue();
+        issue.setProject(project);
+        issue.setType(String.valueOf(issueTypeId));
+        issue.setSummary(summary);
+        issue.setDescription(description);
+        issue.setReporter(reporter);
+        service.createIssue(token, issue);
+    }
+    
     /**
      * Gets all the issues for specified contest id.
      *

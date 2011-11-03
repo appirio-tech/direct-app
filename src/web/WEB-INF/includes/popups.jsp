@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin
-  - Version: 1.6
+  - Author: winsty, GreatKevin, TCSASSEMBLER
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -16,6 +16,9 @@
   -
   - Version 1.3 - Release Assembly - TopCoder Cockpit AJAX Revamp Change Note
   - - move all the popup windows into popups jsp
+  -
+  - Version 1.4 - Release Assembly - TopCoder Cockpit Start A New Project Revamp R1
+  - - add modal windows for the start a new project process
   -
   - Version 1.4 - Release Assembly - Release Assembly - TopCoder Cockpit Project Overview Update 1 Changes Note
   - - add the copilot management widget modal window
@@ -119,15 +122,19 @@
         </div>
       </div><!-- End #repostResult -->
     </div><!-- End #repostDialog -->
-    
-    
-    
+
+
+
     <div id="TB_window_custom" class="specrev-window">
         <h1>Plan Specification Review</h1>
         <a class="review-now" href="../contest/startSpecReview.action?startMode=now"></a>
         <p class="or">or</p>
         <a class="review-later" href="../contest/startSpecReview.action?startMode=later"></a>
         <p class="note">*48 hours prior to the scheduled contest start time.</p>
+    </div>
+
+ <div id="deleteUserConfirmation" title="Do you really want to delete the user?" style="display:none;">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will delete the user from the project. Please confirm you want to delete the user?</p>
     </div>
 
     <!-- AJAX preloading indicator -->
@@ -156,7 +163,7 @@
         </div>
         <!-- end ajax preloader modal -->
 
-        <!-- #addNewProjectModal -->
+                <!-- #addNewProjectModal -->
         <div id="addNewProjectModal" class="outLay">
             <div class="modalHeader">
                 <div class="modalHeaderRight">
@@ -822,8 +829,6 @@
         </div>
     </div>
 </div>
-
-
 </s:if>
 
     <s:if test='%{#request.CURRENT_TAB  == "createNewProject"}'>
@@ -837,7 +842,6 @@
             </div>
         </div>
     </s:if>
-        <!-- end modals for create new project -->
 
     </div>
 

@@ -709,7 +709,7 @@
                 if ($("#swUploadButtonDiv").length > 0) {
                     $('#swUploadButtonDiv').html('<input name="document" type="file" />');
                     this._input = getFileInput(this.studio);
-                } else {
+                } else if ($('#attachFileDiv2 table').length > 0) {
                     $('<input name="document" type="file" class="fileInput"/>').insertBefore('#attachFileDiv2 table');
                     $(".fileUpload .fileInput").styleingInputFile();
                     this._input = getFileInput(this.studio);

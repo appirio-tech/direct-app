@@ -596,6 +596,15 @@ BODY#page{
 	padding-top: 5px;
 	font-weight: bold;
 }
+#area1 .select{
+	float:right;
+	font-size: 12px;
+	padding: 5px 10px 5px 10px;
+	background-color: #F8F8F8;
+	border:1px solid #ccc;
+	position:relative;
+	top:-30px
+}
 
 #area1 H2.contestTitle{
 	background: no-repeat left center;
@@ -4712,17 +4721,9 @@ TABLE.pipelineStats TH.tableColumn, TABLE.billingCostReport TH.tableColumn {
     text-align: right;
     padding-right: 5px;
 }
-TABLE.pipelineStats TH.tableTitle .expand{
-    float:left;
-    display:inline;
-}
 TABLE.pipelineStats TH.tableTitle span {
-    padding-top:0;
-    float:left;
-    vertical-align:baseline;
-    height:32px;
-    line-height:32px;
-    display:inline;
+    vertical-align: middle;
+    padding-top: 12px;
 }
 
 
@@ -5599,14 +5600,15 @@ Contest links
 }
 
 .issueContest .contestNameTd a {
-
+    margin-left: 16px;
+    line-height: 40px;
 }
 
 .issueContest .contestNameLink {
 
     padding-left: 16px;
     padding-right: 10px;
-    padding-top: 25px;
+    padding-top: 15px;
     text-align: left;
 }
 
@@ -5789,7 +5791,10 @@ Contest links
     margin-bottom:10px;
 }
 /* ADDED CSS CODE */ 
-
+.myCopilotsContestsList, .myProjectContests {
+    border-left:1px solid #A8ABAD;
+    border-right:1px solid #A8ABAD;
+}
 .myCopilotsContestsList table.contests, table#ProjectContests {
     border:0px;
     margin-bottom:0px;
@@ -5802,7 +5807,7 @@ Contest links
     padding-left:6px; 
 }
 .myCopilotsContestsList table.projectStats td, table#ProjectContests td {
-    width:auto;
+    width:inherit;
     text-align:center;
     padding:12px 4px;
 }
@@ -6726,11 +6731,6 @@ div.rightColumn .activity TABLE {
 .messageContestName {
     font-weight:bold;
     color: #cc0000;
-}
-
-textarea#newProjectDescription {
-    max-width: 315px;
-    max-height: 130px;
 }
 .contestViews .areaHeader .viewBtns{
     position:absolute;
