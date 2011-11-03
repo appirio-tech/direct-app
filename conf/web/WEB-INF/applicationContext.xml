@@ -524,6 +524,15 @@
           class="com.topcoder.direct.services.view.action.report.DashboardPipelineDraftsRatioAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+    
+    <bean id="createNewProjectAction"
+          class="com.topcoder.direct.services.view.action.CreateNewProjectAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+          <property name="pptJIRAProject" value="TCFAQ"/>
+          <property name="pptJIRAIssueTypeId" value="3"/>
+          <property name="pptJIRAIssueReporter" value="anonymus"/>
+          <property name="copilotURLPrefix" value="http://community.topcoder.com/tc?module=ProjectDetail&amp;pj="/>
+    </bean>
 
         <!-- For Copilot Profile and Copilot Project DAO-->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
