@@ -127,7 +127,7 @@ public class ProjectCopilotsWidgetAction extends BaseDirectStrutsAction {
 
                     if (cp.getStatus().getId() == 1L) {
                         // only add active copilots into the left list
-                        otherCopilots.put(String.valueOf(cp.getId()), getUserService().getUserHandle(cp.getUserId()));
+                        otherCopilots.put(String.valueOf(cp.getId()), cp.getHandle());
                         userIdsMap.put(String.valueOf(cp.getId()), String.valueOf(cp.getUserId()));
                     }
                 }
