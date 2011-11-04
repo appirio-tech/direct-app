@@ -56,7 +56,7 @@
                                     </div>
                                     <!-- end .getCopilots -->
 
-                                    <div class="myCopilotsContestsList" id="MyCopilotPostings">
+                                    <div class="myCopilotsContestsTable myCopilotsContestsList" id="MyCopilotPostings">
 
                                         <table id="tableSorterUsed"
                                                class="projectStats contests contestsStatus paginatedDataTable"

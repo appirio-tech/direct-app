@@ -18,6 +18,12 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".prizesTable:eq(0) tbody tr td:gt(1):lt(2)").hide();
+            $(".prizesTable:eq(1) tbody tr td:gt(0):lt(4)").hide();
+        });
+    </script>
 </head>
 
 <body id="page">
