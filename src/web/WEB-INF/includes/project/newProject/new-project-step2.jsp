@@ -5,8 +5,10 @@
   -
   - Description: This page provides the new create new project step 2.
   -
-  - Version 1.1 change noets: Added selection for presentation project type.
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1 v1.0)
+  - Version 1.1 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R2 v1.0)
+  - Version 1.1 change noets: Added selection for presentation project type.
+  - - Move custom project plan to the first
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -76,6 +78,23 @@
 <div class="projectItem">
 
     <div class="radioBox">
+        <input id="customGamePlanRadio" type="radio" name="gamePlanType" class="radio"/><label>Custom</label>
+
+    </div>
+
+    <!-- container -->
+    <div class="projectContainer">
+        <div class="custom"></div>
+    </div>
+    <!-- End .projectContainer -->
+
+</div>
+<!-- End .projectItem -->
+
+<!-- item -->
+<div class="projectItem">
+
+    <div class="radioBox">
         <input type="radio" name="gamePlanType" class="radio"/><label>Presentation Project Type</label>
 
     </div>
@@ -137,7 +156,7 @@
 <div class="projectItem">
 
     <div class="radioBox">
-        <input type="radio" name="gamePlanType" class="radio" disabled="disabled"/><label>Project Type 2</label>
+        <input type="radio" name="gamePlanType" class="radio" disabled="disabled"/><label>Project Type 1 (coming soon)</label>
 
     </div>
 
@@ -148,8 +167,8 @@
                 <div class="bg">
 
                     <!-- img -->
-                    <div class="projectPic"><img src="/images/projectItem.png" alt=""/></div>
-                    <!-- End .projectPic -->
+                    <div class="comingSoon"><img src="/images/coming_soon_img.png" alt=""/></div>
+                    <!-- End .comingSoon -->
 
                     <table border="0" cellpadding="0" cellspacing="0">
                         <colgroup>
@@ -198,7 +217,7 @@
 <div class="projectItem">
 
     <div class="radioBox">
-        <input type="radio" name="gamePlanType" class="radio" disabled="disabled"/><label>Project Type 3</label>
+        <input type="radio" name="gamePlanType" class="radio" disabled="disabled"/><label>Project Type 2 (coming soon)</label>
 
     </div>
 
@@ -209,8 +228,8 @@
                 <div class="bg">
 
                     <!-- img -->
-                    <div class="projectPic"><img src="/images/projectItem.png" alt=""/></div>
-                    <!-- End .projectPic -->
+                    <div class="comingSoon"><img src="/images/coming_soon_img.png" alt=""/></div>
+                    <!-- End .comingSoon -->
 
                     <table border="0" cellpadding="0" cellspacing="0">
                         <colgroup>
@@ -249,145 +268,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End .projectContainer -->
-
-</div>
-<!-- End .projectItem -->
-
-<!-- item -->
-<div class="projectItem">
-
-    <div class="radioBox">
-        <input type="radio" name="gamePlanType" class="radio" disabled="disabled"/><label>Project Type 4</label>
-
-    </div>
-
-    <!-- container -->
-    <div class="projectContainer">
-        <div class="top">
-            <div class="bottom">
-                <div class="bg">
-
-                    <!-- img -->
-                    <div class="projectPic"><img src="/images/projectItem.png" alt=""/></div>
-                    <!-- End .projectPic -->
-
-                    <table border="0" cellpadding="0" cellspacing="0">
-                        <colgroup>
-                            <col width="50%"/>
-                            <col width="50%"/>
-                        </colgroup>
-                        <tr>
-                            <td class="firstTd">Size of Project</td>
-                            <td>
-                                <select class="selProjSize">
-                                    <option value="0">Small</option>
-                                    <option value="1">Medium</option>
-                                    <option value="2">Large</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="firstTd">Total Duration</td>
-                            <td class="dataDur">000 days</td>
-                        </tr>
-                        <tr>
-                            <td class="firstTd">Total Cost</td>
-                            <td class="dataCost">$ 00000.00</td>
-                        </tr>
-                        <tr>
-                            <td class="firstTd">No of Contents</td>
-                            <td class="dataNumCont">00</td>
-                        </tr>
-                    </table>
-
-                    <div class="buttonArea">
-                        <a href="javascript:;" class="blackButton detailButton">Details</a>
-                        <a href="javascript:;" class="blackButton gamePlanButton">Game Plan</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End .projectContainer -->
-
-</div>
-<!-- End .projectItem -->
-
-<!-- item -->
-<div class="projectItem">
-
-    <div class="radioBox">
-        <input type="radio" name="gamePlanType" class="radio" disabled="disabled"/><label>Project Type 5</label>
-
-    </div>
-
-    <!-- container -->
-    <div class="projectContainer">
-        <div class="top">
-            <div class="bottom">
-                <div class="bg">
-
-                    <!-- img -->
-                    <div class="projectPic"><img src="/images/projectItem.png" alt=""/></div>
-                    <!-- End .projectPic -->
-
-                    <table border="0" cellpadding="0" cellspacing="0">
-                        <colgroup>
-                            <col width="50%"/>
-                            <col width="50%"/>
-                        </colgroup>
-                        <tr>
-                            <td class="firstTd">Size of Project</td>
-                            <td>
-                                <select class="selProjSize">
-                                    <option value="0">Small</option>
-                                    <option value="1">Medium</option>
-                                    <option value="2">Large</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="firstTd">Total Duration</td>
-                            <td class="dataDur">000 days</td>
-                        </tr>
-                        <tr>
-                            <td class="firstTd">Total Cost</td>
-                            <td class="dataCost">$ 00000.00</td>
-                        </tr>
-                        <tr>
-                            <td class="firstTd">No of Contents</td>
-                            <td class="dataNumCont">00</td>
-                        </tr>
-                    </table>
-
-                    <div class="buttonArea">
-                        <a href="javascript:;" class="blackButton detailButton">Details</a>
-                        <a href="javascript:;" class="blackButton gamePlanButton">Game Plan</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End .projectContainer -->
-
-</div>
-<!-- End .projectItem -->
-
-<!-- item -->
-<div class="projectItem">
-
-    <div class="radioBox">
-        <input id="customGamePlanRadio" type="radio" name="gamePlanType" class="radio"/><label>Custom</label>
-
-    </div>
-
-    <!-- container -->
-    <div class="projectContainer">
-        <div class="custom"></div>
     </div>
     <!-- End .projectContainer -->
 
