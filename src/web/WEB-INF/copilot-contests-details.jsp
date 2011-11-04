@@ -323,7 +323,7 @@
 <!-- End Prize Display -->
 
 <!-- Prize Edit -->
-<div class="no_details contest_prize_edit editPanel">
+<div class="no_details contest_prize_edit editPanel hide">
     <div class="caption_det_prize_edit">
         <div class="captionInner">
             <h2>Prizes</h2>
@@ -352,7 +352,6 @@
                 </div>
                 <br/>
                 <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$ <span id="swTotal"> <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/></span></strong></span>
-                </span>
             </div>
         </div>
         <!-- end .prizes -->
