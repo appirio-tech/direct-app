@@ -35,6 +35,12 @@
 
         <li class="splitter"></li>
 
+        <li>
+            <link:onlineReviewProjectDetails projectId="${param.projectId}" target="_blank"
+                                             styleClass="contestLinkIcon linkIconOnlineReview">Online Review</link:onlineReviewProjectDetails>
+        </li>
+
+        <li class="splitter"></li>
 
         <li>
             <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.contestStats.forumId}"
