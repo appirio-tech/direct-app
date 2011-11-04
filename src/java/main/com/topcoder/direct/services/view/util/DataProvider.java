@@ -3452,14 +3452,8 @@ public class DataProvider {
         }
 
         request.setContentHandle(queryName);
-
-        if (contestId > 0) {
-            request.setProperty("sdt", dateFormatter.format(new GregorianCalendar(1900, 1, 1).getTime()));
-            request.setProperty("edt", dateFormatter.format(new GregorianCalendar(9999, 1, 1).getTime()));
-        } else {
-            request.setProperty("sdt", dateFormatter.format(startDate));
-            request.setProperty("edt", dateFormatter.format(endDate));
-        }
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
 
         request.setProperty("pcids", projectCategoryIDsList);
         request.setProperty("scids", studioProjectCategoryIdsList);
