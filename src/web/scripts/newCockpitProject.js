@@ -3,10 +3,7 @@
  *
  * Javascript file for the new creation project process.
  *
- * - Version 1.1 changes:
- * Add logic to create draft copilot posting or add copilots into the new created project.
- *
- * @version 1.1 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R2)
+ * @version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1)
  * @author: TCSASSEMBLER
  */
 
@@ -18,10 +15,7 @@
  * @param hasTreePanel whether to display tree panel in the game plan
  */
 function createChartControl(htmlDiv, hasTreePanel) {
-
-    if($("#" + htmlDiv).height() == 0) return;
-    if($("#" + htmlDiv).width() == 0) return;
-
+    try{
     var ganttChartControl;
 
     // Create Gantt control
@@ -44,6 +38,14 @@ function createChartControl(htmlDiv, hasTreePanel) {
 
     // Load data structure
     ganttChartControl.loadData("../scripts/data.xml", true, true);
+    } catch (e) {}
+}
+
+/**
+ * Checks whether the project is presentation project.
+ */
+function isPresentationProject() {
+    return stepsChoices['step2'] == 'Presentation Project Type';
 }
 
 /**
@@ -73,13 +75,11 @@ var goCreateProjectStep = function(stepNumber) {
         return;
     }
 
-    var step;
-    for (step = 1; step <= 6; ++step) {
-        if (stepNumber == step) {
-            $("#newProjectStep" + step).show();
-        } else {
-            $("#newProjectStep" + step).hide();
-        }
+    $(".newProjectStep").hide();
+    if (isPresentationProject() && (stepNumber == 3 || stepNumber ==  4 || stepNumber == 5)) {
+        $("#newPPTProjectStep" + stepNumber).show();
+    } else {
+        $("#newProjectStep" + stepNumber).show();
     }
 
     $(".stepBar li").each(function() {
@@ -127,16 +127,13 @@ var goCreateProjectStep = function(stepNumber) {
 
     if(stepsChoices['step2'] == 'custom') {
         $("#customGamePlanRadio").attr('checked', true);
-        $("#customGamePlanRadio").parent().parent().find(".projectContainer").addClass('hover');
     }
 
-    if (stepNumber == 2) {
-        // check custom project plan by default for now
-        $("#customGamePlanRadio").attr("checked", "checked");
-        $("#customGamePlanRadio").parent().parent().find(".projectContainer").addClass('hover');
+    if (stepNumber == 3 && isPresentationProject()) {
+        //new add line
+        $('.stepThird .tfooter td .addMoreButtonBox .text').css('width',$('.stepThird .tfooter td .addMoreButtonBox').width() - 142);
     }
-
-    if (stepNumber == 4) {
+    if (stepNumber == 4 && !isPresentationProject()) {
         if(stepsChoices['step4'] == 'chooseCopilot') {
             $("#newProjectStep4 .radioYes").attr("checked", "checked");
         } else if (stepsChoices['step4'] == 'createCopilot') {
@@ -145,19 +142,29 @@ var goCreateProjectStep = function(stepNumber) {
             $("#newProjectStep4 .radioNo").attr("checked", "checked");
         }
     }
-
+    if (stepNumber == 5 && isPresentationProject()) {
+        $('#selectFileDescription').width($('.addMoreParts .topRowWrapper').width() - 90);
+        $('#customFileDescription').width($('#selectFileDescription').width() - 22);
+        $('.stepFifth .browserInput').width($('.stepFifth .browserParts .topRowWrapper').width() - 26);
+        $('#descriptionInput').width($('.stepFifth .otherTypeAreaInputBox').width() - 450);
+    }
 };
 
 var generateConfirmationPage = function(projectId, projectName) {
     // determine what to show in the final confirmation page
     if ($(".stepSixth").length > 0) {
+        var isPPT = isPresentationProject();
         var step2 = stepsChoices["step2"];
         var step4 = stepsChoices["step4"];
         var step2Size;
 
         // add project name
         var text = $(".stepSixth .step1 p").html();
-        text = text + ' <span class="newProjectName"> ' + projectName + "</span>";
+        if (isPPT) {
+            text = 'Create Presentation Project <span class="newProjectName"> ' + projectName + "</span>";
+        } else {
+            text = text + ' <span class="newProjectName"> ' + projectName + "</span>";
+        }
         $(".stepSixth .step1 p").html(text);
 
         // update project overview link
@@ -226,90 +233,199 @@ var generateConfirmationPage = function(projectId, projectName) {
             $(".stepSixth .notYetSteps .step3.completeStep").show();
             $(".stepSixth .notYetSteps .step4.launchFirstStep").show();
         }
+        
+        if (isPPT) {
+            $(".stepSixth .notYetSteps").show();
+            $(".stepSixth .pptStep").show();
+        }
     }
 
 };
 
+/**
+ * Encode a html content.
+ */
+function htmlEncode(html) {
+    if (html.length == 0) return "";
+    html = html.replace(/&/g, "&amp;");
+    html = html.replace(/</g, "&lt;");
+    html = html.replace(/>/g, "&gt;");
+    html = html.replace(/ /g, "&nbsp;");
+    html = html.replace(/\'/g, "'");
+    html = html.replace(/\"/g, "&quot;");
+    html = html.replace(/\n/g, "<br/>");
+    return html;
+}
+
+/**
+ * Create the public description content for copilot contest of Presentation Project.
+ */
+function createCopilotContestPublicDescription() {
+    var content = "";
+    var projectName = htmlEncode($("#newProjectName").val());
+    var projectDescription = htmlEncode($("#newProjectDescription").val());
+    var style = $("input[name='styleSelectRadio']:checked").next().html();
+    var notes = htmlEncode($(".stepForth .notePresentation").val());
+    var pageLength = $("input[name='pageLengthSetting']:checked").next().html();
+    var audiences = "";
+    $(".stepThird .speciealForm .selectRadioBox .radio:checked").each(function() {
+        if (audiences.length > 0) {
+            audiences += ', ';
+        }
+        audiences += htmlEncode($(this).attr('name'));
+    });
+    var deliverableTypes = "";
+    $(".stepFifth .deliverablesTypeItem input[type='checkbox']:checked").each(function() {
+        deliverableTypes += $(this).next().html() + '<br/>';
+    });
+    $(".stepFifth .speciealForm .otherTypeTableWrapper tbody tr").each(function() {
+        if ($(this).hasClass("tfooter")) return;
+        var ext = $(".strExtension", $(this)).html();
+        var desc = $(".strDesc", $(this)).html();
+        deliverableTypes += ext + ' : ' + desc + '<br/>';
+    });
+    
+    content += '<p><strong>Project Name:</strong> ' + projectName + '</p>';
+    content += '<p><strong>Project Overview:</strong><br/>' + projectDescription + '</p>';
+    content += '<p><strong>Which are your preferred style for the presentation?</strong><br/>' + style + '</p>';
+    content += '<p><strong>Any notes on presentation style?</strong><br/>' + notes + '</p>';
+    content += '<p><strong>Project Length:</strong> ' + pageLength + '</p>';
+    content += '<p><strong>Target Audience:</strong><br/>' + audiences + '</p>';
+    content += '<p><strong>Deliverable Type:</strong><br/>' + deliverableTypes + '</p>';
+    return content;
+}
+
+/**
+ * Create request data to create draft copilot conetst for Presentation Project.
+ */
+function createDraftContestRequestForPresentationProject(projectName) {
+    mainWidget.competitionType = "SOFTWARE";
+    
+    mainWidget.softwareCompetition.projectHeader.projectCategory = {};
+    mainWidget.softwareCompetition.projectHeader.projectCategory.id = 29;
+    mainWidget.softwareCompetition.projectHeader.projectCategory.name = "Copilot Posting";
+    mainWidget.softwareCompetition.projectHeader.projectCategory.projectType = {};
+    mainWidget.softwareCompetition.projectHeader.projectCategory.projectType.id = 2;
+    mainWidget.softwareCompetition.projectHeader.projectCategory.projectType.name = "Application";
+   
+    mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded = false;
+    mainWidget.softwareCompetition.assetDTO.directjsDesignId = -1;   
+      
+    mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
+    
+    var contestName = projectName + " Copilot Opportunity";
+    mainWidget.softwareCompetition.assetDTO.name = contestName;
+    mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = projectName;
+    mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = createCopilotContestPublicDescription();
+    mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = "";
+    mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
+    
+    var projectHeader = mainWidget.softwareCompetition.projectHeader;
+    var amount = 150.0;
+    projectHeader.setFirstPlaceCost(amount);
+    // set all prize to 0 except first place cost
+    projectHeader.setSecondPlaceCost(0);
+    projectHeader.setReviewCost(0);
+    projectHeader.setReliabilityBonusCost(0);
+    projectHeader.setDRPoints(0);
+    projectHeader.setMilestoneBonusCost(0);
+    projectHeader.setAdminFee(0);
+    projectHeader.setSpecReviewCost(0);
+    
+    var prizes = [];
+    prizes.push(new com.topcoder.direct.Prize(1, amount, CONTEST_PRIZE_TYPE_ID, 1));
+    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
+    mainWidget.softwareCompetition.projectHeader.setBillingProject(0);
+    delete mainWidget.softwareCompetition.assetDTO.productionDate;
+    
+    var request = saveAsDraftRequestSoftware();
+    request['presentationProject'] = true;
+    return request;
+}
+
 // final step
 var createNewProject = function() {
+    var isPPT = isPresentationProject();
     // get project name and project description
-    var projectName = $("#newCockpitProjectName").val();
-    var projectDescription = $("#newCockpitProjectDescription").val();
+    var projectName = $("#newProjectName").val();
+    var projectDescription = $("#newProjectDescription").val();
 
     var permissions = [];
+    if (!isPPT) {
+        // get permissions
+        $('.stepFifth .checkPermissions .userRow').each(function() {
+            var permission = {};
+            var userId = $(this).find('div.group').attr('id').substring(6);
+            var userName = $.trim($(this).find('div.group').html());
+            var permissionType;
 
-    // get permissions
-    $('.stepFifth .checkPermissions .userRow').each(function() {
-        var permission = {};
-        var userId = $(this).find('div.group').attr('id').substring(6);
-        var userName = $.trim($(this).find('div.group').html());
-        var permissionType;
+            // check permission from higher
+            if ($(this).find('.fullPermissionSelect:checked').length > 0) {
+                permissionType = "full";
+            } else if ($(this).find('.writePermissionSelect:checked').length > 0) {
+                permissionType = "write";
+            } else if ($(this).find('.readPermissionSelect:checked').length > 0) {
+                permissionType = "read";
+            }
 
-        // check permission from higher
-        if ($(this).find('.fullPermissionSelect:checked').length > 0) {
-            permissionType = "full";
-        } else if ($(this).find('.writePermissionSelect:checked').length > 0) {
-            permissionType = "write";
-        } else if ($(this).find('.readPermissionSelect:checked').length > 0) {
-            permissionType = "read";
-        }
+            if (permissionType != undefined && permissionType != null) {
+                permission['userId'] = userId;
+                permission['handle'] = userName;
+                permission['permission'] = permissionType;
 
-        if (permissionType != undefined && permissionType != null) {
-            permission['userId'] = userId;
-            permission['handle'] = userName;
-            permission['permission'] = permissionType;
+                permissions.push(permission);
+            }
 
-            permissions.push(permission);
-        }
-
-    });
-
-    var request = {};
-
-    var step4 = stepsChoices["step4"];
-
-    if(step4 == 'chooseCopilot') {
-        var copilotIds = [];
-        $.each(stepsChoices["copilots"], function(index, value) {
-            copilotIds[copilotIds.length] = value.copilotProfileId;
         });
-        request['copilotIds'] = copilotIds;
-        request['createCopilotPosting'] = false;
-
-    } else if (step4 == "createCopilot") {
-
-        request['createCopilotPosting'] = true;
-
     }
 
+    var request = {};
+    if (isPPT) {
+        request = createDraftContestRequestForPresentationProject(projectName);
+    } else {
+        var step4 = stepsChoices["step4"];
+
+        if(step4 == 'chooseCopilot') {
+            var copilotIds = [];
+            $.each(stepsChoices["copilots"], function(index, value) {
+                copilotIds[copilotIds.length] = value.copilotProfileId;
+            });
+            request['copilotIds'] = copilotIds;
+            request['createCopilotPosting'] = false;
+
+        } else if (step4 == "createCopilot") {
+
+            request['createCopilotPosting'] = true;
+
+        }
+    }
     request['projectName'] = projectName;
     request['projectDescription'] = projectDescription;
     request['permissions'] = permissions;
 
-    modalAllClose();
     modalPreloader();
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url:  "createNewCockpitProjectAjax",
         data: request,
         cache: false,
         dataType: 'json',
-        async : true,
+        async : false,
         success: function (jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
                     var projectName = result.projectName;
                     var projectId = result.projectId;
 
-                    modalAllClose();
+                    modalClose();
 
                     generateConfirmationPage(projectId, projectName);
 
                     goCreateProjectStep(6);
                 },
                 function(errorMessage) {
-                    modalAllClose();
+                    modalClose();
                     showErrors(errorMessage);
                 })
         }
@@ -369,11 +485,11 @@ var createNewProject = function() {
 
 
 $(document).ready(function() {
-
     // text-shadow
     $('.solveProblem .inner h3,.stepBar li span.bg,.stepFifth .geryContent .downloadProfile .profileLeft').css('text-shadow', '0px 1px 0px #ffffff');
     $('.stepBar li a').css('text-shadow', '0px 1px 0px #6C871E');
     $('.stepBar li .complete a').css('text-shadow', '0px 1px 0px #53661C');
+    $(".notePresentation").css("resize", "none");
 
     // z-index for step bar
     $('.stepBar li').each(function() {
@@ -391,12 +507,14 @@ $(document).ready(function() {
     // width for step bar
     $('.stepBar li').css('width', ($('.stepBar').width() / 6) + 17);
     $('.stepBar li:first').css('width', ($('.stepBar').width() / 6) + 15);
-
+    
     // update the step bar width and textarea width when the browser size is changed
     $(window).resize(function() {
         $('.stepBar li').css('width', ($('.stepBar').width() / 6) + 17);
         $('.stepBar li:first').css('width', ($('.stepBar').width() / 6) + 15);
         $('.stepFirst textarea').css('width', $('.stepFirst .row').width() - 206);
+        //new add line
+        $('.stepThird .tfooter td .addMoreButtonBox .text').css('width',($('.stepThird .tfooter td .addMoreButtonBox').width() - 142));
     });
 
 
@@ -498,7 +616,8 @@ $(document).ready(function() {
             addressLoadModal('#errortModal');
         } else {
             jPar = $('.stepSecond .radio:checked').parent();
-            if (jPar.find('label').text() == 'Custom') {
+            var pType = jPar.find('label').text();
+            if (pType == 'Custom') {
 
                 // if custom, show the custom confirm modal
                 addresscloseModal();
@@ -507,6 +626,9 @@ $(document).ready(function() {
                 // $.cookie("step2-size", null);
                 stepsChoices['step2'] = 'custom';
 
+            } else if (pType == 'Presentation Project Type') {
+                stepsChoices['step2'] = 'Presentation Project Type';
+                goCreateProjectStep(3);
             } else {
                 // $.cookie("step2", "gameplan");
                 // $.cookie("step2-size", jPar.parent().find(".selProjSize").val());
@@ -517,31 +639,47 @@ $(document).ready(function() {
     });
 
     $('.stepForth .geryContent .nextStepButton').click(function() {
-        var copilotYesNoChecked = false;
-
-        $('.stepForth .radio').each(function() {
-            if ($(this).attr('checked')) {
-                copilotYesNoChecked = true;
+        if (isPresentationProject()) {
+            var refuse = false;
+            var val = $.trim($('.stepForth .notePresentation').val());
+            if($('.stepForth .speciealForm .styleItem :radio:checked').length == 0){
+                $('.stepForth .errorStatusTips').css('display','inline');
+                refuse = true;
             }
-        });
-
-        // checked value
-        var val = $('.stepForth .radio:checked').val();
-
-        if (!copilotYesNoChecked) {
-
-            addresscloseModal();
-            addressLoadModal('#errortModalStep4');
-
-        } else if (val == "yes") {
-
-            addresscloseModal();
-            addressLoadModal('#errorcModal');
-
-        } else if (val == "no") {
-
-            stepsChoices['step4'] = 'noCopilot';
+            if(val.length == 0){
+                $('.stepForth .textFieldWrapper .notePresentation').addClass('errorInput');
+                $('.stepForth .textFieldWrapper .errorText, .stepForth .textFieldWrapper .errorIcon').show();
+                refuse = true;
+            }
+            if(refuse) return false;
             goCreateProjectStep(5);
+        } else {
+            var copilotYesNoChecked = false;
+
+            $('.stepForth .radio').each(function() {
+                if ($(this).attr('checked')) {
+                    copilotYesNoChecked = true;
+                }
+            });
+
+            // checked value
+            var val = $('.stepForth .radio:checked').val();
+
+            if (!copilotYesNoChecked) {
+
+                addresscloseModal();
+                addressLoadModal('#errortModalStep4');
+
+            } else if (val == "yes") {
+
+                addresscloseModal();
+                addressLoadModal('#errorcModal');
+
+            } else if (val == "no") {
+
+                stepsChoices['step4'] = 'noCopilot';
+                goCreateProjectStep(5);
+            }
         }
     });
 
@@ -556,28 +694,39 @@ $(document).ready(function() {
     });
 
     $('.stepFifth .geryContent .nextStepButton').click(function() {
-        var hasUserPermissionAdded = false;
+        if (isPresentationProject()) {
+            var refuse = false;
+            if($('.stepFifth .speciealForm .deliverablesTypeItem :checked').length == 0){
+                $('.stepFifth .errorStatusTips').css('display','inline');
+                refuse = true;
+            }
+            if(refuse) return false;
+            addresscloseModal();
+            addressLoadModal('#createProjectConfirm');
+        } else {
+            var hasUserPermissionAdded = false;
 
-        $('.stepFifth .checkPermissions .userRow').each(function() {
-                hasUserPermissionAdded = true;
-        });
-        if ($('.addUserPlan').is(":visible")) {
-            if ((!hasUserPermissionAdded)) {
+            $('.stepFifth .checkPermissions .userRow').each(function() {
+                    hasUserPermissionAdded = true;
+            });
+            if ($('.addUserPlan').is(":visible")) {
+                if ((!hasUserPermissionAdded)) {
+
+                    addresscloseModal();
+                    addressLoadModal('#alertModal');
+
+                } else {
+
+                    addresscloseModal();
+                    addressLoadModal('#createProjectConfirm');
+
+                }
+            } else {
 
                 addresscloseModal();
                 addressLoadModal('#alertModal');
 
-            } else {
-
-                addresscloseModal();
-                addressLoadModal('#createProjectConfirm');
-
             }
-        } else {
-
-            addresscloseModal();
-            addressLoadModal('#alertModal');
-
         }
     });
 
@@ -865,7 +1014,7 @@ $(document).ready(function() {
             dataType: 'json',
             async : false,
             success: function (jsonResult) {
-                handleJsonResult2(jsonResult,
+                handleJsonResult(jsonResult,
                     function(result) {
                         // insert into the left list
                         $('#addUserModal .addUserForm .addUserLeft ul').empty();
@@ -889,8 +1038,12 @@ $(document).ready(function() {
 
 
     $('#alertModal .step6Button').live('click', function() {
-          addresscloseModal();
-          addressLoadModal('#createProjectConfirm');
+        addresscloseModal();
+        if (isPresentationProject()) {
+            createNewProject();
+        } else {
+            addressLoadModal('#createProjectConfirm');
+        }
     });
 
 
@@ -954,8 +1107,7 @@ $(document).ready(function() {
     }
 
     $('.projectContainer').click(function() {
-        // only apply to custom project now
-        if ($(this).find("div").hasClass("custom")) {
+        if (!$("input[type='radio']", $(this).parent()).attr("disabled")) {
 
             $('.projectContainer').removeClass('hover');
             $(this).addClass('hover');
@@ -1036,10 +1188,9 @@ $(document).ready(function() {
             $(".stepForth .chooseCopilot .info").show();
             $(".stepForth .chooseCopilot .selection").hide();
         }
-    })
-
-
-    /** Copilot management widget codes **/
+    });
+    
+        /** Copilot management widget codes **/
 
     var request = {};
     request['directProjectId'] = tcDirectProjectId;
@@ -1258,11 +1409,10 @@ $(document).ready(function() {
         // $.cookie("step4", "createCopilot");
         stepsChoices['step4'] = 'createCopilot';
         goCreateProjectStep(5);
-    })
-
+    });
+    
     // choose copilot
     $(".stepForth .chooseYourCopilot").click(function() {
-
         if (widgetResult == undefined) {
             showErrors("Please wait for the loading of the copilot data");
         }
@@ -1278,8 +1428,6 @@ $(document).ready(function() {
     })
 
     $("#selectionConfirmationModal dd a").attr("target", "_blank");
-
-
     $(".stepForth .createPosting").click(function() {
         addresscloseModal();
         addressLoadModal('#createPostingModal');
@@ -1346,14 +1494,408 @@ $(document).ready(function() {
         goCreateProjectStep(4); // skip the page 3
     });
 
+    $("#createProjectConfirm .step6Button").live('click', function() {
+        addresscloseModal();
+        createNewProject();
+    });
+    
+    // check custom project plan by default for now
+    $("#customGamePlanRadio").click();
+    
+    // presentation project step 3 : Add more audience type
+    //add more button 
+    $('.stepThird .addMoreButton').click(function(){
+        var val = $.trim($(this).siblings('input').val());
+        var cache,audienceName,existFlat = false;
+        
+        $('.stepThird .speciealForm table .labelTd').each(function(){
+            if(val == $.trim($(this).text())){
+                existFlat = true;
+            }
+        });
+        $('.stepThird .addMoreButtonBox .errorNameExist').hide();
+        $('.stepThird .addMoreButtonBox .errorStatusTips').hide();
+        if(val.length == 0){
+            $('.stepThird .addMoreButtonBox .errorStatusTips,.addMoreButtonBox .errorStatus div').show();
+            $('.stepThird .addMoreButtonBox input').addClass('errorInput');
+        }else{
+            if(!existFlat){
+                val = htmlEncode(val);
+                cache = $('<tr/>');
+                cache.append('<td class="labelTd">'+val+'</td><td><div class="selectRadioBox"><input type="checkbox" name="'+val+'" class="radio" checked="checked"/></div></td>');
+                cache.insertBefore($('.stepThird .speciealForm table .tfooter'));
+                $('.stepThird .topNotice .redError').hide();
+                $('.stepThird .addMoreButtonBox input').val('');
+            }else{
+                $('.stepThird .addMoreButtonBox input').addClass('errorInput');
+                $('.stepThird .addMoreButtonBox .errorNameExist,.addMoreButtonBox .errorStatus div').show();
+            }
+            
+        }
+    });
+    //focus text field remove the error status 
+    $('.stepThird .addMoreButtonBox :text').focus(function(){
+        $('.stepThird .addMoreButtonBox .errorStatusTips,.addMoreButtonBox .errorStatus div,.addMoreButtonBox .errorNameExist').hide();
+        $('.stepThird .addMoreButtonBox input').removeClass('errorInput')
+    });
+    $(".stepThird .selectRadioBox .radio").click(function() {
+        if ($(".stepThird .selectRadioBox .radio:checked").length > 0) {
+            $('.stepThird .topNotice .redError').hide();
+        }
+    });
+    $(".stepThird .nextStepButton").click(function() {
+        if (isPresentationProject()) {
+            $('.topNotice .redError').hide();
+            if ($(".stepThird .selectRadioBox .radio:checked").length == 0) {
+                $('.stepThird .topNotice .redError').show();
+                return false;
+            }
+            goCreateProjectStep(4);
+        } else {
+            // TODO: will be implemented in next assemblies
+        }
+    });
+    // presentation project step 4 : Presentation Style
+    $('.stepForth .styleItem .radio').click(function(){
+        $('.stepForth .styleItem').removeClass('itemHover');
+        $(this).parent().parent().addClass('itemHover');
+    });
+    // click box for add hover status
+    $('.stepForth .styleContainer').click(function(){
+        $('.stepForth .styleItem').removeClass('itemHover');
+        $(this).parent().addClass('itemHover');    
+        $('.stepForth .styleSelectList').find('.radio').attr('checked','');
+        $(this).parent().find('.radio').attr('checked','checked');
+    });
+    
+    // click label for add hover status
+    $('.stepForth .styleItem label').click(function(){
+        $(this).parent().find('.radio').attr('checked','checked');    
+        $('.stepForth .styleItem').removeClass('itemHover');
+        $(this).parent().parent().addClass('itemHover');
+    });
+    
+    // add focus for radio when clicking the label
+    $('.stepForth .pageLengthSetArea label').live('click',function(){
+        $(this).prev(':radio').trigger('click');
+    });
+        
+    // remove error status
+    $('.stepForth .speciealForm .styleItem').click(function(){
+        $('.errorStatusTips').hide();
+    });
+    
+    //remove error status
+    $('.stepForth .notePresentation').focus(function(){
+        $('.stepForth .textFieldWrapper .errorText, .stepForth .textFieldWrapper .errorIcon').hide();
+        $(this).removeClass('errorInput');
+    });
+    
+    // presentation project step 5: Files
+    $(".stepFifth .noMediaAsset").show();
+    
+    $(window).resize(function(){
+        $('#selectFileDescription').width($('.addMoreParts .topRowWrapper').width() - 90);
+        $('#customFileDescription').width($('#selectFileDescription').width() - 22);
+        $('.stepFifth .browserInput').width($('.stepFifth .browserParts .topRowWrapper').width() - 26);
+        $('#descriptionInput').width($('.stepFifth .otherTypeAreaInputBox').width() - 450);
+    });
+    
+    //set opacity for #uploadFile button
+    $('#uploadFile').css('opacity', '0.01');
+    if($.browser.msie){
+        $('#uploadFile').css({left:'auto',right:'0'});
+        setInterval(function() {
+            if ($('#uploadFile').length > 0) {
+                var filename = $('#uploadFile').val();
+                if (filename.length > 0)
+                $('.stepFifth .browserInput').val(filename);
+            }
+        }, 500);
+    } else {
+        $('#uploadFile').change(function(){
+            $('.stepFifth .browserInput').val($(this).val());
+        });
+        $('#browserButton,.browserInput').click(function(){
+            $('#uploadFile').trigger('click');
+        });
+    }
+    
+    // uploader
+    var swUploader =
+        new AjaxUpload(null, {
+            action: ctx + '/launch/documentUpload',
+            name: 'document',
+            responseType: 'json',
+            onSubmit: function(file , ext) {
+                //document
+                swCurrentDocument['fileName'] = file;
 
-    $("#createProjectConfirm .step6Button").live('click', createNewProject);
+                swUploader.setData({
+                    studio:false,
+                    contestFileDescription:swCurrentDocument['description'],
+                    documentTypeId:swCurrentDocument['documentTypeId']
+                });
 
+                modalPreloader();
+            },
+            onComplete: function(file, jsonResult) { handleJsonResult(jsonResult,
+                    function(result) {
+                        var documentId = result.documentId;
+                        swCurrentDocument['documentId'] = documentId;
+                        swDocuments.push(swCurrentDocument);
+                        
+                        var cache = $('<tr class="itemLine"></tr>');
+                        cache.append('<td class="firstTd"><a href="#">'+file+'</a><span class="description">('+htmlEncode(swCurrentDocument['description'])+')</span></td><td class="deleteTd"><a href="javascript:;" title="delete" class="deleteRowIcon" rel="' + documentId + '"></a></td>');
+                        cache.insertBefore($('.stepFifth .mediaAssetTableWrapper table .tfooter'));
+                        $('.stepFifth .mediaAssetTableWrapper .noMediaAsset').hide();
+                        $(".stepFifth .browserWrapper").append('<input id="uploadFile" type="file" name="document" />');
+                        if(!$.browser.msie){
+                            $('#uploadFile').change(function(){
+                                $('.stepFifth .browserInput').val($(this).val());
+                            });
+                        }
+                        $('#uploadFile').click(function(){
+                            $('.stepFifth .browserInput').removeClass('errorInput');
+                            $('.stepFifth .browserParts .topRowWrapper .errorText').hide();
+                            $('.stepFifth .browserParts .topRowWrapper .errorIcon').hide();
+                        });
+                        $("#uploadFile").hover(function(){
+                            $("#browserButton").css("background-position", "left -72px");
+                            $("#browserButton .btnR").css("background-position", "right -120px");
+                            $("#browserButton .btnC").css("background-position", "left -96px");
+                        },function() {
+                            $("#browserButton").css("background-position", "left top");
+                            $("#browserButton .btnR").css("background-position", "right -48px");
+                            $("#browserButton .btnC").css("background-position", "left -24px");
+                        });
+                        //set opacity for #uploadFile button
+                        $('#uploadFile').css('opacity', '0.01');
+                        if($.browser.msie){
+                            $('#uploadFile').css({left:'auto',right:'0'});
+                        }
+                        $(".stepFifth .browserInput").val("File Name");
+                        $("#selectFileDescription").val(0);
+                        $("#customFileDescription").val("Custom File Description");
+                        swCurrentDocument = {};
+                        
+                        modalClose();
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                        modalClose();
+                    });
+            }
+        }, false);
+    
+    //add more button and validation
+    $('.stepFifth .mediaAssetTableWrapper .addMoreButton').click(function(){
+        var fileVal = $('.stepFifth .browserInput').val();
+        var descriptVal = $('#selectFileDescription').val();
+        var descriptTextVal = $('#customFileDescription').val();
+        var description;
+        var refuse = false;
+        var cache;
+        
+        if(fileVal.length == 0 || fileVal == 'File Name'){
+            $('.stepFifth .browserInput').addClass('errorInput');
+            $('.stepFifth .browserParts .topRowWrapper .errorText').show();
+            $('.stepFifth .browserParts .topRowWrapper .errorIcon').show();
+            refuse = true;
+        }
+        if(descriptVal == 0){
+            $('#selectFileDescription').parent().addClass('errorInput');
+            $('#selectFileDescription').addClass('errorInput');
+            $('.stepFifth .addMoreParts .subButtonBox .errorText').show();
+            $('.stepFifth .addMoreParts .subButtonBox .errorIcon').show();
+            refuse = true;
+        }
+        if(descriptTextVal.length == 0 || descriptTextVal == 'Custom File Description') {
+            $('#customFileDescription').addClass('errorInput');
+            $('.stepFifth .addMoreParts .subButtonBox .errorText').show();
+            $('.stepFifth .addMoreParts .subButtonBox .errorIcon').show();
+            refuse = true;
+        }
+        
+        if(!refuse){
+            description = descriptVal + " " + descriptTextVal;
+            swUploader.setInput($("#uploadFile").get(0));
+            swCurrentDocument['description'] = description;
+            swCurrentDocument['documentTypeId'] = SUPPORTING_DOCUMENTATION_DOCUMENT_TYPE_ID;
+            swUploader.submit();
+        }else{
+            return false;
+        }
+    });
+    
+    //upload
+    $('#uploadFile').click(function(){
+        $('.stepFifth .browserInput').removeClass('errorInput');
+        $('.stepFifth .browserParts .topRowWrapper .errorText').hide();
+        $('.stepFifth .browserParts .topRowWrapper .errorIcon').hide();
+    });
+    
+    //remove error status
+    $('#selectFileDescription').focus(function(){
+        $('#selectFileDescription').parent().removeClass('errorInput');
+        $('#selectFileDescription').removeClass('errorInput');
+        if (!$('#selectFileDescription').hasClass('errorInput') && !$('#customFileDescription').hasClass('errorInput')) {
+            $('.stepFifth .addMoreParts .subButtonBox .errorText').hide();
+            $('.stepFifth .addMoreParts .subButtonBox .errorIcon').hide();
+        }
+    });
+    
+    //remove error status and focus, blur
+    $('#customFileDescription')
+        .focus(function(){
+            $('#customFileDescription').removeClass('errorInput');
+            if (!$('#selectFileDescription').hasClass('errorInput') && !$('#customFileDescription').hasClass('errorInput')) {
+                $('.stepFifth .addMoreParts .subButtonBox .errorText').hide();
+                $('.stepFifth .addMoreParts .subButtonBox .errorIcon').hide();
+            }
+            if($(this).val() == 'Custom File Description'){
+                $(this).val("");
+            }
+        })
+        .blur(function(){
+            if($(this).val().length == 0){
+                $(this).val("Custom File Description");
+            }
+        });
+    
+    //delete button 
+    $(".stepFifth .otherTypeTableWrapper .deleteRowIcon").live("click",function(){
+        $(this).parent().parent().remove();
+    });
+    $('.stepFifth .mediaAssetTableWrapper .deleteRowIcon').live('click',function(){
+        var row = $(this);
+        var documentId = row.attr("rel");
+        var doc = $.grep(swDocuments, function(doc,i){
+            return doc.documentId == documentId;
+        })[0];
+        $.ajax({
+            type: 'POST',
+            url:  ctx+"/launch/removeDocument",
+            data: {
+                documentId: documentId,
+                studio: false
+            },
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        var documentId = result.documentId;
+                        $.each(swDocuments, function(i,doc) {
+                            if(doc && doc.documentId == documentId) {
+                                swDocuments.splice(i,1);
+                            }
+                        });
+                        if($('.stepFifth .mediaAssetTableWrapper .itemLine').length == 1){
+                            $('.stepFifth .mediaAssetTableWrapper .noMediaAsset').show();
+                        }else{
+                            $('.stepFifth .mediaAssetTableWrapper .noMediaAsset').hide();
+                        }
+                        row.parent().parent().remove();
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                    }
+                );
+            }
+        });
+    });
+    
+    //add more file type
+    $('.stepFifth .otherTypeAreaInputBox .addFileType').click(function(){
+        var fileVal = $.trim($('#fileType').val());
+        var extensionDescriptVal = $.trim($('#descriptionInput').val());
+        var refuse = false;
+        var cache;
+        if(fileVal.length == 0){
+            $('#fileType').addClass('errorInput');
+            $('.stepFifth .otherTypeAreaInputBox .fileTypeWrapper .errorText').show();
+            $('.stepFifth .otherTypeAreaInputBox .fileTypeWrapper .errorIcon').show();
+            refuse = true;
+        }
+        if(extensionDescriptVal.length == 0){
+            $('#descriptionInput').addClass('errorInput');
+            $('.stepFifth .otherTypeAreaInputBox .descriptionInputWrapper .errorText').show();
+            $('.stepFifth .otherTypeAreaInputBox .descriptionInputWrapper .errorIcon').show();
+            refuse = true;
+        }
+        if(!refuse){
+            fileVal = htmlEncode(fileVal);
+            extensionDescriptVal = htmlEncode(extensionDescriptVal);
+            cache = $('<tr/>');
+            cache.append('<td class="leftTd"><div class="mediaRow"><span class="rowExtension"><strong>Extension:</strong><span class="strExtension">.'+fileVal+'</span><strong class="textLabel">Description:</strong><span class="strDesc">'+extensionDescriptVal+'</span></span></div></td><td class="deleteTd"><a href="javascript:;" title="delete" class="deleteRowIcon"></a></td>');
+            cache.insertBefore($('.stepFifth .otherTypeTableWrapper table .tfooter'));
+            $('#fileType').val("");
+            $('#descriptionInput').val("");
+        }else{
+            return false;
+        }
+        
+    });
+    
+    //remove error status
+    $('#fileType,#descriptionInput').focus(function(){
+        $(this).removeClass('errorInput');
+        $(this).siblings('.errorIcon').hide();
+        $(this).siblings('.errorText').hide();
+    });
+    
+    //add hover status for deliverablesTypeItem
+    $('.stepFifth .deliverablesTypeItem .typeContainer').click(function(){
+        if($(this).parent().find(':checkbox').attr('checked')){
+            $(this).parent().removeClass('itemHover');    
+            $(this).parent().find(':checkbox').attr('checked','');
+        }else{
+            $(this).parent().addClass('itemHover');    
+            $(this).parent().find(':checkbox').attr('checked','checked');
+            $('.stepFifth .errorStatusTips').css('display','none');
+        }
+    });
+    
+    //add hover status for deliverablesTypeItem
+    $('.stepFifth .deliverablesTypeItem label').click(function(){
+        
+        if($(this).parent().find(':checkbox').attr('checked')){
+            $(this).parent().parent().removeClass('itemHover');
+            $(this).parent().find(':checkbox').attr('checked','');
+        }else{
+            $(this).parent().parent().addClass('itemHover');
+            $(this).parent().find(':checkbox').attr('checked','checked');
+            $('.stepFifth .errorStatusTips').css('display','none');
+        }
+    });
+    
+    //validation for check box
+    $('.stepFifth .deliverablesTypeItem :checkbox').click(function(){
+        
+        if($(this).attr('checked')){
+            $(this).parent().parent().addClass('itemHover');
+            $('.stepFifth .errorStatusTips').css('display','none');
+        }else{
+            $(this).parent().parent().removeClass('itemHover');
+        }
+    });
+    
     createChartControl('ganttChartDiv', true);
 
     $(window).resize(function() {
         if ($(".stepThird #ganttChartDiv").length > 0) {
             recreateChartControl('ganttChartDiv', true);
         }
+    });
+    
+    $("#uploadFile").hover(function(){
+        $("#browserButton").css("background-position", "left -72px");
+        $("#browserButton .btnR").css("background-position", "right -120px");
+        $("#browserButton .btnC").css("background-position", "left -96px");
+    },function() {
+        $("#browserButton").css("background-position", "left top");
+        $("#browserButton .btnR").css("background-position", "right -48px");
+        $("#browserButton .btnC").css("background-position", "left -24px");
     });
 });

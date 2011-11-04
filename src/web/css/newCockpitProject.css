@@ -44,7 +44,10 @@ a{
 .hide{
 	display:none;
 }
-
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 /*------------
 	WRAPPER
 ---------------*/
@@ -768,6 +771,11 @@ a{
 				padding-left:5px;
 				background:url(/images/step-first-complete.png) no-repeat left top;
 				}
+            .stepBar li.first span.inext{
+				height:35px;
+				background:url(/images/step-first-next.png) no-repeat left top;
+				padding-left:5px;
+				}	
 				
 			.stepBar li.last span.inext{
 				height:35px;
@@ -777,6 +785,10 @@ a{
 			.stepBar li.last span.active{
 				height:35px;
 				background:url(/images/step-last-active.png) no-repeat right top;
+				}
+            .stepBar li.last span.complete{
+				height:35px;
+				background:url(/images/step-last-complete.png) no-repeat right top;
 				}
 				
 	/* step title */
@@ -867,6 +879,7 @@ a{
 			text-decoration:none;
 			background:url(/images/iconToolTip.png) no-repeat left top;
             margin-top:4px;
+			z-index:999;
             }
 			
 		.toolTip:hover{
@@ -903,7 +916,7 @@ a{
                 font-family:Tahoma, Arial, Helvetica, sans-serif;
 		     }
 				
-			#toolTip1{
+			#toolTip1, #toolTip3, #toolTip4, #toolTip5{
 				z-index:10;
 				}
 				
@@ -1397,6 +1410,158 @@ a{
 		margin:0;
 		margin-top:24px;
 		}
+.red{
+	color:#ff0000;
+	}
+.stepThird .speciealForm{
+	padding-top:0;
+	padding-bottom:120px;
+	}
+	.redError{
+		display:none;
+		font-style:normal;
+		color:#ec1c23;
+		font-size:11px;
+		padding-left:15px;
+		background:url(/images/error-icon.png) left center no-repeat;
+		}
+	.stepThird .speciealForm .topNotice{
+		height:24px;
+		padding-top:8px;
+		line-height:24px;
+		color:#666666;
+		overflow:hidden;
+		}
+		.stepThird .speciealForm .topNotice .noticeLeft{
+			float:left;
+			width:auto;
+			display:inline;
+			}
+		.stepThird .speciealForm .topNotice .noticeRight{
+			float:right;
+			font-size:11px;
+			}
+			.stepThird .speciealForm .topNotice .noticeRight .red{
+				font-size:12px;
+				}
+.stepThird .form .tableWrapper{
+	font-family:Tahoma, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#333333;
+	}
+	.stepThird .form .tableWrapper table{
+		width:100%;
+		}
+		.stepThird .form .tableWrapper table th{
+			width:100%;
+			height:33px;
+			border:0;
+			color:#ffffff;
+			border:1px solid #534741;
+			background:transparent url(/images/bg-table-header.png) left top repeat-x;
+			}
+		.stepThird .form .tableWrapper table th.firstTh{
+			border-right:0;
+			width:50%
+			}
+		.stepThird .form .tableWrapper table th.lastTh{
+			border-left:0;
+			width:50%
+			}
+		.stepThird .form .tableWrapper table td{
+			height:32px;
+			vertical-align:middle;
+			border:1px solid #bdbdbd;
+			}
+		.stepThird .form .tableWrapper table td.labelTd{
+			font-weight:bold;
+			text-indent:30px;
+			}
+			.stepThird .form .tableWrapper table td label{
+				width:86px;
+				padding-left:8px;
+				cursor:pointer;
+				}
+			.stepThird .form .tableWrapper table td input.radio{
+				width:13px;
+				height:13px;
+				float:left;
+				margin:0;
+				padding:0;
+				display:inline;
+				}
+			.stepThird .form .tableWrapper table td .selectRadioBox{
+				padding-left:3%;
+				height:18px;
+				line-height:14px;
+				padding-top:2px;
+				overflow:hidden;
+				}
+		.stepThird .form .tableWrapper table .tfooter td{
+			height:40px;
+			background-color:#e8e8e8;
+			}
+			.stepThird .form .tableWrapper table .tfooter td .toolTip{
+				margin-top:0;
+				margin-left:6px;
+				}
+			.stepThird .form .tableWrapper table .tfooter td label{
+				width:auto;
+				cursor:default;
+				}
+			.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox{
+				padding-left:2%;
+				position:relative;
+				height:25px;
+				z-index:100;
+				}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .text{
+					height:19px;
+					color:#333;
+					font-family:Arial, Helvetica, sans-serif;
+					border:1px solid #a8abad;
+					padding:2px 4px;
+					float:left;
+					display:inline;
+					}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorStatus{
+					width:24px;
+					height:24px;
+					float:left;
+					display:inline;
+					}
+					.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorStatus div{
+						width:24px;
+						height:24px;
+						display:none;
+						background:url(/images/error-icon.png) 4px center no-repeat;
+						}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .button12{
+					margin-top:2px;
+					}
+				.errorInput{
+					background-color:#ffe4e4 !important;
+					}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorStatusTips{
+					position:absolute;
+					bottom:-28px;
+					left:2%;
+					height:16px;
+					font-size:11px;
+					color:#ec1c23;
+					display:none;
+					background:transparent;
+					}
+				.stepThird .form .tableWrapper table .tfooter td .addMoreButtonBox .errorNameExist{
+					position:absolute;
+					bottom:-28px;
+					left:2%;
+					height:16px;
+					font-size:11px;
+					color:#ec1c23;
+					display:none;
+					background:transparent;
+					}
 					
 /* stepForth */
 .stepForth .form{
@@ -1496,7 +1661,261 @@ a{
                 .stepForth .form .chooseCopilot dd span.red{
                     color:#ed1c24;
                  }
+	.stepForth .speciealForm {
+	padding-top:0;
+	font-family:Tahoma,Arial, Helvetica, sans-serif;
+	color:#333333;
+	font-size:12px;
+	}
+.stepForth .geryContent .noteMask .speciealDl dd{
+	padding-bottom:4px;
+	}
+.stepForth .speciealForm .topNotice{
+		height:24px;
+		line-height:24px;
+		color:#666666;
+		overflow:hidden;
+		padding-top:8px;
+		padding-right:6px;
+		padding-left:6px;
+		}
+		.stepForth .speciealForm .topNotice .noticeRight{
+			text-align:right;
+			padding-right:73px;
+			font-size:11px;
+			}
+			.stepForth .speciealForm .topNotice .noticeRight .red{
+				font-size:12px;
+				}
+	.stepForth .speciealForm .barTitle{
+		margin:0 50px;
+		height:14px;
+		line-height:14px;
+		padding:6px 0 20px;
+		text-indent:7px;
+		}
+	.stepForth .speciealForm .toolTip{
+		margin-top:0;
+		text-indent:0;
+		}
+	.stepForth .speciealForm .row{
+		clear:both;
+		margin-left:73px;
+		margin-right:70px;
+		padding-bottom:18px;
+		}
+	.stepForth .speciealForm .row label{
+		width:203px;
+		float:left;
+		display:inline;
+		line-height:25px;
+		font-family:Tahoma, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		text-indent:13px;
+		}
+	/* textarea */
+	.stepForth .speciealForm .row textarea{
+		width:100%;
+		height:94px;
+		padding:2px 0px;
+		border:#a8abad solid 1px;
+		font-family:Tahoma, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		color:#6c6c6c;
+		overflow:auto;
+		position:absolute;
+		left:0;
+		top:0;
+		}
+	.stepForth .speciealForm .pageLengthSetArea{
+		padding-top:5px;
+		height:14px;
+		line-height:13px;
+		padding-right:146px;
+		position:relative;
+		z-index:1;
+		}
+		.stepForth .speciealForm .pageLengthSetArea input{
+			float:left;
+			width:13px;
+			height:13px;
+			display:inline;
+			}
+		.stepForth .speciealForm .pageLengthSetArea label{
+			line-height:normal;
+			text-indent:10px;
+			cursor:pointer;
+			float:left;
+			width:auto;
+			display:inline;
+			}
+		.stepForth .speciealForm .pageLengthSetArea .part{
+			float:left;
+			width:50%;
+			display:inline;
+			}
+		.stepForth .speciealForm .pageLengthSetArea .rightPart{
+			position:absolute;
+			right:0;
+			top:5px;
+			height:14px;
+			line-height:14px;
+			width:146px;
+			}	
+	/* .styleSelectList */
+	.styleSelectList{
+		margin:0px 0px 18px 10px;
+		min-height:300px;
+		}
+		.styleSelectList .styleItem {
+			float:left;
+			width:242px;
+			margin-left:59px;
+			display:inline;
+			padding-bottom:20px;
+			}
+		.styleItem .boxHeader{
+			height:15px;
+			overflow:hidden;
+			padding-left:16px;
+			background:url(/images/style-header-bg.png) left top no-repeat;
+			}
+			.styleItem .boxHeader .boxHeaderR{
+				height:15px;
+				padding-right:16px;
+				background:url(/images/style-header-bg.png) right -30px no-repeat;
+				}
+				.styleItem .boxHeader .boxHeaderC{
+					height:15px;
+					background:url(/images/style-header-bg.png) left -15px repeat-x;
+					}
+		.styleItem .boxFooter{
+			height:15px;
+			overflow:hidden;
+			padding-left:16px;
+			background:url(/images/style-footer-bg.png) left top no-repeat;
+			}
+			.styleItem .boxFooter .boxFooterR{
+				height:15px;
+				padding-right:16px;
+				background:url(/images/style-footer-bg.png) right -30px no-repeat;
+				}
+				.styleItem .boxFooter .boxFooterC{
+					height:15px;
+					background:url(/images/style-footer-bg.png) left -15px repeat-x;
+					}
+		.styleItem .boxBody{
+			padding-left:17px;
+			background:url(/images/style-body-left.png) left top repeat-y;
+			}
+			.styleItem .boxBody .boxBodyR{
+				padding-right:17px;
+				background:url(/images/style-body-right.png) right top repeat-y;
+				}
+				.styleItem .boxBody .boxInner{
+					border:1px solid #a8abad;
+					text-align:center;
+					padding-top:3px;
+					padding-bottom:3px;
+					height:141px;
+					cursor:pointer;
+					}
+		.itemHover .boxHeader,
+		.styleItem .styleContainer:hover .boxHeader{
+			background-position:left -45px;
+			}
+			.itemHover .boxHeader .boxHeaderR,
+			.styleItem .styleContainer:hover .boxHeader .boxHeaderR{
+				background-position:right -75px;
+				}
+				.itemHover .boxHeader .boxHeaderC,
+				.styleItem .styleContainer:hover .boxHeader .boxHeaderC{
+					background-position:left -60px;
+					}
+		.itemHover .boxBody,
+		.styleItem .styleContainer:hover .boxBody{
+			background:url(/images/style-body-left-hover.png) left top repeat-y;
+			}
+			.itemHover .boxBody .boxBodyR,
+			.styleItem .styleContainer:hover .boxBody .boxBodyR{
+				background:url(/images/style-body-right-hover.png) right top repeat-y;
+				}
+		.itemHover .boxFooter,
+		.styleItem .styleContainer:hover .boxFooter{
+			background-position:left -45px;
+			}
+			.itemHover .boxFooter .boxFooterR,
+			.styleItem .styleContainer:hover .boxFooter .boxFooterR{
+				background-position:right -75px;
+				}
+				.itemHover .boxFooter .boxFooterC,
+				.styleItem .styleContainer:hover .boxFooter .boxFooterC{
+					background-position:left -60px;
+					}
+		
+	/* radioBox */
+	.styleSelectList .styleItem .radioBox{
+		height:17px;
+		width:238px;
+		padding:0 0 4px 4px;
+		overflow:hidden;
+		}
+		
+		.styleSelectList .styleItem .radioBox .radio{
+			width:13px;
+			height:13px;
+			float:left;
+			display:inline;
+			margin-right:6px;
+			}
 			
+		.styleSelectList .styleItem .radioBox label{
+			font-family:Tahoma, Arial, Helvetica, sans-serif;
+			font-size:12px;
+			cursor:pointer;
+			width:auto;
+			float:left;
+			display:inline;
+			}
+		
+		.stepForth .speciealForm .textFieldWrapper{
+			width:100%;
+			height:100px;
+			position:relative;
+			z-index:1;
+			}
+		.stepForth .speciealForm .errorStatusTips{
+			display:none;
+			margin-left:10px;
+			padding-left:20px;
+			font-size:11px;
+			color:#ec1c23;
+			background:url(/images/error-icon.png) 0px center no-repeat;
+			}
+			.stepForth .speciealForm .errorInput{
+				background-color:#ffe4e4;
+				}
+			.stepForth .speciealForm .textFieldWrapper .errorIcon{
+				position:absolute;
+				background:url(/images/error-icon.png) left top no-repeat;
+				width:10px;
+				height:10px;
+				overflow:hidden;
+				right:-24px;
+				top:46px;
+				display:none;
+				}
+			.stepForth .speciealForm .textFieldWrapper .errorText{
+				overflow:hidden;
+				position:absolute;
+				left:0px;
+				bottom:-16px;
+				height:14px;
+				line-height:14px;
+				font-size:11px;
+				color:#ec1c23;
+				display:none;
+				}
 /* stepFifth */
 .stepFifth .form{
 	padding:25px 0 32px;
@@ -1629,7 +2048,471 @@ a{
 			.stepFifth .addUserPlan{
 				display:none;
 				}
+.stepFifth .speciealForm{
+	padding-top:0;
+	font-family:Tahoma,Arial, Helvetica, sans-serif;
+	color:#333333;
+	font-size:12px;
+	padding-left:36px;
+	padding-right:36px;
+	}
+.stepFifth .geryContent .noteMask .speciealDl dd{
+	padding-bottom:4px;
+	}
+.stepFifth .speciealForm .topNotice{
+		height:24px;
+		line-height:24px;
+		color:#666666;
+		overflow:hidden;
+		padding-top:8px;
+		}
+		.stepFifth .speciealForm .topNotice .noticeRight{
+			text-align:right;
+			font-size:11px;
+			}
+			.stepFifth .speciealForm .topNotice .noticeRight .red{
+				font-size:12px;
+				}
+	.stepFifth .form .tableWrapper table{
+		width:100%;
+		}
+		.stepFifth .form .tableWrapper table th{
+			width:100%;
+			height:33px;
+			border:0;
+			color:#ffffff;
+			padding-left:6px;
+			text-align:left;
+			text-indent:6px;
+			border:1px solid #534741;
+			background:transparent url(/images/bg-table-header.png) left top repeat-x;
+			}
+			.stepFifth .form .tableWrapper table th .toolTip{
+				text-align:left;
+				font-weight:normal;
+				text-indent:0;
+				}
+		.stepFifth .form .tableWrapper table td{
+			height:32px;
+			vertical-align:middle;
+			border:1px solid #bdbdbd;
+			}
+			.stepFifth .form .tableWrapper table td.deleteTd{
+				width:10%;
+				text-align:center;
+				}
+			.stepFifth .form .tableWrapper table .noMediaAsset{
+				display:none;
+				}
+			.stepFifth .form .tableWrapper table .noMediaAsset td{
+				text-align:center;
+				}
+			.stepFifth .form .tableWrapper .mediaAssetTableWrapper table{
+				font-family:Arial, Helvetica, sans-serif;
+				}
+			.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd{
+				text-indent:17px;
+				width:90%;
+				}
+				.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd a{
+					font-weight:bold;
+					color:#333333;
+					text-decoration:underline;
+					}
+				.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd a:hover{
+					text-decoration:none;
+					}
+				.stepFifth .form .tableWrapper .mediaAssetTableWrapper table td.firstTd span{
+					margin-left:10px;
+					}
+				.deleteRowIcon{
+					width:23px;
+					height:23px;
+					display:inline-block;
+					background:url(/images/icon-td-delete.png) left top no-repeat;
+					}
+				.deleteRowIcon:hover{
+					background-position:left -23px;
+					}
+		.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td{
+			height:78px;
+			background-color:#e8e8e8;
+			vertical-align:top;
+			}
+		.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper table .tfooter td{
+			height:40px;
+			vertical-align:top;
+			background-color:#e8e8e8;
+			}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts{
+				width:45%;
+				float:left;
+				display:inline;
+				border-right:1px solid #bdbdbd;
+				height:100%;
+				}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .topRowWrapper{
+					height:38px;
+					padding-top:7px;
+					padding-left:17px;
+					padding-right:23px;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts .topRowWrapper{
+					position:relative;
+					overflow:hidden;
+					z-index:1;
+					}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts .topRowWrapper .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:8px;
+						top:14px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .browserParts .topRowWrapper .errorText{
+						overflow:hidden;
+						position:absolute;
+						left:17px;
+						top:32px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox{
+					padding-left:17px;
+					padding-right:23px;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  .addMoreParts .subButtonBox{
+					padding-right:0px;
+					height:26px;
+					position:relative;
+					z-index:1;
+					}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  .addMoreParts .subButtonBox .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:94px;
+						top:7px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  .addMoreParts .subButtonBox .errorText{
+						overflow:hidden;
+						position:absolute;
+						left:17px;
+						top:34px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+					.stepFifth .speciealForm .text{
+						padding:2px 12px;
+						height:19px;
+						line-height:19px;
+						width:auto;
+						font-size:12px;
+						color:#666666;
+						font-family:Arial, Helvetica, sans-serif;
+						border:1px solid #a8abad;
+						}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox .summeryForBrowse{
+				float:left;
+				width:auto;
+				display:inline;
+				font-size:11px;
+				color:#666666;
+				}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox .rightPart{
+				float:right;
+				width:auto;
+				display:inline;
+				}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .subButtonBox .browserWrapper{
+					float:left;
+					width:100px;
+					height:24px;
+					display:inline;
+					position:relative;
+					z-index:1;
+					overflow:hidden;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td #uploadFile{
+					position:absolute;
+					left:0px;
+					top:2px;
+					height:20px;
+					}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .selectWrapper{
+						border:1px solid #A8ABAD;
+						height:16px;
+						padding:3px 1px;
+						float:left;
+						width:auto;
+						display:inline;
+						background-color:#ffffff;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td select{
+						width:auto;
+						display:block;
+						font-size:11px;
+						font-family:Arial, Helvetica, sans-serif;
+						border:0;
+						}
+					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td  #customFileDescription{
+						float:left;
+						display:inline;
+						font-size:12px;
+						font-family:Arial, Helvetica, sans-serif;
+						border:1px solid #a8abad;
+						}
+			.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .addMoreParts{
+				float:left;
+				display:inline;
+				width:54%;
+				}
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .button12{
+					float:right;
+					margin-top:2px;
+					display:inline;
+					}
+				
+					
+	.stepFifth .speciealForm .barTitle{
+		height:14px;
+		line-height:14px;
+		padding:20px 0 20px 6px;
+		text-indent:7px;
+		}
+		.stepFifth .speciealForm .errorStatusTips{
+			margin-left:10px;
+			padding-left:20px;
+			font-size:11px;
+			color:#ec1c23;
+			display:none;
+			background:url(/images/error-icon.png) 0px center no-repeat;
+			}
+	.stepFifth .speciealForm .toolTip{
+		margin-top:0;
+		}
+	.stepFifth .speciealForm .row{
+		clear:both;
+		margin-left:73px;
+		margin-right:70px;
+		padding-bottom:18px;
+		}
+		.stepFifth .speciealForm .row label{
+			width:203px;
+			float:left;
+			display:inline;
+			line-height:25px;
+			font-family:Tahoma, Arial, Helvetica, sans-serif;
+			font-size:12px;
+			text-indent:13px;
+			}
+
+
+	/* .deliverablesTypesList */
+	.deliverablesTypesList{
+		margin:0 0 16px;
+		min-height:40px;
+		}
+		.deliverablesTypesList .deliverablesTypeItem {
+			float:left;
+			width:22%;
+			display:inline;
+			padding-bottom:10px;
+			}
+			.deliverablesTypesList .firstDeliverablesTypeItem{
+				width:24%;
+				}
+				.deliverablesTypesList .deliverablesTypeItem .typeContainer{
+					width:143px;
+					float:right;
+					display:inline;
+					}
+					.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxTop{
+						padding-top:13px;
+						background:url(/images/type-item-bg.png) left top no-repeat;
+						}
+					.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxBottom{
+						padding-bottom:13px;
+						background:url(/images/type-item-bg.png) -286px bottom no-repeat;
+						}
+					.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxBody{
+						background:url(/images/type-item-bg.png) -143px top repeat-y;
+						text-align:center;
+						height:102px;
+						}
+					.deliverablesTypeItem .typeContainer:hover .boxTop{
+						background-position:-429px top;
+						}
+					.deliverablesTypeItem .typeContainer:hover .boxBottom{
+						background-position:-715px bottom;
+						}
+					.deliverablesTypeItem .typeContainer:hover .boxBody{
+						background-position:-572px top;
+						}
+					.deliverablesTypesList .itemHover .typeContainer .boxTop{
+						background-position:-429px top;
+						}
+					.deliverablesTypesList .itemHover .typeContainer .boxBottom{
+						background-position:-715px bottom;
+						}
+					.deliverablesTypesList .itemHover .typeContainer .boxBody{
+						background-position:-572px top;
+						}
+						.deliverablesTypesList .deliverablesTypeItem .typeContainer .boxBody img{
+							cursor:pointer;
+							}
+					
+					
+	/* radioBox */
+	.deliverablesTypesList .deliverablesTypeItem .checkboxBox{
+		clear:right;
+		height:17px;
+		width:143px;
+		text-align:center;
+		padding-top:4px;
+		float:right;
+		display:inline;
+		}
+		
+		.deliverablesTypesList .deliverablesTypeItem .checkboxBox input{
+			width:13px;
+			height:13px;
+			float:none;
+			margin-right:6px;
+			display:inline-block;
+			}
 			
+		.deliverablesTypesList .deliverablesTypeItem .checkboxBox label{
+			font-family:Tahoma, Arial, Helvetica, sans-serif;
+			font-size:12px;
+			line-height:12px;
+			cursor:pointer;
+			width:auto;
+			float:none;
+			display:inline-block;
+			top:-2px;
+			position:relative;
+			}
+				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .leftPart{
+					width:96px;
+					height:40px;
+					line-height:40px;
+					float:left;
+					display:inline;
+					border-right:1px solid #bdbdbd;
+					text-indent:17px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					font-size:14px;
+					}
+				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart{
+					padding:8px 0 7px;
+					height:25px;
+					}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .text{
+						float:left;
+						display:inline;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .period{
+						font-weight:bold;
+						padding-left:12px;
+						line-height:24px;
+						padding-right:4px;
+						float:left;
+						display:inline;
+						}
+					
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .button12{
+						margin-right:12px;
+						float:right;
+						margin-top:2px;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart strong{
+						padding:0px 8px 0 22px;
+						float:left;
+						display:inline;
+						line-height:24px;
+						}
+					#fileType{
+						width:50px;
+						}
+			.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension{
+				padding-left:17px;
+				}
+			.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .strExtension{
+				padding:0 0px 0 24px;
+				display:inline-block;
+				min-width:60px;
+				}
+				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension strong.textLabel{
+					padding-right:10px;
+					}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper,
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper{
+						position:relative;
+						z-index:1;
+						height:25px;
+						min-width:10px;
+						overflow:visible;
+						float:left;
+						display:inline;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:-13px;
+						top:7px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorText{
+						overflow:hidden;
+						width:160px;
+						position:absolute;
+						left:0px;
+						top:34px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorIcon{
+						position:absolute;
+						background:url(/images/error-icon.png) left top no-repeat;
+						width:10px;
+						height:10px;
+						overflow:hidden;
+						right:-13px;
+						top:7px;
+						display:none;
+						}
+					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorText{
+						overflow:hidden;
+						width:160px;
+						position:absolute;
+						left:0px;
+						top:34px;
+						height:14px;
+						line-height:14px;
+						font-size:11px;
+						color:#ec1c23;
+						display:none;
+						}
+						
 /* stepSixth */
 .stepSixth .form{
 	padding:0 0 32px;
@@ -1765,16 +2648,13 @@ a{
                     }
                         .stepSixth .projectOverView .bottomLine p{
                             padding:4px 0 0;
-                            font-size:14px;
-							line-height:24px;
+                            font-size:11px;
+                            line-height:1em;
                             width:auto;
-							clear:both;
-							margin-left:28px;
                         }
                         .stepSixth .projectOverView .bottomLine a.button6{
-                             float:left;
+                             float:right;
                              margin:0;
-							 margin-left:28px;
                         }
                             .stepSixth .projectOverView .bottomLine a.button6 span.right{
                                 padding:5px 13px 0;
@@ -2129,11 +3009,9 @@ a{
          #gamePlanBigModal .buttonArea{
             text-align:center;
          }
-             #gamePlanBigModal .buttonArea a.button6{
+             #gamePlanBigModal a.button6{
                 float:none;
                 display:inline-block;
-                marigni:0px;
-                width:auto;
              }
 			
 	/* addUserModal */
@@ -2646,6 +3524,44 @@ a.button9{
 		background:transparent url(/images/button9.png) no-repeat bottom;
 	} 
 
+a.button10{
+	float:left;
+	background:transparent url(../images/button10.png) no-repeat left top;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-left:3px;
+	margin-left:10px;
+}	
+
+	a.button10 span.left{
+		float:left;
+		background:transparent url(../images/button10.png) no-repeat right -48px;
+		padding-right:3px;;
+		cursor:pointer;
+		overflow:hidden;
+	}
+	a.button10 span.right{
+		float:left;
+		background:transparent url(../images/button10.png) left -24px repeat-x;
+		cursor:pointer;
+		line-height:22px;
+		height:24px;
+		padding:0 18px;
+		color:#FFFFFE;
+		overflow:hidden;
+	}
+	
+	a.button10:hover{
+		background-position:left -72px;
+	}
+	a.button10:hover span.left{
+		background-position:right -120px;
+	}
+	a.button10:hover span.right{
+		background-position:left -96px;
+	}
+    
 /*----------------
 	edit 5/1/2011
 ----------------*/
@@ -2690,6 +3606,122 @@ a.button11{
 		}	
 			a.button11:hover .btnR .btnC{
 				background-position:left -100px;
+			}
+			
+a.button12{
+	display:inline-block;
+	background:transparent url(/images/button12.png) left top no-repeat;
+	font-size:12px;
+	color:#362f2d;
+	font-weight:bold;
+	line-height:21px;
+	padding-left:2px;
+	text-decoration:none;
+}	
+
+	a.button12 .btnR{
+		float:left;
+		background:transparent url(/images/button12.png) right -42px no-repeat;
+		cursor:pointer;
+		padding-right:2px;
+		height:21px;
+	}	
+		a.button12 .btnR .btnC{
+			float:left;
+			background:transparent url(/images/button12.png) left -21px repeat-x;
+			cursor:pointer;
+			height:21px;
+			padding:0 13px;
+		}	
+	
+	a.button12:hover{
+		background-position:left -63px;
+		text-decoration:none;
+	}
+		a.button12:hover .btnR{
+			background-position:right -105px;
+		}	
+			a.button12:hover .btnR .btnC{
+				background-position:left -84px;
+			}
+/* button13 */
+a.button13{
+	float:left;
+	background:transparent url(/images/button13.png) left top no-repeat;
+	font-size:11px;
+	color:#fffffe;
+	line-height:24px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	padding-left:4px;
+	text-decoration:none;
+	text-transform:uppercase;
+	white-space:nowrap;
+}	
+
+	a.button13 .btnR{
+		float:left;
+		background:transparent url(/images/button13.png) right -48px no-repeat;
+		cursor:pointer;
+		padding-right:4px;
+		height:24px;
+	}	
+		a.button13 .btnR .btnC{
+			float:left;
+			background:transparent url(/images/button13.png) left -24px repeat-x;
+			cursor:pointer;
+			height:24px;
+			padding:0 18px;
+		}	
+	
+	a.button13:hover{
+		background-position:left -72px;
+	}
+		a.button13:hover .btnR{
+			background-position:right -120px;
+		}	
+			a.button13:hover .btnR .btnC{
+				background-position:left -96px;
+			}
+
+/* button14 */
+a.button14{
+	float:left;
+	margin-left:16px;
+	background:transparent url(/images/button-new-1.png) left top no-repeat;
+	font-size:11px;
+	color:#fffffe;
+	line-height:24px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	padding-left:4px;
+	text-decoration:none;
+	text-transform:uppercase;
+}	
+
+	a.button14 .btnR{
+		float:left;
+		background:transparent url(/images/button-new-1.png) right -48px no-repeat;
+		cursor:pointer;
+		padding-right:4px;
+		height:24px;
+	}	
+		a.button14 .btnR .btnC{
+			float:left;
+			background:transparent url(/images/button-new-1.png) left -24px repeat-x;
+			cursor:pointer;
+			height:24px;
+			padding:0 18px;
+		}	
+	
+	a.button14:hover{
+		background-position:left -72px;
+	}
+		a.button14:hover .btnR{
+			background-position:right -120px;
+		}	
+			a.button14:hover .btnR .btnC{
+				background-position:left -96px;
 			}
 			
 .searchUserHandle{
@@ -3016,6 +4048,13 @@ table.notifications a.subgroup{ /* group name link */
 	font-weight: bold;
 	}
 
+table.notifications a.expand{
+	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+	}
+	
+table.notifications a.collapse{
+	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+	}
 
 table.notifications .group{ 
 	text-decoration: none;
