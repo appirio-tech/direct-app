@@ -19,8 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>A <code>Struts</code> action to be used for generating the project game plan data for the client
@@ -136,6 +135,24 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             // Get project game plan data from Game Plan Service
             TCDirectProjectGamePlanData data = getGamePlanService().retrieveGamePlanData(user, projectId);
 
+            List<SoftwareProjectData> softwareProjects = data.getSoftwareProjects();
+
+            System.out.println("******************************************");
+
+            for (SoftwareProjectData spt : softwareProjects) {
+                System.out.println("name:" + spt.getProjectName());
+                System.out.println("current status:" + spt.getProjectStatus());
+                System.out.println("current phase:" + spt.getCurrentPhase());
+                System.out.println("type:" + spt.getProjectType());
+                System.out.println("start date:" + spt.getStartDate());
+                System.out.println("end date:" + spt.getEndDate());
+                System.out.println("dependency ID:" + Arrays.toString(spt.getDependencyProjectIds()));
+                System.out.println("=============================================");
+
+            }
+
+            System.out.println("******************************************");
+
             if (data == null) {
                 responseData = ERROR_HEADER + DATA_RETRIEVAL_ERROR_MSG;
             } else {
@@ -211,18 +228,45 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
                 result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1));
             }
 
+            Map<Long, SoftwareProjectData> idMapping = new HashMap<Long, SoftwareProjectData>();
+
+            // build the id mapping
+            for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
+                idMapping.put(swc.getProjectId(), swc);
+            }
+
             // generate software contest data
             for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
                 long id = swc.getProjectId();
-                String name = swc.getProjectName() + " (" + swc.getProjectType() + ")";
+                String name = (swc.getProjectStatus().equals("Draft") ? "Draft-" : "") + swc.getProjectName() + " (" + swc.getProjectType() + ")";
                 String startTime = GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
                 // calculate the duration in hours
                 long duration = calculateDuration(swc.getStartDate(), swc.getEndDate());
                 long percentage = calculateProgressPercentage(swc.isStarted(), swc.isFinished(), duration,
                         swc.getEndDate());
 
+                if(swc.getProjectStatus().equals("Draft")) {
+                    // set percentage to 0 if draft
+                    percentage = 0;
+                }
+
                 // software contest will only have single dependency contest
                 long predecessorId = swc.getDependencyProjectIds().length > 0 ? swc.getDependencyProjectIds()[0] : -1;
+                
+                // check the predecessor's start date
+                if (predecessorId > 0) {
+                    SoftwareProjectData preSw = idMapping.get(predecessorId);
+                    if (preSw != null) {
+                        // check startDate
+                        if (DirectUtils.setTimeToMidnight(preSw.getStartDate()).compareTo(DirectUtils.setTimeToMidnight(swc.getStartDate())) > 0) {
+                            predecessorId = -1;
+                        }
+                    } else {
+                        // does not exist, set to -1
+                        predecessorId = -1;
+                    }
+
+                }
 
                 result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId));
             }

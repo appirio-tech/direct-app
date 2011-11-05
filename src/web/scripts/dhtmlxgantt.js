@@ -24,8 +24,8 @@ To use this component please contact sales@dhtmlx.com to obtain license
  *  @type:  public
  *  @topic: 0
  */
-var ganttContestUrl = "./contest/detail.action?contestId=";
 var ganttSoftwareContestUrl = "./contest/detail.action?projectId=";
+var ganttContestUrl = ganttSoftwareContestUrl;
 var ganttProjectUrl = "./currentProjectOverview.action";
  
 function GanttProjectInfo(id, name, startDate)
@@ -4532,7 +4532,7 @@ GanttTask.prototype.getDescStr = function()
         switch (prop) {
             case "Name":
                 if (str != "")str += delim;
-                str += propValue;
+                str += propValue.indexOf("Draft-") == 0 ? propValue.substr(6) : propValue;
                 break;
             case "EST":
                 if (str != "")str += delim;
@@ -5142,6 +5142,14 @@ GanttTask.prototype.createTaskDescItem = function()
 GanttTask.prototype.checkWidthTaskNameItem = function()
 {
     var tName = this.TaskInfo.Name;
+    var draft = false;
+    var color = "#7D7D7D";
+    if(tName.indexOf("Draft-") == 0) {
+        draft = true;
+        tName = tName.substr(6);
+        this.TaskInfo.Name = tName;
+        color = "#006600";
+    }
     
     if (this.cTaskNameItem[0].offsetWidth + this.cTaskNameItem[0].offsetLeft > this.Chart.maxWidthPanelNames)
     {
@@ -5154,7 +5162,7 @@ GanttTask.prototype.checkWidthTaskNameItem = function()
     
     var urlTemplate = this.TaskInfo.Id > 30000000 ? ganttSoftwareContestUrl : ganttContestUrl;
     
-    this.cTaskNameItem[0].innerHTML = "<a href=\"" + urlTemplate + this.TaskInfo.Id + '" target="_blank">' + "<font color=\"#7D7D7D\">" + tName + "</font></a>";
+    this.cTaskNameItem[0].innerHTML = "<a href=\"" + urlTemplate + this.TaskInfo.Id + '" target="_blank">' + "<font color='" + color + "'>" + tName + "</font></a>";
 
 
 };

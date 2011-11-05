@@ -1527,6 +1527,24 @@ public final class DirectUtils {
         }
     }
 
+    /**
+     * Sets the Date instance to the midnight, so it does not have the time portion.
+     *
+     * @param date the date instance to transfer.
+     * @return the transferred date.
+     */
+    public static Date setTimeToMidnight(Date date) {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+    }
+
     
     public static ContestDashboardDTO adjustPhases(ContestDashboardDTO dashboard) {
         List<ProjectPhaseDTO> phases = dashboard.getAllPhases();
