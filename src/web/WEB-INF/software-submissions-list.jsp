@@ -127,9 +127,15 @@
                                                 <c:if test="${firstPlaceWinner != null}">
                                                     <div id="winnerPanel">
                                                         <div class="winnerCol">
-                                                            <link:onlineReviewDownloadSubmission projectId="${firstPlaceWinner.projectId}"
+                                                            <s:if test="finalFixes.size > 0">
+                                                               <link:downloadFinalFix contestId="${finalFixes[0].contestId}"
+                                                                    finalFix="${finalFixes[0].finalFixSub}" version="${finalFixes[0].versionNumber}" styleClass="downloadFile"></link:downloadFinalFix>
+                                                            </s:if>
+                                                            <s:else>
+                                                                  <link:onlineReviewDownloadSubmission projectId="${firstPlaceWinner.projectId}"
                                                                     submissionId="${firstPlaceWinner.submissionId}" styleClass="downloadFile">
-                                                            </link:onlineReviewDownloadSubmission>
+                                                                  </link:onlineReviewDownloadSubmission>
+                                                            </s:else>
                                                             <div class="winnerData">
                                                                 <h3>1st Place Winner</h3>
                                                                 <link:user styleClass="handle"
