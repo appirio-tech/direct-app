@@ -252,23 +252,26 @@ public class GetContestAction extends ContestAction {
         // calculate the contest issues tracking health
         getViewData().getDashboard().setUnresolvedIssuesNumber(getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
         DashboardHelper.setContestStatusColor(getViewData().getDashboard());
-        
-        // set project
-        Project project = getProjectServices().getProject(projectId);
-        copilotProjectTypes = new HashSet<Long>();
-        for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
-            copilotProjectTypes.add(type.getId());
-        }
-        
-        budget = null;
-        otherManagingExperienceString = null;
-        for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
-            if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
-                budget = extraInfo.getValue();
+
+        if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == 29) {
+            // set project
+            Project project = getProjectServices().getProject(projectId);
+            copilotProjectTypes = new HashSet<Long>();
+            for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
+                copilotProjectTypes.add(type.getId());
             }
-            if (extraInfo.getType().getId() == CopilotContestExtraInfoType.OTHER_MANAGING_EXPERIENCE.getId()) {
-                otherManagingExperienceString = extraInfo.getValue();
+
+            budget = null;
+            otherManagingExperienceString = null;
+            for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
+                if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
+                    budget = extraInfo.getValue();
+                }
+                if (extraInfo.getType().getId() == CopilotContestExtraInfoType.OTHER_MANAGING_EXPERIENCE.getId()) {
+                    otherManagingExperienceString = extraInfo.getValue();
+                }
             }
+
         }
     }
 
