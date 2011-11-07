@@ -257,13 +257,20 @@ public class GetContestAction extends ContestAction {
             // set project
             Project project = getProjectServices().getProject(projectId);
             copilotProjectTypes = new HashSet<Long>();
-            for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
-                copilotProjectTypes.add(type.getId());
-            }
+
+			if (project.getProjectCopilotTypes() != null && project.getProjectCopilotTypes().size() > 0 )
+			{
+				 for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
+						copilotProjectTypes.add(type.getId());
+				 }
+			}
+           
 
             budget = null;
             otherManagingExperienceString = null;
-            for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
+			if ( project.getCopilotContestExtraInfos() != null &&  project.getCopilotContestExtraInfos().size() > 0)
+			{
+				for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
                 if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
                     budget = extraInfo.getValue();
                 }
@@ -271,6 +278,8 @@ public class GetContestAction extends ContestAction {
                     otherManagingExperienceString = extraInfo.getValue();
                 }
             }
+			}
+            
 
         }
     }
