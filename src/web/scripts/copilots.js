@@ -511,11 +511,15 @@ function updateProjectGeneralInfo(notSendToServer) {
         tmpExp.push(other);
     }    
     
-    for (var i = 0; i < tmpExp.length; i++) {
-        exp += tmpExp[i];
-        if (i < tmpExp.length - 1) {
-            exp += ", ";
+    if (tmpExp.length > 0) {
+        for (var i = 0; i < tmpExp.length; i++) {
+            exp += tmpExp[i];
+            if (i < tmpExp.length - 1) {
+                exp += ", ";
+            }
         }
+    } else {
+        exp = "Not set.";
     }
     
     var bud = $('#projectBudgetInput').val();
@@ -528,6 +532,8 @@ function updateProjectGeneralInfo(notSendToServer) {
         infoType.value = bud;
         
         extraInfos.push(infoType);
+        
+        bud = "$ " + bud;
     } else {
         bud = "Don't have a budget yet.";
     }
@@ -540,7 +546,7 @@ function updateProjectGeneralInfo(notSendToServer) {
     $('#billingProjects').val(accountId);
     
     $('#copilotTypesTextLabel').html(exp);
-    $('#budgetTextLabel').html("$ " + bud);
+    $('#budgetTextLabel').html(bud);
     
     if (typeof notSendToServer == "undefined" || !notSendToServer) {
         sendSaveDraftRequestToServer();
