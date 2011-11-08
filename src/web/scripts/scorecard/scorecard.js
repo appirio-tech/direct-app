@@ -402,6 +402,27 @@ function getScorecardData() {
     return scorecard;
 }
 
+/**
+ * Flip object order.
+ */
+function flipObject(obj){
+    var arr = [];
+    $.each(obj, function(key, val){
+        var temp = new Object;
+        temp['key'] = key;
+        temp['val'] = val;
+        arr.push(temp);
+        delete temp;
+        delete obj[key];
+    });
+    arr.reverse();
+    $.each(arr, function(key, val){
+        obj[key] = val['val'];
+    });
+    
+    return obj;
+}
+
 $(document).ready(function() {
     ctx = $("#ctx").val();
 		jsonServiceUrlRoot = ctx + "/json";
@@ -1065,7 +1086,8 @@ $(document).ready(function() {
             
             var actualGroupTable = $(openQuestionHead).parents(".biggroup").prev().find("table.group").first();
             
-            $(this).find("table.section.hover").each(function(){
+            var sections = flipObject($(this).find("table.section.hover"));            
+            sections.each(function(){
                 /*read section values*/
                 var sectionText = $(this).find("span.sectionText").html();
                 var sectionWeight = $(this).find("span.sectionWeight").html();
@@ -1078,7 +1100,8 @@ $(document).ready(function() {
                 $(actualGroupTable).next().prepend($(newSection));
                 var actualSectionTable = $(actualGroupTable).next().find('table.section').first();
                 
-                $(this).find("tr.question.hover").each(function(){
+                var questions = flipObject($(this).find("tr.question.hover"));     
+                questions.each(function(){
                     /*read question values*/
                     var questionText = $(this).find("span.questionText").html();
                     var questionWeight = $(this).find("span.questionWeight").html();
