@@ -103,7 +103,7 @@
                             </tr>
                             <tr class="tfooter">
                                 <td>
-                                    <a href="javascript:;" class="toolTip" id="toolTip3" rel='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'></a>
+                                    <a href="javascript:;" class="toolTip" id="toolTip3" rel='60 characters max.'></a>
                                     <label>Custom Audience: <span class="red">*</span></label>
                                 </td>
                                 <td>

@@ -50,7 +50,7 @@
                     </div>
                     
                     <div class="barTitle">
-                        <a href="javascript:;" class="toolTip" rel='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'></a>
+                        <a href="javascript:;" class="toolTip" rel='Pick the presentation slides style.'></a>
                         Which are your preferred style for the presentation?<span class="red">*</span>
                         <span class="errorStatusTips">No presentation style selected</span>
                         <div class="clear"></div>
@@ -176,7 +176,7 @@
                     </div>
                     
                     <div class="barTitle">
-                        <a href="javascript:;" class="toolTip" rel='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'></a>
+                        <a href="javascript:;" class="toolTip" rel='You can specify any restrictions or notes on the presentation slides style.'></a>
                         Any notes on presentation style?<span class="red">*</span>
                         <div class="clear"></div>
                     </div>
@@ -194,7 +194,7 @@
                     
                     
                     <div class="barTitle">
-                        <a href="javascript:;" class="toolTip" id="toolTip4" rel='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'></a>
+                        <a href="javascript:;" class="toolTip" id="toolTip4" rel='Specify the length of the presentation slides.'></a>
                         Page Length<span class="red">*</span>
                         <div class="clear"></div>
                     </div>

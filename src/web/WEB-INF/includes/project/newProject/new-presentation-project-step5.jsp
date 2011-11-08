@@ -1,4 +1,4 @@
-﻿<%--
+<%--
   - Author: TCSASSEMBLER
   - Version: 1.0
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
@@ -53,7 +53,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="2">
-                                        <a href="javascript:;" class="toolTip" rel='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'></a>
+                                        <a href="javascript:;" class="toolTip" rel='Any file is accepted.'></a>
                                         Media Asset
                                     </th>
                                 </tr>
@@ -106,7 +106,7 @@
                     </div>
                     
                     <div class="barTitle">
-                        <a href="javascript:;" class="toolTip" id="toolTip5" rel='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'></a>
+                        <a href="javascript:;" class="toolTip" id="toolTip5" rel='The deliverable file type.'></a>
                         Deliverables Types (please check all that apply)<span class="red">*</span>
                         <span class="errorStatusTips">No DeliverableType selected.</span>
                         <div class="clear"></div>
@@ -197,7 +197,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="2">
-                                        <a href="javascript:;" class="toolTip" rel='Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'></a>
+                                        <a href="javascript:;" class="toolTip" rel='You can provide other type of deliverable files.'></a>
                                         Other Type
                                     </th>
                                 </tr>
