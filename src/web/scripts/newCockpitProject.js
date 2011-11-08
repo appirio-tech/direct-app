@@ -237,6 +237,7 @@ var generateConfirmationPage = function(projectId, projectName) {
         if (isPPT) {
             $(".stepSixth .notYetSteps").show();
             $(".stepSixth .pptStep").show();
+            $(".stepSixth .projectStats").hide();
         }
     }
 

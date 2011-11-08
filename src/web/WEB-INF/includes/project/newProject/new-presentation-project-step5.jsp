@@ -85,9 +85,11 @@
                                                 <div class="selectWrapper">
                                                     <select id="selectFileDescription">
                                                         <option value="0">-- Select File Description --</option>
-                                                        <option>-- File Description 00 --</option>
-                                                        <option>-- File Description 01 --</option>
-                                                        <option>-- File Description 02 --</option>
+                                                        <option>Requirements Specification</option>
+                                                        <option>Presentation Graphics</option>
+                                                        <option>Presentation Slides</option>
+                                                        <option>Presentation Template</option>
+                                                        <option>Others</option>
                                                     </select>
                                                 </div>
                                             </div>
