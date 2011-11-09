@@ -427,11 +427,20 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         firstPlace.setNumberOfSubmissions(1);
         firstPlace.setPlace(1);
         firstPlace.setPrizeAmount(150);
+
+		Prize secondPlace = new Prize();
+        secondPlace.setNumberOfSubmissions(1);
+        secondPlace.setPlace(2);
+        secondPlace.setPrizeAmount(75);
+
         com.topcoder.management.project.PrizeType prizeType = new com.topcoder.management.project.PrizeType();
         prizeType.setDescription("Contest Prize");
         prizeType.setId(15L);
+
         firstPlace.setPrizeType(prizeType);
         prizes.add(firstPlace);
+		secondPlace.setPrizeType(prizeType);
+        prizes.add(secondPlace);
 
         projectHeader.setPrizes(prizes);
         projectHeader.setProperty("Admin Fee", "0");
@@ -442,7 +451,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         projectHeader.setProperty("Reliability Bonus Cost", "0");
         projectHeader.setProperty("Milestone Bonus Cost", "0");
         projectHeader.setProperty("Spec Review Cost", "0");
-        projectHeader.setProperty("Second Place Cost", "0");
+        projectHeader.setProperty("Second Place Cost", "75");
         projectHeader.setProperty("Review Cost", "0");
 
         cp.setId(-1L);
