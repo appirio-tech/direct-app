@@ -4478,3 +4478,27 @@ a.multiSelect {
 a.modalTitleBtn {
 	margin-top: 5px;
 }
+
+.box .contestsList {
+    position: relative;
+    z-index: 10;
+}
+.box .selectMask {
+    position: relative;
+}
+.box .customerSelectMask {
+    z-index: 99;
+}
+.box .projectSelectMask {
+    z-index: 98;
+}
+.box .selectMask .contestsDropDown {
+    max-height: 200px;
+    overflow: auto;
+}
+
+#area2 .contestsDropDown .longWordsBreak {
+    display: block !important;
+    padding-left: 1px;
+    padding-top: 2px;
+}
