@@ -302,9 +302,11 @@
         <zip destfile="direct-static.jar">
             <fileset dir="${srcdir}/web">
                 <include name="css/*.css"/>
+				<include name="css/scorecard/**/*.css"/>
                 <exclude name="scripts/tiny_mce/**/*.*"/>
                 <include name="scripts/*.*"/>
                 <include name="scripts/launch/**/*.*"/>
+				<include name="scripts/scorecard/**/*.*"/>
             </fileset>
         </zip>
     </target>
