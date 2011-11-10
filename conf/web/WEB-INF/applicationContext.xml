@@ -528,7 +528,7 @@
     <bean id="createNewProjectAction"
           class="com.topcoder.direct.services.view.action.CreateNewProjectAction"
           scope="prototype" parent="baseDirectStrutsAction">
-          <property name="pptJIRAProject" value="TCFAQ"/>
+          <property name="pptJIRAProject" value="@pptJIRAProject@"/>
           <property name="pptJIRAIssueTypeId" value="3"/>
           <property name="pptJIRAIssueReporter" value="anonymus"/>
           <property name="copilotURLPrefix" value="http://community.topcoder.com/tc?module=ProjectDetail&amp;pj="/>
