@@ -20,6 +20,7 @@
   <property name="env_vm" value="vm" />
   <property name="env_ci" value="ci" />
   <property name="env_prod" value="prod" />
+  <property name="env_staging" value="staging" />
   
   <target name="update_properties">
     <if>
@@ -27,7 +28,7 @@
         <isset property="env"/>
       </not>
       <then>
-        <fail>You must specify target environemt by adding -Denv=some_env. Supported environments:${env_vm}, ${env_ci}, ${env_prod}</fail>
+        <fail>You must specify target environemt by adding -Denv=some_env. Supported environments:${env_vm}, ${env_ci}, ${env_prod},  ${env_prod}</fail>
       </then>
       <else>
         <if>
@@ -36,6 +37,7 @@
               <equals arg1="${env}" arg2="${env_vm}" />
               <equals arg1="${env}" arg2="${env_ci}" />
               <equals arg1="${env}" arg2="${env_prod}" />
+			  <equals arg1="${env}" arg2="${env_staging}" />
             </or>
           </not>
           <then>
