@@ -290,12 +290,14 @@ $(document).ready(function(){
     });
 
 	$('.amountText').bind('keyup',function() {
-		var value = $('.amountText').val();
+		var value = $(this).val();
+        
 		if(!checkRequired(value) || !checkNumber(value)) {
 			errors.push("The amount is invalid.");
+            $(this).parent().find('.prizeInfo').html("");
 		} else {
 			var secondPrize = parseFloat(value / 2);
-			$('.postFrame .prizeInfo').html(secondPrize);
+			$(this).parent().find('.prizeInfo').html(secondPrize);
 		}
     });
 });
@@ -553,7 +555,7 @@ function validateStepInputs() {
                             
                     amount = firstPlaceCost;
                 } else if (lineItem.find(".useAmountRadio").attr('checked')) {
-                    var value = lineItem.find(".amountText2").val();
+                    var value = lineItem.find(".newAmountText").val();
                     if(!checkRequired(value) || !checkNumber(value)) {
                         errors.push("The amount is invalid.");
                     }

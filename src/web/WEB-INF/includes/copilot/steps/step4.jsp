@@ -53,7 +53,7 @@
                                 <input type="radio"  class="radio2 useAmountRadio" name="amount" id="useAmount1"/><label for="useAmount1"  class="useAmountLabel">Use this amount</label> 
 								<label class="first">1st Place</label>
 							    <span class="dw">$</span>
-							    <input type="text" class="amountText" id="amountText1" value=""/>
+							    <input type="text" class="amountText newAmountText" id="amountText1" value=""/>
 							    <label class="second">2nd Place</label>
 							    <span class="dw">$</span>
 							    <span class="prizeInfo"></span>
@@ -82,7 +82,7 @@
                                 <input type="radio" class="radio2 proceedRadio" name="amount" id="proceed2"/><label for="proceed2">Proceed</label>
                             </li>
                             <li>
-                                <input type="radio"  class="radio2 useAmountRadio" name="amount" id="useAmount2"/><label for="useAmount2">Use this amount</label> <input type="text" class="text amountText2" id="amountText2" />
+                                <input type="radio"  class="radio2 useAmountRadio" name="amount" id="useAmount2"/><label for="useAmount2">Use this amount</label> <input type="text" class="amountText newAmountText" id="amountText2" />
                             </li>
                         </ul>                            
                         
