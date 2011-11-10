@@ -553,7 +553,7 @@ function validateStepInputs() {
                             
                     amount = firstPlaceCost;
                 } else if (lineItem.find(".useAmountRadio").attr('checked')) {
-                    var value = lineItem.find(".amountText").val();
+                    var value = lineItem.find(".amountText2").val();
                     if(!checkRequired(value) || !checkNumber(value)) {
                         errors.push("The amount is invalid.");
                     }
