@@ -167,7 +167,7 @@ $(document).ready(function(){
 	
 	/*-------------------------- Show/hide the dropdown list --*/
 
-    var updateCustomerDropDown  = function(dropDownWrapper,items, customerName){
+    var updateCustomerDropDown  = function(dropDownWrapper,items){
         var dropDown = dropDownWrapper.find(".contestsDropDown ul");
         var input = dropDownWrapper.find(".inputSelect input");
         dropDown.find("li").remove();
@@ -176,10 +176,8 @@ $(document).ready(function(){
             var li = $("<li><a class='longWordsBreak' href='#'></a></li>");
             li.data("id",item.id);
             li.find("a").text(item.value);
-            if(customerName == undefined && index == 0){
+            if(index == 0){
                 input.val(item.value);
-            } else {
-                input.val(customerName);
             }
             li.appendTo(dropDown);
         })
@@ -291,32 +289,7 @@ $(document).ready(function(){
         return arr;
     }
     var customerList = getCustomers();
-
-    var getCustomerWithProject = function(projectName) {
-        var result = {};
-
-        result.id = '';
-        result.name = 'All Customers';
-
-        $.each(customerList, function(index, item) {
-            var projects = item.projects;
-            if (!(item.id == '' || item.id == 'none')) {
-                for (var p in projects) {
-                    if (typeof(projects[p]) != "function") {
-                        var name = projects[p];
-                        if ($.trim(name) == $.trim(projectName)) {
-                            result.id = item.id;
-                            result.name = item.value;
-                        }
-                    }
-                }
-            }
-        });
-
-        return result;
-    }
-
-
+    updateCustomerDropDown($(".customerSelectMask"),customerList);
 
     var getProjects = function(id){
         var arr = [];
@@ -352,13 +325,6 @@ $(document).ready(function(){
 
     updateProjectDropDown($(".projectSelectMask"),getProjects(""));
 
-    if (currentProjectName != undefined && currentProjectName != '') {
-        var result = getCustomerWithProject(currentProjectName);
-        updateCustomerDropDown($(".customerSelectMask"), customerList, result.name);
-        updateProjectDropDown($(".projectSelectMask"), getProjects(result.id));
-    } else {
-        updateCustomerDropDown($(".customerSelectMask"), customerList);
-    }
 
 
 
