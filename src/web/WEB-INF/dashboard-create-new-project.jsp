@@ -18,20 +18,20 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="createNewProject"/>
-    <link rel="stylesheet" href="/css/newCockpitProject.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/newCockpitProject.css?v=209631" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/newCockpitProject-ie7.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/newCockpitProject-ie7.css?v=208807"/>
     <![endif]-->
-    <link rel="stylesheet" href="/css/ganttchart.css" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/dhtmlxcommon.js"></script>
-    <script type="text/javascript" src="/scripts/dhtmlxgantt.js"></script>
-	<script type="text/javascript" src="/scripts/launch/entity.js?v=49"></script>
-	<script type="text/javascript" src="/scripts/launch/main.js?v=49"></script>
+    <link rel="stylesheet" href="/css/ganttchart.css?v=198728" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=185881"></script>
+    <script type="text/javascript" src="/scripts/dhtmlxgantt.js?v=209663"></script>
+	<script type="text/javascript" src="/scripts/launch/entity.js?v=209437"></script>
+	<script type="text/javascript" src="/scripts/launch/main.js?v=209174"></script>
     <script type="text/javascript">
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
     </script>
-    <script type="text/javascript" src="/scripts/newCockpitProject.js"></script>
+    <script type="text/javascript" src="/scripts/newCockpitProject.js?v=209885"></script>
 </head>
 
 <body id="page">
