@@ -443,16 +443,16 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         prizes.add(secondPlace);
 
         projectHeader.setPrizes(prizes);
-        projectHeader.setProperty("Admin Fee", "0");
-        projectHeader.setProperty("Copilot Cost", "0");
-        projectHeader.setProperty("DR points", "0");
-        projectHeader.setProperty("Payments", "150");
-        projectHeader.setProperty("First Place Cost", "150");
-        projectHeader.setProperty("Reliability Bonus Cost", "0");
-        projectHeader.setProperty("Milestone Bonus Cost", "0");
-        projectHeader.setProperty("Spec Review Cost", "0");
-        projectHeader.setProperty("Second Place Cost", "75");
-        projectHeader.setProperty("Review Cost", "0");
+        projectHeader.setProperty(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY, "0");
+        projectHeader.setProperty(ProjectPropertyType.COPILOT_COST_PROJECT_PROPERTY_KEY, "0");
+        projectHeader.setProperty(ProjectPropertyType.DR_POINTS_PROJECT_PROPERTY_KEY, "0");
+        projectHeader.setProperty(ProjectPropertyType.PAYMENTS_PROJECT_PROPERTY_KEY, "150");
+        projectHeader.setProperty(ProjectPropertyType.FIRST_PLACE_COST_PROJECT_PROPERTY_KEY, "150");
+        projectHeader.setProperty(ProjectPropertyType.RELIABILITY_BONUS_COST_PROJECT_PROPERTY_KEY, "0");
+        projectHeader.setProperty(ProjectPropertyType.MILESTONE_BONUS_COST_PROJECT_PROPERTY_KEY, "0");
+        projectHeader.setProperty(ProjectPropertyType.SPEC_REVIEW_COSTS_PROJECT_PROPERTY_KEY, "0");
+        projectHeader.setProperty(ProjectPropertyType.SECOND_PLACE_COST_PROJECT_PROPERTY_KEY, "75");
+        projectHeader.setProperty(ProjectPropertyType.REVIEW_COSTS_PROJECT_PROPERTY_KEY, "0");
 
         cp.setId(-1L);
         cp.setProjectHeader(projectHeader);
