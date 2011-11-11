@@ -254,7 +254,7 @@ $(document).ready(function() {
         var data = {formData:{projectIds:projectIds}};
         modalPreloader();
         $.ajax({
-            type: 'get',
+            type: 'POST',
             url: "dashboardGetCostBreakDownAJAX",
             data: data,
             cache: false,

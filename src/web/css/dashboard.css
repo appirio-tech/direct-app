@@ -4603,6 +4603,10 @@ TABLE.pipelineStats TD {
     width: 10%;
 }
 
+#breakdownBody TABLE.pipelineStats TD {
+    width: auto;
+}
+
 TABLE.billingCostReport TD {
     font-size: 11px;
     text-align: center;
