@@ -2446,6 +2446,8 @@ public class DataProvider {
         int unansweredForumPostsNumber = 0;
         Date latestTime = null;
 
+		DirectUtils.refreshCache("contest_forum_stats_replatforming");
+
         final ResultSetContainer forumStats = results.get("contest_forum_stats_replatforming");
         if (!forumStats.isEmpty()) {
             if (forumStats.getRow(0).getStringItem("latest_handle") != null)
@@ -3956,6 +3958,8 @@ public class DataProvider {
         } else {
             dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         }
+
+		DirectUtils.refreshCache("direct_project_overview_contests_health_replatforming");
 
         Request request = new Request();
         request.setContentHandle("direct_project_overview_contests_health_replatforming");

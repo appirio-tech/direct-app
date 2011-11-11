@@ -60,6 +60,8 @@ import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
 
+import com.topcoder.shared.util.dwload.CacheClearer;
+
 /**
  * <p>
  * Direct common utility class.
@@ -1566,5 +1568,22 @@ public final class DirectUtils {
         
         dashboard.setAllPhases(adjustedPhases);
         return dashboard;
+    }
+
+	/**
+     * <p>
+     * Helper method to clean registrants query results from the cache to
+     * reflect the latest addition.
+     * </p>
+     */
+    public static void refreshCache(String commandToRefresh) {
+        try {
+            if (commandToRefresh != null && !commandToRefresh.equals(""))
+            {
+            }
+            CacheClearer.removelike(commandToRefresh);
+        } catch (Exception ignore) {
+            ignore.printStackTrace();
+        }
     }
 }
