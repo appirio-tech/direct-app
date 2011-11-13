@@ -157,9 +157,15 @@
     </div><!-- End .helloUSer -->
 
     <%-- link to community site --%>
-    <p class="lookCP dashBoardLookCP">Looking for Community Portal?
-        <a onclick="window.open('https://community.topcoder.com/');" href="javascript:;">Go There Now</a>
+    
+	<div>
+		<!-- TC Logo -->
+		<a onclick="window.open('http://www.topcoder.com/');" href="javascript:;" class="TCLogo"><img src="/images/tc-logo.png" alt="TopCoder"></a>
+		<p class="lookCP dashBoardLookCP">Looking for Community Portal?
+        <a onclick="window.open('https://community.topcoder.com/');" href="javascript:;"><strong>Go There Now</strong></a>
     </p>
+	</div>
+
 
     <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">
 		<s:set name="projId" value="viewData.projectStats.project.id"/>  

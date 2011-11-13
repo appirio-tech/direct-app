@@ -1125,11 +1125,16 @@ overflow: auto;
 }
 
 /** The following is added in TC Cockpit Sidebar Header and Footer Update v1.0 **/
+.TCLogo {
+	float: right;
+	margin-right: 23px;
+	margin-top: 45px;
+}
 
 .dashBoardLookCP {
     position: absolute;
-    top: 46px;
-    right: 23px;
+    top:60px;
+	right:11px;
 }
 
 .lookCP {
@@ -1145,12 +1150,12 @@ overflow: auto;
 .lookCP a,
 .lookCP a:visited {
     font-weight: bold;
-    text-decoration: none;
+    text-decoration:underline;
     color: #333;
 }
 
 .lookCP a:hover {
-    text-decoration: underline;
+    color:#FF0000;
 }
 
 .videoContent {
