@@ -1580,8 +1580,9 @@ public final class DirectUtils {
         try {
             if (commandToRefresh != null && !commandToRefresh.equals(""))
             {
+				CacheClearer.removelike(commandToRefresh);
             }
-            CacheClearer.removelike(commandToRefresh);
+            
         } catch (Exception ignore) {
             ignore.printStackTrace();
         }
