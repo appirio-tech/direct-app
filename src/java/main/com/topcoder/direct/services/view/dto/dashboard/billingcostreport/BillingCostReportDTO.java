@@ -3,7 +3,18 @@
  */
 package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
 
-import com.topcoder.direct.services.view.dto.CommonDTO;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
+
+import com.topcoder.direct.services.view.dto.ReportBaseDTO;
 import com.topcoder.direct.services.view.dto.ReportType;
 import com.topcoder.excel.Row;
 import com.topcoder.excel.Sheet;
@@ -14,25 +25,23 @@ import com.topcoder.excel.output.Biff8WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSavingException;
 
-import java.io.*;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
-
 /**
  * <p>
  * The DTO to store the billing cost report data.
  * It also contains the input stream to serialize billing cost report data.
  * </p>
- *
- * @author Blues
- * @version  1.0 (TC Cockpit Billing Cost Report Assembly v1.0)
- *
+ * 
+ * <p>
+ * Version 1.1 (TC Cockpit Permission and Report Update One) change log:
+ * <ol>
+ *   <li>This class has been refactoring. It's extended from <code>ReportBaseDTO</code>.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author Blues, TCSASSEMBER
+ * @version  1.1 (TC Cockpit Billing Cost Report Assembly v1.0)
  */
-public class BillingCostReportDTO extends CommonDTO implements Serializable {
+public class BillingCostReportDTO extends ReportBaseDTO {
 
     /**
      * <p>The list stores the billing cost report entries</p>
@@ -40,45 +49,9 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
     private List<BillingCostReportEntryDTO> entries;
 
     /**
-     * <p>A <code>boolean</code> providing the flag indicating whether the cost report data is to be calculated and
-     * displayed.</p>
-     */
-    private boolean showJustForm;
-
-    /**
-     * The map stores the direct project information.
-     */
-    private Map<Long, String> projectsLookupMap;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from IDs to names of client billing projects.</p>
-     */
-    private Map<Long, String> clientBillingProjects;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from IDs to names of available client accounts.</p>
-     */
-    private Map<Long, String> clientAccounts;
-
-    /**
      * <p>A <code>Map</code> providing the mapping from payment type IDs to names.</p>
      */
     private Map<Long, String> paymentTypes;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from project category IDs to names.</p>
-     */
-    private Map<Long, String> projectCategories;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from status id to status names.</p>
-     */
-    private Map<Long, String> contestStatus;
-
-    /**
-     * Total amount of this billing cost report.
-     */
-    private double totalAmount;
 
     /**
      * Gets the total cost amount of this billing cost report.
@@ -91,60 +64,6 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
             totalAmount += entry.getPaymentAmount();
         }
         return totalAmount;
-    }
-
-    /**
-     * <p>Gets the projects lookup map.</p>
-     *
-     * @return the projects lookup map.
-     */
-    public Map<Long, String> getProjectsLookupMap() {
-        return projectsLookupMap;
-    }
-
-    /**
-     * <p>Sets the projects lookup map</p>
-     *
-     * @param projectsLookupMap the projects looks up map to set.
-     */
-    public void setProjectsLookupMap(Map<Long, String> projectsLookupMap) {
-        this.projectsLookupMap = projectsLookupMap;
-    }
-
-    /**
-     * Gets the client billing projects.
-     *
-     * @return the client billing projects.
-     */
-    public Map<Long, String> getClientBillingProjects() {
-        return clientBillingProjects;
-    }
-
-    /**
-     * Sets the client billing projects.
-     *
-     * @param clientBillingProjects the client billing projects map to set.
-     */
-    public void setClientBillingProjects(Map<Long, String> clientBillingProjects) {
-        this.clientBillingProjects = clientBillingProjects;
-    }
-
-    /**
-     * Gets the client accounts map.
-     *
-     * @return the client accounts map.
-     */
-    public Map<Long, String> getClientAccounts() {
-        return clientAccounts;
-    }
-
-    /**
-     * Sets the client accounts map.
-     *
-     * @param clientAccounts the client accounts map to set.
-     */
-    public void setClientAccounts(Map<Long, String> clientAccounts) {
-        this.clientAccounts = clientAccounts;
     }
 
     /**
@@ -166,42 +85,6 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
     }
 
     /**
-     * Gets the project categories map.
-     *
-     * @return the project categories map.
-     */
-    public Map<Long, String> getProjectCategories() {
-        return projectCategories;
-    }
-
-    /**
-     * Sets the project categories map.
-     *
-     * @param projectCategories the project categories map to set.
-     */
-    public void setProjectCategories(Map<Long, String> projectCategories) {
-        this.projectCategories = projectCategories;
-    }
-
-    /**
-     * Gets the contest status map.
-     *
-     * @return the contest status map.
-     */
-    public Map<Long, String> getContestStatus() {
-        return contestStatus;
-    }
-
-    /**
-     * Sets the contest status map.
-     *
-     * @param contestStatus the contest status map.
-     */
-    public void setContestStatus(Map<Long, String> contestStatus) {
-        this.contestStatus = contestStatus;
-    }
-
-    /**
      * Gets the billing cost report entries.
      *
      * @return the billing cost report entries.
@@ -217,24 +100,6 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
      */
     public void setEntries(List<BillingCostReportEntryDTO> entries) {
         this.entries = entries;
-    }
-
-    /**
-     * Gets the flag of whether just show the form.
-     *
-     * @return
-     */
-    public boolean isShowJustForm() {
-        return showJustForm;
-    }
-
-    /**
-     * Sets the flag of whether just show the form.
-     *
-     * @param showJustForm
-     */
-    public void setShowJustForm(boolean showJustForm) {
-        this.showJustForm = showJustForm;
     }
 
     /**
@@ -280,10 +145,10 @@ public class BillingCostReportDTO extends CommonDTO implements Serializable {
      */
     private void insertSheetData(Sheet sheet) {
         // the date format used for displaying 'completion date'
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
         // the format used for various cost and fees
-        NumberFormat moneyFormatter = new DecimalFormat("#####0.00");
+        NumberFormat moneyFormatter = new DecimalFormat("###,##0.00");
 
         // set up the sheet header first
         Row row = sheet.getRow(1);

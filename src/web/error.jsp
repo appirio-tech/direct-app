@@ -1,3 +1,12 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Version 1.1 (TC Cockpit Permission and Report Update One) change notes: Added logic to display error message.
+  -
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1
+  - Description: This page renders the error page.
+--%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isErrorPage="true" %>
@@ -51,12 +60,17 @@
                                             <b><span style="color:red;">ERROR</span></b>
                                             <br/>
                                             <br/>
-                                            <s:if test="exception.class.simpleName == 'PermissionServiceException'">
-                                            	 <b>Sorry, you do not have permission to view the requested page.</b>
-                                            </s:if>
-                                            <s:else>
-                                            	<b>An error has occurred when attempting to process your request.</b>
-                                            </s:else>                                            	                                            
+                                            <c:choose>
+                                                <c:when test="${exception.class.simpleName == 'PermissionServiceException'}">
+                                                    <b>Sorry, you do not have permission to view the requested page.</b>
+                                                </c:when>
+                                                <c:when test="${not empty errorPageMessage}">
+                                                    <b>${errorPageMessage}</b>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <b>An error has occurred when attempting to process your request.</b>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <br/>
                                             <br/>
                                             You may click <a href="javascript:history.back();">here</a> to return to

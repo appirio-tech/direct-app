@@ -1,16 +1,14 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.interceptor;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.action.TopCoderDirectAction;
 import com.topcoder.direct.services.view.form.ContestIdForm;
 import com.topcoder.direct.services.view.util.AuthorizationProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.SessionData;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,8 +25,18 @@ import javax.servlet.http.HttpServletRequest;
  *   </ul>
  * </p>
  *
- * @author isv
- * @version 1.1
+ * <p>
+ * Version 1.2 (TC Cockpit Permission and Report Update One) change log:
+ * <ol>
+ *   <li>Updated {@link #intercept(ActionInvocation)} method to use a method
+ *   <code>AuthorizationProvider.isUserGrantedAccessToContest</code> to check the user's permission. It was
+ *   using two different methods based on the contest type (software contest or studio contest).</li>
+ *   <li>Updated {@link #intercept(ActionInvocation)} to set the error page message when user has no permission.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author isv, TCSASSEMBER
+ * @version 1.2
  */
 public class ContestAccessInterceptor implements Interceptor {
 
@@ -61,16 +69,15 @@ public class ContestAccessInterceptor implements Interceptor {
     public String intercept(ActionInvocation actionInvocation) throws Exception {
         HttpServletRequest request = DirectUtils.getServletRequest();
         String contestIdParam = request.getParameter("contestId");
-        long currentUserId = DirectUtils.getTCSubjectFromSession().getUserId();
-        boolean granted;
+        long contestId;
         if (contestIdParam != null) {
-            long contestId = Long.parseLong(contestIdParam);
-            granted = AuthorizationProvider.isUserGrantedAccessToContest(currentUserId, contestId);
+            contestId = Long.parseLong(contestIdParam);
         } else {
-            long contestId = Long.parseLong(request.getParameter("projectId"));
-            granted = AuthorizationProvider.isUserGrantedAccessToSoftwareContest(currentUserId, contestId);
+            contestId = Long.parseLong(request.getParameter("projectId"));
         }
+        boolean granted = AuthorizationProvider.isUserGrantedAccessToContest(DirectUtils.getTCSubjectFromSession(), contestId);
         if (!granted) {
+            request.setAttribute("errorPageMessage", "Sorry, you don't have permission to access this contest.");
             return "permissionDenied";
         } else {
             return actionInvocation.invoke();

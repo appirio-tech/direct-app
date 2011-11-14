@@ -78,8 +78,16 @@ import javax.servlet.http.HttpServletRequest;
  *   </ol>
  * </p>
  *
- * @author isv, xjtufreeman, Blues, flexme, Veve
- * @version 1.1
+ * <p>
+ * Version 1.2 (TC Cockpit Permission and Report Update One) Change notes:
+ *   <ol>
+ *     <li>Updated method {@link #insertSheetData()} to pass <code>TCSubject</code> object to method
+ *     <code>DataProvided.getDashboardCostBreakDown</code> which will use <code>TCSubject</code> to check the user's permission.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author isv, xjtufreeman, Blues, flexme, Veve, TCSASSEMBER
+ * @version 1.2
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -734,7 +742,7 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
     public String getCostBreakDown() throws Exception {
         Date startDate = DirectUtils.getDate(formData.getStartDate());
         Date endDate = DirectUtils.getDate(formData.getEndDate());
-        setResult(buildContestBreakDownResults(DataProvider.getDashboardCostBreakDown(formData.getProjectIds(), formData.getProjectCategoryIds(), startDate, endDate)));
+        setResult(buildContestBreakDownResults(DataProvider.getDashboardCostBreakDown(getCurrentUser(), formData.getProjectIds(), formData.getProjectCategoryIds(), startDate, endDate)));
         return SUCCESS;
     }
     

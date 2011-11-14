@@ -284,13 +284,31 @@ import java.util.Map.Entry;
  * </p>
  *
  * <p>
- * Changes in version 2.9.1 (TC Cockpit Post a Copilot Assembly 2):
+ * Version 2.9.1 (TC Cockpit Permission and Report Update One) change log:
  * <ol>
- * <li>Added {@link #getAllProjectCopilotTypes()} method.</li>
+ *   <li>Added a parameter <code>TCSubject</code> to
+ *   method {@link #getDashboardCostBreakDown(TCSubject, long[], long[], Date, Date)}. The parameter is used to check the permission.</li>
+ *   <li>Added a parameter <code>TCSubject</code> to
+ *   method {@link #getDashboardParticipationReport(TCSubject, long, long[], long, long, String[], Date, Date, List, List)}. The parameter
+ *   is used to check the permission.</li>
+ *   <li>Added a parameter <code>TCSubject</code> to
+ *   method {@link #getDashboardCostReportDetails(TCSubject, long, long[], long[], long, long, long[], Date, Date, Map)}. The parameter
+ *   is used to check the permission.</li>
+ *   <li>Added a parameter <code>TCSubject</code> to
+ *   method {@link #getDashboardBillingCostReport(TCSubject, long, long[], long[], long[], long, long, long[], long, Date, Date, Map, Map)}.
+ *   The parameter is used to check the permission.</li>
+ *   <li>Added {@link #setReportQueryParameters(Request, TCSubject, long, long, long)} method to set common query parameters
+ *   for report query.</li>
+ *   <li>Methods {@link #getDashboardParticipationReport(TCSubject, long, long[], long, long, String[], Date, Date, List, List)}
+ *   and {@link #getDashboardCostReportDetails(TCSubject, long, long[], long[], long, long, long[], Date, Date, Map)}
+ *   and {@link #getDashboardBillingCostReport(TCSubject, long, long[], long[], long[], long, long, long[], long, Date, Date, Map, Map)}
+ *   were updated to use {@link #setReportQueryParameters(Request, TCSubject, long, long, long)} to set the common query parameters.</li>
+ *   <li>Added method {@link #setUserPermissionQueryParameter(Request, TCSubject)} method to set user parameter for report query to check
+ *   the user's permission.</li>
  * </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, TCSASSEMBER
  * @version 2.9.1
  * @since 1.0
  */
@@ -1836,6 +1854,7 @@ public class DataProvider {
     /**
      * <p>Gets the cost breakdown data for contests or markets.</p>
      *
+     * @param currentUser the current user.
      * @param projectIds the project ids of the contests
      * @param projectCategoriesIds the project category ids of the market
      * @param startDate the start date when getting market cost breakdown data
@@ -1845,7 +1864,7 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs.
      * @since 2.6.1
      */
-    public static List<DashboardCostBreakDownDTO> getDashboardCostBreakDown(long[] projectIds, long[] projectCategoriesIds, Date startDate, Date endDate) throws Exception {
+    public static List<DashboardCostBreakDownDTO> getDashboardCostBreakDown(TCSubject currentUser, long[] projectIds, long[] projectCategoriesIds, Date startDate, Date endDate) throws Exception {
         List <DashboardCostBreakDownDTO> data = new ArrayList<DashboardCostBreakDownDTO>();
         if ( (projectIds == null || projectIds.length == 0) && (projectCategoriesIds == null || projectCategoriesIds.length == 0) ) {
             return data;
@@ -1854,6 +1873,7 @@ public class DataProvider {
         DataAccess dataAccessor;
         Request request = new Request();
         String queryName;
+        setUserPermissionQueryParameter(request, currentUser);
         if (projectCategoriesIds == null || projectCategoriesIds.length == 0) {
             queryName = "dashboard_contest_cost_breakdown";
             request.setProperty("pids", concatenate(projectIds, ", "));
@@ -2999,6 +3019,7 @@ public class DataProvider {
      * Gets the contest participation metrics report with the given paramters. The method will retrieve the contest copilots data
      * into parameter <code>contestCopilots</code>, and retrieve the contest participation details data into parameter contestDetails.
      *
+     * @param currentUser the current user.
      * @param projectId the direct project id.
      * @param projectCategoryIds the project category ids.
      * @param clientId the client id.
@@ -3011,7 +3032,7 @@ public class DataProvider {
      * @throws Exception if any error occurs.
      * @since 2.8.0
      */
-    public static void getDashboardParticipationReport(long projectId, long[] projectCategoryIds, long clientId, long billingAccountId,
+    public static void getDashboardParticipationReport(TCSubject currentUser, long projectId, long[] projectCategoryIds, long clientId, long billingAccountId,
             String[] projectStatus, Date startDate, Date endDate,
             List<ParticipationContestCopilotDTO> contestCopilots, List<ParticipationContestDetailDTO> contestDetails) throws Exception {
         
@@ -3034,22 +3055,7 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         
-        if (projectId != 0) {
-            // filter by project id
-            request.setProperty("tcdirectid", String.valueOf(projectId));
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", "0");
-        } else if (billingAccountId != 0) {
-            // filter by billing project
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", String.valueOf(billingAccountId));
-            request.setProperty("clientid", "0");
-        } else if (clientId != 0) {
-            // filter by client
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", String.valueOf(clientId));
-        } else {
+        if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
             return;
         }
         
@@ -3130,7 +3136,8 @@ public class DataProvider {
             }
             contestDetail.setCountry(row.getStringItem("country"));
             contestDetail.setHasSubmit(row.getIntItem("has_submit") > 0);
-            contestDetail.setHasWin(row.getIntItem("has_win") > 0);
+            contestDetail.setHasWinFinal(row.getIntItem("has_win_final") > 0);
+            contestDetail.setHasWinMilestone(row.getIntItem("has_win_milestone") > 0);
             contestDetail.setStatus(row.getStringItem("contest_status").trim());
             contestDetails.add(contestDetail);
         }
@@ -3140,11 +3147,12 @@ public class DataProvider {
      * Gets the cost report details with the given paramters. The method returns a list of CostDetailsDTO. Each
      * CostDetailDTO represents cost details of one contest.
      *
-     * @param projectIds the direct project ids.
+     * @param currentUser the current user.
+     * @param projectId the direct project id.
      * @param projectCategoryIds the software project category ides.
      * @param studioProjectCategoryIds the studio project category ids.
-     * @param clientIds the client ids.
-     * @param billingAccountIds the billing accounts ids.
+     * @param clientId the client id.
+     * @param billingAccountId the billing accounts id.
      * @param projectStatusIds the project status ids.
      * @param startDate the start date.
      * @param endDate the end date.
@@ -3152,15 +3160,12 @@ public class DataProvider {
      * @throws Exception if any error occurs.
      * @since 2.4.0
      */
-    public static List<CostDetailsDTO> getDashboardCostReportDetails(long[] projectIds, long[] projectCategoryIds, long[] studioProjectCategoryIds,
-                long[] clientIds, long[] billingAccountIds, long[] projectStatusIds,  Date startDate, Date endDate, Map<String, Long> statusMapping) throws Exception {
+    public static List<CostDetailsDTO> getDashboardCostReportDetails(TCSubject currentUser, long projectId, long[] projectCategoryIds, long[] studioProjectCategoryIds,
+                long clientId, long billingAccountId, long[] projectStatusIds,  Date startDate, Date endDate, Map<String, Long> statusMapping) throws Exception {
         // create an empty list first to store the result data
         List<CostDetailsDTO> data
                 = new ArrayList<CostDetailsDTO>();
 
-        if ((projectIds == null) || (projectIds.length == 0)) {
-            return data;
-        }
         if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
             return data;
         }
@@ -3169,12 +3174,6 @@ public class DataProvider {
             return data;
         }
 
-        if ((clientIds == null) || (clientIds.length == 0)) {
-            return data;
-        }
-        if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
-            return data;
-        }
         if (projectStatusIds == null || (projectStatusIds.length == 0)) {
             return data;
         }
@@ -3189,11 +3188,6 @@ public class DataProvider {
            studioProjectCategoryIdsList = concatenate(studioProjectCategoryIds, ", ");
         }
 
-
-        String clientIdsList = concatenate(clientIds, ", ");
-        String billingAccountIdsList = concatenate(billingAccountIds, ", ");
-        String projectIDsList = concatenate(projectIds, ", ");
-
         // date format to prepare date for query input
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
@@ -3201,25 +3195,7 @@ public class DataProvider {
 
         String queryName = "dashboard_cost_report";
 
-        if (projectIds[0] != 0) {
-
-            request.setProperty("tcdirectid", projectIDsList);
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", "0");
-
-        } else if (billingAccountIds[0] != 0) {
-
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", billingAccountIdsList);
-            request.setProperty("clientid", "0");
-
-        } else if (clientIds[0] != 0) {
-
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", clientIdsList);
-
-        } else {
+        if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
             return data;
         }
 
@@ -3323,12 +3299,13 @@ public class DataProvider {
      * Gets the billing cost report entries with the given parameters. The method returns a map,
      * the key is the contest id, the value is a list of billing cost entries.
      *
-     * @param projectIds the direct project ids.
+     * @param currentUser the current user.
+     * @param projectId the direct project id.
      * @param projectCategoryIds the software project category ides.
      * @param studioProjectCategoryIds the studio project category ids.
      * @param paymentTypeIds the payment type ids.
-     * @param clientIds the client ids.
-     * @param billingAccountIds the billing accounts ids.
+     * @param clientId the client id.
+     * @param billingAccountId the billing accounts id.
      * @param projectStatusIds the project status ids.
      * @param contestId the contest id
      * @param startDate the start date.
@@ -3339,21 +3316,17 @@ public class DataProvider {
      * @throws Exception if any error occurs.
      * @since 2.5.0
      */
-    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(long[] projectIds,
+    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(TCSubject currentUser, long projectId,
                                                                                            long[] projectCategoryIds,
                                                                                            long[] studioProjectCategoryIds,
                                                                                            long[] paymentTypeIds,
-                                                                                           long[] clientIds, long[] billingAccountIds, long[] projectStatusIds,
+                                                                                           long clientId, long billingAccountId, long[] projectStatusIds,
                                                                                            long contestId, Date startDate, Date endDate,
                                                                                            Map<String, Long> statusMapping, Map<String, Long> paymentTypesMapping) throws Exception {
         // create an empty map first to store the result data
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
 
         if (contestId <= 0) {
-
-            if ((projectIds == null) || (projectIds.length == 0)) {
-                return data;
-            }
             if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
                 return data;
             }
@@ -3363,13 +3336,6 @@ public class DataProvider {
             }
 
             if (paymentTypeIds == null || paymentTypeIds.length == 0) {
-                return data;
-            }
-
-            if ((clientIds == null) || (clientIds.length == 0)) {
-                return data;
-            }
-            if ((billingAccountIds == null) || (billingAccountIds.length == 0)) {
                 return data;
             }
             if (projectStatusIds == null || (projectStatusIds.length == 0)) {
@@ -3395,21 +3361,6 @@ public class DataProvider {
             studioProjectCategoryIdsList = concatenate(studioProjectCategoryIds, ", ");
         }
 
-        String clientIdsList = "-1";
-        if (clientIds != null && clientIds.length > 0) {
-            clientIdsList = concatenate(clientIds, ", ");
-        }
-
-        String billingAccountIdsList = "-1";
-        if (billingAccountIds != null && billingAccountIds.length > 0) {
-            billingAccountIdsList = concatenate(billingAccountIds, ", ");
-        }
-
-        String projectIDsList = "-1";
-        if(projectIds != null && projectIds.length > 0) {
-            projectIDsList = concatenate(projectIds, ", ");
-        }
-
         // date format to prepare date for query input
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
@@ -3422,40 +3373,23 @@ public class DataProvider {
             request.setProperty("billingaccountid", "0");
             request.setProperty("clientid", "0");
             request.setProperty("pj", String.valueOf(contestId));
-
-        } else if (projectIds != null && projectIds[0] != 0) {
-
-            request.setProperty("tcdirectid", projectIDsList);
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("clientid", "0");
-            request.setProperty("pj", "0");
-
-        } else if (billingAccountIds != null && billingAccountIds[0] != 0) {
-
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", billingAccountIdsList);
-            request.setProperty("clientid", "0");
-            request.setProperty("pj", "0");
-
-        } else if (clientIds != null && clientIds[0] >= 0) {
-
-            request.setProperty("tcdirectid", "0");
-            request.setProperty("billingaccountid", "0");
-            request.setProperty("pj", "0");
-
-            if(clientIds[0] == 0) {
-                request.setProperty("clientid", "0");
-            } else {
-              request.setProperty("clientid", clientIdsList);
-            }
-
+            setUserPermissionQueryParameter(request, currentUser);
         } else {
-            return data;
+            request.setProperty("pj", "0");
+            if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
+                return data;
+            }
         }
 
         request.setContentHandle(queryName);
-        request.setProperty("sdt", dateFormatter.format(startDate));
-        request.setProperty("edt", dateFormatter.format(endDate));
+
+        if (contestId > 0) {
+            request.setProperty("sdt", dateFormatter.format(new GregorianCalendar(1900, 1, 1).getTime()));
+            request.setProperty("edt", dateFormatter.format(new GregorianCalendar(9999, 1, 1).getTime()));
+        } else {
+            request.setProperty("sdt", dateFormatter.format(startDate));
+            request.setProperty("edt", dateFormatter.format(endDate));
+        }
 
         request.setProperty("pcids", projectCategoryIDsList);
         request.setProperty("scids", studioProjectCategoryIdsList);
@@ -4311,7 +4245,7 @@ public class DataProvider {
         
         return result;
     }
-
+    
 	/**
      * <p>
      * Gets the mapping to be used for looking up the project copilot types by IDs.
@@ -4335,6 +4269,52 @@ public class DataProvider {
         }
 
         return map;
+    }
+        
+    /**
+     * <p>Sets the user id parameter for report query to check the permission.</p>
+     * 
+     * @param request the query request instance.
+     * @param currentUser the current user.
+     */
+    private static void setUserPermissionQueryParameter(Request request, TCSubject currentUser) {
+        long userId = currentUser.getUserId();
+        if (DirectUtils.isTcOperations(currentUser) || DirectUtils.isTcStaff(currentUser)) {
+            // TC Staff or TC Operations can access all direct projects
+            userId = 0;
+        }
+        request.setProperty("uid", String.valueOf(userId));
+    }
+
+    /**
+     * <p>Sets the common query parameters for the report queries.</p>
+     * 
+     * @param request the query request instance.
+     * @param currentUser the current user.
+     * @param clientId the client id.
+     * @param billingAccountId the billing account id.
+     * @param projectId the project id.
+     * @return true if there are some parameters set, false otherwise.
+     * @since 2.9.1
+     */
+    private static boolean setReportQueryParameters(Request request, TCSubject currentUser, long clientId, long billingAccountId, long projectId) {
+        setUserPermissionQueryParameter(request, currentUser);
+        if (projectId > 0) {
+            request.setProperty("tcdirectid", String.valueOf(projectId));
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+        } else if (billingAccountId > 0) {
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", String.valueOf(billingAccountId));
+            request.setProperty("clientid", "0");
+        } else if (clientId > 0) {
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", String.valueOf(clientId));
+        } else {
+            return false;
+        }
+        return true;
     }
 }
 

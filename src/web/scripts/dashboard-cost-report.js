@@ -1,11 +1,16 @@
 /**
- * AUTHOR: Blues, flexme
- * VERSION: 1.2 (TopCoder Cockpit - Cost Report Assembly)
+ * AUTHOR: Blues, flexme, TCSASSEMBER
+ * VERSION: 1.3 (TopCoder Cockpit - Cost Report Assembly)
  *
  * Version 1.1 change: add toggle trigger for billing cost report.
  *
  * Version 1.2 (TC Cockpit Cost Report Update Cost Breakdown Assembly) change: add support for the cost breakdown
  *  report view.
+ * 
+ * Version 1.3 (TC Cockpit Permission and Report Update One) change log:
+ * - Change parameter name from projectIds to projectId.
+ * - Change parameter name from billingAccountIds to billingAccount.
+ * - Change parameter name from customerIds to customerId.
  * 
  * Submits the cost report form and trigger cost report excel download.
  */
@@ -115,9 +120,9 @@ $(document).ready(function() {
     }
 
     // sort the project names
-    sortDropDown("#formData\\.projectIds");
+    sortDropDown("#formData\\.projectId");
     // sort the billing accounts names
-    sortDropDown("#formData\\.billingAccountIds")
+    sortDropDown("#formData\\.billingAccountId")
 
     function loadOptionsByClientId(clientId) {
 
@@ -132,8 +137,8 @@ $(document).ready(function() {
                         function(result) {
                             var billings = result.billings;
                             var projects = result.projects;
-                            var $billing = $("#formData\\.billingAccountIds");
-                            var $project = $("#formData\\.projectIds");
+                            var $billing = $("#formData\\.billingAccountId");
+                            var $project = $("#formData\\.projectId");
 
                             $billing.html("");
                             $.each(billings, function(key, value) {
@@ -153,8 +158,8 @@ $(document).ready(function() {
                             $project.append($('<option></option>').val(0).html("All Projects"));
                             $project.val(0);
 
-                            sortDropDown("#formData\\.projectIds");
-                            sortDropDown("#formData\\.billingAccountIds");
+                            sortDropDown("#formData\\.projectId");
+                            sortDropDown("#formData\\.billingAccountId");
 
                         },
                         function(errorMessage) {
@@ -165,20 +170,20 @@ $(document).ready(function() {
     }
 
 
-    $("#formData\\.customerIds").change(function() {
+    $("#formData\\.customerId").change(function() {
 
         var customerId = $(this).val();
 
         loadOptionsByClientId(customerId);
     });
 
-    $("#formData\\.billingAccountIds").change(function() {
+    $("#formData\\.billingAccountId").change(function() {
 
         var billingId = $(this).val();
 
         if (billingId == 0) {
             // select all again, load all the billings and projects for customer
-            var customerId = $("#formData\\.customerIds").val();
+            var customerId = $("#formData\\.customerId").val();
 
             loadOptionsByClientId(customerId);
 
@@ -195,7 +200,7 @@ $(document).ready(function() {
                 handleJsonResult(jsonResult,
                         function(result) {
                             var projects = result.projects;
-                            var $project = $("#formData\\.projectIds");
+                            var $project = $("#formData\\.projectId");
 
                             $project.html("");
                             $.each(projects, function(key, value) {
@@ -205,7 +210,7 @@ $(document).ready(function() {
                             // append the default "select all"
                             $project.append($('<option></option>').val(0).html("All Projects"));
                             $project.val(0);
-                            sortDropDown("#formData\\.projectIds");
+                            sortDropDown("#formData\\.projectId");
 
                         },
                         function(errorMessage) {
@@ -254,7 +259,7 @@ $(document).ready(function() {
         var data = {formData:{projectIds:projectIds}};
         modalPreloader();
         $.ajax({
-            type: 'POST',
+            type: 'get',
             url: "dashboardGetCostBreakDownAJAX",
             data: data,
             cache: false,

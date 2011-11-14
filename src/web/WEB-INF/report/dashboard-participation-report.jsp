@@ -1,7 +1,10 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.0 (TC Cockpit Participation Metrics Report Part One Assembly 1 )
+  - Version: 1.1 (TC Cockpit Participation Metrics Report Part One Assembly 1 )
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
+  - - Add logics to display Milestone Winners, Final Winners, Total Unique Winners in Aggregation Participation Metrics Report section.
   -
   - Description: This page renders the view for participation metrics report including form and report data.
   -
@@ -16,9 +19,9 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <script type="text/javascript" src="/scripts/dashboard-participation-report.js?v=208327"></script>
-    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
-    <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208746" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/dashboard-participation-report.js?v=208328"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192106"></script>
+    <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208747" media="all" type="text/css"/>
 </head>
 
 <body id="page">
@@ -198,7 +201,7 @@
     </colgroup>
     <thead>
         <tr>
-            <th class="tableTitle" colspan="5">
+            <th class="tableTitle" colspan="8">
                 <a href="javascript:void(0)" class="expand">&nbsp;</a>
                 <span>Aggregation Participation Metrics Report</span>
             </th>
@@ -223,7 +226,10 @@
             <th class="tableColumn">Total<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
+            <th class="tableColumn">Milestone<br />Winners</th>
+            <th class="tableColumn">Final<br />Winners</th>
             <th class="tableColumn">Total<br />Winners</th>
+            <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn">Winner<br />Countries</th>
         </tr>
     </thead>
@@ -240,7 +246,10 @@
             <td>${item.totalSubmitters}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
         </tr>
         </c:forEach>
@@ -257,7 +266,10 @@
             <td>${item.totalSubmitters}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
         </tr>
         </c:forEach>
@@ -274,7 +286,10 @@
             <td>${item.totalSubmitters}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
         </tr>
         </c:forEach>
@@ -291,7 +306,10 @@
             <td>${item.totalSubmitters}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
             <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
             <td>${item.winnerCountries}</td>
         </tr>
         </c:forEach>

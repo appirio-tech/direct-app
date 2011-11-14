@@ -10,8 +10,17 @@ import java.io.Serializable;
  * The DTO stores the aggregation participation metrics report data.
  * </p>
  *
+ * <p>
+ * Version 1.1 (TC Cockpit Permission and Report Update One) change log:
+ * <ol>
+ *   <li>Added {@link #milestoneWinners} field and getter/setter for it.</li>
+ *   <li>Added {@link #finalWinners} field and getter/setter for it.</li>
+ *   <li>Added {@link #totalUniqueWinners} field and getter/setter for it.</li>
+ * </ol>
+ * </p>
+ * 
  * @author TCSASSEMBER
- * @version  1.0 (TC Cockpit Participation Metrics Report Part One Assembly 1)
+ * @version  1.1 (TC Cockpit Participation Metrics Report Part One Assembly 1)
  */
 public class ParticipationAggregationReportDTO implements Serializable {
 
@@ -56,10 +65,31 @@ public class ParticipationAggregationReportDTO implements Serializable {
     private int submitterContries;
     
     /**
+     * Represents the number of milestone winners (Repeatable) of the aggregation group.
+     *
+     * @since 1.1
+     */
+    private int milestoneWinners;
+
+    /**
+     * Represents the number of final winners (Repeatable) of the aggregation group.
+     *
+     * @since 1.1
+     */
+    private int finalWinners;
+
+    /**
      * Represents the number of total winners of the aggregation group.
      */
     private int totalWinners;
     
+    /**
+     * Represents the unique winners of the aggregation group.
+     *
+     * @since 1.1
+     */
+    private int totalUniqueWinners;
+
     /**
      * Represents the number of winner countries of the aggregation group.
      */
@@ -232,6 +262,64 @@ public class ParticipationAggregationReportDTO implements Serializable {
     public void setWinnerCountries(int winnerCountries) {
         this.winnerCountries = winnerCountries;
     }
-    
-    
+
+    /**
+     * Gets the number of milestone winners (Repeatable) of the aggregation group.
+     *
+     * @return the number of milestone winners (Repeatable) of the aggregation group.
+     * @since 1.1
+     */
+    public int getMilestoneWinners() {
+        return milestoneWinners;
+    }
+
+    /**
+     * Sets the number of milestone winners (Repeatable) of the aggregation group.
+     *
+     * @param milestoneWinners the number of milestone winners (Repeatable) of the aggregation group.
+     * @since 1.1
+     */
+    public void setMilestoneWinners(int milestoneWinners) {
+        this.milestoneWinners = milestoneWinners;
+    }
+
+    /**
+     * Gets the number of final winners (Repeatable) of the aggregation group.
+     *
+     * @return the number of final winners (Repeatable) of the aggregation group.
+     * @since 1.1
+     */
+    public int getFinalWinners() {
+        return finalWinners;
+    }
+
+    /**
+     * Sets the number of final winners (Repeatable) of the aggregation group.
+     *
+     * @param finalWinners the number of final winners (Repeatable) of the aggregation group.
+     * @since 1.1
+     */
+    public void setFinalWinners(int finalWinners) {
+        this.finalWinners = finalWinners;
+    }
+
+    /**
+     * Gets the unique winners of the aggregation group.
+     *
+     * @return the unique winners of the aggregation group.
+     * @since 1.1
+     */
+    public int getTotalUniqueWinners() {
+        return totalUniqueWinners;
+    }
+
+    /**
+     * Sets the unique winners of the aggregation group.
+     *
+     * @param uniqueWinners the unique winners of the aggregation group.
+     * @since 1.1
+     */
+    public void setTotalUniqueWinners(int totalUniqueWinners) {
+        this.totalUniqueWinners = totalUniqueWinners;
+    }
 }

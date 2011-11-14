@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, flexme
-  - Version: 1.2 (Direct Improvements Assembly Release 2)
+  - Author: Blues, flexme, TCSASSEMBER
+  - Version: 1.3 (Direct Improvements Assembly Release 2)
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
@@ -10,6 +10,10 @@
   - Version 1.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Description: This page renders the view for cost report including form and report data.
   -
+  - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
+  - - Change parameter name from projectIds to projectId.
+  - - Change parameter name from billingAccountIds to billingAccount.
+  - - Change parameter name from customerIds to customerId.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -21,11 +25,11 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
-    <script type="text/javascript" src="/scripts/dashboard-cost-report.js?v=208327"></script>
-  <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
-    <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208746" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196004"></script>
+    <script type="text/javascript" src="/scripts/dashboard-cost-report.js?v=208328"></script>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192106"></script>
+    <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208747" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196004" media="all" type="text/css"/>
 
 </head>
 
@@ -64,14 +68,14 @@
 
         <div class="filterCustomName" id="customerNameFilter">
                     <span class="label">Customer Name</span>
-                    <s:select list="viewData.clientAccounts" id="formData.customerIds"
-                        name="formData.customerIds" size="1"/>
+                    <s:select list="viewData.clientAccounts" id="formData.customerId"
+                        name="formData.customerId" size="1"/>
                 </div>
 
                 <div class="filterProject">
                     <span class="label">Project Name </span>
-                    <s:select list="viewData.projectsLookupMap" name="formData.projectIds"
-                              id="formData.projectIds"/>
+                    <s:select list="viewData.projectsLookupMap" name="formData.projectId"
+                              id="formData.projectId"/>
                 </div>
 
                 <div class="firstRow">
@@ -118,8 +122,8 @@
                         <div class="columns" id="clientBillingProjectsFilter">
                             <strong>Billing Account</strong><br/>
                             <s:select list="viewData.clientBillingProjects"
-                                      id="formData.billingAccountIds"
-                                      name="formData.billingAccountIds" size="1"/>
+                                      id="formData.billingAccountId"
+                                      name="formData.billingAccountId" size="1"/>
                         </div>
 
                         <div class="columns columnButton">
@@ -199,18 +203,18 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="projectAggregationCostReport scData  ${rowStyle}">
-            <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
+            <td><a href="<c:url value="dashboardGetCostReport?${item.drillInQuery}"/>" target="_blank"><c:out value="${item.name}"/></a></td>
             <td>
-                <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalContestFees}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalActualMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalActualMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalCosts}" pattern="$###,##0.00"/>
             </td>
         </tr>
     </c:forEach>
@@ -220,18 +224,18 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="billingAggregationCostReport scData hide ${rowStyle}">
-              <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
+              <td><a href="<c:url value="dashboardGetCostReport?${item.drillInQuery}"/>" target="_blank"><c:out value="${item.name}"/></a></td>
             <td>
-                <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalContestFees}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalActualMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalActualMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalCosts}" pattern="$###,##0.00"/>
             </td>
         </tr>
     </c:forEach>
@@ -241,18 +245,18 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="contestTypeAggregationCostReport scData hide ${rowStyle}">
-              <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
+              <td><a href="<c:url value="dashboardGetCostReport?${item.drillInQuery}"/>" target="_blank"><c:out value="${item.name}"/></a></td>
             <td>
-                <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalContestFees}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalActualMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalActualMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalCosts}" pattern="$###,##0.00"/>
             </td>
         </tr>
     </c:forEach>
@@ -262,18 +266,18 @@
                varStatus="loop">
         <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'alt' : ''}"/>
         <tr class="statusAggregationCostReport scData hide ${rowStyle}">
-             <td><a href="<c:url value="dashboardGetCostReport?${item.value.drillInQuery}"/>" target="_blank"><c:out value="${item.value.name}"/></a></td>
+             <td><a href="<c:url value="dashboardGetCostReport?${item.drillInQuery}"/>" target="_blank"><c:out value="${item.name}"/></a></td>
             <td>
-                <fmt:formatNumber value="${item.value.totalContestFees}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalContestFees}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalEstimatedMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalActualMemberCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalActualMemberCosts}" pattern="$###,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.value.totalCosts}" pattern="$###,##0.00"/>
+                <fmt:formatNumber value="${item.totalCosts}" pattern="$###,##0.00"/>
             </td>
         </tr>
     </c:forEach>

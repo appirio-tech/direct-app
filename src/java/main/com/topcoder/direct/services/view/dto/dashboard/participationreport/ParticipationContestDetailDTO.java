@@ -12,8 +12,17 @@ import com.topcoder.direct.services.view.dto.IdNamePair;
  * The DTO stores the participation metrics contest detail data.
  * </p>
  *
+ * <p>
+ * Version 1.1 (TC Cockpit Permission and Report Update One) change log:
+ * <ol>
+ *   <li>Remove field <code>hasWin</code> and getter/setter for it.</li>
+ *   <li>Added {@link #hasWinFinal} field and getter/setter for it.</li>
+ *   <li>Added {@link #hasWinMilestone} field and getter/setter for it.</li>
+ * </ol>
+ * </p>
+ * 
  * @author TCSASSEMBER
- * @version  1.0 (TC Cockpit Participation Metrics Report Part One Assembly 1)
+ * @version  1.1 (TC Cockpit Participation Metrics Report Part One Assembly 1)
  */
 public class ParticipationContestDetailDTO implements Serializable {
 
@@ -63,10 +72,19 @@ public class ParticipationContestDetailDTO implements Serializable {
     private boolean hasSubmit;
     
     /**
-     * A flag indicates whether the registrant has win.
+     * A flag indicates whether the registrant has win in the final round.
+     * 
+     * @since 1.1
      */
-    private boolean hasWin;
-    
+    private boolean hasWinFinal;
+
+    /**
+     * A flag indicates whether the registrant has win in the milestone round.
+     * 
+     * @since 1.1
+     */
+    private boolean hasWinMilestone;
+
     /**
      * Represents the contest status.
      */
@@ -224,21 +242,43 @@ public class ParticipationContestDetailDTO implements Serializable {
     }
 
     /**
-     * Gets the flag indicates whether the registrant has win.
-     * 
-     * @return true if the registrant has win, false otherwise.
+     * Gets the flag indicates whether the registrant has win in the final round.
+     *
+     * @return true if the registrant has win in the final round, false otherwise.
+     * @since 1.1
      */
-    public boolean isHasWin() {
-        return hasWin;
+    public boolean isHasWinFinal() {
+        return hasWinFinal;
     }
 
     /**
-     * Sets the flag indicates whether the registrant has win.
-     * 
-     * @param hasWin true if the registrant has win, false otherwise.
+     * Sets the flag indicates whether the registrant has win in the final round.
+     *
+     * @param hasWin true if the registrant has win in the final round, false otherwise.
+     * @since 1.1
      */
-    public void setHasWin(boolean hasWin) {
-        this.hasWin = hasWin;
+    public void setHasWinFinal(boolean hasWinFinal) {
+        this.hasWinFinal = hasWinFinal;
+    }
+
+    /**
+     * Gets the flag indicates whether the registrant has win in the milestone round.
+     *
+     * @return true if the registrant has win in the milestone round, false otherwise.
+     * @since 1.1
+     */
+    public boolean isHasWinMilestone() {
+        return hasWinMilestone;
+    }
+
+    /**
+     * Sets the flag indicates whether the registrant has win in the milestone round.
+     *
+     * @param hasWin true if the registrant has win in the milestone round, false otherwise.
+     * @since 1.1
+     */
+    public void setHasWinMilestone(boolean hasWinMilestone) {
+        this.hasWinMilestone = hasWinMilestone;
     }
 
     /**

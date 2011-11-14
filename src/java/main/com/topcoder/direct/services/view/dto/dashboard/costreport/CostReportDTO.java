@@ -3,7 +3,18 @@
  */
 package com.topcoder.direct.services.view.dto.dashboard.costreport;
 
-import com.topcoder.direct.services.view.dto.CommonDTO;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.dto.ReportAggregationBaseDTO;
 import com.topcoder.direct.services.view.dto.ReportType;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -15,16 +26,6 @@ import com.topcoder.excel.impl.ExcelWorkbook;
 import com.topcoder.excel.output.Biff8WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSavingException;
-
-import java.io.*;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -54,11 +55,18 @@ import java.util.Map;
  * </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.2 (TC Cockpit Permission and Report Update One) change log:
+ * <ol>
+ *   <li>This class has been refactoring. It's extended from <code>ReportAggregationBaseDTO</code>.</li>
+ * </ol>
+ * </p>
+ * 
  * @author Blues, flexme, TCSDEVELOPER
- * @version  1.1 (TopCoder Cockpit - Cost Report Assembly)
+ * @version  1.2 (TopCoder Cockpit - Cost Report Assembly)
  *
  */
-public class CostReportDTO extends CommonDTO implements Serializable {
+public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> {
 
     /**
      * Represents the excel file name when exporting cost report.
@@ -73,62 +81,11 @@ public class CostReportDTO extends CommonDTO implements Serializable {
      * @since 1.0.1
      */
     private static final String COST_BREAKDOWN_REPORT_EXCEL_FILE_NAME = "cost_report_breakdown.xls";
-    
-    /**
-     * The project aggregation cost report data.
-     */
-    private Map<String, CostAggregationDTO> projectAggregation;
-
-    /*
-     * The contest type aggregation cost report data.
-     */
-    private Map<String, CostAggregationDTO> contestTypeAggregation;
-
-    /**
-     * The status aggregation cost report data.
-     */
-    private Map<String, CostAggregationDTO> statusAggregation;
-
-    /**
-     * The billing account aggregation cost report data.
-     */
-    private Map<String, CostAggregationDTO> billingAggregation;
 
     /**
      * The list of cost details of each contest.
      */
     private List<CostDetailsDTO> costDetails;
-
-    /**
-     * The map stores the direct project information.
-     */
-    private Map<Long, String> projectsLookupMap;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from IDs to names of client billing projects.</p>
-     */
-    private Map<Long, String> clientBillingProjects;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from IDs to names of available client accounts.</p>
-     */
-    private Map<Long, String> clientAccounts;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from project category IDs to names.</p>
-     */
-    private Map<Long, String> projectCategories;
-
-    /**
-     * <p>A <code>Map</code> providing the mapping from status id to status names.</p>
-     */
-    private Map<Long, String> contestStatus;
-
-    /**
-     * <p>A <code>boolean</code> providing the flag indicating whether the cost report data is to be calculated and
-     * displayed.</p>
-     */
-    private boolean showJustForm;
 
     /**
      * <p>A <code>boolean</code> providing the flag indicating whether the cost break down data should display in
@@ -139,75 +96,10 @@ public class CostReportDTO extends CommonDTO implements Serializable {
     private boolean showBreakdown;
 
     /**
-     * Gets the project aggregation cost report data.
-     *
-     * @return the project aggregation cost report data.
+     * Construct a new <code>CostReportDTO</code> instance.
      */
-    public Map<String, CostAggregationDTO> getProjectAggregation() {
-        return projectAggregation;
-    }
-
-    /**
-     * Sets the project aggregation cost report data.
-     *
-     * @param projectAggregation the project aggregation cost report data to set.
-     */
-    public void setProjectAggregation(Map<String, CostAggregationDTO> projectAggregation) {
-        this.projectAggregation = projectAggregation;
-    }
-
-    /**
-     * Gets the contest type aggregation cost report data.
-     *
-     * @return the contest type aggregation cost report data.
-     */
-    public Map<String, CostAggregationDTO> getContestTypeAggregation() {
-        return contestTypeAggregation;
-    }
-
-    /**
-     * Sets the contest type aggregation cost report data.
-     *
-     * @param contestTypeAggregation the contest type aggregation cost report data to set.
-     */
-    public void setContestTypeAggregation(Map<String, CostAggregationDTO> contestTypeAggregation) {
-        this.contestTypeAggregation = contestTypeAggregation;
-    }
-
-    /**
-     * Gets the status aggregation cost report data.
-     *
-     * @return the status aggregation cost report data.
-     */
-    public Map<String, CostAggregationDTO> getStatusAggregation() {
-        return statusAggregation;
-    }
-
-    /**
-     * Sets the status aggregation cost report data.
-     *
-     * @param statusAggregation the status aggregation cost report data to set.
-     */
-    public void setStatusAggregation(Map<String, CostAggregationDTO> statusAggregation) {
-        this.statusAggregation = statusAggregation;
-    }
-
-    /**
-     * Gets the billing aggregation cost report data.
-     *
-     * @return the billing aggregation cost report data.
-     */
-    public Map<String, CostAggregationDTO> getBillingAggregation() {
-        return billingAggregation;
-    }
-
-    /**
-     * Sets the billing aggregation cost report data.
-     *
-     * @param billingAggregation the billing aggregation cost report data to set.
-     */
-    public void setBillingAggregation(Map<String, CostAggregationDTO> billingAggregation) {
-        this.billingAggregation = billingAggregation;
+    public CostReportDTO() {
+        super();
     }
 
     /**
@@ -226,114 +118,6 @@ public class CostReportDTO extends CommonDTO implements Serializable {
      */
     public void setCostDetails(List<CostDetailsDTO> costDetails) {
         this.costDetails = costDetails;
-    }
-
-    /**
-     * Gets the projects lookup map which stores the direct project information.
-     *
-     * @return the projects lookup map.
-     */
-    public Map<Long, String> getProjectsLookupMap() {
-        return projectsLookupMap;
-    }
-
-    /**
-     * Sets the project lookup map.
-     *
-     * @param projectsLookupMap the projects lookup map to set.
-     */
-    public void setProjectsLookupMap(Map<Long, String> projectsLookupMap) {
-        this.projectsLookupMap = projectsLookupMap;
-    }
-
-    /**
-     * Gets the client billing projects.
-     *
-     * @return the client billing projects.
-     */
-    public Map<Long, String> getClientBillingProjects() {
-        return clientBillingProjects;
-    }
-
-    /**
-     * Sets the client billing projects.
-     *
-     * @param clientBillingProjects the client billing projects to set.
-     */
-    public void setClientBillingProjects(Map<Long, String> clientBillingProjects) {
-        this.clientBillingProjects = clientBillingProjects;
-    }
-
-    /**
-     * Gets the client accounts.
-     *
-     * @return the client accounts.
-     */
-    public Map<Long, String> getClientAccounts() {
-        return clientAccounts;
-    }
-
-    /**
-     * Sets the client accounts.
-     *
-     * @param clientAccounts the client accounts to set.
-     */
-    public void setClientAccounts(Map<Long, String> clientAccounts) {
-        this.clientAccounts = clientAccounts;
-    }
-
-    /**
-     * Gets the project categories.
-     *
-     * @return the project categories.
-     */
-    public Map<Long, String> getProjectCategories() {
-        return projectCategories;
-    }
-
-    /**
-     * Sets the project categories.
-     *
-     * @param projectCategories the project categories to set.
-     */
-    public void setProjectCategories(Map<Long, String> projectCategories) {
-        this.projectCategories = projectCategories;
-    }
-
-    /**
-     * Gets the contest status.
-     *
-     * @return the contest status.
-     */
-    public Map<Long, String> getContestStatus() {
-        return contestStatus;
-    }
-
-    /**
-     * Sets the contest status.
-     *
-     * @param contestStatus the contest status to set.
-     */
-    public void setContestStatus(Map<Long, String> contestStatus) {
-        this.contestStatus = contestStatus;
-    }
-
-    /**
-     * Gets the flag to determine whether only show the form.
-     *
-     * @return the flag to determine whether only show the form.
-     */
-    public boolean isShowJustForm() {
-        return showJustForm;
-    }
-
-    /**
-     * Sets the flag of whether only show the form.
-     *
-     * @param showJustForm flag to determine whether only show the form.
-     */
-    public void setShowJustForm(boolean showJustForm) {
-        this.showJustForm = showJustForm;
     }
 
     /**
@@ -437,7 +221,7 @@ public class CostReportDTO extends CommonDTO implements Serializable {
             for (int i = 0; i < getCostDetails().size(); i++) {
                 projectIds[i] = getCostDetails().get(i).getContest().getId();
             }
-            List<DashboardCostBreakDownDTO> breakDown = DataProvider.getDashboardCostBreakDown(projectIds, null, null, null);
+            List<DashboardCostBreakDownDTO> breakDown = DataProvider.getDashboardCostBreakDown(DirectStrutsActionsHelper.getTCSubjectFromSession(), projectIds, null, null, null);
             for (DashboardCostBreakDownDTO data : breakDown) {
                 breakdownMap.put(data.getId(), data);
             }

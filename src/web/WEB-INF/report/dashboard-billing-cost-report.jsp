@@ -1,10 +1,14 @@
 <%--
   - Author: Blues, TCSASSEMBLER
-  - Version: 1.1 ((TopCoder Cockpit - Cost Report Assembly)
+  - Version: 1.2 ((TopCoder Cockpit - Cost Report Assembly)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
+  - Version 1.2 (TC Cockpit Permission and Report Update One) change log:
+  - - Change parameter name from projectIds to projectId.
+  - - Change parameter name from billingAccountIds to billingAccount.
+  - - Change parameter name from customerIds to customerId.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -16,10 +20,10 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
-    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
-    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js?v=208327"></script>
-    <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208746" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196004"></script>
+    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js?v=208328"></script>
+    <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208747" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196004" media="all" type="text/css"/>
 
 </head>
 
@@ -57,8 +61,8 @@
 
                 <div class="filterProject">
                     <span class="label">Project Name </span>
-                    <s:select list="viewData.projectsLookupMap" name="formData.projectIds"
-                              id="formData.projectIds"/>
+                    <s:select list="viewData.projectsLookupMap" name="formData.projectId"
+                              id="formData.projectId"/>
                 </div>
 
                 <div class="firstRow">
@@ -122,15 +126,15 @@
 
                         <div class="columns" id="customerNameFilter">
                             <strong>Customer Name</strong><br/>
-                            <s:select list="viewData.clientAccounts" id="formData.customerIds"
-                                      name="formData.customerIds" size="1"/>
+                            <s:select list="viewData.clientAccounts" id="formData.customerId"
+                                      name="formData.customerId" size="1"/>
                         </div>
 
                         <div class="columns" id="clientBillingProjectsFilter">
                             <strong>Billing Account</strong><br/>
                             <s:select list="viewData.clientBillingProjects"
-                                      id="formData.billingAccountIds"
-                                      name="formData.billingAccountIds" size="1"/>
+                                      id="formData.billingAccountId"
+                                      name="formData.billingAccountId" size="1"/>
                         </div>
 
                         <div class="columns columnButton">
