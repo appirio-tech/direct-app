@@ -20,7 +20,7 @@
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
     <script type="text/javascript" src="/scripts/notifications.js?v=207440"></script>
-	<link rel="stylesheet" href="/css/modal.css?v=207790" media="all" type="text/css"/>
+  <link rel="stylesheet" href="/css/modal.css?v=207790" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.dialog.css?v=185283" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.theme.css?v=185283" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.core.css?v=185283" media="all" type="text/css"/>
@@ -33,7 +33,7 @@
     <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js?v=207440"></script>
     <script type="text/javascript" id="pDialog" src="/scripts/permissionDialog.js?v=194107"></script>
     <script type="text/javascript" id="json" src="/scripts/json2.js?v=186145"></script>
-    
+
     <script type="text/javascript">
         $(function() {
             var limit = 50;
@@ -43,70 +43,70 @@
                     $(this).empty().append(chars.substr(0, limit-1)).append("... ");
                 }
             });
-	   var pn = "<%=request.getParameter("pn")%>";
-	   if (pn !="perm")
-	   {
-	   	document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
-	   	document.getElementById("area2-noti").innerHTML = "";
-	   }
-	   else
-	   {
-		 requestPermissions();
+     var pn = "<%=request.getParameter("pn")%>";
+     if (pn !="perm")
+     {
+       document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
+       document.getElementById("area2-noti").innerHTML = "";
+     }
+     else
+     {
+     requestPermissions();
                  document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
                  document.getElementById("area2-perm").innerHTML = "";
-	   }
-	});
-		
-		function changepn(pn) {
-			if (pn == "perm")
-			{
-				$("#projects").after($("#permissions"));
-				$("#permissions_wrapper").remove();
-				$("#projects").remove();
-				$("#permissions").wrap('<div id="projects"/>');
+     }
+  });
 
-				$("#users").after($("#userTable"));
+    function changepn(pn) {
+      if (pn == "perm")
+      {
+        $("#projects").after($("#permissions"));
+        $("#permissions_wrapper").remove();
+        $("#projects").remove();
+        $("#permissions").wrap('<div id="projects"/>');
+
+        $("#users").after($("#userTable"));
                                 $("#userTable_wrapper").remove();
                                 $("#users").remove();
                                 $("#userTable").wrap('<div id="users"/>');
 
-				requestPermissions();
-				document.getElementById("area2-noti").innerHTML = document.getElementById("area1").innerHTML;
-				document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
-				document.getElementById("area2-perm").innerHTML = "";
+        requestPermissions();
+        document.getElementById("area2-noti").innerHTML = document.getElementById("area1").innerHTML;
+        document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
+        document.getElementById("area2-perm").innerHTML = "";
                         $("#area1 .areaHeader select").val("perm");
                 $(".paging_permission_button .next").removeClass("next");
-			}
-			else
-			{
-				document.getElementById("area2-perm").innerHTML = document.getElementById("area1").innerHTML;
-			    	document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
-				document.getElementById("area2-noti").innerHTML = "";
+      }
+      else
+      {
+        document.getElementById("area2-perm").innerHTML = document.getElementById("area1").innerHTML;
+            document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
+        document.getElementById("area2-noti").innerHTML = "";
                 $("#area1 .areaHeader select").val("noti");
-			}
-		}
-		
-					 
-			function projects_click(pj) {
-				$("#projects").show();
-				$("#users").hide();
-				$(".permissions .firstItem").addClass("on");
-				$(".permissions .lastItem").removeClass("on");
-		
-				$.permission.currentTable = 0;
-			}
+      }
+    }
 
-			/**
-			 * Set the user side click event handle.
-			 */
-			function users_click(user) {
-				$("#users").show();
-				$("#projects").hide();
-				$(".permissions .lastItem").addClass("on");
-				$(".permissions .firstItem").removeClass("on");
-		
-				$.permission.currentTable = 1;
-			}
+
+      function projects_click(pj) {
+        $("#projects").show();
+        $("#users").hide();
+        $(".permissions .firstItem").addClass("on");
+        $(".permissions .lastItem").removeClass("on");
+
+        $.permission.currentTable = 0;
+      }
+
+      /**
+       * Set the user side click event handle.
+       */
+      function users_click(user) {
+        $("#users").show();
+        $("#projects").hide();
+        $(".permissions .lastItem").addClass("on");
+        $(".permissions .firstItem").removeClass("on");
+
+        $.permission.currentTable = 1;
+      }
 
     </script>
 
@@ -132,12 +132,12 @@
                     <div id="area2-noti" style="display:none">
                     <div><!-- the main area -->
                         <div class="area1Content">
-							<div class="currentPage">
+              <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <strong>Notifications</strong>
                             </div>
-							<div class="areaHeader">
-								<h2 class="title notificationTitle">Notifications Setting</h2>
+              <div class="areaHeader">
+                <h2 class="title notificationTitle">Notifications Setting</h2>
                                     <div class="select">
                                         Select a Setting Panel:
                                         <span name="settingPanel">
@@ -148,7 +148,7 @@
                                         </span>
                                     </div>
                             </div><!-- End .areaHeader -->
-                                                
+
                             <div class="activity">
                                 <table width="100%" cellspacing="0" cellpadding="0" id="preferenceTable" class="project">
                                     <thead>
@@ -163,31 +163,31 @@
                                     <div class="container2LeftClear">
                                         <div class="container2RightClear">
                                             <div class="container2BottomClear">
-                                                <div class="container2Content" id="preDiv">       
+                                                <div class="container2Content" id="preDiv">
                                                     <c:forEach items="${preferences}" var="pre">
                                                         <div>
                                                             <input type="checkbox" name="pre_${pre.preferenceId}" ${pre.value ? 'checked="checked"' : ''}></input>
                                                             <span class="preferenceItem">${pre.desc}</span>
-                                                        </div>                                                        
+                                                        </div>
                                                     </c:forEach>
-                                                    
-                                                    
+
+
                                                     <div class="panel2"><a class="button9" href="javascript:savePreference();" id="savePreferenceButton">Save Preference</a></div>
-                                                </div>                                            
+                                                </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <!-- End .tableFooterLeft -->
                                 </div>
                                 <!-- End .tableFooter -->
-                            </div>      
+                            </div>
 
-                            <div class="line"></div>                            
+                            <div class="line"></div>
 
-							<div class="container2">
+              <div class="container2">
 
-							    <div class="dashboardNotificationsDiv">
+                  <div class="dashboardNotificationsDiv">
 
                                         <form id="dashboard-notifications-form">
                                             <table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
@@ -305,26 +305,26 @@
                                               </div>
                                             <!-- End .projectsStats -->
 
-										<!-- End .pagination -->
+                    <!-- End .pagination -->
 
 
                                             <!-- End .panel -->
 
 
-								</div><!-- End .container2Content -->
-							</div>
+                </div><!-- End .container2Content -->
+              </div>
                         </div>
-					</div>
+          </div>
 
 
                     <div id="area2-perm" style="display:none">
                         <!-- the main area -->
                         <div class="area1Content">
-                        	<div class="currentPage">
+                          <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <strong>Permissions</strong>
                             </div>
-                             
+
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Permissions</h2>
                                 <div class="select">
@@ -429,13 +429,13 @@
                         <div class="clear">
                         </div>
                     </div>
-                    
+
                 </div>
                 <!-- End #mainContent -->
             </div>
             <!-- End #content -->
             <jsp:include page="/WEB-INF/includes/footer.jsp"/>
-            	
+
         </div>
         <!-- End #container -->
     </div>
@@ -530,7 +530,7 @@
                     class="left"><span class="right">Cancel</span></span></a></div>
         </div>
     </div>
-    <div id="addProjectDialog">
+    <div id="addProjectDialogPm">
         <div class="header">
             <div class="title">
                 Assign Project(s)...
