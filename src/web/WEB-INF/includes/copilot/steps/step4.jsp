@@ -75,14 +75,20 @@
                     <div class="postFrame hide">
                         <span class="grayArrow"></span>
                         
-                        <p>Most copilot posting are listed for $<span class="defaultFirstPlaceCost"></span>. Would you like to proceed with <br />this amount or set your own amount?</p>
+                        <p>Most copilot postings are listed with $<span class="defaultFirstPlaceCost"></span> first place and $<span class="defaultSecondPlaceCost"></span> second place payments for a total cost of $<span class="defaultTotalPlaceCost"></span>. <br />Would you like to proceed with this amount or set your own amount?</p>
                         
                         <ul>
                             <li>
                                 <input type="radio" class="radio2 proceedRadio" name="amount" id="proceed2"/><label for="proceed2">Proceed</label>
                             </li>
                             <li>
-                                <input type="radio"  class="radio2 useAmountRadio" name="amount" id="useAmount2"/><label for="useAmount2">Use this amount</label> <input type="text" class="amountText newAmountText" id="amountText2" />
+                                <input type="radio"  class="radio2 useAmountRadio" name="amount" id="useAmount2"/><label for="useAmount2"  class="useAmountLabel">Use this amount</label> 
+								<label class="first">1st Place</label>
+							    <span class="dw">$</span>
+							    <input type="text" class="amountText newAmountText" id="amountText2" value=""/>
+							    <label class="second">2nd Place</label>
+							    <span class="dw">$</span>
+							    <span class="prizeInfo"></span>
                             </li>
                         </ul>                            
                         

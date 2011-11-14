@@ -38,7 +38,7 @@
                     
                 <ul>
                     <li>
-                        <input type="radio" class="radio" name="budget" id="haveBudget"/> <label for="haveBudget">a. I have a budget</label> <input id="budget" type="text" class="text" value="$" />
+                        <input type="radio" class="radio" name="budget" id="haveBudget"/> <label for="haveBudget">a. I have a budget</label> <input id="budget" type="text" class="text" value="" />
                     </li>
                     <li>
                         <input type="radio" class="radio" name="budget" id="notHaveBudget"/> <label for="notHaveBudget">b. I don't have a budget yet.</label> 
