@@ -229,7 +229,7 @@
             <result name="success">/WEB-INF/permissions.jsp</result>
         </action>
         <action name="ProjectGamePlanView" class="com.topcoder.direct.services.view.action.project.ProjectGamePlanAction">
-            <interceptor-ref name="securedPreProcessorStack"/>
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-gameplan.jsp</result>
         </action>
         <action name="projectGamePlan" class="com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction">
@@ -598,10 +598,12 @@
 
     <package name="contest" namespace="/contest" extends="base">
         <action name="detail" class="getContestAction">
+            <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/contest-details2.jsp</result>
         </action>
 
         <action name="receipt" class="getContestReceiptAction">
+            <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/contest-receipt.jsp</result>
         </action>
 
@@ -681,6 +683,7 @@
         </action>
 
         <action name="softwareSubmissions" class="softwareContestSubmissionsAction">
+            <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/software-submissions-list.jsp</result>
         </action>
 
@@ -720,6 +723,7 @@
         </action>
 
         <action name="viewSpecReview" class="viewSpecReviewAction">
+            <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/software-specification-review.jsp</result>
         </action>
 
