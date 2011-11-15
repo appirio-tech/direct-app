@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
@@ -19,8 +19,15 @@ import java.io.Serializable;
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.0.1 (Direct Enterprise Dashboard Assembly 1.0)
+ * <p>
+ *     Version 1.1 (Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly) change notes:
+ *     <ol>
+ *         <li>Add the form data contestStatus.</li>
+ *     </ol>
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.1
  */
 public class EnterpriseDashboardForm implements Serializable {
 
@@ -59,9 +66,35 @@ public class EnterpriseDashboardForm implements Serializable {
     private long[] customerIds;
 
     /**
+     * The contest status ids of the volume view.
+     * @since 1.1
+     */
+    private long[] contestStatus;
+
+    /**
      * <p>Constructs new <code>EnterpriseDashboardForm</code> instance. This implementation does nothing.</p>
      */
     public EnterpriseDashboardForm() {
+    }
+
+    /**
+     * Gets the contest status ids.
+     *
+     * @return the contest status ids.
+     * @since 1.1
+     */
+    public long[] getContestStatus() {
+        return contestStatus;
+    }
+
+    /**
+     * Sets the contest status ids.
+     *
+     * @param contestStatus the contest status ids.
+     * @since 1.1
+     */
+    public void setContestStatus(long[] contestStatus) {
+        this.contestStatus = contestStatus;
     }
 
     /**

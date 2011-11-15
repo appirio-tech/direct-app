@@ -10,6 +10,7 @@ import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.*;
+import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
@@ -85,9 +86,16 @@ import javax.servlet.http.HttpServletRequest;
  *     <code>DataProvided.getDashboardCostBreakDown</code> which will use <code>TCSubject</code> to check the user's permission.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.0 (Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly) Change notes:
+ *   <ol>
+ *     <li>Add support for the new enterprise view - volume view</li>
+ *   </ol>
+ * </p>
  * 
- * @author isv, xjtufreeman, Blues, flexme, Veve, TCSASSEMBER
- * @version 1.2
+ * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin
+ * @version 2.0
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -140,6 +148,12 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
     private boolean admin;
 
     /**
+     * <p>The dashboard view type</p>
+     * @since 2.0
+     */
+    private String dashboardViewType;
+
+    /**
      * <p>Constructs new <code>EnterpriseDashboardAction</code> instance. This implementation does nothing.</p>
      */
     public EnterpriseDashboardAction() {
@@ -177,6 +191,26 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
      */
     public void setIsAJAX(boolean isAJAX) {
         this.isAJAX = isAJAX;
+    }
+
+    /**
+     * Gets the dashboard view type.
+     *
+     * @return the dashboard view type.
+     * @since 2.0
+     */
+    public String getDashboardViewType() {
+        return dashboardViewType;
+    }
+
+    /**
+     * Sets the dashboard view type.
+     *
+     * @param dashboardViewType the dashboard view type.
+     * @since 2.0
+     */
+    public void setDashboardViewType(String dashboardViewType) {
+        this.dashboardViewType = dashboardViewType;
     }
 
     /**
@@ -224,6 +258,12 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
         boolean isTableViewCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseTableViewCall");
         boolean isDrillTableCall = request.getServletPath().equalsIgnoreCase("/dashboardEnterpriseDrillTableCall");
+        boolean isVolumeViewCall = false;
+
+        // check if it's volume view call
+        if (getDashboardViewType() != null && getDashboardViewType().equals("volumeView")) {
+            isVolumeViewCall = true;
+        }
 
         admin = DirectUtils.isTcOperations(currentUser) || DirectUtils.isTcOperations(currentUser);
         // Get the list of available project categories
@@ -353,6 +393,19 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         // Validate the dates range
         if (startDate.compareTo(endDate) > 0) {
             addActionError("Start date must not be after end date");
+            return;
+        }
+
+
+        // handle the volume view call
+        if (isVolumeViewCall) {
+
+            List<EnterpriseDashboardVolumeViewDTO> volumeViewData = DataProvider.getEnterpriseDashboardVolumeView(projectIds[0],
+                    billingAccountIds[0], customerIds[0], categoryIds, startDate, endDate);
+
+            setResult(generateVolumeViewData(volumeViewData, categoryIds,
+                    formData.getContestStatus(), startDate, endDate, projectCategories));
+
             return;
         }
 
@@ -1161,6 +1214,168 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
             }
         }
     }
+
+    /**
+     * Generates the all the needed data for volume view.
+     *
+     * @param data the data returned from query.
+     * @param categoryIds the ids of project categories.
+     * @param statusIds the ids of the contest status.
+     * @param startDate the start date of the volume view.
+     * @param endDate the end date of the volume view.
+     * @param projectCategories the project categories mapping.
+     * @return the generated map data.
+     * @since 2.0
+     */
+    private Map<String, Object> generateVolumeViewData(List<EnterpriseDashboardVolumeViewDTO> data, long[] categoryIds, long[] statusIds,
+                                                            Date startDate, Date endDate, Map<Long, String> projectCategories) {
+        Map<String, Object> resultData = new HashMap<String, Object>();
+        Map<String, Object> chartData = new HashMap<String, Object>();
+
+        List<String> chartColumns = new ArrayList<String>();
+        chartColumns.add("date");
+
+        for (long cid : categoryIds) {
+            chartColumns.add(projectCategories.get(Long.valueOf(cid)));
+        }
+
+        List<Map<String, Object>> monthData = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> quarterData = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> yearData = new ArrayList<Map<String, Object>>();
+        Map<String, Map<String, Object>> hashMonthData = new HashMap<String, Map<String, Object>>();
+        Map<String, Map<String, Object>> hashQuarterData = new HashMap<String, Map<String, Object>>();
+        Map<String, Map<String, Object>> hashYearData = new HashMap<String, Map<String, Object>>();
+
+        // initialize the month data map
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(startDate);
+        startCalendar.set(Calendar.DATE, 1);
+        int startMonth = startCalendar.get(Calendar.MONTH);
+        int startYear = startCalendar.get(Calendar.YEAR);
+        int startMonthCount = startMonth + startYear * 12;
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(endDate);
+        endCalendar.set(Calendar.DATE, 1);
+        int endMonth = endCalendar.get(Calendar.MONTH);
+        int endYear = endCalendar.get(Calendar.YEAR);
+        int endMonthCount = endMonth + endYear * 12;
+
+        // initialize the months, quarters , year data list first
+        for(int k = startMonthCount; k <= endMonthCount; ++k) {
+            Date currentMonth = startCalendar.getTime();
+            String monthLabel = getMonthLabel(currentMonth);
+            String quarterLabel = getQuarterLabel(currentMonth);
+            String yearLabel = getYearLabel(currentMonth);
+
+
+            if (!hashMonthData.containsKey(monthLabel)) {
+                Map<String, Object> m = new HashMap<String, Object>();
+                m.put("date", monthLabel);
+                for (long cid : categoryIds) {
+                    String cname = projectCategories.get(cid);
+                    m.put(cname, 0);
+                }
+                monthData.add(m);
+                hashMonthData.put(monthLabel, m);
+            }
+
+            if (!hashQuarterData.containsKey(quarterLabel)) {
+                Map<String, Object> q = new HashMap<String, Object>();
+                q.put("date", quarterLabel);
+                for (long cid : categoryIds) {
+                    String cname = projectCategories.get(cid);
+                    q.put(cname, 0);
+                }
+                quarterData.add(q);
+                hashQuarterData.put(quarterLabel, q);
+            }
+
+            if (!hashYearData.containsKey(yearLabel)) {
+
+                Map<String, Object> y = new HashMap<String, Object>();
+
+                for (long cid : categoryIds) {
+                    String cname = projectCategories.get(cid);
+                    y.put(cname, 0);
+                }
+
+                y.put("date", yearLabel);
+
+                yearData.add(y);
+                hashYearData.put(yearLabel, y);
+            }
+
+
+            startCalendar.add(Calendar.MONTH, 1);
+        }
+
+        Map<String, Map<String, Object>> summaryData = new HashMap<String, Map<String, Object>>();
+
+        // initialize the summary data
+        for (long cid : categoryIds) {
+            Map<String, Object> categorySummary = new HashMap<String, Object>();
+            categorySummary.put("totalCompleted", 0);
+            categorySummary.put("totalFailed", 0);
+            summaryData.put(String.valueOf(cid), categorySummary);
+        }
+
+        // iterate through and volume data and generate statistics for chart (3 time dimensions)
+        for(EnterpriseDashboardVolumeViewDTO volumeData : data) {
+            Date statisticDate = volumeData.getStatisticDate();
+            String monthLabel = getMonthLabel(statisticDate);
+            String quarterLabel = getQuarterLabel(statisticDate);
+            String yearLabel = getYearLabel(statisticDate);
+
+            String category = projectCategories.get(volumeData.getContestCategoryId());
+            Map<String, Object> categorySummary = summaryData.get(String.valueOf(volumeData.getContestCategoryId()));
+
+            Map<String, Object> monthStat = hashMonthData.get(monthLabel);
+            Map<String, Object> quarterStat = hashQuarterData.get(quarterLabel);
+            Map<String, Object> yearStat = hashYearData.get(yearLabel);
+
+            int count = 0;
+            // check the status Ids
+            for(long statusId : statusIds) {
+                if (statusId == 0L) {
+                    count += volumeData.getFailedContestsNumber();
+                } else if (statusId == 1L) {
+                    count += volumeData.getCompletedContestsNumber();
+                }
+            }
+
+            // summary
+            categorySummary.put("totalCompleted", (Integer)(categorySummary.get("totalCompleted")) + volumeData.getCompletedContestsNumber());
+            categorySummary.put("totalFailed", (Integer)(categorySummary.get("totalFailed")) + volumeData.getFailedContestsNumber());
+
+            monthStat.put(category, (Integer)monthStat.get(category) + count);
+            quarterStat.put(category, (Integer)quarterStat.get(category) + count);
+            yearStat.put(category, (Integer)yearStat.get(category) + count);
+        }
+
+
+        // calculate the average
+        double countOfMonth = monthData.size();
+        for(Map<String, Object> csummary : summaryData.values()) {
+            csummary.put("AvgCompleted", (Integer) (csummary.get("totalCompleted")) / countOfMonth);
+            csummary.put("AvgFailed", (Integer) (csummary.get("totalFailed")) / countOfMonth);
+        }
+
+        chartData.put("columns", chartColumns);
+        chartData.put("month", monthData);
+        chartData.put("quarter", quarterData);
+        chartData.put("year", yearData);
+        resultData.put("volumeChartData", chartData);
+        resultData.put("volumeSummaryData", summaryData);
+
+        DateFormat dateFormat1 = new SimpleDateFormat("MM/dd/yyyy");
+
+        resultData.put("startDate", dateFormat1.format(startDate));
+        resultData.put("endDate", dateFormat1.format(endDate));
+
+        return resultData;
+    }
+
 
     /**
      * <p>Converts the specified list of audible entities to mappings from IDs to entity names.</p>

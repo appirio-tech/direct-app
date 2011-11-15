@@ -325,7 +325,7 @@ function createDraftContestRequestForPresentationProject(projectName) {
     var amount = 150.0;
     projectHeader.setFirstPlaceCost(amount);
     // set all prize to 0 except first place cost
-    projectHeader.setSecondPlaceCost(0);
+    projectHeader.setSecondPlaceCost(75.0);
     projectHeader.setReviewCost(0);
     projectHeader.setReliabilityBonusCost(0);
     projectHeader.setDRPoints(0);

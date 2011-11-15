@@ -27,3 +27,10 @@ height: 1%;
 .appositeContainer .registrationModule .statusP .helpBtn:visited{ top:-2px; }
 .appositeContainer .registrationModule .tooltipContainer{ top:-36px; }
 /* end */
+
+.comparisonView .summary .tabsContent,.volumeView .summary .tabsContent{
+    clear:none;
+}
+.graphArea .visualization .chartWrapper{
+
+}

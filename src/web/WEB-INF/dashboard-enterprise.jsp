@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, tangzx, flexme, Veve
+  - Author: isv, tangzx, flexme, Veve, GreatKevin
   -
   - Version: 1.0.2 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
@@ -17,6 +17,9 @@
   -
   - Version 1.1 - Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1 Change Note
   - Add the new summary panel for chart view and table view.
+  -
+  - Version 2.0 - Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly Change Note
+  - Add the volume view.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -32,7 +35,9 @@
     <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=208746" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
-
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css"/>
+    <![endif]-->
     <!-- load the data for Charts -->
     <script type="text/javascript">
         var chartData =
@@ -148,13 +153,13 @@
         
     </script>
     <!-- google visualization -->
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart.js?v=207840"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=204700"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart-range.js?v=204700"></script>
     <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
-	<script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
 </head>
 
 <body id="page">
@@ -230,6 +235,8 @@
                                 <div class="btnArea">
                                     <a href="javascript:" class="active btnGraph"></a>
                                     <a href="javascript:" class="btnTable"></a>
+                                    <a class="btnView" href="javascript:;"></a>
+                                    <a class="btnCompare" href="javascript:;"></a>
                                 </div>
                             </div>
 
@@ -1743,7 +1750,7 @@
                                                                         <td class="noBT" rowspan="2"><strong>Project</strong></td>
                                                                         <td class="noBT" rowspan="2"><strong>Contest Name</strong></td>
                                                                         <td class="noBT" rowspan="2">Contest Type</td>
-                                                                        <td class="noBT" colspan="2"><strong>FullFillment</strong></td>
+                                                                        <td class="noBT" colspan="2"><strong>Fulfillment</strong></td>
                                                                         <td class="noBT" colspan="2"><strong>Member Cost</strong></td>
                                                                         <td class="noBT" colspan="2"><strong>Duration</strong> (Days)</td>
                                                                     </tr>
@@ -1751,7 +1758,7 @@
                                                                         <td>Contest</td>
                                                                         <td>Market Avg</td>
                                                                         <td>Contest<br/><a href="javascript:void(0)" class="contestDlink">(Breakdown)</a></td>
-                                                                        <td>Market Avg <br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</td>
+                                                                        <td>Market Avg <br/><a href="javascript:void(0)" class="marketDlink">(Breakdown)</a></td>
                                                                         <td>Contest</td>
                                                                         <td>Market Avg</td>
                                                                     </tr>
@@ -1832,6 +1839,156 @@
                                 </div>
                                 <!-- End .visualization -->
                                 </div>
+
+                                <div class="volumeView">
+									<div class="summary">
+									<span class="date">Date :
+                                        <span id="volumeStartDateLabel"><fmt:formatDate value="${startDate}" pattern="MMM dd,yyyy"/></span> - <span id="volumeEndDateLabel"><fmt:formatDate value="${endDate}" pattern="MMM dd,yyyy"/></span></span>
+										<ul class="tabs">
+											<li><a href="javascript:;">Contest Volume Summary</a></li>
+                                            <span class="zoomMessage" id="volumeZoomMessage"></span>
+										</ul>
+                                        <div class="tabsContent">
+                                            <table id="volumeViewSummaryTable" cellpadding="0" cellspacing="0">
+                                                <col width="110"/>
+
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="fieldName">
+
+                                                              <span class="newTooltips">
+                                                                  <span class="tipT"> Avg. Completed</span>
+                                                                  <span class="tipC hide">Average number of completed contest per month in the specified period</span>
+                                                              </span>
+
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="fieldName">
+
+                                                              <span class="newTooltips">
+                                                                  <span class="tipT"> Avg. Failed</span>
+                                                                  <span class="tipC hide">Average number of failed contest per month in the specified period</span>
+                                                              </span>
+
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="fieldName">
+
+                                                              <span class="newTooltips">
+                                                                  <span class="tipT">Total Completed</span>
+                                                                  <span class="tipC hide">Total number of completed contest in the specified period</span>
+                                                              </span>
+
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="fieldName">
+                                                              <span class="newTooltips">
+                                                                  <span class="tipT">Total Failed</span>
+                                                                  <span class="tipC hide">Total number of failed contest in the specified period</span>
+                                                              </span>
+
+                                                    </td>
+
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+										<!-- End .tabsContent -->
+									</div>
+
+                                    <s:form action="dashboardEnterprise" namespace="/" id="volumeViewForm"
+                                            method="get">
+                                    <input type="hidden" id="volumeViewZoomType" value="" name="zoomType">
+									<!-- End .summary -->
+									<div class="dateRange"> <strong>Zoom</strong> :
+                                        <a href="MONTH" class="zoomLink">1 Month</a> &nbsp;
+                                        <a href="QUARTER" class="zoomLink">3 Months</a> &nbsp;
+                                        <a href="HALF_OF_THE_YEAR" class="zoomLink">6 Months</a> &nbsp;
+                                        <a href="YEAR" class="zoomLink">YTD</a> &nbsp; </div>
+
+									<div class="viewChartWrapper">
+										<div id="viewChart"></div>
+									</div>
+									<!-- End .viewChartWrapper -->
+									<div class="filterLinkArea">
+										<a class="fiterButton" href="javascript:;">Filters</a>
+										<div class="clear"></div>
+										<div class="filterArea">
+											<div class="filterProject">
+
+                                                <span class="label">Customer Name</span>
+
+												<s:select list="viewData.clientAccounts" id="volumeFormData.customerIds"
+                                                                      name="formData.customerIds" size="1"/>
+
+												<span class="label">Contest Result</span>
+												<select class="contestResult multiselect" multiple="multiple" name="formData.contestStatus" id="formData.contestStatus">
+													<option value="1" selected="selected">Completed</option>
+													<option value="0" selected="selected">Failed</option>
+												</select>
+											</div>
+											<div class="firstRow">
+												<div class="datePicker">
+													<div><span class="label">Start: </span>
+														<s:textfield name="formData.startDate" readonly="true"
+                                                                         id="startDateVolumeView"
+                                                                         cssClass="text date-pick"/>
+													</div>
+													<div class="right"><span class="label">End: </span>
+														<s:textfield name="formData.endDate" readonly="true"
+                                                                         id="endDateVolumeView" cssClass="text date-pick"/>
+													</div>
+												</div>
+												<div class="timeDimension"> <strong>Group By</strong>
+													<select>
+														<option value="month" selected="selected">Month</option>
+														<option value="quarter">Quarter</option>
+														<option value="year">Year</option>
+													</select>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<!-- End .firstRow -->
+											<div class="secondRow">
+												<div class="filterContest"> <a class="button6 applyButton" href="javascript:;"> <span class="left"> <span class="right">Apply</span> </span> </a>
+													<div class="columns contestType"> <strong>Contest Type</strong>
+														<s:select list="viewData.projectCategories" multiple="true"
+                                                                      cssClass="multiselect"
+                                                                      id="volumeFormData.projectCategoryIds"
+                                                                      name="formData.projectCategoryIds" size="5"/>
+													</div>
+													<div class="columns billing"> <strong>Billing Account</strong>
+														<s:select list="viewData.clientBillingProjects"
+                                                                      id="volumeFormData.billingAccountIds"
+                                                                      name="formData.billingAccountIds" size="1"/>
+													</div>
+													<div class="columns project"> <strong>Project Name</strong>
+														<s:select list="viewData.projectsLookupMap" name="formData.projectIds"
+                                                              id="volumeFormData.projectIds"/>
+													</div>
+													<div class="clear"></div>
+												</div>
+												<!-- End .filterContest -->
+											</div>
+											<!-- End .secondRow -->
+										</div>
+										<!-- End .filterArea -->
+									</div>
+									<!-- End .filterLinkArea -->
+
+                                    </s:form>
+								</div>
 
                             </div>
                         </div>
@@ -1978,8 +2135,30 @@
     <div id="modalBackground"></div>
     <div id="new-modal"></div>
     <span class="hide"><img src="../images/preloader-loading.gif" alt="Loading" /></span>
-</div>
 
+
+</div>
+ <div class="tooltipBox2" id="tooltipBox"><span class="arrow"></span>
+
+        <div class="tooltipHeader">
+            <div class="tooltipHeaderRight">
+                <div class="tooltipHeaderCenter">
+                    <h2>Avg. Fulfillment</h2>
+                </div>
+            </div>
+        </div>
+        <!-- End .tooltipHeader -->
+        <div class="tooltipContent">
+            <p>count of contests of the customer in the chosen start /end date</p>
+        </div>
+        <!-- End .tooltipContent -->
+        <div class="tooltipFooter">
+            <div class="tooltipFooterRight">
+                <div class="tooltipFooterCenter"></div>
+            </div>
+        </div>
+        <!-- End .tooltipFooter -->
+</div>
 </body>
 <!-- End #page -->
 

@@ -922,7 +922,7 @@ function validateFieldsRoundSection() {
 	var errors = [];
 
     if (startDate < getServerTime()) {
-        errors.push('Start Date must be in future.');
+        // errors.push('Start Date must be in future.');
     }
     if (isMultiRound && milestoneDateHours == 0) {
 		if (mainWidget.competitionType == "STUDIO") {

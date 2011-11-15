@@ -5,6 +5,9 @@
  *
  * - (Release Assembly - TC Direct UI Improvement Assembly 3) changes:
  * - adjust the height of the filter panel dropdown filter -  customer and billing account
+ *
+ * - Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly change notes:
+ * - Add css styles for the volume view
  */
 .chartCollapse a.expand{
   display:inline-block;
@@ -27,7 +30,7 @@
 */
 	float:left;
 	padding:5px 5px 5px 10px;
-	margin:10px 10px 10px 10px;
+	margin:10px 40px 10px 10px;
 	height:35px;
 }
 
@@ -46,7 +49,7 @@
 /* collapse */
 .chartCollapse a.collapse{
  background:transparent url(../images/icon-collapse.png) no-repeat scroll;
- background-position:0px 5px;
+ background-position:0px 0px;
 }
 
 .chartSummary{
@@ -111,8 +114,7 @@
 .btnArea{
 	float:right;
 	margin:5px;
-	background:red;
-}	
+}
 
 td.alignLeft{
 	text-align:left;
@@ -144,15 +146,23 @@ td.alignLeft{
 
 .btnArea a.active{ background-position:bottom left; }
 
-.chartWrapper{
-	border:1px solid red;
-	height:250px;
+.graphArea .visualization .chartWrapper{
+    overflow:auto;
+	padding:10px 0;
+    border:1px solid #C6C7C8;
+    border-bottom:0;
+    border-top:0;
+    height:100%;
+    overflow-y:hidden;
 }
 
 #chart_div{
+    /*
 	height:230px;
 	padding-top:10px;
-	margin-bottom:10px;
+	margin-bottom:10px;*/
+    border:0;
+    position:static !important;
 }
 
 a.fiterButton{
@@ -606,7 +616,7 @@ td.fontGreen{
     font-size: 12px;
 }
 
-.summaryPanel .zoomMessage {
+.zoomMessage {
     position: absolute;
     right: 50%;
     top: 4px;
@@ -936,4 +946,440 @@ td.fontGreen{
     background-position: left -21px;
 }
 
+.volumeView{
+	border:1px solid #aaacae;
+	border-top:none;
+	/* padding:10px 8px 16px; */
+	padding:0 0 16px;
+}
+	.volumeView .summary{
+		margin-bottom:13px;
+		position:relative;
+	}
+		.volumeView .summary .date{
+			position:absolute;
+			top:4px;
+			right:6px;
+			color:#000000;
+			font-size:12px;
+		}
+		.volumeView .summary .tabs{
+			float:left;
+			width:100%;
+			background:url(../images/bg-tabs-customer.png) left bottom repeat-x;
+			list-style:none;
+			margin:0;
+			padding:0;
+		}
+			.volumeView .summary .tabs li{
+				float:left;
+			}
+				.volumeView .summary .tabs li a,
+				.volumeView .summary .tabs li a:visited{
+					display:block;
+					border:1px solid #cad9e5;
+					border-left:none;
+					background:#e1f2ff;
+					color:#2882ff;
+					border-bottom:none;
+					padding:5px 10px;
+					font-size:11px;
+					font-weight:bold;
+					text-decoration:none;
+				}
+		.volumeView .summary .tabsContent{
+			clear:left;
+			font-size:12px;
+			border-bottom:1px solid #cad9e5;
+			background:#e1f2ff;
+			padding:9px 0 0px;
+            overflow:auto;
+            height:auto;
+        }
+			.volumeView .summary .tabsContent table{
+				width:100%;
+				color:#2882ff;
+            }
+			.volumeView .summary .tabsContent table th{
+				padding-bottom:1px;
+			}
+                .volumeView .summary .tabsContent table th span.short{
+                    display:none;
+                }
+			.volumeView .summary .tabsContent table td{
+				padding:4px 0 3px;
+				text-align:center;
+			}
+			.volumeView .summary .tabsContent table tr.odd td{
+				background:#fff;
+			}
+			.volumeView .summary .tabsContent table .fieldName{
+				padding-left:9px;
+				color:#333333;
+				text-align:left;
+				cursor:pointer;
+				font-weight:bold;
+			}
+
+.volumeView .dateRange {
+    margin: 0;
+    padding: 0 0 0 9px;
+}
+
+.volumeView .viewChartWrapper {
+    width: 100%;
+    overflow: auto;
+    height: auto;
+    overflow-y:hidden;
+}
+
+#viewChart {
+    position:static !important;
+}
+        .volumeView .filterLinkArea{
+			border:none;
+			margin:0;
+			padding:0;
+			width:auto;
+			overflow:hidden;
+		}
+			.volumeView .filterLinkArea .fiterButton{
+				margin:0 13px 0 0;
+				padding:0 0 0 15px;
+			}
+			.volumeView .filterLinkArea .filterArea{
+				padding-top:6px;
+			}
+                .volumeView .filterLinkArea .filterArea .filterProject .multiSelect,.volumeView .filterLinkArea .filterArea .filterProject .multiSelectOptions {
+                    font-size:12px;
+                }
+				.volumeView .filterLinkArea .filterArea .filterProject{
+					font-size:11px;
+					/* width:67.8%;
+					min-width:607px; */
+					padding:10px 0 6px 11px;
+				}
+					.volumeView .filterLinkArea .filterArea select{ float:left; }
+					.volumeView .filterLinkArea .filterArea .filterProject .customerName{
+						width:191px;
+						margin-right:40px;
+					}
+					.volumeView .filterLinkArea .filterArea .filterProject .contestResult{ width:147px; }
+				.volumeView .filterLinkArea .filterArea .firstRow{ /* width:617px; */ }
+					.volumeView .filterLinkArea .filterArea .firstRow .datePicker{
+						/* width:30%;
+						min-width:269px; */
+						width:39%;
+						min-width:300px;
+						height:auto;
+						margin:5px 5px 0 0;
+						padding:16px 0 18px 11px;
+					}
+					.datePicker div.right{ margin:0; }
+						.volumeView .filterLinkArea .filterArea .firstRow .datePicker input{
+							position:relative;
+							top:2px;
+							border:1px solid #a9acae;
+							width:74px;
+							height:15px;
+							line-height:15px;
+						}
+						.volumeView .filterLinkArea .filterArea .firstRow .datePicker span.label{
+							padding:4px 0 0 0;
+							width:30px;
+							font-size:11px;
+						}
+					.volumeView .filterLinkArea .filterArea .firstRow .timeDimension{
+						/* width:30%;
+						min-width:219px; */
+						width:10.5%;
+						min-width:90px;
+						margin:5px 0 0 0;
+						padding:8px 0 11px 14px;
+					}
+						.volumeView .filterLinkArea .filterArea .firstRow .timeDimension strong{
+							display:block;
+							font-size:11px;
+							margin-bottom:4px;
+						}
+						.volumeView .filterLinkArea .filterArea .firstRow .timeDimension select{
+							border:1px solid #a9acae;
+                            width: 80px;
+						}
+				.volumeView .filterLinkArea .filterArea .secondRow{
+					width:100%;
+					margin-top:6px;
+				}
+					.volumeView .filterLinkArea .filterArea .secondRow .filterContest{
+						padding:0;
+						height:auto;
+					}
+						.volumeView .filterLinkArea .filterArea .secondRow .filterContest .columns{
+							width:auto;
+							height:48px;
+							padding:9px 12px 0 12px;
+						}
+						.volumeView .filterLinkArea .filterArea .secondRow .filterContest .columns.contestType{
+							width:19.7%;
+							min-width:156px;
+							margin-right:5px;
+						}
+						.volumeView .filterLinkArea .filterArea .secondRow .filterContest .columns.billing{
+							width:20.1%;
+							min-width:161px;
+							margin-right:5px;
+						}
+						.volumeView .filterLinkArea .filterArea .secondRow .filterContest .columns.project{
+							width:20%;
+							min-width:150px;
+							margin-right:0;
+						}
+							.volumeView .filterLinkArea .filterArea .secondRow .filterContest .columns strong{
+								display:block;
+								font-size:11px;
+								margin-bottom:3px;
+							}
+							.volumeView .filterLinkArea .filterArea .secondRow .filterContest .columns select{ width:100%; }
+							.volumeView .filterLinkArea .filterArea .multiSelect{
+								margin:0;
+								padding:0;
+							}
+							.volumeView .filterLinkArea .contestType .multiSelect{ width:100%; }
+						.volumeView .filterLinkArea .filterArea .secondRow .filterContest .applyButton{
+							margin-top:21px;
+						}
+
+/* .comparisonView */
+.comparisonView{
+	border:1px solid #aaacae;
+	border-top:none;
+	/* padding:10px 8px 16px; */
+	padding:0 0 16px;
+}
+	.comparisonView .summary{
+		margin-bottom:13px;
+		position:relative;
+	}
+		.comparisonView .summary .date{
+			position:absolute;
+			top:5px;
+			right:40%;
+			color:#000000;
+			font-size:12px;
+		}
+		.comparisonView .summary .tabs{
+			float:left;
+			width:100%;
+			background:url(../images/bg-tabs-customer.png) left bottom repeat-x;
+			list-style:none;
+			margin:0;
+			padding:0;
+		}
+			.comparisonView .summary .tabs li{
+				float:left;
+			}
+				.comparisonView .summary .tabs li a,
+				.comparisonView .summary .tabs li a:visited{
+					display:block;
+					border:1px solid #cad9e5;
+					border-left:none;
+					background:#e1f2ff;
+					color:#2882ff;
+					border-bottom:none;
+					padding:5px 10px;
+					font-size:11px;
+					font-weight:bold;
+					text-decoration:none;
+				}
+		.comparisonView .summary .tabsContent{
+			clear:left;
+			font-size:12px;
+			border-bottom:1px solid #cad9e5;
+			background:#e1f2ff;
+			padding:9px 0 0px;
+            overflow:auto;
+        }
+			.comparisonView .summary .tabsContent table{
+				width:100%;
+				color:#2882ff;
+			}
+			.comparisonView .summary .tabsContent table th{
+				padding-bottom:1px;
+			}
+                .comparisonView .summary .tabsContent table th span.short{
+                    display:none;
+                }
+			.comparisonView .summary .tabsContent table td{
+				padding:4px 0 3px;
+				text-align:center;
+			}
+			.comparisonView .summary .tabsContent table tr.odd td{
+				background:#fff;
+			}
+			.comparisonView .summary .tabsContent table .fieldName{
+				padding-left:9px;
+				color:#333333;
+				text-align:left;
+				cursor:pointer;
+			}
+		.comparisonView .dateRange{ margin:0; padding:0 0 0 9px; }
+		.comparisonView .viewChartWrapper{ width:100%; overflow:auto;height:auto;}
+        #comparisonViewChart{
+
+        }
+        .comparisonView .filterProject{
+             padding-right:0;
+            min-width:612px;
+        }
+        .comparisonView .filterLinkArea{
+			border:none;
+			margin:0;
+			padding:0;
+			width:auto;
+			overflow:hidden;
+            padding-top:6px;
+        }
+			.comparisonView .filterLinkArea .fiterButton{
+				margin:0 13px 0 0;
+				padding:0 0 0 15px;
+			}
+			.comparisonView .filterLinkArea .filterArea{
+				padding-top:6px;
+			}
+                .comparisonView .filterLinkArea .filterArea .filterProject .multiSelect,.comparisonView .filterLinkArea .filterArea .filterProject .multiSelectOptions {
+                    font-size:12px;
+                }
+				.comparisonView .filterLinkArea .filterArea .filterProject{
+					font-size:11px;
+					/* width:67.8%;
+					min-width:607px; */
+					padding:10px 0 6px 11px;
+                    overflow:hidden;
+                }
+					.comparisonView .filterLinkArea .filterArea select{ float:left; }
+					.comparisonView .filterLinkArea .filterArea .multiSelect{ float:left; margin-right:16px;}
+					.comparisonView .filterLinkArea .filterArea .filterProject .customerName{
+						width:191px;
+						margin-right:40px;
+					}
+					.comparisonView .filterLinkArea .filterArea .filterProject .comparisonType{ width:147px; }
+				.comparisonView .filterLinkArea .filterArea .firstRow{ /* width:617px; */ }
+					.comparisonView .filterLinkArea .filterArea .firstRow .datePicker{
+						/* width:30%;
+						min-width:269px; */
+						width:34%;
+						min-width:300px;
+						height:auto;
+						margin:5px 5px 0 0;
+						padding:16px 0 18px 11px;
+					}
+					.datePicker div.right{ margin:0; }
+						.comparisonView .filterLinkArea .filterArea .firstRow .datePicker input{
+							position:relative;
+							top:2px;
+							border:1px solid #a9acae;
+							width:74px;
+							height:15px;
+							line-height:15px;
+						}
+						.comparisonView .filterLinkArea .filterArea .firstRow .datePicker span.label{
+							padding:4px 0 0 0;
+							width:30px;
+							font-size:11px;
+						}
+					.comparisonView .filterLinkArea .filterArea .firstRow .timeDimension{
+						/* width:30%;
+						min-width:219px; */
+						width:11%;
+						min-width:90px;
+						margin:5px 0 0 0;
+						padding:8px 0 11px 14px;
+					}
+						.comparisonView .filterLinkArea .filterArea .firstRow .timeDimension strong{
+							display:block;
+							font-size:11px;
+							margin-bottom:4px;
+						}
+						.comparisonView .filterLinkArea .filterArea .firstRow .timeDimension select{
+							border:1px solid #a9acae;
+                            width:80px;
+                        }
+						.comparisonView .filterLinkArea .filterArea .firstRow .contestType{
+							width:20%;
+							min-width:175px;
+							margin: 5px 5px 0 0;
+                            float:left;
+                             height: 45px;
+                            padding: 9px 12px 0;
+                            background-color:#F5F5F5;
+                            font-size:12px;
+                        }
+                            .comparisonView .filterLinkArea .filterArea .firstRow .contestType select{
+                                border:1px solid #a9acae;
+                                width:165px;
+                            }
+                            .comparisonView .filterLinkArea .filterArea .firstRow .contestType strong{
+                                display: block;
+                                font-size: 11px;
+                                margin-bottom: 3px;
+                            }
+                            .comparisonView .filterLinkArea .filterArea .firstRow .contestType  .multiSelect{
+                                margin: 0;
+                                padding: 0;
+                            }
+
+                        .comparisonView .filterLinkArea .filterArea .firstRow  .applyButton{
+							margin-top:21px;
+                            margin-right:20px;
+                            float:right;
+                        }
+        .comparisonView .green{
+            color:#68a71d;
+        }
+/*
+.newTooltips{
+    margin-bottom:2px;
+    display:inline-block;
+}*/
+
+.volumeView .filterProject select {
+    border: 1px solid #A9ACAE;
+    font-size: 12px;
+    margin-right: 20px;
+    width: 200px;
+}
+
+.tooltipBox2 {
+	position:absolute;
+	width:180px;
+	/*left:50%;
+	bottom:19px;
+	margin-left:-90px;*/
+	z-index: 999;
+	display: none;
+	color: #000;
+	background-color: transparent;
+	text-align:left;
+}
+
+.tooltipBox2 .tooltipContent {
+    background-color: #FFFFFD;
+    border-left: 1px solid #BDBDBD;
+    border-right: 1px solid #BDBDBD;
+    color: #333333;
+    font-size: 12px;
+    padding: 0 7px;
+}
+
+.tooltipBox2 SPAN.arrow {
+    background: url("../images/popup_new_arrow.png") no-repeat scroll 0 0 transparent;
+    bottom: -4px;
+    display: block;
+    height: 5px;
+    left: 70px;
+    margin-left: -3px;
+    position: absolute;
+    top: auto;
+    width: 7px;
+}
 /* end */

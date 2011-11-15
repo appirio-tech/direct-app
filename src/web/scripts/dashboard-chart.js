@@ -6,8 +6,12 @@
  * - Add the codes to fill in data for the new summary panel
  * - Add ajax loading indicator of the chart view drill-in operation
  * - Change the AJAX loading indicator for the contest breakdown and market breakdown view
+ *
  * - Version 1.2.1 (Release Assembly - TC Direct UI Improvement Assembly 3)
  * - Add codes to set the default 'Group By' to week when the user zooms to week
+ *
+ * - Version 1.3 (Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly) change notes:
+ * - Move the handler of chart view button here and add the method to rerender the chart
  */
 
 // define google visualization charts
@@ -340,6 +344,33 @@ function drawChart() {
         renderChart();
     });
 
+    /**
+     * Handles the chart view button
+     */
+    $('a.btnGraph').click(function() {
+        $('.btnArea a').removeClass('active');
+        $(this).addClass('active');
+
+        $('.chartCollapse a.expand').html('Chart View').removeClass("collapse");
+
+        $('a.fiterButton').css('background-position', 'bottom left');
+
+        $('.filterArea,#firstTableDataArea').hide();
+        $("#dynamicTableView").addClass("hide");
+        $(".chartContent").show();
+
+        $('.graphArea a.fiterButton').css('background-position', 'bottom left');
+
+        $('.filterArea, .tableView').hide();
+        $(".volumeView,.comparisonView").hide();
+        $(".summaryPanel").show();
+        $('.graphArea .top,.graphArea .chartWrapper, .graphArea a.fiterButton, .graphArea .filterLinkArea').show();
+        $(".graphArea").show();
+        parseChartData();
+        renderChart();
+    });
+
+
     // window re-size - redraw the chart to adjust the page size
     $(window).resize(function(){
         width = $(".visualization").width();
@@ -350,7 +381,7 @@ function drawChart() {
 
     $("#timeDimension").trigger("change");
     
-    $('.zoomLink').click(function() {
+    $('.graphArea .zoomLink').click(function() {
         var value = $(this).attr('href');
         $('#zoomTypeInput').val(value);
         var formData = $('#EnterpriseDashboardForm').serialize();
@@ -442,17 +473,22 @@ function drawChart() {
             $('#NoEnoughStats').show();
         }
     }
+
+    /** Table View **/
     $('a.btnTable').click(function() {
         $('.btnArea a').removeClass('active');
         $(this).addClass('active');
         $('.visualization').addClass('noBorder');
         $('#firstTableDataArea').show();
+        $('.graphArea').show();
         $('.chartCollapse a.expand').html('Table View');
-        $('.top,.chartWrapper,.tableResultFilter').hide();
+        $('.top,.chartWrapper,.tableResultFilter, .volumeView').hide();
         $("#dynamicTableView").addClass("hide");
+        $(".summaryPanel,.graphArea .filterLinkArea,.graphArea .filterArea").show();
         loadNormalTableData("dashboardEnterpriseTableViewCall");
         $('#firstDashboardTableBody table').css('width', $('#firstDashboardTableHeader table').width());
     });
+
 
     function loadNormalTableData(formActionUrl) {
         var formData = $('#EnterpriseDashboardForm').serialize();

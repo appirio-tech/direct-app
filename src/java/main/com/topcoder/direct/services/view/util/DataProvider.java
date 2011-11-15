@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.util;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.copilot.model.CopilotProject;
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.*;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
@@ -18,6 +19,7 @@ import com.topcoder.direct.services.view.dto.dashboard.participationreport.Parti
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestDetailDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
+import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
 import com.topcoder.direct.services.view.dto.project.*;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
@@ -308,8 +310,15 @@ import java.util.Map.Entry;
  * </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, TCSASSEMBER
- * @version 2.9.1
+ *
+ * <p>
+ * Version 3.0 (Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly) change notes:
+ *   <ol>
+ *     <li>Added {@link #getEnterpriseDashboardVolumeView(long, long, long, long[], java.util.Date, java.util.Date)} .</li>
+ *   </ol>
+ * </p>
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
+ * @version 3.0
  * @since 1.0
  */
 public class DataProvider {
@@ -2180,6 +2189,80 @@ public class DataProvider {
         }
 
         return data;
+    }
+
+
+    /**
+     * Gets the volume view data for enterprise dashboard volume view.
+     *
+     * @param projectId the tc direct project id.
+     * @param billingProjectId the billing project id.
+     * @param clientId the client id.
+     * @param projectCategoryIds the ids of project categories.
+     * @param startDate the start date of the view
+     * @param endDate the end date of the view
+     * @return the volume view data.
+     * @throws Exception if there is error.
+     * @since 3.0
+     */
+    public static List<EnterpriseDashboardVolumeViewDTO> getEnterpriseDashboardVolumeView(long projectId, long billingProjectId, long clientId, long[] projectCategoryIds, Date startDate, Date endDate) throws Exception {
+        List<EnterpriseDashboardVolumeViewDTO> result = new ArrayList<EnterpriseDashboardVolumeViewDTO>();
+
+        // argument checking
+        if (projectId < 0 || billingProjectId < 0 || clientId < 0
+                || projectCategoryIds == null || projectCategoryIds.length == 0) {
+            return result;
+        }
+
+        String queryName = "direct_dashboard_enterprise_volume_view";
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+        String projectCategoryIdsList = concatenate(projectCategoryIds, ", ");
+
+        if(projectId != 0) {
+            request.setProperty("tcdirectid", String.valueOf(projectId));
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+        } else if(billingProjectId != 0) {
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", String.valueOf(billingProjectId));
+            request.setProperty("clientid", "0");
+        } else if(clientId != 0) {
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", String.valueOf(clientId));
+        } else {
+            // check if user is admin first
+            if(!DirectUtils.isTcOperations(DirectStrutsActionsHelper.getTCSubjectFromSession())) {
+                throw new IllegalArgumentException("The client id does not exist");
+            }
+
+            // this will get all the projects' data
+            request.setProperty("tcdirectid", "0");
+            request.setProperty("billingaccountid", "0");
+            request.setProperty("clientid", "0");
+        }
+
+        request.setProperty("pcids", projectCategoryIdsList);
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setContentHandle(queryName);
+
+        final ResultSetContainer resultSetContainer = dataAccess.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            EnterpriseDashboardVolumeViewDTO volumeDTO = new EnterpriseDashboardVolumeViewDTO();
+
+            volumeDTO.setStatisticDate(row.getTimestampItem("stat_date"));
+            volumeDTO.setCompletedContestsNumber(row.getIntItem("completed_contests_number"));
+            volumeDTO.setFailedContestsNumber(row.getIntItem("failed_contests_number"));
+            volumeDTO.setContestCategoryId(row.getLongItem("category_id"));
+
+            result.add(volumeDTO);
+        }
+
+        return result;
     }
 
     /**
