@@ -214,6 +214,11 @@
   <property name="id_generator.path" value="id_generator/${id_generator.version}" />
   <property name="id_generator.jar" value="${tcs_libdir}/${id_generator.path}/${id_generator.jar.name}" />
 
+  <property name="json_object.version" value="1.0.0" />
+  <property name="json_object.jar.name" value="json_object.jar" />
+  <property name="json_object.path" value="json_object/${json_object.version}" />
+  <property name="json_object.jar" value="${tcs_libdir}/${json_object.path}/${json_object.jar.name}" />
+
   <property name="jboss_login_module.version" value="2.1.0" />
   <property name="jboss_login_module.jar.name" value="jboss_login_module.jar" />
   <property name="jboss_login_module.path" value="jboss_login_module/${jboss_login_module.version}" />
@@ -433,7 +438,22 @@
   <property name="team_management_persistence.jar.name" value="team_management_persistence.jar" />
   <property name="team_management_persistence.path" value="team_management_persistence/${team_management_persistence.version}" />
   <property name="team_management_persistence.jar" value="${tcs_libdir}/${team_management_persistence.path}/${team_management_persistence.jar.name}" />
-
+  
+  <property name="topcoder_cockpit_project_metadata_entities.version" value="1.0.0" />
+  <property name="topcoder_cockpit_project_metadata_entities.jar.name" value="topcoder_cockpit_project_metadata_entities.jar" />
+  <property name="topcoder_cockpit_project_metadata_entities.path" value="topcoder_cockpit_project_metadata_entities/${topcoder_cockpit_project_metadata_entities.version}" />
+  <property name="topcoder_cockpit_project_metadata_entities.jar" value="${tcs_libdir}/${topcoder_cockpit_project_metadata_entities.path}/${topcoder_cockpit_project_metadata_entities.jar.name}" />
+    
+  <property name="topcoder_cockpit_project_metadata_services.version" value="1.0.0" />
+  <property name="topcoder_cockpit_project_metadata_services.jar.name" value="topcoder_cockpit_project_metadata_services.jar" />
+  <property name="topcoder_cockpit_project_metadata_services.path" value="topcoder_cockpit_project_metadata_services/${topcoder_cockpit_project_metadata_services.version}" />
+  <property name="topcoder_cockpit_project_metadata_services.jar" value="${tcs_libdir}/${topcoder_cockpit_project_metadata_services.path}/${topcoder_cockpit_project_metadata_services.jar.name}" />
+  
+  <property name="topcoder_commons_utility.version" value="1.0.0" />
+  <property name="topcoder_commons_utility.jar.name" value="topcoder_commons_utility.jar" />
+  <property name="topcoder_commons_utility.path" value="topcoder_commons_utility/${topcoder_commons_utility.version}" />
+  <property name="topcoder_commons_utility.jar" value="${tcs_libdir}/${topcoder_commons_utility.path}/${topcoder_commons_utility.jar.name}" />
+  
   <property name="typesafe_enum.version" value="1.1.0" />
   <property name="typesafe_enum.jar.name" value="typesafe_enum.jar" />
   <property name="typesafe_enum.path" value="typesafe_enum/${typesafe_enum.version}" />
@@ -508,6 +528,9 @@
   <property name="saxon9he.jar" value="${ext_libdir}/saxonhe-9.0.2j/saxon9he.jar" />
   <property name="jboss-cache-jdk50.jar" value="${ext_libdir}/jboss-cache/jboss-cache-jdk50.jar" />
   <property name="jgroups.jar" value="${ext_libdir}/jboss-cache/jgroups.jar" />
+  
+  <property name="ehcache.jar" value="${ext_libdir}/hibernate/ehcache-1.5.0.jar" />
+  <property name="hibernate-jpa.jar" value="${ext_libdir}/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar" />
 
 
   <property name="servlet-api.jar" value="${ext_libdir}/servlet-api/servlet-api.jar" />
@@ -542,6 +565,7 @@
   <property name="spring-context-support.jar" value="${spring_libdir}/spring-context-support.jar" />
   <property name="spring-test.jar" value="${spring_libdir}/spring-test.jar" />
   <property name="spring-tx.jar" value="${spring_libdir}/spring-tx.jar" />
+  <property name="common-annotations.jar" value="${spring_libdir}/common-annotations.jar" />
 
   <!-- EJB/Persistence libraries -->
   <path id="ejb.libs">
@@ -575,6 +599,7 @@
     <pathelement location="${spring-test.jar}" />
     <pathelement location="${spring-tx.jar}" />
     <pathelement location="${spring.jar}" />
+    <pathelement location="${common-annotations.jar}" />
   </path>
 
   <!-- JBoss libraries -->
@@ -659,6 +684,9 @@
     <pathelement location="${cockpit_facade_util.jar}" />
     <pathelement location="${specification_review_service.jar}" />
     <pathelement location="${specification_review_comment_service.jar}" />
+    <pathelement location="${json_object.jar}" />
+    <pathelement location="${topcoder_cockpit_project_metadata_entities.jar}" />
+    <pathelement location="${topcoder_cockpit_project_metadata_services.jar}" />
   </path>
 
   <path id="component.3rdParty-dependencies">

@@ -142,6 +142,10 @@
         <copy file="${configuration_persistence.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${confluence_user_soap_client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${copilot_pool_and_profiles_dao.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${topcoder_cockpit_project_metadata_entities.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${topcoder_cockpit_project_metadata_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${json_object.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+		<copy file="${topcoder_commons_utility.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${data_entitlement.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${data_validation.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${database_abstraction.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -203,6 +207,7 @@
         <copy file="${spring-context-support.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${spring-test.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${spring-tx.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${common-annotations.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-beanutils-1.7.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-collections-3.2.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${commons-fileupload-1.2.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -220,6 +225,9 @@
         <copy file="${xwork-core-2.1.6.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jboss-cache-jdk50.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jgroups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${ehcache.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${hibernate-jpa.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+
 
         <!-- EJB components -->
         <copy file="${catalog_entities.jar}" todir="${build_distdir}" overwrite="true"/>

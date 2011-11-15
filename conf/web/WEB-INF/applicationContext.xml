@@ -15,6 +15,12 @@
 
     <context:property-placeholder location="classpath:app.properties"/>
 
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
     <!-- Services -->
     <bean id="projectServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="remote/ProjectServiceFacadeBean"/>
@@ -556,10 +562,11 @@
         </property>
     </bean>
 
-    <tx:annotation-driven transaction-manager="txManager" />
     <bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+    <tx:annotation-driven transaction-manager="txManager"/>
 
     <bean name="copilotBaseDAO" abstract="true">
         <property name="loggerName" value="copilotBaseDAO"/>
@@ -669,4 +676,85 @@
           class="com.topcoder.direct.services.view.action.project.GetProjectForumsStatusAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+
+    <!-- configuration for the direct project metadata services and key service -->
+
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+    <!-- JPA entity manager factory -->
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceUnitName" value="projectMetadataPersistenceUnit"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="INFORMIX"/>
+            </bean>
+        </property>
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.cache.use_query_cache" value="true"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- metadata key validator -->
+    <bean id="directProjectMetadataKeyValidator"
+          class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataKeyValidatorImpl">
+        <property name="loggerName" value="loggerName"/>
+    </bean>
+
+    <!-- metadata validator -->
+    <bean id="directProjectMetadataValidator"
+          class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataValidatorImpl">
+        <property name="loggerName" value="loggerName"/>
+        <property name="validatorMapping">
+            <map></map>
+        </property>
+        <property name="predefinedKeys">
+            <map>
+                <!-- project techonologies has predefined values -->
+                <entry key="8" value="true"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- direct project metadata service -->
+    <bean id="directProjectMetadataServices"
+          class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataServiceImpl">
+        <property name="loggerName" value="loggerName"/>
+        <property name="directProjectMetadataValidator" ref="directProjectMetadataValidator"/>
+        <property name="auditActionTypeIdMap">
+            <map>
+                <entry key="create" value="1"/>
+                <entry key="update" value="2"/>
+                <entry key="delete" value="3"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- direct project metadata key service -->
+    <bean id="directProjectMetadataKeyService"
+          class="com.topcoder.direct.services.project.metadata.impl.DirectProjectMetadataKeyServiceImpl">
+
+        <property name="loggerName" value="loggerName"/>
+        <property name="directProjectMetadataKeyValidator" ref="directProjectMetadataKeyValidator"/>
+        <property name="auditActionTypeIdMap">
+            <map>
+                <entry key="create" value="1"/>
+                <entry key="update" value="2"/>
+                <entry key="delete" value="3"/>
+            </map>
+        </property>
+    </bean>
+
+     <!-- project metadata action, used for demo only -->
+    <bean id="projectMetadataAction"
+          class="com.topcoder.direct.services.view.action.project.metadata.ProjectMetadataAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="metadataKeyService" ref="directProjectMetadataKeyService"/>
+        <property name="metadataService" ref="directProjectMetadataServices"/>
+    </bean>
+
+
 </beans>

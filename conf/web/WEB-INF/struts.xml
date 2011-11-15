@@ -843,4 +843,52 @@
             <result name="error" type="json" />
         </action>            
     </package>
+
+    <package name="projectMetadata" namespace="/metadata" extends="base">
+
+        <action name="projectMetadata" class="projectMetadataAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result>/WEB-INF/metadata/project-metadata-demo.jsp</result>
+        </action>
+
+        <action name="addProjectMetaData" method="addProjectMetaData" class="projectMetadataAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="getAllProjectMetadata" method="getAllProjectMetadata" class="projectMetadataAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="deleteProjectMetadata" method="deleteProjectMetadata" class="projectMetadataAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="updateProjectMetadata" method="updateProjectMetadata" class="projectMetadataAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="searchProjectByMetadata" method="searchProjectByMetadata" class="projectMetadataAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="addProjectMetadataKey" method="addProjectMetadataKey" class="projectMetadataAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+    </package>
+
 </struts>
