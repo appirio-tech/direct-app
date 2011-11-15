@@ -160,6 +160,17 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="dashboardEnterpriseVolumeView" class="dashboardEnterpriseVolumeView">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+        <action name="zoomEnterpriseDashboardVolumeView" class="zoomEnterpriseDashboardVolumeView">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>

@@ -618,6 +618,20 @@
         <property name="isAJAX" value="true"/>
     </bean>
 
+    <bean id="zoomEnterpriseDashboardVolumeView"
+          class="com.topcoder.direct.services.view.action.dashboard.ZoomEnterpriseDashboardAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="isAJAX" value="true"/>
+        <property name="dashboardViewType" value="volumeView"/>
+    </bean>
+
+     <bean id="dashboardEnterpriseVolumeView"
+          class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="isAJAX" value="true"/>
+        <property name="dashboardViewType" value="volumeView"/>
+    </bean>
+
     <bean id="ajaxEnterpriseDashboardAction"
           class="com.topcoder.direct.services.view.action.dashboard.EnterpriseDashboardAction"
           scope="prototype" parent="baseDirectStrutsAction">
