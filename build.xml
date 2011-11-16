@@ -21,6 +21,7 @@
     <property name="testfiles" value="test_files"/>
     <property name="javadocsdir" value="${docsdir}/javadocs"/>
     <property name="webdir" value="${srcdir}/web"/>
+    <property name="ppt_webdir" value="${srcdir}/ppt_web"/>
     <property name="reports" value="${testlogdir}/reports"/>
 
     <!-- Import the dependencies of this build file -->
@@ -65,6 +66,7 @@
     <!-- NAME FOR .JAR FILES -->
     <property name="component.ear" value="${distfilename}.ear"/>
     <property name="component.war" value="${build_distdir}/${distfilename}.war"/>
+    <property name="ppt.war" value="${build_distdir}/ppt.war"/>
     <property name="component.jar" value="${dist_lib}/${component_path}/${distfilename}.jar"/>
     <property name="javadoc.jar" value="javadocs.jar"/>
     <property name="component.tests.jar" value="${dist_lib}/${distfilename}_tests.jar"/>
@@ -123,7 +125,7 @@
     <property name="temp_dist_ear" value="${build_distdir}/temp_dist_ear"/>
     <property name="ear_shared_libdir" value="${build_distdir}/lib"/>
 
-    <target name="ear" depends="war" description="create the ear tarball for direct application">
+    <target name="ear" depends="war, ppt_war" description="create the ear tarball for direct application">
         <!-- Copy the libraries -->
         <mkdir dir="${build_distdir}"/>
         <mkdir dir="${build_distdir}/lib"/>
@@ -316,6 +318,10 @@
                 <include name="scripts/launch/**/*.*"/>
 				<include name="scripts/scorecard/**/*.*"/>
             </fileset>
+            <fileset dir="${srcdir}/ppt_web">
+                <include name="css/**/*.*"/>
+                <include name="scripts/*.*"/>
+            </fileset>
         </zip>
     </target>
 
@@ -370,6 +376,11 @@
                 <include name="images/**/*"/>
                 <include name="scripts/**/*"/>
             </fileset>
+            <fileset dir="src/ppt_web">
+                <include name="css/**/*"/>
+                <include name="images/**/*"/>
+                <include name="scripts/**/*"/>
+            </fileset>
         </copy>
     </target>
 
@@ -381,14 +392,23 @@
         <fileset dir="${srcdir}/web/images">
           <include name="**/*" />
         </fileset>
+        <fileset dir="${srcdir}/ppt_web/images">
+          <include name="**/*" />
+        </fileset>
       </copy>
       <copy todir="${apache_tcdocs}/css" overwrite="true">
         <fileset dir="${srcdir}/web/css">
           <include name="**/*" />
         </fileset>
+        <fileset dir="${srcdir}/ppt_web/css">
+          <include name="**/*" />
+        </fileset>
       </copy>
       <copy todir="${apache_tcdocs}/scripts" overwrite="true">
         <fileset dir="${srcdir}/web/scripts">
+          <include name="**/*" />
+        </fileset>
+        <fileset dir="${srcdir}/ppt_web/scripts">
           <include name="**/*" />
         </fileset>
       </copy>
@@ -535,6 +555,18 @@
 
         <unzip src="temp.war" dest="${component.war}"/>
         <delete file="temp.war"/>
+    </target>
+    
+    <!-- Builds the PPT WAR file for web application module -->
+    <target name="ppt_war" depends="war" description="Builds the PPT WAR file">
+        <war warfile="tempppt.war" webxml="${tokenized_conf}/ppt_web/WEB-INF/web.xml">
+            <fileset dir="${ppt_webdir}">
+                <include name="**/*.jsp"/>
+            </fileset>
+        </war>
+
+        <unzip src="tempppt.war" dest="${ppt.war}"/>
+        <delete file="tempppt.war"/>
     </target>
 
     <!-- ************************************************************************** -->
