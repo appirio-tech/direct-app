@@ -221,6 +221,12 @@
             <context-root>/direct</context-root>
         </web>
     </module>
+    <module>
+        <web>
+            <web-uri>ppt.war</web-uri>
+            <context-root>/present</context-root>
+        </web>
+    </module>
     <!-- Security Domain -->
 
     <!-- Mail Service -->
