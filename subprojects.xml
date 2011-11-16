@@ -344,6 +344,16 @@
             <version name="RELEASE" path="release"/>
         </versions>
     </project>
+	
+	 <project
+        name="copilot_pool_and_profiles_services"
+        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/copilot_pool_and_profiles_services"
+        buildfile="build.xml">
+        <versions>
+            <version name="TRUNK" path="branches/cockpit_trunk"/>
+            <version name="RELEASE" path="release"/>
+        </versions>
+    </project>
 
     <project
         name="project_service_facade"
