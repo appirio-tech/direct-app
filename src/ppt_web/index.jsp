@@ -44,8 +44,8 @@
         	<div class="wrapper">
          		<div class="top">
                 	<div class="left">
-                        <h1>Present with</h1>
-                        <h2>authority.</h2>
+                        <h1>Present like</h1>
+                        <h2>a pro.</h2>
                     </div>
             		<p>We've got your back. Our competitive community of <br /> designers and editors will help you and your message <br /> shine with a seamless, spectacular presentation.<br/><span>You have the substance. We'll bring the style.</span></p>
          		</div>
