@@ -1,0 +1,968 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* --- font --- */
+@font-face {
+    font-family: 'Sansation';
+    src: url('font/sansation/sansation_regular-webfont.eot');
+    src: url('font/sansation/sansation_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/sansation/sansation_regular-webfont.woff') format('woff'),
+         url('font/sansation/sansation_regular-webfont.ttf') format('truetype'),
+         url('font/sansation/sansation_regular-webfont.svg#SansationRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Pigiarniq';
+    src: url('font/pigiarniq/pigiarniq_regular-webfont.eot');
+    src: url('font/pigiarniq/pigiarniq_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/pigiarniq/pigiarniq_regular-webfont.woff') format('woff'),
+         url('font/pigiarniq/pigiarniq_regular-webfont.ttf') format('truetype'),
+         url('font/pigiarniq/pigiarniq_regular-webfont.svg#') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PigiarniqLight';
+    src: url('font/pigiarniq/pigiarniq_light-webfont.eot');
+    src: url('font/pigiarniq/pigiarniq_light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/pigiarniq/pigiarniq_light-webfont.woff') format('woff'),
+         url('font/pigiarniq/pigiarniq_light-webfont.ttf') format('truetype'),
+         url('font/pigiarniq/pigiarniq_light-webfont.svg#PigiarniqLight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'MyriadProRegular';
+    src: url('font/myriadpro/myriadpro-webfont.eot');
+    src: url('font/myriadpro/myriadpro-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/myriadpro/myriadpro-webfont.woff') format('woff'),
+         url('font/myriadpro/myriadpro-webfont.ttf') format('truetype'),
+         url('font/myriadpro/myriadpro-webfont.svg#MyriadProRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+	font-family:"Sansation",Arial, Helvetica, sans-serif;
+	width:100%;
+}
+.wrapper{
+	width:1024px;
+	margin:0 auto;
+}
+
+/* --- general --- */
+.hide{
+	display:none;
+}
+a,a:visited{
+	text-decoration:none;
+}
+a:hover{
+	text-decoration:underline;
+}
+
+/* --- header --- */
+#header{
+	height: 126px;
+	background:url(../images/ppt/header-bg.png) repeat-x left top;
+}
+#topNav{
+	height: 73px;
+	width:100%;
+	float:left;
+}
+	#logo{
+		width: 195px;
+		height:29px;
+		float:left;
+		background:url(../images/ppt/logo.png) no-repeat left top;
+		margin-left:18px;
+		margin-top: 20px;
+	}
+	#topNav .nav{
+		float:right;
+	}
+		#topNav .nav li{
+			float:left;
+			height: 66px;
+			line-height:66px;
+			text-align:center;
+			font-size:14px;
+			width: 90px;
+			background:url(../images/ppt/nav-sep.png) no-repeat left center;
+			padding-left:3px;
+			font-weight:bold;
+		}
+		#topNav .nav li a:hover{
+			text-decoration:none;
+			background:url(../images/ppt/nav-bg-hover.png) repeat-x left top;
+			color:#fffffe;
+		}
+		#topNav .nav li.welcomeSection{
+			font-size:11px;
+			color:#c6c5c5;
+			line-height:20px;
+			width:140px;
+			text-align:right;
+			padding-right:20px;
+			font-weight:normal;
+		}
+			#topNav .nav li.welcomeSection  a{
+				font-size:14px;
+				height:auto;
+				font-weight:bold;
+			}
+			#topNav .nav li.welcomeSection span.welcomeMsg{
+				margin-top:5px;
+				width:100%;
+				text-align:right;
+				float:left;
+			}
+			#topNav .nav li.welcomeSection span.handle{
+				color:#78a4af;
+			}
+			#topNav .nav li.welcomeSection  a:hover{
+				background:none;
+				color:#4F4F4F;
+				text-decoration:underline;
+				
+			}
+			#topNav .nav li a{
+				color:#4F4F4F;
+				float:left;
+				width:100%;
+				height:100%;
+			}
+			
+		#topNav .nav .first{
+			background:none;
+			width:200px;
+		}
+	.topLinks{
+		width: 100%;
+		float:left;
+	}
+	.topLinks .left{
+		float:left;
+		margin-left:18px;
+		color:#e1e7e8;
+		line-height:40px;
+		font-size:25px;
+		font-weight:bold;
+	}
+		.topLinks .left span{
+			color:#c2e8ff;
+		}
+		.topLinks .left img{
+			float:left;
+			margin-right:10px;
+		}
+	.topLinks .right{
+		float:right;
+		color:#fffffe;
+		line-height:42px;
+		margin-right:18px;
+		width: 210px;
+		font-family:'Pigiarniq',Arial, Helvetica, sans-serif;
+		font-size:14px;
+	}
+		.topLinks .right span{
+			float:left;
+		}
+		.topLinks .right a{
+			float:right;
+			margin-top:3px;
+		}
+/* --- content --- */
+#content{
+	min-height:700px;
+}
+	#content .banner{
+		width:100%;
+		height:455px;
+		color:#fffffe;
+		padding-left:85px;
+		background:url(../images/ppt/banner-bg.png) repeat-x left top;
+	}
+		#content .banner .top{
+			width:100%;
+			height:143px;
+			float:left;
+			margin-top:7px;
+		}
+			#content .banner .top .left{
+				width: 370px;
+				float:left;
+			}
+			#content .banner .top h1{
+				font-size: 54px;
+				font-family:"MyriadProRegular";
+				font-weight:normal;
+			}
+			#content .banner .top h2{
+				font-size:68px;
+				color:#c2e8ff;
+				font-family:"MyriadProRegular";
+			}
+			#content .banner .top p{
+				font-family:'Pigiarniq';
+				float:left;
+				font-size:16px;
+				margin-top:35px;
+				margin-left:-20px;
+				line-height:19px;
+			}
+			#content .banner .top p span{
+				color:#fff6a4;
+				font-weight:bold;
+			}
+		#content .banner .bottom{
+			float:left;
+			width:100%;
+			margin-top: 5px;
+		}
+			#content .banner .bottom  .section .sep{
+				float:left;
+				background:url(../images/ppt/banner-sep.png) no-repeat left top;
+				height:214px;
+				width:2px;
+				margin-top:15px;
+			}
+			#content .banner .bottom  .section{
+				float:left;
+				font-family:"Pigiarniq";
+			}
+				#content .banner .bottom  .section .stepNum{
+					background:url(../images/ppt/banner-num-bg.png) no-repeat left top;
+					float:left;
+					width:100%;
+					height:83px;
+					padding-top:10px;
+					margin-top:50px;
+					margin-left: -42px;
+					font-family: "Sansation";
+				}
+					#content .banner .bottom  .section .stepNum span{
+						float:left;
+						margin-top:3px;
+						margin-left:22px;
+						font-size:16px;
+						font-weight:bold;
+						text-align: center;
+					}
+					#content .banner .bottom  .section .stepNum span em{
+						font-style:normal;
+						font-size:44px;
+						width:36px;
+						text-align:center;
+						float:left;
+						line-height:40px;
+					}
+				#content .banner .bottom  .step1{
+					background:url(../images/ppt/step1-icon.png) no-repeat 30px 5px;
+					width:223px;
+				}
+				#content .banner .bottom  .step2{
+					background:url(../images/ppt/step2-icon.png) no-repeat 36px 5px;
+					width:250px;
+				}
+				#content .banner .bottom  .step3{
+					background:url(../images/ppt/step3-icon.png) no-repeat 40px 5px;
+					width:233px;
+				}
+				#content .banner .bottom  .step4{
+					background:url(../images/ppt/step4-icon.png) no-repeat 40px 5px;
+					width:223px;
+				}
+				#content .banner .bottom  .section .title{
+					color:#FFF6A4;
+					font-weight:bold;
+					font-size:14px;
+					float:left;
+					width:205px;
+					margin-left:12px;
+					margin-top:5px;
+					margin-bottom:5px;
+				}
+				#content .banner .bottom  .section p{
+					font-size:12px;
+					line-height:16px;
+					float:left;
+					width:199px;
+					margin-left:12px;
+				}
+		#content .topLine{
+			background:url(../images/ppt/top-line.png) no-repeat center bottom;
+			height:29px;
+			width:100%;
+			margin-left: -85px;
+			float:left;
+			margin-top:24px;
+		}
+	#content .mainBody .bigBtn{
+		float:left;
+		margin-left:255px;
+		margin-top:-40px;
+	}
+	#content .mainBody .wrapper{
+		background:url(../images/ppt/content-bg.png) repeat-y center top;	
+	}
+	#content .mainBody .contentWrapper{
+		background:url(../images/ppt/content-gradient.png) repeat-x left bottom;
+		 margin: 0 auto;
+		 min-height:760px;
+	   	 width: 940px;
+	}
+		#content .mainBody .leftCol{
+			float:left;
+			width:660px;
+			margin-left:20px;
+		}
+			#content .mainBody .heading{
+				float:left;
+				width:100%;
+				font-family:"PigiarniqLight";
+				font-size: 28px;
+   				line-height: 38px;
+				color:#498594;
+				margin-left:15px;
+			}
+				#content .mainBody .heading img{
+					float:left;
+					vertical-align:middle;
+					margin-right:10px;
+				}
+			#content .mainBody .bottom{
+				height:40px;
+				float:left;
+				margin-left:15px;
+				background:url(../images/ppt/content-sep-h.png) repeat-x left 32px #fff;
+			}
+				#content .mainBody .bottom .button3{
+					float:right;
+					margin-right:20px;
+				}
+			#content .mainBody .leftCol .bottom{
+				width: 627px;
+			}
+			#content .mainBody .rightCol .bottom{
+				width: 222px;
+			}
+			#content .mainBody .showCaseSec{
+				margin-top:15px;
+				float:left;
+				width:100%;
+			}
+				#content .mainBody .mainContent{
+					float:left;
+					width:100%;
+				}
+			#content .mainBody .publicationSec{
+				margin-top:30px;
+				float:left;
+				width:100%;
+				font-family:"Pigiarniq";
+				font-size:14px;
+			}
+				#content .mainBody .publicationSec p{
+					line-height:24px;
+					color:#000;
+					margin-left:10px;
+					width:660px;
+				}
+				#content .mainBody .publicationSec ul{
+					float:left;
+					margin-top:10px;
+					margin-left:30px;
+				}
+				#content .mainBody .publicationSec ul li{
+					background:url(../images/ppt/bullet2.png) no-repeat left center;
+					padding:3px 18px;
+				} 
+				#content .mainBody .publicationSec ul li a{
+					color:#37646F;
+				}
+				#content .mainBody .publicationSec .bottom{
+					margin-top:30px;
+				}
+		#carousel{
+			float:left;
+			height:260px;
+			margin-left: 26px;
+		}
+		#carousel li a{
+			float:left;
+			background:url(../images/ppt/showcase-bg.png) no-repeat left top;
+			width:202px;
+			height:128px;
+			text-align:center;
+		}
+		#carousel li a:hover{
+			background-position:left bottom;
+		}
+			#carousel li a img{
+				margin-top:11px;
+			}
+		.jcarousel-prev{
+			width:29px;
+			height:90px;
+			background:url(../images/ppt/caresoul-prev-icon.png) no-repeat center center;
+			float:left;
+		}
+		#content .mainBody .rightCol{
+			float:left;
+			width:245px;
+			background:url(../images/ppt/content-sep-v.png) repeat-y left top;
+	 		height: 710px;
+			margin-left: 10px;
+		}
+			#content .mainBody .rightCol .heading{
+				margin-top:45px;
+			}
+			#content .mainBody .rightCol p{
+				font-size:12px;
+				width:215px;
+				line-height:16px;
+				margin-top: 20px;
+				margin-left:20px;
+			}
+			#content .mainBody .rightCol .logoContainer{
+				width:100%;
+				float:left;
+				text-align:center;
+				margin-top:52px;
+			}
+			#content .mainBody .rightCol .bottom{
+				margin-top:70px;
+			}
+	#content .mainBody .button3 .middle{
+		width: 165px;
+	}
+/* --- footer --- */
+#footer{
+	height: 320px;
+	width: 100%;
+	background:url(../images/ppt/footer-bg.png) repeat-x left top;
+	color:#fffffe;
+	font-size:14px;
+	font-family:"Pigiarniq",Arial, Helvetica, sans-serif;
+}
+	#footer .bottomLine{
+		width: 100%;
+		height: 32px;
+		background:url(../images/ppt/bottom-line.png) no-repeat center top;
+		margin-left: 0px;
+	}
+#footer .top{
+	float:left;
+	width:100%;
+}
+	#footer .top .leftCol{
+		float:left;
+		width: 490px;
+		margin-left: 35px;	
+		line-height:19px;
+		background:url(../images/ppt/footer-sep.png) no-repeat right bottom;
+		/*padding-bottom:10px;*/
+		font-size: 16px;
+	}
+	#footer .top p{
+		font-weight:bold;
+		width:100%;
+		float:left;
+		margin-top: 15px;
+		margin-bottom:15px;
+		margin-left:5px;
+		font-size: 16px;
+	}
+		#footer .top .line{
+			width:95%;
+			float:left;
+			margin-bottom:2px;
+			margin-left:5px;
+			font-size:14px;
+		}
+		#footer .top .line .num {
+			width:10px;
+		}
+		#footer .top .line .content {
+			width:95%;
+			margin-left:8px;
+		}
+		#footer .top .line div{
+			float:left;
+		}
+		#footer .top .leftCol .button2{
+			margin-top: 15px;
+		}
+	#footer .top .rightCol{
+		float:left;
+		margin-left:30px;
+		width:435px;
+	}
+	#footer .top .rightCol ul{
+		width: 105px;
+		float:left;
+		font-size:14px;
+	}
+	#footer .top .rightCol .firstUl{
+		width: 165px;
+	}
+	#footer .top .rightCol .secondUl{
+		width: 165px;
+	}
+	#footer .top .rightCol ul li{
+		background:url(../images/ppt/bullet.png) no-repeat left center;
+		padding: 7px 0 7px 24px;
+	}
+		#footer .top .rightCol ul li a{
+			color:#fffffe;
+		}
+	#footer .bottom{
+		float:left;
+		width:100%;
+		text-align:center;
+		margin-top:20px;
+		font-size:12px;
+		line-height: 14px;
+	}
+	#footer .bottom a{
+		color:#fff;
+	}
+/* --- modals --- */
+#loginModal,#registerModal{
+	position:fixed;
+	z-index:999;
+	width: 521px;
+	font-family:"Pigiarniq";
+}
+#loginModal a:hover,#registerModal a:hover{
+	text-decoration:none;
+}
+	#loginModal .header,#registerModal .header{
+		background:url(../images/ppt/modal-header.png) no-repeat left top;
+		width: 521px;
+		height:79px;
+		float:left;
+	}
+		#loginModal .header ul,#registerModal .header ul{
+			float:left;
+			width:100%;
+			height:100%;
+			font-family:"Sansation";
+			font-weight:bold;
+			font-size:14px;
+			line-height: 60px;
+			text-align:center;
+		}
+			#loginModal .header ul li,#registerModal .header ul li{
+				display:inline;
+				float:left;
+				width:247px;
+				height:73px;
+				padding-top:6px;
+			}
+			#loginModal .header ul .first,#registerModal .header ul .first{
+				padding-left:13px;
+				padding-right:3px;
+				width: 245px;
+				background:url(../images/ppt/nav-sep.png) no-repeat right center;
+			}
+			#loginModal .header ul li a,#registerModal .header ul li a{
+				float:left;
+				width:247px;
+				height:100%;
+				color:#4F4F4F;
+			}
+			#loginModal .header ul li.first a,#registerModal .header ul li.first a{
+				width:246px;
+			}
+			#loginModal .header ul li a:hover,#loginModal .header ul li .active,#registerModal .header ul li a:hover,#registerModal .header ul li .active{
+				text-decoration:none;
+				color:#fffffe;
+				background:url(../images/ppt/modal-header-hover.png) repeat-x left top;
+			}
+	#loginModal .banner,#registerModal .banner{
+		background:url(../images/ppt/modal-banner.png) no-repeat left top;
+		width: 521px;
+		height:59px;
+		float:left;
+		font-weight:bold;
+		font-size:17px;
+		color:#fffffe;
+		text-align:center;
+		line-height:37px;
+	}
+	#loginModal .content,#registerModal .content{
+		background:url(../images/ppt/modal-content-bg.png) repeat-y left top;
+		width: 521px;
+		height:258px;
+		float:left;
+		font-size:14px;
+	}
+	#registerModal .content{
+		height:529px;
+	}
+		#loginModal .content .row,#registerModal .content .row{
+			width:100%;
+			float:left;
+			margin-top:20px;
+		}
+		#loginModal .content .firstRow,#registerModal .content .firstRow{
+			margin-top:30px;
+		}
+		#loginModal .content .specialRow{
+			margin-top:15px;
+		}
+		#registerModal .content .specialRow{
+			margin-top:5px;
+		}
+		#loginModal .content .row label,#registerModal .content .row label{
+			width:140px;
+			float:left;
+			margin-left:70px;
+			margin-top:3px;
+		}
+		#loginModal .content .row .inputCre,#registerModal .content .row .inputCre{
+			width:210px;
+			height:20px;
+			border:1px solid #8a8a8a;
+		}
+		#registerModal .content .row .imgCode{
+			margin-left:203px;
+		}
+		#registerModal .content .row .passStren{
+			margin-left: 5px;
+	    	position: absolute;
+			margin-top:1px;
+		}
+		#loginModal .content .row .forgetPass,#registerModal .content .row .tryAnotherCode{
+			color:#37646F;
+			float:left;
+			margin-left:210px;
+			line-height:15px;
+		}
+		#loginModal .content .row .checkCre{
+			margin-left:150px;
+			margin-right:10px;
+		}
+		#registerModal .content .row .checkCre{
+			margin-left:120px;
+			margin-right:10px;
+		}
+		#loginModal .content .row .resetBtn,#registerModal .content .row .resetBtn{
+			margin-left: 60px;
+			margin-right:10px;
+		}
+			#loginModal .content .row .resetBtn .middle,#loginModal .content .row .loginBtn .middle,
+			#registerModal .content .row .resetBtn .middle,#registerModal .content .row .submitBtn .middle{
+				width: 165px;
+			}
+	#loginModal .footer,#registerModal .footer{
+		background:url(../images/ppt/modal-footer.png) no-repeat left top;
+		width: 521px;
+		height:65px;
+		float:left;
+	}
+	/* error style */
+	.errImg{
+		margin-top:7px;
+		margin-left:-15px;
+		margin-right:7px;
+		float:left;
+	}
+	.errorMsg{
+		left: 212px;
+		margin-top: 28px;
+		position: absolute;
+		width: 100%;
+		color:#ff0000;
+		font-size:11px;
+		float:left;
+	}
+	/* loading indicator */
+	.loadingIndicator{
+		background:url(../images/ppt/loading-bg.png) no-repeat left top;
+		width:298px;
+		height:33px;
+		margin-top:160px;
+		margin-left:100px;
+	}
+	#registerModal .loadingIndicator{
+		margin-top:270px;
+	}
+	.loadingCover{
+		background:url(../images/ppt/loading-cover.png) no-repeat left top;
+		width:0%;
+		height:33px;
+	}
+	.indicatorMsg{
+		color:#498594;
+		font-size:21px;
+		font-family:"MyriadProRegular";
+		width:100%;
+		text-align:center;
+		margin-top:20px;
+	}
+	.loadingbackground{
+		position:absolute;
+		left:12px;
+		top:6px;
+		height: 433px;
+		width: 497px;
+		z-index:900;
+		background:url(../images/ppt/modal-overlay.png) repeat left top;
+	}
+	#registerModal .loadingbackground{
+		height: 705px;
+	}
+/* --- showcase modal --- */
+.showcaseModal{
+	position:fixed;
+	z-index:999;
+	left:100px;
+	top:100px;
+}
+	.showcaseModal .header{
+		background:url(../images/ppt/showcase-modal-header.png) no-repeat center top;
+		height:67px;
+		width: 1000px;
+	}
+	.showcaseModal .content{
+		background:url(../images/ppt/showcase-modal-content.png) repeat-y center top;
+		height:520px;
+		width: 1000px;
+	}
+		.showcaseModal .content .close{
+			float:right;
+			width: 20px;
+			height:21px;
+			background:url(../images/ppt/close-icon.png) no-repeat right top;
+			margin-right:70px;
+			margin-top:-5px;
+		}
+		.showcaseModal .content .showcaseSlideContainer{
+			width: 494px;
+			height:494px;
+			float:left;
+			margin-left:85px;
+			background:url(../images/ppt/showcase-carousel-bg.png) no-repeat left top;
+			margin-top:13px;
+		}
+			.showcaseModal .content .showcaseSlideContainer .label{
+				width:106px;
+				height:37px;
+				background:url(../images/ppt/fullscreen-bg.png) no-repeat left top;
+				position:absolute;
+				color:#fffffe;
+				font-size:13px;
+				font-weight:bold;
+				line-height:37px;
+				text-align:center;
+				left:473px;
+				top:536px;
+			}
+			.showcaseModal .content .showcaseSlideContainer .label:hover{
+				text-decoration:none;
+			}
+			.showcaseCarousel li span{
+				float:left;
+				width:100%;
+				text-align:center;
+				font-weight:bold;
+				font-size:14px;
+				color:#fffffe;
+				line-height:20px;
+			}
+			.showcaseCarousel li img{
+				margin-left:35px;
+				float:left;
+				margin-top:60px;
+			}
+			#showcaseModal1 .showcaseCarousel li img{
+				margin-left: 5px;
+				margin-top: 70px;
+			}
+			#showcaseModal3 .showcaseCarousel li img{
+				margin-left: 0;
+			}
+			#showcaseModal4 .showcaseCarousel li img{
+				margin-left: 40px;
+				margin-top:80px;
+			}
+			#showcaseModal6 .showcaseCarousel li img{
+				margin-left: 5px;
+			}
+		.showcaseModal .content .rightPart{
+			width:300px;
+			float:left;
+			margin-left:30px;
+		}
+			.showcaseModal .content .rightPart h1{
+				font-size:20px;
+				font-weight:normal;
+				font-family:"PigiarniqLight";
+				color:#37646F;
+				line-height:24px;
+				float:left;
+				width:100%;
+				margin-top:15px;
+			}
+			.showcaseModal .content .rightPart p{
+				font-size:14px;
+				line-height:18px;
+				font-family:"Pigiarniq";
+				margin-top:35px;
+				float:left;
+				width:100%;
+			}
+			.boldText{
+				font-weight:bold;
+			}
+			.showcaseModal .content .rightPart p span{
+				color:#37646F;
+			}
+	.showcaseModal .footer{
+		background:url(../images/ppt/showcase-modal-footer.png) no-repeat center top;
+		height:55px;
+		width: 1000px;
+	}
+/* --- buttons --- */
+.bigBtn,
+.bigBtn:visited{
+	background:url(../images/ppt/bigBtn.png) no-repeat 0 0;
+	padding-left:85px;
+	width:auto;
+	display:inline-block;
+	height:77px;
+	line-height:77px;
+	overflow:hidden;
+	text-decoration:none;
+	font-size:25px;
+	color:#fffffe;
+	}
+	.bigBtn .right{
+		cursor:pointer;
+		background:url(../images/ppt/bigBtn.png) no-repeat 100% -154px;
+		padding-right:85px;
+		width:auto;
+		display:inline-block;
+		height:77px;
+		line-height:77px;
+		overflow:hidden;
+		}
+		.bigBtn .middle{
+			cursor:pointer;
+			background:url(../images/ppt/bigBtn.png) repeat-x 100% -77px;
+			width:auto;
+			display:inline-block;
+			height:77px;
+			line-height:77px;
+			overflow:hidden;
+			}
+.bigBtn:hover{
+	background:url(../images/ppt/bigBtn.png) no-repeat 0 -231px;
+	}
+	.bigBtn:hover .right{
+		background:url(../images/ppt/bigBtn.png) no-repeat 100% -385px;
+		}
+	
+		.bigBtn:hover .middle{
+			background:url(../images/ppt/bigBtn.png) repeat-x 0 -308px;
+			}
+.button2,.button2:visited{
+	text-decoration:none !important;
+	background:url(../images/ppt/button2.png) no-repeat left top;
+	padding-left:10px;
+	width:auto;
+	height:55px;
+	line-height:50px;
+	float:left;
+	text-align:center;
+	cursor:pointer;
+}
+	.button2 .right{
+		background:url(../images/ppt/button2.png) no-repeat right -220px;
+		padding-right:10px;
+		height:55px;
+		width:auto;
+		float:left;
+	}
+		.button2 .middle{
+			background:url(../images/ppt/button2.png) repeat-x left -110px;
+			padding:0 5px;
+			height:55px;
+			float:left;
+		}
+		.button2 span {
+			font-size:17px;
+			float:left;
+			font-family:'Sansation',Arial, Helvetica, sans-serif;
+			text-decoration:none;
+			font-weight:bold;
+			color:#fffffe;
+		}
+		.button2 img{
+			float:left;
+			margin:3px;
+		}
+		.button2:hover{
+			text-decoration:none;
+			background:url(../images/ppt/button2.png) no-repeat left -55px;
+		}	
+			.button2:hover > .right{
+				background:url(../images/ppt/button2.png) no-repeat right bottom;
+			}	
+			.button2:hover > .right .middle{
+				background:url(../images/ppt/button2.png) repeat-x left -165px;
+			}
+.button3,.button3:visited{
+	text-decoration:none !important;
+	background:url(../images/ppt/button3.png) no-repeat left top;
+	padding-left:10px;
+	width:auto;
+	height:33px;
+	line-height:30px;
+	float:left;
+	text-align:center;
+	cursor:pointer;
+}
+	.button3 .right{
+		background:url(../images/ppt/button3.png) no-repeat right -132px;
+		padding-right:10px;
+		height:33px;
+		width:auto;
+		float:left;
+	}
+		.button3 .middle{
+			background:url(../images/ppt/button3.png) repeat-x left -66px;
+			padding:0 5px;
+			height:33px;
+			float:left;
+		}
+		.button3 span {
+			font-size:14px;
+			float:left;
+			font-family:'Pigiarniq',Arial, Helvetica, sans-serif;
+			text-decoration:none;
+			font-weight:bold;
+			color:#fffffe;
+		}
+		.button3 img{
+			float:left;
+			margin:3px;
+		}
+		.button3:hover{
+			text-decoration:none;
+			background:url(../images/ppt/button3.png) no-repeat left -33px;
+		}	
+			.button3:hover > .right{
+				background:url(../images/ppt/button3.png) no-repeat right bottom;
+			}	
+			.button3:hover > .right .middle{
+				background:url(../images/ppt/button3.png) repeat-x left -99px;
+			}
