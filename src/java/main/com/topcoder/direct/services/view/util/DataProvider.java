@@ -3577,20 +3577,10 @@ public class DataProvider {
             costDTO.setPaymentType(paymentType);
 
             double contestFee = 0;
-            double digitalRun = 0;
-            double reliability = 0;
-            Date reliabilityPayDate = null;
-
-            
 
             // get the contest fee of the contest
             if (row.getItem("contest_fee").getResultData() != null) {
                 contestFee = row.getDoubleItem("contest_fee");
-            }
-
-            // get the digital run points of the contest
-            if (row.getItem("digital_run").getResultData() != null) {
-                digitalRun = row.getDoubleItem("digital_run");
             }
 
 
@@ -3606,10 +3596,6 @@ public class DataProvider {
                 contestFeeEntry.setPaymentAmount(contestFee);
                 contestFeeEntry.setPaymentDate(contestFeeEntry.getLaunchDate());
 
-                BillingCostReportEntryDTO digitalRunEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
-                digitalRunEntry.setPaymentType("Digital Run");
-                digitalRunEntry.setPaymentAmount(digitalRun);
-                digitalRunEntry.setPaymentDate(digitalRunEntry.getCompletionDate());
 
                 // add contest fee if the payment type filter allows
                 if (paymentTypeFilter.contains(1L)) {
@@ -3618,13 +3604,6 @@ public class DataProvider {
                         entries.add(contestFeeEntry);
                     }
 
-                }
-                // add digital run entry if the payment type filter allows
-                if (paymentTypeFilter.contains(6L)) {
-                    // check date range
-                    if (digitalRunEntry.getPaymentDate().after(startDate) && digitalRunEntry.getPaymentDate().before(endDate)) {
-                        entries.add(digitalRunEntry);
-                    }
                 }
 
             } else {
@@ -3637,24 +3616,7 @@ public class DataProvider {
                 entries.add(costDTO);
             }
 
-            // get the reliability payment date of the contest
-            if (row.getItem("reliability_payment_date").getResultData() != null && row.getItem("reliability").getResultData() != null) {
-                reliabilityPayDate = row.getTimestampItem("reliability_payment_date");
-                reliability = row.getDoubleItem("reliability");
-
-                BillingCostReportEntryDTO reliabilityEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
-                reliabilityEntry.setPaymentType("Reliability");
-                reliabilityEntry.setPaymentAmount(reliability);
-                reliabilityEntry.setPaymentDate(reliabilityPayDate);
-
-                if (paymentTypeFilter.contains(5L)) {
-                    // check date range
-                    if (reliabilityEntry.getPaymentDate().after(startDate) && reliabilityEntry.getPaymentDate().before(endDate)) {
-                        entries.add(reliabilityEntry);
-                    }
-                }
-            }
-
+           
         }
 
         return data;
