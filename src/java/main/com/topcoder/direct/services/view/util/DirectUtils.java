@@ -1301,7 +1301,7 @@ public final class DirectUtils {
      */
     public static Map<Long, String> getAllClients(TCSubject tcSubject) throws Exception {
         Map<Long, String> result = sortByValue((Map<Long, String>) getDashboardClientBillingProjectMappings(tcSubject).get("clients"));
-        return new HashMap<Long, String>(result);
+        return new LinkedHashMap<Long, String>(result);
     }
 
     /**
