@@ -29,7 +29,7 @@ import com.topcoder.service.project.ProjectData;
 /**
  * <p>A <code>Struts</code> action which will be base class of report actions. This class will parse
  * and validate the parameters, prepare for the common data used by the report page.</p>
- * 
+ *
  * @author TCSASSEMBER
  * @version 1.0 (TC Cockpit Permission and Report Update One)
  * @param <FORMT> a type of the form used by the report page. It must extends from <code>DashboardReportForm</code>.
@@ -41,24 +41,24 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
      * <p>Represents the serial version unique id.</p>
      */
     private static final long serialVersionUID = -8277804713736310922L;
-    
+
     /**
      * <p>The contest status used by report. There are 3 status used for report. It's initialized in the
      * static constructor of this action class.</p>
      */
     protected static final Map<Long, String> REPORT_CONTEST_STATUS;
-    
+
     /**
      * <p>The status used by report. There are 3 status used for billing cost report. it's initialized in the
      * static constructor of this action class.</p>
      */
     protected static final Map<String, Long> REPORT_CONTEST_STATUS_IDS;
-    
+
     /**
      * <p>The default duration used for date filter.</p>
      */
     protected static final long DEFAULT_DURATION = 182 * 24 * 3600 * 1000L;
-    
+
     /**
      * <p>Status constructor of this action.</p>
      */
@@ -84,34 +84,34 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
         REPORT_CONTEST_STATUS_IDS.put(active.getName().toLowerCase(), active.getId());
         REPORT_CONTEST_STATUS_IDS.put(finished.getName().toLowerCase(), finished.getId());
     }
-    
+
     /**
      * <p>A <code>SessionData</code> providing interface to current session.</p>
      */
     private SessionData sessionData;
-    
+
     /**
      * <p>A <code>FORMT</code> providing the report form parameters submitted by user.</p>
      */
     private FORMT formData;
-    
+
     /**
      * <p>A <code>VIEWT</code> providing the view data for displaying the view data for report page.</p>
      */
     private VIEWT viewData;
-    
+
     /**
      * <p>Direct projects data accessible by current user.</p>
      */
     private List<ProjectData> directProjectsData;
-    
+
     /**
      * <p>Constructs new <code>DashboardReportBaseAction</code> instance</p>
      */
     protected DashboardReportBaseAction() {
         super();
     }
-    
+
     /**
      * <p>Handles the incoming request. It will parse and validate the parameters, prepare for the
      * common data used by the report page.</p>
@@ -124,7 +124,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
         HttpServletRequest request = DirectUtils.getServletRequest();
         this.sessionData = new SessionData(request.getSession());
         TCSubject currentUser = getCurrentUser();
-        
+
         DashboardReportForm form = getFormData();
         long projectId = form.getProjectId();
         long[] categoryIds = form.getProjectCategoryIds();
@@ -132,7 +132,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
         long[] statusIds = form.getStatusIds();
         Date startDate = DirectUtils.getDate(form.getStartDate());
         Date endDate = DirectUtils.getDate(form.getEndDate());
-        
+
         // If start date is not set then use date for half of a year before current time
         SimpleDateFormat dateFormat = new SimpleDateFormat(DirectUtils.DATE_FORMAT);
         Date now = new Date();
@@ -140,21 +140,21 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             startDate = new Date(now.getTime() - (DEFAULT_DURATION));
             form.setStartDate(dateFormat.format(startDate));
         }
-        
+
         // If end date is not set then use current time
         if (endDate == null) {
             endDate = now;
             form.setEndDate(dateFormat.format(endDate));
         }
-        
+
         // Get the list of available project categories
         Map<Long, String> projectCategories = DataProvider.getAllProjectCategories();
-        
+
         // Get all the clients accessible by current user
         Map<Long, String> customers = DirectUtils.getAllClients(currentUser);
-        
+
         boolean isFirstCall = this.viewData.isShowJustForm();
-        
+
         // If client account IDs are not specified then use the first client account id
         boolean customerIdIsSet = customerId > 0;
         if (isFirstCall && !customerIdIsSet) {
@@ -168,7 +168,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             // check the customerId parameter
             checkParameters(customerId, "customerId", customers);
         }
-        
+
         // If project category IDs are not specified then use all project category Ids
         boolean categoryIdsAreSet = (categoryIds != null) && (categoryIds.length > 0);
         if (isFirstCall && !categoryIdsAreSet) {
@@ -181,7 +181,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             form.setProjectCategoryIds(categoryIds);
             categoryIdsAreSet = true;
         }
-        
+
         // if status IDs are not specified then use all status ids
         boolean statusIdsAreSet = (statusIds != null) && (statusIds.length > 0);
         if (isFirstCall && !statusIdsAreSet) {
@@ -194,7 +194,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             getFormData().setStatusIds(statusIds);
             statusIdsAreSet = true;
         }
-        
+
         // set all the project categories to view data to populate project category selection
         getViewData().setProjectCategories(projectCategories);
 
@@ -203,16 +203,19 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
 
         // set view data for clients
         getViewData().setClientAccounts(customers);
-        
+        if(DirectUtils.isTcOperations(currentUser)) {
+            getViewData().getClientAccounts().put(0L, "All Customers");
+        }
+
         // set view data for billings
         if (getFormData().getCustomerId() > 0) {
             getViewData().setClientBillingProjects(DirectUtils.getBillingsForClient(currentUser, getFormData().getCustomerId()));
         } else {
             getViewData().setClientBillingProjects(new HashMap<Long, String>());
         }
-        
+
         getViewData().getClientBillingProjects().put(0L, "All Billing Accounts");
-        
+
         // set view data for projects
         if (getFormData().getBillingAccountId() <= 0) {
             if (getFormData().getCustomerId() > 0) {
@@ -226,21 +229,21 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             getViewData().setProjectsLookupMap(DirectUtils.getProjectsForBilling(currentUser,
                     getFormData().getBillingAccountId()));
         }
-        
+
         // add the default all for projects
         getViewData().getProjectsLookupMap().put(0L, "All Projects");
         if (projectId > 0) {
             // check projectId parameter
             checkParameters(projectId, "projectId", getViewData().getProjectsLookupMap());
         }
-        
+
         // For normal request flow prepare various data to be displayed to user
         // Set projects data
         List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
         userProjectsDTO.setProjects(projects);
         getViewData().setUserProjects(userProjectsDTO);
-        
+
         // Set current project contests
         ProjectBriefDTO currentProject = this.sessionData.getCurrentProjectContext();
         if (currentProject != null) {
@@ -248,50 +251,50 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
                     = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
             this.sessionData.setCurrentProjectContests(contests);
         }
-        
+
         // Validate the dates range
         if (startDate.compareTo(endDate) > 0) {
             addActionError("Start date must not be after end date");
             return;
         }
     }
-    
+
     /**
      * <p>Sets the form data.</p>
-     * 
+     *
      * @param formData A <code>FORMT</code> providing the report form parameters submitted by user.
      */
     public void setFormData(FORMT formData) {
         this.formData = formData;
     }
-    
+
     /**
      * <p>Gets the form data.</p>
-     * 
+     *
      * @return A <code>FORMT</code> providing the report form parameters submitted by user.
      */
     public FORMT getFormData() {
         return formData;
     }
-    
+
     /**
      * <p>Sets the view data.</p>
-     * 
+     *
      * @param viewData A <code>VIEWT</code> providing the view data for displaying the view data for report page.
      */
     public void setViewData(VIEWT viewData) {
         this.viewData = viewData;
     }
-    
+
     /**
      * <p>Gets the view data.</p>
-     * 
+     *
      * @return A <code>VIEWT</code> providing the view data for displaying the view data for report page.
      */
     public VIEWT getViewData() {
         return viewData;
     }
-    
+
     /**
      * <p>Gets the current session associated with the incoming request from client.</p>
      *
@@ -300,7 +303,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
     public SessionData getSessionData() {
         return sessionData;
     }
-    
+
     /**
      * <p>Gets the direct project the user has access to.</p>
      *
@@ -313,7 +316,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
         }
         return this.directProjectsData;
     }
-    
+
     /**
      * <p>Validate the parameter. The valid values is the key set of a map.</p>
      * <p>If the parameter is invalid, the exception message will contain the parameter name

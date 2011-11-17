@@ -178,7 +178,7 @@ import com.topcoder.shared.util.dwload.CacheClearer;
  *      <li>Add getPhase method to generate single phase.</li>
  * </ul>
  * </p>
- * 
+ *
  * <p>
  * Version 1.6.8 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1) change notes:
  * <ul>
@@ -203,7 +203,7 @@ import com.topcoder.shared.util.dwload.CacheClearer;
  *     <li>Add {@link #isStudio(SoftwareCompetition)} method.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 1.7.1 (TC Direct Replatforming Release 3) Change notes:
  *   <ol>
@@ -229,7 +229,7 @@ import com.topcoder.shared.util.dwload.CacheClearer;
  *     <li>Update {@link #getContestStats} method to use the
  *      new direct_contest_stats_replatforming query.</li>
  *   </ol>
- * </p> 
+ * </p>
  *
  *
  * <p>
@@ -252,7 +252,7 @@ import com.topcoder.shared.util.dwload.CacheClearer;
  *     <li>Added {@link #hasProjectReadPermission(BaseDirectStrutsAction, TCSubject, long)} method.</li>
  *   </ol>
  * </p>
- * 
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv
  * @version 1.7.6
  */
@@ -325,11 +325,11 @@ public final class DirectUtils {
 
      * Private constant specifying TC operations role.
      *
-     * 
+     *
      */
     private static final String SCORECARD_ADMIN_ROLE = "Scorecard Administrator";
 
-	/**
+    /**
      * The project name to use when the direct project name is not available, usually this will not happen.
      *
      * @since 1.6.7
@@ -345,7 +345,7 @@ public final class DirectUtils {
 
     /**
      * Represents the milestone submission type id.
-     * 
+     *
      * @since 1.7.2
      */
     private static final int MILESTONE_SUBMISSION_TYPE_ID = 3;
@@ -366,11 +366,11 @@ public final class DirectUtils {
 
     /**
      * Represents the contest submission type id.
-     * 
+     *
      * @since 1.7.2
      */
     private static final int CONTEST_SUBMISSION_TYPE_ID = 1;
-    
+
     /**
      * <p>
      * Default Constructor.
@@ -547,7 +547,7 @@ public final class DirectUtils {
         }
 
         dto.setContest(contest);
-		dto.setIsStudio(isStudio);
+        dto.setIsStudio(isStudio);
 
         // sets the issues of contests
         dto.setIssues(DataProvider.getContestIssues(contestId));
@@ -573,7 +573,7 @@ public final class DirectUtils {
         }
         return new SessionData(request.getSession()).getCurrentUser();
     }
-    
+
     /**
      * Gets user roles from the persistence.
      *
@@ -683,7 +683,7 @@ public final class DirectUtils {
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
             if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
-                return phase.getActualEndDate() != null ? phase.getActualEndDate() : 
+                return phase.getActualEndDate() != null ? phase.getActualEndDate() :
                     new Date(getRegistrationPhase(softwareCompetition).getFixedStartDate().getTime() + phase.getLength());
             }
         }
@@ -703,16 +703,16 @@ public final class DirectUtils {
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
             if (phase.getPhaseType().getId() == PhaseType.SUBMISSION_PHASE.getId()) {
-                return phase.getActualEndDate() != null ? phase.getActualEndDate() : 
+                return phase.getActualEndDate() != null ? phase.getActualEndDate() :
                     new Date(getRegistrationPhase(softwareCompetition).getFixedStartDate().getTime() + phase.getLength());
             }
         }
         return null;
     }
-    
+
     /**
      * <p>Gets the submission phase of the competition.
-     * 
+     *
      * @param softwareCompetition the contest
      * @return the submission phase of the contest. null if not found.
      */
@@ -724,7 +724,7 @@ public final class DirectUtils {
         }
         return null;
     }
-    
+
     /**
      * <p>
      * Gets the end date of software competition.
@@ -763,7 +763,7 @@ public final class DirectUtils {
         }
 
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
-            if ((PhaseStatus.OPEN.getId() == phase.getPhaseStatus().getId() 
+            if ((PhaseStatus.OPEN.getId() == phase.getPhaseStatus().getId()
                 || PhaseStatus.CLOSED.getId() == phase.getPhaseStatus().getId())
                 && !SPECIFICATION_SUBMISSION.equals(phase.getPhaseType().getName())
                 && !SPECIFICATION_REVIEW.equals(phase.getPhaseType().getName())) {
@@ -1300,7 +1300,8 @@ public final class DirectUtils {
      * @since 1.6.4
      */
     public static Map<Long, String> getAllClients(TCSubject tcSubject) throws Exception {
-        return  sortByValue((Map<Long, String>) getDashboardClientBillingProjectMappings(tcSubject).get("clients"));
+        Map<Long, String> result = sortByValue((Map<Long, String>) getDashboardClientBillingProjectMappings(tcSubject).get("clients"));
+        return new HashMap<Long, String>(result);
     }
 
     /**
@@ -1430,10 +1431,10 @@ public final class DirectUtils {
 
         return null;
     }
-    
+
     /**
      * Set dashboard data.
-     * 
+     *
      * @param currentUser current user
      * @param contestId the contest id
      * @param dto the contest common DTO
@@ -1447,13 +1448,13 @@ public final class DirectUtils {
             dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
-        
+
         dto.setDashboard(adjustPhases(dto.getDashboard()));
     }
-    
+
     /**
      * Set dashboard data.
-     * 
+     *
      * @param currentUser current user
      * @param contestId the contest id
      * @param dto the specification review dto
@@ -1467,7 +1468,7 @@ public final class DirectUtils {
             dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
-        
+
         dto.setDashboard(adjustPhases(dto.getDashboard()));
     }
 
@@ -1516,8 +1517,8 @@ public final class DirectUtils {
         if (!isRole(tcSubject, ADMIN_ROLE)) {
             List<Permission> permissions = action.getContestServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
             for (Permission p : permissions) {
-                if (p.getPermissionType().getPermissionTypeId() == 1L 
-                    || p.getPermissionType().getPermissionTypeId() == 2L 
+                if (p.getPermissionType().getPermissionTypeId() == 1L
+                    || p.getPermissionType().getPermissionTypeId() == 2L
                     || p.getPermissionType().getPermissionTypeId() == 3L) {
                     return true;
                 }
@@ -1547,30 +1548,30 @@ public final class DirectUtils {
         return calendar.getTime();
     }
 
-    
+
     public static ContestDashboardDTO adjustPhases(ContestDashboardDTO dashboard) {
         List<ProjectPhaseDTO> phases = dashboard.getAllPhases();
         List<ProjectPhaseDTO> adjustedPhases = new ArrayList<ProjectPhaseDTO>();
         Map<ProjectPhaseType, Integer> phaseIndex = new HashMap<ProjectPhaseType, Integer>();
-        
+
         for (ProjectPhaseDTO phase : phases) {
-            if (!phaseIndex.containsKey(phase.getPhaseType())) {        
+            if (!phaseIndex.containsKey(phase.getPhaseType())) {
                 adjustedPhases.add(phase);
                 phaseIndex.put(phase.getPhaseType(), adjustedPhases.size() - 1);
             }
-            
+
             ProjectPhaseDTO tmpPhase = adjustedPhases.get(phaseIndex.get(phase.getPhaseType()));
-            
+
             tmpPhase.increaseNum();
             tmpPhase.setStartTime(phase.getStartTime());
             tmpPhase.setEndTime(phase.getEndTime());
         }
-        
+
         dashboard.setAllPhases(adjustedPhases);
         return dashboard;
     }
 
-	/**
+    /**
      * <p>
      * Helper method to clean registrants query results from the cache to
      * reflect the latest addition.
@@ -1580,9 +1581,9 @@ public final class DirectUtils {
         try {
             if (commandToRefresh != null && !commandToRefresh.equals(""))
             {
-				CacheClearer.removelike(commandToRefresh);
+                CacheClearer.removelike(commandToRefresh);
             }
-            
+
         } catch (Exception ignore) {
             ignore.printStackTrace();
         }
