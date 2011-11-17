@@ -463,6 +463,16 @@
             <version name="RELEASE" path="release"/>
         </versions>
     </project>
+	
+	    <project
+        name="client_invoice_entities_dao"
+        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/client_invoice_entities_dao"
+        buildfile="build.xml">
+        <versions>
+            <version name="TRUNK" path="branches/cockpit_trunk"/>
+            <version name="RELEASE" path="release"/>
+        </versions>
+    </project>
     
     
     
