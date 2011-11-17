@@ -30,8 +30,8 @@
     <script type="text/javascript" id="js-ajax" src="/scripts/AjaxPermissionProcessor.js?v=186145"></script>
     <script type="text/javascript" id="jquery-dt"src="/scripts/jquery.dataTables.min.js?v=178111"></script>
     <script type="text/javascript" id="dt-extend" src="/scripts/dataTable.extend.js?v=186145"></script>
-    <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js?v=207440"></script>
-    <script type="text/javascript" id="pDialog" src="/scripts/permissionDialog.js?v=194107"></script>
+    <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js?v=210124"></script>
+    <script type="text/javascript" id="pDialog" src="/scripts/permissionDialog.js?v=210124"></script>
     <script type="text/javascript" id="json" src="/scripts/json2.js?v=186145"></script>
 
     <script type="text/javascript">

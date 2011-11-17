@@ -31,7 +31,7 @@
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
     </script>
-    <script type="text/javascript" src="/scripts/newCockpitProject.js?v=209885"></script>
+    <script type="text/javascript" src="/scripts/newCockpitProject.js?v=210135"></script>
 </head>
 
 <body id="page">

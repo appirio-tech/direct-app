@@ -20,7 +20,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/permissions.css?v=193435" media="all" type="text/css" />
-    <script type="text/javascript" src="/scripts/permissions.js?v=194580"></script>
+    <script type="text/javascript" src="/scripts/permissions.js?v=210124"></script>
     <jsp:include page="includes/paginationSetup.jsp"/>
 </head>
 
