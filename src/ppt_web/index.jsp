@@ -4,13 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Topcoder Presentation</title>
 
-<link rel="stylesheet" type="text/css" href="/css/reset.css" media="screen"/>
-<link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
-<link rel="stylesheet" type="text/css" href="/css/skin.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="/css/ppt/reset.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="/css/ppt/style.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="/css/ppt/skin.css" media="screen"/>
 
 <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js?v=176771"></script>
 <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=207547"></script>
-<script type="text/javascript" src="/scripts/pptScript.js"></script>
+<script type="text/javascript" src="/scripts/ppt/pptScript.js"></script>
 </head>
 <body>
 	<div id="header">

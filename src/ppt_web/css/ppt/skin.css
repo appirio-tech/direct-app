@@ -27,22 +27,22 @@
     width: 29px;
     height: 99px;
     cursor: pointer;
-    background: transparent url(../images/ppt/caresoul-next.png) no-repeat 0 0;
+    background: transparent url(../../images/ppt/caresoul-next.png) no-repeat 0 0;
 }
 
 .jcarousel-skin-tango .jcarousel-direction-rtl .jcarousel-next-horizontal {
     left: 5px;
     right: auto;
-    background-image: url(../images/ppt/caresoul-prev.png);
+    background-image: url(../../images/ppt/caresoul-prev.png);
 }
 
 .jcarousel-skin-tango .jcarousel-next-horizontal:hover,
 .jcarousel-skin-tango .jcarousel-next-horizontal:focus {
-    background-image :url(../images/ppt/caresoul-next-hover.png);
+    background-image :url(../../images/ppt/caresoul-next-hover.png);
 }
 .jcarousel-skin-tango .jcarousel-next-disabled-horizontal:hover,
 .jcarousel-skin-tango .jcarousel-next-disabled-horizontal:focus{
-	background-image: url(../images/ppt/caresoul-next.png);
+	background-image: url(../../images/ppt/caresoul-next.png);
 	cursor:default;
 }
 .jcarousel-skin-tango .jcarousel-prev-horizontal {
@@ -52,22 +52,22 @@
     width: 29px;
     height: 99px;
     cursor: pointer;
-    background: transparent url(../images/ppt/caresoul-prev.png) no-repeat 0 0;
+    background: transparent url(../../images/ppt/caresoul-prev.png) no-repeat 0 0;
 }
 
 .jcarousel-skin-tango .jcarousel-direction-rtl .jcarousel-prev-horizontal {
     left: auto;
     right: 5px;
-    background-image: url(../images/ppt/caresoul-prev.png);
+    background-image: url(../../images/ppt/caresoul-prev.png);
 }
 
 .jcarousel-skin-tango .jcarousel-prev-horizontal:hover, 
 .jcarousel-skin-tango .jcarousel-prev-horizontal:focus {
-   background-image :url(../images/ppt/caresoul-prev-hover.png);
+   background-image :url(../../images/ppt/caresoul-prev-hover.png);
 }
 .jcarousel-skin-tango .jcarousel-prev-disabled-horizontal:hover,
 .jcarousel-skin-tango .jcarousel-prev-disabled-horizontal:focus{
-	background-image: url(../images/ppt/caresoul-prev.png);
+	background-image: url(../../images/ppt/caresoul-prev.png);
 	cursor:default;
 }
 
@@ -100,13 +100,13 @@
     width: 29px;
     height: 99px;
     cursor: pointer;
-    background: transparent url(../images/ppt/showcase-next.png) no-repeat 0 0;
+    background: transparent url(../../images/ppt/showcase-next.png) no-repeat 0 0;
 }
 
 .jcarousel-skin-bill .jcarousel-direction-rtl .jcarousel-next-horizontal {
     left: 5px;
     right: auto;
-    background-image: url(../images/ppt/showcase-prev.png);
+    background-image: url(../../images/ppt/showcase-prev.png);
 }
 
 .jcarousel-skin-bill .jcarousel-next-horizontal:hover,
@@ -125,13 +125,13 @@
     width: 29px;
     height: 99px;
     cursor: pointer;
-    background: transparent url(../images/ppt/showcase-prev.png) no-repeat 0 0;
+    background: transparent url(../../images/ppt/showcase-prev.png) no-repeat 0 0;
 }
 
 .jcarousel-skin-bill .jcarousel-direction-rtl .jcarousel-prev-horizontal {
     left: auto;
     right: 5px;
-    background-image: url(../images/ppt/showcase-prev.png);
+    background-image: url(../../images/ppt/showcase-prev.png);
 }
 
 .jcarousel-skin-bill .jcarousel-prev-horizontal:hover, 

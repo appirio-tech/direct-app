@@ -68,7 +68,7 @@ a:hover{
 /* --- header --- */
 #header{
 	height: 126px;
-	background:url(../images/ppt/header-bg.png) repeat-x left top;
+	background:url(../../images/ppt/header-bg.png) repeat-x left top;
 }
 #topNav{
 	height: 73px;
@@ -79,7 +79,7 @@ a:hover{
 		width: 195px;
 		height:29px;
 		float:left;
-		background:url(../images/ppt/logo.png) no-repeat left top;
+		background:url(../../images/ppt/logo.png) no-repeat left top;
 		margin-left:18px;
 		margin-top: 20px;
 	}
@@ -93,13 +93,13 @@ a:hover{
 			text-align:center;
 			font-size:14px;
 			width: 90px;
-			background:url(../images/ppt/nav-sep.png) no-repeat left center;
+			background:url(../../images/ppt/nav-sep.png) no-repeat left center;
 			padding-left:3px;
 			font-weight:bold;
 		}
 		#topNav .nav li a:hover{
 			text-decoration:none;
-			background:url(../images/ppt/nav-bg-hover.png) repeat-x left top;
+			background:url(../../images/ppt/nav-bg-hover.png) repeat-x left top;
 			color:#fffffe;
 		}
 		#topNav .nav li.welcomeSection{
@@ -186,7 +186,7 @@ a:hover{
 		height:455px;
 		color:#fffffe;
 		padding-left:85px;
-		background:url(../images/ppt/banner-bg.png) repeat-x left top;
+		background:url(../../images/ppt/banner-bg.png) repeat-x left top;
 	}
 		#content .banner .top{
 			width:100%;
@@ -227,7 +227,7 @@ a:hover{
 		}
 			#content .banner .bottom  .section .sep{
 				float:left;
-				background:url(../images/ppt/banner-sep.png) no-repeat left top;
+				background:url(../../images/ppt/banner-sep.png) no-repeat left top;
 				height:214px;
 				width:2px;
 				margin-top:15px;
@@ -237,7 +237,7 @@ a:hover{
 				font-family:"Pigiarniq";
 			}
 				#content .banner .bottom  .section .stepNum{
-					background:url(../images/ppt/banner-num-bg.png) no-repeat left top;
+					background:url(../../images/ppt/banner-num-bg.png) no-repeat left top;
 					float:left;
 					width:100%;
 					height:83px;
@@ -263,19 +263,19 @@ a:hover{
 						line-height:40px;
 					}
 				#content .banner .bottom  .step1{
-					background:url(../images/ppt/step1-icon.png) no-repeat 30px 5px;
+					background:url(../../images/ppt/step1-icon.png) no-repeat 30px 5px;
 					width:223px;
 				}
 				#content .banner .bottom  .step2{
-					background:url(../images/ppt/step2-icon.png) no-repeat 36px 5px;
+					background:url(../../images/ppt/step2-icon.png) no-repeat 36px 5px;
 					width:250px;
 				}
 				#content .banner .bottom  .step3{
-					background:url(../images/ppt/step3-icon.png) no-repeat 40px 5px;
+					background:url(../../images/ppt/step3-icon.png) no-repeat 40px 5px;
 					width:233px;
 				}
 				#content .banner .bottom  .step4{
-					background:url(../images/ppt/step4-icon.png) no-repeat 40px 5px;
+					background:url(../../images/ppt/step4-icon.png) no-repeat 40px 5px;
 					width:223px;
 				}
 				#content .banner .bottom  .section .title{
@@ -296,7 +296,7 @@ a:hover{
 					margin-left:12px;
 				}
 		#content .topLine{
-			background:url(../images/ppt/top-line.png) no-repeat center bottom;
+			background:url(../../images/ppt/top-line.png) no-repeat center bottom;
 			height:29px;
 			width:100%;
 			margin-left: -85px;
@@ -309,10 +309,10 @@ a:hover{
 		margin-top:-40px;
 	}
 	#content .mainBody .wrapper{
-		background:url(../images/ppt/content-bg.png) repeat-y center top;	
+		background:url(../../images/ppt/content-bg.png) repeat-y center top;	
 	}
 	#content .mainBody .contentWrapper{
-		background:url(../images/ppt/content-gradient.png) repeat-x left bottom;
+		background:url(../../images/ppt/content-gradient.png) repeat-x left bottom;
 		 margin: 0 auto;
 		 min-height:760px;
 	   	 width: 940px;
@@ -340,7 +340,7 @@ a:hover{
 				height:40px;
 				float:left;
 				margin-left:15px;
-				background:url(../images/ppt/content-sep-h.png) repeat-x left 32px #fff;
+				background:url(../../images/ppt/content-sep-h.png) repeat-x left 32px #fff;
 			}
 				#content .mainBody .bottom .button3{
 					float:right;
@@ -380,7 +380,7 @@ a:hover{
 					margin-left:30px;
 				}
 				#content .mainBody .publicationSec ul li{
-					background:url(../images/ppt/bullet2.png) no-repeat left center;
+					background:url(../../images/ppt/bullet2.png) no-repeat left center;
 					padding:3px 18px;
 				} 
 				#content .mainBody .publicationSec ul li a{
@@ -396,7 +396,7 @@ a:hover{
 		}
 		#carousel li a{
 			float:left;
-			background:url(../images/ppt/showcase-bg.png) no-repeat left top;
+			background:url(../../images/ppt/showcase-bg.png) no-repeat left top;
 			width:202px;
 			height:128px;
 			text-align:center;
@@ -410,13 +410,13 @@ a:hover{
 		.jcarousel-prev{
 			width:29px;
 			height:90px;
-			background:url(../images/ppt/caresoul-prev-icon.png) no-repeat center center;
+			background:url(../../images/ppt/caresoul-prev-icon.png) no-repeat center center;
 			float:left;
 		}
 		#content .mainBody .rightCol{
 			float:left;
 			width:245px;
-			background:url(../images/ppt/content-sep-v.png) repeat-y left top;
+			background:url(../../images/ppt/content-sep-v.png) repeat-y left top;
 	 		height: 710px;
 			margin-left: 10px;
 		}
@@ -446,7 +446,7 @@ a:hover{
 #footer{
 	height: 320px;
 	width: 100%;
-	background:url(../images/ppt/footer-bg.png) repeat-x left top;
+	background:url(../../images/ppt/footer-bg.png) repeat-x left top;
 	color:#fffffe;
 	font-size:14px;
 	font-family:"Pigiarniq",Arial, Helvetica, sans-serif;
@@ -454,7 +454,7 @@ a:hover{
 	#footer .bottomLine{
 		width: 100%;
 		height: 32px;
-		background:url(../images/ppt/bottom-line.png) no-repeat center top;
+		background:url(../../images/ppt/bottom-line.png) no-repeat center top;
 		margin-left: 0px;
 	}
 #footer .top{
@@ -466,7 +466,7 @@ a:hover{
 		width: 490px;
 		margin-left: 35px;	
 		line-height:19px;
-		background:url(../images/ppt/footer-sep.png) no-repeat right bottom;
+		background:url(../../images/ppt/footer-sep.png) no-repeat right bottom;
 		/*padding-bottom:10px;*/
 		font-size: 16px;
 	}
@@ -516,7 +516,7 @@ a:hover{
 		width: 165px;
 	}
 	#footer .top .rightCol ul li{
-		background:url(../images/ppt/bullet.png) no-repeat left center;
+		background:url(../../images/ppt/bullet.png) no-repeat left center;
 		padding: 7px 0 7px 24px;
 	}
 		#footer .top .rightCol ul li a{
@@ -544,7 +544,7 @@ a:hover{
 	text-decoration:none;
 }
 	#loginModal .header,#registerModal .header{
-		background:url(../images/ppt/modal-header.png) no-repeat left top;
+		background:url(../../images/ppt/modal-header.png) no-repeat left top;
 		width: 521px;
 		height:79px;
 		float:left;
@@ -570,7 +570,7 @@ a:hover{
 				padding-left:13px;
 				padding-right:3px;
 				width: 245px;
-				background:url(../images/ppt/nav-sep.png) no-repeat right center;
+				background:url(../../images/ppt/nav-sep.png) no-repeat right center;
 			}
 			#loginModal .header ul li a,#registerModal .header ul li a{
 				float:left;
@@ -584,10 +584,10 @@ a:hover{
 			#loginModal .header ul li a:hover,#loginModal .header ul li .active,#registerModal .header ul li a:hover,#registerModal .header ul li .active{
 				text-decoration:none;
 				color:#fffffe;
-				background:url(../images/ppt/modal-header-hover.png) repeat-x left top;
+				background:url(../../images/ppt/modal-header-hover.png) repeat-x left top;
 			}
 	#loginModal .banner,#registerModal .banner{
-		background:url(../images/ppt/modal-banner.png) no-repeat left top;
+		background:url(../../images/ppt/modal-banner.png) no-repeat left top;
 		width: 521px;
 		height:59px;
 		float:left;
@@ -598,7 +598,7 @@ a:hover{
 		line-height:37px;
 	}
 	#loginModal .content,#registerModal .content{
-		background:url(../images/ppt/modal-content-bg.png) repeat-y left top;
+		background:url(../../images/ppt/modal-content-bg.png) repeat-y left top;
 		width: 521px;
 		height:258px;
 		float:left;
@@ -663,7 +663,7 @@ a:hover{
 				width: 165px;
 			}
 	#loginModal .footer,#registerModal .footer{
-		background:url(../images/ppt/modal-footer.png) no-repeat left top;
+		background:url(../../images/ppt/modal-footer.png) no-repeat left top;
 		width: 521px;
 		height:65px;
 		float:left;
@@ -686,7 +686,7 @@ a:hover{
 	}
 	/* loading indicator */
 	.loadingIndicator{
-		background:url(../images/ppt/loading-bg.png) no-repeat left top;
+		background:url(../../images/ppt/loading-bg.png) no-repeat left top;
 		width:298px;
 		height:33px;
 		margin-top:160px;
@@ -696,7 +696,7 @@ a:hover{
 		margin-top:270px;
 	}
 	.loadingCover{
-		background:url(../images/ppt/loading-cover.png) no-repeat left top;
+		background:url(../../images/ppt/loading-cover.png) no-repeat left top;
 		width:0%;
 		height:33px;
 	}
@@ -715,7 +715,7 @@ a:hover{
 		height: 433px;
 		width: 497px;
 		z-index:900;
-		background:url(../images/ppt/modal-overlay.png) repeat left top;
+		background:url(../../images/ppt/modal-overlay.png) repeat left top;
 	}
 	#registerModal .loadingbackground{
 		height: 705px;
@@ -728,12 +728,12 @@ a:hover{
 	top:100px;
 }
 	.showcaseModal .header{
-		background:url(../images/ppt/showcase-modal-header.png) no-repeat center top;
+		background:url(../../images/ppt/showcase-modal-header.png) no-repeat center top;
 		height:67px;
 		width: 1000px;
 	}
 	.showcaseModal .content{
-		background:url(../images/ppt/showcase-modal-content.png) repeat-y center top;
+		background:url(../../images/ppt/showcase-modal-content.png) repeat-y center top;
 		height:520px;
 		width: 1000px;
 	}
@@ -741,7 +741,7 @@ a:hover{
 			float:right;
 			width: 20px;
 			height:21px;
-			background:url(../images/ppt/close-icon.png) no-repeat right top;
+			background:url(../../images/ppt/close-icon.png) no-repeat right top;
 			margin-right:70px;
 			margin-top:-5px;
 		}
@@ -750,13 +750,13 @@ a:hover{
 			height:494px;
 			float:left;
 			margin-left:85px;
-			background:url(../images/ppt/showcase-carousel-bg.png) no-repeat left top;
+			background:url(../../images/ppt/showcase-carousel-bg.png) no-repeat left top;
 			margin-top:13px;
 		}
 			.showcaseModal .content .showcaseSlideContainer .label{
 				width:106px;
 				height:37px;
-				background:url(../images/ppt/fullscreen-bg.png) no-repeat left top;
+				background:url(../../images/ppt/fullscreen-bg.png) no-repeat left top;
 				position:absolute;
 				color:#fffffe;
 				font-size:13px;
@@ -827,14 +827,14 @@ a:hover{
 				color:#37646F;
 			}
 	.showcaseModal .footer{
-		background:url(../images/ppt/showcase-modal-footer.png) no-repeat center top;
+		background:url(../../images/ppt/showcase-modal-footer.png) no-repeat center top;
 		height:55px;
 		width: 1000px;
 	}
 /* --- buttons --- */
 .bigBtn,
 .bigBtn:visited{
-	background:url(../images/ppt/bigBtn.png) no-repeat 0 0;
+	background:url(../../images/ppt/bigBtn.png) no-repeat 0 0;
 	padding-left:85px;
 	width:auto;
 	display:inline-block;
@@ -847,7 +847,7 @@ a:hover{
 	}
 	.bigBtn .right{
 		cursor:pointer;
-		background:url(../images/ppt/bigBtn.png) no-repeat 100% -154px;
+		background:url(../../images/ppt/bigBtn.png) no-repeat 100% -154px;
 		padding-right:85px;
 		width:auto;
 		display:inline-block;
@@ -857,7 +857,7 @@ a:hover{
 		}
 		.bigBtn .middle{
 			cursor:pointer;
-			background:url(../images/ppt/bigBtn.png) repeat-x 100% -77px;
+			background:url(../../images/ppt/bigBtn.png) repeat-x 100% -77px;
 			width:auto;
 			display:inline-block;
 			height:77px;
@@ -865,18 +865,18 @@ a:hover{
 			overflow:hidden;
 			}
 .bigBtn:hover{
-	background:url(../images/ppt/bigBtn.png) no-repeat 0 -231px;
+	background:url(../../images/ppt/bigBtn.png) no-repeat 0 -231px;
 	}
 	.bigBtn:hover .right{
-		background:url(../images/ppt/bigBtn.png) no-repeat 100% -385px;
+		background:url(../../images/ppt/bigBtn.png) no-repeat 100% -385px;
 		}
 	
 		.bigBtn:hover .middle{
-			background:url(../images/ppt/bigBtn.png) repeat-x 0 -308px;
+			background:url(../../images/ppt/bigBtn.png) repeat-x 0 -308px;
 			}
 .button2,.button2:visited{
 	text-decoration:none !important;
-	background:url(../images/ppt/button2.png) no-repeat left top;
+	background:url(../../images/ppt/button2.png) no-repeat left top;
 	padding-left:10px;
 	width:auto;
 	height:55px;
@@ -886,14 +886,14 @@ a:hover{
 	cursor:pointer;
 }
 	.button2 .right{
-		background:url(../images/ppt/button2.png) no-repeat right -220px;
+		background:url(../../images/ppt/button2.png) no-repeat right -220px;
 		padding-right:10px;
 		height:55px;
 		width:auto;
 		float:left;
 	}
 		.button2 .middle{
-			background:url(../images/ppt/button2.png) repeat-x left -110px;
+			background:url(../../images/ppt/button2.png) repeat-x left -110px;
 			padding:0 5px;
 			height:55px;
 			float:left;
@@ -912,17 +912,17 @@ a:hover{
 		}
 		.button2:hover{
 			text-decoration:none;
-			background:url(../images/ppt/button2.png) no-repeat left -55px;
+			background:url(../../images/ppt/button2.png) no-repeat left -55px;
 		}	
 			.button2:hover > .right{
-				background:url(../images/ppt/button2.png) no-repeat right bottom;
+				background:url(../../images/ppt/button2.png) no-repeat right bottom;
 			}	
 			.button2:hover > .right .middle{
-				background:url(../images/ppt/button2.png) repeat-x left -165px;
+				background:url(../../images/ppt/button2.png) repeat-x left -165px;
 			}
 .button3,.button3:visited{
 	text-decoration:none !important;
-	background:url(../images/ppt/button3.png) no-repeat left top;
+	background:url(../../images/ppt/button3.png) no-repeat left top;
 	padding-left:10px;
 	width:auto;
 	height:33px;
@@ -932,14 +932,14 @@ a:hover{
 	cursor:pointer;
 }
 	.button3 .right{
-		background:url(../images/ppt/button3.png) no-repeat right -132px;
+		background:url(../../images/ppt/button3.png) no-repeat right -132px;
 		padding-right:10px;
 		height:33px;
 		width:auto;
 		float:left;
 	}
 		.button3 .middle{
-			background:url(../images/ppt/button3.png) repeat-x left -66px;
+			background:url(../../images/ppt/button3.png) repeat-x left -66px;
 			padding:0 5px;
 			height:33px;
 			float:left;
@@ -958,11 +958,11 @@ a:hover{
 		}
 		.button3:hover{
 			text-decoration:none;
-			background:url(../images/ppt/button3.png) no-repeat left -33px;
+			background:url(../../images/ppt/button3.png) no-repeat left -33px;
 		}	
 			.button3:hover > .right{
-				background:url(../images/ppt/button3.png) no-repeat right bottom;
+				background:url(../../images/ppt/button3.png) no-repeat right bottom;
 			}	
 			.button3:hover > .right .middle{
-				background:url(../images/ppt/button3.png) repeat-x left -99px;
+				background:url(../../images/ppt/button3.png) repeat-x left -99px;
 			}
