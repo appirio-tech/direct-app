@@ -129,9 +129,13 @@ $(document).ready(function() {
      */
     function truncateVolumeViewSummary(table){
         var truncate = false;
-        var cols = table.find("th").length -2;
-        var minColWidth = 150;  // to make sure that the min width as 120px
-        if(table.width() >= cols * minColWidth + 190){
+        // the number of columns except total
+        var cols = table.find("th").length - 1;
+
+        var minFullColWidth = 150;
+        var minShortColWidth = 80;
+        var totalColumnWidth = 90;
+        if(table.width() >= cols * minFullColWidth + totalColumnWidth){
             table.find("th span.full").show();
             table.find("th span.short").hide();
         }else{
@@ -142,40 +146,22 @@ $(document).ready(function() {
 
         var width = '100%';
 
-        if(table.parent().width() < cols * 80 + 190 ){
-            width =  cols * 80 + 190 + "px";
+        if(table.parent().width() < cols * minShortColWidth + totalColumnWidth ){
+            width =  cols * minShortColWidth + totalColumnWidth;
             $(".volumeView .summary .tabsContent").height('140');
         } else {
+            width = $("div.tableScroll").width();
             $(".volumeView .summary .tabsContent").height('auto');
         }
 
-        /* scroll bar */
-        if(truncate){
-            $("col.data").attr("width", 80);
-            table.css({
-                "width" : width
-            })
+        table.css({
+            "width" : width
+        });
 
-            var colWidth = (table.width() - 190) / cols;
+        var colWidth = (width - 90) / cols;
+        $("col.data").attr("width", colWidth + "px");
 
-            $("col.data").attr("width", colWidth + "px");
-
-        } else {
-            table.css({
-                "width" : width
-            })
-
-            // var colWidth = (table.width() - 190) / cols;
-
-            // $("col.data").attr("width", colWidth + "px");
-        }
-//
-//        var firstColumn = Math.ceil(10000 / table.width());
-//        var dataColumn = Math.floor((100 - firstColumn) / (cols + 1));
-//        var lastColumn = 100 - firstColumn - (cols * dataColumn);
-//        $(".volumeView .summary table col:first").attr("width", firstColumn + "%")
-//        $("col.data").attr("width", dataColumn + "%");
-//        $(".volumeView .summary table col:last").attr("width", lastColumn + "%")
+        $(".volumeView .summary .tableFixed table thead tr").css('height', $(".volumeView .summary .tableScroll table thead tr").height());
     }
 
 
@@ -253,13 +239,13 @@ $(document).ready(function() {
         // clear the table first
         $(".volumeView .summary .data, .volumeView .summary .total").remove();
 
-        var table = $(".volumeView .tabsContent table");
-        var col = $(".volumeView .tabsContent table colgroup");
-        var thead = $(".volumeView .tabsContent table thead tr");
-        var avgCompleted = $(".volumeView .tabsContent tbody tr:eq(0)");
-        var avgFailed = $(".volumeView .tabsContent tbody tr:eq(1)");
-        var totalCompleted = $(".volumeView .tabsContent tbody tr:eq(2)");
-        var totalFailed = $(".volumeView .tabsContent tbody tr:eq(3)");
+        var table = $(".volumeView .tabsContent .tableScroll table");
+        var col = $(".volumeView .tabsContent .tableScroll table colgroup");
+        var thead = $(".volumeView .tabsContent .tableScroll table thead tr");
+        var avgCompleted = $(".volumeView .tabsContent .tableScroll tbody tr:eq(0)");
+        var avgFailed = $(".volumeView .tabsContent .tableScroll tbody tr:eq(1)");
+        var totalCompleted = $(".volumeView .tabsContent .tableScroll tbody tr:eq(2)");
+        var totalFailed = $(".volumeView .tabsContent .tableScroll tbody tr:eq(3)");
         var avgCompletedTotal = 0; var avgFailedTotal = 0; var totalCompletedTotal = 0; var totalFailedTotal = 0;
 
         $.each(summaryData, function(key, value) {
@@ -383,7 +369,7 @@ $(document).ready(function() {
                                 .trigger('change');
 
                             addDataToVolumeSummary(summaryData);
-                            truncateVolumeViewSummary($(".volumeView .summary table"));
+                            truncateVolumeViewSummary($(".volumeView .summary .tableScroll table"));
                             drawVolumeChart(parseVolumeChartData(chartData, $(".volumeView .timeDimension select").val()));
 
                         },
@@ -606,7 +592,7 @@ $(document).ready(function() {
 
             if(resize) {
                 drawVolumeChart(parseVolumeChartData(chartDataCache, $(".volumeView .timeDimension select").val()));
-                truncateVolumeViewSummary($(".volumeView .summary table"));
+                truncateVolumeViewSummary($(".volumeView .summary .tableScroll table"));
             }
 
         }

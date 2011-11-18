@@ -993,10 +993,20 @@ td.fontGreen{
 			border-bottom:1px solid #cad9e5;
 			background:#e1f2ff;
 			padding:9px 0 0px;
-            overflow:auto;
+            overflow:hidden;
             height:auto;
         }
-			.volumeView .summary .tabsContent table{
+			.volumeView .summary .tabsContent .tableFixed{
+				 float:left;
+                 width:110px;
+            }
+			.volumeView .summary .tabsContent .tableScroll{
+                margin-left:110px;
+                overflow:auto;
+                height: 100%;
+            }
+
+            .volumeView .summary .tabsContent table{
 				width:100%;
 				color:#2882ff;
             }
