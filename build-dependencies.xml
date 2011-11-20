@@ -65,6 +65,11 @@
   <property name="client_project_entities_dao_validator.path" value="client_project_entities_dao_validator" />
   <property name="client_project_entities_dao_validator.jar" value="${tcs_libdir}/${client_project_entities_dao_validator.path}/${client_project_entities_dao_validator.jar.name}" />
 
+  <property name="client_invoice_entities_dao.version" value="1.0.0" />
+  <property name="client_invoice_entities_dao.jar.name" value="client_invoice_entities_dao.jar" />
+  <property name="client_invoice_entities_dao.path" value="client_invoice_entities_dao/${client_invoice_entities_dao.version}" />
+  <property name="client_invoice_entities_dao.jar" value="${tcs_libdir}/${client_invoice_entities_dao.path}/${client_invoice_entities_dao.jar.name}" />
+  
   <property name="cloud_vm_service.version" value="1.0.0" />
   <property name="cloud_vm_service.jar.name" value="cloud_vm_service.jar" />
   <property name="cloud_vm_service.path" value="cloud_vm_service/${cloud_vm_service.version}" />
@@ -663,6 +668,7 @@
     <pathelement location="${catalog_services.jar}" />
     <pathelement location="${admin_service_facade.jar}" />
     <pathelement location="${client_project_entities_dao.jar}" />
+    <pathelement location="${client_invoice_entities_dao.jar}" />
     <pathelement location="${deliverable_management.jar}" />
     <pathelement location="${phase_management.jar}" />
     <pathelement location="${pipeline_service.jar}" />
