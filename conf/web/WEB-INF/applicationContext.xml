@@ -514,10 +514,19 @@
         <property name="viewData.showJustForm" value="true"/>
     </bean>
 
+    <bean id="updateInvoiceRecordsAction"
+          class="com.topcoder.direct.services.view.action.report.UpdateInvoiceRecordsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="invoiceRecordDAO" ref="invoiceRecordDAO"/>
+        <property name="lookupDAO" ref="invoiceLookupDAO"/>
+    </bean>
+    
     <bean id="dashboardBillingCostReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardBillingCostReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="viewData.showJustForm" value="false"/>
+        <property name="invoiceRecordDAO" ref="invoiceRecordDAO"/>
+        <property name="lookupDAO" ref="invoiceLookupDAO"/>
     </bean>
 
     <bean id="enterpriseDashboardAction"
@@ -552,6 +561,7 @@
         <property name="mappingResources">
             <list>
 			    <value>/META-INF/mapping.hbm.xml</value>
+                <value>META-INF/invoiceMapping.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -573,6 +583,11 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="invoiceBaseDAO" abstract="true">
+        <property name="loggerName" value="invoiceBaseDAO"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
     <bean name="copilotProfileDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProfileDAOImpl"
           parent="copilotBaseDAO"/>
 
@@ -582,6 +597,12 @@
     <bean name="lookupDAO" class="com.topcoder.direct.services.copilot.dao.impl.LookupDAOImpl"
           parent="copilotBaseDAO"/>
 
+    <bean name="invoiceRecordDAO" class="com.topcoder.clients.invoices.dao.impl.InvoiceRecordDAOImpl"
+          parent="invoiceBaseDAO"/>
+          
+    <bean name="invoiceLookupDAO" class="com.topcoder.clients.invoices.dao.impl.LookupDAOImpl"
+          parent="invoiceBaseDAO"/>
+          
     <bean id="copilotManageAction"
       class="com.topcoder.direct.services.view.action.copilot.CopilotManageAction"
       scope="prototype" parent="baseDirectStrutsAction">
