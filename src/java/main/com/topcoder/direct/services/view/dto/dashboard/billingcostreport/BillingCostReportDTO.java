@@ -38,6 +38,13 @@ import com.topcoder.excel.output.WorkbookSavingException;
  * </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.1 (TC Accounting Tracking Invoiced Payments) change notes:
+ * <ol>
+ *   <li>Added {@link #canProcessInvoices} field.</li>
+ * </ol>
+ * </p>
+ * 
  * @author Blues, TCSASSEMBER
  * @version  1.1 (TC Cockpit Billing Cost Report Assembly v1.0)
  */
@@ -53,6 +60,13 @@ public class BillingCostReportDTO extends ReportBaseDTO {
      */
     private Map<Long, String> paymentTypes;
 
+    /**
+     * <p>A flag indicates whether the user can perform operators on invoice records.</p>
+     * 
+     * @since 1.1
+     */
+    private boolean canProcessInvoices;
+    
     /**
      * Gets the total cost amount of this billing cost report.
      *
@@ -111,6 +125,26 @@ public class BillingCostReportDTO extends ReportBaseDTO {
         return ReportType.BILLING_COST;
     }
 
+    /**
+     * Gets the flag indicates whether the user can perform operators on invoice records.
+     * 
+     * @return the flag indicates whether the user can perform operators on invoice records.
+     * @since 1.1
+     */
+    public boolean isCanProcessInvoices() {
+        return canProcessInvoices;
+    }
+
+    /**
+     * Sets the flag indicates whether the user can perform operators on invoice records.
+     * 
+     * @param canProcessInvoices the flag indicates whether the user can perform operators on invoice records.
+     * @since 1.1
+     */
+    public void setCanProcessInvoices(boolean canProcessInvoices) {
+        this.canProcessInvoices = canProcessInvoices;
+    }
+    
     /**
      * <p>Gets the excel file download stream for billing cost report.</p>
      *

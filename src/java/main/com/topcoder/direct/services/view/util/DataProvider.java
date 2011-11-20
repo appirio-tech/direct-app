@@ -3,24 +3,100 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
+
+import com.topcoder.clients.invoices.dao.InvoiceDAOException;
+import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
+import com.topcoder.clients.invoices.model.InvoiceRecord;
+import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.copilot.model.CopilotProject;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.*;
-import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.direct.services.view.dto.ActivityDTO;
+import com.topcoder.direct.services.view.dto.ActivityType;
+import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
+import com.topcoder.direct.services.view.dto.IdNamePair;
+import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
+import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
+import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
+import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
+import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
+import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
+import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
+import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
+import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
+import com.topcoder.direct.services.view.dto.contest.RunningPhaseStatus;
+import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
-import com.topcoder.direct.services.view.dto.dashboard.*;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestDetailDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
-import com.topcoder.direct.services.view.dto.project.*;
+import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
@@ -29,24 +105,12 @@ import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
+import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
 import com.topcoder.web.common.tag.HandleTag;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.lang.StringUtils;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Map.Entry;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -310,7 +374,16 @@ import java.util.Map.Entry;
  * </ol>
  * </p>
  *
- *
+ * <p>
+ * Version 2.9.1 (TC Accounting Tracking Invoiced Payments) change notes:
+ *   <ol>
+ *     <li>Added {@link #concatenate(Iterable, String)} method to concatenate iterable objects to string.</li>
+ *     <li>Added {@link #getInvoiceRecordRelatedData(List, List)} method to get the invoice record related data for payment data.</li>
+ *     <li>Updated {@link #getDashboardBillingCostReport(InvoiceRecordDAO, List, long[], long[], long[], long[], long[], long[], long[], long, Date, Date, Map, Map)}
+ *     method to get payment_id, processed fields for billing cost data.</li>
+ *   </ol>
+ * </p>
+ * 
  * <p>
  * Version 3.0 (Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly) change notes:
  *   <ol>
@@ -3382,6 +3455,8 @@ public class DataProvider {
      * Gets the billing cost report entries with the given parameters. The method returns a map,
      * the key is the contest id, the value is a list of billing cost entries.
      *
+     * @param invoiceRecordDAO the <code>InvoiceRecordDAO</code> instance.
+     * @param invoiceTypes a <code>List</code> providing all the invoice types.
      * @param currentUser the current user.
      * @param projectId the direct project id.
      * @param projectCategoryIds the software project category ides.
@@ -3399,7 +3474,9 @@ public class DataProvider {
      * @throws Exception if any error occurs.
      * @since 2.5.0
      */
-    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(TCSubject currentUser, long projectId,
+    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(InvoiceRecordDAO invoiceRecordDAO,
+                                                                                           List<InvoiceType> invoiceTypes,
+                                                                                           TCSubject currentUser, long projectId,
                                                                                            long[] projectCategoryIds,
                                                                                            long[] studioProjectCategoryIds,
                                                                                            long[] paymentTypeIds,
@@ -3516,6 +3593,9 @@ public class DataProvider {
             if (row.getItem("contest_name").getResultData() != null) {
                 contest.setName(row.getStringItem("contest_name"));
             }
+            if (row.getItem("payment_id").getResultData() != null) {
+                costDTO.setPaymentId(row.getLongItem("payment_id"));
+            }
 
             if (row.getItem("client_id").getResultData() != null) {
                 client.setId(row.getLongItem("client_id"));
@@ -3567,6 +3647,10 @@ public class DataProvider {
                     costDTO.setStudio(true);
                 }
             }
+            
+            if (row.getItem("processed").getResultData() != null) {
+                costDTO.setProcessed(row.getBooleanItem("processed"));
+            }
 
 
             costDTO.setClient(client);
@@ -3576,47 +3660,19 @@ public class DataProvider {
             costDTO.setContestType(contestCategory);
             costDTO.setPaymentType(paymentType);
 
-            double contestFee = 0;
-
-            // get the contest fee of the contest
-            if (row.getItem("contest_fee").getResultData() != null) {
-                contestFee = row.getDoubleItem("contest_fee");
-            }
-
-
             List<BillingCostReportEntryDTO> entries;
 
             if (!data.containsKey(costDTO.getContest().getId())) {
                 entries = new ArrayList<BillingCostReportEntryDTO>();
                 data.put(costDTO.getContest().getId(), entries);
-
-                // add entry for contest fee if the contest is first time processed
-                BillingCostReportEntryDTO contestFeeEntry = (BillingCostReportEntryDTO) BeanUtils.cloneBean(costDTO);
-                contestFeeEntry.setPaymentType("Contest Fee");
-                contestFeeEntry.setPaymentAmount(contestFee);
-                contestFeeEntry.setPaymentDate(contestFeeEntry.getLaunchDate());
-
-
-                // add contest fee if the payment type filter allows
-                if (paymentTypeFilter.contains(1L)) {
-                    // check date range
-                    if (contestFeeEntry.getPaymentDate().after(startDate) && contestFeeEntry.getPaymentDate().before(endDate)) {
-                        entries.add(contestFeeEntry);
-                    }
-
-                }
-
             } else {
                 entries = data.get(costDTO.getContest().getId());
-
             }
 
             // add the entry if payment type filter allows
             if (paymentTypeFilter.contains(paymentTypesMapping.get(paymentType.trim().toLowerCase()))) {
                 entries.add(costDTO);
             }
-
-           
         }
 
         return data;
@@ -3912,6 +3968,25 @@ public class DataProvider {
         return b.toString();
     }
 
+    /**
+     * <p>Build a string concatenating the specified values separated with specified delimiter.</p>
+     *  
+     * @param items a <code>long</code> Iterable providing the values to be concatenated. 
+     * @param delimiter a <code>String</code> providing the delimiter to be inserted between concatenated items.
+     * @return a <code>String</code> providing the concatenated item values.
+     * @since 2.9.1
+     */
+    private static String concatenate(Iterable<Long> items, String delimiter) {
+        StringBuilder b = new StringBuilder();
+        for (Long id : items) {
+            if (b.length() > 0) {
+                b.append(delimiter);
+            }
+            b.append(id);
+        }
+        return b.toString();
+    }
+    
     /**
      * <p>Gets the details on contests associated with the specified project.</p>
      *
@@ -4360,6 +4435,73 @@ public class DataProvider {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * <p>Gets the <code>InvoiceRecordBriefDTO</code> data for multi payment data. In <code>invoice_record</code> table, payment_id can unique
+     * determine contest_id, billing_account, invoice_type_id. contest_id can unique determine billing_account. So we should NOT get these data from
+     * request parameters because it may case data inconsistency in <code>invoice_record</code> table if user contruct URL manually.</p>
+     * 
+     * <p>If payment_id is not 0, contest_id, billing_account_id, invoce_type will be returned from database using payment_id.</p>
+     * <p>If payment_id is 0, billing_account_id will be returned from database using contest_id.</p>
+     * 
+     * @param contestIds the contest id of the payment data. Only used when corresponding payment id is zero.
+     * @param paymentIds the payment id of the payment data.
+     * @return a <code>List</code> providing the contest_id, billing_account_id, invoice_type data of the payment data.
+     * @throws Exception if any error occurs.
+     * @since 2.9.1
+     */
+    public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<Long> contestIds, List<Long> paymentIds) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("tc_direct_contest_payment_invoice");
+        List<Long> paymentIdsList = new ArrayList<Long>();
+        paymentIdsList.add(0L);
+        // get unique contest IDs
+        Set<Long> contestIdsSet = new HashSet<Long>();
+        contestIdsSet.add(0L);
+        // prepare for the query parameters
+        for (int i = 0; i < contestIds.size(); i++) {
+            if (paymentIds.get(i) > 0) {
+                paymentIdsList.add(paymentIds.get(i));
+            } else {
+                // use contest_id if payment_id is zero
+                contestIdsSet.add(contestIds.get(i));
+            }
+        }
+        request.setProperty("pids", concatenate(contestIdsSet, ","));
+        request.setProperty("payids", concatenate(paymentIdsList, ","));
+        final Map<String, ResultSetContainer> results = dataAccessor.getData(request);
+        // query result by contestIds
+        final ResultSetContainer contestResultSetContainer = results.get("tc_direct_contest_invoice");
+        // query result by paymentIds
+        final ResultSetContainer paymentResultSetContainer = results.get("tc_direct_payment_invoice");
+        Map<Long, InvoiceRecordBriefDTO> contestInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
+        Map<Long, InvoiceRecordBriefDTO> paymentInvoiceMap = new HashMap<Long, InvoiceRecordBriefDTO>();
+        for (int i = 0; i < contestResultSetContainer.size(); i++) {
+            InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
+            record.setBillingAccountId(contestResultSetContainer.getLongItem(i, "billing_account_id"));
+            record.setContestId(contestResultSetContainer.getLongItem(i, "contest_id"));
+            contestInvoiceMap.put(record.getContestId(), record);
+        }
+        for (int i = 0; i < paymentResultSetContainer.size(); i++) {
+            InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
+            record.setBillingAccountId(paymentResultSetContainer.getLongItem(i, "billing_account_id"));
+            record.setContestId(paymentResultSetContainer.getLongItem(i, "contest_id"));
+            record.setInvoiceType(paymentResultSetContainer.getStringItem(i, "invoice_type"));
+            long paymentId = paymentResultSetContainer.getLongItem(i, "payment_id");
+            paymentInvoiceMap.put(paymentId, record);
+        }
+        
+        List<InvoiceRecordBriefDTO> result = new ArrayList<InvoiceRecordBriefDTO>();
+        for (int i = 0; i < contestIds.size(); i++) {
+            if (paymentIds.get(i) > 0) {
+                result.add(paymentInvoiceMap.get(paymentIds.get(i)));
+            } else {
+                result.add(contestInvoiceMap.get(contestIds.get(i)));
+            }
+        }
+        return result;
     }
 }
 

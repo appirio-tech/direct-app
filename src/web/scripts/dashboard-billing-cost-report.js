@@ -7,6 +7,8 @@
  * - Change parameter name from billingAccountIds to billingAccount.
  * - Change parameter name from customerIds to customerId.
  * 
+ * Version 1.1 (TC Accounting Tracking Invoiced Payments) change notes: Add logic to update the invoice record.
+ *
  * Submits the billing cost report form and trigger cost report excel download.
  */
 function getBillingCostReportAsExcel() {
@@ -208,4 +210,70 @@ $(document).ready(function() {
         });
 
     });
+    
+    $("#invoiceRecordSelectAll").click(function(event) {
+        event.stopPropagation();
+        var checked = $(this).is(":checked");
+        var contestIds = [];
+        var paymentIds = [];
+        var invoiceTypeNames = [];
+        var processeds = [];
+        var allBox = $(this);
+        $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").each(function() {
+            if ($(this).is(":checked") != checked) {
+                contestIds.push($(this).attr("contestid"));
+                paymentIds.push($(this).attr("paymentid"));
+                invoiceTypeNames.push($(this).attr("invoicetype"));
+                processeds.push(checked);
+            }
+        });
+        if (contestIds.length == 0) return;
+        $(this).attr("disabled","disabled");
+        $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("disabled","disabled");
+        updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, processeds, function() {
+            allBox.attr("disabled","");
+            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("disabled","");
+            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("checked", checked ? "checked" : "");
+        }, function() {
+            allBox.attr("disabled","");
+            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("disabled","");
+        });
+    });
 });
+
+/**
+ * Update the invoice records.
+ * 
+ * @param contestIds the contest IDs of the invoice records.
+ * @param paymentIds the payment IDs of the invoice records.
+ * @param invoiceTypeNames the invoice type names of the invoice records.
+ * @param processeds the processed flags of the invoice records.
+ * @param succCallback the callback function which will be called when AJAX completed.
+ * @param errorCallback the callback function which will be called when AJAX failed.
+ */
+function updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, processeds, succCallback, errorCallback) {
+	if (contestIds.length == 0) return;
+    var data = {contestIds: contestIds, paymentIds: paymentIds, invoiceTypeNames: invoiceTypeNames, processeds: processeds};
+    $.ajax({
+        type: 'POST',
+        url:'updateInvoiceRecords',
+        data: data,
+        dataType: "json",
+        cache:false,
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    if (succCallback) {
+                        succCallback();
+                    }
+                },
+                function(errorMessage) {
+                    if (errorCallback) {
+                        errorCallback();
+                    }
+                    showServerError(errorMessage);
+                }
+            )
+        }
+    });
+}

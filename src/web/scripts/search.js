@@ -33,8 +33,11 @@
  *  Version 1.7.1 - (Release Assembly - TopCoder Cockpit Project Status Management) changes:
  *  - Update the codes to initialize the project result table, two columns added
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin
- * @version 1.7.1
+ *  Version 1.7.2 - (TC Accounting Tracking Invoiced Payments) changes:
+ *  - Add logic to update the invoice records in billing cost report page.
+ * 
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, TCSASSEMBER
+ * @version 1.7.2
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -556,8 +559,63 @@ $(document).ready(function() {
             ]
 
     });
-
+    
+    $.fn.dataTableExt.afnSortData['dom-checkbox'] = function(oSettings, iColumn) {
+        var aData = [];
+        $('td:eq('+iColumn+') input', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
+            aData.push( this.checked==true ? "1" : "0" );
+        });
+        return aData;
+    };
+    var ths = $("#billingCostReportSection .paginatedDataTable thead th").length - 1;
+    var aoColumns = [
+                { "sType": "simple-date" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "simple-date" },
+                { "sType": "simple-date" },
+                { "sType": "html" },
+                { "sType": "money" }
+            ];
+    if (ths == 14) {
+        aoColumns.push({ "sSortDataType": "dom-checkbox" });
+    }
     $("#billingCostReportSection .paginatedDataTable").dataTable({
+        "fnDrawCallback": function() {
+            if ($("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:checked)").length == 0) {
+                $("#invoiceRecordSelectAll").attr("checked", "checked");
+            } else {
+                $("#invoiceRecordSelectAll").attr("checked", "");
+            }
+            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").unbind("click").click(function() {
+                var contestIds = [$(this).attr("contestid")];
+                var paymentIds= [$(this).attr("paymentid")];
+                var invoiceTypeNames = [$(this).attr("invoicetype")];
+                var processeds = [$(this).is(":checked")];
+                var checkbox = $(this);
+                checkbox.attr("disabled", "disabled");
+                $("#invoiceRecordSelectAll").attr("disabled", "disabled");
+                updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, processeds, function() {
+                    checkbox.attr("disabled", "");
+                    $("#invoiceRecordSelectAll").attr("disabled", "");
+                    if ($("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:checked)").length == 0) {
+                        $("#invoiceRecordSelectAll").attr("checked", "checked");
+                    } else {
+                        $("#invoiceRecordSelectAll").attr("checked", "");
+                    }
+                }, function() {
+                    checkbox.attr("disabled", "");
+                    $("#invoiceRecordSelectAll").attr("disabled", "");
+                    checkbox.attr("checked", !processeds[0] ? "checked" : "");
+                });
+            });
+        },
         "iDisplayLength": 50,
         "bFilter": false,
         "bSort": true,
@@ -568,21 +626,7 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "sDom": 'rti<"bottom2"fp><"bottom1"l',
         "aaSorting": [[4,'asc']],
-        "aoColumns": [
-                { "sType": "simple-date" },
-                { "sType": "html" },
-		{ "sType": "html" },
-		{ "sType": "html" },
-		{ "sType": "html" },
-                { "sType": "html" },
-		{ "sType": "html" },
-                { "sType": "html" },
-                { "sType": "html" },
-                { "sType": "simple-date" },
-                { "sType": "simple-date" },
-                { "sType": "html" },
-                { "sType": "money" }
-            ]
+        "aoColumns": aoColumns
 
     });
 

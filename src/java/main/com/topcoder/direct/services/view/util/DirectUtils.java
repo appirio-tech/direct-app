@@ -17,6 +17,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
@@ -253,8 +254,16 @@ import com.topcoder.shared.util.dwload.CacheClearer;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.7.7 (TC Accounting Tracking Invoiced Payments) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getInvoiceType(String, List)} to get invoice type by the name of invoice type.</li>
+ *     <li>Added {@link #canPerformInvoiceRecords(TCSubject)} method.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv
- * @version 1.7.6
+ * @version 1.7.7
  */
 public final class DirectUtils {
     /**
@@ -1587,5 +1596,33 @@ public final class DirectUtils {
         } catch (Exception ignore) {
             ignore.printStackTrace();
         }
+    }
+    
+    /**
+     * Gets the <code>InvoiceType</code> instance by the name of invoice type.
+     * 
+     * @param invoiceTypeName the name of the invoice type.
+     * @param invoiceTypes all the invoice types.
+     * @return the <code>InvoiceType</code> with the specified invoice type name. Null if not found.
+     * @since 1.7.7
+     */
+    public static InvoiceType getInvoiceType(String invoiceTypeName, List<InvoiceType> invoiceTypes) {
+        for (InvoiceType invoiceType : invoiceTypes) {
+            if (invoiceType.getName().equals(invoiceTypeName)) {
+                return invoiceType;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Checks whether the user can perform operations on invoice records.
+     * 
+     * @param tcSubject the user.
+     * @return true if the user can perform operations on invoice records, false otherwise.
+     * @since 1.7.7
+     */
+    public static boolean canPerformInvoiceRecords(TCSubject tcSubject) {
+        return DirectUtils.isCockpitAdmin(tcSubject) || DirectUtils.isRole(tcSubject, "TC Accounting");
     }
 }

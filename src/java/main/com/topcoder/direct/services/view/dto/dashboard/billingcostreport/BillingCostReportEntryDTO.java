@@ -11,8 +11,15 @@ import java.util.Date;
 /**
  * <p> The DTO to store info the one entry of billing cost report data. </p>
  *
- * @author Blues
- * @version 1.0 (TC Cockpit Billing Cost Report Assembly v1.0)
+ * <p>
+ * Version 1.1 (TC Accounting Tracking Invoiced Payments) change log:
+ * <ol>
+ *   <li>Added {@link #paymentId} and {@link #processed} fields. Also the setters/getters were added.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author Blues, flexme
+ * @version 1.1 (TC Cockpit Billing Cost Report Assembly v1.0)
  */
 public class BillingCostReportEntryDTO implements Serializable {
     /**
@@ -76,6 +83,20 @@ public class BillingCostReportEntryDTO implements Serializable {
      */
     private String paymentType;
 
+    /**
+     * The ID of the payment.
+     * 
+     * @since 1.1
+     */
+    private long paymentId;
+
+    /**
+     * A flag indicates whether the invoice record of the payment has been processed.
+     * 
+     * @since 1.1
+     */
+    private boolean processed;
+    
     /**
      * Flag indicates whether the contest payment is of type studio contest.
      */
@@ -326,5 +347,45 @@ public class BillingCostReportEntryDTO implements Serializable {
      */
     public void setPaymentAmount(double paymentAmount) {
         this.paymentAmount = paymentAmount;
+    }
+
+    /**
+     * Gets the ID of the payment.
+     * 
+     * @return the ID of the payment.
+     * @since 1.1
+     */
+    public long getPaymentId() {
+        return paymentId;
+    }
+
+    /**
+     * Sets the ID of the payment.
+     * 
+     * @param paymentId the ID of the payment.
+     * @since 1.1
+     */
+    public void setPaymentId(long paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    /**
+     * Gets the flag indicates whether the invoice record of the payment has been processed.
+     * 
+     * @return true if the invoice record of the payment has been processed, false otherwise.
+     * @since 1.1
+     */
+    public boolean isProcessed() {
+        return processed;
+    }
+
+    /**
+     * Sets the flag indicates whether the invoice record of the payment has been processed.
+     * 
+     * @param processed true if the invoice record of the payment has been processed, false otherwise.
+     * @since 1.1
+     */
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
     }
 }

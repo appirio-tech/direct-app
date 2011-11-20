@@ -9,6 +9,7 @@
   - - Change parameter name from projectIds to projectId.
   - - Change parameter name from billingAccountIds to billingAccount.
   - - Change parameter name from customerIds to customerId.
+  - Version 1.2 (TC Accounting Tracking Invoiced Payments) changes: Display the processed columns in "Billing Cost Detail" table.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -164,7 +165,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="13">
+        <th class="tableTitle" colspan="<c:if test="${viewData.canProcessInvoices}">14</c:if><c:if test="${!viewData.canProcessInvoices}">13</c:if>">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Billing Cost Details</span>
             <span style="float:right;padding-top:4px; padding-right:5px">
@@ -188,6 +189,9 @@
    <!--     <th class="tableColumn">&nbsp;Actual Total Member Cost&nbsp;</th> -->
         <th class="tableColumn">&nbsp;Payment Type&nbsp;</th>
         <th class="tableColumn">&nbsp;Amount&nbsp;</th>
+        <c:if test="${viewData.canProcessInvoices}">
+        <th class="tableColumn">&nbsp;Processed?&nbsp;<br/><input type="checkbox" id="invoiceRecordSelectAll"/></th>
+        </c:if>
     </tr>
     </thead>
     <tbody>
@@ -251,6 +255,11 @@
                 <s:set var="paymentA" value="paymentAmount" scope="page"/>
                 <fmt:formatNumber value="${paymentA}" pattern="$###,##0.00"/>
             </td>
+            <c:if test="${viewData.canProcessInvoices}">
+            <td>
+                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" <c:if test="${processed}">checked="checked"</c:if>/>
+            </td>
+            </c:if>
 
         </tr>
 

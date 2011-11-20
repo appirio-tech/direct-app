@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
+import com.topcoder.clients.invoices.dao.LookupDAO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
@@ -30,6 +32,14 @@ import com.topcoder.direct.services.view.util.DirectUtils;
  *   <li>Updated method {@link #executeAction()()} to pass <code>TCSubject</code> object to method
  *     <code>DataProvided.getDashboardBillingCostReport</code> which will use <code>TCSubject</code> to
  *     check the user's permission.</li>
+ * </ol>
+ * </p>
+ * 
+ * <p>
+ * Version 1.1 (TC Accounting Tracking Invoiced Payments) change notes:
+ * <ol>
+ *   <li>Added {@link #invoiceRecordDAO} and {@link #lookupDAO} fields. Also the setters/getters were added.</li>
+ *   <li>Updated {@link #executeAction()} method to pass extra parameters to <code>DataProvider.getDashboardBillingCostReport</code>.</li>
  * </ol>
  * </p>
  * 
@@ -64,6 +74,22 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             BILLING_COST_REPORT_PAYMENT_TYPES_IDS.put(pt.getDescription().toLowerCase(), pt.getId());
         }
     }
+    
+    /**
+     * <p>The instance of <code>InvoiceRecordDAO</code>. Used to retrieve <code>InvoiceRecord</code> data. Will
+     * be injected by Spring IoC.</p>
+     * 
+     * @since 1.1
+     */
+    private InvoiceRecordDAO invoiceRecordDAO;
+    
+    /**
+     * <p>The instance of <code>LookupDAO</code>. Used to retrieve <code>InvoiceType</code> data. Will
+     * be injected by Spring IoC.</p>
+     * 
+     * @since 1.1
+     */
+    private LookupDAO lookupDAO;
 
     /**
      * <p>Constructs new <code>DashboardBillingCostReportAction</code> instance</p>
@@ -75,6 +101,26 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         setFormData(new DashboardBillingCostReportForm());
     }
 
+    /**
+     * <p>Sets the instance of <code>InvoiceRecordDAO</code>.</p>
+     * 
+     * @param invoiceRecordDAO the instance of <code>InvoiceRecordDAO</code>.
+     * @since 1.1
+     */
+    public void setInvoiceRecordDAO(InvoiceRecordDAO invoiceRecordDAO) {
+        this.invoiceRecordDAO = invoiceRecordDAO;
+    }
+
+    /**
+     * <p>Sets the instance of <code>LookupDAO</code>.</p>
+     * 
+     * @param lookupDAO the instance of <code>LookupDAO</code>.
+     * @since 1.1
+     */
+    public void setLookupDAO(LookupDAO lookupDAO) {
+        this.lookupDAO = lookupDAO;
+    }
+    
     /**
      * <p>Handles the incoming request.
      *
@@ -164,7 +210,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         if (!getViewData().isShowJustForm()) {
 
             Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
-                    (getCurrentUser(), projectId,
+                    (invoiceRecordDAO, lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
                     softwareProjectCategories, studioProjectCategories, paymentTypeIds,
                     customerId, billingAccountId, statusIds, contestId, startDate, endDate,
                     REPORT_CONTEST_STATUS_IDS, BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
@@ -184,5 +230,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             getViewData().setEntries(viewData);
 
         }
+        
+        this.getViewData().setCanProcessInvoices(DirectUtils.canPerformInvoiceRecords(getCurrentUser()));
     }
 }
