@@ -191,12 +191,15 @@ public class ContestFeePersistenceImpl implements ContestFeePersistence {
      */
     public BillingAccount getBillingAccount(long projectId) {
         Session session = getSession();
-        String sql = "SELECT p.project_id, p.company_id, p.name, p.description, p.active, p.start_date, c.name as clientName, "
+        String sql = "SELECT unique p.project_id, p.company_id, p.name, p.description, p.active, p.start_date, c.name as clientName, "
                 + " f.contest_type_id, f.contest_fee, f.project_contest_fee_id, f.is_studio, f.is_deleted " 
                 + " from Project p " 
-                + " left join Project_Contest_Fee f on f.project_id = p.project_id"
-                + " inner join client c on p.client_id = c.client_id"
-                + " where p.project_id=:projectId order by f.contest_type_id";
+                + " left join Project_Contest_Fee f on f.project_id = p.project_id, "
+                + " client_project cp , client c "
+                + " where p.project_id=:projectId  "
+				+ " and cp.client_id = c.client_id "
+                + " and cp.project_id = p.project_id and is_studio = 0 "
+				+ " order by f.contest_type_id";
         SQLQuery query = session.createSQLQuery(sql);
         query.setLong("projectId", projectId);
         List<BillingAccount> list = convertBillingAccounts(query.list());
@@ -232,10 +235,13 @@ public class ContestFeePersistenceImpl implements ContestFeePersistence {
             fetchId = query.list();
 
         }
-        String sql = "SELECT p.project_id, p.company_id, p.name, p.description, p.active, p.start_date, c.name as clientName, "
+        String sql = "SELECT unique p.project_id, p.company_id, p.name, p.description, p.active, p.start_date, c.name as clientName, "
                 + " f.contest_type_id, f.contest_fee, f.project_contest_fee_id, f.is_studio, f.is_deleted "
-                + " from Project p left join Project_Contest_Fee f on f.project_id = p.project_id " 
-                + "  inner join client c on p.client_id = c.client_id";
+                + " from Project p left join Project_Contest_Fee f on f.project_id = p.project_id,  " 
+                 + "  client_project cp , client c "
+                + " where cp.client_id = c.client_id "
+                + " and cp.project_id = p.project_id and is_studio = 0 ";
+				
         if (fetchId != null && !fetchId.isEmpty()) {
             boolean isFirst = true;
             for (Integer i : fetchId) {
