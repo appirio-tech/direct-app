@@ -672,12 +672,6 @@
         <property name="fileUpload" ref="fileUpload"/>
     </bean>
 
-    <bean id="downloadFinalFix"
-          class="com.topcoder.direct.services.view.action.contest.DownloadFinalFixAction"
-          scope="prototype" parent="baseDirectStrutsAction">
-        <property name="fileUpload" ref="fileUpload"/>
-    </bean>
-
      <bean id="updateUserPreferencesAction"
       class="com.topcoder.direct.services.view.action.notification.UpdateUserPreferencesAction"
       scope="prototype" parent="baseDirectStrutsAction">
@@ -776,6 +770,53 @@
         <property name="metadataKeyService" ref="directProjectMetadataKeyService"/>
         <property name="metadataService" ref="directProjectMetadataServices"/>
     </bean>
+    <!-- project fee -->
+    <bean id="projectFeeSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="configurationClass">
+            <value>org.hibernate.cfg.AnnotationConfiguration</value>
+        </property>
+        <property name="configLocation">  
+            <value>classpath:project_fee_hibernate.cfg.xml</value>  
+        </property>  
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.InformixDialect
+                hibernate.show_sql=false
+            </value>
+        </property>
+    </bean>
 
+    <tx:annotation-driven transaction-manager="projectFee" />
+    <bean id="projectFee" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="projectFeeSessionFactory"/>
+    </bean>
 
+    <bean name="contestFeePersistence" class="com.topcoder.accounting.fees.persistence.impl.ContestFeePersistenceImpl" scope="prototype">
+        <property name="loggerName" value="com.topcoder.accounting.fees.persistence.impl.ContestFeePersistenceImpl"/>
+        <property name="sessionFactory" ref="projectFeeSessionFactory"/>
+    </bean>
+    
+    <bean name="contestFeeService" class="com.topcoder.accounting.fees.services.impl.ContestFeeServiceImpl" scope="prototype">
+        <property name="loggerName" value="com.topcoder.accounting.fees.services.impl.ContestFeeServiceImpl"/>
+        <property name="persistence" ref="contestFeePersistence"/>
+    </bean>
+    
+    <bean name="contestFeesHomeAction" class="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction" scope="prototype">
+        <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
+        <property name="contestFeeService" ref="contestFeeService"/>
+    </bean>
+    
+    <bean name="contestFeesDetailsAction" class="com.topcoder.accounting.fees.view.actions.ContestFeesDetailsAction" scope="prototype">
+        <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesDetailsAction"/>
+        <property name="contestFeeService" ref="contestFeeService"/>
+    </bean>
+    
+    <bean name="contestFeeAuthorizationProvider" class="com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider" scope="prototype">
+        <property name="loggerName" value="com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider"/>
+    </bean>
+    
+    <bean name="contestFeeAccessInterceptor" class="com.topcoder.accounting.fees.view.interceptor.ContestFeeAccessInterceptor" scope="prototype">
+        <property name="loggerName" value="com.topcoder.accounting.fees.view.interceptor.ContestFeeAccessInterceptor"/>
+        <property name="contestFeeAuthorizationProvider" ref="contestFeeAuthorizationProvider"/>
+    </bean>
 </beans>

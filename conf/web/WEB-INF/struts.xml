@@ -32,6 +32,7 @@
                          class="authenticationInterceptor"/>
             <interceptor name="loggingInterceptor"
                          class="loggingInterceptor"/>
+            <interceptor name="contestFeeAccessInterceptor" class="contestFeeAccessInterceptor"/>
             <interceptor-stack name="preProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="preProcessor"/>
@@ -68,6 +69,40 @@
                     <param name="logEnabled">true</param>
                     <param name="logLevel">ERROR</param>
                 </interceptor-ref>
+            </interceptor-stack>           
+
+			<interceptor-stack name="projectFeeStack">
+				<interceptor-ref name="loggingInterceptor"/>
+                <interceptor-ref name="exception">
+                    <param name="logEnabled">true</param>
+                    <param name="logLevel">ERROR</param>
+                </interceptor-ref>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="params">
+                  <param name="acceptParamNames">contestId,projectId</param>
+                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                </interceptor-ref>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*,directjs.*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>                
+				<interceptor-ref name="authnInterceptor"/>      
+				<interceptor-ref name="contestFeeAccessInterceptor"/>   
             </interceptor-stack>
         </interceptors>
 
@@ -175,12 +210,6 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
         </action>
-
-         <action name="createNewProject" class="com.topcoder.direct.services.view.action.ForwardAction">
-            <interceptor-ref name="securedPreProcessorStack"/>
-            <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
-        </action>
-
         <action name="createProject" class="com.topcoder.direct.services.view.action.project.CreateProjectAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="redirectAction">
@@ -492,12 +521,30 @@
             <result name="error" type="json" />
         </action>
 
-        <action name="createNewCockpitProjectAjax" class="createNewProjectAction">
+		<action name="createNewCockpitProjectAjax" class="createNewProjectAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
+        </action>
+		<action name="listBillingAccountAction" class="contestFeesHomeAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success">/WEB-INF/billing_account_list.jsp</result>
+        </action>
+        
+        <action name="listContestFeesAction" class="contestFeesDetailsAction" method="list">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success">/WEB-INF/billing_account_contest_fee.jsp</result>
+        </action>
+        
+        <action name="saveContestFeesAction" class="contestFeesDetailsAction" method="save">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">listBillingAccountAction</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="input">/WEB-INF/billing_account_contest_fee.jsp</result>
         </action>
 
     </package>
@@ -747,15 +794,6 @@
         </action>
 
         <action name="downloadSoftwareSubmission" class="downloadSoftwareSubmissionAction">
-            <result type="stream">
-                <param name="contentDisposition">${contentDisposition}</param>
-                <param name="contentType">application/octet-stream</param>
-                <param name="inputName">inputStream</param>
-                <param name="bufferSize">1024</param>
-            </result>
-        </action>
-
-        <action name="downloadFinalFix" class="downloadFinalFix">
             <result type="stream">
                 <param name="contentDisposition">${contentDisposition}</param>
                 <param name="contentType">application/octet-stream</param>
