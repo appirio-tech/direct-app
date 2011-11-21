@@ -1,12 +1,13 @@
 <%--
-  - Author: greatKevin, winsty
-  - Version: 1.2
+  - Author: greatKevin, winsty, TCSASSEMBLER
+  - Version: 1.3
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the user notifications.
   -
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Version 1.2 (TC Direct UI Improvement Assembly 1) changes notes: Solve "checkbox exists when no data in Settings > Permissions".
+  - Version 1.3 (Release Assembly - Project Contest Fee Management) changes notes: Added contest fee option to the page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -35,6 +36,9 @@
     <script type="text/javascript" id="json" src="/scripts/json2.js?v=186145"></script>
 
     <script type="text/javascript">
+		
+		var currentPanel;
+		var canViewContestFeeOption = <s:property value="viewContestFeeOption" />;
         $(function() {
             var limit = 50;
             $(".shorten").each(function() {
@@ -43,49 +47,68 @@
                     $(this).empty().append(chars.substr(0, limit-1)).append("... ");
                 }
             });
-     var pn = "<%=request.getParameter("pn")%>";
-     if (pn !="perm")
-     {
-       document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
-       document.getElementById("area2-noti").innerHTML = "";
-     }
-     else
-     {
-     requestPermissions();
-                 document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
-                 document.getElementById("area2-perm").innerHTML = "";
-     }
-  });
+		   currentPanel = "<%=request.getParameter("pn")%>";
+		   if (currentPanel == "perm") {
+			    requestPermissions();
+			    document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
+			    document.getElementById("area2-perm").innerHTML = "";
+				$("#area1 .areaHeader select").val("perm");
+		   } else if (currentPanel == "fee" && canViewContestFeeOption) {
+			    // for newly added contest-fee
+			    document.getElementById("area1").innerHTML = document.getElementById("area2-fee").innerHTML;
+			    document.getElementById("area2-fee").innerHTML = "";
+				$("#area1 .areaHeader select").val("fee");
+		   } else {		    
+				document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
+				document.getElementById("area2-noti").innerHTML = "";
+				currentPanel = "noti";
+				$("#area1 .areaHeader select").val("noti");
+		   }
+		});
+		
+		// called when the setting-panel selection dropdown list's value is changed
+		function changepn(pn) {
+			if (currentPanel == pn) {
+				return;
+			}
+			if (currentPanel == "noti") {
+				document.getElementById("area2-noti").innerHTML = document.getElementById("area1").innerHTML;
+			} else if (currentPanel == "fee") {
+				// for newly added contest-fee
+				document.getElementById("area2-fee").innerHTML = document.getElementById("area1").innerHTML;
+			} else {
+				document.getElementById("area2-perm").innerHTML = document.getElementById("area1").innerHTML;
+			}
 
-    function changepn(pn) {
-      if (pn == "perm")
-      {
-        $("#projects").after($("#permissions"));
-        $("#permissions_wrapper").remove();
-        $("#projects").remove();
-        $("#permissions").wrap('<div id="projects"/>');
 
-        $("#users").after($("#userTable"));
-                                $("#userTable_wrapper").remove();
-                                $("#users").remove();
-                                $("#userTable").wrap('<div id="users"/>');
+			if (pn == "perm") {
+				$("#projects").after($("#permissions"));
+				$("#permissions_wrapper").remove();
+				$("#projects").remove();
+				$("#permissions").wrap('<div id="projects"/>');
 
-        requestPermissions();
-        document.getElementById("area2-noti").innerHTML = document.getElementById("area1").innerHTML;
-        document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
-        document.getElementById("area2-perm").innerHTML = "";
-                        $("#area1 .areaHeader select").val("perm");
+
+				requestPermissions();							
+
+				document.getElementById("area1").innerHTML = document.getElementById("area2-perm").innerHTML;
+				document.getElementById("area2-perm").innerHTML = "";
+
+                $("#area1 .areaHeader select").val("perm");
                 $(".paging_permission_button .next").removeClass("next");
-      }
-      else
-      {
-        document.getElementById("area2-perm").innerHTML = document.getElementById("area1").innerHTML;
-            document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
-        document.getElementById("area2-noti").innerHTML = "";
-                $("#area1 .areaHeader select").val("noti");
-      }
-    }
 
+			} else if (pn == "noti") {			
+			    document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
+				document.getElementById("area2-noti").innerHTML = "";
+                $("#area1 .areaHeader select").val("noti");
+			} else {
+				// for newly added contest-fee
+				document.getElementById("area1").innerHTML = document.getElementById("area2-fee").innerHTML;
+			    document.getElementById("area2-fee").innerHTML = "";
+				$("#area1 .areaHeader select").val("fee");
+			}
+
+			currentPanel = pn;
+		}
 
       function projects_click(pj) {
         $("#projects").show();
@@ -129,6 +152,7 @@
                     <jsp:include page="/WEB-INF/includes/right.jsp"/>
                     <div id="area1"><!-- the main area -->
                     </div>
+
                     <div id="area2-noti" style="display:none">
                     <div><!-- the main area -->
                         <div class="area1Content">
@@ -144,6 +168,9 @@
                                             <select name="select" onchange="changepn(this.value)">
                                                 <option value="noti">Notifications</option>
                                                 <option value="perm">Permissions</option>
+												<s:if test="viewContestFeeOption">
+													<option value="fee">Contest Fee</option>
+												</s:if>
                                             </select>
                                         </span>
                                     </div>
@@ -331,8 +358,11 @@
                                         Select a Setting Panel:
                                         <span name="settingPanel">
                                         <select name="select" onchange="changepn(this.value)">
-                                <option value="noti">Notifications</option>
+												<option value="noti">Notifications</option>
                                                 <option value="perm" selected>Permissions</option>
+												<s:if test="viewContestFeeOption">
+													<option value="fee">Contest Fee</option>
+												</s:if>
                                         </select>
                                     </span>
                                     </div>
@@ -429,6 +459,36 @@
                         <div class="clear">
                         </div>
                     </div>
+
+
+				  <s:if test="viewContestFeeOption">
+					<div id="area2-fee" style="display:none">
+						<div class="area1Content">
+                        	<div class="currentPage">
+                                <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
+                                <strong>Contest Fee Management</strong>
+                            </div>
+                             
+                            <div class="areaHeader">
+                                <h2 class="title contestTitle">Contest Fee Management</h2>
+                                <div class="select">
+                                        Select a Setting Panel:
+                                        <span name="settingPanel">
+                                        <select name="select" onchange="changepn(this.value)">
+												<option value="noti">Notifications</option>
+                                                <option value="perm">Permissions</option>												
+												<option value="fee">Contest Fee</option>												
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- End .areaHeader -->
+							<div>
+								<p class="billingAccountArchive"><a href='<s:url action="listBillingAccountAction" namespace="/"/>'>Project Contest Fees Management for Billing Accounts</a></p>
+							</div>
+						</div>
+					</div>
+                  </s:if>     
 
                 </div>
                 <!-- End #mainContent -->

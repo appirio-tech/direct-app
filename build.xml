@@ -458,6 +458,7 @@
                 <include name="LDAP.properties" />
                 <include name="test.properties" />
                 <include name="commons-logging.properties" />
+                <include name="project_fee_hibernate.cfg.xml" />
             </fileset>
             <fileset dir="${tokenized_conf}/components">
                 <include name="com/topcoder/security/Util.properties" />

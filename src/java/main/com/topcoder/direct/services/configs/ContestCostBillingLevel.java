@@ -62,6 +62,12 @@ public class ContestCostBillingLevel {
      * </p>
      */
     private double drCost;
+    /**
+     * <p>
+     * The description.
+     * </p>
+     */
+    private String description;
 
     /**
      * <p>
@@ -193,5 +199,26 @@ public class ContestCostBillingLevel {
      */
     public double getDrCost() {
         return this.drCost;
+    }
+    /**
+     * <p>
+     * Gets the <code>description</code> field value.
+     * </p>
+     *
+     * @return the <code>description</code> field value
+     */    
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * <p>
+     * Sets the <code>description</code> field value.
+     * </p>
+     *
+     * @param description the value to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

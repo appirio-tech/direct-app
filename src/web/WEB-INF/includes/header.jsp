@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues
-  - Version: 1.6.0
+  - Author: isv, tangzx, Veve, winsty, Blues, TCSASSEMBLER
+  - Version: 1.6.2
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -18,6 +18,8 @@
   - Version 1.5.4 (TC Direct UI Improvement Assembly 1) changes notes: Solve '"Project" tab is not highlight when select Project'
   - version 1.5.5 (Release Assembly - TC Cockpit Sidebar Header and Footer Update) changes notes: add link to topcoder community site in header
   - Version 1.6 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) changes note: add include to the new modal window template jsp
+  - Version 1.6.1 (Module Assembly - Project Contest Fee Management) changes note: add a contest fee tab.
+  - Version 1.6.2 (Release Assembly - Project Contest Fee Management) changes note: move contest fee into settings tab
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>

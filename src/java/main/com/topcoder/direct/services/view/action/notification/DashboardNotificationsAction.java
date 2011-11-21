@@ -30,9 +30,16 @@ import java.util.Properties;
 
 /**
  * Presents notification settings page in dashboard.
+ * 
+ * <p>
+ * Version 1.1 (Release Assembly - Project Contest Fee Management ) Change notes:
+ *   <ol>
+ *     <li>Added viewContestFeeOption flag to indicate the contest-fee option should be displayed or not</li>
+ *   </ol>
+ * </p>
  *
  * @author TCSDEVELOPER
- * @version 1.0
+ * @version 1.1
  */
 public class DashboardNotificationsAction extends BaseDirectStrutsAction {
     private static final List<UserPreferenceDTO> PREFERENCES;
@@ -47,6 +54,13 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
     private List<ProjectNotification> notifications;
     
     private List<UserPreferenceDTO> preferences;
+    
+    /**
+     * The user can view contest fee option or not.
+     * 
+     * @since 1.1
+     */
+    private boolean viewContestFeeOption;
     
     static {
         PREFERENCES = new ArrayList<UserPreferenceDTO>();
@@ -78,6 +92,8 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         }
 
         request.setAttribute("currentUserHandle", sessionData.getCurrentUserHandle());
+        
+        viewContestFeeOption = DirectUtils.isSuperAdmin(user) || DirectUtils.isTCAccounting(user);
 
         notifications = getContestServiceFacade().getNotificationsForUser(user, user.getUserId());
 
@@ -171,4 +187,24 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
     public void setPreferences(List<UserPreferenceDTO> preferences) {
         this.preferences = preferences;
     }
+
+    /**
+     * Getter for the view contest fee option.
+     * 
+     * @return the view contest fee option.
+     */
+	public boolean isViewContestFeeOption() {
+		return viewContestFeeOption;
+	}
+
+	/**
+	 * Setter for the view contest fee option.
+	 * 
+	 * @param viewContestFeeOption the view contest fee option.
+	 */
+	public void setViewContestFeeOption(boolean viewContestFeeOption) {
+		this.viewContestFeeOption = viewContestFeeOption;
+	}
+    
+    
 }

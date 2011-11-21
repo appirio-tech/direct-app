@@ -32,12 +32,16 @@
  *
  *  Version 1.7.1 - (Release Assembly - TopCoder Cockpit Project Status Management) changes:
  *  - Update the codes to initialize the project result table, two columns added
+ *
+ *  Version 1.7.2 - (Module Assembly - Project Contest Fee Management) changes:
+ *  - Update the codes to add project fees table.
+ *  - New column added to project fees table.
  * 
- *  Version 1.7.2 - (TC Accounting Tracking Invoiced Payments) changes:
+ *  Version 1.7.3 - (TC Accounting Tracking Invoiced Payments) changes:
  *  - Add logic to update the invoice records in billing cost report page.
  * 
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, TCSASSEMBER
- * @version 1.7.2
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, TCSASSEMBLER
+ * @version 1.7.3
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -417,6 +421,28 @@ $(document).ready(function() {
     // sort by start date
     //$.activeContestsDataTable.fnSort( [[3,'desc']] );
 
+    $.billingAccountsDataTable = $("#billingAccounts .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+		"bAutoWidth": false,
+			  "oLanguage": {
+ 			  	"sLengthMenu": sStdMenu + " per page",
+                "sInfoFiltered":""
+ 			  },            
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [[0,'asc']],
+		"aoColumns": [
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "html" }
+           
+			]
+
+    });
+    
     $("#notificationsContent .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
         "bStateSave": true,

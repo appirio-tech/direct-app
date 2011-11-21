@@ -35,8 +35,6 @@ import com.topcoder.service.project.ProjectData;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.management.deliverable.Submission;
@@ -262,8 +260,16 @@ import com.topcoder.shared.util.dwload.CacheClearer;
  *   </ol>
  * </p>
  * 
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv
- * @version 1.7.7
+ * <p>
+ * Version 1.7.8 (Release Assembly - Project Contest Fee Management ) Change notes:
+ *   <ol>
+ *     <li>Added {@link #isTCAccounting(TCSubject)} to check the user is TC Accounting or not.</li>
+ *     <li>Added {@link #isSuperAdmin(TCSubject)} to check the user is TC Admin or not.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, TCSASSEMBLER
+ * @version 1.7.8
  */
 public final class DirectUtils {
     /**
@@ -329,6 +335,16 @@ public final class DirectUtils {
      * Private constant specifying TC operations role.
      */
     private static final String TC_STAFF_ROLE = "TC Staff";
+    
+    /**
+     * The TC Accounting role.
+     */
+    private static final String TC_ACCOUNTING_ROLE = "TC Accounting";
+    
+    /**
+     * The super Admin role.
+     */
+    private static final String SUPER_ADMIN_ROLE = "Admin Super Role";
 
     /**
 
@@ -1100,6 +1116,30 @@ public final class DirectUtils {
             return true;
         }
 
+    }
+    
+    /**
+     * Check if the user is TC Accounting
+     * 
+     * @param tcSubject the user.
+     * @return true if the user is TC Accounting and false otherwise.
+     * 
+     * @since 1.7.7
+     */
+    public static boolean isTCAccounting(TCSubject tcSubject) {
+    	return isRole(tcSubject, TC_ACCOUNTING_ROLE);
+    }
+    
+    /**
+     * Check if the user is super admin
+     * 
+     * @param tcSubject the user.
+     * @return true if the user is super admin and false otherwise.
+     * 
+     * @since 1.7.7
+     */
+    public static boolean isSuperAdmin(TCSubject tcSubject) {
+    	return isRole(tcSubject, SUPER_ADMIN_ROLE);
     }
 
     /**
