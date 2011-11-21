@@ -1663,6 +1663,6 @@ public final class DirectUtils {
      * @since 1.7.7
      */
     public static boolean canPerformInvoiceRecords(TCSubject tcSubject) {
-        return DirectUtils.isCockpitAdmin(tcSubject) || DirectUtils.isRole(tcSubject, "TC Accounting");
+        return DirectUtils.isCockpitAdmin(tcSubject) || DirectUtils.isTCAccounting(tcSubject);
     }
 }
