@@ -191,9 +191,11 @@
 ##########################
 # typical windows configuration
 @loginProcessor@=com.topcoder.direct.services.view.processor.security.MockLoginProcessor
+@pptLoginProcessor@=com.topcoder.ppt.security.MockLoginProcessor
 
 # typical VM configuration
 #@loginProcessor@=com.topcoder.direct.services.view.processor.security.LoginProcessor
+#@pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
 
 ###########################
 # liquidPortalService.xml #
