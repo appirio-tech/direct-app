@@ -188,7 +188,7 @@ import com.topcoder.web.common.tag.HandleTag;
  * <p>
  * Version 2.1.9 (Cockpit - Enterprise Dashboard 2 Assembly 1.0) Change notes:
  *   <ol>
- *     <li>Renamed <code>getEnterpriseStatsForProject</code> method to <code>getEnterpriseStatsForProjects</code> and 
+ *     <li>Renamed <code>getEnterpriseStatsForProject</code> method to <code>getEnterpriseStatsForProjects</code> and
  *     updated it to accept additional parameters for client and billing account IDs.</li>
  *   </ol>
  * </p>
@@ -254,11 +254,11 @@ import com.topcoder.web.common.tag.HandleTag;
  *     <li>Add method.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 2.6.1 (TC Cockpit Enterprise Dashboard Update Cost Breakdown Assembly) Change notes:
  *   <ol>
- *     <li>Added {@link #getDashboardCostBreakDown(long[], long[], Date, Date)} method to get the cost break down data 
+ *     <li>Added {@link #getDashboardCostBreakDown(long[], long[], Date, Date)} method to get the cost break down data
  *     for contests or market.</li>
  *   </ol>
  * </p>
@@ -270,7 +270,7 @@ import com.topcoder.web.common.tag.HandleTag;
  *       <li>Added (@link #getDirectProjectIssues(List<? extends ContestBriefDTO>)} to get issues of the direct project.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 2.6.3 (TC Direct - Page Layout Update Assembly) Change notes:
  *   <ol>
@@ -293,7 +293,7 @@ import com.topcoder.web.common.tag.HandleTag;
  *     <code>Studio</code> contests.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 2.6.6 (TC Direct Contest Dashboard Update Assembly) Change notes:
  *   <ol>
@@ -318,7 +318,7 @@ import com.topcoder.web.common.tag.HandleTag;
  *     <li>Updated {@link #getActiveContests(long)} method to add customer id of each active contest.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 2.7.0 (Direct Replatforming Release 4) Change notes:
  *   <ol>
@@ -340,7 +340,7 @@ import com.topcoder.web.common.tag.HandleTag;
  *     <li>Added method {@link #getProjectForumStatus(long, long)}.</li>
  * </ul>
  * </p>
- * 
+ *
  * <p>
  * Version 2.9.0 (TC Cockpit Participation Metrics Report Part One Assembly 1) change notes:
  *   <ol>
@@ -383,7 +383,7 @@ import com.topcoder.web.common.tag.HandleTag;
  *     method to get payment_id, processed fields for billing cost data.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 3.0 (Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly) change notes:
  *   <ol>
@@ -418,7 +418,7 @@ public class DataProvider {
         countReq.setContentHandle("member_count");
         return countDai.getData(countReq).get("member_count").getIntItem(0, "member_count");
     }
-    
+
      /**
      * Gets the copilot user ids for the given direct project.
      *
@@ -630,7 +630,7 @@ public class DataProvider {
         {
             // ignore, if we dont have the query
         }
-        
+
 
         return result;
     }
@@ -739,7 +739,7 @@ public class DataProvider {
      */
     private static ActivityDTO createLatestActivity(ResultSetContainer result, int resultIndex, Map<Long,
             ProjectBriefDTO> directProjectsMap, Map<Long, TypedContestBriefDTO> contestsMap) {
-        
+
             String activityTypeText = result.getStringItem(resultIndex, "activity_type");
             long tcDirectProjectId = result.getLongItem(resultIndex, "tc_direct_project_id");
             String tcDirectProjectName = result.getStringItem(resultIndex, "tc_direct_project_name");
@@ -1115,7 +1115,7 @@ public class DataProvider {
 
         // get current user in session
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
-        
+
         // if user id equals to current user id, get customers for it
         if (currentUser.getUserId() == userId) {
             // get all clients of the user
@@ -1182,7 +1182,7 @@ public class DataProvider {
 
         double draftFee = 0, activeFee = 0, scheduledFee = 0, finishedFee = 0, cancelledFee = 0;
         int draftNum = 0, activeNum = 0, scheduledNum = 0, finishedNum = 0, cancelledNum = 0;
-    
+
         String tcDirectProjectName = "";
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
@@ -1205,7 +1205,7 @@ public class DataProvider {
              } catch(NullPointerException ex) {
                  // ignore the NullPointerException if query result does not have contest_payment column
              }
-            
+
              tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
 
              if(DirectUtils.ACTIVE_STATUS.contains(statusName)) {
@@ -1226,7 +1226,7 @@ public class DataProvider {
              }
 
         }
-        
+
         // direct project info
         project.setId(projectId);
         project.setName(tcDirectProjectName);
@@ -1244,7 +1244,7 @@ public class DataProvider {
         stats.setFeesDraft(draftFee);
         stats.setFeesScheduled(scheduledFee);
         stats.setFeesCancelled(cancelledFee);
-        
+
 
         stats.setProject(project);
 
@@ -1400,10 +1400,10 @@ public class DataProvider {
             }
             catch (NumberFormatException ne)
             {
-		    // ignore
+            // ignore
             }
-				
-			
+
+
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
                 project = createProject(tcDirectProjectId, tcDirectProjectName);
@@ -1475,8 +1475,8 @@ public class DataProvider {
             } catch (NumberFormatException ne) {
                 // ignore
             }
-				
-			
+
+
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
                 project = createProject(tcDirectProjectId, tcDirectProjectName);
@@ -1540,7 +1540,7 @@ public class DataProvider {
             catch (Exception e)
             {
             }
-            
+
 
             final ProjectBriefDTO project;
             if (!projects.containsKey(tcDirectProjectId)) {
@@ -1550,7 +1550,7 @@ public class DataProvider {
                 project = projects.get(tcDirectProjectId);
             }
 
-	        Boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
+            Boolean isStudio = resultContainer.getBooleanItem(i, "is_studio");
             ContestType type = ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
@@ -1686,7 +1686,7 @@ public class DataProvider {
 
             submission.setReviews(reviewsMap.get(submission.getSubmissionId()));
             submission.setScreeningReview(screeningReviewsMap.get(submission.getSubmissionId()));
-            
+
             submissions.add(submission);
 
             Integer placement = submission.getPlacement();
@@ -1951,7 +1951,7 @@ public class DataProvider {
         if ( (projectIds == null || projectIds.length == 0) && (projectCategoriesIds == null || projectCategoriesIds.length == 0) ) {
             return data;
         }
-        
+
         DataAccess dataAccessor;
         Request request = new Request();
         String queryName;
@@ -1988,10 +1988,10 @@ public class DataProvider {
             }
             data.add(dto);
         }
-        
+
         return data;
     }
-    
+
     /**
      * <p>Gets the enterprise-level statistics of contests posted within specified period of time.</p>
      *
@@ -2225,7 +2225,7 @@ public class DataProvider {
         } else {
             return data;
         }
-        
+
         if(monthly) {
             queryName += MONTHLY_SUFFIX;
         }
@@ -2434,7 +2434,7 @@ public class DataProvider {
      */
     public static List<EnterpriseDashboardDetailedProjectStatDTO> getEnterpriseStatsForAllProjects(
         long[] projectCategoryIDs, Date startDate, Date endDate, boolean monthly) throws Exception {
-        
+
         if ((projectCategoryIDs == null) || (projectCategoryIDs.length == 0)) {
             throw new IllegalArgumentException("Project category IDs are not specified");
         }
@@ -2488,7 +2488,7 @@ public class DataProvider {
      * <p>
      * Gets the dashboard data for specified contest.
      * </p>
-     * 
+     *
      * @param contestId
      *            a <code>long</code> providing the ID of a contest to get
      *            dashboard data for.
@@ -2522,18 +2522,18 @@ public class DataProvider {
         // Query database for contest dashboard data
         Map<String, ResultSetContainer> results = dataAccessor.getData(request);
         ContestDashboardDTO dto = new ContestDashboardDTO();
-        
+
         // Analyze current and next phases
         final ResultSetContainer projectPhasesStats = results.get("project_phases_status_replatforming");
-        
+
         dto.setCurrentPhase(new ProjectPhaseDTO());
-        
+
         if (!projectPhasesStats.isEmpty()) {
             List<ProjectPhaseDTO> phases = new ArrayList<ProjectPhaseDTO>();
             boolean findCurrPhase = false;
             Date startTime = null;
             Date endTime = null;
-            
+
             for (ResultSetRow row : projectPhasesStats) {
                 ProjectPhaseDTO phase = new ProjectPhaseDTO();
                 phase.setStartTime(row.getTimestampItem("start_time"));
@@ -2541,21 +2541,21 @@ public class DataProvider {
                 phase.setPhaseName(row.getStringItem("phase_name"));
                 phase.setPhaseType(ProjectPhaseType.findProjectPhaseType(row.getIntItem("phase_type_id")));
                 phase.setPhaseStatus(ProjectPhaseStatus.findProjectPhaseStatus(row.getIntItem("phase_status_id")));
-                
+
                 phases.add(phase);
-                
+
                 if (startTime == null || startTime.after(phase.getStartTime())) {
                     startTime = phase.getStartTime();
                 }
                 if (endTime == null || endTime.before(phase.getEndTime())) {
                     endTime = phase.getEndTime();
                 }
-                
+
                 if (row.getIntItem("phase_status_id") == 2) {
-                    // find current phase 
+                    // find current phase
                     findCurrPhase = true;
                     dto.setCurrentPhase(phase);
-                    
+
                     // set current phase status
                     Date now = new Date();
                     Date currentPhaseEndTime = phase.getEndTime();
@@ -2570,14 +2570,14 @@ public class DataProvider {
                             dto.setCurrentPhaseStatus(RunningPhaseStatus.RUNNING);
                         }
                     }
-                    
+
                 } else if (findCurrPhase) {
                     // find next phase
                     findCurrPhase = false;
                     dto.setNextPhase(phase);
                 }
             }
-            
+
             dto.setStartTime(startTime);
             dto.setEndTime(endTime);
             dto.setAllPhases(phases);
@@ -2595,7 +2595,7 @@ public class DataProvider {
             long registrationPhaseStatus = getLong(row, "registration_phase_status");
 
             if(isStudio) {
-            	dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
             } else if (registrationPhaseStatus == 2) {
                 if (reliabilityTotal >= 200) {
                     dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
@@ -2622,7 +2622,7 @@ public class DataProvider {
         int unansweredForumPostsNumber = 0;
         Date latestTime = null;
 
-		DirectUtils.refreshCache("contest_forum_stats_replatforming");
+        DirectUtils.refreshCache("contest_forum_stats_replatforming");
 
         final ResultSetContainer forumStats = results.get("contest_forum_stats_replatforming");
         if (!forumStats.isEmpty()) {
@@ -2645,7 +2645,7 @@ public class DataProvider {
             {
                  //time from jive is UTC
                 GregorianCalendar calendar = new GregorianCalendar();
-                calendar.setTime(latestTime);  
+                calendar.setTime(latestTime);
                 calendar.set(Calendar.ZONE_OFFSET, 0);
                 latestTime = calendar.getTime();
             }
@@ -2669,16 +2669,16 @@ public class DataProvider {
         {
             latestForumPost.setTimestamp(latestTime);
         }
-        else 
+        else
         {
             latestForumPost.setTimestamp(new Date());
         }
-        
+
         if (latestUserId != 0)
         {
             dto.setLatestForumPost(latestForumPost);
         }
-        
+
         if (!isStudio) {
             dto.setForumURL("https://apps.topcoder.com/forums/?module=Category&categoryID=" + forumId);
         } else {
@@ -2811,11 +2811,11 @@ public class DataProvider {
 
         return result;
     }
-    
+
 
     /**
      * Retrieve copilot project data.
-     * 
+     *
      * @param userId the user id
      * @return copilot projects
      * @throws Exception if any exception occurs
@@ -2879,7 +2879,7 @@ public class DataProvider {
                 CopilotContestDTO contest = new CopilotContestDTO();
                 contest.setContest(projectContest.getContest());
                 contest.setCopilots(new ArrayList<String>());
-                
+
                 contests.put(contest.getContest().getId(), contest);
             }
 
@@ -3004,7 +3004,7 @@ public class DataProvider {
             int submissionsCount = cp.getIntItem("number_of_submission");
             int forumId = -1;
             String forumIdStr = cp.getStringItem("forum_id");
-            
+
             if (!StringUtils.isEmpty(forumIdStr)) {
                 forumId = Integer.parseInt(forumIdStr);
             }
@@ -3016,7 +3016,7 @@ public class DataProvider {
                 project = directProjects.get(directProjectId);
             } else {
                 project = createProject(directProjectId, directProjectName);
-                
+
                 directProjects.put(directProjectId, project);
             }
 
@@ -3036,7 +3036,7 @@ public class DataProvider {
 
         return result;
     }
-	
+
     /**
      * <p>Gets the currently open phases for specified project.</p>
      *
@@ -3191,38 +3191,38 @@ public class DataProvider {
     public static void getDashboardParticipationReport(TCSubject currentUser, long projectId, long[] projectCategoryIds, long clientId, long billingAccountId,
             String[] projectStatus, Date startDate, Date endDate,
             List<ParticipationContestCopilotDTO> contestCopilots, List<ParticipationContestDetailDTO> contestDetails) throws Exception {
-        
+
         if (projectCategoryIds == null || projectCategoryIds.length == 0) {
             return;
         }
         if (projectStatus == null || (projectStatus.length == 0)) {
             return;
         }
-        
+
         // concatenate the filters
         String projectCategoryIDsList = concatenate(projectCategoryIds, ", ");
         Set<String> projectStatusSet = new HashSet<String>();
         for (String status : projectStatus) {
             projectStatusSet.add(status);
         }
-        
+
         // date format to prepare date for query input
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        
+
         if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
             return;
         }
-        
+
         request.setProperty("sdt", dateFormatter.format(startDate));
         request.setProperty("edt", dateFormatter.format(endDate));
         request.setProperty("pcids", projectCategoryIDsList);
         // Command name: dashboard_participation_report
         request.setContentHandle("dashboard_participation_report");
         final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
-        
-        // Get the contest copilots 
+
+        // Get the contest copilots
         final ResultSetContainer conetstCopilotsResult = queryData.get("dashboard_participation_copilots");
         for (ResultSetRow row : conetstCopilotsResult) {
             if (!projectStatusSet.contains(row.getStringItem("contest_status").trim())) {
@@ -3236,7 +3236,7 @@ public class DataProvider {
             }
             contestCopilots.add(copilot);
         }
-        
+
         // Gets the contest participation details
         final ResultSetContainer conetestDetailsResult = queryData.get("dashboard_participation_contest_details");
         for (ResultSetRow row : conetestDetailsResult) {
@@ -3248,7 +3248,7 @@ public class DataProvider {
             IdNamePair directProject = new IdNamePair();
             IdNamePair contest = new IdNamePair();
             IdNamePair contestCategory = new IdNamePair();
-            
+
             ParticipationContestDetailDTO contestDetail = new ParticipationContestDetailDTO();
             if (row.getItem("client_id").getResultData() != null) {
                 client.setId(row.getLongItem("client_id"));
@@ -3298,7 +3298,7 @@ public class DataProvider {
             contestDetails.add(contestDetail);
         }
     }
-    
+
     /**
      * Gets the cost report details with the given paramters. The method returns a list of CostDetailsDTO. Each
      * CostDetailDTO represents cost details of one contest.
@@ -3647,7 +3647,7 @@ public class DataProvider {
                     costDTO.setStudio(true);
                 }
             }
-            
+
             if (row.getItem("processed").getResultData() != null) {
                 costDTO.setProcessed(row.getBooleanItem("processed"));
             }
@@ -3680,7 +3680,7 @@ public class DataProvider {
 
     /**
      * Gets the contest receipt data for a contest.
-     * 
+     *
      * @param contestId the contest id.
      * @param isStudio true if the contest is a studio contest, false otherwise.
      * @return a <code>ContestReceiptDTO</code> instance providing the contest receipt data.
@@ -3688,7 +3688,7 @@ public class DataProvider {
      */
     public static ContestReceiptDTO getContestReceipt(long contestId, boolean isStudio) throws Exception {
         DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
-        
+
         Request request = new Request();
         request.setContentHandle("direct_contest_receipt_replatforming");
         request.setProperty("pj", String.valueOf(contestId));
@@ -3698,7 +3698,7 @@ public class DataProvider {
             return null;
         }
         int row = 0;
-        
+
         ContestReceiptDTO contestReceipt = new ContestReceiptDTO();
         contestReceipt.setFirstPlacePrize(result.getDoubleItem(row, "first_place_prize"));
         contestReceipt.setSecondPlacePrize(result.getDoubleItem(row, "second_place_prize"));
@@ -3715,7 +3715,7 @@ public class DataProvider {
         contestReceipt.setBugFixCost(result.getDoubleItem(row, "bug_fix_cost"));
         contestReceipt.setTotalCost(result.getDoubleItem(row, "total_cost"));
         contestReceipt.setFinished(result.getStringItem(row, "status").trim().equals("Finished"));
-        
+
         return contestReceipt;
     }
 
@@ -3846,7 +3846,7 @@ public class DataProvider {
                                                           ContestStatus status, Date startTime, Date endTime,
                                                           int forumPostsCount, int registrantsCount,
                                                           int submissionsCount, int forumId,
-														  Boolean isStudio) {
+                                                          Boolean isStudio) {
         ProjectContestDTO dto = new ProjectContestDTO();
         dto.setContestType(type);
         dto.setContest(contestBrief);
@@ -3856,8 +3856,8 @@ public class DataProvider {
         dto.setStartTime(startTime);
         dto.setStatus(status);
         dto.setSubmissionsNumber(submissionsCount);
-		dto.setForumId(forumId);
-		dto.setIsStudio(isStudio);
+        dto.setForumId(forumId);
+        dto.setIsStudio(isStudio);
         return dto;
     }
 
@@ -3951,11 +3951,11 @@ public class DataProvider {
 
     /**
      * <p>Build a string concatenating the specified values separated with specified delimiter.</p>
-     *  
-     * @param items a <code>long</code> array providing the values to be concatenated. 
+     *
+     * @param items a <code>long</code> array providing the values to be concatenated.
      * @param delimiter a <code>String</code> providing the delimiter to be inserted between concatenated items.
      * @return a <code>String</code> providing the concatenated item values.
-     * @since 2.1.9 
+     * @since 2.1.9
      */
     private static String concatenate(long[] items, String delimiter) {
         StringBuilder b = new StringBuilder();
@@ -3970,8 +3970,8 @@ public class DataProvider {
 
     /**
      * <p>Build a string concatenating the specified values separated with specified delimiter.</p>
-     *  
-     * @param items a <code>long</code> Iterable providing the values to be concatenated. 
+     *
+     * @param items a <code>long</code> Iterable providing the values to be concatenated.
      * @param delimiter a <code>String</code> providing the delimiter to be inserted between concatenated items.
      * @return a <code>String</code> providing the concatenated item values.
      * @since 2.9.1
@@ -3986,7 +3986,7 @@ public class DataProvider {
         }
         return b.toString();
     }
-    
+
     /**
      * <p>Gets the details on contests associated with the specified project.</p>
      *
@@ -4013,7 +4013,7 @@ public class DataProvider {
             dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         }
 
-		DirectUtils.refreshCache("direct_project_overview_contests_health_replatforming");
+        DirectUtils.refreshCache("direct_project_overview_contests_health_replatforming");
 
         Request request = new Request();
         request.setContentHandle("direct_project_overview_contests_health_replatforming");
@@ -4101,11 +4101,11 @@ public class DataProvider {
 
         return contests;
     }
-	
-	 /**
+
+     /**
      * Gets the documentUrl for the given document id.
      *
-	 * @param documentId the document Id to get url
+     * @param documentId the document Id to get url
      * @return the document Url
      * @throws Exception if can not find the document url
      */
@@ -4274,7 +4274,7 @@ public class DataProvider {
         // Puts result into the map
         for(TcJiraIssue issue : issues) {
             Long projectId = issue.getProjectID();
-           
+
             ContestIssuesTrackingDTO dto;
 
             if(issue.isBugRace()) {
@@ -4284,7 +4284,7 @@ public class DataProvider {
                         dto.getBugRaces().add(issue);
                     }
                 }
-               
+
             } else {
                  if(projectId != null) {
                     dto = idsMap.get(projectId);
@@ -4292,7 +4292,7 @@ public class DataProvider {
                         dto.getIssues().add(issue);
                     }
                 }
-               
+
             }
 
 
@@ -4303,7 +4303,7 @@ public class DataProvider {
 
     /**
      * <p>Gets the number of forum messages for the specified <code>TC Direct</code> project.</p>
-     * 
+     *
      * @param tcDirectProjectId a <code>long</code> providing the ID of TC Direct projects.
      * @return a <code>long</code> providing the number of forum messages for specified project.
      * @throws Exception if an unexpected error occurs.
@@ -4315,7 +4315,7 @@ public class DataProvider {
         request.setContentHandle("tc_direct_project_forum_threads_count");
         request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
 
-        final ResultSetContainer resultContainer 
+        final ResultSetContainer resultContainer
             = dataAccessor.getData(request).get("tc_direct_project_forum_threads_count");
 
         return resultContainer.getLongItem(0, "forum_messages_count");
@@ -4323,15 +4323,15 @@ public class DataProvider {
 
     /**
      * <p>Gets the list of records with statuses for forums for specified <code>TC Direct</code> project.</p>
-     * 
+     *
      *
      * @param tcDirectProjectId a <code>long</code> providing the ID of the TC Direct project.
      * @param userId a <code>long</code> providing the ID of current user.
-     * @return a <code>List</code> of records for forums statuses for project. 
+     * @return a <code>List</code> of records for forums statuses for project.
      * @throws Exception if an unexpected error occurs.
      * @since 2.8.0
      */
-    public static List<ProjectForumStatusDTO> getProjectForumStatus(long tcDirectProjectId, long userId) 
+    public static List<ProjectForumStatusDTO> getProjectForumStatus(long tcDirectProjectId, long userId)
         throws Exception {
         DateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         List<ProjectForumStatusDTO> result = new ArrayList<ProjectForumStatusDTO>();
@@ -4341,7 +4341,7 @@ public class DataProvider {
         request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
         request.setProperty("uid", String.valueOf(userId));
 
-        final ResultSetContainer resultContainer 
+        final ResultSetContainer resultContainer
             = dataAccessor.getData(request).get("tc_direct_project_forum_status");
         for (ResultSetContainer.ResultSetRow row : resultContainer) {
             ProjectForumStatusDTO entry = new ProjectForumStatusDTO();
@@ -4362,11 +4362,11 @@ public class DataProvider {
             entry.setSummary(row.getStringItem("description"));
             result.add(entry);
         }
-        
+
         return result;
     }
-    
-	/**
+
+    /**
      * <p>
      * Gets the mapping to be used for looking up the project copilot types by IDs.
      * </p>
@@ -4390,10 +4390,10 @@ public class DataProvider {
 
         return map;
     }
-        
+
     /**
      * <p>Sets the user id parameter for report query to check the permission.</p>
-     * 
+     *
      * @param request the query request instance.
      * @param currentUser the current user.
      */
@@ -4408,7 +4408,7 @@ public class DataProvider {
 
     /**
      * <p>Sets the common query parameters for the report queries.</p>
-     * 
+     *
      * @param request the query request instance.
      * @param currentUser the current user.
      * @param clientId the client id.
@@ -4427,7 +4427,7 @@ public class DataProvider {
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", String.valueOf(billingAccountId));
             request.setProperty("clientid", "0");
-        } else if (clientId > 0) {
+        } else if (clientId >= 0) {
             request.setProperty("tcdirectid", "0");
             request.setProperty("billingaccountid", "0");
             request.setProperty("clientid", String.valueOf(clientId));
@@ -4436,15 +4436,15 @@ public class DataProvider {
         }
         return true;
     }
-    
+
     /**
      * <p>Gets the <code>InvoiceRecordBriefDTO</code> data for multi payment data. In <code>invoice_record</code> table, payment_id can unique
      * determine contest_id, billing_account, invoice_type_id. contest_id can unique determine billing_account. So we should NOT get these data from
      * request parameters because it may case data inconsistency in <code>invoice_record</code> table if user contruct URL manually.</p>
-     * 
+     *
      * <p>If payment_id is not 0, contest_id, billing_account_id, invoce_type will be returned from database using payment_id.</p>
      * <p>If payment_id is 0, billing_account_id will be returned from database using contest_id.</p>
-     * 
+     *
      * @param contestIds the contest id of the payment data. Only used when corresponding payment id is zero.
      * @param paymentIds the payment id of the payment data.
      * @return a <code>List</code> providing the contest_id, billing_account_id, invoice_type data of the payment data.
@@ -4492,7 +4492,7 @@ public class DataProvider {
             long paymentId = paymentResultSetContainer.getLongItem(i, "payment_id");
             paymentInvoiceMap.put(paymentId, record);
         }
-        
+
         List<InvoiceRecordBriefDTO> result = new ArrayList<InvoiceRecordBriefDTO>();
         for (int i = 0; i < contestIds.size(); i++) {
             if (paymentIds.get(i) > 0) {
