@@ -175,7 +175,9 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             }
         } else {
             // check the customerId parameter
-            checkParameters(customerId, "customerId", customers);
+            if(customerId > 0 ) {
+               checkParameters(customerId, "customerId", customers);
+            }
         }
 
         // If project category IDs are not specified then use all project category Ids
