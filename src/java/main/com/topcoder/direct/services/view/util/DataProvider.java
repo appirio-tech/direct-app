@@ -3526,7 +3526,8 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
 
-        String queryName = "dashboard_billing_cost_report";
+        String commandName = "dashboard_billing_cost_report";
+		String queryName = "dashboard_billing_cost_report_invoice";
 
         if(contestId > 0) {
             request.setProperty("tcdirectid", "0");
@@ -3541,7 +3542,7 @@ public class DataProvider {
             }
         }
 
-        request.setContentHandle(queryName);
+        request.setContentHandle(commandName);
 
         if (contestId > 0) {
             request.setProperty("sdt", dateFormatter.format(new GregorianCalendar(1900, 1, 1).getTime()));
