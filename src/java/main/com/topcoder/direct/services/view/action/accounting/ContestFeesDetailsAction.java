@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.accounting;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,11 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 import com.topcoder.accounting.fees.entities.BillingAccount;
 import com.topcoder.accounting.fees.entities.ContestFeeDetails;
+import com.topcoder.accounting.fees.entities.ContestType;
 import com.topcoder.accounting.fees.services.ContestFeeConfigurationException;
 import com.topcoder.accounting.fees.services.ContestFeeService;
 import com.topcoder.accounting.fees.services.ContestFeeServiceException;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.util.log.Level;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
@@ -78,7 +81,24 @@ public class ContestFeesDetailsAction extends ActionSupport implements Preparabl
             projectId = 0;
         }
         try {
-            setFormData(contestFeeService.getBillingAccount(projectId));
+        	Map<String, ContestType> contestTypes = DirectUtils.getContesetTypes();
+        	
+        	BillingAccount billingAccount = contestFeeService.getBillingAccount(projectId);
+        	List<ContestFeeDetails> contestFees = billingAccount.getContestFees();
+        	if (contestFees != null && !contestFees.isEmpty()) {
+        		Iterator<ContestFeeDetails> it = contestFees.iterator();
+        		while (it.hasNext()) {
+        			ContestFeeDetails contestFee = it.next();
+        			ContestType contestType = contestTypes.get(String.valueOf(contestFee.getContestTypeId()));
+        			if (contestType == null) {
+        				// filter contest-types
+        				it.remove();
+        			} else if (contestType.getDescription() != null) {
+        				contestFee.setContestTypeDescription(contestType.getDescription());
+        			}
+        		}
+        	}
+            setFormData(billingAccount);
         } catch (ContestFeeServiceException e) {
             logger.log(Level.ERROR, e);
             throw e;

@@ -25,6 +25,7 @@ import com.topcoder.direct.services.view.action.specreview.ViewSpecificationRevi
 import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
 import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
@@ -60,6 +61,8 @@ import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
 
 import com.topcoder.shared.util.dwload.CacheClearer;
+import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.MaxAge;
 
 /**
  * <p>
@@ -1665,4 +1668,40 @@ public final class DirectUtils {
     public static boolean canPerformInvoiceRecords(TCSubject tcSubject) {
         return DirectUtils.isCockpitAdmin(tcSubject) || DirectUtils.isTCAccounting(tcSubject);
     }
+    
+    /**
+     * Get all contest types in database.
+     * 
+     * @return all contest types.
+     * @throws Exception
+     *             if there is any exception.
+     */
+    public static Map<String, com.topcoder.accounting.fees.entities.ContestType> getContesetTypes() throws Exception {
+        
+        CachedDataAccess dataAccess = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+        Request request = new Request();
+        request.setContentHandle("project_categories_replatforming");
+        Map<String, com.topcoder.accounting.fees.entities.ContestType> contestTypes = 
+        	new HashMap<String, com.topcoder.accounting.fees.entities.ContestType>();
+        
+        ResultSetContainer container = dataAccess.getData(request)
+                .get("project_categories_replatforming");
+        int recordNum = container.size();
+        for (int i = 0; i < recordNum; i++) {
+        	com.topcoder.accounting.fees.entities.ContestType type = new com.topcoder.accounting.fees.entities.ContestType();
+            type.setTypeId(container.getIntItem(i, "project_category_id"));
+            if (container.getIntItem(i, "project_type_id") == 3) {
+                type.setStudio(true);
+            } else {
+                type.setStudio(false);
+            }
+            type.setDescription(container.getStringItem(i, "name"));
+
+            contestTypes.put(Integer.toString(type.getTypeId()), type);
+        }
+        return contestTypes;
+    }
+    
+    
 }
