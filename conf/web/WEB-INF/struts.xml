@@ -210,6 +210,12 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
         </action>
+		
+		<action name="createNewProject" class="com.topcoder.direct.services.view.action.ForwardAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
+        </action>
+
         <action name="createProject" class="com.topcoder.direct.services.view.action.project.CreateProjectAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success" type="redirectAction">
@@ -795,6 +801,15 @@
         </action>
 
         <action name="downloadSoftwareSubmission" class="downloadSoftwareSubmissionAction">
+            <result type="stream">
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
+		<action name="downloadFinalFix" class="downloadFinalFix">
             <result type="stream">
                 <param name="contentDisposition">${contentDisposition}</param>
                 <param name="contentType">application/octet-stream</param>
