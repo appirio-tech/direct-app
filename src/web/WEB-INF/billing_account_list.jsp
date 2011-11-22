@@ -127,7 +127,7 @@
                                         
                                         <thead>
                                             <tr>
-                                                <th>Item Count</th>
+                                                <th>Billing Account Id</th>
 												<th>Client Name</th>
                                                 <th>Billing Account</th>
                                             </tr>
@@ -139,7 +139,7 @@
                                                 <s:set value="projectId" var="projectId" scope="page"/>
                                                 <s:set value="name" var="name" scope="page"/>
                                                 <tr>
-                                                    <td class="first"><s:property value="#status.index+1"/></td>
+                                                    <td class="first"><s:property value="projectId"/></td>
 													<td class="first">
 														<s:property value="clientName" />
 													</td>

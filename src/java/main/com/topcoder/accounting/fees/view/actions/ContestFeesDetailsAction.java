@@ -98,9 +98,12 @@ public class ContestFeesDetailsAction extends ActionSupport implements Preparabl
             return INPUT;
         }
         try {
-            for (ContestFeeDetails detail : formData.getContestFees()) {
-                contestFeeService.update(detail);
-            }
+        	// clean up the old contest fees first
+        	contestFeeService.cleanUpContestFees(projectId);
+        	
+        	// create new ones
+            contestFeeService.save(formData.getContestFees());
+
         } catch (ContestFeeServiceException e) {
             logger.log(Level.ERROR, e);
             throw e;

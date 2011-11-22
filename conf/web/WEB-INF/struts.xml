@@ -541,8 +541,9 @@
         <action name="saveContestFeesAction" class="contestFeesDetailsAction" method="save">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">listBillingAccountAction</param>
+                <param name="actionName">listContestFeesAction</param>
                 <param name="namespace">/</param>
+				<param name="projectId">${projectId}</param>
             </result>
             <result name="input">/WEB-INF/billing_account_contest_fee.jsp</result>
         </action>

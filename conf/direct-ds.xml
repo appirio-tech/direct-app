@@ -247,5 +247,22 @@
 		</metadata>
   </xa-datasource>
 
+  <no-tx-datasource>
+       <jndi-name>TimeOltp</jndi-name>
+        <connection-url>jdbc:informix-sqli://@database.server@:@database.port@/time_oltp:INFORMIXSERVER=informixoltp_tcp</connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <!-- sql to call when connection is created -->
+        <new-connection-sql>set lock mode to wait 5</new-connection-sql>
+
+
+        <!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+		<check-valid-connection-sql>select 1 from dual</check-valid-connection-sql>
+        <user-name>@database.username@</user-name>
+        <password>@database.password@</password>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </no-tx-datasource>
+
 
 </datasources>

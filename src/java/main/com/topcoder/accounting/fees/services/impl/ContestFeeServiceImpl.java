@@ -3,8 +3,12 @@
  */
 package com.topcoder.accounting.fees.services.impl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import com.topcoder.accounting.fees.entities.BillingAccount;
 import com.topcoder.accounting.fees.entities.ContestFeeDetails;
@@ -13,6 +17,7 @@ import com.topcoder.accounting.fees.entities.FeeAuditRecord;
 import com.topcoder.accounting.fees.entities.SearchResult;
 import com.topcoder.accounting.fees.persistence.ContestFeePersistence;
 import com.topcoder.accounting.fees.services.ContestFeeConfigurationException;
+import com.topcoder.accounting.fees.services.ContestFeePersistenceException;
 import com.topcoder.accounting.fees.services.ContestFeeService;
 import com.topcoder.accounting.fees.services.ContestFeeServiceException;
 import com.topcoder.util.log.Log;
@@ -48,17 +53,15 @@ public class ContestFeeServiceImpl implements ContestFeeService {
     }
 
     /**
-     * This method is responsible for creating contest fee given instance of ContestFeeDetails and project id.
+     * This method is responsible for creating contest fees.
      * 
-     * @Param contestFeeDetails - denotes instance of ContestFeeDetails. ContestFeeDetails.fee should be positive double
-     *        and contestType should be valid contest type
-     * @Return Contest fee identifier
+     * @Param contestFees - a list of ContestFeeDetails instances
      * 
-     * @throws ContestFeeServiceException
+     * @throws ContestFeePersistenceException
      *             if there is any exception.
      */
-    public long create(ContestFeeDetails contestFeeDetails) throws ContestFeeServiceException {
-        return this.persistence.create(contestFeeDetails);
+    public void save(List<ContestFeeDetails> contestFees) throws ContestFeeServiceException {
+        this.persistence.save(contestFees);
     }
 
     /**
@@ -82,6 +85,15 @@ public class ContestFeeServiceImpl implements ContestFeeService {
         this.persistence.delete(contestFeeId);
 
     }
+    
+    /**
+     * Clean up the contest fees for the project.
+     * 
+     * @param projectId the project id.
+     */
+    public void cleanUpContestFees(long projectId) {
+    	this.persistence.cleanUpContestFees(projectId);
+    }
 
     /**
      * This method is responsible for retrieving billing account given billing account id.
@@ -94,17 +106,36 @@ public class ContestFeeServiceImpl implements ContestFeeService {
     public BillingAccount getBillingAccount(long projectId) throws ContestFeeServiceException {
         BillingAccount account = persistence.getBillingAccount(projectId);
         // populate type names
-        Map<String, ContestType> types = persistence.getContesetTypes();
+        Map<String, ContestType> types = persistence.getContesetTypes();      
+        
         if (account.getContestFees() != null) {
-            for (ContestFeeDetails details : account.getContestFees()) {
+        	Iterator<ContestFeeDetails> it = account.getContestFees().iterator();
+            while (it.hasNext()) {
+            	ContestFeeDetails details = it.next();
                 String id = Long.toString(details.getContestTypeId());
                 ContestType type = types.get(id);
-                if (type != null && type.getDescription() != null && type.getDescription().trim().length() != 0) {
+                if (type == null) {
+                	it.remove();                	
+                } else if (type != null && type.getDescription() != null && type.getDescription().trim().length() != 0) {
                     details.setContestTypeDescription(type.getDescription());
                 } else {
                     details.setContestTypeDescription(id);
                 }
             }
+        } else {
+        	account.setContestFees(new ArrayList<ContestFeeDetails>());
+        	
+        	// create default fees for the project
+        	for (ContestType contestType : types.values()) {
+        		ContestFeeDetails details = new ContestFeeDetails();
+        		details.setIsDelete(0);
+        		details.setIsStudio(0);
+        		details.setProjectId(projectId);
+        		details.setContestTypeId(contestType.getTypeId());
+        		details.setContestTypeDescription(contestType.getDescription());
+        		
+        		account.getContestFees().add(details);
+        	}
         }
 
         return account;

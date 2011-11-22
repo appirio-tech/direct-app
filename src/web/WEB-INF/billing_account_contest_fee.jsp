@@ -109,7 +109,7 @@
                             </div>
                             <!-- End .areaHeader -->
 
-                            <s:form action="saveContestFeesAction.action" method="post" validate="true">
+                            <s:form action="saveContestFeesAction" method="post" validate="true">
                             <div class="container2 resultTableContainer" id="contestFeeEditDetail">
                                 <div>
                                 <br/>

@@ -25,16 +25,14 @@ import com.topcoder.direct.services.configs.ContestFee;
  */
 public interface ContestFeePersistence {
     /**
-     * This method is responsible for creating contest fee given instance of ContestFeeDetails and project id.
+     * This method is responsible for creating contest fees.
      * 
-     * @Param contestFeeDetails - denotes instance of ContestFeeDetails. ContestFeeDetails.fee should be positive double
-     *        and contestType should be valid contest type
+     * @Param contestFees - a list of ContestFeeDetails instances
      * 
-     * @Return Contest fee identifier
      * @throws ContestFeePersistenceException
      *             if there is any exception.
      */
-    long create(ContestFeeDetails contestFeeDetails) throws ContestFeePersistenceException;
+    void save(List<ContestFeeDetails> contestFees) throws ContestFeePersistenceException;
 
     /**
      * This method is responsible for updating contest fee given instance of ContestFeeDetails and project id.
@@ -63,6 +61,13 @@ public interface ContestFeePersistence {
      * @Param contestFeeId - denotes contest fee id.
      */
     void delete(long contestFeeId);
+    
+    /**
+     * Clean up the contest fees for the project.
+     * 
+     * @param projectId the project id.
+     */
+    void cleanUpContestFees(long projectId);
 
     /**
      * This method is responsible for retrieving all billing accounts given billing account id.

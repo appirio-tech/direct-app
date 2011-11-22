@@ -20,17 +20,15 @@ import com.topcoder.accounting.fees.entities.SearchResult;
  * @version 1.0
  */
 public interface ContestFeeService {
-    /**
-     * This method is responsible for creating contest fee given instance of ContestFeeDetails and project id.
+	/**
+     * This method is responsible for creating contest fees.
      * 
-     * @Param contestFeeDetails - denotes instance of ContestFeeDetails. ContestFeeDetails.fee should be positive double
-     *        and contestType should be valid contest type
-     * @Return Contest fee identifier
+     * @Param contestFees - a list of ContestFeeDetails instances
      * 
-     * @throws ContestFeeServiceException
+     * @throws ContestFeePersistenceException
      *             if there is any exception.
      */
-    long create(ContestFeeDetails contestFeeDetails) throws ContestFeeServiceException;
+    void save(List<ContestFeeDetails> contestFees) throws ContestFeeServiceException;
 
     /**
      * This method is responsible for updating contest fee given instance of ContestFeeDetails and project id.
@@ -58,6 +56,13 @@ public interface ContestFeeService {
      * @Param contestFeeId - denotes contest fee id.
      */
     void delete(long contestFeeId);
+    
+    /**
+     * Clean up the contest fees for the project.
+     * 
+     * @param projectId the project id.
+     */
+    void cleanUpContestFees(long projectId);
 
     /**
      * This method is responsible for retrieving all billing accounts given billing account id.

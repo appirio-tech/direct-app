@@ -13,6 +13,7 @@ import java.util.Map;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.topcoder.accounting.fees.entities.BillingAccount;
 import com.topcoder.accounting.fees.entities.ContestFeeDetails;
@@ -74,19 +75,21 @@ public class ContestFeePersistenceImpl implements ContestFeePersistence {
     }
 
     /**
-     * This method is responsible for creating contest fee given instance of ContestFeeDetails and project id.
+     * This method is responsible for creating contests
      * 
-     * @Param contestFeeDetails - denotes instance of ContestFeeDetails. ContestFeeDetails.fee should be positive double
-     *        and contestType should be valid contest type
+     * @Param contestFees - a list of ContestFeeDetails instances
      * 
-     * @Return Contest fee identifier
      * @throws ContestFeePersistenceException
      *             if there is any exception.
      */
-    public long create(ContestFeeDetails contestFeeDetails) throws ContestFeePersistenceException {
-        checkContestFeeDetails(contestFeeDetails);
-        getSession().persist(contestFeeDetails);
-        return contestFeeDetails.getProjectContestFeeId();
+    public void save(List<ContestFeeDetails> contestFees) throws ContestFeePersistenceException {
+        // checkContestFeeDetails(contestFeeDetails);
+    	Session session = getSession();
+    	for (ContestFeeDetails contestFeeDetails : contestFees) {
+	        contestFeeDetails.setProjectContestFeeId(0);	        
+	        session.save(contestFeeDetails);	        
+    	}      
+    	session.flush();
     }
 
     /**
@@ -163,12 +166,19 @@ public class ContestFeePersistenceImpl implements ContestFeePersistence {
      */
     public void update(ContestFeeDetails contestFeeDetails) throws ContestFeePersistenceException {
         // checkContestFeeDetails(contestFeeDetails); //TODO some values in database is invalid. skip this test now.
-
         Session session = getSession();
-        session.getTransaction().begin();
-        session.update(contestFeeDetails);
-        session.getTransaction().commit();
-        session.close();
+        session.save(contestFeeDetails);
+    }
+    
+    /**
+     * Clean up the contest fees for the project.
+     * 
+     * @param projectId the project id.
+     */
+    public void cleanUpContestFees(long projectId) {
+    	final String QUERY = "delete ContestFeeDetails c where c.projectId = :projectId";
+    	Session session = getSession();
+    	session.createQuery(QUERY).setLong("projectId", projectId).executeUpdate();
     }
 
     /**
@@ -194,11 +204,11 @@ public class ContestFeePersistenceImpl implements ContestFeePersistence {
         String sql = "SELECT unique p.project_id, p.company_id, p.name, p.description, p.active, p.start_date, c.name as clientName, "
                 + " f.contest_type_id, f.contest_fee, f.project_contest_fee_id, f.is_studio, f.is_deleted " 
                 + " from Project p " 
-                + " left join Project_Contest_Fee f on f.project_id = p.project_id, "
+                + " left join Project_Contest_Fee f on f.project_id = p.project_id and is_studio = 0, "
                 + " client_project cp , client c "
                 + " where p.project_id=:projectId  "
 				+ " and cp.client_id = c.client_id "
-                + " and cp.project_id = p.project_id and is_studio = 0 "
+                + " and cp.project_id = p.project_id "
 				+ " order by f.contest_type_id";
         SQLQuery query = session.createSQLQuery(sql);
         query.setLong("projectId", projectId);
@@ -237,10 +247,10 @@ public class ContestFeePersistenceImpl implements ContestFeePersistence {
         }
         String sql = "SELECT unique p.project_id, p.company_id, p.name, p.description, p.active, p.start_date, c.name as clientName, "
                 + " f.contest_type_id, f.contest_fee, f.project_contest_fee_id, f.is_studio, f.is_deleted "
-                + " from Project p left join Project_Contest_Fee f on f.project_id = p.project_id,  " 
+                + " from Project p left join Project_Contest_Fee f on f.project_id = p.project_id and is_studio = 0,  " 
                  + "  client_project cp , client c "
                 + " where cp.client_id = c.client_id "
-                + " and cp.project_id = p.project_id and is_studio = 0 ";
+                + " and cp.project_id = p.project_id ";
 				
         if (fetchId != null && !fetchId.isEmpty()) {
             boolean isFirst = true;
