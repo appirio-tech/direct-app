@@ -155,6 +155,9 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
 
         boolean isFirstCall = this.viewData.isShowJustForm();
 
+        // if user is TcOperations
+        boolean isTcOperations = DirectUtils.isTcOperations(sessionData.getCurrentUser());
+
         // If client account IDs are not specified then use the first client account id
         boolean customerIdIsSet = customerId > 0;
         if (isFirstCall && !customerIdIsSet) {
@@ -163,6 +166,12 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
                 form.setCustomerId(customerId);
                 customerIdIsSet = true;
                 break;
+            }
+
+            // if user is in the admin group change it to all customers
+            if(isTcOperations) {
+                form.setCustomerId(0);
+                customerIdIsSet = true;
             }
         } else {
             // check the customerId parameter
@@ -203,8 +212,15 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
 
         // set view data for clients
         getViewData().setClientAccounts(customers);
-        if(DirectUtils.isTcOperations(currentUser)) {
-            getViewData().getClientAccounts().put(0L, "All Customers");
+        if(isTcOperations) {
+            Map<Long, String> tmpCustomers = new java.util.LinkedHashMap<Long, String>();
+            tmpCustomers.put(0L, "All Customers");
+            for(Map.Entry<Long, String> c : customers.entrySet()) {
+                tmpCustomers.put(c.getKey(), c.getValue());
+
+            }
+            customers = tmpCustomers;
+            getViewData().setClientAccounts(tmpCustomers);
         }
 
         // set view data for billings
