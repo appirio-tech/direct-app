@@ -1,4 +1,22 @@
 // JavaScript Document
+function handleJsonResult(result, succHandler, failHandler) {
+    if (result.jsonData.error) {
+        if (failHandler) {
+            failHandler(result.jsonData.message);
+        }
+    } else {
+        if (succHandler) {
+            succHandler(result.jsonData.result);
+        }
+    }
+}
+
+var ctx = "/present";
+
+function showErrorMessage(errorMessage) {
+    alert(errorMessage);
+}
+
 $(document).ready(function() {
 	//text shadow
 	$('#content .banner h1,#content .banner h2').css({'text-shadow':'0px 5px 2px #000'});
@@ -74,7 +92,7 @@ $(document).ready(function() {
 			$('.showcaseModal').css({"position":"fixed","top":popWinPosTop});
 	});
 	//login
-	$('.navLogin').click(function(e) {
+	$('.navLogin').live("click", function(e) {
 		clearLoginErrStyle();
         popWinPosTop = screenheight/2 - $('#loginModal').height()/2;
 		popWinPosLeft = screenwidth/2 - $('#loginModal').width()/2;
@@ -103,6 +121,7 @@ $(document).ready(function() {
 		$('.passwordNotMactchErr').hide();
 		$('#veriCode').css({'border':'1px solid #8a8a8a','background':'#fff'});
 		$('.veriCodeErr').hide();
+        $('.policyErr').hide();
 	}
 	function showLoginErrStyle(e){
 		e.css({'border':'1px solid #e71f19','background':'#fdeded'});
@@ -128,52 +147,68 @@ $(document).ready(function() {
 			flag = false;
 		}
 		if(!flag)return;
+        var rememberMe = $("#rememberMe").is(":checked");
 		//start loading
 		$('#loginModal').append("<div class='loadingbackground'><div class='loadingIndicator'><div class='loadingCover'></div></div><div class='indicatorMsg'>Logging in,please wait...</div></div>");
 		loginProcess = 0;
-		loginLoading();
-    });
-	function loginLoading(){
-		loginProcess++;
-		$('#loginModal .loadingCover').css({'width':loginProcess+'%'});
-		if(loginProcess == 100){
-			var username = $('#username').val();
-			var password = $('#password').val();
-			var index = $.inArray(username,users);
-			if(index == -1){ //user name not found
-				$('#loginModal .loadingbackground').remove();
-				showLoginErrStyle($('#username'));
-				$('#loginModal span.handleErr').html('Incorrect username');
-				$('.handleErr').show();
-				return false;
-			}
-			else{
-				if(password != passwords[index]){//password incorrect
-					$('#loginModal .loadingbackground').remove();
-					showLoginErrStyle($('#password'));
-					$('#loginModal span.passwordErr').html('Incorrect password');
-					$('.passwordErr').show();
-					return false;
-				}
-				else{
-					$('#loginModal .indicatorMsg').html('Login succeeded!')
+        longProcessorIntervalId = setInterval(loginLoading, 10);
+        loginLoading();
+        $.ajax({
+          type: 'POST',
+          url:  ctx + "/login",
+          data: {"username":username, "password":password, "rememberMe":rememberMe},
+          cache: false,
+          dataType: 'json',
+          async : false,
+          success: function(jsonResult) {
+            clearInterval(longProcessorIntervalId);
+            handleJsonResult(jsonResult,
+            function(result) {
+                if (result.success) {
+                    $('#loginModal .indicatorMsg').html('Login succeeded!')
 					setTimeout(function(){
 						$('#greybackground').remove();
 						$('#loginModal').hide();
 						$('.nav .welcomeSection').show();
 						$('.nav .loginSection').hide();	
-					},2000);
-				}
-			}
-		}
-		else{
-			setTimeout(loginLoading,10);
-		}
+                        $(".handle").html(username);
+                        $(".startNP").removeClass("navLogin").unbind();
+                        $(".startNP").attr("href", "/direct/createNewProject.action");
+					},500);
+                } else {
+                    $('#loginModal .loadingbackground').remove();
+					showLoginErrStyle($('#password'));
+					$('#loginModal span.passwordErr').html('Incorrect username/password');
+					$('.passwordErr').show();
+                }
+            },
+            function(errorMessage) {
+                showErrorMessage(errorMessage);
+            });
+          }
+        });
+    });
+	function loginLoading(){
+		loginProcess++;
+        if (loginProcess > 100) return;
+		$('#loginModal .loadingCover').css({'width':loginProcess+'%'});
 	}
 	//logout
 	$('.nav .logoutLink').click(function(e) {
-        $('.nav .welcomeSection').hide();
-		$('.nav .loginSection').show();
+		$.ajax({
+            type: 'GET',
+            url:  ctx + "/logout",
+            data: "",
+            cache: false,
+            dataType: 'json',
+            async : false,
+            success: function(jsonResult) {
+            	$('.nav .welcomeSection').hide();
+        		$('.nav .loginSection').show();
+                $(".startNP").attr("href","javascript:;");
+                $(".startNP").addClass("navLogin");
+            }
+		});
     });
 	//reset input 
 	$('.resetBtn').click(function(e) {
@@ -189,66 +224,136 @@ $(document).ready(function() {
 			$('#registerModal .firstNameErr').show();
 			flag = false;
 		}
+        var firstName = $('#registerModal #firstName').val();
 		if(!$('#lastName').val()){
 			showLoginErrStyle($('#lastName'));
 			$('.lastNameErr').show();
 			flag = false;
 		}
+        var lastName = $('#lastName').val();
 		if(!$('#handle').val()){
 			showLoginErrStyle($('#handle'));
 			$('.handleErr').show();
 			flag = false;
 		}
+        var handle = $('#handle').val();
 		if(!$('#email').val()){
 			showLoginErrStyle($('#email'));
 			$('.emailErr').show();
 			flag = false;
 		}
+        var emailAddress = $('#email').val();
 		if(!$('#regPassword').val()){
 			showLoginErrStyle($('#regPassword'));
 			$('.regPasswordErr').show();
 			flag = false;
 		}
+        var password = $('#regPassword').val();
 		if(!$('#confirmPassword').val()){
 			showLoginErrStyle($('#confirmPassword'));
 			$('.passwordNotMactchErr').html('Please fill in your password again');
 			$('.passwordNotMactchErr').show();
 			flag = false;
 		}
+        if($('#regPassword').val()!=$('#confirmPassword').val()){
+            showLoginErrStyle($('#confirmPassword'));
+            $('.passwordNotMactchErr').html('Password does not match');
+            $('.passwordNotMactchErr').show();
+            flag = false;
+        }
+        if (!$("#accPol").is(":checked")) {
+            $('.policyErr').show();
+            flag = false;
+        }
+        /*
 		if(!$('#veriCode').val()){
 			showLoginErrStyle($('#veriCode'));
 			$('.veriCodeErr').show();
 			flag = false;
 		}
+        */
 		if(flag){
 			//start loading
 			$('#registerModal').append("<div class='loadingbackground'><div class='loadingIndicator'><div class='loadingCover'></div></div><div class='indicatorMsg'>Creating account,please wait...</div></div>");
 			registerProcess = 0;
-			registerLoading();
+            registerProcessIntervalId = setInterval(registerLoading, 10);
+            
+            $.ajax({
+              type: 'POST',
+              url:  ctx + "/register",
+              data: "formData.firstName="+firstName+"&formData.lastName="+lastName+"&formData.handle="+handle+"&formData.email="+emailAddress+"&formData.password="+password,
+              cache: false,
+              dataType: 'json',
+              async : false,
+              success: function(jsonResult) {
+                clearInterval(registerProcessIntervalId);
+                handleJsonResult(jsonResult,
+                function(result) {
+                    if (jsonResult.jsonData.fieldErrors) {
+                        var hasError = false;
+                        for (var fname in jsonResult.jsonData.fieldErrors) {
+                            hasError = true;
+                            break;
+                        }
+                        if (hasError) {
+                        	clearLoginErrStyle();
+                        }
+                        for (var fname in jsonResult.jsonData.fieldErrors) {
+                            hasError = true;
+                            showLoginErrStyle($('#handle'));
+                            var errors = jsonResult.jsonData.fieldErrors[fname];
+                            var errEle = $(".errorMsg", $('#' + fname).parent());
+                            errEle.html("");
+                            for (var ind = 0; ind < errors.length; ind++) {
+                                if (ind > 0) errEle.html("<br/>");
+                                errEle.html(errors[ind]);
+                            }
+                            errEle.show();
+                        }
+                        if (hasError) return;
+                    }
+                    $('#registerModal .indicatorMsg').html('Account created.<br/>Thank you for your registration!');
+                    $.ajax({
+                      type: 'POST',
+                      url:  ctx + "/login",
+                      data: {"username":handle, "password":password, "rememberMe":false},
+                      cache: false,
+                      dataType: 'json',
+                      async : false,
+                      success: function(jsonResult) {
+                        handleJsonResult(jsonResult,
+                        function(result) {
+                            if (result.success) {
+                                setTimeout(function(){
+                                    $('#greybackground').remove();
+                                    $('#registerModal').hide();
+                                    $('.nav .welcomeSection').show();
+                                    $('.nav .loginSection').hide();	
+                                    $(".handle").html(handle);
+                                    $(".startNP").removeClass("navLogin").unbind();
+                                    $(".startNP").attr("href", "/direct/createNewProject.action");
+                                },500);
+                            } else {
+                                alert("Can't login");
+                            }
+                        },
+                        function(errorMessage) {
+                            showErrorMessage(errorMessage);
+                        });
+                      }
+                    });
+                },
+                function(errorMessage) {
+                    showErrorMessage(errorMessage);
+                });
+              }
+            });
 		}
     });
 	function registerLoading(){
 		registerProcess++;
+        if (registerProcess > 100) return;
 		$('#registerModal .loadingCover').css({'width':registerProcess+'%'});
-		if(registerProcess == 100){
-			if($('#regPassword').val()!=$('#confirmPassword').val()){
-				showLoginErrStyle($('#confirmPassword'));
-				$('.passwordNotMactchErr').html('Password does not match');
-				$('.passwordNotMactchErr').show();
-				$('#registerModal .loadingbackground').remove();
-				return;
-			}
-			$('#registerModal .indicatorMsg').html('Account created.<br/>Thank you for your registration!');
-			setTimeout(function(){
-				$('#greybackground').remove();
-				$('#registerModal').hide();
-				$('.nav .welcomeSection').show();
-				$('.nav .loginSection').hide();	
-			},2000);
-		}
-		else{
-			setTimeout(registerLoading,10);
-		}
 	}
 	$('#loginModal .registerTab').click(function(e) {
 		$('#loginModal').hide("fast");
