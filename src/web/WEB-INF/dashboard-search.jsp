@@ -1,6 +1,6 @@
 <%--
-  - Author: greatKevin, winsty, TCSASSEMBLER
-  - Version: 1.2.1
+  - Author: greatKevin, winsty, GreatKevin
+  - Version: 1.3
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
@@ -8,6 +8,8 @@
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Version 1.2 (TC Direct UI Improvement Assembly 1) changes: Solve "Project is not highlight when select Project"
   - Version 1.2.1 (Release Assembly - TopCoder Cockpit Project Status Management) changes: add direct project manage JS into head.
+  - Version 1.3 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
+  - Add the filter panel for the all projects and project search reuslt page
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -24,6 +26,7 @@
         <ui:projectPageType tab="overview"/>
     </s:if>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <jsp:include page="includes/filterPanel.jsp"/>
     <script type="text/javascript" src="/scripts/directProjectManage.js?v=207404"></script>
 </head>
 
@@ -40,7 +43,7 @@
                     <jsp:include page="includes/right.jsp"/>
 
                     <div id="area1"><!-- the main area -->
-					
+
                     <div class="area1Content">
 					<div class="areaHeader">
                         <h2 class="title">
@@ -48,7 +51,7 @@
 						<s:if test="viewData.isAllProjectsPage == true">Projects</s:if>
 						</h2>
                     </div><!-- End .areaHeader -->
-					
+
 					<s:if test="viewData.isAllProjectsPage == false">
                     <div class="search" style="height:auto;overflow:hidden">
                         <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
@@ -59,7 +62,7 @@
                             <div id="datefilter" style="float:left;">
                                <label for="startDate" class="fLeft">Start:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" style="width:80px;" name="formData.startDate" id="startDate" readonly="true"/>
                                <label for="endDate" class="fLeft">End:</label> <s:textfield cssClass="fLeft text date-pick dp-applied" name="formData.endDate" style="width:80px;" id="endDate" readonly="true"/>
-                            </div>    
+                            </div>
                             <s:hidden name="formData.excel" id="formDataExcel" value="false" />
                             <a href="javascript:directSearch();" class="button1 fLeft">
                                 <span>Search</span></a>
@@ -68,6 +71,83 @@
 					</s:if>
 
                     <s:if test="viewData.resultType != null">
+
+                        <s:if test="viewData.resultType.name() == 'PROJECTS'">
+
+                            <form id="filterPanelForm" autocompleted="off">
+                               <div class='filterPanel' id='allProjectsFilter'>
+                                <div class='filterHead'>
+                                    <div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class='filterText'>
+                                                <a href='javascript:;' class='collapse'><img
+                                                        src='/images/filter-panel/expand_icon.png' alt=''/></a>
+                                                <span class='title'>Filter</span>
+                                            </div>
+                                            <div class='searchContainer'>
+                                                <span class='title'>Search</span>
+
+                                                <div class='filterSearch'>
+                                                    <input type='text' class='searchBox'/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterContent'>
+                                    <div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class='column1'>
+                                                <div class='row'>
+                                                    <span class='title'>Customer</span>
+                                                    <select id='customerFilter'>
+                                                        <option value='All Customers'>All Customers</option>
+                                                    </select>
+                                                </div>
+                                                <div class='row'>
+                                                    <span class='title'>Project Status</span>
+                                                    <select id='projectStatusFilter'>
+                                                        <option value='All'>All Project Status</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--end .column1-->
+                                            <div class='column3'>
+                                                <div class='row'>
+                                                    <span class='title dateLabel'>Project Creation Date</span>
+                                                    <input id='startDateBegin' type='text' class='date-pick'/>
+                                                    <span class='title toLabel'>To</span>
+                                                    <input id='startDateEnd' type='text' class='date-pick'/>
+                                                </div>
+                                                <div class='row'>
+                                                    <span class='title dateLabel'>Project Completion Date</span>
+                                                    <input id='endDateBegin' type='text' class='date-pick'/>
+                                                    <span class='title toLabel'>To</span>
+                                                    <input id='endDateEnd' type='text' class='date-pick'/>
+                                                </div>
+                                            </div>
+                                            <!--end .column3-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterBottom'>
+                                    <div class='rightSide'>
+                                        <div class='inner'></div>
+                                    </div>
+                                </div>
+                                <!--end .filterBottom-->
+                                <div class='collapseBottom hide'>
+                                    <div class='rightSide'>
+                                        <div class='inner'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+
+                        </s:if>
+
                         <div class="container2 resultTableContainer" id="resultsContainer">
                             <div>
 

@@ -35,9 +35,12 @@
  *
  *  Version 2.0 - TC Cockpit Participation Metrics Report Part One Assembly 1 
  *  - Add the click handler for the "Select Report Type" drop down.
+ *
+ *  Version 2.1 - Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
+ *  - Change the customer drop down to work with the new filter panels
  * 
- * @author tangzx, Blues, GreatKevin, TCSASSEMBER
- * @version 2.0
+ * @author tangzx, Blues, GreatKevin, TCSASSEMBLER
+ * @version 2.1
  */
 $(document).ready(function(){
 						   
@@ -431,13 +434,13 @@ $(document).ready(function(){
     $(".customerSelectMask  UL LI").click(function() {
         var mask = $(this).parents(".customerSelectMask");
         mask.find("input").val($(this).find("a").text());
-        mask.find(".contestsDropDown").slideToggle(100);
+        if (mask.find(".contestsDropDown").is(":visible")) {
+            mask.find(".contestsDropDown:visible").slideToggle(100);
+        }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
-        if ($("#activeContests").length > 0) {
-            $.activeContestsDataTable.fnFilter($(this).data("id"), 10);
-            $.activeContestsDataTable.fnSort([
-                [3,'desc']
-            ]);
+        if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
+            // call method defined by filter panel
+            filterbyCustomer($(this).data("id"),$(this).find('a').html());
             var customer = "";
             if ($(this).data("id") != "0" && $(this).data("id") != "") {
                 customer = $(this).text();

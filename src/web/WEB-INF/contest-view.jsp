@@ -33,6 +33,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="contests"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <jsp:include page="includes/filterPanel.jsp"/>
     <link rel="stylesheet" href="/css/fullcalendar-1.5.2.css?v=207789" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
     <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js?v=207789"></script>
@@ -81,6 +82,78 @@
                             <!-- End .areaHeader -->
 
                             <jsp:include page="includes/project/projectStats.jsp"/>
+
+
+                            <div class='filterPanel' id='ProjectsContestsFilter'>
+                                <div class='filterHead'>
+                                    <div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class='filterText'>
+                                                <a href='javascript:;' class='collapse'><img
+                                                        src='/images/filter-panel/expand_icon.png' alt=''/></a>
+                                                <span class='title'>Filter</span>
+                                            </div>
+                                            <div class='searchContainer'>
+                                                <span class='title'>Search</span>
+
+                                                <div class='filterSearch'>
+                                                    <input type='text' class='searchBox'/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterContent'>
+                                    <div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class='column1'>
+                                                <div class='row'>
+                                                    <span class='title'>Contest Status</span>
+                                                    <select id='contestStatusFilter'>
+                                                        <option value='All'>All Contest Status</option>
+                                                    </select>
+                                                </div>
+                                                <div class='row'>
+                                                    <span class='title'>Contest Type</span>
+                                                    <select id='contestTypeFilter'>
+                                                        <option value='All'>All Contest Types</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--end .column1-->
+                                            <div class='column3'>
+                                                <div class='row'>
+                                                    <span class='title dateLabel'>Start Date</span>
+                                                    <input id='startDateBegin' type='text' class='date-pick'/>
+                                                    <span class='title toLabel'>To</span>
+                                                    <input id='startDateEnd' type='text' class='date-pick'/>
+                                                </div>
+                                                <div class='row'>
+                                                    <span class='title dateLabel'>End Date</span>
+                                                    <input id='endDateBegin' type='text' class='date-pick'/>
+                                                    <span class='title toLabel'>To</span>
+                                                    <input id='endDateEnd' type='text' class='date-pick'/>
+                                                </div>
+                                            </div>
+                                            <!--end .column3-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterBottom'>
+                                    <div class='rightSide'>
+                                        <div class='inner'></div>
+                                    </div>
+                                </div>
+                                <!--end .filterBottom-->
+                                <div class='collapseBottom hide'>
+                                    <div class='rightSide'>
+                                        <div class='inner'></div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="container2 contestTView"  id="ProjectContests">
                                 <div class="myProjectContests">                                    
@@ -195,7 +268,7 @@
                                     </table>
                                     <!-- End .projectsStats -->
                                 </div>
-                                
+
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2Bottom">

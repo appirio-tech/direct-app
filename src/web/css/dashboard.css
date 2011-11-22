@@ -25,7 +25,12 @@
  *
  * - (Module Assembly - Project Contest Fee Management) changes:
  * - Added project fee text style.
- */
+ *
+ * - (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1) changes:
+ * - Add css styles for the new create project button in the right sidebar
+ *
+ * - (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar)
+ * - Add css styles for filter panel */
 
 BODY#page{
 	margin: 0;
@@ -40,7 +45,7 @@ BODY#page{
 ---------------*/
 
 #content{
-	min-width: 1100px;
+	min-width: 1280px;
 }
 
 /*-------------

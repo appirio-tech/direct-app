@@ -390,8 +390,20 @@ import com.topcoder.web.common.tag.HandleTag;
  *     <li>Added {@link #getEnterpriseDashboardVolumeView(long, long, long, long[], java.util.Date, java.util.Date)} .</li>
  *   </ol>
  * </p>
+ *
+ * </ol>
+ * </p>
+ *
+ * <p>
+ * Changes in version 3.1 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar):
+ * <ol>
+ * <li>Added {@link #getProjectsCustomers(long[])} ()} method.</li>
+ * <li>Updated {@link #searchUserProjects(com.topcoder.security.TCSubject, String)} to add customer information</li>
+ * </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
- * @version 3.0
+ * @version 3.1
  * @since 1.0
  */
 public class DataProvider {
@@ -959,10 +971,28 @@ public class DataProvider {
             });
         }
 
+        // gets the project ids
+        long[] projectIds = new long[filteredProjects.size()];
+        int k = 0;
+        for (ProjectSummaryData psd : filteredProjects) {
+            projectIds[k++] = psd.getProjectId();
+        }
+
+        final Map<Long, Long> projectsCustomers = getProjectsCustomers(projectIds);
+
         return (List<DashboardProjectSearchResultDTO>) CollectionUtils.collect(filteredProjects, new Transformer() {
             //@Override
             public Object transform(Object data) {
                 ProjectSummaryData project = (ProjectSummaryData) data;
+
+                Long customerId = projectsCustomers.get(project.getProjectId());
+
+                if (customerId == null) {
+                    project.setCustomerId(-1);
+                } else {
+                    project.setCustomerId(customerId);
+                }
+
                 DashboardProjectSearchResultDTO dto = new DashboardProjectSearchResultDTO();
                 dto.setData(project);
                 return dto;
@@ -3062,6 +3092,45 @@ public class DataProvider {
             ProjectPhaseDTO phase = new ProjectPhaseDTO();
             phase.setPhaseName(phaseTypeName);
             result.add(phase);
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the customer Ids of the given project id.
+     *
+     * @param directProjectIds the array of project ids.
+     * @return the map from direct project id to customer id.
+     * @throws Exception if any error occurs.
+     * @since 3.1
+     */
+    public static Map<Long, Long> getProjectsCustomers(long[] directProjectIds) throws Exception {
+        Map<Long, Long> result = new HashMap<Long, Long>();
+
+        if (directProjectIds == null || directProjectIds.length == 0) return result;
+
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+
+        Request request = new Request();
+
+        ResultSetContainer resultContainer = null;
+
+        request.setContentHandle("non_admin_client_billing_accounts");
+        request.setProperty("tdpis", concatenate(directProjectIds, ", "));
+        resultContainer = dataAccess.getData(request).get(
+                "non_admin_client_billing_accounts");
+
+        if (resultContainer != null) {
+
+            for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+                long clientId = row.getLongItem("client_id");
+                long directProjectId = row.getLongItem("direct_project_id");
+
+                result.put(directProjectId, clientId);
+            }
+
         }
 
         return result;

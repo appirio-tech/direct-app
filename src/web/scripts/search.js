@@ -40,8 +40,11 @@
  *  Version 1.7.3 - (TC Accounting Tracking Invoiced Payments) changes:
  *  - Add logic to update the invoice records in billing cost report page.
  * 
+ *  Version 1.8 - (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
+ *  - Update the data tables initialization codes to work with final panel and search bar.
+ *
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, TCSASSEMBLER
- * @version 1.7.3
+ * @version 1.8
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -269,30 +272,67 @@ $(document).ready(function() {
     }
 
 
-    $("#projectsResult .paginatedDataTable").dataTable({
+    $.allProjectTable = $("#projectsResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
-        "bStateSave": true,
-        "bFilter": false,
+        "bStateSave": false,
+        "bFilter": true,
         "bSort": true,
-		"bAutoWidth": false,
-			  "oLanguage": {
- 			  	"sLengthMenu": sStdMenu + " per page"
- 			  },            
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page"
+        },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"fp><"bottom1"l',
-		"aaSorting": [[0,'asc']],
-		"aoColumns": [
-				{ "sType": "html-trimmed" },
-				{ "sType": "direct-projectNumber" },
-				{ "sType": "direct-projectNumber" },
-				{ "sType": "direct-projectNumber" },
-				{ "sType": "direct-projectNumber" },
-                { "sType": "direct-projectNumber" },
-                { "sType": "project-status" },
-                null
-			]
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [
+            [0,'asc']
+        ],
+        "aoColumns": [
+            { "sType": "html-trimmed" },
+            { "sType": "date-direct" },
+            { "sType": "date-direct" },
+            { "sType": "direct-projectNumber" },
+            { "sType": "direct-projectNumber" },
+            { "sType": "direct-projectNumber" },
+            { "sType": "direct-projectNumber" },
+            { "sType": "direct-projectNumber" },
+            { "sType": "project-status" },
+            null,
+            null
+        ]
 
     });
+
+    $.activeContestsDataTable = $("#activeContests .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page",
+            "sInfoFiltered":""
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [
+            [3,'desc']
+        ],
+        "aoColumns": [
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "date-direct" },
+            { "sType": "date-direct" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            null,
+            null
+        ]
+
+    });
+
     $("#membersResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
         "bStateSave": true,
@@ -340,17 +380,17 @@ $(document).ready(function() {
 			]
 
     });
-    $("#ProjectContests .paginatedDataTable").dataTable({
+    $.ProjectsContests = $("#ProjectContests .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
-        "bStateSave": true,
-        "bFilter": false,
+        "bStateSave": false,
+        "bFilter": true,
         "bSort": true,
 		"bAutoWidth": false,
 			  "oLanguage": {
  			  	"sLengthMenu": sStdMenu + " per page"
  			  },            
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"fp><"bottom1"l',
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
 		"aaSorting": [[0,'asc']],
 		"aoColumns": [
 				{ "sType": "html" },
@@ -389,34 +429,7 @@ $(document).ready(function() {
 
     });
 
-    $.activeContestsDataTable = $("#activeContests .paginatedDataTable").dataTable({
-        "iDisplayLength": 10,
-        "bStateSave": false,
-        "bFilter": true,
-        "bSort": true,
-		"bAutoWidth": false,
-			  "oLanguage": {
- 			  	"sLengthMenu": sStdMenu + " per page",
-                "sInfoFiltered":""
- 			  },            
-        "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"p><"bottom1"l',
-        "aaSorting": [[3,'desc']],
-		"aoColumns": [
-				{ "sType": "html" },
-				{ "sType": "html" },
-                { "sType": "html" },
-				{ "sType": "date-direct" },
-                { "sType": "date-direct" },
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "html" },
-				null,
-                null
-			]
 
-    });
 
     // sort by start date
     //$.activeContestsDataTable.fnSort( [[3,'desc']] );
@@ -465,14 +478,14 @@ $(document).ready(function() {
     var pipelineDataTable = $("#pipelineReportArea .paginatedDataTable").dataTable({
         "iDisplayLength": 5,
         "bStateSave": true,
-        "bFilter": false,
+        "bFilter": true,
         "bSort": true,
         "bAutoWidth": false,
               "oLanguage": {
                    "sLengthMenu": sStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"fp><"bottom1"l',
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
                 { "sType": "html" },
@@ -493,16 +506,18 @@ $(document).ready(function() {
 
     });
 
-    $("#MyCopilotPostings .paginatedDataTable").dataTable({
+    $.pipelineDetailsTable = pipelineDataTable;
+
+    $.myCopilotPostings = $("#MyCopilotPostings .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
-        "bFilter": false,
+        "bFilter": true,
         "bSort": true,
         "bAutoWidth": false,
               "oLanguage": {
                    "sLengthMenu": sStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"fp><"bottom1"l',
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
                 { "sType": "html" },
@@ -513,6 +528,7 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },                
+                null,
                 null
             ]
 
@@ -559,16 +575,16 @@ $(document).ready(function() {
 
     });
 
-    $("#costReportSection .paginatedDataTable").dataTable({
+    $.costReportDataTable = $("#costReportSection .paginatedDataTable").dataTable({
         "iDisplayLength": 25,
-        "bFilter": false,
+        "bFilter": true,
         "bSort": true,
         "bAutoWidth": false,
               "oLanguage": {
                    "sLengthMenu": sStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"fp><"bottom1"l',
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[0,'asc']],
         "aoColumns": [
                 { "sType": "html" },
@@ -612,7 +628,7 @@ $(document).ready(function() {
     if (ths == 14) {
         aoColumns.push({ "sSortDataType": "dom-checkbox" });
     }
-    $("#billingCostReportSection .paginatedDataTable").dataTable({
+    $.billingCostReportDataTable = $("#billingCostReportSection .paginatedDataTable").dataTable({
         "fnDrawCallback": function() {
             if ($("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:checked)").length == 0) {
                 $("#invoiceRecordSelectAll").attr("checked", "checked");
@@ -643,14 +659,14 @@ $(document).ready(function() {
             });
         },
         "iDisplayLength": 50,
-        "bFilter": false,
+        "bFilter": true,
         "bSort": true,
         "bAutoWidth": false,
               "oLanguage": {
                    "sLengthMenu": sLongStdMenu + " per page"
                },
         "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom2"fp><"bottom1"l',
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
         "aaSorting": [[4,'asc']],
         "aoColumns": aoColumns
 

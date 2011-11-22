@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSDEVELOPER, tangzx
-  - Version: 1.1
+  - Author: tangzx, GreatKevin
+  - Version: 1.2
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
@@ -8,6 +8,9 @@
   -
   - Version 1.1 (TC Direct - Page Layout Update Assembly) Change notes:
   - Apply to new prototype.
+  -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) Change notes:
+  - Add the filter panel to my copilot posting pages.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -21,6 +24,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <jsp:include page="includes/filterPanel.jsp"/>
 </head>
 
 <body id="page">
@@ -52,9 +56,81 @@
                                         <span class="introductionHeadIcon">
                                             <img src="/images/copilot_contests_icon.png" alt="copilot contests"/></span>
 
-                                        <h2 class="sectionHead">My Copilot Selection Contests</h2>
+                                        <h2 class="sectionHead">My Copilot Postings</h2>
                                     </div>
                                     <!-- end .getCopilots -->
+                                    <form id="filterPanelForm" autocompleted="off">
+                                        <div class='filterPanel' id='CopilotPosingFilter'>
+                                            <div class='filterHead'>
+                                                <div class='rightSide'>
+                                                    <div class='inner'>
+                                                        <div class='filterText'>
+                                                            <a href='javascript:;' class='collapse'><img
+                                                                    src='/images/filter-panel/expand_icon.png'
+                                                                    alt=''/></a>
+                                                            <span class='title'>Filter</span>
+                                                        </div>
+                                                        <div class='searchContainer'>
+                                                            <span class='title'>Search</span>
+
+                                                            <div class='filterSearch'>
+                                                                <input type='text' class='searchBox'/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end .filterHead-->
+                                            <div class='filterContent'>
+                                                <div class='rightSide'>
+                                                    <div class='inner'>
+                                                        <div class='column1'>
+                                                            <div class='row'>
+                                                                <span class='title'>Customer</span>
+                                                                <select id='customerFilter'>
+                                                                    <option value='All Customers'>All Customers</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class='row'>
+                                                                <span class='title'>Copilot Posting Status</span>
+                                                                <select id='copilotPostingStatusFilter'>
+                                                                    <option value='All'>All Posting Status</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!--end .column1-->
+                                                        <div class='column3'>
+                                                            <div class='row'>
+                                                                <span class='title dateLabel'>Start Date</span>
+                                                                <input id='startDateBegin' type='text' class='date-pick'/>
+                                                                <span class='title toLabel'>To</span>
+                                                                <input id='startDateEnd' type='text' class='date-pick'/>
+                                                            </div>
+                                                            <div class='row'>
+                                                                <span class='title dateLabel'>End Date</span>
+                                                                <input id='endDateBegin' type='text' class='date-pick'/>
+                                                                <span class='title toLabel'>To</span>
+                                                                <input id='endDateEnd' type='text' class='date-pick'/>
+                                                            </div>
+                                                        </div>
+                                                        <!--end .column3-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end .filterHead-->
+                                            <div class='filterBottom'>
+                                                <div class='rightSide'>
+                                                    <div class='inner'></div>
+                                                </div>
+                                            </div>
+                                            <!--end .filterBottom-->
+                                            <div class='collapseBottom hide'>
+                                                <div class='rightSide'>
+                                                    <div class='inner'></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
 
                                     <div class="myCopilotsContestsTable myCopilotsContestsList" id="MyCopilotPostings">
 
@@ -72,7 +148,7 @@
                                                 <col width="8%" />
                                                 <col width="9%" />
                                                 <col width="13%" />
-
+                                                <col width="" />
                                             </colgroup>                                               
                                             
                                             <thead>
@@ -85,7 +161,8 @@
                                                 <th class="sorting truncateSubs">Submissions </th>
                                                 <th class="sorting">Forums</th>
                                                 <th class="sorting">Status</th>
-                                                <th class="{sorter: false} sorting">&nbsp;</th>                                                
+                                                <th class="{sorter: false} sorting">&nbsp;</th>
+                                                <th class='hide'></th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -133,14 +210,12 @@
                                                     </td>
                                                     <td>
                                                         <s:if test="%{#attr['contest'].status.name == 'Completed'}">
-                                                            Completed
+                                                            <span>Completed</span>
                                                         </s:if>
                                                         <s:if test="%{#attr['contest'].status.shortName == 'draft' 
                                                             || #attr['contest'].status.shortName == 'running'
                                                             || #attr['contest'].status.shortName == 'scheduled'}">
-                                                            <span class="${contest.status.shortName}">
-                                                                ${contest.status.name}
-                                                            </span>
+                                                            <span class="${contest.status.shortName}">${contest.status.name}</span>
                                                         </s:if>
                                                     </td>
                                                     <td class="last">
@@ -153,8 +228,9 @@
                                                             </a>
                                                         </s:if>
                                                     </td>
+
+                                                    <td class="hide"><span>${contest.contest.customerId == -1 ? 'none' : contest.contest.customerId}</span></td>
                                                 </tr>                                            
-                                            
 
                                             </c:forEach>
 

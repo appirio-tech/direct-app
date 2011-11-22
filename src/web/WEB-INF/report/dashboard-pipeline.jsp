@@ -1,7 +1,7 @@
 <%--
   - Author: isv, TCSASSEMBLER
-  - Version: 1.2 (Direct Pipeline Integration Assembly 1.0)
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
   -
@@ -10,6 +10,9 @@
   - Version 1.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   -
   - Version 1.2.1 (Release Assembly - TC Direct UI Improvement Assembly 3) changes: Add jsp to show server side validation error
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
+  - Add the search bar for pipleline details report
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -21,6 +24,12 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
+    <link rel="stylesheet" href="/css/filter-panel.css" media="all" type="text/css"/>
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/filter-panel-ie7.css"/>
+    <![endif]-->
+    <script type="text/javascript" src="/scripts/tableSearchBar.js"></script>
     <script type="text/javascript" src="/scripts/dashboard-pipeline.js?v=208327"></script>
 
     <c:if test="${not viewData.showJustForm}">
@@ -339,6 +348,28 @@
 
                                     </tbody>
                                 </table>
+
+                                <div class='filterPanel searchBar' id='pipelineSearchBar'>
+                                    <div class='filterHead'>
+                                        <div class='rightSide'>
+                                            <div class='inner'>
+                                                <div class='searchContainer'>
+                                                    <span class='title'>Search</span>
+
+                                                    <div class='filterSearch'>
+                                                        <input type='text' class='searchBox'/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterHead-->
+                                    <div class='collapseBottom'>
+                                        <div class='rightSide'>
+                                            <div class='inner'></div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <%-- Pipeline Details --%>
                                 <div class="resultTableContainer">

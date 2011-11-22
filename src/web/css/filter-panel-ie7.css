@@ -1,0 +1,9 @@
+.filterPanel .filterHead .inner .searchContainer .filterSearch{
+	margin-top:-25px;
+}
+#activeContestsFilterSearch .filterHead .filterSearch {
+    margin-top: -27px;
+}
+.tablesWrapper table td img{
+	vertical-align:middle;
+}

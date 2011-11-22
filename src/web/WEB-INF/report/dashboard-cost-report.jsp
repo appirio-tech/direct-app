@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, flexme, TCSASSEMBER
-  - Version: 1.3 (Direct Improvements Assembly Release 2)
+  - Author: Blues, flexme, GreatKevin
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
@@ -10,10 +10,13 @@
   - Version 1.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Description: This page renders the view for cost report including form and report data.
   -
-  - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
+  - Version 1.3 (TC Cockpit Permission and Report Update One) change log:
   - - Change parameter name from projectIds to projectId.
   - - Change parameter name from billingAccountIds to billingAccount.
   - - Change parameter name from customerIds to customerId.
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
+  - - Add the search bar for cost report details table.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -25,6 +28,12 @@
     <ui:dashboardPageType tab="reports"/>
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
+    <link rel="stylesheet" href="/css/filter-panel.css" media="all" type="text/css"/>
+
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/filter-panel-ie7.css"/>
+    <![endif]-->
+    <script type="text/javascript" src="/scripts/tableSearchBar.js"></script>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
     <script type="text/javascript" src="/scripts/dashboard-cost-report.js?v=210122"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
@@ -284,6 +293,28 @@
 
     </tbody>
 </table>
+
+    <div class='filterPanel searchBar' id='costReportSearchBar'>
+        <div class='filterHead'>
+            <div class='rightSide'>
+                <div class='inner'>
+                    <div class='searchContainer'>
+                        <span class='title'>Search</span>
+
+                        <div class='filterSearch'>
+                            <input type='text' class='searchBox'/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end .filterHead-->
+        <div class='collapseBottom'>
+            <div class='rightSide'>
+                <div class='inner'></div>
+            </div>
+        </div>
+    </div>
 
 <div class="resultTableContainer">
     <%-- Cost report Details --%>

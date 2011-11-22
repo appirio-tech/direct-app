@@ -50,6 +50,14 @@ function updateDirectProjectStatus(directProjectId, statusId) {
                             $("#deleteProjectButton" + result.directProjectId).hide();
                         }
 
+                        if ($("#projectsResult").length > 0) {
+                            // get status td row and column number
+                            var statusTD = $("#projectStatus" + result.directProjectId).parent();
+                            var index = $.allProjectTable.fnGetPosition(statusTD.get(0));
+
+                            $.allProjectTable.fnUpdate(statusTD.html(), index[0], index[1]);
+                        }
+
                     } else if (result.warning) {
                         showErrors(result.warning);
                     } else {

@@ -1,6 +1,6 @@
 <%--
   - Author: tangzx, TCSASSEMBLER
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
@@ -10,6 +10,9 @@
   - Version 1.2 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
   - 1) Change the bread crumb of the active contests page
   - 2) Add the hidden column customerId into the active contests table, it will be used to filter active contests.
+  -
+  - Version 1.3 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination) changes:
+  - 1) Add the filter panel for the dashboard active contests.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -21,6 +24,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="active"/>
 	<jsp:include page="includes/paginationSetup.jsp"/>
+    <jsp:include page="includes/filterPanel.jsp"/>
 <!--[if IE 6]>
     <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
     <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
@@ -109,7 +113,84 @@
                                 <h2 class="title contestTitle">Contests</h2>
                             </div>
                             <!-- End .areaHeader -->
-
+                            <form id="filterPanelForm" autocompleted="off">
+                            <!-- start filter panel -->
+                            <div class='filterPanel' id='activeContestsFilter'>
+                                <div class='filterHead'>
+                                    <div class='rightSide'>
+                                        <div class='inner'>
+                                        	<div class='filterText'>
+                                                <a href='javascript:;' class='collapse'><img src='/images/filter-panel/expand_icon.png' alt=''/></a>
+                                                <span class='title'>Filter</span>
+                                            </div>
+                                            <div class='searchContainer'>
+                                            	<span class='title'>Search</span>
+                                                <div class='filterSearch'>
+                                                	<input type='text' class='searchBox' />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterContent'>
+                                	<div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class='column1'>
+                                            	<div class='row'>
+                                                	<span class='title short'>Customer</span>
+                                                    <select id='customerFilter'>
+                                                    	<option value='All Customers'>All Customers</option>
+                                                    </select>
+                                                </div>
+                                                <div class='row'>
+                                                	<span class='title short'>Project</span>
+                                                    <select id='projectNameFilter'>
+                                                    	<option value='All'>All Projects</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--end .column1-->
+                                            <div class='column2'>
+                                            	<div class='row'>
+                                                	<span class='title'>Contest Type</span>
+                                                    <select id='contestTypeFilter'>
+                                                    	<option value='All'>All Contest Types</option>
+                                                    </select>
+                                                </div>
+                                                <div class='row'>
+                                                	<span class='title'>Contest Status</span>
+                                                    <select id='contestStatusFilter'>
+                                                    	<option value='All'>All Contest Status</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--end .column2-->
+                                            <div class='column3'>
+                                            	<div class='row'>
+                                                	<span class='title dateLabel'>Start Date</span>
+                                                    <input id='startDateBegin' type='text' class="date-pick"/>
+                                                    <span class='title toLabel'>To</span>
+                                                    <input id='startDateEnd' type='text' class="date-pick"/>
+                                                </div>
+                                                <div class='row'>
+                                                	<span class='title dateLabel'>End Date</span>
+                                                    <input id='endDateBegin' type='text' class="date-pick"/>
+                                                    <span class='title toLabel'>To</span>
+                                                    <input id='endDateEnd' type='text' class="date-pick"/>
+                                                </div>
+                                            </div>
+                                            <!--end .column3-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterBottom'><div class='rightSide'><div class='inner'></div></div></div>
+                                <!--end .filterBottom-->
+                                <div class='collapseBottom hide'><div class='rightSide'><div class='inner'></div></div></div>
+                            </div>
+                            <!--end .filterPanel-->
+                            </form>
                             <div class="container2 resultTableContainer" id="activeContests">
                                 <div>
                                     <table id="activeContests" class="projectStats contests paginatedDataTable resultTable"
