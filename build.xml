@@ -113,6 +113,14 @@
         </javac>
     </target>
 
+    <target name="ppt_compile" description="compile the ppt source code">
+        <mkdir dir="${build_classdir}"/>
+        <javac srcdir="${javamain}" destdir="${build_classdir}" includes="com/topcoder/ppt/**" debug="true"
+               verbose="${verbose}" includeAntRuntime="no" encoding="${javac.encoding}">
+            <classpath refid="buildlibs"/>
+        </javac>
+    </target>
+    
     <target name="manifest">
         <mkdir dir="${manifest_file_path}"/>
         <manifest file="${manifest_file}">
@@ -224,6 +232,7 @@
         <copy file="${struts2-convention-plugin-2.1.8.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${struts2-core-2.1.8.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${struts2-spring-plugin-2.1.8.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${struts2-json-plugin-2.1.8.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xwork-1.2.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xwork-core-2.1.6.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jboss-cache-jdk50.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -545,7 +554,7 @@
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="validators.xml"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
-            <classes dir="${build_classdir}" includes="**/*.class"/>
+            <classes dir="${build_classdir}" includes="${packagedir}/**/*.class"/>
             <classes dir="${tokenized_conf}" includes="META-INF/**/*"/>
             <classes dir="${tokenized_conf}/web" includes="Messages.properties"/>
             <classes dir="${configdir}" includes="xwork-conversion.properties"/>
@@ -560,8 +569,13 @@
     </target>
     
     <!-- Builds the PPT WAR file for web application module -->
-    <target name="ppt_war" depends="war" description="Builds the PPT WAR file">
+    <target name="ppt_war" depends="war, ppt_compile" description="Builds the PPT WAR file">
         <war warfile="tempppt.war" webxml="${tokenized_conf}/ppt_web/WEB-INF/web.xml">
+            <webinf dir="${tokenized_conf}/ppt_web/WEB-INF" includes="applicationContext.xml"/>
+            <classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="struts.xml"/>
+            <classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="validators.xml"/>
+            <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
+            <classes dir="${build_classdir}" includes="com/topcoder/ppt/**/*.class"/>
             <fileset dir="${ppt_webdir}">
                 <include name="**/*.jsp"/>
             </fileset>

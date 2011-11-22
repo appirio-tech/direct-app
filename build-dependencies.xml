@@ -560,6 +560,7 @@
   <property name="struts2-convention-plugin-2.1.8.jar" value="${struts2_libdir}/struts2-convention-plugin-2.1.8.jar" />
   <property name="struts2-core-2.1.8.1.jar" value="${struts2_libdir}/struts2-core-2.1.8.1.jar" />
   <property name="struts2-spring-plugin-2.1.8.jar" value="${struts2_libdir}/struts2-spring-plugin-2.1.8.jar" />
+  <property name="struts2-json-plugin-2.1.8.jar" value="${struts2_libdir}/struts2-json-plugin-2.1.8.jar" />
   <property name="xwork-1.2.3.jar" value="${struts2_libdir}/xwork-1.2.3.jar" />
   <property name="xwork-core-2.1.6.jar" value="${struts2_libdir}/xwork-core-2.1.6.jar" />
 
