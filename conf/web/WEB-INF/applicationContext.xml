@@ -782,7 +782,7 @@
             <value>org.hibernate.cfg.AnnotationConfiguration</value>
         </property>
         <property name="configLocation">  
-            <value>classpath:project_fee_hibernate.cfg.xml</value>  
+            <value>classpath:hibernate.cfg.xml</value>  
         </property>  
         <property name="hibernateProperties">
             <value>
