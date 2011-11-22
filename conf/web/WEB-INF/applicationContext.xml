@@ -801,12 +801,12 @@
         <property name="persistence" ref="contestFeePersistence"/>
     </bean>
     
-    <bean name="contestFeesHomeAction" class="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction" scope="prototype">
+    <bean name="contestFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.ContestFeesHomeAction" scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
     </bean>
     
-    <bean name="contestFeesDetailsAction" class="com.topcoder.accounting.fees.view.actions.ContestFeesDetailsAction" scope="prototype">
+    <bean name="contestFeesDetailsAction" class="com.topcoder.direct.services.view.action.accounting.ContestFeesDetailsAction" scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesDetailsAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
     </bean>
@@ -815,7 +815,7 @@
         <property name="loggerName" value="com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider"/>
     </bean>
     
-    <bean name="contestFeeAccessInterceptor" class="com.topcoder.accounting.fees.view.interceptor.ContestFeeAccessInterceptor" scope="prototype">
+    <bean name="contestFeeAccessInterceptor" class="com.topcoder.direct.services.view.action.accounting.ContestFeeAccessInterceptor" scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.interceptor.ContestFeeAccessInterceptor"/>
         <property name="contestFeeAuthorizationProvider" ref="contestFeeAuthorizationProvider"/>
     </bean>

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
-package com.topcoder.accounting.fees.view.actions;
+package com.topcoder.direct.services.view.action.accounting;
 
 import java.util.Map;
 
