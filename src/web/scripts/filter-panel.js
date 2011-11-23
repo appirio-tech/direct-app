@@ -190,7 +190,7 @@ $(function() {
             var filterStr = $('input.searchBox').val();
             var len = aData.length;
             for (var i = 0; i < len - 1; i++) {
-                if (aData[i].replace(/<[^>]*>/g, "").indexOf(filterStr) != -1)
+                if (aData[i].replace(/<[^>]*>/g, "").toLowerCase().indexOf(filterStr.toLowerCase()) != -1)
                     return true;
             }
             return false;
