@@ -213,7 +213,7 @@
             </div>
             <!--end .top-->
             <div class="bottom">
-                CopyrightTopcoder,Inc.2001-2011 | <a href="javascript:;">Terms of Use</a> | <a href="javascript:;">Privacy Policy</a>
+                CopyrightTopcoder,Inc.2001-2011 | <a href="javascript:;">Terms of Use</a> | <a href="https://www.topcoder.com/reg/privacy_policy.jsp">Privacy Policy</a>
             </div>
             <!--end .bottom-->
         </div>
@@ -230,6 +230,7 @@
             <p>Login using your credentials</p>
         </div>
         <div class="content">
+            <div class="loginError hide">Incorrect username and/or password</div>
             <div class="row firstRow">
                 <label for="username">Username</label>
                 <img src="/images/ppt/error.png" alt="" class="errImg handleErr hide"/>
@@ -240,7 +241,7 @@
                 <label for="password">Password</label>
                 <img src="/images/ppt/error.png" alt="" class="errImg passwordErr hide"/>
                 <input id="password" type="password" class="inputCre"/>
-                <span class="errorMsg passwordErr hide">Incorrect username/password</span>
+                <span class="errorMsg passwordErr hide">Please fill in your password</span>
             </div>
             <div class="row">
                 <a href="https://www.topcoder.com/tc?module=RecoverPassword" class="forgetPass">Forgot your password?</a>
@@ -319,7 +320,7 @@
             </div>
             -->
             <div class="row">
-                <input type="checkbox" class="checkCre" id="accPol"/><span>I have read and accept the privacy policy</span>
+                <input type="checkbox" class="checkCre" id="accPol"/><span>I have read and accept the <a class="underline" href="https://www.topcoder.com/reg/privacy_policy.jsp">privacy policy</a></span>
                 <span class="errorMsg policyErr hide">Please accept the privary policy</span>
             </div>
             <div class="row">

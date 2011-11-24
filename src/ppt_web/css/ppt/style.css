@@ -966,3 +966,17 @@ a:hover{
 			.button3:hover > .right .middle{
 				background:url(../../images/ppt/button3.png) repeat-x left -99px;
 			}
+a.underline:hover {
+    text-decoration:underline !important;
+}
+.loginError {
+    color:#FF0000;
+    font-size:11px;
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+#loginModal .firstRow {
+    margin-top: 10px !important;
+}

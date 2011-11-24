@@ -93,6 +93,7 @@ $(document).ready(function() {
 	});
 	//login
 	$('.navLogin').live("click", function(e) {
+        $("input[type='password']").val("");
 		clearLoginErrStyle();
         popWinPosTop = screenheight/2 - $('#loginModal').height()/2;
 		popWinPosLeft = screenwidth/2 - $('#loginModal').width()/2;
@@ -122,6 +123,7 @@ $(document).ready(function() {
 		$('#veriCode').css({'border':'1px solid #8a8a8a','background':'#fff'});
 		$('.veriCodeErr').hide();
         $('.policyErr').hide();
+        $('.loginError').hide();
 	}
 	function showLoginErrStyle(e){
 		e.css({'border':'1px solid #e71f19','background':'#fdeded'});
@@ -177,9 +179,9 @@ $(document).ready(function() {
 					},500);
                 } else {
                     $('#loginModal .loadingbackground').remove();
-					showLoginErrStyle($('#password'));
-					$('#loginModal span.passwordErr').html('Incorrect username/password');
-					$('.passwordErr').show();
+					showLoginErrStyle($('#username'));
+                    showLoginErrStyle($('#password'));
+                    $('.loginError').show();
                 }
             },
             function(errorMessage) {
