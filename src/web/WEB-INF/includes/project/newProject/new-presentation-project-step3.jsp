@@ -12,7 +12,7 @@
 <div id="newPPTProjectStep3" class="hide newProjectStep">
     <!-- step title -->
     <div class="stepTitle">
-        <h3><span>3</span>Audience</h3>
+        <h3><span>3</span>Identify the audience for your presentation.</h3>
          <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
     </div>
     <!-- End .stepTitle -->
@@ -38,9 +38,13 @@
                     </dt>
 
                     <dd class="first">
-                         For these types below, select the target audience of your presentation.
+                         Please identify your target audience accurately so that we can take
+a suitable approach to styling and phrasing your presentation.
                     </dd>
-                    <dd>If none of the listed audience types is your target audience, then you can add a new audience type from Custom Audience field.</dd> 
+                    <dd>You may select multiple audience types if you expect to have a mixed
+audience with substantial components of each type.</dd>
+                    <dd>For the greatest possible precision, select the Custom Audience type
+and provide a detailed description of your audience.</dd>
                      
                 </dl>
             </div><!-- End .noteMask -->
@@ -62,49 +66,88 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="labelTd">Customer</td>
+                                <td class="labelTd">Enterprise business customer</td>
                                 <td>
                                     <div class="selectRadioBox">
-                                        <input type="checkbox" name="Customer" class="radio" />
+                                        <input type="checkbox" name="EnterpriseBusinessCustomer" class="radio" />
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="labelTd">Management</td>
+                                <td class="labelTd">Small or medium business customer</td>
                                 <td>
                                     <div class="selectRadioBox">
-                                        <input type="checkbox" name="Management" class="radio" />
+                                        <input type="checkbox" name="SMBusinessCustomer" class="radio" />
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="labelTd">Academic</td>
+                                <td class="labelTd">Prospective home customer (consumer)</td>
                                 <td>
                                     <div class="selectRadioBox">
-                                        <input type="checkbox" name="Academic" class="radio" />
+                                        <input type="checkbox" name="ProspectiveHomeCustomer" class="radio" />
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="labelTd">Conference</td>
+                                <td class="labelTd">Unqualified general audience (web traffic)</td>
                                 <td>
                                     <div class="selectRadioBox">
-                                        <input type="checkbox" name="Conference" class="radio" />
+                                        <input type="checkbox" name="GeneralAudience" class="radio" />
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="labelTd">General Public (internet reader)</td>
+                                <td class="labelTd">Executive business meeting</td>
                                 <td>
                                     <div class="selectRadioBox">
-                                        <input type="checkbox" name="General Public (internet reader)" class="radio" />
+                                        <input type="checkbox" name="ExecutiveBusinessMeeting" class="radio" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelTd">Project-level business meeting</td>
+                                <td>
+                                    <div class="selectRadioBox">
+                                        <input type="checkbox" name="ProjectBusinessMeeting" class="radio" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelTd">All-hands business meeting</td>
+                                <td>
+                                    <div class="selectRadioBox">
+                                        <input type="checkbox" name="AllHandsBusinessMeeting" class="radio" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelTd">Business conference</td>
+                                <td>
+                                    <div class="selectRadioBox">
+                                        <input type="checkbox" name="BusinessConference" class="radio" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelTd">Academic conference</td>
+                                <td>
+                                    <div class="selectRadioBox">
+                                        <input type="checkbox" name="AcademicConference" class="radio" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="labelTd">TechnicalConference</td>
+                                <td>
+                                    <div class="selectRadioBox">
+                                        <input type="checkbox" name="TechnicalConference" class="radio" />
                                     </div>
                                 </td>
                             </tr>
                             <tr class="tfooter">
                                 <td>
-                                    <a href="javascript:;" class="toolTip" id="toolTip3" rel='60 characters max.'></a>
-                                    <label>Custom Audience: <span class="red">*</span></label>
+                                    <label>Custom audience: <span class="red">be as specific as you can</span></label>
                                 </td>
                                 <td>
                                     <div class="addMoreButtonBox">

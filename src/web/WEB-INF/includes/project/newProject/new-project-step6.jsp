@@ -13,7 +13,7 @@
 
     <!-- step title -->
     <div class="stepTitle">
-        <h3><span>6</span>Setup the Project</h3>
+        <h3><span>6</span>Launch</h3>
         <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
     </div>
     <!-- End .stepTitle -->
@@ -40,13 +40,49 @@
                         <span>Want to communicate?</span>
                         <a href="#">Project Forums</a>
                     </div>
-                    <p>You have successfully created your project. <br/>
+                    <p class='defaultNote'>You have successfully created your project. <br/>
                         You must complete project setup from Project Overview Page before you can start your project.
+                    </p>
+                    <p class='pptNote hide'>Your presentation project has been launched. That was easy, wasn't it? <br/>
+                        Your specifications are summarized below.
                     </p>
                 </div>
                 <!-- End .successDiv -->
 
                 <div class="projectOverView">
+                    <!-- list -->
+                    <dl class="pptProjectName hide">
+                        <dt>Name:</dt>
+                        <dd><p>Floating Futon Sales Pitch</p></dd>
+                    </dl>
+
+                    <dl class="pptSummary hide">
+                        <dt>Summary:</dt>
+                        <dd><p>I am presenting my idea for a helium-filled futon to a major mattress manufacturer.</p></dd>
+                    </dl>
+
+                    <dl class="pptProjectDuration hide">
+                        <dt>Project duration:</dt>
+                        <dd><p><span class="duration">45</span> days</p></dd>
+                    </dl>
+
+                    <dl class="pptPresentationLength hide">
+                        <dt>Presentation length:</dt>
+                        <dd><p><span class="length">6-10</span> pages, including the cover page</p></dd>
+                    </dl>
+
+                    <dl class="pptTargetAudience hide">
+                        <dt>Target audience:</dt>
+                        <dd><p>Enterprise business customer</p></dd>
+                    </dl>
+
+                    <dl class="pptManagementMessage hide">
+                        <dt></dt>
+                        <dd><p style="width: 100%;line-height: 20px;font-size: 14px;">Our management team is reviewing your full specifications in order to assign the most qualified copilot to your project. You can expect to hear from your new copilot within 48 hours.<br/>We have already set up your project in the Cockpit, where you will be able to follow our progress in building your presentation.</p></dd>
+                        <dd style="text-align: center;"><p style="font-size: 14px;">Thank you for choosing TopCoder!</p></dd>
+                    </dl>
+
+                    <!-- End .list -->
 
                     <table cellspacing="0" cellpadding="0" border="0" class="projectStats">
                         <colgroup>
@@ -145,7 +181,7 @@
                     </dl>
                     <!-- End .list -->
 
-                    <div class="bottomLine">
+<div class="bottomLine">
                         <a class="button6" title="PROJECT OVERVIEW" href='<s:url action="projectOverview"><s:param name="formData.projectId" value="%{'projectIdValue'}" /></s:url>'><span class="left"><span
                                 class="right">PROJECT OVERVIEW</span></span></a>
 
@@ -154,8 +190,10 @@
                             manage your copilot, run contests...
                         </p>
                     </div>
-
                 </div>
+
+
+
 
             </div>
             <!-- End .form -->

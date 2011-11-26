@@ -927,7 +927,7 @@ table {
                     width:336px;
                 }
 			
-/* stepFirst */
+/* stepSecond */
 .stepContainer .geryContent{
 	width:100%;
 	position:relative;
@@ -964,21 +964,21 @@ table {
 		}
 		
 	/* form */
-	.stepFirst .geryContent .form{
+	.stepSecond .geryContent .form{
 		padding:20px 0 18px; 
 		}
 		
-		.stepFirst .geryContent .row{
+		.stepSecond .geryContent .row{
 			clear:both;
 			margin-left:46px;
 			padding-bottom:7px;
 			}
 			
-			.stepFirst .geryContent .row .toolTip{
+			.stepSecond .geryContent .row .toolTip{
 				margin-right:7px;
 				}
 				
-			.stepFirst .geryContent .row label{
+			.stepSecond .geryContent .row label{
 				width:134px;
 				float:left;
 				display:inline;
@@ -987,11 +987,11 @@ table {
 				font-size:12px;
 				}
 				
-			.stepFirst .geryContent .row span.red{
+			.stepSecond .geryContent .row span.red{
 				color:#ff0000;
 				}
 				
-			.stepFirst .geryContent .row .intro{
+			.stepSecond .geryContent .row .intro{
 				width:auto;
 				float:right;
 				display:inline;
@@ -1002,7 +1002,7 @@ table {
 				line-height:25px;
 				} 
 
-            .stepFirst .geryContent .row .message{
+            .stepSecond .geryContent .row .message{
                 background: #ffffff;
 				width:373px; 
 				margin-left:157px; 
@@ -1012,13 +1012,13 @@ table {
                 padding:2px 0 0 0;
                 height:14px;
                 }
-				.stepFirst .geryContent .row .message .remaning{
+				.stepSecond .geryContent .row .message .remaning{
 					float:right;
 				 }
-				.stepFirst .geryContent .row .message .errorText{
+				.stepSecond .geryContent .row .message .errorText{
 					color:#ec1c23;
 				 }
-                .stepFirst .geryContent .row .errorIcon{
+                .stepSecond .geryContent .row .errorIcon{
                     background:url(/images/error-icon.png) no-repeat left center;
                     height:10px;
                     width:10px;
@@ -1026,12 +1026,12 @@ table {
                     margin-left:7px;
                     margin-top:7px;
                  }
-                .stepFirst .geryContent .descProject .errorIcon{
+                .stepSecond .geryContent .descProject .errorIcon{
                     margin-top:57px;
                  }
 
             /* input */
-			.stepFirst .geryContent .row .text{
+			.stepSecond .geryContent .row .text{
 				width:353px;
 				height:19px;
 				float:left;
@@ -1045,7 +1045,7 @@ table {
 				}
 			
 			/* textarea */
-			.stepFirst .geryContent .row textarea{
+			.stepSecond .geryContent .row textarea{
 				width:auto;
 				height:127px;
 				padding:2px 7px !important;
@@ -1056,7 +1056,7 @@ table {
                 float:left;
                 overflow:auto;
                 }
-		    .stepFirst .geryContent .row input.error,.stepFirst .geryContent .row textarea.error{
+		    .stepSecond .geryContent .row input.error,.stepSecond .geryContent .row textarea.error{
                 background:#ffe4e4;
             }
 
@@ -1200,21 +1200,21 @@ table {
 		background-position:-3px -3px;
 		}
 		
-/* stepSecond */
-.stepSecond .geryContent .form{
+/* stepFirst */
+.stepFirst .geryContent .form{
 	padding:23px 0 32px; 
 	}
 
-	.stepSecond .projectTypeSelect{
+	.stepFirst .projectTypeSelect{
 		margin-left:38px;
 		}	
 		
-	.stepSecond .projectList{
+	.stepFirst .projectList{
 		padding-bottom:30px;
 		}
 		
 		/* projectTypeSelect */
-		.stepSecond .projectTypeSelect label{
+		.stepFirst .projectTypeSelect label{
 			width:81px;
 			float:left;
 			display:inline;
@@ -1223,12 +1223,12 @@ table {
 			line-height:21px;
 			}
 			
-		.stepSecond .projectTypeSelect select{
+		.stepFirst .projectTypeSelect select{
 			width:186px;
 			}
 			
 		/* projectItem */
-		.stepSecond .projectItem{
+		.stepFirst .projectItem{
 			width:273px;
 			float:left;
 			display:inline;
@@ -1236,84 +1236,84 @@ table {
 			padding-top:18px;
 			}
 			
-		.stepSecond .projectItem .projectContainer .top{
+		.stepFirst .projectItem .projectContainer .top{
 			width:273px;
 			padding-top:12px;
 			background:url(/images/selectProject_top.png) no-repeat left top;
 			}
 			
-		.stepSecond .projectItem .projectContainer .bottom{
+		.stepFirst .projectItem .projectContainer .bottom{
 			width:100%;
 			padding-bottom:12px;
 			background:url(/images/selectProject_bottom.png) no-repeat left bottom;
 			}
 			
-		.stepSecond .projectItem .projectContainer .bg{
+		.stepFirst .projectItem .projectContainer .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
 			background:url(/images/selectProject_bg.png) repeat-y left top;
 			}
 			
-		.stepSecond .projectItem .hover .top{
+		.stepFirst .projectItem .hover .top{
 			width:273px;
 			padding-top:12px;
 			background:url(/images/selectProject_top_hover.png) no-repeat left top;
 			}
 			
-		.stepSecond .projectItem .hover .bottom{
+		.stepFirst .projectItem .hover .bottom{
 			width:100%;
 			padding-bottom:12px;
 			background:url(/images/selectProject_bottom_hover.png) no-repeat left bottom;
 			}
 			
-		.stepSecond .projectItem .hover .bg{
+		.stepFirst .projectItem .hover .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
 			background:url(/images/selectProject_bg_hover.png) repeat-y left top;
 			}
 			
-		.stepSecond .projectItem .projectContainer .custom{
+		.stepFirst .projectItem .projectContainer .custom{
 			width:273px;
 			height:285px;
 			background:url(/images/custom.png) no-repeat center 4px;
 			}
 			
-		.stepSecond .projectItem .hover .custom{
+		.stepFirst .projectItem .hover .custom{
 			width:273px;
 			height:285px;
 			background:url(/images/custom_hover.png) no-repeat center top;
 			}
 			
 			/* radioBox */
-			.stepSecond .projectItem .radioBox{
+			.stepFirst .projectItem .radioBox{
 				height:17px;
 				padding:12px 0 0 0;
 				margin-left:4px;
 				}
 				
-				.stepSecond .projectItem .radioBox .radio{
+				.stepFirst .projectItem .radioBox .radio{
 					width:auto;
 					float:left;
 					display:inline;
 					margin-right:6px;
 					}
 					
-				.stepSecond .projectItem .radioBox label{
+				.stepFirst .projectItem .radioBox label{
 					font-family:Tahoma, Arial, Helvetica, sans-serif;
 					font-size:12px;
 					}
 					
 			/* pic */
-			.stepSecond .projectItem .projectContainer .projectPic{
+			.stepFirst .projectItem .projectContainer .projectPic{
 				width:232px;
 				margin:0 auto;
 				margin-bottom:10px;
 				padding:3px;
 				border:#a8abad solid 1px;
 				}
-            .stepSecond .projectItem .projectContainer .comingSoon{
+            .stepFirst .projectItem .projectContainer .comingSoon{
 				width:262px;
 				margin:0 auto;
                 margin-top: -12px;
@@ -1322,13 +1322,13 @@ table {
 				}
 				
 			/* table */
-			.stepSecond .projectItem .projectContainer table{
+			.stepFirst .projectItem .projectContainer table{
 				width:263px;
 				margin-left:5px;
 				border-collapse:collapse;
 				}
 				
-				.stepSecond .projectItem .projectContainer table td{
+				.stepFirst .projectItem .projectContainer table td{
 					height:27px;
 					padding:0 6px;
 					font-family:Tahoma, Arial, Helvetica, sans-serif;
@@ -1340,25 +1340,25 @@ table {
 					background:#ffffff;
 					}
 					
-				.stepSecond .projectItem .projectContainer table td.firstTd{
+				.stepFirst .projectItem .projectContainer table td.firstTd{
 					border-right:#d0d2d3 solid 1px;
 					background:#f3f3f3;
 					font-weight:normal;
 					text-indent:4px;
 					}
 					
-					.stepSecond .projectItem .projectContainer table td select{
+					.stepFirst .projectItem .projectContainer table td select{
 						width:119px;
 						}
 						
 			/* buttonArea */
-			.stepSecond .projectItem .projectContainer .buttonArea{
+			.stepFirst .projectItem .projectContainer .buttonArea{
 				height:21px;
 				padding-top:7px;
 				text-align:center;
 				}
 				
-				.stepSecond .projectItem .projectContainer .buttonArea .blackButton{
+				.stepFirst .projectItem .projectContainer .buttonArea .blackButton{
 					width:100px;
 					height:21px;
 					float:left;
@@ -1371,11 +1371,11 @@ table {
 					background:url(/images/blackButton.png) no-repeat left top;
 					}
 					
-				.stepSecond .projectItem .projectContainer .buttonArea .blackButton:hover{
+				.stepFirst .projectItem .projectContainer .buttonArea .blackButton:hover{
 					background:url(/images/blackButton.png) no-repeat left -21px;
 					}
 				
-				.stepSecond .projectItem .projectContainer .buttonArea .detailButton{
+				.stepFirst .projectItem .projectContainer .buttonArea .detailButton{
 					margin-left:14px;
 					margin-right:44px;
 					}
@@ -1479,7 +1479,7 @@ table {
 			}
 			.stepThird .form .tableWrapper table td label{
 				width:86px;
-				padding-left:8px;
+				text-indent:30px;
 				cursor:pointer;
 				}
 			.stepThird .form .tableWrapper table td input.radio{
@@ -1700,7 +1700,7 @@ table {
 		}
 	.stepForth .speciealForm .row{
 		clear:both;
-		margin-left:73px;
+		margin-left:56px;
 		margin-right:70px;
 		padding-bottom:18px;
 		}
@@ -1919,7 +1919,6 @@ table {
 /* stepFifth */
 .stepFifth .form{
 	padding:25px 0 32px;
-    min-height:566px;
     }
 	
 	.stepFifth h3{
@@ -2073,10 +2072,10 @@ table {
 			.stepFifth .speciealForm .topNotice .noticeRight .red{
 				font-size:12px;
 				}
-	.stepFifth .form .tableWrapper table{
+	.stepFifth .form .tableWrapper table, .stepForth .form .tableWrapper table{
 		width:100%;
 		}
-		.stepFifth .form .tableWrapper table th{
+		.stepFifth .form .tableWrapper table th, .stepForth .form .tableWrapper table th {
 			width:100%;
 			height:33px;
 			border:0;
@@ -2087,17 +2086,17 @@ table {
 			border:1px solid #534741;
 			background:transparent url(/images/bg-table-header.png) left top repeat-x;
 			}
-			.stepFifth .form .tableWrapper table th .toolTip{
+			.stepFifth .form .tableWrapper table th .toolTip, .stepForth .form .tableWrapper table th .toolTip{
 				text-align:left;
 				font-weight:normal;
 				text-indent:0;
 				}
-		.stepFifth .form .tableWrapper table td{
+		.stepFifth .form .tableWrapper table td, .stepForth .form .tableWrapper table td{
 			height:32px;
 			vertical-align:middle;
 			border:1px solid #bdbdbd;
 			}
-			.stepFifth .form .tableWrapper table td.deleteTd{
+			.stepFifth .form .tableWrapper table td.deleteTd, .stepForth .form .tableWrapper table td.deleteTd{
 				width:10%;
 				text-align:center;
 				}
@@ -2139,7 +2138,13 @@ table {
 			background-color:#e8e8e8;
 			vertical-align:top;
 			}
-		.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper table .tfooter td{
+
+        .stepForth .speciealForm .tableWrapper .otherTypeTableWrapper {
+            margin-left: 56px;
+            margin-right: 70px;
+            padding-bottom: 18px;
+        }
+		.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper table .tfooter td{
 			height:40px;
 			vertical-align:top;
 			background-color:#e8e8e8;
@@ -2214,7 +2219,7 @@ table {
 						color:#ec1c23;
 						display:none;
 						}
-					.stepFifth .speciealForm .text{
+					.stepFifth .speciealForm .text, .stepForth .speciealForm .text{
 						padding:2px 12px;
 						height:19px;
 						line-height:19px;
@@ -2251,15 +2256,26 @@ table {
 					top:2px;
 					height:20px;
 					}
-				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .selectWrapper{
-						border:1px solid #A8ABAD;
-						height:16px;
-						padding:3px 1px;
+				.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .categoryWrapper{
+						height:25px;
+                                                line-height: 25px;
 						float:left;
 						width:auto;
 						display:inline;
-						background-color:#ffffff;
 						}
+                    .stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .categoryWrapper label {
+                        font-weight: bold;
+                        width: 80px;
+                    }
+                    .stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .categoryWrapper span {
+                        padding-left: 10px;
+                        padding-right: 20px;
+                    }
+
+                    .stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td .categoryWrapper span input {
+                        margin-right: 7px;
+                    }
+
 					.stepFifth .speciealForm .tableWrapper .mediaAssetTableWrapper table .tfooter td select{
 						width:auto;
 						display:block;
@@ -2405,7 +2421,7 @@ table {
 			top:-2px;
 			position:relative;
 			}
-				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .leftPart{
+				.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .leftPart{
 					width:96px;
 					height:40px;
 					line-height:40px;
@@ -2416,15 +2432,15 @@ table {
 					font-family:Tahoma, Arial, Helvetica, sans-serif;
 					font-size:14px;
 					}
-				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart{
+				.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart{
 					padding:8px 0 7px;
 					height:25px;
 					}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .text{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .text{
 						float:left;
 						display:inline;
 						}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .period{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .period{
 						font-weight:bold;
 						padding-left:12px;
 						line-height:24px;
@@ -2433,12 +2449,12 @@ table {
 						display:inline;
 						}
 					
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .button12{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart .button12{
 						margin-right:12px;
 						float:right;
 						margin-top:2px;
 						}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart strong{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper  .rightPart strong{
 						padding:0px 8px 0 22px;
 						float:left;
 						display:inline;
@@ -2447,19 +2463,19 @@ table {
 					#fileType{
 						width:50px;
 						}
-			.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension{
+			.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension{
 				padding-left:17px;
 				}
-			.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .strExtension{
+			.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .strExtension{
 				padding:0 0px 0 24px;
 				display:inline-block;
 				min-width:60px;
 				}
-				.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension strong.textLabel{
+				.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .rowExtension strong.textLabel{
 					padding-right:10px;
 					}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper,
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper,
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper{
 						position:relative;
 						z-index:1;
 						height:25px;
@@ -2468,7 +2484,7 @@ table {
 						float:left;
 						display:inline;
 						}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorIcon{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorIcon{
 						position:absolute;
 						background:url(/images/error-icon.png) left top no-repeat;
 						width:10px;
@@ -2478,7 +2494,7 @@ table {
 						top:7px;
 						display:none;
 						}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorText{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .fileTypeWrapper .errorText{
 						overflow:hidden;
 						width:160px;
 						position:absolute;
@@ -2490,7 +2506,7 @@ table {
 						color:#ec1c23;
 						display:none;
 						}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorIcon{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorIcon{
 						position:absolute;
 						background:url(/images/error-icon.png) left top no-repeat;
 						width:10px;
@@ -2500,7 +2516,7 @@ table {
 						top:7px;
 						display:none;
 						}
-					.stepFifth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorText{
+					.stepForth .speciealForm .tableWrapper .otherTypeTableWrapper .descriptionInputWrapper .errorText{
 						overflow:hidden;
 						width:160px;
 						position:absolute;
@@ -4224,6 +4240,8 @@ table.notifications TH.permCol2{
     font-weight: bold;
     color: #EC1C23;
 }
+
+
 
 
 

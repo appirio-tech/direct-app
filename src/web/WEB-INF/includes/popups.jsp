@@ -402,13 +402,13 @@
                             <!-- End .modal-title -->
                             <!-- content -->
                             <div class="modal-content">
-                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                <p class="paragraph1">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
                                     doloremque
                                     laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
                                     quasi
                                     architecto beatae vitae dicta sunt explicabo.</p>
 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                <p class="paragraph2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt.</p>
 
                                 <div class="tableOut">
@@ -520,7 +520,7 @@
                                         initial setup on the project page
                                     </dd>
                                     <dd>
-                                        At this point, you'll skip Step 3 and go to Step 4
+                                        At this point, you will get name and description for the project, skip step 3 and go to step 4
                                     </dd>
                                 </dl>
                             </div>

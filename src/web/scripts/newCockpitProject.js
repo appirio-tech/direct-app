@@ -45,7 +45,7 @@ function createChartControl(htmlDiv, hasTreePanel) {
  * Checks whether the project is presentation project.
  */
 function isPresentationProject() {
-    return stepsChoices['step2'] == 'Presentation Project Type';
+    return stepsChoices['step1'] == 'Presentation Project Type';
 }
 
 /**
@@ -82,6 +82,9 @@ var goCreateProjectStep = function(stepNumber) {
         $("#newProjectStep" + stepNumber).show();
     }
 
+    // text area
+    $('.stepSecond textarea').css('width', $('.stepSecond .row').width() - 206);
+
     $(".stepBar li").each(function() {
         var index = $(this).index() + 1;
         var s = $(this).find(">span");
@@ -108,7 +111,7 @@ var goCreateProjectStep = function(stepNumber) {
             stepLink.attr("href", "javascript:goCreateProjectStep(" + index + ");");
 
 
-            if(stepNumber >= 3 && stepsChoices['step2'] == 'custom' && index == 3) {
+            if(stepNumber >= 3 && stepsChoices['step1'] == 'custom' && index == 3) {
                 s.addClass("finished");
                 s.find("a").unbind('click').attr("href", "javascript:;");
             }
@@ -125,7 +128,7 @@ var goCreateProjectStep = function(stepNumber) {
         });
     }
 
-    if(stepsChoices['step2'] == 'custom') {
+    if(stepsChoices['step1'] == 'custom') {
         $("#customGamePlanRadio").attr('checked', true);
     }
 
@@ -142,11 +145,13 @@ var goCreateProjectStep = function(stepNumber) {
             $("#newProjectStep4 .radioNo").attr("checked", "checked");
         }
     }
+
+    if(stepNumber == 4 && isPresentationProject()) {
+        $('#descriptionInput').width($('.stepForth .otherTypeAreaInputBox').width() - 450);
+    }
     if (stepNumber == 5 && isPresentationProject()) {
-        $('#selectFileDescription').width($('.addMoreParts .topRowWrapper').width() - 90);
-        $('#customFileDescription').width($('#selectFileDescription').width() - 22);
+        $('#customFileDescription').width($('.addMoreParts .topRowWrapper').width() - 112);
         $('.stepFifth .browserInput').width($('.stepFifth .browserParts .topRowWrapper').width() - 26);
-        $('#descriptionInput').width($('.stepFifth .otherTypeAreaInputBox').width() - 450);
     }
 };
 
@@ -154,7 +159,7 @@ var generateConfirmationPage = function(projectId, projectName) {
     // determine what to show in the final confirmation page
     if ($(".stepSixth").length > 0) {
         var isPPT = isPresentationProject();
-        var step2 = stepsChoices["step2"];
+        var step1 = stepsChoices["step1"];
         var step4 = stepsChoices["step4"];
         var step2Size;
 
@@ -173,28 +178,27 @@ var generateConfirmationPage = function(projectId, projectName) {
         hrefValue = hrefValue.replace("projectIdValue", projectId);
         projectOverviewLink.attr('href', hrefValue);
 
-        if (step2 == "gameplan" && step4 == "chooseCopilot") {
+        // Display default note
+        $(".stepSixth .defaultNote").show();
+        if (step1 == "gameplan" && step4 == "chooseCopilot") {
             $(".stepSixth .completedSteps .step2.gameplanStep").show();
             $(".stepSixth .completedSteps .step3.selectStep").show();
         }
-
-        if (step2 == "gameplan" && step4 == "createCopilot") {
+        if (step1 == "gameplan" && step4 == "createCopilot") {
             $(".stepSixth .notYetSteps").show();
             $(".stepSixth .completedSteps .step2.gameplanStep").show();
             $(".stepSixth .completedSteps .step3.createStep").show();
             $(".stepSixth .notYetSteps .step4.launchStep").show();
             $(".stepSixth .notYetSteps .step5.selectStep").show();
         }
-
-        if (step2 == "gameplan" && step4 == "noCopilot") {
+        if (step1 == "gameplan" && step4 == "noCopilot") {
             $(".stepSixth .notYetSteps").show();
             $(".stepSixth .completedSteps .step2.gameplanStep").show();
             $(".stepSixth .notYetSteps .step3.gameplanStep").show();
             $(".stepSixth .notYetSteps .step4.completeStep").show();
             $(".stepSixth .notYetSteps .step5.launchFirstStep").show();
         }
-
-        if (step2 == "gameplan") {
+        if (step1 == "gameplan") {
             step2Size = stepsChoices["step2-size"];
             if ((step2Size === null) || (step2Size === undefined)) {
                 updateProjSizeData($(".stepSixth .projectStats"), 0);  // Arbitrary default.
@@ -202,16 +206,13 @@ var generateConfirmationPage = function(projectId, projectName) {
                 updateProjSizeData($(".stepSixth .projectStats"), step2Size);
             }
         }
-
-        if (step2 == "custom") {
+        if (step1 == "custom") {
             $(".stepSixth .projectStats").hide();
         }
-
-        if (step2 == "custom" && step4 == "chooseCopilot") {
+        if (step1 == "custom" && step4 == "chooseCopilot") {
             $(".stepSixth .completedSteps .step2.selectStep").show();
             // fill in the copilots
             var copilots = stepsChoices["copilots"];
-
             var names = "";
             $.each(copilots, function(index, value) {
                 if (index > 0) names += ", ";
@@ -219,25 +220,52 @@ var generateConfirmationPage = function(projectId, projectName) {
             });
             $(".stepSixth .completedSteps .step2.selectStep .smallText").html(names);
         }
-
-        if (step2 == "custom" && step4 == "createCopilot") {
+        if (step1 == "custom" && step4 == "createCopilot") {
             $(".stepSixth .notYetSteps").show();
             $(".stepSixth .completedSteps .step2.createStep").show();
             $(".stepSixth .notYetSteps .step3.launchStep").show();
             $(".stepSixth .notYetSteps .step4.selectStep").show();
         }
-
-        if (step2 == "custom" && step4 == "noCopilot") {
+        if (step1 == "custom" && step4 == "noCopilot") {
             $(".stepSixth .notYetSteps").show();
             $(".stepSixth .notYetSteps .step2").show();
             $(".stepSixth .notYetSteps .step3.completeStep").show();
             $(".stepSixth .notYetSteps .step4.launchFirstStep").show();
         }
-        
         if (isPPT) {
-            $(".stepSixth .notYetSteps").show();
-            $(".stepSixth .pptStep").show();
+            $(".stepSixth .defaultNote").hide();
+            $(".stepSixth .notYetSteps").hide();
             $(".stepSixth .projectStats").hide();
+            $(".stepSixth .completedSteps").hide();
+            $(".stepSixth .pptNote").show();
+            $(".stepSixth .pptProjectName").show();
+            $(".stepSixth .pptSummary").show();
+            $(".stepSixth .pptProjectDuration").show();
+            $(".stepSixth .pptPresentationLength").show();
+            $(".stepSixth .pptTargetAudience").show();
+            $(".stepSixth .pptManagementMessage").show();
+            // name
+            $('.stepSixth dl.pptProjectName dd p').text(projectName);
+
+            // summary
+            $('.stepSixth dl.pptSummary dd p').text($("#newProjectDescription").val());
+
+            // project duration
+            $('.stepSixth dl.pptProjectDuration p').text($('.stepFirst .projectItem input:radio:checked').parents('.projectItem').find('td.dataDur').text());
+
+            // presentation length
+            $('.stepSixth dl.pptPresentationLength dd span.length').text($('.stepFirst .projectItem input:radio:checked').parents('.projectItem').find('td.dataNumCont').text());
+
+            var audiences = "";
+            $(".stepThird .speciealForm .selectRadioBox .radio:checked").each(function() {
+            if (audiences.length > 0) {
+                audiences += '<br/>';
+            }
+            audiences += htmlEncode($(this).parents('tr').find('td.labelTd').text());
+        });
+
+        // target audience
+        $('.stepSixth dl.pptTargetAudience dd p').html(audiences);
         }
     }
 
@@ -265,21 +293,23 @@ function createCopilotContestPublicDescription() {
     var content = "";
     var projectName = htmlEncode($("#newProjectName").val());
     var projectDescription = htmlEncode($("#newProjectDescription").val());
-    var style = $("input[name='styleSelectRadio']:checked").next().html();
-    var notes = htmlEncode($(".stepForth .notePresentation").val());
-    var pageLength = $("input[name='pageLengthSetting']:checked").next().html();
+    var subject = htmlEncode($(".stepForth textarea.subject").val());
+    var overallMessage = htmlEncode($(".stepForth textarea.overallMessage").val());
+    var importantPoints = htmlEncode($(".stepForth textarea.importantPoints").val());
+    var restrictions = htmlEncode($(".stepForth textarea.restrictions").val());
+    var specialRequirements = htmlEncode($(".stepForth textarea.specialRequirements").val());
     var audiences = "";
     $(".stepThird .speciealForm .selectRadioBox .radio:checked").each(function() {
         if (audiences.length > 0) {
             audiences += ', ';
         }
-        audiences += htmlEncode($(this).attr('name'));
+        audiences += htmlEncode($(this).parents('tr').find('td.labelTd').text());
     });
     var deliverableTypes = "";
-    $(".stepFifth .deliverablesTypeItem input[type='checkbox']:checked").each(function() {
-        deliverableTypes += $(this).next().html() + '<br/>';
+    $(".stepForth .deliverablesTypeItem input[type='checkbox']:checked").each(function() {
+        deliverableTypes += $(this).next().text() + '<br/>';
     });
-    $(".stepFifth .speciealForm .otherTypeTableWrapper tbody tr").each(function() {
+    $(".stepForth .speciealForm .otherTypeTableWrapper tbody tr").each(function() {
         if ($(this).hasClass("tfooter")) return;
         var ext = $(".strExtension", $(this)).html();
         var desc = $(".strDesc", $(this)).html();
@@ -288,9 +318,11 @@ function createCopilotContestPublicDescription() {
     
     content += '<p><strong>Project Name:</strong> ' + projectName + '</p>';
     content += '<p><strong>Project Overview:</strong><br/>' + projectDescription + '</p>';
-    content += '<p><strong>Which are your preferred style for the presentation?</strong><br/>' + style + '</p>';
-    content += '<p><strong>Any notes on presentation style?</strong><br/>' + notes + '</p>';
-    content += '<p><strong>Project Length:</strong> ' + pageLength + '</p>';
+    content += '<p><strong>What is the subject of your presentation?</strong><br/>' + subject + '</p>';
+    content += '<p><strong>What is the overall message for your audience?</strong><br/>' + overallMessage + '</p>';
+    content += '<p><strong>What are the most important points you want to get across?</strong><br/>' + importantPoints + '</p>';
+    content += '<p><strong>Do you have any restrictions pertaining to the presentation graphics?</strong><br/>' + restrictions + '</p>';
+    content += '<p><strong>Are there any other special requirements we should know about?</strong><br/>' + specialRequirements + '</p>';
     content += '<p><strong>Target Audience:</strong><br/>' + audiences + '</p>';
     content += '<p><strong>Deliverable Type:</strong><br/>' + deliverableTypes + '</p>';
     return content;
@@ -500,10 +532,7 @@ $(document).ready(function() {
     });
 
     // comment this statement because we want to disable some checkboxes
-    // $('.stepSecond .radio,.stepForth .radio').attr('checked', '');
-
-    // text area
-    $('.stepFirst textarea').css('width', $('.stepFirst .row').width() - 206);
+    // $('.stepFirst .radio,.stepForth .radio').attr('checked', '');
 
     // width for step bar
     $('.stepBar li').css('width', ($('.stepBar').width() / 6) + 17);
@@ -513,7 +542,7 @@ $(document).ready(function() {
     $(window).resize(function() {
         $('.stepBar li').css('width', ($('.stepBar').width() / 6) + 17);
         $('.stepBar li:first').css('width', ($('.stepBar').width() / 6) + 15);
-        $('.stepFirst textarea').css('width', $('.stepFirst .row').width() - 206);
+        $('.stepSecond textarea').css('width', $('.stepSecond .row').width() - 206);
         //new add line
         $('.stepThird .tfooter td .addMoreButtonBox .text').css('width',($('.stepThird .tfooter td .addMoreButtonBox').width() - 142));
     });
@@ -586,27 +615,11 @@ $(document).ready(function() {
     }
     var key = Request.QueryString('id');
 
-    $(".stepFirst .nextStepButton").click(function() {
 
-        removeError($(".stepFirst .descProject textarea"));
-        var valid1 = validate($(".stepFirst .descProject textarea"));
-
-        removeError($(".stepFirst .projectName input"));
-        var valid2 = validate($(".stepFirst .projectName input"));
-
-        if (valid1 && valid2) {
-            goCreateProjectStep(2);
-            return true;
-        } else {
-            return false;
-        }
-    });
-
-
-    // STEP 2 project type and project plan validations
-    $('.stepSecond .geryContent .nextStepButton').click(function() {
+    // STEP 1 project type and project plan validations
+    $('.stepFirst .geryContent .nextStepButton').click(function() {
         var falgRadio = false, jPar;
-        $('.stepSecond .radio').each(function() {
+        $('.stepFirst .radio').each(function() {
             if ($(this).attr('checked')) {
                 falgRadio = true;
             }
@@ -616,7 +629,7 @@ $(document).ready(function() {
             addresscloseModal();
             addressLoadModal('#errortModal');
         } else {
-            jPar = $('.stepSecond .radio:checked').parent();
+            jPar = $('.stepFirst .radio:checked').parent();
             var pType = jPar.find('label').text();
             if (pType == 'Custom') {
 
@@ -625,11 +638,11 @@ $(document).ready(function() {
                 addressLoadModal('#customConfirmModal');
 
                 // $.cookie("step2-size", null);
-                stepsChoices['step2'] = 'custom';
+                stepsChoices['step1'] = 'custom';
 
             } else if (pType == 'Presentation Project Type') {
-                stepsChoices['step2'] = 'Presentation Project Type';
-                goCreateProjectStep(3);
+                stepsChoices['step1'] = 'Presentation Project Type';
+                goCreateProjectStep(2);
             } else {
                 // $.cookie("step2", "gameplan");
                 // $.cookie("step2-size", jPar.parent().find(".selProjSize").val());
@@ -639,17 +652,43 @@ $(document).ready(function() {
         }
     });
 
+    $(".stepSecond .nextStepButton").click(function() {
+
+        removeError($(".stepSecond .descProject textarea"));
+        var valid1 = validate($(".stepSecond .descProject textarea"));
+
+        removeError($(".stepSecond .projectName input"));
+        var valid2 = validate($(".stepSecond .projectName input"));
+
+        if (valid1 && valid2) {
+            var step1 = stepsChoices['step1'];
+            if(step1 == 'custom') {
+                goCreateProjectStep(4);
+            } else {
+                goCreateProjectStep(3);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    });
+
     $('.stepForth .geryContent .nextStepButton').click(function() {
         if (isPresentationProject()) {
             var refuse = false;
-            var val = $.trim($('.stepForth .notePresentation').val());
-            if($('.stepForth .speciealForm .styleItem :radio:checked').length == 0){
+            $('.stepForth .notePresentation').each(function() {
+                var val = $.trim($(this).val());
+
+                if(val.length == 0){
+                    $(this).addClass('errorInput');
+                    $(this).siblings('.errorText').show();
+                    $(this).siblings('.errorIcon').show();
+                    refuse = true;
+                }
+            });
+
+            if($('.stepForth .speciealForm .deliverablesTypeItem :checked').length == 0){
                 $('.stepForth .errorStatusTips').css('display','inline');
-                refuse = true;
-            }
-            if(val.length == 0){
-                $('.stepForth .textFieldWrapper .notePresentation').addClass('errorInput');
-                $('.stepForth .textFieldWrapper .errorText, .stepForth .textFieldWrapper .errorIcon').show();
                 refuse = true;
             }
             if(refuse) return false;
@@ -687,8 +726,8 @@ $(document).ready(function() {
     $(".stepContainer .prevStepButton").live('click', function(){
         var previousStep = $(".stepBar .active").parent().index();
 
-        if(previousStep == 3 && stepsChoices['step2'] == 'custom') {
-             previousStep = 2;
+        if(previousStep == 3 && stepsChoices['step1'] == 'custom') {
+             previousStep = 1;
         }
 
         goCreateProjectStep(previousStep);
@@ -696,12 +735,6 @@ $(document).ready(function() {
 
     $('.stepFifth .geryContent .nextStepButton').click(function() {
         if (isPresentationProject()) {
-            var refuse = false;
-            if($('.stepFifth .speciealForm .deliverablesTypeItem :checked').length == 0){
-                $('.stepFifth .errorStatusTips').css('display','inline');
-                refuse = true;
-            }
-            if(refuse) return false;
             addresscloseModal();
             addressLoadModal('#createProjectConfirm');
         } else {
@@ -733,15 +766,26 @@ $(document).ready(function() {
 
     // custom project type confirmation button
     $("#customConfirmModal .button6").live('click', function(){
-        goCreateProjectStep(4);
+        goCreateProjectStep(2);
     });
 
     //detail modal
-    $('.stepSecond .geryContent .detailButton').click(function() {
+    $('.stepFirst .geryContent .detailButton').click(function() {
+        var sizeOption = $(this).parents('.projectItem').find('select.selProjSize option:selected').text();
         var jModal = $('#detailModal');
         var cost, dur, contestList, i, jContest;
         addresscloseModal();
         addressLoadModal('#detailModal');
+        if (sizeOption == 'Small') {
+           jModal.find("p.paragraph1").text('Do you need to persuade someone quickly? Make it short and snappy.');
+           jModal.find("p.paragraph2").text('A small project is suitable for a presentation of one to five 	pages, including the cover page. A brief presentation with the 	right choice of words and graphics can be a very powerful way to make your point.');
+        } else if (sizeOption == 'Medium') {
+           jModal.find("p.paragraph1").text('Are you trying to hit the sweet spot? Not too short, not too long.');
+           jModal.find("p.paragraph2").text('A medium project will result in a presentation of six to ten pages, including the cover page. Sharp graphics and succinct text will make this just right for a quotidian sales pitch or business report.');
+        } else if (sizeOption == 'Large') {
+           jModal.find("p.paragraph1").text('Do you have an important point to make? Go big or go home.');
+           jModal.find("p.paragraph2").text('A large project will build a presentation of 11 to 20 pages, including the cover page. Spectacular graphics accompanied by precise yet elegant wording will deliver your message in the best possible light.');
+        }
         jModal.find('h2').text($(this).parent().parent().parent().parent().parent().parent().find('.radioBox label').text());
         function randInt(lo, hi) {
             return lo + Math.floor(Math.random() * (hi - lo + 1));
@@ -766,16 +810,16 @@ $(document).ready(function() {
      * @param v the index
      */
     function updateProjSizeData(jPar, v) {
-        var durList = [30, 60, 120], costList = [10000, 30000, 60000], numContList = [5, 10, 20];
+        var durList = [10, 20, 30], costList = [3000, 7000, 12000], numContList = ['1-2', '3-4', '5-6'];
         jPar.find('.dataDur').html(durList[v] + " days");
         jPar.find('.dataCost').html("$ " + costList[v].toFixed(2));
         jPar.find('.dataNumCont').html(numContList[v]);
     }
 
-    $('.stepSecond .selProjSize').each(function () {  // Initialize.
+    $('.stepFirst .selProjSize').each(function () {  // Initialize.
         updateProjSizeData($(this).parents('table').eq(0), $(this).val());
     });
-    $('.stepSecond .selProjSize').bind("change", function () {
+    $('.stepFirst .selProjSize').bind("change", function () {
         updateProjSizeData($(this).parents('table').eq(0), $(this).val());
     });
 
@@ -805,7 +849,7 @@ $(document).ready(function() {
         }
     }
 
-    $('.stepSecond .geryContent .gamePlanButton').click(function() {
+    $('.stepFirst .geryContent .gamePlanButton').click(function() {
         addresscloseModal();
         adjustGamePlanModal($("#gamePlanModal"));
         addressLoadModal('#gamePlanModal', $(window).width() < 1006);
@@ -826,8 +870,8 @@ $(document).ready(function() {
         return true;
     });
 
-    $('.stepSecond .projectItem .radio').click(function() {
-        $('.stepSecond .projectItem .projectContainer').removeClass('hover');
+    $('.stepFirst .projectItem .radio').click(function() {
+        $('.stepFirst .projectItem .projectContainer').removeClass('hover');
         $(this).parent().parent().find('.projectContainer').addClass('hover');
     });
 
@@ -1052,8 +1096,8 @@ $(document).ready(function() {
     if ($.browser.msie && ($.browser.version == "7.0")) {
         $('.stepForth .form dl.radioList dd .radio').css('margin-top', '-4px');
         $('.stepForth .form dl.radioList dd').css('margin-left', '28px');
-        $('.stepSecond .radioBox').css('margin-left', '0px');
-        $('.stepSecond .radioBox .radio').css('margin-top', '-3px');
+        $('.stepFirst .radioBox').css('margin-left', '0px');
+        $('.stepFirst .radioBox .radio').css('margin-top', '-3px');
         $('.selectUserCheck,.selectUser').css('margin-top', '-3px');
     }
 
@@ -1133,20 +1177,20 @@ $(document).ready(function() {
 
     /* Added JS code for Cockpit "Start a New Project" Update Prototype - http://apps.topcoder.com/wiki/pages/viewpage.action?pageId=64258944 */
     // input tips
-    $(".stepFirst .projectName input.text").inputTips("Enter your Project Name here");
+    $(".stepSecond .projectName input.text").inputTips("Enter your Project Name here");
     // input limited text
-    $(".stepFirst .projectName input.text").limitedText({
+    $(".stepSecond .projectName input.text").limitedText({
         "max" : 60
     });
 
-    $(".stepFirst .descProject textarea").inputTips("");
+    $(".stepSecond .descProject textarea").inputTips("");
     // input limited text
-    $(".stepFirst .descProject textarea").limitedText({
+    $(".stepSecond .descProject textarea").limitedText({
         "max" : 255
     });
 
 
-    // validate step 1
+    // validate step 2
     function validate(box) {
         var value = $.trim(box.val());
         var tips = box.data("tips") ? box.data("tips") : "";
@@ -1164,7 +1208,7 @@ $(document).ready(function() {
         box.removeClass("error");
     }
 
-    $(".stepFirst .projectName input.text,.stepFirst .descProject textarea").keyup(function() {
+    $(".stepSecond .projectName input.text,.stepSecond .descProject textarea").keyup(function() {
         removeError($(this));
     });
 
@@ -1491,7 +1535,7 @@ $(document).ready(function() {
     // step 2 cookie function
     $("#customConfirmModal .buttonArea a.button6").click(function() {
         // $.cookie("step2", "custom");
-        stepsChoices['step2'] = 'custom';
+        stepsChoices['step1'] = 'custom';
         goCreateProjectStep(4); // skip the page 3
     });
 
@@ -1588,7 +1632,8 @@ $(document).ready(function() {
     
     //remove error status
     $('.stepForth .notePresentation').focus(function(){
-        $('.stepForth .textFieldWrapper .errorText, .stepForth .textFieldWrapper .errorIcon').hide();
+        $(this).siblings('.errorText').hide();
+        $(this).siblings('.errorIcon').hide();
         $(this).removeClass('errorInput');
     });
     
@@ -1596,10 +1641,9 @@ $(document).ready(function() {
     $(".stepFifth .noMediaAsset").show();
     
     $(window).resize(function(){
-        $('#selectFileDescription').width($('.addMoreParts .topRowWrapper').width() - 90);
-        $('#customFileDescription').width($('#selectFileDescription').width() - 22);
+        $('#customFileDescription').width($('.addMoreParts .topRowWrapper').width() - 112);
         $('.stepFifth .browserInput').width($('.stepFifth .browserParts .topRowWrapper').width() - 26);
-        $('#descriptionInput').width($('.stepFifth .otherTypeAreaInputBox').width() - 450);
+        $('#descriptionInput').width($('.stepForth .otherTypeAreaInputBox').width() - 450);
     });
     
     //set opacity for #uploadFile button
@@ -1690,9 +1734,8 @@ $(document).ready(function() {
         }, false);
     
     //add more button and validation
-    $('.stepFifth .mediaAssetTableWrapper .addMoreButton').click(function(){
+    $('.stepFifth .mediaAssetTableWrapper .uploadFileButton').click(function(){
         var fileVal = $('.stepFifth .browserInput').val();
-        var descriptVal = $('#selectFileDescription').val();
         var descriptTextVal = $('#customFileDescription').val();
         var description;
         var refuse = false;
@@ -1704,22 +1747,23 @@ $(document).ready(function() {
             $('.stepFifth .browserParts .topRowWrapper .errorIcon').show();
             refuse = true;
         }
-        if(descriptVal == 0){
-            $('#selectFileDescription').parent().addClass('errorInput');
-            $('#selectFileDescription').addClass('errorInput');
+        if($('.stepFifth .categoryWrapper input:radio:checked').length == 0){
+            $('.stepFifth .categoryWrapper').addClass('errorInput');
             $('.stepFifth .addMoreParts .subButtonBox .errorText').show();
             $('.stepFifth .addMoreParts .subButtonBox .errorIcon').show();
             refuse = true;
         }
-        if(descriptTextVal.length == 0 || descriptTextVal == 'Custom File Description') {
+        if(descriptTextVal.length == 0 || descriptTextVal == 'Instructions (tell us how to use the uploaded file)') {
             $('#customFileDescription').addClass('errorInput');
             $('.stepFifth .addMoreParts .subButtonBox .errorText').show();
             $('.stepFifth .addMoreParts .subButtonBox .errorIcon').show();
             refuse = true;
         }
-        
+
+        var categoryVal = $('.stepFifth .categoryWrapper input:radio:checked').val();
+
         if(!refuse){
-            description = descriptVal + " " + descriptTextVal;
+            description = categoryVal + " " + descriptTextVal;
             swUploader.setInput($("#uploadFile").get(0));
             swCurrentDocument['description'] = description;
             swCurrentDocument['documentTypeId'] = SUPPORTING_DOCUMENTATION_DOCUMENT_TYPE_ID;
@@ -1754,18 +1798,18 @@ $(document).ready(function() {
                 $('.stepFifth .addMoreParts .subButtonBox .errorText').hide();
                 $('.stepFifth .addMoreParts .subButtonBox .errorIcon').hide();
             }
-            if($(this).val() == 'Custom File Description'){
+            if($(this).val() == 'Instructions (tell us how to use the uploaded file)'){
                 $(this).val("");
             }
         })
         .blur(function(){
             if($(this).val().length == 0){
-                $(this).val("Custom File Description");
+                $(this).val("Instructions (tell us how to use the uploaded file)");
             }
         });
     
     //delete button 
-    $(".stepFifth .otherTypeTableWrapper .deleteRowIcon").live("click",function(){
+    $(".stepForth .otherTypeTableWrapper .deleteRowIcon").live("click",function(){
         $(this).parent().parent().remove();
     });
     $('.stepFifth .mediaAssetTableWrapper .deleteRowIcon').live('click',function(){
@@ -1808,21 +1852,21 @@ $(document).ready(function() {
     });
     
     //add more file type
-    $('.stepFifth .otherTypeAreaInputBox .addFileType').click(function(){
+    $('.stepForth .otherTypeAreaInputBox .addFileType').click(function(){
         var fileVal = $.trim($('#fileType').val());
         var extensionDescriptVal = $.trim($('#descriptionInput').val());
         var refuse = false;
         var cache;
         if(fileVal.length == 0){
             $('#fileType').addClass('errorInput');
-            $('.stepFifth .otherTypeAreaInputBox .fileTypeWrapper .errorText').show();
-            $('.stepFifth .otherTypeAreaInputBox .fileTypeWrapper .errorIcon').show();
+            $('.stepForth .otherTypeAreaInputBox .fileTypeWrapper .errorText').show();
+            $('.stepForth .otherTypeAreaInputBox .fileTypeWrapper .errorIcon').show();
             refuse = true;
         }
         if(extensionDescriptVal.length == 0){
             $('#descriptionInput').addClass('errorInput');
-            $('.stepFifth .otherTypeAreaInputBox .descriptionInputWrapper .errorText').show();
-            $('.stepFifth .otherTypeAreaInputBox .descriptionInputWrapper .errorIcon').show();
+            $('.stepForth .otherTypeAreaInputBox .descriptionInputWrapper .errorText').show();
+            $('.stepForth .otherTypeAreaInputBox .descriptionInputWrapper .errorIcon').show();
             refuse = true;
         }
         if(!refuse){
@@ -1830,7 +1874,7 @@ $(document).ready(function() {
             extensionDescriptVal = htmlEncode(extensionDescriptVal);
             cache = $('<tr/>');
             cache.append('<td class="leftTd"><div class="mediaRow"><span class="rowExtension"><strong>Extension:</strong><span class="strExtension">.'+fileVal+'</span><strong class="textLabel">Description:</strong><span class="strDesc">'+extensionDescriptVal+'</span></span></div></td><td class="deleteTd"><a href="javascript:;" title="delete" class="deleteRowIcon"></a></td>');
-            cache.insertBefore($('.stepFifth .otherTypeTableWrapper table .tfooter'));
+            cache.insertBefore($('.stepForth .otherTypeTableWrapper table .tfooter'));
             $('#fileType').val("");
             $('#descriptionInput').val("");
         }else{
@@ -1847,19 +1891,19 @@ $(document).ready(function() {
     });
     
     //add hover status for deliverablesTypeItem
-    $('.stepFifth .deliverablesTypeItem .typeContainer').click(function(){
+    $('.stepForth .deliverablesTypeItem .typeContainer').click(function(){
         if($(this).parent().find(':checkbox').attr('checked')){
             $(this).parent().removeClass('itemHover');    
             $(this).parent().find(':checkbox').attr('checked','');
         }else{
             $(this).parent().addClass('itemHover');    
             $(this).parent().find(':checkbox').attr('checked','checked');
-            $('.stepFifth .errorStatusTips').css('display','none');
+            $('.stepForth .errorStatusTips').css('display','none');
         }
     });
     
     //add hover status for deliverablesTypeItem
-    $('.stepFifth .deliverablesTypeItem label').click(function(){
+    $('.stepForth .deliverablesTypeItem label').click(function(){
         
         if($(this).parent().find(':checkbox').attr('checked')){
             $(this).parent().parent().removeClass('itemHover');
@@ -1867,16 +1911,16 @@ $(document).ready(function() {
         }else{
             $(this).parent().parent().addClass('itemHover');
             $(this).parent().find(':checkbox').attr('checked','checked');
-            $('.stepFifth .errorStatusTips').css('display','none');
+            $('.stepForth .errorStatusTips').css('display','none');
         }
     });
     
     //validation for check box
-    $('.stepFifth .deliverablesTypeItem :checkbox').click(function(){
+    $('.stepForth .deliverablesTypeItem :checkbox').click(function(){
         
         if($(this).attr('checked')){
             $(this).parent().parent().addClass('itemHover');
-            $('.stepFifth .errorStatusTips').css('display','none');
+            $('.stepForth .errorStatusTips').css('display','none');
         }else{
             $(this).parent().parent().removeClass('itemHover');
         }

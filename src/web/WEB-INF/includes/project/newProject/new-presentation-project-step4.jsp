@@ -12,7 +12,7 @@
 <div id="newPPTProjectStep4" class="hide newProjectStep">
     <!-- step title -->
     <div class="stepTitle">
-        <h3><span>4</span>Presentation Style</h3>
+        <h3><span>4</span>Describe the purpose of your presentation.</h3>
         <a href="<s:url action="dashboardActive" namespace="/"/>" class="button4">Back to Dashboard</a>
     </div>
     <!-- End .stepTitle -->
@@ -35,9 +35,10 @@
                         <strong>Note:</strong>
                         <a href="javascript:void(0)">Hide</a>
                     </dt>
-                     <dd class="first">You can select one of the listed presentation styles as the preferred style for your presentation.</dd>
-                     <dd>We will design your presentation slides based on your presentation style selection.</dd>
-                     <dd>You can also specify the length of your presentation slides and provide additional notes about the presentation style.</dd>
+                     <dd class="first">In this step we are trying to get a general idea of what you want to
+accomplish with your presentation.</dd>
+                     <dd>A subsequent step will let you upload files containing your presentation
+outline, notes, and any other content you may have.</dd>
                 </dl>
             </div><!-- End .noteMask -->
             
@@ -49,135 +50,7 @@
                         <div class="noticeRight">All fields marked with <span class="red">*</span> are mandatory</div>
                     </div>
                     
-                    <div class="barTitle">
-                        <a href="javascript:;" class="toolTip" rel='Pick the presentation slides style.'></a>
-                        Which are your preferred style for the presentation?<span class="red">*</span>
-                        <span class="errorStatusTips">No presentation style selected</span>
-                        <div class="clear"></div>
-                    </div>
-                    <!-- .barTitle -->
-                    
-                    <div class="styleSelectList">
-                        <!--.styleItem-->
-                        <div class="styleItem">
-                            <div class="radioBox">
-                                <input type="radio" name="styleSelectRadio" class="radio" /><label>Minimalist Style</label>
-                            </div>
-                            <div class="styleContainer">
-                                <div class="boxHeader"><div class="boxHeaderR"><div class="boxHeaderC"></div></div></div>
-                                <div class="boxBody">
-                                    <div class="boxBodyR">
-                                        <div class="boxInner">
-                                            <img src="/images/style-image-1.png" alt="style" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="boxFooter"><div class="boxFooterR"><div class="boxFooterC"></div></div></div>
-                            </div>
-                        </div>
-                        <!--end .styleItem-->
-                        
-                        <!--.styleItem-->
-                        <div class="styleItem">
-                            <div class="radioBox">
-                                <input type="radio" name="styleSelectRadio" class="radio" /><label>Edgy Style</label>
-                            </div>
-                            <div class="styleContainer">
-                                <div class="boxHeader"><div class="boxHeaderR"><div class="boxHeaderC"></div></div></div>
-                                <div class="boxBody">
-                                    <div class="boxBodyR">
-                                        <div class="boxInner">
-                                            <img src="/images/style-image-2.png" alt="style" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="boxFooter"><div class="boxFooterR"><div class="boxFooterC"></div></div></div>
-                            </div>
-                        </div>
-                        <!--end .styleItem-->
-                        
-                        <!--.styleItem-->
-                        <div class="styleItem">
-                            <div class="radioBox">
-                                <input type="radio" name="styleSelectRadio" class="radio" /><label>Corporate Style</label>
-                            </div>
-                            <div class="styleContainer">
-                                <div class="boxHeader"><div class="boxHeaderR"><div class="boxHeaderC"></div></div></div>
-                                <div class="boxBody">
-                                    <div class="boxBodyR">
-                                        <div class="boxInner">
-                                            <img src="/images/style-image-3.png" alt="style" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="boxFooter"><div class="boxFooterR"><div class="boxFooterC"></div></div></div>
-                            </div>
-                        </div>
-                        <!--end .styleItem-->
-                        
-                        <!--.styleItem-->
-                        <div class="styleItem">
-                            <div class="radioBox">
-                                <input type="radio" name="styleSelectRadio" class="radio" /><label>Futuristic Style</label>
-                            </div>
-                            <div class="styleContainer">
-                                <div class="boxHeader"><div class="boxHeaderR"><div class="boxHeaderC"></div></div></div>
-                                <div class="boxBody">
-                                    <div class="boxBodyR">
-                                        <div class="boxInner">
-                                            <img src="/images/style-image-4.png" alt="style" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="boxFooter"><div class="boxFooterR"><div class="boxFooterC"></div></div></div>
-                            </div>
-                        </div>
-                        <!--end .styleItem-->
-                        
-                        <!--.styleItem-->
-                        <div class="styleItem">
-                            <div class="radioBox">
-                                <input type="radio" name="styleSelectRadio" class="radio" /><label>Playful Style</label>
-                            </div>
-                            <div class="styleContainer">
-                                <div class="boxHeader"><div class="boxHeaderR"><div class="boxHeaderC"></div></div></div>
-                                <div class="boxBody">
-                                    <div class="boxBodyR">
-                                        <div class="boxInner">
-                                            <img src="/images/style-image-5.png" alt="style" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="boxFooter"><div class="boxFooterR"><div class="boxFooterC"></div></div></div>
-                            </div>
-                        </div>
-                        <!--end .styleItem-->
-                        
-                        <!--.styleItem-->
-                        <div class="styleItem">
-                            <div class="radioBox">
-                                <input type="radio" name="styleSelectRadio" class="radio" /><label>Other Style</label>
-                            </div>
-                            <div class="styleContainer">
-                                <div class="boxHeader"><div class="boxHeaderR"><div class="boxHeaderC"></div></div></div>
-                                <div class="boxBody">
-                                    <div class="boxBodyR">
-                                        <div class="boxInner">
-                                            <img src="/images/style-image-6.png" alt="style" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="boxFooter"><div class="boxFooterR"><div class="boxFooterC"></div></div></div>
-                            </div>
-                        </div>
-                        <!--end .styleItem-->
-                        
-                        <div class="clear"></div>
-                    </div>
-                    
-                    <div class="barTitle">
-                        <a href="javascript:;" class="toolTip" rel='You can specify any restrictions or notes on the presentation slides style.'></a>
-                        Any notes on presentation style?<span class="red">*</span>
+                    <div class="barTitle">What is the subject of your presentation?<span class="red">*</span>
                         <div class="clear"></div>
                     </div>
                     <!-- .barTitle -->
@@ -187,37 +60,193 @@
                         <div class="textFieldWrapper">
                             <div class="errorText">This field cannot be left empty.</div>
                             <div class="errorIcon"></div>
-                            <textarea rows="10" cols="10" class="notePresentation"></textarea>
+                            <textarea rows="10" cols="10" class="subject notePresentation"></textarea>
                         </div>
                     </div>
                     <!-- End .row -->
-                    
-                    
-                    <div class="barTitle">
-                        <a href="javascript:;" class="toolTip" id="toolTip4" rel='Specify the length of the presentation slides.'></a>
-                        Page Length<span class="red">*</span>
+
+                    <div class="barTitle">What is the overall message for your audience?<span class="red">*</span>
                         <div class="clear"></div>
                     </div>
                     <!-- .barTitle -->
-                    
+
                     <!-- row -->
                     <div class="row">
-                        <div class="pageLengthSetArea">
-                            <div class="part">
-                                <input type="radio" name="pageLengthSetting" checked="checked" />
-                                <label>Small (1-5 pages)</label>
+                        <div class="textFieldWrapper">
+                            <div class="errorText">This field cannot be left empty.</div>
+                            <div class="errorIcon"></div>
+                            <textarea rows="10" cols="10" class="overallMessage notePresentation"></textarea>
+                        </div>
+                    </div>
+                    <!-- End .row -->
+
+                    <div class="barTitle">What are the most important points you want to get across?<span class="red">*</span>
+                        <div class="clear"></div>
+                    </div>
+                    <!-- .barTitle -->
+
+                    <!-- row -->
+                    <div class="row">
+                        <div class="textFieldWrapper">
+                            <div class="errorText">This field cannot be left empty.</div>
+                            <div class="errorIcon"></div>
+                            <textarea rows="10" cols="10" class="importantPoints notePresentation"></textarea>
+                        </div>
+                    </div>
+                    <!-- End .row -->
+
+                    <div class="barTitle">
+                        Deliverables Types (please check all that apply)<span class="red">*</span>
+                        <span class="errorStatusTips">No DeliverableType selected.</span>
+                        <div class="clear"></div>
+                    </div>
+                    <!-- .barTitle -->
+
+
+                    <div class="deliverablesTypesList">
+
+                        <!--.deliverablesTypeItem-->
+                        <div class="deliverablesTypeItem firstDeliverablesTypeItem">
+                            <div class="typeContainer">
+                                <div class="boxTop">
+                                    <div class="boxBottom">
+                                        <div class="boxBody">
+                                            <img src="/images/type-icon-1.png" alt="Deliverables Type" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="part">
-                                <input type="radio" name="pageLengthSetting" />
-                                <label>Medium (5-10 pages)</label>
+                            <div class="checkboxBox">
+                                <input type="checkbox" />
+                                <label>PPT</label>
                             </div>
-                            <div class="clear"></div>
-                            <div class="rightPart">
-                                <input type="radio" name="pageLengthSetting" />
-                                <label>Large (10-20 pages)</label>
-                                <div class="clear"></div>
+                        </div>
+                        <!--.deliverablesTypeItem-->
+
+                        <!--.deliverablesTypeItem-->
+                        <div class="deliverablesTypeItem">
+                            <div class="typeContainer">
+                                <div class="boxTop">
+                                    <div class="boxBottom">
+                                        <div class="boxBody">
+                                            <img src="/images/type-icon-2.png" alt="Deliverables Type" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>                                         
+                            <div class="checkboxBox">
+                                <input type="checkbox" />
+                                <label>Keynote</label>
+                            </div>
+                        </div>
+                        <!--.deliverablesTypeItem-->
+
+                        <!--.deliverablesTypeItem-->
+                        <div class="deliverablesTypeItem">
+                            <div class="typeContainer">
+                                <div class="boxTop">
+                                    <div class="boxBottom">
+                                        <div class="boxBody">
+                                            <img src="/images/type-icon-3.png" alt="Deliverables Type" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkboxBox">
+                                <input type="checkbox" />
+                                <label>PDF</label>
+                            </div>
+                        </div>
+                        <!--.deliverablesTypeItem-->
+
+                        <!--.deliverablesTypeItem-->
+                        <div class="deliverablesTypeItem">
+                            <div class="typeContainer">
+                                <div class="boxTop">
+                                    <div class="boxBottom">
+                                        <div class="boxBody">
+                                            <img src="/images/type-icon-4.png" alt="Deliverables Type" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkboxBox">
+                                <input type="checkbox" />
+                                <label>JPGs/PNGs</label>
+                            </div>
+                        </div>
+                        <!--.deliverablesTypeItem-->
+
+                        <div class="clear"></div>
+                    </div>
+                    <!--.deliverablesTypesList-->
+
+                    <div class="otherTypeTableWrapper">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
+                                        <a href="javascript:;" class="toolTip" rel='You can provide other type of deliverable files.'></a>
+                                        Other Type
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tfooter">
+                                    <td colspan="2">
+                                        <div class="otherTypeAreaInputBox">
+                                            <div class="leftPart">Extension:</div>
+                                            <div class="rightPart">
+                                                <span class="period">.</span>
+                                                <div class="fileTypeWrapper">
+                                                    <input type="text" class="text" id="fileType" />
+                                                    <div class="errorText">This field cannot be left empty.</div>
+                                                    <div class="errorIcon"></div>
+                                                </div>
+                                                <strong>Description:</strong>
+                                                <div class="descriptionInputWrapper">
+                                                    <input type="text" class="text" id="descriptionInput" />
+                                                    <div class="errorText">This field cannot be left empty.</div>
+                                                    <div class="errorIcon"></div>
+                                                </div>
+                                                <a href="javascript:;" class="button12 addFileType"><span class="btnR"><span class="btnC">Add More</span></span></a>
+
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="barTitle">Do you have any restrictions pertaining to the presentation graphics?<span class="red">*</span>
+                        <div class="clear"></div>
+                    </div>
+                    <!-- .barTitle -->
+
+                    <!-- row -->
+                    <div class="row">
+                        <div class="textFieldWrapper">
+                            <div class="errorText">This field cannot be left empty.</div>
+                            <div class="errorIcon"></div>
+                            <textarea rows="10" cols="10" class="restrictions notePresentation"></textarea>
+                        </div>
+                    </div>
+                    <!-- End .row -->
+
+                    <div class="barTitle">Are there any other special requirements we should know about?<span class="red">*</span>
+                        <div class="clear"></div>
+                    </div>
+                    <!-- .barTitle -->
+
+                    <!-- row -->
+                    <div class="row">
+                        <div class="textFieldWrapper">
+                            <div class="errorText">This field cannot be left empty.</div>
+                            <div class="errorIcon"></div>
+                            <textarea rows="10" cols="10" class="specialRequirements notePresentation"></textarea>
+                        </div>
                     </div>
                     <!-- End .row -->
                     
