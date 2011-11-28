@@ -3717,6 +3717,14 @@ public class DataProvider {
                 }
             }
 
+            if (row.getItem("invoice_amount").getResultData() != null) {
+                costDTO.setInvoiceAmount(row.getDoubleItem("invoice_amount"));
+            }
+
+            if (row.getItem("process_date").getResultData() != null) {
+                costDTO.setInvoiceDate(row.getTimestampItem("process_date"));
+            }
+
             if (row.getItem("processed").getResultData() != null) {
                 costDTO.setProcessed(row.getBooleanItem("processed"));
             }

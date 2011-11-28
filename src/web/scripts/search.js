@@ -625,13 +625,17 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "money" }
             ];
-    if (ths == 14) {
+    if (ths == 17) {
+        aoColumns.push({ "sSortDataType": "html" });
+        aoColumns.push({ "sSortDataType": "simple-date" });
+        aoColumns.push({ "sSortDataType": "money" });
         aoColumns.push({ "sSortDataType": "dom-checkbox" });
     }
     $.billingCostReportDataTable = $("#billingCostReportSection .paginatedDataTable").dataTable({
         "fnDrawCallback": function() {
             if ($("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:checked)").length == 0) {
                 $("#invoiceRecordSelectAll").attr("checked", "checked");
+                $("#invoiceRecordSelectAll").attr("disabled", "disabled");
             } else {
                 $("#invoiceRecordSelectAll").attr("checked", "");
             }
@@ -639,18 +643,22 @@ $(document).ready(function() {
                 var contestIds = [$(this).attr("contestid")];
                 var paymentIds= [$(this).attr("paymentid")];
                 var invoiceTypeNames = [$(this).attr("invoicetype")];
+                var invoiceAmounts = [$(this).attr("invoiceamount")];
                 var processeds = [$(this).is(":checked")];
                 var checkbox = $(this);
-                checkbox.attr("disabled", "disabled");
+
                 $("#invoiceRecordSelectAll").attr("disabled", "disabled");
-                updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, processeds, function() {
-                    checkbox.attr("disabled", "");
+                updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, function() {
+
                     $("#invoiceRecordSelectAll").attr("disabled", "");
                     if ($("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:checked)").length == 0) {
                         $("#invoiceRecordSelectAll").attr("checked", "checked");
+                        $("#invoiceRecordSelectAll").attr("disabled", "disabled");
                     } else {
                         $("#invoiceRecordSelectAll").attr("checked", "");
                     }
+
+
                 }, function() {
                     checkbox.attr("disabled", "");
                     $("#invoiceRecordSelectAll").attr("disabled", "");

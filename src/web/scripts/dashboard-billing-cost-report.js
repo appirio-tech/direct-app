@@ -217,26 +217,27 @@ $(document).ready(function() {
         var contestIds = [];
         var paymentIds = [];
         var invoiceTypeNames = [];
+        var invoiceAmounts = [];
         var processeds = [];
         var allBox = $(this);
         $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").each(function() {
-            if ($(this).is(":checked") != checked) {
+            if (!$(this).is(":disabled") && $(this).is(":checked") != checked) {
                 contestIds.push($(this).attr("contestid"));
                 paymentIds.push($(this).attr("paymentid"));
                 invoiceTypeNames.push($(this).attr("invoicetype"));
+                invoiceAmounts.push($(this).attr("invoiceamount"));
                 processeds.push(checked);
             }
         });
         if (contestIds.length == 0) return;
         $(this).attr("disabled","disabled");
-        $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("disabled","disabled");
-        updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, processeds, function() {
-            allBox.attr("disabled","");
-            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("disabled","");
-            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("checked", checked ? "checked" : "");
+        var notProcessed = $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").not(":disabled");
+        notProcessed.attr("disabled","disabled");
+        updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, function() {
+            notProcessed.attr("checked", "checked");
         }, function() {
             allBox.attr("disabled","");
-            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").attr("disabled","");
+            notProcessed.attr("disabled","");
         });
     });
 });
@@ -247,13 +248,14 @@ $(document).ready(function() {
  * @param contestIds the contest IDs of the invoice records.
  * @param paymentIds the payment IDs of the invoice records.
  * @param invoiceTypeNames the invoice type names of the invoice records.
+ * @param invoiceAmounts the invoice amount of the invoice records.
  * @param processeds the processed flags of the invoice records.
  * @param succCallback the callback function which will be called when AJAX completed.
  * @param errorCallback the callback function which will be called when AJAX failed.
  */
-function updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, processeds, succCallback, errorCallback) {
+function updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, succCallback, errorCallback) {
 	if (contestIds.length == 0) return;
-    var data = {contestIds: contestIds, paymentIds: paymentIds, invoiceTypeNames: invoiceTypeNames, processeds: processeds};
+    var data = {contestIds: contestIds, paymentIds: paymentIds, invoiceTypeNames: invoiceTypeNames, invoiceAmounts: invoiceAmounts, processeds: processeds};
     $.ajax({
         type: 'POST',
         url:'updateInvoiceRecords',

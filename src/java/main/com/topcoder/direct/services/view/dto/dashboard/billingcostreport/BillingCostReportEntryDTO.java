@@ -96,6 +96,16 @@ public class BillingCostReportEntryDTO implements Serializable {
      * @since 1.1
      */
     private boolean processed;
+
+    /**
+     * The invoice amount.
+     */
+    private double invoiceAmount;
+
+    /**
+     * The invoice date.
+     */
+    private Date invoiceDate;
     
     /**
      * Flag indicates whether the contest payment is of type studio contest.
@@ -387,5 +397,43 @@ public class BillingCostReportEntryDTO implements Serializable {
      */
     public void setProcessed(boolean processed) {
         this.processed = processed;
+    }
+
+    /**
+     * Gets the invoice amount.
+     *
+     * @return the invoice amount.
+     */
+    public double getInvoiceAmount() {
+        return invoiceAmount;
+    }
+
+    /**
+     * Sets the invoice amount.
+     *
+     * @param invoiceAmount the invoice amount to set.
+     */
+    public void setInvoiceAmount(double invoiceAmount) {
+        this.invoiceAmount = invoiceAmount;
+    }
+
+
+
+    /**
+     * Gets the invoice date.
+     *
+     * @return the invoice date.
+     */
+    public Date getInvoiceDate() {
+        return invoiceDate;
+    }
+
+    /**
+     * Sets the invoice date.
+     *
+     * @param invoiceDate the invoice date to set.
+     */
+    public void setInvoiceDate(Date invoiceDate) {
+        this.invoiceDate = invoiceDate;
     }
 }

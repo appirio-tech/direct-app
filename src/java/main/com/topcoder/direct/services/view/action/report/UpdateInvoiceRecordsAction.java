@@ -51,6 +51,11 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
      * <p>A <code>List</code> providing the invoice type names of the invoice records which needs to be updated.</p>
      */
     private List<String> invoiceTypeNames;
+
+    /**
+     * <p>A <code>List</code> providing the invoice amounts of the invoice records which needs to be updated.</p>
+     */
+    private List<Double> invoiceAmounts;
     
     /**
      * <p>A <code>List</code> providing the processed flag of the invoice records which needs to be updated.</p>
@@ -106,6 +111,7 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
             if (record != null) {
                 // InvoiceRecord exists, update the exists record
                 record.setModifyUser(userId);
+                record.setInvoiceAmount(invoiceAmounts.get(i));
                 record.setProcessed(processeds.get(i));
                 invoiceRecordDAO.update(record);
             } else {
@@ -124,6 +130,7 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     record.setInvoiceType(invoiceType);
                 }
                 record.setProcessed(processeds.get(i));
+                record.setInvoiceAmount(invoiceAmounts.get(i));
                 record.setCreateUser(userId);
                 record.setModifyUser(userId);
                 invoiceRecordDAO.create(record);
@@ -174,6 +181,15 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
      */
     public void setInvoiceTypeNames(List<String> invoiceTypeNames) {
         this.invoiceTypeNames = invoiceTypeNames;
+    }
+
+        /**
+     * <p>Sets the invoice amounts of the invoice records which needs to be updated.</p>
+     *
+     * @param invoiceTypeNames A <code>List</code> providing the invoice amounts of the invoice records which needs to be updated.
+     */
+    public void setInvoiceAmounts(List<Double> invoiceAmounts) {
+        this.invoiceAmounts = invoiceAmounts;
     }
 
     /**

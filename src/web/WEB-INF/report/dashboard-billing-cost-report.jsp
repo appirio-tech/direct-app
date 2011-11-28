@@ -196,7 +196,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="<c:if test="${viewData.canProcessInvoices}">14</c:if><c:if test="${!viewData.canProcessInvoices}">13</c:if>">
+        <th class="tableTitle" colspan="<c:if test="${viewData.canProcessInvoices}">17</c:if><c:if test="${!viewData.canProcessInvoices}">13</c:if>">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Billing Cost Details</span>
             <span style="float:right;padding-top:4px; padding-right:5px">
@@ -221,6 +221,9 @@
         <th class="tableColumn">&nbsp;Payment Type&nbsp;</th>
         <th class="tableColumn">&nbsp;Amount&nbsp;</th>
         <c:if test="${viewData.canProcessInvoices}">
+        <th class="tableColumn">&nbsp;Payment ID&nbsp;</th>
+        <th class="tableColumn">&nbsp;Invoice Date&nbsp;</th>
+        <th class="tableColumn">&nbsp;Invoice Amount&nbsp;</th>
         <th class="tableColumn">&nbsp;Processed?&nbsp;<br/><input type="checkbox" id="invoiceRecordSelectAll"/></th>
         </c:if>
     </tr>
@@ -282,13 +285,23 @@
             <td>
                  <s:property value="paymentType"/>
             </td>
-            <td>
+            <td class="amount">
                 <s:set var="paymentA" value="paymentAmount" scope="page"/>
                 <fmt:formatNumber value="${paymentA}" pattern="$###,##0.00"/>
             </td>
             <c:if test="${viewData.canProcessInvoices}">
             <td>
-                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" <c:if test="${processed}">checked="checked"</c:if>/>
+                <s:property value="paymentId"/>
+            </td>
+            <td>
+                <s:date name="invoiceDate" format="yyyy-MM-dd" />
+            </td>
+            <td class="invoiceAmount">
+                <s:set var="invoiceA" value="invoiceAmount" scope="page"/>
+                <fmt:formatNumber value="${invoiceA}" pattern="$###,##0.00"/>
+            </td>
+            <td>
+                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if>/>
             </td>
             </c:if>
 
