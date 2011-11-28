@@ -1,7 +1,6 @@
-/*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
- */
 /**
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ *
  * This javascript file is used to render elements to launch copilot contest page, and handle
  * events.
  * 
@@ -20,39 +19,17 @@
  * 
  * Changes in version 1.5 (TC Cockpit Post a Copilot Assembly 2):
  * - Finished the logic in step 2 and 3.
+ *
+ * Version 1.6 Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change note:
+ * - integrate the new cockpit tinyMCE editor
  * 
- * @author TCSASSEMBLER, duxiaoyang
- * @version 1.5 (TC Cockpit Post a Copilot Assembly 2)
+ * @author duxiaoyang, GreatKevin
+ * @version 1.6
  */
 $(document).ready(function(){
-	/**
-     * Initiate mce elements.
-     */
-    function makeMaxCharsTinyMCE(obj, maxChars) {
-        tinyMCE.init({
-            mode : "exact",
-            elements : obj,
-            plugins :"pagebreak,style,layer,table,save,advhr,advimage,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
 
-            theme : "advanced",
-            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink,code",
-            theme_advanced_buttons2 : "",
-            theme_advanced_buttons3 : "",
-            theme_advanced_statusbar_location : "bottom",
-            theme_advanced_path : false,
-            theme_advanced_resizing : true,
-            theme_advanced_resize_horizontal : false,
-            valid_elements : tinyMCEValidElements,
-            
-            init_instance_callback : function() {
-                $('table.mceLayout').css('width','100%');
-            },
-            setup: function(ed) {setMaxCharsEventHandlerOnSetup(ed, maxChars);},
-            handle_event_callback : maxCharsEventHandler(obj, maxChars)
-        });
-    }
-    makeMaxCharsTinyMCE('allDescription', 12000);
-    makeMaxCharsTinyMCE('privateDescription', 4096);
+    setupTinyMCE('allDescription', 12000);
+    setupTinyMCE('privateDescription', 4096);
 
     initPanel();
 

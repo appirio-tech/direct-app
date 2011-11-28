@@ -1,17 +1,11 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0.1
+  - Version: 1.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
   - Version 1.0.1 (TC Direct Release Assembly 7) changes: added digital run input field.
---%>
-<%--
-  - Author: TCSASSEMBER
-  - Version: 1.2
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
-  -
   - Description: overview page for software contest.
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
@@ -20,6 +14,8 @@
   -
   - Version 1.2 - TC Direct Replatforming Release 2 Change Note
   - - Add milestone prizes section to support milestone prizes for software contest.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -30,7 +26,8 @@
         <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
         
         <div class="textarea">
-            <textarea id="swDetailedRequirements" rows="" cols=""></textarea>
+            <textarea id="swDetailedRequirements" rows="15" cols="80"></textarea>
+            <!-- <p class="mceFooterNote">Describe your project and your project goals.</p> -->
         </div>        
   </div>
     
@@ -39,7 +36,8 @@
         <h3><span class="icon">Software Guidelines</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>
         
         <div class="textarea">
-            <textarea id="swGuidelines" rows="" cols=""></textarea>
+            <textarea id="swGuidelines" rows="15" cols="80"></textarea>
+            <!-- p class="mceFooterNote">Size, Colors, Fonts, Target Audience? Reference Designs? </p -->
         </div>        
   </div>
   <!-- end .guidelines -->

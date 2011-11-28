@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for software contest.
@@ -10,6 +10,8 @@
   -
   - Version 1.2 - TC Direct Replatforming Release 2 
   - - Added milestone prizes section.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -55,7 +57,7 @@
 <!-- End .overviewBox -->
 
 <!-- contentList -->
-<div class="contentList">
+<div class="contentList previewMask">
 	<dl>
 		<dt>Detailed Requirements :</dt>
 		<dd><span id="rswDetailedRequirements"></span><a href="javascript: showPage('overviewSoftwarePage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>		

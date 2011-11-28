@@ -1,6 +1,5 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.3
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
@@ -12,7 +11,11 @@
   -
   - Version 1.2 - TC Direct Replatforming Release 2 Change notes:
   - - Added "Go to my Spec Review" section to support starting specification review for studio contest.
+  -
   - Version 1.3 (Direct Replatforming Release 4) changes: Add support to make the files downloadable.
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes:
+  -  Fix the contest requirements preview and integrate the new cockpit tinyMCE editor
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -192,8 +195,11 @@
            <span class="gray_name"><strong>Describe round one information.</strong>
            </span>               
            <br /><br />
-           <span class="small_info_spec" id="rRound1Info">
-           </span>
+
+            <div class="previewMask">
+               <span class="small_info_spec" id="rRound1Info">
+               </span>
+            </div>
           </p>
                                             
           <div class="bottom_spec">
@@ -206,8 +212,11 @@
            </span>
            
            <br /><br />
+
+            <div class="previewMask">
            <span class="small_info_spec" id="rRound2Info">
            </span>
+            </div>
            </p>
            
             <div class="bottom_spec">
@@ -307,12 +316,11 @@
                       <h3><span class="icon">Round One Information</span><div id="Round1HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>                    
                       <div class="textarea1">
                           <textarea id="round1Info" rows="" cols=""></textarea>
+
+                          <p class="mceFooterNote">Round one information.</p>
                       </div>
-                      
-                      <div class="bottomTextarea">
-                        <p>Round one information.</p>
-                        <span class="icon"></span>                                        
-                      </div>                    
+
+
                 </div>
                 <!-- end .description -->
                 
@@ -322,12 +330,8 @@
                       
                       <div class="textarea1">
                           <textarea id="round2Info" rows="" cols=""></textarea>
+                          <p class="mceFooterNote">Round two information.</p>
                       </div>
-                      
-                      <div class="bottomTextarea">
-                        <p>Round two information.</p>
-                        <span class="icon"></span>                                        
-                      </div>                    
                 </div>
                 <!-- end .guidelines -->
             </div> <!-- end .contestDetail -->
@@ -446,8 +450,11 @@
                <span class="gray_name"><strong>Describe your project and your project goals.</strong>
                </span>               
                <br /><br />
+
+                <div class="previewMask">
                <span class="small_info_spec" id="rContestIntroduction">
                </span>
+                </div>
               </p>
                                                 
               <div class="bottom_spec">
@@ -460,8 +467,10 @@
                </span>
                
                <br /><br />
-               <span class="small_info_spec" id="rContestDescription">
-               </span>
+               <div class="previewMask">
+                   <span class="small_info_spec" id="rContestDescription">
+                   </span>
+                </div>
                </p>
                
                 <div class="bottom_spec">
@@ -516,11 +525,9 @@
                       <h3><span class="icon">Contest Introduction</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
                       <div class="textarea1">
                           <textarea id="contestIntroduction" rows="" cols=""></textarea>
+                          <p class="mceFooterNote">Describe your project and your project goals.</p>
                       </div>
-                      
-                      <div class="bottomTextarea">
-                        <p>Describe your project and your project goals.</p>                        
-                      </div>                    
+
                 </div>
                 <!-- end .description -->
                 
@@ -530,11 +537,9 @@
                       
                       <div class="textarea1">
                           <textarea id="contestDescription" rows="" cols=""></textarea>
+                          <p class="mceFooterNote">Size, Colors, Fonts? Target Audience? Reference Designs? </p>
                       </div>
-                      
-                      <div class="bottomTextarea">
-                        <p>Size, Colors, Fonts? Target Audience? Reference Designs? </p>
-                      </div>                    
+
                 </div>
                 <!-- end .guidelines -->
             </div> <!-- end .contestDetail -->

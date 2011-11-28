@@ -1,6 +1,6 @@
 <%--
   - Author: TCSASSEMBER
-  - Version: 1.1
+  - Version: 1.2
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: review page for studio contest.
@@ -9,6 +9,7 @@
   - - Change Milestone Date to Milestone End Date.
   - - Remove End Date for project.
   -
+  - Version 1.2 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -58,7 +59,7 @@
 <!-- End .overviewBox -->
 
 <!-- contentList -->
-<div class="contentList">
+<div class="contentList previewMask">
     <dl>
         <dt>Contest Introduction :</dt>
         <dd><span id="rContestIntroduction"></span><a href="javascript: showPage('overviewPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a> </dd>        

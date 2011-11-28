@@ -7,7 +7,10 @@
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - The file upload function should the same as software contest.
+  -
   - Version 1.2 (Direct Replatforming Release 4) changes: remove the requirement document radio box for the studio contest.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -16,7 +19,7 @@
 	<div class="description">    
         <h3>Contest Introduction</h3>
         <div class="textarea">
-            <textarea id="contestIntroduction" rows="" cols=""></textarea>
+            <textarea id="contestIntroduction" rows="10" cols="80"></textarea>
         </div>
   </div>
   <!-- end .description -->
@@ -26,7 +29,7 @@
 	<div class="goals">    
         <h3><span class="icon">Contest Description</span><div id="ContestDescriptionHelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>        
         <div class="textarea">
-            <textarea id="contestDescription" rows="" cols=""></textarea>
+            <textarea id="contestDescription" rows="10" cols="80"></textarea>
         </div>        
   </div>
   <!-- end contest introduction -->
@@ -35,7 +38,7 @@
 	<div class="target hide" id="round1InfoDiv" >    
         <h3><span class="icon">Round 1 Information</span><div id="Round1HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
         <div class="textarea">
-            <textarea id="round1Info" rows="" cols=""></textarea>
+            <textarea id="round1Info" rows="10" cols="80"></textarea>
         </div>
   </div>
   <!-- end round 1 information -->
@@ -44,7 +47,7 @@
 	<div class="designs hide" id="round2InfoDiv">    
         <h3><span class="icon">Round 2 Information</span><div id="Round2HelpIcon"><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></div></h3>
         <div class="textarea">
-            <textarea id="round2Info" rows="" cols=""></textarea>
+            <textarea id="round2Info" rows="10" cols="80"></textarea>
         </div>
   </div>
   <!-- end round 2 information -->

@@ -229,7 +229,7 @@
         }					
 
         #launchContestOut .contestDetail .textarea1 {
-           height:150px;
+           position: relative;
         }  
         
        #launchContestOut .contestDetail .textarea1 textarea {  
@@ -240,6 +240,13 @@
           padding:5px 0;
           width:100%;
        }
+
+        #launchContestOut .contestDetail p.mceFooterNote{
+                font-size:12px;
+                color:#494949;
+                padding:2px 0 0 5px;
+            }
+
 	/** end .tabOut **/
 					
 	
@@ -1475,7 +1482,34 @@
        height:239px;
        padding:5px 0;
        width:100%;
-    }	
+    }
+
+    #overviewSoftwarePage .contestDetail .textarea {
+        height:100%;
+    }
+
+    #overviewSoftwarePage .contestDetail .textarea textarea {
+        height:240px;
+    }
+
+.previewMask {
+    font-size: 12px !important;
+}
+
+.previewMask ul,
+.previewMask ol {
+    padding: 6px 0 6px 40px !important;
+}
+
+.previewMask p {
+    margin-bottom: 12px;
+}
+
+.previewMask h4, .previewMask p, .previewMask blockquote,
+.previewMask ul, .previewMask fieldset, .previewMask form,
+.previewMask dir, .previewMask menu {
+    font: 12px/1.5em "Lucida Grande",Helvetica,Arial,sans-serif;
+}
     
 	/** textarea bottom **/	
 	#launchContestOut .contestDetail .bottomTextarea{
@@ -2346,6 +2380,14 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 .launchCopilotContest .descriptionInfo p{
     padding:0 10px;
     font-size:14px;
+}
+
+.launchCopilotContest .descriptionInfo .previewMask {
+    font-size:12px;
+}
+
+.launchCopilotContest .descriptionInfo .previewMask p {
+    font-size:12px;
 }
 
 /** Hide the path in tinyMCE description in launch copilot contest page*/

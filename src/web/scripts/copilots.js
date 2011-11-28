@@ -1,4 +1,6 @@
 /**
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ *
  * The JavaScript code used by the Launch Copilot Posting Contest views.
  *
  * Changes in 1.1 (TCCC-2706):
@@ -11,8 +13,11 @@
  * Version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) changes notes:
  * - Update to user the new "add new project" modal window
  *
- * @author TCSASSEMBLER
- * @version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp)
+ * Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes notes:
+ * - Update to use the new cockpit tinyMCE editor
+ *
+ * @author GreatKevin
+ * @version 1.4
  */
 
 var currentDocument = {};
@@ -48,25 +53,8 @@ $(document).ready(function() {
         $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
     }
 
-    function makeMaxCharsTinyMCE(obj, maxChars) {
-        tinyMCE.init({
-            mode : "exact",
-            elements : obj,
-            plugins : "paste",
-            theme : "advanced",
-            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink,code",
-            theme_advanced_buttons2 : "",
-            theme_advanced_buttons3 : "",
-            init_instance_callback : function() {
-                $('table.mceLayout').css('width', '100%');
-            },
-            valid_elements : tinyMCEValidElements,
-            setup: function(ed) {setMaxCharsEventHandlerOnSetup(ed, maxChars);},
-            handle_event_callback : maxCharsEventHandler(obj, maxChars)
-        });
-    }
-    makeMaxCharsTinyMCE("publicCopilotPostingDescription2", 12000);
-    makeMaxCharsTinyMCE("privateCopilotPostingDescription2", 4096);
+    setupTinyMCE("publicCopilotPostingDescription2", 12000);
+    setupTinyMCE("privateCopilotPostingDescription2", 4096);
 
     /* init pop */
     var prevPopup = null;

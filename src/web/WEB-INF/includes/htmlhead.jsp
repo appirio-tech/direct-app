@@ -62,7 +62,7 @@
 <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
 <script type="text/javascript" src="/scripts/ajaxupload2.js?v=209582"></script>
 <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
-<script type="text/javascript" src="/scripts/tiny_mce/tiny_mce.js?v=180066"></script>
+<script type="text/javascript" src="/scripts/tinyMCE/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="/scripts/jquery.autocomplete.js?v=183826"></script>
 
 <script type="text/javascript" src="/scripts/dashboard.js?v=209989"></script>

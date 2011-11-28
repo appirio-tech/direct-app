@@ -1,7 +1,5 @@
-/*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
- */
 /**
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  * Contest Detail Javascript
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
@@ -32,8 +30,10 @@
  * Version 1.4.1 TC Direct Release 6 change note
  * - Updated retrieveContestCostWithoutAdminFee method to check for non-existing feeObject
  *
- * @author TCSDEVELOPER
- * @version 1.4.1
+ *  Version 1.4.2 Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp changes:
+ * - Updated software contest details page to use new cockpit tinyMCE editor
+ *
+ * @version 1.4.2
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -261,36 +261,13 @@ $(document).ready(function(){
        onDigitalRunChangeKeyUp();
     });
 
-     // restrict chars for the text editor
-     function makeMaxCharsAndAllowedTagsTinyMCE(obj, maxChars) {
-         tinyMCE.init({
-             mode : "exact",
-             elements : obj,
-             plugins :"pagebreak,style,layer,table,save,advhr,advimage,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist",
-             theme : "advanced",
-             theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link,unlink,code",
-             theme_advanced_buttons2 : "",
-             theme_advanced_buttons3 : "",
-             theme_advanced_statusbar_location : "bottom",
-             theme_advanced_path : false,
-             theme_advanced_resizing : true,
-             theme_advanced_resize_horizontal : false,
-             valid_elements : tinyMCEValidElements,
-             
-             init_instance_callback : function() {
-                 $('table.mceLayout').css('width','100%');
-             },
-             setup: function(ed) {setMaxCharsEventHandlerOnSetup(ed, maxChars);},
-             handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
-         });
-     }
-    makeMaxCharsAndAllowedTagsTinyMCE("swPrivateDescription", 2048);
-    makeMaxCharsAndAllowedTagsTinyMCE('contestDescription', 10000);
-    makeMaxCharsAndAllowedTagsTinyMCE('contestIntroduction', 2000);
-	makeMaxCharsAndAllowedTagsTinyMCE('round1Info', 2000);
-	makeMaxCharsAndAllowedTagsTinyMCE('round2Info', 2000);
-	makeMaxCharsAndAllowedTagsTinyMCE('swDetailedRequirements', 12000);
-	makeMaxCharsAndAllowedTagsTinyMCE('swGuidelines', 2048);
+    setupTinyMCEWithTemplate('contestDescription', 10000, "studio_templates_list");
+    setupTinyMCE("swPrivateDescription", 2048);
+    setupTinyMCE('contestIntroduction', 2000);
+	setupTinyMCE('round1Info', 2000);
+	setupTinyMCE('round2Info', 2000);
+	setupTinyMCE('swDetailedRequirements', 12000);
+	setupTinyMCE('swGuidelines', 2048);
 	
    
    $('#ContestDescriptionHelpIcon .helpIcon').hover(function(){

@@ -1,6 +1,5 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
@@ -8,6 +7,9 @@
   -
   - Version 1.2 (Direct Improvements Assembly Release 1 ) Change notes:
   - - Fix bug TCCC-2900.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) Change notes:
+  - - Fix the contest requirements preview and integrate new cockpit tinyMCE editor
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -438,7 +440,7 @@
             </if:isEditable>
         </h3>
 
-        <div class="infoPanelMask">
+        <div class="infoPanelMask previewMask">
             <div id="publicDescriptionText">${projectHeader.projectSpec.detailedRequirements}</div>
         </div>
     </div>
@@ -474,7 +476,7 @@
             </if:isEditable>
         </h3>
 
-        <div class="infoPanelMask">
+        <div class="infoPanelMask previewMask">
             <div id="privateDescriptionText">${projectHeader.projectSpec.privateDescription}</div>
         </div>
     </div>

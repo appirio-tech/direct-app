@@ -1,6 +1,5 @@
 <%--
-  - Author: TCSASSEMBLER, TCSASSEMBLER
-  - Version: 1.0.3
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -9,13 +8,9 @@
   - Version 1.0.2 (TC Direct Software Creation Update) changes: add display of copilots.
   -
   - Version 1.0.3 (TC Direct "Contest Links and Button" Update 24Hr Assembly) changes:
-  - Change the  style for the Edit links for each contest edit sections. 
---%>
-<%--
-  - Author: TCSASSEMBER
-  - Version: 1.2
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Change the  style for the Edit links for each contest edit sections.
   -
+  - Version: 1.2
   - Description: Edit Tab for software contest detail page
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
@@ -24,7 +19,11 @@
   -
   - Version 1.2 - TC Direct Replatforming Release 2 Change noets:
   - - Added milestone prizes section to support milestone prizes for software contest.
+  -
   - Version 1.3 (Direct Replatforming Release 4) changes: Add milestone end time edit support for softare contest.
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change notes)
+  - Fix the contest requirements preview and integrate the new cockpit tinyMCE editor.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -386,8 +385,11 @@
                     </strong>
                 </span>               
                 <br /><br />
+
+                <div class="previewMask">
                 <span class="small_info_spec" id="rswDetailedRequirements">
                 </span>
+                </div>
                 </p>
                                                 
                 <div class="bottom_spec">
@@ -416,8 +418,12 @@
                    </span>
                    
                    <br /><br />
+
+                    <div class="previewMask">
                    <span class="small_info_spec" id="rswGuidelines">
+
                    </span>
+                    </div>
                    </p>
                    
                    <div class="bottom_spec">
@@ -480,10 +486,7 @@
                       <h3><span class="icon">Detailed Requirements</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
                       <div class="textarea1">
                           <textarea id="swDetailedRequirements" rows="" cols=""></textarea>
-                      </div>
-                      
-                      <div class="bottomTextarea">
-                      	<p>
+                          <p class="mceFooterNote">
                             <s:if test="result.projectHeader.projectCategory.id == 29">
                                 A description that you want everyone to see.
                             </s:if>
@@ -491,8 +494,8 @@
                                 Describe what you want to accomplish.
                             </s:else>
                         </p>
-                      	<span class="icon"></span>                                        
-                      </div>                    
+                      </div>
+                      
                 </div>
                 <!-- end .description -->
                 
@@ -501,14 +504,12 @@
                       <h3><span class="icon">Private Description</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
                       <div class="textarea1">
                           <textarea id="swPrivateDescription" rows="" cols=""></textarea>
+
+                          <p class="mceFooterNote">
+                              A description that is only viewable to copilots that register for this posting.
+                          </p>
                       </div>
-                      
-                      <div class="bottomTextarea">
-                      	<p>
-                        A description that is only viewable to copilots that register for this posting.    
-                        </p>
-                      	<span class="icon"></span>                                        
-                      </div>                    
+
                 </div>
                 <!-- end .description -->                
                 
@@ -518,12 +519,9 @@
                       
                       <div class="textarea1">
                           <textarea id="swGuidelines" rows="" cols=""></textarea>
+                          <p class="mceFooterNote">Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</p>
                       </div>
-                      
-                      <div class="bottomTextarea">
-                      	<p>Submission Deliverables?, Environment Setup Instructions?, Final Submission Guidelines?</p>
-                      	<span class="icon"></span>                                        
-                      </div>                    
+
                 </div>
                 <!-- end .guidelines -->
                             

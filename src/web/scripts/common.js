@@ -1,4 +1,5 @@
 /**
+ *
  * Common JS Script
  *
  * Version 1.1 Direct - Repost and New Version Assembly change note
@@ -10,7 +11,9 @@
  * Version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) change notes:
  * - Add methods to show different modal windows.
  *
- * @version 1.3 (Release Assembly - TopCoder Cockpit Modal Windows Revamp)
+ * Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) change notes:
+ * - Add methods to setup cockpit tinyMCE editors.
+ *
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
@@ -554,4 +557,89 @@ function maxCharsAndAllowedTagsEventHandler(obj, maxChars) {
         }, 100);
         return true;
     };
+}
+
+/**
+ * Standard options for cockpit tinyMCE editor
+ * @since 1.4
+ */
+var cockpitTinyMCEOptions =
+{
+    mode: "exact",
+    // General options
+    skin : "cirkuit",
+    theme : "advanced",
+    plugins : "inlinepopups,advlist,paste,fullscreen,template,preview",
+
+    // Theme options
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,bullist,numlist,outdent, indent,|,|,forecolor,backcolor,link,unlink,|,|,pasteword,code,preview,fullscreen,template,|,indent,outdent,forecolor,backcolor",
+    theme_advanced_buttons2 :"",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_statusbar_location : "bottom",
+    theme_advanced_resizing : true,
+    theme_advanced_resize_horizontal : false,
+    theme_advanced_path : false,
+    theme_advanced_resizing_use_cookie : false
+};
+
+/**
+ * The template lists location for tinyMCE editor
+ * @since 1.4
+ */
+var templateListsLocation = "/scripts/tinyMCE/lists/";
+
+/**
+ * Sets up the tinyMCE editor without loading template list
+ *
+ * @param obj the obj id
+ * @param maxChars the max chars allowed
+ * @since 1.4
+ */
+var setupTinyMCE = function(obj, maxChars) {
+    var options = jQuery.extend({}, cockpitTinyMCEOptions);
+    options.elements = obj;
+    options.setup = function(ed) {
+        setMaxCharsEventHandlerOnSetup(ed, maxChars);
+    };
+    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
+    tinyMCE.init(options);
+}
+
+/**
+ * Sets up the tinyMCE editor without loading template list
+ *
+ * @param obj the obj id
+ * @param maxChars the max chars allowed
+ * @param height the height of the editor
+ * @since 1.4
+ */
+var setupTinyMCEWithHeight = function(obj, maxChars, height) {
+    var options = jQuery.extend({}, cockpitTinyMCEOptions);
+    options.elements = obj;
+    options.setup = function(ed) {
+        setMaxCharsEventHandlerOnSetup(ed, maxChars);
+    };
+    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
+    options.height=height;
+    tinyMCE.init(options);
+}
+
+/**
+ * Sets up the tinyMCE editor with template list loaded
+ *
+ * @param obj the obj id
+ * @param maxChars the max chars allowed
+ * @param templateListName the name of the template list to load
+ * @since 1.4
+ */
+var setupTinyMCEWithTemplate = function(obj, maxChars, templateListName) {
+    var options = jQuery.extend({},cockpitTinyMCEOptions);
+    options.elements = obj;
+    options.setup = function(ed) {
+        setMaxCharsEventHandlerOnSetup(ed, maxChars);
+    };
+    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
+    options.template_external_list_url = templateListsLocation + templateListName + ".js";
+    tinyMCE.init(options);
 }
