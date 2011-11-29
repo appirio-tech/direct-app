@@ -29,7 +29,7 @@
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script> 
     <script type="text/javascript" src="/scripts/launch/entity.js?v=209437"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=209174"></script>
-    <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=209952"></script>
+    <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=210496"></script>
     
 </head>
 

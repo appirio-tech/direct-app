@@ -18,9 +18,9 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="createNewProject"/>
-    <link rel="stylesheet" href="/css/newCockpitProject.css?v=209631" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/newCockpitProject.css?v=210469" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/newCockpitProject-ie7.css?v=208807"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/newCockpitProject-ie7.css?v=210469"/>
     <![endif]-->
     <link rel="stylesheet" href="/css/ganttchart.css?v=198728" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=185881"></script>
@@ -31,7 +31,7 @@
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
     </script>
-    <script type="text/javascript" src="/scripts/newCockpitProject.js?v=210135"></script>
+    <script type="text/javascript" src="/scripts/newCockpitProject.js?v=210469"></script>
 </head>
 
 <body id="page">
