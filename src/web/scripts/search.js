@@ -648,6 +648,7 @@ $(document).ready(function() {
                 var checkbox = $(this);
 
                 $("#invoiceRecordSelectAll").attr("disabled", "disabled");
+                checkbox.attr("disabled", "disabled");
                 updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, function() {
 
                     $("#invoiceRecordSelectAll").attr("disabled", "");
