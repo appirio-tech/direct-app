@@ -515,12 +515,10 @@
                             <div class="modalContainer">
                                 <dl>
                                     <dd>
-                                        You've selected custom game plan, your game plan will need to be created
-                                        after the
-                                        initial setup on the project page
+                                        You have chosen to setup your game plan and contests manually.  After you complete the basic project setup, you can proceed to your project dashboard to add contests.
                                     </dd>
                                     <dd>
-                                        At this point, you will get name and description for the project, skip step 3 and go to step 4
+                                        Next, you will name and describe the project before skipping to step 4.
                                     </dd>
                                 </dl>
                             </div>
