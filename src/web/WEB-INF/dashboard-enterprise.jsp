@@ -1849,60 +1849,80 @@
                                             <span class="zoomMessage" id="volumeZoomMessage"></span>
 										</ul>
                                         <div class="tabsContent">
-                                            <table id="volumeViewSummaryTable" cellpadding="0" cellspacing="0">
-                                                <col width="110"/>
 
-                                                <thead>
-                                                <tr>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td class="fieldName">
+                                             <div class="tableFixed">
+                                                <table cellpadding="0" cellspacing="0">
+                                                    <col width="110" />
+                                                    <thead>
+                                                        <tr>
+                                                            <th>&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="fieldName">
 
                                                               <span class="newTooltips">
                                                                   <span class="tipT"> Avg. Completed</span>
                                                                   <span class="tipC hide">Average number of completed contest per month in the specified period</span>
                                                               </span>
 
-                                                    </td>
+                                                        </td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td class="fieldName">
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="fieldName">
 
                                                               <span class="newTooltips">
                                                                   <span class="tipT"> Avg. Failed</span>
                                                                   <span class="tipC hide">Average number of failed contest per month in the specified period</span>
                                                               </span>
 
-                                                    </td>
+                                                        </td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td class="fieldName">
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="fieldName">
 
                                                               <span class="newTooltips">
                                                                   <span class="tipT">Total Completed</span>
                                                                   <span class="tipC hide">Total number of completed contest in the specified period</span>
                                                               </span>
 
-                                                    </td>
+                                                        </td>
 
-                                                </tr>
-                                                <tr>
-                                                    <td class="fieldName">
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="fieldName">
                                                               <span class="newTooltips">
                                                                   <span class="tipT">Total Failed</span>
                                                                   <span class="tipC hide">Total number of failed contest in the specified period</span>
                                                               </span>
 
-                                                    </td>
+                                                        </td>
 
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                                    </tr>
+                                                    </tbody>
+                                                   </table>
+                                               </div>
+
+                                            <div class="tableScroll">
+                                                <table id="volumeViewSummaryTable" cellpadding="0" cellspacing="0">
+                                                    <colgroup></colgroup>
+
+                                                    <thead>
+                                                    <tr>
+
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr></tr>
+                                                    <tr></tr>
+                                                    <tr></tr>
+                                                    <tr></tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
 										<!-- End .tabsContent -->
 									</div>
