@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.4
+  - Version: 1.5
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
@@ -16,6 +16,7 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes:
   -  Fix the contest requirements preview and integrate the new cockpit tinyMCE editor
+  - Version 1.5 (Release Assembly - Contest Edit and Upload Update) changes: fixes for TCCC-3724, TCCC-3604
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -24,7 +25,7 @@
   <div class="caption_det_type">                                                    
         <div class="captionInner">
            <h2>Contest Type</h2>
-           <a href="javascript:;" class="button11 edit_type"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
+           <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>
       </div>
                                                     
    </div><!-- End .caption -->
@@ -63,12 +64,12 @@
           
       <div class="detailsContent_det_type_edit">
                     <div class="det_font" style="border:1px solid #BDBDBD; height:250px;padding-left:10px;">                                              
-            <div id="launchContestOut">                                                         
+            <div id="launchContestOut" class="contestTypeEditSection">                                                         
                          <div class="tabOut">                                    
                  <!-- tab contest -->
                  <div class="tabContest tabContest1">                                       
                    <!-- selectDesing -->
-                   <div class="selectDesing selectDesing1">                         
+                   <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">                         
                           <div class="selectX">
                                 <span class="name fixWidthName"><strong>Contest Type</strong></span>
                                 <div class="selectOut">                                 
@@ -83,10 +84,19 @@
                   <!-- end .tabContest -->
                                     
                  </div></div>
+
+                        <span class="hide contestTypeRO name fixWidthName"><strong>Contest Type</strong></span>
+                        <span class="value contestTypeRO hide">
+                            <span id="contestTypeNameText"></span>
+                            <br />
+                        </span>
                                                                                                 
                  <br />
                  <span class="name fixWidthName"><strong>Contest Name</strong></span>
-                 <span class="value"><input type="text" class="bigin"  id="contestName" /></span>
+                        <span class="value">
+                            <input type="text" class="bigin"  id="contestName" />
+                            <span id="contestNameText"></span>
+                        </span>
                                   
                  <!-- Billing Account -->
                  <div id="billingAccountDivEdit">
@@ -636,7 +646,7 @@
                        <div id="swDocumentList">
                        </div>
                        <div>
-                          File to Upload: <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
+                          File to Upload (20MB maximum): <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
                           File Description:
                           <textarea id="swFileDescription" rows="5" cols="50"></textarea>               
                           <input id="swFileUploadBtn"  type="button" value="Upload File -->" /> <br/>

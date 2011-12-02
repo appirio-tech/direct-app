@@ -252,6 +252,7 @@
     <bean id="documentUploadAction" class="com.topcoder.direct.services.view.action.contest.launch.DocumentUploadAction"
           parent="contestAction" scope="prototype">
         <property name="mimeTypeRetriever" ref="mimeTypeRetriever"/>
+        <property name="fileSizeLimitExceededMessage" value="The upload is over the limit of 20M"/>
     </bean>
 
     <bean id="removeDocumentAction" class="com.topcoder.direct.services.view.action.contest.launch.RemoveDocumentAction"

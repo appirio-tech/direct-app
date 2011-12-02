@@ -33,9 +33,12 @@
  *
  * Version 1.6 TC Cockpit Post a Copilot Assembly  change notes:
  * - Add more checks.
+ * 
+ * Version 1.7 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
+ * - Fixed bug TCCC-3724. Updated logic for editing the contests.
  *
- * @author TCSDEVELOPER
- * @version 1.6
+ * @author isv, TCSDEVELOPER
+ * @version 1.7
  */
 
  /**
@@ -48,6 +51,11 @@ var mainWidget = new com.topcoder.direct.MainWidget();
  */
 var currentDocument = {};
 var documents = [];
+
+var originalPrizes;
+var phaseOpen;
+var isCompleted;
+var isCancelled;
 
 /**
  * Configurations
@@ -267,6 +275,19 @@ $(document).ready(function() {
 
     if(!checkRequired(fileName)) {
         errors.push('No file is selected.');
+    } else {
+        var fileNameToCheck = fileName.toLowerCase();
+        if (fileNameToCheck.indexOf('fakepath') >= 0) {
+            var p1 = fileNameToCheck.lastIndexOf("\\");
+            var p2 = fileNameToCheck.lastIndexOf("/");
+            var p = Math.max(p1, p2);
+            fileNameToCheck = fileNameToCheck.substring(p + 1);
+        }
+        $('.fileInput').each(function(index, item) {
+            if ($(item).html().toLowerCase() == fileNameToCheck) {
+                errors.push('Such a file is already uploaded');
+            }
+        });
     }
 
     if(!checkRequired(description)) {
@@ -1016,6 +1037,10 @@ function fillPrizes() {
    }
 
    var firstPlaceAmount = contestCost.firstPlaceCost.formatMoney(2);
+//    originalPrizes = [];
+//    originalPrizes.push(contestCost.firstPlaceCost + '');
+//    originalPrizes.push(contestCost.drCost + '');
+    
    $('#swFirstPlace').val(firstPlaceAmount);
    $('#rswFirstPlace').html(firstPlaceAmount);
    $('#swSecondPlace,#rswSecondPlace').html(contestCost.secondPlaceCost.formatMoney(2));
@@ -1231,13 +1256,17 @@ function onFirstPlaceChange() {
         showErrors('first place value is invalid.');
         return;
    }
+   calcPrizes(value);
+    fillPrizes();
+}
 
+function calcPrizes(firstPlacePrizeValue) {
    //fee object
    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
    var feeObject = softwareContestFees[projectCategoryId];
 
    //update custom cost data
-   var firstPlace = parseFloat(value);
+   var firstPlace = parseFloat(firstPlacePrizeValue);
    var contestCost = getContestCost(feeObject, 'custom');
    var categoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
    contestCost.firstPlaceCost = firstPlace;
@@ -1251,7 +1280,6 @@ function onFirstPlaceChange() {
        contestCost.reliabilityBonusCost = 0;
        contestCost.drCost = 0;
    }
-   fillPrizes();
 }
 
 /**
@@ -1269,14 +1297,18 @@ function onDigitalRunChange() {
         return;
    }
 
+    calcDR(value);
+   fillPrizes();
+}
+
+function calcDR(drPoints){
    //fee object
    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
    var feeObject = softwareContestFees[projectCategoryId];
 
    //update custom cost data
    var contestCost = getContestCost(feeObject, 'custom');
-   contestCost.drCost = parseFloat(value);
-   fillPrizes();
+   contestCost.drCost = parseFloat(drPoints);
 }
 
 function calculateSecondPlacePrize(firstPlaceCost) {
@@ -1488,6 +1520,7 @@ function validateTcProject(tcProjectId, errors) {
 function validatePrizes(errors) {
    var prizeInputs = [];
    var lastPrizeIndex = -1;
+    var errorsAdded = false;
    var stop = false;
    $.each($('div.prizes .prizesInput'),function(i, element) {
         var value = $.trim($(this).val());
@@ -1505,12 +1538,14 @@ function validatePrizes(errors) {
    //validation
    if(prizeInputs.length < 2) {
        errors.push('At least first & second place prizes should be set!');
+       errorsAdded = true;
    }
 
    var prizes = [];
    $.each(prizeInputs, function(i, value) {
         if(!checkRequired(value) || !checkNumber(value)) {
             errors.push('Prize '+ (i+1) + ' is invalid.');
+            errorsAdded = true;
         } else {
             prizes.push(new com.topcoder.direct.Prize((i+1),parseFloat(value), CONTEST_PRIZE_TYPE_ID, 1));
         }
@@ -1522,6 +1557,7 @@ function validatePrizes(errors) {
      $.each(prizes, function(i, value) {
           if(i != 0 && value.prizeAmount > prevPrize) {
               errors.push('Prize '+ (i+1) + ' is too large.');
+              errorsAdded = true;
           }
           if (value.prizeType.id == CONTEST_PRIZE_TYPE_ID) {
         	  if (value.place == 1) {
@@ -1536,8 +1572,32 @@ function validatePrizes(errors) {
 
       if(prizes[1].prizeAmount < 0.2 * prizes[0].prizeAmount) {
           errors.push('Second place prize should at least be 20% of first place prize!');
+          errorsAdded = true;
       }
    }
+    if (!errorsAdded) {
+        if (phaseOpen) {
+            var newPrizes = [];
+            for (var i = 1; i <=5; i++) {
+                var value = $('#prize' + i).val();
+                if ($.trim(value).length > 0) {
+                    newPrizes.push(value);
+                }
+            };
+            
+            if (newPrizes.length < originalPrizes.length) {
+                errors.push('The prizes can not be deleted');
+            } else {
+                var n = Math.min(newPrizes.length, originalPrizes.length);
+                for (var i = 0; i < n; i++) {
+                    if (parseFloat(newPrizes[i]) < parseFloat(originalPrizes[i])){
+                        errors.push('The prizes can not be decreased');
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
    return prizes;
 }

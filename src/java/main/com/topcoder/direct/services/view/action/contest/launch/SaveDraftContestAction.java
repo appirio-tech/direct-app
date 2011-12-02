@@ -128,8 +128,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
- * @author fabrizyo, FireIce, Veve
- * @version 1.6.1
+ * <p>
+ * Version 1.6.2 (Release Assembly - TC Cockpit Contest Edit and Upload Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getSoftwareResult(SoftwareCompetition)} method to include details on contest documents.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, Veve, isv
+ * @version 1.6.2
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -1042,6 +1049,9 @@ public class SaveDraftContestAction extends ContestAction {
                 softwareCompetition.getProjectHeader().getId(), false, false)
                 .getForumURL();
         result.put("forumUrl", forumUrl);
+
+        List<CompDocumentation> documentation = softwareCompetition.getAssetDTO().getDocumentation();
+        result.put("documents", documentation);
 
         return result;
     }

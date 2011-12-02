@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0.3
+  - Author: isv
+  - Version: 1.0.5
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Launch copilot contest page input/edit section.
@@ -13,6 +13,7 @@
   - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
   - Version 1.0.3 (Direct Improvements Assembly Release 2) changes: Add preview button.
   - Version 1.0.4 (Release Assembly - TC Direct UI Improvement Assembly 3) changes: Fix typo and hide activation message.
+  - Version 1.0.5 (Release Assembly - Contest Edit and Upload Update) changes: added text on file size limit.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -264,7 +265,7 @@
                 <table id="swDocumentList" style="width:100%">
                 </table>
                 <div>
-                   File to Upload: <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
+                   File to Upload (20MB maximum): <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
                    File Description:
                    <textarea id="swFileDescription" rows="5" cols="50"></textarea>               
                    <input id="swFileUploadBtn"  type="button" value="Upload File" /> <br/>

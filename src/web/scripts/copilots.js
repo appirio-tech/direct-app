@@ -1,6 +1,4 @@
 /**
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
- *
  * The JavaScript code used by the Launch Copilot Posting Contest views.
  *
  * Changes in 1.1 (TCCC-2706):
@@ -15,15 +13,21 @@
  *
  * Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes notes:
  * - Update to use the new cockpit tinyMCE editor
+ * 
+ * Version 1.5 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
+ * - Fixed bug TCCC-3739. Fixed errors with proper maintaining the start date/time while editing the contest details
+ * - and saving contest to server. The timeout for AJAX call to saveDraftContest is set to 3 minutes as the action
+ * - may take a long time if there are large files added to contest.
  *
- * @author GreatKevin
- * @version 1.4
+ * @author GreatKevin, isv
+ * @version 1.5
  */
 
 var currentDocument = {};
-var exsitingDocuments = [];
-var newDocuments = [];
-var uploadedDocuments = [];
+var exsitingDocuments = []; // Holds documents which are already assigned to contest before starting editing files
+var newDocuments = []; // Holds documents which are uploaded to server but not yet assigned to contest while editing files
+var removedExistingDocuments = []; // Holds documents which are already assigned to contest and are marked for deletion
+                                   // while editing files
 var prizes = [];
 var projectId = -1;
 
@@ -45,16 +49,9 @@ $(document).ready(function() {
 
     $('#projects2, #billingProjects2').sSelect(SelectOptions);
     
-    $('#start2TimeInput').getSetSSValue(getTimePart($('#mainContent').data('p3')));
-    
-
-    /* init date-pack */
-    if ($('.date-pick').length > 0) {
-        $(".date-pick").datePicker().val(new Date().asString()).trigger('change');
-    }
-
     setupTinyMCE("publicCopilotPostingDescription2", 12000);
     setupTinyMCE("privateCopilotPostingDescription2", 4096);
+
 
     /* init pop */
     var prevPopup = null;
@@ -199,6 +196,7 @@ $(document).ready(function() {
         } else {
             hideEdit($(this));
             updateProjectDate();
+            $('#mainContent').data('p3', getSelectedStartTime());
         }
         return false;
     });
@@ -297,11 +295,25 @@ $(document).ready(function() {
 
         if (!checkRequired(fileName)) {
             errors.push('No file is selected.');
+        } else {
+            var fileNameToCheck = fileName.toLowerCase();
+            if (fileNameToCheck.indexOf('fakepath') >= 0) {
+                var p1 = fileNameToCheck.lastIndexOf("\\");
+                var p2 = fileNameToCheck.lastIndexOf("/");
+                var p = Math.max(p1, p2);
+                fileNameToCheck = fileNameToCheck.substring(p + 1);
+            }
+            $('.uploadedDocumentItemFileName').each(function(index, item) {
+                if ($(item).html().toLowerCase() == fileNameToCheck) {
+                    errors.push('Such a file is already uploaded');
+                }
+            });
         }
 
         if (!checkRequired(description)) {
             errors.push('File description is empty.');
         }
+
 
         if (errors.length > 0) {
             showErrors(errors);
@@ -414,9 +426,14 @@ function addFileItem(doc) {
 
 function removeFileItem(documentId, docs) {
     $('#doc' + documentId).remove();
-    $.each(docs, function(i, doc) {
+    $.each(newDocuments, function(i, doc) {
         if (doc && doc.documentId == documentId) {
-            docs.splice(i, 1);
+            newDocuments.splice(i, 1);
+        }
+    });
+    $.each(exsitingDocuments, function(i, doc) {
+        if (doc && doc.documentId == documentId) {
+            removedExistingDocuments.push(doc);
         }
     });
 }
@@ -425,14 +442,17 @@ function getDatePart(d) {
     if (d == null) {
         return null;
     }
-    return d.toString("MM/dd/yyyy");
+    var year = d.substring(0, 4);
+    var month = d.substring(5, 7);
+    var day = d.substring(8, 10);
+    return month + "/" + day + "/" + year;
 }
 
 function getTimePart(d) {
     if (d == null) {
         return null;
     }
-    return d.toString("HH:mm");
+    return d.substring(11, 16);
 }
 
 function getDate(datePart, timePart) {
@@ -450,20 +470,18 @@ function hideEdit(cancelButton) {
 }
 
 function restorePrevData() {
-    // documents2 = [];
-    var template = unescape($('#uploadedDocumentTemplate').html());
     $('#uploadedDocumentsTable').html('');
-    $('#fileUpload2 dl').remove('.uploadedDocumentItem');
+    $('.fileUpload .uploadedDocumentItem').remove();
     for (var i = 0; i < exsitingDocuments.length; i++) {
         var doc = exsitingDocuments[i];
-        var d = '<tr><td class="fileName"><span>' + (i + 1) + '.</span> <a href="javascript:">' + doc['fileName']
+        var d = '<tr><td class="fileName"><span>' + (i + 1) + '.</span> <a href="' 
+                        + ctx + '/launch/downloadDocument?documentId=' + doc['documentId'] + '">' + doc['fileName']
                 + '</a></td> <td class="fileDesc">' + doc['description'] + '</td></tr>';
         $('#uploadedDocumentsTable').append(d);
-
-        var html = $.validator.format(template, doc['documentId'], doc['fileName'], doc['description'], '2');
-        $('#fileUpload2 dl').append(html);
-        // documents2[i] = doc;
+        addFileItem(doc);
     }
+    removedExistingDocuments = [];
+    newDocuments = [];
 }
 
 function updateProjectGeneralInfo(notSendToServer) {
@@ -588,32 +606,7 @@ function updatePrize() {
 }
 
 function updateProjectFiles() {
-    // $('#uploadedDocumentsTable').html('');
-    $('#fileUpload dl').html('');
-
     sendSaveDraftRequestToServer();
-
-    for (var i = 0; i < newDocuments.length; i++) {
-        var doc = newDocuments[i];
-
-        var uploaded = false;
-
-        for(var j = 0; j < uploadedDocuments.length; ++j) {
-            var toCheck = uploadedDocuments[j];
-            if (toCheck['documentId'] == doc['documentId']) {
-                uploaded = true;
-                break;
-            }
-        }
-
-        if (uploaded == false) {
-            var d = '<tr><td class="fileName"><span>' + (i + 1) + '.</span> <a href="javascript:">' + doc['fileName']
-                    + '</a></td> <td class="fileDesc">' + doc['description'] + '</td></tr>';
-            $('#uploadedDocumentsTable').append(d);
-            uploadedDocuments.push(doc);
-        }
-
-    }
 }
 
 function validateContestInput() {
@@ -671,6 +664,13 @@ function activateContest() {
     });
 }
 
+function getSelectedStartTime() {
+    var dateValue = $('#start2DateInput').datePicker().val();
+    var year = dateValue.substring(6, 10);
+    var month = dateValue.substring(0, 2);
+    var day = dateValue.substring(3, 5);
+    return year + '-' + month + '-' + day +"T" + $('#start2TimeInput').val() + ":00";
+}
 
 function saveAsDraftRequest() {
     var request = {};
@@ -681,8 +681,8 @@ function saveAsDraftRequest() {
     request['competitionType'] = 'SOFTWARE';
 
     request['assetDTO.name'] = $('#contestNameInput2').val();
-    request['assetDTO.productionDate'] = $('#start2DateInput').datePicker().val() +"T" 
-                                         + $('#start2TimeInput').val() + ":00";
+
+    request['assetDTO.productionDate'] = getSelectedStartTime();
 
     request['projectHeader.id'] = projectId;
     request['projectHeader.tcDirectProjectId'] = $('#projects2').val();
@@ -715,12 +715,29 @@ function getDocumentIds() {
     return $.map(newDocuments, function(doc, i) {
         return doc.documentId;
     });
+//    return $.map(uploadedDocuments, function(doc, i) {
+//        return doc.documentId;
+//    });
 }
 
 function getExistingDocumentIds() {
-    return $.map(exsitingDocuments, function(doc, i) {
-        return doc.documentId;
+    var ddd = [];
+    $.each(exsitingDocuments, function(i, doc) {
+        var isRemoved = false;
+        $.each(removedExistingDocuments, function(j, doc2) {
+            if (doc && doc2 && doc.documentId == doc2.documentId) {
+                isRemoved = true;
+            }
+        });
+        if (!isRemoved) {
+            ddd.push(doc.documentId);
+        }
     });
+    return ddd;
+//    
+//    return $.map(exsitingDocuments, function(doc, i) {
+//        return doc.documentId;
+//    });
 }
 
 
@@ -754,6 +771,18 @@ function handleDraftSaving(jsonResult) {
     handleJsonResult(jsonResult,
                      function(result) {
                          projectId = result.projectId;
+                         newDocuments = [];
+                         removedExistingDocuments = [];
+                         exsitingDocuments = [];
+                         $.each(result.documents, function(index, doc) {
+                             var d = {};
+                             var pos = doc.url.lastIndexOf('/');
+                             d['fileName'] = doc.url.substring(pos + 1);
+                             d['documentId'] = doc.id;
+                             d['description'] = doc.documentName;
+                             exsitingDocuments.push(d);
+                         });
+                         restorePrevData();
                          showSuccessfulMessage("Your copilot posting has been saved successfully.");
 
                      },
@@ -770,6 +799,7 @@ function sendSaveDraftRequestToServer() {
         data: request,
         cache: false,
         dataType: 'json',
+        timeout: 180000,
         success: handleDraftSaving,
         beforeSend: function() {
             modalPreloader();

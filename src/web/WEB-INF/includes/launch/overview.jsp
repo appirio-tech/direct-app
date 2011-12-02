@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.2
+  - Author: isv
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
@@ -11,6 +11,7 @@
   - Version 1.2 (Direct Replatforming Release 4) changes: remove the requirement document radio box for the studio contest.
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
+  - Version 1.4 (Release Assembly - Contest Edit and Upload Update) changes: added text on file size limit.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -55,7 +56,7 @@
   <!-- upload -->
 	<div id="uploadSection">
     
-        <h3>File Upload:</h3>       
+        <h3>File Upload (20MB maximum):</h3>       
         <div class="uploadInner">
             <div id="documentList">
             </div>

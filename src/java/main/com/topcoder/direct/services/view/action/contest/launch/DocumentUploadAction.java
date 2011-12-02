@@ -5,17 +5,23 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.opensymphony.xwork2.interceptor.annotations.InputConfig;
 import org.apache.commons.io.IOUtils;
 
 import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionFileStore;
-import com.topcoder.security.TCSubject;
 import com.topcoder.util.errorhandling.ExceptionUtils;
+import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
+
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -48,13 +54,23 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * </p>
  *
  * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit Contest Edit and Upload Update Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #fileSizeLimitExceededMessage} property.</li>
+ *     <li>Added {@link #execute()} method.</li>
+ *     <li>Added {@link #checkRequestError()} method.</li>
+ *     <li>Updated {@link #executeAction()} method to remove the <code>result</code> from the data model.</li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
  * <b>Thread safety:</b> The class is not thread safe because it's mutable by the setters and the values of this class
  * will change based on the request parameters. It's not required to be thread safe because in Struts 2 the actions
  * (different from Struts 1) are created for every request.
  * </p>
  *
- * @author fabrizyo, TCSDEVELOPER
- * @version 1.0
+ * @author fabrizyo, isv
+ * @version 1.1
  */
 public class DocumentUploadAction extends ContestAction {
     /**
@@ -145,9 +161,30 @@ public class DocumentUploadAction extends ContestAction {
     private boolean studio = true;
 
     /**
+     * <p>A <code>String</code> providing the text of error message to be displayed to user in case uploaded file
+     * exceeds the pre-defined limit.</p>
+     * 
+     * @since 1.1
+     */
+    private String fileSizeLimitExceededMessage;
+
+    /**
      * Default constructor, creates new instance.
      */
     public DocumentUploadAction() {
+    }
+
+    /**
+     * <p>Handles the incoming request.</p>
+     * 
+     * @return a <code>String</code> referencing the next view to be displayed to user.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.1
+     */
+    @InputConfig(methodName = "checkRequestError")
+    @Override
+    public String execute() throws Exception {
+        return super.execute();
     }
 
     /**
@@ -161,6 +198,36 @@ public class DocumentUploadAction extends ContestAction {
         executeActionSoftware();
     }
 
+    /**
+     * <p>Handles the case when the request for uploading the document has failed, most likely due to uploaded file to
+     * exceed the maximum file size limit.</p>
+     * 
+     * @return a <code>String</code> referencing the next view.  
+     * @since 1.1
+     */
+    public String checkRequestError() {
+        StringBuilder b = new StringBuilder();
+        MultiPartRequestWrapper servletRequest = (MultiPartRequestWrapper) DirectUtils.getServletRequest();
+        if (servletRequest.hasErrors()) {
+            Collection<String> errors = servletRequest.getErrors();
+            for (String error : errors) {
+                error = error.toLowerCase();
+                if (error.startsWith("the request was rejected because its size") 
+                    && error.contains("exceeds the configured maximum")) {
+                        setResult(new RuntimeException(getFileSizeLimitExceededMessage()));
+                        return ERROR;
+                } else {
+                    b.append("\n").append(error);
+                }
+            }
+        }
+        if (b.length() == 0) {
+            setResult(new RuntimeException("Failed to upload the document"));
+        } else {
+            setResult(new RuntimeException("Failed to upload the document due to following errors:" + b));
+        }
+        return ERROR;
+    }
 
     /**
      * Executes the action. Saves the uploaded file to the file store.
@@ -325,5 +392,29 @@ public class DocumentUploadAction extends ContestAction {
     public void setMimeTypeRetriever(MimeTypeRetriever mimeTypeRetriever) {
         ExceptionUtils.checkNull(mimeTypeRetriever, null, null, "mimeTypeRetriever cannot be null");
         this.mimeTypeRetriever = mimeTypeRetriever;
+    }
+
+    /**
+     * <p>Gets the text of error message to be displayed to user in case uploaded file exceeds the pre-defined
+     * limit.</p>
+     *
+     * @return a <code>String</code> providing the text of error message to be displayed to user in case uploaded file
+     *         exceeds the pre-defined limit.
+     * @since 1.1
+     */
+    public String getFileSizeLimitExceededMessage() {
+        return this.fileSizeLimitExceededMessage;
+    }
+
+    /**
+     * <p>Sets the text of error message to be displayed to user in case uploaded file exceeds the pre-defined
+     * limit.</p>
+     *
+     * @param fileSizeLimitExceededMessage a <code>String</code> providing the text of error message to be displayed to
+     *                                     user in case uploaded file exceeds the pre-defined limit.
+     * @since 1.1
+     */
+    public void setFileSizeLimitExceededMessage(String fileSizeLimitExceededMessage) {
+        this.fileSizeLimitExceededMessage = fileSizeLimitExceededMessage;
     }
 }

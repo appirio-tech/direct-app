@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.4
+  - Version: 1.5
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -24,6 +24,7 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change notes)
   - Fix the contest requirements preview and integrate the new cockpit tinyMCE editor.
+  - Version 1.5 (Release Assembly - Contest Edit and Upload Update) changes: fixes for TCCC-3724, TCCC-3604
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -32,7 +33,7 @@
   <div class="caption_det_type">													
 	  <div class="captionInner">
            <h2>Contest Type</h2>
-		   <a href="javascript:;" class="button11 edit_type"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>                                                          
+		   <a href="javascript:;" class="button11 edit_type editType"><span class="btnR"><span class="btnC"><span id="editTypeButton" class="btnIcon">Edit</span></span></span></a>                                                          
       </div>
 													
    </div><!-- End .caption -->
@@ -68,19 +69,15 @@
 		  
       <div class="detailsContent_det_type_edit">
 					<p class="det_font">                                                
-         	<div id="launchContestOut" class="hide">                                  
+         	<div id="launchContestOut" class="contestTypeEditSection hide">                                  
                  <!-- tab contest -->
                  <div class="tabContest tabContest1">                                    	
                    <!-- selectDesing -->
-                   <div class="selectDesing selectDesing1">                      	
+                   <div class="selectDesing selectDesing1" id="contestTypeSelectDiv">                      	
                           <div class="selectX">
                           		<span class="name fixWidthName"><strong>Contest Type</strong></span>
                                 <div class="selectOut">                                	
                                     <select id="contestTypes">
-                                         <optgroup label="Studio">
-                                         </optgroup>														                            
-                                         <optgroup label="Software">
-                                         </optgroup>														                             
                                      </select>
                                   </div>                                                
                            </div> <!-- End of .selectX -->                                                                                        
@@ -90,10 +87,22 @@
                   </div>
                   <!-- end .tabContest -->
                                     
-                 <br/></div> <!-- end #launchContestOut -->           
+                 <br/></div> <!-- end #launchContestOut -->
+
+          <span class="contestTypeRO name fixWidthName hide"><strong>Contest Type</strong></span>
+          <span class="value contestTypeRO hide">
+              <span id="contestTypeNameText"></span>
+              <br />
+          </span>
+          <br />
+          
+          
                  <span class="name fixWidthName"><strong>Contest Name</strong></span>
-                 <span class="value"><input type="text" class="bigin"  id="contestName" /></span>
-				 <br /><br />
+          <span class="value">
+              <input type="text" class="bigin"  id="contestName" />
+              <span id="contestNameText"></span>
+          </span>
+          <br /><br />
                  
 				 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
 				 <br /> <br />
@@ -632,7 +641,7 @@
                        <div id="swDocumentList">
                        </div>
                        <div>
-                          File to Upload: <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
+                          File to Upload (20MB maximum): <span id="swUploadButtonDiv"><input name="document" type="file" > </span> <br/>
                           File Description:
                           <textarea id="swFileDescription" rows="5" cols="50"></textarea>               
                           <input id="swFileUploadBtn"  type="button" value="Upload File -->" /> <br/>

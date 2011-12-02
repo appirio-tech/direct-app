@@ -1,5 +1,6 @@
 <%--
-  - Version: 1.3
+  - Author: isv
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
@@ -10,6 +11,10 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) Change notes:
   - - Fix the contest requirements preview and integrate new cockpit tinyMCE editor
+  -
+  - Version 1.4 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
+  - Fixed bug TCCC-3739. Date/Time inputs for contest start time are initialized in JS code block from this page
+  - Fixed bug TCCC-3760. The link for downloading the document is corrected.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -55,7 +60,7 @@
                 d['documentId'] = ${doc.id};
                 d['description'] = '${doc.documentName}';
                 exsitingDocuments.push(d);
-                // documents2.push(d);
+                addFileItem(d);
             </c:forEach>
             <c:forEach items="${projectHeader.prizes}" var="p" varStatus="loop" >
             prizes.push(new com.topcoder.direct.Prize(${p.place}, ${p.prizeAmount}, CONTEST_PRIZE_TYPE_ID, ${p.numberOfSubmissions}));
@@ -71,6 +76,8 @@
             </c:forEach>
             extraExperience = '${otherManagingExperienceString}';
             budget = '${budget}';
+            $('#start2TimeInput').getSetSSValue(getTimePart('${assetDTO.productionDate}'));
+            $("#start2DateInput").datePicker().val(getDatePart('${assetDTO.productionDate}')).trigger('change');
         });
     </script>
 </head>
@@ -516,12 +523,12 @@
         <div class="infoPanelMask">
         <table id="uploadedDocumentsTable">
             <c:forEach items="${assetDTO.documentation}" var="doc" varStatus="loop">
-                <tr>
+                <tr id="rowDoc_${doc.id}">
                     <c:set var="docUrl" value="${doc.url}"/>
                     <c:set var="splitURI" value="${fn:split(docUrl, '/')}"/>
                     <c:set var="docName" value="${splitURI[fn:length(splitURI)-1]}"/>
                     <td class="fileName"><span>${loop.index + 1}.</span>
-                        <a href="${doc.url}"><c:out value="${docName}"/></a></td>
+                        <a href="${ctx}/launch/downloadDocument?documentId=${doc.id}"><c:out value="${docName}"/></a></td>
                     <td class="fileDesc"><c:out value="${doc.documentName}"/></td>
                 </tr>
             </c:forEach>
@@ -530,7 +537,7 @@
     </div>
     <div class="fileUpload editPanel">
         <h3>
-            <span class="icon">Files</span>
+            <span class="icon">Files (20MB maximum)</span>
             <a href="javascript:"><img class="edit_type" alt="edit" src="/images/edit_red.png"/></a>
         </h3>
 
@@ -679,7 +686,7 @@
 </div>
 <div id="uploadedDocumentTemplate" class="hide">
     <dd id="doc{0}" class="uploadedDocumentItem">
-        <div class="attachFile"><span style="line-height:30px"><span style="margin-right:5px"><b>File Name:</b></span>{1}</span></div>
+        <div class="attachFile"><span style="line-height:30px"><span style="margin-right:5px"><b>File Name:</b></span><span class="uploadedDocumentItemFileName">{1}</span></span></div>
         <div class="attachDesc">
             <table>
                 <tbody>
@@ -696,6 +703,16 @@
     </dd>
 </div>
 
+<div id="existingDocumentTemplate" class="hide">
+    <tr id="rowDoc_{0}">
+        <c:set var="docUrl" value="${doc.url}"/>
+        <c:set var="splitURI" value="${fn:split(docUrl, '/')}"/>
+        <c:set var="docName" value="${splitURI[fn:length(splitURI)-1]}"/>
+        <td class="fileName"><span>${loop.index + 1}.</span>
+            <a href="${ctx}/launch/downloadDocument?documentId={0}"><c:out value="${docName}"/></a></td>
+        <td class="fileDesc"><c:out value="${doc.documentName}"/></td>
+    </tr>
+</div>
 
 
 <!-- End .popups -->

@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.3
+  - Author: isv
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
@@ -16,6 +16,7 @@
   - - Add milestone prizes section to support milestone prizes for software contest.
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
+  - Version 1.4 (Release Assembly - Contest Edit and Upload Update) changes: added text on file size limit.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -99,7 +100,7 @@
   <!-- upload -->
 	<div id="swUploadSection">
     
-        <h3>File Upload: </h3>       
+        <h3>File Upload (20MB maximum): </h3>       
         <div class="uploadInner">
             <div id="swDocumentList">
             </div>

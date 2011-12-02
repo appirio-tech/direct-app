@@ -13,7 +13,7 @@
     <constant name="struts.ui.theme" value="simple"/>
     <constant name="struts.convention.exclude.parentClassLoader" value="true" />
     <constant name="struts.convention.action.fileProtocols" value="jar,vfsfile,vfszip" />
-    <constant name="struts.multipart.maxSize" value="10485760" />
+    <constant name="struts.multipart.maxSize" value="20971520" />
 
 
 
@@ -69,7 +69,7 @@
                     <param name="logEnabled">true</param>
                     <param name="logLevel">ERROR</param>
                 </interceptor-ref>
-            </interceptor-stack>           
+            </interceptor-stack>
 
 			<interceptor-stack name="projectFeeStack">
 				<interceptor-ref name="loggingInterceptor"/>
@@ -210,8 +210,8 @@
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
         </action>
-		
-		<action name="createNewProject" class="com.topcoder.direct.services.view.action.ForwardAction">
+
+         <action name="createNewProject" class="com.topcoder.direct.services.view.action.ForwardAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
         </action>
@@ -449,7 +449,7 @@
                 <param name="bufferSize">1024</param>
             </result>
         </action>
-        
+
         <action name="updateInvoiceRecords" class="updateInvoiceRecordsAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -527,7 +527,7 @@
             <result name="error" type="json" />
         </action>
 
-		<action name="createNewCockpitProjectAjax" class="createNewProjectAction">
+        <action name="createNewCockpitProjectAjax" class="createNewProjectAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
@@ -538,7 +538,7 @@
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing_account_list.jsp</result>
         </action>
-        
+
         <action name="listContestFeesAction" class="contestFeesDetailsAction" method="list">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing_account_contest_fee.jsp</result>
@@ -809,7 +809,7 @@
             </result>
         </action>
 
-		<action name="downloadFinalFix" class="downloadFinalFix">
+        <action name="downloadFinalFix" class="downloadFinalFix">
             <result type="stream">
                 <param name="contentDisposition">${contentDisposition}</param>
                 <param name="contentType">application/octet-stream</param>
