@@ -3306,12 +3306,16 @@ public class DataProvider {
             contestCopilots.add(copilot);
         }
 
-        // Gets the contest participation details
-        final ResultSetContainer conetestDetailsResult = queryData.get("dashboard_participation_contest_details");
-        for (ResultSetRow row : conetestDetailsResult) {
+        // submitter resource ID -> ParticipationContestDetailDTO
+        Map<Long, ParticipationContestDetailDTO> submitterContestDetailsMap = new HashMap<Long, ParticipationContestDetailDTO>();
+        
+        // Gets the contest participation registration details
+        final ResultSetContainer conetestRegistrationResult = queryData.get("dashboard_participation_registration");
+        for (ResultSetRow row : conetestRegistrationResult) {
             if (!projectStatusSet.contains(row.getStringItem("contest_status").trim())) {
                 continue;
             }
+            
             IdNamePair client = new IdNamePair();
             IdNamePair billing = new IdNamePair();
             IdNamePair directProject = new IdNamePair();
@@ -3359,11 +3363,40 @@ public class DataProvider {
             } else {
                 contestDetail.setRegistrant(row.getLongItem("registrant"));
             }
+            long resourceId = 0;
+            if (row.getItem("resource_id").getResultData() != null) {
+                resourceId = row.getLongItem("resource_id");
+            }
             contestDetail.setCountry(row.getStringItem("country"));
-            contestDetail.setHasSubmit(row.getIntItem("has_submit") > 0);
-            contestDetail.setHasWinFinal(row.getIntItem("has_win_final") > 0);
-            contestDetail.setHasWinMilestone(row.getIntItem("has_win_milestone") > 0);
             contestDetail.setStatus(row.getStringItem("contest_status").trim());
+            
+            submitterContestDetailsMap.put(resourceId, contestDetail);
+        }
+        
+        // Gets the conetst participation submission details
+        final ResultSetContainer conetestSubmissionResult = queryData.get("dashboard_participation_submission");
+        for (ResultSetRow row : conetestSubmissionResult) {
+            long resourceId = row.getLongItem("resource_id");
+            if (!submitterContestDetailsMap.containsKey(resourceId)) {
+                continue;
+            }
+            
+            ParticipationContestDetailDTO contestDetail = submitterContestDetailsMap.get(resourceId);
+            contestDetail.setHasSubmit(true);
+            int submissionTypeId = row.getIntItem("submission_type_id");
+            boolean hasWin = row.getIntItem("has_win") > 0;
+            if (hasWin) {
+                if (submissionTypeId == 1) {
+                    // conetst submission
+                    contestDetail.setHasWinFinal(true);
+                } else if (submissionTypeId == 3) {
+                    // milestone submission
+                    contestDetail.setHasWinMilestone(true);
+                }
+            }
+        }
+        
+        for (ParticipationContestDetailDTO contestDetail : submitterContestDetailsMap.values()) {
             contestDetails.add(contestDetail);
         }
     }
