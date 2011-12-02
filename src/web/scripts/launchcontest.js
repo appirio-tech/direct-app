@@ -616,7 +616,7 @@ function resetFileTypes(studioSubtypeId) {
     var types = getStudioFileTypes(studioSubtypeId);
     var html = "";
     $.each(types, function(i, type) {
-        html += '<input type="checkbox" checked="checked" value="' + type + '" class="defaultFileType" /> <label>' + type + '</label>';
+        html += '<div><input type="checkbox" value="' + type.value + '" class="defaultFileType" /> <label>' + type.description + '</label></div>';
     });
 
     $('#deliverablesCheckboxs').html(html);

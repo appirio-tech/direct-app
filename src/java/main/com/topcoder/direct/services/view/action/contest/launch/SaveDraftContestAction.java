@@ -630,18 +630,21 @@ public class SaveDraftContestAction extends ContestAction {
         List<FileType> newFileTypes = new ArrayList<FileType>();
         FileType[] allFileTypes = getContestServiceFacadeWithISE().getAllFileTypes();
         if (fileTypes != null) {
-            Map<String, FileType> nameToFileType = new HashMap<String, FileType>();
+            Map<Long, FileType> idToFileType = new HashMap<Long, FileType>();
             for (FileType type : allFileTypes) {
-                nameToFileType.put(type.getExtension().toUpperCase(), type);
+                idToFileType.put(type.getId(), type);
             }
-            for (String name : fileTypes) {
-                String ext = name.toUpperCase();
-                if (nameToFileType.containsKey(ext)) {
-                    newFileTypes.add(nameToFileType.get(ext));
+            for (String fileType : fileTypes) {
+                try {
+                    long id = Long.parseLong(fileType);
+                    if (idToFileType.containsKey(id)) {
+                        newFileTypes.add(idToFileType.get(id));
                 } else {
+                }
+                } catch (NumberFormatException e) {
                     FileType type = new FileType();
-                    type.setExtension(ext);
-                    type.setDescription("description");
+                    type.setExtension("-");
+                    type.setDescription(fileType);
                     newFileTypes.add(type);
                 }
             }

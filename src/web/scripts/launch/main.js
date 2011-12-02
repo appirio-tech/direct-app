@@ -142,7 +142,7 @@ $(document).ready(function() {
 
    //file types
    $('.fileType').click(function(){
-       $('.deliverablesInner .checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
+       $('.deliverablesInner .checkInput').append('<div><input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" /></div>');
    });
 
   // Document uploader set up
@@ -738,9 +738,7 @@ function getStudioFileTypes(studioSubtypeId) {
 
   $.each(fileTypes, function(i, fileType) {
       if(studioSubtypeId == fileType.id) {
-         $.each(fileType.fileFormats, function(j, fileFormat) {
-              types.push(fileFormat.value);
-         });
+         types = fileType.fileFormats;
       }
   });
 

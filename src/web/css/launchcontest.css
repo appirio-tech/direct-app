@@ -1262,10 +1262,12 @@
 			/** input **/
 			.deliverablesInner .checkInput{
 			       width:auto;
-				float:left;
-				display:inline;
 				margin-top:4px;
 				}
+
+            .deliverablesInner .checkInput > div {
+                padding:  2px 0;
+            }
 				
 				/** label **/
 				.deliverablesInner label{
@@ -1277,22 +1279,18 @@
 				
 				/** input **/	
 				.deliverablesInner .text{
-					width:46px;
+					width:370px;
 					height:16px;
-					border:0;
-					padding:3px 9px;
+					padding:2px 9px;
 					font-weight:bold;
 					color:#6c6c6c;
 					margin-right:30px;
-					background:url(/images/prizesInput.gif) no-repeat;
 					}
 			
 			/** file button **/		
 			.deliverablesInner .fileType{
 				width:auto;
 				height:22px;
-				float:left;
-				display:inline;
 				margin-top:4px;
 				padding-left:28px;
 				font-size:12px;

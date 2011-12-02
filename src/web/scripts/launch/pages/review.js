@@ -113,10 +113,22 @@ function updateReviewStudio() {
    // file types
    var fileTypes = mainWidget.softwareCompetition.fileTypes;
 
-   html = "";
+   html = "<ul>";
+   var studioSubtypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+   var types = getStudioFileTypes(studioSubtypeId);
    $.each(fileTypes, function(i, fileType) {
-       html += '&nbsp; <label>' + fileType + '</label>';
+       var found = false;
+       $.each(types, function(i, type) {
+           if(type.value == fileType && !found) {
+              html += '<li>' + type.description + '</li>';
+              found = true;
+           }
+       });
+       if(!found) {
+           html += '<li>' + fileType + '</li>';
+       }
    });
+   html += "</ul>";
    $('#rFinalDeliveries').html(html);
    
    // uploads

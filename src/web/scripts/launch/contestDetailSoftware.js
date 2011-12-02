@@ -333,7 +333,7 @@ function initContest(contestJson) {
 	  var types = contestJson.fileTypes;
 	  if (types) {
 		  for (var i = 0; i < types.length; i++) {
-			  fileTypes.push(types[i].extension);
+			  fileTypes.push(types[i].description);
 		  }
 	  }
 	  mainWidget.softwareCompetition.fileTypes = fileTypes;
@@ -1413,25 +1413,29 @@ function showPrizeSectionEdit() {
 function getSplitFileTypes(allFileTypes) {
 	var defaultFileTypes = [];
 	var otherFileTypes = [];
-	var defaultAllFileTypes = {};
+    var predefinedFileTypes = [];
 	if (mainWidget.softwareCompetition.projectHeader.projectCategory.id > 0) {
 		for (var i = 0; i < fileTypes.length; i++) {
 			if (fileTypes[i].id == mainWidget.softwareCompetition.projectHeader.projectCategory.id) {
-				for (var j = 0; j < fileTypes[i].fileFormats.length; j++) {
-					defaultAllFileTypes[fileTypes[i].fileFormats[j].value] = true;
-				}
-				break;
-			}
+                predefinedFileTypes = fileTypes[i].fileFormats;
+                for (var k = 0; k < allFileTypes.length; k++) {
+                    var matched = false;
+                    for (var j = 0; j < fileTypes[i].fileFormats.length; j++) {
+                            if(fileTypes[i].fileFormats[j].description == allFileTypes[k] || fileTypes[i].fileFormats[j].value == allFileTypes[k]) {
+                                defaultFileTypes.push(fileTypes[i].fileFormats[j]);
+                                matched = true;
+                                break;
+                            }
+                    }
+                    if (!matched) {
+                        otherFileTypes.push(allFileTypes[k]);
+	                }
+		        }
+                break;
+            }
 		}
 	}
-	for (var i = 0; i < allFileTypes.length; i++) {
-		if (defaultAllFileTypes[allFileTypes[i]]) {
-			defaultFileTypes.push(allFileTypes[i]);
-		} else {
-			otherFileTypes.push(allFileTypes[i]);
-		}
-	}
-	return [defaultFileTypes, otherFileTypes];
+	return [defaultFileTypes, otherFileTypes, predefinedFileTypes];
 }
 
 /**
@@ -1476,17 +1480,27 @@ function populateSpecSection(initFlag) {
 	  $('#deliverablesCheckboxs').html('');
 	  var types = getSplitFileTypes(mainWidget.softwareCompetition.fileTypes);
 	  // default types
+      var predefinedFileTypes = types[2];
 	  var html = "";
-	  $.each(types[0], function(i, type) {
-		  if(isNotEmpty(type)) {
-			  html += '<input type="checkbox" checked="checked" value="' + type +'" class="defaultFileType" /> <label>' + type + '</label>';
-		  }  
-	  });
+
+      $.each(predefinedFileTypes, function(i, type) {
+          var selected = false;
+          $.each(types[0], function(i, type1) {
+              if(type1.description == type.description) {
+                  selected = true;
+              }
+	      });
+
+          if(selected) {
+              html += '<div><input type="checkbox" checked="checked" value="' + type.value +'" class="defaultFileType" /> <label>' + type.description + '</label></div>';
+          } else {
+              html += '<div><input type="checkbox" value="' + type.value +'" class="defaultFileType" /> <label>' + type.description + '</label></div>';
+          }
+      });
+
 	  // other file types
 	  $.each(types[1], function(i, type) {
-		  if(isNotEmpty(type)) {
-			  html += '<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" value="' + escape(type) + '"/>'
-		  }
+	      html += '<div><input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" value="' + type + '"/></div>';
 	  });
 	  $('#deliverablesCheckboxs').html(html);
   }
@@ -1519,9 +1533,21 @@ function populateSpecSection(initFlag) {
 	  $('#rContestIntroduction').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestIntroduction);   
 	  $('#rContestDescription').html(mainWidget.softwareCompetition.projectHeader.projectStudioSpecification.contestDescription);
 	  html = "";
+      var studioSubtypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
+      var types = getStudioFileTypes(studioSubtypeId);
 	  $.each(mainWidget.softwareCompetition.fileTypes, function(i, fileType) {
 		  if(isNotEmpty(fileType)) {
+              var found = false;
+              for (var i = 0; i < types.length; i++) {
+                  if(types[i].value == fileType) {
+                      html += '<li>'+ types[i].description +'</li>';
+                      found = true;
+                      break;
+                  }
+              }
+              if(!found) {
 			  html += '<li>'+ fileType +'</li>';
+              }
 		  }
 	  });
 	  $('#rFinalDeliveries').html(html);

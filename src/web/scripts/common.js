@@ -272,8 +272,7 @@ function checkNumber(value) {
 }
 
 function checkFileType(value) {
-	  value = $.trim(value);
-    return optional(value) || /^\w+$/.test(value);
+	return checkRequired(value);
 }
 
 function optional(value) {

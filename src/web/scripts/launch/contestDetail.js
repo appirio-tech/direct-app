@@ -730,14 +730,16 @@ function populateSpecSection() {
    var html = "";
    $.each(types, function(i, type) {
    	  if(isNotEmpty(type)) {
-         html += '<input type="checkbox" checked="checked" value="' + type +'" class="defaultFileType" /> <label>' + type + '</label>';
-       }  
+         html += '<div><input type="checkbox" checked="checked" value="' + type +'" class="defaultFileType" /> <label>' + type + '</label></div>';
+      } else {
+         html += '<div><input type="checkbox" value="' + type +'" class="defaultFileType" /> <label>' + type + '</label></div>';
+      }
    });
    // other file types
    types = mainWidget.competition.contestData.otherFileFormats.split(",");
    $.each(types, function(i, type) {
    	    if(isNotEmpty(type)) {
-           html += '<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" value="' + escape(type) + '"/>'
+           html += '<div><input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" value="' + escape(type) + '"/></div>'
         }
    });
 

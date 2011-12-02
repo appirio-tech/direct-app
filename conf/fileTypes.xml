@@ -2,174 +2,238 @@
 <contestTypes>
   <contestType id="16">
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>38</value>
+      <description>ICO files</description>
     </fileFormat>
   </contestType>
   <contestType id="20">
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
   </contestType>
   <contestType id="21">
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>indd</value>
-      <description>.INDD (Adobe InDesign graphic file)</description>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ico</value>
-      <description>.ICO (For specific icon contests…not always needed)</description>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>pdf</value>
-      <description>.PDF (Some print shops require a PDF file for proofing)</description>
+      <value>39</value>
+      <description>INDD created with InDesign</description>
+    </fileFormat>
+    <fileFormat>
+      <value>40</value>
+      <description>PDF file</description>
+    </fileFormat>
+    <fileFormat>
+      <value>46</value>
+      <description>PPT (for presentations) created with PowerPoint or similar</description>
     </fileFormat>
   </contestType>
   <contestType id="18">
 	<fileFormat>
-      <value>ico</value>
-      <description>.ICO (For specific icon contests…not always needed)</description>
+      <value>44</value>
+      <description>HTML</description>
     </fileFormat>
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
-    </fileFormat>
-    <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
-    </fileFormat>
-    <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>45</value>
+      <description>RP file created with Axure</description>
     </fileFormat>
   </contestType>
   <contestType id="34">
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>42</value>
+      <description>WORD document</description>
+    </fileFormat>
+    <fileFormat>
+      <value>43</value>
+      <description>Text file saved as TXT</description>
+    </fileFormat>
+    <fileFormat>
+      <value>40</value>
+      <description>PDF file</description>
     </fileFormat>
   </contestType>
   <contestType id="22">
 	<fileFormat>
-      <value>ppt</value>
-      <description>.PPT (Microsoft PowerPoint)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>39</value>
+      <description>INDD created with InDesign</description>
+    </fileFormat>
+    <fileFormat>
+      <value>40</value>
+      <description>PDF file</description>
+    </fileFormat>
+    <fileFormat>
+      <value>46</value>
+      <description>PPT (for presentations) created with PowerPoint or similar</description>
     </fileFormat>
   </contestType>
   <contestType id="30">
 	<fileFormat>
-      <value>ppt</value>
-      <description>.PPT (Microsoft PowerPoint)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
   </contestType>
-    <contestType id="31">
+  <contestType id="31">
 	<fileFormat>
-      <value>ppt</value>
-      <description>.PPT (Microsoft PowerPoint)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
   </contestType>
   <contestType id="17">
     <fileFormat>
-      <value>ppt</value>
-      <description>.PPT (Microsoft PowerPoint)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
   </contestType>
   <contestType id="32">
     <fileFormat>
-      <value>ppt</value>
-      <description>.PPT (Microsoft PowerPoint)</description>
+      <value>33</value>
+      <description>Layered PSD files created in Adobe Photoshop or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>psd</value>
-      <description>.PSD (Photoshop layered graphic file)</description>
+      <value>34</value>
+      <description>AI files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>ai</value>
-      <description>.AI (Adobe Illustrator vector graphic file)</description>
+      <value>35</value>
+      <description>EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
     <fileFormat>
-      <value>eps</value>
-      <description>.EPS (Vector graphic file)</description>
+      <value>36</value>
+      <description>Vector AI files created in Adobe Illustrator or similar</description>
+    </fileFormat>
+    <fileFormat>
+      <value>37</value>
+      <description>Vector EPS files created in Adobe Illustrator or similar</description>
     </fileFormat>
   </contestType>
 </contestTypes>
