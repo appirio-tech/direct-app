@@ -1,0 +1,41 @@
+<CMConfig>
+    <Config name="com.topcoder.randomstringimg">
+        <Property name="width">
+            <Value>200</Value>
+        </Property>
+        <Property name="height">
+            <Value>50</Value>
+        </Property>
+        <Property name="colorfiles">
+            <Value>@randomStringImageColorsFile@</Value>
+        </Property>
+        <Property name="dictionaries">
+            <Value>@randomStringImageDictFile@</Value>
+        </Property>
+        <Property name="algorithms">
+            <Value>com.topcoder.randomstringimg.algorithms.BlurObfuscator</Value>
+            <Value>com.topcoder.randomstringimg.algorithms.HorizLinesObfuscator</Value>
+            <Value>com.topcoder.randomstringimg.algorithms.VerticalLinesObfuscator</Value>
+            <Value>com.topcoder.randomstringimg.algorithms.DiagLinesObfuscator</Value>
+            <Value>com.topcoder.randomstringimg.algorithms.CheckersObfuscator</Value>
+            <Value>com.topcoder.randomstringimg.algorithms.ColorInvertObfuscator</Value>
+            <Value>com.topcoder.randomstringimg.algorithms.RotateObfuscator</Value>
+            <Value>com.topcoder.randomstringimg.algorithms.ShearObfuscator</Value>
+        </Property>
+        <Property name="minlength">
+            <Value>6</Value>
+        </Property>
+        <Property name="maxlength">
+            <Value>10</Value>
+        </Property>
+        <Property name="format">
+            <Value>PNG</Value>
+        </Property>
+        <Property name="minfontsize">
+            <Value>20</Value>
+        </Property>
+        <Property name="maxfontsize">
+            <Value>40</Value>
+        </Property>
+    </Config>
+</CMConfig>

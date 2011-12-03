@@ -1,0 +1,8 @@
+<CMConfig>
+    <Config name="com.topcoder.randomstringimg.color">
+        <Property name="colorpairs">
+            <Value>0 0 0 255 255 255</Value>
+            <Value>255 255 255 0 0 0</Value>
+        </Property>
+    </Config>
+</CMConfig>

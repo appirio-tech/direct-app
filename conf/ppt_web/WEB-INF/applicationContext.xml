@@ -46,4 +46,8 @@
     <bean id="registerAction" class="com.topcoder.ppt.action.RegisterAction" scope="prototype">
         <property name="userService" ref="userService"/>
     </bean>
+    
+    <bean id="captchaImageAction" class="com.topcoder.ppt.action.CaptchaImageAction" scope="prototype">
+        <property name="configFile" value="@randomStringImageConfigFile@"/>
+    </bean>
 </beans>
