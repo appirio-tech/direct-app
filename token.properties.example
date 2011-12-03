@@ -248,6 +248,13 @@
 ##############
 @uploadedFilesRootDir@=uploaded_files_path
 
+#################################
+# Random String Image component #
+#################################
+@randomStringImageConfigFile@=/home/direct/jboss-4.2.3.GA/server/default/conf/com/topcoder/randomstringimg/RandomStringImage.xml
+@randomStringImageColorsFile@=/home/direct/jboss-4.2.3.GA/server/default/conf/com/topcoder/randomstringimg/Colors.xml
+@randomStringImageDictFile@=/home/direct/jboss-4.2.3.GA/server/default/conf/com/topcoder/randomstringimg/movie-characters
+
 ################################
 # ApplicationServer.properties #
 ################################

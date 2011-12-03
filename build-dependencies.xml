@@ -501,11 +501,26 @@
   <property name="workdays.path" value="workdays/${workdays.version}" />
   <property name="workdays.jar" value="${tcs_libdir}/${workdays.path}/${workdays.jar.name}" />
 
+  <property name="random_string_generator.version" value="1.0" />
+  <property name="random_string_generator.jar.name" value="random_string_generator.jar" />
+  <property name="random_string_generator.path" value="random_string_generator/${random_string_generator.version}" />
+  <property name="random_string_generator.jar" value="${tcs_libdir}/${random_string_generator.path}/${random_string_generator.jar.name}" />
+
+  <property name="random_string_image.version" value="1.0" />
+  <property name="random_string_image.jar.name" value="random_string_image.jar" />
+  <property name="random_string_image.path" value="random_string_image/${random_string_image.version}" />
+  <property name="random_string_image.jar" value="${tcs_libdir}/${random_string_image.path}/${random_string_image.jar.name}" />
+  
+  <property name="spell_check.version" value="1.0" />
+  <property name="spell_check.jar.name" value="spell_check.jar" />
+  <property name="spell_check.path" value="spell_check/${spell_check.version}" />
+  <property name="spell_check.jar" value="${tcs_libdir}/${spell_check.path}/${spell_check.jar.name}" />
+  
   <property name="file_upload.version" value="2.0" />
   <property name="file_upload.jar.name" value="file_upload.jar" />
   <property name="file_upload.path" value="file_upload/${file_upload.version}" />
   <property name="file_upload.jar" value="${tcs_libdir}/${file_upload.path}/${file_upload.jar.name}" />
-
+  
   <property name="shared.jar.name" value="shared.jar" />
   <property name="shared.jar" value="${tcs_libdir}/${shared.jar.name}" />
 
@@ -545,6 +560,8 @@
   <property name="javaee.jar" value="${ext_libdir}/j2ee/1.5/javaee.jar" />
   <property name="jaxb.jar" value="${ext_libdir}/jaxb/2.1.7/jaxb-api.jar" />
 
+  <property name="jai_codec-1.1.3.jar" value="${ext_libdir}/jai/jai_codec-1.1.3.jar" />
+  <property name="jai_core-1.1.3.jar" value="${ext_libdir}/jai/jai_core-1.1.3.jar" />
   <!-- Struts 2 libs -->
   <property name="struts2_libdir" value="${ext_libdir}/struts" />
   <property name="commons-beanutils-1.7.0.jar" value="${struts2_libdir}/commons-beanutils-1.7.0.jar" />
@@ -694,6 +711,9 @@
     <pathelement location="${json_object.jar}" />
     <pathelement location="${topcoder_cockpit_project_metadata_entities.jar}" />
     <pathelement location="${topcoder_cockpit_project_metadata_services.jar}" />
+    <pathelement location="${random_string_generator.jar}" />
+    <pathelement location="${random_string_image.jar}" />
+    <pathelement location="${spell_check.jar}" />
   </path>
 
   <path id="component.3rdParty-dependencies">

@@ -190,6 +190,9 @@
         <copy file="${user_group_manager.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${workdays.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${file_upload.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${random_string_generator.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${random_string_image.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${spell_check.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${shared.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${tcwebcommon.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
@@ -239,6 +242,8 @@
         <copy file="${jgroups.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${ehcache.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${hibernate-jpa.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${jai_codec-1.1.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${jai_core-1.1.3.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
 
         <!-- EJB components -->
@@ -475,6 +480,9 @@
                 <include name="com/topcoder/message/email/EmailEngine.xml" />
                 <include name="com/topcoder/util/config/ConfigManager.properties" />
                 <include name="com/topcoder/util/file/DocumentGenerator.xml" />
+                <include name="com/topcoder/randomstringimg/Colors.xml" />
+                <include name="com/topcoder/randomstringimg/movie-characters" />
+                <include name="com/topcoder/randomstringimg/RandomStringImage.xml" />
             </fileset>
         </copy>
         <copy todir="${jboss.home}/server/${server.name}/lib" flatten="true"  overwrite="true">
