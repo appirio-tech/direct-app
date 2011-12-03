@@ -6,6 +6,10 @@ package com.topcoder.ppt.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.topcoder.ppt.form.RegisterForm;
 import com.topcoder.security.ldap.LDAPClient;
 import com.topcoder.security.ldap.LDAPClientException;
@@ -84,6 +88,12 @@ public class RegisterAction extends BaseAjaxAction {
         checkRequired("email", "email", formData.getEmail());
         checkRequired("regPassword", "password", formData.getPassword());
         
+        HttpSession session = ServletActionContext.getRequest().getSession();
+        String randomString = (String) session.getAttribute("captcha_str");
+        session.removeAttribute("captcha_str");
+        if (randomString == null || randomString.compareToIgnoreCase(formData.getVerificationCode()) != 0) {
+            addFieldError("veriCode", "Verification code doesn't match");
+        }
         if (hasFieldErrors()) {
             return;
         }

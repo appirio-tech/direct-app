@@ -36,6 +36,11 @@ public class RegisterForm {
     private String email;
     
     /**
+     * Represents the verification code.
+     */
+    private String verificationCode;
+    
+    /**
      * Construct a new <code>RegisterForm</code> instance.
      */
     public RegisterForm() {
@@ -130,5 +135,23 @@ public class RegisterForm {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * Gets the verification code.
+     * 
+     * @return the verification code.
+     */
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    /**
+     * Sets the verification code.
+     * 
+     * @param verificationCode the verification code.
+     */
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 }

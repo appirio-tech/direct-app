@@ -29,8 +29,8 @@
                     </c:if>
                     </li>
                     <li><a href="http://info.topcoder.com/blog">BLOG</a></li>
-                    <c:if test="${empty sessionScope.userHandle}">
                     <li><a href="http://www.topcoder.com/help">HELP</a></li>
+                    <c:if test="${empty sessionScope.userHandle}">
                     <li class="loginSection"><a href="javascript:;" class="navLogin">LOGIN</a></li>
                     <li class="welcomeSection hide"><span class="welcomeMsg">Welcome,[<span class="handle"></span>]</span><a href="javascript:;" class="logoutLink">LOGOUT</a></li>
                     </c:if>
@@ -305,20 +305,18 @@
                 <input id="confirmPassword" type="password" class="inputCre"/>
                 <span class="errorMsg passwordNotMactchErr hide">Password does not match</span>
             </div>
-            <!--
             <div class="row">
                 <label for="veriCode">Verification Code</label>
                 <img src="/images/ppt/error.png" alt="" class="errImg veriCodeErr hide"/>
                 <input id="veriCode" type="text" class="inputCre"/>
                 <span class="errorMsg veriCodeErr hide">Please enter the verification code</span>
             </div>
-            <div class="row specialRow">
-                <img class="imgCode" src="/images/ppt/imageCode.png" alt=""/>
+            <div class="row specialRow" style="margin-top:20px;">
+                <img class="imgCode" src="" alt="" id="veriImg"/>
             </div>
             <div class="row specialRow">
                 <a href="javascript:;" class="tryAnotherCode">Try Another Code</a>
             </div>
-            -->
             <div class="row">
                 <input type="checkbox" class="checkCre" id="accPol"/><span>I have read and accept the <a class="underline" href="https://www.topcoder.com/reg/privacy_policy.jsp">privacy policy</a></span>
                 <span class="errorMsg policyErr hide">Please accept the privary policy</span>

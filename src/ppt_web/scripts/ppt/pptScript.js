@@ -93,6 +93,7 @@ $(document).ready(function() {
 	});
 	//login
 	$('.navLogin').live("click", function(e) {
+        $("#veriImg").attr("src", "/present/captchaImage.action?t=" + new Date().getTime());
         $("input[type='password']").val("");
 		clearLoginErrStyle();
         popWinPosTop = screenheight/2 - $('#loginModal').height()/2;
@@ -101,6 +102,9 @@ $(document).ready(function() {
 		$("#greybackground").css({"position":'absolute',"left":0,"top":0,"height":docheight,"width":docwidth,'z-index':900,'background':'url(/images/ppt/overlay-bg.png) repeat left top'});
 		$('#loginModal').css({"left":(popWinPosLeft>0)?popWinPosLeft:0,"top":(popWinPosTop>0)?(popWinPosTop):0});
 		$('#loginModal').show("fast");
+    });
+    $(".tryAnotherCode").click(function() {
+        $("#veriImg").attr("src", "/present/captchaImage.action?t=" + new Date().getTime());
     });
 	function clearLoginErrStyle(){
 		$('.loadingbackground').remove();
@@ -267,13 +271,12 @@ $(document).ready(function() {
             $('.policyErr').show();
             flag = false;
         }
-        /*
 		if(!$('#veriCode').val()){
 			showLoginErrStyle($('#veriCode'));
 			$('.veriCodeErr').show();
 			flag = false;
 		}
-        */
+        var veriCode = $('#veriCode').val();
 		if(flag){
 			//start loading
 			$('#registerModal').append("<div class='loadingbackground'><div class='loadingIndicator'><div class='loadingCover'></div></div><div class='indicatorMsg'>Creating account,please wait...</div></div>");
@@ -283,7 +286,7 @@ $(document).ready(function() {
             $.ajax({
               type: 'POST',
               url:  ctx + "/register",
-              data: "formData.firstName="+firstName+"&formData.lastName="+lastName+"&formData.handle="+handle+"&formData.email="+emailAddress+"&formData.password="+password,
+              data: "formData.firstName="+firstName+"&formData.lastName="+lastName+"&formData.handle="+handle+"&formData.email="+emailAddress+"&formData.password="+password+"&formData.verificationCode="+veriCode,
               cache: false,
               dataType: 'json',
               async : false,
@@ -302,7 +305,7 @@ $(document).ready(function() {
                         }
                         for (var fname in jsonResult.jsonData.fieldErrors) {
                             hasError = true;
-                            showLoginErrStyle($('#handle'));
+                            showLoginErrStyle($('#' + fname));
                             var errors = jsonResult.jsonData.fieldErrors[fname];
                             var errEle = $(".errorMsg", $('#' + fname).parent());
                             errEle.html("");
@@ -312,7 +315,10 @@ $(document).ready(function() {
                             }
                             errEle.show();
                         }
-                        if (hasError) return;
+                        if (hasError) {
+                            $("#veriImg").attr("src", "/present/captchaImage.action?t=" + new Date().getTime());
+                            return;
+                        }
                     }
                     $('#registerModal .indicatorMsg').html('Account created.<br/>Thank you for your registration!');
                     $.ajax({
