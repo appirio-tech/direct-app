@@ -107,9 +107,11 @@ $(document).ready(function() {
     }
 
 	  // limits the characters for text inputs and text editors
-	  $("#contestName, #projectName").bind('keydown keyup paste', limitContestProjectNameChars(200));
+	  $("#contestName, #projectName, #newProjectName").bind('keydown keyup paste', limitContestProjectNameChars(200));
 	  
-	  $("#swFileDescription, #fileDescription").bind('keydown keyup paste', limitFileDescriptionChars(200));
+	  $("#swFileDescription, #fileDescription, #fileDescription2").bind('keydown keyup paste', limitFileDescriptionChars(200));
+
+      $("#newProjectDescription").bind('keydown keyup paste', limitFileDescriptionChars(2000));
 });
 
 
@@ -579,7 +581,8 @@ var cockpitTinyMCEOptions =
     theme_advanced_resizing : true,
     theme_advanced_resize_horizontal : false,
     theme_advanced_path : false,
-    theme_advanced_resizing_use_cookie : false
+    theme_advanced_resizing_use_cookie : false,
+    valid_elements : tinyMCEValidElements
 };
 
 /**
