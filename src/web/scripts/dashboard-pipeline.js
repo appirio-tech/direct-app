@@ -2,14 +2,18 @@
  * The JS script for Pipeline report.
  *
  * Version 1.1 updates: Toggle report type selection. Two reports are supported: pipeline and cost report.
+ *
  * Version 1.2 updates: Toggle report type selection. Three reports are supported: pipeline ,
  * cost report and billing cost report.
  *
  * Version 1.2.1 updates: Add js validation for start date and end date for pipeline report, end date must be larger than
  * end date.
  *
- * @author isv, Blues, GreatKevin
- * @version 1.2.1
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) updates
+ * - Updates the filter panel of pipeline report to the new one.
+ *
+ * @author isv, Blues, GreatKevin, TCSASSEMBLER
+ * @version 1.3
  * @since Direct Pipeline Stats Update Assembly
  */
 var ctx = "/direct";
@@ -95,14 +99,15 @@ $(document).ready(function(){
         if (startDate >= endDate) {
             $('#validationErrors').append("Start date should be smaller than end date<br/>");
         }
-        if ($('#validationErrors').html() == '') {
+        if ($('#validationErrors').html() == '' || $('#validationErrors').html() == null) {
             var currentPage = $.trim($('.paginate_active').html());
             $('#pipelineDetailsPageNumber2').val(currentPage);
             $('#formDataExcel').val("false");
             document.DashboardSearchForm.submit();
+
+            modalPreloader();
         }
 
-        modalPreloader();
 
         return false;
     });

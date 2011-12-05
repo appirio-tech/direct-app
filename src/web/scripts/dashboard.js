@@ -1,7 +1,6 @@
-/*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
- */
 /**
+ * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ *
  * The JS script for dashboard.
  *
  *  Version 1.1 - TC Direct - Page Layout Update Assembly & TC Direct - Page Layout Update Assembly 2
@@ -38,9 +37,12 @@
  *
  *  Version 2.1 - Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  *  - Change the customer drop down to work with the new filter panels
+ *
+ *  Version 2.2 - Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp
+ *  - Add the js codes to handle multiple selection box.
  * 
  * @author tangzx, Blues, GreatKevin, TCSASSEMBLER
- * @version 2.1
+ * @version 2.2
  */
 $(document).ready(function(){
 						   
@@ -1375,6 +1377,108 @@ $(document).ready(function(){
     });
 
 
+    $('.multiSelectArea .multiSelectBox').css('overflow-x','hidden');
+
+    	//expand function
+    	$('.filterTitle .expanded').click(function(){
+    		var filterTitle = $(this).closest('.filterTitle');
+    		if(!$(this).hasClass('collapsed')){
+    			filterTitle.addClass('filterTitleCollapsed');
+    			$(this).addClass('collapsed');
+    			$('.filterContainer').hide();
+    		}else{
+    			filterTitle.removeClass('filterTitleCollapsed');
+    			$(this).removeClass('collapsed');
+    			$('.filterContainer').show();
+    		}
+    	});
+
+    	//Multi Select checkbox function
+    	$('.multiSelectBox :checkbox').each(function(){
+    		$(this).click(function(){
+    			var parentBox = $(this).closest('.multiSelectBox');
+    			var parentRow = $(this).parent('.multiOptionRow');
+    			var parentSelectLen = parentBox.find(':checkbox').length;
+
+    			if($(this).attr('checked')){
+    				if($(this).siblings('label').text() == 'Select All'){
+    					parentBox.find(':checkbox').attr('checked',true);
+    					parentBox.find('.multiOptionRow').addClass('multiOptionRowChecked');
+    				}else{
+    					parentRow.addClass('multiOptionRowChecked');
+    					if(parentBox.find(':checked').length+1 == parentSelectLen){
+    						parentBox.find(':checkbox:first').attr('checked',true);
+    						parentBox.find('.multiOptionRow:first').addClass('multiOptionRowChecked');
+    					}
+    				}
+    			}else{
+    				if($(this).siblings('label').text() == 'Select All'){
+    					parentBox.find(':checkbox').attr('checked',false);
+    					parentBox.find('.multiOptionRow').removeClass('multiOptionRowChecked');
+    				}else{
+    					parentBox.find(':checkbox:first').attr('checked',false);
+    					parentBox.find('.multiOptionRow:first').removeClass('multiOptionRowChecked');
+    					parentRow.removeClass('multiOptionRowChecked');
+    				}
+    			}
+    		});
+    	});
+
+        var selectAllCheckOrNot = function() {
+            $(".multiSelectBox").each(function() {
+                var allChecked = true;
+                $(this).find(".optionItem").each(function(){
+                    if(!$(this).attr('checked')) {
+                        allChecked = false;
+                    }
+                });
+
+                var selectAll = $(this).find('.optionAll');
+
+                if(!allChecked) {
+                    selectAll.attr('checked', false);
+                    selectAll.parent().removeClass('multiOptionRowChecked');
+                } else {
+                    selectAll.attr('checked', true);
+                    selectAll.parent().addClass('multiOptionRowChecked');
+                }
+
+            })
+        }
+
+        selectAllCheckOrNot();
+
+
+
+    	//Multi Select Area width
+    	function multiSelectAreaSet(){
+            var bestWidth = 1380;
+
+            if ($("#costReportsPage").length > 0) {
+                bestWidth = 1340;
+            }
+
+    		var width = $(window).width();
+    		if($('.filterContainer').length>0){
+    			if(width < bestWidth){
+    				$('.filterContainer').removeClass('filterContainer1400');
+    			}else{
+    				$('.filterContainer').addClass('filterContainer1400');
+    			}
+    			$('.rightFilterContent').width($('.filterContainer').width()-$('.leftFilterContent').width());
+    		}
+    	}
+
+    	//resize Multi Select Area width
+    	$(window).resize(function(){
+    		if($('.filterContainer').length>0){
+    			multiSelectAreaSet();
+    		}
+        }) ;
+
+
+
+    	multiSelectAreaSet();
 
 });
 

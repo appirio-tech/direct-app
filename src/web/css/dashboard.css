@@ -30,7 +30,12 @@
  * - Add css styles for the new create project button in the right sidebar
  *
  * - (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar)
- * - Add css styles for filter panel */
+ * - Add css styles for datatables filter panel
+ *
+ * - (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) updates:
+ * - Add css styles for reports filter panel
+ */
+
 
 BODY#page{
 	margin: 0;
@@ -605,11 +610,10 @@ BODY#page{
 	float:right;
 	font-size: 12px;
 	padding: 5px 10px 5px 10px;
-	background-color: #F8F8F8;
-	border:1px solid #ccc;
 	position:relative;
 	top:-30px
 }
+
 
 #area1 H2.contestTitle{
 	background: no-repeat left center;
@@ -4514,7 +4518,7 @@ hr.plain {
 
 .pipelineSearch LABEL {
     font-weight: bold;
-    padding-right: 6px;
+    padding-right: 0px;
     padding-top: 2px;
     font-size: 12px;
 }
@@ -7173,189 +7177,7 @@ div.rightColumn .activity TABLE {
     font-size:12px;
     color:#333333;
 }
-/* .filterTitle */
-.filterTitle{
-    height:36px;
-    padding-left:4px;
-    background:url(../images/bg-newbox-header.png) left top no-repeat;
-    overflow:hidden;
-}
-.filterTitle .filterTitleRight{
-    height:36px;
-    padding-right:4px;
-    background:url(../images/bg-newbox-header.png) right -72px no-repeat;
-}
-    .filterTitle .filterTitleCenter{
-        height:36px;
-        background:url(../images/bg-newbox-header.png) left -36px repeat-x;
-    }
-.filterTitleCollapsed{
-    background-position:left -108px;
-}
-    .filterTitleCollapsed .filterTitleRight{
-        background-position:right -144px;
-    }
-.filterTitle .expanded{
-    float:left;
-    height:21px;
-    width:21px;
-    margin-left:4px;
-    margin-top:8px;
-    background:url(../images/icon-new-expand.png) left top no-repeat;
-    display:inline;
-    overflow:hidden;
-}
-.filterTitle .collapsed{
-    background-position:left -21px;
-}
-.filterTitle h4{
-    float:left;
-    min-height:10px;
-    line-height:36px;
-    margin-left:9px;
-    display:inline;
-    font-weight:normal;
-    font-size:12px;
-}
 
-/* .filterContainer */
-.filterContainer{
-    border:1px solid #bdbdbd;
-    border-top-width:0;
-    padding:13px 19px;
-    min-height:10px;
-    overflow:hidden;
-}
-
-.filterContainer .leftFilterContent{
-        float:left;
-        width:192px;
-        display:inline;
- }     
- .filterContainer .filterRow{
-     min-height:10px;
-     padding-bottom:19px;
-     float:left;
-     min-width:186px;
-     display:inline;
- }     
- .filterContainer #datefilter label{
-     width:42px;
-     line-height:22px;
-     font-weight:bold;
- }
- .filterContainer #datefilter .text{
-     width:100px;
-     color:#6c6c6c;
-     font-size:12px;
-     height:20px;
-     line-height:20px;
-     border:1px solid #BDBDBD;
-     padding:0 6px;
-     font-family:Arial, Helvetica, sans-serif;
- }
- .filterContainer #pipelineDataFilter .filterRowLeft{
-     width:112px;
-     line-height:22px;
-     font-weight:bold;
-     float:left;
-     display:inline;
- }
- .filterContainer #pipelineDataFilter .text{
-     float:left;
-     display:inline;
-     width:58px;
-     color:#6c6c6c;
-     font-size:12px;
-     height:20px;
-     line-height:20px;
-     border:1px solid #BDBDBD;
-     padding:0 6px;
-     font-family:Arial, Helvetica, sans-serif;
- }
- .filterContainer #pipelineDataFilter .checkbox{
-     float:left;
-     width:13px;
-     height:13px;
-     margin-top:4px;
-     display:inline;
- }
- .filterContainer #pipelineDataFilter select{
-     font-family:Arial, Helvetica, sans-serif;
-     font-size:11px;
-     color:#000001;
-     width:100px;
- }
-            
- .filterContainer .rightFilterContent{
-     float:right;
-     width:564px;
-     display:inline;
-     margin-top:-2px;
- }
- .multiSelectArea{
-     float:left;
-     width:33.3%;
-     display:inline;
- }
- .multiSelectArea .multiSelectAreaInner{
-     float:right;
-     width:165px;
-     display:inline;
- }
- .multiSelectArea label.multiSelectAreaTitle{
-     font-size:12px;
-     font-weight:bold;
-     color:#333333;
-     padding-bottom:12px;
-     display:block;
- }
- .multiSelectArea .multiSelectBox{
-     width:163px;
-     height:126px;
-     border:1px solid #bdbdbd;
-     overflow:scroll;
-     background-color:#fffffc;
- }
- .multiSelectArea .multiSelectBox .multiOptionRow{
-     clear:left;
-     padding-left:5px;
-     min-height:13px;
-     padding-top:4px;
-     padding-bottom:4px;
-     width:141px;
- }
- .multiSelectArea .multiSelectBox .multiOptionRowChecked{
-     background-color:#dee7f7;
- }
- .multiSelectArea .multiSelectBox input{
-     width:13px;
-     height:13px;
-     float:left;
-     display:inline;
- }
- .multiSelectArea .multiSelectBox label{
-     float:left;
-     width:122px;
-     padding-left:5px;
-     display:inline;
-     line-height:13px;
-     white-space:nowrap;
-     overflow:hidden;
-     font-weight:bold;
-     cursor:pointer;
- }
-                    
-  .applyButtonBox{
-      padding-top:15px;
-      min-height:10px;
-  }
-        
- .applyButtonBox .button6{
-     font-size:11px;
-     font-weight:bold;
-     margin-right:0;
- }
 
 .solveProblem{
 	margin-right:10px;
@@ -7447,3 +7269,765 @@ P.billingAccountArchive {
 P.billingAccountArchive A {
     text-decoration: underline;
 }
+
+/** Reports new filter section **/
+.clearFix {
+    clear: both !important;
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* Report select box */
+#area1 .select {
+    float: right;
+    margin-top: -38px;
+    display: inline;
+}
+
+#area1 .select select {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000001;
+}
+
+#area1 .select .selectInnerBox {
+    position: relative;
+    height: 36px;
+    font-size: 12px;
+    color: #333333;
+}
+
+#area1 .select .selectInnerBox .selectInner {
+    height: 34px;
+    border: 1px solid #bdbdbd;
+}
+
+#area1 .select .selectInnerBox .selectInner label {
+    height: 34px;
+    line-height: 34px;
+    border-right: 1px solid #bdbdbd;
+    background: url(../images/bg-report.png) left top repeat-x;
+    float: left;
+    width: auto;
+    display: inline;
+    padding-left: 12px;
+    padding-right: 16px;
+    font-weight: bold;
+}
+
+#area1 .select .selectInnerBox .selectInner .settingPanel {
+    float: left;
+    width: auto;
+    display: inline;
+    height: 26px;
+    padding: 8px 20px 0px;
+}
+
+#area1 .select .selectInnerBox .selectInner .settingPanel select {
+    float: left;
+    width: 120px;
+    display: inline;
+}
+
+#area1 .select .selectInnerBox .corner {
+    display: block;
+    width: 3px;
+    height: 3px;
+    overflow: hidden;
+    position: absolute;
+    background-image: url(../images/corner-report.gif);
+}
+
+#area1 .select .selectInnerBox .tl {
+    left: 0;
+    top: 0;
+    background-position: left top;
+}
+
+#area1 .select .selectInnerBox .tr {
+    right: 0;
+    top: 0;
+    background-position: -3px top;
+}
+
+#area1 .select .selectInnerBox .bl {
+    left: 0;
+    bottom: 0;
+    background-position: left -3px;
+}
+
+#area1 .select .selectInnerBox .br {
+    right: 0;
+    bottom: 0;
+    background-position: -3px -3px;
+}
+
+/* pipelineReports Page */
+/* .pipelineFilter */
+.pipelineFilter {
+    margin-top: 3px;
+    min-height: 10px;
+    font-size: 12px;
+    color: #333333;
+}
+
+/* .filterTitle */
+.filterTitle {
+    height: 36px;
+    padding-left: 4px;
+    background: url(../images/bg-newbox-header.png) left top no-repeat;
+    overflow: hidden;
+}
+
+.filterTitle .filterTitleRight {
+    height: 36px;
+    padding-right: 4px;
+    background: url(../images/bg-newbox-header.png) right -72px no-repeat;
+}
+
+.filterTitle .filterTitleCenter {
+    height: 36px;
+    background: url(../images/bg-newbox-header.png) left -36px repeat-x;
+}
+
+.filterTitleCollapsed {
+    background-position: left -108px;
+}
+
+.filterTitleCollapsed .filterTitleRight {
+    background-position: right -144px;
+}
+
+.filterTitle .expanded {
+    float: left;
+    height: 21px;
+    width: 21px;
+    margin-left: 4px;
+    margin-top: 8px;
+    background: url(../images/icon-new-expand.png) left top no-repeat;
+    display: inline;
+    overflow: hidden;
+}
+
+.filterTitle .collapsed {
+    background-position: left -21px;
+}
+
+.filterTitle h4 {
+    float: left;
+    min-height: 10px;
+    line-height: 36px;
+    margin-left: 9px;
+    display: inline;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+/* .filterContainer */
+.filterContainer {
+    border: 1px solid #bdbdbd;
+    border-top-width: 0;
+    padding: 13px 19px;
+    min-height: 10px;
+    overflow: hidden;
+}
+
+.filterContainer .leftFilterContent {
+    float: left;
+    width: 192px;
+    display: inline;
+}
+
+.filterContainer .filterRow {
+    min-height: 10px;
+    padding-bottom: 10px;
+    float: left;
+    min-width: 186px;
+    display: inline;
+}
+
+.filterContainer #datefilter label {
+    width: 42px;
+    line-height: 22px;
+    font-weight: bold;
+}
+
+.filterContainer #datefilter .text {
+    width: 100px;
+    color: #6c6c6c;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid #BDBDBD;
+    padding: 0 6px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.filterContainer #pipelineDataFilter .filterRowLeft {
+    /*width:112px;*/
+    line-height: 22px;
+    font-weight: bold;
+    float: left;
+    display: inline;
+    width:auto;
+}
+
+.filterContainer #pipelineDataFilter .text {
+    /*float:left;*/
+    display: inline;
+    width: 56px;
+    color: #6c6c6c;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    border: 1px solid #BDBDBD;
+    padding: 0 6px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.filterContainer #pipelineDataFilter .checkbox {
+    float: left;
+    width: 13px;
+    height: 13px;
+    margin-top: 4px;
+    display: inline;
+    margin-left: 10px;
+}
+
+.filterContainer #pipelineDataFilter select {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000001;
+    width: 94px;
+    margin-left: 2px;
+    margin-top: 3px;
+}
+
+.filterContainer .rightFilterContent {
+    float: right;
+    width: 564px;
+    display: inline;
+    margin-top: -2px;
+}
+
+.multiSelectArea {
+    float: left;
+    width: 33.3%;
+    display: inline;
+}
+
+.multiSelectArea .multiSelectAreaInner {
+    float: right;
+    width: 165px;
+    display: inline;
+}
+
+.multiSelectArea label.multiSelectAreaTitle {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333333;
+    padding-bottom: 12px;
+    display: block;
+}
+
+.multiSelectArea .multiSelectBox {
+    width: 163px;
+    height: 126px;
+    border: 1px solid #bdbdbd;
+    overflow: scroll;
+    background-color: #fffffc;
+}
+
+.multiSelectArea .multiSelectBox .multiOptionRow {
+    clear: left;
+    padding-left: 5px;
+    min-height: 13px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: 141px;
+}
+
+.multiSelectArea .multiSelectBox .multiOptionRowChecked {
+    background-color: #dee7f7;
+}
+
+.multiSelectArea .multiSelectBox input {
+    width: 13px;
+    height: 13px;
+    float: left;
+    display: inline;
+}
+
+.multiSelectArea .multiSelectBox label {
+    float: left;
+    width: 122px;
+    padding-left: 5px;
+    display: inline;
+    line-height: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.applyButtonBox {
+    padding-top: 15px;
+    min-height: 10px;
+}
+
+.applyButtonBox .button6 {
+    font-size: 11px;
+    font-weight: bold;
+    margin-right: 0;
+}
+
+#pipelineReportsPage .filterContainer1400 .leftFilterContent {
+    width: 414px;
+    overflow: visible;
+}
+
+#pipelineReportsPage .filterContainer1400 #datefilter label {
+    line-height: 15px;
+    padding-bottom: 14px;
+    width: 190px;
+}
+
+#pipelineReportsPage .filterContainer1400 #datefilter input.text {
+    clear: left;
+    width: 154px;
+    float: left;
+}
+
+#pipelineReportsPage .filterContainer1400 #datefilter .firstFilterRow,
+#pipelineReportsPage .filterContainer1400 #pipelineDataFilter .firstFilterRow {
+    width: 214px;
+}
+
+#pipelineReportsPage .filterContainer1400 #pipelineDataFilter .adjustFilterRow .filterRowLeft {
+    line-height: 22px;
+    height: 18px;
+    /*padding-bottom:16px;*/
+}
+
+#pipelineReportsPage .filterContainer1400 #pipelineDataFilter .adjustFilterRow  .filterRowLeft select {
+    width: 126px;
+}
+
+#pipelineReportsPage .filterContainer1400 #pipelineDataFilter span.to {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#pipelineReportsPage .filterContainer1400 #pipelineDataFilter input.text {
+    clear: left;
+    width: 151px;
+}
+
+#pipelineReportsPage .filterContainer1400 #pipelineDataFilter input.text2 {
+    width: 171px !important;
+}
+
+#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectAreaInner {
+    width: 176px;
+}
+
+#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox {
+    width: 174px;
+}
+
+#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow {
+    width: 152px;
+}
+
+#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox label {
+    width: 133px;
+}
+
+/* costDetails Page and costReports Page */
+#costReportsPage {
+    margin-bottom: 15px;
+}
+
+#costReportsPage .filterContainer {
+    position: relative;
+}
+
+#costReportsPage .filterContainer .filterProject {
+    position: absolute;
+    left: 19px;
+    top: 8px;
+    width: 414px;
+    min-height: 10px;
+    z-index: 99;
+}
+
+#costReportsPage .filterContainer .leftFilterContent {
+    width: 200px;
+}
+
+#costReportsPage .filterContainer .filterProject label {
+    line-height: 22px;
+    font-weight: bold;
+    padding-bottom: 8px;
+    display: block;
+}
+
+#costReportsPage .filterContainer #customerFilter select,
+#costReportsPage .filterContainer #projectFilter select {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000001;
+    width: 414px;
+}
+
+#costReportsPage .filterContainer #datefilter .filterRow {
+    width: 200px;
+    padding-top: 5px;
+}
+
+#costReportsPage .filterContainer .filterRow {
+    padding-bottom: 16px;
+}
+
+#costReportsPage .filterContainer #datefilter .firstFilterRow {
+    padding-bottom: 18px;
+}
+
+#costReportsPage .filterContainer #datefilter .text {
+    width: 112px;
+}
+
+#costReportsPage .filterContainer #customerFilter .filterRowLeft,
+#costReportsPage .filterContainer #projectFilter .filterRowLeft {
+    width: 180px;
+    line-height: 22px;
+    font-weight: bold;
+    padding-bottom: 8px;
+    display: block;
+}
+
+#costReportsPage .filterContainer #customerFilter select {
+    width: 198px;
+}
+
+#costReportsPage .filterContainer #projectFilter select {
+    width: 260px;
+}
+
+#costReportsPage .multiSelectArea {
+    width: 49.9%;
+}
+
+#costReportsPage .multiSelectArea .multiSelectAreaInner {
+    width: 255px;
+}
+
+#costReportsPage .multiSelectArea .multiSelectBox {
+    width: 253px;
+    height: 240px;
+}
+
+#costReportsPage .multiSelectArea .multiSelectBox .multiOptionRow {
+    width: 231px;
+}
+
+#costReportsPage .multiSelectArea .multiSelectBox  label {
+    width: 200px;
+}
+
+#costReportsPage a.button6 span.right {
+    padding: 4px 27px 0px;
+}
+
+#costReportsPage .filterContainer1400 .leftFilterContent {
+    width: 414px;
+}
+
+#costReportsPage .filterContainer1400 #datefilter .filterRow {
+    padding-bottom: 18px;
+    padding-top: 5px;
+}
+
+#costReportsPage .filterContainer1400 #customerFilter .filterRowLeft,
+#costReportsPage .filterContainer1400 #projectFilter .filterRowLeft {
+    padding-bottom: 10px;
+}
+
+#costReportsPage .filterContainer1400 #datefilter .firstFilterRow,
+#costReportsPage .filterContainer1400 #customerFilter .firstFilterRow,
+#costReportsPage .filterContainer1400 #projectFilter .firstFilterRow {
+    width: 214px;
+}
+
+#costReportsPage .filterContainer1400 #projectFilter select {
+    width: 412px;
+}
+
+#costReportsPage .filterContainer1400 .multiSelectArea .multiSelectAreaInner {
+    width: 280px;
+}
+
+#costReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox {
+    width: 278px;
+    height: 135px;
+}
+
+#costReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow {
+    width: 256px;
+}
+
+#costReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow label {
+    width: 233px;
+}
+
+/* costDetails Page new icon and some repair */
+#costDetails th.viewType {
+    display: table-cell !important;
+}
+
+#costDetails th.viewType a {
+    float: right;
+    width: 21px;
+    height: 21px;
+    display: inline;
+    text-indent: -9999px;
+    overflow: hidden;
+    background: url(/images/view-cost-icon-default.png) left top no-repeat;
+}
+
+#costDetails th.viewType .viewBtnCostBreakdown {
+    background: url(/images/view-cost-icon-breakdown.png) left top no-repeat;
+}
+
+#costDetails th.viewType a:hover {
+    background-position: left -21px;
+}
+
+#costDetails th.viewType .current {
+    background-position: left -21px;
+}
+
+TABLE.pipelineStats TH.tableTitle .expand {
+    float: left;
+    display: inline;
+}
+
+TABLE.pipelineStats TH.tableTitle span {
+    padding-top: 0;
+    float: left;
+    vertical-align: baseline;
+    height: 32px;
+    line-height: 32px;
+    display: inline;
+}
+
+#costDetails_info {
+    padding-top: 10px;
+    padding-left: 8px;
+}
+
+.showPages select {
+    margin-top: 6px;
+}
+
+/* billingCostReports Page */
+#billingCostReportsPage .filterContainer {
+    position: relative;
+}
+
+#billingCostReportsPage .filterContainer .filterProject {
+    position: absolute;
+    left: 19px;
+    top: 8px;
+    width: 414px;
+    min-height: 10px;
+    z-index: 99;
+}
+
+#billingCostReportsPage .filterContainer .leftFilterContent {
+    width: 295px;
+    position: relative;
+}
+
+#billingCostReportsPage .filterContainer #customerFilter select,
+#billingCostReportsPage .filterContainer #projectFilter select,
+#billingCostReportsPage .filterContainer #contestfilter input {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000001;
+}
+
+#billingCostReportsPage .filterContainer #customerFilter select {
+    width: 198px;
+}
+
+#billingCostReportsPage .filterContainer #projectFilter select {
+    width: 295px;
+}
+
+#billingCostReportsPage .filterContainer #datefilter .filterRow {
+    width: 200px;
+    padding-top: 5px;
+}
+
+#billingCostReportsPage .filterContainer .filterRow {
+    padding-bottom: 16px;
+}
+
+#billingCostReportsPage .filterContainer #datefilter .firstFilterRow {
+    padding-bottom: 18px;
+}
+
+#billingCostReportsPage .filterContainer #datefilter .text {
+    width: 112px;
+}
+
+#billingCostReportsPage .filterContainer #customerFilter .filterRowLeft,
+#billingCostReportsPage .filterContainer #projectFilter .filterRowLeft,
+#billingCostReportsPage .filterContainer #contestfilter .filterRowLeft {
+    width: 180px;
+    line-height: 22px;
+    font-weight: bold;
+    padding-bottom: 8px;
+    display: block;
+}
+
+#billingCostReportsPage .filterContainer #contestfilter {
+    position: absolute;
+    top: 65px;
+    right: 3px;
+}
+
+@-moz-document url-prefix(){	/* firefox hack */
+			#billingCostReportsPage .filterContainer #contestfilter{
+				top:62px;
+			}
+		}
+#billingCostReportsPage .filterContainer #contestfilter .filterRow {
+    min-width: 70px;
+    width: 70px;
+}
+
+#billingCostReportsPage .filterContainer #contestfilter input {
+    width: 70px;
+}
+
+#billingCostReportsPage .multiSelectArea {
+    width: 33.3%;
+}
+
+#billingCostReportsPage .multiSelectArea .multiSelectAreaInner {
+    width: 165px;
+}
+
+#billingCostReportsPage .multiSelectArea .multiSelectBox {
+    width: 163px;
+    height: 240px;
+}
+
+#billingCostReportsPage .multiSelectArea .multiSelectBox .multiOptionRow {
+    width: 141px;
+}
+
+#billingCostReportsPage .multiSelectArea .multiSelectBox  label {
+    width: 122px;
+}
+
+#billingCostReportsPage a.button6 span.right {
+    padding: 4px 27px 0px;
+}
+
+#billingCostReportsPage .filterContainer1400 .leftFilterContent {
+    width: 414px;
+}
+
+#billingCostReportsPage .filterContainer1400 #datefilter .filterRow {
+    padding-bottom: 18px;
+    padding-top: 5px;
+}
+
+#billingCostReportsPage .filterContainer1400 #customerFilter .filterRowLeft,
+#billingCostReportsPage .filterContainer1400 #projectFilter .filterRowLeft {
+    padding-bottom: 10px;
+}
+
+#billingCostReportsPage .filterContainer1400 #datefilter .firstFilterRow,
+#billingCostReportsPage .filterContainer1400 #customerFilter .firstFilterRow,
+#billingCostReportsPage .filterContainer1400 #projectFilter .firstFilterRow {
+    width: 214px;
+}
+
+#billingCostReportsPage .filterContainer1400 #contestfilter {
+    top: 69px;
+}
+
+@-moz-document url-prefix(){	/* firefox hack */
+					#billingCostReportsPage .filterContainer1400 #contestfilter{
+						top:66px;
+					}
+				}
+#billingCostReportsPage .filterContainer1400 #contestfilter .filterRow {
+    min-width: 100px;
+    width: 100px;
+}
+
+#billingCostReportsPage .filterContainer1400 #contestfilter input {
+    width: 100px;
+}
+
+#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectAreaInner {
+    width: 176px;
+}
+
+#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox {
+    width: 174px;
+    height: 137px;
+}
+
+#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow {
+    width: 152px;
+}
+
+#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox  label {
+    width: 133px;
+}
+
+.pipelineFilter #customerFilter, .pipelineFilter #projectNameFilter, .pipelineSearch #customerFilter, .pipelineSearch #projectNameFilter {
+    width: auto;
+}
+
+#billingCostReportsPage .filterContainer #contestfilter #contestIDFilter.filterRowLeft {
+    width:64px;
+}
+
+#billingCostReportSearchBar {
+    padding-top:30px;
+}
+
+#pipelineReportsPage a.dp-choose-date {
+    margin-right:0px;
+}
+
+#pipelineReportArea {
+    margin-top:30px;
+}
+
+#pipelineReportsPage fieldset
+{
+     border: 0px solid #000000;
+}
+
+#content.pipelineReportContent {
+    min-width:1100px;
+}
+
+#content.costReportContent {
+    min-width:1200px;
+}
+
+#content.billingCostReportContent {
+    min-width:1180px;
+}
+

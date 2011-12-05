@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, GreatKevin
-  - Version: 1.4
+  - Author: Blues, GreatKevin, TCSASSEMBLER
+  - Version: 1.5
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
@@ -12,7 +12,12 @@
   - Version 1.3 (TC Accounting Tracking Invoiced Payments) changes: Display the processed columns in "Billing Cost Detail" table.
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
-  - - Add the search bar for billing cost report table.--%>
+  - - Add the search bar for billing cost report table.
+  -
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) changes:
+  - - Update the filter panel of billing cost report to the new one.
+  -
+  --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -40,7 +45,7 @@
 <div id="wrapper">
 <div id="wrapperInner">
 <div id="container">
-<div id="content">
+<div id="content" class="billingCostReportContent">
 
 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
@@ -57,109 +62,214 @@
 </jsp:include>
 
 <%-- cost report form --%>
-<div class="pipelineSearch">
+
+<div class="pipelineFilter" id="billingCostReportsPage">
+
+	<!-- .filterTitle -->
+	<div class="filterTitle">
+		<div class="filterTitleRight">
+			<div class="filterTitleCenter">
+				<a href="javascript:;" class="expanded"></a>
+				<h4>Filter</h4>
+			</div><!-- End .filterTitleCenter -->
+		</div><!-- End .filterTitleRight -->
+	</div>
+	<!-- End .filterTitle -->
+
+	<!-- .filterContainer -->
     <s:form method="get" action="dashboardGetBillingCostReport" namespace="/"
-            id="dashboardBillingCostReportForm">
-        <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
-        <div id="costReportFilters" class="filterLinkArea">
-          <div id="costReportFilterShowControl">
-            <a class="fiterButton" href="javascript:">Filters</a>
-          </div>
+               id="dashboardBillingCostReportForm">
+	<div class="filterContainer">
 
-            <div class="filterArea">
+		<!-- .leftFilterContent -->
+		<div class="leftFilterContent">
+			<input type="hidden" name="formData.excel" value="false" id="formDataExcel"/>
 
-                <div class="filterProject">
-                    <span class="label">Project Name </span>
+			<div id="customerFilter">
+
+				<div class="filterRow firstFilterRow">
+					<div class="filterRowLeft">
+						<label for="formData.customerId">Customer Name:</label>
+					</div>
+                    <s:select list="viewData.clientAccounts" id="formData.customerId"
+                              name="formData.customerId" size="1"/>
+
+					<div class="clearFix"></div>
+				</div><!-- end .filterRow -->
+
+				<div class="filterRow">
+					<div class="filterRowLeft">
+						<label for="formData.billingAccountIds">Billing Account:</label>
+					</div>
+                    <s:select list="viewData.clientBillingProjects"
+                              id="formData.billingAccountId"
+                              name="formData.billingAccountId" size="1"/>
+					<div class="clearFix"></div>
+
+				</div><!-- end .filterRow -->
+
+			</div><!-- end .customerFilter -->
+
+			<div id="projectFilter">
+
+				<div class="filterRow firstFilterRow">
+					<div class="filterRowLeft">
+						<label>Project Name:</label>
+					</div>
                     <s:select list="viewData.projectsLookupMap" name="formData.projectId"
                               id="formData.projectId"/>
-                </div>
+					<div class="clearFix"></div>
+				</div><!-- end .filterRow -->
 
-                <div class="firstRow">
-                    <div class="datePicker">
-                        <div class="columns contestType">
-                            <strong>Payment Date</strong><br/>
-                            <div>
-                                <span class="label">Start: </span>
-                                <s:textfield name="formData.startDate" readonly="true"
-                                             id="startDateCostReport"
-                                             cssClass="text date-pick"/>
+			</div><!-- end .projectfilter -->
+
+			<div id="datefilter">
+
+				<div class="filterRow firstFilterRow">
+					<label for="startDate" class="fLeft">Start:</label>
+                    <s:textfield name="formData.startDate" readonly="true"
+                                 id="startDateCostReport"
+                                 cssClass="text fLeft date-pick"/>
+					<div class="clearFix"></div>
+				</div><!-- end .filterRow -->
+
+				<div class="filterRow">
+					<label for="endDate" class="fLeft">End:</label>
+                    <s:textfield name="formData.endDate" readonly="true"
+                                 id="endDateCostReport" cssClass="text fLeft date-pick"/>
+					<div class="clearFix"></div>
+				</div><!-- end .filterRow -->
+
+			</div><!-- end .datefilter -->
+
+			<div id="contestfilter">
+
+				<div class="filterRow">
+					<div class="filterRowLeft" id="contestIDFilter">
+						<label>Contest ID:</label>
+					</div>
+                    <s:textfield id="formData.contestId" name="formData.contestId"  cssClass="text"/>
+					<div class="clearFix"></div>
+				</div><!-- end .filterRow -->
+
+			</div><!-- end .contestfilter -->
+
+		</div>
+		<!-- end .leftFilterContent -->
+
+		<!-- .rightFilterContent -->
+		<div class="rightFilterContent">
+
+            <div class="multiSelectArea">
+                <div class="multiSelectAreaInner">
+                    <label class="multiSelectAreaTitle">Status:</label>
+
+                    <div class="multiSelectBox">
+                        <div class="multiOptionRow multiOptionRowChecked">
+                            <input type="checkbox" checked="checked" id="StatusSelectAll"
+                                   name="StatusSelectAll" class="optionAll"/>
+                            <label for="StatusSelectAll" title="Select All">Select All</label>
+                        </div>
+
+                        <s:iterator value='viewData.contestStatus' status='s'>
+                            <s:set name='needCheck' value='false'/>
+                            <s:iterator value='formData.statusIds' var="statusId">
+                                <s:if test="#statusId == key.longValue()"><s:set name='needCheck' value='true'/></s:if>
+                            </s:iterator>
+                            <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                <input type="checkbox" <s:if test='#needCheck'>checked="checked"</s:if> id="StatusSelectCheckBox${s.index}" class="optionItem" name="formData.statusIds" value="${key}"/>
+                                <label for="StatusSelectCheckBox${s.index}" title="${value}">${value}</label>
                             </div>
-                            <div>
-                                <span class="label">End: </span>
-                                <s:textfield name="formData.endDate" readonly="true"
-                                             id="endDateCostReport" cssClass="text date-pick"/>
-                            </div>
-                            <s:if test="hasActionErrors()">
-                                <div id="validationErrors">
-                                    <s:actionerror/>
-                                </div>
-                            </s:if>
-                         </div>
-                    </div>
-
-                    <div class="timeDimension">
-                        <div class="columns contestType">
-                            <strong>Contest Status</strong><br/>
-                            <s:select list="viewData.contestStatus" multiple="true"
-                                      cssClass="multiselect"
-                                      id="formData.statusIds"
-                                      name="formData.statusIds" size="3"/>
-                        </div>
-                    </div>
-
-                    <div class="timeDimension">
-                        <div class="columns contestType">
-                            <strong>Contest ID</strong><br/>
-                            <s:textfield id="formData.contestId" name="formData.contestId"/>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="spacer"></div>
-                <div class="secondRow">
-                    <div class="filterContest">
-                        <div class="columns paymentType">
-                            <strong>Payment Type</strong><br/>
-                            <s:select list="viewData.paymentTypes" multiple="true"
-                                      cssClass="multiselect"
-                                      id="formData.paymentTypeIds"
-                                      name="formData.paymentTypeIds" size="3"/>
-                        </div>
-                        <div class="columns contestType">
-                            <strong>Contest Type</strong><br/>
-                            <s:select list="viewData.projectCategories" multiple="true"
-                                      cssClass="multiselect"
-                                      id="formData.projectCategoryIds"
-                                      name="formData.projectCategoryIds" size="5"/>
-                        </div>
-
-                        <div class="columns" id="customerNameFilter">
-                            <strong>Customer Name</strong><br/>
-                            <s:select list="viewData.clientAccounts" id="formData.customerId"
-                                      name="formData.customerId" size="1"/>
-                        </div>
-
-                        <div class="columns" id="clientBillingProjectsFilter">
-                            <strong>Billing Account</strong><br/>
-                            <s:select list="viewData.clientBillingProjects"
-                                      id="formData.billingAccountId"
-                                      name="formData.billingAccountId" size="1"/>
-                        </div>
-
-                        <div class="columns columnButton">
-                            <a class="button6 applyButton" href="javascript:"
-                               id="costReportSubmit">
-                                <span class="left"><span class="right">Apply</span></span>
-                            </a>
-                        </div>
+                        </s:iterator>
 
                     </div>
                 </div>
             </div>
-            <!-- End .filterArea -->
-        </div>
-    </s:form>
+			<!-- end .multiSelectArea -->
+
+            <div class="multiSelectArea">
+                <div class="multiSelectAreaInner">
+                    <label class="multiSelectAreaTitle">Contest Type:</label>
+
+                    <div class="multiSelectBox">
+                        <div class="multiOptionRow multiOptionRowChecked">
+                            <input type="checkbox" checked="checked" id="ContestTypeSelectAll"
+                                   name="ContestTypeSelectAll" class="optionAll"/>
+                            <label for="ContestTypeSelectAll" title="Select All">Select All</label>
+                        </div>
+
+                        <s:iterator value='viewData.projectCategories' status='c'>
+                            <s:set name='needCheck' value='false'/>
+                            <s:iterator value='formData.projectCategoryIds' var="cateogryId">
+                                <s:if test="#cateogryId == key.longValue()"><s:set name='needCheck'
+                                                                                   value='true'/></s:if>
+                            </s:iterator>
+                            <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                <input type="checkbox"
+                                       <s:if test='#needCheck'>checked="checked"</s:if>
+                                       id="ProjectTypeCheckBox${c.index}" class="optionItem"
+                                       name="formData.projectCategoryIds" value="${key}"/>
+                                <label for="ProjectTypeCheckBox${c.index}" title="${value}">${value}</label>
+                            </div>
+                        </s:iterator>
+                    </div>
+                </div>
+            </div>
+			<!-- end .multiSelectArea -->
+
+			<div class="multiSelectArea">
+				<div class="multiSelectAreaInner">
+					<label class="multiSelectAreaTitle">Payment Type:</label>
+
+                    <div class="multiSelectBox">
+                        <div class="multiOptionRow multiOptionRowChecked">
+                            <input type="checkbox" checked="checked" id="PaymentTypeSelectAll"
+                                   name="PaymentTypeSelectAll" class="optionAll"/>
+                            <label for="PaymentTypeSelectAll" title="Select All">Select All</label>
+                        </div>
+
+                        <s:iterator value='viewData.paymentTypes' status='p'>
+                            <s:set name='needCheck' value='false'/>
+                            <s:iterator value='formData.paymentTypeIds' var="paymentTypeId">
+                                <s:if test="#paymentTypeId == key.longValue()"><s:set name='needCheck'
+                                                                                   value='true'/></s:if>
+                            </s:iterator>
+                            <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                <input type="checkbox"
+                                       <s:if test='#needCheck'>checked="checked"</s:if>
+                                       id="PaymentTypeSelectCheckBox${p.index}" class="optionItem"
+                                       name="formData.paymentTypeIds" value="${key}"/>
+                                <label for="PaymentTypeSelectCheckBox${p.index}" title="${value}">${value}</label>
+                            </div>
+                        </s:iterator>
+                    </div>
+			</div>
+			<!-- end .multiSelectArea -->
+
+			<div class="clearFix"></div>
+
+			<div class="applyButtonBox">
+				<a class="button6 applyButton" href="javascript:" id="costReportSubmit"><span class="left"><span class="right">APPLY</span></span></a>
+			</div>
+			<!-- end .applyButtonBox -->
+
+		</div>
+		<!-- end .rightFilterContent -->
+		<div class="clearFix"></div>
+
+	</div>
+
+          <s:if test="hasActionErrors()">
+                                <div id="validationErrors">
+                                    <s:actionerror/>
+                                </div>
+           </s:if>
+    </div>
+   </s:form>
+	<!-- End .filterContainer -->
+
 </div>
+
 
 <c:if test="${not viewData.showJustForm}">
 
@@ -339,6 +449,7 @@
 </div>
 </div>
 
+</div>
 </div>
 <!-- End #mainContent -->
 

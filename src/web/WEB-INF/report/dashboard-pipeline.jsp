@@ -1,18 +1,22 @@
 <%--
   - Author: isv, TCSASSEMBLER
-  - Version: 1.3
+  - Version: 1.4
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for Pipeline report including form and report data.
   -
   - Version 1.1 (Direct Pipeline Stats Update assembly) change notes: Added "Drafts To Lauched" column to "Launched
   - Contests" section.
+  -
   - Version 1.2 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   -
   - Version 1.2.1 (Release Assembly - TC Direct UI Improvement Assembly 3) changes: Add jsp to show server side validation error
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
   - Add the search bar for pipleline details report
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) changes:
+  - - Updte the filter panel of pipeline report to the new one.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -45,7 +49,7 @@
 <div id="wrapper">
     <div id="wrapperInner">
         <div id="container">
-            <div id="content">
+            <div id="content" class="pipelineReportContent">
 
                 <jsp:include page="/WEB-INF/includes/header.jsp"/>
 
@@ -61,84 +65,231 @@
                                 <jsp:param name="reportTitle" value="Pipeline Report"/>
                             </jsp:include>
 
-                            <%-- Pipeline form --%>
-                            <div class="pipelineSearch">
-                                <s:form method="get" action="dashboardPipelineReport" namespace="/"
-                                        id="DashboardSearchForm">
-                                    <fieldset>
-                                        <input type="hidden" name="ppp"
-                                               value="${empty param.ppp ? '1' : param.ppp}" id="pipelineDetailsPageNumber2"/>
-                                        <s:hidden name="formData.excel" id="formDataExcel" value="false" />
-                                        <div id="datefilter">
-                                            <label for="startDate" class="fLeft">Start:</label>
-                                            <s:textfield cssClass="fLeft text date-pick dp-applied"
-                                                         name="formData.startDate" id="startDate" readonly="true"/>
-                                            <label for="endDate" class="fLeft">End:</label>
-                                            <s:textfield cssClass="fLeft text date-pick dp-applied"
-                                                         name="formData.endDate" id="endDate" readonly="true"/>
-                                        </div>
-                                        <div>
-                                            <span>&nbsp;</span>
-                                        </div>
-                                        <div id="contestFilter">
-                                            <label for="contestType">Contest Type:</label>
-                                            <s:select id="contestType" list="viewData.contestTypeOptions"
-                                                      multiple="true" name="formData.contestTypes" size="5"/>
-                                            <label for="contestStatus">Contest Status:</label>
-                                            <s:select id="contestStatus" list="viewData.contestStatusOptions"
-                                                      multiple="true" name="formData.contestStatuses" size="5"/>
-                                            <label for="clients">Include Clients:</label>
-                                            <s:select id="clients" list="viewData.clients" multiple="true" size="5"
-                                                      name="formData.clients"/>
-                                        </div>
-                                        <div id="pipelineFilter">
-                                            <label for="showReposts">Include Reposts:</label>
-                                            <s:checkbox id="showReposts" name="formData.showReposts"/>
-                                            <label for="numericalFilter">Numerical Filter:</label>
-                                            <s:textfield cssClass="text" name="formData.numericalFilterMinValue"
-                                                         size="10" maxlength="10" id="numericalFilterMinValue"/>
-                                            &lt:=
-                                            <s:select id="numericalFilter" list="viewData.numericalFilterOptions"
-                                                      size="1" name="formData.numericalFilterType"/>
-                                            &lt:=
-                                            <s:textfield cssClass="text" name="formData.numericalFilterMaxValue"
-                                                         size="10" maxlength="10" id="numericalFilterMaxValue"/>
-                                        </div>
-                                        <a href="javascript:" class="button1" id="submitPipelineForm">
-                                            <span>Submit</span></a>
-                                        <div class="clear"></div>
-											<div id="validationErrors">
-                                                <s:actionerror/>
-                                            </div>
-                                        <div>
-                                            <c:forEach items="${formData.numericalFilterTypes}" var="filterType"
-                                                       varStatus="loop">
-                                                <p>
-                                                    <c:out value="${tcdirect:numericalFilterTypeToString(filterType)}"/>
-                                                    Numeric Filter
-                                                    <fmt:formatNumber
-                                                               value="${formData.numericalFilterMinValues[loop.index]}"
-                                                               pattern="##0.##" />
-                                                    &lt;=
-                                                    &nbsp;
-                                                    <c:out value="${tcdirect:numericalFilterTypeToString(filterType)}"/>
-                                                    &nbsp;
-                                                    &lt;= <fmt:formatNumber
-                                                               value="${formData.numericalFilterMaxValues[loop.index]}"
-                                                               pattern="##0.##" />
-                                                    <a href="javascript:" class="removeNumericalFilter">remove filter</a>
-                                                    <input type="hidden" name="formData.numericalFilterTypes"
-                                                           value="${filterType}"/>
-                                                    <input type="hidden" name="formData.numericalFilterMinValues"
-                                                           value="${formData.numericalFilterMinValues[loop.index]}"/>
-                                                    <input type="hidden" name="formData.numericalFilterMaxValues"
-                                                           value="${formData.numericalFilterMaxValues[loop.index]}"/>
-                                                </p>
-                                            </c:forEach>
-                                        </div>
-                                    </fieldset>
-                                </s:form>
+
+                          <div class="pipelineFilter" id="pipelineReportsPage">
+
+                            <div class="filterTitle">
+                                <div class="filterTitleRight">
+                                    <div class="filterTitleCenter">
+                                        <a href="javascript:;" class="expanded"></a>
+                                        <h4>Filter</h4>
+                                    </div>
+                                    <!-- End .filterTitleCenter -->
+                                </div>
+                                <!-- End .filterTitleRight -->
                             </div>
+
+                            <s:form method="get" action="dashboardPipelineReport" namespace="/"
+                                    id="DashboardSearchForm">
+                            <fieldset>
+                            <div class="filterContainer">
+                            <!-- .leftFilterContent -->
+                            <div class="leftFilterContent">
+                                <input type="hidden" name="ppp" value="1" id="pipelineDetailsPageNumber2"/>
+                                <input type="hidden" name="formData.excel" value="false" id="formDataExcel"/>
+
+                                <div id="datefilter">
+
+                                    <div class="filterRow firstFilterRow">
+                                        <label for="startDate" class="fLeft">Start:</label>
+                                        <s:textfield name="formData.startDate" readonly="true"
+                                                     id="startDateCostReport"
+                                                     cssClass="text fLeft date-pick"/>
+
+                                        <div class="clearFix"></div>
+                                    </div>
+                                    <!-- end .filterRow -->
+
+                                    <div class="filterRow">
+                                        <label for="endDate" class="fLeft">End:</label>
+                                        <s:textfield name="formData.endDate" readonly="true"
+                                                     id="endDateCostReport" cssClass="text fLeft date-pick"/>
+
+                                        <div class="clearFix"></div>
+                                    </div>
+                                    <!-- end .filterRow -->
+
+                                </div>
+                                <!-- end .datefilter -->
+
+                                <div id="pipelineDataFilter">
+
+                                    <div class="filterRow">
+                                        <div class="filterRowLeft">
+                                            <label for="showReposts">Include Repost:</label>
+                                        </div>
+                                        <s:checkbox id="showReposts" name="formData.showReposts" cssClass="checkbox"/>
+
+                                        <div class="clearFix"></div>
+                                    </div>
+                                    <!-- end .filterRow -->
+                                    <div class="clearFix"></div>
+
+                                    <div class="filterRow adjustFilterRow firstFilterRow">
+                                        <div class="filterRowLeft">
+                                            <label for="numericalFilterMinValue">Numerical Filter:</label>
+                                        </div>
+                                        <s:select id="numericalFilter" list="viewData.numericalFilterOptions"
+                                                  size="1" name="formData.numericalFilterType"/>
+                                    </div>
+                                    <!-- end .filterRow -->
+                                    <div class="clearFix"></div>
+                                    <div class="filterRow adjustFilterRow">
+                                        From <s:textfield cssClass="text" name="formData.numericalFilterMinValue"
+                                                          size="10" maxlength="10" id="numericalFilterMinValue"/>
+                                        <span class="to">To</span> <s:textfield cssClass="text"
+                                                                                name="formData.numericalFilterMaxValue"
+                                                                                size="10" maxlength="10"
+                                                                                id="numericalFilterMaxValue"/>
+
+                                        <div class="clearFix"></div>
+
+                                    </div>
+                                    <!-- end .filterRow -->
+                                </div>
+
+                                <!-- end .pipelineFilter -->
+                            </div>
+                            <!-- end .leftFilterContent -->
+
+                            <!-- .rightFilterContent -->
+                            <div class="rightFilterContent">
+
+                                <div class="multiSelectArea">
+                                    <div class="multiSelectAreaInner">
+                                        <label class="multiSelectAreaTitle">Contest Type:</label>
+
+                                        <div class="multiSelectBox">
+                                            <div class="multiOptionRow multiOptionRowChecked">
+                                                <input type="checkbox" checked="checked" id="ContestTypeSelectAll"
+                                                       name="ContestTypeSelectAll" class="optionAll"/>
+                                                <label for="ContestTypeSelectAll" title="Select All">Select All</label>
+                                            </div>
+
+                                            <s:iterator value='viewData.contestTypeOptions' status='c'>
+                                                <s:set name='needCheck' value='false'/>
+                                                <s:iterator value='formData.contestTypes' var="contestType">
+                                                    <s:if test="#contestType == key"><s:set name='needCheck' value='true'/></s:if>
+                                                </s:iterator>
+                                                <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                                    <input type="checkbox"
+                                                           <s:if test='#needCheck'>checked="checked"</s:if>
+                                                           id="ProjectTypeCheckBox${c.index}" class="optionItem"
+                                                           name="formData.contestTypes" value="${key}"/>
+                                                    <label for="ProjectTypeCheckBox${c.index}"
+                                                           title="${value}">${value}</label>
+                                                </div>
+                                            </s:iterator>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- end .multiSelectArea -->
+
+                                <div class="multiSelectArea">
+                                    <div class="multiSelectAreaInner">
+                                        <label class="multiSelectAreaTitle">Contest Status:</label>
+
+                                        <div class="multiSelectBox">
+                                           <div class="multiOptionRow multiOptionRowChecked">
+                                                <input type="checkbox" checked="checked" id="ContestStatusSelectAll"
+                                                       name="ContestStatusSelectAll" class="optionAll"/>
+                                                <label for="ContestStatusSelectAll" title="Select All">Select All</label>
+                                            </div>
+
+                                            <s:iterator value='viewData.contestStatusOptions' status='c'>
+                                                <s:set name='needCheck' value='false'/>
+                                                <s:iterator value='formData.contestStatuses' var="contestStatus">
+                                                    <s:if test="#contestStatus == key"><s:set name='needCheck' value='true'/></s:if>
+                                                </s:iterator>
+                                                <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                                    <input type="checkbox"
+                                                           <s:if test='#needCheck'>checked="checked"</s:if>
+                                                           id="StatusSelectCheckBox${c.index}" class="optionItem"
+                                                           name="formData.contestStatuses" value="${key}"/>
+                                                    <label for="StatusSelectCheckBox${c.index}"
+                                                           title="${value}">${value}</label>
+                                                </div>
+                                            </s:iterator>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- end .multiSelectArea -->
+
+                                <div class="multiSelectArea">
+                                    <div class="multiSelectAreaInner">
+                                        <label class="multiSelectAreaTitle">Include Clients:</label>
+
+                                        <div class="multiSelectBox">
+                                           <div class="multiOptionRow multiOptionRowChecked">
+                                                <input type="checkbox" checked="checked" id="ClientSelectAll"
+                                                       name="ClientSelectAll" class="optionAll"/>
+                                                <label for="ClientSelectAll" title="Select All">Select All</label>
+                                            </div>
+
+                                            <s:iterator value='viewData.clients' status='c' var="clientValue">
+                                                <s:set name='needCheck' value='false'/>
+                                                <s:iterator value='formData.clients' var="client">
+                                                    <s:if test="#client == #clientValue"><s:set name='needCheck' value='true'/></s:if>
+                                                </s:iterator>
+                                                <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                                    <input type="checkbox"
+                                                           <s:if test='#needCheck'>checked="checked"</s:if>
+                                                           id="ClientSelectCheckBox${c.index}" class="optionItem"
+                                                           name="formData.clients" value="${clientValue}"/>
+                                                    <label for="ClientSelectCheckBox${c.index}"
+                                                           title="${clientValue}">${clientValue}</label>
+                                                </div>
+                                            </s:iterator>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end .multiSelectArea -->
+                                <div class="clear"></div>
+
+                                <div class="applyButtonBox">
+                                    <a class="button6 applyButton" href="javascript:" id="submitPipelineForm"><span
+                                            class="left"><span class="right">APPLY</span></span></a>
+                                </div>
+                                <!-- end .applyButtonBox -->
+
+                            </div>
+                            <!-- end .rightFilterContent -->
+                            <div class="clearFix"></div>
+                            <div id="validationErrors">
+                                <s:actionerror/>
+                            </div>
+                            <div>
+                                <c:forEach items="${formData.numericalFilterTypes}" var="filterType"
+                                           varStatus="loop">
+                                    <p>
+                                        <c:out value="${tcdirect:numericalFilterTypeToString(filterType)}"/>
+                                        Numeric Filter
+                                        <fmt:formatNumber
+                                                value="${formData.numericalFilterMinValues[loop.index]}"
+                                                pattern="##0.##"/>
+                                        &lt;=
+                                        &nbsp;
+                                        <c:out value="${tcdirect:numericalFilterTypeToString(filterType)}"/>
+                                        &nbsp;
+                                        &lt;= <fmt:formatNumber
+                                            value="${formData.numericalFilterMaxValues[loop.index]}"
+                                            pattern="##0.##"/>
+                                        <a href="javascript:" class="removeNumericalFilter">remove filter</a>
+                                        <input type="hidden" name="formData.numericalFilterTypes"
+                                               value="${filterType}"/>
+                                        <input type="hidden" name="formData.numericalFilterMinValues"
+                                               value="${formData.numericalFilterMinValues[loop.index]}"/>
+                                        <input type="hidden" name="formData.numericalFilterMaxValues"
+                                               value="${formData.numericalFilterMaxValues[loop.index]}"/>
+                                    </p>
+                                </c:forEach>
+                            </div>
+                             </div>
+                            </fieldset>
+                          </div>
+                          </s:form>
 
                             <c:if test="${not viewData.showJustForm}">
 

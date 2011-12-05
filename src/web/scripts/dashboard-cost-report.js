@@ -1,6 +1,6 @@
 /**
- * AUTHOR: Blues, flexme, TCSASSEMBER
- * VERSION: 1.3 (TopCoder Cockpit - Cost Report Assembly)
+ * AUTHOR: Blues, flexme, TCSASSEMBLER
+ * VERSION: 1.4
  *
  * Version 1.1 change: add toggle trigger for billing cost report.
  *
@@ -11,6 +11,9 @@
  * - Change parameter name from projectIds to projectId.
  * - Change parameter name from billingAccountIds to billingAccount.
  * - Change parameter name from customerIds to customerId.
+ *
+ * Version 1.4 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) change log:
+ * - Change the filter panel of cost report to the new one.
  * 
  * Submits the cost report form and trigger cost report excel download.
  */
@@ -24,35 +27,12 @@ $(document).ready(function() {
     // initialize the multiple selection
     $('.multiselect').multiSelect();
 
-    /** hide the filter panel **/
-    hideFilter = function() {
-        $('.filterArea').hide();
-        $('a.fiterButton').css('background-position', 'bottom left');
-    };
-
-    /** show the filter panel **/
-    showFilter = function() {
-        $('.filterArea').show();
-        $('a.fiterButton').css('background-position', 'top left');
-    }
-
     // toggle the selection change for aggregation cost reports
     $('#aggregationCostReportType').change(function() {
         $('.scData').hide();
         $('.' + $(this).val() + 'AggregationCostReport').show();
     });
 
-    /* Toggle Filter collapse/expand */
-    $("a.fiterButton").click(function() {
-        $(".filterContest .contestType a span").css({"width": "165px"});
-        $(".filterContest .contestType div").css({"width": "188px"});
-        if ($('.filterArea').css('display') == 'none') {
-            showFilter();
-        }
-        else {
-            hideFilter();
-        }
-    });
 
     /* Apply button action */
     $('a.applyButton').click(function(event) {
@@ -242,12 +222,12 @@ $(document).ready(function() {
             $("#contestDViewPopup .dashboardTable").css("max-height", hHht-100 + "px"); 
         },
         onClose : function() {
-            $("#costDetailsViewType").val("default");
+            $(".viewBtnDefault").addClass('current');
+            $(".viewBtnCostBreakdown").removeClass('current');
         }
      });
     contestDViewApi =  $("#contestDViewMock").data("overlay");
-    $("#costDetailsViewType").val("default");
-    // a flag indicates whether the cost break down data has been loaded
+   // a flag indicates whether the cost break down data has been loaded
     var breakdownLoaded = false;
 
     /**
@@ -343,56 +323,55 @@ $(document).ready(function() {
         });
     }
 
-    // bind change event to the view type dorpdown
-    $("#costDetailsViewType").change(function() {
-        if ($(this).val() == "breakdown") {
-            if (!breakdownLoaded) {
-                // load the cost breakdown data
-                var tbody = $("#breakdownBody table tbody");
-                tbody.children("tr").remove();
-                $("#breakdownBody table tfoot").remove();
-                var oldval = $("#dataTableLength").val();
-                $("#dataTableLength").val(-1);
-                $("#dataTableLength").trigger("change");
-                var trs = $("#costDetails tbody tr");
-                var projectIds = [];
-                trs.each(function(i) {
-                    var projectId = parseInt($(this).attr("id").substr(8));
-                    if (!isNaN(projectId)) {
-                        projectIds.push(projectId);
-                        var classes = "pipelineDetailsRow";
-                        if (i % 2 == 1) {
-                            classes = "pipelineDetailsRow alt";
-                        }
-                        var tr = $("<tr class='" + classes + "' rel='" + projectId + "'></tr>");
-                        $(this).children("td:not(:last)").each(function() {
-                            tr.append("<td>" + $(this).text() + "</td>");
-                        });
-                        for (var i = 0; i < 9; i++)
-                        {
-                            tr.append("<td></td>");
-                        }
-                        tr.append("<td>" + $(this).children("td:last").text() + "</td>");
-                        tbody.append(tr);
+    $(".viewBtnCostBreakdown").click(function () {
+        $(".viewBtnCostBreakdown").addClass('current');
+        $(".viewBtnDefault").removeClass('current');
+        if (!breakdownLoaded) {
+            // load the cost breakdown data
+            var tbody = $("#breakdownBody table tbody");
+            tbody.children("tr").remove();
+            $("#breakdownBody table tfoot").remove();
+            var oldval = $("#dataTableLength").val();
+            $("#dataTableLength").val(-1);
+            $("#dataTableLength").trigger("change");
+            var trs = $("#costDetails tbody tr");
+            var projectIds = [];
+            trs.each(function (i) {
+                var projectId = parseInt($(this).attr("id").substr(8));
+                if (!isNaN(projectId)) {
+                    projectIds.push(projectId);
+                    var classes = "pipelineDetailsRow";
+                    if (i % 2 == 1) {
+                        classes = "pipelineDetailsRow alt";
                     }
-                });
-                if (projectIds.length == 0) {
-                    tbody.append("<tr><td class='dataTables_empty' valign='top' colspan='20'>No matching records found</td></tr>");
-                    contestDViewApi.load();
+                    var tr = $("<tr class='" + classes + "' rel='" + projectId + "'></tr>");
+                    $(this).children("td:not(:last)").each(function () {
+                        tr.append("<td>" + $(this).text() + "</td>");
+                    });
+                    for (var i = 0; i < 9; i++) {
+                        tr.append("<td></td>");
+                    }
+                    tr.append("<td>" + $(this).children("td:last").text() + "</td>");
+                    tbody.append(tr);
                 }
-                $("#breakdown_costDetails_info").html("Total " + projectIds.length + " entries");
-                $("#dataTableLength").val(oldval);
-                $("#dataTableLength").trigger("change");
-
-                if (projectIds.length > 0) {
-                    $("#breakdownBody table").append("<tfoot><tr><td colspan='7' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
-                    loadBreakdownData(projectIds);
-                }
-            } else {
+            });
+            if (projectIds.length == 0) {
+                tbody.append("<tr><td class='dataTables_empty' valign='top' colspan='20'>No matching records found</td></tr>");
                 contestDViewApi.load();
             }
+            $("#breakdown_costDetails_info").html("Total " + projectIds.length + " entries");
+            $("#dataTableLength").val(oldval);
+            $("#dataTableLength").trigger("change");
+
+            if (projectIds.length > 0) {
+                $("#breakdownBody table").append("<tfoot><tr><td colspan='7' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
+                loadBreakdownData(projectIds);
+            }
+        } else {
+            contestDViewApi.load();
         }
     });
+
 
     var resizePopupId = -1;
     /**
