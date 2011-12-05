@@ -332,6 +332,7 @@
                 <include name="scripts/*.*"/>
                 <include name="scripts/launch/**/*.*"/>
 				<include name="scripts/scorecard/**/*.*"/>
+				<include name="scripts/tinyMCE/templates/*.html"/>
             </fileset>
             <fileset dir="${srcdir}/ppt_web">
                 <include name="css/**/*.*"/>
