@@ -141,18 +141,18 @@ var DRAFT_STATUS = "Draft";
  
 var projectCategoryArray = [
 {id:SOFTWARE_CATEGORY_ID_CONCEPT,      name:'CONCEPTUALIZATION', label:'Software Conceptualization', typeId:2, typeName:'Application', hasMulti:true},
-{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',     label:'Software Specification',     typeId:2, typeName:'Application', hasMulti:false},
+{id:SOFTWARE_CATEGORY_ID_SPEC,         name:'SPECIFICATION',     label:'Software Specification',     typeId:2, typeName:'Application', hasMulti:true},
 {id:7,                                 name:'ARCHITECTURE',      label:'Architecture',               typeId:2, typeName:'Application', hasMulti:true},
 {id:SOFTWARE_CATEGORY_ID_DESIGN,       name:'DESIGN',            label:'Component Design',           typeId:1, typeName:'Component', hasMulti:false},
 {id:SOFTWARE_CATEGORY_ID_DEVELOPMENT,  name:'DEVELOPMENT',       label:'Component Development',      typeId:1, typeName:'Component', hasMulti:false},
-{id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application', hasMulti:false},
-{id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application', hasMulti:false},
-{id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application', hasMulti:false},
-{id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:false},
-{id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application', hasMulti:false},
-{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application', hasMulti:false},
-{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:false},
-{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application', hasMulti:false},
+{id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application', hasMulti:true},
+{id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application', hasMulti:true},
+{id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application', hasMulti:true},
+{id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:true},
+{id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application', hasMulti:true},
+{id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application', hasMulti:true},
+{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application', hasMulti:true},
 {id:17,                                name:'Web Design',        label:'Web Design',                 typeId:3, typeName:'Studio', hasMulti:true},
 {id:20,                                name:'Logo Design',       label:'Logo Design',                typeId:3, typeName:'Studio', hasMulti:true},
 {id:16,                                name:'Banners/Icons',     label:'Banners/Icons',              typeId:3, typeName:'Studio', hasMulti:true},
@@ -163,7 +163,7 @@ var projectCategoryArray = [
 {id:34,                                name:'Studio Other',             label:'Studio Other',                      typeId:3, typeName:'Studio', hasMulti:true},
 {id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
-{id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:false}
+{id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true}
 ];
 
 /**
