@@ -336,7 +336,7 @@
             </fileset>
             <fileset dir="${srcdir}/ppt_web">
                 <include name="css/**/*.*"/>
-                <include name="scripts/*.*"/>
+                <include name="scripts/**/*.*"/>
             </fileset>
         </zip>
     </target>
