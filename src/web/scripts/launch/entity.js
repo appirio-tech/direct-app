@@ -151,7 +151,7 @@ var projectCategoryArray = [
 {id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:true},
 {id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application', hasMulti:true},
 {id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application', hasMulti:true},
-{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:true},
+{id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:false},
 {id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application', hasMulti:true},
 {id:17,                                name:'Web Design',        label:'Web Design',                 typeId:3, typeName:'Studio', hasMulti:true},
 {id:20,                                name:'Logo Design',       label:'Logo Design',                typeId:3, typeName:'Studio', hasMulti:true},
