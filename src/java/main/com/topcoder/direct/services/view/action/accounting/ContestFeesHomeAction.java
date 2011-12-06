@@ -3,37 +3,28 @@
  */
 package com.topcoder.direct.services.view.action.accounting;
 
-import com.topcoder.accounting.fees.entities.BillingAccount;
-import com.topcoder.accounting.fees.entities.SearchResult;
-import com.topcoder.accounting.fees.services.ContestFeeConfigurationException;
-import com.topcoder.accounting.fees.services.ContestFeeService;
-import com.topcoder.direct.services.view.action.AbstractAction;
-import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.util.log.Log;
-import com.topcoder.util.log.LogManager;
+import com.topcoder.clients.model.BillingAccount;
+import com.topcoder.clients.model.SearchResult;
 
 /**
  * This struts action is used to display all billing accounts for all projects. By default it will retrieve
- * lastest(active) project billings. Account team can select any billing account view its contest
- * fees(ContestFeeDetailsAction struts action display contest fee details of the billing account).
+ * latest(active) project billings which have contest fees set. Account team can select any billing account view its
+ * contest fees(ContestFeeDetailsAction struts action display contest fee details of the billing account).
+ * 
+ * <p>
+ * Version 1.1 (Release Assembly - Project Contest Fees Management Update 1 Assembly) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #execute()} method to retrieve the list of billing accounts having contest fees set only.</li>
+ *   </ol>
+ * </p>
  * 
  * Thread safety: The class is mutable and not thread safe. But it'll not caused thread safety issue if used under
  * Spring container.
  * 
- * @author winstips, TCSDEVELOPER
- * @version 1.0
+ * @author winstips, isv
+ * @version 1.1
  */
-public class ContestFeesHomeAction extends AbstractAction implements ViewAction<SearchResult<BillingAccount>> {
-    /**
-     * Instance of ContestFeeService used to perform persistence operations. It is managed with a getter and setter. It
-     * may have any value. It is fully mutable.
-     */
-    private ContestFeeService contestFeeService;
-    /**
-     * Instance of Logger used to perform logging operations. It is managed with a getter and setter. It may have any
-     * value. It is fully mutable.
-     */
-    private Log logger;
+public class ContestFeesHomeAction extends BaseContestFeeAction {
     /**
      * Denotes instance of SearchResult<BillingAccount>. It is managed with a getter and setter. It may have any value.
      * It is fully mutable.
@@ -68,53 +59,10 @@ public class ContestFeesHomeAction extends AbstractAction implements ViewAction<
     /**
      * Responsible for displaying billing accounts for all active projects.
      * 
-     * @return success flag.
+     * @throws Exception if an unexpected error occurs.
      */
-    public String execute() {
-        setResult(contestFeeService.search(pageSize, pageNumber, sortColumn, sortOrder));
-        return SUCCESS;
-    }
-
-    /**
-     * Returns the contestFeeService field value.
-     * 
-     * @return contestFeeService field value.
-     */
-    public ContestFeeService getContestFeeService() {
-        return this.contestFeeService;
-    }
-
-    /**
-     * Sets the given value to contestFeeService field.
-     * 
-     * @param contestFeeService
-     *            - the given value to set.
-     */
-    public void setContestFeeService(ContestFeeService contestFeeService) {
-        this.contestFeeService = contestFeeService;
-    }
-
-    /**
-     * Returns the logger field value.
-     * 
-     * @return logger field value.
-     */
-    public Log getLogger() {
-        return this.logger;
-    }
-
-    /**
-     * Sets the corresponding member field
-     * 
-     * @param loggerName
-     *            - the given name to set.
-     */
-    public void setLoggerName(String loggerName) {
-        if (loggerName == null) {
-            this.logger = null;
-        } else {
-            this.logger = LogManager.getLog(loggerName);
-        }
+    public void executeAction() throws Exception {
+        setResult(getContestFeeService().search(true, getPageSize(), getPageNumber(), getSortColumn(), getSortOrder()));
     }
 
     /**
@@ -210,18 +158,6 @@ public class ContestFeesHomeAction extends AbstractAction implements ViewAction<
      */
     public void setSortOrder(String sortOrder) {
         this.sortOrder = sortOrder;
-    }
-
-    /**
-     * Check parameters.
-     * 
-     * @throws ContestFeeConfigurationException
-     *             if this.contestFeeService or this.logger is null
-     */
-    public void postConstruct() {
-        if (contestFeeService == null || logger == null) {
-            throw new ContestFeeConfigurationException("The contestFeeService and logger should not be null.");
-        }
     }
 
     /**

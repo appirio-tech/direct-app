@@ -534,24 +534,45 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        
 		<action name="listBillingAccountAction" class="contestFeesHomeAction">
             <interceptor-ref name="projectFeeStack"/>
-            <result name="success">/WEB-INF/billing_account_list.jsp</result>
+            <result name="success">/WEB-INF/billing/billing_account_list.jsp</result>
         </action>
 
-        <action name="listContestFeesAction" class="contestFeesDetailsAction" method="list">
-            <interceptor-ref name="projectFeeStack"/>
-            <result name="success">/WEB-INF/billing_account_contest_fee.jsp</result>
+        <action name="cancelFeesManagement" class="com.topcoder.direct.services.view.action.ForwardAction"> 
+            <result name="success" type="redirectAction">
+                <param name="actionName">dashboardNotifications</param>
+                <param name="pn">fee</param>
+            </result>
         </action>
         
-        <action name="saveContestFeesAction" class="contestFeesDetailsAction" method="save">
+        <action name="createContestFeesHome" class="createFeesHomeAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success">/WEB-INF/billing/billing_account_create_fees_list.jsp</result>
+        </action>
+        
+        <action name="listContestFeesAction" class="listBillingProjectContestFeesAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success">/WEB-INF/billing/billing_account_contest_fee.jsp</result>
+        </action>
+        
+        <action name="saveContestFeesAction" class="saveContestFeesAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
-                <param name="actionName">listContestFeesAction</param>
-                <param name="namespace">/</param>
-				<param name="projectId">${projectId}</param>
+                <param name="actionName">dashboardNotifications</param>
+                <param name="pn">fee</param>
             </result>
-            <result name="input">/WEB-INF/billing_account_contest_fee.jsp</result>
+            <result name="input">/WEB-INF/billing/billing_account_contest_fee.jsp</result>
+        </action>
+
+        <action name="createContestFeesAction" class="createContestFeesAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">dashboardNotifications</param>
+                <param name="pn">fee</param>
+            </result>
+            <result name="input">/WEB-INF/billing/billing_account_create_fees_list.jsp</result>
         </action>
 
     </package>

@@ -2622,3 +2622,10 @@ A.buttonRed1{
 #addNewProjectModal.outLay {
     width: 450px;
 }
+
+ul.errorMessage {
+    color: #ff0001;;
+    font-size: 12px;
+    line-height: 20px;
+    padding-left: 20px;
+}

@@ -17,13 +17,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <jsp:include page="includes/htmlhead.jsp"/>
+    <jsp:include page="../includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="project_fee"/>
-	<jsp:include page="includes/paginationSetup.jsp"/>
+	<jsp:include page="../includes/paginationSetup.jsp"/>
 <!--[if IE 6]>
-    <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
-    <script type="text/javascript" src="/scripts/ie6.js?v=205148"></script>
+    <script type="text/javascript" src="/scripts/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/scripts/ie6.js"></script>
 <![endif]-->
 </head>
 
@@ -92,11 +92,11 @@
         <div id="container">
             <div id="content">
 
-                <jsp:include page="includes/header.jsp"/>
+                <jsp:include page="../includes/header.jsp"/>
 
                 <div id="mainContent">
 
-                    <jsp:include page="includes/right.jsp"/>
+                    <jsp:include page="../includes/right.jsp"/>
 
                     <div id="area1"><!-- the main area -->
                         <div class="area1Content">
@@ -177,7 +177,7 @@
                 </div>
                 <!-- End #mainContent -->
 
-                <jsp:include page="includes/footer.jsp"/>
+                <jsp:include page="../includes/footer.jsp"/>
 
             </div>
             <!-- End #content -->
@@ -187,7 +187,7 @@
 </div>
 <!-- End #wrapper -->
 
-<jsp:include page="includes/popups.jsp"/>
+<jsp:include page="../includes/popups.jsp"/>
 
 </body>
 <!-- End #page -->

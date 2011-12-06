@@ -270,9 +270,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #isSuperAdmin(TCSubject)} to check the user is TC Admin or not.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.7.9 (Release Assembly - Project Contest Fee Management Update 1 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Re-imported contes fee classes from new package com.topcoder.clients.model.</li>
+ *   </ol>
+ * </p>
  * 
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, TCSASSEMBLER
- * @version 1.7.8
+ * @version 1.7.9
  */
 public final class DirectUtils {
     /**
@@ -1676,20 +1683,20 @@ public final class DirectUtils {
      * @throws Exception
      *             if there is any exception.
      */
-    public static Map<String, com.topcoder.accounting.fees.entities.ContestType> getContesetTypes() throws Exception {
+    public static Map<String, com.topcoder.clients.model.ContestType> getContesetTypes() throws Exception {
         
         CachedDataAccess dataAccess = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
 
         Request request = new Request();
         request.setContentHandle("project_categories_replatforming");
-        Map<String, com.topcoder.accounting.fees.entities.ContestType> contestTypes = 
-        	new HashMap<String, com.topcoder.accounting.fees.entities.ContestType>();
+        Map<String, com.topcoder.clients.model.ContestType> contestTypes = 
+        	new LinkedHashMap<String, com.topcoder.clients.model.ContestType>();
         
         ResultSetContainer container = dataAccess.getData(request)
                 .get("project_categories_replatforming");
         int recordNum = container.size();
         for (int i = 0; i < recordNum; i++) {
-        	com.topcoder.accounting.fees.entities.ContestType type = new com.topcoder.accounting.fees.entities.ContestType();
+        	com.topcoder.clients.model.ContestType type = new com.topcoder.clients.model.ContestType();
             type.setTypeId(container.getIntItem(i, "project_category_id"));
             if (container.getIntItem(i, "project_type_id") == 3) {
                 type.setStudio(true);

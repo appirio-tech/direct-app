@@ -1,6 +1,6 @@
 <%--
-  - Author: greatKevin, winsty, TCSASSEMBLER
-  - Version: 1.3
+  - Author: greatKevin, winsty, isv
+  - Version: 1.4
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the user notifications.
@@ -8,6 +8,8 @@
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Version 1.2 (TC Direct UI Improvement Assembly 1) changes notes: Solve "checkbox exists when no data in Settings > Permissions".
   - Version 1.3 (Release Assembly - Project Contest Fee Management) changes notes: Added contest fee option to the page.
+  - Version 1.4 (Release Assembly - Project Contest Fees Management Update 1) changes notes: Added option for contest 
+   -fee creation to the page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -483,11 +485,17 @@
                                 </div>
                             </div>
                             <!-- End .areaHeader -->
-							<div>
-								<p class="billingAccountArchive"><a href='<s:url action="listBillingAccountAction" namespace="/"/>'>Project Contest Fees Management for Billing Accounts</a></p>
-							</div>
-						</div>
-					</div>
+                            <div>
+                                <p class="billingAccountArchive"><a
+                                        href='<s:url action="listBillingAccountAction" namespace="/"/>'>Project Contest
+                                    Fees Management for Billing Accounts</a></p>
+
+                                <p class="billingAccountArchive"><a
+                                        href='<s:url action="createContestFeesHome" namespace="/"/>'>Project Contest
+                                    Fees Creation for Billing Accounts</a></p>
+                            </div>
+                        </div>
+                    </div>
                   </s:if>     
 
                 </div>

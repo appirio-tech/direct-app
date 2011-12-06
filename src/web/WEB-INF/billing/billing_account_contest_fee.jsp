@@ -1,10 +1,12 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0
+  - Version: 1.1
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - Project Contest Fee Management) changes:
   - Initialized the page functions.
+  - Version 1.1 (Release Assembly - Project Contest Fees Management Update 1) changes notes: Provided facilities
+  - for editing Studio and Software contest type fees.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -14,13 +16,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <jsp:include page="includes/htmlhead.jsp"/>
+    <jsp:include page="../includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="project_fee"/>
-	<jsp:include page="includes/paginationSetup.jsp"/>
+	<jsp:include page="../includes/paginationSetup.jsp"/>
 <!--[if IE 6]>
-    <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
-    <script type="text/javascript" src="/scripts/ie6.js?v=205148"></script>
+    <script type="text/javascript" src="/scripts/DD_belatedPNG.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/scripts/ie6.js"></script>
 <![endif]-->
 </head>
 
@@ -89,11 +91,11 @@
         <div id="container">
             <div id="content">
 
-                <jsp:include page="includes/header.jsp"/>
+                <jsp:include page="../includes/header.jsp"/>
 
                 <div id="mainContent">
 
-                    <jsp:include page="includes/right.jsp"/>
+                    <jsp:include page="../includes/right.jsp"/>
 
                     <div id="area1"><!-- the main area -->
                         <div class="area1Content">
@@ -110,7 +112,7 @@
                             <!-- End .areaHeader -->
 
                             <s:form action="saveContestFeesAction" method="post" validate="true">
-                            <div class="container2 resultTableContainer" id="contestFeeEditDetail">
+                            <div class="container2" id="contestFeeEditDetail">
                                 <div>
                                 <br/>
                                 <p><s:if test="%{formData.contestFees==null}">Empty </s:if>Contest Fee details for <s:property value="name"/></p>
@@ -120,37 +122,61 @@
                                 </p>
                                 <div style="color:red">
                                     <s:fielderror />
-                                </div>                    
-                                <s:if test="%{formData.contestFees!=null}">
-                                <table id="contestFeeEditDetail" class="projectStats contests paginatedDataTable resultTable"
-                                           cellpadding="0"
-                                           cellspacing="0">
-                                    <colgroup>
-                                        <col width="40%" />
-                                        <col width="60%" />
-                                    </colgroup>  
-                                    
-                                    <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <s:iterator value="formData.contestFees" id="formData.contestFees" status="status">
-                                        <tr>
-                                            <td><s:property value="contestTypeDescription"/></td>
-                                            <td>
-                                                <s:textfield name="formData.contestFees[%{#status.index}].fee" size="40"/>
-                                            </td>
-                                        </tr>
-                                        </s:iterator>
-                                    </tbody>
-                                 </table>
-                                 </s:if>
-                                 <br/><br/>
+                                </div>
+                                    <s:if test="%{formData.contestFees!=null}">
+                                        <table id="contestFeeEditDetail"
+                                               class="projectStats contests paginatedDataTable resultTable"
+                                               cellpadding="0" cellspacing="0">
+                                            <colgroup>
+                                                <col width="40%"/>
+                                                <col width="60%"/>
+                                            </colgroup>
+
+                                            <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>Value</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="2"><strong>Studio</strong></td>
+                                            </tr>
+
+                                            <s:iterator value="formData.contestFees" id="formData.contestFees"
+                                                        status="status">
+                                                <s:if test="studio">
+                                                    <tr>
+                                                        <td><s:property value="contestTypeDescription"/></td>
+                                                        <td>
+                                                            <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
+                                                                         size="40"/>
+                                                        </td>
+                                                    </tr>
+                                                </s:if>
+                                            </s:iterator>
+                                            <tr>
+                                                <td colspan="2"><strong>Software</strong></td>
+                                            </tr>
+
+                                            <s:iterator value="formData.contestFees" id="formData.contestFees"
+                                                        status="status">
+                                                <s:if test="!studio">
+                                                    <tr>
+                                                        <td><s:property value="contestTypeDescription"/></td>
+                                                        <td>
+                                                            <s:textfield name="formData.contestFees[%{#status.index}].contestFee"
+                                                                         size="40"/>
+                                                        </td>
+                                                    </tr>
+                                                </s:if>
+                                            </s:iterator>
+                                            </tbody>
+                                        </table>
+                                    </s:if>
+                                    <br/><br/>
                                     <p style="float:right;"><s:if test="%{formData.contestFees!=null}"><s:submit value="Submit"/> &nbsp; </s:if>
-                                    <s:submit action="listBillingAccountAction" value="Cancel" onclick="form.onsubmit=null"/></p>
+                                    <s:submit action="cancelFeesManagement" value="Cancel" onclick="form.onsubmit=null"/></p>
                                 </s:form>
 
                                 </div>                          
@@ -163,7 +189,7 @@
                 </div>
                 <!-- End #mainContent -->
 
-                <jsp:include page="includes/footer.jsp"/>
+                <jsp:include page="../includes/footer.jsp"/>
 
             </div>
             <!-- End #content -->
@@ -173,7 +199,7 @@
 </div>
 <!-- End #wrapper -->
 
-<jsp:include page="includes/popups.jsp"/>
+<jsp:include page="../includes/popups.jsp"/>
 
 </body>
 <!-- End #page -->
