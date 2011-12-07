@@ -6,11 +6,16 @@
  * 
  * Version 1.0 TC Cockpit Post a Copilot Assembly 1 change note
  * - Apply to new prototype.
+ *
  * Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
  * - Refined the function for step 3 fluid checkboxes.
- * 
- * @author TCSASSEMBLER, duxiaoyang
- * @version 1.1
+ *
+ * Changes in version 1.2 (Release Assembly - TC Direct Select From Copilot Pool Assembly):
+ * - Move some codes out for handling select from copilot pool page request.
+ * - Update the logic of Carousel.
+ *
+ * @author tangzx, duxiaoyang
+ * @version 1.2
  */
 $(document).ready(function(){
 	//z-index for step bar
@@ -185,43 +190,6 @@ $(document).ready(function(){
         
         $(window).resize();
 	});
-    
-	// copilot
-	$(".selectCopilot").live('click',function() {
-		addressLoadModal('#copilotPopUp');
-	});
-	
-	$("#copilotPopUp .submitBtn").live('click',function() {
-		addresscloseModal();
-		window.location.href="copilot-selected.html";
-	});
-	
-	function listType(num){
-		var listWidth = $(".projectList").width();
-		var itemWidth = 293;
-		$(".projectItem").css("margin-right",(listWidth - itemWidth*num) / (num-1) + "px");
-		$(".wideList .projectItem").each(function(i) {
-			var number =$(this).index() + 1;
-			if (number%num == 0) { 
-				$(this).css("margin-right","0"); 
-			}
-		});
-	}
-	 if($(".projectList").width() > 1210){
-		listType(4);
-	}
-	else{
-		listType(3);
-	}
-	
-    $(window).resize(function(){
-        if($(".projectList").width() > 1210){
-			listType(4);
-		}
-		else{
-			listType(3);
-		}
-    });
 	
 	// get a copilot 
 	$('.get-a-copilot .leftColumn').css('width',($('.get-a-copilot .mainContent').width()-330)-25);
@@ -251,8 +219,6 @@ $(document).ready(function(){
 		}
 	)
 	
-	$(".copilotList table tr:nth-child(even)").addClass("even");
-	
 	// video 
 	$(".viewVideo").click(function() {
 		$(".viewVideo").target = "_blank";
@@ -269,12 +235,21 @@ $(document).ready(function(){
 			
 		}
 	)
+    
+    $('#copilotProfileCarouselDiv .info .handle a').attr("target", "_blank");
 	
-	 
 	 /*------------------------------------------------ Carousel ---------------------------------------------*/
 	var size = 5;
-	var currentIndex = Math.round(size / 2);
-	var edge = size - currentIndex;
+	var currentIndex = Math.min(Math.round(size / 2), Math.round($(".carousel-content ul li").length / 2));
+    var edge;
+    
+    if ($(".carousel-content ul li").length >= 5) {
+        edge = 2;
+    } else {
+        edge = Math.floor(($(".carousel-content ul li").length - 1) / 2);
+        size = edge * 2 + 1;
+    }
+    
 	var data = {
 		small: {
 			width: "194px",
@@ -367,20 +342,18 @@ $(document).ready(function(){
 		$.each($(".carousel-content ul li"), function(index, value){
 			var offset = Math.abs(currentIndex - (index + 1));
 			$(".foot-bar strong").text($(".carousel-content ul li").length - offset);
-			if(offset >= Math.round(size / 2)){
+			if(offset > edge){
 				$(value).css({ height: "115px", left: index < currentIndex ? - $(value).width() + "px" : "539px" }).hide();
 			}
 			else{
-				$(value).show();
-				if(offset == edge){
-					styleItem(index < currentIndex ? "small" : "smallRight", $(value));
-				}
-				else if(offset == edge - 1){
-					styleItem(index < currentIndex ? "medium" : "mediumRight", $(value));
-				}
-				else{
-					styleItem("current", $(value));
-				}
+				$(value).show();                
+                if (offset == 1) {
+                    styleItem(index < currentIndex ? "medium" : "mediumRight", $(value));
+                } else if (offset == 2) {
+                	styleItem(index < currentIndex ? "small" : "smallRight", $(value));
+                } else {
+                	styleItem("current", $(value));
+                }
 			}
 		});
 	}

@@ -152,6 +152,7 @@
         <copy file="${configuration_persistence.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${confluence_user_soap_client.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${copilot_pool_and_profiles_dao.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${copilot_pool_and_profiles_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${client_invoice_entities_dao.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_project_metadata_entities.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_project_metadata_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>

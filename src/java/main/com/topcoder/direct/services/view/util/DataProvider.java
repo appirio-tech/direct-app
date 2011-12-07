@@ -45,6 +45,7 @@ import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDTO;
@@ -402,8 +403,15 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 3.2 (Release Assembly - TC Direct Select From Copilot Pool Assembly) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getMemberPhotos(long[])} method to retrieve member photos.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
- * @version 3.1
+ * @version 3.2
  * @since 1.0
  */
 public class DataProvider {
@@ -4613,5 +4621,43 @@ public class DataProvider {
         }
         return result;
     }
+
+    /**
+     * Get member photos with specify user id array.
+     *
+     * @param userIds the user id array.
+     * @return retrieved member photos.
+     * @throws Exception if any exception occurs.
+     * @since 3.1
+     */
+    public static Map<Long, MemberPhotoDTO> getMemberPhotos(long[] userIds) throws  Exception {
+        Map<Long, MemberPhotoDTO> memberPhotos = new HashMap<Long, MemberPhotoDTO>();
+
+        if (userIds.length == 0) {
+            return memberPhotos;
+        }
+
+        final String queryName = "coder_image_data_list";
+        DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("uids", concatenate(userIds, ","));
+
+        final ResultSetContainer container = dataAccess.getData(request).get(queryName);
+        for (ResultSetRow row : container) {
+            MemberPhotoDTO photo = new MemberPhotoDTO();
+
+            photo.setPhotoPath(new StringBuilder().append(row.getStringItem("image_path")).
+                    append(row.getStringItem("file_name")).toString());
+            photo.setHeight(row.getIntItem("height"));
+            photo.setWidth(row.getIntItem("width"));
+            photo.setId(row.getLongItem("coder_id"));
+
+            memberPhotos.put(photo.getId(), photo);
+        }
+
+        return memberPhotos;
+    }
+    
 }
 

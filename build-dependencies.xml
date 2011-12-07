@@ -143,6 +143,11 @@
   <property name="copilot_pool_and_profiles_dao.path" value="copilot_pool_and_profiles_dao/${copilot_pool_and_profiles_dao.version}" />
   <property name="copilot_pool_and_profiles_dao.jar" value="${tcs_libdir}/${copilot_pool_and_profiles_dao.path}/${copilot_pool_and_profiles_dao.jar.name}" />
 
+  <property name="copilot_pool_and_profiles_services.version" value="1.0.0" />
+  <property name="copilot_pool_and_profiles_services.jar.name" value="copilot_pool_and_profiles_services.jar" />
+  <property name="copilot_pool_and_profiles_services.path" value="copilot_pool_and_profiles_services/${copilot_pool_and_profiles_services.version}" />
+  <property name="copilot_pool_and_profiles_services.jar" value="${tcs_libdir}/${copilot_pool_and_profiles_services.path}/${copilot_pool_and_profiles_services.jar.name}" />
+
   <property name="data_entitlement.version" value="1.1.4" />
   <property name="data_entitlement.jar.name" value="data_entitlement.jar" />
   <property name="data_entitlement.path" value="data_entitlement/${data_entitlement.version}" />
@@ -666,6 +671,7 @@
     <pathelement location="${base_exception.jar}" />
     <pathelement location="${configuration_manager.jar}" />
     <pathelement location="${copilot_pool_and_profiles_dao.jar}" />
+    <pathelement location="${copilot_pool_and_profiles_services.jar}" />
     <pathelement location="${excel_utility.jar}" />
     <pathelement location="${logging_wrapper.jar}" />
     <pathelement location="${object_factory.jar}" />
