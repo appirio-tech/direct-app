@@ -2827,28 +2827,3 @@ table.notifications TH.permCol2{
     padding-bottom: 5px;
     border: none;
 }          
-
-#stepContainerView, #stepContainerSelect, #stepContainerConfirmation {
-    margin-right:25px;
-}
-
-#new-modal #copilotPopUp .buttonArea .submitBtn.button10{
-    width:100px;
-    float:left;
-    display:block;
-    margin:0 auto;
-    margin-top:16px;
-}
-
-#new-modal #copilotPopUp .buttonArea .submitBtn.button10 span.right{
-    padding:4px 20px 0 20px;
-}
-
-#new-modal #copilotPopUp .buttonArea .submitBtn.button10 span.right {
-    padding: 1px 20px 0;
-}
-#new-modal #copilotPopUp a.submitBtn.button10 span.right {
-    height: 23px;
-}
-                
-			

@@ -12,7 +12,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	font-size: 100%;
 	vertical-align: baseline;
 	background: transparent;
-    line-height:13px;
 }
 
 /* tables still need 'cellspacing="0"' in the markup */
@@ -913,7 +912,7 @@ a.smallRed span.right {
 					
 				.copilotPool .projectItem .projectContainer .bg{
 					width:100%;
-					height:181px;
+					height:155px;
 					padding-top:7px;
 					background:url(../images/selectCopilot_bg.png) repeat-y left top;
 					}
@@ -932,7 +931,7 @@ a.smallRed span.right {
 					
 				.copilotPool .projectItem .hover .bg{
 					width:100%;
-					height:181px;
+					height:155px;
 					padding-top:7px;
 					background:url(../images/selectCopilot_bg_hover.png) repeat-y left top;
 					}
@@ -1000,9 +999,6 @@ a.smallRed span.right {
 						.greenText {
 							color:#17c000;
 						}
-						.yellowText {
-							color:#FFD700;
-						}                        
 						
 						.copilotInfo p {
 							padding-left:3px;
@@ -1021,7 +1017,7 @@ a.smallRed span.right {
 						}
 							.copilotInfo ul li span {
 								display:inline-block;
-								width:120px;
+								width:130px;
 							}
 							
 						a.blue, a.blue:visited {
@@ -1036,10 +1032,10 @@ a.smallRed span.right {
 						.stepContainer .geryContent .corner.white{
 							width:4px;
 							height:4px;
-							background:url(../images/white_corner.png) 0 0 no-repeat !important;
+							background:url(../images/white_corner.png) 0 0 no-repeat;
 						}
 						.stepContainer .geryContent .corner.white.tr  {
-							background-position: -4px 0 !important;
+							background-position: -4px 0;
 						}
 						
 			.pagination { float: right; margin: 13px 13px 0 0; } 
@@ -1380,7 +1376,7 @@ a.smallRed span.right {
 			background-position: right top;
 		}
 		.copilot-carousel .carousel-content {
-			background: #413833 left top repeat-x;
+			background: #413833 url(../images/copilot-carousel.png) left top repeat-x;
 			padding: 29px 0;
 			overflow: hidden;
 		}
@@ -1587,114 +1583,4 @@ a.smallRed span.right {
 #privateDescription_parent {
 	float:left;
 	min-width:722px;
-}
-
-.pageArea {
-    float: right; margin: 13px 13px 0 0;
-}
-.pageArea .pagination, .pageArea .dataTables_paginate { 
-    display: inline;
-    margin: 0;
-    list-style-type: none;
-    float: left;
-    width: auto;
-}
-.pageArea .pagination a, .pageArea .pagination span, .pageArea .dataTables_paginate span {
-    float: left; 
-    color:#000002;
-    text-decoration: none; 
-    padding: 0 4px;
-    font-size: 12px;
-    height: 9px;
-    line-height: 10px; 
-}
-.pageArea .pagination a:hover { text-decoration:underline;} 
-.pageArea .pagination  span.current ,.pagination  span.current:hover { font-weight: bold!important; }
-
-.pagination  span.current { font-weight: bold!important; }
-.pagination  span.current:hover { text-decoration:none; font-weight: bold!important; cursor: pointer; }
-.pageArea .pagination span.prev.current, .pageArea .pagination span.next.current { font-weight:normal!important;}
-.pageArea .pagination span.prev.current:hover, .pageArea .pagination span.next.current:hover { text-decoration:underline; cursor: pointer;}
-
-.pageArea .pagination a.next{ padding: 0 10px 0 4px; background: url(../images/arrow-pagination-next.png) right top no-repeat; }
-.pageArea .pagination a.next:hover{ background-position: right bottom; } 
-.pageArea .pagination a.prev{ padding: 0 4px 0 10px; background: url(../images/arrow-pagination-prev.png) left top no-repeat; }
-.pageArea .pagination a.prev:hover{ background-position: left bottom; }	
-.pageArea .pagination span.next{ padding: 0 10px 0 4px; background: url(../images/arrow-pagination-next.png) right top no-repeat; }
-.pageArea .pagination span.next:hover{ background-position: right bottom; } 
-.pageArea .pagination span.prev{ padding: 0 4px 0 10px; background: url(../images/arrow-pagination-prev.png) left top no-repeat; }
-.pageArea .pagination span.prev:hover{ background-position: left bottom; }	
-
-.copilotListTable  .userLinkTD  a{
-    display: block;
-}
-
-.copilotList .dataTables_paginate  .first, .copilotList .dataTables_paginate  .last {
-    display: none;
-}
-
-.copilotList .dataTables_paginate span.paginate_button:hover { text-decoration:underline;} 
-.copilotList .dataTables_paginate span.paginate_active ,.pagination  span.paginate_active:hover { font-weight: bold!important; text-decoration:none; }
-.copilotList .dataTables_paginate span.next{ padding: 0 10px 0 4px; background: url(../images/arrow-pagination-next.png) right top no-repeat; }
-.copilotList .dataTables_paginate span.next:hover{ background-position: right bottom; } 
-.copilotList .dataTables_paginate span.previous{ padding: 0 4px 0 10px; background: url(../images/arrow-pagination-prev.png) left top no-repeat; }
-.copilotList .dataTables_paginate span.previous:hover{ background-position: left bottom; }
-
-.get-a-copilot .leftColumn .rowItem label {
-    font-size: 12px;
-    line-height: 1.5;
-}
-.get-a-copilot .leftColumn .projectSelection {
-    margin-bottom:5px;
-}
-.get-a-copilot .leftColumn .selectProject {
-    margin-top:35px;
-    margin-left:10px;
-}
-.get-a-copilot .leftColumn .selectProject .projectName{
-    margin-left:30px;
-}
-.get-a-copilot .leftColumn .red-button-big {
-    margin-left:20px;
-}
-.get-a-copilot .leftColumn .createNewBtn .middle {
-    
-}	
-
-#stepContainerSelect .copilotInfo td.firstLine {
-    padding: 0 3px 8px !important;
-}
-
-#stepContainerSelect .copilotInfo td.firstTd {
-    padding: 0 0 0 3px !important;
-}
-
-#stepContainerSelect .copilotInfo td.lastTd {
-    padding: 0 5px 0 0!important;
-}
-
-#stepContainerSelect .selectProject {
-    margin-bottom: 0px;
-    margin-left: 0px;
-    width: auto;
-}
-
-#stepContainerSelect .selectProject  { 
-    font-family: Tahoma,Geneva,sans-serif;
-}
-
-.copilotInfo .firstLine a, .copilotListTable .userLinkTD a {
-    font-weight: bold;
-}
-.copilotPool .copilotInfo .firstLine a, .copilotPool .copilotListTable .userLinkTD a, #copilotPopUp .copilotInfo .firstLine a{
-    text-decoration:underline;
-}
-.greenText,.statusActive {
-    color:#17c000;
-}
-.redColorText,.statusPSuspend {
-    color: #FC240A;
-}
-.yellowColorText,.statusTSuspend {
-    color: #fc3;
 }
