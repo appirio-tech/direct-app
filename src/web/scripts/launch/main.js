@@ -521,8 +521,10 @@ function saveAsDraftRequestSoftware() {
    request['competitionType'] = 'SOFTWARE';
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
-   request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
-   request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
+    if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
+        request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
+        request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
+    }
 
    if(isDevOrDesign()) {
       //only check for design
@@ -574,8 +576,11 @@ function saveAsDraftRequestStudio() {
    request['competitionType'] = 'STUDIO';
    request['assetDTO'] = mainWidget.softwareCompetition.assetDTO;
    request['projectHeader'] = mainWidget.softwareCompetition.projectHeader;
-   request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
-   request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
+    
+    if (!isNaN(mainWidget.softwareCompetition.copilotUserId)) {
+        request['contestCopilotId'] = mainWidget.softwareCompetition.copilotUserId;
+        request['contestCopilotName'] = mainWidget.softwareCompetition.copilotUserName;
+    }
 
    updateStudioPrizes();
    // add copilot cost into project header

@@ -247,7 +247,31 @@
                                         
         <div class="detailsContent_det_round_edit">                                      
         <div id="launchContestOut">
-            <div class="schedule schedule1">
+            <div class="schedule schedule1" id="roundText">
+                <table cellspacing="10" class="det_font_tab">
+                    <tr>
+                        <td class="first_tab"><strong>Start Date/Time</strong></td>
+                        <td class="sec_tab">&nbsp;</td>
+                        <td><span id="rStartDateRO"></span></td>
+                    </tr>
+                    <tr id="rMileStoneTR">
+                        <td class="first_tab"><strong>Milestone End Date/Time</strong></td>
+                        <td class="sec_tab">&nbsp;</td>
+                        <td><span id="rMilestoneDateRO"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="first_tab"><strong>Submission End Date/Time</strong></td>
+                        <td class="sec_tab">&nbsp;</td>
+                        <td><span id="rSubEndDateRO"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="first_tab"><strong>End Date/Time</strong></td>
+                        <td class="sec_tab">&nbsp;</td>
+                        <td><span id="rEndDateRO"></span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="schedule schedule1" id="roundEdit">
             
              <!-- Round Type -->
              <div class="row" id="type">

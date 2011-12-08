@@ -588,8 +588,8 @@ function initContest(contestJson) {
         $('a.button11').hide();
         $('a.editType').show();
         $('#chkboxCCA').attr("disabled", true);
-        $('#contestName').hide();
-        $('#contestNameText').show();
+//        $('#contestName').hide();
+//        $('#contestNameText').show();
         $('#copilots').attr("disabled", true);
         $('.copilotsSelect').html('');
         if (mainWidget.softwareCompetition.copilotUserId <=0) {
@@ -609,6 +609,9 @@ function initContest(contestJson) {
             $(".edit_prize").parent().show();
         } else {
             $(".edit_prize").show();
+            $(".edit_round").show();
+            $('#roundEdit').hide();
+            $('#roundText').show();
         }
         
         $(".edit_spec").show();
@@ -874,11 +877,14 @@ function populateRoundSection() {
 	//display
     var startDateString = formatDateForReview(startDate);
     $('#rStartDate').html(startDateString);
+    $('#rStartDateRO').html(startDateString);
     $('table.projectStats td:eq(0)').html(startDateString);
     var endDateString = formatDateForReview(endDate);
     $('#rEndDate').html(endDateString);
+    $('#rEndDateRO').html(endDateString);
     $('table.projectStats td:eq(1)').html(endDateString);
 	$('#rSubEndDate').html(formatDateForReview(subEndDate));
+	$('#rSubEndDateRO').html(formatDateForReview(subEndDate));
    
     if(!isMultiRound) {	
     	$('#rMileStoneTR').hide();
@@ -886,6 +892,7 @@ function populateRoundSection() {
   	} else {
   		$('#rMileStoneTR').show();  	
   	 	$('#rMilestoneDate').html(formatDateForReview(milestoneDate));
+  	 	$('#rMilestoneDateRO').html(formatDateForReview(milestoneDate));
   	 	  	 	  
         $('#rMultiRoundInfoDiv').show();
         $('#rMPrizesAmount').text('$'+milestonePrizes[0].formatMoney(2));
@@ -1003,7 +1010,14 @@ function validateFieldsRoundSection() {
 		milestonePrize = parseFloat(milestonePrizeInput);
 		if(!checkRequired(milestonePrizeInput) || !checkNumber(milestonePrizeInput) || isNaN(milestonePrize)) {
 			errors.push('Milestone prize is invalid.');
-		}
+		} else {
+            // If registration is already started then check that the milestone prize is not decreased
+            if (phaseOpen) {
+                if (milestonePrize < getMilestonePrizes()[0]){
+                    errors.push('The milestone prize can not be decreased');
+                }
+            }
+        }
 	       
 		if (mainWidget.competitionType == "STUDIO") {
 			if(!checkRequired(round1Info)) {
