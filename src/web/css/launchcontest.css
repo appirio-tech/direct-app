@@ -1293,10 +1293,7 @@
 				height:22px;
 				margin-top:4px;
 				padding-left:28px;
-				font-size:12px;
-				color:#ab0000;
 				line-height:22px;
-				text-decoration:underline;
 				background:url(/images/addButton.gif) no-repeat left center;
 				}
 				
@@ -1304,6 +1301,12 @@
 				text-decoration:none;
 				background:url(/images/addButton_hover.gif) no-repeat left center;
 				}
+
+            .deliverablesInner .fileTypeAdd {
+                font-size:12px;
+				color:#ab0000;
+                text-decoration:underline;
+            }
 				
 		/** Stock Arts **/
 		.deliverablesInnerSa{

@@ -591,7 +591,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('.fileType').click(function(){
+	$('.fileTypeAdd').click(function(){
 		if($('.deliverablesInner .fileInput').length < 3){
 			$('.checkInput').append('<input type="checkbox" checked="checked" />&nbsp;&nbsp;<input type="text" class="text fileInput" />');
 		}

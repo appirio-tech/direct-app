@@ -127,16 +127,19 @@
     <!-- end .mPrizes -->
     
     <!-- Final Deliverables -->
-	<div class="deliverables">
-    
-        <h3><span class="icon">Final Deliverables:</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>        
+    <div class="deliverables">
+
+        <h3><span class="icon">Final Deliverables:</span><a href="javascript:;" class="helpIcon"><span
+                class="hide">Help</span></a></h3>
+
         <div class="deliverablesInner">
-        	<div class="checkInput" id="deliverablesCheckboxs">
-          </div>
-          <a href="javascript:;" class="fileType">File Type</a>
-          <div class="clear"></div>
+            <div class="checkInput" id="deliverablesCheckboxs">
+            </div>
+            <div class="fileType">
+                <a href="javascript:;" class="fileTypeAdd">File Type</a>
+            </div>
         </div>
-        
+
     </div>
     <!-- end .deliverables -->
     
