@@ -854,12 +854,16 @@
     
     <!-- For Copilot Tab-->
     <package name="copilot" namespace="/copilot" extends="base">
-        <action name="launchCopilotContest" class="launchContestAction">
+        <action name="launchCopilotContest" class="getACopilotAction">
             <result>/WEB-INF/launch-copilot-contest.jsp</result>
         </action>
 
 		<action name="postACopilot" class="launchContestAction">
             <result>/WEB-INF/post-a-copilot.jsp</result>
+        </action>
+        
+        <action name="selectFromCopilotPool" class="getACopilotAction">
+            <result>/WEB-INF/copilot-pool.jsp</result>
         </action>
         
         <action name="manageCopilots" class="copilotManageAction">

@@ -849,4 +849,10 @@
         <property name="loggerName" value="com.topcoder.accounting.fees.view.interceptor.ContestFeeAccessInterceptor"/>
         <property name="contestFeeAuthorizationProvider" ref="contestFeeAuthorizationProvider"/>
     </bean>
+    
+    <bean id="getACopilotAction"
+          class="com.topcoder.direct.services.view.action.copilot.GetACopilotAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="copilotProfileDAO" ref="copilotProfileDAO"/>  
+    </bean>
 </beans>

@@ -33,6 +33,7 @@ import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceRecord;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.ActivityDTO;
@@ -45,6 +46,7 @@ import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDTO;
@@ -402,8 +404,15 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 3.2 (Release Assembly - TC Direct Select From Copilot Pool Assembly) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getMemberPhotos(long[])} method to retrieve member photos.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
- * @version 3.1
+ * @version 3.2
  * @since 1.0
  */
 public class DataProvider {
@@ -4613,5 +4622,73 @@ public class DataProvider {
         }
         return result;
     }
+
+    /**
+     * Get member photos with specify user id array.
+     *
+     * @param userIds the user id array.
+     * @return retrieved member photos.
+     * @throws Exception if any exception occurs.
+     * @since 3.2
+     */
+    public static Map<Long, MemberPhotoDTO> getMemberPhotos(long[] userIds) throws  Exception {
+        Map<Long, MemberPhotoDTO> memberPhotos = new HashMap<Long, MemberPhotoDTO>();
+
+        if (userIds.length == 0) {
+            return memberPhotos;
+        }
+
+        final String queryName = "coder_image_data_list";
+        DataAccess dataAccess = new DataAccess(DBMS.JTS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("uids", concatenate(userIds, ","));
+
+        final ResultSetContainer container = dataAccess.getData(request).get(queryName);
+        for (ResultSetRow row : container) {
+            MemberPhotoDTO photo = new MemberPhotoDTO();
+
+            photo.setPhotoPath(new StringBuilder().append(row.getStringItem("image_path")).
+                    append(row.getStringItem("file_name")).toString());
+            photo.setId(row.getLongItem("coder_id"));
+
+            memberPhotos.put(photo.getId(), photo);
+        }
+
+        return memberPhotos;
+    }
+
+    /**
+     * Get copilot statistics.
+     *
+     * @param userId the user id
+     * @return copilot statistics
+     * @throws Exception if any exception occurs
+     * @since 3.2
+     */
+    public static CopilotPoolMember getCopilotStatistics(long userId) throws Exception {
+        final String commandName = "copilot_profile";
+        final String queryName = "copilot_profile_statistics";
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(commandName);
+        request.setProperty("uid", String.valueOf(userId));
+
+        CopilotPoolMember copilotPoolMember = new CopilotPoolMember();
+        final ResultSetContainer container = dataAccess.getData(request).get(queryName);
+        if (container.size() > 0) {
+            ResultSetRow row = container.get(0);
+
+            copilotPoolMember.setTotalContests(row.getIntItem("total_contests_number"));
+            copilotPoolMember.setTotalProjects(row.getIntItem("total_projects_number"));
+            copilotPoolMember.setTotalFailedContests(row.getIntItem("failed_contests_number"));
+            copilotPoolMember.setTotalRepostedContests(row.getIntItem("reposted_contests_number"));
+            copilotPoolMember.setCurrentContests(row.getIntItem("current_contests_number"));
+            copilotPoolMember.setCurrentProjects(row.getIntItem("current_projects_number"));
+        }
+
+        return copilotPoolMember;
+    }
+    
 }
 
