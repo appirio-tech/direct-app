@@ -2031,6 +2031,10 @@ TABLE.projectStats{
 	TABLE.projectStats TD.action a{
 		color: #ec1c23;
 	}
+	
+	TABLE.projectStats TD.action a.edit span.disabled {
+	  color: gray;
+  }
 	TABLE.projectStats TD.date{
 		font-size: 12px;
 		font-weight: normal;

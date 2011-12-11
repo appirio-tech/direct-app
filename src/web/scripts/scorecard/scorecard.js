@@ -152,7 +152,7 @@ function searchScorecard(page, max, callback) {
                             if (so.editable){
                                 html = html + '<a href="' + ctx + '/scorecard/edit/' + so.id + '" class="edit">Edit&nbsp;|&nbsp;</a>';
                             } else {
-                                html = html + '<a href="javascript:;"' + so.id + '" class="edit">Edit&nbsp;|&nbsp;</a>';
+                                html = html + '<a href="javascript:;"' + so.id + '" class="edit"><span class="disabled">Edit</span>&nbsp;|&nbsp;</a>';
                             }
                             html = html + '<a href="' + ctx + '/scorecard/clone/' + so.id + '" ref="' + so.id + '" class="copy">Clone</a></td>';
                             html += '</tr>';
@@ -476,6 +476,14 @@ $(document).ready(function() {
         });
     });
     
+    $("input[name='sn']").keypress(function(event) {
+        if(event.which == 13) {
+            searchScorecard(0, $(".maxResult").val());
+            
+            return false;
+        }        
+        
+    });
     $("#search, .apply").click(function() {
         searchScorecard(0, $(".maxResult").val());
     });
