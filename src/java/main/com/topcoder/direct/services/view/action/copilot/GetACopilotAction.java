@@ -3,8 +3,9 @@
  */
 package com.topcoder.direct.services.view.action.copilot;
 
-import com.topcoder.direct.services.copilot.CopilotProfileService;
+import com.topcoder.direct.services.copilot.dao.CopilotProfileDAO;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
+import com.topcoder.direct.services.copilot.model.CopilotProfile;
 import com.topcoder.direct.services.copilot.model.CopilotProfileStatus;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
@@ -66,8 +67,6 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
         // set default member photo
         DEFAULT_MEMBER_PHOTO = new MemberPhotoDTO();
         DEFAULT_MEMBER_PHOTO.setPhotoPath("/images/copilot_img.png");
-        DEFAULT_MEMBER_PHOTO.setWidth(96);
-        DEFAULT_MEMBER_PHOTO.setHeight(106);
     }
 
     /**
@@ -85,7 +84,7 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
     /**
      * The copilot profile service.
      */
-    private CopilotProfileService copilotProfileService;
+    private CopilotProfileDAO copilotProfileDAO;
 
     /**
      * Execute the action, include all handling logics.
@@ -102,11 +101,14 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
         profiles = new ArrayList<CopilotProfileDTO>();
 
         // get all copilots
-        List<CopilotPoolMember> members = copilotProfileService.getCopilotPoolMembers();
-        long[] userIds = new long[members.size()];
+        List<CopilotProfile> copilotProfiles = copilotProfileDAO.retrieveAll();
+        long[] userIds = new long[copilotProfiles.size()];
 
-        for (int i = 0; i < members.size(); i++) {
-            CopilotPoolMember member = members.get(i);
+        for (int i = 0; i < copilotProfiles.size(); i++) {
+            CopilotProfile copilotProfile = copilotProfiles.get(i);
+            CopilotPoolMember member = DataProvider.getCopilotStatistics(copilotProfile.getUserId());
+            member.setCopilotProfile(copilotProfile);
+
             CopilotProfileDTO profile = new CopilotProfileDTO();
             profile.setMember(member);
 
@@ -182,20 +184,11 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
     }
 
     /**
-     * Get the copilot profile service.
+     * Set the copilot profile DAO.
      *
-     * @return the copilot profile service.
+     * @param copilotProfileDAO the copilot profile DAO.
      */
-    public CopilotProfileService getCopilotProfileService() {
-        return copilotProfileService;
-    }
-
-    /**
-     * Set the copilot profile service.
-     *
-     * @param copilotProfileService the copilot profile service.
-     */
-    public void setCopilotProfileService(CopilotProfileService copilotProfileService) {
-        this.copilotProfileService = copilotProfileService;
+    public void setCopilotProfileDAO(CopilotProfileDAO copilotProfileDAO) {
+        this.copilotProfileDAO = copilotProfileDAO;
     }
 }
