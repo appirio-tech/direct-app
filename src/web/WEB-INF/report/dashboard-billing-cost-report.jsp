@@ -378,7 +378,11 @@
                  <s:property value="contest.id"/>
             </td>
             <td>
-                 <s:property value="referenceId"/>
+                <s:if test="referenceId != null && referenceId != ''">
+                    <a  target="_blank" href="https://apps.topcoder.com/bugs/browse/${referenceId}">
+                        <s:property value="referenceId"/>
+                    </a>
+                </s:if>
             </td>
             <td>
                  <s:property value="contestType.name"/>

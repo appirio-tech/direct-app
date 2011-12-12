@@ -5861,7 +5861,7 @@ Contest links
     text-decoration: underline;
 }
 
-.myCopilotsContestsList table.projectStats td a, table#ProjectContests td a.addCopilotUsers {
+table#copilotProjectTable td a.addCopilotUsers {
     text-decoration: none;
 }
 

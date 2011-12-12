@@ -74,7 +74,7 @@
                                                                 <s:iterator value="viewData.copilotProjects">
                                                                     <tr class="trNormal" name="project_${project.id}">
                                                                         <td class="tdTitle"><a href="javascript:;" class="expand">Expand</a>
-                                                                            <a class="longWordsBreak listTitle" href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#attr['value'].project.id}"/></s:url>">
+                                                                            <a class="longWordsBreak listTitle" href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="project.id"/></s:url>">
                                                                                 ${project.name}
                                                                             </a>
                                                                         </td>

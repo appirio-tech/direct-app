@@ -435,10 +435,15 @@
                 <c:out value="${item.billing.name}"/>
             </td>
             <td>
+                <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#attr['item'].project.id}"/></s:url>">
+
                     <c:out value="${item.project.name}"/>
+                </a>
 
             <td>
-                <c:out value="${item.contest.name}"/>
+                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['item'].contest.id}"/></s:url>">
+                    <c:out value="${item.contest.name}"/>
+                </a>
             </td>
             <td>
                 <c:out value="${item.contestType.name}"/>
