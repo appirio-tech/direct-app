@@ -14,7 +14,7 @@
 			paste_auto_cleanup_on_paste : true,
 			paste_enable_default_filters : true,
 			paste_block_drop : false,
-			paste_retain_style_properties : "yes",
+			paste_retain_style_properties : "none",
 			paste_strip_class_attributes : "mso",
 			paste_remove_spans : false,
 			paste_remove_styles : false,
@@ -99,7 +99,7 @@
 				t.onPostProcess.dispatch(t, o);
 
 				// Serialize content
-				//o.content = ed.serializer.serialize(o.node, {getInner : 1, forced_root_block : ''});
+				o.content = ed.serializer.serialize(o.node, {getInner : 1, forced_root_block : ''});
 
 				// Plain text option active?
 				if ((!force_rich) && (ed.pasteAsPlainText)) {
