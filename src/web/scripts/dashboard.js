@@ -48,17 +48,43 @@ $(document).ready(function(){
 						   
 	var Sys = {};
 	var ua = navigator.userAgent.toLowerCase();
+    var filterToSynchronized = ['customerId', 'billingAccountId', 'projectId', 'startDate', 'endDate', 'statusIds', 'projectCategoryIds'];
+
+    var synchronizeFilters = function() {
+
+        if($("#pipelineReportsPage").length != 0) {
+            return "";
+        }
+
+        var requestPart = "?";
+        var requestForm = $("form").serialize();
+        var requests = requestForm.split('&');
+        for(var i = 0; i < requests.length; ++i) {
+            var requestsNeeded = false;
+            for(var k = 0; k < filterToSynchronized.length; ++k) {
+                if (requests[i].indexOf(filterToSynchronized[k]) != -1) {
+                    requestsNeeded = true;
+                    break;
+                }
+            }
+            if (requestsNeeded) {
+                if(requestPart != "") requestPart += "&";
+                requestPart += requests[i];
+            }
+        }
+        return requestPart;
+    }
 	
     $("#selectReport").change(function() {
         var reportType = $(this).val();
         if (reportType == 'COST') {
-            window.location.href = '/direct/dashboardCostReport';
+            window.location.href = '/direct/dashboardCostReport' + synchronizeFilters();
         } else if (reportType == 'PIPELINE') {
             window.location.href = '/direct/dashboardReports';
         } else if (reportType == 'BILLING_COST') {
-           window.location.href = '/direct/dashboardBillingCostReport';
+            window.location.href = '/direct/dashboardBillingCostReport' + synchronizeFilters();
         } else if (reportType == 'PARTICIPATION') {
-           window.location.href = '/direct/dashboardParticipationReport';
+            window.location.href = '/direct/dashboardParticipationReport' + synchronizeFilters();
         }
     });
 	
