@@ -223,7 +223,7 @@ public class BillingCostReportDTO extends ReportBaseDTO {
             row.getCell(5).setStringValue(costDetail.getContest().getName());
 
             // set the contest id
-            row.getCell(6).setStringValue(String.valueOf(costDetail.getContest().getId()));
+            row.getCell(6).setNumberValue(costDetail.getContest().getId());
 
             // set the reference id
             if (costDetail.getReferenceId() == null || costDetail.getReferenceId().equals(""))
@@ -249,14 +249,14 @@ public class BillingCostReportDTO extends ReportBaseDTO {
 
             // set the actual total member cost, the 'active' and 'scheduled' contest does not have actual member cost
             //if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
-                row.getCell(12).setStringValue(moneyFormatter.format(costDetail.getActualTotalMemberCost()));
+                row.getCell(12).setNumberValue((costDetail.getActualTotalMemberCost()));
             
 
             // set the payment type
             row.getCell(13).setStringValue(costDetail.getPaymentType());
 
             // set the amount
-            row.getCell(14).setStringValue(moneyFormatter.format(costDetail.getPaymentAmount()));
+            row.getCell(14).setNumberValue((costDetail.getPaymentAmount()));
         }
     }
 }
