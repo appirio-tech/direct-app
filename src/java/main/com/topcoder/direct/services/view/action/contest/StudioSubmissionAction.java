@@ -17,6 +17,7 @@ import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.StudioContestSubmissionDTO;
+import com.topcoder.direct.services.view.dto.contest.SubmissionViewerType;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.StudioContestSubmissionForm;
@@ -81,9 +82,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ul>
  * </p>
  *
- * @author isv, flexme, TCSASSEMBLER
+ * <p>
+ *   Version 1.7 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
+ *   <ul>
+ *     <li>Updated {@link #executeAction()} method add support for full size view and get image file names.</code>
+ *   </ul>
+ * </p>
+ *
+ * @author isv, flexme, minhu
  * @since Submission Viewer Release 1 assembly
- * @version 1.6
+ * @version 1.7
  */
 public class StudioSubmissionAction extends ContestAction {
 
@@ -140,6 +148,22 @@ public class StudioSubmissionAction extends ContestAction {
     }
 
     /**
+     * <p>Handles the incoming request. If action is executed successfully then directs the application
+     * to single view or full view.</p>
+     *
+     * @return <code>full</code> if request is to be directed to full view or <code>single</code> if
+     *         response is to be directed to single view.
+     */
+    @Override
+    public String execute() throws Exception {
+        String result = super.execute();
+        if (SUCCESS.equals(result)) {
+            return getFormData().isFullView() ? "full" : "single";
+        }
+        return result;
+    }
+
+    /**
      * <p>Handles the incoming request. Retrieves the details for requested submission for requested contest and binds
      * it to view data along with other necessary details.</p>
      *
@@ -187,7 +211,7 @@ public class StudioSubmissionAction extends ContestAction {
             for (Submission sub : submissions) {
                 if (sub.getId() == submissionId) {
                     getViewData().setSubmission(sub);
-                    getViewData().setSubmissionArtifactCount(DirectUtils.getStudioSubmissionArtifactCount(submissionId));
+                    getViewData().setSubmissionArtifacts(DirectUtils.getStudioSubmissionArtifacts(submissionId));
                     break;
                 }
             }

@@ -185,7 +185,9 @@ function displayComingSoonMessage(modal, title, message, buttonText, buttonHandl
 $(function() {
 	$("#modal-background").css("opacity", "0.6");
 	$("#new-modal-window .closeModal").bind("click", closeModal);
-	$("#new-modal-window").scrollFollow({
-		offset : parseInt((document.documentElement.clientHeight / 2))
-	});
+    if ($("#new-modal-window").length > 0 && jQuery().scrollFollow) {
+        $("#new-modal-window").scrollFollow({
+            offset : parseInt((document.documentElement.clientHeight / 2))
+        });
+    }
 });

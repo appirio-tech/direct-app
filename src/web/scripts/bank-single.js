@@ -19,12 +19,18 @@
  * - Update the ajax loading indicator.
  * </p>
  *
- * @author tangzx, GreatKevin
- * @version 1.0.3
+ * <p>
+ * Version 1.1 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) Change notes:
+ * - Updated to follow the new prototype.
+ * </p>
+ *
+ * @author tangzx, GreatKevin, minhu
+ * @version 1.1
  */
 var listLikes = new Array();
 var listDislikes = new Array();
 var listExtra = new Array();
+var listPrize = [0,0,0,0,0];
 var arrPrize = ["firstPrize","secondPrize","thirdPrize","fourthPrize","fifthPrize"];
 var arrSlot = ["firstSlots","secondSlots","thirdSlots","fourthSlots","fifthSlots"];
 var cookieOptions = { path: '/', expires: 1 };
@@ -40,94 +46,15 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
-$(document).ready(function(){
-	
-		$('#carouselSingle').cycle({ 
-			fx:     'scrollHorz', 
-			prev:   '.navSingleSubmissionSlidePrev', 
-			next:   '.navSingleSubmissionSlideNext',  
-			timeout:   0,
-			pause:  1,
-			speed: 1000
-		});
-		//$('#carouselSingle').css('height', '560px');
-		/* new added for contest dashboard */
-		if($(".SubmissionSlotTitle").length > 0){
-			$(window).scrollTop($(".SubmissionSlotTitle").offset().top - 15);
-		}
-		/* end */
-						   
-$("a.actButtonlike, a.actButtondislike, a.actButtonzoom, a.actButtonzoom, a.actButtondollar, a.actButtonstar").hover(function() { 
-			var $this = $(this);	
-			var $next = $(this).next(".dialog-mini-wrapper");								   
-			$next.css("display", "block");
-			$(this).children("span").addClass("hover");
-			$next.hover(function() {
-				$next.css("display", "block");
-				$this.children("span").addClass("hover");
-				},function() {
-				$next.css("display", "none");
-				$this.children("span").removeClass("hover");
-			}); 
-			},function() {
-			var $next = $(this).next(".dialog-mini-wrapper");			
-			$next.css("display", "none"); 
-			$(this).children("span").removeClass("hover");
-}); 
-
-if($.browser.msie && $.browser.version == 6.0){	   
-		$("#contest-sort label").css({'zoom':'1' });   
-	}
-
-		$("a.thumbGrid").hover(function() {
-			var $next = $(this).next(".submissionAction");								   
-			$next.css("display", "block");
-			$next.hover(function() { 
-				$next.css("display", "block");
-				},function() {
-				$next.css("display", "none");
-			}); 
-			},function() {
-			var $next = $(this).next(".submissionAction");			
-			$next.css("display", "none"); 
-		});
-						   
-	
-	$('.TB_overlayBG').css("opacity", "0.6");
-	$('#TB_overlaySingle').hide();
-	$('#TB_closeWindowButtonSingle').click(function(){
-		$('#TB_overlaySingle').hide();
-		$('#TB_windowSingle').hide();										  
-	});
-	$(".actButtonzoom").click(function(){
-		var img = document.createElement('img');
-		img.src =  $(this).parent().parent().parent().parent().children("a.thumbSingle").children('img').attr('longdesc');
-		$('#TB_ajaxContentSingle').empty().append(img);
-//		TB_ajaxWindowTitleSingle
-		$('#TB_overlaySingle').show();
-		$('#TB_windowSingle').show();
-		$('.TB_overlayBG').css('height',document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
-		var winH = $("body").height();
-		var winW = $(window).width();
-		$('#TB_windowSingle').css({
-            'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_windowSingle").width() / 2)) + 'px',
-			'margin-top' : ((winH/2)-($("#TB_windowSingle").height()/2)) +'px'
-        });
-		return false;
-	});
-								
+$(document).ready(function() {									
 	//if submission id already exist in the list than remove it
 	function removeIfExist(id)
 	{
-		
-		for(var i=0;i<arrPrize.length;i++)
+		for(var i=0;i<listPrize.length;i++)
 		{
-			if ( $("#"+arrPrize[i]).children().length == 3)
+			if (listPrize[i] == id)
 			{
-				if ($("#"+arrPrize[i]).children().eq(2).text() == id)
-				{
-					$("#"+arrPrize[i]).html('<a href="#" class="thumb"><span></span></a>');
-				}
+				listPrize[i]=0;
 			}
 		}
 		for(var i=0;i<listExtra.length;i++)
@@ -135,7 +62,6 @@ if($.browser.msie && $.browser.version == 6.0){
 			if (listExtra[i] == id)
 			{
 				listExtra.remove(i,0);
-				$("#numExtra").html("(" + listExtra.length + ")");
 			}
 		}
 		
@@ -144,7 +70,6 @@ if($.browser.msie && $.browser.version == 6.0){
 			if(listLikes[i] == id)
 			{
 				listLikes.remove(i,0);
-				$("#likeCount").html(listLikes.length);
 			}
 		}
 		for(var i=0;i<listDislikes.length;i++)
@@ -152,10 +77,27 @@ if($.browser.msie && $.browser.version == 6.0){
 			if(listDislikes[i] == id)
 			{
 				listDislikes.remove(i,0);
-				$("#dislikeCount").html(listDislikes.length);
 			}
 		}
-	}
+	}   
+						   
+	$("a.actButtonlike, a.actButtondislike, a.actButtonzoom, a.actButtondollar, a.actButtonstar").hover(function() { 
+		var $this = $(this);	
+		var $next = $(this).next(".dialog-mini-wrapper");								   
+		$next.css("display", "block");
+		$(this).children("span").addClass("hover");
+		$next.hover(function() {
+			$next.css("display", "block");
+			$this.children("span").addClass("hover");
+			},function() {
+			$next.css("display", "none");
+			$this.children("span").removeClass("hover");
+		}); 
+		},function() {
+		var $next = $(this).next(".dialog-mini-wrapper");			
+		$next.css("display", "none"); 
+		$(this).children("span").removeClass("hover");
+	});
 	
 	// contest id
 	contestId = $("#contestId").val();
@@ -169,35 +111,52 @@ if($.browser.msie && $.browser.version == 6.0){
 	}
 
 	// update the bank data to cookie
+    var cookieInited = false;
 	function getBankData() {
-		var jsonData = {};
-		$("#bankSelectionItemList li:not(:last-child)").each(function() {
-			jsonData[this.id] = $(this).children("label").eq(0).html();
-		});
-		jsonData["listLikes"] = listLikes;
-		jsonData["listDislikes"] = listDislikes;
-		jsonData["listExtra"] = listExtra;
 		var cdata = $.cookie(COOKIE_NAME);
 		if (!cdata) {
 			cdata = {};
-			cdata[contestId] = {};
 		} else {
 			cdata = jQuery.parseJSON(cdata);
-			if (!cdata[contestId]) {
-				cdata[contestId] = {};
-				cdata[contestId][roundType] = {};
-			}
 		}
-		cdata[contestId][roundType] = jsonData;
+        if (!cdata[contestId]) {
+            cdata[contestId] = {};
+        }        
+        if (!cdata[contestId][roundType]) {
+            cdata[contestId][roundType] = {};
+        }
+		var jsonData = cdata[contestId][roundType];
+		if (!jsonData["listLikes"] || cookieInited) {
+		    jsonData["listLikes"] = listLikes;
+		} else {
+		    listLikes = jsonData["listLikes"];
+		}
+		if (!jsonData["listDislikes"] || cookieInited) {
+		    jsonData["listDislikes"] = listDislikes;
+		} else {
+		    listDislikes = jsonData["listDislikes"];
+		}
+		if (!jsonData["listExtra"] || cookieInited) {
+		    jsonData["listExtra"] = listExtra;
+		} else {
+		    listExtra = jsonData["listExtra"];
+		}
+		
+		if (!cookieInited) {
+		    // init the prize info
+            for(var i=0;i<listPrize.length;i++) {
+                listPrize[i]=jsonData[arrPrize[i]];
+            }
+		} else {
+		    // save prize info
+            for(var i=0;i<listPrize.length;i++) {
+                jsonData[arrPrize[i]]=listPrize[i];
+            }
+		}
 		$.cookie(COOKIE_NAME, JSON.stringify(cdata), cookieOptions);
+		cookieInited = true;
 	}
 
-	// set id to bankSelectionItemList's children
-	$("#bankSelectionItemList").children().each(function(index) {
-		if(!this.id) {
-			this.id = arrPrize[index];
-		}
-	});
 	// set class name to addToBank's children
 	$(".addToBank").each(function() {
 		$(this).children("a:not(:last-child)").each(function(index) {
@@ -206,294 +165,41 @@ if($.browser.msie && $.browser.version == 6.0){
 	});
 
     var hasCheckout = $('#hasCheckout').val() == 'true';
-    
-    	
-	// update the order of the bank slots
-	function updateSortable()
-	{
-		var result = $("#bankSelectionItemList").sortable('toArray');
-		
-		//reset slot prize number
-		$("#bankSelectionItemList li:not(#extraPrize)").each(function(index){
-			$(this).attr('id',arrPrize[index]);
-		});
-		
-		$("#bankSelectionItemList li:not(#extraPrize)").each(function(index){
-			if ($(this).children().length == 3)
-			{
-				var $item = $(this).children(".thumb").children("img").attr("src");
-				var $itemlabel = $(this).children("label").text();
-				var $slotId = arrPrize[index];
-				var $slotName = arrSlot[index];
-				$(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-				$(".statusSubmission").removeClass($slotName);
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass($slotName);
-				getBankData();
-				
-				$('#remove' + $slotId).click(function() { 
-					$("#" + $slotId).html('<a href="#" class="thumb"><span></span></a>');
-					$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-					getBankData();
-					return false;
-				});
-			}
-		});
+
+    // set the place/thumb up/thumb down/extra indicator
+	function setIndicator(cls) {
+        $(".submissionActionGrid").children(".numIcon").removeClass().addClass("numIcon").addClass(cls);
+        if (cls.indexOf('num')==0) {
+            $('#popupRankText').html(cls.substr(3));
+        } else {
+            $('#popupRankText').html("not assigned");
+        }
 	}
-
-	$("#bankSelectionItemList").disableSelection(); 
-
-    if (hasContestWritePermission) {
-        if (!hasCheckout) {
-            $("#bankSelectionItemList").children().each(function(index) {
-                $(this).droppable({
-                    accept: '.carouselSingleItem',
-                    hoverClass: 'drophover',
-                    drop: function(event, ui) {
-                        var $item = ui.draggable.children(".hidden").children("img.submissionIMG").attr("src");
-                        var $itemlabel = ui.draggable.children(".hidden").children("label").children(".submissionID").text();
-                        removeIfExist($itemlabel);
-                        var $slotId = $(this).attr('id');
-                        var $slotName = arrSlot[arrPrize.indexOf($slotId)];
-                        $(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' +
-                                     getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item +
-                                     '" alt="" /></a><label>' + $itemlabel + '</label>');
-                        $(".statusSubmission").removeClass($slotName);
-                        $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass($slotName);
-
-                        $('#remove' + $slotId).click(function() {
-                            $("#" + $slotId).html('<a href="#" class="thumb"><span></span></a>');
-                            $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-                            getBankData();
-                            return false;
-                        });
-                        getBankData();
+    if (!hasCheckout) {
+        //Add to Bank
+        $(".firstSlots,.secondSlots,.thirdSlots,.fourthSlots,.fifthSlots").click(function() { 	
+                var $itemlabel = $(this).attr("rel"); 
+                removeIfExist($itemlabel);
+                var i;
+                for (i = 0; i < arrSlot.length; i++) {
+                    if ($(this).hasClass(arrSlot[i])) {
+                        break;
                     }
-                }).sortable({
-                    items: 'li:not(#extraPrize)'
-                });
-            });
-        }
-    
-        if (!hasCheckout) {
-            $("#bankSelectionItemList").sortable({
-                items: 'li:not(#extraPrize)',
-                update:updateSortable
-            });
-        }
-
-        // submission li init draggable
-        $(".carouselSingleItem:not(.prizedSubmission)").draggable({
-            revert: true, 
-            cursor: 'move', 
-            cursorAt: { top: 35, left: 35 },
-            helper: function(event) {
-                    var $item = $(this).children(".hidden").children("img.submissionIMG").attr("src");
-                    return $('<div class="excerpt"><img src="' + $item + '" /></div>'); 
-                } 
-        }); 
-        
-        
-        // #clearSlots click function to clear all slots
-        if (!hasCheckout) {
-        $("#clearSlots").click(function() {
-                listExtra = new Array();
-                listLikes = new Array();
-                listDislikes = new Array();
-                $("#likeCount").html("0");
-                $("#dislikeCount").html("0");
-                $("#numExtra").html("(0)"); 
-                $(".icoSingleSubmissionBankLocation").removeClass("firstSlots");
-                $(".icoSingleSubmissionBankLocation").removeClass("secondSlots");
-                $(".icoSingleSubmissionBankLocation").removeClass("thirdSlots");
-                $(".icoSingleSubmissionBankLocation").removeClass("fourthSlots");
-                $(".icoSingleSubmissionBankLocation").removeClass("fifthSlots");
-                $(".icoSingleSubmissionBankLocation").removeClass("dollarSlots");
-                $(".icoSingleSubmissionBankLocation").removeClass("likeSlots");
-                $(".icoSingleSubmissionBankLocation").removeClass("dislikeSlots");
-                $("#bankSelectionItemList li:not(:last-child)").html('<a href="#" class="thumb"><span></span></a>');
+                }
+                setIndicator("num" + (i+1));
+                listPrize[i] = $itemlabel;
                 getBankData();
                 return false;
-        });   
-        }
-        
-        // #likeFolder init droppable
-        $("#likeFolder a").droppable({ 
-                    drop: function(ev, ui) { 
-                        $(this).removeClass('drophover');
-                        var $count = $(this).children("span").text();  
-                        var $countAdd = parseInt($count) + 1; 
-                        //$(".statusSubmission").removeClass("likeSlot");
-                        var $itemlabel = ui.draggable.children(".hidden").children("label").children(".submissionID").text();
-                        removeIfExist($itemlabel);
-                        listLikes.push($itemlabel);
-                        $("#likeCount").html(listLikes.length);
-                        $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("likeSlots"); 
-                        getBankData();
-                    },
-                    over: function(){
-                        $(this).addClass('drophover');
-                    },
-                    out : function(){
-                        $(this).removeClass('drophover');
-                    },	
-                    tolerance:"pointer"
-        });
-        
-        
-        // #likeFolder init droppable
-        $("#dislikeFolder a").droppable({ 
-                    drop: function(ev, ui) { 
-                        $(this).removeClass('drophover');
-                        var $count = $(this).children("span").text();  
-                        var $countAdd = parseInt($count) + 1; 
-                        //$(".statusSubmission").removeClass("dislikeSlot");
-                        var $itemlabel = ui.draggable.children(".hidden").children("label").children(".submissionID").text();
-                        removeIfExist($itemlabel);
-                        listDislikes.push($itemlabel);
-                        $("#dislikeCount").html(listDislikes.length);
-                        $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("dislikeSlots"); 
-                        getBankData();
-                    },
-                    over: function(){
-                        $(this).addClass('drophover');
-                    },
-                    out : function(){
-                        $(this).removeClass('drophover');
-                    },	
-                    tolerance:"pointer"
-        });
-        
-         
-        // #extraPrize init droppable
-        $("#extraPrize").droppable({
-            hoverClass: 'drophover', 
-            drop: function(event, ui) {
-                var $item = ui.draggable.children(".hidden").children("img.submissionIMG").attr("src");
-                var $itemlabel = ui.draggable.children(".hidden").children("label").children(".submissionID").text();
-                removeIfExist($itemlabel);  
-                listExtra.push($itemlabel);
-                $("#numExtra").html("(" + listExtra.length + ")");
-                $(".icoSingleSubmissionBankLocation").removeClass("dollarSlots");
-                $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("dollarSlots");
-                
-                $('#removeExtraPrize').click(function() { 
-                     $("#extraPrize").html('<a href="#" class="thumb"><span></span></a>');
-                     $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-                     getBankData();
-                    return false;
-                });
-                getBankData();
-                
-            }
-        });  
-        
-    }
-	
-    if (!hasCheckout) {
-	//Add to Bank number 1st
-	$(".firstSlots").click(function() { 					
-			var $item = $(this).attr("title"); 
-			var $itemlabel = $(this).attr("rel"); 
-			removeIfExist($itemlabel);
-			$("#firstPrize").html('<a href="#" id="removeFirstPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("firstSlots");
-			$('#removeFirstPrize').click(function() { 
-				$("#firstPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-				getBankData();
-				return false;
-			});
-			getBankData();
-			return false;
-	}); 
-	
-	
-	//Add to Bank number 2nd
-	$(".secondSlots").click(function() { 					
-			var $item = $(this).attr("title"); 
-			var $itemlabel = $(this).attr("rel"); 
-			removeIfExist($itemlabel);
-			$("#secondPrize").html('<a href="#" id="removeSecondPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("secondSlots");
-			$('#removeSecondPrize').click(function() { 
-				$("#secondPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-				getBankData();
-				return false;
-			});
-			getBankData();
-			return false;
-	}); 
-	
-	//Add to Bank number 3rd
-	$(".thirdSlots").click(function() { 					
-			var $item = $(this).attr("title"); 
-			var $itemlabel = $(this).attr("rel"); 
-			removeIfExist($itemlabel);
-			$("#thirdPrize").html('<a href="#" id="removeThirdPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("thirdSlots");
-			$('#removeThirdPrize').click(function() { 
-				$("#thirdPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-				getBankData();
-				return false;
-			});
-			getBankData();
-			return false;
-	}); 
-	
-	//Add to Bank number 4th
-	$(".fourthSlots").click(function() { 					
-			var $item = $(this).attr("title"); 
-			var $itemlabel = $(this).attr("rel"); 
-			removeIfExist($itemlabel);
-			$("#fourthPrize").html('<a href="#" id="removeFourthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("fourthSlots");
-			$('#removeFourthPrize').click(function() { 
-				$("#fourthPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-				getBankData();
-				return false;
-			});
-			getBankData();
-			return false;
-	}); 
-	
-	//Add to Bank number 5th
-	$(".fifthSlots").click(function() { 					
-			var $item = $(this).attr("title"); 
-			var $itemlabel = $(this).attr("rel"); 
-			removeIfExist($itemlabel);
-			$("#fifthPrize").html('<a href="#" id="removeFifthPrize" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("fifthSlots");
-			$('#removeFifthPrize').click(function() { 
-				$("#fifthPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-				getBankData();
-				return false;
-			});
-			getBankData();
-			return false;
-	}); 
+        }); 
     }
 
 	//Add to Extra Purchase
-	$(".extraSlot").click(function() { 					
-			var $item = $(this).attr("title"); 
+	$(".extraSlot").click(function() { 		
 			var $itemlabel = $(this).attr("rel");
 			removeIfExist($itemlabel); 
+            setIndicator("icoExtra");
 			listExtra.push($itemlabel);
-			$("#numExtra").html("(" + listExtra.length + ")");
-			$(".statusSubmission").addClass("dollarSlot");
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").addClass("dollarSlots");
-			$('#removeExtraPrize').click(function() { 
-				$("#extraPrize").html('<a href="#" class="thumb"><span></span></a>');
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-				getBankData();
-				return false;
-			});
 			getBankData();
-			
 			return false;
 	}); 
 
@@ -517,20 +223,17 @@ if($.browser.msie && $.browser.version == 6.0){
 	$(".noExtraSlot").click(function() {
 			var $itemlabel = $(this).attr("rel");
 			if (arrayRemove(listExtra, $itemlabel) != -1) {
-				$("#numExtra").html("(" + listExtra.length + ")");
-				$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
+                setIndicator("icoNull");
 				getBankData();
 			}
 	});
-	 
 	
 	//like bank
 	$(".likeSubmission").click(function() { 
 		var $item = $(this).attr("rel"); 
 		removeIfExist($item);
+        setIndicator("icoLike");
 		listLikes.push($item);
-		$("#likeCount").html(listLikes.length);
-		$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("likeSlots");
 		getBankData();
 		return false;
 	}); 
@@ -539,8 +242,7 @@ if($.browser.msie && $.browser.version == 6.0){
 	$(".noLikeSubmission").click(function() {
 		var $item = $(this).attr("rel"); 
 		if (arrayRemove(listLikes, $item) != -1) {
-			$("#likeCount").html(listLikes.length);
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
+            setIndicator("icoNull");
 			getBankData();
 		}
 	});
@@ -549,9 +251,8 @@ if($.browser.msie && $.browser.version == 6.0){
 	$(".dislikeSubmission").click(function() { 
 		var $item = $(this).attr("rel");
 		removeIfExist($item);
+        setIndicator("icoDislike");
 		listDislikes.push($item);
-		$("#dislikeCount").html(listDislikes.length);
-		$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("dislikeSlots");
 		getBankData();
 		return false;
 	});  
@@ -560,30 +261,59 @@ if($.browser.msie && $.browser.version == 6.0){
 	$(".noDislikeSubmission").click(function() {
 		var $item = $(this).attr("rel"); 
 		if (arrayRemove(listDislikes, $item) != -1) {
-			$("#dislikeCount").html(listDislikes.length);
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
+            setIndicator("icoNull");
 			getBankData();
 		}
 	});
+	 
 
-	initDialog('msgDialog', 300);
+	// alert modal
+	$('.addFeedbackButton').live('click',function(){
+        modalLoad("#alertModal2");
+		return false;
+	});
+	$("#cancelBtn,#alertModal2Close").live('click',function(){
+		$("#alertModal2").css("display","none");
+		modalClose();
+		return false;
+	});
+	$("#alertModal3Close,#doneBtn").live('click',function(){	
+		$('.addFeedbackButton').html("Edit Feedback");
+        $("span.feedbackTitle").html("Edit Feedback"); 
+        $("#alertModal3").find(".modalBodyBox").find(".hasAdded").html("Your feedback has been edited");
+		$("#alertModal3").css("display","none");
+		modalClose();
+	});
+	$('#editFeedbackBtn').live('click',function(){
+		$("#alertModal3").css("display","none");
+		$('.addFeedbackButton').html("Edit Feedback");
+        $("span.feedbackTitle").html("Edit Feedback"); 
+        $("#alertModal3").find(".modalBodyBox").find(".hasAdded").html("Your feedback has been edited");
+        modalLoad("#alertModal2");
+		return false;
+	});
+	//addFeedbackBox end
+	
+	//initDialog('msgDialog', 300);
 	// block ui before ajax calls
 	function beforeAjax() {
         modalPreloader();
 	}
 	// unblock ui after ajax calls
 	function afterAjax() {
-        modalClose();
+        //modalClose();
 	}
 
-	// update feedback text through ajax call
-	$("#updateFeedback").click(function() {
+	// save feedback text through ajax call
+	$("#saveFeedbackBtn").click(function() {
 		var feedback = $("#feedback").val();
 		feedback = $.trim(feedback);
 		if (feedback.length == 0) {
 			ShowErrors("Feedback content can't be empty.");
 			return false;
 		}
+        $("#alertModal2").css("display","none");
+        modalClose();
 		$.ajax({
 			type: 'POST',
 			url:  ctx + "/contest/updateSubmissionFeedback",
@@ -592,111 +322,30 @@ if($.browser.msie && $.browser.version == 6.0){
 			dataType: 'json',
 			async : false,
 			success: function (jsonResult) {
-//				$("<tr><td class='label'>Feedback:</td><td>" + feedback + "</td></tr>").insertAfter($("#submissionData").find("tr").last());
-//				$("#submissionFeedback").remove();
+                $("#alertModal3").find(".modalBodyBox").find("p").html(feedback);
+                modalLoad("#alertModal3");
 			},
 			beforeSend: beforeAjax,
 			complete: afterAjax
 		});
 	});
-	// url of all submissions page
-	var allSubs = "submissions?projectId=" + contestId + "&formData.viewType=GRID&formData.roundType=" + roundType;
-	// show all submissions
-	$("#allSubmissionBtn").click(function() {
-		window.location.href = allSubs;
-		return false;
-	});
-	// show like submissions
-	$("#likeSubmissionBtn").click(function() {
-		window.location.href = allSubs + "#like";
-		return false;
-	});
-	// show dislike submissions
-	$("#dislikeSubmissionBtn").click(function() {
-		window.location.href = allSubs + "#dislike";
-		return false;
-	});
-
-	// get bank data from cookie
-	var bankData = $.cookie(COOKIE_NAME);
-	if (bankData) {
-		bankData = jQuery.parseJSON(bankData);
-		if (bankData && bankData[contestId]) {
-			bankData = bankData[contestId][roundType];
-		} else {
-			bankData = null;
-		}
-	}
-
-    function initBanks(index, link) {
-        var $item = link.attr("title");
-        var $itemlabel = link.attr("rel");
-
-        var f = arrPrize[index];
-        var s = arrSlot[index];
-
-        $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass(s);
-        if (link.hasClass('disabledControl')) {
-            $("#" + f).html('<a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-        } else {
-            $("#" + f).html('<a href="#" id="remove' + f + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-            $('#remove' + f).click(function() {
-                $("#" + f).html('<a href="#" class="thumb"><span></span></a>');
-                $(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation");
-                getBankData();
-                return false;
-            });
-        }
-    }
 
 	// restore bank ui using bank data
-	if (bankData) {
-		listLikes = bankData.listLikes;
-		listDislikes = bankData.listDislikes;
-		listExtra = bankData.listExtra;
-		// set prize bank data from cookie
-		$("#bankSelectionItemList li:not(:last-child)").each(function(index) {
-			var $itemlabel = bankData[arrPrize[index]];
-			var $item = "https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=" + $itemlabel + "&sbt=thumb";
-			var $slotId = arrPrize[index];
-			if ($itemlabel) {
-				if ($itemlabel != submissionId) {
-                    if (hasCheckout) {
-                        $(this).html('<a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' 
-                                + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-                    } else {
-                        $(this).html('<a href="#" id="remove' + $slotId + '" class="btn_remove"></a><a href="' + getSinglePage($itemlabel) + '" class="thumb"><span></span><img src="' + $item + '" alt="" /></a><label>' + $itemlabel + '</label>');
-                        $('#remove' + $slotId).click(function() {
-                            $("#" + $slotId).html('<a href="#" class="thumb"><span></span></a>');
-                            getBankData();
-                            return false;
-                        });
-                    }
-				} else {
-                    initBanks(index, $("." + arrSlot[index]));
-				}
-			}
-		});
-		// set the count of like submissions
-		$("#likeCount").html(listLikes.length);
-		// set the count of dislike submissions
-		$("#dislikeCount").html(listDislikes.length);
-		// set the count of extra purchases
-		$("#numExtra").html("(" + listExtra.length + ")");
-		if (listLikes.indexOf(submissionId) >= 0) {
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("likeSlots");
-		}
-		if (listDislikes.indexOf(submissionId) >= 0) {
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").removeClass().addClass("icoSingleSubmissionBankLocation").addClass("dislikeSlots");
-		}
-		if (listExtra.indexOf(submissionId) >= 0) {
-			$(".submissionAction").children(".icoSingleSubmissionBankLocation").addClass("dollarSlots");
-		}
-	}
+	getBankData();
+    if (listLikes.indexOf(submissionId) >= 0) {
+        setIndicator("icoLike");
+    } else if (listDislikes.indexOf(submissionId) >= 0) {
+        setIndicator("icoDislike");
+    } else if (listExtra.indexOf(submissionId) >= 0) {
+        setIndicator("icoExtra");
+    } else if (listPrize.indexOf(submissionId) >= 0) {
+        setIndicator("num" +(listPrize.indexOf(submissionId)+1));
+    } else {
+        setIndicator("icoNull");
+    }
     
     if (!hasContestWritePermission) {
-        $("#bankSelectionButton").hide();
         $("#submissionFeedback").hide();
-        $(".btn_remove").hide();
     }
 }); 
+

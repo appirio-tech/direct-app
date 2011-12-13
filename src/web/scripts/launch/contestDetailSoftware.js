@@ -38,8 +38,11 @@
  * Version 1.4.3 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
  * - Fixed bug TCCC-3724. Updated logic for editing the contests.
  *
- * @author isv
- * @version 1.4.3
+ * Version 1.4.4 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp)
+ * - Updated updateContestCostData method to check Studio type.
+ *
+ * @author isv, minhu
+ * @version 1.4.4
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1183,7 +1186,7 @@ function updateContestCostData() {
     var prizeType = $('input[name="prizeRadio"]:checked').val();
     var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
     var feeObject = softwareContestFees[projectCategoryId];
-    if (!feeObject) {
+    if (!feeObject && mainWidget.competitionType != 'STUDIO') {
         showErrors('no fee found for project category ' + projectCategoryId);
         return;
     }

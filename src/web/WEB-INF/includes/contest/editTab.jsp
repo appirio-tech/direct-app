@@ -1,5 +1,5 @@
 <%--
-  - Version: 1.5
+  - Version: 1.6
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
@@ -16,7 +16,11 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes:
   -  Fix the contest requirements preview and integrate the new cockpit tinyMCE editor
+  -
   - Version 1.5 (Release Assembly - Contest Edit and Upload Update) changes: fixes for TCCC-3724, TCCC-3604
+  -
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) changes:
+  -   Added contestTypes select sub elements to avoid loading scripts error.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -74,6 +78,10 @@
                                 <span class="name fixWidthName"><strong>Contest Type</strong></span>
                                 <div class="selectOut">                                 
                                     <select id="contestTypes">
+                                         <optgroup label="Studio">
+                                         </optgroup>														                            
+                                         <optgroup label="Software">
+                                         </optgroup>														                             
                                      </select>
                                   </div>                                                
                            </div> <!-- End of .selectX -->                                                                                        

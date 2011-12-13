@@ -91,7 +91,9 @@ $(document).ready(function(){
 	//------------------------------------------------- Contests List
 	
 	/* sort contests */
-	$("#contestsTable").tablesorter(); 
+    if ($("#contestsTable").length > 0) {
+        $("#contestsTable").tablesorter();
+    }
     
     /* init date-pack */
     if($('.date-pick').length > 0){
@@ -184,17 +186,14 @@ $(document).ready(function(){
     }
 
     adjustContestListHeight();
-	
-	/* Stylished scrollbar*/
-	$('.contestsContent').jScrollPane({
-		scrollbarWidth: 17,
-		showArrows: true
-	});
-	
-	/* if a user click a contest cell he will be taken to that Contest description page*/
-	$(".contestsContent TD").click(function(){
-		document.location.href='contest-details.html';
-	});
+
+    if ($(".contestsContent").length > 0) {
+        /* Stylished scrollbar*/
+        $('.contestsContent').jScrollPane({
+            scrollbarWidth: 17,
+            showArrows: true
+        });
+    }
 	
 	/*-------------------------- Show/hide the dropdown list --*/
 

@@ -1,13 +1,13 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER, TCSASSEMBLER
+  - Author: isv, flexme, minhu
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: remove firstSlots class on single page.
   - Version 1.2 (Direct Submission Viewer Release 4) change notes: Replaced "submissionId" with "submission" attribute.
   - Version 1.3 (TC Direct Release Assembly 7) change notes: not to show link if user has no write permission.
   - Version 1.4 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
-  -
-  - Version: 1.4
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes: Updated to follow the new prototype.
+  - Version: 1.5
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This tag renders the HTML markup for a collection of buttons used for ranking, viewing,
   - purchasing, voting for Studio submissions by client.
@@ -19,6 +19,7 @@
 
 <%@ attribute name="contestId" required="true" type="java.lang.Long" %>
 <%@ attribute name="submission" required="false" type="com.topcoder.management.deliverable.Submission" %>
+<%@ attribute name="singleSubmissionFlag" required="false" type="java.lang.Boolean" %>
 
 <c:set var="submissionId" value="${submission.id}"/>
 <s:set var="viewType" value="formData.viewType.toString()" scope="page"/>
@@ -26,12 +27,15 @@
 <c:if test="${viewType eq 'LIST'}">
     <c:set var="divStyleClass" value="submissionListAction" scope="page"/>
 </c:if>
+<c:if test="${singleSubmissionFlag}">
+    <c:set var="divStyleClass" value="submissionActionGrid" scope="page"/>
+</c:if>
 
 <c:set var="isContestCheckedOut" value="${viewData.hasCheckout}"/>
 
 <div class="${divStyleClass}">
-    <c:if test="${viewType eq 'SINGLE'}">
-        <span class="icoSingleSubmissionBankLocation"></span>
+    <c:if test="${singleSubmissionFlag}">
+        <a href="#" class="numIcon icoNull"></a>
     </c:if>
     <ul>
         <li>
@@ -88,6 +92,7 @@
             </div>
             <!-- End .dialog-mini-wrapper -->
         </li>
+    <c:if test="${not singleSubmissionFlag}">
         <li>
             <a href="<s:url action="studioSubmission" namespace="/contest">
                             <s:param name="projectId" value="%{#attr['contestId']}"/>
@@ -107,6 +112,7 @@
                 </div>
             </div>
         </li>
+    </c:if>
         <li>
             <c:choose>            
                 <c:when test="${viewData.hasContestWritePermission}">

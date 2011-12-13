@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Studio submissions list view page.
@@ -9,8 +9,13 @@
  * - Hide input fields if user has no write permission.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0.1
+ * <p>
+ * Version 1.0.2 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) Change notes:
+ * - Added click event handler for thumb images.
+ * </p>
+ *
+ * @author minhu
+ * @version 1.0.2
  */
  
 var listLikes = new Array();
@@ -659,4 +664,8 @@ $(document).ready(function(){
         $("#bankSelectionButton").hide();
         $(".btn_remove").hide();
     }	 
+	
+	$('.thumbList').each(function(){
+	   $(this).attr("href",getSinglePage($(this).parents("tr").attr('id').substring(11)));    
+	});
 }); 

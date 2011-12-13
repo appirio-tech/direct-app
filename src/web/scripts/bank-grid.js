@@ -14,8 +14,13 @@
  * - Make drop submissions into the sink easy.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0.2
+ * <p>
+ * Version 1.0.3 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) Change notes:
+ * - Updated to follow the new prototype.
+ * </p>
+ *
+ * @author minhu
+ * @version 1.0.3
  */
  
 var listLikes = new Array();
@@ -117,7 +122,8 @@ $(document).ready(function(){
 	roundType = $("#roundType").val();
 	// get the url of a sumbission's single page
 	function getSinglePage(submissionId) {
-		return "studioSubmission?projectId=" + contestId + "&formData.submissionId=" + submissionId + "&formData.roundType=" + roundType;
+		return "studioSubmission?projectId=" + contestId + "&formData.submissionId=" + submissionId + "&formData.roundType=" + roundType
+		    +"&formData.fullView=false&formData.artifactNum=0";
 	}
 
 	// update the order of the bank slots
@@ -638,4 +644,8 @@ $(document).ready(function(){
         $("#bankSelectionButton").hide();
         $(".btn_remove").hide();
     }
+	
+	$('.thumbGrid').each(function(){
+	   $(this).attr("href",getSinglePage($(this).parent().find('.submissionID').html()));    
+	});
 }); 

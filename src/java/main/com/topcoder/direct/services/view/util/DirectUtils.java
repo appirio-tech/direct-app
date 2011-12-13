@@ -270,7 +270,7 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #isSuperAdmin(TCSubject)} to check the user is TC Admin or not.</li>
  *   </ol>
  * </p>
- *
+ * 
  * <p>
  * Version 1.7.9 (Release Assembly - Project Contest Fee Management Update 1 Assembly 1.0) Change notes:
  *   <ol>
@@ -278,8 +278,14 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  * 
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, TCSASSEMBLER
- * @version 1.7.9
+ * <p>
+ * Version 1.8.0 (Release Assembly - TopCoder Cockpit Studio Submission Viewer Revamp v1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getStudioSubmissionArtifacts(long)} to fetch image file names.</li>
+ *   </ol>
+ * </p>
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu
+ * @version 1.8.0
  */
 public final class DirectUtils {
     /**
@@ -634,6 +640,32 @@ public final class DirectUtils {
         }
 
         return principals;
+    }
+
+
+    /**
+     * Get studio submission artifacts which contain file names.
+     *
+     * @return the artifacts which contain file names
+     * @throws Exception if any error occurs.
+     * @since 1.8.0
+     */
+    public static List<String> getStudioSubmissionArtifacts(long submissionId) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("studio_submission_artifacts");
+        request.setProperty("subid", String.valueOf(submissionId));
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("studio_submission_artifacts");
+
+        final long recordNum = resultContainer.size();
+
+        List<String> names = new ArrayList<String>();
+        for (int i = 0; i < recordNum; i++) {
+            names.add(resultContainer.getStringItem(i, "file_name"));
+        }
+
+        return names;
     }
 
 
@@ -1689,7 +1721,7 @@ public final class DirectUtils {
 
         Request request = new Request();
         request.setContentHandle("project_categories_replatforming");
-        Map<String, com.topcoder.clients.model.ContestType> contestTypes = 
+        Map<String, com.topcoder.clients.model.ContestType> contestTypes =
         	new LinkedHashMap<String, com.topcoder.clients.model.ContestType>();
         
         ResultSetContainer container = dataAccess.getData(request)

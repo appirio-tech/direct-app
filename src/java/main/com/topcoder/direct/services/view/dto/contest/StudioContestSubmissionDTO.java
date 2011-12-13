@@ -54,10 +54,17 @@ import com.topcoder.management.deliverable.Submission;
  *     <li>Added {@link #stockArts} property with respective accessor/mutator methods.</li>
  *   </ul>
  * </p>
+ *
+ * <p>
+ *   Version 1.6 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
+ *   <ul>
+ *     <li>Changed {@link # .</code>
+ *   </ul>
+ * </p>
  * 
- * @author isv, flexme
+ * @author isv, flexme, minhu
  * @since Submission Viewer Release 1 assembly
- * @version 1.5
+ * @version 1.6
  */
 public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -72,9 +79,10 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     private Submission submission;
 
     /**
-     * <p>A <code>submissionArtifactCount</code> providing the nubmer of artifact count of the submission</p>
+     * <p>A <code>submissionArtifacts</code> providing the artifacts (file names) of the submission</p>
+     * @since 1.6
      */
-    private long submissionArtifactCount;
+    private List<String> submissionArtifacts;
 
     /**
      * <p>A <code>boolean</code> providing the flag indicating whether contest has milestone round set or not.</p>
@@ -205,25 +213,25 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
     }
 
      /**
-     * <p>Get the submissionArtifactCount.</p>
+     * <p>Get the submissionArtifacts.</p>
      *
-     * @return the number of artifact of the current submission
+     * @return the artifacts of the current submission
+     * @since 1.6
      */
-    public long getSubmissionArtifactCount() {
-        return this.submissionArtifactCount;
+    public List<String> getSubmissionArtifacts() {
+        return this.submissionArtifacts;
     }
 
     /**
-     * <p>Sets the submissionArtifactCount.</p>
+     * <p>Sets the submissionArtifacts.</p>
      *
-     * @param submissionArtifactCount - submission Artifact Count
+     * @param submissionArtifacts - submission Artifacts
+     * @since 1.6
      */
-    public void setSubmissionArtifactCount(long submissionArtifactCount) {
-        this.submissionArtifactCount = submissionArtifactCount;
+    public void setSubmissionArtifacts(List<String> submissionArtifacts) {
+        this.submissionArtifacts = submissionArtifacts;
     }
-
-
-    
+   
 
     /**
      * <p>Gets the flag indicating whether contest has milestone round set or not.</p>

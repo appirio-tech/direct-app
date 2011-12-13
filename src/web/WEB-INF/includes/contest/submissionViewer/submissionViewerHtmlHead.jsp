@@ -1,12 +1,15 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER
+  - Author: isv, flexme, minhu
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
+  -   Moved bank-single to its owning jsp to avoid JS initializing issue.
   - Version 1.3 (Direct Submission Viewer Release 4 ) change notes: Added some JS, CSS files for NOWINNER pages.
   - Version 1.2 (Direct Submission Viewer Release 3 ) change notes: Added some JS, CSS files for CHECKOUT page.
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes: Added some JS, CSS files for dialog, block UI.
   -
-  - Version: 1.3
+  - Version: 1.4
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders HTML HEAD area to be included into Studio Submissions Grid, List and
   - Single views.
@@ -75,8 +78,7 @@
 <s:if test="formData.viewType.toString() == 'SINGLE'">
     <script type="text/javascript" src="/scripts/jquery-cycle.js?v=185283"></script>
     <script type="text/javascript" src="/scripts/jquery-easing.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/bank-single.js?v=207440"></script>
-    <script type="text/javascript" src="/scripts/common.js?v=210496"></script>
+    <script type="text/javascript" src="/scripts/common.js?v=208807"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <!--[if IE 6]>
     <script src="/scripts/DD_belatedPNG.js?v=185283" type="text/javascript"></script>

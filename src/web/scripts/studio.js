@@ -3,8 +3,11 @@ $(function(){
 	//judge browser
 	var Sys = {};
 	var ua = navigator.userAgent.toLowerCase();	
-	 
-		$("#selectPaymentWrapper select").msDropDown(); 
+
+    if($("#selectPaymentWrapper select").length > 0) {
+        $("#selectPaymentWrapper select").msDropDown();
+    }
+
  
 	//safari
 	if(ua.match(/version\/([\d.]+).*safari/)!=null &&

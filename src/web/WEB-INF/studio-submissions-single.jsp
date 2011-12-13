@@ -1,5 +1,5 @@
 <%--
-  - Author: isv, flexme, TCSDEVELOPER, TCSASSEMBLER
+  - Author: isv, flexme, minhu
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes:
   - 1.Remove "bank:" row.
   - 2.Hide "Submitter Notes:" row.
@@ -20,7 +20,10 @@
   -
   - Version 1.5 (TC Direct Replatforming Release 5  ) change notes: Add support to the Submission Declaration section.
   -
-  - Version: 1.5
+  - Version 1.6 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
+  -   Updated to follow the new prototype.
+  -
+  - Version: 1.6
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
@@ -35,18 +38,26 @@
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/contest/submissionViewer/submissionViewerHtmlHead.jsp"/>
-    
+                                         
+    <link rel="stylesheet" href="/css/submission_viewer.css"  type="text/css" />
+    <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js"></script>
+    <script type="text/javascript" src="/scripts/json2.js?v=186145"></script>
+    <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
+    <script type="text/javascript" src="/scripts/submission_viewer.js"></script>
+    <script type="text/javascript" src="/scripts/bank-single.js"></script>
     <script type="text/javascript">
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
     </script>    
 </head>
 
 <s:set var="submission" value="viewData.submission" scope="page"/>
-<s:set var="submissionArtifactCount" value="viewData.submissionArtifactCount" scope="page"/>
+<s:set var="submissionArtifacts" value="viewData.submissionArtifacts" scope="page"/>
 <s:set var="previousSubmissionId" value="viewData.previousSubmissionId" scope="page"/>
 <s:set var="nextSubmissionId" value="viewData.nextSubmissionId" scope="page"/>
 <s:set var="roundType" value="formData.roundType.toString()" scope="page"/>
 <s:set var="contestId" value="projectId" scope="page"/>
+<s:set var="feedbackAction" scope="page"><s:if test="%{(viewData.feedbackText+'').trim().length()!=0}">Edit</s:if><s:else>Add</s:else> Feedback</s:set>
 
 <body id="page">
 <div id="wrapper">
@@ -56,160 +67,182 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
-
-                    <jsp:include page="includes/right.jsp"/>
-
-                    <div id="area1"><!-- the main area -->
-                        <div class="area1Content">
+				<div id="wholeContent">
+					<div id="wholeArea">
+						
+						<div class="wholeArea">
+						  <!-- current Page -->
+                          <div class="currentPageBox">
                             <div class="currentPage">
-                                <a href="<s:url action="dashboard" namespace="/"/>" class="home">Dashboard</a> &gt;
-                                <a href="<s:url action="currentProjectDetails" namespace="/">
-                                    <s:param name="formData.projectId" value="sessionData.currentProjectContext.id"/>
-                                </s:url>"><s:property
-                                        value="sessionData.currentProjectContext.name"/></a> &gt;
-                                <strong><s:property value="viewData.contestStats.contest.title"/></strong>
-                            </div>
-                            <div class="areaHeader">
-                                <h2 class="title contestTitle"><s:property
-                                        value="viewData.contestStats.contest.title"/></h2>
-                            </div>
-                            <!-- End .areaHeader -->
-
-                            <jsp:include page="includes/contest/dashboard.jsp"/>
-
-                            <!-- End .projectsStats -->
-
-                            <div class="container2 tabs3Container">
-
-                                <jsp:include page="includes/contest/tabs.jsp"/>
-
-                                <div class="container2Left">
-                                    <div class="container2Right">
-                                        <div class="container2BottomClear">
-                                            <div class="containerNoPadding">
-
-                                                <jsp:include
-                                                        page="includes/contest/submissionViewer/bankSelection.jsp"/>
-
-                                                <ul id="navSubmissionSlideshowTop">
-                                                    <li>
-                                                        <link:studioSubmission
-                                                            id="navSubmissionSlideshowTopPrev"
-                                                            submissionId="${previousSubmissionId}"
-                                                            contestId="${contestId}"
-                                                            roundType="${roundType}">
-                                                            Previous Submission
-                                                        </link:studioSubmission>
-                                                    </li>
-                                                    <li class="dot"></li>
-                                                    <li>
-                                                        <link:studioSubmission
-                                                            id="navSubmissionSlideshowTopNext"
-                                                            submissionId="${nextSubmissionId}"
-                                                            contestId="${contestId}"
-                                                            roundType="${roundType}">
-                                                            Next Submission
-                                                        </link:studioSubmission>
-                                                    </li>
-                                                </ul>
-
-
-                                                <jsp:include page="includes/contest/submissionViewer/slotTitle.jsp"/>
-                                                <div id="singleSubmissionContainer">
-
-                                                    <div id="singleSubmissionSlide">
-                                                        <a href="javascript:;" id="navSingleSubmissionSlidePrev"
-                                                           class="navSingleSubmissionSlidePrev"></a>
-                                                        <a href="javascript:;" id="navSingleSubmissionSlideNext"
-                                                           class="navSingleSubmissionSlideNext"></a>
-
-                                                        <ul id="carouselSingle" style="position: relative; width: 750px; height: 550px; overflow: hidden;">
-                                                            <%--
-                                                            For Wireframe contests only preview image is shown;
-                                                            For other contests images carousel is shown
-                                                            --%>
-                                                            
-                                                            <ui:studioCarouselSubmission
-                                                                    contestId="${contestId}"
-                                                                    submission="${submission}"
-                                                                    artifactNum="1"/>
-                                                            <!-- Carousel images -->
-                                                            <c:forEach begin="2" end="${submissionArtifactCount}"
-                                                                       varStatus="status">
-                                                                <ui:studioCarouselSubmission
-                                                                        contestId="${contestId}"
-                                                                        submission="${submission}"
-                                                                        artifactNum="${status.index}"/>
-                                                            </c:forEach>
-                                                        </ul>
-                                                        <ui:submissionAction contestId="${contestId}" submission="${submission}"/>
-                                                    </div>
-                                                    <!-- End #singleSubmissionSlide -->
-
-                                                    <s:push value="viewData.submission">
-                                                        <div id="submissionData">
-                                                            <table>
-                                                                <tr>
-                                                                    <td class="label">Submission ID:</td>
-                                                                    <td><s:property value="id"/></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="label">Date Submitted:</td>
-                                                                    <td>
-                                                                        <fmt:formatDate value="${creationTimestamp}"
-                                                                                        pattern="MMM dd, yyyy, hh:mm:ss aa"/>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="2">
-                                                                        <h3>Declarations</h3><i>Any notes and declared fonts or stock images that are used in the submission. <a href="http://topcoder.com/wiki/display/tcstudio/Declarations-+Stock+Art+and+Fonts" target="_blank">Read more here.</a></i>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="label">Comment:</td>
-                                                                    <td><c:if test="${viewData.submission.submissionDeclaration != null}">${viewData.submission.submissionDeclaration.comment}</c:if></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="label">Fonts:</td>
-                                                                    <td><c:forEach items="${viewData.fonts}" var="font"><a href="${font['Url']}" target="_blank">${font['Name']}</a><br/></c:forEach></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td class="label">Stock Art:</td>
-                                                                    <td><c:forEach items="${viewData.stockArts}" var="stockArt"><a href="${stockArt['Url']}" target="_blank">${stockArt['Name']}</a><br/></c:forEach></td>
-                                                                </tr>
-                                                                <s:if test="viewData.feedbackText != null && viewData.feedbackText.length() > 0">
-                                                                    <if:isConfirmedStudioSubmission>
-                                                                        <td class="label">Feedback:</td>
-                                                                        <td>${viewData.feedbackText}</td>
-                                                                    </if:isConfirmedStudioSubmission>
-                                                                </s:if>
-                                                            </table>
-                                                        </div>
-                                                        <!-- End #submissionData -->
-                                                    </s:push>
-
-                                                    <jsp:include page="includes/contest/submissionViewer/feedback.jsp"/>
-
-                                                </div>
-
-
-                                            </div>
-                                            <!-- End .container2Content -->
-                                        </div>
-                                    </div>
+                                <div class="crumbs">
+                                    <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
+                                    <a href="<s:url action="projectOverview" namespace="/">
+                                        <s:param name="formData.projectId" value="sessionData.currentProjectContext.id"/>
+                                    </s:url>"><s:property
+                                            value="sessionData.currentProjectContext.name"/></a> &gt;
+                                    <a href="<s:url action="detail" namespace="/contest">
+                                        <s:param name="projectId" value="projectId"/>
+                                    </s:url>"><s:property
+                                            value="viewData.contestStats.contest.title"/></a> &gt;
+                                    <a href="<s:url action="submissions" namespace="/contest">
+                                        <s:param name="formData.viewType" value="'GRID'"/>
+                                        <s:param name="projectId" value="projectId"/>
+                                    </s:url>">Submissions</a> &gt;
+                                    <strong>Submission ID: <s:property value="viewData.submission.id"/></strong>
                                 </div>
+                                <div class="pageTurn">
+                                    <c:if test="${previousSubmissionId != 0}">
+                                    <link:studioSubmission
+                                        submissionId="${previousSubmissionId}"
+                                        contestId="${contestId}"
+                                        roundType="${roundType}"
+                                        styleClass="prevLink">Previous</link:studioSubmission><span>|</span></c:if>
+                                    <a href="<s:url action="submissions" namespace="/contest">
+                                        <s:param name="formData.viewType" value="'GRID'"/>
+                                        <s:param name="projectId" value="projectId"/>
+                                    </s:url>" class="current">All Submissions</a>
+                                    <c:if test="${nextSubmissionId != 0}"><span>|</span>
+                                    <link:studioSubmission
+                                        submissionId="${nextSubmissionId}"
+                                        contestId="${contestId}"
+                                        roundType="${roundType}"
+                                        styleClass="nextLink">Next</link:studioSubmission></c:if>
+                                  </div>
+                              </div>
                             </div>
-                            <!-- End .container2 -->
+							<!-- End current Page -->
+                            
+                                  <!-- Submission Info Point -->
+                                  <div class="relative">
+                                    <div class="infoPointBox none">
+                                      <h2> 
+                                        <span class="titleLeft"></span> 
+                                        <span class="titleContent">Submission Info</span> 
+                                        <span class="titleRight"></span> 
+                                      </h2>
+                                        <div class="contentLeft">
+                                          <div class="contentRight">
+                                            <div class="contentBox">
+                                              <!-- form Text -->
+                                              <div class="formText">
+                                                <div class="left">Submission ID:</div>
+                                                <div class="right">${submission.id}</div>
+                                              </div>
+                                              <!-- End form Text -->
+                                              <!-- form Text -->
+                                              <div class="formText">
+                                                <div class="left">Date Submitted:</div>
+                                                <div class="right"><fmt:formatDate value="${submission.creationTimestamp}"
+                                                                                        pattern="MMM dd, yyyy, hh:mm:ss aa"/></div>
+                                              </div>
+                                              <!-- End form Text -->
+                                              <!-- form Text -->
+                                              <div class="formText">
+                                                <div class="left">Bank:</div>
+                                                <div class="right" id="popupRankText">not assigned</div>
+                                              </div>
+                                              <!-- End form Text -->
+                                                <h3>Submitter Notes</h3>
+                                                  <p><c:if test="${submission.submissionDeclaration != null}">${submission.submissionDeclaration.comment}</c:if></p>
+                                            </div>  
+                                          </div>
+                                        </div>
+                                          <div class="bottomBox"> 
+                                            <span>
+                                              <strong></strong>
+                                            </span> 
+                                          </div>                                    
+                                    </div>
+                                  </div>
+                                  <!-- End Submission Info Point -->
+							
+                          <!-- titleBarBox -->
+                          <div class="titleBarBox">
+                            <h1>
+                              <span>Submission ID : ${submission.id}</span>
+                              <a href="javascript:;" id="downTips"></a>
+                            </h1>
+                            <link:studioSubmissionDownload submissionId="${submission.id}" styleClass="downloadBtn">
+                                <span>DOWNLOAD</span>
+                            </link:studioSubmissionDownload>
 
-                            <a href="javascript:;" class="button1 backToTop"><span>Back To Top</span></a>
-                        </div>
-                    </div>
-
-                    <div class="clear"></div>
-
-                </div>
-                <!-- End #mainContent -->
+                              <!-- submission info -->
+						      <div class="submissionInfoFeedback">   
+                                <span class="corner tl"></span>
+                                <span class="corner tr"></span>
+                                <span class="corner bl"></span>
+                                <span class="corner br"></span>                                 
+                                  <!-- Add Feedback -->
+                                  <div class="addFeedback">
+                                    <a href="#" class="addFeedbackButton">${feedbackAction}</a>    
+                                  </div> 
+                                  <!-- End Add Feedback -->                               								 	
+                                     <!-- Action Bar -->
+                                     <div class="actionBar">
+                                        <ui:submissionAction contestId="${contestId}" submission="${submission}" singleSubmissionFlag="true"/>
+                                      </div>
+                                      <!-- End .actionBar -->
+                                      <!--  inactiveBar -->
+                                      <div class="inactiveBar">
+                                          <a href="javascript:;" class="gridView gridViewActive"><span>Grid View</span></a>
+                                          <a href="javascript:;" class="singleView"><span>Single View</span></a>
+                                      </div>
+                                      <!-- End .inactiveBar -->
+                              </div>
+							  <!-- End .submissionInfo -->   
+                              <div class="clear"></div>   
+                            </div>
+                            <!-- End titleBarBox -->                         
+                            <!-- imagesPage --> 
+                              <div class="imagesPage">
+                                    <p class="hide"><strong>Image 1</strong> of ${fn:length(submissionArtifacts)} images</p>
+                              </div>
+                              <!-- End imagesPage --> 
+							<!-- mainContent -->
+							<div class="mainContent">			
+								<!-- mainArea -->
+								<div class="mainArea">
+									<!-- thumbnails -->
+								  <div class="thumbnailsList gridViewDiv">
+                                        <c:forEach begin="1" end="${fn:length(submissionArtifacts)}"
+                                                   var="artifactNum">
+                                            <c:set var="imgUrl" value="${tcdirect:getSubmissionPreviewImageURL(submission.id, 'thumb', artifactNum, pageContext.request)}"/>
+                                            <c:set var="filename" value="${submissionArtifacts[artifactNum-1]}" />
+                                            <div class="thumbnailsItem">
+                                                <link:studioSubmission
+                                                        submissionId="${submission.id}"
+                                                        contestId="${contestId}"
+                                                        roundType="${roundType}"
+                                                        fullView="true"
+                                                        artifactNum="${artifactNum}"><img src="${imgUrl}" alt="thumbnails" /><span class="hoverPic"></span></link:studioSubmission>
+                                                <p>${filename}</p>
+                                            </div>
+                                        </c:forEach>
+                                        <div class="clear"></div>
+								   </div>
+								   
+									<!-- single submission -->
+									<div class="singleSubmission singleViewDiv hide">
+										<div class="singleCarousel">
+											<ul id="singleCarousel" class="jcarousel-skin-tango">
+                                                <c:forEach begin="1" end="${fn:length(submissionArtifacts)}"
+                                                           var="artifactNum">
+                                                    <c:set var="imgUrl" value="${tcdirect:getSubmissionPreviewImageURL(submission.id, 'full', artifactNum, pageContext.request)}"/>
+                                                    <li><link:studioSubmission
+                                                        submissionId="${submission.id}"
+                                                        contestId="${contestId}"
+                                                        roundType="${roundType}"
+                                                        fullView="true"
+                                                        artifactNum="${artifactNum}"><img src="${imgUrl}" alt="${artifactNum}" /><span class="hoverPic"></span></link:studioSubmission></li>
+                                                </c:forEach>
+											</ul>
+										</div>
+									</div>
+									<!-- End .singleSubmission -->
+                               </div>
+                           </div>
+                       </div>
+                   </div>
 
                 <jsp:include page="includes/footer.jsp"/>
 
@@ -223,7 +256,89 @@
 
 <jsp:include page="includes/contest/submissionViewer/contestVars.jsp"/>
 <input type="hidden" id="submissionId" value="${formData.submissionId}"/>
-<jsp:include page="includes/popups.jsp"/>
+
+<!-- modal -->
+
+<div id="modalBackground"></div>
+<div id="new-modal">
+	<!-- #alertModal2 -->
+	<div id="alertModal2" class="submissions smodal_1">
+		<div class="modalHeader">
+			<div class="modalHeaderRight">
+				<div class="modalHeaderCenter">
+					<span class="feedbackTitle">${feedbackAction}</span>
+				  <a href="javascript:;" class="closeModal" id="alertModal2Close" title="Close">Close</a>
+
+				</div>
+			</div>
+		</div>
+		<!-- end .modalHeader -->
+		<div class="modalBodyBox">
+		  <div class="addFeedbackBox">
+		    <h3>Feedback</h3>
+		    <div>
+		      <textarea name="textarea" id="feedback" cols="" rows="">${viewData.feedbackText}</textarea>
+	        </div>
+	      </div>
+		  <div class="modalCommandBox"> 
+            <a href="javascript:;" class="bottomBtn btnRed widthBox1" id="cancelBtn"><span><em>CANCEL</em></span></a>
+            <a href="javascript:;" class="bottomBtn btnRed widthBox2" id="saveFeedbackBtn"><span><em>SAVE FEEDBACK</em></span></a>
+          </div>
+	  </div>
+
+		<!-- end .modalBody -->
+		
+<div class="modalFooter">
+			<div class="modalFooterRight">
+				<div class="modalFooterCenter"></div>
+			</div>
+		</div>
+		<!-- end .modalFooter -->
+	</div>
+	<!-- end #alertModal2 -->
+
+    
+	<!-- #alertModal3 -->
+	<div id="alertModal3" class="submissions smodal_2">
+		<div class="modalHeader">
+			<div class="modalHeaderRight">
+				<div class="modalHeaderCenter">
+					<span class="feedbackTitle">${feedbackAction}</span>
+				  <a href="javascript:;" class="closeModal" id="alertModal3Close"  title="Close">Close</a>
+				</div>
+
+			</div>
+		</div>
+		<!-- end .modalHeader -->
+		<div class="modalBodyBox">
+		  <div class="hasaddFeedback">
+            <div class="hasAdded">Your feedback has been <s:if test="%{(viewData.feedbackText+'').trim().length()!=0}">edited</s:if><s:else>added</s:else></div>
+              <div class="textBox">
+                <h4>Feedback</h4>
+
+                  <p>${viewData.feedbackText}</p>
+              </div>          
+	      </div>
+		  <div class="modalCommandBox"> 
+            <a href="javascript:;" class="bottomBtn btnRed widthBox1" id="doneBtn"><span><em>DONE</em></span></a>
+            <a href="javascript:;" class="bottomBtn btnRed widthBox2" id="editFeedbackBtn"><span><em>EDIT FEEDBACK</em></span></a>
+          </div>
+
+	  </div>
+		<!-- end .modalBody -->
+		
+<div class="modalFooter">
+			<div class="modalFooterRight">
+				<div class="modalFooterCenter"></div>
+			</div>
+		</div>
+		<!-- end .modalFooter -->
+	</div>
+
+	<!-- end #alertModal3 -->
+	
+</div>
+<!-- end modal -->
 
 </body>
 <!-- End #page -->

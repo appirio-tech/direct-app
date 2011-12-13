@@ -10,8 +10,15 @@ import com.topcoder.direct.services.view.dto.contest.SubmissionViewerType;
  * <p>A form bean for requests for viewing the details for requested submission for desired <code>Studio</code> contest.
  * </p>
  *
- * @author isv
- * @version 1.0 (Submission Viewer Release 1 assembly)
+ * <p>
+ *   Version 1.1 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
+ *   <ul>
+ *     <li>Added {@link #fullView}, {@link #artifactNum} properties to support for full size view also.</code>
+ *   </ul>
+ * </p>
+ *
+ * @author isv, minhu
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp)
  */
 public class StudioContestSubmissionForm extends ContestIdForm {
 
@@ -24,6 +31,16 @@ public class StudioContestSubmissionForm extends ContestIdForm {
      * <p>A <code>ContestRoundType</code> providing the contest round type.</p>
      */
     private ContestRoundType roundType = ContestRoundType.FINAL;
+    
+    /**
+     * The fullView flag used to request the result jsp view.
+     */
+    private boolean fullView;
+    
+    /**
+     * The artifactNum for the full view.
+     */
+    private int artifactNum;
 
     /**
      * <p>Constructs new <code>StudioContestSubmissionForm</code> instance. This implementation does nothing.</p>
@@ -84,5 +101,41 @@ public class StudioContestSubmissionForm extends ContestIdForm {
      */
     public void setRoundType(ContestRoundType roundType) {
         this.roundType = roundType;
+    }
+
+    /**
+     * <p>Sets the fullView flag.</p>
+     * 
+     * @param fullView the fullView to set
+     */
+    public void setFullView(boolean fullView) {
+        this.fullView = fullView;
+    }
+
+    /**
+     * <p>Gets the fullView flag.</p>
+     * 
+     * @return the fullView
+     */
+    public boolean isFullView() {
+        return fullView;
+    }
+
+    /**
+     * <p>Sets the artifactNum value.</p>
+     * 
+     * @param artifactNum the artifactNum to set
+     */
+    public void setArtifactNum(int artifactNum) {
+        this.artifactNum = artifactNum;
+    }
+
+    /**
+     * <p>Gets the artifactNum value.</p>
+     * 
+     * @return the artifactNum
+     */
+    public int getArtifactNum() {
+        return artifactNum;
     }
 }
