@@ -6167,6 +6167,10 @@ A.button11{
     border-right: 1px solid #A8ABAD;
 }
 
+.resultTableContainer .statsTable {
+    overflow: auto;
+    border-top: 1px solid #A8ABAD;
+}
 .resultTableContainer .resultTable {
     border: 0px;
     margin-bottom: 0px;

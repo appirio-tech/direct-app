@@ -595,6 +595,15 @@
   <property name="spring-tx.jar" value="${spring_libdir}/spring-tx.jar" />
   <property name="common-annotations.jar" value="${spring_libdir}/common-annotations.jar" />
 
+  <!-- Apache POI libs -->
+  <property name="poi_libdir" value="${ext_libdir}/poi/3.7" />
+  <property name="poi_version_tag" value="3.7-20101029" />
+  <property name="poi.jar" value="${poi_libdir}/poi-${poi_version_tag}.jar" />
+  <property name="poi-ooxml.jar" value="${poi_libdir}/poi-ooxml-${poi_version_tag}.jar" />
+  <property name="poi-ooxml-schemas.jar" value="${poi_libdir}/poi-ooxml-schemas-${poi_version_tag}.jar" />
+  <property name="dom4j-1.6.1.jar" value="${poi_libdir}/ooxml-lib/dom4j-1.6.1.jar" />
+  <property name="xmlbeans-2.3.0.jar" value="${poi_libdir}/ooxml-lib/xmlbeans-2.3.0.jar" />
+
   <!-- EJB/Persistence libraries -->
   <path id="ejb.libs">
     <pathelement location="${ejb-api.jar}" />
@@ -667,6 +676,12 @@
     <fileset dir="${ext_libdir}" includes="*.jar" />
   </path>
 
+  <path id="poi.libs" >
+    <pathelement location="${poi.jar}" />
+    <pathelement location="${poi-ooxml.jar}" />
+    <pathelement location="${poi-ooxml-schemas.jar}" />
+  </path>
+
   <path id="component.tcs-dependencies">
     <pathelement location="${base_exception.jar}" />
     <pathelement location="${configuration_manager.jar}" />
@@ -730,6 +745,7 @@
     <path refid="hibernate.libs" />
     <path refid="commons.libs" />
     <path refid="asm.libs" />
+    <path refid="poi.libs" />
     <pathelement location="${jira-soapclient-all.jar}" />
     <pathelement location="${servlet-api.jar}" />
     <pathelement location="${jaxb.jar}" />

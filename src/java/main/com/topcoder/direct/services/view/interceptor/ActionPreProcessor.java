@@ -19,6 +19,7 @@ import com.topcoder.direct.services.view.action.project.ProjectContestsAction;
 import com.topcoder.direct.services.view.action.project.ProjectOverviewAction;
 import com.topcoder.direct.services.view.action.project.SetCurrentProjectAction;
 import com.topcoder.direct.services.view.action.project.ProjectGamePlanAction;
+import com.topcoder.direct.services.view.action.stats.InternalStatsAction;
 import com.topcoder.direct.services.view.processor.ProcessorsGroup;
 import com.topcoder.direct.services.view.processor.RequestProcessor;
 import com.topcoder.direct.services.view.processor.UserProjectsProcessor;
@@ -192,6 +193,8 @@ public class ActionPreProcessor implements Interceptor {
         } else if (action instanceof ProjectGamePlanAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new ProjectStatsProcessor(),
                                                                });
+        } else if (action instanceof InternalStatsAction) {
+            return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
         }else {
             return null;
         }

@@ -1234,6 +1234,19 @@ public final class DirectUtils {
     }
 
     /**
+
+     * <p>
+     * Checks if the user can view internal stats.
+     * </p>
+     *
+     * @return true if the user can view internal stats and false otherwise.
+     * @since 1.6.7
+     */
+    public static boolean canViewInternalStats() {
+        return isRole(getTCSubjectFromSession(), TC_OPERATIONS_ROLE);
+    }
+
+    /**
      * Gets the client feedback for submissions.
      *
      * @param currentUser TCSubject instance for login user

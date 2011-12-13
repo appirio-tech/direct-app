@@ -407,4 +407,15 @@ public class JSPHelper {
     public static boolean isScorecardAdmin() {
         return DirectUtils.isScorecardAdmin();
     }
+
+    /**
+     * <p>
+     * Checks if the user can view internal stats.
+     * </p>
+     *
+     * @return true if the user can view internal stats and false otherwise.
+     */
+    public static boolean canViewInternalStats() {
+        return DirectUtils.canViewInternalStats();
+    }
 }

@@ -48,6 +48,8 @@
                 <span>TopCoder Copilots</span>
             </a>
         </c:when>
+        <c:when test="${requestScope.PAGE_TYPE eq 'internal'}">
+        </c:when>
         <c:otherwise>
             <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo">
             <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
@@ -73,11 +75,16 @@
                      <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
                 </li>
 
-		<c:if test="${tcdirect:isScorecardAdmin()}" >
-		   <li>
-                      <a href="/direct/scorecard/"><span>Scorecards</span></a>
-                   </li>
-               </c:if>
+		        <c:if test="${tcdirect:isScorecardAdmin()}" >
+		        <li>
+                     <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                </li>
+                </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}" >
+		        <li>
+                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                </li>
+                </c:if>
             </ul>
         </ui:isDashboardPage>
         <ui:isProjectPage>
@@ -98,7 +105,12 @@
 		   <li>
                       <a href="/direct/scorecard/"><span>Scorecards</span></a>
                    </li>
-               </c:if>               
+               </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}" >
+		        <li>
+                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                </li>
+                </c:if>
             </ul>
         </ui:isProjectPage>
 	<ui:isCopilotPage>
@@ -119,12 +131,43 @@
 		   <li>
                       <a href="/direct/scorecard/"><span>Scorecards</span></a>
                    </li>
-               </c:if>   
+               </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}" >
+		        <li>
+                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                </li>
+                </c:if>
                 <!--
                 <li><a href="#"><span>Messages (0)</span></a></li>
                 -->
             </ul>
         </ui:isCopilotPage>
+        <ui:isInternalPage>
+            <ul>
+                <li>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
+                </li>
+
+                <li>
+                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
+                </li>
+
+                <li>
+                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                </li>
+
+		<c:if test="${tcdirect:isScorecardAdmin()}" >
+		   <li>
+                      <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                   </li>
+               </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}" >
+		        <li class="on">
+                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                </li>
+                </c:if>
+            </ul>
+        </ui:isInternalPage>
         <c:if test="${requestScope.PAGE_TYPE eq 'launch'}">
             <ul>
                 <li class="on">
@@ -143,7 +186,12 @@
 		   <li>
                       <a href="/direct/scorecard/"><span>Scorecards</span></a>
                    </li>
-               </c:if>                   
+               </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}" >
+		        <li>
+                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                </li>
+                </c:if>
             </ul>
         </c:if>
     </div><!-- End #tabs0 -->

@@ -99,4 +99,10 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>boolean isScorecardAdmin()</function-signature>
     </function>
+
+    <function>
+        <name>canViewInternalStats</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean canViewInternalStats()</function-signature>
+    </function>
 </taglib>

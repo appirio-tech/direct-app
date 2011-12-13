@@ -28,6 +28,8 @@
                          class="com.topcoder.direct.services.view.interceptor.ProjectAccessInterceptor"/>
             <interceptor name="contestAccessGuard"
                          class="com.topcoder.direct.services.view.interceptor.ContestAccessInterceptor"/>
+            <interceptor name="internalStatsGuard"
+                         class="com.topcoder.direct.services.view.interceptor.InternalStatsAccessInterceptor"/>
             <interceptor name="authnInterceptor"
                          class="authenticationInterceptor"/>
             <interceptor name="loggingInterceptor"
@@ -58,6 +60,11 @@
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
                 <interceptor-ref name="contestAccessGuard"/>
+            </interceptor-stack>
+            <interceptor-stack name="securedInternalStatsStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="internalStatsGuard"/>
             </interceptor-stack>
             <interceptor-stack name="securedDefaultStack">
                 <interceptor-ref name="defaultStack"/>
@@ -575,6 +582,11 @@
             <result name="input">/WEB-INF/billing/billing_account_create_fees_list.jsp</result>
         </action>
 
+        <action name="internalStats" class="com.topcoder.direct.services.view.action.stats.InternalStatsAction">
+          <param name="excelFile">E:/BUGR/BUGR-5638/rev_sample.xlsx</param>
+          <interceptor-ref name="securedPreProcessorStack"/>
+          <result name="success">/WEB-INF/internal-stats.jsp</result>
+        </action>
     </package>
 
     <package name="base" namespace="/base" extends="default">
@@ -975,7 +987,6 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-
     </package>
 
 </struts>
