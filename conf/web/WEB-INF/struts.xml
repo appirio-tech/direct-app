@@ -741,6 +741,8 @@
         </action>
 
         <action name="studioSubmission" class="studioSubmissionAction">
+            <result name="full">/WEB-INF/studio-submissions-full.jsp</result>
+            <result name="single">/WEB-INF/studio-submissions-single.jsp</result>
             <result>/WEB-INF/studio-submissions-single.jsp</result>
         </action>
         
