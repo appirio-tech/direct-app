@@ -583,7 +583,7 @@
         </action>
 
         <action name="internalStats" class="com.topcoder.direct.services.view.action.stats.InternalStatsAction">
-          <param name="excelFile">E:/BUGR/BUGR-5638/rev_sample.xlsx</param>
+          <param name="excelFile">@excelFile@</param>
           <interceptor-ref name="securedPreProcessorStack"/>
           <result name="success">/WEB-INF/internal-stats.jsp</result>
         </action>
