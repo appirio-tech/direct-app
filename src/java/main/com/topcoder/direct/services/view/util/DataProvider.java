@@ -950,6 +950,61 @@ public class DataProvider {
     }
 
     /**
+     * <p>Gets the list of project summary data associated with specified user.</p>
+     *
+     * @param tcSubject a <code>TCSubject</code> referencing the user.
+     * @return a <code>List</code> listing the details for project summary data.
+     * @throws Exception if an unexpected error occurs.
+     */
+    public static List<ProjectSummaryData> getProjectData(TCSubject tcSubject) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_projects_contests");
+
+        if(DirectUtils.isCockpitAdmin(tcSubject)) {
+            request.setProperty("uid", String.valueOf(0));
+        } else {
+            request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        }
+
+        List<ProjectSummaryData> projectData = new ArrayList<ProjectSummaryData>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects_contests");
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            ProjectSummaryData data = new ProjectSummaryData();
+            data.setProjectId(resultContainer.getLongItem(i, "project_id"));
+            data.setProjectName(resultContainer.getStringItem(i, "project_name"));
+            data.setDirectProjectStatusId(resultContainer.getLongItem(i, "project_status_id"));
+            data.setProjectCreationDate(resultContainer.getTimestampItem(i, "create_date"));
+
+            // draft
+            data.getDraft().setTotalNumber(resultContainer.getIntItem(i, "num_draft"));
+            data.getDraft().setTotalPayment(resultContainer.getDoubleItem(i, "cost_draft"));
+
+            // scheduled
+            data.getScheduled().setTotalNumber(resultContainer.getIntItem(i, "num_scheduled"));
+            data.getScheduled().setTotalPayment(resultContainer.getDoubleItem(i, "cost_scheduled"));
+
+            // active
+            data.getActive().setTotalNumber(resultContainer.getIntItem(i, "num_active"));
+            data.getActive().setTotalPayment(resultContainer.getDoubleItem(i, "cost_active"));
+
+            // finished
+            data.getFinished().setTotalNumber(resultContainer.getIntItem(i, "num_finished"));
+            data.getFinished().setTotalPayment(resultContainer.getDoubleItem(i, "cost_finished"));
+
+            // cancelled
+            data.getCancelled().setTotalNumber(resultContainer.getIntItem(i, "num_cancelled"));
+            data.getCancelled().setTotalPayment(resultContainer.getDoubleItem(i, "cost_cancelled"));
+
+            projectData.add(data);
+        }
+
+        return projectData;
+    }
+
+    /**
      * <p>Gets the details on projects associated with specified user and matching the specified criteria.</p>
      *
      * <p>Sub-sequent assemblies must implement this method to use the appropriate logic for getting the matching
@@ -963,7 +1018,7 @@ public class DataProvider {
      */
     public static List<DashboardProjectSearchResultDTO> searchUserProjects(TCSubject tcSubject, String searchFor)
         throws Exception {
-        List<ProjectSummaryData> projects = DirectUtils.getContestServiceFacade().getProjectData(tcSubject);
+        List<ProjectSummaryData> projects = getProjectData(tcSubject);
         List<ProjectSummaryData> filteredProjects;
 
         if (StringUtils.isBlank(searchFor)) {
