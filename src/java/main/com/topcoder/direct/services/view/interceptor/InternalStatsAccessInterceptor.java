@@ -46,7 +46,7 @@ public class InternalStatsAccessInterceptor implements Interceptor {
      */
     public String intercept(ActionInvocation actionInvocation) throws Exception {
         HttpServletRequest request = DirectUtils.getServletRequest();
-        boolean granted = DirectUtils.isTcOperations(DirectUtils.getTCSubjectFromSession());
+        boolean granted = DirectUtils.canViewInternalStats();
         if (!granted) {
             request.setAttribute("errorPageMessage", "Sorry, you don't have permission to access the internal stats.");
             return "permissionDenied";

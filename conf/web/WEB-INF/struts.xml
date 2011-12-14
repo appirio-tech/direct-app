@@ -584,7 +584,7 @@
 
         <action name="internalStats" class="com.topcoder.direct.services.view.action.stats.InternalStatsAction">
           <param name="excelFile">@excelFile@</param>
-          <interceptor-ref name="securedPreProcessorStack"/>
+          <interceptor-ref name="securedInternalStatsStack"/>
           <result name="success">/WEB-INF/internal-stats.jsp</result>
         </action>
     </package>
