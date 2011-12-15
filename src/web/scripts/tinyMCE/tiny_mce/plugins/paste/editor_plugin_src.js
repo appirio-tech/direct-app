@@ -27,7 +27,7 @@
 			paste_text_sticky : false,
 			paste_text_sticky_default : false,
 			paste_text_notifyalways : false,
-			paste_text_linebreaktype : "combined",
+			paste_text_linebreaktype : "p",
 			paste_text_replacements : [
 				[/\u2026/g, "..."],
 				[/[\x93\x94\u201c\u201d]/g, '"'],
@@ -76,7 +76,7 @@
 			// This function executes the process handlers and inserts the contents
 			// force_rich overrides plain text mode set by user, important for pasting with execCommand
 			function process(o, force_rich) {
-				var dom = ed.dom, rng;
+				var dom = ed.dom, rng, nodes;
 
 				// Execute pre process handlers
 				t.onPreProcess.dispatch(t, o);
@@ -89,9 +89,11 @@
 				if (tinymce.isGecko) {
 					rng = ed.selection.getRng(true);
 					if (rng.startContainer == rng.endContainer && rng.startContainer.nodeType == 3) {
+						nodes = dom.select('p,h1,h2,h3,h4,h5,h6,pre', o.node);
+
 						// Is only one block node and it doesn't contain word stuff
-						if (o.node.childNodes.length === 1 && /^(p|h[1-6]|pre)$/i.test(o.node.firstChild.nodeName) && o.content.indexOf('__MCE_ITEM__') === -1)
-							dom.remove(o.node.firstChild, true);
+						if (nodes.length == 1 && o.content.indexOf('__MCE_ITEM__') === -1)
+							dom.remove(nodes.reverse(), true);
 					}
 				}
 
@@ -99,11 +101,11 @@
 				t.onPostProcess.dispatch(t, o);
 
 				// Serialize content
-				o.content = ed.serializer.serialize(o.node, {getInner : 1, forced_root_block : ''});
+				o.content = ed.serializer.serialize(o.node, {getInner : 1});
 
 				// Plain text option active?
 				if ((!force_rich) && (ed.pasteAsPlainText)) {
-					t._insertPlainText(o.content);
+					t._insertPlainText(ed, dom, o.content);
 
 					if (!getParam(ed, "paste_text_sticky")) {
 						ed.pasteAsPlainText = false;
@@ -130,7 +132,7 @@
 						if (getParam(ed, "paste_text_sticky")) {
 							ed.windowManager.alert(ed.translate('paste.plaintext_mode_sticky'));
 						} else {
-							ed.windowManager.alert(ed.translate('paste.plaintext_mode'));
+							ed.windowManager.alert(ed.translate('paste.plaintext_mode_sticky'));
 						}
 
 						if (!getParam(ed, "paste_text_notifyalways")) {
@@ -155,7 +157,7 @@
 
 					if (ed.pasteAsPlainText) {
 						e.preventDefault();
-						process({content : dom.encode(textContent).replace(/\r?\n/g, '<br />')});
+						process({content : textContent.replace(/\r?\n/g, '<br />')});
 						return;
 					}
 				}
@@ -170,14 +172,13 @@
 				if (body != ed.getDoc().body)
 					posY = dom.getPos(ed.selection.getStart(), body).y;
 				else
-					posY = body.scrollTop + dom.getViewPort(ed.getWin()).y;
+					posY = body.scrollTop + dom.getViewPort().y;
 
 				// Styles needs to be applied after the element is added to the document since WebKit will otherwise remove all styles
-				// If also needs to be in view on IE or the paste would fail
 				dom.setStyles(n, {
 					position : 'absolute',
-					left : tinymce.isGecko ? -40 : 0, // Need to move it out of site on Gecko since it will othewise display a ghost resize rect for the div
-					top : posY - 25,
+					left : -10000,
+					top : posY,
 					width : 1,
 					height : 1,
 					overflow : 'hidden'
@@ -267,9 +268,8 @@
 									h += n.innerHTML;
 							});
 						} else {
-							// Found WebKit weirdness so force the content into paragraphs this seems to happen when you paste plain text from Nodepad etc
-							// So this logic will replace double enter with paragraphs and single enter with br so it kind of looks the same
-							h = '<p>' + dom.encode(textContent).replace(/\r?\n\r?\n/g, '</p><p>').replace(/\r?\n/g, '<br />') + '</p>';
+							// Found WebKit weirdness so force the content into plain text mode
+							h = '<pre>' + dom.encode(textContent).replace(/\r?\n/g, '<br />') + '</pre>';
 						}
 
 						// Remove the nodes
@@ -359,17 +359,8 @@
 			}
 
 			// IE9 adds BRs before/after block elements when contents is pasted from word or for example another browser
-			if (tinymce.isIE && document.documentMode >= 9) {
-				// IE9 adds BRs before/after block elements when contents is pasted from word or for example another browser
+			if (tinymce.isIE && document.documentMode >= 9)
 				process([[/(?:<br>&nbsp;[\s\r\n]+|<br>)*(<\/?(h[1-6r]|p|div|address|pre|form|table|tbody|thead|tfoot|th|tr|td|li|ol|ul|caption|blockquote|center|dl|dt|dd|dir|fieldset)[^>]*>)(?:<br>&nbsp;[\s\r\n]+|<br>)*/g, '$1']]);
-
-				// IE9 also adds an extra BR element for each soft-linefeed and it also adds a BR for each word wrap break
-				process([
-					[/<br><br>/g, '<BR><BR>'], // Replace multiple BR elements with uppercase BR to keep them intact
-					[/<br>/g, ' '], // Replace single br elements with space since they are word wrap BR:s
-					[/<BR><BR>/g, '<br>'] // Replace back the double brs but into a single BR
-				]);
-			}
 
 			// Detect Word content and process it more aggressive
 			if (/class="?Mso|style="[^"]*\bmso-|w:WordDocument/i.test(h) || o.wordContent) {
@@ -381,7 +372,7 @@
 					/^\s*(&nbsp;)+/gi,				// &nbsp; entities at the start of contents
 					/(&nbsp;|<br[^>]*>)+\s*$/gi		// &nbsp; entities at the end of contents
 				]);
-
+				
 				if (getParam(ed, "paste_convert_headers_to_strong")) {
 					h = h.replace(/<p [^>]*class="?MsoHeading"?[^>]*>(.*?)<\/p>/gi, "<p><strong>$1</strong></p>");
 				}
@@ -579,7 +570,7 @@
 			o.content = h;
 		},
 
-		/**
+		/*
 		 * Various post process items.
 		 */
 		_postProcess : function(pl, o) {
@@ -588,7 +579,6 @@
 			if (ed.settings.paste_enable_default_filters == false) {
 				return;
 			}
-			
 			if (o.wordContent) {
 				// Remove named anchors or TOC links
 				each(dom.select('a', o.node), function(a) {
@@ -625,7 +615,7 @@
 						}
 
 						// Remove all of the existing styles
-						dom.setAttrib(el, 'style', '');
+						//dom.setAttrib(el, 'style', '');
 
 						if (styleProps && npc > 0)
 							dom.setStyles(el, newStyle); // Add back the stored subset of styles
@@ -651,6 +641,11 @@
 					});
 				}
 			}
+			// Set in _convertLists, keeps OL style even if style tag is removed above.
+			each(dom.select('ol[data-mce-list-type]', o.node), function(el) {
+				el.style.setProperty('list-style-type',el.getAttribute('data-mce-list-type'),'');
+				el.removeAttribute('data-mce-list-type');
+			});
 		},
 
 		/**
@@ -660,7 +655,8 @@
 			var dom = pl.editor.dom, listElm, li, lastMargin = -1, margin, levels = [], lastType, html;
 
 			// Convert middot lists into real semantic lists
-			each(dom.select('p', o.node), function(p) {
+			each(dom.select('p', o.node), function(p,i) {
+			
 				var sib, val = '', type, html, idx, parents;
 
 				// Get text node value at beginning of paragraph
@@ -670,13 +666,31 @@
 				val = p.innerHTML.replace(/<\/?\w+[^>]*>/gi, '').replace(/&nbsp;/g, '\u00a0');
 
 				// Detect unordered lists look for bullets
-				if (/^(__MCE_ITEM__)+[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*\u00a0*/.test(val))
+				
+				if (/^[__MCE_ITEM__]+[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*\u00a0*/.test(val))
 					type = 'ul';
 
 				// Detect ordered lists 1., a. or ixv.
-				if (/^__MCE_ITEM__\s*\w+\.\s*\u00a0+/.test(val))
+				if (/^[__MCE_ITEM__]+\s*\w+[\.\)]\s*\u00a0+/.test(val))
 					type = 'ol';
 
+				var typeStyle = '';
+
+				if(type=='ol'){
+					if(/^[__MCE_ITEM__]+\s*[a-z][\.\)]\s*/.test(val))
+						typeStyle = 'lower-alpha';
+						
+					if(/^[__MCE_ITEM__]+\s*[A-Z][\.\)]\s*/.test(val))
+						typeStyle = 'upper-alpha';
+
+					if(/^[__MCE_ITEM__]+\s*[ixv][\.\)]\s*/.test(val))
+						typeStyle = 'lower-roman';	
+
+					if(/^[__MCE_ITEM__]+\s*[IXV][\.\)]\s*/.test(val))
+						typeStyle = 'upper-roman';
+			
+				};
+				
 				// Check if node value matches the list pattern: o&nbsp;&nbsp;
 				if (type) {
 					margin = parseFloat(p.style.marginLeft || 0);
@@ -687,40 +701,50 @@
 					if (!listElm || type != lastType) {
 						listElm = dom.create(type);
 						dom.insertAfter(listElm, p);
-					} else {
+						if (typeStyle.length) {
+							dom.setAttrib(listElm,'data-mce-list-type',typeStyle);
+							/*listElm.style.setProperty('list-style-type', typeStyle, '');*/
+						}
+					}
+					else {
 						// Nested list element
 						if (margin > lastMargin) {
 							listElm = li.appendChild(dom.create(type));
-						} else if (margin < lastMargin) {
-							// Find parent level based on margin value
-							idx = tinymce.inArray(levels, margin);
-							parents = dom.getParents(listElm.parentNode, type);
-							listElm = parents[parents.length - 1 - idx] || listElm;
 						}
+						else 
+							if (margin < lastMargin) {
+								// Find parent level based on margin value
+								idx = tinymce.inArray(levels, margin);
+								parents = dom.getParents(listElm.parentNode, type);
+								listElm = parents[parents.length - 1 - idx] || listElm;
+							}
 					}
-
-					// Remove middot or number spans if they exists
+				
+					
+					// Remove middot or number spans if they exists					
 					each(dom.select('span', p), function(span) {
+						//console.log(span)
 						var html = span.innerHTML.replace(/<\/?\w+[^>]*>/gi, '');
-
 						// Remove span with the middot or the number
 						if (type == 'ul' && /^__MCE_ITEM__[\u2022\u00b7\u00a7\u00d8o\u25CF]/.test(html))
 							dom.remove(span);
-						else if (/^__MCE_ITEM__[\s\S]*\w+\.(&nbsp;|\u00a0)*\s*/.test(html))
+						else if (/^__MCE_ITEM__[\s\S]*\w+[\.\)](&nbsp;|\u00a0)*\s*/.test(html))
 							dom.remove(span);
 					});
 
 					html = p.innerHTML;
-
-					// Remove middot/list items
+					
+					// Remove middot/list items	
+					//<br> is added by IE in place of newline chars				
 					if (type == 'ul')
-						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*(&nbsp;|\u00a0)+\s*/, '');
-					else
-						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^\s*\w+\.(&nbsp;|\u00a0)+\s*/, '');
-
+						html = p.innerHTML.replace(/^[__MCE_ITEM__]+/g, '').replace(/^[\u2022\u00b7\u00a7\u00d8o\u25CF](<br>|&nbsp;|\u00a0)+\s*/, '');
+					else 
+						html = p.innerHTML.replace(/[__MCE_ITEM__]+(\s|&nbsp;)+(<br>|&nbsp;|\u00a0)+/g, '').replace(/^\s*\w+[\.\)](&nbsp;|\u00a0)+\s*(<br>)*/, '');
 					// Create li and add paragraph data into the new li
 					li = listElm.appendChild(dom.create('li', 0, html));
 					dom.remove(p);
+					
+					//console.log(html);
 
 					lastMargin = margin;
 					lastType = type;
@@ -730,8 +754,10 @@
 
 			// Remove any left over makers
 			html = o.node.innerHTML;
+			
 			if (html.indexOf('__MCE_ITEM__') != -1)
 				o.node.innerHTML = html.replace(/__MCE_ITEM__/g, '');
+						
 		},
 
 		/**
@@ -756,24 +782,28 @@
 		 * plugin, and requires minimal changes to add the new functionality.
 		 * Speednet - June 2009
 		 */
-		_insertPlainText : function(content) {
-			var ed = this.editor,
+		_insertPlainText : function(ed, dom, h) {
+			var i, len, pos, rpos, node, breakElms, before, after,
+				w = ed.getWin(),
+				d = ed.getDoc(),
+				sel = ed.selection,
+				is = tinymce.is,
+				inArray = tinymce.inArray,
 				linebr = getParam(ed, "paste_text_linebreaktype"),
-				rl = getParam(ed, "paste_text_replacements"),
-				is = tinymce.is;
+				rl = getParam(ed, "paste_text_replacements");
 
 			function process(items) {
 				each(items, function(v) {
 					if (v.constructor == RegExp)
-						content = content.replace(v, "");
+						h = h.replace(v, "");
 					else
-						content = content.replace(v[0], v[1]);
+						h = h.replace(v[0], v[1]);
 				});
 			};
 
-			if ((typeof(content) === "string") && (content.length > 0)) {
+			if ((typeof(h) === "string") && (h.length > 0)) {
 				// If HTML content with line-breaking tags, then remove all cr/lf chars because only tags will break a line
-				if (/<(?:p|br|h[1-6]|ul|ol|dl|table|t[rdh]|div|blockquote|fieldset|pre|address|center)[^>]*>/i.test(content)) {
+				if (/<(?:p|br|h[1-6]|ul|ol|dl|table|t[rdh]|div|blockquote|fieldset|pre|address|center)[^>]*>/i.test(h)) {
 					process([
 						/[\n\r]+/g
 					]);
@@ -790,47 +820,114 @@
 					[/<\/t[dh]>\s*<t[dh][^>]*>/gi, "\t"],		// Table cells get tabs betweem them
 					/<[a-z!\/?][^>]*>/gi,						// Delete all remaining tags
 					[/&nbsp;/gi, " "],							// Convert non-break spaces to regular spaces (remember, *plain text*)
-					[/(?:(?!\n)\s)*(\n+)(?:(?!\n)\s)*/gi, "$1"],// Cool little RegExp deletes whitespace around linebreak chars.
-					[/\n{3,}/g, "\n\n"]							// Max. 2 consecutive linebreaks
+					[/(?:(?!\n)\s)*(\n+)(?:(?!\n)\s)*/gi, "$1"],	// Cool little RegExp deletes whitespace around linebreak chars.
+					[/\n{3,}/g, "\n\n"],							// Max. 2 consecutive linebreaks
+					/^\s+|\s+$/g									// Trim the front & back
 				]);
 
-				content = ed.dom.decode(tinymce.html.Entities.encodeRaw(content));
+				h = dom.decode(tinymce.html.Entities.encodeRaw(h));
+
+				// Delete any highlighted text before pasting
+				if (!sel.isCollapsed()) {
+					d.execCommand("Delete", false, null);
+				}
 
 				// Perform default or custom replacements
-				if (is(rl, "array")) {
+				if (is(rl, "array") || (is(rl, "array"))) {
 					process(rl);
-				} else if (is(rl, "string")) {
+				}
+				else if (is(rl, "string")) {
 					process(new RegExp(rl, "gi"));
 				}
 
 				// Treat paragraphs as specified in the config
 				if (linebr == "none") {
-					// Convert all line breaks to space
 					process([
 						[/\n+/g, " "]
 					]);
-				} else if (linebr == "br") {
-					// Convert all line breaks to <br />
+				}
+				else if (linebr == "br") {
 					process([
 						[/\n/g, "<br />"]
 					]);
-				} else if (linebr == "p") {
-					// Convert all line breaks to <p>...</p>
+				}
+				else {
 					process([
-						[/\n+/g, "</p><p>"],
-						[/^(.*<\/p>)(<p>)$/, '<p>$1']
-					]);
-				} else {
-					// defaults to "combined"
-					// Convert single line breaks to <br /> and double line breaks to <p>...</p>
-					process([
+						/^\s+|\s+$/g,
 						[/\n\n/g, "</p><p>"],
-						[/^(.*<\/p>)(<p>)$/, '<p>$1'],
 						[/\n/g, "<br />"]
 					]);
 				}
 
-				ed.execCommand('mceInsertContent', false, content);
+				// This next piece of code handles the situation where we're pasting more than one paragraph of plain
+				// text, and we are pasting the content into the middle of a block node in the editor.  The block
+				// node gets split at the selection point into "Para A" and "Para B" (for the purposes of explaining).
+				// The first paragraph of the pasted text is appended to "Para A", and the last paragraph of the
+				// pasted text is prepended to "Para B".  Any other paragraphs of pasted text are placed between
+				// "Para A" and "Para B".  This code solves a host of problems with the original plain text plugin and
+				// now handles styles correctly.  (Pasting plain text into a styled paragraph is supposed to make the
+				// plain text take the same style as the existing paragraph.)
+				if ((pos = h.indexOf("</p><p>")) != -1) {
+					rpos = h.lastIndexOf("</p><p>");
+					node = sel.getNode(); 
+					breakElms = [];		// Get list of elements to break 
+
+					do {
+						if (node.nodeType == 1) {
+							// Don't break tables and break at body
+							if (node.nodeName == "TD" || node.nodeName == "BODY") {
+								break;
+							}
+
+							breakElms[breakElms.length] = node;
+						}
+					} while (node = node.parentNode);
+
+					// Are we in the middle of a block node?
+					if (breakElms.length > 0) {
+						before = h.substring(0, pos);
+						after = "";
+
+						for (i=0, len=breakElms.length; i<len; i++) {
+							before += "</" + breakElms[i].nodeName.toLowerCase() + ">";
+							after += "<" + breakElms[breakElms.length-i-1].nodeName.toLowerCase() + ">";
+						}
+
+						if (pos == rpos) {
+							h = before + after + h.substring(pos+7);
+						}
+						else {
+							h = before + h.substring(pos+4, rpos+4) + after + h.substring(rpos+7);
+						}
+					}
+				}
+
+				// Insert content at the caret, plus add a marker for repositioning the caret
+				ed.execCommand("mceInsertRawHTML", false, h + '<span id="_plain_text_marker">&nbsp;</span>');
+
+				// Reposition the caret to the marker, which was placed immediately after the inserted content.
+				// Needs to be done asynchronously (in window.setTimeout) or else it doesn't work in all browsers.
+				// The second part of the code scrolls the content up if the caret is positioned off-screen.
+				// This is only necessary for WebKit browsers, but it doesn't hurt to use for all.
+				window.setTimeout(function() {
+					var marker = dom.get('_plain_text_marker'),
+						elm, vp, y, elmHeight;
+
+					sel.select(marker, false);
+					d.execCommand("Delete", false, null);
+					marker = null;
+
+					// Get element, position and height
+					elm = sel.getStart();
+					vp = dom.getViewPort(w);
+					y = dom.getPos(elm).y;
+					elmHeight = elm.clientHeight;
+
+					// Is element within viewport if not then scroll it into view
+					if ((y < vp.y) || (y + elmHeight > vp.y + vp.h)) {
+						d.body.scrollTop = y < vp.y ? y : y - vp.h + 25;
+					}
+				}, 0);
 			}
 		},
 
