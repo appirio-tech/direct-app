@@ -1184,7 +1184,7 @@
                 </Property>
 
                 <Property name="searchableFields">
-                    <Property name="resource.resource_id">
+                    <Property name="resource_id">
                         <Property name="validator">
                             <Property name="class">
                                 <Value>validator</Value>
@@ -1266,18 +1266,27 @@
                 <Property name="context">
                     <Value>
                         SELECT DISTINCT resource.resource_id AS resource_id,
-                               resource_role_id,
+                               resource_role_lu.resource_role_id AS resource_role_id,
                                project_id,
                                project_phase_id,
                                resource.create_user AS create_user,
                                resource.create_date AS create_date,
                                resource.modify_user AS modify_user,
-                               resource.modify_date AS modify_date
+                               resource.modify_date AS modify_date,
+                               resource_role_lu.phase_type_id,
+                               resource_role_lu.name,
+                               resource_role_lu.description,
+                               resource_role_lu.create_user AS rr_crate_user,
+                               resource_role_lu.create_date AS rr_crate_date,
+                               resource_role_lu.modify_user AS rr_modify_user,
+                               resource_role_lu.modify_date AS rr_modify_date
                           FROM resource,
+                               resource_role_lu,
                                resource_info,
                                resource_info_type_lu,
                          OUTER resource_submission
                          WHERE resource.resource_id = resource_info.resource_id
+                           AND resource.resource_role_id = resource_role_lu.resource_role_id
                            AND resource_info.resource_info_type_id = resource_info_type_lu.resource_info_type_id
                            AND resource.resource_id = resource_submission.resource_id
                            AND
@@ -1287,6 +1296,9 @@
                 <Property name="alias">
                     <Property name="resource_id">
                         <Value>resource.resource_id</Value>
+                    </Property>
+                    <Property name="resource_role_id">
+                        <Value>resource_role_lu.resource_role_id</Value>
                     </Property>
                 </Property>
             </Property>
@@ -1319,7 +1331,7 @@
                             </Property>
                         </Property>
                     </Property>
-                    <Property name="resource_role_id">
+                    <Property name="resource_role_lu.resource_role_id">
                         <Property name="validator">
                             <Property name="class">
                                 <Value>validator</Value>
@@ -1355,7 +1367,7 @@
 
                 <Property name="alias">
                     <Property name="resource_role_id">
-                        <Value>resource_role_id</Value>
+                        <Value>resource_role_lu.resource_role_id</Value>
                     </Property>
                 </Property>
             </Property>
