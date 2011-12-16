@@ -415,7 +415,7 @@ $(document).ready(function(){
 		$(".copilotInfo p").css("margin", "0");
     }
 
-    modalPreloader();
+    //modalPreloader();
     $.ajax({
         type: 'POST',
         url:  "copilotStatistics",
@@ -424,11 +424,11 @@ $(document).ready(function(){
         success: function(jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
-                    modalClose();
+                    //modalClose();
                     handleCopilotStatisticsResult(result);
                 },
                 function(errorMessage) {
-                    modalClose();
+                    //modalClose();
                     showServerError(errorMessage);
                 });
         }
