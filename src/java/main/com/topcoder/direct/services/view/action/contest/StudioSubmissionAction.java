@@ -112,6 +112,11 @@ public class StudioSubmissionAction extends ContestAction {
     private StudioContestSubmissionForm formData;
 
     /**
+     * The category type id of the studio contest.
+     */
+    private long contestTypeId;
+
+    /**
      * <p>Constructs new <code>StudioSubmissionAction</code> instance. This implementation does nothing.</p>
      */
     public StudioSubmissionAction() {
@@ -147,6 +152,14 @@ public class StudioSubmissionAction extends ContestAction {
         return this.formData;
     }
 
+    public long getContestTypeId() {
+        return contestTypeId;
+    }
+
+    public void setContestTypeId(long contestTypeId) {
+        this.contestTypeId = contestTypeId;
+    }
+
     /**
      * <p>Handles the incoming request. If action is executed successfully then directs the application
      * to single view or full view.</p>
@@ -180,7 +193,9 @@ public class StudioSubmissionAction extends ContestAction {
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        
+
+        setContestTypeId(softwareCompetition.getProjectHeader().getProjectCategory().getId());
+
         // only works for studio contest
         if (DirectUtils.isStudio(softwareCompetition)) {
             ContestRoundType roundType = getFormData().getRoundType();

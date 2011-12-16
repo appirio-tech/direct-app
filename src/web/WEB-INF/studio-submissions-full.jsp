@@ -37,11 +37,16 @@
 			
 			<!-- bar -->
 			<div class="bar">
-				<a href="#" class="prevLink">Previous Image</a>
-				<a href="#" class="nextLink">Next Image</a>
-				<span><strong class="lblID">${artifactNum}</strong> / ${submissionArtifactCount}</span>
-				<div class="corner tl"></div>
-				<div class="corner tr"></div>
+                <s:if test="contestTypeId != 18L">
+                    <a href="#" class="prevLink">Previous Image</a>
+                    <a href="#" class="nextLink">Next Image</a>
+                    <span><strong class="lblID">${artifactNum}</strong> / ${submissionArtifactCount}</span>
+                </s:if>
+                <s:else>
+                    <span><strong class="lblID">${artifactNum}</strong> / 1</span>
+                </s:else>
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
 			</div>
 			<!-- End .bar -->
 			
@@ -54,11 +59,16 @@
 			
 			<!-- bar -->
 			<div class="bar">
-				<a href="#" class="prevLink">Previous Image</a>
-				<a href="#" class="nextLink">Next Image</a>
-				<span><strong class="lblID">${artifactNum}</strong> / ${submissionArtifactCount}</span>
-				<div class="corner bl"></div>
-				<div class="corner br"></div>
+				  <s:if test="contestTypeId != 18L">
+                    <a href="#" class="prevLink">Previous Image</a>
+                    <a href="#" class="nextLink">Next Image</a>
+                    <span><strong class="lblID">${artifactNum}</strong> / ${submissionArtifactCount}</span>
+                </s:if>
+                <s:else>
+                    <span><strong class="lblID">${artifactNum}</strong> / 1</span>
+                </s:else>
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
 			</div>
 			<!-- End .bar -->
 		

@@ -203,29 +203,66 @@
 								<!-- mainArea -->
 								<div class="mainArea">
 									<!-- thumbnails -->
-								  <div class="thumbnailsList gridViewDiv">
-                                        <c:forEach begin="1" end="${fn:length(submissionArtifacts)}"
-                                                   var="artifactNum">
-                                            <c:set var="imgUrl" value="${tcdirect:getSubmissionPreviewImageURL(submission.id, 'thumb', artifactNum, pageContext.request)}"/>
-                                            <c:set var="filename" value="${submissionArtifacts[artifactNum-1]}" />
-                                            <div class="thumbnailsItem">
-                                                <link:studioSubmission
-                                                        submissionId="${submission.id}"
-                                                        contestId="${contestId}"
-                                                        roundType="${roundType}"
-                                                        fullView="true"
-                                                        artifactNum="${artifactNum}"><img src="${imgUrl}" alt="thumbnails" /><span class="hoverPic"></span></link:studioSubmission>
-                                                <p>${filename}</p>
-                                            </div>
-                                        </c:forEach>
-                                        <div class="clear"></div>
-								   </div>
+
+                                    <s:if test="contestTypeId != 18L">
+                                        <div class="thumbnailsList gridViewDiv">
+                                            <c:forEach begin="1" end="${fn:length(submissionArtifacts)}"
+                                                       var="artifactNum">
+                                                <c:set var="imgUrl"
+                                                       value="${tcdirect:getSubmissionPreviewImageURL(submission.id, 'medium', artifactNum, pageContext.request)}"/>
+                                                <c:set var="filename" value="${submissionArtifacts[artifactNum-1]}"/>
+                                                <div class="thumbnailsItem">
+                                                    <link:studioSubmission
+                                                            submissionId="${submission.id}"
+                                                            contestId="${contestId}"
+                                                            roundType="${roundType}"
+                                                            fullView="true"
+                                                            artifactNum="${artifactNum}"><img src="${imgUrl}"
+                                                                                              alt="thumbnails"/><span
+                                                            class="hoverPic"></span></link:studioSubmission>
+                                                    <p>${filename}</p>
+                                                </div>
+                                            </c:forEach>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </s:if>
+                                    <s:else>
+                                        <div class="thumbnailsList thumbnailsListSingle gridViewDiv">
+                                            <c:forEach begin="1" end="1"
+                                                       var="artifactNum">
+                                                <c:set var="imgUrl"
+                                                       value="${tcdirect:getSubmissionPreviewImageURL(submission.id, 'medium', artifactNum, pageContext.request)}"/>
+                                                <c:set var="filename" value="${submissionArtifacts[artifactNum-1]}"/>
+                                                <div class="thumbnailsItem thumbnailsItemLarge">
+                                                    <link:studioSubmission
+                                                            submissionId="${submission.id}"
+                                                            contestId="${contestId}"
+                                                            roundType="${roundType}"
+                                                            fullView="true"
+                                                            artifactNum="${artifactNum}"><img src="${imgUrl}"
+                                                                                              alt="thumbnails"/><span
+                                                            class="hoverPic"></span></link:studioSubmission>
+                                                    <p>${filename}</p>
+                                                </div>
+
+                                            </c:forEach>
+
+                                            <div class="clear"></div>
+                                        </div>
+                                    </s:else>
+
 								   
 									<!-- single submission -->
 									<div class="singleSubmission singleViewDiv hide">
 										<div class="singleCarousel">
 											<ul id="singleCarousel" class="jcarousel-skin-tango">
-                                                <c:forEach begin="1" end="${fn:length(submissionArtifacts)}"
+                                                <s:if test="contestTypeId != 18L">
+                                                     <c:set var="artifactNumEnd" value="${fn:length(submissionArtifacts)}"/>
+                                                </s:if>
+                                                <s:else>
+                                                      <c:set var="artifactNumEnd" value="1"/>
+                                                </s:else>
+                                                <c:forEach begin="1" end="${artifactNumEnd}"
                                                            var="artifactNum">
                                                     <c:set var="imgUrl" value="${tcdirect:getSubmissionPreviewImageURL(submission.id, 'full', artifactNum, pageContext.request)}"/>
                                                     <li><link:studioSubmission

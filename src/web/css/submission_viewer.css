@@ -909,31 +909,40 @@
 		padding:0 0 12px 0;
 		display:block;
 		}
+    .mainArea .thumbnailsListSingle {
+		margin-left: 0px !important;
+	}
 		
 		.mainArea .thumbnailsList .thumbnailsItem{
 			text-align:center;
-			width:198px;
-			height:198px;
+			width:350px;
+			height:350px;
 			border:1px solid #a8abad;
 			float:left;
 			display:inline;
 			margin:0 15px 40px 15px;
 			}
-			
+
 			.mainArea .thumbnailsList .thumbnailsItem a{
-				width:198px;
-				height:198px;
+				width:350px;
+				height:350px;
 				display:block;
 				margin:0 auto;
 				position:relative;
 				}
-			
+
 			.mainArea .thumbnailsList .thumbnailsItem img{
-				width:198px;
-				height:198px;
+				width:350px;
+				height:350px;
 				display:block;
 				}
-			
+
+            .mainArea .thumbnailsList .thumbnailsItemLarge, .mainArea .thumbnailsList .thumbnailsItemLarge a, .mainArea .thumbnailsList .thumbnailsItemLarge img {
+			    width:555px;
+			    height:555px;
+                float: none;
+			}
+
 			.mainArea .thumbnailsList .thumbnailsItem span{
 				width:29px;
 				height:29px;
