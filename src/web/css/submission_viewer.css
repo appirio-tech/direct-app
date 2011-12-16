@@ -170,6 +170,9 @@
     padding-left: 212px;
     padding-top: 11px;
 }
+.submissions div.modalCommandBox.viewFeedback {
+    padding-left: 260px;
+}
 .submissions a.bottomBtn {
     color: #FFFFFE;
     cursor: pointer;
@@ -482,6 +485,10 @@
 	position:relative;
 	z-index:300;
 	display:block;
+	}	
+.submissionInfoFeedback.withoutFeedback{
+	width:331px;
+	margin-left:100px;
 	}
 	
     .submissionInfoFeedback span.corner{
@@ -1037,9 +1044,9 @@
 	}
 
 .singleSubmission img{
-	width:800px;
+	/*width:800px;
 	height:600px;
-	display:block;
+	*/display:block;
 	}
 	
 .singleSubmission span{
@@ -1239,4 +1246,3 @@
 .fullSizePic img{
 	border:1px solid #ccc;
 	}
-	

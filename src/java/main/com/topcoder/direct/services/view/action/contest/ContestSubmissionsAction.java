@@ -306,7 +306,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
                 // Set real prized submissions as is for confirmed contest
                 int prizeIndex = 0;
                 for (Submission submission : submissions) {
-                    if (!submission.isExtra() && submission.getFinalScore() > 10.0) {
+                    if (!submission.isExtra() && submission.getFinalScore() != null && submission.getFinalScore() > 10.0) {
                         // milestone prize
                         contestRoundSelectionJSON.put(prizeSlotNames[prizeIndex++], 
                                 String.valueOf(submission.getId()));
@@ -412,8 +412,13 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
     /**
      * <p>Comparator for submissions based on ranks assigned by user.</p>
      *
-     * @author isv
-     * @version 1.0
+     * <p>Change notes:</p>
+     * <p>
+     *  Version 1.1: check the argument null in method compare.
+     * </p>
+     * 
+     * @author isv, minhu
+     * @version 1.1
      */
     private static class SubmissionsRankComparator implements Comparator<Submission> {
 
@@ -432,6 +437,12 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
          * @param s2 a <code>SubmissionData</code> to compare.
          */
         public int compare(Submission s1, Submission s2) {
+            if (s2.getPlacement() == null) {
+                return 1;
+            }
+            if (s1.getPlacement() == null) {
+                return -1;
+            }
             long rank1 = s1.getPlacement();
             long rank2 = s2.getPlacement();
 

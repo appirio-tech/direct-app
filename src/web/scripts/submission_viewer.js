@@ -4,20 +4,59 @@
 /**
  * This js used to render studio jsp views of single submission, including grid view and full size view.
  *
- * Author: TCSASSEMBLER
+ * Author: minhu
  * Version 1.0 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp)
  */
+// resize the image keep width-height ratio 	
+function imgLoaded(id){
+    var img=$('#JCarouselImage'+id);
+    if (img.length>0 && !img.attr('width')) {
+        var w=img.width();
+        var h=img.height();
+        if (w && h) {
+            var r=Math.max(w/800, h/600);
+            var nw=w/r;
+            var nh=h/r;
+            var left=(800-nw)/2;
+            var top=(600-nh)/2;
+            img.attr('width', nw);
+            img.attr('height', nh);
+            img.css({position:"relative",left:left,top:top});
+        }	        
+    }	    
+}	
 // JavaScript Document
 $(document).ready(function(){
 	//singleCarousel
-	function itemLoadCallbackFunction(carousel){
+	function itemVisibleOutCallbackFunction(carousel){
 		$('.imagesPage p strong').html('Image '+carousel.first);
 	}
+	$('#singleCarouselLookup a').each(function(){
+	    $(this).attr('href',$.trim($(this).attr('href')));
+	});
 	
+	function itemLoadCallbackFunction1(carousel){
+	    // load dynamically
+        for (var i = carousel.first; i <= carousel.last; i++) {
+            if (carousel.has(i)) {
+                continue;
+            }
+            if (i > $('#singleCarouselLookup li').length) {
+                break;
+            }
+            var img = $('#singleCarouselLookup li').eq(i-1).html().
+                replace('#IMGSTART#','<img id="JCarouselImage' + i +'"').replace('#IMGEND#',
+                    ' onload="imgLoaded(' + i+ ')"/>');
+            
+            carousel.add(i, img);
+        }	    
+	}
 	if($('#singleCarousel').length > 0){
 		$('#singleCarousel').jcarousel({
 			scroll:1,
-			itemVisibleOutCallback: itemLoadCallbackFunction
+			size:$('#singleCarouselLookup li').length,
+			itemVisibleOutCallback: itemVisibleOutCallbackFunction,
+			itemLoadCallback: itemLoadCallbackFunction1
 		});	
 	}
 	$('.singleViewDiv').hide();
@@ -91,6 +130,7 @@ $(document).ready(function(){
 	            $('.singleViewDiv').show();
 	            $('.gridView').removeClass('gridViewActive');
 	            $(this).addClass('singleViewActive');
+	            imgLoaded(1);
 	        } 
 	});
 	

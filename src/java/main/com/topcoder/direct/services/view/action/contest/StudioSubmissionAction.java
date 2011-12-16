@@ -85,7 +85,8 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <p>
  *   Version 1.7 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
  *   <ul>
- *     <li>Updated {@link #executeAction()} method add support for full size view and get image file names.</code>
+ *     <li>Updated {@link #executeAction()} method to add support for full size view and get image file names,
+ *      and set the milestoneReviewOpen flag to viewData.</code>
  *   </ul>
  * </p>
  *
@@ -204,6 +205,8 @@ public class StudioSubmissionAction extends ContestAction {
                 reviewPhaseType = PhaseType.REVIEW_PHASE;
             } else {
                 reviewPhaseType = PhaseType.MILESTONE_REVIEW_PHASE;
+                viewData.setMilestoneReviewPhaseOpen(DirectUtils.isPhaseOpen(softwareCompetition,
+                        PhaseType.MILESTONE_REVIEW_PHASE));
             }
             viewData.setPhaseOpen(true);
 

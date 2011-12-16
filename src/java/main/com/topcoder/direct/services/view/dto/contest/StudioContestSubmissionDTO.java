@@ -58,7 +58,8 @@ import com.topcoder.management.deliverable.Submission;
  * <p>
  *   Version 1.6 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
  *   <ul>
- *     <li>Changed {@link # .</code>
+ *     <li>Changed submissionArtifactNum to {@link #submissionArtifacts}.</code>
+ *     <li>Added {@link #milestoneReviewPhaseOpen}.</code>
  *   </ul>
  * </p>
  * 
@@ -168,6 +169,14 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
      * @since 1.5
      */
     private List<Map<String, String>> stockArts;
+    
+    
+    /**
+     * The flag indicates whether milestone review phase is open.
+     * 
+     * @since 1.6
+     */
+    private boolean milestoneReviewPhaseOpen;
     
     /**
      * <p>Constructs new <code>StudioContestSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -475,5 +484,25 @@ public class StudioContestSubmissionDTO extends BaseContestCommonDTO implements 
      */
     public void setStockArts(List<Map<String, String>> stockArts) {
         this.stockArts = stockArts;
+    }
+
+    /**
+     * Sets the milestoneReviewPhaseOpen flag.
+     * 
+     * @param milestoneReviewPhaseOpen the milestoneReviewPhaseOpen to set
+     * @since 1.6
+     */
+    public void setMilestoneReviewPhaseOpen(boolean milestoneReviewPhaseOpen) {
+        this.milestoneReviewPhaseOpen = milestoneReviewPhaseOpen;
+    }
+
+    /**
+     * Gets the milestoneReviewPhaseOpen flag.
+     * 
+     * @return the milestoneReviewPhaseOpen
+     * @since 1.6
+     */
+    public boolean isMilestoneReviewPhaseOpen() {
+        return milestoneReviewPhaseOpen;
     }
 }

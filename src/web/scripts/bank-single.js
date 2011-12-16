@@ -46,7 +46,13 @@ Array.prototype.remove = function(from, to) {
   return this.push.apply(this, rest);
 };
 
-$(document).ready(function() {									
+$(document).ready(function() {	
+    if ($('.addFeedback').length==0){
+        // adjust the action bar
+        $('.submissionInfoFeedback').addClass('withoutFeedback');
+        $('.submissionInfoFeedback span.tl,.submissionInfoFeedback span.bl').hide();
+    }        
+        
 	//if submission id already exist in the list than remove it
 	function removeIfExist(id)
 	{
@@ -269,7 +275,12 @@ $(document).ready(function() {
 
 	// alert modal
 	$('.addFeedbackButton').live('click',function(){
-        modalLoad("#alertModal2");
+        modalLoad(milestoneReviewPhaseOpen ? "#alertModal2" : "#alertModalView");
+		return false;
+	});
+	$("#closeViewBtn,#alertModalViewClose").live('click',function(){
+		$("#alertModalView").css("display","none");
+		modalClose();
 		return false;
 	});
 	$("#cancelBtn,#alertModal2Close").live('click',function(){

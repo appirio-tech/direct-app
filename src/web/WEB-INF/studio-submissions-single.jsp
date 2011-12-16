@@ -48,6 +48,7 @@
     <script type="text/javascript" src="/scripts/bank-single.js"></script>
     <script type="text/javascript">
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
+        var milestoneReviewPhaseOpen = ${viewData.milestoneReviewPhaseOpen};
     </script>    
 </head>
 
@@ -58,6 +59,7 @@
 <s:set var="roundType" value="formData.roundType.toString()" scope="page"/>
 <s:set var="contestId" value="projectId" scope="page"/>
 <s:set var="feedbackAction" scope="page"><s:if test="%{(viewData.feedbackText+'').trim().length()!=0}">Edit</s:if><s:else>Add</s:else> Feedback</s:set>
+<s:if test="!viewData.milestoneReviewPhaseOpen"><s:set var="feedbackAction" scope="page">View Feedback</s:set></s:if>
 
 <body id="page">
 <div id="wrapper">
@@ -173,9 +175,11 @@
                                 <span class="corner bl"></span>
                                 <span class="corner br"></span>                                 
                                   <!-- Add Feedback -->
+                                  <s:if test="formData.roundType.toString() == 'MILESTONE'">
                                   <div class="addFeedback">
                                     <a href="#" class="addFeedbackButton">${feedbackAction}</a>    
-                                  </div> 
+                                  </div>
+                                  </s:if>
                                   <!-- End Add Feedback -->                               								 	
                                      <!-- Action Bar -->
                                      <div class="actionBar">
@@ -255,13 +259,15 @@
 									<!-- single submission -->
 									<div class="singleSubmission singleViewDiv hide">
 										<div class="singleCarousel">
-											<ul id="singleCarousel" class="jcarousel-skin-tango">
                                                 <s:if test="contestTypeId != 18L">
                                                      <c:set var="artifactNumEnd" value="${fn:length(submissionArtifacts)}"/>
                                                 </s:if>
                                                 <s:else>
                                                       <c:set var="artifactNumEnd" value="1"/>
                                                 </s:else>
+											<ul id="singleCarousel" class="jcarousel-skin-tango">
+											</ul>
+											<ul id="singleCarouselLookup" class="hide">
                                                 <c:forEach begin="1" end="${artifactNumEnd}"
                                                            var="artifactNum">
                                                     <c:set var="imgUrl" value="${tcdirect:getSubmissionPreviewImageURL(submission.id, 'full', artifactNum, pageContext.request)}"/>
@@ -270,7 +276,7 @@
                                                         contestId="${contestId}"
                                                         roundType="${roundType}"
                                                         fullView="true"
-                                                        artifactNum="${artifactNum}"><img src="${imgUrl}" alt="${artifactNum}" /><span class="hoverPic"></span></link:studioSubmission></li>
+                                                        artifactNum="${artifactNum}">#IMGSTART# src="${imgUrl}" alt="${artifactNum}" #IMGEND#<span class="hoverPic"></span></link:studioSubmission></li>
                                                 </c:forEach>
 											</ul>
 										</div>
@@ -298,82 +304,114 @@
 
 <div id="modalBackground"></div>
 <div id="new-modal">
-	<!-- #alertModal2 -->
-	<div id="alertModal2" class="submissions smodal_1">
-		<div class="modalHeader">
-			<div class="modalHeaderRight">
-				<div class="modalHeaderCenter">
-					<span class="feedbackTitle">${feedbackAction}</span>
-				  <a href="javascript:;" class="closeModal" id="alertModal2Close" title="Close">Close</a>
-
-				</div>
-			</div>
-		</div>
-		<!-- end .modalHeader -->
-		<div class="modalBodyBox">
-		  <div class="addFeedbackBox">
-		    <h3>Feedback</h3>
-		    <div>
-		      <textarea name="textarea" id="feedback" cols="" rows="">${viewData.feedbackText}</textarea>
-	        </div>
-	      </div>
-		  <div class="modalCommandBox"> 
-            <a href="javascript:;" class="bottomBtn btnRed widthBox1" id="cancelBtn"><span><em>CANCEL</em></span></a>
-            <a href="javascript:;" class="bottomBtn btnRed widthBox2" id="saveFeedbackBtn"><span><em>SAVE FEEDBACK</em></span></a>
+  <s:if test="formData.roundType.toString() == 'MILESTONE' && !viewData.milestoneReviewPhaseOpen">
+        <!-- #alertModalView -->
+        <div id="alertModalView" class="submissions smodal_2">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        <span class="feedbackTitle">${feedbackAction}</span>
+                      <a href="javascript:;" class="closeModal" id="alertModalViewClose"  title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+            <div class="modalBodyBox">
+              <div class="hasaddFeedback">
+                  <div class="textBox">
+                      <p>${viewData.feedbackText}</p>
+                  </div>          
+              </div> 
+              <div class="modalCommandBox viewFeedback"> 
+                <a href="javascript:;" class="bottomBtn btnRed widthBox1" id="closeViewBtn"><span><em>Close</em></span></a>
+              </div>   
           </div>
-	  </div>
-
-		<!-- end .modalBody -->
-		
-<div class="modalFooter">
-			<div class="modalFooterRight">
-				<div class="modalFooterCenter"></div>
-			</div>
-		</div>
-		<!-- end .modalFooter -->
-	</div>
-	<!-- end #alertModal2 -->
-
+            <!-- end .modalBody -->
+            
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+        <!-- end #alertModalView -->
+  </s:if>
+  <s:if test="formData.roundType.toString() == 'MILESTONE' && viewData.milestoneReviewPhaseOpen">
+        <!-- #alertModal2 -->
+        <div id="alertModal2" class="submissions smodal_1">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        <span class="feedbackTitle">${feedbackAction}</span>
+                      <a href="javascript:;" class="closeModal" id="alertModal2Close" title="Close">Close</a>
     
-	<!-- #alertModal3 -->
-	<div id="alertModal3" class="submissions smodal_2">
-		<div class="modalHeader">
-			<div class="modalHeaderRight">
-				<div class="modalHeaderCenter">
-					<span class="feedbackTitle">${feedbackAction}</span>
-				  <a href="javascript:;" class="closeModal" id="alertModal3Close"  title="Close">Close</a>
-				</div>
-
-			</div>
-		</div>
-		<!-- end .modalHeader -->
-		<div class="modalBodyBox">
-		  <div class="hasaddFeedback">
-            <div class="hasAdded">Your feedback has been <s:if test="%{(viewData.feedbackText+'').trim().length()!=0}">edited</s:if><s:else>added</s:else></div>
-              <div class="textBox">
-                <h4>Feedback</h4>
-
-                  <p>${viewData.feedbackText}</p>
-              </div>          
-	      </div>
-		  <div class="modalCommandBox"> 
-            <a href="javascript:;" class="bottomBtn btnRed widthBox1" id="doneBtn"><span><em>DONE</em></span></a>
-            <a href="javascript:;" class="bottomBtn btnRed widthBox2" id="editFeedbackBtn"><span><em>EDIT FEEDBACK</em></span></a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+            <div class="modalBodyBox">
+              <div class="addFeedbackBox">
+                <h3>Feedback</h3>
+                <div>
+                  <textarea name="textarea" id="feedback" cols="" rows="">${viewData.feedbackText}</textarea>
+                </div>
+              </div>
+              <div class="modalCommandBox"> 
+                <a href="javascript:;" class="bottomBtn btnRed widthBox1" id="cancelBtn"><span><em>CANCEL</em></span></a>
+                <a href="javascript:;" class="bottomBtn btnRed widthBox2" id="saveFeedbackBtn"><span><em>SAVE FEEDBACK</em></span></a>
+              </div>
           </div>
-
-	  </div>
-		<!-- end .modalBody -->
-		
-<div class="modalFooter">
-			<div class="modalFooterRight">
-				<div class="modalFooterCenter"></div>
-			</div>
-		</div>
-		<!-- end .modalFooter -->
-	</div>
-
-	<!-- end #alertModal3 -->
-	
+    
+            <!-- end .modalBody -->
+            
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+        <!-- end #alertModal2 -->
+        
+        <!-- #alertModal3 -->
+        <div id="alertModal3" class="submissions smodal_2">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        <span class="feedbackTitle">${feedbackAction}</span>
+                      <a href="javascript:;" class="closeModal" id="alertModal3Close"  title="Close">Close</a>
+                    </div>
+    
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+            <div class="modalBodyBox">
+              <div class="hasaddFeedback">
+                <div class="hasAdded">Your feedback has been <s:if test="%{(viewData.feedbackText+'').trim().length()!=0}">edited</s:if><s:else>added</s:else></div>
+                  <div class="textBox">
+                    <h4>Feedback</h4>
+    
+                      <p>${viewData.feedbackText}</p>
+                  </div>          
+              </div>
+              <div class="modalCommandBox"> 
+                <a href="javascript:;" class="bottomBtn btnRed widthBox1" id="doneBtn"><span><em>DONE</em></span></a>
+                <a href="javascript:;" class="bottomBtn btnRed widthBox2" id="editFeedbackBtn"><span><em>EDIT FEEDBACK</em></span></a>
+              </div>
+    
+          </div>
+            <!-- end .modalBody -->
+            
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+        <!-- end #alertModal3 -->
+  </s:if>
 </div>
 <!-- end modal -->
 
