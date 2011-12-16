@@ -888,6 +888,12 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+
+        <action name="copilotStatistics" class="getCopilotStatisticsAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>        
+        
         <action name="listCopilotPostings" class="listCopilotContestsAction">
             <result>/WEB-INF/copilot-contests.jsp</result>
         </action>

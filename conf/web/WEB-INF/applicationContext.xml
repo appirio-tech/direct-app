@@ -855,4 +855,10 @@
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="copilotProfileDAO" ref="copilotProfileDAO"/>  
     </bean>
+    
+    <bean id="getCopilotStatisticsAction"
+      class="com.topcoder.direct.services.view.action.copilot.GetCopilotStatisticsAction"
+      scope="prototype" parent="baseDirectStrutsAction">
+      <property name="copilotProfileDAO" ref="copilotProfileDAO"/>  
+    </bean>    
 </beans>
