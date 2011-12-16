@@ -4721,18 +4721,18 @@ public class DataProvider {
      * @throws Exception if any exception occurs
      * @since 3.2
      */
-    public static CopilotPoolMember getCopilotStatistics(long userId) throws Exception {
-        final String commandName = "copilot_profile";
-        final String queryName = "copilot_profile_statistics";
-        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+    public static Map<Long, CopilotPoolMember> getCopilotStatistics() throws Exception {
+        final String commandName = "copilot_pool_members";
+        final String queryName = "copilot_pool_statistics_projects_contests";
+        DataAccess dataAccess = new CachedDataAccess(MaxAge.THREE_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle(commandName);
-        request.setProperty("uid", String.valueOf(userId));
 
-        CopilotPoolMember copilotPoolMember = new CopilotPoolMember();
+        Map<Long, CopilotPoolMember> members = new HashMap<Long, CopilotPoolMember>();
+
         final ResultSetContainer container = dataAccess.getData(request).get(queryName);
-        if (container.size() > 0) {
-            ResultSetRow row = container.get(0);
+        for (ResultSetRow row : container) {
+            CopilotPoolMember copilotPoolMember = new CopilotPoolMember();
 
             copilotPoolMember.setTotalContests(row.getIntItem("total_contests_number"));
             copilotPoolMember.setTotalProjects(row.getIntItem("total_projects_number"));
@@ -4740,9 +4740,11 @@ public class DataProvider {
             copilotPoolMember.setTotalRepostedContests(row.getIntItem("reposted_contests_number"));
             copilotPoolMember.setCurrentContests(row.getIntItem("current_contests_number"));
             copilotPoolMember.setCurrentProjects(row.getIntItem("current_projects_number"));
+
+            members.put(row.getLongItem("user_id"), copilotPoolMember);
         }
 
-        return copilotPoolMember;
+        return members;
     }
     
 }

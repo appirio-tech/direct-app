@@ -147,14 +147,14 @@
                                                                         <p class="handle">Handle : 
                                                                             <link:user userId="${profile.member.copilotProfile.userId}" handle="${profile.member.copilotProfile.handle}"/>
                                                                         </p>
-                                                                        <p><span>${profile.member.totalProjects}</span>Project :</p>
-                                                                        <p><span>${profile.member.totalContests}</span>Contest :</p>
-                                                                        <p><span>${profile.member.totalRepostedContests}</span>Repost :</p>
-                                                                        <p><span>${profile.member.totalFailedContests}</span>Failure :</p>
-                                                                        <p><span>${profile.member.totalBugRaces}</span>Bugrace :</p>
+                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalProjects">loading</span>Project :</p>
+                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalContests">loading</span>Contest :</p>
+                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</span>Repost :</p>
+                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</span>Failure :</p>
+                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</span>Bugrace :</p>
                                                                         <div class="current">
-                                                                            <p><a href="javascript:;" class="link">${profile.member.currentProjects}</a>Current Projects :</p>
-                                                                            <p><a href="javascript:;" class="link">${profile.member.currentContests}</a>Current Contests :</p>
+                                                                            <p><a href="javascript:;" class="link field_${profile.member.copilotProfile.userId}_currentProjects">loading</a>Current Projects :</p>
+                                                                            <p><a href="javascript:;" class="link field_${profile.member.copilotProfile.userId}_currentContests">loading</a>Current Contests :</p>
                                                                         </div>
                                                                         
                                                                     </div>

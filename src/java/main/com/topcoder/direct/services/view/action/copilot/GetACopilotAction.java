@@ -15,7 +15,6 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,19 +33,10 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
     private static final Map<Long, String> STATUS_CLASS_MAPPING;
 
     /**
-     * The default fullfillment text.
-     */
-    private static final String DEFAULT_FULLFILLMENT_TEXT = "n/a";
-
-    /**
      * The default photo if can't find any specified photo.
      */
     private static final MemberPhotoDTO DEFAULT_MEMBER_PHOTO;
 
-    /**
-     * The format.
-     */
-    private static final NumberFormat FORMAT;
 
     /**
      * Initiate all static variables.
@@ -58,11 +48,6 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
         STATUS_CLASS_MAPPING.put(1L, "greenText");
         STATUS_CLASS_MAPPING.put(2L, "yellowText");
         STATUS_CLASS_MAPPING.put(3L, "redText");
-
-        // set format
-        FORMAT = NumberFormat.getPercentInstance();
-        FORMAT.setMinimumFractionDigits(2);
-        FORMAT.setMaximumFractionDigits(2);
 
         // set default member photo
         DEFAULT_MEMBER_PHOTO = new MemberPhotoDTO();
@@ -106,7 +91,7 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
 
         for (int i = 0; i < copilotProfiles.size(); i++) {
             CopilotProfile copilotProfile = copilotProfiles.get(i);
-            CopilotPoolMember member = DataProvider.getCopilotStatistics(copilotProfile.getUserId());
+            CopilotPoolMember member = new CopilotPoolMember();
             member.setCopilotProfile(copilotProfile);
 
             CopilotProfileDTO profile = new CopilotProfileDTO();
@@ -127,15 +112,6 @@ public class GetACopilotAction extends BaseDirectStrutsAction {
             CopilotProfileStatus tmpStatus = profile.getMember().getCopilotProfile().getStatus();
             profile.setStatusClass(STATUS_CLASS_MAPPING.get(tmpStatus.getId()));
             profile.setStatusText(tmpStatus.getName());
-
-            // set fullfillment
-            if (profile.getMember().getTotalContests() == 0) {
-                profile.setFullfillment(DEFAULT_FULLFILLMENT_TEXT);
-            } else {
-                double fullfilment = (profile.getMember().getTotalContests() -
-                        profile.getMember().getTotalFailedContests()) / (1.0 * profile.getMember().getTotalContests());
-                profile.setFullfillment(FORMAT.format(fullfilment));
-            }
 
             // set photo
             if (photos.containsKey(profile.getMember().getCopilotProfile().getUserId())) {

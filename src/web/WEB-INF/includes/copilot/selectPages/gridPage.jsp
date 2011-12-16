@@ -21,7 +21,7 @@
                         <div class="copilotInfo">
                             <!-- img -->
                             <div class="copioltPic">
-                                <img src="${profile.photo.photoPath}" alt="" style="height:${profile.photo.height}px;width:${profile.photo.width}px"/>
+                                <img src="${profile.photo.photoPath}" alt="" style="height:106px;width:96px"/>
                                 <a href="javascript:;" class="blackButton selectCopilot" id="gridSelectButton_${profile.member.copilotProfile.userId}">Choose</a>
                             </div>
                             <!-- End .projectPic -->
@@ -29,15 +29,16 @@
                             <div class="infoArea">
                                 <input type="hidden" value="${profile.member.copilotProfile.userId}" class="userIdInput"></input>
                                 <input type="hidden" value="${profile.member.copilotProfile.id}" class="profileIdInput"></input>
-                                <input type="hidden" value="${profile.member.totalProjects}" class="totalProjectsInput"></input>
-                                <input type="hidden" value="${profile.member.totalContests}" class="totalContestsInput"></input>
-                                <input type="hidden" value="${profile.member.currentProjects}" class="currentProjectsInput"></input>
-                                <input type="hidden" value="${profile.member.currentContests}" class="currentContestsInput"></input>
-                                
                                 <input type="hidden" value="${profile.member.copilotProfile.handle}" class="userHandleInput"></input>
-                                <input type="hidden" value="${profile.member.totalRepostedContests}" class="repostContestsInput"></input>
-                                <input type="hidden" value="${profile.member.totalFailedContests}" class="failureContestsInput"></input>
-                                <input type="hidden" value="${profile.member.totalBugRaces}" class="bugraceInput"></input>
+                                
+                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalProjects totalProjectsInput" value="${profile.member.totalProjects}" ></input>
+                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalContests totalContestsInput" value="${profile.member.totalContests}" ></input>
+                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_currentProjects currentProjectsInput" value="${profile.member.currentProjects}" ></input>
+                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_currentContests currentContestsInput" value="${profile.member.currentContests}" ></input>
+                                
+                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalRepostedContests repostContestsInput" value="${profile.member.totalRepostedContests}" ></input>
+                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalFailedContests failureContestsInput" value="${profile.member.totalFailedContests}" ></input>
+                                <input type="hidden" class="field_${profile.member.copilotProfile.userId}_totalBugRaces bugraceInput" value="${profile.member.totalBugRaces}" ></input>
                                 
                                 <table border="0" cellpadding="0" cellspacing="0">
                                     <colgroup>
@@ -59,7 +60,7 @@
                                     </tr>                                    
                                     <tr>
                                         <td class="firstTd">Fullfillment: </td>
-                                        <td class="lastTd"><strong>${profile.fullfillment}</strong></td>
+                                        <td class="lastTd"><strong class="field_${profile.member.copilotProfile.userId}_fullfillment">loading</strong></td>
                                     </tr>
                                     <tr>
                                         <td class="firstTd">Reliability:</td>
@@ -72,11 +73,11 @@
                                 <ul>
                                     <li>
                                         <span>Number of Project: </span>
-                                        <strong class="greenText">${profile.member.currentProjects}</strong>
+                                        <strong class="greenText field_${profile.member.copilotProfile.userId}_currentProjects">loading</strong>
                                     </li>
                                     <li>
                                         <span>Number of Contest: </span>
-                                        <strong class="greenText">${profile.member.currentContests}</strong>
+                                        <strong class="greenText field_${profile.member.copilotProfile.userId}_currentContests">loading</strong>
                                     </li>
                                 </ul>
                                 

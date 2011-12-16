@@ -70,13 +70,13 @@
                         <img src="${profile.photo.photoPath}" width="47" height="53" alt=""  />
                         <link:user userId="${profile.member.copilotProfile.userId}" handle="${profile.member.copilotProfile.handle}"/>
                     </td>
-                    <td>${profile.member.totalProjects}</td>
-                    <td>${profile.member.totalContests}</td>
-                    <td>${profile.member.totalRepostedContests}</td>
-                    <td>${profile.member.totalFailedContests}</td>
-                    <td>${profile.member.totalBugRaces}</td>
-                    <td class="custom greenText">${profile.member.currentProjects}</td>
-                    <td class="custom greenText">${profile.member.currentContests}</td>
+                    <td class="field_${profile.member.copilotProfile.userId}_totalProjects">loading</td>
+                    <td class="field_${profile.member.copilotProfile.userId}_totalContests">loading</td>
+                    <td class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</td>
+                    <td class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</td>
+                    <td class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</td>
+                    <td class="custom greenText field_${profile.member.copilotProfile.userId}_currentProjects">loading</td>
+                    <td class="custom greenText field_${profile.member.copilotProfile.userId}_currentContests">loading</td>
                     <td class="last">
                         <a href="javascript:;" class="blackButton selectCopilotList">Choose</a>
                         <input type="hidden" value="${profile.member.copilotProfile.userId}"></input>

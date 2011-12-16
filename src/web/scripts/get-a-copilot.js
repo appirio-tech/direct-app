@@ -415,8 +415,50 @@ $(document).ready(function(){
 		$(".copilotInfo p").css("margin", "0");
     }
 
-   
+    modalPreloader();
+    $.ajax({
+        type: 'POST',
+        url:  "copilotStatistics",
+        cache: true,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    modalClose();
+                    handleCopilotStatisticsResult(result);
+                },
+                function(errorMessage) {
+                    modalClose();
+                    showServerError(errorMessage);
+                });
+        }
+    });    
 });
+
+function handleCopilotStatisticsResult(result) {    
+    //alert(result.length);
+    $.each(result, function(index, item) {
+        $(".field_" + index + "_totalProjects").html(item.member.totalProjects);
+        $(".field_" + index + "_totalContests").html(item.member.totalContests);
+        $(".field_" + index + "_totalRepostedContests").html(item.member.totalRepostedContests);
+        $(".field_" + index + "_totalFailedContests").html(item.member.totalFailedContests);
+        $(".field_" + index + "_totalBugRaces").html(item.member.totalBugRaces);
+        $(".field_" + index + "_currentProjects").html(item.member.currentProjects);
+        $(".field_" + index + "_currentContests").html(item.member.currentContests);
+        
+        $(".field_" + index + "_fullfillment").html(item.fullfillment);
+
+        // set hidden input value
+        $("input.field_" + index + "_totalProjects").val(item.member.totalProjects);
+        $("input.field_" + index + "_totalContests").val(item.member.totalContests);
+        $("input.field_" + index + "_totalRepostedContests").val(item.member.totalRepostedContests);
+        $("input.field_" + index + "_totalFailedContests").val(item.member.totalFailedContests);
+        $("input.field_" + index + "_totalBugRaces").val(item.member.totalBugRaces);
+        $("input.field_" + index + "_currentProjects").val(item.member.currentProjects);
+        $("input.field_" + index + "_currentContests").val(item.member.currentContests);
+                
+    });
+}
 
 /* function to style the input file */
 (function($) {
