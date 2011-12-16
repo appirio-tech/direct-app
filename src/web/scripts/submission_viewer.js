@@ -7,37 +7,35 @@
  * Author: minhu
  * Version 1.0 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp)
  */
-// resize the image keep width-height ratio 	
-function imgLoaded(id){
-    var img=$('#JCarouselImage'+id);
-    if (img.length>0 && !img.attr('width')) {
-        var w=img.width();
-        var h=img.height();
-        if (w && h) {
-            var r=Math.max(w/800, h/600);
-            var nw=w/r;
-            var nh=h/r;
-            var left=(800-nw)/2;
-            var top=(600-nh)/2;
-            img.attr('width', nw);
-            img.attr('height', nh);
-            img.css({position:"relative",left:left,top:top});
-        }	        
-    }	    
+// resize the image keep width-height ratio 
+function imgLoaded(obj){
+    var img=$(obj);
+    var w=obj.width;
+    var h=obj.height;
+    if (w && h) {
+        var r=Math.max(w/800, h/600);
+        var nw=w/r;
+        var nh=h/r;
+        var left=(800-nw)/2;
+        var top=(600-nh)/2;
+        img.attr('width', nw);
+        img.attr('height', nh);
+        img.css({position:"relative",left:left,top:top});
+    }	  
 }	
 // JavaScript Document
 $(document).ready(function(){
 	//singleCarousel
-	function itemVisibleOutCallbackFunction(carousel){
+	function itemVisibleInCallbackFunction(carousel){
 		$('.imagesPage p strong').html('Image '+carousel.first);
 	}
 	$('#singleCarouselLookup a').each(function(){
 	    $(this).attr('href',$.trim($(this).attr('href')));
 	});
 	
-	function itemLoadCallbackFunction1(carousel){
+	function itemLoadCallbackFunction(carousel){
 	    // load dynamically
-        for (var i = carousel.first; i <= carousel.last; i++) {
+        for (var i = carousel.first; i <= carousel.last+1; i++) {
             if (carousel.has(i)) {
                 continue;
             }
@@ -46,7 +44,7 @@ $(document).ready(function(){
             }
             var img = $('#singleCarouselLookup li').eq(i-1).html().
                 replace('#IMGSTART#','<img id="JCarouselImage' + i +'"').replace('#IMGEND#',
-                    ' onload="imgLoaded(' + i+ ')"/>');
+                    ' onload="imgLoaded(this)"/>');
             
             carousel.add(i, img);
         }	    
@@ -55,8 +53,8 @@ $(document).ready(function(){
 		$('#singleCarousel').jcarousel({
 			scroll:1,
 			size:$('#singleCarouselLookup li').length,
-			itemVisibleOutCallback: itemVisibleOutCallbackFunction,
-			itemLoadCallback: itemLoadCallbackFunction1
+			itemVisibleInCallback: itemVisibleInCallbackFunction,
+			itemLoadCallback: itemLoadCallbackFunction
 		});	
 	}
 	$('.singleViewDiv').hide();
@@ -130,7 +128,6 @@ $(document).ready(function(){
 	            $('.singleViewDiv').show();
 	            $('.gridView').removeClass('gridViewActive');
 	            $(this).addClass('singleViewActive');
-	            imgLoaded(1);
 	        } 
 	});
 	
