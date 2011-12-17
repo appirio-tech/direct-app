@@ -11,9 +11,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>                                         
-    <link rel="stylesheet" href="/css/submission_viewer.css"  type="text/css" />
-    <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="/scripts/submission_viewer.js"></script>
+    <link rel="stylesheet" href="/css/submission_viewer.css?v=211235"  type="text/css" />
+    <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js?v=211035"></script>
+    <script type="text/javascript" src="/scripts/submission_viewer.js?v=211210"></script>
 </head>
 
 <s:set var="submissionId" value="viewData.submission.id" scope="page"/>

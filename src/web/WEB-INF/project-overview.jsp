@@ -37,8 +37,8 @@
     <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js?v=203928"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=204700"></script>
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=207547"></script>
-    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=208052"></script>
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=211035"></script>
+    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=210997"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>

@@ -19,16 +19,16 @@
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
     
     <link rel="stylesheet" href="/css/modal.css?v=207790" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/newProject.css?v=209631" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/get-a-copilot.css?v=209437" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/newProject.css?v=210944" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/get-a-copilot.css?v=210944" media="all" type="text/css"/> 
     <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
     
-    <script type="text/javascript" src="/scripts/jquery.pagination.js?v=209437"></script>
-    <script type="text/javascript" src="/scripts/jquery.dataTables.min.js?v=209437"></script>
-    <script type="text/javascript" src="/scripts/jquery.tinysort.min.js?v=209437"></script>
+    <script type="text/javascript" src="/scripts/jquery.pagination.js?v=210944"></script>
+    <script type="text/javascript" src="/scripts/jquery.dataTables.min.js?v=178111"></script>
+    <script type="text/javascript" src="/scripts/jquery.tinysort.min.js?v=210944"></script>
     <script type="text/javascript" src="/scripts/newProject.js?v=209631"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=209437"></script> 
-    <script type="text/javascript" src="/scripts/select-a-copilot.js"></script> 
+    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=211230"></script> 
+    <script type="text/javascript" src="/scripts/select-a-copilot.js?v=210944"></script> 
     
 </head>
 

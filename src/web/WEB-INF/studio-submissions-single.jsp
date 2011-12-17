@@ -39,13 +39,13 @@
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/contest/submissionViewer/submissionViewerHtmlHead.jsp"/>
                                          
-    <link rel="stylesheet" href="/css/submission_viewer.css"  type="text/css" />
-    <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js"></script>
+    <link rel="stylesheet" href="/css/submission_viewer.css?v=211235"  type="text/css" />
+    <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js?v=211035"></script>
+    <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=211035"></script>
     <script type="text/javascript" src="/scripts/json2.js?v=186145"></script>
     <script type="text/javascript" src="/scripts/jquery.cookie.js?v=187251"></script>
-    <script type="text/javascript" src="/scripts/submission_viewer.js"></script>
-    <script type="text/javascript" src="/scripts/bank-single.js"></script>
+    <script type="text/javascript" src="/scripts/submission_viewer.js?v=211210"></script>
+    <script type="text/javascript" src="/scripts/bank-single.js?v=211203"></script>
     <script type="text/javascript">
         var hasContestWritePermission = ${viewData.hasContestWritePermission};
         var milestoneReviewPhaseOpen = ${viewData.milestoneReviewPhaseOpen};
