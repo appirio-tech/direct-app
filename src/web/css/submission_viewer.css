@@ -960,7 +960,12 @@
 				left:160px;
 				top:160px;
 				background:url(/images/thumbnails-pic-hover.png) no-repeat left center;
-				}
+			}
+
+            .mainArea .thumbnailsList .thumbnailsItemLarge span.hoverPic {
+                left:263px;
+				top:263px;
+            }
 				
 			.mainArea .thumbnailsList .thumbnailsItem a:hover span{
 				display:block;

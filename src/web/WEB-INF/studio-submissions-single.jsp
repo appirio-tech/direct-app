@@ -196,10 +196,16 @@
 							  <!-- End .submissionInfo -->   
                               <div class="clear"></div>   
                             </div>
+                          <s:if test="contestTypeId != 18L">
+                              <c:set var="artifactNumEnd" value="${fn:length(submissionArtifacts)}"/>
+                          </s:if>
+                          <s:else>
+                              <c:set var="artifactNumEnd" value="1"/>
+                          </s:else>
                             <!-- End titleBarBox -->                         
                             <!-- imagesPage --> 
                               <div class="imagesPage">
-                                    <p class="hide"><strong>Image 1</strong> of ${fn:length(submissionArtifacts)} images</p>
+                                    <p class="hide"><strong>Image 1</strong> of ${artifactNumEnd} images</p>
                               </div>
                               <!-- End imagesPage --> 
 							<!-- mainContent -->
@@ -259,12 +265,6 @@
 									<!-- single submission -->
 									<div class="singleSubmission singleViewDiv hide">
 										<div class="singleCarousel">
-                                                <s:if test="contestTypeId != 18L">
-                                                     <c:set var="artifactNumEnd" value="${fn:length(submissionArtifacts)}"/>
-                                                </s:if>
-                                                <s:else>
-                                                      <c:set var="artifactNumEnd" value="1"/>
-                                                </s:else>
 											<ul id="singleCarousel" class="jcarousel-skin-tango">
 											</ul>
 											<ul id="singleCarouselLookup" class="hide">
