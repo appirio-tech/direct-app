@@ -1331,7 +1331,7 @@
                             </Property>
                         </Property>
                     </Property>
-                    <Property name="resource_role_lu.resource_role_id">
+                    <Property name="resource_role_id">
                         <Property name="validator">
                             <Property name="class">
                                 <Value>validator</Value>
