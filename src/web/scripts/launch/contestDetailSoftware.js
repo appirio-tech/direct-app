@@ -163,7 +163,10 @@ $(document).ready(function(){
       data: {"projectId":paramContestId},
       cache: false,
       dataType: 'json',
-      async : false,
+      async : true,
+      beforeSend: function() {
+        $("#contestLoading").show();
+      },
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
@@ -178,9 +181,11 @@ $(document).ready(function(){
             
             //execute some actions specific for component design/dev
             //onContestTypeChange();
+            $("#contestLoading").hide();
           },
           function(errorMessage) {
               showServerError(errorMessage);
+              $("#contestLoading").hide();
           })
       }
    });
