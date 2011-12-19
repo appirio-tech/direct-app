@@ -20,7 +20,8 @@
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/vmservice.js?v=206355"></script>
     <link href="/css/screen.css?v=210789" rel="stylesheet" type="text/css" />
-    <link href="../../css/dashboard.css?v=211038" rel="stylesheet" type="text/css" /> 
+    <link href="../../css/dashboard.css?v=211038" rel="stylesheet" type="text/css" />
+    <jsp:include page="/WEB-INF/includes/filterPanel.jsp"/>
 </head>
 
 <c:set var="CURRENT_TAB" scope="request" value="VM Management"/>
@@ -45,7 +46,7 @@
                             <!-- End .areaHeader -->
 
                             <p class="msg">Here you can launch Virtual Machines.</p>
-                                                          
+
 
                             <div class="form">
                                 <form id="vm-launch-form" name="vm-launch-form" action="javascript:vmService.launch('vm-launch-form');">
@@ -121,11 +122,85 @@
 							<!-- End .form -->
 							<hr color="black" class="plain" />
                             <p class="msg">Here you can view and destroy Virtual Machines.</p>
-							
-						    <div>
-								<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td>
+
+
+
+
+                            <div>
+								<table width="100%" border="0" cellpadding="0" cellspacing="0"  style="margin-top:-22px"><tr><td>
  							   	 <a id="refreshBtn" href="javascript:vmService.refresh();" class="button1"><span>Refresh</span></a>    
-								</td></tr></table>    
+								</td></tr>
+                                </table>
+
+                                <div class='filterPanel' id='VMFilter' style="margin-top:10px">
+                                    <div class='filterHead'>
+                                        <div class='rightSide'>
+                                            <div class='inner'>
+                                                <div class='filterText'>
+                                                    <a href='javascript:;' class='collapse'><img
+                                                            src='/images/filter-panel/expand_icon.png' alt=''/></a>
+                                                    <span class='title'>Filter</span>
+                                                </div>
+                                                <div class='searchContainer'>
+                                                    <span class='title'>Search</span>
+
+                                                    <div class='filterSearch'>
+                                                        <input type='text' class='searchBox'/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterHead-->
+                                    <div class='filterContent'>
+                                        <div class='rightSide'>
+                                            <div class='inner'>
+                                                <div class='column1'>
+                                                    <div class='row'>
+                                                        <span class='title'>Contest Name</span>
+                                                        <select id='contestNameFilter'>
+                                                            <option value='All'>All Contest Names</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class='row'>
+                                                        <span class='title'>Member Handle</span>
+                                                        <select id='memberHandleFilter'>
+                                                            <option value='All'>All Handles</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end .column1-->
+                                                <div class='column3'>
+                                                    <div class='row'>
+                                                        <span class='title dateLabel'>Creation Date</span>
+                                                        <input id='startDateBegin' type='text' class='date-pick'/>
+                                                        <span class='title toLabel'>To</span>
+                                                        <input id='startDateEnd' type='text' class='date-pick'/>
+                                                    </div>
+                                                    <div class='row'>
+                                                        <span class='title' style="width:90px">VM Usage</span>
+                                                        <select id='vmUsageFilter'>
+                                                            <option value='All'>All VM Usages</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end .column3-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterHead-->
+                                    <div class='filterBottom'>
+                                        <div class='rightSide'>
+                                            <div class='inner'></div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterBottom-->
+                                    <div class='collapseBottom hide'>
+                                        <div class='rightSide'>
+                                            <div class='inner'></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table border="1px" class="projectStats contests" id="contest_vms">
                                     <thead>
                                         <tr>

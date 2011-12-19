@@ -255,3 +255,28 @@
 #allProjectsFilter.filterPanel .filterContent .inner .column3 {
     width: 450px;
 }
+
+#VMFilter.filterPanel .filterContent .inner .column1 .row .title {
+    width: 105px;
+}
+
+#VMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
+    width:90px;
+}
+
+
+#VMFilter.filterPanel #contestNameFilter {
+    width: 350px;
+}
+
+#VMFilter.filterPanel #memberHandleFilter {
+    width: 200px;
+}
+
+#VMFilter.filterPanel #vmUsageFilter {
+    width: 250px;
+}
+
+#VMFilter.filterPanel .filterContent .inner .column1 {
+    width: 500px;
+}

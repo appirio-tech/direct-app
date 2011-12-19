@@ -115,6 +115,10 @@ $(function() {
     if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().attr('id');
     if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().parent().parent().attr('id');
 
+    if($("#VMFilter").length > 0) {
+        handleName = "vmFilter";
+    }
+
     if($("#ProjectsContestsFilter").length > 0) {
         handleName = "ProjectsContests";
     }
@@ -131,6 +135,9 @@ $(function() {
     else if (handleName == 'projectsResult') {
         startDateCol = 1;
         endDateCol = 2;
+    } else if (handleName == 'vmFilter') {
+        var additionalColumnNumber = $("#contest_vms thead th").length - 11;
+        startDateCol = 7 + additionalColumnNumber;
     }
     // The plugin function for adding a new filtering routine
     $.fn.dataTableExt.afnFiltering.push(
@@ -218,6 +225,8 @@ $(function() {
     }
     else if (handleName == "ProjectsContests") { //project contests
         tableHandle = $.ProjectsContests;
+    } else if (handleName == 'vmFilter') {
+        tableHandle = vmTable;
     }
     //common part
     var customerFilter,len;
@@ -297,6 +306,56 @@ $(function() {
             $('#copilotPostingStatusFilter').append("<option value='" + value + "'>" + value + "</option>");
         }
     }
+
+    // VM Management
+    if(handleName == 'vmFilter') {
+
+        var additionalColumnNumber = $("#contest_vms thead th").length - 11;
+
+        var contestNameFilter = tableHandle.fnGetColumnData(1);
+        len = contestNameFilter.length;
+        for (var i = 0; i < len; i++) {
+            var name = contestNameFilter[i];
+            $('#contestNameFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+        var memberHandleFilter = tableHandle.fnGetColumnData(5);
+        len = memberHandleFilter.length;
+        for (var i = 0; i < len; i++) {
+            var name = memberHandleFilter[i];
+            $('#memberHandleFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+        var usageFilter = tableHandle.fnGetColumnData(8 + additionalColumnNumber);
+        len = usageFilter.length;
+        for (var i = 0; i < len; i++) {
+            var name = $.trim(usageFilter[i]);
+            if(name.length > 0)
+            $('#vmUsageFilter').append("<option value='" + name + "'>" + name + "</option>");
+        }
+
+        $('#contestNameFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+            tableHandle.fnFilter(str, 1);
+        });
+
+        $('#memberHandleFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+            tableHandle.fnFilter(str, 5);
+        });
+
+        $('#vmUsageFilter').change(function () {
+            var str = $(this).val();
+            if (str.indexOf('All') != -1) str = '';
+            tableHandle.fnFilter(str, 8 + additionalColumnNumber);
+        });
+
+    }
+
+
+
     $('#customerFilter').change(function() {
         var str = $(this).val();
         $(".customerSelectMask").find(".inputSelect input").val(str);
@@ -307,6 +366,7 @@ $(function() {
             }
         });
     });
+
     $('#projectStatusFilter').change(function() {
         var str = $(this).val();
         if (str.indexOf('All') != -1)str = '';
