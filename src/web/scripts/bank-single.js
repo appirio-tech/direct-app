@@ -51,7 +51,11 @@ $(document).ready(function() {
         // adjust the action bar
         $('.submissionInfoFeedback').addClass('withoutFeedback');
         $('.submissionInfoFeedback span.tl,.submissionInfoFeedback span.bl').hide();
-    }        
+    }     
+    
+    $('.viewFeedbackContent').each(function() {
+        var html=$(this).html().replace(/[\n]/g,'<br />')   
+    });
         
 	//if submission id already exist in the list than remove it
 	function removeIfExist(id)
@@ -333,7 +337,7 @@ $(document).ready(function() {
 			dataType: 'json',
 			async : false,
 			success: function (jsonResult) {
-                $("#alertModal3").find(".modalBodyBox").find("p").html(feedback);
+                $("#alertModal3").find(".modalBodyBox").find("p").html(feedback.replace(/[\n]/g,'<br />'));
                 modalLoad("#alertModal3");
 			},
 			beforeSend: beforeAjax,

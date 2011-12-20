@@ -319,7 +319,7 @@
             <div class="modalBodyBox">
               <div class="hasaddFeedback">
                   <div class="textBox">
-                      <p>${viewData.feedbackText}</p>
+                      <p class="viewFeedbackContent">${viewData.feedbackText}</p>
                   </div>          
               </div> 
               <div class="modalCommandBox viewFeedback"> 
@@ -392,7 +392,7 @@
                   <div class="textBox">
                     <h4>Feedback</h4>
     
-                      <p>${viewData.feedbackText}</p>
+                      <p class="viewFeedbackContent">${viewData.feedbackText}</p>
                   </div>          
               </div>
               <div class="modalCommandBox"> 
