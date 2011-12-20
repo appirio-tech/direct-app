@@ -1274,8 +1274,8 @@
                                resource.modify_user AS modify_user,
                                resource.modify_date AS modify_date,
                                resource_role_lu.phase_type_id,
-                               resource_role_lu.name,
-                               resource_role_lu.description,
+                               resource_role_lu.name AS rr_name,
+                               resource_role_lu.description AS rr_description,
                                resource_role_lu.create_user AS rr_crate_user,
                                resource_role_lu.create_date AS rr_crate_date,
                                resource_role_lu.modify_user AS rr_modify_user,
@@ -1299,6 +1299,9 @@
                     </Property>
                     <Property name="resource_role_id">
                         <Value>resource_role_lu.resource_role_id</Value>
+                    </Property>
+                    <Property name="name">
+                        <Value>resource_info_type_lu.name</Value>
                     </Property>
                 </Property>
             </Property>
