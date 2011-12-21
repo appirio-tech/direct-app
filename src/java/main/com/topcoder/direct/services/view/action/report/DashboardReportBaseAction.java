@@ -156,7 +156,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
         boolean isFirstCall = this.viewData.isShowJustForm();
 
         // if user is TcOperations
-        boolean isTcOperations = DirectUtils.isTcOperations(sessionData.getCurrentUser());
+        boolean isTcStaff = DirectUtils.isTcStaff(sessionData.getCurrentUser());
 
         // If client account IDs are not specified then use the first client account id
         boolean customerIdIsSet = customerId > 0;
@@ -169,7 +169,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             }
 
             // if user is in the admin group change it to all customers
-            if(isTcOperations) {
+            if(isTcStaff) {
                 form.setCustomerId(0);
                 customerIdIsSet = true;
             }
