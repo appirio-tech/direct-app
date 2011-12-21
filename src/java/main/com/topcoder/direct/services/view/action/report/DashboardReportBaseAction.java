@@ -214,7 +214,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
 
         // set view data for clients
         getViewData().setClientAccounts(customers);
-        if(isTcOperations) {
+        if(isTcStaff) {
             Map<Long, String> tmpCustomers = new java.util.LinkedHashMap<Long, String>();
             tmpCustomers.put(0L, "All Customers");
             for(Map.Entry<Long, String> c : customers.entrySet()) {
