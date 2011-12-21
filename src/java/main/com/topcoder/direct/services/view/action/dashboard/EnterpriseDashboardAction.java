@@ -514,7 +514,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                     // calculate the customer summary data
                     customerTotalCost += (stat.getValue() * stat.getContestsCount());
                     customerTotalVolume += stat.getContestsCount();
-                    numberOfDays += 7;
                     hasCustomerSummaryData = true;
 
                 } else if (statType == EnterpriseDashboardStatType.DURATION) {
