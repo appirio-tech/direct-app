@@ -1251,3 +1251,10 @@
 .fullSizePic img{
 	border:1px solid #ccc;
 	}
+
+
+	.viewFeedbackContent{
+	 height:90px;
+	 overflow-y:scroll;	
+	 word-wrap:break-word;
+	}
