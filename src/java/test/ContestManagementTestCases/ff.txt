@@ -1,0 +1,20 @@
+Please notice that, the test data given in scenarios doc is only for reference only. In real dev phase, it is fine to make some modifications.
+
+1.1.2
+   "Requirement 2.1 is not writen as the document, you created a contest first. In the doc, you must access the existing ones."
+   - I think it is correct, you can treat it as preparing a test contest.
+   "testFTC3"
+   - the saved contest is not in the list, i can't click the view/edit button
+   "testFTC4"
+   - I already do it. 
+   "testFTC32, testFTC36, testFTC37, testFTC38, testFTC39, testFTC40 Didn't check 1. After step 3, a popup window shows with two fields: Name and Description."
+   - The fields are already checked in previous cases, it is useless to check it again and again.
+   "testFTC25 Step 2. Populate the form with $TestContest1Step1 except Contest Name, enter "select project_id from project". didn't implemented"
+   - it is already there.
+   "testFTC82
+	dind't implement
+
+	6. Press "CONTINUE".
+	7. Press "CONTINUE".
+	8. Press the edit button for "Detailed Requirements"."
+   - i can't do it, there no "Detailed Requirements" part.
