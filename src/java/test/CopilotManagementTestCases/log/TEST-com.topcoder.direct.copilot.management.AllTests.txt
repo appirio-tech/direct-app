@@ -1,0 +1,557 @@
+Testsuite: com.topcoder.direct.copilot.management.AllTests
+Tests run: 202, Failures: 16, Errors: 34, Time elapsed: 3,067.594 sec
+
+Testcase: testFTC1 took 9.922 sec
+Testcase: testFTC2 took 8.718 sec
+Testcase: testFTC3 took 8.578 sec
+	FAILED
+the page content is incorrect
+junit.framework.AssertionFailedError: the page content is incorrect
+	at com.topcoder.direct.copilot.management.GetACopilotTests.testFTC3(GetACopilotTests.java:88)
+
+Testcase: testFTC4 took 8.579 sec
+Testcase: testFTC5 took 9.734 sec
+Testcase: testFTC6 took 8.531 sec
+Testcase: testFTC7 took 8.891 sec
+Testcase: testFTC8 took 9.156 sec
+Testcase: testFTC9 took 19.156 sec
+Testcase: testFTC10 took 16.75 sec
+	Caused an ERROR
+ERROR: Element link=3 not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element link=3 not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.GetACopilotTests.testFTC10(GetACopilotTests.java:197)
+
+Testcase: testFTC11 took 8.907 sec
+Testcase: testFTC12 took 22.078 sec
+Testcase: testFTC13 took 33.984 sec
+Testcase: testFTC14 took 10.5 sec
+Testcase: testFTC15 took 10.578 sec
+Testcase: testFTC17 took 11.281 sec
+Testcase: testFTC18 took 10.157 sec
+Testcase: testFTC19 took 10.109 sec
+Testcase: testFTC20 took 10.078 sec
+	FAILED
+file upload logic is wrong
+junit.framework.AssertionFailedError: file upload logic is wrong
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC20(GetACopilotStep1Tests.java:157)
+
+Testcase: testFTC21 took 10.86 sec
+	FAILED
+the page content is incorrect expected:<3> but was:<0>
+junit.framework.AssertionFailedError: the page content is incorrect expected:<3> but was:<0>
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC21(GetACopilotStep1Tests.java:176)
+
+Testcase: testFTC22 took 10.453 sec
+	FAILED
+the page content is incorrect expected:<3> but was:<0>
+junit.framework.AssertionFailedError: the page content is incorrect expected:<3> but was:<0>
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC22(GetACopilotStep1Tests.java:195)
+
+Testcase: testFTC23 took 10.812 sec
+Testcase: testFTC24 took 11.11 sec
+Testcase: testFTC25 took 10.64 sec
+Testcase: testFTC26 took 12.078 sec
+Testcase: testFTC27 took 11.157 sec
+Testcase: testFTC28 took 10.703 sec
+Testcase: testFTC29 took 11.265 sec
+Testcase: testFTC30 took 11.282 sec
+Testcase: testFTC31 took 11.312 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC31(GetACopilotStep1Tests.java:387)
+
+Testcase: testFTC32 took 11.094 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC32(GetACopilotStep1Tests.java:408)
+
+Testcase: testFTC33 took 10.625 sec
+Testcase: testFTC34 took 10.828 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC34(GetACopilotStep1Tests.java:452)
+
+Testcase: testFTC35 took 10.609 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC35(GetACopilotStep1Tests.java:473)
+
+Testcase: testFTC36 took 10.766 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC36(GetACopilotStep1Tests.java:496)
+
+Testcase: testFTC37 took 10.906 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC37(GetACopilotStep1Tests.java:518)
+
+Testcase: testFTC38 took 10.656 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep1Tests.testFTC38(GetACopilotStep1Tests.java:542)
+
+Testcase: testFTC39 took 10.11 sec
+Testcase: testFTC40 took 15.375 sec
+Testcase: testFTC41 took 15.265 sec
+Testcase: testFTC42 took 16.891 sec
+Testcase: testFTC44 took 16.5 sec
+Testcase: testFTC45 took 15.844 sec
+Testcase: testFTC46 took 15.812 sec
+Testcase: testFTC47 took 15.157 sec
+Testcase: testFTC48 took 16.063 sec
+Testcase: testFTC49 took 15.703 sec
+Testcase: testFTC50 took 20.484 sec
+	FAILED
+the page content is incorrect
+junit.framework.AssertionFailedError: the page content is incorrect
+	at com.topcoder.direct.copilot.management.GetACopilotStep2Tests.testFTC50(GetACopilotStep2Tests.java:280)
+
+Testcase: testFTC51 took 46.781 sec
+Testcase: testFTC52 took 16.329 sec
+Testcase: testFTC53 took 16.375 sec
+Testcase: testFTC54 took 16.343 sec
+Testcase: testFTC55 took 16.469 sec
+Testcase: testFTC56 took 17.5 sec
+Testcase: testFTC57 took 18.016 sec
+Testcase: testFTC59 took 18.218 sec
+Testcase: testFTC60 took 17.735 sec
+Testcase: testFTC61 took 17.281 sec
+Testcase: testFTC62 took 17.172 sec
+Testcase: testFTC63 took 16.469 sec
+Testcase: testFTC64 took 21.843 sec
+Testcase: testFTC65 took 22.047 sec
+	FAILED
+error popup should be displayed
+junit.framework.AssertionFailedError: error popup should be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotStep3Tests.testFTC65(GetACopilotStep3Tests.java:328)
+
+Testcase: testFTC66 took 17.735 sec
+Testcase: testFTC67 took 19.093 sec
+Testcase: testFTC69 took 18.969 sec
+Testcase: testFTC70 took 18.609 sec
+Testcase: testFTC71 took 18.156 sec
+Testcase: testFTC72 took 18.391 sec
+Testcase: testFTC73 took 18.766 sec
+Testcase: testFTC74 took 18.297 sec
+Testcase: testFTC75 took 18.812 sec
+Testcase: testFTC76 took 13.703 sec
+Testcase: testFTC77 took 13.922 sec
+Testcase: testFTC78 took 13.718 sec
+Testcase: testFTC79 took 13.579 sec
+Testcase: testFTC80 took 14.203 sec
+Testcase: testFTC81 took 13.157 sec
+Testcase: testFTC82 took 19.234 sec
+Testcase: testFTC83 took 12.656 sec
+	FAILED
+submit button should not be displayed
+junit.framework.AssertionFailedError: submit button should not be displayed
+	at com.topcoder.direct.copilot.management.GetACopilotSummaryTests.testFTC83(GetACopilotSummaryTests.java:657)
+
+Testcase: testFTC84 took 18.766 sec
+Testcase: testFTC85 took 19.656 sec
+Testcase: testFTC86 took 20.172 sec
+Testcase: testFTC87 took 18.937 sec
+	FAILED
+a preview window should be displayed expected:<2> but was:<1>
+junit.framework.AssertionFailedError: a preview window should be displayed expected:<2> but was:<1>
+	at com.topcoder.direct.copilot.management.GetACopilotConfirmation1Tests.testFTC87(GetACopilotConfirmation1Tests.java:193)
+
+Testcase: testFTC88 took 18.407 sec
+Testcase: testFTC89 took 27.203 sec
+Testcase: testFTC90 took 57.078 sec
+Testcase: testFTC91 took 27.172 sec
+Testcase: testFTC92 took 27.406 sec
+Testcase: testFTC93 took 27.266 sec
+Testcase: testFTC94 took 27.093 sec
+Testcase: testFTC95 took 6.407 sec
+Testcase: testFTC96 took 6.234 sec
+Testcase: testFTC97 took 6.516 sec
+Testcase: testFTC98 took 6.547 sec
+Testcase: testFTC99 took 6.828 sec
+Testcase: testFTC100 took 6.531 sec
+Testcase: testFTC103 took 6.562 sec
+Testcase: testFTC104 took 6.782 sec
+Testcase: testFTC105 took 6.547 sec
+Testcase: testFTC106 took 6.75 sec
+Testcase: testFTC107 took 6.609 sec
+Testcase: testFTC108 took 36.594 sec
+Testcase: testFTC109 took 6.547 sec
+Testcase: testFTC110 took 6.921 sec
+Testcase: testFTC111 took 6.532 sec
+Testcase: testFTC112 took 6.657 sec
+Testcase: testFTC113 took 6.609 sec
+Testcase: testFTC114 took 6.562 sec
+Testcase: testFTC115 took 6.672 sec
+Testcase: testFTC116 took 6.578 sec
+Testcase: testFTC117 took 6.688 sec
+Testcase: testFTC118 took 6.531 sec
+Testcase: testFTC119 took 6.375 sec
+Testcase: testFTC122 took 6.375 sec
+Testcase: testFTC123 took 6.375 sec
+Testcase: testFTC124 took 6.422 sec
+Testcase: testFTC125 took 6.656 sec
+Testcase: testFTC126 took 6.828 sec
+Testcase: testFTC127 took 6.766 sec
+Testcase: testFTC128 took 6.844 sec
+Testcase: testFTC129 took 7.422 sec
+Testcase: testFTC130 took 7.203 sec
+Testcase: testFTC131 took 7.156 sec
+Testcase: testFTC132 took 37.172 sec
+Testcase: testFTC133 took 6.828 sec
+Testcase: testFTC134 took 6.656 sec
+Testcase: testFTC135 took 9.594 sec
+Testcase: testFTC136 took 9.89 sec
+	FAILED
+the page content is incorrect expected:<Reg[istrant]s> but was:<Reg[]s>
+junit.framework.ComparisonFailure: the page content is incorrect expected:<Reg[istrant]s> but was:<Reg[]s>
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC136(MyCopilotPostingTests.java:73)
+
+Testcase: testFTC137 took 9.907 sec
+Testcase: testFTC138 took 10.062 sec
+Testcase: testFTC139 took 11.156 sec
+Testcase: testFTC140 took 12.875 sec
+Testcase: testFTC141 took 12.969 sec
+Testcase: testFTC142 took 13.328 sec
+Testcase: testFTC143 took 10.86 sec
+Testcase: testFTC146 took 9.968 sec
+Testcase: testFTC147 took 11.938 sec
+Testcase: testFTC148 took 11.89 sec
+Testcase: testFTC149 took 13.282 sec
+Testcase: testFTC150 took 13.484 sec
+Testcase: testFTC151 took 12.438 sec
+Testcase: testFTC152 took 42.171 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC152(MyCopilotPostingTests.java:331)
+
+Testcase: testFTC153 took 41.844 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC153(MyCopilotPostingTests.java:348)
+
+Testcase: testFTC156 took 13.61 sec
+Testcase: testFTC157 took 42.234 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC157(MyCopilotPostingTests.java:381)
+
+Testcase: testFTC158 took 42.234 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC158(MyCopilotPostingTests.java:398)
+
+Testcase: testFTC159 took 42.188 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC159(MyCopilotPostingTests.java:415)
+
+Testcase: testFTC160 took 41.969 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC160(MyCopilotPostingTests.java:432)
+
+Testcase: testFTC161 took 42.125 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC161(MyCopilotPostingTests.java:449)
+
+Testcase: testFTC162 took 42.062 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC162(MyCopilotPostingTests.java:465)
+
+Testcase: testFTC163 took 11.063 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC163(MyCopilotPostingTests.java:478)
+
+Testcase: testFTC164 took 11.109 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC164(MyCopilotPostingTests.java:492)
+
+Testcase: testFTC165 took 11.203 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC165(MyCopilotPostingTests.java:509)
+
+Testcase: testFTC166 took 11.234 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.scheduleInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC166(MyCopilotPostingTests.java:526)
+
+Testcase: testFTC167 took 11.532 sec
+	Caused an ERROR
+ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC167(MyCopilotPostingTests.java:542)
+
+Testcase: testFTC168 took 11.359 sec
+	Caused an ERROR
+ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC168(MyCopilotPostingTests.java:557)
+
+Testcase: testFTC169 took 11.359 sec
+	Caused an ERROR
+ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC169(MyCopilotPostingTests.java:576)
+
+Testcase: testFTC170 took 11.11 sec
+	Caused an ERROR
+ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC170(MyCopilotPostingTests.java:593)
+
+Testcase: testFTC171 took 11.047 sec
+	Caused an ERROR
+ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC171(MyCopilotPostingTests.java:612)
+
+Testcase: testFTC172 took 11.281 sec
+	Caused an ERROR
+ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC172(MyCopilotPostingTests.java:632)
+
+Testcase: testFTC173 took 11.25 sec
+	Caused an ERROR
+ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC173(MyCopilotPostingTests.java:647)
+
+Testcase: testFTC174 took 11.562 sec
+	Caused an ERROR
+ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC174(MyCopilotPostingTests.java:667)
+
+Testcase: testFTC175 took 11.75 sec
+	Caused an ERROR
+ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC175(MyCopilotPostingTests.java:685)
+
+Testcase: testFTC176 took 11.11 sec
+	Caused an ERROR
+ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.editMask.greybg > div.htmlDescription.descriptionInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC176(MyCopilotPostingTests.java:703)
+
+Testcase: testFTC177 took 11.297 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC177(MyCopilotPostingTests.java:721)
+
+Testcase: testFTC178 took 11.047 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC178(MyCopilotPostingTests.java:734)
+
+Testcase: testFTC179 took 11.141 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC179(MyCopilotPostingTests.java:750)
+
+Testcase: testFTC180 took 11.219 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC180(MyCopilotPostingTests.java:766)
+
+Testcase: testFTC181 took 12.281 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC181(MyCopilotPostingTests.java:781)
+
+Testcase: testFTC182 took 11.203 sec
+	Caused an ERROR
+ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+com.thoughtworks.selenium.SeleniumException: ERROR: Element css=div.infoPanel.fileUploadInfo  > h3 > a.editLink > img.edit_type not found
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingTests.testFTC182(MyCopilotPostingTests.java:798)
+
+Testcase: testFTC183 took 13.031 sec
+Testcase: testFTC184 took 13.297 sec
+Testcase: testFTC185 took 12.969 sec
+Testcase: testFTC186 took 15.109 sec
+Testcase: testFTC187 took 15.844 sec
+Testcase: testFTC188 took 14.109 sec
+Testcase: testFTC189 took 14.735 sec
+Testcase: testFTC190 took 14.468 sec
+Testcase: testFTC193 took 13.032 sec
+Testcase: testFTC194 took 12.843 sec
+Testcase: testFTC195 took 12.172 sec
+Testcase: testFTC196 took 15.141 sec
+Testcase: testFTC197 took 15.859 sec
+Testcase: testFTC198 took 14.844 sec
+Testcase: testFTC199 took 14.609 sec
+Testcase: testFTC200 took 14.469 sec
+Testcase: testFTC203 took 41.594 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.waitForPageToLoad(DefaultSelenium.java:635)
+	at com.topcoder.direct.copilot.management.MyCopilotPostingSubmissionsTests.testFTC203(MyCopilotPostingSubmissionsTests.java:256)
+
+Testcase: testFTC204 took 10.781 sec
+Testcase: testFTC205 took 11.047 sec
+Testcase: testFTC206 took 10.797 sec
+Testcase: testFTC207 took 40.75 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.waitForPageToLoad(DefaultSelenium.java:635)
+	at com.topcoder.direct.copilot.management.ManageCopilotsTests.testFTC207(ManageCopilotsTests.java:100)
+
+Testcase: testFTC208 took 11.469 sec
+Testcase: testFTC210 took 41.172 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.ManageCopilotsTests.testFTC210(ManageCopilotsTests.java:138)
+
+Testcase: testFTC211 took 41.281 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.ManageCopilotsTests.testFTC211(ManageCopilotsTests.java:153)
+
+Testcase: testFTC212 took 42.859 sec
+	Caused an ERROR
+Timed out after 30000ms
+com.thoughtworks.selenium.SeleniumException: Timed out after 30000ms
+	at com.thoughtworks.selenium.HttpCommandProcessor.throwAssertionFailureExceptionOrError(HttpCommandProcessor.java:97)
+	at com.thoughtworks.selenium.HttpCommandProcessor.doCommand(HttpCommandProcessor.java:91)
+	at com.thoughtworks.selenium.DefaultSelenium.click(DefaultSelenium.java:167)
+	at com.topcoder.direct.copilot.management.ManageCopilotsTests.testFTC212(ManageCopilotsTests.java:168)
+
+Testcase: testFTC213 took 11.656 sec
+Testcase: testFTC214 took 12.188 sec
+Testcase: testFTC215 took 11.766 sec
+Testcase: testFTC216 took 12.046 sec
+Testcase: testFTC217 took 11.922 sec
+Testcase: testFTC218 took 11.547 sec
+Testcase: testFTC219 took 12.735 sec

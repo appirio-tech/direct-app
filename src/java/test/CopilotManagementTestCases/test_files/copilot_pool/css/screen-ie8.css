@@ -1,0 +1,17 @@
+/*Fix for ie8*/
+
+
+/*48Hr Cockpit Header Footer and Sidebar Prototype new css codes fixing ie8 begin from this line*/
+/*fix the tab position */
+.tabContent{
+	position:relative;
+	top:-3px;
+	}
+.dashboardPage .tabContent{
+	top:-4px;}
+	
+.copilotPool .projectItem{
+					
+					margin-right:20px;
+					
+					}	

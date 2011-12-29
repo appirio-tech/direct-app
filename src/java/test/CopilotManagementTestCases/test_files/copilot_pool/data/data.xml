@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects>
+	<project id = "10002" name = "TopCoder Online Review version 1.0" startdate = "2010,04,01">
+
+		<task id="30000123">
+			<name>Online Review Conceptulization</name>
+			<est>2010,04,02</est>
+			<duration>61</duration>
+			<percentcompleted>100</percentcompleted>
+			<predecessortasks></predecessortasks>
+			<childtasks>
+				
+			</childtasks>
+		</task>
+
+		<task id="30000124">
+			<name>Online Review Specification</name>
+			<est>2010,04,04</est>
+			<duration>204</duration>
+			<percentcompleted>100</percentcompleted>
+			<predecessortasks>30000123</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000125">
+			<name>Online Review Frontend Architecture</name>
+			<est>2010,04,16</est>
+			<duration>180</duration>
+			<percentcompleted>40</percentcompleted>
+			<predecessortasks>30000124</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000126">
+			<name>Online Review Backend Architecture</name>
+			<est>2010,04,16</est>
+			<duration>300</duration>
+			<percentcompleted>50</percentcompleted>
+			<predecessortasks>30000124</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000127">
+			<name>Online Review Admin Module</name>
+			<est>2010,04,13</est>
+			<duration>200</duration>
+			<percentcompleted>50</percentcompleted>
+			<predecessortasks>30000124</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000128">
+			<name>Backend Component 1 design</name>
+			<est>2010,04,29</est>
+			<duration>150</duration>
+			<percentcompleted>0</percentcompleted>
+			<predecessortasks>30000126</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000145">
+			<name>Backend Component 1 dev</name>
+			<est>2010,05,05</est>
+			<duration>150</duration>
+			<percentcompleted>0</percentcompleted>
+			<predecessortasks>30000128</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000129">
+			<name>Backend Component 2 design</name>
+			<est>2010,04,29</est>
+			<duration>150</duration>
+			<percentcompleted>0</percentcompleted>
+			<predecessortasks>30000126</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000146">
+			<name>Backend Component 2 dev</name>
+			<est>2010,05,05</est>
+			<duration>150</duration>
+			<percentcompleted>0</percentcompleted>
+			<predecessortasks>30000129</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000135">
+			<name>Backend Component 3 design</name>
+			<est>2010,04,29</est>
+			<duration>150</duration>
+			<percentcompleted>0</percentcompleted>
+			<predecessortasks>30000126</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+		
+		<task id="30000147">
+			<name>Backend Component 3 dev</name>
+			<est>2010,05,05</est>
+			<duration>150</duration>
+			<percentcompleted>0</percentcompleted>
+			<predecessortasks>30000135</predecessortasks>
+			<childtasks>
+			</childtasks>
+		</task>
+
+	</project>
+
+
+
+</projects>

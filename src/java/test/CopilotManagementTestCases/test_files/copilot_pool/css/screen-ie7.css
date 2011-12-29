@@ -1,0 +1,61 @@
+.add_comment_cancel_text{
+	margin-right: 22px;
+}
+
+.spec_review_odd_question{
+	margin-top:10px;
+	padding-bottom: 10px;
+	background-color:#F5F5F5;
+}
+
+.no_details .add_your_comment {
+	padding: 0px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+.no_details .add_your_comment .textarea1{
+	height:90px;
+	margin-left: 25px;
+	margin-right: 70px;
+}
+
+
+/*48Hr Cockpit Header Footer and Sidebar Prototype new js codes begin from this line*/
+/*fix the tab position */
+.tabContent{
+	position:relative;
+	top:-13px;
+	}
+	.tabContent ul li{
+		padding-bottom:5px;
+		background:url(../images/grayArrow.gif) no-repeat 0 7px;
+		}
+.tabMore{
+position:relative;
+left:-9px;
+}
+
+#helpCenterWidget .contactUs{
+	margin-top:0;
+}
+.dashboardPage #helpCenterWidget .contactUs{
+	margin-top:13px;
+}
+
+
+#layout .grid {
+	margin-top:5px;
+}
+
+.customUploadWrap {
+	width:525px;
+}
+
+.postFrame {
+	width:431px;
+}
+
+.stepNav {
+		padding:25px 0 0;
+	}

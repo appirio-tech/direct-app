@@ -1,0 +1,15 @@
+This problem exists in all chrome browser (Chinese Edition) I checked in V 13.0.782.215 m (stable edition) an also in  V 14.0.835.18 (beta).
+
+
+In google chrome the  font-size is limited to minimum 12px when using "Chinese(Traditional Han)"
+Just google it or check this link
+http://www.google.com/support/forum/p/Chrome/thread?tid=6c5177414cbf8330
+
+
+In the "copilot-selected.html" the font size is set to "11px" which is automatically modified to "12px" while using "Chinese(Traditional Han)" 
+
+I have modified the css so it looks better.
+
+Please check the sanpshots in this submision.
+
+Finally the problem is fixed for this page but the problem continues in other pages to topcoder website/

@@ -1,0 +1,659 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>TopCoder Cockpit</title>
+<!-- Meta Tags -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- External CSS -->
+<link rel="stylesheet" href="css/screen.css" media="all" type="text/css" />
+<link rel="stylesheet" href="css/launchcontest.css" media="all" type="text/css"/>
+<link rel="stylesheet" href="css/dashboard.css" media="all" type="text/css" />
+<link rel="stylesheet" href="css/thickbox.css" media="all" type="text/css" />
+<link rel="stylesheet" href="css/jScrollPane.css" media="all" type="text/css"/>
+<link rel="stylesheet" href="css/newProject.css" media="all" type="text/css"/>
+<link rel="stylesheet" href="css/jquery-ui-1.7.2.custom.css" media="all" type="text/css"/>
+
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" media="screen" href="css/dashboard-ie6.css" />
+<![endif]-->
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" media="screen" href="css/screen-ie7.css"/>
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" media="screen" href="css/screen-ie8.css"/>
+<![endif]-->
+<!-- External javascript -->
+<script type="text/javascript" src="scripts/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="scripts/jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="scripts/thickbox-compressed.js"></script>
+<script type="text/javascript" src="scripts/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="scripts/jquery.em.js"></script>
+<script type="text/javascript" src="scripts/jScrollPane.js"></script>
+<script type="text/javascript" src="scripts/jquery.bgiframe.js"></script>
+<script type="text/javascript" src="scripts/date.prev.js"></script>
+<script type="text/javascript" src="scripts/date.js?v=2"></script>
+<script type="text/javascript" src="scripts/common.js?v=32"></script>
+<script type="text/javascript" src="scripts/jquery.datePicker.js?v=2"></script>
+<script type="text/javascript" src="scripts/jquery.stylish-select.js?v=4"></script>
+<script type="text/javascript" src="scripts/jquery.scrollfollow.js"></script>
+<script type="text/javascript" src="scripts/jquery.blockUI.js"></script>
+<script type="text/javascript" src="scripts/ajaxupload2.js?v=5"></script>
+<script type="text/javascript" src="scripts/jquery.validate.js"></script>
+<script type="text/javascript" src="scripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="scripts/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="scripts/dashboard.js"></script>
+<script type="text/javascript" src="scripts/jquery.dataTables.min.js?v=1.6.2"></script>
+<script type="text/javascript" src="scripts/search.js?v=3"></script>
+</head>
+<body id="page" class="dashboardPage">
+<div id="wrapper">
+	<div id="wrapperInner">
+		<div id="container">
+			<div id="content">
+				<div id="header"> <a href="/direct/dashboardActive.action" class="logo"> <img src="images/dashboard_logo.png" alt="Dashboard" /> </a>
+					<div id="tabs0">
+						<!-- the left tabs -->
+						<ul>
+							<li class="on"> <a href="/direct/dashboardActive.action"><span>Dashboard</span></a> </li>
+							<li> <a href="/direct/allProjects.action"><span>Projects</span></a> </li>
+							<li> <a href="/direct/copilot/launchCopilotContest.action"><span>Copilots</span></a> </li>
+						</ul>
+					</div>
+					<!-- End #tabs0 -->
+					<div class="helloUser">
+						<ul>
+							<li> <strong>Hello</strong> <a href="/tc?module=MemberProfile&amp;cr=22706873" class="coderTextGreen">lunarkid</a> | </li>
+							<li class="helloUserLink"> <a href="/direct/logout.action">Logout</a>| </li>
+							<li class="helloUserLink"> <a href="http://topcoder.com/home/help/" target="_blank" >Help</a> </li>
+						</ul>
+					</div>
+					<!-- End .helloUSer -->
+					<p class="lookCP dashBoardLookCP">Looking for Community Portal? <a href="javascript:;" onclick="window.open('http://community.topcoder.com');">Go There Now</a></p>
+					<div id="tabs1">
+						<ul>
+							<li > <a href="/direct/dashboardEnterprise.action"><span class="dashboardSpan">Overview</span></a> </li>
+							<li class="on"> <a href="/direct/dashboardActive.action"><span class="dashboardSpan">Active Contests</span></a> </li>
+							<li > <a href="/direct/calendar.action"><span class="dashboardSpan">Calendar</span></a> </li>
+							<li > <a href="/direct/dashboardLatest.action"><span class="dashboardSpan">Latest Activities</span></a> </li>
+						</ul>
+					</div>
+					<div id="tabs2">
+						<!-- tabs on the right side-->
+						<ul>
+							<li > <a href="/direct/dashboardSearchView.action"><span>Search</span></a> </li>
+							<li > <a href="/direct/dashboardNotifications.action"><span>Settings</span></a> </li>
+							<li > <a href="/direct/dashboardReports.action"><span>Reports</span></a> </li>
+						</ul>
+					</div>
+					<!-- End #tabs2 -->
+				</div>
+				<!-- End #header -->
+				<div id="mainContent">
+					<div id="area2">
+						<!-- the right column -->
+						<div class="box"> <a href="get-a-copilot.html" class="button2">Get A Copilot</a> <br />
+							<a href="/direct/launch/home" class="button2">Launch New Contest</a> </div>
+						<!-- End .box -->
+						<div class="box">
+							<h2 class="title">My Projects</h2>
+                            <!-- solve your problem -->
+                            <div class="solveProblem">
+                            	
+                                <div class="inner">
+                                	<h3>We can solve your problem!</h3>
+                                    <p>We represents an entirely new way to get your problem things done. Click button below to start your project.</p>
+                                    <div class="startButtonBox">
+                                    	<a href="start-a-new-project-step-1.html" class="button2">Start a New Project Now</a>
+                                    </div>
+                                </div>
+                                
+                                <!-- corner -->
+                                <div class="corner tl"></div>
+                              <div class="corner tr"></div>
+                              <div class="corner bl"></div>
+                              <div class="corner br"></div>
+                                
+                          </div>
+                            <!-- End .solveProblem -->
+                            
+							<div class="contestsContainer">
+								<p class="label">Select a Project</p>
+								<select class="selectProject">
+									<option value="/direct/projectOverview.action?formData.projectId=2902">FOL 3.2 Design</option>
+									<option value="/direct/projectOverview.action?formData.projectId=3091">FOL 3.2 Support (EFOL-3.2)</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2980">FOL 3.3 Design (G18-479)</option>
+									<option value="/direct/projectOverview.action?formData.projectId=3462">FOL 3.3 Merchandising</option>
+									<option value="/direct/projectOverview.action?formData.projectId=1379">Hestia B2B 2.3</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2221">Hestia B2B 2.4</option>
+									<option value="/direct/projectOverview.action?formData.projectId=3523">LendingTree - Landing Pages</option>
+									<option value="/direct/projectOverview.action?formData.projectId=3470">Mobile Apps</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2903">My Lists (E10-1014.1)</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2907">My Preferences (E10-1013.1)</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2908">Omniture and Demos (EFOL3.2.1)</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2906">Quote to Order (E07-0494.1)</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2904">Search (E10-1015.1)</option>
+									<option value="/direct/projectOverview.action?formData.projectId=3318">TC - Cockpit UI Revamp - 1</option>
+									<option value="/direct/projectOverview.action?formData.projectId=2905">UX (E10-1016.1)</option>
+								
+								</select>
+								<div class="contestsList">
+									<!-- This will contain the list of contests -->
+									<div class="caption">
+										<label>Sort Contests by &nbsp;</label>
+										<select id="sortTableBy" onchange="sortTable(this);">
+											<option value="title">Title</option>
+											<option value="status">Status</option>
+											<option value="type">Type</option>
+										</select>
+									</div>
+									<!-- End .caption -->
+									<div class="contestsContent">
+										<table id="contestsTable" width="100%" class="table-sidebar">
+											<thead>
+												<tr class="hide">
+													<!-- table header is necessary for the sorting functionality-->
+													<th>c1</th>
+													<th>c2</th>
+													<th>c3</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr  onclick="document.location.href = '/direct/contest/detail.action?projectId=30017464'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="running"><span>a</span></span></td>
+													<td width="70%"> Module Assembly - Hestia FOL Merchandising Custom Profile </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr class="even" onclick="document.location.href = '/direct/contest/detail.action?projectId=30017260'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="running"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Service Landing Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr  onclick="document.location.href = '/direct/contest/detail.action?projectId=30017259'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="running"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Category Landing Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr class="even" onclick="document.location.href = '/direct/contest/detail.action?projectId=30017037'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="completed"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Home Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr  onclick="document.location.href = '/direct/contest/detail.action?projectId=30017259'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="running"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Category Landing Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr class="even" onclick="document.location.href = '/direct/contest/detail.action?projectId=30017037'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="completed"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Home Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr  onclick="document.location.href = '/direct/contest/detail.action?projectId=30017259'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="running"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Category Landing Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr class="even" onclick="document.location.href = '/direct/contest/detail.action?projectId=30017037'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="completed"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Home Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr  onclick="document.location.href = '/direct/contest/detail.action?projectId=30017259'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="running"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Category Landing Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr class="even" onclick="document.location.href = '/direct/contest/detail.action?projectId=30017037'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="completed"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Home Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+												<tr  onclick="document.location.href = '/direct/contest/detail.action?projectId=30017259'; this.style.cursor='pointer';">
+													<td class="status" width="15%"><span class="running"><span>a</span></span></td>
+													<td width="70%"> FOL Merchandising Integration Category Landing Page Assembly 1.0 </td>
+													<td class="type" width="15%"><div style="display: table-cell; vertical-align: middle;"> <img src="images/as_small.png" alt="as"/> </div></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- End .contestsContent -->
+								</div>
+								<!-- End .contestsList -->
+								<p class="projectArchive"><a href="javascript:;">Projects Archive</a></p>
+							</div>
+							<!-- End .contestsContainer -->
+						</div>
+						<!-- End .box -->
+						<div id="helpCenterWidget">
+							<h6>Help Center</h6>
+							<ul class="tabList">
+								<li class="firstTab"><a href="javascript:;" class="firstTab tab actived" id="FAQTab"><span class="right"><span class="middle">FAQ</span></span></a></li>
+                                <li><a href="javascript:;" class="tab" id="videoTab"><span class="right"><span class="middle">Videos</span></span></a></li>
+                                <li><a href="javascript:;" class="tab" id="tutorialTab"><span class="right"><span class="middle">Tutorials</span></span></a></li>
+                                <li class="last"><a href="javascript:;" class="tab" id="moreTab"><span class="right"><span class="middle">&gt;&gt;</span></span></a></li>
+                                <li class="firstTab"><a href="javascript:;" class="tab tabMore hide" id="exampleTab"><span class="right"><span class="middle">Example</span></span></a></li>
+                                <li class="last"><a href="javascript:;" class="tabMore hide" id="lessTab"><span class="right"><span class="middle">&lt;&lt;</span></span></a></li>
+							</ul>
+							<div class="clear"></div>
+							<div class="tabContent" id="FAQTabCotent">
+								<ul>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=622')">How to monitor Forum Activity?</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=620')">What is TopCoder forum?</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=618')">How to Extend deadline?</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=616')">How to increase Prize?</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=614')">What can I do once a contest is running?</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=606')">What types of forums does TopCoder provide?</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=604')">How do I know a member has posted in forum?</a></li>
+								</ul>
+								<a href="http://topcoder.com/home/help/?page_id=82" class="viewAllLink">View All</a> </div>
+							<!--End FAQTabCotent-->
+							<div class="tabContent hide" id="videoTabCotent">
+								<ul>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=118')">My Game Plan</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=102')">Contest Health</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=583')">Launching a Conceptualization Contest</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=433')">Manufacturing Software</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=431')">Component Architecture</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=729')">Cockpit: Setting Permissions</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=583')">Launching a Conceptualization Contest</a></li>
+								</ul>
+								<a href="http://topcoder.com/home/help/?page_id=90" class="viewAllLink">View All</a> </div>
+							<!--End videoTabCotent-->
+							<div class="tabContent hide" id="tutorialTabCotent">
+								<ul>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=817')">How to delete Draft contest</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=815')">How to create a bug ticket in JIRA and move it to Mod Dash</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=807')">How to post new version of a contest</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=805')">How to repost a contest</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=801')">How to increase contest prize (while the contest is running)</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=797')">How to extend contest deadline (while the contest is running)</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=791')">How to launch a Copilot Contest</a></li>
+								</ul>
+								<a href="http://topcoder.com/home/help/?page_id=86" class="viewAllLink">View All</a> </div>
+							<!--End tutorialTabCotent-->
+							<div class="tabContent hide" id="exampleTabCotent">
+								<ul>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=118')">My Game Plan</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=102')">Contest Health</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=583')">Launching a Conceptualization Contest</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=433')">Manufacturing Software</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=431')">Component Architecture</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=729')">Cockpit: Setting Permissions</a></li>
+									<li><a href="javascript:;" onclick="window.open('http://topcoder.com/home/help/?p=583')">Launching a Conceptualization Contest</a></li>
+								</ul>
+								<a href="http://topcoder.com/home/help/?page_id=95" class="viewAllLink">View All</a> </div>
+							<!--End exampleTabCotent-->
+							<p class="contactUs"> <a href="javascript:;" onclick="window.open('http://topcoder.com/home/lets-talk/')" class="darkenBtn" title="CONTACT US"><span class="right"><span class="middle">CONTACT US</span></span></a> </p>
+						</div>
+						<!--End helpCenterWidget-->
+					</div>
+					<div id="area1">
+						<!-- the main area -->
+						<div class="area1Content">
+							<div class="currentPage"> <a href="/direct/dashboardActive.action" class="home">Dashboard</a> &gt; <strong>FOL 3.3 Merchandising</strong> </div>
+							<div class="areaHeader">
+								<h2 class="title contestTitle">Contests</h2>
+							</div>
+							<!-- End .areaHeader -->
+							<div class="container2" id="activeContests">
+								<div class="container2Left">
+									<div class="container2Right">
+										<div class="container2Bottom">
+											<div class="container2BottomLeft">
+												<div class="container2BottomRight">
+													<div class="container2Content">
+														<table id="activeContests" class="projectStats contests paginatedDataTable" cellpadding="0" cellspacing="0">
+															<thead>
+																<tr>
+																	<th>Contest Type</th>
+																	<th>Contest Name</th>
+																	<th>Project Name</th>
+																	<th>Start/End</th>
+																	<th>Registrants</th>
+																	<th>Submissions</th>
+																	<th>Forums</th>
+																	<th>Status</th>
+																	<th></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>Assembly</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/as_small.png" alt="as"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?projectId=30017464"> Module Assembly - Hestia FOL Merchandising Custom Profile</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3462">FOL 3.3 Merchandising</a> </div></td>
+																	<td>05/13/2011 01:28 EDT
+																		Ends in 14 days</td>
+																	<td><a href="contest/contestRegistrants.action?projectId=30017464">5</a></td>
+																	<td><a href=" /direct/contest/softwareSubmissions.action?projectId=30017464"
+>0</a></td>
+																	<td><a href="http://forums.topcoder.com/?module=Category&categoryID=9729" target="_blank">8</a></td>
+																	<td><span class="running">Registration</span></td>
+																	<td><a href="contest/detail?projectId=30017464" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Web Design</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/w_small.png" alt="w"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?contestId=1002467">(FAST!) Hestia &#034;Catalog Price Generator&#034; Storyboard Update Contest</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=2980">FOL 3.3 Design (G18-479)</a> </div></td>
+																	<td>05/11/2011 21:00 EDT
+																		Ends in 5 days</td>
+																	<td><a href="contest/contestRegistrants.action?contestId=1002467"> 15</a></td>
+																	<td><a href=" /direct/contest/submissions.action?contestId=1002467&amp;formData.viewType=GRID&amp;formData.roundType=FINAL" >3</a></td>
+																	<td><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=2056" target="_blank">0</a></td>
+																	<td><span class="running">Active</span></td>
+																	<td><a href="contest/detail?contestId=1002467" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Web Design</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/w_small.png"  alt="w"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?contestId=1002389"> Cockpit &#034;Start a Project&#034; Storyboard Contest</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3318">TC - Cockpit UI Revamp - 1</a> </div></td>
+																	<td>05/09/2011 16:00 EDT
+																		Ends in 7 days</td>
+																	<td><a href="contest/contestRegistrants.action?contestId=1002389">18</a></td>
+																	<td><a href=" /direct/contest/submissions.action?contestId=1002389&amp;formData.viewType=GRID&amp;formData.roundType=FINAL" >0</a></td>
+																	<td><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=2050" target="_blank">0</a></td>
+																	<td><span class="running">Active</span></td>
+																	<td><a href="contest/detail?contestId=1002389" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Wireframes</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/wf_small.png" alt="wf"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?contestId=1002391">Cockpit &#034;Get a Copilot&#034; Wireframes Update Contest</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3318">TC - Cockpit UI Revamp - 1</a> </div></td>
+																	<td>05/09/2011 14:00 EDT
+																		Ends in 7 days </td>
+																	<td><a href="contest/contestRegistrants.action?contestId=1002391">14</a></td>
+																	<td><a href=" /direct/contest/submissions.action?contestId=1002391&amp;formData.viewType=GRID&amp;formData.roundType=FINAL" >2</a></td>
+																	<td><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=2048" target="_blank">0</a></td>
+																	<td><span class="running">Active</span></td>
+																	<td><a href="contest/detail?contestId=1002391" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>UI Prototype</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/ui_small.png" alt="ui"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?projectId=30017412">FAST! - Hestia B2B Checkout Update 5 Prototype</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=2980">FOL 3.3 Design (G18-479)</a> </div></td>
+																	<td>05/08/2011 02:00 EDT
+																		Ends in 3 days </td>
+																	<td><a href="contest/contestRegistrants.action?projectId=30017412">7 </a></td>
+																	<td><a href=" /direct/contest/softwareSubmissions.action?projectId=30017412">2</a></td>
+																	<td><a href="http://forums.topcoder.com/?module=Category&categoryID=9697" target="_blank">13</a></td>
+																	<td><span class="running">Approval</span></td>
+																	<td><a href="contest/detail?projectId=30017412" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Web Design</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/w_small.png"
+                                                                                 alt="w"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?contestId=1002457"> Hestia B2B Merchandising &#034;Outlet Deals&#034; Graphic Update</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=2980">FOL 3.3 Design (G18-479)</a> </div></td>
+																	<td>05/07/2011 23:55 EDT
+																		Ends in 3 hours</td>
+																	<td><a href="contest/contestRegistrants.action?contestId=1002457"> 11 </a></td>
+																	<td><a href="
+                     
+                     
+                     
+                 /direct/contest/submissions.action?contestId=1002457&amp;formData.viewType=GRID&amp;formData.roundType=FINAL" > 21 </a></td>
+																	<td><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=2046" target="_blank"> 0 </a></td>
+																	<td><span
+                                                                            class="running">Active</span></td>
+																	<td><a href="contest/detail?contestId=1002457" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Web Design</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/w_small.png"
+                                                                                 alt="w"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?contestId=1002455"> (Quick!) Hestia B2B &#034;My Account: Payment Setting&#034; Design Contest</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=2980">FOL 3.3 Design (G18-479)</a> </div></td>
+																	<td>05/06/2011 19:00 EDT
+																		Finished</td>
+																	<td><a href="contest/contestRegistrants.action?contestId=1002455"> 9 </a></td>
+																	<td><a href="
+                     
+                     
+                     
+                 /direct/contest/submissions.action?contestId=1002455&amp;formData.viewType=GRID&amp;formData.roundType=FINAL" > 9 </a></td>
+																	<td><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=2044" target="_blank"> 0 </a></td>
+																	<td><span
+                                                                            class="running">Action Required</span></td>
+																	<td><a href="contest/detail?contestId=1002455" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Web Design</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/w_small.png"
+                                                                                 alt="w"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?contestId=1002456"> Loan Explorer Redesign Contest</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3523">LendingTree - Landing Pages</a> </div></td>
+																	<td>05/06/2011 14:00 EDT
+																		Ends in 3 days</td>
+																	<td><a href="contest/contestRegistrants.action?contestId=1002456"> 26 </a></td>
+																	<td><a href="
+                     
+                     
+                     
+                 /direct/contest/submissions.action?contestId=1002456&amp;formData.viewType=GRID&amp;formData.roundType=FINAL" > 14 </a></td>
+																	<td><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=2041" target="_blank"> 0 </a></td>
+																	<td><span
+                                                                            class="running">Active</span></td>
+																	<td><a href="contest/detail?contestId=1002456" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Assembly</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/as_small.png"
+                                                                                 alt="as"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?projectId=30017392"> Release Assembly - TC Direct &#034;Contest Links and Button&#034; Update 24Hr Assembly</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3318">TC - Cockpit UI Revamp - 1</a> </div></td>
+																	<td>05/04/2011 08:00 EDT
+																		Ends in 1 days</td>
+																	<td><a href="contest/contestRegistrants.action?projectId=30017392"> 11 </a></td>
+																	<td><a href=" /direct/contest/softwareSubmissions.action?projectId=30017392"
+   > 1 </a></td>
+																	<td><a href="http://forums.topcoder.com/?module=Category&categoryID=9686" target="_blank"> 43 </a></td>
+																	<td><span
+                                                                            class="running">Approval</span></td>
+																	<td><a href="contest/detail?projectId=30017392" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Web Design</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/w_small.png"
+                                                                                 alt="w"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?contestId=1002432"> Cockpit &#034;Reports Filter&#034; Redesign Contest</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3318">TC - Cockpit UI Revamp - 1</a> </div></td>
+																	<td>05/04/2011 02:00 EDT
+																		Ends in 2 days</td>
+																	<td><a href="contest/contestRegistrants.action?contestId=1002432"> 19 </a></td>
+																	<td><a href="
+                     
+                     
+                     
+                 /direct/contest/submissions.action?contestId=1002432&amp;formData.viewType=GRID&amp;formData.roundType=FINAL" > 7 </a></td>
+																	<td><a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=2028" target="_blank"> 0 </a></td>
+																	<td><span
+                                                                            class="running">Active</span></td>
+																	<td><a href="contest/detail?contestId=1002432" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Assembly</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/as_small.png"
+                                                                                 alt="as"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?projectId=30017260"> FOL Merchandising Integration Service Landing Page Assembly 1.0</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3462">FOL 3.3 Merchandising</a> </div></td>
+																	<td>04/25/2011 11:51 EDT
+																		Ends in 1 hours</td>
+																	<td><a href="contest/contestRegistrants.action?projectId=30017260"> 16 </a></td>
+																	<td><a href=" /direct/contest/softwareSubmissions.action?projectId=30017260"
+   > 2 </a></td>
+																	<td><a href="http://forums.topcoder.com/?module=Category&categoryID=9621" target="_blank"> 51 </a></td>
+																	<td><span
+                                                                            class="running">Approval</span></td>
+																	<td><a href="contest/detail?projectId=30017260" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Assembly</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/as_small.png"
+                                                                                 alt="as"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?projectId=30017259"> FOL Merchandising Integration Category Landing Page Assembly 1.0</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3462">FOL 3.3 Merchandising</a> </div></td>
+																	<td>04/25/2011 11:48 EDT
+																		Ends in 1 days</td>
+																	<td><a href="contest/contestRegistrants.action?projectId=30017259"> 18 </a></td>
+																	<td><a href=" /direct/contest/softwareSubmissions.action?projectId=30017259"
+   > 2 </a></td>
+																	<td><a href="http://forums.topcoder.com/?module=Category&categoryID=9620" target="_blank"> 73 </a></td>
+																	<td><span
+                                                                            class="running">Approval</span></td>
+																	<td><a href="contest/detail?projectId=30017259" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+																<tr>
+																	<td>Assembly</td>
+																	<td><div style="display: table-cell; vertical-align: middle; padding-left:5px; padding-right:5px"> <img src="images/as_small.png"
+                                                                                 alt="as"/> </div>
+																		<div style="display:table-cell;text-align:left"> <a class="longWordsBreak" href="/direct/contest/detail.action?projectId=30017240"> TC Direct - Page Layout Update Assembly 2</a> </div></td>
+																	<td><div style="display:table-cell;text-align:left"> <a href="projectOverview?formData.projectId=3318">TC - Cockpit UI Revamp - 1</a> </div></td>
+																	<td>04/23/2011 02:00 EDT
+																		Ends in 4 days</td>
+																	<td><a href="contest/contestRegistrants.action?projectId=30017240"> 20 </a></td>
+																	<td><a href=" /direct/contest/softwareSubmissions.action?projectId=30017240"
+   > 3 </a></td>
+																	<td><a href="http://forums.topcoder.com/?module=Category&categoryID=9601" target="_blank"> 216 </a></td>
+																	<td><span
+                                                                            class="running">Approval</span></td>
+																	<td><a href="contest/detail?projectId=30017240" class="button1 button"><span>View/Edit</span></a></td>
+																</tr>
+															</tbody>
+														</table>
+														<!-- End .projectsStats -->
+														<div class="panel"></div>
+													</div>
+													<!-- End .container2Content -->
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End .container2 -->
+						</div>
+					</div>
+				</div>
+				<!-- End #mainContent -->
+				<div id="footer" class="dashboardFooter">
+					<!--Update footer-->
+					<div class="socialNetwork"> <span>Follow us on :</span> <a href="http://www.twitter.com/TopCoder" class="twitterIcon" title="Follow us on Twitter"></a> <a href="http://www.linkedin.com/company/topcoder" class="linkedInIcon" title="Follow us on LinkedIn"></a> <a href="http://www.facebook.com/TopCoderInc" class="facebookIcon" title="Follow us on Facebook"></a> </div>
+					<!--End socialNetwork-->
+					<div class="copyright"> 
+						<span>Copyright TopCoder, Inc. 2001-2011</span>
+						<a href="http://www.topcoder.com/tc?module=Static" title="Terms of Use">Terms of Use</a>
+						<a href="http://www.topcoder.com/tc?module=Static" title="Privacy Policy">Privacy Policy</a>
+					</div>
+					<!--End copyright-->
+				</div>
+			<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6340959-9']);
+  _gaq.push(['_setDomainName', '.topcoder.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+	</script>
+				<!-- Performable Analytics -->
+				<script type="text/javascript">
+
+    var _paq = _paq || [];
+ 
+    _paq.push(["identify", {
+    id: "lunarkid"
+    }]);
+</script>
+<script src="//d1nu2rn22elx8m.cloudfront.net/performable/pax/4wrbNk.js" type="text/javascript"></script>
+			</div>
+			<!-- End #content -->
+		</div>
+		<!-- End #container -->
+	</div>
+</div>
+<!-- End #wrapper -->
+<div class="popups">
+	<!-- this area will contain the popups of this page -->
+	<!-- Help Popup -->
+	<div id="helpPopup" class="hide">
+		<div class="helpPopupInner details"> </div>
+		<!-- End .helpPopupInner -->
+	</div>
+	<!-- End #helpPopup -->
+	<!-- Message Dialog-->
+	<div id="msgDialog" title="Message"  class="dialog-box hide">
+		<p> </p>
+		<div class="popupButtons"> <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>OK</span></a> </div>
+	</div>
+	<!-- Error Dialog-->
+	<div id="errorDialog" title="Errors"  class="dialog-box hide">
+		<p> </p>
+		<div class="popupButtons"> <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>OK</span></a> </div>
+	</div>
+	<!-- Repost Dialog -->
+	<div id="repostDialog" title="Repost" class="dialog-box hide">
+		<div id="repostForm">
+			<p> Are you sure to repost the failed contest? </p>
+			<div class="popupButtons"> <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a> <a href="javascript:;" onclick="repostContest();" class="button1"><span>Yes</span></a> </div>
+		</div>
+		<!-- End #repostForm -->
+		<div id="repostResult">
+			<p> Contest has been reposted successfully! <br/>
+				Click edit button if you want to edit it. </p>
+			<div class="popupButtons"> <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>Close</span></a> <a href="javascript:;" onclick="editRepost();" class="button1"><span>Edit</span></a> </div>
+		</div>
+		<!-- End #repostResult -->
+	</div>
+	<!-- End #repostDialog -->
+	<!-- New Version Dialog -->
+	<div id="newVersionDialog" title="New Version" class="dialog-box hide">
+		<div id="newVersionConfirm">
+			<p> Are you sure to release a new version? </p>
+			<div class="popupButtons"> <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a> <a href="javascript:;" onclick="newVersionConfirm();" class="button1"><span>Yes</span></a> </div>
+		</div>
+		<!-- End #newVersionStep1 -->
+		<div id="newVersionDev">
+			<p> Do you want to create corresponding development contest? </p>
+			<div class="popupButtons"> <a href="javascript:;" onclick="newVersionDevYes();" class="button1"><span>Yes</span></a> <a href="javascript:;" onclick="newVersionDevNo();" class="button1"><span>No</span></a> </div>
+		</div>
+		<!-- End #newVersionDev -->
+		<div id="newVersionMinor">
+			<p> Do you want to create a major version or minor version? </p>
+			<div class="popupButtons"> <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a> <a href="javascript:;" onclick="newVersionChooseMajor();" class="button1"><span>Major Version</span></a> <a href="javascript:;" onclick="newVersionChooseMinor();" class="button1"><span>Minor Version</span></a> </div>
+		</div>
+		<!-- End #newVersionMinor -->
+		<div id="newVersionResult">
+			<p> New version has been created successfully! <br/>
+				Click edit button if you want to edit it. </p>
+			<div class="popupButtons"> <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>Close</span></a> <a href="javascript:;" onclick="editNewVersionProject();" class="button1"><span>Edit</span></a> </div>
+		</div>
+		<!-- End #repostResult -->
+	</div>
+	<!-- End #repostDialog -->
+	<div id="TB_overlay" class="TB_overlayBG" style="display:none"></div>
+	<div id="TB_window">
+		<div id="placeHolder">PlaceHoldertest</div>
+	</div>
+	<div id="TB_window_custom" class="specrev-window">
+		<h1>Plan Specification Review</h1>
+		<a class="review-now" href="../contest/startSpecReview.action?startMode=now"></a>
+		<p class="or">or</p>
+		<a class="review-later" href="../contest/startSpecReview.action?startMode=later"></a>
+		<p class="note">*48 hours prior to the scheduled contest start time.</p>
+	</div>
+</div>
+<!-- End .popups -->
+</body>
+<!-- End #page -->
+</html>

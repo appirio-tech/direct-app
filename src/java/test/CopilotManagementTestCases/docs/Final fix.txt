@@ -1,0 +1,37 @@
+Separate test scenario document to 2 here. One is for future testing (Copilots_Management_Test_Scenarios(For future testing).xls). One is for current vm testing (Copilots_Management_Test_Scenarios(For vm site).xls). The reson for separate for it is because in future we may use 5 step process but at the moment we just need to cover 3 step process.
+
+Final reviewer please just focus on review Copilots_Management_Test_Scenarios(For vm site).xls.
+
+From forum post http://apps.topcoder.com/forums/?module=Thread&threadID=725593&start=0, change the scenario document Copilots_Management_Test_Scenarios(For vm site).xls based on the vm site. Remove the original step2 and step3 page, move step4 and step5 page to step 2 and step 3. Update case steps for cases F40-F87.
+
+rajwirock
+1. Dashboard is out of scope. it will annoy for the peoples who use this document.
+Remove all dashboard cases and related setup data.
+
+2.It is not advisable to include to test unwanted scenarios. 
+Remove all dashboard cases and related setup data.
+
+3. F58, How do you know  max 200 characters?
+Have updated, now it's F48  Copilots_Management_Test_Scenarios(For future testing).xls, no such page on vm site so no such cases on Copilots_Management_Test_Scenarios(For vm site).xls.
+
+
+sare:
+1. TC needed for Copilot Video Tutorial on Copilot  Introduction Page
+Add F11 to cover it.
+
+2.TC need for "View More" link after "Copilots are paid per contest based on outcomes, not hours." on Copilot Introduction Page
+Add F12 to cover it.
+
+3. TC need for  "View All Videos" link on Copilot  Introduction Page
+Add F13 to cover it.
+
+4. TC need for "Work with a Copilot" link on Copilot Introduction Page
+Change it on Copilots_Management_Test_Scenarios(For vm site).xls, all "Post a Copilot" button change to "Work with a Copilot" button. Don't need to change on Copilots_Management_Test_Scenarios(For future testing).xls.
+
+5. F24 as per VM it is "Work with a Copilot" button in Copilot Introduction Page
+Change it on Copilots_Management_Test_Scenarios(For vm site).xls, all "Post a Copilot" button change to "Work with a Copilot" button. Don't need to change on Copilots_Management_Test_Scenarios(For future testing).xls.
+
+6. TC for Description under Document Upload of Get Copilot step 1
+Change it on Copilots_Management_Test_Scenarios(For vm site).xls, Add F39 to cover it and update the test data $TestStep1.
+Don't need to change on Copilots_Management_Test_Scenarios(For future testing).xls.
+

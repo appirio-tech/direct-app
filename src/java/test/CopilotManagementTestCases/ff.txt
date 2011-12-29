@@ -1,0 +1,6 @@
+Question1.1.2 arylio,
+4. there is no way to provide more detailed, the link is not clickable.
+8. the function doesn't work.
+11-12 ar using prototype, the reviewer is wrong. it will not be available from the VM.
+14-29 have been successfully appealled.
+35. the upload function doesn't work, plz check again.
