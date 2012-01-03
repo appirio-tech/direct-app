@@ -210,7 +210,7 @@
     
 	<div>
 		<!-- TC Logo -->
-		<a onclick="window.open('http://www.topcoder.com/');" href="javascript:;" class="TCLogo"><img src="/images/tc-logo.png" alt="TopCoder"></a>
+		<a onclick="window.open('https://www.topcoder.com/');" href="javascript:;" class="TCLogo"><img src="/images/tc-logo.png" alt="TopCoder"></a>
 		<p class="lookCP dashBoardLookCP">Looking for Community Portal?
         <a onclick="window.open('https://community.topcoder.com/');" href="javascript:;"><strong>Go There Now</strong></a>
     </p>

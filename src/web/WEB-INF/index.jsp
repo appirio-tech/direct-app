@@ -338,7 +338,7 @@
 
                                         <div class="register">
                                             <p class="registerLink">New to TopCoder? Please
-                                                <a href="https://www.topcoder.com/reg" target="_blank">Register</a>
+                                                <a href="https://www.topcoder.com/reg2" target="_blank">Register</a>
                                             </p>
                                             <p class="registerLink">
                                                 <a href="javascript:document.LoginForm.submit();" class="button8">
