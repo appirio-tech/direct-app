@@ -10,12 +10,12 @@
 <div class="box videoBox">
     <!-- video wrapper -->
     <div class="videoContent">
-        <object id="videoContainer" type="application/x-shockwave-flash" data="http://www.youtube.com/v/ubU0_mVtxJc">
-            <param name="movie" id="movieLink" value="http://www.youtube.com/v/ubU0_mVtxJc"/>
+        <object id="videoContainer" type="application/x-shockwave-flash" data="https://www.youtube.com/v/ubU0_mVtxJc">
+            <param name="movie" id="movieLink" value="https://www.youtube.com/v/ubU0_mVtxJc"/>
             <param name="FlashVars" value="playerMode=embedded"/>
         </object>
     </div>
-    <a href="http://topcoder.com/home/help/?page_id=90" target="_blank" class="allVideos">All Videos</a>
+    <a href="https://www.topcoder.com/help/?page_id=90" target="_blank" class="allVideos">All Videos</a>
 
     <div class="clear"></div>
 </div>
