@@ -22,6 +22,7 @@
     <property name="javadocsdir" value="${docsdir}/javadocs"/>
     <property name="webdir" value="${srcdir}/web"/>
     <property name="ppt_webdir" value="${srcdir}/ppt_web"/>
+	<property name="mobile_webdir" value="${srcdir}/mobile_web"/>
     <property name="reports" value="${testlogdir}/reports"/>
 
     <!-- Import the dependencies of this build file -->
@@ -67,6 +68,7 @@
     <property name="component.ear" value="${distfilename}.ear"/>
     <property name="component.war" value="${build_distdir}/${distfilename}.war"/>
     <property name="ppt.war" value="${build_distdir}/ppt.war"/>
+	<property name="mobile.war" value="${build_distdir}/mobile.war"/>
     <property name="component.jar" value="${dist_lib}/${component_path}/${distfilename}.jar"/>
     <property name="javadoc.jar" value="javadocs.jar"/>
     <property name="component.tests.jar" value="${dist_lib}/${distfilename}_tests.jar"/>
@@ -133,7 +135,7 @@
     <property name="temp_dist_ear" value="${build_distdir}/temp_dist_ear"/>
     <property name="ear_shared_libdir" value="${build_distdir}/lib"/>
 
-    <target name="ear" depends="war, ppt_war" description="create the ear tarball for direct application">
+    <target name="ear" depends="war, ppt_war, mobile_war" description="create the ear tarball for direct application">
         <!-- Copy the libraries -->
         <mkdir dir="${build_distdir}"/>
         <mkdir dir="${build_distdir}/lib"/>
@@ -344,6 +346,10 @@
                 <include name="css/**/*.*"/>
                 <include name="scripts/**/*.*"/>
             </fileset>
+        	<fileset dir="${srcdir}/mobile_web">
+                <include name="css/**/*.*"/>
+                <include name="scripts/**/*.*"/>
+            </fileset>
         </zip>
     </target>
 
@@ -403,6 +409,11 @@
                 <include name="images/**/*"/>
                 <include name="scripts/**/*"/>
             </fileset>
+        	<fileset dir="src/mobile_web">
+                <include name="css/**/*"/>
+                <include name="images/**/*"/>
+                <include name="scripts/**/*"/>
+            </fileset>
         </copy>
     </target>
 
@@ -417,6 +428,9 @@
         <fileset dir="${srcdir}/ppt_web/images">
           <include name="**/*" />
         </fileset>
+      	<fileset dir="${srcdir}/mobile_web/images">
+          <include name="**/*" />
+        </fileset>
       </copy>
       <copy todir="${apache_tcdocs}/css" overwrite="true">
         <fileset dir="${srcdir}/web/css">
@@ -425,12 +439,18 @@
         <fileset dir="${srcdir}/ppt_web/css">
           <include name="**/*" />
         </fileset>
+      	<fileset dir="${srcdir}/mobile_web/css">
+          <include name="**/*" />
+        </fileset>
       </copy>
       <copy todir="${apache_tcdocs}/scripts" overwrite="true">
         <fileset dir="${srcdir}/web/scripts">
           <include name="**/*" />
         </fileset>
         <fileset dir="${srcdir}/ppt_web/scripts">
+          <include name="**/*" />
+        </fileset>
+      	<fileset dir="${srcdir}/mobile_web/scripts">
           <include name="**/*" />
         </fileset>
       </copy>
@@ -600,6 +620,23 @@
 
         <unzip src="tempppt.war" dest="${ppt.war}"/>
         <delete file="tempppt.war"/>
+    </target>
+	
+	<!-- Builds the PPT WAR file for web application module -->
+    <target name="mobile_war" depends="war, ppt_compile" description="Builds the Mobile WAR file">
+        <war warfile="tempmobile.war" webxml="${tokenized_conf}/mobile_web/WEB-INF/web.xml">
+            <webinf dir="${tokenized_conf}/mobile_web/WEB-INF" includes="applicationContext.xml"/>
+            <classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="struts.xml"/>
+            <classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="validators.xml"/>
+            <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
+            <classes dir="${build_classdir}" includes="com/topcoder/ppt/**/*.class"/>
+            <fileset dir="${mobile_webdir}">
+                <include name="**/*.jsp"/>
+            </fileset>
+        </war>
+
+        <unzip src="tempmobile.war" dest="${mobile.war}"/>
+        <delete file="tempmobile.war"/>
     </target>
 
     <!-- ************************************************************************** -->
