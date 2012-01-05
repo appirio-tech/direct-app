@@ -352,6 +352,21 @@ $(function() {
             tableHandle.fnFilter(str, 8 + additionalColumnNumber);
         });
 
+        if ($("#memberHandleFilter").length > 0) {
+            var all_option = $("#memberHandleFilter option:eq(0)")
+            var my_options = $("#memberHandleFilter option:gt(1)");
+
+            my_options.sort(function (a, b) {
+                a = a.text.toUpperCase();
+                b = b.text.toUpperCase();
+                if (a > b) return 1;
+                else if (a < b) return -1;
+                else return 0
+            })
+
+            $("#memberHandleFilter").empty().append(all_option).append(my_options);
+            $("#memberHandleFilter option:eq(0)").attr('selected', 'selected');
+        }
     }
 
 
