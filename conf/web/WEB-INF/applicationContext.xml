@@ -519,14 +519,23 @@
           class="com.topcoder.direct.services.view.action.report.UpdateInvoiceRecordsAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="invoiceRecordDAO" ref="invoiceRecordDAO"/>
+        <property name="invoiceDAO" ref="invoiceDAO"/>
         <property name="lookupDAO" ref="invoiceLookupDAO"/>
+        <property name="transactionManager" ref="txManager"/>
+    </bean>
+    
+    <bean id="updateInvoiceAction"
+          class="com.topcoder.direct.services.view.action.report.UpdateInvoiceAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="invoiceRecordDAO" ref="invoiceRecordDAO"/>
+        <property name="invoiceDAO" ref="invoiceDAO"/>
+        <property name="transactionManager" ref="txManager"/>
     </bean>
     
     <bean id="dashboardBillingCostReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardBillingCostReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="viewData.showJustForm" value="false"/>
-        <property name="invoiceRecordDAO" ref="invoiceRecordDAO"/>
         <property name="lookupDAO" ref="invoiceLookupDAO"/>
     </bean>
 
@@ -600,7 +609,10 @@
 
     <bean name="invoiceRecordDAO" class="com.topcoder.clients.invoices.dao.impl.InvoiceRecordDAOImpl"
           parent="invoiceBaseDAO"/>
-          
+    
+    <bean name="invoiceDAO" class="com.topcoder.clients.invoices.dao.impl.InvoiceDAOImpl"
+          parent="invoiceBaseDAO"/>
+                
     <bean name="invoiceLookupDAO" class="com.topcoder.clients.invoices.dao.impl.LookupDAOImpl"
           parent="invoiceBaseDAO"/>
           

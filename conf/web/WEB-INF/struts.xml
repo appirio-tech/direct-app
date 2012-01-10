@@ -464,6 +464,14 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        
+        <action name="updateInvoice" class="updateInvoiceAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
 
          <action name="dashboardBillingCostReport" class="dashboardShowBillingCostReportAction">
             <interceptor-ref name="baseStack"/>
