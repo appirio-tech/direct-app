@@ -19,8 +19,8 @@
     <ui:dashboardPageType tab="dashboard"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/vmservice.js?v=206355"></script>
-    <link href="/css/screen.css?v=210789" rel="stylesheet" type="text/css" />
-    <link href="../../css/dashboard.css?v=211038" rel="stylesheet" type="text/css" />
+    <link href="/css/screen.css?v=211688" rel="stylesheet" type="text/css" />
+    <link href="../../css/dashboard.css?v=211688" rel="stylesheet" type="text/css" />
     <jsp:include page="/WEB-INF/includes/filterPanel.jsp"/>
 </head>
 
