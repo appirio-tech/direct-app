@@ -1,6 +1,6 @@
 <%--
   - Author: Blues, GreatKevin, TCSASSEMBLER
-  - Version: 1.5
+  - Version: 1.6
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
@@ -17,6 +17,8 @@
   - Version 1.5 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) changes:
   - - Update the filter panel of billing cost report to the new one.
   -
+  - Version 1.6 (TC Accounting Tracking Invoiced Payments Part 2) changes:
+  - - Added invoice number, invoice date and bug description to the report detail table.
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -299,6 +301,7 @@
 <%--
   Cost report area
 --%>
+<input type="hidden" id="currentDate" value="<s:date name="currentDate" format="MM/dd/yyyy" />" />
 <div id="billingCostReportSection" class="resultTableContainer">
 
     <%-- Cost report Details --%>
@@ -306,7 +309,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="<c:if test="${viewData.canProcessInvoices}">17</c:if><c:if test="${!viewData.canProcessInvoices}">13</c:if>">
+        <th class="tableTitle" colspan="<c:if test="${viewData.canProcessInvoices}">18</c:if><c:if test="${!viewData.canProcessInvoices}">15</c:if>">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Billing Cost Details</span>
             <span style="float:right;padding-top:4px; padding-right:5px">
@@ -332,9 +335,12 @@
         <th class="tableColumn">&nbsp;Amount&nbsp;</th>
         <c:if test="${viewData.canProcessInvoices}">
         <th class="tableColumn">&nbsp;Payment ID&nbsp;</th>
+        </c:if>
+        <th class="tableColumn">&nbsp;Invoice Number&nbsp;</th>
         <th class="tableColumn">&nbsp;Invoice Date&nbsp;</th>
+        <c:if test="${viewData.canProcessInvoices}">
         <th class="tableColumn">&nbsp;Invoice Amount&nbsp;</th>
-        <th class="tableColumn">&nbsp;Processed?&nbsp;<br/><input type="checkbox" id="invoiceRecordSelectAll"/></th>
+        <th class="tableColumn"><input type="button" value="Invoice" class="processBtn"></th>
         </c:if>
     </tr>
     </thead>
@@ -379,9 +385,11 @@
             </td>
             <td>
                 <s:if test="referenceId != null && referenceId != ''">
+                    <div class="wrapContent">
                     <a  target="_blank" href="https://apps.topcoder.com/bugs/browse/${referenceId}">
-                        <s:property value="referenceId"/>
+                        ${paymentDesc}
                     </a>
+                    </div>
                 </s:if>
             </td>
             <td>
@@ -407,15 +415,35 @@
             <td>
                 <s:property value="paymentId"/>
             </td>
-            <td>
-                <s:date name="invoiceDate" format="yyyy-MM-dd" />
+            </c:if>
+            <td class="invoiceNumber">
+                <c:if test="${viewData.canProcessInvoices and not empty invoiceNumber}">
+                    <a href="#" class="updInvoiceDate">${invoiceNumber}</a>
+                </c:if>
+                <c:if test="${!viewData.canProcessInvoices and not empty invoiceNumber}">
+                    ${invoiceNumber}
+                </c:if>
             </td>
+            <td class="invoiceDate">
+                <c:if test="${viewData.canProcessInvoices and not empty invoiceDate}">
+                    <a href="#" class="updInvoiceDate"><s:date name="invoiceDate" format="yyyy-MM-dd" /></a>
+                </c:if>
+                <c:if test="${!viewData.canProcessInvoices and not empty invoiceDate}">
+                    <s:date name="invoiceDate" format="yyyy-MM-dd" />
+                </c:if>
+            </td>
+            <c:if test="${viewData.canProcessInvoices}">
             <td class="invoiceAmount">
                 <s:set var="invoiceA" value="invoiceAmount" scope="page"/>
+                <c:if test="${not empty invoiceNumber}">
+                    <a href="#" class="updInvoiceAmount"><fmt:formatNumber value="${invoiceA}" pattern="$###,##0.00"/></a>
+                </c:if>
+                <c:if test="${empty invoiceNumber}">
                 <fmt:formatNumber value="${invoiceA}" pattern="$###,##0.00"/>
+                </c:if>
             </td>
             <td>
-                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if>/>
+                <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
             </td>
             </c:if>
 

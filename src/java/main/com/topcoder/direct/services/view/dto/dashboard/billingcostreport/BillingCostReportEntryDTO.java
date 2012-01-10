@@ -18,8 +18,16 @@ import java.util.Date;
  * </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.2 (TC Accounting Tracking Invoiced Payments Part 2) change log:
+ * <ol>
+ *   <li>Added {@link #invoiceNumber}, {@link #invoiceId} and {@link #paymentDesc} fields.
+ *   Also the setters/getters were added.</li>
+ * </ol>
+ * </p>
+ * 
  * @author Blues, flexme
- * @version 1.1 (TC Cockpit Billing Cost Report Assembly v1.0)
+ * @version 1.2 (TC Cockpit Billing Cost Report Assembly v1.0)
  */
 public class BillingCostReportEntryDTO implements Serializable {
     /**
@@ -108,6 +116,22 @@ public class BillingCostReportEntryDTO implements Serializable {
     private Date invoiceDate;
     
     /**
+     * The invoice number.
+     * 
+     * @since 1.2
+     */
+    private String invoiceNumber;
+    
+    /**
+     * The id of the invoice.
+     * 
+     * @since 1.2
+     */
+    private long invoiceId;
+    
+    private long invoiceRecordId;
+    
+    /**
      * Flag indicates whether the contest payment is of type studio contest.
      */
 
@@ -116,6 +140,13 @@ public class BillingCostReportEntryDTO implements Serializable {
 
     private String referenceId;
 
+    /**
+     * The payment description.
+     * 
+     * @since 1.2
+     */
+    private String paymentDesc;
+    
     public String getReferenceId() {
         return referenceId;
     }
@@ -435,5 +466,83 @@ public class BillingCostReportEntryDTO implements Serializable {
      */
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
+    }
+
+    /**
+     * Gets the invoice number.
+     * 
+     * @return the invoice number.
+     * @since 1.2
+     */
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    /**
+     * Sets the invoice number.
+     * 
+     * @param invoiceNumber the invoice number.
+     * @since 1.2
+     */
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
+    /**
+     * Gets the id of the invoice.
+     * 
+     * @return the id of the invoice.
+     * @since 1.2
+     */
+    public long getInvoiceId() {
+        return invoiceId;
+    }
+
+    /**
+     * Sets the id of the invoice.
+     * 
+     * @param invoiceId the id of the invoice.
+     * @since 1.2
+     */
+    public void setInvoiceId(long invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    /**
+     * Gets the payment description.
+     * 
+     * @return the payment description.
+     * @since 1.2
+     */
+    public String getPaymentDesc() {
+        return paymentDesc;
+    }
+
+    /**
+     * Sets the payment description.
+     * 
+     * @param paymentDesc the payment description.
+     * @since 1.2
+     */
+    public void setPaymentDesc(String paymentDesc) {
+        this.paymentDesc = paymentDesc;
+    }
+
+    /**
+     * Gets the invoice record id.
+     * 
+     * @return the invoice record id
+     */
+    public long getInvoiceRecordId() {
+        return invoiceRecordId;
+    }
+
+    /**
+     * Sets the invoice record id.
+     * 
+     * @param invoiceRecordId the invoice record id to set
+     */
+    public void setInvoiceRecordId(long invoiceRecordId) {
+        this.invoiceRecordId = invoiceRecordId;
     }
 }

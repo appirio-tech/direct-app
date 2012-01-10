@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.dao.LookupDAO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
@@ -43,8 +42,18 @@ import com.topcoder.direct.services.view.util.DirectUtils;
  * </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.2 (TC Accounting Tracking Invoiced Payments Part 2) change notes:
+ * <ol>
+ *   <li>Added {@link #getCurrentDate()} method to get the current date of server.</li>
+ *   <li>Removed field <code>invoiceRecordDAO</code>.</li>
+ *   <li>Updated method {@link #executeAction()} to remove invoiceRecordDAO from parameter list
+ *   when calling DataProvider.getDashboardBillingCostReport.</li>
+ * </ol>
+ * </p>
+ * 
  * @author Blues, TCSASSEMBER
- * @version 1.1 (TC Cockpit Billing Cost Report Assembly)
+ * @version 1.2 (TC Cockpit Billing Cost Report Assembly)
  */
 public class DashboardBillingCostReportAction extends DashboardReportBaseAction<DashboardBillingCostReportForm, BillingCostReportDTO> {
 
@@ -76,14 +85,6 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
     }
     
     /**
-     * <p>The instance of <code>InvoiceRecordDAO</code>. Used to retrieve <code>InvoiceRecord</code> data. Will
-     * be injected by Spring IoC.</p>
-     * 
-     * @since 1.1
-     */
-    private InvoiceRecordDAO invoiceRecordDAO;
-    
-    /**
      * <p>The instance of <code>LookupDAO</code>. Used to retrieve <code>InvoiceType</code> data. Will
      * be injected by Spring IoC.</p>
      * 
@@ -102,16 +103,6 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
     }
 
     /**
-     * <p>Sets the instance of <code>InvoiceRecordDAO</code>.</p>
-     * 
-     * @param invoiceRecordDAO the instance of <code>InvoiceRecordDAO</code>.
-     * @since 1.1
-     */
-    public void setInvoiceRecordDAO(InvoiceRecordDAO invoiceRecordDAO) {
-        this.invoiceRecordDAO = invoiceRecordDAO;
-    }
-
-    /**
      * <p>Sets the instance of <code>LookupDAO</code>.</p>
      * 
      * @param lookupDAO the instance of <code>LookupDAO</code>.
@@ -119,6 +110,16 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
      */
     public void setLookupDAO(LookupDAO lookupDAO) {
         this.lookupDAO = lookupDAO;
+    }
+    
+    /**
+     * <p>Gets the current date.</p>
+     *  
+     * @return the current date
+     * @since 1.2
+     */
+    public Date getCurrentDate() {
+        return new Date();
     }
     
     /**
@@ -210,7 +211,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         if (!getViewData().isShowJustForm()) {
 
             Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
-                    (invoiceRecordDAO, lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
+                    (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
                     softwareProjectCategories, studioProjectCategories, paymentTypeIds,
                     customerId, billingAccountId, statusIds, contestId, startDate, endDate,
                     REPORT_CONTEST_STATUS_IDS, BILLING_COST_REPORT_PAYMENT_TYPES_IDS);

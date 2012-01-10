@@ -8032,6 +8032,13 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #content.billingCostReportContent {
-    min-width:1180px;
+    min-width:1480px;
 }
-
+#billingCostDetails .processBtn {
+    width:60px !important;
+    height:20px !important;
+}
+#billingCostDetails .wrapContent {
+    display:table-cell;
+    text-align:left
+}

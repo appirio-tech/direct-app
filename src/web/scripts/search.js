@@ -43,8 +43,11 @@
  *  Version 1.8 - (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
  *  - Update the data tables initialization codes to work with final panel and search bar.
  *
+ * Version 1.8.1 - (TC Accounting Tracking Invoiced Payments Part 2:
+ *  - Add logic to update the disabled state of invoice process button in billing cost report page.
+ *  
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, TCSASSEMBLER
- * @version 1.8
+ * @version 1.8.1
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -625,47 +628,23 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "money" }
             ];
-    if (ths == 17) {
+    if (ths == 18) {
         aoColumns.push({ "sSortDataType": "html" });
-        aoColumns.push({ "sSortDataType": "simple-date" });
+    }
+    aoColumns.push({ "sSortDataType": "html" });
+    aoColumns.push({ "sSortDataType": "simple-date" });
+    if (ths == 18) {
         aoColumns.push({ "sSortDataType": "money" });
         aoColumns.push({ "sSortDataType": "dom-checkbox" });
     }
     $.billingCostReportDataTable = $("#billingCostReportSection .paginatedDataTable").dataTable({
         "fnDrawCallback": function() {
-            if ($("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:checked)").length == 0) {
-                $("#invoiceRecordSelectAll").attr("checked", "checked");
-                $("#invoiceRecordSelectAll").attr("disabled", "disabled");
+            var chs = $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:checked:not(:disabled)");
+            if (chs.length == 0) {
+                $("#billingCostReportSection .processBtn").attr("disabled", "disabled");
             } else {
-                $("#invoiceRecordSelectAll").attr("checked", "");
+                $("#billingCostReportSection .paginatedDataTable .processBtn").attr("disabled", "");
             }
-            $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']").unbind("click").click(function() {
-                var contestIds = [$(this).attr("contestid")];
-                var paymentIds= [$(this).attr("paymentid")];
-                var invoiceTypeNames = [$(this).attr("invoicetype")];
-                var invoiceAmounts = [$(this).attr("invoiceamount")];
-                var processeds = [$(this).is(":checked")];
-                var checkbox = $(this);
-
-                $("#invoiceRecordSelectAll").attr("disabled", "disabled");
-                checkbox.attr("disabled", "disabled");
-                updateInvoiceRecords(contestIds, paymentIds, invoiceTypeNames, invoiceAmounts, processeds, function() {
-
-                    $("#invoiceRecordSelectAll").attr("disabled", "");
-                    if ($("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:checked)").length == 0) {
-                        $("#invoiceRecordSelectAll").attr("checked", "checked");
-                        $("#invoiceRecordSelectAll").attr("disabled", "disabled");
-                    } else {
-                        $("#invoiceRecordSelectAll").attr("checked", "");
-                    }
-
-
-                }, function() {
-                    checkbox.attr("disabled", "");
-                    $("#invoiceRecordSelectAll").attr("disabled", "");
-                    checkbox.attr("checked", !processeds[0] ? "checked" : "");
-                });
-            });
         },
         "iDisplayLength": 50,
         "bFilter": true,

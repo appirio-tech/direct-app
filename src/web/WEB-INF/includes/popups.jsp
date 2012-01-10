@@ -1,6 +1,6 @@
 <%--
   - Author: winsty, GreatKevin, TCSASSEMBLER
-  - Version: 1.4
+  - Version: 1.7
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -28,6 +28,9 @@
   - 
   - Version 1.6 - Release Assembly - TopCoder Cockpit Start A New Project Revamp R2
   - - add modal windows for the start a new project process R2
+  -
+  - Version 1.7 - TC Accounting Tracking Invoiced Payments Part 2
+  - - add modal windows for creating invoice in biling cost report page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -209,6 +212,82 @@
 	</div>
 	    <!-- end #addNewProjectModal -->
 
+        <!-- #processInvoiceRecord -->
+        <div id="processInvoiceRecordModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        <span class="title">Process Invoice Record</span>
+                        <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+
+            <div class="modalBody">
+                <div class="noticeContent">
+                    <div class="modalRow">
+                        <label>Invoice Number:</label>
+                        <input type="text" class="text" id="invoiceNumber"/>
+                        <div class="clearFix"></div>
+                        <div class="errorInfo hide">Please input invoice number</div>
+                    </div>
+                    <div class="modalRow">
+                        <label class="fLeft">Invoice Date:</label>
+                        <input type="text" class="text fLeft date-pick" id="invoiceDate" readonly value="" />
+                        <div class="clearFix"></div>
+                    </div>
+                </div>
+
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1 updateInvoice"><span class="btnR"><span class="btnC"
+                                                                                       onclick="">Save</span></span></a>
+                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal"><span class="btnR"><span
+                            class="btnC">CANCEL</span></span></a>
+                </div>
+            </div>
+            <!-- end .modalBody -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+        <!-- end #processInvoiceRecordModal -->
+        
+        <div id="invoiceNumberDuplicatedModal" class="outLay">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        Warning
+                        <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modalBody">
+                <div class="noticeContent">
+                    <div class="modalRow">
+                        <div class="errorIcon fLeft"><img src="/images/warning_milestone.png" alt=""/></div>
+                        <p class="twoLine">The invoice number is existing in the table, do you want to proceed?</p>
+                    </div>
+                </div>
+                <div class="modalCommandBox">
+                    <a href="javascript:;" class="newButton1 updateInvoice"><span class="btnR"><span class="btnC"
+                                                                                       onclick="">YES</span></span></a>
+                    <a href="javascript:;" class="newButton1 newButtonCancel closeModal"><span class="btnR"><span
+                            class="btnC">CANCEL</span></span></a>
+                </div>
+            </div>
+            
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+        </div>
+        
         <!-- copilot manage modal -->
         <div id="copilotManageModal" class="outLay">
         <div class="inner">

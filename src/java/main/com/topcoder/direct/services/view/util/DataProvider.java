@@ -22,15 +22,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.lang.StringUtils;
 
-import com.topcoder.clients.invoices.dao.InvoiceDAOException;
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
-import com.topcoder.clients.invoices.model.InvoiceRecord;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
@@ -411,8 +408,18 @@ import com.topcoder.web.common.tag.HandleTag;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 3.3 (TC Accounting Tracking Invoiced Payments Part 2) change log:
+ * <ol>
+ *   <li>Removed <code>invoiceRecordDAO</code> from the parameter list from
+ *   {@link #getDashboardBillingCostReport(List, TCSubject, long, long[], long[], long[], long, long, long[], long, Date, Date, Map, Map)}.</li>
+ *   <li>Updated {@link #getDashboardBillingCostReport(List, TCSubject, long, long[], long[], long[], long, long, long[], long, Date, Date, Map, Map)}
+ *   to populate the invoice number, invoice id and payment description.</li>
+ * </ol>
+ * </p>
+ * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
- * @version 3.2
+ * @version 3.3
  * @since 1.0
  */
 public class DataProvider {
@@ -3621,7 +3628,6 @@ public class DataProvider {
      * Gets the billing cost report entries with the given parameters. The method returns a map,
      * the key is the contest id, the value is a list of billing cost entries.
      *
-     * @param invoiceRecordDAO the <code>InvoiceRecordDAO</code> instance.
      * @param invoiceTypes a <code>List</code> providing all the invoice types.
      * @param currentUser the current user.
      * @param projectId the direct project id.
@@ -3640,8 +3646,7 @@ public class DataProvider {
      * @throws Exception if any error occurs.
      * @since 2.5.0
      */
-    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(InvoiceRecordDAO invoiceRecordDAO,
-                                                                                           List<InvoiceType> invoiceTypes,
+    public static Map<Long, List<BillingCostReportEntryDTO>> getDashboardBillingCostReport(List<InvoiceType> invoiceTypes,
                                                                                            TCSubject currentUser, long projectId,
                                                                                            long[] projectCategoryIds,
                                                                                            long[] studioProjectCategoryIds,
@@ -3822,11 +3827,26 @@ public class DataProvider {
                 costDTO.setInvoiceDate(row.getTimestampItem("process_date"));
             }
 
+            if (row.getItem("invoice_number").getResultData() != null) {
+                costDTO.setInvoiceNumber(row.getStringItem("invoice_number"));
+            }
+            
+            if (row.getItem("invoice_id").getResultData() != null) {
+                costDTO.setInvoiceId(row.getLongItem("invoice_id"));
+            }
+            
+            if (row.getItem("invoice_record_id").getResultData() != null) {
+                costDTO.setInvoiceRecordId(row.getLongItem("invoice_record_id"));
+            }
+            
             if (row.getItem("processed").getResultData() != null) {
                 costDTO.setProcessed(row.getBooleanItem("processed"));
             }
 
-
+            if (row.getItem("payment_desc").getResultData() != null) {
+                costDTO.setPaymentDesc(row.getStringItem("payment_desc"));
+            }
+            
             costDTO.setClient(client);
             costDTO.setBilling(billing);
             costDTO.setProject(directProject);

@@ -119,7 +119,7 @@ div.dp-popup .datePickerWrapper .datePickerCenterInner{
 
 div#dp-popup {
 	position: absolute;
-	z-index: 199;
+	z-index: 10002;
 }
 
 div.dp-popup h2 {
