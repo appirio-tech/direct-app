@@ -292,7 +292,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
                 }
 
                 // Remove prized submissions as provided by request cookie
-                String[] prizeSlotNames = {"firstPrize", "secondPrize", "thirdPrize", "fourthPrize", "fifthPrize"};
+                String[] prizeSlotNames = {"firstPrize", "secondPrize", "thirdPrize", "fourthPrize", "fifthPrize", "sixthPrize", "seventhPrize", "eighthPrize", "ninthPrize", "tenthPrize"};
                 if (!contestRoundSelectionJSON.isNullObject()) {
                     for (String prizeSlotName : prizeSlotNames) {
                         if (contestRoundSelectionJSON.has(prizeSlotName)) {
