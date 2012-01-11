@@ -53,6 +53,7 @@
 
 <script type="text/javascript" src="/scripts/jquery.stylish-select.js?v=188719"></script>
 <script type="text/javascript" src="/scripts/date.js?v=185881"></script>
+<script type="text/javascript" src="/scripts/date.prev.js?v=185881"></script>
 <script type="text/javascript" src="/scripts/jquery.datePicker.js?v=209150"></script>
 <script type="text/javascript" src="/scripts/jquery.bgiframe.js?v=207894"></script>
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js?v=179771"></script>
@@ -67,7 +68,6 @@
 <script type="text/javascript" src="/scripts/ui.droppable.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/ui.accordion.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/thickbox-compressed.js?v=186145"></script>
-
 
 <s:if test="formData.viewType.toString() == 'GRID'">
     <script type="text/javascript" src="/scripts/bank-grid.js?v=211035"></script>
