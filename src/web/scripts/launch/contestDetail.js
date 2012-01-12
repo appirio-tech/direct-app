@@ -94,7 +94,7 @@ $(document).ready(function(){
       data: {"contestId":paramContestId},
       cache: false,
       dataType: 'json',
-      async : true,
+      async : false,
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
