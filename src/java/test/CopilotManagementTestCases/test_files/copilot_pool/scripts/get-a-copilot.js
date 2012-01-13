@@ -368,7 +368,7 @@ $(document).ready(function(){
 	// video 
 	$(".viewVideo").click(function() {
 		$(".viewVideo").target = "_blank";
-		window.location.href="http://topcoder.com/home/help/?page_id=15&subject=startproject&catIdx=5809";
+		window.location.href="https://www.topcoder.com/help/?page_id=15&subject=startproject&catIdx=5809";
 	});
 	
 	

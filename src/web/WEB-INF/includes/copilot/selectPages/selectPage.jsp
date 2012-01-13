@@ -61,7 +61,7 @@
             </div>
             <!--End .grayTextArea-->
             
-            <a href="http://topcoder.com/home/help/?page_id=15&subject=startproject&catIdx=5809" class="redText viewVideo"><strong>View All Videos</strong></a>
+            <a href="https://www.topcoder.com/help/?page_id=15&subject=startproject&catIdx=5809" class="redText viewVideo"><strong>View All Videos</strong></a>
             
             <div class="grayTextAreaCustom">
                 <h3>Selected Copilot</h3>
