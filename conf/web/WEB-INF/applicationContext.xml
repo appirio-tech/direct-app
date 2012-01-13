@@ -213,6 +213,8 @@
         <property name="projectServices" ref="projectServices"/>
         <property name="specificationReviewService" ref="specificationReviewService"/>
         <property name="userPreferenceHome" ref="userPreferenceHome"/>
+        <property name="metadataKeyService" ref="directProjectMetadataKeyService"/>
+        <property name="metadataService" ref="directProjectMetadataServices"/>
     </bean>
 
     <bean id="projectOverviewAction"
@@ -296,6 +298,14 @@
     <bean id="abstractVMAction" class="com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction"
           parent="baseDirectStrutsAction" scope="prototype" abstract="true">
         <property name="cloudVMService" ref="cloudVMService"/>
+    </bean>
+    
+    <bean id="editCockpitProjectAction" class="com.topcoder.direct.services.view.action.project.edit.EditCockpitProjectAction"
+            parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
+
+    <bean id="saveCockpitProjectSettingAction" class="com.topcoder.direct.services.view.action.project.edit.SaveCockpitProjectSettingAction"
+          parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
     <bean id="launchVMInstanceAction" class="com.topcoder.direct.services.view.action.cloudvm.LaunchVMInstanceAction"

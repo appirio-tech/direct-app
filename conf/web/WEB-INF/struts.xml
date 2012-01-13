@@ -323,6 +323,41 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/project-overview-contests-health.jsp</result>
         </action>
+
+        <action name="editProject" class="editCockpitProjectAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success">/WEB-INF/editCockpitProject.jsp</result>
+        </action>
+
+        <action name="saveProjectSettings" class="saveCockpitProjectSettingAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="saveClientProjectManagers" class="saveCockpitProjectSettingAction"
+                method="saveClientProjectManagers">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="saveTopCoderManagers" class="saveCockpitProjectSettingAction"
+                method="saveTopCoderManagers">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="addNewCustomMetadataKey" class="saveCockpitProjectSettingAction"
+                method="addNewCustomMetadataKey">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+
+
         <action name="calendar" class="com.topcoder.direct.services.view.action.dashboard.CalendarAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/calendar.jsp</result>
