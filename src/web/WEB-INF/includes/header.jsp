@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, TCSASSEMBLER
-  - Version: 1.6.2
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin
+  - Version: 1.6.3
   - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
@@ -20,6 +20,7 @@
   - Version 1.6 (Release Assembly - TopCoder Cockpit Modal Windows Revamp) changes note: add include to the new modal window template jsp
   - Version 1.6.1 (Module Assembly - Project Contest Fee Management) changes note: add a contest fee tab.
   - Version 1.6.2 (Release Assembly - Project Contest Fee Management) changes note: move contest fee into settings tab
+  - Version 1.6.3 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) : add edit project button
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -51,11 +52,11 @@
         <c:when test="${requestScope.PAGE_TYPE eq 'internal'}">
         </c:when>
         <c:otherwise>
-            <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo">
+            <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo" style="float:left; position:relative;">
             <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
             <span id="projectTitleSpan"> <s:property value="sessionData.currentProjectContext.name"/></span>
-            <c:if test="${requestScope.CURRENT_TAB != 'overview'}">
-
+            <c:if test="${requestScope.CURRENT_TAB != 'editProject'}">
+                <a href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>' class="editIcon"></a>
             </c:if>
             </a>
         </c:otherwise>

@@ -17,7 +17,7 @@
 <%@ taglib prefix="tc-webtag" uri="/WEB-INF/tld/tc-webtags.tld" %>
 
 <%@ attribute name="userId" required="true" type="java.lang.Long" %>
-<%@ attribute name="handle" required="true" type="java.lang.String" %>
+<%@ attribute name="handle" required="false" type="java.lang.String" %>
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 <c:if test="${empty styleClass}">
     <c:set var="styleClass" value="postedBy"/>

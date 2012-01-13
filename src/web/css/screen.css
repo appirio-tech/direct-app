@@ -2623,13 +2623,6 @@ A.buttonRed1{
     width: 450px;
 }
 
-ul.errorMessage {
-    color: #ff0001;;
-    font-size: 12px;
-    line-height: 20px;
-    padding-left: 20px;
-}
-
 #processInvoiceRecordModal .noticeContent {
     padding-left: 26px;
     padding-top: 35px;
@@ -2661,4 +2654,66 @@ ul.errorMessage {
 }
 #invoiceNumberDuplicatedModal .errorIcon {
     padding-right:10px;
+}
+
+.editIcon {
+    background: url(/images/edit/editIcon.png) 0 0 no-repeat;
+    width: 26px;
+    height: 22px;
+    display: block;
+    float: left;
+    top: 44px;
+    left: 21px;
+    position: relative;
+    z-index: 100;
+    margin: 5px 0 0 6px;
+    text-decoration: none;
+}
+.editIcon:hover {
+    background-position: 0 -22px;
+}
+
+#header .logo {
+    position: relative!important;
+    float: left;
+}
+
+.tctips {
+    position: absolute;
+    background: #e7e7e7 url(/images/edit/tipsBackground.png) 0 0 repeat-x;
+    width: 202px;
+    border: 1px solid #bdbdbd;
+    padding: 10px;
+    z-index: 100;
+    display: none;
+}
+.tctips .triangle {
+    background: url(/images/edit/triangle.png) 0 0 no-repeat;
+    width: 11px;
+    height: 7px;
+    display: block;
+    position: absolute;
+    top: -7px;
+    left: 34px
+}
+.tctips .tipsTitle {
+    font-size: 11px;
+    font-family: Tahoma, Geneva, sans-serif;
+    color: #333;
+    text-decoration: none;
+    -webkit-text-size-adjust: none;
+}
+.tctips .tipsContent {
+    font-size: 11px;
+    -webkit-text-size-adjust: none;
+    font-family: Tahoma, Geneva, sans-serif;
+    color: #333;
+    text-decoration: none;
+}
+
+ul.errorMessage {
+    color: #ff0001;;
+    font-size: 12px;
+    line-height: 20px;
+    padding-left: 20px;
 }

@@ -3229,6 +3229,7 @@ public class DataProvider {
         Map<Long, Map<Long, String>> clientProjectMap = new HashMap<Long, Map<Long, String>>();
         Map<Long, Map<Long, String>> billingProjectMap = new HashMap<Long, Map<Long, String>>();
         Map<Long, String> clientsMap = new HashMap<Long, String>();
+        Map<Long, Long> projectClientMap = new HashMap<Long, Long>();
 
         DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
 
@@ -3299,6 +3300,8 @@ public class DataProvider {
                 }
 
                 projectForBilling.put(directProjectId, directProjectName);
+                
+                projectClientMap.put(directProjectId, clientId);
             }
 
         }
@@ -3307,6 +3310,7 @@ public class DataProvider {
         result.put("client.project", clientProjectMap);
         result.put("billing.project", billingProjectMap);
         result.put("clients", clientsMap);
+        result.put("project.client", projectClientMap);
 
         return result;
     }

@@ -1,10 +1,11 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
+import com.topcoder.direct.services.view.action.contest.launch.AggregateDataModel;
 import com.topcoder.direct.services.view.util.RequestData;
 import com.topcoder.direct.services.view.util.SessionData;
 import org.apache.struts2.ServletActionContext;
@@ -22,8 +23,15 @@ import javax.servlet.http.HttpSession;
  *   </ol>
  * </p>
  *
- * @author isv, TCSDEVELOPER
- * @version 1.0.1
+ * <p>
+  * Version 1.1 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) Change notes:
+  *   <ol>
+  *     <li>Add more fields to AbstractAction</li>
+  *   </ol>
+  * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.1
  */
 public abstract class AbstractAction extends ActionSupport implements TopCoderDirectAction, Preparable {
 
@@ -54,6 +62,34 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
      * </p>
      */
     private Throwable error;
+
+
+    /**
+     * <p>
+     * Represents the model attribute of the AbstractAction entity.
+     * </p>
+     *
+     * <p>
+     * It's set and accessed in the set/get methods. It can be any value.
+     * The default value is null.
+     * </p>
+     * @since 1.1
+     */
+    private AggregateDataModel model;
+
+    /**
+     * <p>
+     * Represents the action attribute of the AbstractAction entity.
+     * </p>
+     *
+     * <p>
+     * It's set and accessed in the set/get methods. It can be any value.
+     * The default value is null.
+     * </p>
+     * @since 1.1
+     */
+    private String action = this.getClass().getName();
+
 
     /**
      * <p>Constructs new <code>AbstractAction</code> instance. This implementation does nothing.</p>
@@ -164,7 +200,7 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
     public void prepare() throws Exception {
         HttpServletRequest request = ServletActionContext.getRequest();
 
-        if (getSessionData() == null) {
+        if (this.sessionData == null) {
             HttpSession session = request.getSession();
             SessionData sessionData = new SessionData(session);
             setSessionData(sessionData);
@@ -172,6 +208,9 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
 
         RequestData requestData = new RequestData(request);
         setRequestData(requestData);
+
+        setModel(new AggregateDataModel());
+        getModel().setAction(getAction());
     }
 
     /**
@@ -193,5 +232,49 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
             request.setAttribute("error", getError());
             return ERROR;
         }
+    }
+
+    /**
+     * Getter for the model.
+     *
+     * @return the model
+     * @since 1.1
+     */
+    public AggregateDataModel getModel() {
+        if(this.model == null) {
+            this.model = new AggregateDataModel();
+        }
+
+        return this.model;
+    }
+
+    /**
+     * Setter for the model. This set method does not perform any check on the argument.
+     *
+     * @param model the model to set to the AbstractAction
+     * @since 1.1
+     */
+    public void setModel(AggregateDataModel model) {
+        this.model = model;
+    }
+
+    /**
+     * Getter for the action.
+     *
+     * @return the action
+     * @since 1.1
+     */
+    public String getAction() {
+        return action;
+    }
+
+    /**
+     * Setter for the action. This set method does not perform any check on the argument.
+     *
+     * @param action the action to set to the AbstractAction
+     * @since 1.1
+     */
+    public void setAction(String action) {
+        this.action = action;
     }
 }

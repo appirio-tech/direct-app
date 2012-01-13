@@ -14,6 +14,9 @@
  * Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) change notes:
  * - Add methods to setup cockpit tinyMCE editors.
  *
+ * Version 1.5 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
+ * - Add the tctip lib to display the tooltip
+ *
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
@@ -201,6 +204,38 @@ jQuery.extend({
 		}
 	}	
 });
+
+/* TC tips JQuery plug-in. */
+$.fn.tctip = function(s) {
+    s = $.extend({
+        title  : '',
+        content: ''
+    }, s || {});
+    if ($(this).css('position') != 'absolute') {
+        $(this).css('position', 'relative');
+    }
+    $(this).css('overflow', 'visible');
+    var hover = $('<div class="tctips"><div class="triangle"></div><h2 class="tipsTitle">' + s.title + '</h2><p class="tipsContent">' + s.content + '</p></div>');
+    $(this).append(hover);
+    var top = $(this).outerHeight() + 11;
+    hover.css({
+        top: top + 'px',
+        left: '-28px'
+    });
+    $(this).hover(
+        function() {
+            var h = $('.tctips', $(this));
+            h.show();
+        },
+        function() {
+            var h = $('.tctips', $(this));
+            h.hide();
+        }
+    );
+    var h = $('.tctips', $(this));
+    h.hide();
+    return this;
+};
 
 /**
  * Defines the date format used for date picker.

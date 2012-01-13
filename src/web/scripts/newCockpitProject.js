@@ -1059,7 +1059,7 @@ $(document).ready(function() {
             dataType: 'json',
             async : false,
             success: function (jsonResult) {
-                handleJsonResult(jsonResult,
+                handleJsonResult2(jsonResult,
                     function(result) {
                         // insert into the left list
                         $('#addUserModal .addUserForm .addUserLeft ul').empty();

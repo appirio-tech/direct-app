@@ -284,8 +284,15 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #getStudioSubmissionArtifacts(long)} to fetch image file names.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+  * Version 1.8.1 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) Change notes:
+  *   <ol>
+  *     <li>Added {@link #getClientIdForProject(com.topcoder.security.TCSubject, long)} to fetch the client id of the direct project.</li>
+  *   </ol>
+  * </p>
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu
- * @version 1.8.0
+ * @version 1.8.1
  */
 public final class DirectUtils {
     /**
@@ -1393,6 +1400,21 @@ public final class DirectUtils {
         } else {
             return new HashMap<Long, String>(result);
         }
+    }
+
+    /**
+     * Gets the client id for the specified project id.
+     *
+     * @param tcSubject the current user.
+     * @param directProjectId the id of the direct project.
+     * @return the client id
+     * @throws Exception if any error.
+     * @since 1.8.1
+     */
+    public static Long getClientIdForProject(TCSubject tcSubject, long directProjectId) throws Exception {
+        Map<Long, Long> projectClientMap = (Map<Long, Long>) getDashboardClientBillingProjectMappings(tcSubject).get("project.client");
+
+        return projectClientMap.get(directProjectId);
     }
 
     /**

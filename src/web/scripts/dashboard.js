@@ -1501,10 +1501,14 @@ $(document).ready(function(){
     		}
         }) ;
 
-
-
     	multiSelectAreaSet();
 
+        if($(".editIcon").length > 0)  {
+            $('.editIcon').tctip({
+                title: "Edit / Update Project Details",
+                content: "Go to the edit project page to edit and update the project details and settings"
+            });
+        }
 });
 
 /*

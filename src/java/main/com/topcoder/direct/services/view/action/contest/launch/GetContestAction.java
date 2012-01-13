@@ -392,16 +392,24 @@ public class GetContestAction extends ContestAction {
      * @return the session data
      * @throws Exception if any error occurs
      */
-    public SessionData getSessionData() throws Exception {
-        if (sessionData == null) {
-            HttpServletRequest request = ServletActionContext.getRequest();
+    public SessionData getSessionData() {
+        if (sessionData == null || sessionData.getCurrentProjectContext() == null) {
 
+            HttpServletRequest request = ServletActionContext.getRequest();
             HttpSession session = request.getSession(false);
-            if (session != null) {
+
+            if (sessionData == null) {
                 sessionData = new SessionData(session);
+            }
+
+            if (session != null) {
                 ProjectBriefDTO project = new ProjectBriefDTO();
                 project.setId(softwareCompetition.getProjectHeader().getId());
-                project.setName(getProjectName(softwareCompetition.getProjectHeader().getTcDirectProjectId()));
+                try {
+                    project.setName(getProjectName(softwareCompetition.getProjectHeader().getTcDirectProjectId()));
+                } catch (Exception ex) {
+                    // ignore
+                }
                 sessionData.setCurrentProjectContext(project);
 
                  long directProjectId = softwareCompetition.getProjectHeader().getTcDirectProjectId();
@@ -409,6 +417,7 @@ public class GetContestAction extends ContestAction {
                 sessionData.setCurrentSelectDirectProjectID(directProjectId);
             }
         }
+
         return sessionData;
     }
 

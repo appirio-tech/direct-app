@@ -1,24 +1,15 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
-import java.util.Comparator;
-
-import com.topcoder.project.service.ProjectServices;
-import com.topcoder.service.user.UserService;
-import org.apache.log4j.Logger;
-
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.Preparable;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.configs.ReferenceDataBean;
+import com.topcoder.direct.services.project.metadata.DirectProjectMetadataKeyService;
+import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
-import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
@@ -26,11 +17,16 @@ import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.review.specification.SpecificationReviewService;
+import com.topcoder.service.user.UserService;
 import com.topcoder.shared.dataAccess.DataAccess;
 import com.topcoder.shared.dataAccess.Request;
 import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.ejb.user.UserPreferenceHome;
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -81,11 +77,17 @@ import com.topcoder.web.ejb.user.UserPreferenceHome;
  * <li>Set the error message into JSON result, the previous one does not set error message right.</li>
  * </ul>
  * </p>
+ * <p>
+  * Version 1.3 - Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0
+  * <ul>
+  * <li>Add direct project metadata and direct project metadata key service.</li>
+  * </ul>
+  * </p>
  *
  * @author fabrizyo, FireIce, murphydog, GreatKevin
- * @version 1.2.4
+ * @version 1.3
  */
-public abstract class BaseDirectStrutsAction extends AbstractAction implements Preparable {
+public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
      * Logger for this class
      */
@@ -176,27 +178,23 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
     private UserPreferenceHome userPreferenceHome;
 
     /**
+     * The direct project metadata key service.
+     * @since 1.3
+     */
+    private DirectProjectMetadataKeyService metadataKeyService;
+
+    /**
+     * The direct project metadata service.
+     * @since 1.3
+     */
+    private DirectProjectMetadataService metadataService;
+
+    /**
      * <p>
      * Creates a <code>BaseDirectStrutsAction</code> instance.
      * </p>
      */
     protected BaseDirectStrutsAction() {
-    }
-
-    /**
-     * <p>
-     * Prepare the action before its logic.
-     * </p>
-     * <p>
-     * This method is used by its related interceptor before of the setters/getters of parameters (params
-     * interceptor).
-     * </p>
-     *
-     * @throws Exception if any problem occurs.
-     */
-    public void prepare() throws Exception {
-        setModel(new AggregateDataModel());
-        getModel().setAction(getAction());
     }
 
     /**
@@ -560,4 +558,43 @@ public abstract class BaseDirectStrutsAction extends AbstractAction implements P
         this.userPreferenceHome = userPreferenceHome;
     }
 
+    /**
+     * Gets the direct project metadata key service.
+     *
+     * @return the direct project metadata key service.
+     * @since 1.3
+     */
+    public DirectProjectMetadataKeyService getMetadataKeyService() {
+        return metadataKeyService;
+    }
+
+    /**
+     * Sets the direct project metadata key service.
+     *
+     * @param metadataKeyService the direct project metadata key service.
+     * @since 1.3
+     */
+    public void setMetadataKeyService(DirectProjectMetadataKeyService metadataKeyService) {
+        this.metadataKeyService = metadataKeyService;
+    }
+
+    /**
+     * Gets the direct project metadata service.
+     *
+     * @return the direct project metadata service.
+     * @since 1.3
+     */
+    public DirectProjectMetadataService getMetadataService() {
+        return metadataService;
+    }
+
+    /**
+     * Sets the direct project metadata service
+     *
+     * @param metadataService the direct project metadata service.
+     * @since 1.3
+     */
+    public void setMetadataService(DirectProjectMetadataService metadataService) {
+        this.metadataService = metadataService;
+    }
 }

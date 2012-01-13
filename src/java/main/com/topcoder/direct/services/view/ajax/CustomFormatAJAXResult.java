@@ -202,10 +202,15 @@ public class CustomFormatAJAXResult implements Result {
             AJAXDataSerializationException, AJAXDataPostProcessingException, IOException {
         Helper.checkNull(invocation, "invocation");
         Object action = invocation.getAction();
-        if (action instanceof AbstractAction) {
+        if (action instanceof AbstractAction || action instanceof com.topcoder.direct.services.view.action.AbstractAction) {
             Object data = null;
             String actionName = null;
-            AggregateDataModel dataModel = ((AbstractAction) action).getModel();
+            AggregateDataModel dataModel = null;
+            if (action instanceof AbstractAction) {
+                dataModel = ((AbstractAction) action).getModel();
+            } else {
+                dataModel = ((com.topcoder.direct.services.view.action.AbstractAction) action).getModel();
+            }
             if (dataModel != null) {
                 data = dataModel.getData(RESULT_DATA_KEY);
                 actionName = dataModel.getAction();
