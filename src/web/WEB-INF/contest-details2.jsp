@@ -41,7 +41,7 @@
     </script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=210792"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=210879"></script>
-    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=211035"></script>
+    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=211259"></script>
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
 </head>
 
@@ -65,13 +65,13 @@
                         <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/></a> &gt;
                         <strong style="word-wrap:break-word;"><s:property value="viewData.contestStats.contest.title"/></strong>
                     </div>
+
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
-                        <s:property value="viewData.contestStats.contest.title"/>
-
-
-
+                        <s:property value="viewData.contestStats.contest.title"/>  <img id="contestLoading" style="display:none" src="/images/dots-white.gif"/>
                         </h2>
+
+
                     </div><!-- End .areaHeader -->
 
                     <jsp:include page="includes/contest/dashboard.jsp"/>

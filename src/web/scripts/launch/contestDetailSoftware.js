@@ -153,7 +153,7 @@ $(document).ready(function(){
        // billing projects
        $('#billingProjects').bind("change", function() {
            updateContestFee();
-       });  
+       });
 
    	//Get the contest and populate each section
    // loading some configuration data
@@ -163,7 +163,10 @@ $(document).ready(function(){
       data: {"projectId":paramContestId},
       cache: false,
       dataType: 'json',
-      async : false,
+      async : true,
+      beforeSend: function() {
+        $("#contestLoading").show();
+      },
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
@@ -175,12 +178,22 @@ $(document).ready(function(){
             populatePrizeSection(true);
             populateSpecSection(true);
             populateDocumentSection();
+
+              setupTinyMCEWithTemplate('contestDescription', 10000, "studio_templates_list");
+              setupTinyMCE("swPrivateDescription", 2048);
+              setupTinyMCE('contestIntroduction', 2000);
+              setupTinyMCE('round1Info', 2000);
+              setupTinyMCE('round2Info', 2000);
+              setupTinyMCE('swDetailedRequirements', 12000);
+              setupTinyMCE('swGuidelines', 2048);
             
             //execute some actions specific for component design/dev
             //onContestTypeChange();
+            $("#contestLoading").hide();
           },
           function(errorMessage) {
               showServerError(errorMessage);
+              $("#contestLoading").hide();
           })
       }
    });
@@ -259,14 +272,6 @@ $(document).ready(function(){
     $('#swDigitalRun').bind('keyup',function() {
        onDigitalRunChangeKeyUp();
     });
-
-    setupTinyMCEWithTemplate('contestDescription', 10000, "studio_templates_list");
-    setupTinyMCE("swPrivateDescription", 2048);
-    setupTinyMCE('contestIntroduction', 2000);
-	setupTinyMCE('round1Info', 2000);
-	setupTinyMCE('round2Info', 2000);
-	setupTinyMCE('swDetailedRequirements', 12000);
-	setupTinyMCE('swGuidelines', 2048);
 	
    
    $('#ContestDescriptionHelpIcon .helpIcon').hover(function(){

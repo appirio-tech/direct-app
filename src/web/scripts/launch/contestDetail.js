@@ -94,7 +94,7 @@ $(document).ready(function(){
       data: {"contestId":paramContestId},
       cache: false,
       dataType: 'json',
-      async : false,
+      async : true,
       success: function (jsonResult) {
           handleJsonResult(jsonResult,
           function(result) {
@@ -111,6 +111,28 @@ $(document).ready(function(){
             showTypeSectionEdit();
             populateTypeSection();
             showTypeSectionDisplay();
+
+              // restrict chars for the text editor
+              function makeMaxCharsTinyMCE(obj, maxChars) {
+                  tinyMCE.init({
+                      mode:"exact",
+                      elements:obj,
+                      plugins:"paste",
+                      theme:"advanced",
+                      theme_advanced_buttons1:"bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link",
+                      theme_advanced_buttons2:"",
+                      theme_advanced_buttons3:"",
+                      init_instance_callback:function () {
+                          $('table.mceLayout').css('width', '100%');
+                      },
+                      handle_event_callback:maxCharsAndAllowedTagsEventHandler(obj, maxChars)
+                  });
+              }
+
+              makeMaxCharsTinyMCE("contestDescription", 10000);
+              makeMaxCharsTinyMCE("contestIntroduction", 10000);
+              makeMaxCharsTinyMCE("round1Info", 2000);
+              makeMaxCharsTinyMCE("round2Info", 2000);
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -196,27 +218,6 @@ $(document).ready(function(){
     $('#contestRound2ToolTip').hide();
   });
 
-	// restrict chars for the text editor
-	function makeMaxCharsTinyMCE(obj, maxChars) {
-        tinyMCE.init({
-            mode : "exact",
-            elements : obj,
-            plugins : "paste",
-            theme : "advanced",      
-              theme_advanced_buttons1 : "bold,italic,underline,strikethrough,undo,redo,pasteword, bullist,numlist,link",
-              theme_advanced_buttons2 : "",
-              theme_advanced_buttons3 : "",
-              init_instance_callback : function() {
-                  $('table.mceLayout').css('width','100%');
-              },
-              handle_event_callback : maxCharsAndAllowedTagsEventHandler(obj, maxChars)
-        });
-    }
-    makeMaxCharsTinyMCE("contestDescription", 10000);
-    makeMaxCharsTinyMCE("contestIntroduction", 10000);
-    makeMaxCharsTinyMCE("round1Info", 2000);
-	makeMaxCharsTinyMCE("round2Info", 2000);
-	
    //contest type
    $('#contestTypes').bind("change", function() {
         updateContestFee();
