@@ -26,21 +26,13 @@
             
            
             <!-- form -->
-            <div class="form">
-                
-                <div class="noteContainer">
-                    <p>
-                    Your selected copilot has been inform about this oppurtunity. The copilot will contact you to confirm the message.
-                   </p>
-                </div>
-                
+            <div class="form" style="min-height:0">
                 <div class="textArea">
                     <p>
-                        Next you will be able to manage/review/adjust any copilots need via the project page. From there, after you accept any copilot rosters in your project, you can interact to them via any available communications channels that has been provided.
-                    
+                        <span id="confirm-copilotHandle"></span> has been added as the copilot to your project named <span id="confirm-projectName"></span>.
                     </p>
                     <p>
-                        Good luck with your project!
+                        You will now be directed to your project, where you can communicate in your project forum with your copilot.
                     </p>
                 </div>
             </div>

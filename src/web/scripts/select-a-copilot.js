@@ -394,7 +394,10 @@ function handleHireButtonClick() {
             handleJsonResult(jsonResult,
                 function(result) {
                     modalClose();
+                    $("#confirm-copilotHandle").append($("a", $('#stepContainerSelect table tr')[0]).clone());
+                    $("#confirm-projectName").html($.trim($('select#projectName').find("option:selected").text()));
                     handleHireCopilotSuccess();
+                    setTimeout(function() {window.location.href = '/direct/projectOverview?formData.projectId=' + tcProjectId;}, 2000);
                 },
                 function(errorMessage) {
                     modalClose();

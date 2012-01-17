@@ -438,15 +438,15 @@ $(document).ready(function(){
 function handleCopilotStatisticsResult(result) {    
     //alert(result.length);
     $.each(result, function(index, item) {
-        $(".field_" + index + "_totalProjects").html(item.member.totalProjects);
-        $(".field_" + index + "_totalContests").html(item.member.totalContests);
-        $(".field_" + index + "_totalRepostedContests").html(item.member.totalRepostedContests);
-        $(".field_" + index + "_totalFailedContests").html(item.member.totalFailedContests);
-        $(".field_" + index + "_totalBugRaces").html(item.member.totalBugRaces);
-        $(".field_" + index + "_currentProjects").html(item.member.currentProjects);
-        $(".field_" + index + "_currentContests").html(item.member.currentContests);
+        $(".field_" + index + "_totalProjects:not(input)").html(item.member.totalProjects);
+        $(".field_" + index + "_totalContests:not(input)").html(item.member.totalContests);
+        $(".field_" + index + "_totalRepostedContests:not(input)").html(item.member.totalRepostedContests);
+        $(".field_" + index + "_totalFailedContests:not(input)").html(item.member.totalFailedContests);
+        $(".field_" + index + "_totalBugRaces:not(input)").html(item.member.totalBugRaces);
+        $(".field_" + index + "_currentProjects:not(input)").html(item.member.currentProjects);
+        $(".field_" + index + "_currentContests:not(input)").html(item.member.currentContests);
         
-        $(".field_" + index + "_fullfillment").html(item.fullfillment);
+        $(".field_" + index + "_fullfillment:not(input)").html(item.fullfillment);
 
         // set hidden input value
         $("input.field_" + index + "_totalProjects").val(item.member.totalProjects);

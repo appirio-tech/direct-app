@@ -63,12 +63,14 @@
         </thead>
         
         <tbody>
+            <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
             <c:forEach var="profile" items="${profiles}">
+                <c:set var="profileLink" value="http://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
                 <tr>
                     <td class="userLinkTD">
                         <input type="hidden" value="${profile.member.copilotProfile.handle}"></input>
                         <img src="${profile.photo.photoPath}" width="47" height="53" alt=""  />
-                        <link:user userId="${profile.member.copilotProfile.userId}" handle="${profile.member.copilotProfile.handle}"/>
+                        <tc-webtag:handle coderId="${profile.member.copilotProfile.userId}" link="${profileLink}"/>
                     </td>
                     <td class="field_${profile.member.copilotProfile.userId}_totalProjects">loading</td>
                     <td class="field_${profile.member.copilotProfile.userId}_totalContests">loading</td>
@@ -80,7 +82,7 @@
                     <td class="last">
                         <a href="javascript:;" class="blackButton selectCopilotList">Choose</a>
                         <input type="hidden" value="${profile.member.copilotProfile.userId}"></input>
-                        <a href="http://<%=ApplicationServer.SERVER_NAME%>/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}" class="blue">view profile</a>
+                        <a href="${profileLink}" class="blue">view profile</a>
                     </td>
                 </tr>
             </c:forEach>    

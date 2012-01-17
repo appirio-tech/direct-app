@@ -12,7 +12,9 @@
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="projectList copilotGridDiv" style="display: block;">
     <div class="wideList">
+        <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
         <c:forEach var="profile" items="${profiles}">
+            <c:set var="profileLink" value="http://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
             <!-- item -->
             <div class="projectItem">
                 <!-- container -->
@@ -47,7 +49,7 @@
                                     </colgroup>
                                     <tr>
                                         <td class="firstLine" colspan="2">Handle : 
-                                        <link:user userId="${profile.member.copilotProfile.userId}" handle="${profile.member.copilotProfile.handle}"/>
+                                        <tc-webtag:handle coderId="${profile.member.copilotProfile.userId}" link="${profileLink}"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -81,7 +83,7 @@
                                     </li>
                                 </ul>
                                 
-                                <a href="http://<%=ApplicationServer.SERVER_NAME%>/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}" class="blue copilotProfileLink">view profile</a>
+                                <a href="${profileLink}" class="blue copilotProfileLink">view profile</a>
                             </div>
                             <!--End .infoArea-->
                             

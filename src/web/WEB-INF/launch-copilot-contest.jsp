@@ -133,19 +133,21 @@
                                                 <span class="corner tr"></span>
                                                 <div class="carousel-content" id="copilotProfileCarouselDiv">
                                                     <ul>
+                                                        <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
                                                         <c:forEach var="profile" items="${profiles}">
+                                                            <c:set var="profileLink" value="http://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
                                                             <li>
                                                                 <div class="copilot-wrapper">
                                                                     <div class="photo">
                                                                         <img src="${profile.photo.photoPath}" alt="handle" />
-                                                                        <a href="http://<%=ApplicationServer.SERVER_NAME%>/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}" class="black-button">
+                                                                        <a href="${profileLink}" class="black-button">
                                                                             <span class="right"><span class="middle">View Profile</span></span>
                                                                         </a>
                                                                     </div>
                                                                     <!-- .photo -->
                                                                     <div class="info">
                                                                         <p class="handle">Handle : 
-                                                                            <link:user userId="${profile.member.copilotProfile.userId}" handle="${profile.member.copilotProfile.handle}"/>
+                                                                            <tc-webtag:handle coderId="${profile.member.copilotProfile.userId}" link="${profileLink}"/>
                                                                         </p>
                                                                         <p><span class="field_${profile.member.copilotProfile.userId}_totalProjects">loading</span>Project :</p>
                                                                         <p><span class="field_${profile.member.copilotProfile.userId}_totalContests">loading</span>Contest :</p>
@@ -193,10 +195,10 @@
                                                
                                                 <div class="buttonArea">
                                                     <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2">
-                                                        <span class="left"><span class="right">Work with a Copilot</span></span>
+                                                        <span class="left"><span class="right">Engage the Copilots</span></span>
                                                     </a>
                                                     <span class="or">or</span>
-                                                    <a href="<s:url action='selectFromCopilotPool' namespace='/copilot'/>" class="button2"> <span class="left"><span class="right">Select from Copilot Pool</span></span></a>                                                    
+                                                    <a href="<s:url action='selectFromCopilotPool' namespace='/copilot'/>" class="button2"> <span class="left"><span class="right">Choose a Copilot</span></span></a>                                                    
                                                 </div>
                                                 <!--End .buttonArea-->
                                             </div>
