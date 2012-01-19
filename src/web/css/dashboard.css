@@ -7868,7 +7868,7 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #billingCostReportsPage .filterContainer #projectFilter select {
-    width: 295px;
+    width: 198px;
 }
 
 #billingCostReportsPage .filterContainer #datefilter .filterRow {
@@ -7901,7 +7901,7 @@ TABLE.pipelineStats TH.tableTitle span {
 #billingCostReportsPage .filterContainer #contestfilter {
     position: absolute;
     top: 65px;
-    right: 3px;
+    right: 0px;
 }
 
 @-moz-document url-prefix(){	/* firefox hack */
@@ -7966,6 +7966,15 @@ TABLE.pipelineStats TH.tableTitle span {
 #billingCostReportsPage .filterContainer1400 #contestfilter {
     top: 69px;
 }
+#billingCostReportsPage #contestfilter .filterRow {
+		float: none;
+		display: block;
+}
+
+#billingCostReportsPage .filterContainer1400 #contestfilter .filterRow {
+    float: left;
+		display: inline;
+}
 
 @-moz-document url-prefix(){	/* firefox hack */
 					#billingCostReportsPage .filterContainer1400 #contestfilter{
@@ -7978,7 +7987,7 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #billingCostReportsPage .filterContainer1400 #contestfilter input {
-    width: 100px;
+    width: 90px;
 }
 
 #billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectAreaInner {

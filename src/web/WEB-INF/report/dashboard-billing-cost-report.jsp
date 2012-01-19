@@ -154,6 +154,13 @@
 					<div class="clearFix"></div>
 				</div><!-- end .filterRow -->
 
+				<div class="filterRow">
+					<div class="filterRowLeft" id="invoiceNumberFilter">
+						<label>Invoice #:</label>
+					</div>
+                    <s:textfield id="formData.invoiceNumber" name="formData.invoiceNumber"  cssClass="text"/>
+					<div class="clearFix"></div>
+				</div><!-- end .filterRow -->
 			</div><!-- end .contestfilter -->
 
 		</div>

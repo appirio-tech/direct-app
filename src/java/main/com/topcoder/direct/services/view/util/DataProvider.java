@@ -3642,6 +3642,7 @@ public class DataProvider {
      * @param billingAccountId the billing accounts id.
      * @param projectStatusIds the project status ids.
      * @param contestId the contest id
+     * @param invoiceNumber the invoice number
      * @param startDate the start date.
      * @param endDate the end date.
      * @param statusMapping the mapping of all the contest status.
@@ -3656,7 +3657,7 @@ public class DataProvider {
                                                                                            long[] studioProjectCategoryIds,
                                                                                            long[] paymentTypeIds,
                                                                                            long clientId, long billingAccountId, long[] projectStatusIds,
-                                                                                           long contestId, Date startDate, Date endDate,
+                                                                                           long contestId, String invoiceNumber, Date startDate, Date endDate,
                                                                                            Map<String, Long> statusMapping, Map<String, Long> paymentTypesMapping) throws Exception {
         // create an empty map first to store the result data
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
@@ -3701,7 +3702,13 @@ public class DataProvider {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
 
-        String queryName = "dashboard_billing_cost_invoice_report";
+        String queryName;
+        boolean hasInvoice = invoiceNumber != null && invoiceNumber.trim().length() > 0;
+        if (!hasInvoice) {
+            queryName = "dashboard_billing_cost_invoice_report";
+        } else {
+            queryName = "dashboard_billing_cost_invoice_report_invoice_number";
+        }
 
         if(contestId > 0) {
             request.setProperty("tcdirectid", "0");
@@ -3714,6 +3721,9 @@ public class DataProvider {
             if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
                 return data;
             }
+        }
+        if (hasInvoice) {
+            request.setProperty("invoicenumber", invoiceNumber);
         }
 
         request.setContentHandle(queryName);

@@ -213,7 +213,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
                     (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
                     softwareProjectCategories, studioProjectCategories, paymentTypeIds,
-                    customerId, billingAccountId, statusIds, contestId, startDate, endDate,
+                    customerId, billingAccountId, statusIds, contestId, form.getInvoiceNumber(), startDate, endDate,
                     REPORT_CONTEST_STATUS_IDS, BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
 
             List<BillingCostReportEntryDTO> viewData = new ArrayList<BillingCostReportEntryDTO>();
