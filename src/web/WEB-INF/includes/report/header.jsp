@@ -31,7 +31,7 @@
                         <option value="COST" <s:if test="viewData.reportType.toString() == 'COST'">selected="selected"</s:if>>
                             Cost</option>
                         <option value="BILLING_COST" <s:if test="viewData.reportType.toString() == 'BILLING_COST'">selected="selected"</s:if>>
-                            Billing Cost</option>
+                            Invoice History</option>
                         <option value="PARTICIPATION" <s:if test="viewData.reportType.toString() == 'PARTICIPATION'">selected="selected"</s:if>>
                             Participation Metrics</option>
                     </select>

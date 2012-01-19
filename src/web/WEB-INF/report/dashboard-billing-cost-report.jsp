@@ -318,7 +318,7 @@
     <tr>
         <th class="tableTitle" colspan="<c:if test="${viewData.canProcessInvoices}">18</c:if><c:if test="${!viewData.canProcessInvoices}">15</c:if>">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
-            <span>Billing Cost Details</span>
+            <span>Invoice History Details</span>
             <span style="float:right;padding-top:4px; padding-right:5px">
                 <s:set var="totalPayment" value="viewData.totalAmount" scope="page"/>
                 Total Amount: <fmt:formatNumber value="${totalPayment}" pattern="$###,##0.00"/>
