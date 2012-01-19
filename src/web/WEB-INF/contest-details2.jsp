@@ -41,7 +41,7 @@
     </script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=210792"></script>
     <script type="text/javascript" src="/scripts/launch/main.js?v=210879"></script>
-    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=211259"></script>
+    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=211774"></script>
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
 </head>
 

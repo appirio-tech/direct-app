@@ -18,13 +18,13 @@
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
     
-    <link rel="stylesheet" href="/css/modal.css?v=207790" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/newProject.css?v=210944" media="all" type="text/css"/> 
     <link rel="stylesheet" href="/css/get-a-copilot.css?v=210944" media="all" type="text/css"/> 
     <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
 
     <script type="text/javascript" src="/scripts/newProject.js?v=209631"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=211230"></script> 
+    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=211902"></script> 
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>   
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script> 
     <script type="text/javascript" src="/scripts/launch/entity.js?v=210792"></script>
