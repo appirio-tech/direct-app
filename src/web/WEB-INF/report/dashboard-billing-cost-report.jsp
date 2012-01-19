@@ -60,7 +60,7 @@
 <div class="area1Content">
 
 <jsp:include page="/WEB-INF/includes/report/header.jsp">
-    <jsp:param name="reportTitle" value="Billing Cost Report"/>
+    <jsp:param name="reportTitle" value="Invoice History"/>
 </jsp:include>
 
 <%-- cost report form --%>
