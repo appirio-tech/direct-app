@@ -364,6 +364,18 @@
             <version name="RELEASE" path="release"/>
         </versions>
     </project>
+    
+    <!-- svn base does not exist now, need to add to this path -->
+    <project
+        name="permission_service_facade"
+        svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/permission_service_facade"
+        buildfile="build.xml">
+        <versions>
+            <version name="TRUNK" path="branches/cockpit_trunk"/>
+            <version name="RELEASE" path="release"/>
+        </versions>
+    </project>
+    
     <project
         name="contest_service_facade"
         svnbase="https://coder.topcoder.com/tcs/clients/cronos/components/contest_service_facade"

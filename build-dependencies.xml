@@ -130,6 +130,12 @@
   <property name="contest_service_facade.path" value="contest_service_facade/${contest_service_facade.version}" />
   <property name="contest_service_facade.jar" value="${tcs_libdir}/${contest_service_facade.path}/${contest_service_facade.jar.name}" />
 
+  <property name="permission_service_facade.version" value="1.0.0"/>
+  <property name="permission_service_facade.jar.name" value="permission_service_facade.jar"/>
+  <property name="permission_service_facade.path" value="permission_service_facade/${permission_service_facade.version}"/>
+  <property name="permission_service_facade.jar"
+              value="${tcs_libdir}/${permission_service_facade.path}/${permission_service_facade.jar.name}"/>
+
   <property name="contest_service_facade_ws.jar.name" value="contest_service_facade_ws.jar" />
   <property name="contest_service_facade_ws.path" value="contest_service_facade/${contest_service_facade.version}" />
   <property name="contest_service_facade_ws.jar" value="${tcs_libdir}/${contest_service_facade_ws.path}/${contest_service_facade_ws.jar.name}" />
@@ -695,6 +701,7 @@
     <pathelement location="${security.jar}" />
     <pathelement location="${typesafe_enum.jar}" />
     <pathelement location="${contest_service_facade.jar}" />
+    <pathelement location="${permission_service_facade.jar}" />
     <pathelement location="${cloud_vm_service.jar}" />
     <pathelement location="${authentication_manager.jar}" />
     <pathelement location="${project_service_facade.jar}" />

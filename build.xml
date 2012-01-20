@@ -288,6 +288,7 @@
         <copy file="${specification_review_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${specification_review_comment_service.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${contest_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
+        <copy file="${permission_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${user_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${project_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${admin_service_facade.jar}" todir="${build_distdir}" overwrite="true"/>
@@ -487,6 +488,7 @@
                 <include name="hibernate.cfg.xml" />
                 <include name="ContestCapacity.xml" />
                 <include name="ContestServiceFacade.xml" />
+                <include name="PermissionServiceFacade.xml" />
                 <include name="SpecReviewCommentService.xml" />
                 <include name="SpecReviewService.xml" />
                 <include name="ContestEligibilityValidationManagerBean.xml" />
