@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.clients.model.Project;
+import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.direct.services.configs.ReferenceDataBean;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataKeyService;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
@@ -83,9 +84,16 @@ import java.util.List;
   * <li>Add direct project metadata and direct project metadata key service.</li>
   * </ul>
   * </p>
+  * <p>
+  * Version 1.4 - Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One Change Note
+  * <ul>
+  * <li>Add <code>permissionServiceFacade</code> reference.</li>
+  * </ul>
+  * </p>
+ *  
  *
  * @author fabrizyo, FireIce, murphydog, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
@@ -144,6 +152,9 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      */
     private PipelineServiceFacade pipelineServiceFacade;
 
+    /**
+     * Admin service facade.
+     */
     private AdminServiceFacade adminServiceFacade;
 
     /**
@@ -176,6 +187,13 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      * Represents the user preference home ejb object. It has getter & setter. Can be any value.
      */
     private UserPreferenceHome userPreferenceHome;
+
+    /**
+     * Represents the permission service facade ejb service.
+     *
+     * @since 1.4
+     */
+    private PermissionServiceFacade permissionServiceFacade;
 
     /**
      * The direct project metadata key service.
@@ -556,6 +574,26 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      */
     public void setUserPreferenceHome(UserPreferenceHome userPreferenceHome) {
         this.userPreferenceHome = userPreferenceHome;
+    }
+
+    /**
+     * Gets the permission service facade.
+     *
+     * @return the permission service facade
+     * @since 1.4
+     */
+    public PermissionServiceFacade getPermissionServiceFacade() {
+        return permissionServiceFacade;
+    }
+
+    /**
+     * Sets the permission service facade.
+     *
+     * @param permissionServiceFacade the permission service facade.
+     * @since 1.4
+     */
+    public void setPermissionServiceFacade(PermissionServiceFacade permissionServiceFacade) {
+        this.permissionServiceFacade = permissionServiceFacade;
     }
 
     /**

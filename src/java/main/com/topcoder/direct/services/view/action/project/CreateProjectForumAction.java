@@ -95,7 +95,7 @@ public class CreateProjectForumAction extends BaseDirectStrutsAction {
         if (hasWritePermission) {
             // Create project forums
             logger.debug("Calling Forums EJB for creating the forum for project " + getTcDirectProjectId());
-            long forumId = getContestServiceFacade().createTopCoderDirectProjectForum(currentUser, 
+            long forumId = getContestServiceFacade().createTopCoderDirectProjectForum(currentUser,
                                                                                       projectData.getProjectId(), null);
 
             // use direct project id as forum id to test

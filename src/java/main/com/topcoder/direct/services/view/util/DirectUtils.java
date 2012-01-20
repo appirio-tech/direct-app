@@ -286,13 +286,21 @@ import com.topcoder.web.common.cache.MaxAge;
  * </p>
  *
  * <p>
-  * Version 1.8.1 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) Change notes:
-  *   <ol>
-  *     <li>Added {@link #getClientIdForProject(com.topcoder.security.TCSubject, long)} to fetch the client id of the direct project.</li>
-  *   </ol>
-  * </p>
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu
- * @version 1.8.1
+ * Version 1.8.1 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #getClientIdForProject(com.topcoder.security.TCSubject, long)} to fetch the client id of the direct project.</li>
+ *   </ol>
+ * </p>
+ *
+ * <p>
+ * Version 1.8.2 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One) Change notes:
+ *   <ol>
+ *     <li>change call of contest service facade #getPermissionsByProject to permission service facade #getPermissionsByProject</li>
+ *   </ol>
+ * </p>  
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe
+ * @version 1.8.2
  */
 public final class DirectUtils {
     /**
@@ -1612,7 +1620,7 @@ public final class DirectUtils {
                                                     TCSubject tcSubject, long directProjectId) throws PermissionServiceException {
         if (!isRole(tcSubject, ADMIN_ROLE)) {
 
-            List<Permission> permissions = action.getContestServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
+            List<Permission> permissions = action.getPermissionServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
 
             for (Permission p : permissions) {
 
@@ -1641,7 +1649,7 @@ public final class DirectUtils {
     public static boolean hasProjectReadPermission(BaseDirectStrutsAction action,
                                                    TCSubject tcSubject, long directProjectId) throws PermissionServiceException {
         if (!isRole(tcSubject, ADMIN_ROLE)) {
-            List<Permission> permissions = action.getContestServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
+            List<Permission> permissions = action.getPermissionServiceFacade().getPermissionsByProject(tcSubject, directProjectId);
             for (Permission p : permissions) {
                 if (p.getPermissionType().getPermissionTypeId() == 1L
                     || p.getPermissionType().getPermissionTypeId() == 2L

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action;
 
@@ -48,8 +48,13 @@ import java.util.*;
  *     - Add new logic to create draft copilot posting for the new project.
  * </p>
  *
+ * <p>
+ *     Version 1.2 updates:
+ *     -  change call of contest service facade #updateProjectPermissions to permission service facade #updateProjectPermissions
+ * </p>
+ *
  * @author TCSASSEMBLER
- * @version 1.1 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1)
+ * @version 1.2 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One)
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
@@ -318,9 +323,13 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
                 throw new IllegalStateException("The contest service facade is not initialized");
             }
 
+            if (null == getPermissionServiceFacade()) {
+            	  throw new IllegalStateException("The permission service facade is not initialized");
+            }
+
             if (permissionsToAdd.size() > 0) {
                 // update when the there is at least 1 permission
-                contestServiceFacade.updateProjectPermissions(currentUser, permissionsToAdd, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
+                getPermissionServiceFacade().updateProjectPermissions(currentUser, permissionsToAdd, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
             }
 
         }

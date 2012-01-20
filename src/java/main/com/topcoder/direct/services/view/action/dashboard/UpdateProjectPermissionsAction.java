@@ -34,8 +34,15 @@ import java.util.List;
  *   </ol>
  * </p>
  * 
+ * <p>
+ *     Version 1.1 update notes:
+ *     <li>
+ *         change call of contest service facade #updateProjectPermissions to permission service facade #updateProjectPermissions
+ *     </li>
+ * </p>
+ * 
  * @author isv, TCSASSEMBLER
- * @version 1.0.1 
+ * @version 1.1 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One)
  * @since Direct Permissions Setting Back-end and Integration Assembly 1.0
  */
 public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
@@ -76,9 +83,8 @@ public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
             permission.setUserPermissionId(jsonPermission.getLong("userPermissionId"));
             permissions.add(permission);
         }
-        ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-        contestServiceFacade.updateProjectPermissions(tcSubject, permissions, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
+        getPermissionServiceFacade().updateProjectPermissions(tcSubject, permissions, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
     }
 
     /**
