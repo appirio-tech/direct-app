@@ -42,6 +42,7 @@
 <s:if test="formData.viewType.toString() == 'SINGLE' || formData.viewType.toString() == 'CHECKOUT'">
 <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js?v=179771"></script>
 </s:if>
+<script type="text/javascript" src="/scripts/common.js?v=211035"></script>
 <script type="text/javascript" src="/scripts/jquery.tablesorter.min.js?v=176771"></script>
 <script type="text/javascript" src="/scripts/fullcalendar.min.js?v=205096"></script>
 <script type="text/javascript" src="/scripts/jquery.mousewheel.js?v=176771"></script>
