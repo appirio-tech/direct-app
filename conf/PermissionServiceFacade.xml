@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<CMConfig>
+    <Config name="com.topcoder.service.facade.permission.ejb.PermissionServiceFacadeBean">
+       
+        <Property name="createForum">
+        	<Value>@createForum@</Value>
+        </Property>
+        <Property name="forumBeanProviderUrl">
+        	<Value>@forumBeanProviderUrl@</Value>
+        </Property>
+       
+        <Property name="userBeanProviderUrl">
+        	<Value>@userBeanProviderUrl@</Value>
+        </Property>
+        <Property name="projectBeanProviderUrl">
+        	<Value>@projectBeanProviderUrl@</Value>
+        </Property>
+      
+    </Config>
+</CMConfig>

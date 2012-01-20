@@ -150,6 +150,22 @@
         <property name="proxyInterface" value="com.topcoder.project.service.ProjectServices"/>
     </bean>
 
+    <bean id="permissionServiceFacade" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="PermissionServiceFacadeBean/remote"/>
+        <property name="cache" value="true"/>
+        <property name="lookupOnStartup" value="false"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory
+                </prop>
+                <prop key="java.naming.provider.url">${service.provder.url}</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces
+                </prop>
+            </props>
+        </property>
+        <property name="proxyInterface" value="com.topcoder.service.facade.permission.PermissionServiceFacade"/>
+    </bean>
+
     <!--  FileUpload -->
     <bean id="fileUpload" class="com.topcoder.servlet.request.LocalFileUpload">
         <constructor-arg index="0">
@@ -215,6 +231,7 @@
         <property name="userPreferenceHome" ref="userPreferenceHome"/>
         <property name="metadataKeyService" ref="directProjectMetadataKeyService"/>
         <property name="metadataService" ref="directProjectMetadataServices"/>
+        <property name="permissionServiceFacade" ref="permissionServiceFacade"/> 
     </bean>
 
     <bean id="projectOverviewAction"
@@ -546,6 +563,7 @@
           class="com.topcoder.direct.services.view.action.report.DashboardBillingCostReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="viewData.showJustForm" value="false"/>
+        <!-- <property name="invoiceRecordDAO" ref="invoiceRecordDAO"/> -->
         <property name="lookupDAO" ref="invoiceLookupDAO"/>
     </bean>
 

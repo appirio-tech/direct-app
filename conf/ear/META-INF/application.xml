@@ -135,6 +135,11 @@
       <ejb>specification_review_comment_service.jar</ejb>
     </module>
   
+
+    <module>
+        <ejb>permission_service_facade.jar</ejb>
+    </module>
+  
      <module>
         <ejb>contest_service_facade.jar</ejb>
     </module>
