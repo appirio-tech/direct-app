@@ -71,148 +71,22 @@ function filterbyCustomer(id, filterStr) {
     }
 }
 
-$(function() {
-
-    //reset the filter panel for consistency
-    if (document.getElementById("filterPanelForm") != null) {
-        document.getElementById("filterPanelForm").reset();
+// Function for converting a mm/dd/yyyy date value into a numeric string for comparison (example 08/12/2010 becomes 20100812
+var parseDateValue = function(rawDate) {
+    if ($.trim(rawDate) == '') {
+        return '';
     }
+    rawDate = $.trim(rawDate);
+    var dateArray = rawDate.split(" ")[0];
+    dateArray = dateArray.split("/");
+    var parsedDate = dateArray[2] + dateArray[0] + dateArray[1];
+    return parsedDate;
+}
 
-    var left = $('#activeContestsFilterSearch').parent().width() - 333;
-    $('#activeContestsFilterSearch').css({'margin-left':left + 'px'});
-    if ($('.filterContent .column3').prev().hasClass('column2')) {
-        $('.filterContent .column3').css({'width':'300px'})
-    }
-    if (jQuery.browser.msie && jQuery.browser.version == 9) {
-        $('.filterSearch').find('img').css({'margin-left':'-22px'});
-    }
-    $(window).resize(function() {
-        left = $('#activeContestsFilterSearch').parent().width() - 333;
-        $('#activeContestsFilterSearch').css({'margin-left':left + 'px'});
-    });
-    $('.collapse').live('click', function() {
-        $(this).removeClass('collapse').addClass('expand');
-        $(this).find('img').attr("src", "/images/filter-panel/collapse_icon.png");
-        $(this).parent().parent().parent().parent().parent().find('.filterContent').hide();
-        $(this).parent().parent().parent().parent().parent().find('.filterBottom').hide();
-        $(this).parent().parent().parent().parent().parent().find('.collapseBottom').show();
-        $(this).parent().parent().parent().parent().css({"margin-bottom":"-2px","height":'30px'});
-        $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'30px'});
-    });
-    $('.expand').live('click', function() {
-        $(this).removeClass('expand').addClass('collapse');
-        $(this).find('img').attr("src", "/images/filter-panel/expand_icon.png");
-        $(this).parent().parent().parent().parent().parent().find('.filterContent').show();
-        $(this).parent().parent().parent().parent().parent().find('.filterBottom').show();
-        $(this).parent().parent().parent().parent().parent().find('.collapseBottom').hide();
-        $(this).parent().parent().parent().parent().css({"margin-bottom":"0px","height":'32px'});
-        $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'32px'});
-    });
+var handleName;
+var tableHandle;
 
-    $('.collapse').trigger('click');
-
-    handleName = $('.paginatedDataTable').parent().parent().parent().attr('id');
-    if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().attr('id');
-    if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().parent().parent().attr('id');
-
-    if($("#VMFilter").length > 0) {
-        handleName = "vmFilter";
-    }
-
-    if($("#ProjectsContestsFilter").length > 0) {
-        handleName = "ProjectsContests";
-    }
-
-    var startDateCol,endDateCol;
-    if (handleName == 'activeContests') {
-        startDateCol = 3;
-        endDateCol = 4;
-    }
-    else if (handleName == 'MyCopilotPostings' || handleName == 'ProjectsContests') {
-        startDateCol = 2;
-        endDateCol = 3;
-    }
-    else if (handleName == 'projectsResult') {
-        startDateCol = 1;
-        endDateCol = 2;
-    } else if (handleName == 'vmFilter') {
-        var additionalColumnNumber = $("#contest_vms thead th").length - 11;
-        startDateCol = 7 + additionalColumnNumber;
-    }
-    // The plugin function for adding a new filtering routine
-    $.fn.dataTableExt.afnFiltering.push(
-        function(oSettings, aData, iDataIndex) {
-            var dateStart;
-            var dateEnd;
-
-            if ($("#startDateBegin").val() == null || $("#startDateBegin").val() == '')
-                dateStart = '';
-            else
-                dateStart = parseDateValue($("#startDateBegin").val())
-            if ($("#startDateEnd").val() == null || $("#startDateEnd").val() == '')
-                dateEnd = 'zzzzzzzz';
-            else
-                dateEnd = parseDateValue($("#startDateEnd").val())
-            // aData represents the table structure as an array of columns, so the script access the date value
-            // in the fourth column of the table via aData[3]
-            var evalDate = parseDateValue(aData[startDateCol]);
-
-            if (evalDate >= dateStart && evalDate <= dateEnd) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        });
-    $.fn.dataTableExt.afnFiltering.push(
-        function(oSettings, aData, iDataIndex) {
-            var dateStart;
-            var dateEnd;
-            // aData represents the table structure as an array of columns, so the script access the date value
-            // in the fifth column of the table via aData[4]
-            if ($("#endDateBegin").val() == null || $("#endDateBegin").val() == '')
-                dateStart = '';
-            else
-                dateStart = parseDateValue($("#endDateBegin").val())
-            if ($("#endDateEnd").val() == null || $("#endDateEnd").val() == '')
-                dateEnd = 'zzzzzzzz';
-            else
-                dateEnd = parseDateValue($("#endDateEnd").val());
-
-            var evalDate = parseDateValue(aData[endDateCol]);
-
-            if ($.trim(evalDate) == '') {
-                return true;
-            }
-
-            if (evalDate >= dateStart && evalDate <= dateEnd) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        });
-    $.fn.dataTableExt.afnFiltering.push(
-        function(oSettings, aData, iDataIndex) {
-            var filterStr = $('input.searchBox').val();
-            var len = aData.length;
-            for (var i = 0; i < len - 1; i++) {
-                if (aData[i].replace(/<[^>]*>/g, "").toLowerCase().indexOf(filterStr.toLowerCase()) != -1)
-                    return true;
-            }
-            return false;
-        });
-    // Function for converting a mm/dd/yyyy date value into a numeric string for comparison (example 08/12/2010 becomes 20100812
-    function parseDateValue(rawDate) {
-        if ($.trim(rawDate) == '') {
-            return '';
-        }
-        rawDate = $.trim(rawDate);
-        var dateArray = rawDate.split(" ")[0];
-        dateArray = dateArray.split("/");
-        var parsedDate = dateArray[2] + dateArray[0] + dateArray[1];
-        return parsedDate;
-    }
+var setupFilterPanel = function () {
 
     if (handleName == "activeContests") { //active contests table
         tableHandle = $.activeContestsDataTable;
@@ -229,9 +103,9 @@ $(function() {
         tableHandle = vmTable;
     }
     //common part
-    var customerFilter,len;
+    var customerFilter, len;
 
-    $('.customerSelectMask .contestsDropDown li a').each(function() {
+    $('.customerSelectMask .contestsDropDown li a').each(function () {
         var value = $(this).html();
         if (value != 'All Customers')
             $('#customerFilter').append("<option value='" + value + "'>" + value + "</option>");
@@ -249,7 +123,7 @@ $(function() {
             statusMap[value] = true;
         }
 
-        $.each(statusMap, function(key, value) {
+        $.each(statusMap, function (key, value) {
             $('#projectStatusFilter').append("<option value=" + key + ">" + key + "</option>");
         });
     }
@@ -308,11 +182,12 @@ $(function() {
     }
 
     // VM Management
-    if(handleName == 'vmFilter') {
+    if (handleName == 'vmFilter') {
 
         var additionalColumnNumber = $("#contest_vms thead th").length - 11;
 
         var contestNameFilter = tableHandle.fnGetColumnData(1);
+        $('#contestNameFilter option:gt(0)').remove();
         len = contestNameFilter.length;
         for (var i = 0; i < len; i++) {
             var name = contestNameFilter[i];
@@ -321,6 +196,7 @@ $(function() {
 
         var memberHandleFilter = tableHandle.fnGetColumnData(5);
         len = memberHandleFilter.length;
+        $('#memberHandleFilter option:gt(0)').remove();
         for (var i = 0; i < len; i++) {
             var name = memberHandleFilter[i];
             $('#memberHandleFilter').append("<option value='" + name + "'>" + name + "</option>");
@@ -328,15 +204,17 @@ $(function() {
 
         var usageFilter = tableHandle.fnGetColumnData(8 + additionalColumnNumber);
         len = usageFilter.length;
+        $('#vmUsageFilter option:gt(0)').remove();
         for (var i = 0; i < len; i++) {
             var name = $.trim(usageFilter[i]);
-            if(name.length > 0)
-            $('#vmUsageFilter').append("<option value='" + name + "'>" + name + "</option>");
+            if (name.length > 0)
+                $('#vmUsageFilter').append("<option value='" + name + "'>" + name + "</option>");
         }
 
         $('#contestNameFilter').change(function () {
             var str = $(this).val();
             if (str.indexOf('All') != -1) str = '';
+
             tableHandle.fnFilter(str, 1);
         });
 
@@ -354,7 +232,7 @@ $(function() {
 
         if ($("#memberHandleFilter").length > 0) {
             var all_option = $("#memberHandleFilter option:eq(0)")
-            var my_options = $("#memberHandleFilter option:gt(1)");
+            var my_options = $("#memberHandleFilter option:gt(0)");
 
             my_options.sort(function (a, b) {
                 a = a.text.toUpperCase();
@@ -370,11 +248,10 @@ $(function() {
     }
 
 
-
-    $('#customerFilter').change(function() {
+    $('#customerFilter').change(function () {
         var str = $(this).val();
         $(".customerSelectMask").find(".inputSelect input").val(str);
-        $(".customerSelectMask  ul li a").each(function(index, element) {
+        $(".customerSelectMask  ul li a").each(function (index, element) {
             if ($(this).html() == str) {
                 var id = $(this).parent().data("id");
                 var id = $(this).parent().trigger('click');
@@ -382,15 +259,16 @@ $(function() {
         });
     });
 
-    $('#projectStatusFilter').change(function() {
+    $('#projectStatusFilter').change(function () {
         var str = $(this).val();
         if (str.indexOf('All') != -1)str = '';
         tableHandle.fnFilter(str, 8);
     });
-    $('#contestTypeFilter').change(function() {
+    $('#contestTypeFilter').change(function () {
         var str = $(this).val();
         if (str.indexOf('All') != -1)str = '';
-        tableHandle.fnFilter(str, 0);
+        var searchFor = $(this).find("option:selected").text();
+        tableHandle.fnFilter(searchFor, 0);
     });
     $('#contestStatusFilter').change(function() {
         var str = $(this).val();
@@ -415,7 +293,15 @@ $(function() {
     $('input.searchBox').keyup(function(event) {
         tableHandle.fnDraw();
     });
-    $("#startDateBegin").keyup(function() {
+    if ($("#VMFilter").length > 0) {
+        $('input.searchBox').keyup(function (event) {
+            var filterStr = $('input.searchBox').val();
+            tableHandle.fnFilter(filterStr);
+        });
+    }
+
+
+    $("#startDateBegin").keyup(function () {
         tableHandle.fnDraw();
     });
 
@@ -428,27 +314,165 @@ $(function() {
         tableHandle.fnDraw();
     });
 
-    $("#startDateEnd").change(function() {
+    $("#startDateEnd").change(function () {
         tableHandle.fnDraw();
         tableHandle.fnFilter("")
     });
 
-    $("#endDateBegin").keyup(function() {
+    $("#endDateBegin").keyup(function () {
         tableHandle.fnDraw();
     });
 
-    $("#endDateBegin").change(function() {
+    $("#endDateBegin").change(function () {
         tableHandle.fnDraw();
         tableHandle.fnFilter("")
     });
 
-    $("#endDateEnd").keyup(function() {
+    $("#endDateEnd").keyup(function () {
         tableHandle.fnDraw();
     });
 
-    $("#endDateEnd").change(function() {
+    $("#endDateEnd").change(function () {
         tableHandle.fnDraw();
         tableHandle.fnFilter("")
     });
+
+}
+
+$(function() {
+
+    var left = $('#activeContestsFilterSearch').parent().width() - 333;
+    $('#activeContestsFilterSearch').css({'margin-left':left + 'px'});
+    if ($('.filterContent .column3').prev().hasClass('column2')) {
+        $('.filterContent .column3').css({'width':'300px'})
+    }
+    if (jQuery.browser.msie && jQuery.browser.version == 9) {
+        $('.filterSearch').find('img').css({'margin-left':'-22px'});
+    }
+    $(window).resize(function() {
+        left = $('#activeContestsFilterSearch').parent().width() - 333;
+        $('#activeContestsFilterSearch').css({'margin-left':left + 'px'});
+    });
+    $('.collapse').live('click', function() {
+        $(this).removeClass('collapse').addClass('expand');
+        $(this).find('img').attr("src", "/images/filter-panel/collapse_icon.png");
+        $(this).parent().parent().parent().parent().parent().find('.filterContent').hide();
+        $(this).parent().parent().parent().parent().parent().find('.filterBottom').hide();
+        $(this).parent().parent().parent().parent().parent().find('.collapseBottom').show();
+        $(this).parent().parent().parent().parent().css({"margin-bottom":"-2px","height":'30px'});
+        $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'30px'});
+    });
+    $('.expand').live('click', function() {
+        $(this).removeClass('expand').addClass('collapse');
+        $(this).find('img').attr("src", "/images/filter-panel/expand_icon.png");
+        $(this).parent().parent().parent().parent().parent().find('.filterContent').show();
+        $(this).parent().parent().parent().parent().parent().find('.filterBottom').show();
+        $(this).parent().parent().parent().parent().parent().find('.collapseBottom').hide();
+        $(this).parent().parent().parent().parent().css({"margin-bottom":"0px","height":'32px'});
+        $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'32px'});
+    });
+
+    $('.collapse').trigger('click');
+
+    handleName = $('.paginatedDataTable').parent().parent().parent().attr('id');
+    if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().attr('id');
+    if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().parent().parent().attr('id');
+
+    if ($("#VMFilter").length > 0) {
+        handleName = "vmFilter";
+    }
+
+    if ($("#ProjectsContestsFilter").length > 0) {
+        handleName = "ProjectsContests";
+    }
+
+    var startDateCol, endDateCol;
+    if (handleName == 'activeContests') {
+        startDateCol = 3;
+        endDateCol = 4;
+    }
+    else if (handleName == 'MyCopilotPostings' || handleName == 'ProjectsContests') {
+        startDateCol = 2;
+        endDateCol = 3;
+    }
+    else if (handleName == 'projectsResult') {
+        startDateCol = 1;
+        endDateCol = 2;
+    } else if (handleName == 'vmFilter') {
+        var additionalColumnNumber = $("#contest_vms thead th").length - 11;
+        startDateCol = 7 + additionalColumnNumber;
+    }
+
+    // The plugin function for adding a new filtering routine
+    $.fn.dataTableExt.afnFiltering.push(
+        function (oSettings, aData, iDataIndex) {
+            var dateStart;
+            var dateEnd;
+
+            if ($("#startDateBegin").val() == null || $("#startDateBegin").val() == '')
+                dateStart = '';
+            else
+                dateStart = parseDateValue($("#startDateBegin").val())
+            if ($("#startDateEnd").val() == null || $("#startDateEnd").val() == '')
+                dateEnd = 'zzzzzzzz';
+            else
+                dateEnd = parseDateValue($("#startDateEnd").val())
+            // aData represents the table structure as an array of columns, so the script access the date value
+            // in the fourth column of the table via aData[3]
+            var evalDate = parseDateValue(aData[startDateCol]);
+
+            if (evalDate >= dateStart && evalDate <= dateEnd) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+    $.fn.dataTableExt.afnFiltering.push(
+        function (oSettings, aData, iDataIndex) {
+            var dateStart;
+            var dateEnd;
+            // aData represents the table structure as an array of columns, so the script access the date value
+            // in the fifth column of the table via aData[4]
+            if ($("#endDateBegin").val() == null || $("#endDateBegin").val() == '')
+                dateStart = '';
+            else
+                dateStart = parseDateValue($("#endDateBegin").val())
+            if ($("#endDateEnd").val() == null || $("#endDateEnd").val() == '')
+                dateEnd = 'zzzzzzzz';
+            else
+                dateEnd = parseDateValue($("#endDateEnd").val());
+
+            var evalDate = parseDateValue(aData[endDateCol]);
+
+            if ($.trim(evalDate) == '') {
+                return true;
+            }
+
+            if (evalDate >= dateStart && evalDate <= dateEnd) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+    $.fn.dataTableExt.afnFiltering.push(
+        function (oSettings, aData, iDataIndex) {
+            var filterStr = $('input.searchBox').val();
+            var len = aData.length;
+            for (var i = 0; i < len - 1; i++) {
+                if (aData[i].replace(/<[^>]*>/g, "").toLowerCase().indexOf(filterStr.toLowerCase()) != -1)
+                    return true;
+            }
+            return false;
+        });
+
+    setupFilterPanel();
+
+    //reset the filter panel for consistency
+    if (document.getElementById("filterPanelForm") != null) {
+        document.getElementById("filterPanelForm").reset();
+    }
+
 
 })

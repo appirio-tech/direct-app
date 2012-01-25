@@ -20,9 +20,11 @@ $(document).ready(function() {
         vmTable = $("#contest_vms").dataTable({
             "bPaginate": false,
             "bFilter": false,
+            "bStateSave": false,
             "bSort": true,
             "bAutoWidth": false,
             "bInfo": false,
+            "sDom": 'rt',
             "aaSorting": [[4,'asc']],
             "aoColumns": [
                     null,
@@ -43,9 +45,11 @@ $(document).ready(function() {
         vmTable = $("#contest_vms").dataTable({
             "bPaginate": false,
             "bFilter": false,
+            "bStateSave": false,
             "bSort": true,
             "bAutoWidth": false,
             "bInfo": false,
+            "sDom": 'rt',
             "aaSorting": [[4,'asc']],
             "aoColumns": [
                     null,
@@ -72,7 +76,7 @@ function addData(vm) {
 
     if (columnCount == 12) {
         vmTable.fnAddData([
-            vm.instance.contestId,
+            vm.instance.contestId + '',
             vm.contestName,
             vm.vmImageTcName,
             vm.accountName,
@@ -87,7 +91,7 @@ function addData(vm) {
         ]);
     } else {
         vmTable.fnAddData([
-            vm.instance.contestId,
+            vm.instance.contestId + '',
             vm.contestName,
             vm.vmImageTcName,
             vm.accountName,
@@ -139,7 +143,7 @@ if (!window.vmService) var vmService = {
                         addData(r[i]);
                     }
 
-
+                    setupFilterPanel();
                 }
             }
         });
@@ -165,6 +169,7 @@ if (!window.vmService) var vmService = {
                     for (var i=0; i<r.length; i++) {
                         addData(r[i]);
                     }
+                    setupFilterPanel();
                 }
             }
         });

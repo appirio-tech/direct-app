@@ -69,24 +69,24 @@ public class ContestStatsDTO implements Serializable {
      * <p>A <code>int</code> providing the number of registrants for contest.</p>
      */
     private int registrantsNumber;
-    
+
     /**
-     * <p>A <code>int</code> providing the number of forum posts for contest.</p> 
+     * <p>A <code>int</code> providing the number of forum posts for contest.</p>
      */
     private int forumPostsNumber;
-	
-	/**
-     * <p>A <code>long</code> providing the id of the contest forum.</p> 
+
+    /**
+     * <p>A <code>long</code> providing the id of the contest forum.</p>
      */
     private long forumId;
-	
-	private List<CompetitionPrize> prizes;
-	
-	private Double adminFees;
-	
-	private Boolean isStudio;
-	
-	private String paymentReferenceId;
+
+    private List<CompetitionPrize> prizes;
+
+    private Double adminFees;
+
+    private Boolean isStudio;
+
+    private String paymentReferenceId;
 
 
     /**
@@ -107,17 +107,22 @@ public class ContestStatsDTO implements Serializable {
      * @since 1.0.2
      */
     private ContestIssuesTrackingDTO issues;
-	
-	/**
-	 * <p>A <code>String</code> providing the SVN module of the contest.</p>
-	 */
-	private String svn;
+
+    /**
+     * <p>A <code>String</code> providing the SVN module of the contest.</p>
+     */
+    private String svn;
+
+    /**
+     * <p>Shows if it shows the spec review or not.</p>
+     */
+    private boolean showSpecReview;
 
     /**
      * <p>Constructs new <code>ContestStatsDTO</code> instance. This implementation does nothing.</p>
      */
     public ContestStatsDTO() {
-		this.isStudio = true;
+        this.isStudio = true;
     }
 
     public boolean isDraft() {
@@ -190,8 +195,8 @@ public class ContestStatsDTO implements Serializable {
     public void setForumPostsNumber(int forumPostsNumber) {
         this.forumPostsNumber = forumPostsNumber;
     }
-	
-	/**
+
+    /**
      * <p>Gets the id of forum for contest.</p>
      *
      * @return a <code>long</code> providing the id of forum for contest.
@@ -208,7 +213,7 @@ public class ContestStatsDTO implements Serializable {
     public void setForumId(long forumId) {
         this.forumId = forumId;
     }
-	
+
     /**
      * <p>Gets the end date and time for contest.</p>
      *
@@ -263,67 +268,67 @@ public class ContestStatsDTO implements Serializable {
     public void setContest(ContestBriefDTO contest) {
         this.contest = contest;
     }
-	
-	public Boolean getIsStudio() {
-		return isStudio;
-	}
-	
-	public void setIsStudio(Boolean isStudio) {
-		this.isStudio = isStudio;
-	}
-	
-	public void setPrizes(List<CompetitionPrize> prizes){
-		this.prizes = prizes;
-	}
-	
-	public List<CompetitionPrize> getPrizes(){
-		return prizes;
-	}
-	
-	public void setAdminFees(Double adminFees){
-		this.adminFees = adminFees;
-	}
-	
-	public Double getAdminFees(){
-		if(adminFees == null){
-			return 0.0;
-		}
-		return adminFees;
-	}
-		
-	public Double getTotalMainPrizes(){
-		Double totalMainPrizes = 0.0;
-		for (int i=0; i < prizes.size(); i++ ) {
-		   totalMainPrizes += prizes.get(i).getAmount() ;
-		}
-		return totalMainPrizes;
-	}
-	
-	public void setPaymentReferenceId(String paymentReferenceId){
-		this.paymentReferenceId = paymentReferenceId;
-	}
-	
-	public String getPaymentReferenceId(){
-		return paymentReferenceId;
-	}
-	
-	/**
-	 * Gets the svn module.
-	 *
-	 * @return the svn module.
-	 */
-	public String getSvn() {
-	    return svn;
-	}
-	
-	/**
-	 * Sets the svn module.
-	 *
-	 * @param svn the svn module.
-	 */
-	public void setSvn(String svn) {
-	    this.svn = svn;
-	}
+
+    public Boolean getIsStudio() {
+        return isStudio;
+    }
+
+    public void setIsStudio(Boolean isStudio) {
+        this.isStudio = isStudio;
+    }
+
+    public void setPrizes(List<CompetitionPrize> prizes){
+        this.prizes = prizes;
+    }
+
+    public List<CompetitionPrize> getPrizes(){
+        return prizes;
+    }
+
+    public void setAdminFees(Double adminFees){
+        this.adminFees = adminFees;
+    }
+
+    public Double getAdminFees(){
+        if(adminFees == null){
+            return 0.0;
+        }
+        return adminFees;
+    }
+
+    public Double getTotalMainPrizes(){
+        Double totalMainPrizes = 0.0;
+        for (int i=0; i < prizes.size(); i++ ) {
+           totalMainPrizes += prizes.get(i).getAmount() ;
+        }
+        return totalMainPrizes;
+    }
+
+    public void setPaymentReferenceId(String paymentReferenceId){
+        this.paymentReferenceId = paymentReferenceId;
+    }
+
+    public String getPaymentReferenceId(){
+        return paymentReferenceId;
+    }
+
+    /**
+     * Gets the svn module.
+     *
+     * @return the svn module.
+     */
+    public String getSvn() {
+        return svn;
+    }
+
+    /**
+     * Sets the svn module.
+     *
+     * @param svn the svn module.
+     */
+    public void setSvn(String svn) {
+        this.svn = svn;
+    }
 
     /**
      * Gets the issues of the contest.
@@ -364,4 +369,24 @@ public class ContestStatsDTO implements Serializable {
     public void setTotalJiraIssuesNumber(int totalJiraIssuesNumber) {
         this.totalJiraIssuesNumber = totalJiraIssuesNumber;
     }
+
+    /**
+     * <p>Set if show spec review.</p>
+     *
+     * @return the showSpecReview
+     */
+    public boolean isShowSpecReview() {
+        return showSpecReview;
+    }
+
+    /**
+     * <p>Sets the showSpecReview.</p>
+     *
+     * @param showSpecReview the showSpecReview to set
+     */
+    public void setShowSpecReview(boolean showSpecReview) {
+        this.showSpecReview = showSpecReview;
+    }
+
+
 }

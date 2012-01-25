@@ -94,10 +94,12 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <p>
  * Version 1.3 - TC Direct Replatforming Release 1 Change Note
  * <ul>
- * <li>Remove contestId and studioCompetition fields and getter/setter for them because this studio contest is the same as software contest now.</li>
+ * <li>Remove contestId and studioCompetition fields and getter/setter for them because this studio contest is the
+ * same as software contest now.</li>
  * <li>Update {@link #executeAction()} method to only handle the <code>SoftwareCompetition</code>.</li>
  * <li>Update PrizeSortByPlace to sort <code>Prize</code>.</li>
- * <li>Update {@link #isSoftware()} method to use the new logic to determine whether a contest is a software contest or not.</li>
+ * <li>Update {@link #isSoftware()} method to use the new logic to determine whether a contest is a software contest
+ * or not.</li>
  * <li>Update {@link #getViewData()} method to only handle the <code>SoftwareCompetition</code>.</li>
  * <li>Remove fillContestStats method because we are using DirectUtils.getContestStats method instead.</li>
  * <li>Update {@link #getSessionData()} method to only handle the <code>SoftwareCompetition</code>.</li>
@@ -107,10 +109,11 @@ import com.topcoder.service.project.SoftwareCompetition;
  * Version 1.4 - TC Direct Replatforming Release 4 Change Note
  * <ul>
  * <li>Update {@link #isSoftware()} method to support the copilot contest as a software contest.</li>
- * <li>Update {@link #executeAction()} method to set the contest type to studio if contestStats.getIsStudio returns true.</li>
+ * <li>Update {@link #executeAction()} method to set the contest type to studio if contestStats.getIsStudio returns
+ * true.</li>
  * </ul>
  * </p>
- * 
+ *
  * @author fabrizyo, FireIce, isv, morehappiness
  * @version 1.4
  */
@@ -121,6 +124,15 @@ public class GetContestAction extends ContestAction {
      * </p>
      */
     private static final long serialVersionUID = 7980735050638514625L;
+
+    /**
+     * <p>
+     * The action type.
+     * </p>
+     *
+     * @see TYPE
+     */
+    private TYPE type;
 
     /**
      * <p>
@@ -155,26 +167,32 @@ public class GetContestAction extends ContestAction {
     private SoftwareCompetition softwareCompetition;
 
     /**
-     * <p>Copilots for this contest</p>
+     * <p>
+     * Copilots for this contest
+     * </p>
      */
     private List<ContestCopilotDTO> copilots;
 
     /**
-     * <p>The copilot cost of the contest</p>
+     * <p>
+     * The copilot cost of the contest
+     * </p>
      */
     private double copilotCost;
 
     /**
-    * <p> Whether user is admin </p>
-    */
+     * <p>
+     * Whether user is admin
+     * </p>
+     */
     private boolean admin;
-    
+
     private Set<Long> copilotProjectTypes;
-    
+
     private String budget;
-    
+
     private String otherManagingExperienceString;
-    
+
     /**
      * <p>
      * Creates a <code>GetContestAction</code> instance.
@@ -207,50 +225,88 @@ public class GetContestAction extends ContestAction {
             throw new DirectException("projectId less than 0 or not defined.");
         }
 
+        if (type == null) {
+            throw new DirectException("action type is null.");
+        }
+
+        HttpSession session = DirectUtils.getServletRequest().getSession(true);
+
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
         admin = DirectUtils.isRole(currentUser, "Administrator");
+
+        final String SESSION_KEY = String.valueOf(projectId);
+
+        // retrieve software competition
+        // TODO: this is TEMPORARY solution to eliminate same call for contest and contest json
+        if (this.type == TYPE.CONTEST_JSON && session.getAttribute(SESSION_KEY) != null) {
+            softwareCompetition = (SoftwareCompetition) session.getAttribute(SESSION_KEY);
+            session.removeAttribute(String.valueOf(projectId));
+        }
+
+        if (softwareCompetition == null) {
             softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(DirectStrutsActionsHelper
                 .getTCSubjectFromSession(), projectId);
-        setResult(softwareCompetition);
-        // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
-        if(DirectUtils.isStudio(softwareCompetition)) {
+        }
+        if (DirectUtils.isStudio(softwareCompetition)) {
             softwareCompetition.setType(CompetionType.STUDIO);
         }
+        setResult(softwareCompetition);
+
+        // depends on the type :
+        // 1. if contest, store softwareCompetition in session
+        // 2. if json data for contest, stops here since we are getting it
+        // 3. if copilot, keep going
+        switch(this.type) {
+          case CONTEST:
+               session.setAttribute(SESSION_KEY, softwareCompetition);
+               break;
+          case CONTEST_JSON:
+               return;
+          case COPILOT_CONTEST:
+        }
+
+        // Set contest stats
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
         getViewData().setContestStats(contestStats);
-        getViewData().setDashboard(DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
-        DirectUtils.setDashboardData(currentUser, projectId, getViewData(), getContestServiceFacade(), !DirectUtils.isStudio(softwareCompetition));
-        
-        if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
-        {
-            contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());
+
+        getViewData().setDashboard(
+            DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
+        DirectUtils.setDashboardData(currentUser, projectId, getViewData(), getContestServiceFacade(), !DirectUtils
+            .isStudio(softwareCompetition));
+
+        if (softwareCompetition.getProjectData().getContestSales() != null
+            && softwareCompetition.getProjectData().getContestSales().size() > 0) {
+            contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0)
+                .getSaleReferenceId());
         }
 
         List<Prize> prizes = softwareCompetition.getProjectHeader().getPrizes();
         if (prizes != null) {
             Collections.sort(prizes, new PrizeSortByPlace());
-                        
-            if (softwareCompetition.getProjectData().getContestSales() != null && softwareCompetition.getProjectData().getContestSales().size() > 0)
-            {
-                contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0).getSaleReferenceId());
+
+            if (softwareCompetition.getProjectData().getContestSales() != null
+                && softwareCompetition.getProjectData().getContestSales().size() > 0) {
+                contestStats.setPaymentReferenceId(softwareCompetition.getProjectData().getContestSales().get(0)
+                    .getSaleReferenceId());
             }
 
             // set copilots
-            this.copilots = DataProvider.getCopilotsForDirectProject(softwareCompetition.getProjectHeader().getTcDirectProjectId());
+            this.copilots = DataProvider.getCopilotsForDirectProject(softwareCompetition.getProjectHeader()
+                .getTcDirectProjectId());
 
             this.copilotCost = calculateCopilotCost(softwareCompetition.getResources());
-            
+
             // set contest permission
-            viewData.setHasContestWritePermission(DirectUtils
-                    .hasWritePermission(this, currentUser, projectId, false));
+            viewData
+                .setHasContestWritePermission(DirectUtils.hasWritePermission(this, currentUser, projectId, false));
 
             // set whether to show spec review
-            viewData.setShowSpecReview(getSpecificationReviewService()
-                    .getSpecificationReview(currentUser, projectId) != null);
+            viewData.setShowSpecReview(contestStats.isShowSpecReview());
         }
 
         // calculate the contest issues tracking health
-        getViewData().getDashboard().setUnresolvedIssuesNumber(getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
+        getViewData().getDashboard().setUnresolvedIssuesNumber(
+            getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
         DashboardHelper.setContestStatusColor(getViewData().getDashboard());
 
         if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == 29) {
@@ -258,28 +314,24 @@ public class GetContestAction extends ContestAction {
             Project project = getProjectServices().getProject(projectId);
             copilotProjectTypes = new HashSet<Long>();
 
-			if (project.getProjectCopilotTypes() != null && project.getProjectCopilotTypes().size() > 0 )
-			{
-				 for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
-						copilotProjectTypes.add(type.getId());
-				 }
-			}
-           
+            if (project.getProjectCopilotTypes() != null && project.getProjectCopilotTypes().size() > 0) {
+                for (ProjectCopilotType type : project.getProjectCopilotTypes()) {
+                    copilotProjectTypes.add(type.getId());
+                }
+            }
 
             budget = null;
             otherManagingExperienceString = null;
-			if ( project.getCopilotContestExtraInfos() != null &&  project.getCopilotContestExtraInfos().size() > 0)
-			{
-				for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
-                if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
-                    budget = extraInfo.getValue();
-                }
-                if (extraInfo.getType().getId() == CopilotContestExtraInfoType.OTHER_MANAGING_EXPERIENCE.getId()) {
-                    otherManagingExperienceString = extraInfo.getValue();
+            if (project.getCopilotContestExtraInfos() != null && project.getCopilotContestExtraInfos().size() > 0) {
+                for (CopilotContestExtraInfo extraInfo : project.getCopilotContestExtraInfos()) {
+                    if (extraInfo.getType().getId() == CopilotContestExtraInfoType.BUDGET.getId()) {
+                        budget = extraInfo.getValue();
+                    }
+                    if (extraInfo.getType().getId() == CopilotContestExtraInfoType.OTHER_MANAGING_EXPERIENCE.getId()) {
+                        otherManagingExperienceString = extraInfo.getValue();
+                    }
                 }
             }
-			}
-            
 
         }
     }
@@ -311,8 +363,10 @@ public class GetContestAction extends ContestAction {
 
     /**
      * <p>
-    /**
-     * <p>Gets the copilots of the software contest</p>
+     * /**
+     * <p>
+     * Gets the copilots of the software contest
+     * </p>
      *
      * @return the copilots of the software contest.
      */
@@ -321,13 +375,16 @@ public class GetContestAction extends ContestAction {
     }
 
     /**
-     * <p>Gets the copilot cost</p>
+     * <p>
+     * Gets the copilot cost
+     * </p>
      *
      * @return the cost of the copilots.
      */
     public double getCopilotCost() {
         return copilotCost;
     }
+
     /**
      * <p>
      * Determines if it is software contest or not.
@@ -367,17 +424,17 @@ public class GetContestAction extends ContestAction {
 
         return viewData;
     }
-    
+
     /**
      * The <code>Comparator</code> to compare two <code>Prize</code> object ordered by the prize place.
-     * 
+     *
      * @author TCSASSEMBER
      */
-    public class PrizeSortByPlace implements Comparator<Prize>{
+    public class PrizeSortByPlace implements Comparator<Prize> {
         public int compare(Prize o1, Prize o2) {
             if (o1.getPlace() > o2.getPlace())
                 return 1;
-            else if(o1.getPlace() < o2.getPlace())
+            else if (o1.getPlace() < o2.getPlace())
                 return -1;
             else
                 return 0;
@@ -412,7 +469,7 @@ public class GetContestAction extends ContestAction {
                 }
                 sessionData.setCurrentProjectContext(project);
 
-                 long directProjectId = softwareCompetition.getProjectHeader().getTcDirectProjectId();
+                long directProjectId = softwareCompetition.getProjectHeader().getTcDirectProjectId();
 
                 sessionData.setCurrentSelectDirectProjectID(directProjectId);
             }
@@ -433,11 +490,10 @@ public class GetContestAction extends ContestAction {
      */
     private String getProjectName(long projectId) throws Exception {
         try {
-            /*for (ProjectData project : getProjects()) {
-                if (projectId == project.getProjectId()) {
-                    return project.getName();
-                }
-            }*/
+            /*
+             * for (ProjectData project : getProjects()) { if (projectId == project.getProjectId()) { return
+             * project.getName(); } }
+             */
             List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getCurrentUser().getUserId());
 
             for (ProjectBriefDTO project : projects) {
@@ -478,10 +534,12 @@ public class GetContestAction extends ContestAction {
     }
 
     /**
-    * <p>Check whether user is admin</p>
-    *
-    * @return whether logged in user is admin
-    */
+     * <p>
+     * Check whether user is admin
+     * </p>
+     *
+     * @return whether logged in user is admin
+     */
     public boolean isAdmin() {
         return admin;
     }
@@ -490,9 +548,9 @@ public class GetContestAction extends ContestAction {
      * <p>
      * Gets the mapping to be used for looking up the project copilot types by IDs.
      * </p>
+     *
      * @return a <code>Map</code> mapping the project copilot type ids to category names.
-     * @throws Exception
-     *             if an unexpected error occurs.
+     * @throws Exception if an unexpected error occurs.
      * @since 1.5
      */
     public Map<Long, String> getAllProjectCopilotTypes() throws Exception {
@@ -518,5 +576,27 @@ public class GetContestAction extends ContestAction {
      */
     public String getOtherManagingExperienceString() {
         return otherManagingExperienceString;
-    }    
+    }
+
+    /**
+     * <p>
+     * Sets the action type.
+     * </p>
+     *
+     * @param type the type to set
+     */
+    public void setType(TYPE type) {
+        this.type = type;
+    }
+
+    /**
+     * <p>
+     * The static type enum to indicate in which mode this action is being called.
+     * </p>
+     *
+     * @author BeBetter
+     */
+    public static enum TYPE {
+        COPILOT_CONTEST, CONTEST, CONTEST_JSON
+    }
 }
