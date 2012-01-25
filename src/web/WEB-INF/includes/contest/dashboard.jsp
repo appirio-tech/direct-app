@@ -23,6 +23,30 @@
             <span class="tl"></span>
             <span class="tr"></span>
             Timeline
+            <c:set var="projectStatus" value="${viewData.contestStats.currentStatus}"/>
+            <c:choose>
+                <c:when test="${projectStatus eq 'Active'}">
+                    <c:choose>
+                        <c:when test="${viewData.dashboard.stalled}">
+                            <div class="status stalled">Contest Status: <span>Stalled</span></div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="status active">Contest Status: <span>Active</span></div>
+                        </c:otherwise>
+                    </c:choose>
+                </c:when>
+                <c:when test="${projectStatus eq 'Draft'}">
+                    <div class="status draft">Contest Status: <span>Draft</span></div>
+                </c:when>
+                <c:when test="${projectStatus eq 'Deleted'}">
+                </c:when>
+                <c:when test="${projectStatus == 'Completed'}">
+                    <div class="status completed">Contest Status: <span>Completed</span></div>
+                </c:when>
+                <c:otherwise>
+                    <div class="status deleted">Contest Status: <span>Cancelled</span></div>
+                </c:otherwise>
+            </c:choose>
         </h1>
         <div class="content">
             <span class="bl"></span>

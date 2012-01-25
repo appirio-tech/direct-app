@@ -6280,6 +6280,56 @@ table.resultTable td a.button1:hover {
 			background-position:right top;
 			right:-1px;
 		}
+		.dashboardModule .heading .status{
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding-left: 40px;
+            width: 155px;
+            border-left: 1px solid #bdbdbd;
+            height: 25px;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 25px;
+            color: #000;
+        }
+        .dashboardModule .heading .archived{
+            background: url("../images/archieved-icon.png") no-repeat 10px 2px;
+        }
+        .dashboardModule .heading .archived span{
+            color: #ea980e;
+        }
+        .dashboardModule .heading .completed{
+            background: url("../images/complete-icon.png") no-repeat 10px 2px;
+        }
+        .dashboardModule .heading .completed span{
+            color: #00ac03;
+        }
+        .dashboardModule .heading .deleted{
+            background: url("../images/deleted-icon.png") no-repeat 10px 2px;
+        }
+        .dashboardModule .heading .deleted span{
+            color: #c40000;
+        }
+        .dashboardModule .heading .active{
+            background: url("../images/active-icon.png") no-repeat 10px 2px;
+        }
+        .dashboardModule .heading .active span{
+            color: #00b306;
+        }
+        .dashboardModule .heading .draft{
+            background: url("../images/draft-icon.png") no-repeat 10px 2px;
+        }
+        .dashboardModule .heading .draft span{
+            color: #979797;
+        }
+        .dashboardModule .heading .stalled{
+            background: url("../images/stalled-icon.png") no-repeat 10px 2px;
+        }
+        .dashboardModule .heading .stalled span{
+            color: #a60000;
+        }
+            
 	.dashboardModule .content{
 		position:relative;
 		background:#fffffe url(../images/bg-dashboardModuleContent.png) left bottom repeat-x;
@@ -6313,8 +6363,10 @@ table.resultTable td a.button1:hover {
 		}
 		.dashboardModule .content .timelineContainer{
 			position:relative;
-			width:772px;
 			margin:0 auto;
+            margin-left:10px;
+            margin-right:10px;
+            min-width:772px;
 			padding:41px 0 39px;
 			overflow:hidden;
 		}
@@ -6399,7 +6451,9 @@ table.resultTable td a.button1:hover {
 						margin-left:-60px;
 						padding-top:8px;
 						color:#333333;
+						overflow:visible;
 					}
+					.dashboardModule .content .progressContainer li .phaseDate p {width:128px;padding:0;}
 					.dashboardModule .content .progressContainer li.current .phaseDate{ display:block; }
 						.dashboardModule .content .progressContainer li .phaseDate label{
 							display:inline-block;
@@ -8033,7 +8087,7 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #content.pipelineReportContent {
-    min-width:1100px;
+    min-width:1170px;
 }
 
 #content.costReportContent {

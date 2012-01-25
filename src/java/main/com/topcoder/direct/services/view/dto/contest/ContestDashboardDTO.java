@@ -418,4 +418,29 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
     public void setRegProgressPercent(int regProgressPercent) {
         this.regProgressPercent = regProgressPercent;
     }
+    
+    /**
+     * Checks whether the contest is stalled.
+     * 
+     * @return true if the contest is stalled, false otherwise.
+     */
+    public boolean isStalled() {
+        ProjectPhaseDTO specReviewPhase = null;
+        ProjectPhaseDTO regPhase = null;
+        for (ProjectPhaseDTO phase : allPhases) {
+            if (phase.getPhaseType().getPhaseTypeId() == ProjectPhaseType.SPECIFICATION_REVIEW.getPhaseTypeId()) {
+                specReviewPhase = phase;
+            } else if (phase.getPhaseType().getPhaseTypeId() == ProjectPhaseType.REGISTRATION.getPhaseTypeId()) {
+	            regPhase = phase;
+	        }
+            if (phase.getPhaseStatus().getPhaseStatusId() == ProjectPhaseStatus.OPEN.getPhaseStatusId()) {
+                return false;
+            }
+        }
+        if (regPhase.getPhaseStatus().getPhaseStatusId() != ProjectPhaseStatus.CLOSED.getPhaseStatusId()
+            && (specReviewPhase == null || specReviewPhase.getPhaseStatus().getPhaseStatusId() == ProjectPhaseStatus.CLOSED.getPhaseStatusId())) {
+            return false;
+        }
+        return true;
+    }
 }

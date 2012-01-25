@@ -1163,10 +1163,6 @@ $(document).ready(function(){
 	$('.dashboardModule .content .progressContainer li .phaseName').css('padding-left', phaseNamePadding + 'px');
 	$('.dashboardModule .content .progressContainer li .phaseName').css('padding-right', phaseNamePadding + 'px');
 	
-	// get new progressContainer width and update timelineContainer
-	progressContainerWidth = $('.progressContainer').width();
-	$('.dashboardModule .content .timelineContainer').width(progressContainerWidth+1);
-	
 	var firstPhaseWidth = $(".dashboardModule .content .progressContainer li:first").width();
 	if(firstPhaseWidth < 120)
 		$(".dashboardModule .content .progressContainer li:first .phaseDate p").css({"position":"relative","left":Math.floor((120-firstPhaseWidth)/2)+"px"});
@@ -1184,10 +1180,6 @@ $(document).ready(function(){
 		$('.dashboardModule .content .progressContainer li:first .progressStatus').width($('.dashboardModule .content .progressContainer li:first').width()-7);
 		$('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
 	}
-	
-	// get new progressContainer width and update timelineContainer
-	progressContainerWidth = $('.progressContainer').width();
-	$('.dashboardModule .content .timelineContainer').width(progressContainerWidth+1);
 
 	$(".statusP .helpBtn").hover(
 		function(){
@@ -1282,6 +1274,36 @@ $(document).ready(function(){
 	} 
 	/* end */
 
+    if ($(".progressContainer").length > 0) {
+		window.phaseLens = [];
+		$(".progressContainer li").each(function() {
+	        phaseLens.push($(this).width());
+	    });
+	    window.progressWidth = $(".progressContainer").width();
+		var updateTimeline = function() {
+	        var leftWidth = $(".timelineContainer").width() - 3 - progressWidth;
+	        var perWidth = parseInt(leftWidth / phaseLens.length);
+	        var clWidth = leftWidth - perWidth * phaseLens.length;
+	        var index = 0;
+	        $(".progressContainer li").each(function() {
+	            var wid = phaseLens[index] + perWidth;
+	            if (index == phaseLens.length - 1) wid += clWidth;
+	            $(this).width(wid);
+	            index++;
+	        });
+	        if($.browser.msie) {
+	            $('.dashboardModule .content .progressContainer li .progressStatus').each(function() {
+	                $(this).width($(this).parent().width());
+	            });
+	            $('.dashboardModule .content .progressContainer li:first .progressStatus').width($('.dashboardModule .content .progressContainer li:first').width()-7);
+	            $('.dashboardModule .content .progressContainer li:last .progressStatus').width($('.dashboardModule .content .progressContainer li:last').width()-7);
+	        }
+	    }
+	    updateTimeline();
+	    $(window).resize(function() {
+	        window.setTimeout(updateTimeline, 50);
+	    });
+    }
 
     $(" .contestViews  .contestCView .loading").css("opacity", "0.8");
 
