@@ -187,7 +187,7 @@
             </props>
         </property>
         <property name="proxyInterface" value="com.topcoder.web.ejb.user.UserPreferenceHome"/>
-    </bean>        
+    </bean>
 
     <!-- AuthenticationInterceptor -->
     <bean id="authenticationInterceptor"
@@ -231,7 +231,7 @@
         <property name="userPreferenceHome" ref="userPreferenceHome"/>
         <property name="metadataKeyService" ref="directProjectMetadataKeyService"/>
         <property name="metadataService" ref="directProjectMetadataServices"/>
-        <property name="permissionServiceFacade" ref="permissionServiceFacade"/> 
+        <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
     </bean>
 
     <bean id="projectOverviewAction"
@@ -305,18 +305,32 @@
           class="com.topcoder.direct.services.view.action.notification.UpdateNotificationsAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
-    <bean id="getContestAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
+
+    <bean id="copilotContestDetailsAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
+          <property name="type" value="COPILOT_CONTEST" />
     </bean>
+
+    <bean id="contestDetailAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
+          parent="contestAction" scope="prototype">
+          <property name="type" value="CONTEST" />
+    </bean>
+
+    <bean id="contestDetailJSONAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
+          parent="contestAction" scope="prototype">
+          <property name="type" value="CONTEST_JSON" />
+    </bean>
+
+    <!-- we need this type to avoid to store session value  -->
     <bean id="getContestReceiptAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestReceiptAction"
-          parent="getContestAction" scope="prototype">
+          parent="copilotContestDetailsAction" scope="prototype">
     </bean>
 
     <bean id="abstractVMAction" class="com.topcoder.direct.services.view.action.cloudvm.AbstractVMAction"
           parent="baseDirectStrutsAction" scope="prototype" abstract="true">
         <property name="cloudVMService" ref="cloudVMService"/>
     </bean>
-    
+
     <bean id="editCockpitProjectAction" class="com.topcoder.direct.services.view.action.project.edit.EditCockpitProjectAction"
             parent="baseDirectStrutsAction" scope="prototype">
     </bean>
@@ -486,7 +500,7 @@
         <property name="specificationReviewService" ref="specificationReviewService"/>
         <property name="specReviewCommentService" ref="specReviewCommentService"/>
         <property name="userService" ref="userService"/>
-		<property name="contestServiceFacade" ref="contestServiceFacade"/>
+    <property name="contestServiceFacade" ref="contestServiceFacade"/>
     </bean>
 
     <bean id="saveSpecReviewCommentAction"
@@ -523,19 +537,19 @@
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="viewData.showJustForm" value="false"/>
     </bean>
-    
+
     <bean id="dashboardShowParticipationReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardParticipationMetricsReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
           <property name="viewData.showJustForm" value="true"/>
     </bean>
-    
+
     <bean id="dashboardParticipationReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardParticipationMetricsReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
           <property name="viewData.showJustForm" value="false"/>
     </bean>
-    
+
     <bean id="dashboardShowBillingCostReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardBillingCostReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -550,7 +564,7 @@
         <property name="lookupDAO" ref="invoiceLookupDAO"/>
         <property name="transactionManager" ref="txManager"/>
     </bean>
-    
+
     <bean id="updateInvoiceAction"
           class="com.topcoder.direct.services.view.action.report.UpdateInvoiceAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -558,7 +572,7 @@
         <property name="invoiceDAO" ref="invoiceDAO"/>
         <property name="transactionManager" ref="txManager"/>
     </bean>
-    
+
     <bean id="dashboardBillingCostReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardBillingCostReportAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -577,7 +591,7 @@
           class="com.topcoder.direct.services.view.action.report.DashboardPipelineDraftsRatioAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
-    
+
     <bean id="createNewProjectAction"
           class="com.topcoder.direct.services.view.action.CreateNewProjectAction"
           scope="prototype" parent="baseDirectStrutsAction">
@@ -598,7 +612,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mappingResources">
             <list>
-			    <value>/META-INF/mapping.hbm.xml</value>
+          <value>/META-INF/mapping.hbm.xml</value>
                 <value>META-INF/invoiceMapping.hbm.xml</value>
             </list>
         </property>
@@ -625,7 +639,7 @@
         <property name="loggerName" value="invoiceBaseDAO"/>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    
+
     <bean name="copilotProfileDAO" class="com.topcoder.direct.services.copilot.dao.impl.CopilotProfileDAOImpl"
           parent="copilotBaseDAO"/>
 
@@ -637,13 +651,13 @@
 
     <bean name="invoiceRecordDAO" class="com.topcoder.clients.invoices.dao.impl.InvoiceRecordDAOImpl"
           parent="invoiceBaseDAO"/>
-    
+
     <bean name="invoiceDAO" class="com.topcoder.clients.invoices.dao.impl.InvoiceDAOImpl"
           parent="invoiceBaseDAO"/>
-                
+
     <bean name="invoiceLookupDAO" class="com.topcoder.clients.invoices.dao.impl.LookupDAOImpl"
           parent="invoiceBaseDAO"/>
-          
+
     <bean id="copilotManageAction"
       class="com.topcoder.direct.services.view.action.copilot.CopilotManageAction"
       scope="prototype" parent="baseDirectStrutsAction">
@@ -713,7 +727,7 @@
         <property name="fileUpload" ref="fileUpload"/>
     </bean>
 
-	 <bean id="downloadFinalFix"
+   <bean id="downloadFinalFix"
           class="com.topcoder.direct.services.view.action.contest.DownloadFinalFixAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="fileUpload" ref="fileUpload"/>
@@ -822,9 +836,9 @@
         <property name="configurationClass">
             <value>org.hibernate.cfg.AnnotationConfiguration</value>
         </property>
-        <property name="configLocation">  
-            <value>classpath:hibernate.cfg.xml</value>  
-        </property>  
+        <property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
         <property name="hibernateProperties">
             <value>
                 hibernate.dialect=org.hibernate.dialect.InformixDialect
@@ -842,63 +856,63 @@
         <property name="loggerName" value="com.topcoder.clients.dao.impl.ProjectContestFeeDAOImpl"/>
         <property name="sessionFactory" ref="projectFeeSessionFactory"/>
     </bean>
-    
+
     <bean name="contestFeeService" class="com.topcoder.clients.dao.impl.ProjectContestFeeServiceImpl" scope="prototype">
         <property name="loggerName" value="com.topcoder.clients.dao.impl.ProjectContestFeeServiceImpl"/>
         <property name="persistence" ref="contestFeePersistence"/>
     </bean>
-    
-    <bean name="contestFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.ContestFeesHomeAction" 
+
+    <bean name="contestFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.ContestFeesHomeAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
     </bean>
 
-    <bean name="createFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.CreateFeesHomeAction" 
+    <bean name="createFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.CreateFeesHomeAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
     </bean>
 
-    <bean name="listBillingProjectContestFeesAction" parent="baseDirectStrutsAction" 
-          class="com.topcoder.direct.services.view.action.accounting.ListBillingProjectContestFeesAction" 
+    <bean name="listBillingProjectContestFeesAction" parent="baseDirectStrutsAction"
+          class="com.topcoder.direct.services.view.action.accounting.ListBillingProjectContestFeesAction"
           scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
     </bean>
 
-    <bean name="saveContestFeesAction" parent="baseDirectStrutsAction" 
-          class="com.topcoder.direct.services.view.action.accounting.SaveContestFeesAction" 
+    <bean name="saveContestFeesAction" parent="baseDirectStrutsAction"
+          class="com.topcoder.direct.services.view.action.accounting.SaveContestFeesAction"
           scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
     </bean>
 
-    <bean name="createContestFeesAction" parent="baseDirectStrutsAction" 
-          class="com.topcoder.direct.services.view.action.accounting.CreateContestFeesAction" 
+    <bean name="createContestFeesAction" parent="baseDirectStrutsAction"
+          class="com.topcoder.direct.services.view.action.accounting.CreateContestFeesAction"
           scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
     </bean>
-    
+
     <bean name="contestFeeAuthorizationProvider" class="com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider" scope="prototype">
         <property name="loggerName" value="com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider"/>
     </bean>
-    
+
     <bean name="contestFeeAccessInterceptor" class="com.topcoder.direct.services.view.action.accounting.ContestFeeAccessInterceptor" scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.interceptor.ContestFeeAccessInterceptor"/>
         <property name="contestFeeAuthorizationProvider" ref="contestFeeAuthorizationProvider"/>
     </bean>
-    
+
     <bean id="getACopilotAction"
           class="com.topcoder.direct.services.view.action.copilot.GetACopilotAction"
           scope="prototype" parent="baseDirectStrutsAction">
-        <property name="copilotProfileDAO" ref="copilotProfileDAO"/>  
+        <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
     </bean>
-    
+
     <bean id="getCopilotStatisticsAction"
       class="com.topcoder.direct.services.view.action.copilot.GetCopilotStatisticsAction"
       scope="prototype" parent="baseDirectStrutsAction">
-      <property name="copilotProfileDAO" ref="copilotProfileDAO"/>  
-    </bean>    
+      <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
+    </bean>
 </beans>

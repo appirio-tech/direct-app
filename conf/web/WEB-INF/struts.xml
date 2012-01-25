@@ -78,8 +78,8 @@
                 </interceptor-ref>
             </interceptor-stack>
 
-			<interceptor-stack name="projectFeeStack">
-				<interceptor-ref name="loggingInterceptor"/>
+      <interceptor-stack name="projectFeeStack">
+        <interceptor-ref name="loggingInterceptor"/>
                 <interceptor-ref name="exception">
                     <param name="logEnabled">true</param>
                     <param name="logLevel">ERROR</param>
@@ -107,9 +107,9 @@
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="validation">
                     <param name="excludeMethods">input,back,cancel,browse</param>
-                </interceptor-ref>                
-				<interceptor-ref name="authnInterceptor"/>      
-				<interceptor-ref name="contestFeeAccessInterceptor"/>   
+                </interceptor-ref>
+        <interceptor-ref name="authnInterceptor"/>
+        <interceptor-ref name="contestFeeAccessInterceptor"/>
             </interceptor-stack>
         </interceptors>
 
@@ -145,7 +145,7 @@
         </action>
         <action name="logout" class="com.topcoder.direct.services.view.action.LogoutAction">
             <result name="success" type="redirect">/scorecard/logout</result>
-	    <!-- type="redirectAction">
+      <!-- type="redirectAction">
                 <param name="actionName">home</param>
                 <param name="namespace">/</param>
             </result> -->
@@ -368,7 +368,7 @@
             <result name="success">/WEB-INF/project-permissions.jsp</result>
         </action>
 
-        <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction"> 
+        <action name="permissionsUpdateSuccess" class="permissionsUpdateSuccessAction">
             <result name="success" type="redirectAction">
                 <param name="actionName">dashboardNotifications</param>
                 <param name="pn">perm</param>
@@ -464,14 +464,14 @@
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-cost-report.jsp</result>
         </action>
-        
+
         <action name="dashboardParticipationReport" class="dashboardShowParticipationReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-participation-report.jsp</result>
         </action>
-        
+
         <action name="dashboardGetParticipationReport" class="dashboardParticipationReportAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -499,7 +499,7 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-        
+
         <action name="updateInvoice" class="updateInvoiceAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -561,7 +561,7 @@
         </action>
 
 
-		<action name="getProjectForumsStatusAJAX" class="getProjectForumsStatusAction">
+    <action name="getProjectForumsStatusAJAX" class="getProjectForumsStatusAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
@@ -584,29 +584,29 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-        
-		<action name="listBillingAccountAction" class="contestFeesHomeAction">
+
+    <action name="listBillingAccountAction" class="contestFeesHomeAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing/billing_account_list.jsp</result>
         </action>
 
-        <action name="cancelFeesManagement" class="com.topcoder.direct.services.view.action.ForwardAction"> 
+        <action name="cancelFeesManagement" class="com.topcoder.direct.services.view.action.ForwardAction">
             <result name="success" type="redirectAction">
                 <param name="actionName">dashboardNotifications</param>
                 <param name="pn">fee</param>
             </result>
         </action>
-        
+
         <action name="createContestFeesHome" class="createFeesHomeAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing/billing_account_create_fees_list.jsp</result>
         </action>
-        
+
         <action name="listContestFeesAction" class="listBillingProjectContestFeesAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success">/WEB-INF/billing/billing_account_contest_fee.jsp</result>
         </action>
-        
+
         <action name="saveContestFeesAction" class="saveContestFeesAction">
             <interceptor-ref name="projectFeeStack"/>
             <result name="success" type="redirectAction">
@@ -746,19 +746,19 @@
     </package>
 
     <package name="contest" namespace="/contest" extends="base">
-        <action name="detail" class="getContestAction">
+        <action name="detail" class="contestDetailAction">
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/contest-details2.jsp</result>
+        </action>
+
+        <action name="detailJson" class="contestDetailJSONAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
 
         <action name="receipt" class="getContestReceiptAction">
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/contest-receipt.jsp</result>
-        </action>
-
-        <action name="detailJson" class="getContestAction">
-            <result name="success" type="json" />
-            <result name="error" type="json" />
         </action>
 
         <action name="repostContest" class="repostAction">
@@ -788,13 +788,13 @@
             <result name="single">/WEB-INF/studio-submissions-single.jsp</result>
             <result>/WEB-INF/studio-submissions-single.jsp</result>
         </action>
-        
+
         <action name="updateSubmissionFeedback" class="updateStudioSubmissionFeedbackAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="authnInterceptor"/>
             <result name="success" type="json" />
-			<result name="error" type="json" />
+      <result name="error" type="json" />
         </action>
 
         <action name="hasSubmissionFeedback" class="hasStudioSubmissionFeedbackAction">
@@ -896,37 +896,37 @@
             </result>
         </action>
     </package>
-    
+
     <package name="ajax" namespace="/ajax" extends="base">
         <action name="saveSpecReviewComment" class="saveSpecReviewCommentAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-        
+
         <action name="resubmitSpecReview" class="resubmitSpecReviewAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
     </package>
-    
+
     <!-- For Copilot Tab-->
     <package name="copilot" namespace="/copilot" extends="base">
         <action name="launchCopilotContest" class="getACopilotAction">
             <result>/WEB-INF/launch-copilot-contest.jsp</result>
         </action>
 
-		<action name="postACopilot" class="launchContestAction">
+    <action name="postACopilot" class="launchContestAction">
             <result>/WEB-INF/post-a-copilot.jsp</result>
         </action>
-        
+
         <action name="selectFromCopilotPool" class="getACopilotAction">
             <result>/WEB-INF/copilot-pool.jsp</result>
         </action>
-        
+
         <action name="manageCopilots" class="copilotManageAction">
             <result>/WEB-INF/manage-copilots.jsp</result>
         </action>
-        
+
         <action name="processCopilotProjects" class="copilotProjectAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
@@ -935,12 +935,12 @@
         <action name="copilotStatistics" class="getCopilotStatisticsAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
-        </action>        
-        
+        </action>
+
         <action name="listCopilotPostings" class="listCopilotContestsAction">
             <result>/WEB-INF/copilot-contests.jsp</result>
         </action>
-        <action name="copilotContestDetails" class="getContestAction">
+        <action name="copilotContestDetails" class="copilotContestDetailsAction">
             <result>/WEB-INF/copilot-contests-details.jsp</result>
         </action>
         <action name="listCopilotContestRegistrants" class="copilotContestsRegistrantsAction">
@@ -985,13 +985,13 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-    </package>    
-    
-    <package name="preference" namespace="/preference" extends="base">                         
+    </package>
+
+    <package name="preference" namespace="/preference" extends="base">
         <action name="updatePreferences" class="updateUserPreferencesAction">
             <result name="success" type="json" />
             <result name="error" type="json" />
-        </action>            
+        </action>
     </package>
 
     <package name="projectMetadata" namespace="/metadata" extends="base">
