@@ -62,7 +62,7 @@ $(document).ready(function() {
 
     function SubstringDemo(str, num) {
         var ss;
-        if (str.length > num) {
+        if (str && str.length > num) {
             ss = str.substring(0, num);
             ss += ' <a href="javascript:;" class="moreLink triggerModal triggerProjectDescription" name="projectDescModal">More...</a>'
         }
