@@ -234,11 +234,17 @@
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
     </bean>
 
-    <bean id="projectOverviewAction"
+    <bean id="currentProjectOverviewAction"
           class="com.topcoder.direct.services.view.action.project.CurrentProjectOverviewAction"
           abstract="true">
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
+        <property name="projectMetadataService" ref="directProjectMetadataServices"/>
+    </bean>
 
+    <bean id="projectOverviewAction"
+          class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction">
+        <property name="projectServiceFacade" ref="projectServiceFacade"/>
+        <property name="projectMetadataService" ref="directProjectMetadataServices"/>
     </bean>
 
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"

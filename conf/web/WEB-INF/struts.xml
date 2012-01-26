@@ -306,7 +306,7 @@
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
         </action>
-        <action name="projectOverview" class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction">
+        <action name="projectOverview" class="projectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
         </action>
@@ -315,7 +315,7 @@
             <result name="success">/WEB-INF/project-issues-tracking.jsp</result>
         </action>
         <action name="currentProjectOverview"
-                class="com.topcoder.direct.services.view.action.project.CurrentProjectOverviewAction">
+                class="currentProjectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
         </action>
