@@ -1,8 +1,10 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
+import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
@@ -77,9 +79,16 @@ import java.util.Map;
  *     <li>Updated {@link #execute()} method to retrieve project forum category and forum messages count.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (Module Assembly - TC Cockpit Project Overview Project General Info) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #execute()} method to retrieve data for the newly added project general information table.</li>
+ *   </ol>
+ * </p>
  * 
- * @author isv, Veve
- * @version 1.1
+ * @author isv, Veve, Blues
+ * @version 1.2
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -114,6 +123,13 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      */
     private ProjectServiceFacade projectServiceFacade;
 
+    /**
+     * The project metadata service. It will be set via spring injection in applicationContext.xml.
+     *
+     * @since 1.2
+     */
+    private DirectProjectMetadataService projectMetadataService;
+
 
     /**
      * Gets the project service facade.
@@ -133,6 +149,26 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      */
     public void setProjectServiceFacade(ProjectServiceFacade projectServiceFacade) {
         this.projectServiceFacade = projectServiceFacade;
+    }
+
+    /**
+     * Gets the project metadata service.
+     *
+     * @return the project metadata service.
+     * @since 1.2
+     */
+    public DirectProjectMetadataService getProjectMetadataService() {
+        return projectMetadataService;
+    }
+
+    /**
+     * Sets the project metadata service.
+     *
+     * @param projectMetadataService the project metadata service.
+     * @since 1.2
+     */
+    public void setProjectMetadataService(DirectProjectMetadataService projectMetadataService) {
+        this.projectMetadataService = projectMetadataService;
     }
 
     /**
@@ -229,7 +265,7 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
                 getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
 
-                // gets and sets the statistics of the project copiolots
+                // gets and sets the statistics of the project copilots
                 setCopilotStats(DataProvider.getDirectProjectCopilotStats(formData.getProjectId()));
 
                 // get the project forum information and update the project name and project id
@@ -243,6 +279,11 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 // Check if the project's forum has any threads
                 long forumThreadsCount = DataProvider.getTopCoderDirectProjectForumThreadsCount(project.getProjectId());
                 getViewData().setHasForumThreads(forumThreadsCount > 0);
+
+                // set all data for project general information table to the view data
+                setProjectGeneralInfo(project);
+                
+                
             } catch (Exception e) {
                 log.error("Project Overview error: ", e);
                 return ERROR;
@@ -270,5 +311,57 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 .getDirectProjectStats(tcDirectProjects, getSessionData().getCurrentUserId());
         getViewData().setDashboardProjectStat(enterpriseProjectStats.get(0));
         DashboardHelper.setAverageContestDurationText(getViewData().getDashboardProjectStat());
+    }
+
+    /**
+     * Sets all the data for project general information table of project overview page.
+     *
+     * @param project the <code>ProjectData</code> instance which contains the name and id of the project.
+     * @throws Exception if any exception occurs
+     * @since 1.2
+     */
+    private void setProjectGeneralInfo(ProjectData project) throws Exception {
+        getViewData().getProjectGeneralInfo().setProject(project);
+
+        // throw ISE if project metadata service is not injected
+        if (getProjectMetadataService() == null) {
+            throw new IllegalStateException("Project metadata service is not initialized and injected.");
+        }
+
+        final List<DirectProjectMetadata> metadata = getProjectMetadataService().getProjectMetadataByProject(getFormData().getProjectId());
+        List<Long> clientManagers = new ArrayList<Long>();
+        List<Long> tcManagers = new ArrayList<Long>();
+
+        for (DirectProjectMetadata m : metadata) {
+            long keyId = m.getProjectMetadataKey().getId();
+
+            if (keyId == 1L) {
+                // client managers
+                clientManagers.add(Long.parseLong(m.getMetadataValue()));
+            } else if (keyId == 2L) {
+                // topcoder project managers
+                tcManagers.add(Long.parseLong(m.getMetadataValue()));
+            } else if (keyId == 3L) {
+                // budget
+                getViewData().getProjectGeneralInfo().setTotalBudget(Integer.parseInt(m.getMetadataValue()));
+            } else if (keyId == 4L) {
+                // svn
+                getViewData().getProjectGeneralInfo().setSvn(m.getMetadataValue());
+            } else if (keyId == 5L) {
+                // jira
+                getViewData().getProjectGeneralInfo().setJira(m.getMetadataValue());
+            } else if (keyId == 6L) {
+                // planned duration
+                getViewData().getProjectGeneralInfo().setPlannedDuration(Integer.parseInt(m.getMetadataValue()));
+            }
+        }
+
+        getViewData().getProjectGeneralInfo().setClientManagers(clientManagers);
+        getViewData().getProjectGeneralInfo().setTopcoderManagers(tcManagers);
+
+        // set the project cost
+        getViewData().getProjectGeneralInfo().setActualCost((int) Math.round(getViewData().getDashboardProjectStat().getTotalProjectCost()));
+        
+        DataProvider.setProjectGeneralInfo(getViewData().getProjectGeneralInfo());
     }
 }

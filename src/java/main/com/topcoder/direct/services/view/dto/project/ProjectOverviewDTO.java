@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
@@ -45,8 +45,15 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.3
+ * <p>
+ * Version 1.4 (Module Assembly - TC Cockpit Project Overview Project General Info) Change notes:
+ *   <ol>
+ *     <li>Added {@link #projectGeneralInfo} property with respective accessor/mutator methods.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, Blues
+ * @version 1.4
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
                                                              UpcomingActivitiesDTO.Aware,
@@ -84,6 +91,15 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * @since 1.0.1
      */
     private EnterpriseDashboardProjectStatDTO dashboardProjectStat;
+
+    /**
+     * <p>
+     * Provides the general information of the project.
+     * </p>
+     *
+     * @since 1.4
+     */
+    private ProjectGeneralInfoDTO projectGeneralInfo = new ProjectGeneralInfoDTO();
 
     /**
      * <p>
@@ -192,5 +208,25 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      */
     public void setHasForumThreads(boolean hasForumThreads) {
         this.hasForumThreads = hasForumThreads;
+    }
+
+    /**
+     * Gets the general information of the project.
+     *
+     * @return the general information of the project.
+     * @since 1.4
+     */
+    public ProjectGeneralInfoDTO getProjectGeneralInfo() {
+        return projectGeneralInfo;
+    }
+
+    /**
+     * Sets the general information of the project.
+     *
+     * @param projectGeneralInfo the general information of the project.
+     * @since 1.4
+     */
+    public void setProjectGeneralInfo(ProjectGeneralInfoDTO projectGeneralInfo) {
+        this.projectGeneralInfo = projectGeneralInfo;
     }
 }

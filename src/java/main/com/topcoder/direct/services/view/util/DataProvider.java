@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.topcoder.direct.services.view.dto.project.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -88,14 +89,6 @@ import com.topcoder.direct.services.view.dto.dashboard.participationreport.Parti
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
-import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
@@ -417,9 +410,18 @@ import com.topcoder.web.common.tag.HandleTag;
  *   to populate the invoice number, invoice id and payment description.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 3.4 (Module Assembly - TC Cockpit Project Overview Project General Info) change log:
+ * <ol>
+ *     <li>Add method {@link #setProjectGeneralInfo(com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO)}
+ *     to retrieve the project general information for project overview page.
+ *     </li>
+ * </ol>
+ * </p>
  * 
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang
- * @version 3.3
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues
+ * @version 3.4
  * @since 1.0
  */
 public class DataProvider {
@@ -4750,7 +4752,6 @@ public class DataProvider {
     /**
      * Get copilot statistics.
      *
-     * @param userId the user id
      * @return copilot statistics
      * @throws Exception if any exception occurs
      * @since 3.2
@@ -4780,6 +4781,73 @@ public class DataProvider {
 
         return members;
     }
-    
+
+    /**
+     * <p>
+     * Sets the project actual duration and project actual cost into <code>ProjectGeneralInfoDTO</code>
+     * </p>
+     *
+     * @param projectGeneralInfo the <code>ProjectGeneralInfoDTO</code> instance to set values into.
+     * @throws Exception if any exception happens
+     * @since 3.4
+     */
+    public static void setProjectGeneralInfo(ProjectGeneralInfoDTO projectGeneralInfo) throws Exception {
+        long projectId = projectGeneralInfo.getProject().getProjectId();
+
+        final String commandName = "direct_project_general_info";
+        final String projectStartDateQuery = "direct_project_general_info_start_date";
+        // final String projectCostQuery = "direct_project_general_info_cost";
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(commandName);
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+
+        // get result container map
+        final Map<String, ResultSetContainer> map = dataAccess.getData(request);
+
+        // get start date
+        final ResultSetContainer startDateContainer = map.get(projectStartDateQuery);
+
+        if(startDateContainer.size() > 0) {
+            final Timestamp startDate = startDateContainer.getTimestampItem(0, "start_date");
+
+            if (startDate != null) {
+                // current date
+                Date currentTime = new Date();
+
+                long duration = currentTime.getTime() - startDate.getTime();
+
+                long days = duration / (60 * 60 * 1000 * 24);
+
+                if (duration % (60 * 60 * 1000 * 24) > 0L) {
+                    days = days + 1;
+                }
+
+                projectGeneralInfo.setActualDuration((int) days);
+            } else {
+                projectGeneralInfo.setActualDuration(0);
+            }
+
+        } else {
+            projectGeneralInfo.setActualDuration(0);
+        }
+
+//        // get cost
+//        final ResultSetContainer costContainer = map.get(projectCostQuery);
+//
+//        if(costContainer.size() > 0) {
+//
+//            if (costContainer.getItem(0, "total_cost").getResultData() != null) {
+//                final float cost = costContainer.getFloatItem(0, "total_cost");
+//
+//                projectGeneralInfo.setActualCost(Math.round(cost));
+//            } else {
+//                projectGeneralInfo.setActualCost(0);
+//            }
+//        } else {
+//            projectGeneralInfo.setActualCost(0);
+//        }
+        
+    }
 }
 

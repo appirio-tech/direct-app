@@ -1,8 +1,8 @@
 <%--
-  - Author: Veve, isv
+  - Author: Veve, isv, BLues
   -
-  - Version: 1.0.6
-  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.1
+  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
   -
@@ -19,6 +19,8 @@
   - Added new CSS class for project stats and project activities tables
   - Version 1.0.6 - Release Assembly - Release Assembly - TopCoder Cockpit Project Overview Update 1 Change Note:
   - Added new JSP codes for project copilots and project forum
+  - Version 1.1 - Module Assembly - TC Cockpit Project Overview Project General Info Change Note:
+  - Added new JSP codes for project general information table
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -34,6 +36,7 @@
     <![endif]-->
     <ui:projectPageType tab="overview"/>
     <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/projectOverview.css?v=204285" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js?v=203928"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=204700"></script>
@@ -65,7 +68,250 @@
                                 <strong><s:property value="sessionData.currentProjectContext.name"/></strong>
                             </div>
 
-                            <div class="spaceWhite"></div> 
+                            <div class="spaceWhite"></div>
+
+                            <!-- start project general information table -->
+                            <div class="projectInforDiv">
+                                <div class="projectInforTitle"><a href="javascript:void(0)" class="expand">Project
+                                    Information</a></div>
+                                <div class="projectInformation">
+
+                                    <div class="projectDetails" id="${fn:toLowerCase(viewData.projectGeneralInfo.statusLabel)}">
+
+                                        <div class="columeFirst">
+
+                                            <!-- Project Description -->
+                                            <div class="projectDescription">
+                                                <h3>Project Description :</h3>
+
+                                                <div class="projectDescDetails">
+
+                                                    <s:if test="viewData.projectGeneralInfo.project.description != null">
+                                                        <p>${viewData.projectGeneralInfo.project.description}</p>
+                                                    </s:if>
+                                                    <s:else>
+                                                         <p class="notSetMessage">Not Set - Set Description at <a href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Edit Project</a> </p>
+                                                    </s:else>
+
+                                                </div>
+                                            </div>
+                                            <!-- End .projectDescription -->
+                                        </div>
+
+                                        <div class="columeSecond">
+
+                                            <!-- Project Type -->
+                                            <div class="projectType">
+                                                <h3>Project Type :</h3>
+
+                                                <p><span>Not available for now</span>
+                                                    <span></span></p>
+                                            </div>
+                                            <!-- End .projectType -->
+
+                                            <!-- Project Status -->
+                                            <div class="projectStatus">
+                                                <h3>Project Status :</h3>
+
+                                                <p class="completedStatus">${viewData.projectGeneralInfo.statusLabel}</p>
+
+                                                <div class="clearFix"></div>
+                                            </div>
+                                            <!-- End .ProjectStatus -->
+
+                                            <!-- Project Links -->
+                                            <div class="smallProjectLinks">
+                                                <h3>Project Links :</h3>
+
+                                                <div class="linkBox">
+
+                                                    <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
+                                                        <span class="notSetMessage">Not Set - Set Project Links at <a href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Edit Project</a> </span>
+                                                    </s:if>
+                                                    <s:else>
+                                                        <s:if test="viewData.projectGeneralInfo.svn != null">
+                                                            <a href="${viewData.projectGeneralInfo.svn}" target="_blank" class="projectSVN">Project SVN</a>
+                                                        </s:if>
+                                                        <s:if test="viewData.projectGeneralInfo.jira != null">
+                                                            <a href="${viewData.projectGeneralInfo.jira}" target="_blank" class="projectBug">Project Bug Track
+                                                                (JIRA)</a>
+                                                        </s:if>
+                                                    </s:else>
+                                                </div>
+                                            </div>
+                                            <!-- End .smallProjectLinks -->
+                                        </div>
+
+                                        <div class="columeThird">
+
+                                            <!-- Project Budget -->
+                                            <div class="projectBudget">
+                                                <h3>Project Budget :</h3>
+
+                                                <s:if test="viewData.projectGeneralInfo.totalBudget != null">
+                                                    <div class="totalBudget">
+                                                        <div class="actualCost">
+                                                            <div class="leftActual">
+                                                                <div class="rightActual">
+                                                                    <div class="midActual"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="totalBudgetInfor">
+                                                        <dl>
+                                                            <dt>Total Budget :</dt>
+                                                            <dd><fmt:formatNumber
+                                                                    value="${viewData.projectGeneralInfo.totalBudget}" type="currency" maxFractionDigits="0"/></dd>
+                                                            <dt class="actual">Actual Cost :</dt>
+                                                            <dd class="actualNum"><fmt:formatNumber
+                                                                    value="${viewData.projectGeneralInfo.actualCost}" type="currency" maxFractionDigits="0"/></dd>
+                                                        </dl>
+                                                    </div>
+                                                </s:if>
+                                                <s:else>
+                                                    <div class="totalBudget" style="visibility:hidden">
+                                                        <div class="actualCost">
+                                                            <div class="leftActual">
+                                                                <div class="rightActual">
+                                                                    <div class="midActual"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="totalBudgetInfor">
+                                                        <dl>
+                                                            <dt>Total Budget :</dt>
+                                                            <dd class="notSet"><a href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Not Set</a></dd>
+                                                            <dt>Actual Cost :</dt>
+                                                            <dd><fmt:formatNumber
+                                                                    value="${viewData.projectGeneralInfo.actualCost}" type="currency" maxFractionDigits="0"/></dd>
+                                                        </dl>
+                                                    </div>
+                                                </s:else>
+
+                                            </div>
+                                            <!-- End .projectBudget -->
+
+                                            <!-- Project Links -->
+                                            <div class="bigProjectLinks">
+                                                <h3>Project Links :</h3>
+
+                                                <div class="linkBox">
+                                                    <s:if test="viewData.projectGeneralInfo.svn == null && viewData.projectGeneralInfo.jira == null">
+                                                        <span class="notSetMessage">Not Set - Set Project Links at <a href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Edit Project</a> </span>
+                                                    </s:if>
+                                                    <s:else>
+                                                        <s:if test="viewData.projectGeneralInfo.svn != null">
+                                                            <a href="${viewData.projectGeneralInfo.svn}" target="_blank" class="projectSVN">Project SVN</a>
+                                                        </s:if>
+                                                        <s:if test="viewData.projectGeneralInfo.jira != null">
+                                                            <a href="${viewData.projectGeneralInfo.jira}" target="_blank" class="projectBug">Project Bug Track
+                                                                (JIRA)</a>
+                                                        </s:if>
+                                                    </s:else>
+                                                </div>
+                                            </div>
+                                            <!-- End .bigProjectLinks -->
+                                        </div>
+
+                                        <div class="columeForth">
+
+                                            <!-- Project Duration -->
+                                            <div class="projectDuration">
+                                                <h3>Project Duration :</h3>
+                                                <s:if test="viewData.projectGeneralInfo.plannedDuration != null">
+                                                    <div class="plannedDuration">
+                                                        <div class="actualDuration">
+                                                            <div class="leftActual">
+                                                                <div class="rightActual">
+                                                                    <div class="midActual"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="totalBudgetInfor">
+                                                        <dl>
+                                                            <dt>Planned Duration :</dt>
+                                                            <dd>${viewData.projectGeneralInfo.plannedDuration} days</dd>
+                                                            <dt class="actual">Actual Duration :</dt>
+                                                            <dd class="actualNum">${viewData.projectGeneralInfo.actualDuration} days</dd>
+                                                        </dl>
+                                                    </div>
+                                                </s:if>
+                                                <s:else>
+                                                    <div class="plannedDuration" style="visibility: hidden">
+                                                        <div class="actualDuration">
+                                                            <div class="leftActual">
+                                                                <div class="rightActual">
+                                                                    <div class="midActual"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="totalBudgetInfor">
+                                                        <dl>
+                                                            <dt>Planned Duration :</dt>
+                                                            <dd class="notSet"><a href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Not Set</a></dd>
+                                                            <dt>Actual Duration :</dt>
+                                                            <dd>${viewData.projectGeneralInfo.actualDuration} days</dd>
+                                                        </dl>
+                                                    </div>
+                                                </s:else>
+                                            </div>
+
+                                            <!-- End .projectDuration -->
+                                        </div>
+
+                                        <div class="clearFix"></div>
+                                    </div>
+
+                                    <!-- Managers -->
+                                    <div class="managersBox">
+
+                                        <!-- Client Managers -->
+                                        <div class="clientManagers">
+                                            <h3>Client Managers : </h3>
+
+                                                <s:if test="viewData.projectGeneralInfo.clientManagers == null || viewData.projectGeneralInfo.clientManagers.size == 0">
+                                                    <ul class="notSetUl"><span class="notSetMessage">Not Set - Set Client Managers at <a href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Edit Project</a> </span></ul>
+                                                </s:if>
+                                                <s:else>
+                                                    <ul>
+                                                    <s:iterator value="viewData.projectGeneralInfo.clientManagers" var="managerId">
+                                                        <li><link:user userId="${managerId}"/></li>
+                                                    </s:iterator>
+                                                    </ul>
+                                                </s:else>
+
+                                        </div>
+                                        <!-- End .clientManagers -->
+
+                                        <!-- TopCoder Project Managers -->
+                                        <div class="projectManagers">
+                                            <h3>TopCoder Project Managers :</h3>
+
+                                                <s:if test="viewData.projectGeneralInfo.topcoderManagers == null || viewData.projectGeneralInfo.topcoderManagers.size == 0">
+                                                    <ul class="notSetUl"><span class="notSetMessage">Not Set - Set TopCoder Managers at <a href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Edit Project</a> </span> </ul>
+                                                </s:if>
+                                                <s:else>
+                                                    <ul>
+                                                    <s:iterator value="viewData.projectGeneralInfo.topcoderManagers" var="managerId">
+                                                        <li><link:user userId="${managerId}"/></li>
+                                                    </s:iterator>
+                                                    </ul>
+                                                </s:else>
+                                            </ul>
+                                        </div>
+                                        <!-- End .projectManagers -->
+
+                                        <div class="clearFix"></div>
+                                    </div>
+                                    <!-- End .managersBox -->
+                                </div>
+                            </div>
+                            <!-- end project general information table -->
+
                             <div class="dashboardTable">
                                 <dl>
                                     <dt>

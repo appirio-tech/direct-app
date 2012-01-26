@@ -51,15 +51,24 @@
         </c:when>
         <c:when test="${requestScope.PAGE_TYPE eq 'internal'}">
         </c:when>
-        <c:otherwise>
-            <a href="<s:url action="currentProjectOverview" namespace="/"/>" class="logo" style="float:left; position:relative;">
-            <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
-            <span id="projectTitleSpan"> <s:property value="sessionData.currentProjectContext.name"/></span>
-            <c:if test="${requestScope.CURRENT_TAB != 'editProject'}">
-                <a href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>' class="editIcon"></a>
-            </c:if>
-            </a>
-        </c:otherwise>
+    <c:otherwise>
+    <s:if test="viewData.isAllProjectsPage == true">
+    <a href="<s:url action='allProjects' namespace='/'/>" class="logo">
+    <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
+    <span id="projectTitleSpan"> All Projects</span>
+    </s:if>
+    <s:else>
+    <a href="<s:url action='currentProjectOverview' namespace='/'><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>" class="logo"
+       style="float:left; position:relative;">
+        <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
+        <span id="projectTitleSpan"> <s:property value="sessionData.currentProjectContext.name"/></span>
+        <c:if test="${requestScope.CURRENT_TAB != 'editProject'}">
+            <a href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>'
+               class="editIcon"></a>
+        </c:if>
+    </a>
+    </s:else>
+    </c:otherwise>
     </c:choose>
 
     <div id="tabs0"><!-- the left tabs -->

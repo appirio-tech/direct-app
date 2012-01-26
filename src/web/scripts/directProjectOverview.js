@@ -1,15 +1,149 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  *
  * <p>
- *  Provides project copilots management and project forum creation features to project overview page.
+ *  Version 1.0: Provides project copilots management and project forum creation features to project overview page.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * <p>
+ *  Version 1.1 (Module Assembly - TC Cockpit Project Overview Project General Info): Adds the JS codes for project general information table.
+ * </p>
+ *
+ * @author Blues
+ * @version 1.1
  * @since Release Assembly - TopCoder Cockpit Project Overview Update 1
  */
 $(document).ready(function() {
+
+    $(".projectInforDiv .expand").click(function () {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $(".projectInforDiv .projectInformation").show();
+            $(this).removeClass("collapse");
+        } else {
+            $(".projectInforDiv .projectInformation").hide();
+            $(this).addClass("collapse");
+        }
+    });
+
+    var iProjectBudget = parseInt($('.projectBudget dd:last').text().replace('$', '').replace(/,/g, '') / $('.projectBudget dd:first').text().replace('$', '').replace(/,/g, '') * 100);
+    if(!isNaN(iProjectBudget)) $('.projectBudget .totalBudget .midActual').css('width', 1.87 * iProjectBudget);
+    if (iProjectBudget < 70) {
+        $('.projectBudget .totalBudget').addClass('green');
+        $('.projectBudget .totalBudgetInfor').addClass('green');
+        if (iProjectBudget < 5) {
+            $('.projectBudget .totalBudget .actualCost').css('width', 1.95 * iProjectBudget);
+        }
+    } else if (iProjectBudget >= 100) {
+        $('.projectBudget .totalBudget').addClass('red');
+        $('.projectBudget .totalBudgetInfor').addClass('red');
+        $('.projectBudget .totalBudget .midActual').css('width', '187px');
+    } else {
+        $('.projectBudget .totalBudget').addClass('yellow');
+        $('.projectBudget .totalBudgetInfor').addClass('yellow');
+    }
+
+    var iprojectDuration = parseInt($('.projectDuration dd:last').text().replace('days', '') / $('.projectDuration dd:first').text().replace('days', '') * 100);
+    if(!isNaN(iprojectDuration)) $('.projectDuration .plannedDuration .midActual').css('width', 1.87 * iprojectDuration);
+    if (iprojectDuration < 70) {
+        $('.projectDuration .plannedDuration').addClass('green');
+        $('.projectDuration .totalBudgetInfor').addClass('green');
+        if (iprojectDuration < 5) {
+            $('.projectBudget .totalBudget .actualCost').css('width', 1.95 * iProjectBudget);
+        }
+    } else if (iprojectDuration >= 100) {
+        $('.projectDuration .plannedDuration').addClass('red');
+        $('.projectDuration .totalBudgetInfor').addClass('red');
+        $('.projectDuration .actualDuration .midActual').css('width', '187px');
+    } else {
+        $('.projectDuration .plannedDuration').addClass('yellow');
+        $('.projectDuration .totalBudgetInfor').addClass('yellow');
+    }
+
+    function SubstringDemo(str, num) {
+        var ss;
+        if (str.length > num) {
+            ss = str.substring(0, num);
+            ss += ' <a href="javascript:;" class="moreLink triggerModal triggerProjectDescription" name="projectDescModal">More...</a>'
+        }
+        return(ss);
+    }
+
+    $(".triggerProjectDescription").live('click', function() {
+        modalLoad('#projectDescModal');
+    })
+
+    var iStr = $('.projectDescDetails p').html();
+
+    var iWidth = $('.projectDetails').width();
+    var iWidth1 = $('.columeFirst').width();
+    var iWidth2 = $('.columeSecond').width();
+    var iWidth3 = $('.columeThird').width();
+    var iWidth4 = $('.columeForth').width();
+    var iDis = iWidth - iWidth1 - iWidth2 - iWidth3 - iWidth4 - 34;
+    var iDis1 = iWidth - iWidth1 - iWidth2 - iWidth3 - 34;
+    if ($('body').width() >= 1410) {
+        $('.projectDetails').css('min-height', '150px');
+        $('.bigProjectLinks').show();
+        $('.smallProjectLinks').hide();
+        $('.projectDescDetails p').html(iStr);
+        $('.projectDescDetails p').html(SubstringDemo($('.projectDescDetails p').html(), 418));
+        $('.columeFirst,.columeSecond,.columeThird').css('margin-right', (iDis / 4));
+        $('#archived .columeFirst,#archived .columeSecond,#archived .columeThird').css('margin-right', (iDis / 3));
+        /*$('.projectDescDetails span').hide();
+         $('.projectDescription a').css('margin-left','218px');*/
+    } else {
+        $('.projectDetails').css('min-height', '200px');
+        $('.bigProjectLinks').hide();
+        $('.smallProjectLinks').show();
+        $('.projectDescDetails p').html(iStr);
+        $('.projectDescDetails p').html(SubstringDemo($('.projectDescDetails p').html(), 700));
+        $('.columeFirst,.columeSecond,.columeThird').css('margin-right', (iDis1 / 3));
+        /*$('.projectDescDetails span').show();
+         $('.projectDescription a').css('margin-left','210px');*/
+    }
+
+    if ($.browser.msie) {
+        var marginTop = 0;
+        if(parseInt($.browser.version, 10) === 7) {
+            marginTop = 7;
+        } else if(parseInt($.browser.version, 10) === 8) {
+            marginTop = 2;
+        }
+
+        $("ul.notSetUl").css('margin-top', marginTop);
+    }
+
+    $(window).resize(function () {
+        var iWidth = $('.projectDetails').width();
+        var iWidth1 = $('.columeFirst').width();
+        var iWidth2 = $('.columeSecond').width();
+        var iWidth3 = $('.columeThird').width();
+        var iWidth4 = $('.columeForth').width();
+        var iDis = iWidth - iWidth1 - iWidth2 - iWidth3 - iWidth4 - 34;
+        var iDis1 = iWidth - iWidth1 - iWidth2 - iWidth3 - 34;
+        if ($('body').width() >= 1410) {
+            $('.projectDetails').css('min-height', '150px');
+            $('.bigProjectLinks').show();
+            $('.smallProjectLinks').hide();
+            $('.projectDescDetails p').html(iStr);
+            $('.projectDescDetails p').html(SubstringDemo($('.projectDescDetails p').html(), 418));
+            $('.columeFirst,.columeSecond,.columeThird').css('margin-right', (iDis / 4));
+            $('#archived .columeFirst,#archived .columeSecond,#archived .columeThird').css('margin-right', (iDis / 3));
+            /*$('.projectDescDetails span').hide();
+             $('.projectDescription a').css('margin-left','218px');*/
+        } else {
+            $('.projectDetails').css('min-height', '200px');
+            $('.bigProjectLinks').hide();
+            $('.smallProjectLinks').show();
+            $('.projectDescDetails p').html(iStr);
+            $('.projectDescDetails p').html(SubstringDemo($('.projectDescDetails p').html(), 571));
+            $('.columeFirst,.columeSecond,.columeThird').css('margin-right', (iDis1 / 3));
+            /*$('.projectDescDetails span').show();
+             $('.projectDescription a').css('margin-left','210px');*/
+        }
+    });
+
 
     if ($("#projectForumTable").length > 0) {
 

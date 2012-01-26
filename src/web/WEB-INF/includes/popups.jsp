@@ -31,6 +31,9 @@
   -
   - Version 1.7 - TC Accounting Tracking Invoiced Payments Part 2
   - - add modal windows for creating invoice in biling cost report page
+  -
+  - Version 1.8 - Module Assembly - TC Cockpit Project Overview Project General Info
+  - - add modal window for the project description in project overview page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -368,6 +371,40 @@
         </div>
     </div>
         <!-- end copilot manage modal -->
+        <s:if test='%{#request.CURRENT_TAB  == "overview"}'>
+            <div id="projectDescModal" class="outLay">
+                <div class="inner">
+                    <div class="modalHeader">
+                        <div class="modalHeaderRight">
+                            <div class="modalHeaderCenter">
+                                PROJECT DESCRIPTION
+                                <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end .modalHeader -->
+
+                    <!-- content -->
+                    <div class="modalBody">
+                        <div class="description">
+                            <p>${viewData.projectGeneralInfo.project.description}</p>
+                        </div>
+                        <div class="buttonArea">
+                            <a href="javascript:;" title="OK" class="button6 closeModal"><span class="left"><span class="right">OK</span></span></a>
+                            <div class="clearFix"></div>
+                        </div>
+                    </div>
+                    <!-- End .content -->
+
+                    <div class="modalFooter">
+                        <div class="modalFooterRight">
+                            <div class="modalFooterCenter"></div>
+                        </div>
+                    </div>
+                    <!-- end .modalFooter -->
+                </div>
+            </div>
+        </s:if>
 
         <!-- start modals for create new project -->
         <s:if test='%{#request.CURRENT_TAB  == "createNewProject"}'>
