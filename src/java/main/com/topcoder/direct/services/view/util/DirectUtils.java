@@ -262,7 +262,7 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #canPerformInvoiceRecords(TCSubject)} method.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 1.7.8 (Release Assembly - Project Contest Fee Management ) Change notes:
  *   <ol>
@@ -270,14 +270,14 @@ import com.topcoder.web.common.cache.MaxAge;
  *     <li>Added {@link #isSuperAdmin(TCSubject)} to check the user is TC Admin or not.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 1.7.9 (Release Assembly - Project Contest Fee Management Update 1 Assembly 1.0) Change notes:
  *   <ol>
  *     <li>Re-imported contes fee classes from new package com.topcoder.clients.model.</li>
  *   </ol>
  * </p>
- * 
+ *
  * <p>
  * Version 1.8.0 (Release Assembly - TopCoder Cockpit Studio Submission Viewer Revamp v1.0) Change notes:
  *   <ol>
@@ -297,7 +297,7 @@ import com.topcoder.web.common.cache.MaxAge;
  *   <ol>
  *     <li>change call of contest service facade #getPermissionsByProject to permission service facade #getPermissionsByProject</li>
  *   </ol>
- * </p>  
+ * </p>
  *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe
  * @version 1.8.2
@@ -366,12 +366,12 @@ public final class DirectUtils {
      * Private constant specifying TC operations role.
      */
     private static final String TC_STAFF_ROLE = "TC Staff";
-    
+
     /**
      * The TC Accounting role.
      */
     private static final String TC_ACCOUNTING_ROLE = "TC Accounting";
-    
+
     /**
      * The super Admin role.
      */
@@ -592,6 +592,7 @@ public final class DirectUtils {
         dto.setRegistrantsNumber(resultContainer.getIntItem(recordIndex, "number_of_registration"));
         dto.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
         dto.setSvn(resultContainer.getStringItem(recordIndex, "svn"));
+        dto.setShowSpecReview(resultContainer.getBooleanItem(recordIndex, "has_spec_review"));
         long forumId = -1;
         try {
             if (resultContainer.getStringItem(recordIndex, "forum_id") != null
@@ -610,6 +611,7 @@ public final class DirectUtils {
 
         // gets the number of issues and bug races for contest
         dto.setTotalJiraIssuesNumber(dto.getIssues().getIssuesNumber() + dto.getIssues().getBugRacesNumber());
+
 
         return dto;
     }
@@ -1174,29 +1176,29 @@ public final class DirectUtils {
         }
 
     }
-    
+
     /**
      * Check if the user is TC Accounting
-     * 
+     *
      * @param tcSubject the user.
      * @return true if the user is TC Accounting and false otherwise.
-     * 
+     *
      * @since 1.7.7
      */
     public static boolean isTCAccounting(TCSubject tcSubject) {
-    	return isRole(tcSubject, TC_ACCOUNTING_ROLE);
+        return isRole(tcSubject, TC_ACCOUNTING_ROLE);
     }
-    
+
     /**
      * Check if the user is super admin
-     * 
+     *
      * @param tcSubject the user.
      * @return true if the user is super admin and false otherwise.
-     * 
+     *
      * @since 1.7.7
      */
     public static boolean isSuperAdmin(TCSubject tcSubject) {
-    	return isRole(tcSubject, SUPER_ADMIN_ROLE);
+        return isRole(tcSubject, SUPER_ADMIN_ROLE);
     }
 
     /**
@@ -1722,10 +1724,10 @@ public final class DirectUtils {
             ignore.printStackTrace();
         }
     }
-    
+
     /**
      * Gets the <code>InvoiceType</code> instance by the name of invoice type.
-     * 
+     *
      * @param invoiceTypeName the name of the invoice type.
      * @param invoiceTypes all the invoice types.
      * @return the <code>InvoiceType</code> with the specified invoice type name. Null if not found.
@@ -1739,10 +1741,10 @@ public final class DirectUtils {
         }
         return null;
     }
-    
+
     /**
      * Checks whether the user can perform operations on invoice records.
-     * 
+     *
      * @param tcSubject the user.
      * @return true if the user can perform operations on invoice records, false otherwise.
      * @since 1.7.7
@@ -1750,28 +1752,28 @@ public final class DirectUtils {
     public static boolean canPerformInvoiceRecords(TCSubject tcSubject) {
         return DirectUtils.isCockpitAdmin(tcSubject) || DirectUtils.isTCAccounting(tcSubject);
     }
-    
+
     /**
      * Get all contest types in database.
-     * 
+     *
      * @return all contest types.
      * @throws Exception
      *             if there is any exception.
      */
     public static Map<String, com.topcoder.clients.model.ContestType> getContesetTypes() throws Exception {
-        
+
         CachedDataAccess dataAccess = new CachedDataAccess(MaxAge.QUARTER_HOUR, DBMS.TCS_OLTP_DATASOURCE_NAME);
 
         Request request = new Request();
         request.setContentHandle("project_categories_replatforming");
         Map<String, com.topcoder.clients.model.ContestType> contestTypes =
-        	new LinkedHashMap<String, com.topcoder.clients.model.ContestType>();
-        
+            new LinkedHashMap<String, com.topcoder.clients.model.ContestType>();
+
         ResultSetContainer container = dataAccess.getData(request)
                 .get("project_categories_replatforming");
         int recordNum = container.size();
         for (int i = 0; i < recordNum; i++) {
-        	com.topcoder.clients.model.ContestType type = new com.topcoder.clients.model.ContestType();
+            com.topcoder.clients.model.ContestType type = new com.topcoder.clients.model.ContestType();
             type.setTypeId(container.getIntItem(i, "project_category_id"));
             if (container.getIntItem(i, "project_type_id") == 3) {
                 type.setStudio(true);
@@ -1784,6 +1786,6 @@ public final class DirectUtils {
         }
         return contestTypes;
     }
-    
-    
+
+
 }
