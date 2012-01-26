@@ -266,8 +266,13 @@ var setupFilterPanel = function () {
     });
     $('#contestTypeFilter').change(function () {
         var str = $(this).val();
-        if (str.indexOf('All') != -1)str = '';
-        var searchFor = $(this).find("option:selected").text();
+        var searchFor;
+        if (str.indexOf('All') != -1) {
+            searchFor = '';
+        }
+        else {
+            searchFor = $(this).find("option:selected").text();
+        }
         tableHandle.fnFilter(searchFor, 0);
     });
     $('#contestStatusFilter').change(function() {
