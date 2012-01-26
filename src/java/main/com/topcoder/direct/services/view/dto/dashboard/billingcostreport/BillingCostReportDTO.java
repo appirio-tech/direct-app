@@ -200,6 +200,9 @@ public class BillingCostReportDTO extends ReportBaseDTO {
         row.getCell(12).setStringValue("Actual Total Member Cost");
         row.getCell(13).setStringValue("Payment Type");
         row.getCell(14).setStringValue("Amount");
+		row.getCell(15).setStringValue("Invoice Number");
+		row.getCell(16).setStringValue("Invoice Date");
+		row.getCell(17).setStringValue("Invoice Amount");
 
         // insert sheet data from 2nd row
         int rowIndex = 2;
@@ -257,6 +260,17 @@ public class BillingCostReportDTO extends ReportBaseDTO {
 
             // set the amount
             row.getCell(14).setNumberValue((costDetail.getPaymentAmount()));
+			
+			row.getCell(15).setStringValue((costDetail.getInvoiceNumber()));
+			
+			row.getCell(16).setStringValue(dateFormatter.format(costDetail.getInvoiceDate()));
+			
+			if (row.getCell(17) != null)
+			{
+				row.getCell(17).setNumberValue((costDetail.getInvoiceAmount()));
+			}
+			
+			
         }
     }
 }
