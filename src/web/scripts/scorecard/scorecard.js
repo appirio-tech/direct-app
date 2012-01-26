@@ -1,12 +1,15 @@
 /**
- * - Author: TCSASSEMBER
- * - Version: 1.1
+ * - Author: TCSASSEMBLER, pvmagacho
+ * - Version: 1.2
  * - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
  * 
  * This file contains all the client javascript code for the scorecard pages.
  * Version 1.1 (Release Assembly - TopCoder Scorecard Tool Ajax Loading and Static Files Sharing) Change notes:
  * - Add Clone scoreboard
  * - Change AJAX loading animiation.
+ * Version 1.2 ((TCCC-3917) Scorecard Tool - Document Upload Option) Change notes:
+ * - Modified upload options from YES/NO to N/A, Optional or Required. Will use both
+ * - uploadDocument and uploadDocumentRequired properties.
  */
 
 /**
@@ -221,8 +224,8 @@ function addQuestion2(openQuestionHead, question, guideline, selType, upload, we
     		$(this).attr('selected', 'selected');
     	}
     });    
-    $(questionSRC).find('select.questionUploadDocument option').each(function() {
-    	if ($.trim($(this).html()) == $.trim(upload)) {
+    $(questionSRC).find('select[name="questionUploadDocument"] option').each(function() {
+    	if ($.trim($(this).text()) == $.trim(upload)) {
     		$(this).attr('selected', 'selected');
     	}
     });    
@@ -393,7 +396,12 @@ function getScorecardData() {
                 question.guideline = qobj.find("textarea[name='questionGuideline']").val();
                 question.questionType = parseInt(qobj.find("select[name='questionType']").val());
                 question.weight = parseFloat(qobj.find("input[name='questionWeight']").val());
-                question.uploadDocument = qobj.find("select[name='questionUploadDocument']").val() == "true" ? true : false;
+
+                // upload document - N/A, Optional, Required
+                var upload = qobj.find("select[name='questionUploadDocument'] :selected").text();
+                question.uploadDocument = (upload != 'N/A');
+                question.uploadDocumentRequired = (upload == 'Required');
+
                 curSection.scorecardQuestions.push(question);
             });
         });
