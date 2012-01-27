@@ -236,13 +236,13 @@
 
     <bean id="currentProjectOverviewAction"
           class="com.topcoder.direct.services.view.action.project.CurrentProjectOverviewAction"
-          abstract="true">
+           scope="prototype">
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
         <property name="projectMetadataService" ref="directProjectMetadataServices"/>
     </bean>
 
     <bean id="projectOverviewAction"
-          class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction">
+          class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction" scope="prototype">
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
         <property name="projectMetadataService" ref="directProjectMetadataServices"/>
     </bean>
