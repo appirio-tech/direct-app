@@ -261,9 +261,24 @@ public class BillingCostReportDTO extends ReportBaseDTO {
             // set the amount
             row.getCell(14).setNumberValue((costDetail.getPaymentAmount()));
 			
-			row.getCell(15).setStringValue((costDetail.getInvoiceNumber()));
+			if (costDetail.getInvoiceNumber() == null || costDetail.getInvoiceNumber().equals(""))
+			{
+				row.getCell(15).setStringValue("-");
+			}
+			else 
+			{
+				row.getCell(15).setStringValue((costDetail.getInvoiceNumber()));
+			}
 			
-			row.getCell(16).setStringValue(dateFormatter.format(costDetail.getInvoiceDate()));
+			if (costDetail.getInvoiceDate() == null || costDetail.getInvoiceDate().equals(""))
+			{
+				row.getCell(16).setStringValue("-");
+			}
+			else 
+			{
+				row.getCell(16).setStringValue(dateFormatter.format(costDetail.getInvoiceDate()));
+			}
+			
 			
 			if (row.getCell(17) != null)
 			{
