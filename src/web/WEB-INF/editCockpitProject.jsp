@@ -156,10 +156,10 @@
 <!-- End .projectMetaArea -->
 
 <div class="projectMetaArea multiMetaArea customeMetaArea" id="editCustomProjectMetadata">
-    <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Client Project Information :</h3>
+    <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Additional Project Information :</h3>
 
     <s:if test="viewData.clientId == null">
-        <span class="customeMetaAreaWarning">Client Project Information is only available to project associated with the customer</span>
+        <span class="customeMetaAreaWarning">Additional Project Information is only available to project associated with the customer</span>
     </s:if>
     <s:else>
         <input type="hidden" name="clientId" value="${viewData.clientId}"/>
