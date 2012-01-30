@@ -114,6 +114,12 @@ $(document).ready(function() {
         $("ul.notSetUl").css('margin-top', marginTop);
     }
 
+    $(".managersBox a").each(
+        function() {
+            $(this).attr('target', '_blank');
+        }
+    );
+
     $(window).resize(function () {
         var iWidth = $('.projectDetails').width();
         var iWidth1 = $('.columeFirst').width();
