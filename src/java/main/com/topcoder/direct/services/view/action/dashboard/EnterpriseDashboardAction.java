@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
@@ -7,20 +7,15 @@ import com.topcoder.clients.model.AuditableEntity;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.*;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.EnterpriseDashboardForm;
-import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.project.ProjectData;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -53,7 +48,7 @@ import javax.servlet.http.HttpServletRequest;
  * <p>
  * Version 1.0.3 (Cockpit - Enterprise Dashboard 3 Assembly 1.0) Change notes:
  *   <ol>
- *     <li>Add the logic to get the coustomer contest status and all contest status</li>
+ *     <li>Add the logic to get the customer contest status and all contest status</li>
  *     <li>Added admin attribute.</li>
  *   </ol>
  * </p>
@@ -93,9 +88,17 @@ import javax.servlet.http.HttpServletRequest;
  *     <li>Add support for the new enterprise view - volume view</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.1 (TC Cockpit Performance Improvement Enterprise Dashboard 1 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Moved the logic for evaluating the data for <code>Enterprise Health</code> area to new 
+ *     {@link EnterpriseDashboardHealthAction} class.</li>
+ *   </ol>
+ * </p>
  * 
- * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin
- * @version 2.0
+ * @author isv, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv
+ * @version 2.1
  */
 public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
@@ -126,11 +129,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
      * <p>A <code>EnterpriseDashboardForm</code> providing the form parameters submitted by user.</p>
      */
     private EnterpriseDashboardForm formData;
-
-    /**
-     * <p>The direct projects the user has access to.</p>
-     */
-    private List<ProjectData> directProjectsData;
 
     /**
      * <p>A <code>boolean</code> providing the flag indicating if this action instance is to handle AJAX calls or
@@ -271,20 +269,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 
         // set all the project categories to view data to populate project category selection
         getViewData().setProjectCategories(projectCategories);
-
-        // Get the list of TC Direct Projects accessible to current user
-        List<ProjectData> tcDirectProjects = getDashboardDirectProjects();
-
-        List<EnterpriseDashboardProjectStatDTO> enterpriseProjectStats = new ArrayList<EnterpriseDashboardProjectStatDTO>();
-
-        if (!isAJAXCall) {
-        // Get the overall stats for user projects
-            enterpriseProjectStats
-            = DataProvider.getEnterpriseProjectStats(tcDirectProjects);
-        sortEnterpriseDashboardProjectStatDTOByName(enterpriseProjectStats);
-        }
-
-        getViewData().setProjects(enterpriseProjectStats);
 
         Map<Long, String> customers = DirectUtils.getAllClients(currentUser);
 
@@ -690,9 +674,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
                 = DataProvider.getProjectTypedContests(currentUser.getUserId(), currentProject.getId());
             this.sessionData.setCurrentProjectContests(contests);
         }
-
-        // set projects status color
-        setProjectStatusColor();
         
         // Build the result for consumption by JSON serializer in case of AJAX calls
         if (isAJAXCall) {
@@ -813,19 +794,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         setResult(result);
 
         return SUCCESS;
-    }
-
-    /**
-     * Gets the direct project the user has access to.
-     *
-     * @return the list of project data
-     * @throws Exception if any error occurs.
-     */
-    public List<ProjectData> getDashboardDirectProjects() throws Exception {
-        if(this.directProjectsData == null) {
-            this.directProjectsData = getProjects();
-        }
-        return this.directProjectsData;
     }
 
     /**
@@ -1390,46 +1358,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
         return map;
     }
 
-    private void setProjectStatusColor() throws Exception {
-        for (EnterpriseDashboardProjectStatDTO project : viewData.getProjects()) {
-            ProjectContestsListDTO contests = DataProvider.getProjectContests(
-                    getSessionData().getCurrentUserId(), project.getProject()
-                            .getId());
-            boolean hasRed = false;
-            boolean hasOrange = false;
-
-            for (ProjectContestDTO projectContest : contests.getContests()) {
-                // just call all running and scheduled contest's query
-                if (DashboardHelper.SCHEDULED.equalsIgnoreCase(projectContest
-                        .getStatus().getShortName())
-                        || DashboardHelper.RUNNING
-                                .equalsIgnoreCase(projectContest.getStatus()
-                                        .getShortName())) {
-                    ContestDashboardDTO contest = DataProvider
-                            .getContestDashboardData(projectContest
-                                    .getContest().getId(), projectContest
-                                    .getIsStudio(), true);
-
-                    DashboardHelper.setContestStatusColor(contest);
-                    if (contest.getContestStatusColor() == DashboardStatusColor.RED) {
-                        hasRed = true;
-                        break;
-                    } else if (contest.getContestStatusColor() == DashboardStatusColor.ORANGE) {
-                        hasOrange = true;
-                    }
-                }
-            }
-            if (hasRed) {
-                project.setProjectStatusColor(DashboardStatusColor.RED);
-            } else if (hasOrange) {
-                project.setProjectStatusColor(DashboardStatusColor.ORANGE);
-            } else {
-                project.setProjectStatusColor(DashboardStatusColor.GREEN);
-            }
-        }
-    }
-
-
     private void sortClientProjectByName(List<Project> projects) {
         Collections.sort(projects, new Comparator() {
 			public int compare(Object obj1, Object obj2) {
@@ -1461,23 +1389,6 @@ public class EnterpriseDashboardAction extends BaseDirectStrutsAction {
 			}
         });
     }
-
-    private void sortEnterpriseDashboardProjectStatDTOByName(List<EnterpriseDashboardProjectStatDTO> values) {
-         Collections.sort(values, new Comparator() {
-			public int compare(Object obj1, Object obj2) {
-                EnterpriseDashboardProjectStatDTO e1 = (EnterpriseDashboardProjectStatDTO) obj1;
-                EnterpriseDashboardProjectStatDTO e2 = (EnterpriseDashboardProjectStatDTO) obj2;
-
-                if(e1.getProject().getName() == null) return -1;
-                if(e2.getProject().getName() == null) return 1;
-
-				String name1 = e1.getProject().getName().trim().toLowerCase();
-				String name2 = e2.getProject().getName().trim().toLowerCase();
-				return name1.compareTo(name2);
-			}
-        });
-    }
-
 
     /**
      * Helper method to convert the key of Map<Long, String> to String, returns a Map<String, String>.

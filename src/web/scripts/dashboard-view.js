@@ -1,5 +1,13 @@
-// javascript functions for dashboard view
-
+/**
+ * The JS script for dashboard views.
+ *
+ * Version 1.1 (TC Cockpit Performance Improvement Enterprise Dashboard 1) updates
+ * - Added the logic for retrieving data for Enterprise Health area of Enterprise Dashboard view via AJAX call and
+ * - rendering the data on page.
+ *
+ * @author isv
+ * @version 1.1
+ */
 $(document).ready(function(){
     // Color the rows for projects in Enterprise Health area
     $('#enterpriseHealthTable tr:even').addClass('even');
@@ -78,6 +86,58 @@ $(document).ready(function(){
             $($options[i]).val(arrVals[i].val).text(arrVals[i].text);
         }
         $select.val(selectedVal);
+    }
+    
+    if ($("#enterpriseHealthTable").length != 0) {
+        // Load project contests health data via AJAX call
+        $.ajax({
+                   type:'get',
+                   url:'dashboardEnterpriseHealthAJAX',
+                   cache:false,
+                   dataType:'json',
+                   timeout: 100000,
+                   error:function (e) {
+                       $('#loaderEnterpriseHealth').remove();
+                       $('#enterpriseHealthTableBody').empty();
+                       $('#enterpriseHealthTableBody').html('<tr class="odd"><td valign="top" colspan="10">Failed to retrieve data</td></tr>');
+                   },
+                   success:function (jsonResult) {
+                       handleJsonResult(jsonResult,
+                                        function (result) {
+                                            $('#loaderEnterpriseHealthWrapper').remove();
+                                            $('#loaderEnterpriseHealth').remove();
+                                            $('#enterpriseHealthTableBody').empty();
+                                            var n = result.length;
+                                            for (var i = 0; i < n; i++) {
+                                                var p = result[i];
+                                                var html =
+                                                        '<tr>' +
+                                                        '<td class="first">' +
+                                                        '<a class="longWordsBreak ' + p.projectStatusColor.toLowerCase() + '"' +
+                                                        'href="projectOverview?formData.projectId=' + p.project.id +
+                                                        '">' +
+                                                        p.project.name + '</a>' +
+                                                        '</td>' +
+                                                        '<td><span class="">' +
+                                                        p.averageContestDuration.toFixed(0) + '</span></td>' +
+                                                        '<td><span class="">' +
+                                                        '$' + p.averageCostPerContest.toFixed(2) + '</span></td>' +
+                                                        '<td><span class="">' +
+                                                        '$' + p.totalProjectCost.toFixed(2) + '</span></td>' +
+                                                        '<td><span class="">' +
+                                                        p.averageFulfillment.toFixed(2) + '%</span></td>' +
+                                                        '</tr>';
+
+
+                                                $('#enterpriseHealthTableBody').append(html);
+                                            }
+                                        },
+                                        function (errorMessage) {
+                                            showServerError(errorMessage);
+                                            $("#contestLoading").hide();
+                                        });
+                   }
+               });
     }
 
     if ($("#projectHealthTable").length != 0) {

@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, tangzx, flexme, Veve, GreatKevin
+  - Author: isv, tangzx, flexme, Veve, GreatKevin, isv
   -
-  - Version: 1.0.2 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
+  - Version: 2.1 (Cockpit Enterprise Dashboard 2 Assembly 1.0)
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the Enterprise Dashboard view.
@@ -20,6 +20,9 @@
   -
   - Version 2.0 - Release Assembly - TC Cockpit Enterprise Dashboard Volume View Assembly Change Note
   - Add the volume view.
+  -
+  - Version 2.1 - Release Assembly - TC Cockpit Performance Improvement Enterprise Dashboard 1 Assembly Change Note
+  - Updated Enterprise Health area to load the data via AJAX call.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -188,7 +191,7 @@
                                             <table cellpadding="0" cellspacing="0" id="enterpriseHealthTable">
                                                 <colgroup>
                                                     <col/>
-                                                    <col width="17%"/>
+                                                    <col width="18%"/>
                                                     <col width="17%"/>
                                                     <col width="17%"/>
                                                     <col width="17%"/>
@@ -200,28 +203,15 @@
                                                     <th>Total Project Cost</th>
                                                     <th>Average Fulfillment</th>
                                                 </tr>
-                                                <tbody>
-                                                <c:forEach items="${viewData.projects}" var="project">
-                                                    <tr>
-                                                        <td class="first">
-                                                            <a class="longWordsBreak ${project.projectStatusColor.name}"
-                                                               href="projectOverview?formData.projectId=${project.project.id}">
-                                                                <c:out value="${project.project.name}"/></a>
-                                                        </td>
-                                                        <td><span class="">
-                                                        <fmt:formatNumber value="${project.averageContestDuration}"
-                                                                          pattern="##0.##"/></span></td>
-                                                        <td><span class="">
-                                                        <fmt:formatNumber value="${project.averageCostPerContest}"
-                                                                          pattern="$#,##0.00"/></span></td>
-                                                        <td><span class="">
-                                                        <fmt:formatNumber value="${project.totalProjectCost}"
-                                                                          pattern="$#,##0.00"/></span></td>
-                                                        <td><span class="">
-                                                        <fmt:formatNumber value="${project.averageFulfillment}"
-                                                                          pattern="##0.##"/>%</span></td>
-                                                    </tr>
-                                                </c:forEach>
+                                                <tbody id="enterpriseHealthTableBody">
+                                                <tr id="loaderEnterpriseHealthWrapper">
+                                                    <td colspan="10">
+                                                        <div id="loaderEnterpriseHealth">
+                                                            &nbsp;<img src="/images/ajax-loader.gif" alt="Loading"
+                                                                       width="220" height="19"/>&nbsp;
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>

@@ -1,14 +1,11 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,16 +38,17 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.0.4 (TC Cockpit Performance Improvement Enterprise Dashboard 1 Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Removed <code>projects</code> property.</li>
+ *   </ol>
+ * </p>
  *
- * @author isv xjtufreeman, Veve
- * @version 1.0.3 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1)
+ * @author isv xjtufreeman, Veve, isv
+ * @version 1.0.4 (Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1)
  */
 public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
-
-    /**
-     * <p>A <code>List</code> providing the statistics for projects associated to current user.</p>
-     */
-    private List<EnterpriseDashboardProjectStatDTO> projects;
 
     /**
      * <p>A <code>Map</code> providing the mapping from project category IDs to names.</p>
@@ -161,24 +159,6 @@ public class EnterpriseDashboardDTO extends CommonDTO implements Serializable {
      */
     public void setMarketSummary(EnterpriseDashboardSummary marketSummary) {
         this.marketSummary = marketSummary;
-    }
-
-    /**
-     * <p>Gets the statistics for projects associated to current user.</p>
-     *
-     * @return a <code>List</code> providing the statistics for projects associated to current user.
-     */
-    public List<EnterpriseDashboardProjectStatDTO> getProjects() {
-        return this.projects;
-    }
-
-    /**
-     * <p>Sets the statistics for projects associated to current user.</p>
-     *
-     * @param projects a <code>List</code> providing the statistics for projects associated to current user.
-     */
-    public void setProjects(List<EnterpriseDashboardProjectStatDTO> projects) {
-        this.projects = projects;
     }
 
     /**

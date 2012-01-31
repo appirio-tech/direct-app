@@ -20,7 +20,7 @@
     padding-right:17px;   
 }
 .dashboardTableBody{
-    overflow-y:scroll;
+    overflow-y:auto;
     height:140px;
 }
 .dashboardTable dt{
@@ -526,4 +526,18 @@ TABLE.project TBODY TD a.longWordsBreak:hover{
 
 #projectHealthTableBody tr {
     height: 39px;
+}
+
+#loaderEnterpriseHealthWrapper td {
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    height: 125px;
+}
+
+#loaderEnterpriseHealth {
+    float: left;
+    text-align: center;
+    width: 100%;
+    line-height: 113px;
 }

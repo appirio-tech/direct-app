@@ -176,6 +176,11 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
+        <action name="dashboardEnterpriseHealthAJAX" class="enterpriseDashboardHealthAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
         <action name="dashboardGetOptionsForClientAJAX" method="getOptionsForClient" class="ajaxEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
