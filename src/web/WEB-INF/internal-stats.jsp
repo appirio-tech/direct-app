@@ -35,8 +35,21 @@
                         <h2 class="title">
 						Internal Stats
 						</h2>
-                    </div><!-- End .areaHeader -->					                  
-                        <div class="container2 resultTableContainer" id="resultsContainer">
+                    </div><!-- End .areaHeader -->	
+                    <c:if test="${fn:length(sheetTabs) gt 1}">
+                    <div id="tabs3">
+					        <ul>
+						        <c:set var="perWidth" value="${100 / fn:length(sheetTabs)}"/>
+						        <c:forEach var="tab" items="${sheetTabs}" varStatus="vs">
+					            <li class="<c:if test="${vs.index eq 0}">firstItem</c:if> <c:if test="${vs.index eq fn:length(sheetTabs) - 1}">lastItem</c:if> <c:if test="${sheetIndex eq vs.index}">on</c:if>" <c:if test="${vs.index != (fn:length(sheetTabs) - 1)}">style="width:${perWidth}%"</c:if>>
+					                    <a href="<s:url action="internalStats" namespace="/"></s:url>?sheetIndex=${vs.index}" class="<c:if test="${vs.index eq 0}">first</c:if> <c:if test="${vs.index eq fn:length(sheetTabs) - 1}">last</c:if>">
+					                    <span class="left"><span class="right">${tab}</span></span></a>
+					            </li>
+                                </c:forEach>
+					         </ul>
+					</div>
+					</c:if>
+                        <div class="container2 resultTableContainer" id="resultsContainer" style="border-bottom:1px solid #A8ABAD;">
                             <div class="statsTable">
                                  ${tableData}
                             </div>

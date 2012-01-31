@@ -14,11 +14,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -41,6 +39,8 @@ public class ToHtml {
     private int firstColumn;
     private int endColumn;
     private HtmlHelper helper;
+    private boolean generateAllSheets = false;
+    private int sheetIndex;
 
     private static final String DEFAULTS_CLASS = "excelDefaults";
 
@@ -137,11 +137,30 @@ public class ToHtml {
                     "unknown workbook type: " + wb.getClass().getSimpleName());
     }
 
-    public static String generateStatsPage(String excelFile)  throws Exception {
+    public static String generateStatsPage(int sheetIndex, String excelFile, List<String> tabs)  throws Exception {
+
+        StringBuilder strBuf = new StringBuilder();
+        ToHtml toHtml = create(excelFile, strBuf);
+        toHtml.sheetIndex = sheetIndex;
+        toHtml.setCompleteHTML(false);
+        toHtml.printPage();
+        
+        for (int i = 0; i < toHtml.wb.getNumberOfSheets(); i++) {
+            Sheet sheet =toHtml.wb.getSheetAt(i); 
+            if (sheet.rowIterator().hasNext()) {
+                tabs.add(sheet.getSheetName());
+            }
+        }
+
+        return strBuf.toString();
+    }
+    
+    public static String generateStatsPageForAllSheets(String excelFile)  throws Exception {
 
         StringBuilder strBuf = new StringBuilder();
         ToHtml toHtml = create(excelFile, strBuf);
         toHtml.setCompleteHTML(false);
+        toHtml.setGenerateAllSheets(true);
         toHtml.printPage();
 
         return strBuf.toString();
@@ -222,25 +241,42 @@ public class ToHtml {
         }
 
         // now add css for each used style
-        Set<CellStyle> seen = new HashSet<CellStyle>();
+        Set<String> seen = new HashSet<String>();
         for (int i = 0; i < wb.getNumberOfSheets(); i++) {
             Sheet sheet = wb.getSheetAt(i);
             Iterator<Row> rows = sheet.rowIterator();
+            gotBounds = false;
+            ensureColumnBounds(sheet);
+            
             while (rows.hasNext()) {
                 Row row = rows.next();
-                for (Cell cell : row) {
-                    CellStyle style = cell.getCellStyle();
-                    if (!seen.contains(style)) {
-                        printStyle(style);
-                        seen.add(style);
+                
+                for (int col = firstColumn; col < endColumn; col++) {
+                    if (col >= row.getFirstCellNum() && col < row.getLastCellNum()) {
+                        Cell cell = row.getCell(col);
+                        if (cell != null) {
+                            CellStyle style = cell.getCellStyle();
+                            String styleName = styleName(i, style);
+                            if (!seen.contains(styleName)) {
+                                printStyle(i, style);
+                                seen.add(styleName);
+                            }
+                        }
                     }
                 }
             }
         }
+        
+        CellStyle style = wb.getCellStyleAt((short) 0);
+        String styleName = styleName(0, style);
+        if (!seen.contains(styleName)) {
+            printStyle(0, style);
+            seen.add(styleName);
+        }
     }
 
-    private void printStyle(CellStyle style) {
-        out.format(".%s .%s {%n", DEFAULTS_CLASS, styleName(style));
+    private void printStyle(int sheetIndex, CellStyle style) {
+        out.format(".%s .%s {%n", DEFAULTS_CLASS, styleName(sheetIndex, style));
         styleContents(style);
         out.format("}%n");
     }
@@ -278,12 +314,16 @@ public class ToHtml {
         // Font color is handled with the other colors
     }
 
-    private String styleName(CellStyle style) {
+    private String styleName(int sheetIndex, CellStyle style) {
         if (style == null)
             style = wb.getCellStyleAt((short) 0);
         StringBuilder sb = new StringBuilder();
         Formatter fmt = new Formatter(sb);
-        fmt.format("style_%02x", style.getIndex());
+        if (style.getIndex() > 0) {
+            fmt.format("style_%02x_%02x", sheetIndex, style.getIndex());
+        } else {
+            fmt.format("style_%02x", style.getIndex());
+        }
         return fmt.toString();
     }
 
@@ -303,16 +343,26 @@ public class ToHtml {
 
     private void printSheets() {
         ensureOut();
-        Sheet sheet = wb.getSheetAt(0);
-        printSheet(sheet);
+        
+        if (generateAllSheets) {
+            for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+                gotBounds = false;
+                Sheet sheet = wb.getSheetAt(i);
+                printSheet(i, sheet);
+            }
+        } else {
+            gotBounds = false;
+            Sheet sheet = wb.getSheetAt(sheetIndex);
+            printSheet(sheetIndex, sheet);
+        }
     }
 
-    public void printSheet(Sheet sheet) {
+    public void printSheet(int sheetIndex, Sheet sheet) {
         ensureOut();
-        out.format("<table class=%s>%n", DEFAULTS_CLASS);
+        out.format("<div id='sheet_%s'><table class=%s>%n", sheetIndex, DEFAULTS_CLASS);
         printCols(sheet);
-        printSheetContent(sheet);
-        out.format("</table>%n");
+        printSheetContent(sheetIndex, sheet);
+        out.format("</table></div>%n");
     }
 
     private void printCols(Sheet sheet) {
@@ -341,18 +391,14 @@ public class ToHtml {
         gotBounds = true;
     }
 
-    private void printSheetContent(Sheet sheet) {
+    private void printSheetContent(int sheetIndex, Sheet sheet) {
         out.format("<tbody>%n");
         Iterator<Row> rows = sheet.rowIterator();
         while (rows.hasNext()) {
             Row row = rows.next();
 
-            if (row.getRowNum() <= 1) {
-                out.format("  <tr class='header'>%n");
-            }  else {
-                out.format("  <tr>%n");
-            }
-
+            StringBuffer sb = new StringBuffer();
+            boolean empty = true;
             for (int i = firstColumn; i < endColumn; i++) {
                 String content = "&nbsp;";
                 String attrs = "";
@@ -363,6 +409,7 @@ public class ToHtml {
                     if (cell != null) {
                         style = cell.getCellStyle();
                         attrs = tagStyle(cell, style);
+
                         //Set the value that is rendered for the cell
                         //also applies the format
                         CellFormat cf = CellFormat.getInstance(
@@ -393,10 +440,21 @@ public class ToHtml {
                             content = "&nbsp;";
                     }
                 }
-                out.format("    <td class=%s %s>%s</td>%n", styleName(style),
-                        attrs, content);
+                if (!content.equals("&nbsp;")) {
+                    empty = false;
+                }
+                sb.append("    <td class=").append(styleName(sheetIndex, style)).append(" ").append(attrs).append(">").append(content).append("</td>\n");
             }
-            out.format("  </tr>%n");
+            
+            if (!empty) {
+                if (row.getRowNum() <= 1) {
+                    out.format("  <tr class='header'>%n");
+                }  else {
+                    out.format("  <tr>%n");
+                }
+                out.format("%s%n", sb.toString());
+                out.format("  </tr>%n");
+            }
         }
         out.format("</tbody>%n");
     }
@@ -416,5 +474,9 @@ public class ToHtml {
             }
         }
         return "";
+    }
+    
+    void setGenerateAllSheets(boolean generateAllSheets) {
+        this.generateAllSheets = generateAllSheets;
     }
 }

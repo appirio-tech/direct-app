@@ -3,28 +3,11 @@
  */
 package com.topcoder.direct.services.view.action.stats;
 
-import com.topcoder.direct.services.view.action.AbstractAction;
-import com.topcoder.direct.services.view.action.FormAction;
-import com.topcoder.direct.services.view.action.ForwardAction;
-import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.form.ProjectIdForm;
-import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.SessionData;
-import com.topcoder.direct.services.view.util.excel2html.ToHtml;
-import com.topcoder.security.TCSubject;
-import com.topcoder.service.gameplan.GamePlanService;
-import com.topcoder.service.util.gameplan.SoftwareProjectData;
-import com.topcoder.service.util.gameplan.StudioProjectData;
-import com.topcoder.service.util.gameplan.TCDirectProjectGamePlanData;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.topcoder.direct.services.view.action.ForwardAction;
+import com.topcoder.direct.services.view.util.excel2html.ToHtml;
 
 /**
  * <p>A <code>Struts</code> action to be used for generating the internal stats page from an excel file. This action will return the raw HTML data in plain text.</p>
@@ -44,12 +27,14 @@ public class InternalStatsAction extends ForwardAction {
     private String excelFile;
 
     /**
-     * Set the path to excel file
-     * @param excelFile  the path to excel file
+     * Represents the index of sheet to display.
      */
-    public void setExcelFile(String excelFile) {
-        this.excelFile = excelFile;
-    }
+    private int sheetIndex;
+    
+    /**
+     * Represents the name of sheets in the excel.
+     */
+    private List<String> sheetTabs;
 
     /**
      * Represents the generated table data to embed.
@@ -57,12 +42,48 @@ public class InternalStatsAction extends ForwardAction {
     private String tableData;
 
     /**
+     * Gets the index of sheet to display.
+     * 
+     * @return the sheetIndex the index of sheet to display.
+     */
+    public int getSheetIndex() {
+        return sheetIndex;
+    }
+    
+    /**
+     * Sets the index of sheet to display.
+     * 
+     * @param sheetIndex the index of sheet to display.
+     */
+    public void setSheetIndex(int sheetIndex) {
+        this.sheetIndex = sheetIndex;
+    }
+    
+    /**
+     * Gets the name of sheets in the excel.
+     * 
+     * @return the sheetTabs the name of sheets in the excel.
+     */
+    public List<String> getSheetTabs() {
+        return sheetTabs;
+    }
+    
+    /**
+     * Set the path to excel file
+     * @param excelFile  the path to excel file
+     */
+    public void setExcelFile(String excelFile) {
+        this.excelFile = excelFile;
+    }
+    
+    /**
      * Returns the table data generated.
      * @return the table data generated.
      */
     public String getTableData() {
         return tableData;
     }
+    
     /**
      * Generate the internal stats page from excel file.
      *
@@ -70,7 +91,8 @@ public class InternalStatsAction extends ForwardAction {
      * @throws Exception if any error occurs.
      */
     public String execute() throws Exception {
-        tableData = ToHtml.generateStatsPage(this.excelFile);
+        sheetTabs = new ArrayList<String>();
+        tableData = ToHtml.generateStatsPage(sheetIndex, excelFile, sheetTabs);
 
         return SUCCESS;
     }

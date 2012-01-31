@@ -25,8 +25,12 @@ public class XSSFHtmlHelper implements HtmlHelper {
 
     public void colorStyles(CellStyle style, Formatter out) {
         XSSFCellStyle cs = (XSSFCellStyle) style;
-        styleColor(out, "background-color", cs.getFillForegroundXSSFColor());
-        styleColor(out, "text-color", cs.getFont().getXSSFColor());
+        try {
+            styleColor(out, "background-color", cs.getFillForegroundXSSFColor());
+            styleColor(out, "text-color", cs.getFont().getXSSFColor());
+        } catch (Exception e) {
+            
+        }
     }
 
     private void styleColor(Formatter out, String attr, XSSFColor color) {

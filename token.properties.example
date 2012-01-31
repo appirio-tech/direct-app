@@ -299,3 +299,5 @@
 @ApplicationServer.TRANS_FACTORY@=javax.transaction.UserTransaction
 @ApplicationServer.TRANS_MANAGER@=java:/TransactionManager
 @ApplicationServer.SECURITY_CONTEXT_FACTORY@=org.jnp.interfaces.NamingContextFactory
+
+@excelFile@=/Users/macbookpro/Downloads/Revenue_sample.xlsx
