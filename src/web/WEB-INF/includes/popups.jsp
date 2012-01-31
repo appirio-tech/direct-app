@@ -371,7 +371,7 @@
         </div>
     </div>
         <!-- end copilot manage modal -->
-        <s:if test='%{#request.CURRENT_TAB  == "overview"}'>
+        <s:if test='%{#request.CURRENT_TAB  == "overview" && #request.PAGE_TYPE  == "project"}'>
             <div id="projectDescModal" class="outLay">
                 <div class="inner">
                     <div class="modalHeader">
