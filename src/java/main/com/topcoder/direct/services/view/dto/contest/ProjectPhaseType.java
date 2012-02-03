@@ -14,87 +14,108 @@ public enum ProjectPhaseType {
     /**
      * The specification submission type.
      */
-    SPECIFICATION_SUBMISSION(13, "specSub", "Spec Sub"),
+    SPECIFICATION_SUBMISSION(13, "specSub", "Spec Sub", 1),
     
     /**
      * The specification review type.
      */
-    SPECIFICATION_REVIEW(14, "specReview", "Spec Review"),
+    SPECIFICATION_REVIEW(14, "specReview", "Spec Review", 2),
     
     /**
      * The software registration type.
      */
-    REGISTRATION(1, "registration", "Registration"),
+    REGISTRATION(1, "registration", "Registration", 3),
     
     /**
      * The submission type.
      */
-    SUBMISSION(2, "submission", "Submission"),
+    SUBMISSION(2, "submission", "Submission", 7),
     
     /**
      * The screening type.
      */
-    SCREENING(3, "screening", "Screening"),
+    SCREENING(3, "screening", "Screening", 8),
     
     /**
      * The review type.
      */
-    REVIEW(4, "review", "Review"),
+    REVIEW(4, "review", "Review", 9),
     
     /**
      * The appeals type.
      */
-    APPEALS(5, "appeals", "Appeals"),
+    APPEALS(5, "appeals", "Appeals", 10),
     
     /**
      * The appeal response type.
      */
-    APPEALS_RESPONSE(6, "appealsRes", "Appeals Res"),
+    APPEALS_RESPONSE(6, "appealsRes", "Appeals Res", 16),
     
     /**
      * The aggregation type.
      */
-    AGGREGATION(7, "aggregation", "Aggr"),
+    AGGREGATION(7, "aggregation", "Aggr", 17),
     
     /**
      * The aggregation review type.
      */
-    AGGREGATION_REVIEW(8, "aggregationReview", "Aggr Review"),
+    AGGREGATION_REVIEW(8, "aggregationReview", "Aggr Review", 13),
     
     /**
      * The final fix type.
      */
-    FINAL_FIX(9, "finalFix", "Final Fix"),
+    FINAL_FIX(9, "finalFix", "Final Fix", 18),
     
     /**
      * The final review type.
      */
-    FINAL_REVIEW(10, "finalReview", "Final Review"),
+    FINAL_REVIEW(10, "finalReview", "Final Review", 19),
     
     /**
      * The approval type.
      */
-    APPROVAL(11, "approval", "Approval"),
+    APPROVAL(11, "approval", "Approval", 20),
     
     /**
      * The post moterm type.
      */
-    POST_MOTERM(12, "postMoterm", "Post Moterm"),
+    POST_MOTERM(12, "postMoterm", "Post Moterm", 21),
     
     /**
      * The milestone submission type.
      */
-    MILESTONE_SUBMISSION(15, "milestoneSubmission", "Milestone Submission"),
+    MILESTONE_SUBMISSION(15, "milestoneSubmission", "Milestone Submission", 4),
     
     /**
      * The milestone submission type.
      */
-    MILESTONE_SCREENING(16, "milestoneScreening", "Milestone Screening"),
+    MILESTONE_SCREENING(16, "milestoneScreening", "Milestone Screening", 5),
     
     /**
      * The milestone submission type.
      */
-    MILESTONE_REVIEW(17, "milestoneReview", "Milestone Review");
+    MILESTONE_REVIEW(17, "milestoneReview", "Milestone Review", 6),
+
+    /**
+     * The secondary Reviewer Review phase.
+     */
+    SECONDARY_REVIEW(18, "secondaryReview", "Secondary Review", 12),
+
+    /**
+     * The primary review evaluation phase.
+     */
+    PRIMARY_REVIEW_EVALUATION(19, "primaryReviewEvaluation", "Primary Review Evaluation", 13),
+
+    /**
+     * The new appeals phase.
+     */
+    NEW_APPEALS(20, "newAppeals", "New Appeals", 14),
+
+
+    /**
+     * The new appeals response phase.
+     */
+    PRIMARY_APPEALS_RESPONSE(21, "primaryAppealsResponse", "Primary Appeals Response", 15);
     
     /**
      * The phase type id.
@@ -111,6 +132,8 @@ public enum ProjectPhaseType {
      */
     private String shortName;
     
+    private int order;
+    
     /**
      * The constructor.
      * 
@@ -118,10 +141,11 @@ public enum ProjectPhaseType {
      * @param clazz the html class
      * @param sName the short name
      */
-    private ProjectPhaseType(int id, String clazz, String sName) {
+    private ProjectPhaseType(int id, String clazz, String sName, int order) {
         phaseTypeId = id;
         htmlClass = clazz;
         shortName = sName;
+        this.order = order;
     }
     
     /**
@@ -165,5 +189,9 @@ public enum ProjectPhaseType {
      */
     public String getShortName() {
         return shortName;
+    }
+    
+    public int getOrder() {
+        return order;
     }
 }

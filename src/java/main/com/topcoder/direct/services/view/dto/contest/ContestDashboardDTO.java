@@ -138,6 +138,7 @@ public class ContestDashboardDTO extends ContestHealthDTO implements Serializabl
      * </p>
      */
     public ContestDashboardDTO() {
+
     }
 
     /**

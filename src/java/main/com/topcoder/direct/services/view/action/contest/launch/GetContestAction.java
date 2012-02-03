@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -309,6 +310,8 @@ public class GetContestAction extends ContestAction {
             getViewData().getContestStats().getIssues().getUnresolvedIssuesNumber());
         DashboardHelper.setContestStatusColor(getViewData().getDashboard());
 
+        getViewData().getDashboard().setAllPhases(sortContestPhases(getViewData().getDashboard().getAllPhases()));
+
         if (softwareCompetition.getProjectHeader().getProjectCategory().getId() == 29) {
             // set project
             Project project = getProjectServices().getProject(projectId);
@@ -599,4 +602,52 @@ public class GetContestAction extends ContestAction {
     public static enum TYPE {
         COPILOT_CONTEST, CONTEST, CONTEST_JSON
     }
+
+    private static List<ProjectPhaseDTO> sortContestPhases(List<ProjectPhaseDTO> phases) {
+        List<ProjectPhaseDTO> specPart = new ArrayList<ProjectPhaseDTO>();
+        List<ProjectPhaseDTO> reviewPart = new ArrayList<ProjectPhaseDTO>();
+        List<ProjectPhaseDTO> finalPart = new ArrayList<ProjectPhaseDTO>();
+        
+        for(ProjectPhaseDTO p : phases) {
+            if(p.getPhaseType().getOrder() <= ProjectPhaseType.SPECIFICATION_REVIEW.getOrder()) {
+                specPart.add(p);
+            } else if (p.getPhaseType().getOrder() >= ProjectPhaseType.FINAL_FIX.getOrder()) {
+                finalPart.add(p);
+            } else {
+                reviewPart.add(p);
+            }
+        }
+
+        StartDateComparator sc = new StartDateComparator();
+        PhaseOrderComparator pc = new PhaseOrderComparator();
+        Collections.sort(specPart, sc);
+        Collections.sort(finalPart, sc);
+        Collections.sort(reviewPart, pc);
+
+        specPart.addAll(reviewPart);
+        specPart.addAll(finalPart);
+        
+//        for(ProjectPhaseDTO p : specPart) {
+//            System.out.println("start date:" + p.getStartTime() + " phase name:" + p.getPhaseType().getShortName() + " phase order:" + p.getPhaseType().getOrder());
+//        }
+
+        return specPart;
+
+    }
+
+    private static class StartDateComparator implements Comparator<ProjectPhaseDTO>{
+
+        public int compare(ProjectPhaseDTO o1, ProjectPhaseDTO o2) {
+            return o1.getStartTime().compareTo(o2.getStartTime());
+        }
+    }
+
+    private static class PhaseOrderComparator implements Comparator<ProjectPhaseDTO>{
+
+            public int compare(ProjectPhaseDTO p1, ProjectPhaseDTO p2) {
+                int o1 = p1.getPhaseType().getOrder();
+                int o2 = p2.getPhaseType().getOrder();
+                return (o1>o2 ? 1 : (o1==o2 ? 0 : -1));
+            }
+        }
 }
