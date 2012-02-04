@@ -18,15 +18,12 @@ import com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestA
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.project.*;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
-import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.permission.ProjectPermission;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
 
@@ -52,9 +49,16 @@ import java.util.*;
  *     Version 1.2 updates:
  *     -  change call of contest service facade #updateProjectPermissions to permission service facade #updateProjectPermissions
  * </p>
+ * <p>
+ * Version 1.3 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part Two) change notes:
+ *   <ol>
+ *       <li>Updated {@link #executeAction()} method to call newly added method for creating TC Direct project via
+ *       Project Service Facade.</li>
+ *   </ol>
+ * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.2 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One)
+ * @author Veve, isv
+ * @version 1.3 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One)
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
@@ -293,47 +297,12 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         projectData.setDescription(getProjectDescription());
 
         // delegate to ProjectServiceFacade to create the project.
-        projectData = projectServiceFacade.createProject(currentUser, projectData);
+        projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions());
 
         // put data into result
         result.put("projectName", projectData.getName());
         result.put("projectId", String.valueOf(projectData.getProjectId()));
 
-        if (getPermissions() != null) {
-
-            List<ProjectPermission> permissionsToAdd = new ArrayList<ProjectPermission>();
-
-            // add project permission
-            for (ProjectPermission p : getPermissions()) {
-
-                p.setProjectId(projectData.getProjectId());
-                p.setProjectName(projectData.getName());
-                p.setStudio(false);
-                p.setUserPermissionId(-1); // always new permission
-
-                // do not add permission for current user who creates the new project
-                if (p.getUserId() != currentUser.getUserId()) {
-                    permissionsToAdd.add(p);
-                }
-            }
-
-            ContestServiceFacade contestServiceFacade = getContestServiceFacade();
-
-            if (null == contestServiceFacade) {
-                throw new IllegalStateException("The contest service facade is not initialized");
-            }
-
-            if (null == getPermissionServiceFacade()) {
-            	  throw new IllegalStateException("The permission service facade is not initialized");
-            }
-
-            if (permissionsToAdd.size() > 0) {
-                // update when the there is at least 1 permission
-                getPermissionServiceFacade().updateProjectPermissions(currentUser, permissionsToAdd, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
-            }
-
-        }
-        
         if (!isCreateCopilotPosting()) {
             // check whether has copilots to add
             if (getCopilotIds() != null && getCopilotIds().length > 0) {

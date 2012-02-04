@@ -488,6 +488,7 @@
                 <include name="hibernate.cfg.xml" />
                 <include name="ContestCapacity.xml" />
                 <include name="ContestServiceFacade.xml" />
+                <include name="ProjectServiceFacade.xml" />
                 <include name="PermissionServiceFacade.xml" />
                 <include name="SpecReviewCommentService.xml" />
                 <include name="SpecReviewService.xml" />

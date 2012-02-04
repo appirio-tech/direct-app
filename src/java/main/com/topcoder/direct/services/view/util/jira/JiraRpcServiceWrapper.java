@@ -77,17 +77,17 @@ public class JiraRpcServiceWrapper {
     private static void initializeSoapSession() throws Exception {
 
         // Get configurations
-		String jiraServiceUrl = ConfigUtils.getIssueTrackingConfig().getJiraRpcURL();
+        String jiraServiceUrl = ConfigUtils.getIssueTrackingConfig().getJiraRpcURL();
         String user = ConfigUtils.getIssueTrackingConfig().getUser();
         String password = ConfigUtils.getIssueTrackingConfig().getPassword();
 
-		// create a soap session from the configured tc jira service soap url
-		soapSession = new SOAPSession(new URL(jiraServiceUrl));
-		soapSession.connect(user, password);
+        // create a soap session from the configured tc jira service soap url
+        soapSession = new SOAPSession(new URL(jiraServiceUrl));
+        soapSession.connect(user, password);
 
-		// the JIRA SOAP Service and authentication token are used to make authentication calls
-		JiraSoapService jiraSoapService = soapSession.getJiraSoapService();
-		String authToken = soapSession.getAuthenticationToken();
+        // the JIRA SOAP Service and authentication token are used to make authentication calls
+        JiraSoapService jiraSoapService = soapSession.getJiraSoapService();
+        String authToken = soapSession.getAuthenticationToken();
 
         // initialize mappings of resolution names if needed
         if (RESOLUTION_NAMES == null) {
@@ -111,7 +111,7 @@ public class JiraRpcServiceWrapper {
 
     /**
      * <p>Create a new JIRA issue.</p>
-     *  
+     *
      * @param project the JIRA project the new issue belongs to.
      * @param issueTypeId the type id of the new created issue.
      * @param summary the summary of the issue.
@@ -124,7 +124,7 @@ public class JiraRpcServiceWrapper {
         if (soapSession == null) {
             initializeSoapSession();
         }
-        
+
         JiraSoapService service = soapSession.getJiraSoapService();
         String token = soapSession.getAuthenticationToken();
         RemoteIssue issue = new RemoteIssue();
@@ -135,7 +135,7 @@ public class JiraRpcServiceWrapper {
         issue.setReporter(reporter);
         service.createIssue(token, issue);
     }
-    
+
     /**
      * Gets all the issues for specified contest id.
      *
@@ -146,6 +146,11 @@ public class JiraRpcServiceWrapper {
     public static List<TcJiraIssue> getIssuesForContest(long contestId) throws Exception {
 
         long time = System.currentTimeMillis();
+
+
+        if(true) {
+            return new ArrayList<TcJiraIssue>();
+        }
 
         // throw IllegalArgumentException when the contest id is not positive
         if (contestId <= 0 ) {
@@ -211,13 +216,13 @@ public class JiraRpcServiceWrapper {
         final List<TcJiraIssue> result = new ArrayList<TcJiraIssue>();
 
         try {
-            
+
             // if soap session is not established, initialize a soap session first
             if (soapSession == null) {
                 initializeSoapSession();
             }
 
-            
+
             JiraSoapService service = soapSession.getJiraSoapService();
             String token = soapSession.getAuthenticationToken();
 

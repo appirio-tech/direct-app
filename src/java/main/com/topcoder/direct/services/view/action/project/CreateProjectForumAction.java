@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
@@ -22,8 +22,16 @@ import java.util.Map;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part Two) change notes:
+ *    <ol>
+ *        <li>Using <code>Project Service Facade</code> instead of <code>Contest Service Facade</code> for creating
+ *        project forums.</li>
+ *    </ol>  
+ * </p>
+ *
  * @author GreatKevin, isv
- * @version 1.1
+ * @version 1.2
  */
 public class CreateProjectForumAction extends BaseDirectStrutsAction {
 
@@ -95,15 +103,9 @@ public class CreateProjectForumAction extends BaseDirectStrutsAction {
         if (hasWritePermission) {
             // Create project forums
             logger.debug("Calling Forums EJB for creating the forum for project " + getTcDirectProjectId());
-            long forumId = getContestServiceFacade().createTopCoderDirectProjectForum(currentUser,
+            long forumId = getProjectServiceFacade().createTopCoderDirectProjectForum(currentUser,
                                                                                       projectData.getProjectId(), null);
-
-            // use direct project id as forum id to test
-            projectData.setForumCategoryId(String.valueOf(forumId));
-
-            getProjectServiceFacade().updateProject(currentUser, projectData);
-
-            result.put("projectForumId", projectData.getForumCategoryId());
+            result.put("projectForumId", forumId);
         } else {
             logger.error("User does not have write permission for project " + getTcDirectProjectId());
             throw new Exception("You don't have permission to create project forum.");
