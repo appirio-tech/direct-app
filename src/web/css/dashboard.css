@@ -34,6 +34,9 @@
  *
  * - (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) updates:
  * - Add css styles for reports filter panel
+ 
+ * - (Module Assembly - TopCoder Studio and Cockpit Download All Submissions Feature) updates:
+ * - Add css styles for DOWNLOAD ALL button
  */
 
 
@@ -3689,18 +3692,22 @@ margin:0 0 0 17px!important;  background:url(../images/prize_extra.png) no-repea
 	SUBMISSION GRID
 --------------------------*/
 
-.SubmissionSlotTitle{
-	float:left;
-	margin: 15px 0 0 20px;
+.SubmissionSlotTitle {
+    margin: 15px 22px 0 20px;
+    display: block;
 }
 
-.SubmissionSlotTitle h3{
-	font-size: 18px;
-	font-weight: normal;
+.SubmissionSlotTitle div.left {
+    float: left;
 }
 
-h3.red{
-	color: #cf0b0f;
+.SubmissionSlotTitle h3 {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+h3.red {
+    color: #cf0b0f;
 }
 
 a.toggleViewList{
@@ -8104,4 +8111,44 @@ TABLE.pipelineStats TH.tableTitle span {
 #billingCostDetails .wrapContent {
     display:table-cell;
     text-align:left
+}
+
+.SubmissionSlotTitle div.right {
+    float: right;
+    padding-top: 3px;
+}
+
+.SubmissionSlotTitle div.right A.downloadAllbtn span {
+    width: 102px;
+    text-align: center;
+    padding: 0;
+}
+
+a.downloadAllbtn {
+    display: inline-block;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 23px;
+    font-weight: bold;
+    color: #FFFFFE;
+    text-decoration: none;
+    padding: 0 0 0 27px;
+    background: url(../images/DownloadAllbtn_Left.png) no-repeat left top;
+}
+
+a.downloadAllbtn span {
+    float: left;
+    cursor: pointer;
+    height: 23px;
+    line-height: 23px;
+    padding: 0 10px;
+    background: url(../images/DownloadAllbtn_Right.png) no-repeat right top;
+}
+
+a.downloadAllbtn:hover {
+    background: url(../images/DownloadAllbtn_Left.png) no-repeat left -23px;
+}
+
+a.downloadAllbtn:hover span {
+    background: url(../images/DownloadAllbtn_Right.png) no-repeat right -23px;
 }
