@@ -307,7 +307,7 @@ $(document).ready(function(){
             for (var i = 0; i < number; i++) {
                 if (!bankData || !bankData[arrPrize[i]]) {
                     
-                    showErrors.html("Prize slots must be filled.");
+                    showErrors("Prize slots must be filled.");
                     return false;
                     
                 } else {
