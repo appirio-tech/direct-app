@@ -35,7 +35,7 @@ import com.topcoder.service.project.SoftwareCompetition;
  * A <code>Struts</code> action to be used for handling requests for checkout a list of submissions for
  * <code>Studio</code> contest.
  * </p>
- * 
+ *
  * <p>
  *   Version 1.1 (TC Direct Replatforming Release 3) change notes:
  *   <ul>
@@ -99,7 +99,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
      * <p>
      * Gets the form data.
      * </p>
-     * 
+     *
      * @return an <code>StudioContestSubmissionsForm</code> providing the data for form submitted by user..
      */
     public StudioContestSubmissionsForm getFormData() {
@@ -110,7 +110,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
      * <p>
      * Gets the current session associated with the incoming request from client.
      * </p>
-     * 
+     *
      * @return a <code>SessionData</code> providing access to current session.
      */
     public SessionData getSessionData() {
@@ -139,7 +139,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
      * <p>
      * Gets the data to be displayed by view mapped to this action.
      * </p>
-     * 
+     *
      * @return a <code>StudioContestSubmissionsDTO</code> providing the collector for data to be rendered by the view
      *         mapped to this action.
      */
@@ -152,7 +152,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
      * Handles the incoming request. Retrieves the list of submissions for requested contest and binds it to view data
      * along with other necessary details.
      * </p>
-     * 
+     *
      * @throws Exception
      *             if an unexpected error occurs.
      */
@@ -163,17 +163,17 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
         if (projectId <= 0) {
             throw new DirectException("projectId less than 0 or not defined.");
         }
-        
+
         ContestServiceFacade contestServiceFacade = getContestServiceFacade();
         TCSubject currentUser = DirectStrutsActionsHelper.getTCSubjectFromSession();
         SoftwareCompetition softwareCompetition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
-        
+
         // only works for studio contest
         if (DirectUtils.isStudio(softwareCompetition)) {
             // Get current session
             HttpServletRequest request = DirectUtils.getServletRequest();
             this.sessionData = new SessionData(request.getSession());
-            
+
             boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
             getViewData().setHasMilestoneRound(hasMilestoneRound);
             getViewData().setPrizes(DirectUtils.getContestPrizes(softwareCompetition));
@@ -190,7 +190,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
                     int count = 0;
 
                     for (Submission submission : milestoneSubmissions) {
-                        if (submission.isExtra() || submission.getFinalScore() > 10.0) {
+                        if (submission.isExtra() || submission.getFinalScore()!= null && submission.getFinalScore() > 10.0) {
                             count++;
                         }
                     }
@@ -202,7 +202,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
             if (getFormData().getRoundType() == ContestRoundType.MILESTONE) {
                 getViewData().setMilestoneRoundFeedbackText(softwareCompetition.getProjectHeader().getProjectStudioSpecification().getGeneralFeedback());
             }
-            
+
             // Set submissions data
             ContestRoundType roundType = getFormData().getRoundType();
             PhaseType reviewPhaseType;
@@ -219,10 +219,10 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
             }
             getViewData().setContestSubmissions(submissions);
             getViewData().setSubmissionFeedback(DirectUtils.getStudioSubmissionsFeedback(currentUser, contestServiceFacade, submissions, projectId, reviewPhaseType));
-            
+
             boolean hasCheckout = DirectUtils.getContestCheckout(softwareCompetition, roundType);
             getViewData().setHasCheckout(hasCheckout);
-            
+
             this.contestBillingAccountId = DirectUtils.getBillingIdForProject(currentUser, projectId);
 
             this.canAccessBillingAccount = false;
