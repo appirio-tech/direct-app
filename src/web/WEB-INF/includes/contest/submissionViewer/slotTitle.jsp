@@ -45,7 +45,7 @@
     <c:if test="${viewData.submissionsCount > 0}">
         <div class="right">
             <a class="downloadAllbtn"
-               href="http://${studioServerName}?module=DownloadAllSubmissions&amp;ct=${contestId}&amp;round=${fn:toLowerCase(formData.roundType)}">
+               href="http://${studioServerName}?module=DownloadAllSubmissions&amp;ct=${contestId}&amp;round=${fn:toLowerCase(formData.roundType)}&amp;type=preview">
                 <span>DOWNLOAD ALL</span></a>
         </div>
     </c:if>

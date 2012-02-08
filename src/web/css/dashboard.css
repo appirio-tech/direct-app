@@ -3402,7 +3402,7 @@ span.icoTHDownload{
 	padding: 25px 0 20px 0;
 }
 
-.winnerCol{ float:left; width: 50%; }
+.winnerCol{ float:left; width: 40%; }
 
 a.downloadFile{
 	float:left;
@@ -8116,6 +8116,12 @@ TABLE.pipelineStats TH.tableTitle span {
 .SubmissionSlotTitle div.right {
     float: right;
     padding-top: 3px;
+}
+
+#winnerPanel div.right {
+    /*float: right;*/
+    padding-top: 3px;
+    padding-right: 20px;
 }
 
 .SubmissionSlotTitle div.right A.downloadAllbtn span {
