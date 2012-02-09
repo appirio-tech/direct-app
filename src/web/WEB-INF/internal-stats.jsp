@@ -13,7 +13,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
+    <link rel="stylesheet" href="/css/filter-panel.css?v=211271" media="all" type="text/css"/>
     <c:set var="PAGE_TYPE" value="internal" scope="request"/>
+    <script type="text/javascript">
+        $('.collapse').live('click', function() {
+            $(this).removeClass('collapse').addClass('expand');
+            $(this).find('img').attr("src", "/images/filter-panel/collapse_icon.png");
+            $(this).parent().parent().parent().parent().parent().find('.filterContent').hide();
+            $(this).parent().parent().parent().parent().parent().find('.filterBottom').hide();
+            $(this).parent().parent().parent().parent().parent().find('.collapseBottom').show();
+            $(this).parent().parent().parent().parent().css({"margin-bottom":"-2px","height":'30px'});
+            $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'30px'});
+        });
+        $('.expand').live('click', function() {
+            $(this).removeClass('expand').addClass('collapse');
+            $(this).find('img').attr("src", "/images/filter-panel/expand_icon.png");
+            $(this).parent().parent().parent().parent().parent().find('.filterContent').show();
+            $(this).parent().parent().parent().parent().parent().find('.filterBottom').show();
+            $(this).parent().parent().parent().parent().parent().find('.collapseBottom').hide();
+            $(this).parent().parent().parent().parent().css({"margin-bottom":"0px","height":'32px'});
+            $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'32px'});
+        });
+    </script>
 </head>
 
 <body id="page">
@@ -49,16 +70,48 @@
 					         </ul>
 					</div>
 					</c:if>
-                        <div class="container2 resultTableContainer" id="resultsContainer" style="border-bottom:1px solid #A8ABAD;">
+                        <c:if test="${tableData != null}">
+                        <div class="container2 resultTableContainer" id="resultsContainer" style="border-bottom:1px solid #A8ABAD;margin-bottom:10px;">
                             <div class="statsTable">
                                  ${tableData}
                             </div>
-
                         </div>
+                        </c:if>
                         <!-- End .container2 -->
+                        
+                        <form id="uploadPanelForm" enctype="multipart/form-data" method="POST" action="<s:url action="uploadSheet" namespace="/"></s:url>">
+                            <!-- start filter panel -->
+                            <div class='filterPanel'>
+                                <div class='filterHead' style="margin-bottom: -2px; height: 30px;">
+                                    <div class='rightSide' style="height: 30px;">
+                                        <div class='inner'>
+                                        	<div class='filterText'>
+                                                <a href='javascript:;' class='expand'><img src='/images/filter-panel/collapse_icon.png' alt=''/></a>
+                                                <span class='title'>Upload</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterContent hide'>
+                                	<div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class="row">
+                                                Upload excel file:<input type="file" name="file" /><input type="submit" name="Submit" value="Upload"/>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .filterHead-->
+                                <div class='filterBottom hide'><div class='rightSide'><div class='inner'></div></div></div>
+                                <!--end .filterBottom-->
+                                <div class='collapseBottom'><div class='rightSide'><div class='inner'></div></div></div>
+                            </div>
+                            <!--end .filterPanel-->
+                        </form>
                     </div>
                     </div>
-
                 </div>
                 <!-- End #mainContent -->
 

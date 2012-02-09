@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.stats;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,8 +92,10 @@ public class InternalStatsAction extends ForwardAction {
      * @throws Exception if any error occurs.
      */
     public String execute() throws Exception {
-        sheetTabs = new ArrayList<String>();
-        tableData = ToHtml.generateStatsPage(sheetIndex, excelFile, sheetTabs);
+        if (new File(excelFile).canRead()) {
+            sheetTabs = new ArrayList<String>();
+            tableData = ToHtml.generateStatsPage(sheetIndex, excelFile, sheetTabs);
+        }
 
         return SUCCESS;
     }
