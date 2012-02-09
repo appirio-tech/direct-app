@@ -635,6 +635,14 @@
           <interceptor-ref name="securedInternalStatsStack"/>
           <result name="success">/WEB-INF/internal-stats.jsp</result>
         </action>
+        <action name="uploadSheet" class="com.topcoder.direct.services.view.action.stats.UploadSheetAction">
+          <param name="excelFile">@excelFile@</param>
+          <interceptor-ref name="securedInternalStatsStack"/>
+          <result type="redirectAction">
+                <param name="actionName">internalStats</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
     </package>
 
     <package name="base" namespace="/base" extends="default">
