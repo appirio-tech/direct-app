@@ -871,12 +871,12 @@
                             <dt>You've chosen this copliot for your project.</dt>
                             <dd>
                                 <span>username1</span>
-                                <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">View Copilot
+                                <a href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">View Copilot
                                     Profile</a>
                             </dd>
                             <dd>
                                 <span>iamcopilot</span>
-                                <a href="http://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">View Copilot
+                                <a href="https://www.topcoder.com/tc?module=MemberProfile&amp;cr=22706873">View Copilot
                                     Profile</a>
                             </dd>
                         </dl>

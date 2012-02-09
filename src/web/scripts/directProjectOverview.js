@@ -175,7 +175,7 @@ $(document).ready(function() {
 
                     isReadStatus = (item.isRead == false ? "isNew" : " ");
 
-                    strTableData += '<h3 class="' + isReadStatus + '"><a target="_blank" href="http://apps.topcoder.com/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
+                    strTableData += '<h3 class="' + isReadStatus + '"><a target="_blank" href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
                     strTableData += '<p>' + item.summary + '</p>';
                     strTableData += '</div>';
                     strTableData += '</td>';

@@ -408,9 +408,9 @@
                   <div class="projectCopilotsProblem">
                     <dl>
                       <dt>Want to know more about Copilot?</dt>
-                      <dd><a href="http://www.topcoder.com/help/2011/03/10/how-can-i-get-a-copilot/">What's Copilot?</a></dd>
-                      <dd><a href="http://www.topcoder.com/help/2011/03/10/how-will-using-a-copilot-benefit-the-user-and-the-users-project/">How can Copilot benefit my project?</a></dd>
-                      <dd><a href="http://www.topcoder.com/help/2011/05/11/how-to-launch-a-copilot-contest/">How to hire a CoPilot</a></dd>
+                      <dd><a href="https://www.topcoder.com/help/2011/03/10/how-can-i-get-a-copilot/">What's Copilot?</a></dd>
+                      <dd><a href="https://www.topcoder.com/help/2011/03/10/how-will-using-a-copilot-benefit-the-user-and-the-users-project/">How can Copilot benefit my project?</a></dd>
+                      <dd><a href="https://www.topcoder.com/help/2011/05/11/how-to-launch-a-copilot-contest/">How to hire a CoPilot</a></dd>
                     </dl>
                   </div>
                   <!-- End .projectCopilotsProblem -->
@@ -432,7 +432,7 @@
                                                         <div class="itemContainer">
                                                             <div class="userPhoto">
                                                                 <div class="userPhotoInner">
-                                                                    <a href="http://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=<s:property value='copilotInfo.userId'/>">
+                                                                    <a href="https://community.topcoder.com/tc?module=ViewCopilotProfile&amp;pid=<s:property value='copilotInfo.userId'/>">
                                                                         <s:if test="copilotInfo.avatarPath == null || copilotInfo.avatarPath.length == 0">
                                                                             <img class="projectCopilotPhoto" src="/images/user-photo-placeholder.png"
                                                                                  alt="Copilot Photo"/>

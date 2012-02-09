@@ -222,7 +222,7 @@ $(document).ready(function(){
 	// video 
 	$(".viewVideo").click(function() {
 		$(".viewVideo").target = "_blank";
-		window.location.href="http://www.topcoder.com/help/template-video/?subject=startproject&catIdx=18";
+		window.location.href="https://www.topcoder.com/help/template-video/?subject=startproject&catIdx=18";
 	});
 	
 	$('.projectContainer').hover(
