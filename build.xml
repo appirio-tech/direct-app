@@ -503,7 +503,6 @@
                 <include name="test.properties" />
                 <include name="commons-logging.properties" />
                 <include name="project_fee_hibernate.cfg.xml" />
-				<include name="rev_sample.xlsx" />
             </fileset>
             <fileset dir="${tokenized_conf}/components">
                 <include name="com/topcoder/security/Util.properties" />
