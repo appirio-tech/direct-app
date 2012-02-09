@@ -631,6 +631,7 @@
     <pathelement location="${struts2-convention-plugin-2.1.8.jar}" />
     <pathelement location="${struts2-core-2.1.8.1.jar}" />
     <pathelement location="${struts2-spring-plugin-2.1.8.jar}" />
+	<pathelement location="${struts2-json-plugin-2.1.8.jar}" />
     <pathelement location="${xwork-1.2.3.jar}" />
     <pathelement location="${xwork-core-2.1.6.jar}" />
   </path>
