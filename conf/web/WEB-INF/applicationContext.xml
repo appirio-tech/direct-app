@@ -764,6 +764,11 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="updateProjectForumWatchAction"
+          class="com.topcoder.direct.services.view.action.project.UpdateProjectForumWatchAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
     <!-- configuration for the direct project metadata services and key service -->
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>

@@ -635,6 +635,14 @@ BODY#page{
 	background: url(../images/notification_ico.png) no-repeat left center;
 }
 
+.watchForumOptions {
+  float:right;
+  font-size:12px;
+  font-weight:bold;
+  margin-right:10px;
+  margin-top:-20px;
+}
+
 .areaHeader A.button1{
 	position: absolute;
 	right: 0;

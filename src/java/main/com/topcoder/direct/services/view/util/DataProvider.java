@@ -419,7 +419,7 @@ import com.topcoder.web.common.tag.HandleTag;
  *     </li>
  * </ol>
  * </p>
- * 
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues
  * @version 3.4
  * @since 1.0
@@ -3302,7 +3302,7 @@ public class DataProvider {
                 }
 
                 projectForBilling.put(directProjectId, directProjectName);
-                
+
                 projectClientMap.put(directProjectId, clientId);
             }
 
@@ -3385,14 +3385,14 @@ public class DataProvider {
 
         // submitter resource ID -> ParticipationContestDetailDTO
         Map<Long, ParticipationContestDetailDTO> submitterContestDetailsMap = new HashMap<Long, ParticipationContestDetailDTO>();
-        
+
         // Gets the contest participation registration details
         final ResultSetContainer conetestRegistrationResult = queryData.get("dashboard_participation_registration");
         for (ResultSetRow row : conetestRegistrationResult) {
             if (!projectStatusSet.contains(row.getStringItem("contest_status").trim())) {
                 continue;
             }
-            
+
             IdNamePair client = new IdNamePair();
             IdNamePair billing = new IdNamePair();
             IdNamePair directProject = new IdNamePair();
@@ -3446,10 +3446,10 @@ public class DataProvider {
             }
             contestDetail.setCountry(row.getStringItem("country"));
             contestDetail.setStatus(row.getStringItem("contest_status").trim());
-            
+
             submitterContestDetailsMap.put(resourceId, contestDetail);
         }
-        
+
         // Gets the conetst participation submission details
         final ResultSetContainer conetestSubmissionResult = queryData.get("dashboard_participation_submission");
         for (ResultSetRow row : conetestSubmissionResult) {
@@ -3457,7 +3457,7 @@ public class DataProvider {
             if (!submitterContestDetailsMap.containsKey(resourceId)) {
                 continue;
             }
-            
+
             ParticipationContestDetailDTO contestDetail = submitterContestDetailsMap.get(resourceId);
             contestDetail.setHasSubmit(true);
             int submissionTypeId = row.getIntItem("submission_type_id");
@@ -3472,7 +3472,7 @@ public class DataProvider {
                 }
             }
         }
-        
+
         for (ParticipationContestDetailDTO contestDetail : submitterContestDetailsMap.values()) {
             contestDetails.add(contestDetail);
         }
@@ -3846,15 +3846,15 @@ public class DataProvider {
             if (row.getItem("invoice_number").getResultData() != null) {
                 costDTO.setInvoiceNumber(row.getStringItem("invoice_number"));
             }
-            
+
             if (row.getItem("invoice_id").getResultData() != null) {
                 costDTO.setInvoiceId(row.getLongItem("invoice_id"));
             }
-            
+
             if (row.getItem("invoice_record_id").getResultData() != null) {
                 costDTO.setInvoiceRecordId(row.getLongItem("invoice_record_id"));
             }
-            
+
             if (row.getItem("processed").getResultData() != null) {
                 costDTO.setProcessed(row.getBooleanItem("processed"));
             }
@@ -3862,7 +3862,7 @@ public class DataProvider {
             if (row.getItem("payment_desc").getResultData() != null) {
                 costDTO.setPaymentDesc(row.getStringItem("payment_desc"));
             }
-            
+
             costDTO.setClient(client);
             costDTO.setBilling(billing);
             costDTO.setProject(directProject);
@@ -4570,6 +4570,7 @@ public class DataProvider {
             entry.setThreadID(row.getLongItem("forum_id"));
             entry.setThreadTitle(row.getStringItem("name"));
             entry.setSummary(row.getStringItem("description"));
+            entry.setWatching(row.getBooleanItem("watching"));
             result.add(entry);
         }
 
@@ -4847,7 +4848,7 @@ public class DataProvider {
 //        } else {
 //            projectGeneralInfo.setActualCost(0);
 //        }
-        
+
     }
 }
 

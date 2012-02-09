@@ -12,9 +12,9 @@
   - -add issue tracking to health table
   - -add unresolved issues and ongoing bug races to project status.
   - Version 1.0.3 - Direct - TC Cockpit Contest Duration Calculation Updates Assembly Change Note:
-  - added Average Contest Duration 
+  - added Average Contest Duration
   - Version 1.0.4 - Direct - TC Cockpit Project Health Update Assembly Change Note:
-  - Added new columns to Project Health area; the data for Project Health area is loaded via AJAX call now 
+  - Added new columns to Project Health area; the data for Project Health area is loaded via AJAX call now
   - Version 1.0.5 - Release Assembly - TC Direct UI Improvement Assembly 3 Change Note:
   - Added new CSS class for project stats and project activities tables
   - Version 1.0.6 - Release Assembly - Release Assembly - TopCoder Cockpit Project Overview Update 1 Change Note:
@@ -41,7 +41,7 @@
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js?v=203928"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=204700"></script>
     <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=211035"></script>
-    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=212237"></script>
+    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=212238"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>
@@ -390,41 +390,41 @@
                                 <!-- start .projectCopilotsLeader -->
                                 <div class="projectCopilotsLeader">
 
-									<div class="goForCopilot">
-										<h3>There is currently no copilot hired for this project.</h3>
-										<div class="goForCopilotBox">
-											<div class="leftBox">
-												<a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="buttonRed1"><span>GET A COPILOT</span></a>
-												<p>If you do not have a clear choice for a copilot, post the offer to available copilots.</p>
-											</div>
-											<div class="rightBox">
-												<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
-												<p>If you already have a copilot that you would like to assign. </p>
-											</div>
-										</div>
-									</div>
-									<!-- End .goForCopilot -->
+                  <div class="goForCopilot">
+                    <h3>There is currently no copilot hired for this project.</h3>
+                    <div class="goForCopilotBox">
+                      <div class="leftBox">
+                        <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>" class="buttonRed1"><span>GET A COPILOT</span></a>
+                        <p>If you do not have a clear choice for a copilot, post the offer to available copilots.</p>
+                      </div>
+                      <div class="rightBox">
+                        <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
+                        <p>If you already have a copilot that you would like to assign. </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End .goForCopilot -->
 
-									<div class="projectCopilotsProblem">
-										<dl>
-											<dt>Want to know more about Copilot?</dt>
-											<dd><a href="http://www.topcoder.com/help/2011/03/10/how-can-i-get-a-copilot/">What's Copilot?</a></dd>
-											<dd><a href="http://www.topcoder.com/help/2011/03/10/how-will-using-a-copilot-benefit-the-user-and-the-users-project/">How can Copilot benefit my project?</a></dd>
-											<dd><a href="http://www.topcoder.com/help/2011/05/11/how-to-launch-a-copilot-contest/">How to hire a CoPilot</a></dd>
-										</dl>
-									</div>
-									<!-- End .projectCopilotsProblem -->
+                  <div class="projectCopilotsProblem">
+                    <dl>
+                      <dt>Want to know more about Copilot?</dt>
+                      <dd><a href="http://www.topcoder.com/help/2011/03/10/how-can-i-get-a-copilot/">What's Copilot?</a></dd>
+                      <dd><a href="http://www.topcoder.com/help/2011/03/10/how-will-using-a-copilot-benefit-the-user-and-the-users-project/">How can Copilot benefit my project?</a></dd>
+                      <dd><a href="http://www.topcoder.com/help/2011/05/11/how-to-launch-a-copilot-contest/">How to hire a CoPilot</a></dd>
+                    </dl>
+                  </div>
+                  <!-- End .projectCopilotsProblem -->
 
-								</div><!-- End .projectCopilotsLeader -->
+                </div><!-- End .projectCopilotsLeader -->
                             </s:if>
                             <s:else>
                                <div class="projectCopilotsList">
-									<div class="copilotsListHeader">
-										<h3><strong class="red"><s:property value="copilotStats.size"/></strong> copilot working on this project.</h3>
-									</div>
-									<div class="copilotsListBody">
-										<div id="projectCopilotsCarouselWrapper" class="noCopilotType">
-											<ul id="projectCopilotsCarousel" class="jcarousel-skin-tango">
+                  <div class="copilotsListHeader">
+                    <h3><strong class="red"><s:property value="copilotStats.size"/></strong> copilot working on this project.</h3>
+                  </div>
+                  <div class="copilotsListBody">
+                    <div id="projectCopilotsCarouselWrapper" class="noCopilotType">
+                      <ul id="projectCopilotsCarousel" class="jcarousel-skin-tango">
 
                                                 <s:iterator value="copilotStats">
                                                     <!-- item -->
@@ -496,13 +496,13 @@
                                                 </s:iterator>
 
 
-											</ul>
-										</div>
-									</div>
-									<div class="copilotsListButtonBox">
-										<a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
-									</div>
-								</div>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="copilotsListButtonBox">
+                    <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
+                  </div>
+                </div>
                             </s:else>
 
                                 <div class="areaHeader padding2 titleProjectStats">
@@ -601,8 +601,14 @@
 
                                 <div class="areaHeader padding2 titleProjectForum">
                                     <h2 class="title">Project Forum</h2>
+                                    <s:if test='viewData.hasForumThreads'>
+                                      <div id="watchForumOptions" class="watchForumOptions" style="display:none;"> 
+                                        	<input type="checkbox" value="" name="chProjectForum" id="chProjectForum">
+                                          <label id="chProjectForum">Watch Project Forum?</label>
+                                      </div>
+                                    </s:if>                                    
                                 </div><!-- End .areaHeader -->
-                                
+
                                 <s:if test='viewData.hasForumThreads'>
                                     <div id="projectForumTable">
                                         <div class="projectForumTableHeader">
@@ -693,7 +699,7 @@
                                         </table>
                                     </div>
                                 </s:iterator>
-                                
+
                                 <jsp:include page="includes/upcomingActivities.jsp"/>
                             </div><!-- End .rightColumn -->
                         <div class="clearFix"></div>

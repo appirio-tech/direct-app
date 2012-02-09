@@ -165,6 +165,7 @@ $(document).ready(function() {
             data: request,
             dataType: "json",
             success: function(json) {
+                var isForumWatched = false;
                 strTableData = "";
                 strTmp = "";
                 $.each(json.result['return'].projectForumThreads, function(idx, item) {
@@ -182,16 +183,20 @@ $(document).ready(function() {
                     strTableData += '<div>' + item.threadNumber + '/' + item.messageNumber + '</div>';
                     strTableData += '</td>';
                     strTableData += '<td class="colTab3">';
-//                    strTableData += '<a href="#" class="author">' + item.lastPostHandle + '</a>';
+                    //  strTableData += '<a href="#" class="author">' + item.lastPostHandle + '</a>';
                     strTableData += item.latestPostAuthorLink;
                     strTableData += '<p>' + item.lastPostTime + '</p>';
                     strTableData += '</td>';
                     strTableData += '</tr>';
+                    
+                    if(item.watching) {
+                    	  isForumWatched = true;
+                    }
                 });
                 strTmp += '<table cellpadding="0" cellspacing="0"><tbody>';
                 strTmp += strTableData;
                 strTmp += '</tbody></table>';
-                
+                                                
                 $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
                 $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
 
@@ -200,9 +205,58 @@ $(document).ready(function() {
                     $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
                     $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
                 }, ajaxTableTimer);
+                
+                //initiate the forum watch checkbox            	  
+                initForumWatch(isForumWatched);    
             }
         });
     }
+    
+    //
+    // add forum watch enable/disable functions
+    //
+    //
+    function initForumWatch(isWatched) {
+    	  $('#chProjectForum').attr('checked', isWatched);    	      	  
+    	  $('.watchForumOptions').show();
+    	  
+    	  // add listener so it could trigger watch/unwatch
+        $('#chProjectForum').click(function(){
+        	  forumWatchCheckBoxListener(this);
+        });    	  
+    }
+    
+     /**
+      * forum checkbox listener. It will perform corresponding operation
+      * depending on check box selection.
+      *
+      * @param cb checkbox      
+      */    
+    function forumWatchCheckBoxListener(cb) {
+        var request = {
+            tcDirectProjectId : tcDirectProjectId,
+            watch : $(cb).is(':checked')
+        };
+
+     
+        $.ajax({
+                type : 'post',
+                url : 'updateProjectForumWatchAJAX',
+                cache : false,
+                data : request,
+                dataType : 'json',
+                success : function(result) {
+                    if(!result.result) {
+                        showErrors(result.error.errorMessage);                        
+                        return;
+                    }                    
+                },
+                error: function(result) {
+                    showErrors("Error when creating project forum");
+                }
+             });           	 
+    }
+    
 
     // the event handler of project forum creation button
     $(".projectForumLeader .createForumButton").live('click', function() {

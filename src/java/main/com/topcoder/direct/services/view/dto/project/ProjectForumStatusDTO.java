@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>A DTO for a single entry in TC Direct project forum.</p>
- * 
+ *
  * @author TCSDEVELOPER
  * @version 1.0 (opCoder Cockpit Project Overview R2 Project Forum Backend Assembly)
  */
@@ -57,6 +57,11 @@ public class ProjectForumStatusDTO implements Serializable {
      * <p>A <code>String</code> providing the link to profile for latest forum post author.</p>
      */
     private String latestPostAuthorLink;
+
+    /**
+     * <p>A <code>boolean</code> providing if forum has been watched.
+     */
+    private boolean watching;
 
     /**
      * <p>Constructs new <code>ProjectForumStatusDTO</code> instance. This implementation does nothing.</p>
@@ -225,5 +230,23 @@ public class ProjectForumStatusDTO implements Serializable {
      */
     public void setLatestPostAuthorLink(String latestPostAuthorLink) {
         this.latestPostAuthorLink = latestPostAuthorLink;
+    }
+
+    /**
+     * <p>If the forum is watched.</p>
+     *
+     * @return the watching
+     */
+    public boolean isWatching() {
+        return watching;
+    }
+
+    /**
+     * <p>Set if the forum is watched.</p>
+     *
+     * @param watching the watching to set
+     */
+    public void setWatching(boolean watching) {
+        this.watching = watching;
     }
 }
