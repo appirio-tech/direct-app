@@ -16,7 +16,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <link rel="stylesheet" href="/css/editProject.css?v=211772" media="all" type="text/css"/>
-    <script type="text/javascript" src="/scripts/editCockpitProject.js?v=211772"></script>
+    <script type="text/javascript" src="/scripts/editCockpitProject.js?v=212862"></script>
     <ui:projectPageType tab="editProject"/>
 </head>
 

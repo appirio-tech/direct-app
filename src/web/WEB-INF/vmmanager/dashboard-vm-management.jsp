@@ -20,7 +20,7 @@
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <script type="text/javascript" src="/scripts/vmservice.js?v=212186"></script>
     <link href="/css/screen.css?v=211772" rel="stylesheet" type="text/css" />
-    <link href="../../css/dashboard.css?v=212170" rel="stylesheet" type="text/css" />
+    <link href="../../css/dashboard.css?v=212858" rel="stylesheet" type="text/css" />
     <jsp:include page="/WEB-INF/includes/filterPanel.jsp"/>
 </head>
 

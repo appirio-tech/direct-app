@@ -16,7 +16,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="issues"/>
-    <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css" />
 </head>
 
 <body id="page">

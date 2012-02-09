@@ -27,7 +27,7 @@
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="css/dashboard-ie7.css" />
     <![endif]-->    
-    <link rel="stylesheet" href="/css/dashboard-view.css?v=204285" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css" />
     
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="details"/>
