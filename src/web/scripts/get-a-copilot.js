@@ -43,6 +43,8 @@ $(document).ready(function(){
 		$('.stepBar li').css('width',($('.stepBar').width()/5)+16);
 		$('.stepBar li:first').css('width',($('.stepBar').width()/5)+14);
 		$('.stepFirst textarea').css('width',$('.stepFirst .row').width()-272);
+        
+        resetCarousel();
 	});
 	
 	//modal
@@ -198,17 +200,6 @@ $(document).ready(function(){
 		
     }) ;
 	
-	function carouselSize() {
-		var carouselWidth = $(".carousel-content").width();
-		$(".carousel-content ul").css("left",( carouselWidth - 540 )/ 2 + "px");
-	}
-	
-	carouselSize();
-	
-    $(window).resize(function(){
-		carouselSize();
-    });
-	
 	// copilot list
 	$(".copilotList table th").hover(
 		function(){ 
@@ -237,154 +228,6 @@ $(document).ready(function(){
 	)
     
     $('#copilotProfileCarouselDiv .info .handle a').attr("target", "_blank");
-	
-	 /*------------------------------------------------ Carousel ---------------------------------------------*/
-	var size = 5;
-	var currentIndex = Math.min(Math.round(size / 2), Math.round($(".carousel-content ul li").length / 2));
-    var edge;
-    
-    if ($(".carousel-content ul li").length >= 5) {
-        edge = 2;
-    } else {
-        edge = Math.floor(($(".carousel-content ul li").length - 1) / 2);
-        size = edge * 2 + 1;
-    }
-    
-	var data = {
-		small: {
-			width: "194px",
-			height: "115px",
-			marginTop: "-58px",
-			left: "0",
-			fontSize: "7px",
-			infoWidth: "102px",
-			photoWidth: "67px",
-			infoMargin: "0",
-			buttonWidth: "61px",
-			zIndex: 1,
-			padding_top: "9px",
-			padding_bottom: "5px"
-		},
-		smallRight: {
-			width: "194px",
-			height: "115px",
-			marginTop: "-58px",
-			left: "343px",
-			fontSize: "7px",
-			infoWidth: "102px",
-			photoWidth: "67px",
-			infoMargin: "0",
-			buttonWidth: "61px",
-			zIndex: 1,
-			padding_top: "9px",
-			padding_bottom: "5px"
-		},
-		medium: {
-			width: "240px",
-			height: "142px",
-			marginTop: "-72px",
-			left: "57px",
-			fontSize: "9px",
-			infoWidth: "125px",
-			photoWidth: "83px",
-			infoMargin: "7px",
-			buttonWidth: "77px",
-			zIndex: 2,
-			padding_top: "12px",
-			padding_bottom: "9px"
-		},
-		mediumRight: {
-			width: "240px",
-			height: "142px",
-			marginTop: "-72px",
-			left: "242px",
-			fontSize: "9px",
-			infoWidth: "125px",
-			photoWidth: "83px",
-			infoMargin: "7px",
-			buttonWidth: "77px",
-			zIndex: 2,
-			padding_top: "12px",
-			padding_bottom: "9px"
-		},
-		current: {
-			width: "283px",
-			height: "163px",
-			marginTop: "-85px",
-			left: "126px",
-			fontSize: "11px",
-			infoWidth: "147px",
-			photoWidth: "96px",
-			infoMargin: "11px",
-			buttonWidth: "90px",
-			zIndex: 3,
-			padding_top: "15px",
-			padding_bottom: "12px"
-		}
-	}
-	function styleItem (name, item){
-		item.css("z-index", data[name]["zIndex"]);
-		if(name == "small" || name == "smallRight"){
-			item.css("left", data[name]["left"]);
-			item.animate({ width: data[name]["width"], height: data[name]["height"], marginTop: data[name]["marginTop"]}, 300);
-		}
-		else{
-			item.animate({ width: data[name]["width"], height: data[name]["height"], marginTop: data[name]["marginTop"], left: data[name]["left"] }, 300);
-		}
-		item.find(".photo").animate({ width: data[name]["photoWidth"] }, 300);
-		item.find(".copilot-wrapper").css({ "padding-top": data[name]["padding_top"] });
-		item.find(".copilot-wrapper").css({ "padding-bottom": data[name]["padding_bottom"] });
-		item.find(".photo").find("img").animate({ width: data[name]["photoWidth"] }, 300);
-		item.find(".photo").find(".middle").animate({ width: data[name]["buttonWidth"] }, 300);
-		item.find(".info").animate({ fontSize: data[name]["fontSize"], width: data[name]["infoWidth"], marginLeft: data[name]["infoMargin"] }, 300);
-	}
-	function render() {
-		$.each($(".carousel-content ul li"), function(index, value){
-			var offset = Math.abs(currentIndex - (index + 1));
-			$(".foot-bar strong").text($(".carousel-content ul li").length - offset);
-			if(offset > edge){
-				$(value).css({ height: "115px", left: index < currentIndex ? - $(value).width() + "px" : "539px" }).hide();
-			}
-			else{
-				$(value).show();                
-                if (offset == 1) {
-                    styleItem(index < currentIndex ? "medium" : "mediumRight", $(value));
-                } else if (offset == 2) {
-                	styleItem(index < currentIndex ? "small" : "smallRight", $(value));
-                } else {
-                	styleItem("current", $(value));
-                }
-			}
-		});
-	}
-	render();
-	var lastAnimateTime = new Date().getTime();
-	$(".foot-bar .prev").click(function(){
-		var now = new Date().getTime();
-		if(currentIndex > 1 && now - lastAnimateTime > 350){
-			lastAnimateTime = new Date().getTime();
-			currentIndex--;
-			render();
-		}
-		if(currentIndex == 1 && now - lastAnimateTime > 350){
-			lastAnimateTime = new Date().getTime();
-			currentIndex = $(".carousel-content ul li").length;
-			render();
-		} 
-	});
-	$(".foot-bar .next").click(function(){
-		var now = new Date().getTime();
-		if(currentIndex < $(".carousel-content ul li").length && now - lastAnimateTime > 350){
-			lastAnimateTime = new Date().getTime();
-			currentIndex++;
-			render();
-		} 
-		if(currentIndex == $(".carousel-content ul li").length && now - lastAnimateTime > 350){
-			lastAnimateTime = new Date().getTime();
-			currentIndex = 1;
-			render();
-		} 
-	});
 	
 	 //fix browsers
     var Sys = {};
@@ -433,6 +276,133 @@ $(document).ready(function(){
                 });
         }
     });    
+    
+    /* grayscale images */
+    function grayscaleImageIE(imgObj) {
+        imgObj.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(grayScale=1)';
+    }
+
+    function grayscaleImage(imgObj) {
+        var canvas = document.createElement('canvas');
+        var canvasContext = canvas.getContext('2d');
+
+        var imgW = 60;//imgObj.width;
+        var imgH = 72;//imgObj.height;
+        canvas.width = imgW;
+        canvas.height = imgH;
+        
+        canvasContext.drawImage(imgObj, 0, 0, imgW, imgH);
+        var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
+
+        for ( var y = 0; y < imgPixels.height; y++) {
+            for ( var x = 0; x < imgPixels.width; x++) {
+                var i = (y * 4) * imgPixels.width + x * 4;
+                var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
+                imgPixels.data[i] = avg;
+                imgPixels.data[i + 1] = avg;
+                imgPixels.data[i + 2] = avg;
+            }
+        }
+
+        canvasContext.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+        return canvas.toDataURL();
+    }
+
+    function grayscaleImg(object){
+        if (!object.parent().parent().hasClass('current')) {
+            if ($.browser.msie) {
+                 grayscaleImageIE(object[0]);
+            } else {
+                object.attr('src', grayscaleImage(object[0]));
+            }
+        }
+    }
+    function resetNavThumb(){
+        $('.navThumb ul img').each(function(i) {
+            if (!$(this).parent().parent().hasClass('current')) {
+                grayscaleImg($(this));
+            }
+        });
+    }
+    
+    $.easing.easeinout = function(x, t, b, c, d) {
+        if (t < d/2) return 2*c*t*t/(d*d) + b;
+        var ts = t - d/2;
+        return -2*c*ts*ts/(d*d) + 2*c*ts/d + c/2 + b;		
+    };
+    
+    function carouselNavInit(){
+        $(".ad-thumb-list").carouFredSel({
+            prev: '.carouselNav .navBack',
+            next: '.carouselNav .navForward',		
+            scroll: {
+                items: 1,
+                easing: 'easeinout',
+                duration: 400
+            },
+            auto: false
+        }).find("li").click(function() {
+            var deviation = $('.copilot-carousel').width()>950?-5:-3;
+            $(".ad-thumb-list").trigger("slideTo", [$(this), deviation]);
+        });	
+    }
+
+    function resetCarousel(){
+        if($('.copilot-carousel').width()>950){
+            $('.copilot-carousel').addClass('wider');
+            $('.navThumb .caroufredsel_wrapper').css('width','880px');
+            
+        }else{
+            $('.copilot-carousel').removeClass('wider');
+            $('.navThumb .caroufredsel_wrapper').css('width','616px');
+        }
+        carouselNavInit();
+    }
+
+    // carousel thumb width
+    function carouselInit() {
+        resetCarousel();
+        $('.navThumb .ad-thumb-list li a').each(function(i){
+            $(this).attr('id','thumbNo-'+i);
+        })
+        var totalItems= $('.navThumb .ad-thumb-list').find('li').length;
+        $('.foot-bar .currentThumb').html('<strong>1</strong> / '+ totalItems);						
+    }
+    
+    $('.ad-thumb-list img').load(function(){
+        grayscaleImg($(this));
+    });
+    
+    if ($.browser.msie) {
+        resetNavThumb();
+    }
+    window.setTimeout(function(){
+        carouselInit();
+    } ,500);
+
+    /* carousel nav thumb click */
+    $('.navThumb a').live('click',
+            function() {
+                var idx = $(this).attr('id').split('-')[1];
+                var currentIdx = $(this).parents('ul').find('.current a').attr('id').split('-')[1];
+                var totalItems= $('.foot-bar .currentThumb').text().split('/')[1];
+                totalItems=parseInt(totalItems,10);
+                $('#copilot-' + currentIdx).fadeTo('fast', 0, function() {
+                    $('#copilot-' + currentIdx).hide();
+                    $('#copilot-' + idx).show().css('opacity', '0').fadeTo('slow', '1');
+                });
+                $(this).parents('ul').find('.current').removeClass('current');
+                $(this).parent().addClass('current');
+                resetNavThumb();
+                
+                if ($.browser.msie) {
+                    $(this).children('img:first').attr('style','filter: none');
+                } else {
+                    $(this).children('img:first').attr('src',$('#copilot-' + idx + ' img').attr('src'));
+                }	
+                
+                $('.foot-bar .currentThumb').html('<strong>'+ (parseInt(idx,10)+1) +'</strong> / '+totalItems);
+            });
 });
 
 function handleCopilotStatisticsResult(result) {    

@@ -30,11 +30,10 @@
     <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/newProject.css?v=210944" media="all" type="text/css"/> 
     <link rel="stylesheet" href="/css/get-a-copilot.css?v=210944" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
 
     <script type="text/javascript" src="/scripts/newProject.js?v=209631"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=212862"></script> 
-    <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script> 
+    <script type="text/javascript" src="/scripts/jquery.carouFredSel.js"></script>
+    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=211902"></script> 
     
 </head>
 
@@ -132,47 +131,68 @@
                                                 <span class="corner tl"></span>
                                                 <span class="corner tr"></span>
                                                 <div class="carousel-content" id="copilotProfileCarouselDiv">
-                                                    <ul>
-                                                        <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
-                                                        <c:forEach var="profile" items="${profiles}">
-                                                            <c:set var="profileLink" value="http://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
-                                                            <li>
-                                                                <div class="copilot-wrapper">
-                                                                    <div class="photo">
-                                                                        <img src="${profile.photo.photoPath}" alt="handle" />
-                                                                        <a href="${profileLink}" class="black-button">
-                                                                            <span class="right"><span class="middle">View Profile</span></span>
-                                                                        </a>
+                                                    <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
+                                                    <c:forEach var="profile" items="${profiles}" varStatus="varStatus">
+                                                        <div class="copilot-details <c:if test="${varStatus.index gt 0}">hide</c:if>" id="copilot-${varStatus.index}">
+                                                        <c:set var="profileLink" value="http://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
+                                                            <img src="${profile.photo.photoPath}" alt="Copilot" />
+                                                            <div class="main-content">
+                                                                <h2><tc-webtag:handle coderId="${profile.member.copilotProfile.userId}" link="${profileLink}"/></h2>
+                                                                <div class="clear"></div>
+                                                                <div class="colLeft">
+                                                                    <div class="row first"></div>
+                                                                    <div class="row">
+                                                                        <label>Project:</label><span class="field_${profile.member.copilotProfile.userId}_totalProjects">loading</span>
                                                                     </div>
-                                                                    <!-- .photo -->
-                                                                    <div class="info">
-                                                                        <p class="handle">Handle : 
-                                                                            <tc-webtag:handle coderId="${profile.member.copilotProfile.userId}" link="${profileLink}"/>
-                                                                        </p>
-                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalProjects">loading</span>Project :</p>
-                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalContests">loading</span>Contest :</p>
-                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</span>Repost :</p>
-                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</span>Failure :</p>
-                                                                        <p><span class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</span>Bugrace :</p>
-                                                                        <div class="current">
-                                                                            <p><a href="javascript:;" class="link field_${profile.member.copilotProfile.userId}_currentProjects">loading</a>Current Projects :</p>
-                                                                            <p><a href="javascript:;" class="link field_${profile.member.copilotProfile.userId}_currentContests">loading</a>Current Contests :</p>
-                                                                        </div>
-                                                                        
+                                                                    <div class="row">
+                                                                        <label>Contest:</label><span class="field_${profile.member.copilotProfile.userId}_totalContests">loading</span>
                                                                     </div>
-                                                                    <!-- .info -->
-                                                                    <div class="clear"></div>
+                                                                    <div class="row">
+                                                                        <label>Report:</label><span class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</span>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <label>Failure:</label><span class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</span>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <label>Bugrace:</label><span class="field_${profile.member.copilotProfile.userId}_totalBugRaces">loading</span>
+                                                                    </div>
                                                                 </div>
-                                                            </li>                                                        
-                                                        </c:forEach>
-                                                 
-                                                    </ul>
-                                                    <div class="clear"></div>
+                                                                <!-- /.colLeft -->
+                                                                <div class="colRight">
+                                                                    <div class="row first"></div>
+                                                                    <div class="row">
+                                                                        <label>Current Projects:</label><span class="field_${profile.member.copilotProfile.userId}_currentProjects">loading</span>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <label>Current Contests:</label><span class="field_${profile.member.copilotProfile.userId}_currentContests">loading</span>
+                                                                    </div>
+
+
+                                                                    <div class="buttonArea">
+                                                                        <a href="${profileLink}" class="btnRed"> <span class="right"> <span class="middle">View Profile</span> </span> </a>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.colRight -->
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
+                                                    <div class="carouselNav">
+														<div class="carouselNavContent">
+															<div class="navBack"></div>
+															<div class="navThumb">
+																<ul class="ad-thumb-list">
+                                                                    <c:forEach var="profile" items="${profiles}" varStatus="varStatus">
+																	<li <c:if test="${varStatus.index eq 0}">class="current"</c:if>><a href="javascript:;"> <img src="${profile.photo.photoPath}" alt="thumb" /> </a></li>
+                                                                    </c:forEach>
+																</ul>
+															</div>
+															<div class="navForward"></div>
+														</div>
+													</div>
+													<!-- /.carouselNav -->
                                                 </div>
                                                 <div class="foot-bar">
-                                                    <a href="javascript:;" class="next">&gt;</a>
-                                                    <a href="javascript:;" class="prev">&lt;</a>
-                                                    <strong>0</strong> / ${fn:length(profiles)} 
+                                                    <span class="footCorner bl"></span> <span class="footCorner br"></span> <span class="currentThumb"><strong>1</strong> / ${fn:length(profiles)} </span>
                                                 </div>
                                                 <!-- .foot-bar -->
                                                 

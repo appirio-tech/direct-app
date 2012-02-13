@@ -1380,78 +1380,95 @@ a.smallRed span.right {
 			background-position: right top;
 		}
 		.copilot-carousel .carousel-content {
-			background: #413833 left top repeat-x;
-			padding: 29px 0;
+			background: black url(../images/copilot-carousel.png) left top repeat-x;
 			overflow: hidden;
+			height: 277px;
 		}
-		.carousel-content ul{
-			position: relative;
-			left: 40px;
-			width:6000px;
-			height:168px;
-		}
-			.carousel-content ul li{
-				position:absolute;
-				top:50%;
-				background:#f2f2f2;
-				border:1px solid #333333;
-				width:194px;
-				margin-top:-58px;
-				text-align:center;
+        	.copilot-carousel .carousel-content .copilot-details{
+				width: 588px;
+				margin: 0px auto;
 				overflow: hidden;
-				-webkit-text-size-adjust: none;
-				
+				padding: 23px 0 21px 0;
+				height: 138px;
 			}
-				
-				.carousel-content ul li .copilot-wrapper {
-					border: none;
-					background: #f2f2f2;
-					text-align: left;
-				}
-					.carousel-content ul li .copilot-wrapper .photo .black-button .middle {
-						width: 92px;
-						padding: 0;
-						text-align: center;
-					}
-					.carousel-content ul li .copilot-wrapper .info div.current{ margin-top: 11px; }
-					
-					
-					.carousel-content ul li .corner {
-						background:url(../images/slider-corners.png) 0 0 no-repeat;
-						width:5px;
-						height:5px;
-						display:inline-block;
-						position:absolute;
-					}
-					.carousel-content ul li .corner.tl {
-						background-position: 0 0;
-						left:-1px;
-						top:-1px;
-					}
-					.carousel-content ul li .corner.tr {
-						background-position: -5px 0;
-						right:-1px;
-						top:-1px;
-					}
-					.carousel-content ul li .corner.bl {
-						background-position: 0 -5px;
-						left:-1px;
-						bottom:-1px;
-					}
-					.carousel-content ul li .corner.br {
-						background-position: -5px -5px;
-						right:-1px;
-						bottom:-1px;
-					}
+			.copilot-carousel.wider .carousel-content .copilot-details{
+				width: 854px;
+			}
+		.copilot-carousel .copilot-details img{
+			float: left;
+			height: 138px;
+			width: 115px;			
+		}
+		.copilot-carousel .main-content{
+			float: left;
+			margin-left: 20px;
+			width: 453px;
+		}
+		.copilot-carousel.wider .main-content{
+			width: 719px;
+		}
+		.copilot-carousel .copilot-details .colLeft{
+			float: left;
+			width: 195px;			
+		}			
+		.copilot-carousel.wider .copilot-details .colLeft{
+			width: 284px;
+		}
+		.copilot-carousel .copilot-details h2{
+			color: #fffffe;
+			line-height: 20px;
+			font-family: 'Myriad Pro', Arial, Helvetica, sans-serif;
+			font-size: 25px;
+			font-weight: normal;
+			padding-bottom: 14px;
+		}
+		.copilot-carousel .copilot-details .row{
+			font-size:12px;
+			color: #c9c9c9;
+			font-family: Arial, Helvetica, sans-serif;
+			line-height: 20px;	
+			background: url(../images/carousel-row-dashed.png) left bottom repeat-x;
+			height: 20px;
+		}
+			.copilot-carousel .copilot-details .colRight .row {
+				background:#5d5d58 url(../images/carousel-row-dashed.png) left bottom repeat-x;
+			}
+			.copilot-carousel .copilot-details .row.first{
+				height:1px;
+			}
+			.copilot-carousel .copilot-details .row label{
+				float: left;
+				padding-left: 4px;
+			}
+			.copilot-carousel .copilot-details .row span{
+				float: right;
+				padding-right: 10px;
+				font-weight: bold;
+			}
+            .copilot-carousel .copilot-details .row a.link {
+                color:#C9C9C9;
+            }
+		.copilot-carousel .copilot-details .colRight{
+			float: right;
+			width: 195px;
+		}
+		.copilot-carousel.wider .copilot-details .colRight{
+			width: 284px;
+		}
+		.copilot-carousel .copilot-details .buttonArea{
+			margin-top: 22px;
+			text-align: center;
+		}
 					
 		.copilot-carousel .foot-bar {
-			border: 1px solid #dedede;
-			background: #f8efe5;
+			background: url('../images/carousel_stats_bg.png') repeat-x left top;
 			margin-bottom: 2px;
-			padding: 8px 10px;
-			color: #333333;
+			line-height: 25px;
+			height: 25px;
+			color: #9e9b9a;
 			font-size: 11px;
 			text-align: center;
+			position: relative;
 		}
 			.copilot-carousel .foot-bar a {
 				display: inline-block;
@@ -1474,6 +1491,94 @@ a.smallRed span.right {
 				float: right;
 				background-position: left -12px;
 			}
+.foot-bar .footCorner{
+	background: white;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+}
+	.foot-bar .bl{
+		bottom: 0px;
+		left: 0px;
+	}
+	.foot-bar .br{
+		bottom: 0px;
+		right: 0px;
+	}
+        /* carousel Navigation */	
+.carouselNav{
+	height: 94px;
+	border: 1px solid #bbbbbb;
+	border-top: none;
+}
+	.carouselNav .carouselNavContent{
+		width: 686px;		
+		margin: 0 auto;
+		position: relative;
+	}
+	.wider .carouselNav .carouselNavContent{
+		width: 950px;	
+	}
+	.carouselNav .navBack{
+		background:url(../images/caro-nav-back.png) right top no-repeat;
+		height: 93px;
+		width: 20px;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	.carouselNav .navForward{
+		background:url(../images/caro-nav-forward.png) left top no-repeat;
+		height: 93px;
+		width: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	.carouselNav .navBack:hover{
+		background-position: right bottom;
+		cursor: pointer;
+	}
+	.carouselNav .navForward:hover{
+		background-position: left bottom;
+		cursor: pointer;
+	}
+	.carouselNav .navThumb{
+		margin: 0px 35px 0px 35px;
+		overflow: hidden;
+		width: 616px;
+	}	
+	.wider .carouselNav .navThumb{
+		width: 880px;
+	}	
+		.carouselNav .navThumb ul {
+			height: 93px;		
+		}
+			.carouselNav .navThumb ul li{
+				float: left;
+				margin: 0 13px;
+				height: 93px;
+			}
+				.carouselNav .navThumb ul li.first{
+					margin-left: 0px;
+				}
+				.carouselNav .navThumb ul li a{
+					display: inline-block;
+					padding: 10px 0 6px 0;					
+					outline: none;
+				}				
+		.carouselNav .navThumb img{
+			width: 60px;
+			height: 72px;	
+			border: 1px solid #cfcfcf;
+			outline: none;
+		}
+		.carouselNav .navThumb img:focus{
+			outline: none;
+		}
+		.carouselNav ul li.current a{
+			background: url(../images/caro-nav-current.png) center top no-repeat;
+		}
 		
 /* copilot-wrapper */
 .copilot-wrapper {
@@ -1698,3 +1803,44 @@ a.smallRed span.right {
 .yellowColorText,.statusTSuspend {
     color: #fc3;
 }
+/* button Red */
+.btnRed{
+	background:url(../images/btn_red.png) left top no-repeat;
+	display:inline-block;
+	padding-left:3px;
+	height:30px;
+	width: auto;
+	overflow:hidden;	
+	text-decoration: none;
+}
+	.btnRed .right{
+		background:url(../images/btn_red.png) right bottom no-repeat;
+		display:inline-block;
+		height:30px;
+		padding-right:3px;	
+		width: auto;
+		cursor:pointer;			
+	}
+		.btnRed .right .middle{
+			background:url(../images/btn_red.png) 0 -30px repeat-x;
+			display:inline-block;
+			height:30px;
+			line-height:30px;
+			width: auto;
+			font-family: Arial, Helvetica, sans-serif;
+			font-weight: normal;
+			font-size:14px;
+			color:#fffffe;
+			cursor:pointer;
+			font-weight: bold;
+			padding: 0 10px;
+		}
+.btnRed:hover{
+	background:url(../images/btn_red_hover.png) left top no-repeat;
+}
+	.btnRed:hover .right{
+		background:url(../images/btn_red_hover.png) right bottom no-repeat;
+	}
+		.btnRed:hover .right .middle{
+			background:url(../images/btn_red_hover.png) 0 -30px repeat-x;
+		}	
