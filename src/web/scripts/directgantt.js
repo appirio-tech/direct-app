@@ -32,7 +32,7 @@ function recreateChartControl(htmlDiv) {
 }
 
 function showErrorMessage(htmlDiv, errorDiv, message) {
-    var defaultErrorMessage = "Error occurs while retrieving project game plan, please try refersh later";
+    var defaultErrorMessage = "Error occurs while retrieving project game plan, please try refresh later";
 
     $('#' + htmlDiv).html('');
 

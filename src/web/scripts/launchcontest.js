@@ -477,7 +477,7 @@ function handleProjectDropDownChange() {
     // set the selection drop down value
     $contestCopilots.val(selected);
 
-    // we only refersh stylish selection when it's not hidden
+    // we only refresh stylish selection when it's not hidden
     $('.copilotSelect select').resetSS();
     $('.copilotSelect select').getSetSSValue(selected);
 }
