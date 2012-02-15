@@ -1,7 +1,8 @@
 <div class="title"><!-- columns title -->
     <div class="titleLeft">
         <div class="titleRight">
-            <h2>Top News</h2>
+            <h2 style="float:left">Top News</h2>
+            <a href="http://www.topcoder.com/feed/?cat=57" class="homePageRSS"></a>
         </div>
     </div>
 </div><!-- End .title -->

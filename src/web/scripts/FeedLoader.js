@@ -60,14 +60,14 @@ function loadFeed(rss, template, element, errorMessage) {
  */
 function loadHomePageFeeds() {
 
-    // NOTE: The following block is commented out for testing/review purposes only. It should be
-    // uncommented when deploying to Production environment
-    loadFeed("https://www.topcoder.com/feed/?cat=57", "/scripts/DirectNewsTemplate.txt", "newsColumn",
-        "Error reading Direct News feed.");
+//    // NOTE: The following block is commented out for testing/review purposes only. It should be
+//    // uncommented when deploying to Production environment
+//    loadFeed("https://www.topcoder.com/feed/?cat=57", "/scripts/DirectNewsTemplate.txt", "newsColumn",
+//        "Error reading Direct News feed.");
 
     // NOTE: The following block is provided for testing/review purposes only. It should be
-    // removed when deploying to Production environment 
-    // loadFeed("/scripts/mockDirectNews.xml", "/scripts/DirectNewsTemplate.txt", "newsColumn",
-       //      "Error reading Direct News feed.");
+    // removed when deploying to Production environment
+    loadFeed("/scripts/mockDirectNews.xml", "/scripts/DirectNewsTemplate.txt", "newsColumn",
+             "Error reading Direct News feed.");
 
 }

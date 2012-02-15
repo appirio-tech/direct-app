@@ -2717,3 +2717,10 @@ ul.errorMessage {
     line-height: 20px;
     padding-left: 20px;
 }
+
+.homePageRSS {
+    background: url("/images/feed-icon.gif") no-repeat scroll center bottom transparent;
+    display: block;
+    padding: 13px 155px 13px 13px;
+    width: 20px;
+}

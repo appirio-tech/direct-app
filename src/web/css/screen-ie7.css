@@ -65,3 +65,13 @@
 .stepNav {
 		padding:25px 0 0;
 }
+
+.homePageRSS {
+    background: url("../images/feed-icon.gif") no-repeat scroll center center transparent;
+    display: block;
+    padding-left: 13px;
+    padding-top: 18px;
+    width: 26px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
