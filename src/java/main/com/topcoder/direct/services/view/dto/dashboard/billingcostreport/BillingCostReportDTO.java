@@ -203,6 +203,10 @@ public class BillingCostReportDTO extends ReportBaseDTO {
 		row.getCell(15).setStringValue("Invoice Number");
 		row.getCell(16).setStringValue("Invoice Date");
 		row.getCell(17).setStringValue("Invoice Amount");
+		if (isCanProcessInvoices())
+		{
+			row.getCell(18).setStringValue("Payment ID");
+		}
 
         // insert sheet data from 2nd row
         int rowIndex = 2;
@@ -283,6 +287,12 @@ public class BillingCostReportDTO extends ReportBaseDTO {
 			if (row.getCell(17) != null)
 			{
 				row.getCell(17).setNumberValue((costDetail.getInvoiceAmount()));
+			}
+			
+			
+			if (isCanProcessInvoices() && row.getCell(18) != null)
+			{
+				row.getCell(18).setNumberValue((costDetail.getPaymentId()));
 			}
 			
 			
