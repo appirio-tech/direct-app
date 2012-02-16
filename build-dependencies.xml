@@ -464,6 +464,14 @@
   <property name="topcoder_cockpit_project_metadata_services.jar.name" value="topcoder_cockpit_project_metadata_services.jar" />
   <property name="topcoder_cockpit_project_metadata_services.path" value="topcoder_cockpit_project_metadata_services/${topcoder_cockpit_project_metadata_services.version}" />
   <property name="topcoder_cockpit_project_metadata_services.jar" value="${tcs_libdir}/${topcoder_cockpit_project_metadata_services.path}/${topcoder_cockpit_project_metadata_services.jar.name}" />
+
+    <property name="topcoder_cockpit_project_milestone_services.version" value="1.0.0"/>
+    <property name="topcoder_cockpit_project_milestone_services.jar.name"
+              value="topcoder_cockpit_project_milestone_services.jar"/>
+    <property name="topcoder_cockpit_project_milestone_services.path"
+              value="topcoder_cockpit_project_milestone_services/${topcoder_cockpit_project_milestone_services.version}"/>
+    <property name="topcoder_cockpit_project_milestone_services.jar"
+              value="${tcs_libdir}/${topcoder_cockpit_project_milestone_services.path}/${topcoder_cockpit_project_milestone_services.jar.name}"/>
   
   <property name="topcoder_commons_utility.version" value="1.0.0" />
   <property name="topcoder_commons_utility.jar.name" value="topcoder_commons_utility.jar" />
@@ -740,6 +748,7 @@
     <pathelement location="${json_object.jar}" />
     <pathelement location="${topcoder_cockpit_project_metadata_entities.jar}" />
     <pathelement location="${topcoder_cockpit_project_metadata_services.jar}" />
+    <pathelement location="${topcoder_cockpit_project_milestone_services.jar}" />
     <pathelement location="${random_string_generator.jar}" />
     <pathelement location="${random_string_image.jar}" />
     <pathelement location="${spell_check.jar}" />

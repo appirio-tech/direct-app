@@ -1014,6 +1014,75 @@
         </action>
     </package>
 
+    <package name="projectMilestone" namespace="/milestone" extends="base">
+
+        <action name="projectMilestone"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result>/WEB-INF/milestone/project-milestone-demo.jsp</result>
+        </action>
+
+        <action name="projectMilestoneBatchCreatePage"
+                        class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+                    <interceptor-ref name="baseStack"/>
+                    <interceptor-ref name="defaultStack"/>
+                    <interceptor-ref name="authnInterceptor"/>
+                    <result>/WEB-INF/milestone/project-milestone-batch-create.jsp</result>
+        </action>
+
+        <action name="getProjectMilestones" method="getProjectMilestones"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getProjectResponsiblePerson" method="getProjectResponsiblePerson"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="removeProjectMilestone" method="removeProjectMilestone"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="addProjectMilestone" method="addProjectMilestone"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="updateProjectMilestone" method="updateProjectMilestone"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="addProjectMilestones" method="addProjectMilestones"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="removeProjectMilestones" method="removeProjectMilestones"
+                class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneDemoAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+    </package>
+
     <package name="projectMetadata" namespace="/metadata" extends="base">
 
         <action name="projectMetadata" class="projectMetadataAction">

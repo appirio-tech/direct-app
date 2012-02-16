@@ -232,6 +232,8 @@
         <property name="metadataKeyService" ref="directProjectMetadataKeyService"/>
         <property name="metadataService" ref="directProjectMetadataServices"/>
         <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
+        <property name="milestoneResponsiblePersonService" ref="milestoneResponsiblePersonService"/>
+        <property name="milestoneService" ref="milestoneService"/>
     </bean>
 
     <bean id="currentProjectOverviewAction"
@@ -625,6 +627,8 @@
             <list>
           <value>/META-INF/mapping.hbm.xml</value>
                 <value>META-INF/invoiceMapping.hbm.xml</value>
+                <value>META-INF/Milestone.hbm.xml</value>
+                <value>META-INF/ResponsiblePerson.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -645,6 +649,21 @@
         <property name="loggerName" value="copilotBaseDAO"/>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+    <bean id="milestoneLogger" class="com.topcoder.util.log.LogManager"
+    		factory-method="getLog">
+    		<constructor-arg value="milestoneLogger" />
+    </bean>
+
+    <bean name="milestoneResponsiblePersonService" class="com.topcoder.direct.services.project.milestone.hibernate.HibernateResponsiblePersonService">
+        <property name="logger" ref="milestoneLogger"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="milestoneService" class="com.topcoder.direct.services.project.milestone.hibernate.HibernateMilestoneService">
+            <property name="logger" ref="milestoneLogger"/>
+            <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
 
     <bean name="invoiceBaseDAO" abstract="true">
         <property name="loggerName" value="invoiceBaseDAO"/>

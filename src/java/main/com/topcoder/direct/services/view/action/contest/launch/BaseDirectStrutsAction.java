@@ -5,15 +5,17 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.clients.model.Project;
-import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.direct.services.configs.ReferenceDataBean;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataKeyService;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
+import com.topcoder.direct.services.project.milestone.MilestoneService;
+import com.topcoder.direct.services.project.milestone.ResponsiblePersonService;
 import com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
@@ -90,10 +92,15 @@ import java.util.List;
   * <li>Add <code>permissionServiceFacade</code> reference.</li>
   * </ul>
   * </p>
- *  
+ *  <p>
+   * Version 1.5 - Module Assembly - TC Cockpit Project Milestones Service Integration and Testing Change Note
+   * <ul>
+   * <li>Add <code>permissionServiceFacade</code> reference.</li>
+   * </ul>
+   * </p>
  *
  * @author fabrizyo, FireIce, murphydog, GreatKevin
- * @version 1.4
+ * @version 1.5
  */
 public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
@@ -206,6 +213,18 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      * @since 1.3
      */
     private DirectProjectMetadataService metadataService;
+
+    /**
+     * The milestone responsible person service.
+     * @since 1.5
+     */
+    private ResponsiblePersonService milestoneResponsiblePersonService;
+
+    /**
+     * The milestone service.
+     * @since 1.5
+     */
+    private MilestoneService milestoneService;
 
     /**
      * <p>
@@ -634,5 +653,46 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      */
     public void setMetadataService(DirectProjectMetadataService metadataService) {
         this.metadataService = metadataService;
+    }
+
+    /**
+     * Gets the milestone responsible person service.
+     *
+     * @return the milestone responsible person service.
+     *
+     * @since 1.5
+     */
+    public ResponsiblePersonService getMilestoneResponsiblePersonService() {
+        return milestoneResponsiblePersonService;
+    }
+
+    /**
+     * Sets the milestone responsible person service.
+     *
+     * @param milestoneResponsiblePersonService  the milestone responsible person service.
+     * @since 1.5
+     */
+    public void setMilestoneResponsiblePersonService(ResponsiblePersonService milestoneResponsiblePersonService) {
+        this.milestoneResponsiblePersonService = milestoneResponsiblePersonService;
+    }
+
+    /**
+     * Gets the project milestone service.
+     *
+     * @return the project milestone service.
+     * @since 1.5
+     */
+    public MilestoneService getMilestoneService() {
+        return milestoneService;
+    }
+
+    /**
+     * Sets the project milestone service.
+     *
+     * @param milestoneService the project milestone service.
+     * @since 1.5
+     */
+    public void setMilestoneService(MilestoneService milestoneService) {
+        this.milestoneService = milestoneService;
     }
 }
