@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <projects>
 	
+    <project
+        name="scorecard_tool"
+        svnbase="https://coder.topcoder.com/tcs/clients/cronos/applications/scorecards"
+        buildfile="build.xml">
+        <versions>
+            <version name="TRUNK" path="trunk/scorecard_tool"/>
+            <version name="RELEASE" path="release"/>
+        </versions>
+    </project>
 
     <project
         name="configuration_manager"
