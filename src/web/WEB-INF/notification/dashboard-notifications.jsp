@@ -163,7 +163,7 @@
                                 <strong>Notifications</strong>
                             </div>
               <div class="areaHeader">
-                <h2 class="title notificationTitle">Notifications Setting</h2>
+                <h2 class="title notificationTitle">Notification Settings</h2>
                                     <div class="select">
                                         Select a Setting Panel:
                                         <span name="settingPanel">
@@ -183,7 +183,7 @@
                                     <thead>
                                     <tr class=" ">
                                         <th colspan="5">
-                                            <span class="left"><span class="right">Preference to Receive Notifications for Forums and Timeline Changes</span></span>
+                                            <span class="left"><span class="right">Default Settings</span></span>
                                         </th>
                                     </tr>
                                     </thead>
@@ -222,13 +222,13 @@
                                             <table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="permCol">Project / Contest</th>
+                                                        <th class="permCol">Project / Contest Settings</th>
                                                         <th class="permCol2" colspan="2">Notifications</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="checkPermissions">
                                                     <tr class="applyForAll">
-                                                        <td class="markRed">Apply for All Projects</td>
+                                                        <td class="markRed">Apply to All Projects</td>
                                                         <td class="checkbox">
                                                             <input id="timeCheckAllId" class="selectUser select_timeline" type="checkbox" onclick="notifications.selectAll(this, 'timeline');" autocomplete="off">
                                                             <label for="timeCheckAllId"> Timeline </label>
