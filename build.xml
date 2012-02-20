@@ -444,9 +444,6 @@
       	<fileset dir="${srcdir}/mobile_web/images">
           <include name="**/*" />
         </fileset>
-        <fileset dir="${scorecard_dir}/web-app/images">
-          <include name="**/*" />
-        </fileset>
       </copy>
       <copy todir="${apache_tcdocs}/css" overwrite="true">
         <fileset dir="${srcdir}/web/css">
@@ -458,9 +455,6 @@
       	<fileset dir="${srcdir}/mobile_web/css">
           <include name="**/*" />
         </fileset>
-        <fileset dir="${scorecard_dir}/web-app/css">
-          <include name="**/*" />
-        </fileset>
       </copy>
       <copy todir="${apache_tcdocs}/scripts" overwrite="true">
         <fileset dir="${srcdir}/web/scripts">
@@ -470,9 +464,6 @@
           <include name="**/*" />
         </fileset>
       	<fileset dir="${srcdir}/mobile_web/scripts">
-          <include name="**/*" />
-        </fileset>
-        <fileset dir="${scorecard_dir}/web-app/js">
           <include name="**/*" />
         </fileset>
       </copy>
