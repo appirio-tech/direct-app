@@ -150,6 +150,10 @@
 
 /* smallProjectLinks */
 
+.smallProjectLinks {
+    min-height: 60px;
+}
+
 .smallProjectLinks .linkBox, .bigProjectLinks .linkBox {
     min-height: 18px;
     /*padding-bottom:15px;*/
@@ -210,6 +214,7 @@
     height: 13px;
     padding: 2px;
     background: url(/images/total_bg.png) no-repeat left center;
+    position:relative;
 }
 
 .columeThird .projectBudget .actualCost, .columeForth .projectDuration .actualDuration {
@@ -218,6 +223,9 @@
     float: left;
     display: inline;
     overflow: hidden;
+    position: absolute;
+    left: 2px;
+    top: 2px;
 }
 
 .columeThird .projectBudget .actualCost .leftActual, .columeForth .projectDuration .actualDuration .leftActual {
@@ -344,27 +352,17 @@
 
 /* clientManagers */
 .managersBox .clientManagers {
-    width: 49%;
-    float: left;
-    display: inline;
+    padding-bottom:7px;
 }
 
 .managersBox .clientManagers h3 {
-    width: 107px;
-    float: left;
-    display: inline;
-    margin: 1px 0;
-    margin-top: 4px;
-    margin-left: 10px;
+    margin:2px 0 4px;
 }
 
 .managersBox .clientManagers ul {
-    min-width: 350px;
     width: auto;
-    float: left;
-    display: inline;
-    margin-left: 10px;
     padding-bottom: 6px;
+    overflow:hidden;
 }
 
 .managersBox .clientManagers ul li {
@@ -391,28 +389,16 @@
 }
 
 /* projectManagers */
-.managersBox .projectManagers {
-    width: 49%;
-    float: left;
-    display: inline;
-}
+
 
 .managersBox .projectManagers h3 {
-    width: 175px;
-    float: left;
-    display: inline;
-    margin: 1px 0;
-    margin-top: 4px;
-    margin-left: 10px;
+    margin: 2px 0 4px;
 }
 
 .managersBox .projectManagers ul {
-    min-width: 282px;
     width: auto;
-    float: left;
-    display: inline;
-    margin-left: 10px;
     padding-bottom: 6px;
+    overflow: hidden;
 }
 
 .managersBox .projectManagers ul li {
@@ -604,5 +590,180 @@ td.contestActivities .review .rightLaunch p a {
 
 .notSet a:hover {
     text-decoration:underline !important;
+}
+
+.columeThird .projectBudget dt.projected, .columeForth .projectDuration dt.projected {
+    background-image: url("/images/projected-icon.gif");
+}
+
+.columeThird .projectBudget dt.projected.red, .columeForth .projectDuration dt.projected.red {
+    background-image: url("/images/actual_red_icon.png");
+}
+
+.columeThird .projectBudget dd.projectedNum.red, .columeForth .projectDuration dd.projectedNum.red {
+    color: #ff0000;
+}
+
+.ratingView {
+    overflow: hidden;
+}
+
+.ratingView span {
+    background: url(/images/rating2.png) no-repeat 0 0;
+    height: 13px;
+    width: 14px;
+    float: left;
+    margin-right: 2px;
+}
+
+.ratingView span.active {
+    background-position: 0 -13px;
+}
+
+.managersBox .pRatings {
+    font-size: 11px;
+    padding-left: 10px;
+    width: 263px;
+    float: left;
+    min-height: 148px;
+}
+
+.managersBox .pRatings dt {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 0 10px;
+}
+
+.noData .managersBox .pRatings dt {
+    padding-bottom: 2px;
+}
+
+.managersBox .pRatings dd {
+    overflow: hidden;
+    padding: 0 0 10px;
+}
+
+.managersBox .pRatings dd label {
+    float: left;
+    width: 134px;
+}
+
+.managersBox .pRatings dd .ratingView {
+    float: left;
+}
+
+.noData .managersBox .clientManagers h3, .noData .managersBox .projectManagers h3 {
+    margin-bottom: 0;
+}
+
+.managersBox .managersMask {
+    float: left;
+    min-width: 200px;
+    padding-left: 0;
+    padding-bottom: 11px;
+}
+
+.managersBox  .additionalInfo {
+    float: left;
+    padding: 4px 2px 6px 0;
+    font-size: 11px;
+    min-width: 200px;
+}
+
+.noData .managersBox  .additionalInfo, .noData .managersBox .managersMask {
+    min-width: 260px;
+}
+
+.managersBox  .additionalInfo dt {
+    font-weight: bold;
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+.noData .managersBox  .additionalInfo dt {
+    padding-bottom: 0;
+}
+
+.managersBox  .additionalInfo dd {
+    overflow: hidden;
+    padding-bottom: 2px;
+}
+
+.managersBox  .additionalInfo dd label {
+    width: 125px;
+    float: left;
+}
+
+.managersBox  .additionalInfo dd span {
+    padding-left: 125px;
+    display: block;
+    color: #666;
+}
+
+.columeThird .projectBudget .projectedCost, .columeForth .projectDuration .projectDuration {
+    display: inline;
+    float: left;
+    height: 13px;
+    left: 2px;
+    overflow: hidden;
+    position: absolute;
+    top: 2px;
+    width: auto;
+}
+
+.columeThird .projectBudget .projectedCost .leftProjected, .columeForth .projectDuration .projectedDuration .leftProjected {
+    width: auto;
+    float: left;
+    display: inline;
+    padding-left: 4px;
+    background-position: left 0;
+    background-repeat: no-repeat;
+}
+
+.columeThird .projectBudget .projectedCost .rightProjected, .columeForth .projectDuration .projectedDuration .rightProjected {
+    width: auto;
+    float: left;
+    display: inline;
+    padding-right: 4px;
+    background-position: right -26px;
+    background-repeat: no-repeat;
+}
+
+.columeThird .projectBudget .projectedCost .midProjected, .columeForth .projectDuration .projectedDuration .midProjected {
+    width: 10px;
+    float: left;
+    display: inline;
+    height: 13px;
+    background-position: left -13px;
+    background-repeat: repeat-x;
+}
+
+.columeThird .projectedCost .leftProjected, .columeThird .projectedCost .rightProjected, .columeThird .projectedCost .midProjected,
+.columeForth .projectedDuration .leftProjected, .columeForth .projectedDuration .rightProjected, .columeForth .projectDuration .midProjected {
+    background-image: url(/images/black-bar.png);
+}
+
+.columeThird .projectedCost.red .leftProjected, .columeThird .projectedCost.red .rightProjected, .columeThird .projectedCost.red .midProjected,
+.columeForth .projectedDuration.red .leftProjected, .columeForth .projectedDuration.red .rightProjected, .columeForth .projectedDuration.red .midProjected {
+    background-image: url(../images/actual_red.png);
+}
+
+.columeThird .projectBudget dt.noData , .columeForth .totalBudgetInfor dt.noData {
+    background: none !important;
+    padding-left: 0;
+}
+
+.projectEditLink {
+    background: url(/images/edit-icon.png) no-repeat 0 2px;
+    display: inline-block;
+    line-height: 14px;
+    color: #ea0107 !important;
+    padding-left: 20px;
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.projectEditLink:hover {
+    text-decoration: none;
 }
 

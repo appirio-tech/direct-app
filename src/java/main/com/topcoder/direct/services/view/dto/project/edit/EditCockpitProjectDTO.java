@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project.edit;
 
@@ -16,7 +16,13 @@ import java.util.*;
  *     DTO for data in edit project page.
  * </p>
  *
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
+ * <p>
+ *     Version 1.1 Release Assembly - TC Cockpit Edit Project and Project General Info Update change nots:
+ *     - Add 5 new properties for 5 project ratings.
+ * </p>
+ *
+ * @version 1.1
+ * @author GreatKevin
  */
 public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
 
@@ -64,6 +70,37 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      * The privacy setting of the project.
      */
     private DirectProjectMetadata privacy;
+
+
+    /**
+     * The business impact rating of the project.
+     * @since 1.1
+     */
+    private DirectProjectMetadata businessImpactRating;
+
+    /**
+     * The risk level rating of the project.
+     * @since 1.1
+     */
+    private DirectProjectMetadata riskLevelRating;
+
+    /**
+     * The cost level rating of the project.
+     * @since 1.1
+     */
+    private DirectProjectMetadata costLevelRating;
+
+    /**
+     * The difficulty rating of the project.
+     * @since 1.1
+     */
+    private DirectProjectMetadata difficultyRating;
+
+    /**
+     * The ROI rating of the project.
+     * @since 1.1
+     */
+    private DirectProjectMetadata roiRating;
 
     /**
      * All the custom metadata of the project.
@@ -248,5 +285,105 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setCustomMetadata(Map<DirectProjectMetadataKey, List<DirectProjectMetadata>> customMetadata) {
         this.customMetadata = customMetadata;
+    }
+
+    /**
+     * Gets the business impact rating.
+     *
+     * @return the business impact rating.
+     * @since 1.1
+     */
+    public DirectProjectMetadata getBusinessImpactRating() {
+        return businessImpactRating;
+    }
+
+    /**
+     * Sets the business impact rating.
+     *
+     * @param businessImpactRating the business impact rating.
+     * @since 1.1
+     */
+    public void setBusinessImpactRating(DirectProjectMetadata businessImpactRating) {
+        this.businessImpactRating = businessImpactRating;
+    }
+
+    /**
+     * Gets the risk level rating.
+     *
+     * @return the risk level rating.
+     * @since 1.1
+     */
+    public DirectProjectMetadata getRiskLevelRating() {
+        return riskLevelRating;
+    }
+
+    /**
+     * Sets the risk level rating.
+     *
+     * @param riskLevelRating the risk level rating.
+     * @since 1.1
+     */
+    public void setRiskLevelRating(DirectProjectMetadata riskLevelRating) {
+        this.riskLevelRating = riskLevelRating;
+    }
+
+    /**
+     * Gets the cost level rating.
+     *
+     * @return the cost level rating.
+     * @since 1.1
+     */
+    public DirectProjectMetadata getCostLevelRating() {
+        return costLevelRating;
+    }
+
+    /**
+     * Sets the cost level rating.
+     *
+     * @param costLevelRating the cost level rating.
+     * @since 1.1
+     */
+    public void setCostLevelRating(DirectProjectMetadata costLevelRating) {
+        this.costLevelRating = costLevelRating;
+    }
+
+    /**
+     * Gets the difficulty rating.
+     *
+     * @return the difficulty rating.
+     * @since 1.1
+     */
+    public DirectProjectMetadata getDifficultyRating() {
+        return difficultyRating;
+    }
+
+    /**
+     * Sets the difficulty rating.
+     *
+     * @param difficultyRating the difficulty rating.
+     * @since 1.1
+     */
+    public void setDifficultyRating(DirectProjectMetadata difficultyRating) {
+        this.difficultyRating = difficultyRating;
+    }
+
+    /**
+     * Gets the ROI rating.
+     *
+     * @return the ROI rating.
+     * @since 1.1
+     */
+    public DirectProjectMetadata getRoiRating() {
+        return roiRating;
+    }
+
+    /**
+     * Sets the ROI rating.
+     *
+     * @param roiRating the roi rating.
+     * @since 1.1
+     */
+    public void setRoiRating(DirectProjectMetadata roiRating) {
+        this.roiRating = roiRating;
     }
 }

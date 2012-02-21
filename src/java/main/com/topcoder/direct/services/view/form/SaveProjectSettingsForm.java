@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
@@ -13,8 +13,13 @@ import java.util.List;
  *     The form data for the save operation and all the ajax operations in Edit Project Settings page.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project)
+ * <p>
+ *     Version 1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info Update) change notes:
+ *     - Add new form property projectRatings for saving project ratings in Edit Project Page.
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class SaveProjectSettingsForm extends ProjectIdForm {
 
@@ -77,6 +82,13 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      * The privacy setting of the project.
      */
     private ProjectMetadataOperation privacy;
+
+
+    /**
+     * The project ratings of the project.
+     * @since 1.1
+     */
+    private List<ProjectMetadataOperation> projectRatings;
 
     /**
      * Gets the name of the project.
@@ -292,5 +304,25 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     public void setCustomMetadataValues(List<ProjectMetadataOperation> customMetadataValues) {
         this.customMetadataValues = customMetadataValues;
+    }
+
+    /**
+     * Gets the project ratings of the project.
+     *
+     * @return the project ratings of the project.
+     * @since 1.1
+     */
+    public List<ProjectMetadataOperation> getProjectRatings() {
+        return projectRatings;
+    }
+
+    /**
+     * Sets the project ratings of the project.
+     *
+     * @param projectRatings the project ratings of the project.
+     * @since 1.1
+     */
+    public void setProjectRatings(List<ProjectMetadataOperation> projectRatings) {
+        this.projectRatings = projectRatings;
     }
 }

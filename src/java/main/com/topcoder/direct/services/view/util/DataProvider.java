@@ -420,8 +420,16 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 3.5 (Release Assembly - TC Cockpit Edit Project and Project General Info Update) change log:
+ * <ol>
+ *     <li>Updated method method {@link #setProjectGeneralInfo(com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO)}
+ *     to set projected duration and projected cost of the project.</li>
+ * </ol>
+ * </p>
+ * 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues
- * @version 3.4
+ * @version 3.5
  * @since 1.0
  */
 public class DataProvider {
@@ -3302,7 +3310,7 @@ public class DataProvider {
                 }
 
                 projectForBilling.put(directProjectId, directProjectName);
-
+                
                 projectClientMap.put(directProjectId, clientId);
             }
 
@@ -4797,6 +4805,9 @@ public class DataProvider {
 
         final String commandName = "direct_project_general_info";
         final String projectStartDateQuery = "direct_project_general_info_start_date";
+        final String projectedEndDateQuery = "direct_project_general_info_projected_end_date";
+        final String projectedCostQuery = "direct_project_general_info_projected_cost";
+
         // final String projectCostQuery = "direct_project_general_info_cost";
         DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
@@ -4809,8 +4820,10 @@ public class DataProvider {
         // get start date
         final ResultSetContainer startDateContainer = map.get(projectStartDateQuery);
 
-        if(startDateContainer.size() > 0) {
-            final Timestamp startDate = startDateContainer.getTimestampItem(0, "start_date");
+        Timestamp startDate = null;
+
+        if (startDateContainer.size() > 0) {
+            startDate = startDateContainer.getTimestampItem(0, "start_date");
 
             if (startDate != null) {
                 // current date
@@ -4818,11 +4831,12 @@ public class DataProvider {
 
                 long duration = currentTime.getTime() - startDate.getTime();
 
-                long days = duration / (60 * 60 * 1000 * 24);
+                long days = 0;
 
-                if (duration % (60 * 60 * 1000 * 24) > 0L) {
-                    days = days + 1;
+                if (duration > 0) {
+                    days = DirectUtils.daysBetween(startDate, currentTime);
                 }
+
 
                 projectGeneralInfo.setActualDuration((int) days);
             } else {
@@ -4833,22 +4847,46 @@ public class DataProvider {
             projectGeneralInfo.setActualDuration(0);
         }
 
-//        // get cost
-//        final ResultSetContainer costContainer = map.get(projectCostQuery);
-//
-//        if(costContainer.size() > 0) {
-//
-//            if (costContainer.getItem(0, "total_cost").getResultData() != null) {
-//                final float cost = costContainer.getFloatItem(0, "total_cost");
-//
-//                projectGeneralInfo.setActualCost(Math.round(cost));
-//            } else {
-//                projectGeneralInfo.setActualCost(0);
-//            }
-//        } else {
-//            projectGeneralInfo.setActualCost(0);
-//        }
+        // get projected end date
+        final ResultSetContainer projectedEndContainer = map.get(projectedEndDateQuery);
 
+        if (projectedEndContainer.size() > 0) {
+            final Timestamp projectedEndDate = projectedEndContainer.getTimestampItem(0, "projected_end_date");
+
+            if (projectedEndDate != null && startDate != null) {
+                long duration = projectedEndDate.getTime() - startDate.getTime();
+                long days = 0;
+
+                if (duration > 0) {
+                    days = DirectUtils.daysBetween(startDate, projectedEndDate);
+                }
+
+                projectGeneralInfo.setProjectedDuration((int) days);
+
+            } else {
+                projectGeneralInfo.setProjectedDuration(0);
+            }
+        } else {
+            projectGeneralInfo.setProjectedDuration(0);
+        }
+
+
+        // get projected cost
+        final ResultSetContainer costContainer = map.get(projectedCostQuery);
+
+        if(costContainer.size() > 0) {
+
+            if (costContainer.getItem(0, "projected_cost").getResultData() != null) {
+                final float cost = costContainer.getFloatItem(0, "projected_cost");
+
+                projectGeneralInfo.setProjectedCost(Math.round(cost + projectGeneralInfo.getActualCost()));
+            } else {
+                projectGeneralInfo.setProjectedCost(projectGeneralInfo.getActualCost());
+            }
+        } else {
+            projectGeneralInfo.setProjectedCost(projectGeneralInfo.getActualCost());
+        }
+        
     }
 }
 

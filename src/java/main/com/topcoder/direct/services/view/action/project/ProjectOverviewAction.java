@@ -22,6 +22,7 @@ import com.topcoder.service.project.ProjectData;
 import com.topcoder.shared.util.logging.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,9 +87,17 @@ import java.util.Map;
  *     <li>Updated {@link #execute()} method to retrieve data for the newly added project general information table.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Cockpit Edit Project and Project General Info Update version 1.0) change notes:
+ * <ol>
+ *     <li>Update {@link #setProjectGeneralInfo(com.topcoder.service.project.ProjectData)} to set project ratings and
+ *     additional project information.</li>
+ * </ol>
+ * </p>
  * 
- * @author isv, Veve, Blues
- * @version 1.2
+ * @author isv, Veve, Blues, GreatKevin
+ * @version 1.3
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -331,9 +340,15 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         final List<DirectProjectMetadata> metadata = getProjectMetadataService().getProjectMetadataByProject(getFormData().getProjectId());
         List<Long> clientManagers = new ArrayList<Long>();
         List<Long> tcManagers = new ArrayList<Long>();
+        Map<String, List<String>> additionalProjectInfo = new HashMap<String, List<String>>();
 
         for (DirectProjectMetadata m : metadata) {
             long keyId = m.getProjectMetadataKey().getId();
+            long clientId = -1;
+            
+            if(m.getProjectMetadataKey().getClientId() != null) {
+                clientId = m.getProjectMetadataKey().getClientId();
+            }
 
             if (keyId == 1L) {
                 // client managers
@@ -353,9 +368,35 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             } else if (keyId == 6L) {
                 // planned duration
                 getViewData().getProjectGeneralInfo().setPlannedDuration(Integer.parseInt(m.getMetadataValue()));
+            } else if (keyId == 10L) {
+                // business impact rating
+                getViewData().getProjectGeneralInfo().setBusinessImpactRating(Integer.parseInt(m.getMetadataValue()));
+            } else if (keyId == 11L) {
+                // risk level rating
+                getViewData().getProjectGeneralInfo().setRiskLevelRating(Integer.parseInt(m.getMetadataValue()));
+            } else if (keyId == 12L) {
+                // cost rating
+                getViewData().getProjectGeneralInfo().setCostRating(Integer.parseInt(m.getMetadataValue()));
+            } else if (keyId == 13L) {
+                // difficulty rating
+                getViewData().getProjectGeneralInfo().setDifficultyRating(Integer.parseInt(m.getMetadataValue()));
+            }
+
+            if (clientId > 0) {
+                String keyName = m.getProjectMetadataKey().getName();
+                
+                if(!additionalProjectInfo.containsKey(keyName)) {
+                    List<String> values = new ArrayList<String>();
+                    values.add(m.getMetadataValue());
+                    additionalProjectInfo.put(keyName, values);
+                } else {
+                    List<String> values = additionalProjectInfo.get(keyName);
+                    values.add(m.getMetadataValue());
+                }
             }
         }
 
+        getViewData().getProjectGeneralInfo().setAdditionalProjectInfo(additionalProjectInfo);
         getViewData().getProjectGeneralInfo().setClientManagers(clientManagers);
         getViewData().getProjectGeneralInfo().setTopcoderManagers(tcManagers);
 

@@ -26,8 +26,15 @@ import java.util.List;
  * Action for viewing edit project settings page.
  * </p>
  *
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project)
- * @TCSASSEMBLER
+ * <p>
+ *     Version 1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info Update) changes notes:
+ *     <li>
+ *         Update ${@link #setCommonProjectMetadata(java.util.List)} ()} to set the new added 5 project ratings.
+ *     </li>
+ * </p>
+ *
+ * @version 1.1
+ * @GreatKevin
  */
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
         ViewAction<EditCockpitProjectDTO> {
@@ -161,6 +168,14 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
                 getViewData().setDuration(data);
             } else if (keyId == 9L) {
                 getViewData().setPrivacy(data);
+            } else if (keyId == 10L) {
+                getViewData().setBusinessImpactRating(data);
+            } else if (keyId == 11L) {
+                getViewData().setRiskLevelRating(data);
+            } else if (keyId == 12L) {
+                getViewData().setCostLevelRating(data);
+            } else if (keyId == 13L) {
+                getViewData().setDifficultyRating(data);
             }
         }
     }

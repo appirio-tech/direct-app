@@ -1,17 +1,117 @@
 /**
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for edit project page..
  *
  *  Version 1.0 - Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0
  *
+ *  Version 1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info) changes:
+ *  - Add javascripts codes to edit and save project ratings.
+ *
  * @author GreatKevin
- * @version 1.0
+ * @version 1.1
  */
 Date.format = 'mm/dd/yyyy';
+
+var setupEditProjectToolTip = function() {
+
+    $(".tctips").remove();
+
+
+    $('#editProjectName a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Project Name",
+            content:'Set the name of your project, max 60 characters'
+        });
+    });
+
+    $('#editProjectDescription a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Project Description",
+            content:'Set the description of your project, max 2000 characters'
+        });
+    });
+
+    $('#editProjectInfo a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Project Information",
+            content:'Edit the general project information like budget, planned duration etc'
+        });
+    });
+
+    $('#editCustomProjectMetadata a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Custom Project Metadata",
+            content:'Edit or Add custom information for your project. Custom metadata can be used to store additional information about your project'
+        });
+    });
+
+    $('.metaAreaRight a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Project Ratings",
+            content:'Rating your project with 5 different ratings'
+        });
+    });
+
+    $('#editProjectStatus a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Project Status",
+            content:'Set the project status'
+        });
+    });
+
+    $('#editProjectPrivacy a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Project Privacy",
+            content:'Set whether you want your project name viewable to TopCoder community'
+        });
+    });
+
+}
+
+
 $(document).ready(function (e) {
 
     if ($('.editPage').length > 0) {
+
+        $(".ratingEdit span").live("mouseenter", function () {
+            var wrapper = $(this).parent();
+            var index = wrapper.find("span").index($(this));
+            wrapper.find("span").removeClass("active");
+            wrapper.find("span:lt(" + (index + 1) + ")").addClass("active");
+        })
+        $(".ratingEdit span").live("mouseleave", function () {
+            var wrapper = $(this).parent();
+            var index = wrapper.find("span").index($(this));
+            var rating = wrapper.data("rating");
+            wrapper.find("span").removeClass("active");
+            wrapper.find("span:lt(" + rating + ")").addClass("active");
+        })
+        $(".ratingEdit span").live("click", function () {
+            var wrapper = $(this).parent();
+            var index = wrapper.find("span").index($(this));
+            wrapper.find("span:lt(" + index + ")").addClass("active");
+            wrapper.data("rating", index + 1);
+            return false;
+        });
+
+        $(".ratingEdit").each(function () {
+            var _this = $(this);
+            for (var i = 0; i < 5; i++) {
+                var span = $("<span/>").appendTo(_this);
+            }
+
+            // check the value
+            var item = $(this).parent();
+            var value = item.find("input[name='rating']").val();
+
+            if(value <= 0) {
+                _this.data("rating", 0);
+            } else {
+                $(this).find("span:eq(" + (value - 1) + ")").trigger('mouseenter').trigger('click');
+            }
+
+        });
 
 
         $('.addCustomMetaBtnContainer .triggerModal').click(function () {
@@ -91,6 +191,7 @@ $(document).ready(function (e) {
 
         $('.moreValue').live('click', function () {
             $('<div class="inputContainer inputWrapper"><input type="text" value="" name="customMetadataValue" class="textInput" autocomplete="off"><a href="javascript:;" class="clearValue clearValueDisabled">Clear</a></div>').insertBefore($(this));
+            setupEditProjectToolTip();
             return false;
         });
 
@@ -419,48 +520,7 @@ $(document).ready(function (e) {
             });
         });
 
-
-        $('#editProjectName a.toolTipIcon').each(function () {
-            $(this).tctip({
-                title:"Project Name",
-                content:'Set the name of your project, max 60 characters'
-            });
-        });
-
-        $('#editProjectDescription a.toolTipIcon').each(function () {
-            $(this).tctip({
-                title:"Project Description",
-                content:'Set the description of your project, max 2000 characters'
-            });
-        });
-
-        $('#editProjectInfo a.toolTipIcon').each(function () {
-            $(this).tctip({
-                title:"Project Information",
-                content:'Edit the general project information like budget, planned duration etc'
-            });
-        });
-
-        $('#editCustomProjectMetadata a.toolTipIcon').each(function () {
-            $(this).tctip({
-                title:"Custom Project Metadata",
-                content:'Edit or Add custom information for your project. Custom metadata can be used to store additional information about your project'
-            });
-        });
-
-        $('#editProjectStatus a.toolTipIcon').each(function () {
-            $(this).tctip({
-                title:"Project Status",
-                content:'Set the project status'
-            });
-        });
-
-        $('#editProjectPrivacy a.toolTipIcon').each(function () {
-            $(this).tctip({
-                title:"Project Privacy",
-                content:'Set whether you want your project name viewable to TopCoder community'
-            });
-        });
+        setupEditProjectToolTip();
 
 //        $('.userManagementModal a.downloadProfile').each(function () {
 //            $(this).tctip({
@@ -603,6 +663,36 @@ $(document).ready(function (e) {
             privacyUpdate.value = privacyValue;
 
             formData.privacy = privacyUpdate;
+
+            var ratingOperations = [];
+
+            // get project ratings
+            $(".pRatings li").each(function(){
+                var currentRating = $(this).find(".ratingEdit").data("rating");
+                var oldRating = $(this).find("input[name='rating']").val();
+                var keyId = $(this).find("input[name='key']").val();
+
+                if(currentRating != oldRating) {
+
+                    var ratingOperation = {keyId:keyId};
+
+                    if(oldRating == 0) {
+                        // add
+                        ratingOperation.operation = "add";
+                    } else {
+                        ratingOperation.operation = "update";
+                        var metadataId = $(this).find("input[name='metadataId']").val();
+                        ratingOperation.id = metadataId;
+                    }
+
+                    ratingOperation.value = currentRating;
+
+                    ratingOperations.push(ratingOperation);
+                }
+
+            });
+
+            formData.projectRatings = ratingOperations;
 
             // get custom project metadata values
 
@@ -1013,6 +1103,7 @@ $(document).ready(function (e) {
                             $('.projectMetaAreaField:odd').addClass('oddRowItem');
 
                             LoopMedaField();
+                            setupEditProjectToolTip();
 
                         },
                         function (errorMessage) {

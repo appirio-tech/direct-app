@@ -1,9 +1,12 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.0.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
+  - Version: 1.1.0
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
+  -
+  - (Version 1.1 Release Assembly - TC Cockpit Edit Project and Project General Info Update) changes:
+  - -- Add edit and save of project ratings.
   -
   - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
 --%>
@@ -226,38 +229,123 @@
     </s:else>
 
 </div>
-<!-- End .projectMetaArea -->
 
-<div class="projectMetaArea singleMetaArea pStatus" id="editProjectStatus">
-    <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Status :</h3>
-    <div class="projectMetaAreaField radioContainer">
-        <input autocomplete="off" name="projectStatus" class="radioFix" type="radio" value="1" <s:if test='viewData.project.projectStatusId == 1L'>checked="checked"</s:if> />
-        <label class="activeStatus">Active</label>
-        <input autocomplete="off" name="projectStatus" type="radio" value="2" <s:if test='viewData.project.projectStatusId == 2L'>checked="checked"</s:if> />
-        <label class="archivedStatus">Archived</label>
-        <input autocomplete="off" name="projectStatus" type="radio" value="3" <s:if test='viewData.project.projectStatusId == 3L'>checked="checked"</s:if> />
-        <label class="deletedStatus">Deleted</label>
-        <input autocomplete="off" name="projectStatus" type="radio" value="4" <s:if test='viewData.project.projectStatusId == 4L'>checked="checked"</s:if> />
-        <label class="completedStatus">Completed</label>
+<!-- End .projectMetaArea -->
+<div class="metaAreaLeft">
+    <div class="projectMetaArea singleMetaArea pStatus" id="editProjectStatus">
+        <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Status :</h3>
+        <ul class="projectMetaAreaField radioContainer">
+
+            <li>
+                <input autocomplete="off" name="projectStatus" class="radioFix" type="radio" value="1"
+                       <s:if test='viewData.project.projectStatusId == 1L'>checked="checked"</s:if> />
+                <label class="activeStatus">Active</label>
+            </li>
+            <li>
+                <input autocomplete="off" name="projectStatus" type="radio" value="2"
+                       <s:if test='viewData.project.projectStatusId == 2L'>checked="checked"</s:if> />
+                <label class="archivedStatus">Archived</label>
+            </li>
+            <li>
+                <input autocomplete="off" name="projectStatus" type="radio" value="3"
+                       <s:if test='viewData.project.projectStatusId == 3L'>checked="checked"</s:if> />
+                <label class="deletedStatus">Deleted</label>
+            </li>
+            <li>
+                <input autocomplete="off" name="projectStatus" type="radio" value="4"
+                       <s:if test='viewData.project.projectStatusId == 4L'>checked="checked"</s:if> />
+                <label class="completedStatus">Completed</label>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="projectMetaArea singleMetaArea isPrivate" id="editProjectPrivacy">
+        <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Privacy :</h3>
+
+        <div class="projectMetaAreaField radioContainer">
+            <span class='hide' id="privacyMetadataId" name="${viewData.privacy.id}"></span>
+            <input autocomplete="off" name="privateFlag" type="radio" value="true" class="radioFix" <s:if
+                    test='viewData.privacy != null && viewData.privacy.metadataValue == "true"'> checked="checked" </s:if>/>
+            <label>Yes</label>
+            <input autocomplete="off" name="privateFlag" type="radio" value="false" <s:if
+                    test='viewData.privacy == null || viewData.privacy.metadataValue == "false"'> checked="checked" </s:if> />
+            <label>No</label>
+        </div>
     </div>
 </div>
-<!-- End .projectMetaArea -->
 
-<div class="projectMetaArea singleMetaArea isPrivate" id="editProjectPrivacy">
-    <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Privacy :</h3>
+<div class="metaAreaRight">
+    <div class="projectMetaArea pRatings">
+        <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Ratings :</h3>
+        <ul class="projectMetaAreaField">
+            <li>
+                <input type="hidden" name="key" value="10"/>
+                <s:if test="viewData.businessImpactRating != null">
+                    <label>${viewData.businessImpactRating.projectMetadataKey.name}</label>
+                    <input type="hidden" name="rating" value="${viewData.businessImpactRating.metadataValue}">
+                    <input type="hidden" name="metadataId" value="${viewData.businessImpactRating.id}">
+                </s:if>
+                <s:else>
+                    <label>Business Impact</label>
+                    <input type="hidden" name="rating" value="0">
+                </s:else>
+                <div class="ratingEdit"></div>
+            </li>
+            <li>
+                <input type="hidden" name="key" value="11"/>
+                <s:if test="viewData.riskLevelRating != null">
+                    <label>${viewData.riskLevelRating.projectMetadataKey.name}</label>
+                    <input type="hidden" name="rating" value="${viewData.riskLevelRating.metadataValue}">
+                    <input type="hidden" name="metadataId" value="${viewData.riskLevelRating.id}">
+                </s:if>
+                <s:else>
+                    <label>Risk Level</label>
+                    <input type="hidden" name="rating" value="0">
+                </s:else>
+                <div class="ratingEdit"></div>
+            </li>
+            <li>
 
-    <div class="projectMetaAreaField radioContainer">
-        <span class='hide' id="privacyMetadataId" name="${viewData.privacy.id}"></span>
-        <input autocomplete="off" name="privateFlag" type="radio" value="true" class="radioFix" <s:if test='viewData.privacy != null && viewData.privacy.metadataValue == "true"'> checked="checked" </s:if>/>
-        <label>Yes</label>
-        <input autocomplete="off" name="privateFlag" type="radio" value="false" <s:if test='viewData.privacy == null || viewData.privacy.metadataValue == "false"'> checked="checked" </s:if> />
-        <label>No</label>
+                <input type="hidden" name="key" value="12"/>
+                <s:if test="viewData.costLevelRating != null">
+                    <label>${viewData.costLevelRating.projectMetadataKey.name}</label>
+                    <input type="hidden" name="rating" value="${viewData.costLevelRating.metadataValue}">
+                    <input type="hidden" name="metadataId" value="${viewData.costLevelRating.id}">
+                </s:if>
+                <s:else>
+                    <label>Cost</label>
+                    <input type="hidden" name="rating" value="0">
+                </s:else>
+                <div class="ratingEdit"></div>
+            </li>
+            <li>
+                <input type="hidden" name="key" value="13"/>
+                <s:if test="viewData.difficultyRating != null">
+                    <label>${viewData.difficultyRating.projectMetadataKey.name}</label>
+                    <input type="hidden" name="rating" value="${viewData.difficultyRating.metadataValue}">
+                    <input type="hidden" name="metadataId" value="${viewData.difficultyRating.id}">
+                </s:if>
+                <s:else>
+                    <label>Difficulty</label>
+                    <input type="hidden" name="rating" value="0">
+                </s:else>
+                <div class="ratingEdit"></div>
+            </li>
+
+        </ul>
+
+            <div class="clearFix"></div>
+
     </div>
+
 </div>
+<div class="clearFix"></div>
+
 <!-- End .projectMetaArea -->
-
-
 </form>
+<!-- End .projectMetaArea -->
+
 <!-- End form.editProjectForm -->
 
 <div class="editProjectSaveBtnContainer">

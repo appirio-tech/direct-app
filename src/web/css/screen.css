@@ -2684,8 +2684,8 @@ A.buttonRed1{
     width: 202px;
     border: 1px solid #bdbdbd;
     padding: 10px;
-    z-index: 100;
-    display: none;
+    z-index: 1000;
+    overflow: visible !important;
 }
 .tctips .triangle {
     background: url(/images/edit/triangle.png) 0 0 no-repeat;

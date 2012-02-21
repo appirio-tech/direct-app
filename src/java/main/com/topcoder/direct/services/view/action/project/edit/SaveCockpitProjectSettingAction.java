@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project.edit;
 
@@ -21,9 +21,14 @@ import java.util.*;
  * The action handles the operation of saving project settings and all the ajax operations take in Edit Project
  * Settings page.
  * </p>
+ * 
+ * <p>
+ *     Version 1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info Update) change notes:
+ *     - Update method ${@link #executeAction()} to add ProjectMetadataOperation for new added project ratings.
+ * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project)
+ * @author GreatKevin
+ * @version 1.1
  */
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction implements FormAction<SaveProjectSettingsForm> {
 
@@ -67,6 +72,12 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
         metadataOperations.add(getFormData().getSvn());
         metadataOperations.add(getFormData().getJira());
         metadataOperations.add(getFormData().getPrivacy());
+
+        if (getFormData().getProjectRatings() != null && getFormData().getProjectRatings().size() > 0) {
+            for (ProjectMetadataOperation op : getFormData().getProjectRatings()) {
+                metadataOperations.add(op);
+            }
+        }
 
         if (getFormData().getCustomMetadataValues() != null && getFormData().getCustomMetadataValues().size() > 0) {
             for (ProjectMetadataOperation op : getFormData().getCustomMetadataValues()) {

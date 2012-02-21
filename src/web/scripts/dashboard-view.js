@@ -5,8 +5,11 @@
  * - Added the logic for retrieving data for Enterprise Health area of Enterprise Dashboard view via AJAX call and
  * - rendering the data on page.
  *
- * @author isv
- * @version 1.1
+ * Version 1.1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info)
+ * - Fix a small bug causing js error in the project overview page.
+ *
+ * @author isv, GreatKevin
+ * @version 1.1.1
  */
 $(document).ready(function(){
     // Color the rows for projects in Enterprise Health area
@@ -207,7 +210,7 @@ $(document).ready(function(){
                 initTooltips();
             }
         });
-        
+
         if ($.browser.msie) {
             $(window).resize($.debounce(200, function() {
                 truncateProjectHealthTable();
@@ -291,7 +294,7 @@ $(document).ready(function(){
     }
 
     function adjustTables() {
-        // Determine if scrollbar is displayed for table
+if ($('.dataTables_scrollBody').length != 0) {        // Determine if scrollbar is displayed for table
         var d = $('.dataTables_scrollBody')[0];
         var o = 0;
         if (typeof(d.clientHeight) != 'undefined') {
@@ -312,6 +315,7 @@ $(document).ready(function(){
             $('.projectHealthHeader table').css('padding-right', o + 'px');
         }
     }
+}
     
     function initTooltips() {
 

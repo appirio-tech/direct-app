@@ -205,6 +205,14 @@ jQuery.extend({
 	}	
 });
 
+function guidGenerator() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
+
 /* TC tips JQuery plug-in. */
 $.fn.tctip = function(s) {
     s = $.extend({
@@ -218,22 +226,40 @@ $.fn.tctip = function(s) {
     var hover = $('<div class="tctips"><div class="triangle"></div><h2 class="tipsTitle">' + s.title + '</h2><p class="tipsContent">' + s.content + '</p></div>');
     $(this).append(hover);
     var top = $(this).outerHeight() + 11;
+
     hover.css({
         top: top + 'px',
         left: '-28px'
     });
+
+    var leftNew, topNew;
+
+    leftNew = hover.offset().left;
+    topNew = hover.offset().top;
+    var id = guidGenerator();
+    hover.attr('id', id)
+      .appendTo('body')
+      .css({
+        'position': 'absolute',
+        'left': leftNew + 'px',
+        'top': topNew + 'px'
+      });
+
+    hover.css('display', 'none');
+
+    $(this).data('tipId', id);
+
     $(this).hover(
         function() {
-            var h = $('.tctips', $(this));
-            h.show();
+            var h = $(this).data('tipId');
+            $("#" + h).show();
         },
         function() {
-            var h = $('.tctips', $(this));
-            h.hide();
+            var h = $(this).data('tipId');
+            $("#" + h).hide();
         }
     );
-    var h = $('.tctips', $(this));
-    h.hide();
+
     return this;
 };
 

@@ -1,10 +1,13 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  *
  * This css used to render edit project page.
  *
- * Author: TCSASSEMBLER
- * Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
+ * Version 1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info Update version 1.0)
+ * - Updated to add project ratings styles.
+ *
+ * Author: GreatKevin
+ * Version 1.1
  */
 .editPage #header .logo {
     font-size: 18px;
@@ -91,6 +94,7 @@
 .editPage .editProjectForm {
     display: block;
     width: 100%;
+    overflow: hidden;
 }
 
 .editPage .contestTitle  .buttonRed1 {
@@ -1292,3 +1296,88 @@ div#dp-popup {
     padding-left: 235px;
     color: red;
 }
+
+
+.metaAreaLeft {
+    float: left;
+    width: 41%;
+}
+
+.metaAreaRight {
+    float: right;
+    width: 55%;
+}
+
+.projectMetaArea li {
+    list-style: none;
+}
+
+.editPage .pStatus {
+    padding-right: 0;
+}
+
+.editPage .isPrivate {
+    padding-right: 0;
+    margin-top: 18px;
+}
+
+.editPage .pRatings {
+    margin-top: 23px;
+    height: 100%;
+}
+
+.projectMetaArea.pStatus .radioContainer label {
+    margin-right: 0 !important;
+}
+
+.editPage .pStatus .projectMetaAreaField {
+    width: auto;
+}
+
+.editPage .pStatus .projectMetaAreaField li {
+    overflow: hidden;
+    padding-bottom: 15px;
+}
+
+.editPage .pRatings h3.projectMetaAreaLabel {
+    float: left;
+    width: 190px;
+}
+
+.editPage .pRatings .projectMetaAreaField {
+    float: left;
+}
+
+.editPage .pRatings .projectMetaAreaField li {
+    overflow: hidden;
+    padding-bottom: 9px;
+}
+
+.editPage .pRatings .projectMetaAreaField li label {
+    font-size: 14px;
+    float: left;
+    width: 121px;
+    line-height: 22px;
+}
+
+.editPage .pRatings .projectMetaAreaField li .ratingEdit {
+    float: left;
+}
+
+.ratingEdit {
+    overflow: hidden;
+}
+
+.ratingEdit span {
+    float: left;
+    background: url(/images/rating1.png) no-repeat 0 0;
+    height: 21px;
+    width: 23px;
+    margin-right: 1px;
+    cursor: pointer;
+}
+
+.ratingEdit span.active {
+    background-position: 0 -21px;
+}
+

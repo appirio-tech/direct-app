@@ -9,8 +9,16 @@
  *  Version 1.1 (Module Assembly - TC Cockpit Project Overview Project General Info): Adds the JS codes for project general information table.
  * </p>
  *
- * @author Blues
- * @version 1.1
+ * <p>
+ *  Version 1.2 (Release Assembly - TC Cockpit Edit Project and Project General Info Update): Change the codes for new data in project general information:
+ *   - Projected Duration
+ *   - Projected Cost
+ *   - Project ratings
+ *   - Additional Project Info
+ * </p>
+ *
+ * @author Blues, GreatKevin
+ * @version 1.2
  * @since Release Assembly - TopCoder Cockpit Project Overview Update 1
  */
 $(document).ready(function() {
@@ -26,8 +34,11 @@ $(document).ready(function() {
         }
     });
 
-    var iProjectBudget = parseInt($('.projectBudget dd:last').text().replace('$', '').replace(/,/g, '') / $('.projectBudget dd:first').text().replace('$', '').replace(/,/g, '') * 100);
-    if(!isNaN(iProjectBudget)) $('.projectBudget .totalBudget .midActual').css('width', 1.87 * iProjectBudget);
+    var iProjectBudget = parseInt($('.projectBudget dd.actualNum').text().replace('$', '').replace(/,/g, '') / $('.projectBudget dd:first').text().replace('$', '').replace(/,/g, '') * 100);
+    var iProjectedTotal = parseInt($('.projectBudget dd.projectedNum').text().replace('$', '').replace(/,/g, '') / $('.projectBudget dd:first').text().replace('$', '').replace(/,/g, '') * 100);
+
+    $('.projectBudget .totalBudget .midActual').css('width', 1.87 * iProjectBudget);
+    $('.projectBudget .totalBudget .midProjected').css('width', 1.87 * iProjectedTotal);
     if (iProjectBudget < 70) {
         $('.projectBudget .totalBudget').addClass('green');
         $('.projectBudget .totalBudgetInfor').addClass('green');
@@ -43,8 +54,17 @@ $(document).ready(function() {
         $('.projectBudget .totalBudgetInfor').addClass('yellow');
     }
 
-    var iprojectDuration = parseInt($('.projectDuration dd:last').text().replace('days', '') / $('.projectDuration dd:first').text().replace('days', '') * 100);
-    if(!isNaN(iprojectDuration)) $('.projectDuration .plannedDuration .midActual').css('width', 1.87 * iprojectDuration);
+    if (iProjectedTotal >= 100) {
+        $('.projectBudget .projectedCost,.projectBudget dt.projected, .projectBudget dd.projectedNum').addClass('red');
+        $('.projectBudget .totalBudget .midProjected').css('width', '187px');
+    }
+
+    var iprojectDuration = parseInt($('.projectDuration dd.actualNum').text().replace('days', '') / $('.projectDuration dd:first').text().replace('days', '') * 100);
+    var iprojectedTotalDuration = parseInt($('.projectDuration dd.projectedNum').text().replace('days', '') / $('.projectDuration dd:first').text().replace('days', '') * 100);
+
+    $('.projectDuration .plannedDuration .midActual').css('width', 1.87 * iprojectDuration);
+    $('.projectDuration .plannedDuration .midProjected').css('width', 1.87 * iprojectedTotalDuration);
+
     if (iprojectDuration < 70) {
         $('.projectDuration .plannedDuration').addClass('green');
         $('.projectDuration .totalBudgetInfor').addClass('green');
@@ -59,6 +79,12 @@ $(document).ready(function() {
         $('.projectDuration .plannedDuration').addClass('yellow');
         $('.projectDuration .totalBudgetInfor').addClass('yellow');
     }
+
+    if (iprojectedTotalDuration >= 100) {
+        $('.projectDuration .projectedDuration,.projectDuration dt.projected, .projectDuration dd.projectedNum').addClass('red');
+        $('.projectDuration .plannedDuration .midProjected').css('width', '187px');
+    }
+
 
     function SubstringDemo(str, num) {
         var ss;
@@ -114,9 +140,14 @@ $(document).ready(function() {
         $("ul.notSetUl").css('margin-top', marginTop);
     }
 
-    $(".managersBox a").each(
+    $(".managersMask a").each(
         function() {
-            $(this).attr('target', '_blank');
+
+            var css = $(this).attr('class');
+
+            if(css.indexOf('coder') == 0) {
+                $(this).attr('target', '_blank');
+            }
         }
     );
 
@@ -149,6 +180,52 @@ $(document).ready(function() {
              $('.projectDescription a').css('margin-left','210px');*/
         }
     });
+
+    $(".ratingView").each(function () {
+        var _this = $(this);
+        var rating = 0;
+        for (var i = 0; i < 5; i++) {
+            var span = $("<span/>").appendTo(_this);
+        }
+        if (_this.hasClass("rating1")) {
+            rating = 1;
+        } else if (_this.hasClass("rating2")) {
+            rating = 2;
+        } else if (_this.hasClass("rating3")) {
+            rating = 3;
+        } else if (_this.hasClass("rating4")) {
+            rating = 4;
+        } else if (_this.hasClass("rating5")) {
+            rating = 5;
+        }
+        _this.find("span:lt(" + rating + ")").addClass("active");
+    })
+
+    // managebox resize
+    function resizeManageBox() {
+
+        var iWidth = $('.projectDetails').width();
+        var iWidth1 = $('.columeFirst').width();
+        var iWidth2 = $('.columeSecond').width();
+        var iWidth3 = $('.columeThird').width();
+        var iDis1 = iWidth - iWidth1 - iWidth2 - iWidth3 - 34;
+
+        if ($('body').width() >= 1200) {
+            $(".managersBox .pRatings").css('margin-right', (iDis1 / 3));
+            $(".managersBox .additionalInfo").css('margin-right', 0);
+            $(".managersBox .managersMask").css('width', (iWidth2 + iDis1 / 6));
+            $(".managersBox .managersMask").css('margin-right', (iDis1 / 6));
+        } else {
+
+            $(".managersBox .managersMask").css('width', "auto");
+            $('.managersBox .pRatings,.managersBox .managersMask,.managersBox .additionalInfo').css('margin-right', (iDis1 / 3));
+        }
+    }
+
+    $(window).resize(function () {
+        resizeManageBox();
+    });
+    $(window).trigger("resize");
 
 
     if ($("#projectForumTable").length > 0) {
