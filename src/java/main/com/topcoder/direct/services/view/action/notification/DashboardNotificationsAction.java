@@ -67,12 +67,12 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         
         UserPreferenceDTO userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(29);
-        userPreferenceDTO.setDesc("Always assign notifications from OR when I am added to a role on the contest");
+        userPreferenceDTO.setDesc("Receive notifications when my contests advance phases.");
         PREFERENCES.add(userPreferenceDTO);
         
         userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(30);
-        userPreferenceDTO.setDesc("Always assign me a watch on forums related to my competitions");
+        userPreferenceDTO.setDesc("Receive notifications when forum communication is posted in my contests.");
         PREFERENCES.add(userPreferenceDTO);
     }
 
