@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
 
     <script type="text/javascript" src="/scripts/newProject.js?v=209631"></script>
+	<script type="text/javascript" src="/scripts/jquery.carouFredSel.js"></script>
     <script type="text/javascript" src="/scripts/get-a-copilot.js?v=212862"></script> 
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>   
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script> 
