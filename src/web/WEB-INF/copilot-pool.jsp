@@ -91,7 +91,7 @@
                                                                     
                                                                     <option value="repostContestsInput">No. of Repost Contests #</option>
                                                                     <option value="failureContestsInput">No. of Failure Contests #</option>
-                                                                    <option value="bugraceInput">No. of Bugrace #</option>
+                                                                    <option value="bugraceInput">No. of Bug Races #</option>
 																</select>
 															</li>
 														</ul>
