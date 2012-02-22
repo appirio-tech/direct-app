@@ -15,7 +15,7 @@
     <jsp:include page="../includes/htmlhead.jsp"/>
     <!-- the tab does not exist because it's demo -->
     <ui:projectPageType tab="metadata"/>
-    <script type="text/javascript" src="/scripts/projectMilestoneDemo.js?v=210152"></script>
+    <script type="text/javascript" src="/scripts/projectMilestoneDemo.js?v=213183"></script>
 </head>
 
 <body id="page">

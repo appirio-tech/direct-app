@@ -38,12 +38,12 @@
     <![endif]-->
     <ui:projectPageType tab="overview"/>
     <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/projectOverview.css?v=212222" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/projectOverview.css?v=213353" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js?v=203928"></script>
-    <script type="text/javascript" src="/scripts/dashboard-view.js?v=212459"></script>
+    <script type="text/javascript" src="/scripts/dashboard-view.js?v=213353"></script>
     <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=211035"></script>
-    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=212862"></script>
+    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=213353"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>

@@ -159,7 +159,7 @@
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart.js?v=210135"></script>
-    <script type="text/javascript" src="/scripts/dashboard-view.js?v=212459"></script>
+    <script type="text/javascript" src="/scripts/dashboard-view.js?v=213353"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart-range.js?v=210282"></script>
     <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
