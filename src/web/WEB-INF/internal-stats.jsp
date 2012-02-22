@@ -34,6 +34,15 @@
             $(this).parent().parent().parent().parent().css({"margin-bottom":"0px","height":'32px'});
             $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'32px'});
         });
+        
+        var error = "${excelOpenError}";
+        
+        $(function() {
+            if (error) {
+                showErrors(error);
+            }
+        });
+        
     </script>
 </head>
 

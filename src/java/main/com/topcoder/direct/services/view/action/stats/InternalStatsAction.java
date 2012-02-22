@@ -23,6 +23,11 @@ import com.topcoder.direct.services.view.util.excel2html.ToHtml;
  */
 public class InternalStatsAction extends ForwardAction {
     /**
+     * The Error.
+     */
+    private static final String WORKBOOK_NO_FOUND_ERROR = "Can't find any Workbook, or it is protected by password.";
+
+    /**
      * Represents the excel file to convert
      */
     private String excelFile;
@@ -41,6 +46,11 @@ public class InternalStatsAction extends ForwardAction {
      * Represents the generated table data to embed.
      */
     private String tableData;
+
+    /**
+     * Represents the error message.
+     */
+    private String excelOpenError;
 
     /**
      * Gets the index of sheet to display.
@@ -84,6 +94,15 @@ public class InternalStatsAction extends ForwardAction {
     public String getTableData() {
         return tableData;
     }
+
+    /**
+     * Return the excelOpenError.
+     *
+     * @return the excelOpenError
+     */
+    public String getExcelOpenError() {
+        return excelOpenError;
+    }
     
     /**
      * Generate the internal stats page from excel file.
@@ -92,9 +111,19 @@ public class InternalStatsAction extends ForwardAction {
      * @throws Exception if any error occurs.
      */
     public String execute() throws Exception {
-        if (new File(excelFile).canRead()) {
-            sheetTabs = new ArrayList<String>();
-            tableData = ToHtml.generateStatsPage(sheetIndex, excelFile, sheetTabs);
+        try {
+            if (new File(excelFile).canRead()) {
+                sheetTabs = new ArrayList<String>();
+                tableData = ToHtml.generateStatsPage(sheetIndex, excelFile, sheetTabs);
+            }
+            excelOpenError = "";
+        } catch (IllegalArgumentException e){
+            excelOpenError = WORKBOOK_NO_FOUND_ERROR;
+
+            File excel = new File(excelFile);
+            if (excel.exists()) {
+                excel.delete();
+            }
         }
 
         return SUCCESS;
