@@ -614,7 +614,7 @@ $(document).ready(function() {
     };
     var ths = $("#billingCostReportSection .paginatedDataTable thead th").length - 1;
     var aoColumns = [
-                { "sType": "simple-date" },
+                { "sType": "simple-date" },             
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },
@@ -624,18 +624,22 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "simple-date" },
-                { "sType": "simple-date" },
-                { "sType": "html" },
-                { "sType": "money" }
+                { "sType": "simple-date" }
             ];
-    if (ths == 18) {
-        aoColumns.push({ "sSortDataType": "html" });
+            
+    if (ths >= 18) {
+        aoColumns.push({ "sType": "money" });
     }
+    
+    aoColumns.push({ "sType": "html" });
+    aoColumns.push({ "sType": "money" });
     aoColumns.push({ "sSortDataType": "html" });
     aoColumns.push({ "sSortDataType": "simple-date" });
-    if (ths == 18) {
+    
+    if (ths >= 18) {
         aoColumns.push({ "sSortDataType": "money" });
-        aoColumns.push({ "sSortDataType": "dom-checkbox" });
+        aoColumns.push({ "sSortDataType": "html" });
+        aoColumns.push({ "bSortable": false });
     }
     $.billingCostReportDataTable = $("#billingCostReportSection .paginatedDataTable").dataTable({
         "fnDrawCallback": function() {
@@ -645,6 +649,12 @@ $(document).ready(function() {
             } else {
                 $("#billingCostReportSection .paginatedDataTable .processBtn").attr("disabled", "");
             }
+            
+            if (chs.length == $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").length) {
+                $("#checkAllInvoice").attr("checked", "checked");
+            } else {
+                $("#checkAllInvoice").removeAttr("checked");
+            }            
         },
         "iDisplayLength": 50,
         "bFilter": true,

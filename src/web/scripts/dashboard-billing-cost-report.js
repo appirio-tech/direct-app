@@ -330,7 +330,7 @@ $(document).ready(function() {
             var fd = formatDate(invoiceDate);
             chs.each(function() {
                 $("td.invoiceAmount", $(this).parent().parent()).html("$" + parseFloat($(this).attr("invoiceamount")).formatMoney(2));
-                if (ths != 18) {
+                if (ths != 19) {
                     $("td.invoiceDate", $(this).parent().parent()).html(fd);
                     $("td.invoiceNumber", $(this).parent().parent()).html(invoiceNumber);
                 } else {
@@ -421,6 +421,12 @@ $(document).ready(function() {
         } else {
             $("#billingCostReportSection .paginatedDataTable .processBtn").attr("disabled", "");
         }
+        
+        if (chs.length == $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").length) {
+            $("#checkAllInvoice").attr("checked", "checked");
+        } else {
+            $("#checkAllInvoice").removeAttr("checked");
+        }
     });
     // the click handler for the "Invoice" button.
     $(".processBtn").click(function(event) {
@@ -452,6 +458,22 @@ $(document).ready(function() {
         $(".errorInfo", $("#invoiceNumber").parent()).hide();
         modalLoad("#processInvoiceRecordModal");
     });
+    
+    $("#checkAllInvoice").click(function() {
+        if ($(this).is(":checked")) {
+            $("#billingCostDetails tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").attr("checked", "checked");
+        } else {
+            $("#billingCostDetails tbody tr input[name='invoiceRecordProcessed']:not(:disabled)").removeAttr("checked");
+        }
+        
+        var chs = $("#billingCostReportSection .paginatedDataTable tbody tr input[name='invoiceRecordProcessed']:checked:not(:disabled)");
+        if (chs.length == 0) {
+            $("#billingCostReportSection .processBtn").attr("disabled", "disabled");
+        } else {
+            $("#billingCostReportSection .paginatedDataTable .processBtn").attr("disabled", "");
+        }
+    });
+    
 });
 
 /**
