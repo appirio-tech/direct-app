@@ -148,7 +148,7 @@
                                                                         <label>Contests:</label><span class="field_${profile.member.copilotProfile.userId}_totalContests">loading</span>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <label>Reports:</label><span class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</span>
+                                                                        <label>Reposts:</label><span class="field_${profile.member.copilotProfile.userId}_totalRepostedContests">loading</span>
                                                                     </div>
                                                                     <div class="row">
                                                                         <label>Failures:</label><span class="field_${profile.member.copilotProfile.userId}_totalFailedContests">loading</span>
