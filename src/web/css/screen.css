@@ -1408,6 +1408,16 @@ overflow: auto;
     background-position: -32px 0;
 }
 
+#footer .socialNetwork a.gPlusIcon,
+#footer .socialNetwork a.gPlusIcon:visited {
+	background-position: -48px 0;
+}
+
+#footer .socialNetwork a.youtubeIcon,
+#footer .socialNetwork a.youtubeIcon:visited {
+	background-position: -64px 0;
+}	
+
 #footer .copyright {
     font-size: 11px;
     color: #333;
