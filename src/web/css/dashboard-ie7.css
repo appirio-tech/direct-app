@@ -34,3 +34,29 @@ height: 1%;
 .graphArea .visualization .chartWrapper{
 
 }
+
+#projectCopilotsCarousel .itemContainer{
+	  min-height:145px;
+	  padding-bottom:10px;
+	  overflow:hidden;
+	  width: 304px!important;
+	  margin-left: 26px; 
+}
+#projectCopilotsCarousel .itemContainer .userInfor .userInforInner{
+	padding-left: 0!important;
+}
+
+#projectCopilotsCarousel .itemContainer .userPhoto{
+	float:left!important;  
+	width:78px!important;  
+}
+
+#projectCopilotsCarousel .itemContainer .userInfor{
+	float:left;
+	width:200px; 
+}
+.jcarousel-skin-tango .jcarousel-next-horizontal {
+    position: absolute;
+    top: 40%;
+    right: 23px; 
+}

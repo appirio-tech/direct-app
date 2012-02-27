@@ -376,7 +376,8 @@ $(document).ready(function() {
     if ($('#projectCopilotsCarousel').length > 0) {
         $('#projectCopilotsCarousel').jcarousel({
             scroll: 1,
-            visible: 1
+            visible: 1,
+			wrap: 'circular'
         });
 
     }

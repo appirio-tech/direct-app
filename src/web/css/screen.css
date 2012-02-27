@@ -2022,7 +2022,27 @@ overflow: auto;
 		font-size:11px;
 		color:#333333;
 		}
-
+	
+	.projectCopilotsList .jcarousel-item-horizontal,
+	#projectCopilotsCarouselWrapper .jcarousel-item-placeholder-horizontal {
+		width: 330px;
+ 	}
+	.projectCopilotsList .jcarousel-container-horizontal {
+		width: 330px; 
+		border: 1px solid #fff;
+	}
+	.projectCopilotsList .jcarousel-clip-horizontal {
+		width: 330px; 
+		overflow:hidden!important; 
+	}
+	
+	#projectCopilotsCarouselWrapper{
+		display:block!important;
+		width: 330px!important;
+		height: 155px!important;
+		overflow:hidden!important;
+ 	}
+	
     .projectCopilotsList .projectCopilotPhoto {
         width: 77px;
         height: 85px;
