@@ -1,27 +1,22 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.ajax.DirectJsonBeanProcessorMatcher;
-import com.topcoder.direct.services.view.ajax.SoftwareCompetitionBeanProcessor;
-import com.topcoder.direct.services.view.ajax.XMLGregorianCalendarBeanProcessor;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.permission.Permission;
 import com.topcoder.service.permission.ProjectPermission;
-import com.topcoder.service.project.SoftwareCompetition;
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
-import net.sf.json.JsonConfig;
 
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>A <code>Struts</code> action for handling requests for updating the project level permissions for all projects
@@ -40,9 +35,14 @@ import java.util.List;
  *         change call of contest service facade #updateProjectPermissions to permission service facade #updateProjectPermissions
  *     </li>
  * </p>
- * 
+ * <p>
+ *     Version 1.2 (Release Assembly - TC Direct Cockpit Release One) update notes:
+ *     <li>
+ *         change UpdateProjectPermissionsAction to be ajax styled
+ *     </li>
+ * </p>
  * @author isv, TCSASSEMBLER
- * @version 1.1 (Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One)
+ * @version 1.2
  * @since Direct Permissions Setting Back-end and Integration Assembly 1.0
  */
 public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
@@ -71,6 +71,10 @@ public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
         JSONObject jsonData = (JSONObject) JSONSerializer.toJSON(getPermissionsJSON());
         JSONArray jsonPermissions
             = jsonData.getJSONObject("result").getJSONObject("return").getJSONArray("permissions");
+        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
+        // build the return json result
+        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+
         for (int i = 0; i < jsonPermissions.size(); i++) {
             JSONObject jsonPermission = jsonPermissions.getJSONObject(i);
             ProjectPermission permission = new ProjectPermission();
@@ -81,10 +85,56 @@ public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
             permission.setUserId(jsonPermission.getLong("userId"));
             permission.setStudio(jsonPermission.getBoolean("studio"));
             permission.setUserPermissionId(jsonPermission.getLong("userPermissionId"));
+
+            List<Permission> userProjectPermissions = getPermissionServiceFacade().getPermissions(tcSubject, permission.getUserId(), permission.getProjectId());
+
+            boolean add = true;
+            long permissionTypeId;
+
+            if (permission.getPermission().toLowerCase().equals("full")) {
+                permissionTypeId = 3;
+            } else if (permission.getPermission().toLowerCase().equals("write")) {
+                permissionTypeId = 2;
+            } else {
+                permissionTypeId = 1;
+            }
+
+            for (Permission upp : userProjectPermissions) {
+                if (upp.getPermissionType().getPermissionTypeId() == permissionTypeId) {
+                    add = false;
+                    break;
+                }
+
+                permission.setUserPermissionId(upp.getPermissionId());
+            }
+
+            if (add) {
             permissions.add(permission);
         }
-        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
+
+
+        }
+
         getPermissionServiceFacade().updateProjectPermissions(tcSubject, permissions, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
+
+
+        for(ProjectPermission p : permissions) {
+            Map<String, String> resultItem = new HashMap<String, String>();
+            resultItem.put("projectId", String.valueOf(p.getProjectId()));
+            resultItem.put("userId", String.valueOf(p.getUserId()));
+            resultItem.put("permission", p.getPermission());
+            resultItem.put("permissionId", String.valueOf(p.getUserPermissionId()));
+            
+            if(p.getUserId() == tcSubject.getUserId() && p.getPermission().trim().equals("")) {
+                resultItem.put("removeTotalProject", "true");
+            } else {
+                resultItem.put("removeTotalProject", "false");
+            }
+
+            result.add(resultItem);
+        }
+
+        setResult(result);
     }
 
     /**

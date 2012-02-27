@@ -119,6 +119,7 @@ $(document).ready(function(){
                 calcDR(originalPrizes[1]);
             }
             populatePrizeSection();
+            updateContestCostData();
             showPrizeSectionDisplay();
         });		
 		
@@ -1424,6 +1425,8 @@ function showPrizeSectionEdit() {
 		$(".prizeBillingSelect select").data('customized',true);
       	$(".prizeBillingSelect select").sSelect({ddMaxHeight: '220',yscroll: true});
     }
+
+    fillPrizes();
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -19,8 +19,13 @@ import com.topcoder.service.project.CompetitionPrize;
  * - Add property issues.
  * </p>
  *
- * @author isv, Veve
- * @version 1.0.2
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Cockpit Release One) changes:
+ * - Add property milestoneSubmissionNumber, finalSubmissionNumber and isMultipleRound
+ * </p>
+ *
+ * @author isv, Veve, TCSASSEMBLER
+ * @version 1.1
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -80,13 +85,43 @@ public class ContestStatsDTO implements Serializable {
      */
     private long forumId;
 
+    /**
+     * The competition prizes.
+     */
     private List<CompetitionPrize> prizes;
 
+    /**
+     * The admin fees
+     */
     private Double adminFees;
 
+    /**
+     * Whether the contest is studio.
+     */
     private Boolean isStudio;
 
+    /**
+     * The payment reference id.
+     */
     private String paymentReferenceId;
+
+    /**
+     * The number of milestone submissions.
+     * @since 1.1
+     */
+    private int milestoneSubmissionNumber;
+
+    /**
+     * The number of final submissions.
+     * @since 1.1
+     */
+    private int finalSubmissionNumber;
+
+    /**
+     * Whether the contest is multiple round.
+     * @since 1.1
+     */
+    private boolean isMultipleRound;
 
 
     /**
@@ -388,5 +423,83 @@ public class ContestStatsDTO implements Serializable {
         this.showSpecReview = showSpecReview;
     }
 
+    /**
+     * Gets the number of milestone submissions.
+     *
+     * @return the number of milestone submissions.
+     * @since 1.1
+     */
+    public int getMilestoneSubmissionNumber() {
+        return milestoneSubmissionNumber;
+    }
 
+    /**
+     * Sets the number of milestone submissions.
+     *
+     * @param milestoneSubmissionNumber the number of milestone submissions.
+     * @since 1.1
+     */
+    public void setMilestoneSubmissionNumber(int milestoneSubmissionNumber) {
+        this.milestoneSubmissionNumber = milestoneSubmissionNumber;
+    }
+
+    /**
+     * Gets the number of final submissions.
+     *
+     * @return the number of final submissions.
+     * @since 1.1
+     */
+    public int getFinalSubmissionNumber() {
+        return finalSubmissionNumber;
+    }
+
+    /**
+     * Sets the number of final submissions.
+     *
+     * @param finalSubmissionNumber
+     * @since 1.1
+     */
+    public void setFinalSubmissionNumber(int finalSubmissionNumber) {
+        this.finalSubmissionNumber = finalSubmissionNumber;
+    }
+
+    /**
+     * Gets whether the contest is studio.
+     *
+     * @return studio the studio flag.
+     * @since 1.1
+     */
+    public Boolean getStudio() {
+        return isStudio;
+    }
+
+    /**
+     * Sets whether the contest is studio.
+     *
+     * @param studio the studio flag.
+     * @since 1.1
+     */
+    public void setStudio(Boolean studio) {
+        isStudio = studio;
+    }
+
+    /**
+     * Gets whether the contest is multiple rounds.
+     *
+     * @return whether the contest is multiple rounds.
+     * @since 1.1
+     */
+    public boolean isMultipleRound() {
+        return isMultipleRound;
+    }
+
+    /**
+     * Sets whether the contest is multiple rounds.
+     *
+     * @param multipleRound whether the contest is multiple rounds.
+     * @since 1.1
+     */
+    public void setMultipleRound(boolean multipleRound) {
+        isMultipleRound = multipleRound;
+    }
 }

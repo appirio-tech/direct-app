@@ -7,8 +7,11 @@
  * - Version 1.2 (Release Assembly - TopCoder Cockpit Modal Windows Revamp version) changes note:
  * -  Update the modal windows of success and error
  *
- * @author flexme
- * @version 1.1
+ * - Version 1.3 (Release Assembly - TC Direct Cockpit Release One) changes note
+ * -  Update the check out checking logic to allow the number of chosen winner less than the predefined slots.
+ *
+ * @author flexme, TCSASSEMBLER
+ * @version 1.3
  */
 var arrPrize = ["firstPrize","secondPrize","thirdPrize","fourthPrize","fifthPrize"];
 var arrSlot = ["firstSlots","secondSlots","thirdSlots","fourthSlots","fifthSlots"];
@@ -215,7 +218,7 @@ $(document).ready(function(){
             var label = listExtra[i];
             extraNumber++;
             html += '<div class="additionalCol"><label>#' + label + '</label><input name="ch" type="checkbox" value=""'
-                + ' class="selectThumb" id="extra_' + label + '" onclick="updateSummary()"/><a href="#" class="thumbList"><span></span><img src="https://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=' + label + '&sbt=small"'
+                + ' class="selectThumb" id="extra_' + label + '" onclick="updateSummary()"/><a href="#" class="thumbList"><span></span><img src="http://www.topcoder.com/direct/cockpit/impersonation/cockpitStudio.do?&sbmid=' + label + '&sbt=small"'
                 + ' width="136" height="136"/></a></div>';
         }
         $("#purchasePreview").html(html);
@@ -225,16 +228,27 @@ $(document).ready(function(){
     }
     // add placement icon to submissions and reorder the submissions
     var number = Math.min(submissionsNumber, prizeNumber);
+
+    var finalRoundWinnerChosen = false;
+
     for (var i = 0; i < number; i++) {
         var label = bankData ? bankData[arrPrize[i]] : null;
         if (label || (roundType == "MILESTONE")) {
+
+            if(roundType == 'FINAL') {
+                finalRoundWinnerChosen = true;
+            }
+
             $("#submission-" + label).find(".icoBankLocation").addClass(arrSlot[i]);
             $("#submission-" + label).appendTo($("#submissionList tbody")).show();
-        } else {
-            $('<tr><td></td><td></td><td></td><td class="left"><div class="warningMilestone">There is no selection for Slot '
-            + (i + 1) + '. You can go back to the <a href="submissions.action?projectId=' + contestId + '&formData.viewType=GRID&formData.roundType=' + roundType + '">submissions viewer</a> and add one / make necessary changes.</div></td></tr>').appendTo($("#submissionList tbody"));
         }
     }
+
+    if(roundType == "FINAL" && !finalRoundWinnerChosen ) {
+        $('<tr><td></td><td></td><td></td><td class="left"><div class="warningMilestone">There is no selection winner for final round'
+        + '. You can go back to the <a href="submissions.action?projectId=' + contestId + '&formData.viewType=GRID&formData.roundType=' + roundType + '">submissions viewer</a> and add one / make necessary changes.</div></td></tr>').appendTo($("#submissionList tbody"));
+    }
+
 
     // set individual feedback text for final round.
     var subNumber = Math.min(submissionsNumber, prizeNumber);
@@ -306,13 +320,22 @@ $(document).ready(function(){
             var reachLast = false;
             for (var i = 0; i < number; i++) {
                 if (!bankData || !bankData[arrPrize[i]]) {
-                    
-                    showErrors("Prize slots must be filled.");
-                    return false;
-                    
                 } else {
                     prizesChosen++;
                 }
+            }
+
+            if(prizesChosen <= 0) {
+                    
+                var roundMessage = "milestone round";
+                    
+                if(roundType == 'FINAL') {
+                    roundMessage = "final round";
+                }
+
+
+                showErrors("Please select at least one submission for " + roundMessage + ".");
+                return false;
             }
             
             for (var i = 0; i < number; i++) {

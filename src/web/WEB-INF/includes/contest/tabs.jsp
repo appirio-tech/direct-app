@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, Veve, morehappiness
-  - Version: 1.3
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: isv, Veve, morehappiness, TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
   -
@@ -10,7 +10,8 @@
   - Version 1.2 (Direct Replatforming Release 4) changes: remove the condition test on whether it's studio contest or not.
   - Version 1.3 (TC Cockpit Bug Tracking R1 Contest Tracking  assembly) changes: Add new tab for the issue tracking for
   - software and studio contest.
-  -
+  - Version 1.4 (Release Assembly - TC Direct Cockpit Release One) changes: Add milestone submission number and final submission
+  - number in the submission tab title for multiple round contest
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -37,18 +38,28 @@
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
 
             </li>
-            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if>>
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:180px">
                 <if:isStudioContest contestStats="${contestStats}">
                     <link:studioSubmissionsGrid contestId="${contestStats.contest.id}">
                         <span class="left">
+                            <s:if test="viewData.contestStats.multipleRound">
+                                <span class="right">Submissions  ${viewData.contestStats.submissionsNumber} (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>
+                            </s:if>
+                            <s:else>
                             <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
+                            </s:else>
                         </span>
                     </link:studioSubmissionsGrid>
                 </if:isStudioContest>
                 <if:isStudioContest contestStats="${contestStats}" negate="true">
                     <link:softwareSubmissionsList contestId="${contestStats.contest.id}">
                         <span class="left">
+                            <s:if test="viewData.contestStats.multipleRound">
+                                <span class="right">Submissions ${viewData.contestStats.submissionsNumber} (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>
+                            </s:if>
+                            <s:else>
                             <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
+                            </s:else>
                         </span>
                     </link:softwareSubmissionsList>
                 </if:isStudioContest>

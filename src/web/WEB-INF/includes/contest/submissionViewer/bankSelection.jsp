@@ -101,7 +101,7 @@
         <s:if test="!viewData.hasCheckout" >
             <s:if test="formData.roundType.toString() == 'MILESTONE'">
                 <s:if test="viewData.phaseOpen">
-                <link:studioCheckout contestId="${projectId}" milestoneRound="${true}" styleClass="buttonBankSelection">
+                <link:studioCheckout contestId="${projectId}" milestoneRound="${true}" styleClass="buttonBankSelection milestoneConfirmation">
                     <span class="left"><span class="right">Confirm Milestone</span></span>
                 </link:studioCheckout>
                 </s:if>
@@ -112,7 +112,7 @@
             </s:if>
             <s:else>
                 <link:studioCheckout contestId="${projectId}" milestoneRound="${false}"
-                                     styleClass="buttonBankSelection">
+                                     styleClass="buttonBankSelection winnersLockIn">
                     <span class="left"><span class="right">Lock-in Winners</span></span>
                 </link:studioCheckout>
             </s:else>

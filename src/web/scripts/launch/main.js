@@ -37,8 +37,12 @@
  * Version 1.7 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
  * - Fixed bug TCCC-3724. Updated logic for editing the contests.
  *
- * @author isv, TCSDEVELOPER
- * @version 1.7
+ * Version 1.8 (Release Assembly - TC Direct Cockpit Release One) change notes:
+ * - Update fillPrizes(), always try loading billing contest fee for billingFees global object first
+ *   because it's loaded via ajax and has the latest data.
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.8
  */
 
  /**
@@ -374,7 +378,7 @@ function initContestFeeForEdit(isStudio, contestTypeId, billingProjectId) {
         	 //update corresponding contest fee
         	 var feeObject = softwareContestFees[contestTypeId];
         	 if(feeObject) {
-        	 	  feeObject.contestFee = billingContestFee;
+                 softwareContestFees[contestTypeId].contestFee = billingContestFee;
         	 }
         }    	  
     }
@@ -1052,16 +1056,36 @@ function fillPrizes() {
    $('#rswDigitalRun').html(contestCost.drCost.formatMoney(2));
    $('#swDigitalRun').val(contestCost.drCost.formatMoney(2));
    
+    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+
+    var contestBillingFee = -1;
+
+    if(billingFees[billingProjectId]!= null) {
+        var fees = billingFees[billingProjectId];
+
+        for(var i = 0; i < fees.length; ++i) {
+            if(fees[i].contestTypeId == projectCategoryId) {
+                contestBillingFee = fees[i].contestFee;
+            }
+        }
+    }
+
+    if(contestBillingFee >= 0) {
+        $('#swContestFee,#rswContestFee').html(contestBillingFee);
+    } else {
+        // no billing is loaded, use the default fee loaded from configuration
    $('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
+    }
+
    
    $('#swCopilotFee,#rswCopilotFee').html(mainWidget.softwareCompetition.copilotCost.formatMoney(2));
 
-   $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+   $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType, false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
 
    //totals
-   $('#swPrize_low').html((getContestTotal(feeObject, 'low', false, true) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-   $('#swPrize_medium').html((getContestTotal(feeObject, 'medium', false, true) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-   $('#swPrize_high').html((getContestTotal(feeObject, 'high', false, true) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+   $('#swPrize_low').html((getContestTotal(feeObject, 'low', false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+   $('#swPrize_medium').html((getContestTotal(feeObject, 'medium', false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+   $('#swPrize_high').html((getContestTotal(feeObject, 'high', false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
 
    // spec cost
    $('#swSpecCost,#rswSpecCost').html(feeObject.specReviewCost.formatMoney(2));
@@ -1149,6 +1173,26 @@ function updateSoftwarePrizes() {
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
    var prizeType = $('input[name="prizeRadio"]:checked').val();
    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+   var billingProjectId =  mainWidget.softwareCompetition.projectHeader.getBillingProject();
+   var contestFee = -1;
+
+    if (billingProjectId > 0) {
+        var fees = billingFees[billingProjectId];
+
+        for (var i = 0; i < fees.length; ++i) {
+            if (fees[i].contestTypeId == projectCategoryId) {
+                contestFee = fees[i].contestFee;
+            }
+        }
+    } else {
+        contestFee = softwareContestFees[projectCategoryId].contestFee;
+    }
+
+    if(contestFee < 0) {
+        // still not get contest fee, use default
+        contestFee = softwareContestFees[projectCategoryId].contestFee;
+    }
+
    var feeObject = softwareContestFees[projectCategoryId];
    var contestCost = getContestCost(feeObject, prizeType);
 
@@ -1162,7 +1206,7 @@ function updateSoftwarePrizes() {
    projectHeader.setReliabilityBonusCost(contestCost.reliabilityBonusCost);
    projectHeader.setDRPoints(contestCost.drCost);
    projectHeader.setMilestoneBonusCost(0);
-   projectHeader.setAdminFee(feeObject.contestFee);
+   projectHeader.setAdminFee(contestFee);
    projectHeader.setSpecReviewCost(feeObject.specReviewCost);
    
    var prizes = [];
@@ -1401,10 +1445,11 @@ function calculateDRPoint(firstPlacePrize, secondPlacePrize, reliabilityPrize) {
    return (firstPlacePrize + secondPlacePrize + reliabilityPrize) * 0.25;
 }
 
-function getContestTotal(feeObject, prizeType, useDomElem, noMilestoneCost) {
+function getContestTotal(feeObject, prizeType, useDomElem, noMilestoneCost, actualFee) {
     var contestCost = getContestCost(feeObject, prizeType);
     var total = contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
-    + contestCost.reliabilityBonusCost + contestCost.drCost + feeObject.contestFee + feeObject.specReviewCost;
+    + contestCost.reliabilityBonusCost + contestCost.drCost + (actualFee == null ? feeObject.contestFee : actualFee) + feeObject.specReviewCost;
+    console.log(actualFee);
     if (noMilestoneCost) {
     	return total;
     }

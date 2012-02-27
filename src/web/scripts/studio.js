@@ -27,49 +27,55 @@ $(function(){
 	 
 });
 
-$(document).ready(function(){ 		 	   
+$(document).ready(function () {
 	
-$("a.actButtonlike, a.actButtondislike, a.actButtonzoom, a.actButtonzoom, a.actButtondollar, a.actButtonstar").hover(function() { 
+    $("a.actButtonlike, a.actButtondislike, a.actButtonzoom, a.actButtonzoom, a.actButtondollar, a.actButtonstar").hover(function () {
 			var $this = $(this);	
 			var $next = $(this).next(".dialog-mini-wrapper");								   
 			$next.css("display", "block");
 			$(this).children("span").addClass("hover");
-			$next.hover(function() {
+        $next.hover(function () {
 				$next.css("display", "block");
 				$this.children("span").addClass("hover");
-				},function() {
+        }, function () {
 				$next.css("display", "none");
 				$this.children("span").removeClass("hover");
 			}); 
-			},function() {
+    }, function () {
 			var $next = $(this).next(".dialog-mini-wrapper");			
 			$next.css("display", "none"); 
 			$(this).children("span").removeClass("hover");
-}); 
+    });
  
  
-$("a.thumbGrid").hover(function() {
+    $("a.thumbGrid").hover(function () {
 			var $next = $(this).next(".submissionAction");								   
 			$next.css("display", "block");
-			$next.hover(function() { 
+        $next.hover(function () {
 				$next.css("display", "block");
-				},function() {
+        }, function () {
 				$next.css("display", "none");
 			}); 
-			},function() {
+    }, function () {
 			var $next = $(this).next(".submissionAction");			
 			$next.css("display", "none"); 
 		});  
 
-	$("#checkAll").click(function() {   
-			$(".selectThumb").attr('checked' , true);
+    $("#checkAll").click(function () {
+        $(".selectThumb").attr('checked', true);
 			return false;			  
 		}); 
 
-	$("#checkNone").click(function() {   
-			$(".selectThumb").attr('checked' , false);
+    $("#checkNone").click(function () {
+        $(".selectThumb").attr('checked', false);
 			return false;			  
 		}); 
   
-
+    $(".milestoneConfirmation, .winnersLockIn").click(function () {
+        if ($("ul#bankSelectionItemList li label").length <= 0) {
+            showErrors("Please select at least one submission.");
+            return false;
+        }
+        return true;
+    })
 }); 

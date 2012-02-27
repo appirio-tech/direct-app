@@ -1,13 +1,17 @@
 <%--
   - Author: isv, Veve, TCSASSEMBLER
-  - Version: 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0)
-  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3 (Release Assembly - TC Direct Cockpit Release One)
+  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
   - Version 1.1 change notes: add issue tracking health status into dashboard page.
   -
   - Version 1.2 (TC Direct Contest Dashboard Update Assembly) change Notes: 
   - 1.Apply to new dashboard prototype. 
+  -
+  - Version 1.3 (Release Assembly - TC Direct Cockpit Release One) change notes:
+  - - Add milestone submission number and final submission number in registration box if
+  -   the contest is of multiple rounds
   -
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -196,8 +200,15 @@
                         <!-- End .column -->
                         <div class="column">
                     </s:if>
-                    <p>
-                        <label>Submissions</label>: ${viewData.dashboard.numberOfSubmissions}
+                    <p class="<s:if test='viewData.contestStats.multipleRound'>multipleSubmission</s:if>">
+                        <label>Submissions</label>:
+                        <s:if test="viewData.contestStats.multipleRound">
+                          <strong> ${viewData.contestStats.submissionsNumber}</strong> (M:<strong>${viewData.contestStats.milestoneSubmissionNumber}</strong> /F:<strong>${viewData.contestStats.finalSubmissionNumber}</strong> )
+                        </s:if>
+                        <s:else>
+                            ${viewData.dashboard.numberOfSubmissions}
+                        </s:else>
+
                     </p>
                     <p>
                         <label class="prediction">Prediction</label>: 

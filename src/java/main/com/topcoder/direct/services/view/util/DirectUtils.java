@@ -299,8 +299,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe
- * @version 1.8.2
+ * <p>
+ * Version 1.8.3 (Release Assembly - TC Direct Cockpit Release One) changes:
+ * <ol>
+ *     <li>Update {@link #getContestStats(com.topcoder.security.TCSubject, long)}</li> to add milestone submission number,
+ *     final submission number and is multiple round flag.
+ * </ol>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, TCSASSEMBLER
+ * @version 1.8.3
  */
 public final class DirectUtils {
     /**
@@ -534,7 +542,6 @@ public final class DirectUtils {
      *
      * @param currentUser a <code>TCSubject</code> representing the current user.
      * @param contestId a <code>long</code> providing the ID of a contest.
-     * @param isStudio a flag indicates whether the contest to get is a studio contest.
      * @return a <code>ContestStatsDTO</code> providing the statistics for specified contest.
      * @throws Exception if an unexpected error occurs while accessing the persistent data store.
      * @since 1.1
@@ -593,6 +600,9 @@ public final class DirectUtils {
         dto.setForumPostsNumber(resultContainer.getIntItem(recordIndex, "number_of_forum"));
         dto.setSvn(resultContainer.getStringItem(recordIndex, "svn"));
         dto.setShowSpecReview(resultContainer.getBooleanItem(recordIndex, "has_spec_review"));
+        dto.setMilestoneSubmissionNumber(resultContainer.getIntItem(recordIndex, "number_of_milestone_submission"));
+        dto.setFinalSubmissionNumber(resultContainer.getIntItem(recordIndex, "number_of_final_submission"));
+        dto.setMultipleRound(resultContainer.getBooleanItem(recordIndex, "is_multiple_round"));
         long forumId = -1;
         try {
             if (resultContainer.getStringItem(recordIndex, "forum_id") != null

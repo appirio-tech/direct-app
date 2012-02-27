@@ -19,8 +19,11 @@
  * - and saving contest to server. The timeout for AJAX call to saveDraftContest is set to 3 minutes as the action
  * - may take a long time if there are large files added to contest.
  *
- * @author GreatKevin, isv
- * @version 1.5
+ * Version 1.5.1 (Release Assembly - TC Direct Cockpit Release One) changes:
+ * - Fix the bug of not setting copilot posting payments property when saving.
+ *
+ * @author GreatKevin, isv, TCSASSEMBLER
+ * @version 1.5.1
  */
 
 var currentDocument = {};
@@ -689,6 +692,7 @@ function saveAsDraftRequest() {
     request["projectHeader.properties['Billing Project']"] = $('#billingProjects2').val();
     request["projectHeader.properties['First Place Cost']"] = parseFloat($('input[name=firstPlacePrize]').val());
     request["projectHeader.properties['Second Place Cost']"] = (request["projectHeader.properties['First Place Cost']"] / 2).toFixed(1);
+    request["projectHeader.properties['Payments']"] = parseFloat($('input[name=firstPlacePrize]').val());
     request['projectHeader.projectSpec.detailedRequirements'] = tinyMCE.get('publicCopilotPostingDescription2').getContent();
     request['projectHeader.projectSpec.privateDescription'] = tinyMCE.get('privateCopilotPostingDescription2').getContent();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file is used to render permission data to page, and handle
@@ -20,53 +20,57 @@
  * Version 1.0.3 - Release Assembly - TC Direct UI Improvement Assembly 3
  * - Fix the li issue under error dialogue of notificaiton page
  *
+ * Version 1.1 - Release Assembly - TC Direct Cockpit Release One
+ * - Saving the permissions via ajax instead of submitting a form.
+ *
  * @author TCSASSEMBLER
- * @version 1.0.3 (Release Assembly - TC Direct UI Improvement Assembly 3)
+ * @version 1.1 (Release Assembly - TC Direct Cockpit Release One)
  */
 //$(function() {
-  /**
+/**
    * Represents the URL to get project permission.
    */
-  var GET_PROJECT_PERMISSIONS_URL = "getProjectPermissions";
+var GET_PROJECT_PERMISSIONS_URL = "getProjectPermissions";
 
-  /**
+/**
    * Represents the URL to update project permission.
    */
-  var UPDATE_PROJECT_PERMISSION_URL = "updateProjectPermissions";
+var UPDATE_PROJECT_PERMISSION_URL = "updateProjectPermissions";
 
-  /**
+/**
    * Comparator of two div objects.
    */
-  $.fn.dataTableExt.afnSortData['dom-text'] = function ( oSettings, iColumn ){
+$.fn.dataTableExt.afnSortData['dom-text'] = function (oSettings, iColumn) {
     var aData = [];
-    $('td:eq('+iColumn+') div', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
-      aData.push( $(this).html() );
+    $('td:eq(' + iColumn + ') div', oSettings.oApi._fnGetTrNodes(oSettings)).each(function () {
+        aData.push($(this).html());
     });
     return aData;
-  }
+}
 
-  /**
+/**
    * Create the ajax processor.
    */
-  function requestPermissions () {
-  var processor = new js.topcoder.ajax.BufferedAjaxProcessor( {
-    method : "get",
-    url : GET_PROJECT_PERMISSIONS_URL,
-    responseType : "text",
-    sendingData : "nothing",
-    onSuccess : function(processor) {
+function requestPermissions() {
+    var processor = new js.topcoder.ajax.BufferedAjaxProcessor({
+        method:"get",
+        url:GET_PROJECT_PERMISSIONS_URL,
+        responseType:"text",
+        sendingData:"nothing",
+        onSuccess:function (processor) {
       handleJsonResult(JSON.parse(processor.getResponseText()));
+            $("#permissions .applyForAll:gt(0)").remove();
     }
   });
-  }
+}
 
-  /**
+/**
    * Handle json result, render it to the page.
    *
    * @param jsonResult
    *            json result
    */
-  var handleJsonResult = function handleJsonResult(jsonResult) {
+var handleJsonResult = function handleJsonResult(jsonResult) {
     if (!jsonResult['result']) {
       $.permission.showErrors("fail to get project permissions");
     }
@@ -75,7 +79,7 @@
         if (jsonResult.length != 0) {
         $("#permissions thead").append('<tr class="applyForAll"><td class="markRed"></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td></td></tr>');
     }
-    for ( var i = 0; i < jsonResult.length; i++) {
+    for (var i = 0; i < jsonResult.length; i++) {
       jsonResult[i].rperm = false;
       jsonResult[i].wperm = false;
       jsonResult[i].fperm = false;
@@ -89,13 +93,13 @@
       $.permission.addProject(jsonResult[i]);
     }
     $.permission.renderToHtml();
-  };
+};
 
-  /**
+/**
    * Submit the form.
    */
 //	$("#permission_submit").click(
-      function pbutton_submit() {
+function pbutton_submit() {
         if (!$.permission.tableCreateComplete) {
           $.permission.showErrors("fail to load data");
           return;
@@ -105,28 +109,100 @@
         ret['result']['return'] = {};
         ret['result']['return']['permissions'] = [];
 
-        $.each($.permission.projects, function(pId, project) {
+    $.each($.permission.projects, function (pId, project) {
           var pName = project.projectName;
           var isStudio = project.studio;
-          $.each(project.updateUserPermissions, function(uId, uP) {
+        $.each(project.updateUserPermissions, function (uId, uP) {
             ret['result']['return']['permissions'].push(uP
                 .getReturnObj(pId, pName, isStudio));
           });
         });
 
         var result = JSON.stringify(ret);
-        $("#permissionHiddenInput").val(result);
-        $("#permissionForm").attr("action", UPDATE_PROJECT_PERMISSION_URL);
-        document.forms['permissionForm'].submit();
+    var request = {permissionsJSON:result};
+
+    modalPreloader();
+
+    $.ajax({
+        type:'POST',
+        url:"updateProjectPermissions",
+        data:request,
+        cache:false,
+        dataType:'json',
+        success:function (jsonResult) {
+            modalClose();
+            handleJsonResult2(jsonResult,
+                function (result) {
+                    if (result) {
+                        var data = result;
+                        $.each(data, function(index, item){
+                            var projectId = item.projectId;
+                            var userId = item.userId;
+                            var permission = item.permission;
+                            var permissionId = item.permissionId;
+                            var removeTotalProject = item.removeTotalProject;
+
+                            $.permission.projects[projectId].userPermissions[userId].originalPperm = permission;
+                            $.permission.projects[projectId].updateUserPermissions = {};
+                            $.permission.projects[projectId].userPermissionIds[userId] = permissionId;
+
+                            if(permission == "") {
+                                // remove
+                                $.permission.deleteUserOnProject(userId, projectId);
+                            }
+
+                            if(removeTotalProject == 'true') {
+                                $("#permissions .checkPermissions tr").each(function () {
+                                    if($(this).hasClass('subTr')) {
+                                        if($(this).attr('id').indexOf('project' + projectId + 'user') != -1) {
+                                            $(this).remove();
+                                        }
+                                    } else {
+                                        if($(this).find('div').attr('id').indexOf('project' + projectId) != -1) {
+                                            $(this).remove();
+                                        }
+                                    }
+                                });
+
+                                $("#permissions .checkPermissions tr:not(.subTr)").each(function (index) {
+                                    $(this).removeClass();
+                                    if(index % 2 == 0) {
+                                        $(this).attr('class', 'even');
+                                    } else {
+                                        $(this).attr('class', 'odd');
+                                    }
+                                });
+                            }
+
+                        });
+
+
+                        showSuccessfulMessage("Permission settings have been updated successfully");
+                    } else if (result.warning) {
+                        showErrors(result.warning);
+                    } else {
+                        showErrors("Unknown response from the server side.");
       }
+                },
+                function (errorMessage) {
+                    showErrors(errorMessage);
+                });
+        }
+    });
+
+
+//    $("#permissionHiddenInput").val(result);
+//    $("#permissionForm").attr("action", UPDATE_PROJECT_PERMISSION_URL);
+//    document.forms['permissionForm'].submit();
+}
 //);
 
-  /*
+/*
    * Bind the click event of delete single user.
    */
-  $(".removeProject").live('click', function(){
+$(".removeProject").live('click', function () {
     //It is current user.
-    if ($(this).attr('userid') < 0){
+    if ($(this).attr('userid') < 0) {
       return true;
     }
 
@@ -136,7 +212,7 @@
         showConfirmation("Do you really want to delete the user ?",
             "This will delete the user <span class='messageContestName'>" + userName + "</span> from the project. Please confirm you want to delete ?",
             "YES",
-            function() {
+        function () {
           modalClose();
           $.permission.removeSingleUser(id);
           pbutton_submit();
@@ -145,122 +221,122 @@
         );
 
 
-  });
+});
 
-  function showDeleteOneselfError(){
+function showDeleteOneselfError() {
     initDialog('errorDialog', 300);
         showErrors("You cannot delete yourself in permission setting.");
     $("#errorDialog").parent().find(".ui-dialog-titlebar").show();
-  }
+}
 
-  /**
+/**
    * The permission object, used to store information and handle event.
    */
-  $.permission = {
+$.permission = {
     /**
      * The classed of group.
      */
-    GROUP_CLASS : [ "expand", "collapse" ],
+    GROUP_CLASS:[ "expand", "collapse" ],
 
     /**
      * The images used for sort.
      */
-    SORT_IMAGES : [ "/images/down.png", "/images/up.png" ],
+    SORT_IMAGES:[ "/images/down.png", "/images/up.png" ],
 
     /**
      * The class name for hidden.
      */
-    HIDDEN_CLASS : "hide",
+    HIDDEN_CLASS:"hide",
 
     /**
      * The read permission.
      */
-    PERMISSION_TYPE_R : "r",
+    PERMISSION_TYPE_R:"r",
 
     /**
      * The write permission.
      */
-    PERMISSION_TYPE_W : "w",
+    PERMISSION_TYPE_W:"w",
 
     /**
      * The full permission.
      */
-    PERMISSION_TYPE_F : "f",
+    PERMISSION_TYPE_F:"f",
 
     /**
      * Represents the project table.
      */
-    TABLE_TYPE_PROJECTS : "projects",
+    TABLE_TYPE_PROJECTS:"projects",
 
     /**
      * Represents the user table.
      */
-    TABLE_TYPE_USERS : "users",
+    TABLE_TYPE_USERS:"users",
 
     /**
      * Indicates the head type of source.
      */
-    SRC_TYPE_ALL : "all",
+    SRC_TYPE_ALL:"all",
 
     /**
      * Indicates the main type of source.
      */
-    SRC_TYPE_MAIN : "main",
+    SRC_TYPE_MAIN:"main",
 
     /**
      * Indicates the detail type of source.
      */
-    SRC_TYPE_DETAIL : "detail",
+    SRC_TYPE_DETAIL:"detail",
 
     /**
      * The project table object.
      */
-    oProjectTable : {},
+    oProjectTable:{},
 
     /**
      * The user table object.
      */
-    oUserTable : {},
+    oUserTable:{},
 
     /**
      * Used to store the project objects.
      */
-    projects : {},
+    projects:{},
 
     /**
      * Used to store the user objects.
      */
-    users : {},
+    users:{},
 
     /**
      * Used to store current users.
      */
-    currentUserMap : {},
+    currentUserMap:{},
 
     /**
      * Used to indicate current project.
      */
-    currentProjectId : Number,
+    currentProjectId:Number,
 
     /**
      * Used to store current user id.
      */
-    currentUserId : Number,
+    currentUserId:Number,
 
     /**
      * Used to indicate which table is shown.
      */
-    currentTable : 0,
+    currentTable:0,
 
     /**
      * Used to indicate whether the table has been created.
      */
-    tableCreateComplete : false,
+    tableCreateComplete:false,
 
     /**
      * Used to indicate how the add more users dialog created.
      */
-    addMoreUsersDirect : false,
+    addMoreUsersDirect:false,
 
     /**
      * Add quota for text.
@@ -268,7 +344,7 @@
      * @param text
      *            the text to add quotas
      */
-    addQuo : function(text) {
+    addQuo:function (text) {
       return "\"" + text + "\"";
     },
 
@@ -278,7 +354,7 @@
      * @param errMsg
      *            the error to show
      */
-    showErrors : function(errMsg) {
+    showErrors:function (errMsg) {
       showErrors("Error occurs: " + errMsg);
     },
 
@@ -298,8 +374,7 @@
      * @param mainId
      *            the main id, optional
      */
-    getCheckboxString : function(tableType, srcType, permissionType, id,
-        checked, mainId) {
+    getCheckboxString:function (tableType, srcType, permissionType, id, checked, mainId) {
       var ret = "";
       ret += "<td class='checkbox'><input type='checkbox' class='selectUser' onclick='$.permission.handleCheckboxEvent(";
       ret += this.addQuo(tableType) + "," + this.addQuo(srcType) + ","
@@ -322,7 +397,7 @@
      * @param projectJson
      *            the project json object
      */
-    userPermission : function(projectJson) {
+    userPermission:function (projectJson) {
       this.userId = projectJson.userId;
       this.handle = projectJson.handle;
       this.rperm = projectJson.rperm;
@@ -437,13 +512,13 @@
         var pperm = this.getPperm(this.rperm, this.wperm, this.fperm);
 
         return {
-          userId : this.userId,
-          handle : this.handle,
-          permission : pperm,
-          projectId : projectId,
-          projectName : projectName,
-                    studio : studio,
-          userPermissionId : $.permission.projects[projectId].userPermissionIds[this.userId] ? $.permission.projects[projectId].userPermissionIds[this.userId] : -1
+                userId:this.userId,
+                handle:this.handle,
+                permission:pperm,
+                projectId:projectId,
+                projectName:projectName,
+                studio:studio,
+                userPermissionId:$.permission.projects[projectId].userPermissionIds[this.userId] ? $.permission.projects[projectId].userPermissionIds[this.userId] : -1
         };
       };
     },
@@ -454,7 +529,7 @@
      * @param projectJson
      *            the project json object
      */
-    projectPermission : function(projectJson) {
+    projectPermission:function (projectJson) {
       this.projectId = projectJson.projectId;
       this.projectName = projectJson.projectName;
       this.studio = projectJson.studio;
@@ -526,7 +601,7 @@
      * @param projectJson
      *            the json project
      */
-    project : function(projectJson) {
+    project:function (projectJson) {
       this.projectId = projectJson.projectId;
       this.projectName = projectJson.projectName;
             this.studio = projectJson.studio;
@@ -600,7 +675,7 @@
       this.getUserPermissionsHtml = function getUserPermissionsHtml() {
         this.userPermissionsHtml = "";
 
-        for ( var userId in this.userPermissions) {
+            for (var userId in this.userPermissions) {
           this.userPermissionsHtml += this.userPermissions[userId]
               .toHtml(this.projectId);
         }
@@ -620,8 +695,7 @@
        * @param notChangeProjectRow
        *            not to change the project row, optional
        */
-      this.setSingleUserPermission = function setSingleUserPermission(
-          userId, rperm, wperm, fperm, notChangeProjectRow) {
+        this.setSingleUserPermission = function setSingleUserPermission(userId, rperm, wperm, fperm, notChangeProjectRow) {
         if (this.userPermissions[userId] == null) {
           return;
         }
@@ -664,7 +738,7 @@
 
         var mark = true;
         var hasUser = false;
-        for ( var userId in this.userPermissions) {
+            for (var userId in this.userPermissions) {
           hasUser = true;
           var uP = this.userPermissions[userId];
 
@@ -699,8 +773,7 @@
        * @param notUpdateAllPermission
        *            not to change the head row, optional
        */
-      this.setMainPermission = function setMainPermission(permissionType,
-          notUpdateAllPermission) {
+        this.setMainPermission = function setMainPermission(permissionType, notUpdateAllPermission) {
         if (permissionType == $.permission.PERMISSION_TYPE_R) {
           this.rperm = !this.rperm;
         }
@@ -711,7 +784,7 @@
           this.fperm = !this.fperm;
         }
 
-        for ( var userId in this.userPermissions) {
+            for (var userId in this.userPermissions) {
           var uP = this.userPermissions[userId];
 
           if (permissionType == $.permission.PERMISSION_TYPE_R) {
@@ -739,7 +812,7 @@
      * @param projectJson
      *            the project json object
      */
-    user : function(projectJson) {
+    user:function (projectJson) {
       this.userId = projectJson.userId;
       this.handle = projectJson.handle;
       this.projectPermissions = {};
@@ -756,8 +829,7 @@
        * @param pPermission
        *            the project permission to add
        */
-      this.addProjectPermissions = function addProjectPermissions(
-          pPermission) {
+        this.addProjectPermissions = function addProjectPermissions(pPermission) {
         if (this.projectPermissions[pPermission.projectId] == null) {
           this.projectPermissions[pPermission.projectId] = pPermission;
         }
@@ -801,7 +873,7 @@
 
         // Check whether it is current user
         var currentUser = $(".helloUser li:first a").html();
-        if (currentUser == this.handle){
+            if (currentUser == this.handle) {
           html += "<a userid=-1 href=\"javascript:showDeleteOneselfError()\" class='removeProject'></a>";
         } else {
           html += "<a userid = ";
@@ -824,7 +896,7 @@
       this.getProjectPermissionsHtml = function getProjectPermissionsHtml() {
         this.projectPermissionsHtml = "";
 
-        for ( var pId in this.projectPermissions) {
+            for (var pId in this.projectPermissions) {
           this.projectPermissionsHtml += this.projectPermissions[pId]
               .toHtml(this.userId);
         }
@@ -844,8 +916,7 @@
        * @param notChangeProjectRow
        *            not to change the project row, optional
        */
-      this.setSingleProjectPermission = function setSingleProjectPermission(
-          projectId, rperm, wperm, fperm, notChangeUserRow) {
+        this.setSingleProjectPermission = function setSingleProjectPermission(projectId, rperm, wperm, fperm, notChangeUserRow) {
         if (this.projectPermissions[projectId] == null) {
           return;
         }
@@ -882,7 +953,7 @@
 
         var mark = true;
         var hasProject = false;
-        for ( var projectId in this.projectPermissions) {
+            for (var projectId in this.projectPermissions) {
           hasProject = true;
           var pP = this.projectPermissions[projectId];
 
@@ -916,8 +987,7 @@
        * @param notUpdateAllPermission
        *            not update head row, optional
        */
-      this.setMainPermission = function setMainPermission(permissionType,
-          notUpdateAllPermission) {
+        this.setMainPermission = function setMainPermission(permissionType, notUpdateAllPermission) {
         if (permissionType == $.permission.PERMISSION_TYPE_R) {
           this.rperm = !this.rperm;
         }
@@ -928,7 +998,7 @@
           this.fperm = !this.fperm;
         }
 
-        for ( var projectId in this.projectPermissions) {
+            for (var projectId in this.projectPermissions) {
           var pP = this.projectPermissions[projectId];
 
           if (permissionType == $.permission.PERMISSION_TYPE_R) {
@@ -953,14 +1023,14 @@
      * Update the permissions in first row, set checked if all below rows
      * are checked.
      */
-    updateAllPermission : function() {
+    updateAllPermission:function () {
       var rperm = true;
       var wperm = true;
       var fperm = true;
       var tr;
 
       // update project table
-      $("#projects .group").each(function() {
+        $("#projects .group").each(function () {
         var p = $.permission;
         var projectId = $(this).attr("id");
         projectId = projectId.substring("p_project".length);
@@ -976,7 +1046,7 @@
       rperm = true;
       wperm = true;
       fperm = true;
-      $("#users .group").each(function() {
+        $("#users .group").each(function () {
         var p = $.permission;
         var userId = $(this).attr("id");
         userId = userId.substring("u_user".length);
@@ -997,11 +1067,11 @@
      * @param checked
      *            the state of checkbox
      */
-    setAllPermission : function(permissionType, checked) {
+    setAllPermission:function (permissionType, checked) {
       if (this.currentTable == 0) {
         $("#projects .group")
             .each(
-                function() {
+                function () {
                   var p = $.permission;
                   var projectId = $(this).attr("id");
                   projectId = projectId
@@ -1029,7 +1099,7 @@
                 });
       } else {
         $("#users .group").each(
-            function() {
+                function () {
               var p = $.permission;
               var userId = $(this).attr("id");
               userId = userId.substring("u_user".length);
@@ -1062,7 +1132,7 @@
      * @param projectId
      *            the project id
      */
-    deleteUserOnProject : function(userId, projectId) {
+    deleteUserOnProject:function (userId, projectId) {
       // update project table
       var project = this.projects[projectId];
 
@@ -1102,10 +1172,10 @@
      * @param userId
      *            the user id
      */
-    removeSingleUser : function(userId) {
+    removeSingleUser:function (userId) {
       var user = this.users[userId];
 
-      for ( var pId in user.projectPermissions) {
+        for (var pId in user.projectPermissions) {
         var project = user.projectPermissions[pId];
         this.deleteUserOnProject(userId, project.projectId);
       }
@@ -1122,8 +1192,8 @@
     /**
      * Remove users.
      */
-    removeUsers : function() {
-      $("#users .group").each(function() {
+    removeUsers:function () {
+        $("#users .group").each(function () {
         if ($($(this).parent().find("input")[0]).attr("checked")) {
           var id = $(this).attr("id");
           id = id.substring("u_user".length);
@@ -1139,8 +1209,8 @@
      * @param dialogId
      *            the id of dialog
      */
-    clearAndOpenDialog : function(dialogId) {
-      $("#" + dialogId + " .list").each(function() {
+    clearAndOpenDialog:function (dialogId) {
+        $("#" + dialogId + " .list").each(function () {
         $(this).empty();
       });
       $("#" + dialogId + " .searchTxt").val("");
@@ -1153,14 +1223,14 @@
      * @param projectId
      *            the project id
      */
-    handleAddUserClick : function(projectId) {
+    handleAddUserClick:function (projectId) {
       // clear and open the dialog
       this.clearAndOpenDialog("manageUserDialog");
 
       // set current project id
       this.currentProjectId = projectId;
 
-      $.each($.permission.projects[projectId].userPermissions, function(index, item) {
+        $.each($.permission.projects[projectId].userPermissions, function (index, item) {
           var listDiv = $("#manageUserDialog .right .list");
           var htmlToAdd = "<div name='" + item.handle + "' id='mu_r_" + index + "' class='listItem'>"
               + item.handle + "</div>";
@@ -1168,7 +1238,7 @@
       });
 
       $(".ui-dialog-content .list .listItem").unbind("click");
-        $(".ui-dialog-content .list .listItem").click(function() {
+        $(".ui-dialog-content .list .listItem").click(function () {
           $(this).toggleClass("active");
         });
     },
@@ -1179,7 +1249,7 @@
      * @param userId
      *            the user id
      */
-    handleAssignProjectClick : function(userId) {
+    handleAssignProjectClick:function (userId) {
       // clear and open the dialog
       this.clearAndOpenDialog("addProjectDialogPm");
 
@@ -1187,7 +1257,7 @@
       this.currentUserMap = {};
       this.currentUserMap[userId] = this.users[userId].handle;
 
-        $.each($.permission.users[userId].projectPermissions, function(index, item) {
+        $.each($.permission.users[userId].projectPermissions, function (index, item) {
           var listDiv = $("#addProjectDialogPm .right .list");
           var htmlToAdd = "<div name='" + item.projectName + "' id='ap_r_" + index + "' class='listItem'>"
               + item.projectName + "</div>";
@@ -1195,7 +1265,7 @@
       });
 
       $(".ui-dialog-content .list .listItem").unbind("click");
-        $(".ui-dialog-content .list .listItem").click(function() {
+        $(".ui-dialog-content .list .listItem").click(function () {
           $(this).toggleClass("active");
         });
     },
@@ -1203,7 +1273,7 @@
     /**
      * Add more users.
      */
-    addMoreUsers : function() {
+    addMoreUsers:function () {
       this.addMoreUsersDirect = true;
 
       // clear and open the dialog
@@ -1213,8 +1283,8 @@
     /**
      * Handle add user process.
      */
-    processAddUsers : function() {
-      $("#addUserDialog .right .list .listItem").each(function() {
+    processAddUsers:function () {
+        $("#addUserDialog .right .list .listItem").each(function () {
         var userId = $.permission.retrieveId(this, "au_r_");
         var handle = $(this).attr("name");
 
@@ -1229,10 +1299,10 @@
     /**
      * Handle add user to project process.
      */
-    processAddUsersToProject : function() {
+    processAddUsersToProject:function () {
       $("#manageUserDialog .right .list .listItem")
           .each(
-              function() {
+            function () {
                 var project = $.permission.projects[$.permission.currentProjectId];
                 var userId = $.permission.retrieveId(this,
                     "mu_r_");
@@ -1240,12 +1310,12 @@
 
                 var newUser = false;
                 var uP = project.userPermissions[userId];
-                if (uP == null || typeof(uP) == "undefined"){
+                if (uP == null || typeof(uP) == "undefined") {
                   newUser = true;
                 }
                 $.permission.addUserProjectPair(userId, handle,
                     project.projectId);
-                if (newUser){
+                if (newUser) {
                   var JSON = new Object();
                   JSON['userId'] = userId;
                   JSON['handle'] = handle;
@@ -1259,7 +1329,7 @@
               });
 
 
-            $.each($.permission.projects[$.permission.currentProjectId].userPermissions, function(index, item) {
+        $.each($.permission.projects[$.permission.currentProjectId].userPermissions, function (index, item) {
                 if ($("#mu_r_" + index).length == 0) {
                     $.permission.deleteUserOnProject(index, $.permission.currentProjectId);
                 }
@@ -1269,19 +1339,19 @@
     /**
      * Handle assign projects process.
      */
-    processAssignProjects : function() {
-      $("#addProjectDialogPm .right .list .listItem").each(function() {
+    processAssignProjects:function () {
+        $("#addProjectDialogPm .right .list .listItem").each(function () {
         var pId = $.permission.retrieveId(this, "ap_r_");
 
-        $.each($.permission.currentUserMap, function(uId, handle) {
+            $.each($.permission.currentUserMap, function (uId, handle) {
           var newUser = false;
           var project = $.permission.projects[pId];
           var uP = project.userPermissions[uId];
-          if (uP == null || typeof(uP) == "undefined"){
+                if (uP == null || typeof(uP) == "undefined") {
             newUser = true;
           }
           $.permission.addUserProjectPair(uId, handle, pId);
-          if (newUser){
+                if (newUser) {
             var JSON = new Object();
             JSON['userId'] = uId;
             JSON['handle'] = handle;
@@ -1294,8 +1364,8 @@
         });
       });
 
-      $.each($.permission.currentUserMap, function(uId, handle) {
-          $.each($.permission.users[uId].projectPermissions, function(index, item) {
+        $.each($.permission.currentUserMap, function (uId, handle) {
+            $.each($.permission.users[uId].projectPermissions, function (index, item) {
               if ($("#ap_r_" + index).length == 0) {
                   $.permission.deleteUserOnProject(uId, index);
               }
@@ -1311,7 +1381,7 @@
      * @param prefix
      *            the prefix string
      */
-    retrieveId : function(obj, prefix) {
+    retrieveId:function (obj, prefix) {
       var id = $(obj).attr("id");
       id = id.substring(prefix.length);
       return id;
@@ -1320,17 +1390,17 @@
     /**
      * Add user to user table if it is not exist.
      */
-    addUserIfNotExist : function(userId, handle) {
+    addUserIfNotExist:function (userId, handle) {
       if (this.users[userId] != null) {
         return;
       }
 
       var obj = {
-        userId : userId,
-        handle : handle,
-        rperm : false,
-        wperm : false,
-        fperm : false
+            userId:userId,
+            handle:handle,
+            rperm:false,
+            wperm:false,
+            fperm:false
       };
       var user = new this.user(obj);
       this.users[userId] = user;
@@ -1342,11 +1412,11 @@
       var tmpCurrentTable = this.currentTable;
 
       this.currentTable = 1;
-      this.oUserTable.fnAddData( [ $(tds[0]).html(), $(tds[1]).html(),
+        this.oUserTable.fnAddData([ $(tds[0]).html(), $(tds[1]).html(),
           $(tds[2]).html(), $(tds[3]).html(), $(tds[4]).html() ]);
 
       var addDiv = $("#u_user" + userId);
-      addDiv.parent().parent().find("td").each(function(tdIndex) {
+        addDiv.parent().parent().find("td").each(function (tdIndex) {
         if (tdIndex == 0) {
           $(this).addClass("permCol");
         } else {
@@ -1368,7 +1438,7 @@
      * @param projectId
      *            the project id
      */
-    addUserProjectPair : function(userId, handle, projectId) {
+    addUserProjectPair:function (userId, handle, projectId) {
       if ($.permission.projects[projectId].userPermissions[userId] != null) {
         return;
       }
@@ -1379,13 +1449,13 @@
       var project = $.permission.projects[projectId];
       var projectName = project.projectName;
       var obj = {
-        userId : userId,
-        handle : handle,
-        projectId : projectId,
-        projectName : projectName,
-        rperm : false,
-        wperm : false,
-        fperm : false
+            userId:userId,
+            handle:handle,
+            projectId:projectId,
+            projectName:projectName,
+            rperm:false,
+            wperm:false,
+            fperm:false
       };
       var tmpCurrentTable = $.permission.currentTable;
 
@@ -1397,12 +1467,12 @@
       var pDiv = $("#p_project" + projectId);
       project.toHtml();
       if (project.groupState == 0) {
-        $("#permissions tr.group" + projectId).each(function() {
+            $("#permissions tr.group" + projectId).each(function () {
           $(this).remove();
         });
       } else {
         $.permission.changePermissionHideGroup(pDiv, projectId);
-        $("#permissions tr.group" + projectId).each(function() {
+            $("#permissions tr.group" + projectId).each(function () {
           $(this).remove();
         });
         $.permission.changePermissionHideGroup(pDiv, projectId);
@@ -1414,12 +1484,12 @@
       var user = $.permission.users[userId];
       user.toHtml();
       if (user.groupState == 0) {
-        $("#userTable tr.group" + userId).each(function() {
+            $("#userTable tr.group" + userId).each(function () {
           $(this).remove();
         });
       } else {
         $.permission.changePermissionHideGroup(uDiv, userId);
-        $("#userTable tr.group" + userId).each(function() {
+            $("#userTable tr.group" + userId).each(function () {
           $(this).remove();
         });
         $.permission.changePermissionHideGroup(uDiv, userId);
@@ -1435,7 +1505,7 @@
      * @param projectJson
      *            the project json object to add
      */
-    addProject : function(projectJson) {
+    addProject:function (projectJson) {
       // add to user table
       var pPermission = new this.projectPermission(projectJson);
       if (this.users[projectJson.userId] == null) {
@@ -1460,64 +1530,64 @@
     /**
      * Render to html.
      */
-    renderToHtml : function() {
+    renderToHtml:function () {
       var tmpTable = this.currentTable;
 
       // render to project table
       this.currentTable = 0;
       var html = "";
-      for ( var projectId in this.projects) {
+        for (var projectId in this.projects) {
         html += this.projects[projectId].toHtml();
       }
       $("#permissions tbody").html(html);
       this.oProjectTable = $("#permissions")
           .dataTable(
               {
-                "bFilter" : false,
-                "bSort" : true,
-                "asSorting": [ "asc" ],
-                "bInfo" : false,
-                "oLanguage" : {
-                  "sLengthMenu" : "_MENU_ Per page"
+                "bFilter":false,
+                "bSort":true,
+                "asSorting":[ "asc" ],
+                "bInfo":false,
+                "oLanguage":{
+                    "sLengthMenu":"_MENU_ Per page"
                 },
-                "sPaginationType" : "permission_button",
-                "bAutoWidth" : false,
-                "sDom" : '"bottom"<"pagination-info"<"pagination"p><"display-perpage"l>>',
-                "aoColumns" : [
-                  { "sSortDataType": "dom-text" },
-                  {"bSortable" : false},
-                  {"bSortable" : false},
-                  {"bSortable" : false},
-                  {"bSortable" : false}
+                "sPaginationType":"permission_button",
+                "bAutoWidth":false,
+                "sDom":'"bottom"<"pagination-info"<"pagination"p><"display-perpage"l>>',
+                "aoColumns":[
+                    { "sSortDataType":"dom-text" },
+                    {"bSortable":false},
+                    {"bSortable":false},
+                    {"bSortable":false},
+                    {"bSortable":false}
                   ]
               });
 
       // render to user table
       this.currentTable = 1;
       html = "";
-      for ( var userId in this.users) {
+        for (var userId in this.users) {
         html += this.users[userId].toHtml();
       }
       $("#userTable tbody").html(html);
       this.oUserTable = $("#userTable")
           .dataTable(
               {
-                "bFilter" : false,
-                "bSort" : true,
-                "asSorting": [ "asc" ],
-                "bInfo" : false,
-                "oLanguage" : {
-                  "sLengthMenu" : "_MENU_ Per page"
+                "bFilter":false,
+                "bSort":true,
+                "asSorting":[ "asc" ],
+                "bInfo":false,
+                "oLanguage":{
+                    "sLengthMenu":"_MENU_ Per page"
                 },
-                "sPaginationType" : "permission_button",
-                "bAutoWidth" : false,
-                "sDom" : '"bottom"<"pagination-info"<"pagination"p><"display-perpage"l>>',
-                "aoColumns" : [
+                "sPaginationType":"permission_button",
+                "bAutoWidth":false,
+                "sDom":'"bottom"<"pagination-info"<"pagination"p><"display-perpage"l>>',
+                "aoColumns":[
                     null,
-                    {"bSortable" : false},
-                    {"bSortable" : false},
-                    {"bSortable" : false},
-                    {"bSortable" : false}
+                    {"bSortable":false},
+                    {"bSortable":false},
+                    {"bSortable":false},
+                    {"bSortable":false}
                 ]
               });
 
@@ -1538,25 +1608,25 @@
     /**
      * Set global event handles.
      */
-    setGlobalEventHandle : function() {
+    setGlobalEventHandle:function () {
       // handle checkbox click event in 'applyForAll' row
       var tableIds = [ "#projects", "#users" ];
-      for ( var i = 0; i < tableIds.length; i++) {
+        for (var i = 0; i < tableIds.length; i++) {
         var inputs = $(tableIds[i] + " .applyForAll input");
         $(inputs[0]).click(
-            function() {
+                function () {
               $.permission.setAllPermission(
                   $.permission.PERMISSION_TYPE_R, $(this)
                       .attr("checked"));
             });
         $(inputs[1]).click(
-            function() {
+                function () {
               $.permission.setAllPermission(
                   $.permission.PERMISSION_TYPE_W, $(this)
                       .attr("checked"));
             });
         $(inputs[2]).click(
-            function() {
+                function () {
               $.permission.setAllPermission(
                   $.permission.PERMISSION_TYPE_F, $(this)
                       .attr("checked"));
@@ -1564,21 +1634,21 @@
       }
 
       // handle add more users event and delete users event
-      $("#u_addMoreUserA").click(function() {
+        $("#u_addMoreUserA").click(function () {
         $.permission.addMoreUsers();
       });
-      $("#u_deleteUsersA").click(function() {
+        $("#u_deleteUsersA").click(function () {
         $.permission.removeUsers();
         pbutton_submit();
       });
 
       // handle user list click event
-      $($("#users thead tr")[0]).click(function() {
+        $($("#users thead tr")[0]).click(function () {
         $.permission.initTable();
       });
 
       // hanlde sort image change
-      $("#users thead tr th.permCol").click(function() {
+        $("#users thead tr th.permCol").click(function () {
         var img = $(this).find("img");
         if (img.attr("src") == $.permission.SORT_IMAGES[0]) {
           img.attr("src", $.permission.SORT_IMAGES[1]);
@@ -1588,8 +1658,8 @@
       });
 
       // handle select value change event
-      $.each(["notifications_length", "userTable_length"], function(index, item) {
-          $("#" + item).change(function() {
+        $.each(["notifications_length", "userTable_length"], function (index, item) {
+            $("#" + item).change(function () {
               $.permission.initTable();
           });
       });
@@ -1598,7 +1668,7 @@
     /**
      * Change the visibility of specified hide group.
      */
-    changePermissionHideGroup : function(obj, groupId) {
+    changePermissionHideGroup:function (obj, groupId) {
       var group;
       var htmlToAdd;
       var nTr = $(obj).parent().parent();
@@ -1617,7 +1687,7 @@
       if ($(selectString).length == 0) {
         $(htmlToAdd).insertAfter(nTr);
       }
-      $(selectString).each(function() {
+        $(selectString).each(function () {
         if ($(this).hasClass($.permission.HIDDEN_CLASS)) {
           $(this).removeClass($.permission.HIDDEN_CLASS);
         } else {
@@ -1634,11 +1704,11 @@
     /**
      * Initiate the table.
      */
-    initTable : function() {
+    initTable:function () {
       if (this.currentTable == 0) {
         $("#projects .group")
             .each(
-                function() {
+                function () {
                   var projectId = $(this).attr("id");
                   projectId = projectId
                       .substring("p_project".length);
@@ -1655,12 +1725,12 @@
       }
 
       if (this.currentTable == 1) {
-        $("#users .group").each(function() {
+            $("#users .group").each(function () {
           var userId = $(this).attr("id");
           userId = userId.substring("u_user".length);
 
           var addDiv = $("#u_user" + userId);
-          addDiv.parent().parent().find("td").each(function(tdIndex) {
+                addDiv.parent().parent().find("td").each(function (tdIndex) {
             if (tdIndex == 0) {
               $(this).addClass("permCol");
             } else {
@@ -1694,7 +1764,7 @@
      * @param fperm
      *            the full permission to set
      */
-    setTrCheckStatus : function(tr, rperm, wperm, fperm) {
+    setTrCheckStatus:function (tr, rperm, wperm, fperm) {
         $(tr.children()[1]).children().attr("checked", rperm);
             $(tr.children()[2]).children().attr("checked", wperm);
             $(tr.children()[3]).children().attr("checked", fperm);
@@ -1714,8 +1784,7 @@
      * @param mainId
      *            the main id, optional
      */
-    handleCheckboxEvent : function(tableType, srcType, permissionType, id,
-        mainId) {
+    handleCheckboxEvent:function (tableType, srcType, permissionType, id, mainId) {
       if (tableType == this.TABLE_TYPE_PROJECTS) {
         if (srcType == this.SRC_TYPE_DETAIL) {
           var project = this.projects[mainId];
@@ -1763,5 +1832,5 @@
         }
       }
     }
-  };
+};
 //});
