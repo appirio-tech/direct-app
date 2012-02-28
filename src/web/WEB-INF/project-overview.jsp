@@ -34,7 +34,7 @@
     <jsp:include page="includes/htmlhead.jsp"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=210135" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=213607" />
     <![endif]-->
     <ui:projectPageType tab="overview"/>
     <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css" />
@@ -43,7 +43,7 @@
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js?v=203928"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=213353"></script>
     <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=211035"></script>
-    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=213353"></script>
+    <script type="text/javascript" src="/scripts/directProjectOverview.js?v=213607"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>

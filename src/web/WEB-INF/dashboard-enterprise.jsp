@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=210282" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=210135"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=213607"/>
     <![endif]-->
     <!-- load the data for Charts -->
     <script type="text/javascript">

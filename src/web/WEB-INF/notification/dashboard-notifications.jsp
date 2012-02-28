@@ -23,7 +23,7 @@
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
     <script type="text/javascript" src="/scripts/notifications.js?v=207440"></script>
-  <link rel="stylesheet" href="/css/modal.css?v=207790" media="all" type="text/css"/>
+  <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.dialog.css?v=185283" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.theme.css?v=185283" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.core.css?v=185283" media="all" type="text/css"/>
@@ -33,7 +33,7 @@
     <script type="text/javascript" id="js-ajax" src="/scripts/AjaxPermissionProcessor.js?v=186145"></script>
     <script type="text/javascript" id="jquery-dt"src="/scripts/jquery.dataTables.min.js?v=178111"></script>
     <script type="text/javascript" id="dt-extend" src="/scripts/dataTable.extend.js?v=186145"></script>
-    <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js?v=210124"></script>
+    <script type="text/javascript" id="ptable" src="/scripts/permissionTable.js?v=213622"></script>
     <script type="text/javascript" id="pDialog" src="/scripts/permissionDialog.js?v=210124"></script>
     <script type="text/javascript" id="json" src="/scripts/json2.js?v=186145"></script>
 

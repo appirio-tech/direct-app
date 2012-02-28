@@ -29,7 +29,7 @@
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>   
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script> 
     <script type="text/javascript" src="/scripts/launch/entity.js?v=210792"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=210879"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=213622"></script>
     <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=212862"></script>
     
 </head>

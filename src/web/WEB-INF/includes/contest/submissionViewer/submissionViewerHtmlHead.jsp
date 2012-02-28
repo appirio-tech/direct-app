@@ -21,8 +21,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- External CSS -->
-<link rel="stylesheet" href="/css/screen.css?v=211772" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/dashboard.css?v=212170" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/screen.css?v=213607" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/dashboard.css?v=213622" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/jScrollPane.css?v=176771" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/thickbox.css?v=192822" media="all" type="text/css" />
@@ -42,7 +42,7 @@
 <s:if test="formData.viewType.toString() == 'SINGLE' || formData.viewType.toString() == 'CHECKOUT'">
 </s:if>
 <script type="text/javascript" src="/scripts/jquery-ui-1.7.2.custom.min.js?v=179771"></script>
-<script type="text/javascript" src="/scripts/common.js?v=211772"></script>
+<script type="text/javascript" src="/scripts/common.js?v=213353"></script>
 <script type="text/javascript" src="/scripts/jquery.tablesorter.min.js?v=176771"></script>
 <script type="text/javascript" src="/scripts/fullcalendar.min.js?v=205096"></script>
 <script type="text/javascript" src="/scripts/jquery.mousewheel.js?v=176771"></script>
@@ -60,7 +60,7 @@
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js?v=179771"></script>
 
 <script type="text/javascript" src="/scripts/jquery.select.js?v=185283"></script>
-<script type="text/javascript" src="/scripts/studio.js?v=211035"></script>
+<script type="text/javascript" src="/scripts/studio.js?v=213622"></script>
 <script type="text/javascript" src="/scripts/ui.core.js?v=185283"></script>  
 <script type="text/javascript" src="/scripts/ui.widget.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/ui.mouse.js?v=185283"></script>
@@ -79,7 +79,7 @@
 <s:if test="formData.viewType.toString() == 'SINGLE'">
     <script type="text/javascript" src="/scripts/jquery-cycle.js?v=185283"></script>
     <script type="text/javascript" src="/scripts/jquery-easing.js?v=185283"></script>
-    <script type="text/javascript" src="/scripts/common.js?v=211772"></script>
+    <script type="text/javascript" src="/scripts/common.js?v=213353"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <!--[if IE 6]>
     <script src="/scripts/DD_belatedPNG.js?v=185283" type="text/javascript"></script>
@@ -87,12 +87,12 @@
     <![endif]-->
 </s:if>
 <s:if test="formData.viewType.toString() == 'CHECKOUT'">
-    <script type="text/javascript" src="/scripts/common.js?v=211772"></script>
+    <script type="text/javascript" src="/scripts/common.js?v=213353"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
-    <script type="text/javascript" src="/scripts/checkout.js?v=209530"></script>
+    <script type="text/javascript" src="/scripts/checkout.js?v=213622"></script>
 </s:if>
 <s:if test="formData.viewType.toString() == 'CHECKOUT_CONFIRM'">
-    <script type="text/javascript" src="/scripts/common.js?v=211772"></script>
+    <script type="text/javascript" src="/scripts/common.js?v=213353"></script>
     <script type="text/javascript" src="/scripts/jquery.blockUI.js?v=179771"></script>
     <script type="text/javascript" src="/scripts/confirmCheckout.js?v=206299"></script>
 </s:if>
