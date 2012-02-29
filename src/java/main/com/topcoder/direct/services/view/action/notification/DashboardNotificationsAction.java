@@ -3,6 +3,12 @@
  */
 package com.topcoder.direct.services.view.action.notification;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
@@ -16,21 +22,10 @@ import com.topcoder.service.facade.contest.notification.ProjectNotification;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.RowNotFoundException;
 import com.topcoder.web.ejb.user.UserPreference;
-import com.topcoder.web.ejb.user.UserPreferenceHome;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * Presents notification settings page in dashboard.
- * 
+ *
  * <p>
  * Version 1.1 (Release Assembly - Project Contest Fee Management ) Change notes:
  *   <ol>
@@ -43,38 +38,43 @@ import java.util.Properties;
  */
 public class DashboardNotificationsAction extends BaseDirectStrutsAction {
     private static final List<UserPreferenceDTO> PREFERENCES;
-    
+
     private CommonDTO viewData =  new CommonDTO();
 
     private  SessionData sessionData;
-    
+
     /**
      * List of current notifications.
      */
     private List<ProjectNotification> notifications;
-    
+
     private List<UserPreferenceDTO> preferences;
-    
+
     /**
      * The user can view contest fee option or not.
-     * 
+     *
      * @since 1.1
      */
     private boolean viewContestFeeOption;
-    
+
     static {
         PREFERENCES = new ArrayList<UserPreferenceDTO>();
-        
+
         UserPreferenceDTO userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(29);
         userPreferenceDTO.setDesc("Receive notifications when my contests advance phases.");
         PREFERENCES.add(userPreferenceDTO);
-        
+
         userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(30);
         userPreferenceDTO.setDesc("Receive notifications when forum communication is posted in my contests.");
         PREFERENCES.add(userPreferenceDTO);
-    }
+
+        userPreferenceDTO = new UserPreferenceDTO();
+        userPreferenceDTO.setPreferenceId(31);
+        userPreferenceDTO.setDesc("Receive notifications when forum communication is posted in my project.");
+        PREFERENCES.add(userPreferenceDTO);
+}
 
     /**
      * Executes action by fetching necessary data from the back-end.
@@ -86,13 +86,13 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         HttpServletRequest request = DirectUtils.getServletRequest();
 
         HttpSession session = request.getSession(false);
-        
+
         if (session != null) {
             sessionData = new SessionData(session);
         }
 
         request.setAttribute("currentUserHandle", sessionData.getCurrentUserHandle());
-        
+
         viewContestFeeOption = DirectUtils.isSuperAdmin(user) || DirectUtils.isTCAccounting(user);
 
         notifications = getContestServiceFacade().getNotificationsForUser(user, user.getUserId());
@@ -104,7 +104,7 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         viewData.setUserProjects(userProjectsDTO);
 
         UserPreference userPreference = getUserPreferenceHome().create();
-        
+
         preferences = new ArrayList<UserPreferenceDTO>();
         for (UserPreferenceDTO preference : PREFERENCES) {
             String value;
@@ -115,7 +115,7 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
                         DBMS.COMMON_OLTP_DATASOURCE_NAME);
             } catch (RowNotFoundException e) {
                 //e.printStackTrace();
-                
+
                 // set default value to false if can't find the row
                 value = "false";
                 userPreference.createUserPreference(user.getUserId(),
@@ -125,7 +125,7 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
                         preference.getPreferenceId(), value,
                         DBMS.COMMON_OLTP_DATASOURCE_NAME);
             }
-            
+
             preference.setValue(value);
             preferences.add(preference);
         }
@@ -190,21 +190,21 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
 
     /**
      * Getter for the view contest fee option.
-     * 
+     *
      * @return the view contest fee option.
      */
-	public boolean isViewContestFeeOption() {
-		return viewContestFeeOption;
-	}
+    public boolean isViewContestFeeOption() {
+        return viewContestFeeOption;
+    }
 
-	/**
-	 * Setter for the view contest fee option.
-	 * 
-	 * @param viewContestFeeOption the view contest fee option.
-	 */
-	public void setViewContestFeeOption(boolean viewContestFeeOption) {
-		this.viewContestFeeOption = viewContestFeeOption;
-	}
-    
-    
+    /**
+     * Setter for the view contest fee option.
+     *
+     * @param viewContestFeeOption the view contest fee option.
+     */
+    public void setViewContestFeeOption(boolean viewContestFeeOption) {
+        this.viewContestFeeOption = viewContestFeeOption;
+    }
+
+
 }
