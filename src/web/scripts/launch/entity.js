@@ -136,6 +136,7 @@ var SOFTWARE_CATEGORY_ID_DEVELOPMENT = 2;
 var SOFTWARE_CATEGORY_ID_CONCEPT = 23;
 var SOFTWARE_CATEGORY_ID_SPEC = 6;
 var SOFTWARE_CATEGORY_ID_CONTENT = 35;
+var SOFTWARE_CATEGORY_ID_MARATHON = 37;
 
 var DRAFT_STATUS = "Draft";
  
@@ -163,7 +164,8 @@ var projectCategoryArray = [
 {id:34,                                name:'Studio Other',             label:'Studio Other',                      typeId:3, typeName:'Studio', hasMulti:true},
 {id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
-{id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true}
+{id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_MARATHON,     name:'Marathon Match',   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false}
 ];
 
 /**

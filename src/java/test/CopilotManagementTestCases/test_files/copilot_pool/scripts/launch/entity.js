@@ -176,7 +176,8 @@ var projectCategoryArray = [
 {id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application'},
 {id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application'},
 {id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application'},
-{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application'}
+{id:SOFTWARE_CATEGORY_ID_CONTENT,      name:'Content Creation',  label:'Content Creation',           typeId:2, typeName:'Application'},
+{37      							   name:'Marathon Match',    label:'Marathon Match',             typeId:2, typeName:'Application'}
 ];
 
 /**

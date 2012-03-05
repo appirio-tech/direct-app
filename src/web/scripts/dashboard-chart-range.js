@@ -29,7 +29,8 @@ var shortNameMap = {
 "32" :  ["Application Front-End Design" , "App Design"],
 "34" :  ["Other" , "Other"],
 "35" :  ["Content Creation", "Content"],
-"36" :  ["Reporting" , "Reporting"]
+"36" :  ["Reporting" , "Reporting"],
+"37" :  ["Marathon Match" , "Marathon Match"]
 };
 
 
