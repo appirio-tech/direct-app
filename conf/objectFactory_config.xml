@@ -1834,6 +1834,7 @@
             <Value>phase_templates/TCSTemplate_Studio.xml</Value>
             <Value>phase_templates/TCSTemplate_SpecReview.xml</Value>
             <Value>phase_templates/TCSTemplate_Copilot_Posting.xml</Value>
+			<Value>phase_templates/TCSTemplate_Marathon_Match.xml</Value>
         </Property>
     </Config>
 
