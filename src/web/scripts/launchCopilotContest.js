@@ -204,12 +204,16 @@ $(document).ready(function(){
         swUploader.setInput($(this).parent().prev().find("input[type=file]").get(0));
         
         var fileName = swUploader._input.value;
-	var description = $(this).parent().find("#fileDescription").val();
+       	var description = $(this).parent().find("#fileDescription").val();
 
         var errors = [];
 
         if(!checkRequired(fileName)) {
             errors.push('No file is selected.');
+        }
+
+        if(!checkRequired(description)) {
+            errors.push('File description is empty.');
         }
 
         if(errors.length > 0) {
