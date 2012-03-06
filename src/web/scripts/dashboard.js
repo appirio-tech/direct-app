@@ -93,6 +93,8 @@ $(document).ready(function(){
 	/* sort contests */
     if ($("#contestsTable").length > 0) {
         $("#contestsTable").tablesorter();
+        
+        $("#rightTableHeader .statusTh").click().click();
     }
     
     /* init date-pack */
@@ -112,13 +114,14 @@ $(document).ready(function(){
 	
 	/* sort contest by status */
 	sortStatus = function(){
-		var sorting = [[0,0]];
+		var sorting = [[0,1]];
         $("#contestsTable").trigger("sorton",[sorting]);
         $("#contestsTable tr").removeClass("even");
 		$("#contestsTable tr").each(function(){
 			$("#contestsTable tr:even").addClass("even");
 		});
 	}
+    sortStatus();
 	
 	/* sort contest by type */
 	sortType = function(){
@@ -248,8 +251,14 @@ $(document).ready(function(){
                         scrollbarWidth: 17,
                         showArrows: true
                     });
+                    
+                    $("#contestsTable").tablesorter();
                 }
+                
+                $("#rightTableHeader").show();
             } else {
+                $("#rightTableHeader").hide();
+            
                 // clear the contests if needed
                 if ($("#contestsTable tbody tr").length > 0) {
                     currentProjectContests = $("#contestsTable tbody").html();
@@ -261,8 +270,6 @@ $(document).ready(function(){
                     });
                 }
             }
-
-
         }
 
         dropDown.find("li:odd").addClass("even");
@@ -390,13 +397,13 @@ $(document).ready(function(){
         updateCustomerDropDown($(".customerSelectMask"), customerList);
     }
 
-
-
-
-
 	showHideProjectList = function(){
-		$("#dropDown1").slideToggle(100);
-		$("#sortTableBy").toggle();
+		var list = $("#dropDown1 .dropList");
+        if(list.is(":hidden")){
+            list.show();
+        }else{
+            list.hide();    
+        }        
 
         if($(".projectSelectMask .contestsDropDown UL").height() > 200) {
             $(".projectSelectMask .contestsDropDown UL").css('width', 233);
@@ -408,7 +415,15 @@ $(document).ready(function(){
         if(contestsDropDown.is(":hidden")){
             $(".customerSelectMask .contestsDropDown").hide();
         }
-        contestsDropDown.slideToggle(100);
+        
+        var list = contestsDropDown.find("ul");
+        if(list.is(":hidden")){
+            $(".dropdownWidget .dropList").hide();
+            list.show();
+        }else{
+            list.hide();    
+        }        
+        //contestsDropDown.slideToggle(100);
 	}
 	
 	/*TCCC-2398*/
@@ -458,11 +473,12 @@ $(document).ready(function(){
 
 
 
-    $(".customerSelectMask  UL LI").click(function() {
+    $(".customerSelectMask UL LI").click(function() {
         var mask = $(this).parents(".customerSelectMask");
         mask.find("input").val($(this).find("a").text());
-        if (mask.find(".contestsDropDown").is(":visible")) {
-            mask.find(".contestsDropDown:visible").slideToggle(100);
+        
+        if (!mask.find(".contestsDropDown .dropList").is(":hidden")) {
+            mask.find(".contestsDropDown .dropList").hide();
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
         if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
@@ -1531,6 +1547,8 @@ $(document).ready(function(){
                 content: "Go to the edit project page to edit and update the project details and settings"
             });
         }
+        
+    
 });
 
 /*
@@ -1719,3 +1737,81 @@ var floatOverlayOpacity = 0.6;	//opacity for modal Background
 	});
 
 })(jQuery);
+
+ /* Add js code for  https://apps.topcoder.com/bugs/browse/BUGR-6104 */
+$(document).ready(function(){
+
+     var zIndex = 100;
+     $(".newSidebar .dropdownWidget").each(function(){
+        $(this).css("z-index",zIndex--);    
+     });
+    
+    /*
+     $(".newSidebar .dropdownWidget a.arrow").click(function(){
+        var widget = $(this).parents(".dropdownWidget");
+        var list = widget.find(".dropList");
+        if(list.is(":hidden")){
+            $(".dropdownWidget .dropList").hide();
+            list.show();
+        }else{
+            list.hide();    
+        }
+        return false;
+    })
+
+    $(".newSidebar .dropdownWidget .dropList a").live("click",function(){
+         var widget = $(this).parents(".dropdownWidget");
+         widget.find("input:text").val($(this).text());
+         $(this).parents(".dropList").hide();
+         return false;
+     })
+    */
+    
+    $(".newSidebar .contestList .tableHeader span").click(function(){
+        var header = $(this).parent();
+        if($(this).hasClass("down")){
+            $(this).removeClass("down").addClass("up");
+        }else if($(this).hasClass("up")){
+            $(this).removeClass("up").addClass("down");    
+        }else{
+            header.find("span").removeClass("down").removeClass("up");
+            $(this).addClass("down");
+        }
+        
+        var o = 0;
+        if ($(this).hasClass("down")) {
+            o = 1;
+        }
+        
+        var oo;
+        
+        if ($(this).hasClass("statusTh")) {
+            oo = 0;
+        } else if ($(this).hasClass("titleTh")) {
+            oo = 1;
+        } else {
+            oo = 2;
+        }
+        
+		var sorting = [[oo, o]];
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr:even").addClass("even");
+    })
+
+    $(".newSidebar .contestList .tableBody td").live("mouseenter",function(){
+        $(this).parent().addClass("hover");
+    })
+    $(".newSidebar .contestList .tableBody td").live("mouseleave",function(){
+        $(this).parent().removeClass("hover");
+    })
+
+    $(document).click(function(event){
+
+        if($(event.target).parents(".dropList").length == 0){
+            //$(".dropdownWidget .dropList").hide(); 
+        }
+         
+    });
+
+})

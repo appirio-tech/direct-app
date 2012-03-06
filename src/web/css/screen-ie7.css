@@ -75,3 +75,11 @@
     padding-right: 0px;
     padding-bottom: 0px;
 }
+
+/* Add css code for https://apps.topcoder.com/bugs/browse/BUGR-6104 */
+.newSidebar .contestList .tableBody table{
+   width:235px;
+}
+.newSidebar .contestList .tableBody col.last{
+   width:45px;
+}

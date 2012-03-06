@@ -27,168 +27,140 @@
          var isInProjectScope = ('project' == $.trim("<s:property value='#request.PAGE_TYPE'/>"));
          var currentProjectContests;
     </script>
-
-    <div class="box">
-        <a href="${ctx}/copilot/launchCopilotContest" class="button2">Get A Copilot</a>
-        <br />
-        <a href="${ctx}/launch/home" class="button2">Launch New Contest</a>
-    </div>
-    <span id="contextPath" value="${ctx}"/>
-    <!-- End .box -->
-    <div class="box">
-        <h2 class="title">My Projects</h2>
-        <!-- solve your problem -->
-        <div class="solveProblem">
-
-            <div class="inner">
-                <h3>We can help you</h3>
-
-                <p>Click below to start working with the community</p>
-
-                <div class="startButtonBox">
-                    <a href="<s:url action="createNewProject" namespace="/"/>" class="button2">Start Your New Project Now</a>
-                </div>
-            </div>
-
-            <!-- corner -->
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
-            <div class="corner bl"></div>
-            <div class="corner br"></div>
-
+    
+    <div class="newSidebar">
+        <div class="topBtns">
+            <a href="${ctx}/copilot/launchCopilotContest" class="copilot">Get a Copilot</a>
+            <a href="<s:url action="createNewProject" namespace="/"/>" class="start">Start a Project</a>
+            <a href="${ctx}/launch/home" class="launch">Launch Contest</a>
         </div>
-        <!-- End .solveProblem -->
-
-        <div class="contestsContainer">
-
-            <div class="customerSelectMask selectMask">
-                <p class="label">Select a Customer</p>
-
-                <div class="inputSelect">
-                    <input type="text" name="" value="All Customers">
-                    <a class="selectIco" href="javascript:;"></a>
-                </div>
-
-                <div id="dropDown2" class="contestsDropDown">
-                    <!-- when the user click the selectIco button we will show this dropdown list -->
-                    <ul>
-
-                        <s:if test="viewData.userProjects.projectsCustomers.size <= 1">
-                            <s:iterator value="viewData.userProjects.projectsCustomers" status="status" var="customer">
-                                <li <s:if test="#status.even">class="even"</s:if>>
-                                    <a class="longWordsBreak" href="#" id="<s:property value='key'/>"><s:property
-                                            value="value"/></a>
-                                </li>
-                            </s:iterator>
-                        </s:if>
-                        <s:else>
-                            <li class="">
-                                <a id="0" class="longWordsBreak" href="#">All Customers</a>
-                            </li>
-                            <s:iterator value="viewData.userProjects.projectsCustomers" status="status" var="customer">
-                                <li <s:if test="#status.odd">class="even"</s:if>>
-                                    <a class="longWordsBreak" href="#" id="<s:property value='key'/>"><s:property
-                                            value="value"/></a>
-                                </li>
-                            </s:iterator>
-
-                        </s:else>
-                    </ul>
-                </div>
-
-            </div>
-
-
-            <div class="projectSelectMask selectMask">
-                <p class="label">Select a Project</p>
-
-                <div class="inputSelect">
-                    <ui:isProjectContextSet>
-                        <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideProjectList();"
-                                     onkeyup="filterProject();"/>
-                    </ui:isProjectContextSet>
-                    <ui:noProjectContextSet>
-                        <s:textfield value="Select a Project" onfocus="showHideProjectList();" onkeyup="filterProject();"/>
-                    </ui:noProjectContextSet>
-                    <a href="javascript:;" onclick="showHideProjectList();" class="selectIco"></a>
-                </div>
-
-                <div id="dropDown1" class="contestsDropDown">
-                    <!-- when the user click the selectIco button we will show this dropdown list -->
-                    <ul>
-                        <s:iterator value="viewData.userProjects.projects" status="status" var="project">
-                            <li <s:if test="#status.even">class="even"</s:if>>
-                                <link:projectOverview project="${project}"/>
-                            </li>
-                        </s:iterator>
-                    </ul>
-                </div>
-
-            </div>
-            <!-- End .contestsDropDown -->
-
-            <ui:isProjectContextSet>
-                <div class="contestsList">
-                    <!-- This will contain the list of contests -->
-                    <div class="caption">
-                        <label>Sort Contests by &nbsp;</label>
-                        <select id="sortTableBy" onchange="sortTable(this);">
-                            <option value="title">Title</option>
-                            <option value="status">Status</option>
-                            <option value="type">Type</option>
-                        </select>
+        
+        
+        
+        <div class="contestList">
+            <div class="contestListMask">
+                <div class="filter">
+                    <label>Select Customer</label>
+                    
+                    <div class="dropdownWidget customerSelectMask">
+                        <div class="inputSelect">
+                            <input type="text" value="All Customers" />
+                            <a href="javascript:;" class="arrow"></a>
+                        </div>
+                        <div class="contestsDropDown">
+                            <ul class="dropList">
+                                <s:if test="viewData.userProjects.projectsCustomers.size <= 1">
+                                    <s:iterator value="viewData.userProjects.projectsCustomers" status="status" var="customer">
+                                        <li <s:if test="#status.even">class="even"</s:if>>
+                                            <a class="longWordsBreak" href="#" id="<s:property value='key'/>"><s:property
+                                                    value="value"/></a>
+                                        </li>
+                                    </s:iterator>
+                                                                        
+                                </s:if>
+                                <s:else>
+                                    <li class="">
+                                        <a id="0" class="longWordsBreak" href="#">All Customers</a>
+                                    </li>
+                                    <s:iterator value="viewData.userProjects.projectsCustomers" status="status" var="customer">
+                                        <li <s:if test="#status.odd">class="even"</s:if>>
+                                            <a class="longWordsBreak" href="#" id="<s:property value='key'/>"><s:property
+                                                    value="value"/></a>
+                                        </li>
+                                    </s:iterator>
+                                </s:else>  
+                            </ul>
+                        </div>
                     </div>
-                    <!-- End .caption -->
-                    <div class="contestsContent">
-                        <table id="contestsTable" width="100%" class="table-sidebar">
+                   
+                    <label>Select Project</label>
+                    
+                    <div class="dropdownWidget projectSelectMask">
+                        <div class="inputSelect">
+                        <ui:isProjectContextSet>
+                            <s:textfield name="sessionData.currentProjectContext.name" onfocus="showHideProjectList();"
+                                         onkeyup="filterProject();"/>
+                        </ui:isProjectContextSet>
+                        <ui:noProjectContextSet>
+                            <s:textfield value="Select a Project" onfocus="showHideProjectList();" onkeyup="filterProject();"/>
+                        </ui:noProjectContextSet>
+                        </div>
+                        
+                        <a href="javascript:;" onclick="showHideProjectList();" class="arrow"></a>
+                        
+                        <div class="contestsDropDown" id="dropDown1" >                        
+                            <ul class="dropList ">
+                                <s:iterator value="viewData.userProjects.projects" status="status" var="project">
+                                    <li <s:if test="#status.even">class="even"</s:if>>
+                                        <link:projectOverview project="${project}"/>
+                                    </li>
+                                </s:iterator>                            
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <ui:isProjectContextSet>
+                    <div class="tableHeader" id="rightTableHeader">
+                        <span class="statusTh down">Status</span>
+                        <span class="titleTh">Contest Title</span>
+                        <span class="typeTh">Type</span>
+                    </div>
+                    <div class="tableBody">                        
+                        <table cellpadding="0" cellspacing="0" id="contestsTable">
+                            <colgroup>
+                                <col width="42px" />
+                                <col width="144px" />
+                                <col class="last" />
+                            </colgroup>
                             <thead>
                             <tr class="hide"><!-- table header is necessary for the sorting functionality-->
                                 <th>c1</th>
                                 <th>c2</th>
                                 <th>c3</th>
                             </tr>
-                            </thead>
-                            <tbody>
-                            <s:iterator value="sessionData.currentProjectContests" status="status" var="contest">
-                            	<tr <s:if test="#status.even">class="even"</s:if> 
-                                <s:if test="contestType.name == 'Copilot Posting'">
-                                onclick="document.location.href = '<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; 
-                                </s:if>
-                                <s:if test="contestType.name != 'Copilot Posting'">
-                                onclick="document.location.href = '<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; 
-                                </s:if>
-                                
-                                this.style.cursor='pointer';">
-                                    <td class="status" width="15%">
-                                        <span class="<s:property value="status.shortName"/>"><span>a</span></span>
-                                    </td>
-                                    <td width="70%">
-                                        ${contest.title}
-                                    </td>
-                                    <td class="type" width="15%">
-
-                                        <div style="display: table-cell; vertical-align: middle;">
+                            </thead>                            
+                            <tbody>                                
+                                <s:iterator value="sessionData.currentProjectContests" status="status" var="contest">
+                                    <tr <s:if test="#status.even">class="even"</s:if> 
+                                    <s:if test="contestType.name == 'Copilot Posting'">
+                                    onclick="document.location.href = '<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; 
+                                    </s:if>
+                                    <s:if test="contestType.name != 'Copilot Posting'">
+                                    onclick="document.location.href = '<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>'; 
+                                    </s:if>
+                                    
+                                    this.style.cursor='pointer';">
+                                        <td>
+                                            <span class="<s:property value="status.shortName"/>"></span>
+                                        </td>
+                                        <td class="leftAlign">
+                                            ${contest.title}
+                                        </td>
+                                        <td>
                                             <img src="/images/<s:property value="contestType.letter"/>_small.png"
-                                                 alt="<s:property value="contestType.letter"/>"/>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                            </s:iterator>
-
+                                                     alt="<s:property value="contestType.letter"/>"/>
+                                        </td>
+                                    </tr>
+                                </s:iterator>                                
+                                
                             </tbody>
                         </table>
                     </div>
-                    <!-- End .contestsContent -->
-                </div>
-                <!-- End .contestsList -->
-            </ui:isProjectContextSet>
-
-            <p class="projectArchive"><a href="<s:url action='allProjects'/>">Project Archive</a></p>
-        </div>
-        <!-- End .contestsContainer -->
-
+                </ui:isProjectContextSet>
+                <div class="tl"></div>
+                <div class="tr"></div>
+                <div class="bl"></div>
+                <div class="br"></div>
+            </div>
+        </div>        
+        
+        <div class="archiveLink">
+            <a href="<s:url action='allProjects'/>">Project Archive</a>
+        </div>           
     </div>
+
+    <span id="contextPath" value="${ctx}"/>
     <!-- End .box -->
 
     <!-- help widget -->

@@ -37,9 +37,6 @@
  
  * - (Module Assembly - TopCoder Studio and Cockpit Download All Submissions Feature) updates:
  * - Add css styles for DOWNLOAD ALL button
- *
- * - (Release Assembly - TC Direct Cockpit Release One) updates:
- * - Add new css for the p to show multiple round submission numbers in registration box
  */
 
 
@@ -6551,18 +6548,13 @@ table.resultTable td a.button1:hover {
 			margin:0 auto 4px;
 			text-align:left;
 		}
-
-    .dashboardModule .listContent p.multipleSubmission  {
-    width: 160px;
-    }	
-
-		.appositeContainer .registrationModule .wrap{ width:289px; margin:0 auto; }
+		.appositeContainer .registrationModule .wrap{ width:264px; margin:0 auto; }
 		.appositeContainer .registrationModule .column{
 			float:left;
 			width:102px;
 		}
 		.appositeContainer .registrationModule .column.first{ width:162px; }
-		.appositeContainer .registrationModule .column p{ width:182px; }
+		.appositeContainer .registrationModule .column p{ width:102px; }
 		.appositeContainer .registrationModule .column.first p,
 		.appositeContainer .registrationModule .column.first .statusP{ width:162px; }
 		.appositeContainer .forumModule .listContent p,
@@ -8173,4 +8165,256 @@ a.downloadAllbtn:hover {
 
 a.downloadAllbtn:hover span {
     background: url(../images/DownloadAllbtn_Right.png) no-repeat right -23px;
+}
+
+/* Add css code for https://apps.topcoder.com/bugs/browse/BUGR-6104 */
+
+    .newSidebar .topBtns{
+        background:url(../images/sidebar-top-bg.gif) no-repeat 0 0;
+        padding:16px 0 8px 10px;
+        overflow:hidden;
+    }
+        .newSidebar .topBtns a{
+            float:left;
+            color:#fffffe;
+            padding-top:67px;
+            background-repeat:no-repeat;
+            background-position:0 0;
+            margin-right:9px;
+            text-decoration:none;
+            font-size:11px;
+            text-align:center;
+        }
+        .newSidebar .topBtns a:hover{
+            text-decoration:none;
+            color:#ff0000;
+        }
+        .newSidebar .topBtns a.copilot{
+            background-image:url(../images/copilot-icon.png);
+            width:76px;
+        }
+        .newSidebar .topBtns a.copilot:hover{
+            background-image:url(../images/copilot-icon-hover.png); 
+        }
+        .newSidebar .topBtns a.start{
+            background-image:url(../images/start-project-icon.png);
+            width:80px;
+        }
+        .newSidebar .topBtns a.start:hover{
+            background-image:url(../images/start-project-icon-hover.png);
+        }
+        .newSidebar .topBtns a.launch{
+            background-image:url(../images/launch-contest-icon.png);
+            width:78px;
+        }
+        .newSidebar .topBtns a.launch:hover{
+            background-image:url(../images/launch-contest-icon-hover.png);
+            color:#ffff00;
+        }
+    .newSidebar .contestList{
+        background:url(../images/sidebar-top-bg.gif) no-repeat 0 0;
+        padding:16px 0 4px;
+        position:relative;
+    }
+        .newSidebar .contestList .tr{
+            position:absolute;
+            right:-1px;
+            top:-1px;
+            background:url(../images/box-corner1.gif) no-repeat -4px 0;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        }
+        .newSidebar .contestList .tl{
+            position:absolute;
+            left:-1px;
+            top:-1px;
+            background:url(../images/box-corner1.gif) no-repeat 0 0;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        }
+        .newSidebar .contestList .bl{
+            position:absolute;
+            left:-1px;
+            bottom:-1px;
+            background:url(../images/box-corner1.gif) no-repeat 0 -4px;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        }
+        .newSidebar .contestList .br{
+            position:absolute;
+            right:-1px;
+            bottom:-1px;
+            background:url(../images/box-corner1.gif) no-repeat -4px -4px;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        } 
+        .newSidebar .contestListMask{
+            border:1px solid #000;
+            background:url(../images/contest--box-bg.gif) repeat-x #e7e7e7 0 0;
+            width:252px;
+            margin:0 auto;
+            padding-bottom:3px;
+            position:relative;
+        }
+             .newSidebar .contestList .filter{
+                padding:0 0 14px 14px;    
+             }
+                 .newSidebar .contestList .filter label{
+                    color:#333;
+                     font-weight:bold;
+                     font-size:11px;
+                     display:block;
+                     padding:12px 0 5px;
+                 }
+                 .newSidebar .contestList .filter .dropdownWidget{
+                     background:url(../images/dropdown-box.gif) no-repeat 0 0;
+                     height:22px;
+                     width:220px;
+                     position:relative;
+                     padding:0 2px;
+                 }
+                     .newSidebar .contestList .filter .dropdownWidget input{
+                          border:0;
+                          height:18px;
+                         line-height:18px;
+                         padding:0 3px;
+                         width:188px;
+                         color:#333;
+                         font-size:11px; 
+	                    font-family: Arial, Helvetica, sans-serif;
+                     }
+                     .newSidebar .contestList .filter .dropdownWidget a.arrow{
+                           background:url(../images/dropdown-box-arrow.gif) no-repeat 0 0;
+                          height:20px;
+                         width:20px;
+                         position:absolute;
+                         right:3px;
+                         top:1px;
+                     }
+                     .newSidebar .contestList .filter .dropdownWidget .dropList{
+                          position:absolute;
+                          top:22px;
+                          width:222px;
+                          max-height:200px;
+                          overflow:auto;
+                          border: 1px solid #D0D2D3;
+                          left:0;
+                         display:none;
+                     }
+                         .newSidebar .contestList .filter .dropdownWidget .dropList li{
+                               background-color: #FFFFFF;
+                               font-size:11px;
+                                cursor:pointer; 
+                         }
+                         .newSidebar .contestList .filter .dropdownWidget .dropList a{
+                              display:block;
+                             padding:3px 5px;
+                             text-decoration:none;
+                             line-height:16px;
+                         }
+                         .newSidebar .contestList .dropdownWidget .dropList .even a{
+                             background:#F3F3F3;
+                         }
+                          .newSidebar .contestList .dropdownWidget .dropList a:hover,
+                          .newSidebar .contestList .dropdownWidget .dropList .even a:hover{
+                                background:#ffffcc;   
+                          }
+             .newSidebar .contestList .tableHeader{
+                background:url(../images/thead-bg.gif) repeat-x 0 0;
+                height:33px;
+                 border-top:1px solid #d2d2d2;
+                 border-bottom:1px solid #d2d2d2;
+             }
+                .newSidebar .contestList .tableHeader span{
+                    text-align:center;
+                    font-size:11px;
+                    color:#353454;
+                    float:left;
+                    height:25px;
+                    padding-top:8px;
+                    cursor:pointer
+                }
+                .newSidebar .contestList .tableHeader span.down{
+                    background:url(../images/arrow-down.png) no-repeat center 23px; 
+                }
+                .newSidebar .contestList .tableHeader span.up{
+                    background:url(../images/arrow-up.png) no-repeat center 23px;
+                }
+                .newSidebar .contestList .tableHeader span.statusTh{
+                     width:42px;
+                     border-right:1px solid #d0d0d0;
+                }
+                .newSidebar .contestList .tableHeader span.titleTh{
+                     width:142px;
+                     border-right:1px solid #d0d0d0;
+                     border-left:1px solid #fff;
+                }
+                .newSidebar .contestList .tableHeader span.typeTh{
+                     width:46px;
+                     border-left:1px solid #fff;
+                }
+
+        .newSidebar .contestList .tableBody{
+            background:#fffffe;
+            max-height:300px;
+            overflow:auto;
+        }
+            .newSidebar .contestList .tableBody table{
+                width:100%;
+                font-size:11px;
+                color:#343436;
+            }
+            .newSidebar .contestList .tableBody table td{
+                cursor:pointer;
+                padding:5px 3px;
+                border-bottom:1px solid #d2d2d2;
+                vertical-align:middle;
+                text-align:center;
+            }
+            .newSidebar .contestList .tableBody table td.leftAlign{
+                text-align:left;
+            }
+             .newSidebar .contestList .tableBody table .even td{
+                background:#ececec;   
+             }
+             .newSidebar .contestList .tableBody table .hover td{
+                background:#ffffcc;
+                font-weight:bold;
+                 color:#ff0000;
+             }
+            .newSidebar .contestList .tableBody table span.running{
+                background:url("../images/running_ico.png") no-repeat  0 0;
+                display:inline-block;
+                width:11px;
+                height:11px;
+            }
+            .newSidebar .contestList .tableBody table span.draft{
+                background:url("../images/draft_ico.png") no-repeat  0 0;
+                display:inline-block;
+                width:11px;
+                height:11px;
+            }
+        .newSidebar .archiveLink{
+            text-align:right;
+            padding:0 11px 12px 0;
+        }
+            .newSidebar .archiveLink a{
+                background:url(../images/archive.png) no-repeat 0 center;
+                padding-left:26px;
+                display:inline-block;
+                color:#fcfcfc;
+                text-decoration:none;
+                font-size:11px;
+            }
+            .newSidebar .archiveLink a:hover{
+                text-decoration:underline;
+            }
+
+#helpCenterWidget{
+    padding-top:9px;
+    background:url(../images/sidebar-top-bg.gif) no-repeat 0 0;
 }
