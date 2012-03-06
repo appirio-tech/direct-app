@@ -60,3 +60,16 @@ height: 1%;
     top: 40%;
     right: 23px; 
 }
+
+/* new added for project milestone management */
+#editMilestoneModal .modalBody p.notify label,
+#addMilestoneModal .modalBody p.notify label{
+    padding-top:4px;
+}
+.milestoneManage .milestoneList dd .project .projectT label{
+    padding-top:3px;
+}
+.milestoneManage .milestoneList dd .project .projectT a{
+    margin-top:3px;
+}
+

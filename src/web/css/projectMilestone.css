@@ -1,0 +1,708 @@
+/*
+ * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ *
+ * Used for the project management pages.
+ *
+ * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ */
+.projectMilestoneListViewPage {
+    min-width: 1024px !important;
+}
+
+a.grayButton {
+    background: url(/images/gray-button.png) no-repeat left top;
+    display: inline-block;
+    padding-left: 5px;
+    text-decoration: none;
+}
+
+a.grayButton .buttonMask {
+    background: url(/images/gray-button.png) no-repeat right -108px;
+    padding-right: 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+a.grayButton .text {
+    background: url(/images/gray-button.png) repeat-x left -54px;
+    display: inline-block;
+    height: 27px;
+    line-height: 25px;
+    color: #333;
+    font-size: 12px;
+    text-align: center;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+a.grayButton .text .plus {
+    background: url(/images/plus-icon.png) no-repeat left 8px;
+    display: inline-block;
+    height: 27px;
+    line-height: 25px;
+    cursor: pointer;
+    padding-left: 14px;
+}
+
+a.grayButton:hover {
+    background-position: 0 -27px;
+    text-decoration: none;
+}
+
+a.grayButton:hover .buttonMask {
+    background-position: right -135px;
+}
+
+a.grayButton:hover .text {
+    background-position: 0 -81px;
+}
+
+/* .milestoneManage */
+.milestoneManage {
+    color: #333;
+    font-size: 12px;
+    padding-bottom: 100px;
+}
+
+.milestoneManage .topLine {
+    overflow: hidden;
+    border-bottom: 1px solid #a9acae;
+    padding-bottom: 11px;
+}
+
+.milestoneManage .topLine h2 {
+    background: url(/images/milestones-icon.png) no-repeat left center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 34px;
+    padding-left: 43px;
+    float: left;
+}
+
+.milestoneManage .topLine a.grayButton {
+    float: left;
+    margin: 6px 0 0 20px;
+}
+
+.milestoneManage .topLine .viewBtns {
+    float: right;
+    margin: 9px 1px 0;
+}
+
+.milestoneManage .topLine .viewBtns a.listViewBtn {
+    background: url("/images/left-view-button.gif") no-repeat scroll left -21px transparent;
+    color: #333333;
+    float: left;
+    font-size: 11px;
+    height: 21px;
+    line-height: 19px;
+    padding-left: 8px;
+    text-decoration: none;
+    width: 74px;
+}
+
+.milestoneManage .topLine .viewBtns a.listViewBtn span {
+    background: url("/images/list-icon.gif") no-repeat scroll left center transparent;
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 13px;
+}
+
+.milestoneManage .topLine .viewBtns a.calendarViewBtn {
+    background: url("/images/right-view-button.gif") no-repeat scroll left -21px transparent;
+    color: #333333;
+    float: left;
+    font-size: 11px;
+    height: 21px;
+    line-height: 19px;
+    padding-left: 8px;
+    text-decoration: none;
+    width: 67px;
+}
+
+.milestoneManage .topLine .viewBtns a.calendarViewBtn span {
+    background: url("/images/calendar-icon.gif") no-repeat scroll left center transparent;
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 13px;
+}
+
+.milestoneManage .topLine .viewBtns a:hover {
+    background-position: 0 -42px;
+}
+
+.milestoneManage .topLine .viewBtns a.active {
+    background-position: 0 0;
+}
+
+.milestoneManage .topLine .viewBtns a.active:hover {
+    background-position: 0 0;
+}
+
+.milestoneManage p.notes {
+    background: url(/images/note.png) no-repeat left 1px;
+    line-height: 16px;
+    padding-left: 18px;
+    margin: 9px 0 17px;
+    font-size: 11px;
+}
+
+.milestoneManage .milestoneList {
+    margin-bottom: 20px;
+}
+
+.milestoneManage .milestoneList dt {
+    border-bottom: 3px solid #aa0005;
+}
+
+.milestoneManage .milestoneList.upcoming dt {
+    border-bottom: 3px solid #ff9900;
+}
+
+.milestoneManage .milestoneList.completed dt {
+    border-bottom: 3px solid #2d8d00;
+}
+
+.milestoneManage .milestoneList dt .tabL {
+    background: url(/images/red-tab.png) no-repeat 0 0;
+    padding-left: 4px;
+    display: inline-block;
+}
+
+.milestoneManage .milestoneList dt .tabR {
+    background: url(/images/red-tab.png) no-repeat right -58px;
+    padding-right: 4px;
+    display: inline-block;
+
+}
+
+.milestoneManage .milestoneList dt .tabR span {
+    background: url(/images/red-tab.png) repeat-x 0 -29px;
+    display: inline-block;
+    height: 29px;
+    line-height: 29px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 9px;
+}
+
+.milestoneManage .milestoneList.upcoming dt .tabL,
+.milestoneManage .milestoneList.upcoming dt .tabR,
+.milestoneManage .milestoneList.upcoming dt .tabR span {
+    background-image: url(/images/yellow-tab.png);
+}
+
+.milestoneManage .milestoneList.completed dt .tabL,
+.milestoneManage .milestoneList.completed dt .tabR,
+.milestoneManage .milestoneList.completed dt .tabR span {
+    background-image: url(/images/green-tab.png);
+}
+
+.milestoneManage .milestoneList dd {
+    position: relative;
+    padding: 13px 0 17px;
+    border-bottom: 1px solid #a9acae;
+    height: 100%;
+}
+
+.milestoneManage .milestoneList dd .date {
+    position: absolute;
+    left: 0;
+    top: 13px;
+    width: 182px;
+    padding-right: 10px;
+}
+
+.milestoneManage .milestoneList dd .project {
+    margin: 0 70px 0 192px;
+    padding-right: 20px;
+}
+
+.milestoneManage .milestoneList dd .project .projectT {
+    overflow: hidden;
+    padding-bottom: 6px;
+}
+
+.milestoneManage .milestoneList dd .project .projectT input {
+    float: left;
+}
+
+.milestoneManage .milestoneList dd .project .projectT label {
+    float: left;
+    font-weight: bold;
+    padding: 0 52px 0 6px;
+}
+
+.milestoneManage .milestoneList.completed dd .project .projectT label {
+    text-decoration: line-through;
+}
+
+.milestoneManage .milestoneList dd .project .projectT a {
+    float: left;
+    font-size: 11px;
+}
+
+.milestoneManage .milestoneList dd .project .projectD {
+    font-size: 11px;
+    color: #666;
+}
+
+.milestoneManage .milestoneList dd .project .projectD a {
+    color: #666;
+    text-decoration: underline;
+}
+
+.milestoneManage .milestoneList dd .project .projectD a:hover {
+    text-decoration: none;
+}
+
+.milestoneManage .milestoneList dd .actions {
+    position: absolute;
+    right: 0;
+    top: 13px;
+    width: 68px;
+}
+
+.milestoneManage .milestoneList dd .actions a {
+    display: inline-block;
+    line-height: 14px;
+    color: #333;
+    font-size: 11px;
+    text-decoration: underline;
+    padding-left: 20px;
+    margin-bottom: 5px;
+}
+
+.milestoneManage .milestoneList dd .actions a:hover {
+    text-decoration: none;
+}
+
+.milestoneManage .milestoneList dd .actions a.edit {
+    background: url(/images/edit-icon.png) no-repeat 0 2px;
+}
+
+.milestoneManage .milestoneList dd .actions a.remove {
+    background: url(/images/remove-milestone-icon.png) no-repeat 0 0;
+}
+
+.milestoneManage .bottomLine {
+    text-align: right;
+}
+
+/* .multiMilestones */
+.multiMilestones {
+    color: #333;
+    font-size: 12px;
+}
+
+.multiMilestones .topLine {
+    overflow: hidden;
+    border-bottom: 1px solid #a9acae;
+    padding-bottom: 11px;
+}
+
+.multiMilestones .topLine h2 {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 34px;
+    float: left;
+}
+
+.multiMilestones .topLine a.button6 {
+    float: right;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 6px 0 0 15px;
+}
+
+.multiMilestones .topLine a.button6 span.right {
+    width: 68px;
+    padding: 4px 10px 0;
+    text-align: center;
+}
+
+.multiMilestones table {
+    width: 100%;
+}
+
+.multiMilestones table th {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    padding: 8px 0;
+}
+
+.multiMilestones table td {
+    padding-bottom: 13px;
+}
+
+.multiMilestones table td input {
+    border: 1px solid #a8abad;
+    height: 22px;
+    width: 92%;
+    padding: 0 5px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+}
+
+.multiMilestones table td.dueDate input {
+    width: 65px;
+    padding: 0 3px;
+    float: left;
+}
+
+.multiMilestones table td.dueDate input.tip {
+    color: #999;
+}
+
+.multiMilestones table td.dueDate .dp-choose-date {
+    float: left;
+    margin-right: 0;
+    margin-top: 1px;
+}
+
+.multiMilestones table td select {
+    width: 100%;
+    border: 1px solid #a8abad;
+    height: 20px;
+    padding: 1px;
+    min-width: 146px;
+    font-size: 11px;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.multiMilestones table td .invalid {
+    border: 1px solid #ff0000;
+}
+
+.multiMilestones .bottomLine {
+    overflow: hidden;
+    border-top: 1px solid #a9acae;
+    padding-top: 10px;
+    margin-top: 6px;
+}
+
+.multiMilestones .errorMsg {
+    float: left;
+    color: #ff0000;
+    padding-top: 4px;
+}
+
+.multiMilestones .bottomLine a.button6 {
+    float: right;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 6px 0 0 15px;
+}
+
+.multiMilestones .bottomLine a.button6 span.right {
+    width: 68px;
+    padding: 4px 10px 0;
+    text-align: center;
+}
+
+/* .addMilestonePopup */
+.addMilestonePopup {
+    position: absolute;
+    width: 354px;
+    font-size: 11px;
+    color: #666;
+    padding-top: 6px;
+    display: none;
+    z-index: 1000;
+}
+
+.addMilestonePopup .popupMask {
+    border: 1px solid #bdbdbd;
+    background: url(/images/milestone-add-panel-bg.gif) #fffffe repeat-x 0 bottom;
+    overflow: hidden;
+    padding: 14px 0;
+}
+
+.addMilestonePopup .popupMask .single {
+    float: left;
+    width: 146px;
+    padding: 5px 15px;
+}
+
+.addMilestonePopup .popupMask .multi {
+    float: left;
+    width: 146px;
+    padding: 5px 15px;
+    background: url(/images/milestone-add-panel-line.gif) repeat-y left 0;
+}
+
+.addMilestonePopup .popupMask p {
+    padding-top: 5px;
+    padding-left: 1px;
+}
+
+.addMilestonePopup .popupMask a.grayButton span.text {
+    width: 127px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #d90303;
+}
+
+.addMilestonePopup .arrow {
+    height: 7px;
+    width: 13px;
+    background: url(/images/up-arrow.gif) no-repeat 0 0;
+    position: absolute;
+    top: 0;
+    left: 48px;
+}
+
+#addMilestonePopup2 .arrow {
+    right: 48px;
+    left: auto;
+}
+
+/* modal */
+.newOutLay input.text {
+    border: 1px solid #a8abad;
+    height: 22px;
+    padding: 0 5px;
+    color: #333;
+    font-size: 12px;
+    width: 338px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.newOutLay textarea {
+    border: 1px solid #a8abad;
+    padding-left: 5px;
+    color: #333;
+    font-size: 12px;
+    width: 343px;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: auto;
+    height: 46px;
+    text-align: left;
+}
+
+.newOutLay .dateLine input.text {
+    width: 65px;
+    padding: 0 3px;
+    float: left;
+}
+
+.newOutLay .dateLine input.tip {
+    color: #999;
+}
+
+.newOutLay .dateLine .dp-choose-date {
+    float: left;
+    margin-right: 0;
+    margin-top: 1px;
+}
+
+.newOutLay select {
+    border: 1px solid #a8abad;
+    height: 20px;
+    padding: 1px;
+    min-width: 146px;
+    font-size: 11px;
+    width: 196px;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#new-modal .newOutLay .modalHeader .modalHeaderCenter {
+    padding-left: 16px;
+    line-height: 46px;
+}
+
+.newOutLay .buttonArea .button6 {
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+/* #editMilestoneModal,#addMilestoneModal  */
+#editMilestoneModal,
+#addMilestoneModal {
+    width: 706px;
+}
+
+#editMilestoneModal .modalBody ul,
+#addMilestoneModal .modalBody ul {
+    padding: 20px 20px 0 50px;
+    border-top: 1px solid #ccc;
+}
+
+#editMilestoneModal .modalBody li,
+#addMilestoneModal .modalBody li {
+    overflow: hidden;
+    padding-bottom: 15px;
+    list-style: none;
+}
+
+#editMilestoneModal .modalBody li label,
+#addMilestoneModal .modalBody li label {
+    float: left;
+    width: 250px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#editMilestoneModal .modalBody li .right,
+#addMilestoneModal .modalBody li .right {
+    float: left;
+    width: 350px;
+}
+
+#editMilestoneModal .modalBody li .right p,
+#addMilestoneModal .modalBody li .right p {
+    text-align: right;
+    color: #999;
+    font-size: 11px;
+}
+
+#editMilestoneModal .modalBody p.notify,
+#addMilestoneModal .modalBody p.notify {
+    overflow: hidden;
+    padding: 10px 20px 28px 50px;
+    color: #000;
+}
+
+#editMilestoneModal .modalBody p.notify input,
+#addMilestoneModal .modalBody p.notify input {
+    float: left;
+}
+
+#editMilestoneModal .modalBody p.notify label,
+#addMilestoneModal .modalBody p.notify label {
+    float: left;
+    line-height: 14px;
+    padding-left: 6px;
+}
+
+#editMilestoneModal .buttonArea .button6,
+#addMilestoneModal .buttonArea .button6 {
+    display: inline;
+    float: left;
+    margin-left: 245px;
+    margin-right: 30px;
+    width: 90px;
+}
+
+#editMilestoneModal .buttonArea .cancelButton,
+#addMilestoneModal .buttonArea .cancelButton {
+    margin-left: 0;
+}
+
+#editMilestoneModal .buttonArea .button6 span.right,
+#addMilestoneModal .buttonArea .button6 span.right {
+    padding: 4px 0 0;
+    text-align: center;
+}
+
+/* #addMilestoneModal */
+
+#removeMilestoneModal {
+    width: 490px;
+}
+
+#removeMilestoneModal .modalBody .confirmInfo {
+    padding: 24px 20px 33px 25px;
+    border-top: 1px solid #ccc;
+}
+
+#removeMilestoneModal .modalBody .confirmInfo p {
+    background: url(/images/alert-icon.png) no-repeat 0 0;
+    line-height: 18px;
+    font-size: 14px;
+    padding-left: 65px;
+    min-height: 50px;
+}
+
+#removeMilestoneModal .modalBody .confirmInfo p span {
+    font-size: 12px;
+    display: block;
+}
+
+#removeMilestoneModal .buttonArea .button6 {
+    display: inline;
+    float: left;
+    margin-left: 165px;
+    margin-right: 30px;
+    width: 60px;
+}
+
+#removeMilestoneModal .buttonArea .cancelButton {
+    margin-left: 0;
+}
+
+#removeMilestoneModal .buttonArea .button6 span.right {
+    padding: 4px 0 0;
+    text-align: center;
+}
+
+/* .milestoneCalView */
+.milestoneCalView {
+    padding-bottom: 20px;
+}
+
+.milestoneCalView table.fc-header {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.milestoneCalView .fc-event a {
+    display: block;
+    background: none;
+    padding: 0;
+    margin: 0;
+    float: none;
+}
+
+.milestoneCalView .fc-event-title {
+    font-size: 11px;
+    font-weight: normal;
+    color: #333;
+}
+
+.milestoneCalView .fc-milestone-completed .fc-event-title {
+    text-decoration: line-through;
+}
+
+.milestoneCalView .fc-event-skin {
+    border: 0 !important;
+    background: none;
+}
+
+.milestoneCalView .fc-milestone-completed {
+    background: url(/images/green-icon.png) no-repeat 0 1px;
+    padding-left: 16px;
+}
+
+.milestoneCalView .fc-milestone-overdue {
+    background: url(/images/red-icon.png) no-repeat 0 1px;
+    padding-left: 16px;
+}
+
+.milestoneCalView .fc-milestone-upcoming {
+    background: url(/images/orange-icon.png) no-repeat 0 1px;
+    padding-left: 16px;
+}
+
+.milestoneCalView .fc-content td.fc-overdue {
+    border: 1px solid #f07f7f;
+    background: #ffe4e4;
+}
+
+#new-modal .invalid {
+    background: none repeat scroll 0 0 #FFE1E0;
+    border: 1px solid #FF0000;
+}
+
+#new-modal .errorMessage {
+   color: #FF0000;
+   font-size: 11px;
+   float: left;
+   padding-left: 10px;
+}
+
+

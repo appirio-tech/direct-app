@@ -1,7 +1,7 @@
 <%--
-  - Author: winsty, GreatKevin, TCSASSEMBLER
-  - Version: 1.7
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, GreatKevin
+  - Version: 1.9
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
   -
@@ -34,6 +34,9 @@
   -
   - Version 1.8 - Module Assembly - TC Cockpit Project Overview Project General Info
   - - add modal window for the project description in project overview page
+  -
+  - Version 1.9 - Module Assembly - TC Cockpit Project Milestones Management Front End
+    - - add modal window for the project milestone management in project milestone page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -945,19 +948,229 @@
 </div>
 </s:if>
 
-    <s:if test='%{#request.CURRENT_TAB  == "createNewProject"}'>
-        <div id="gamePlanBigModal">
-            <!--<h2>Game Plan for Project Type 1 - Full Screen</h2> -->
-            <div id="ganttChartBigDiv"></div>
-            <div class="clear"></div>
-            <div class="buttonArea">
-                <a href="javascript:;" title="CLOSE" class="button6"><span class="left"><span
-                        class="right">Close</span></span></a>
+        <s:if test='%{#request.CURRENT_TAB  == "createNewProject"}'>
+            <div id="gamePlanBigModal">
+                <!--<h2>Game Plan for Project Type 1 - Full Screen</h2> -->
+                <div id="ganttChartBigDiv"></div>
+                <div class="clear"></div>
+                <div class="buttonArea">
+                    <a href="javascript:;" title="CLOSE" class="button6"><span class="left"><span
+                            class="right">Close</span></span></a>
+                </div>
             </div>
+        </s:if>
+
+        <s:if test='%{#request.CURRENT_TAB == "milestone"}'>
+                    <div id="editMilestoneModal" class="outLay newOutLay">
+                            <div class="inner">
+                                <div class="modalHeader">
+                                    <div class="modalHeaderRight">
+                                        <div class="modalHeaderCenter">
+                                            EDIT PROJECT MILESTONE
+                                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end .modalHeader -->
+
+                                <!-- content -->
+                                <div class="modalBody">
+                                    <ul>
+                                        <li>
+                                            <label>Project Milestone Name :</label>
+                                            <div class="right">
+                                                <input type="text" name="projectName" value="Milestone name lorem ipsum dolor sit amet" class="text limitText" />
+                                                <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <label>Project Milestone Description :</label>
+                                            <div class="right">
+                                                <textarea cols="10"  name="projectDesc" rows="5">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida dolor sit amet, consect etuer adispiscing elit.</textarea>
+                                                <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
+                                            </div>
+                                        </li>
+                                        <li class="dateLine">
+                                            <label>Project Milestone Due Date :</label>
+                                            <div class="right">
+                                                 <input type="text"  name="projectDuedate" value="01/15/2012" readonly="readonly"  class="text"/>
+                                                <span class="errorMessage" style="float:none"></span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <label>People Responsible :</label>
+                                            <div class="right">
+                                                <select  name="projectRes">
+                                                    <option value="">Unassigned</option>
+                                                    <option value="TonyJ" selected="selected">TonyJ</option>
+                                                    <option value="hohosky">hohosky</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <p class="notify">
+                                        <input type="checkbox" name="emailNotify" id="emailNotifyEdit"/>
+                                        <label for="emailNotifyEdit">Notification email reminder now &amp; 48 hours before the milestone due.</label>
+                                    </p>
+                                    <div class="buttonArea">
+                                        <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
+                                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                                        <div class="clearFix"></div>
+                                    </div>
+                                </div>
+                                <!-- End .content -->
+
+                                <div class="modalFooter">
+                                    <div class="modalFooterRight">
+                                        <div class="modalFooterCenter"></div>
+                                    </div>
+                                </div>
+                                <!-- end .modalFooter -->
+                            </div>
+                        </div>
+                        <div id="addMilestoneModal" class="outLay newOutLay">
+                            <div class="inner">
+                                <div class="modalHeader">
+                                    <div class="modalHeaderRight">
+                                        <div class="modalHeaderCenter">
+                                            ADD A PROJECT MILESTONE
+                                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end .modalHeader -->
+
+                                <!-- content -->
+                                <div class="modalBody">
+                                    <ul>
+                                        <li>
+                                            <label>Project Milestone Name :</label>
+                                            <div class="right">
+                                                <input type="text"  name="projectName" class="text limitText" />
+                                                <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <label>Project Milestone Description :</label>
+                                            <div class="right">
+                                                <textarea cols="10" rows="5" name="projectDesc"></textarea>
+                                                <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
+                                            </div>
+                                        </li>
+                                        <li class="dateLine">
+                                            <label>Project Milestone Due Date :</label>
+                                            <div class="right">
+                                                 <input type="text" name="projectDuedate" value="mm/dd/yyyy" readonly="readonly"  class="text tip"/>
+                                                <span class="errorMessage" style="float:none"></span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <label>People Responsible :</label>
+                                            <div class="right">
+                                                <select name="projectRes">
+                                                    <option value=""  selected="selected">Unassigned</option>
+                                                    <option value="TonyJ">TonyJ</option>
+                                                    <option value="hohosky">hohosky</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <p class="notify">
+                                        <input type="checkbox" name="emailNotify" id="emailNotifyAdd"/>
+                                        <label for="emailNotifyAdd">Notification email reminder now  &amp; 48 hours before the milestone due.</label>
+                                    </p>
+                                    <div class="buttonArea">
+                                        <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
+                                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                                        <div class="clearFix"></div>
+                                    </div>
+                                </div>
+                                <!-- End .content -->
+
+                                <div class="modalFooter">
+                                    <div class="modalFooterRight">
+                                        <div class="modalFooterCenter"></div>
+                                    </div>
+                                </div>
+                                <!-- end .modalFooter -->
+                            </div>
+                        </div>
+                        <div id="removeMilestoneModal" class="outLay newOutLay">
+                            <div class="inner">
+                                <div class="modalHeader">
+                                    <div class="modalHeaderRight">
+                                        <div class="modalHeaderCenter">
+                                            REMOVE PROJECT MILESTONE
+                                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end .modalHeader -->
+
+                                <!-- content -->
+                                <div class="modalBody">
+                                    <div class="confirmInfo">
+                                        <p>
+                                            Are you sure you want to delete the project milestone?
+                                            <span>You cannot undo after removal.</span>
+                                        </p>
+                                    </div>
+                                    <div class="buttonArea">
+                                        <a href="javascript:;" class="button6 saveButton"><span class="left"><span class="right">YES</span></span></a>
+                                        <a href="javascript:;" class="closebutton button6 cancelButton"><span class="left"><span class="right">NO</span></span></a>
+                                        <div class="clearFix"></div>
+                                    </div>
+                                </div>
+                                <!-- End .content -->
+
+                                <div class="modalFooter">
+                                    <div class="modalFooterRight">
+                                        <div class="modalFooterCenter"></div>
+                                    </div>
+                                </div>
+                                <!-- end .modalFooter -->
+                            </div>
+                        </div>
+        </s:if>
+    </div>
+
+    <s:if test='%{#request.CURRENT_TAB == "milestone"}'>
+        <div class="addMilestonePopup" id="addMilestonePopup1">
+            <div class="popupMask">
+                <div class="single">
+                    <a href="javascript:;" class="grayButton">
+                         <span class="buttonMask"><span class="text">Single Milestone</span></span>
+                     </a>
+                    <p>Create a new milestone for your project.</p>
+                </div>
+                <div class="multi">
+                    <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/><s:param name="formData.viewType">multiple</s:param></s:url>" class="grayButton">
+                         <span class="buttonMask"><span class="text">Multiple Milestones</span></span>
+                     </a>
+                    <p>Create multiple milestones for your project and save them all at one time.</p>
+                </div>
+            </div>
+            <div class="arrow"></div>
+        </div> <!-- End .addMilestonePopup -->
+
+        <div class="addMilestonePopup" id="addMilestonePopup2">
+            <div class="popupMask">
+                <div class="single">
+                    <a href="javascript:;" class="grayButton">
+                         <span class="buttonMask"><span class="text">Single Milestone</span></span>
+                     </a>
+                    <p>Create a new milestone for your project.</p>
+                </div>
+                <div class="multi">
+                    <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/><s:param name="formData.viewType">multiple</s:param></s:url>" class="grayButton">
+                         <span class="buttonMask"><span class="text">Multiple Milestones</span></span>
+                     </a>
+                    <p>Create multiple milestones for your project and save them all at one time.</p>
+                </div>
+            </div>
+            <div class="arrow"></div>
         </div>
     </s:if>
-
-    </div>
 
     <span class="hide">
        <img src="/images/preloader-corner.png"/>

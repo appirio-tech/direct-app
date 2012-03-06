@@ -1,7 +1,7 @@
 <%--
-  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin
-  - Version: 1.6.3
-  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  - Author: isv, tangzx, Veve, winsty, Blues, GreatKevin, TCSASSEMBLER
+  - Version: 1.6.4
+  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment is to be included to all pages from TC Direct application.
   - It renders the common page headers.
@@ -21,6 +21,7 @@
   - Version 1.6.1 (Module Assembly - Project Contest Fee Management) changes note: add a contest fee tab.
   - Version 1.6.2 (Release Assembly - Project Contest Fee Management) changes note: move contest fee into settings tab
   - Version 1.6.3 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) : add edit project button
+  - Version 1.6.4 (Module Assembly - TC Cockpit Project Milestones Management Front End) : add the milestone tab for project
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -205,7 +206,7 @@
             </ul>
         </c:if>
     </div><!-- End #tabs0 -->
-	
+
 	<div class="helloUser">
         <ul>
             <li>
@@ -217,7 +218,7 @@
     </div><!-- End .helloUSer -->
 
     <%-- link to community site --%>
-    
+
 	<div>
 		<!-- TC Logo -->
 		<a onclick="window.open('https://www.topcoder.com/');" href="javascript:;" class="TCLogo"><img src="/images/tc-logo.png" alt="TopCoder"></a>
@@ -248,6 +249,13 @@
 						<span>Contests</span>
 					</a>
                 </li>
+
+                 <li <c:if test="${requestScope.CURRENT_TAB eq 'milestone'}">class="on"</c:if>>
+                     <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/> <s:param name="formData.viewType" >list</s:param></s:url>">
+                         <span>Milestone</span>
+                     </a>
+                 </li>
+
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
                     <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
                 </li>

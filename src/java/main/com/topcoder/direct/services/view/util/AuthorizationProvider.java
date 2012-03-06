@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -25,9 +25,16 @@ import com.topcoder.shared.util.DBMS;
  *   and {@link #isUserGrantedAccessToContest(TCSubject, long)}.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (Module Assembly - TC Cockpit Project Milestones Management Front End) change log:
+ *   <ol>
+ *       <li>Add method {@link #isUserGrantedToModifyMilestone(com.topcoder.security.TCSubject, long)}</li>
+ *   </ol>
+ * </p>
  * 
- * @author isv, TCSASSEMBER
- * @version 1.1
+ * @author isv, GreatKevin
+ * @version 1.2
  */
 public class AuthorizationProvider {
 
@@ -78,6 +85,29 @@ public class AuthorizationProvider {
         request.setProperty("pj", String.valueOf(contestId));
         request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_cockpit_permissions");
+        return resultContainer.size() > 0;
+    }
+
+    /**
+     * <p>Checks if specified user is granted access permission to modify the specified milestone.</p>
+     *
+     * @param tcSubject  a <code>TCSubject</code> providing the user subject.
+     * @param milestoneId a <code>long</code> providing the contest ID.
+     * @return <code>true</code> if user is granted access to modify the milestone, <code>false</code> otherwise.
+     * @throws Exception if any error occurs.
+     * @since 1.2
+     */
+    public static boolean isUserGrantedToModifyMilestone(TCSubject tcSubject, long milestoneId) throws Exception {
+        if (DirectUtils.isTcStaff(tcSubject)) {
+            return true;
+        }
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("has_milestone_write_permission");
+        request.setProperty("mid", String.valueOf(milestoneId));
+        request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("has_milestone_write_permission");
         return resultContainer.size() > 0;
     }
 }

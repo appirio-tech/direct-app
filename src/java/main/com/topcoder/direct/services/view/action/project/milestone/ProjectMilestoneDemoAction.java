@@ -31,8 +31,14 @@ import java.util.Map;
  * This action demonstrates the usage of project milestone service and project responsible person service in Cockpit.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Service Integration and Testing)
+ * <p>
+ *  Version 1.1 (Module Assembly - TC Cockpit Project Milestones Management Front End) update:
+ *  - Update {@link #updateProjectMilestone()} according to the new milestone service update.
+ *  - Fix the error handling of ajax based operation methods.
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class ProjectMilestoneDemoAction extends BaseDirectStrutsAction {
 
@@ -185,7 +191,7 @@ public class ProjectMilestoneDemoAction extends BaseDirectStrutsAction {
         } catch (Throwable e) {
             // set the error message into the ajax response
             if (getModel() != null) {
-                setResult(e.getMessage());
+                setResult(e);
             }
 
             return ERROR;
@@ -272,26 +278,6 @@ public class ProjectMilestoneDemoAction extends BaseDirectStrutsAction {
         try {
             Milestone m = getMilestone();
 
-            // get milestone first
-            Milestone old = getMilestoneService().get(m.getId());
-
-            if (old == null) {
-                throw new IllegalArgumentException("The milestone to update does not exist.");
-            }
-
-            // check owner
-            if (old.getOwners() != null && old.getOwners().size() > 0) {
-                if (m.getOwners() != null && m.getOwners().size() > 0) {
-                    m.getOwners().get(0).setId(old.getOwners().get(0).getId());
-                } else if (m.getOwners() == null || m.getOwners().size() == 0) {
-                    getMilestoneResponsiblePersonService().deleteResponsiblePerson(old.getOwners().get(0).getId());
-                }
-            } else {
-                if (m.getOwners() != null && m.getOwners().size() > 0) {
-                    m.getOwners().get(0).setId(0);
-                }
-            }
-
             getMilestoneService().update(m);
 
             result.put("operation", "update");
@@ -302,10 +288,11 @@ public class ProjectMilestoneDemoAction extends BaseDirectStrutsAction {
         } catch (Throwable e) {
             // set the error message into the ajax response
             if (getModel() != null) {
-                setResult(e.getMessage());
+                setResult(e);
             }
 
-            return ERROR;
+ 			return ERROR;
+
         }
 
         return SUCCESS;
@@ -332,7 +319,7 @@ public class ProjectMilestoneDemoAction extends BaseDirectStrutsAction {
         } catch (Throwable e) {
             // set the error message into the ajax response
             if (getModel() != null) {
-                setResult(e.getMessage());
+                setResult(e);
             }
 
             return ERROR;
