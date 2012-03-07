@@ -1008,7 +1008,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <p class="notify">
+                                    <p class="notify hide">
                                         <input type="checkbox" name="emailNotify" id="emailNotifyEdit"/>
                                         <label for="emailNotifyEdit">Notification email reminder now &amp; 48 hours before the milestone due.</label>
                                     </p>
@@ -1075,7 +1075,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <p class="notify">
+                                    <p class="notify hide">
                                         <input type="checkbox" name="emailNotify" id="emailNotifyAdd"/>
                                         <label for="emailNotifyAdd">Notification email reminder now  &amp; 48 hours before the milestone due.</label>
                                     </p>
