@@ -77,7 +77,7 @@
                                 <!-- End .topLine -->
                                 <div class="milestoneListView">
                                     <p class="notes">
-                                        Check the check box to mark project milestone as completed, uncheck to mark project milestone as incomplete
+                                        To mark a milestone complete, check the box next to the milestone name. To set a milestone back to incomplete, uncheck the box.
                                     </p>
                                     <!-- End .notes -->
 
@@ -105,7 +105,7 @@
                                                 <div class="project">
                                                     <div class="projectT">
                                                         <input type="checkbox" name="projectName"/>
-                                                        <label>${name}</label>
+                                                        <label><s:property value="name"/></label>
                                                         <s:if test="owners.size > 0">
                                                             <link:user userId="${owners[0].userId}"/>
                                                             <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
@@ -115,12 +115,12 @@
 
                                                         <s:if test="%{description.length() > 100}">
                                                            <span class="short">
-                                                             ${fn:substring(description, 0, 100)}
+                                                               <c:out value="${fn:substring(description, 0, 100)}"/>
                                                              <a href="javascript:;">more</a>
                                                            </span>
                                                            <span class="long hide">
                                                                <span>
-                                                                       ${description}
+                                                                   <s:property value="description"/>
                                                                </span>
                                                                <a href="javascript:;">Hide</a>
                                                            </span>
@@ -128,7 +128,7 @@
                                                         </s:if>
                                                         <s:else>
                                                            <span class="short">
-                                                                   ${fn:substring(description, 0, 100)}
+                                                               <s:property value="description"/>
                                                            </span>
                                                         </s:else>
                                                     </div>
@@ -165,7 +165,7 @@
                                                 <div class="project">
                                                     <div class="projectT">
                                                         <input type="checkbox" name="projectName"/>
-                                                        <label>${name}</label>
+                                                        <label><s:property value="name"/></label>
                                                         <s:if test="owners.size > 0">
                                                             <link:user userId="${owners[0].userId}"/>
                                                             <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
@@ -175,12 +175,12 @@
 
                                                         <s:if test="description.length() > 100">
                                                            <span class="short">
-                                                             ${fn:substring(description, 0, 100)}
+                                                               <c:out value="${fn:substring(description, 0, 100)}"/>
                                                              <a href="javascript:;">more</a>
                                                            </span>
                                                            <span class="long hide">
                                                                <span>
-                                                                       ${description}
+                                                                   <s:property value="description"/>
                                                                </span>
                                                                <a href="javascript:;">Hide</a>
                                                            </span>
@@ -188,7 +188,7 @@
                                                         </s:if>
                                                         <s:else>
                                                            <span class="short">
-                                                                   ${fn:substring(description, 0, 100)}
+                                                               <s:property value="description"/>
                                                            </span>
                                                         </s:else>
                                                     </div>
@@ -227,7 +227,7 @@
                                                 <div class="project">
                                                     <div class="projectT">
                                                         <input type="checkbox" name="projectName" checked="checked"/>
-                                                        <label>${name}</label>
+                                                        <label><s:property value="name"/></label>
                                                         <s:if test="owners.size > 0">
                                                             <link:user userId="${owners[0].userId}"/>
                                                             <input type="hidden" name="ownerId" value="${owners[0].userId}"/>
@@ -237,12 +237,12 @@
 
                                                         <s:if test="description.length() > 100">
                                                            <span class="short">
-                                                             ${fn:substring(description, 0, 100)}
+                                                               <c:out value="${fn:substring(description, 0, 100)}"/>
                                                              <a href="javascript:;">more</a>
                                                            </span>
                                                            <span class="long hide">
                                                                <span>
-                                                                       ${description}
+                                                                   <s:property value="description"/>
                                                                </span>
                                                                <a href="javascript:;">Hide</a>
                                                            </span>
@@ -250,7 +250,7 @@
                                                         </s:if>
                                                         <s:else>
                                                            <span class="short">
-                                                                   ${fn:substring(description, 0, 100)}
+                                                               <s:property value="description"/>
                                                            </span>
                                                         </s:else>
                                                     </div>

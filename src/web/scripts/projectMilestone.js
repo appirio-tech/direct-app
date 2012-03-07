@@ -292,14 +292,14 @@ $(document).ready(function () {
     var modalTrigger;
 
     $('.milestoneManage .milestoneList .actions a.edit').live('click', function () {
-        var ms = $(this).parent().parent();
+        var ms = $(this).parents("dd:eq(0)");
 
         $("#editMilestoneModal").find("input[name='projectName']").val($.trim(ms.find(".projectT label").text())).trigger('keyup');
         var description = '';
         if(ms.find(".projectD .long span").length > 0) {
-            description = ms.find(".projectD .long span").text();
+            description = ms.find(".projectD .long span").html();
         } else {
-            description = ms.find(".projectD span.short").text();
+            description = ms.find(".projectD span.short").html();
         }
 
         $("#editMilestoneModal").find("textarea[name='projectDesc']").val($.trim(description)).trigger('keyup');
@@ -393,14 +393,23 @@ $(document).ready(function () {
         if ($.trim(modal.find("input[name='projectName']").val()) == '') {
             passValidation = false;
             modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot be empty');
-        } else {
+        }
+        else if (containTags($.trim(modal.find("input[name='projectName']").val()))) {
+            passValidation = false;
+            modal.find("input[name='projectName']").addClass('invalid').parent().find(".errorMessage").text('Name cannot contain HTML tags');
+        }
+        else {
             modal.find("input[name='projectName']").removeClass('invalid').parent().find(".errorMessage").text('');
         }
 
         if ($.trim(modal.find("textarea[name='projectDesc']").val()) == '') {
             passValidation = false;
             modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot be empty');
-        } else {
+        } else if (containTags($.trim(modal.find("textarea[name='projectDesc']").val()))) {
+            passValidation = false;
+            modal.find("textarea[name='projectDesc']").addClass('invalid').parent().find(".errorMessage").text('Description cannot contain HTML tags');
+        }
+        else {
             modal.find("textarea[name='projectDesc']").removeClass('invalid').parent().find(".errorMessage").text('');
         }
 

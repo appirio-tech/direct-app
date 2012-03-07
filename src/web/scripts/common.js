@@ -355,6 +355,10 @@ function isDev() {
 	return window.location.href.indexOf('cloud.topcoder.com') > -1;
 }
 
+function containTags(value) {
+    return value.search(tagsRegExp) > 0;
+}
+
 /**
  * Formats the number in the money format.
  */

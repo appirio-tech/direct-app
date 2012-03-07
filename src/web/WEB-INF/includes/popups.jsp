@@ -977,28 +977,28 @@
                                 <div class="modalBody">
                                     <ul>
                                         <li>
-                                            <label>Project Milestone Name :</label>
+                                            <label>Name :</label>
                                             <div class="right">
                                                 <input type="text" name="projectName" value="Milestone name lorem ipsum dolor sit amet" class="text limitText" />
                                                 <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
                                             </div>
                                         </li>
                                         <li>
-                                            <label>Project Milestone Description :</label>
+                                            <label>Description :</label>
                                             <div class="right">
                                                 <textarea cols="10"  name="projectDesc" rows="5">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo, ipsum sed pharetra gravida dolor sit amet, consect etuer adispiscing elit.</textarea>
                                                 <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
                                             </div>
                                         </li>
                                         <li class="dateLine">
-                                            <label>Project Milestone Due Date :</label>
+                                            <label>Due Date :</label>
                                             <div class="right">
                                                  <input type="text"  name="projectDuedate" value="01/15/2012" readonly="readonly"  class="text"/>
                                                 <span class="errorMessage" style="float:none"></span>
                                             </div>
                                         </li>
                                         <li>
-                                            <label>People Responsible :</label>
+                                            <label>Person Responsible :</label>
                                             <div class="right">
                                                 <select  name="projectRes">
                                                     <option value="">Unassigned</option>
@@ -1044,28 +1044,28 @@
                                 <div class="modalBody">
                                     <ul>
                                         <li>
-                                            <label>Project Milestone Name :</label>
+                                            <label>Name :</label>
                                             <div class="right">
                                                 <input type="text"  name="projectName" class="text limitText" />
                                                 <p><span class="errorMessage"></span><span class="num">30</span> characters remaining</p>
                                             </div>
                                         </li>
                                         <li>
-                                            <label>Project Milestone Description :</label>
+                                            <label>Description :</label>
                                             <div class="right">
                                                 <textarea cols="10" rows="5" name="projectDesc"></textarea>
                                                 <p><span class="errorMessage"></span><span class="num">70</span> characters remaining</p>
                                             </div>
                                         </li>
                                         <li class="dateLine">
-                                            <label>Project Milestone Due Date :</label>
+                                            <label>Due Date :</label>
                                             <div class="right">
                                                  <input type="text" name="projectDuedate" value="mm/dd/yyyy" readonly="readonly"  class="text tip"/>
                                                 <span class="errorMessage" style="float:none"></span>
                                             </div>
                                         </li>
                                         <li>
-                                            <label>People Responsible :</label>
+                                            <label>Person Responsible :</label>
                                             <div class="right">
                                                 <select name="projectRes">
                                                     <option value=""  selected="selected">Unassigned</option>
