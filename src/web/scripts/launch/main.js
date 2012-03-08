@@ -1179,11 +1179,14 @@ function updateSoftwarePrizes() {
     if (billingProjectId > 0) {
         var fees = billingFees[billingProjectId];
 
-        for (var i = 0; i < fees.length; ++i) {
-            if (fees[i].contestTypeId == projectCategoryId) {
-                contestFee = fees[i].contestFee;
-            }
-        }
+		if (fees)
+		{
+			for (var i = 0; i < fees.length; ++i) {
+				if (fees[i].contestTypeId == projectCategoryId) {
+					contestFee = fees[i].contestFee;
+				}
+			}
+		}
     } else {
         contestFee = softwareContestFees[projectCategoryId].contestFee;
     }
