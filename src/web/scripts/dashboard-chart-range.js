@@ -30,7 +30,8 @@ var shortNameMap = {
 "34" :  ["Other" , "Other"],
 "35" :  ["Content Creation", "Content"],
 "36" :  ["Reporting" , "Reporting"],
-"37" :  ["Marathon Match" , "Marathon Match"]
+"37" :  ["Marathon Match" , "Marathon Match"],
+"9" :  ["Bug Hunt" , "Bug Hunt"]
 };
 
 
