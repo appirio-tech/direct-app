@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file defines classes to store informations about contest.
@@ -27,10 +27,12 @@
  * <li>Added projectCopilotTypes and copilotContestExtraInfos fields to Project class.</li>
  * <li>Added two constant CopilotContestExtraInfoTypes.</li>
  * </ul>
+ * Changes in version 1.4 (Release Assembly - TopCoder BugHunt Competition Integration):
+ * <li>Add bug hunt to the contest types when creating new contest.</li>
  * </p>
  * 
- * @author TCSASSEMBLER, duxiaoyang
- * @version 1.3
+ * @author duxiaoyang, TCSASSEMBLER
+ * @version 1.4
  */
 if(!com) {
    var com = {};
@@ -165,7 +167,8 @@ var projectCategoryArray = [
 {id:18,                                name:'Wireframes',        label:'Wireframes',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:22,                                name:'Idea Generation',   label:'Idea Generation',            typeId:3, typeName:'Studio', hasMulti:true},
 {id:36,                                name:'REPORTING',   label:'Reporting',            typeId:2, typeName:'Application', hasMulti:true},
-{id:SOFTWARE_CATEGORY_ID_MARATHON,     name:'Marathon Match',   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false}
+{id:SOFTWARE_CATEGORY_ID_MARATHON,     name:'Marathon Match',   label:'Marathon Match',            typeId:2, typeName:'Application', hasMulti:false},
+{id:9,                                 name:'Bug Hunt',   label:'Bug Hunt',            typeId:2, typeName:'Application', hasMulti:false}
 ];
 
 /**

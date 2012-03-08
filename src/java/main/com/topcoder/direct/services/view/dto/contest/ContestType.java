@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -13,9 +13,15 @@ package com.topcoder.direct.services.view.dto.contest;
  *     <li>Added grouping for contest types.</li>
  *   </ol>
  * </p>
+ * <p>
+  * Version 1.2 (Release Assembly - TopCoder BugHunt Competition Integration 1.0) Change notes:
+  *   <ol>
+  *     <li>Add {@link #BUG_HUNT} contest type</li>
+  *   </ol>
+  * </p>
 
- * @author isv, TCSDEVELOPER
- * @version 1.1
+ * @author isv, TCSASSEMBLER
+ * @version 1.2
  */
 public enum ContestType {
 
@@ -170,11 +176,16 @@ public enum ContestType {
      * <p>A <code>ContestType</code> corresponding to <code>Reporting</code> contest type.</p>
      */
     REPORTING("Reporting", "Rp", 36),
-	
-	    /**
+
+    /**
      * <p>A <code>ContestType</code> corresponding to <code>Marathon Match</code> contest type.</p>
      */
-    MARATHON_MATCH("Marathon Match", "Mm", 37);
+    MARATHON_MATCH("Marathon Match", "Mm", 37),
+    
+    /**
+     * <p>A <code>ContestType</code> corresponding to <code>Bug Hunt</code> contest type.</p>
+     */
+    BUG_HUNT("Bug Hunt","bh", 9);
 
     /**
      * <p>A <code>String</code> providing the activity name. Such a name serves as a textual presentation of the
@@ -207,8 +218,6 @@ public enum ContestType {
      *             type.
      * @param letter a <code>String</code> providing the type letter. Such a name serves as a identifier of the type.
      * @param id a <code>long</code> providing the ID of the type.
-     * @param isStudio <code>true</code> if this contest type is <code>Studio</code> contest type; <code>false</code>
-     *        otherwise.
      */
     private ContestType(String name, String letter, long id) {
         this.name = name;
