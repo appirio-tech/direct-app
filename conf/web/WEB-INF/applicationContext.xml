@@ -248,6 +248,14 @@
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
         <property name="projectMetadataService" ref="directProjectMetadataServices"/>
     </bean>
+    
+    <bean id="projectMilestoneViewAction" class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneViewAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
+    <bean id="projectMilestoneOperationAction" class="com.topcoder.direct.services.view.action.project.milestone.ProjectMilestoneOperationAction"
+              scope="prototype" parent="baseDirectStrutsAction">
+        </bean>
 
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
           parent="baseDirectStrutsAction">

@@ -329,6 +329,62 @@
             <result name="success">/WEB-INF/project-overview-contests-health.jsp</result>
         </action>
 
+        <action name="projectMilestoneView" class="projectMilestoneViewAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="list">/WEB-INF/milestone/projectMilestonesListView.jsp</result>
+            <result name="calendar">/WEB-INF/milestone/projectMilestonesCalendarView.jsp</result>
+            <result name="multiple">/WEB-INF/milestone/projectMilestonesBatchCreation.jsp</result>
+        </action>
+
+        <action name="getProjectMilestoneCalendarData" method="getProjectMilestoneCalendarData"
+                class="projectMilestoneViewAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getProjectResponsiblePerson" method="getProjectResponsiblePerson"
+                        class="projectMilestoneViewAction">
+                    <interceptor-ref name="securedProjectPreProcessorStack"/>
+                    <result name="success" type="json"/>
+                    <result name="error" type="json"/>
+        </action>
+
+        <action name="addProjectMilestone" method="addProjectMilestone"
+                class="projectMilestoneOperationAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="changeMilestoneStatus" method="changeMilestoneStatus"
+                class="projectMilestoneOperationAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="removeMilestone" method="removeMilestone"
+                class="projectMilestoneOperationAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="updateMilestone" method="updateMilestone"
+                class="projectMilestoneOperationAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="addProjectMilestones" method="addProjectMilestones"
+                class="projectMilestoneOperationAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="editProject" class="editCockpitProjectAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/editCockpitProject.jsp</result>
