@@ -28,9 +28,9 @@
     <script type="text/javascript" src="/scripts/get-a-copilot.js?v=213033"></script>
     <script type="text/javascript" src="/scripts/jquery.jcarousel.pack.js?v=176771"></script>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=210792"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=213622"></script>
-    <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=212863"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=214142"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=214149"></script>
+    <script type="text/javascript" src="/scripts/launchCopilotContest.js?v=214038"></script>
 
 </head>
 

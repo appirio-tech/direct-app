@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=210282" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=213607"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=214041"/>
     <![endif]-->
     <!-- load the data for Charts -->
     <script type="text/javascript">
@@ -160,7 +160,7 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="/scripts/dashboard-chart.js?v=210135"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=213353"></script>
-    <script type="text/javascript" src="/scripts/dashboard-chart-range.js?v=210282"></script>
+    <script type="text/javascript" src="/scripts/dashboard-chart-range.js?v=214157"></script>
     <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
 </head>
