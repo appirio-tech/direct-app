@@ -62,17 +62,17 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
 
         UserPreferenceDTO userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(29);
-        userPreferenceDTO.setDesc("Receive notifications when my contests advance phases.");
+        userPreferenceDTO.setDesc("Contest Timelines: Receive individual contest status notifications when each contest advances phases.");
         PREFERENCES.add(userPreferenceDTO);
 
         userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(30);
-        userPreferenceDTO.setDesc("Receive notifications when forum communication is posted in my contests.");
+        userPreferenceDTO.setDesc("Contest Forum Communication: Receive contest forum communication for questions posted in each contest in your project.");
         PREFERENCES.add(userPreferenceDTO);
 
         userPreferenceDTO = new UserPreferenceDTO();
         userPreferenceDTO.setPreferenceId(31);
-        userPreferenceDTO.setDesc("Receive notifications when forum communication is posted in my project.");
+        userPreferenceDTO.setDesc("Project Forum Communication: Receive project forum communication for questions posted in your project forum.");
         PREFERENCES.add(userPreferenceDTO);
 }
 
