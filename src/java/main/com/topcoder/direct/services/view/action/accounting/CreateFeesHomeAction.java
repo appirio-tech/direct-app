@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
@@ -14,8 +14,15 @@ import java.util.Map;
 /**
  * <p>An action to be used for servicing the requests for viewing the page for contest fees creation.</p>
  * 
- * @author isv
- * @version 1.0 (Release Assembly - Project Contest Fees Management Update 1 Assembly)
+ * <p>
+ * Versions 1.1 (Module Assembly - Contest Fee Based on % of Member Cost Admin Part)
+ * <ol>
+ * <li>Updated method executeAction to support percentage based contest fee.</li>
+ * <ol>
+ * </p>
+ * 
+ * @author isv, minhu
+ * @version 1.1
  */
 public class CreateFeesHomeAction extends BaseContestFeeAction {
 
@@ -48,6 +55,9 @@ public class CreateFeesHomeAction extends BaseContestFeeAction {
         if (getFormData() == null) {
             setFormData(getBillingAccount(-1));
         }
+        
+        // by default it uses Fixed contest fee
+        getFormData().setContestFeeFixed(true);
     }
 
     /**

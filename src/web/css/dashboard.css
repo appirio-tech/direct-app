@@ -8418,3 +8418,10 @@ a.downloadAllbtn:hover span {
     padding-top:9px;
     background:url(../images/sidebar-top-bg.gif) no-repeat 0 0;
 }
+#contest_fee_type {
+    margin: 10px 0 10px 0;
+    font-size: 14px;
+}
+#contest_fee_type label:first-of-type {
+    margin-right:20px;   
+}

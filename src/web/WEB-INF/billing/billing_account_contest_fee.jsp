@@ -1,12 +1,14 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.0 (Module Assembly - Project Contest Fee Management) changes:
   - Initialized the page functions.
   - Version 1.1 (Release Assembly - Project Contest Fees Management Update 1) changes notes: Provided facilities
   - for editing Studio and Software contest type fees.
+  - Version 1.2 (Module Assembly - Contest Fee Based on % of Member Cost Admin Part)
+  - Added contest fee base on percentage support.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -115,7 +117,7 @@
                             <div class="container2" id="contestFeeEditDetail">
                                 <div>
                                 <br/>
-                                <p><s:if test="%{formData.contestFees==null}">Empty </s:if>Contest Fee details for <s:property value="name"/></p>
+                                <p><s:if test="%{formData.contestFees==null}">Empty </s:if>Contest Fee details for <s:property value="formData.clientName"/></p>
                                 <br/>
                                 <p style="display:none;">
                                     <s:textfield name="projectId" value="%{projectId}" size="40"/>
@@ -123,6 +125,11 @@
                                 <div style="color:red">
                                     <s:fielderror />
                                 </div>
+
+                                    <div id="contest_fee_type">
+                                        <s:radio name="formData.contestFeeFixed" list="#{'true':'Fixed Contest Fee', 'false':'Member Cost Percentage Based Contest Fee'}"/>
+                                        <s:textfield label="Percentage" name="formData.contestFeePercentage" size="20"/>
+                                    </div>
                                     <s:if test="%{formData.contestFees!=null}">
                                         <table id="contestFeeEditDetail"
                                                class="projectStats contests paginatedDataTable resultTable"

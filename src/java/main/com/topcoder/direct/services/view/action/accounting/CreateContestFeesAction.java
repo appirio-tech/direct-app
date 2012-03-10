@@ -1,36 +1,53 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
 import com.opensymphony.xwork2.Preparable;
 import com.topcoder.clients.model.BillingAccount;
 import com.topcoder.clients.model.ProjectContestFee;
+import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.clients.model.SearchResult;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.security.TCSubject;
 import com.topcoder.util.log.Level;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * <p>An action to be used for handling the requests for creating new contest fees.</p>
+ * <p>
+ * An action to be used for handling the requests for creating new contest fees.
+ * </p>
+ * <p>
+ * Versions 1.1 (Module Assembly - Contest Fee Based on % of Member Cost Admin Part)
+ * <ol>
+ * <li>Updated methods validate and executeAction to support percentage based contest fee.</li>
+ * <li>Moved method body of validate to super class BaseContestFeeAction#validateFormData.</li>
+ * <ol>
+ * </p>
  * 
- * @author isv
- * @version 1.0 (Release Assembly - Project Contest Fees Management Update 1 Assembly)
+ * @author isv, minhu
+ * @version 1.1
  */
 public class CreateContestFeesAction extends CreateFeesHomeAction implements Preparable {
-
     /**
-     * <p>Constructs new <code>CreateContestFeesAction</code> instance. This implementation does nothing.</p>
+     * <p>
+     * Constructs new <code>CreateContestFeesAction</code> instance. This implementation does nothing.
+     * </p>
      */
     public CreateContestFeesAction() {
     }
 
     /**
-     * <p>Handles the incoming request.</p>
+     * <p>
+     * Handles the incoming request.
+     * </p>
      * 
      * @return a <code>String</code> referencing the next view to be displayed to user.
      * @throws Exception if an unexpected error occurs.
@@ -48,37 +65,13 @@ public class CreateContestFeesAction extends CreateFeesHomeAction implements Pre
      * Implements validate method.
      */
     public void validate() {
-        Map<String, List<String>> map = getFieldErrors();
-        if (getFieldErrors() != null && !getFieldErrors().isEmpty()) {
-            for (String str : map.keySet()) {
-                if (str != null && str.startsWith("formData.contestFees[")) {
-                    try {
-                        String str2 = str.replace("formData.contestFees[", "");
-                        int pos = str2.indexOf("]");
-                        int i = Integer.parseInt(str2.substring(0, pos));
-                        String description = getFormData().getContestFees().get(i).getContestTypeDescription();
-                        map.get(str).clear();
-                        map.get(str)
-                            .add("Invalid value for " + description + ". It should use non-negative Double type.");
-                    } catch (Exception e) {
-                        getLogger().log(Level.ERROR, e);
-                    }
-                }
-            }
-        }
-        // Validate against negative fees
-        List<ProjectContestFee> contestFees = getFormData().getContestFees();
-        for (int i = 0; i < contestFees.size(); i++) {
-            ProjectContestFee fee = contestFees.get(i);
-            if (fee.getContestFee() < 0) {
-                addFieldError("formData.contestFees[" + i + "].fee", "Value for " + fee.getContestTypeDescription()
-                                                                     + " is negative");
-            }
-        }
+        validateFormData();
     }
 
     /**
-     * <p>Implements the logic for preparing the action for creating contest fees.</p>
+     * <p>
+     * Implements the logic for preparing the action for creating contest fees.
+     * </p>
      * 
      * @throws Exception if an unexpected error occurs.
      * @since 1.1
@@ -98,13 +91,34 @@ public class CreateContestFeesAction extends CreateFeesHomeAction implements Pre
     }
 
     /**
-     * <p>Handles the incoming request. Creates new contest fees.</p>
+     * <p>
+     * Handles the incoming request. Creates new contest fees and contest fee percentage.
+     * </p>
      * 
      * @throws Exception if an unexpected error occurs.
      */
     @Override
     protected void executeAction() throws Exception {
-        // create new ones
-        getContestFeeService().save(getFormData().getContestFees());
+        // create new contest fees
+        List<ProjectContestFee> fees = getFormData().getContestFees();
+        getContestFeeService().save(fees);
+
+        // create the percentage
+        ProjectContestFeePercentage percentage = new ProjectContestFeePercentage();
+        percentage.setActive(!getFormData().isContestFeeFixed());
+        if (percentage.isActive()) {
+            percentage.setContestFeePercentage(getFormData().getContestFeePercentage());
+        }
+        percentage.setProjectId(getProjectId());
+        
+        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
+        String userId = String.valueOf(tcSubject.getUserId());
+        percentage.setCreateUser(userId);
+        percentage.setModifyUser(userId);
+        Date date = new Date();
+        percentage.setCreateDate(date);
+        percentage.setModifyDate(date);
+        
+        getContestFeePercentageService().create(percentage);
     }
 }
