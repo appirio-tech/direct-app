@@ -905,16 +905,28 @@
         <property name="persistence" ref="contestFeePersistence"/>
     </bean>
 
+    <bean name="contestFeePercentageService" class="com.topcoder.clients.dao.impl.ProjectContestFeePercentageServiceImpl" scope="prototype">
+        <property name="loggerName" value="com.topcoder.clients.dao.impl.ProjectContestFeePercentageServiceImpl"/>
+        <property name="persistence" ref="contestFeeFeePercentagePersistence"/>
+    </bean>
+
+    <bean name="contestFeeFeePercentagePersistence" class="com.topcoder.clients.dao.impl.ProjectContestFeePercentageDAOImpl" scope="prototype">
+        <property name="loggerName" value="com.topcoder.clients.dao.impl.ProjectContestFeePercentageDAOImpl"/>
+        <property name="sessionFactory" ref="projectFeeSessionFactory"/>
+    </bean>
+
     <bean name="contestFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.ContestFeesHomeAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean name="createFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.CreateFeesHomeAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean name="listBillingProjectContestFeesAction" parent="baseDirectStrutsAction"
@@ -922,6 +934,7 @@
           scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean name="saveContestFeesAction" parent="baseDirectStrutsAction"
@@ -929,6 +942,7 @@
           scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean name="createContestFeesAction" parent="baseDirectStrutsAction"
@@ -936,6 +950,7 @@
           scope="prototype">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
         <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean name="contestFeeAuthorizationProvider" class="com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider" scope="prototype">
