@@ -121,7 +121,11 @@ $(document).ready(function(){
 			$("#contestsTable tr:even").addClass("even");
 		});
 	}
-    sortStatus();
+
+    if ($("#contestsTable tbody tr").length > 0) {
+        sortStatus();
+    }
+
 	
 	/* sort contest by type */
 	sortType = function(){
