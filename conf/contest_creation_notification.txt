@@ -1,4 +1,4 @@
-The Liquid Resource contest %CONTEST_NAME% has been successfully registered.
+The Liquid TopCoder contest %CONTEST_NAME% has been successfully registered.
 
 This email triggers the creation of a Jira tracking ticket.
 You will receive another email identifying the URL for this Jira ticket. All communication regarding this contest must take place via comments on that ticket.
