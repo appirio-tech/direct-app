@@ -244,8 +244,8 @@
 					</a>
                 </li>
                 <li <c:if test="${requestScope.CURRENT_TAB eq 'milestone'}">class="on"</c:if>>
-                     <a href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/> <s:param name="formData.viewType" >list</s:param></s:url>">
-                         <span>Milestones</span>
+                     <a id="tabProjectMilestone" href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/> <s:param name="formData.viewType" >list</s:param></s:url>">
+                         <span>Project Milestones</span>
                      </a>
                  </li>
 

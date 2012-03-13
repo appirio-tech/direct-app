@@ -8425,3 +8425,8 @@ a.downloadAllbtn:hover span {
 #contest_fee_type label:first-of-type {
     margin-right:20px;   
 }
+
+#tabProjectMilestone SPAN{
+width: 140px!important;
+}
+
