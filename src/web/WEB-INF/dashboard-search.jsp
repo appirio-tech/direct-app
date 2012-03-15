@@ -23,7 +23,7 @@
         <ui:dashboardPageType tab="search"/>
     </s:if>
     <s:if test="viewData.isAllProjectsPage == true">
-        <ui:projectPageType tab="overview"/>
+        <ui:projectPageType tab="allProjects"/>
     </s:if>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>

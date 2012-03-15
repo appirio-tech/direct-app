@@ -236,34 +236,36 @@
 	</c:if>	
 	
     <ui:isProjectPage>
-        <div id="tabs1">
-             <ul>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-            		<a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
-						<span>Overview</span>
-					</a>
-                </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'milestone'}">class="on"</c:if>>
-                     <a id="tabProjectMilestone" href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/> <s:param name="formData.viewType" >list</s:param></s:url>">
-                         <span>Project Milestones</span>
-                     </a>
-                 </li>
+        <c:if test="${requestScope.CURRENT_TAB ne 'allProjects'}">
+                <div id="tabs1">
+                     <ul>
+                        <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
+                            <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
+                                <span>Overview</span>
+                            </a>
+                        </li>
+                        <li <c:if test="${requestScope.CURRENT_TAB eq 'milestone'}">class="on"</c:if>>
+                             <a id="tabProjectMilestone" href="<s:url action="projectMilestoneView" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/> <s:param name="formData.viewType" >list</s:param></s:url>">
+                                 <span>Project Milestones</span>
+                             </a>
+                         </li>
 
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
-                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
-                </li>
+                        <li <c:if test="${requestScope.CURRENT_TAB eq 'gameplan'}">class="on"</c:if>>
+                            <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
+                        </li>
 
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
-           			<a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
-						<span>Contests</span>
-					</a>
-                </li>
+                        <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
+                            <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
+                                <span>Contests</span>
+                            </a>
+                        </li>
 
-                 <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="on"</c:if>>
-                    <a href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Issue Tracking</span></a>
-                </li>
-            </ul>
-        </div>
+                         <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="on"</c:if>>
+                            <a href="<s:url action="projectIssueTracking" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Issue Tracking</span></a>
+                        </li>
+                    </ul>
+                </div>
+        </c:if>
     </ui:isProjectPage>
 
     <ui:isDashboardPage>
