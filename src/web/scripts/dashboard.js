@@ -405,9 +405,6 @@ $(document).ready(function(){
     }
 
 	showHideProjectList = function(){
-		$("#dropDown1").slideToggle(100);
-		$("#sortTableBy").toggle();
-
 		var list = $("#dropDown1 .dropList");
         if(list.is(":hidden")){
             list.show();
@@ -487,8 +484,9 @@ $(document).ready(function(){
     $(".customerSelectMask UL LI").click(function() {
         var mask = $(this).parents(".customerSelectMask");
         mask.find("input").val($(this).find("a").text());
-        if (mask.find(".contestsDropDown").is(":visible")) {
-            mask.find(".contestsDropDown:visible").slideToggle(100);
+        
+        if (!mask.find(".contestsDropDown .dropList").is(":hidden")) {
+            mask.find(".contestsDropDown .dropList").hide();
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
         if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
