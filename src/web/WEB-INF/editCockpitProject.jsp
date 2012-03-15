@@ -260,7 +260,7 @@
     </div>
 
 
-    <div class="projectMetaArea singleMetaArea isPrivate" id="editProjectPrivacy">
+    <div class="projectMetaArea singleMetaArea isPrivate hide" id="editProjectPrivacy">
         <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Privacy :</h3>
 
         <div class="projectMetaAreaField radioContainer">
