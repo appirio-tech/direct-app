@@ -910,6 +910,11 @@
         <action name="softwareSubmissions" class="softwareContestSubmissionsAction">
             <interceptor-ref name="securedContestStack"/>
             <result>/WEB-INF/software-submissions-list.jsp</result>
+            <result name="milestone" type="redirectAction">
+                            <param name="actionName">softwareSubmissions</param>
+                            <param name="projectId">${formData.projectId}</param>
+                            <param name="roundType">MILESTONE</param>
+            </result>
         </action>
 
         <action name="studioNoWinner" class="studioNoWinnerAction">
