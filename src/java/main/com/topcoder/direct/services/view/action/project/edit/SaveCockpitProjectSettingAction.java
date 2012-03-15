@@ -240,10 +240,13 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
         List<ProjectPermission> permissionToUpdate = new ArrayList<ProjectPermission>();
 
         // find the permission need to update: client manager has permission but it's not full permission
-        for (Permission p : allPermissionsOfProject) {
+        for (Permission p : allPermissionsOfProject) { 
+		
             // update client manager's permission to full if it's not
-            if (managerIds.contains(p.getUserId()) && p.getPermissionType().getPermissionTypeId() != PROJECT_FULL_PERMISSION_TYPE_ID) {
-                permissionToUpdate.add(getProjectPermission(PROJECT_FULL_PERMISSION_TYPE, p.getUserId(), p.getPermissionId()));
+            if (managerIds.contains(p.getUserId())) {
+                if (p.getPermissionType().getPermissionTypeId() != PROJECT_FULL_PERMISSION_TYPE_ID) { 
+					permissionToUpdate.add(getProjectPermission(PROJECT_FULL_PERMISSION_TYPE, p.getUserId(), p.getPermissionId()));
+				}
                 managersToUpdateSet.add(p.getUserId());
             }
         }
