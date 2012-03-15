@@ -65,6 +65,6 @@
 <script type="text/javascript" src="/scripts/tinyMCE/tiny_mce/tiny_mce.js?v=210496"></script>
 <script type="text/javascript" src="/scripts/jquery.autocomplete.js?v=183826"></script>
 
-<script type="text/javascript" src="/scripts/dashboard.js?v=214025"></script>
+<script type="text/javascript" src="/scripts/dashboard.js?v=214026"></script>
 <script type="text/javascript" src="/scripts/loadHelps.js?v=211775"></script>
 <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>

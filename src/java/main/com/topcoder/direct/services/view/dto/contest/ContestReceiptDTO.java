@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -8,8 +8,13 @@ import java.io.Serializable;
 /**
  * <p>A DTO providing the complete details on a contest receipt.</p>
  *
- * @author flexme
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) updates:
+ * - Add the field <code>milestonePrizeNumber</code> to show how many milestone submission can have milestone prize.
+ * </p>
+ *
+ * @author flexme, TCSASSEMBLER
+ * @version 1.1
  */
 public class ContestReceiptDTO implements Serializable {
     /**
@@ -46,6 +51,12 @@ public class ContestReceiptDTO implements Serializable {
      * Represents the milestone prize.
      */
     private double milestonePrize;
+    
+    /**
+     * Represents how many submissions have been paid with milestone prize.
+     * @since 1.1
+     */
+    private int milestonePrizeNumber;
     
     /**
      * Represents the DR points.
@@ -203,6 +214,26 @@ public class ContestReceiptDTO implements Serializable {
      */
     public void setMilestonePrize(double milestonePrize) {
         this.milestonePrize = milestonePrize;
+    }
+
+    /**
+     * Gets the number of milestone prize.
+     *
+     * @return the number of milestone prize.
+     * @since 1.1
+     */
+    public int getMilestonePrizeNumber() {
+        return milestonePrizeNumber;
+    }
+
+    /**
+     * Sets the number of milestone prize.
+     *
+     * @param milestonePrizeNumber the number of milestone prize.
+     * @since 1.1
+     */
+    public void setMilestonePrizeNumber(int milestonePrizeNumber) {
+        this.milestonePrizeNumber = milestonePrizeNumber;
     }
 
     /**

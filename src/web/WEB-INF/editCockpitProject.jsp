@@ -76,6 +76,8 @@
 <div class="projectMetaArea multiMetaArea" id="editProjectInfo">
     <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Information :</h3>
 
+    <s:if test="viewData.hasFullPermission">
+
     <div class="projectMetaAreaField oddRowItem">
         <h4 class="projectMetaLabel cmIcon">Client Manager Handles :</h4>
 
@@ -102,6 +104,8 @@
             <a name="projectManagersModal" class="buttonRed1 triggerModal triggerManagerModal" href="javascript:;"><span>ADD/REMOVE</span></a>
         </div>
     </div>
+
+    </s:if>
 
     <div class="projectMetaAreaField oddRowItem budgetField">
         <h4 class="projectMetaLabel pbIcon">Project Budget :</h4>

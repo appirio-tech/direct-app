@@ -1,3 +1,14 @@
+<%--
+  - Author: TCSASSEMBLER
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version 1.1
+  -
+  - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
+  - - Add the milestone prize for software contest receipt if exists
+  -
+  -
+  - Description: This page fragment renders receipt page content for software contest.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -179,6 +190,27 @@
                                                             <td class="last">$<fmt:formatNumber value="${firstPrize + secondPrize + drPoints + reliabilityBonusCost}" pattern="0.00"/></td>
                                                         </tr>
                                                     </tbody></table>
+                                                    <s:if test="contestReceipt.milestonePrize > 0">
+                                                        <h3>Milestone Prizes:</h3>
+                                                        <table class="prizesTable">
+                                                            <tbody>
+                                                            <tr>
+                                                                <s:set id="milestoneSinglePrize" name="milestoneSinglePrize"
+                                                                       value="(contestReceipt.milestonePrize / contestReceipt.milestonePrizeNumber)"
+                                                                       scope="page"/>
+
+                                                                <c:forEach var="currentIndex" begin="1" end="${contestReceipt.milestonePrizeNumber}">
+
+                                                                    <td>${currentIndex}:${milestoneSinglePrize}</td>
+
+                                                                </c:forEach>
+
+
+                                                                <td class="last">$${milestonePrize}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </s:if>
                                                     <h3>Additional Costs:</h3>
                                                     <table class="prizesTable">
                                                         <tbody><tr>

@@ -1,7 +1,10 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.0
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  - Author: TCSASSEMBLER
+  - Version: 1.1
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
+  - Add new button to allow user not choose the 2nd place winner of copilot posting contest when review.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -73,7 +76,7 @@
                                                 <div class="container2Right"><div class="container2Bottom">
                                             <div class="container2BottomLeft"><div class="container2BottomRight">
                                                 <div class="tableContainer">
-                                                    <table class="projectStats newContestsStatus paginatedDataTable"
+                                                    <table class="projectStats newContestsStatus paginatedDataTable copilotPostingSubmissions"
                                                            cellpadding="0" cellspacing="0">
                                                         <thead>
                                                             <tr>
@@ -129,10 +132,14 @@
                                                                             <c:when test="${submitter.id eq firstPlaceWinner.id}">
                                                                                 The Chosen Copilot
                                                                             </c:when>
-                                                                            <c:when test="${secondPlaceWinner eq null}">
+                                                                            <c:when test="${secondPlaceWinner eq null && allSubmissionReviewed eq false}">
                                                                                 <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
                                                                                    class="chooseCopilotButton"><span
                                                                                     class="profileLeft">Choose as 2nd place</span></a>
+
+                                                                                <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 3, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
+                                                                                                                                                                   class="chooseCopilotButton notChooseButton"><span
+                                                                                                                                                                    class="profileLeft">I don't want to select 2nd</span></a>
                                                                             </c:when>
                                                                             <c:when test="${submitter.id eq secondPlaceWinner.id}">
                                                                                 The Runner-Up Copilot

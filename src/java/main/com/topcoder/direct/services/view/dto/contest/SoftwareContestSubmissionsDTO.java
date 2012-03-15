@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -26,8 +26,12 @@ import java.util.List;
  * - remove ContestStatsDTO and corresponding get/set methods.
  * </p>
  *
+ * <p>Version 1.0.3 (Release Assembly - TC Direct Cockpit Release Two) change notes:
+  * - add property milestoneWinners to store the winner of the milestone round.
+  * </p>
+ *
  * @author isv, TCSASSEMBLER
- * @version 1.0.2 (Direct Software Submission Viewer assembly)
+ * @version 1.0.3
  */
 public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implements ProjectIdForm.Aware, ContestStatsDTO.Aware {
 
@@ -60,6 +64,12 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      * <p>A <code>boolean </code> to indicate whether to show spec review comments.</p>
      */
     private boolean showSpecReview;
+
+    /**
+     * The milestone winners of the contest.
+     * @since 1.0.3
+     */
+    private List<SoftwareContestWinnerDTO> milestoneWinners;
 
     /**
      * <p>Constructs new <code>SoftwareContestSubmissionsDTO</code> instance. This implementation does nothing.</p>
@@ -266,5 +276,25 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      */
     public void setShowSpecReview(boolean showSpecReview) {
         this.showSpecReview = showSpecReview;
+    }
+
+    /**
+     * Gets the milestone winners.
+     *
+     * @return the milestone winners.
+     * @since 1.0.3
+     */
+    public List<SoftwareContestWinnerDTO> getMilestoneWinners() {
+        return milestoneWinners;
+    }
+
+    /**
+     * Sets the milestone winners.
+     *
+     * @param milestoneWinners the milestone winners.
+     * @since 1.0.3
+     */
+    public void setMilestoneWinners(List<SoftwareContestWinnerDTO> milestoneWinners) {
+        this.milestoneWinners = milestoneWinners;
     }
 }

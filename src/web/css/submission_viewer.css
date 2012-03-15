@@ -1,11 +1,15 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This css used to render studio jsp views of single submission, including grid view and full size view.
  *
  * Author: TCSASSEMBLER
+ *
  * Version 1.0 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp)
+ *
+ * Version 1.0.1 (Release Assembly - TC Direct Cockpit Release Two) updates
+ * - Adjust the vertical margin of submission notes hover box in studio single submission page.
  */
 /* CSS Document */
 #wholeContent {
@@ -353,7 +357,7 @@
 				}
 				
 				.contentBox div.formText{
-					padding:3px 0;
+					padding:2px 0;
 					line-height:16px;
 					display:block;
 					overflow:hidden;

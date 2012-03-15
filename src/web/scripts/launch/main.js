@@ -1176,7 +1176,7 @@ function updateSoftwarePrizes() {
    var billingProjectId =  mainWidget.softwareCompetition.projectHeader.getBillingProject();
    var contestFee = -1;
 
-    if (billingProjectId > 0) {
+    if (billingProjectId > 0 && billingFees != null &&  billingFees[billingProjectId] != null) {
         var fees = billingFees[billingProjectId];
 
 		if (fees)
@@ -1452,7 +1452,6 @@ function getContestTotal(feeObject, prizeType, useDomElem, noMilestoneCost, actu
     var contestCost = getContestCost(feeObject, prizeType);
     var total = contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
     + contestCost.reliabilityBonusCost + contestCost.drCost + (actualFee == null ? feeObject.contestFee : actualFee) + feeObject.specReviewCost;
-    console.log(actualFee);
     if (noMilestoneCost) {
     	return total;
     }

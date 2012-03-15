@@ -37,6 +37,13 @@
  
  * - (Module Assembly - TopCoder Studio and Cockpit Download All Submissions Feature) updates:
  * - Add css styles for DOWNLOAD ALL button
+ *
+ * - (Release Assembly - TC Direct Cockpit Release One) updates:
+ * - Add new css for the p to show multiple round submission numbers in registration box
+ *
+ * - (Release Assembly - TC Direct Cockpit Release Two) updates:
+ * - Add new css for not choose 2nd place copilot posting button
+ * - Adjust the button style in copilot posting submission page to remove underline link in button
  */
 
 
@@ -5862,6 +5869,16 @@ Contest links
 .myCopilotsContestsList table.projectStats td.first, table#ProjectContests td.first {
     border-left:0px;
 }
+
+.copilotPostingSubmissions a.chooseCopilotButton, .copilotPostingSubmissions a.copilotProfile,
+.copilotPostingSubmissions a.downloadProfile, .copilotPostingSubmissions a.memberProfile {
+    text-decoration: none !important;
+}
+
+.notChooseButton {
+    margin-top:8px;
+}
+
 .copilotPostingsPanel{
     height:30px;
     padding:0px;
@@ -6548,13 +6565,18 @@ table.resultTable td a.button1:hover {
 			margin:0 auto 4px;
 			text-align:left;
 		}
-		.appositeContainer .registrationModule .wrap{ width:264px; margin:0 auto; }
+
+    .dashboardModule .listContent p.multipleSubmission  {
+    width: 160px;
+    }	
+
+		.appositeContainer .registrationModule .wrap{ width:289px; margin:0 auto; }
 		.appositeContainer .registrationModule .column{
 			float:left;
 			width:102px;
 		}
 		.appositeContainer .registrationModule .column.first{ width:162px; }
-		.appositeContainer .registrationModule .column p{ width:102px; }
+		.appositeContainer .registrationModule .column p{ width:182px; }
 		.appositeContainer .registrationModule .column.first p,
 		.appositeContainer .registrationModule .column.first .statusP{ width:162px; }
 		.appositeContainer .forumModule .listContent p,

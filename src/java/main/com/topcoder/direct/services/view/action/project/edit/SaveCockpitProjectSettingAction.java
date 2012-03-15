@@ -11,8 +11,12 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
 import com.topcoder.direct.services.view.dto.project.edit.ProjectMetadataOperation;
 import com.topcoder.direct.services.view.form.SaveProjectSettingsForm;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.permission.Permission;
+import com.topcoder.service.permission.ProjectPermission;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.shared.security.AuthorizationException;
 
 import java.util.*;
 
@@ -27,10 +31,40 @@ import java.util.*;
  *     - Update method ${@link #executeAction()} to add ProjectMetadataOperation for new added project ratings.
  * </p>
  *
- * @author GreatKevin
- * @version 1.1
+ * <p>
+  *     Version 1.2 (Release Assembly - TC Direct Cockpit Release Two) change notes:
+  *     - Add methods to assign full permissions for the client managers / topcoder managers when add or update in edit page.
+  * </p>
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.2
  */
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction implements FormAction<SaveProjectSettingsForm> {
+
+
+    /**
+     * Constant to represent the permission type id of full permission on project.
+     * @since 1.2
+     */
+    private static final long PROJECT_FULL_PERMISSION_TYPE_ID = 3L;
+
+    /**
+     * Constant to represent the permission type name of full permission on project.
+     * @since 1.2
+     */
+    private static final String PROJECT_FULL_PERMISSION_TYPE = "full";
+
+    /**
+     * Constant to represent the project metadata key id for client managers.
+     * @since 1.2
+     */
+    private static final long CLIENT_MANAGER_METADATA_KEY = 1L;
+
+    /**
+     * Constant to represent the project metadata key id for topcoder managers.
+     * @since 1.2
+     */
+    private static final long TOPCODER_MANAGER_METADATA_KEY = 2L;
 
     /**
      * The form of saving project settings.
@@ -144,6 +178,89 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
     }
 
     /**
+     * Creates a new <code>ProjectPermission</code> instance for updating permission.
+     *
+     * @param permission the permission type name
+     * @param userId the user id
+     * @param userPermissionId the user permission id, -1 for creating a new permission.
+     * @return the new created <code>ProjectPermission</code> instance.
+     * @since 1.2
+     */
+    private ProjectPermission getProjectPermission(String permission,
+                                                   long userId, long userPermissionId) {
+        ProjectPermission projectPermission = new ProjectPermission();
+        projectPermission.setPermission(permission);
+        projectPermission.setProjectId(getFormData().getProjectId());
+        projectPermission.setUserId(userId);
+        projectPermission.setStudio(false);
+        projectPermission.setUserPermissionId(userPermissionId);
+
+        return projectPermission;
+    }
+
+    /**
+     * Updates the client managers or topcoder managers permissions to make sure all the managers have full permission
+     * on the project.
+     *
+     * @param managersMetadata the metadata list contains the user id of the managers.
+     * @param currentUser current user
+     * @throws Exception if an expected error occurs.
+     * @since 1.2
+     */
+    private void updateManagerPermissions(List<DirectProjectMetadata> managersMetadata, TCSubject currentUser) throws Exception {
+        Set<Long> managerIds = new HashSet<Long>();
+        Set<Long> managersToUpdateSet = new HashSet<Long>();
+
+        for (DirectProjectMetadata meta : managersMetadata) {
+            managerIds.add(Long.parseLong(meta.getMetadataValue()));
+        }
+
+        if (getPermissionServiceFacade() == null) {
+            throw new IllegalStateException("The permission service is not initialized.");
+        }
+
+
+        // check if any existing client managers does not have write permission set on project
+        final List<Permission> allPermissionsOfProject = getPermissionServiceFacade().getPermissionsByProject(currentUser, getFormData().getProjectId());
+
+        // check current user has full permission to proceed
+        boolean hasFullPermission = false;
+
+        for (Permission p : allPermissionsOfProject) {
+            if (p.getUserId() == currentUser.getUserId() && p.getPermissionType().getPermissionTypeId() == PROJECT_FULL_PERMISSION_TYPE_ID) {
+                hasFullPermission = true;
+            }
+        }
+
+        if (!hasFullPermission) {
+            // do not have permission
+            throw new AuthorizationException("You don't have FULL permission on this project to do this operation");
+        }
+
+        List<ProjectPermission> permissionToUpdate = new ArrayList<ProjectPermission>();
+
+        // find the permission need to update: client manager has permission but it's not full permission
+        for (Permission p : allPermissionsOfProject) {
+            // update client manager's permission to full if it's not
+            if (managerIds.contains(p.getUserId()) && p.getPermissionType().getPermissionTypeId() != PROJECT_FULL_PERMISSION_TYPE_ID) {
+                permissionToUpdate.add(getProjectPermission(PROJECT_FULL_PERMISSION_TYPE, p.getUserId(), p.getPermissionId()));
+                managersToUpdateSet.add(p.getUserId());
+            }
+        }
+
+        for (Long userId : managerIds) {
+            if (!managersToUpdateSet.contains(userId)) {
+                // client manager does not have any permission, add new one
+                permissionToUpdate.add(getProjectPermission(PROJECT_FULL_PERMISSION_TYPE, userId, -1L));
+            }
+        }
+
+        // update the project permission
+        getPermissionServiceFacade().updateProjectPermissions(currentUser,
+                permissionToUpdate, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
+    }
+
+    /**
      * Handles the save client project managers ajax request.
      *
      * @return result code.
@@ -155,7 +272,9 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
 
             persistAllProjectMetadata(getFormData().getClientManagers(), currentUser.getUserId());
 
-            List<DirectProjectMetadata> values = getMetadataService().getProjectMetadataByProjectAndKey(getFormData().getProjectId(), 1L);
+            List<DirectProjectMetadata> values = getMetadataService().getProjectMetadataByProjectAndKey(getFormData().getProjectId(), CLIENT_MANAGER_METADATA_KEY);
+
+            updateManagerPermissions(values, currentUser);
 
             for (DirectProjectMetadata value : values) {
                 Map<String, String> user = new HashMap<String, String>();
@@ -186,7 +305,9 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
 
             persistAllProjectMetadata(getFormData().getProjectManagers(), currentUser.getUserId());
 
-            List<DirectProjectMetadata> values = getMetadataService().getProjectMetadataByProjectAndKey(getFormData().getProjectId(), 2L);
+            List<DirectProjectMetadata> values = getMetadataService().getProjectMetadataByProjectAndKey(getFormData().getProjectId(), TOPCODER_MANAGER_METADATA_KEY);
+
+            updateManagerPermissions(values, currentUser);
 
             for (DirectProjectMetadata value : values) {
                 Map<String, String> user = new HashMap<String, String>();

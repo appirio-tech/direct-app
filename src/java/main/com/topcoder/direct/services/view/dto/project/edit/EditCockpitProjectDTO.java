@@ -108,6 +108,12 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
     private Map<DirectProjectMetadataKey, List<DirectProjectMetadata>> customMetadata = new LinkedHashMap<DirectProjectMetadataKey, List<DirectProjectMetadata>>();
 
     /**
+     * Whether the user has full permission on the project to edit. Only when true, the user can edit the managers of
+     * the project.
+     */
+    private boolean hasFullPermission;
+
+    /**
      * Gets the project data.
      *
      * @return the project data.
@@ -385,5 +391,23 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setRoiRating(DirectProjectMetadata roiRating) {
         this.roiRating = roiRating;
+    }
+
+    /**
+     * Gets has full permission flag.
+     *
+     * @return full permission flag
+     */
+    public boolean getHasFullPermission() {
+        return hasFullPermission;
+    }
+
+    /**
+     * Sets has full permission flag.
+     *
+     * @param hasFullPermission full permission flag.
+     */
+    public void setHasFullPermission(boolean hasFullPermission) {
+        this.hasFullPermission = hasFullPermission;
     }
 }

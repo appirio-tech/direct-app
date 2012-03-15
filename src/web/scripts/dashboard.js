@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for dashboard.
  *
@@ -41,8 +41,11 @@
  *  Version 2.2 - Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp
  *  - Add the js codes to handle multiple selection box.
  * 
+ *  Version 2.3 - Release Assembly - TC Direct Cockpit Release Two
+  *  - Add the js codes to handle not choose 2nd place copilot button.
+ * 
  * @author tangzx, Blues, GreatKevin, TCSASSEMBLER
- * @version 2.2
+ * @version 2.3
  */
 $(document).ready(function(){
 						   
@@ -402,6 +405,9 @@ $(document).ready(function(){
     }
 
 	showHideProjectList = function(){
+		$("#dropDown1").slideToggle(100);
+		$("#sortTableBy").toggle();
+
 		var list = $("#dropDown1 .dropList");
         if(list.is(":hidden")){
             list.show();
@@ -419,6 +425,7 @@ $(document).ready(function(){
         if(contestsDropDown.is(":hidden")){
             $(".customerSelectMask .contestsDropDown").hide();
         }
+        
         
         var list = contestsDropDown.find("ul");
         if(list.is(":hidden")){
@@ -480,9 +487,8 @@ $(document).ready(function(){
     $(".customerSelectMask UL LI").click(function() {
         var mask = $(this).parents(".customerSelectMask");
         mask.find("input").val($(this).find("a").text());
-        
-        if (!mask.find(".contestsDropDown .dropList").is(":hidden")) {
-            mask.find(".contestsDropDown .dropList").hide();
+        if (mask.find(".contestsDropDown").is(":visible")) {
+            mask.find(".contestsDropDown:visible").slideToggle(100);
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
         if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
@@ -575,7 +581,11 @@ $(document).ready(function(){
 	/*------------------------------------------------------------ Calendar --*/
 
     try {
+
+        if ($("#calendar").length > 0) {
         $('#calendar').fullCalendar(getCalendarConfig());
+        }
+
     } catch(e) {
     }
 
@@ -770,7 +780,7 @@ $(document).ready(function(){
 
     $('.selectRunnerUpCopilot').click(function() {
         var data = $(this).data('rel');
-        $('#scpPlacement').val('2');
+        $('#scpPlacement').val($(this).data('place'));
         $('#scpSubmissionId').val($(this).data('sid'));
         $('#scpProfileId').val($(this).data('pid'));
         $('#scpTcdProjectId').val($(this).data('prid'));
@@ -1545,7 +1555,7 @@ $(document).ready(function(){
 
     	multiSelectAreaSet();
 
-        if($(".editIcon").length > 0)  {
+        if($(".editIcon").length > 0 && $('.editIcon').tctip )  {
             $('.editIcon').tctip({
                 title: "Edit / Update Project Details",
                 content: "Go to the edit project page to edit and update the project details and settings"
@@ -1612,8 +1622,15 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
     if (place == 1) {
         $('#firstPlaceCopilot').html(handle);
         $('#projectNameLabel').html(projectName);
-    } else {
+    } else if (place == 2) {
+        $('.selectRunnerUpCopilot').data('place', 2);
+        $("#removeProjectDialog .header .title").text("Choose second place Confirmation");
+        $("#removeProjectDialog .body").html('Choose <strong id="secondPlaceCopilot"></strong> as second place of this copilot posting ?');
         $('#secondPlaceCopilot').html(handle);
+    } else if (place == 3) {
+        $('.selectRunnerUpCopilot').data('place', 3);
+        $("#removeProjectDialog .header .title").text("Do not select 2nd place");
+        $("#removeProjectDialog .body").html("Are you sure you don't want to select 2nd place?");
     }
     
     $('#removeProjectDialog').dialog("open");

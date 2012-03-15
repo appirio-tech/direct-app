@@ -17,6 +17,7 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.permission.Permission;
 import com.topcoder.service.project.ProjectData;
 
 import java.util.List;
@@ -116,6 +117,19 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         if (viewData.getClientId() != null) {
             currentProject.setCustomerId(viewData.getClientId());
             setCustomProjectMetadata(viewData.getClientId());
+        }
+
+        final List<Permission> projectPermissions = getPermissionServiceFacade().getPermissionsByProject(currentUser, getFormData().getProjectId());
+        
+        this.viewData.setHasFullPermission(false);
+
+        // check permission
+        for(Permission p : projectPermissions) {
+            if(p.getUserId() == currentUser.getUserId()) {
+                if(p.getPermissionType().getPermissionTypeId() == 3L) {
+                    this.viewData.setHasFullPermission(true);
+                }
+            }
         }
 
         List<DirectProjectMetadata> allProjectMetadata = getMetadataService().getProjectMetadataByProject(formData.getProjectId());

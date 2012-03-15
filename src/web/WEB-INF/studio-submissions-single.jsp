@@ -1,5 +1,7 @@
 <%--
   - Author: isv, flexme, minhu
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  -
   - Version 1.1 (Direct Submission Viewer Release 2 ) change notes:
   - 1.Remove "bank:" row.
   - 2.Hide "Submitter Notes:" row.
@@ -23,9 +25,11 @@
   - Version 1.6 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) change notes:
   -   Updated to follow the new prototype.
   -
-  - Version: 1.6
+  - Version: 1.7
   - Since: Submission Viewer Release 1 assembly
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.8 (Release Assembly - TC Direct Cockpit Release Two) changes:
+  - - Update the single submission viewer hover to display font and stock art information
   -
   - Description: This page renders the single submission for Studio contest.
 --%>
@@ -146,6 +150,71 @@
                                               <!-- End form Text -->
                                                 <h3>Submitter Notes</h3>
                                                   <p><c:if test="${submission.submissionDeclaration != null}">${submission.submissionDeclaration.comment}</c:if></p>
+
+                                                <h3>Fonts</h3>
+                                                <p>
+                                                    <s:if test="viewData.submission.submissionDeclaration != null && viewData.submission.submissionDeclaration.externalContents != null">
+                                                        <s:iterator value="viewData.submission.submissionDeclaration.externalContents">
+                                                            <s:if test="externalContentType.id == 1L">
+                                                            <div class="formText"><div class="left">Font&nbsp;${displayPosition}</div></div>
+                                                            	  <div class="formText">
+			                                                                <s:iterator value="externalContentProperties">
+			                                                                        <s:if test="name.toLowerCase() == 'name'">
+			                                                                            <div class="left">Name:</div>
+			                                                                            <div class="right">${value}</div>
+			                                                                        </s:if>
+			                                                                </s:iterator>
+			                                                                <s:iterator value="externalContentProperties">
+			                                                                        <s:if test="name.toLowerCase() == 'url'">
+			                                                                            <div class="left">Url:</div>
+			                                                                            <div class="right"><a href="${value}" target="_blank">${value}</a></div>
+			                                                                        </s:if>
+			                                                                </s:iterator>
+                                                                 </div>
+                                                            </s:if>
+                                                        </s:iterator>
+                                                    </s:if>
+                                                </p>
+
+                                                <h3>Stock Arts</h3>
+                                                <p>
+                                                    <s:if test="viewData.submission.submissionDeclaration != null && viewData.submission.submissionDeclaration.externalContents != null">
+                                                        <s:iterator
+                                                                value="viewData.submission.submissionDeclaration.externalContents">
+                                                            <s:if test="externalContentType.id == 2L">
+                                                            <div class="formText"><div class="left">Stock Art&nbsp;${displayPosition}</div></div>
+                                                                <div class="formText"> 
+		                                                                <s:iterator value="externalContentProperties">
+		                                                                
+		                                                                    <s:if test="name.toLowerCase() == 'name'">
+		                                                                        <div class="left">Name:</div>
+		                                                                        <div class="right">${value}</div>
+		                                                                    </s:if>
+		                                                                 
+		                                                                 
+		                                                                </s:iterator>
+		                                                                <s:iterator value="externalContentProperties">
+		                                                                
+		                                                                    <s:if test="name.toLowerCase() == 'url'">
+		                                                                        <div class="left">Url:</div>
+		                                                                        <div class="right"><a href="${value}" target="_blank">${value}</a></div>
+		                                                                    </s:if>
+		                                                                 
+		                                                                </s:iterator>
+		                                                                <s:iterator value="externalContentProperties">
+		                                                                
+		                                                                    <s:if test="name.toLowerCase() == 'filenumber'">
+		                                                                        <div class="left">FileNumber:</div>
+		                                                                        <div class="right">${value}</div>
+		                                                                    </s:if>
+		                                                                 
+		                                                                </s:iterator>
+                                                               </div>
+                                                                <br/>
+                                                            </s:if>
+                                                        </s:iterator>
+                                                    </s:if>
+                                                </p>
                                             </div>  
                                           </div>
                                         </div>

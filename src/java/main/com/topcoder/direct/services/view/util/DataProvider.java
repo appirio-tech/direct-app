@@ -428,8 +428,15 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ol>
  * </p>
  * 
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues
- * @version 3.5
+ * <p>
+  * Version 3.6 (Release Assembly - TC Direct Cockpit Release Two) change log:
+  * <ol>
+  *     <li>Add method ${@link #setSoftwareMilestoneSubmissionsData(com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO)}.</li>
+  * </ol>
+  * </p>
+ * 
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues, TCSASSEMBLER
+ * @version 3.6
  * @since 1.0
  */
 public class DataProvider {
@@ -1711,6 +1718,104 @@ public class DataProvider {
     public static List<ContestRegistrantDTO> getContestRegistrants(long contestId) {
 //        return MockData.getContestRegistrants(contestId);
         return MockData.getContestRegistrants(4);
+    }
+
+    /**
+     * Gets the milestone submission data for multiple-rounds software contest and sets the data into the
+     * <code>SoftwareContestSubmissionDTO</code>.
+     *
+     * @param dto the <code>SoftwareContestSubmissionDTO</code> to set.
+     * @throws Exception if an unexpected error occurs.
+     * @since 3.6
+     */
+    public static void setSoftwareMilestoneSubmissionsData(SoftwareContestSubmissionsDTO dto) throws Exception {
+        final String commandName = "direct_software_milestone_submissions_view";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(commandName);
+        request.setProperty("pj", String.valueOf(dto.getProjectId()));
+
+        // Get milestone reviews for contest milestone submissions and collect them to amp for faster lookup
+        final ResultSetContainer reviewsContainer
+                = dataAccessor.getData(request).get("direct_software_project_milestone_reviews");
+
+        Map<Long, List<SoftwareSubmissionReviewDTO>> milestoneReviewsMap
+                = new HashMap<Long, List<SoftwareSubmissionReviewDTO>>();
+
+        for (ResultSetContainer.ResultSetRow reviewRow : reviewsContainer) {
+            SoftwareSubmissionReviewDTO milestoneReview = new SoftwareSubmissionReviewDTO();
+            milestoneReview.setSubmissionId(reviewRow.getLongItem("submission_id"));
+            milestoneReview.setFinalScore(reviewRow.getFloatItem("final_score"));
+            milestoneReview.setInitialScore(reviewRow.getFloatItem("initial_score"));
+            milestoneReview.setReviewId(reviewRow.getLongItem("review_id"));
+            milestoneReview.setCommitted(reviewRow.getBooleanItem("is_committed"));
+
+            long submissionId = milestoneReview.getSubmissionId();
+
+            if(milestoneReviewsMap.get(submissionId) == null) {
+                List<SoftwareSubmissionReviewDTO> reviews = new ArrayList<SoftwareSubmissionReviewDTO>();
+                reviews.add(milestoneReview);
+                milestoneReviewsMap.put(milestoneReview.getSubmissionId(), reviews);
+            } else {
+                milestoneReviewsMap.get(submissionId).add(milestoneReview);
+            }
+        }
+
+        // set contest milestone submissions
+        final ResultSetContainer submissionsContainer
+                = dataAccessor.getData(request).get("direct_software_project_milestone_submissions");
+
+        // the number of milestone prize can be given for the contest
+        int milestonePrizeNumber = 0;
+
+        List<SoftwareSubmissionDTO> submissions = new ArrayList<SoftwareSubmissionDTO>();
+        
+        List<SoftwareContestWinnerDTO> milestoneWinners = new ArrayList<SoftwareContestWinnerDTO>();
+        
+        for (ResultSetContainer.ResultSetRow submissionRow : submissionsContainer) {
+            UserDTO submitter = new UserDTO();
+            submitter.setId(Long.parseLong(submissionRow.getStringItem("submitter_id")));
+            submitter.setHandle(submissionRow.getStringItem("submitter_handle"));
+
+            SoftwareSubmissionDTO submission = new SoftwareSubmissionDTO();
+            long submissionId = submissionRow.getLongItem("submission_id");
+            submission.setSubmissionId(submissionId);
+            submission.setSubmissionDate(submissionRow.getTimestampItem("create_date"));
+            submission.setScreeningScore((Float) submissionRow.getItem("screening_score").getResultData());
+            submission.setInitialScore((Float) submissionRow.getItem("initial_score").getResultData());
+            submission.setFinalScore((Float) submissionRow.getItem("final_score").getResultData());
+            submission.setPlacement((Integer) submissionRow.getItem("placement").getResultData());
+            submission.setPassedScreening(!submissionRow.getBooleanItem("failed_milestone_screening"));
+            submission.setPassedReview(!submissionRow.getBooleanItem("failed_milestone_review"));
+            submission.setUploadId(submissionRow.getLongItem("upload_id"));
+            submission.setSubmitter(submitter);
+
+            if(milestonePrizeNumber <= 0) {
+                milestonePrizeNumber = submissionRow.getIntItem("milestone_prize_number");
+            }
+
+            submission.setReviews(milestoneReviewsMap.get(submission.getSubmissionId()));
+
+            submissions.add(submission);
+
+            Integer placement = submission.getPlacement();
+
+            
+            if (placement != null && placement <= milestonePrizeNumber && submission.getPassedReview()) {
+                SoftwareContestWinnerDTO winner = new SoftwareContestWinnerDTO();
+                winner.setFinalScore(submission.getFinalScore());
+                winner.setHandle(submitter.getHandle());
+                winner.setId(submitter.getId());
+                winner.setPlacement(placement);
+                winner.setProjectId(dto.getProjectId());
+                winner.setSubmissionId(submissionId);
+                
+                milestoneWinners.add(winner);
+            }
+        }
+
+        dto.setSubmissions(submissions);
+        dto.setMilestoneWinners(milestoneWinners);
     }
 
     /**
@@ -3926,6 +4031,7 @@ public class DataProvider {
         contestReceipt.setMilestonePrize(result.getDoubleItem(row, "milestone_prize"));
         contestReceipt.setDrPoints(result.getDoubleItem(row, "dr_points"));
         contestReceipt.setContestFee(result.getDoubleItem(row, "contest_fee"));
+        contestReceipt.setMilestonePrizeNumber(result.getIntItem(row, "milestone_prize_number"));
         contestReceipt.setReliabilityBonus(result.getDoubleItem(row, "reliability_bonus"));
         contestReceipt.setSpecReviewCost(result.getDoubleItem(row, "spec_review_cost"));
         contestReceipt.setReviewCost(result.getDoubleItem(row, "review_cost"));

@@ -1,13 +1,19 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
@@ -15,9 +21,7 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import com.topcoder.service.project.SoftwareCompetition;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a list of submissions for
@@ -43,9 +47,16 @@ import java.util.List;
  * <li>Updated {@link #executeAction()} method to set contest dashboard data.</li>
  * </ol>
  * </p>
+ * <p>
+  * Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) Change notes:
+  * <ol>
+  * <li>Updated {@link #executeAction()} method to set milestone submissions data.</li>
+  * </ol>
+  * </p>
  *
- * @author TCSDEVELOPER, TCSASSEMBLER
- * @version 1.0.3 (Direct Software Submission Viewer assembly)
+ *
+ * @author TCSASSEMBLER
+ * @version 1.1 (Release Assembly - TC Direct Cockpit Release Two)
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -58,6 +69,23 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      * <p>A <code>SessionData</code> providing interface to current session.</p>
      */
     private SessionData sessionData;
+
+    /**
+     * <p>
+     *   Represents the round type of viewing software contest submission, will be set in request.
+     * </p>
+     * @since 1.1
+     */
+    private ContestRoundType roundType;
+
+    /**
+     * <p>
+     *   Flag used to determine whether redirect to milestone round. It will be set to true if milestone review is
+     *   open and final review is not started.
+     * </p>
+     * @since 1.1
+     */
+    private boolean redirectToMilestone;
 
     /**
      * <p>A <code>SoftwareContestSubmissionsDTO</code> providing the view data for displaying by <code>Software Contest
@@ -73,6 +101,26 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
     public void setFinalFixes(List<ContestFinalFixDTO> finalFixes) {
         this.finalFixes = finalFixes;
+    }
+
+    /**
+     * Gets the contest round type.
+     *
+     * @return the contest round type.
+     * @since 1.1
+     */
+    public ContestRoundType getRoundType() {
+        return roundType;
+    }
+
+    /**
+     * Sets the contest round type.
+     *
+     * @param roundType the contest group type.
+     * @since 1.1
+     */
+    public void setRoundType(ContestRoundType roundType) {
+        this.roundType = roundType;
     }
 
     /**
@@ -112,8 +160,32 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     }
 
     /**
+     * Overrides the {@link #execute()} to check redirectToMilestone, if true, return the result 'milestone' to redirect
+     * to milestone submissions page.
+     *
+     * @return the result code
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.1
+     */
+    @Override
+    public String execute() throws Exception {
+        String result = super.execute();
+        if (SUCCESS.equals(result)) {
+            if (this.redirectToMilestone) {
+                return "milestone";
+            }
+        }
+        return result;
+    }
+
+    /**
      * <p>Handles the incoming request. Retrieves the list of submissions for requested contest and binds it to view
      * data along with other necessary details.</p>
+     *
+     * <p>
+     *  Updates in version 1.1:
+     *  - adds codes to get milestone submissions data if the round type is milestone round.
+     * </p>
      *
      * @throws Exception if an unexpected error occurs.
      */
@@ -124,8 +196,40 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         HttpServletRequest request = DirectUtils.getServletRequest();
         this.sessionData = new SessionData(request.getSession());
 
+        // Get current user
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(currentUser, getFormData().getProjectId());
+
+        boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
+
+        // get the round type
+        ContestRoundType roundType = getRoundType();
+
+        // if round type is not specified, default to FINAL
+        if (roundType == null) {
+            roundType = ContestRoundType.FINAL;
+        }
+
+        if (hasMilestoneRound) {
+            if (roundType == ContestRoundType.FINAL) {
+
+                boolean isMilestoneRoundConfirmed = DirectUtils.getContestCheckout(softwareCompetition, ContestRoundType.MILESTONE);
+
+                if (!isMilestoneRoundConfirmed) {
+                    // if the milestone is not confirmed, redirect to milestone submission page
+                    this.redirectToMilestone = true;
+                    return;
+                }
+            }
+        }
+
+        if (roundType == ContestRoundType.FINAL) {
         // Set submissions, winners, reviewers data
         DataProvider.setSoftwareSubmissionsData(getViewData());
+        } else {
+            DataProvider.setSoftwareMilestoneSubmissionsData(getViewData());
+        }
 
         // For normal request flow prepare various data to be displayed to user
         // Set contest stats
@@ -133,7 +237,6 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         getViewData().setContestStats(contestStats);
 
         // Set projects data
-        TCSubject currentUser = getCurrentUser();
         List<ProjectBriefDTO> projects = DataProvider.getUserProjects(currentUser.getUserId());
         UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
         userProjectsDTO.setProjects(projects);
@@ -156,5 +259,22 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
         // add final fixes of the contest if exist
         setFinalFixes(DataProvider.getContestFinalFixes(getProjectId()));
+    }
+
+    /**
+     * Checks whether all the submission are reviewed.
+     *
+     * @return true if all submissions are review, false otherwise.
+     */
+    public boolean isAllSubmissionReviewed() {
+        final List<SoftwareSubmissionDTO> submissions = getViewData().getSubmissions();
+
+        for(SoftwareSubmissionDTO s : submissions) {
+            if (s.getReviews() == null || s.getReviews().size() == 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

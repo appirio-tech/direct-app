@@ -1,12 +1,15 @@
 <%--
   - Author: TCSDEVELOPER, TCSASSEMBLER
-  - Version 1.1 (Direct Software Submission Viewer assembly)
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Two)
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Software contest in a list view.
   -
   - Version 1.1 (TC Direct Contest Dashboard Update Assembly) change Notes: 
   - 1.Add dashboard header.    
+  -
+  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Two) change Notes:
+  - - add miletone submissions and sub tabs for switch between milestone and final round
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -54,7 +57,44 @@
                                 <div class="container2Left">
                                     <div class="container2Right">
                                         <div class="container2BottomClear">
+
                                             <div class="containerNoPadding">
+
+                                            <div id="bankSelection">
+                                                <div id="bankSelectionHead">
+
+                                                    <s:if test="viewData.contestStats.multipleRound">
+                                                        <h3>Multiple Rounds Submissions</h3>
+                                                    </s:if>
+                                                    <s:else>
+                                                        <h3>Single Round Submissions</h3>
+                                                    </s:else>
+
+                                                    <ul id="bankSelectionTab">
+                                                        <s:if test="viewData.contestStats.multipleRound">
+                                                            <li
+                                                                    <s:if test="roundType.toString() == 'FINAL'">class="off"</s:if>>
+                                                                <a href="/direct/contest//softwareSubmissions?projectId=${formData.projectId}&amp;roundType=MILESTONE">
+                                                                    <span>Milestone (R1)</span>
+                                                                </a>
+                                                            </li>
+                                                        </s:if>
+                                                            <li
+                                                                    <s:if test="roundType.toString() == 'MILESTONE'">class="off"</s:if> >
+                                                                <a href="/direct/contest//softwareSubmissions?projectId=${formData.projectId}&amp;roundType=FINAL">
+                                                                    <s:if test="viewData.contestStats.multipleRound">
+                                                                        <span>Final (R2)</span>
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                        <span>Final (R1)</span>
+                                                                    </s:else>
+                                                                </a>
+                                                            </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <s:if test="roundType.toString() == 'FINAL'">
 
                                             <s:if test="finalFixes.size > 0">
 
@@ -85,11 +125,16 @@
                                                     <tbody>
                                                        <s:iterator value="finalFixes" status="rowStatus">
                                                            <tr>
-                                                               <s:if test='#rowStatus.count == 1'><s:set var="iconStyle" value="'gold'" scope="page"/></s:if>
-                                                               <s:else><s:set var="iconStyle" value="'normal'" scope="page"/></s:else>
+                                                                <s:if test='#rowStatus.count == 1'><s:set var="iconStyle"
+                                                                                                          value="'gold'"
+                                                                                                          scope="page"/></s:if>
+                                                                <s:else><s:set var="iconStyle" value="'normal'"
+                                                                               scope="page"/></s:else>
                                                                <td>
                                                                 <link:downloadFinalFix contestId="${contestId}"
-                                                                    finalFix="${finalFixSub}" version="${versionNumber}" styleClass="icoZip ${iconStyle}"></link:downloadFinalFix>
+                                                                                           finalFix="${finalFixSub}"
+                                                                                           version="${versionNumber}"
+                                                                                           styleClass="icoZip ${iconStyle}"></link:downloadFinalFix>
                                                                 </td>
                                                                 <td class="left">
                                                                 <link:user userId="${finalFixerUserId}"
@@ -103,14 +148,16 @@
                                                                   <s:property value="uploadId"/>
                                                                 </td>
                                                                <td>
-                                                                   <s:date name="finalFixDate" format="MM.dd.yyyy" />
+                                                                    <s:date name="finalFixDate" format="MM.dd.yyyy"/>
                                                                </td>
                                                                <td>
                                                                   <s:if test='approved == false && reviewed == true'>Rejected</s:if><s:else></s:else>
                                                                 </td>
                                                                <td>
                                                                        <link:downloadFinalFix contestId="${contestId}"
-                                                                    finalFix="${finalFixSub}" version="${versionNumber}" styleClass="icoZip ${iconStyle}"></link:downloadFinalFix>
+                                                                                           finalFix="${finalFixSub}"
+                                                                                           version="${versionNumber}"
+                                                                                           styleClass="icoZip ${iconStyle}"></link:downloadFinalFix>
                                                                 </td>
 
                                                            </tr>
@@ -122,18 +169,25 @@
                                             </s:if>
 
 
-                                            <s:set var="firstPlaceWinner" value="viewData.firstPlaceWinner" scope="page"/>
-                                                <s:set var="secondPlaceWinner" value="viewData.secondPlaceWinner" scope="page"/>
+                                                    <s:set var="firstPlaceWinner" value="viewData.firstPlaceWinner"
+                                                           scope="page"/>
+                                                    <s:set var="secondPlaceWinner" value="viewData.secondPlaceWinner"
+                                                           scope="page"/>
                                                 <c:if test="${firstPlaceWinner != null}">
                                                     <div id="winnerPanel">
                                                         <div class="winnerCol">
                                                             <s:if test="finalFixes.size > 0">
-                                                               <link:downloadFinalFix contestId="${finalFixes[0].contestId}"
-                                                                    finalFix="${finalFixes[0].finalFixSub}" version="${finalFixes[0].versionNumber}" styleClass="downloadFile"></link:downloadFinalFix>
+                                                                    <link:downloadFinalFix
+                                                                            contestId="${finalFixes[0].contestId}"
+                                                                            finalFix="${finalFixes[0].finalFixSub}"
+                                                                            version="${finalFixes[0].versionNumber}"
+                                                                            styleClass="downloadFile"></link:downloadFinalFix>
                                                             </s:if>
                                                             <s:else>
-                                                                  <link:onlineReviewDownloadSubmission projectId="${firstPlaceWinner.projectId}"
-                                                                    submissionId="${firstPlaceWinner.submissionId}" styleClass="downloadFile">
+                                                                    <link:onlineReviewDownloadSubmission
+                                                                            projectId="${firstPlaceWinner.projectId}"
+                                                                            submissionId="${firstPlaceWinner.submissionId}"
+                                                                            styleClass="downloadFile">
                                                                   </link:onlineReviewDownloadSubmission>
                                                             </s:else>
                                                             <div class="winnerData">
@@ -152,8 +206,10 @@
 
                                                         <c:if test="${secondPlaceWinner != null}">
                                                             <div class="winnerCol">
-                                                                <link:onlineReviewDownloadSubmission projectId="${secondPlaceWinner.projectId}"
-                                                                    submissionId="${secondPlaceWinner.submissionId}" styleClass="downloadFile">
+                                                                    <link:onlineReviewDownloadSubmission
+                                                                            projectId="${secondPlaceWinner.projectId}"
+                                                                            submissionId="${secondPlaceWinner.submissionId}"
+                                                                            styleClass="downloadFile">
                                                                 </link:onlineReviewDownloadSubmission>
                                                                 <div class="winnerData">
                                                                     <h3>2nd Place Winner</h3>
@@ -174,7 +230,7 @@
                                                 </c:if>
 
                                                 <s:set var="viewData" value="viewData" scope="page"/>
-                                                <h2>All Submissions</h2>
+                                                    <h2>All Final Round Submissions</h2>
 
                                                 <table class="softwareStats" cellpadding="0" cellspacing="0">
                                                     <colgroup>
@@ -220,8 +276,10 @@
                                                         <c:set var="passedScreening" value="${submission.passedScreening}"/>
                                                         <c:set var="passedReview" value="${submission.passedReview}"/>
                                                         <c:set var="submitter" value="${submission.submitter}"/>
-                                                        <c:set var="isWinner1" value="${submitter.id eq firstPlaceWinner.id}"/>
-                                                        <c:set var="isWinner2" value="${submitter.id eq secondPlaceWinner.id}"/>
+                                                            <c:set var="isWinner1"
+                                                                   value="${submitter.id eq firstPlaceWinner.id}"/>
+                                                            <c:set var="isWinner2"
+                                                                   value="${submitter.id eq secondPlaceWinner.id}"/>
                                                         <c:set var="passedScreening" value="${submission.passedScreening}"/>
                                                         <c:set var="passedReview" value="${submission.passedReview}"/>
                                                         <c:choose>
@@ -237,8 +295,10 @@
                                                         </c:choose>
                                                         <tr ${loop.index mod 2 > 0 ? 'class="alt"' : ''}>
                                                             <td>
-                                                                <link:onlineReviewDownloadSubmission projectId="${param.projectId}"
-                                                                    submissionId="${submission.submissionId}" styleClass="icoZip ${icoStyle}"></link:onlineReviewDownloadSubmission>
+                                                                    <link:onlineReviewDownloadSubmission
+                                                                            projectId="${param.projectId}"
+                                                                            submissionId="${submission.submissionId}"
+                                                                            styleClass="icoZip ${icoStyle}"></link:onlineReviewDownloadSubmission>
                                                             </td>
                                                             <td class="left">
                                                                 <link:user userId="${submitter.id}"
@@ -258,7 +318,8 @@
                                                                         <link:onlineReviewScreeningScorecard
                                                                                 reviewId="${submission.screeningReview.reviewId}"
                                                                                 styleClass="${passedScreening ? 'icoTrue' : 'icoFalse'}">
-                                                                        <fmt:formatNumber value="${submission.screeningScore}"
+                                                                                <fmt:formatNumber
+                                                                                        value="${submission.screeningScore}"
                                                                                               pattern="##0.00"/>
                                                                         </link:onlineReviewScreeningScorecard>
                                                                     </c:when>
@@ -270,7 +331,8 @@
                                                                     <c:when test="${passedScreening}">
                                                                         <c:choose>
                                                                             <c:when test="${submission.initialScore ne null}">
-                                                                                <fmt:formatNumber value="${submission.initialScore}"
+                                                                                    <fmt:formatNumber
+                                                                                            value="${submission.initialScore}"
                                                                                                   pattern="##0.00"/>
                                                                             </c:when>
                                                                             <c:otherwise>n/a</c:otherwise>
@@ -285,7 +347,8 @@
                                                                         <c:when test="${passedScreening}">
                                                                             <c:choose>
                                                                                 <c:when test="${submission.finalScore ne null}">
-                                                                                    <fmt:formatNumber value="${submission.finalScore}"
+                                                                                        <fmt:formatNumber
+                                                                                                value="${submission.finalScore}"
                                                                                                       pattern="##0.00"/>
                                                                                 </c:when>
                                                                                 <c:otherwise>n/a</c:otherwise>
@@ -307,7 +370,8 @@
                                                                                     <link:onlineReviewScorecard
                                                                                             reviewId="${review.reviewId}" 
                                                                                             styleClass="scores">
-                                                                                        <fmt:formatNumber value="${review.finalScore}"
+                                                                                            <fmt:formatNumber
+                                                                                                    value="${review.finalScore}"
                                                                                                           pattern="##0.00"/>
                                                                                     </link:onlineReviewScorecard>
                                                                                 </c:when>
@@ -322,6 +386,96 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
+
+                                            </s:if>
+                                            <s:if test="roundType.toString() == 'MILESTONE'">
+                                                <h2>All Milestone Round Submissions</h2>
+
+                                                <table class="softwareStats" cellpadding="0" cellspacing="0">
+                                                    <colgroup>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
+                                                        <col width="20%"/>
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th rowspan="1"><span class="icoTHDownload"></span></th>
+                                                        <th rowspan="1" class="left">Handle</th>
+                                                        <th rowspan="1">Milestone Submission ID</th>
+                                                        <th rowspan="1">Date Submitted</th>
+                                                        <th rowspan="1">Is Milestone Winner ?</th>
+                                                    </tr>
+
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <c:forEach items="${viewData.submissions}" var="submission"
+                                                               varStatus="loop">
+                                                        <c:set var="passedScreening"
+                                                               value="${submission.passedScreening}"/>
+                                                        <c:set var="passedReview" value="${submission.passedReview}"/>
+                                                        <c:set var="submitter" value="${submission.submitter}"/>
+                                                        <c:set var="isWinner" value="false"/>
+                                                        <c:forEach items="${viewData.milestoneWinners}" var="milestoneWinner">
+                                                            <c:choose>
+                                                                <c:when test="${submitter.id eq milestoneWinner.id}">
+                                                                      <c:set var="isWinner" value="true"/>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                        <c:set var="passedReview" value="${submission.passedReview}"/>
+                                                        <c:choose>
+                                                            <c:when test="${isWinner}">
+                                                                <c:set var="icoStyle" value="gold"/>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:set var="icoStyle" value="normal"/>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                        <tr ${loop.index mod 2 > 0 ? 'class="alt"' : ''}>
+                                                            <td>
+                                                                <link:onlineReviewDownloadSubmission
+                                                                        projectId="${param.projectId}"
+                                                                        submissionId="${submission.submissionId}"
+                                                                        styleClass="icoZip ${icoStyle}"></link:onlineReviewDownloadSubmission>
+                                                            </td>
+                                                            <td class="left">
+                                                                <link:user userId="${submitter.id}"
+                                                                           handle="${submitter.handle}"
+                                                                           styleClass="handle"/>
+                                                            </td>
+                                                            <td>
+                                                                <strong><c:out
+                                                                        value="${submission.submissionId}"/></strong>
+                                                            </td>
+                                                            <td>
+                                                                <fmt:formatDate value="${submission.submissionDate}"
+                                                                                pattern="MM.dd.yyyy"/>
+                                                            </td>
+
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${submission.passedReview}">
+                                                                        <c:choose>
+                                                                            <c:when test="${isWinner}">
+                                                                                Milestone Winner
+                                                                            </c:when>
+                                                                            <c:when test="${submission.finalScore ne null}">
+                                                                            </c:when>
+                                                                            <c:otherwise>n/a</c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise>Not Passed Review</c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </s:if>
+
                                             </div>
                                             <!-- End .container2Content -->
                                         </div>
