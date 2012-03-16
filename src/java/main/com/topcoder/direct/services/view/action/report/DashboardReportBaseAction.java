@@ -1,18 +1,11 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.ReportBaseDTO;
@@ -26,12 +19,30 @@ import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.ProjectData;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * <p>A <code>Struts</code> action which will be base class of report actions. This class will parse
  * and validate the parameters, prepare for the common data used by the report page.</p>
  *
- * @author TCSASSEMBER
- * @version 1.0 (TC Cockpit Permission and Report Update One)
+ * <p>
+ *  Version 1.1 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) change notes:
+ *  <ol>
+ *      <li>Add the handle of view data and form data of group by and group values filter for both Cost report and
+ *      billing cost report</li>
+ *  </ol>
+ * </p>
+ *
+ * @author TCSASSEMBLER
+ * @version 1.1
  * @param <FORMT> a type of the form used by the report page. It must extends from <code>DashboardReportForm</code>.
  * @param <VIEWT> a type of the view used by the report page. It must extends from <code>ReportBaseDTO</code>.
  */
@@ -275,6 +286,30 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
             addActionError("Start date must not be after end date");
             return;
         }
+
+        // handle the group by and group values view data and form data
+        getViewData().setGroupKeys(new LinkedHashMap<Long, String>());
+        getViewData().getGroupKeys().put(-1L, "No Grouping");
+        getViewData().setGroupValues(new LinkedHashSet<String>());
+
+        if (getFormData().getCustomerId() > 0) {
+            // set Group By drop down view data
+            final List<DirectProjectMetadataKey> clientProjectMetadataKeys =
+                    getMetadataKeyService().getClientProjectMetadataKeys(getFormData().getCustomerId(), true);
+
+            for (DirectProjectMetadataKey key : clientProjectMetadataKeys) {
+                getViewData().getGroupKeys().put(key.getId(), key.getName());
+            }
+
+            if (getFormData().getGroupId() > 0) {
+                // set Group Values multiple selection view data
+                final List<DirectProjectMetadata> values =
+                        getMetadataService().getProjectMetadataByKey(getFormData().getGroupId());
+                for (DirectProjectMetadata value : values) {
+                    getViewData().getGroupValues().add(value.getMetadataValue());
+                }
+            }
+        }
     }
 
     /**
@@ -334,6 +369,7 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
         }
         return this.directProjectsData;
     }
+    
 
     /**
      * <p>Validate the parameter. The valid values is the key set of a map.</p>

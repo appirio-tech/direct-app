@@ -42,10 +42,13 @@
  *  - Add the js codes to handle multiple selection box.
  * 
  *  Version 2.3 - Release Assembly - TC Direct Cockpit Release Two
-  *  - Add the js codes to handle not choose 2nd place copilot button.
+ *  - Add the js codes to handle not choose 2nd place copilot button.
  * 
- * @author tangzx, Blues, GreatKevin, TCSASSEMBLER
- * @version 2.3
+ *  Version 2.4 - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement
+ *  - Add the js codes to load group by by customer id and load group values by group by id via ajax
+ *
+ * @author tangzx, Blues, GreatKevin
+ * @version 2.4
  */
 $(document).ready(function(){
 						   
@@ -419,10 +422,9 @@ $(document).ready(function(){
 
     showHideCustomerList = function(){
 		var  contestsDropDown = $(".customerSelectMask .contestsDropDown");
-        if(contestsDropDown.is(":hidden")){
+        if (contestsDropDown.is(":hidden")) {
             $(".customerSelectMask .contestsDropDown").hide();
         }
-        
         
         var list = contestsDropDown.find("ul");
         if(list.is(":hidden")){
@@ -1469,8 +1471,7 @@ $(document).ready(function(){
     	});
 
     	//Multi Select checkbox function
-    	$('.multiSelectBox :checkbox').each(function(){
-    		$(this).click(function(){
+    	$('.multiSelectBox :checkbox').live('click', function(){
     			var parentBox = $(this).closest('.multiSelectBox');
     			var parentRow = $(this).parent('.multiOptionRow');
     			var parentSelectLen = parentBox.find(':checkbox').length;
@@ -1496,7 +1497,6 @@ $(document).ready(function(){
     					parentRow.removeClass('multiOptionRowChecked');
     				}
     			}
-    		});
     	});
 
         var selectAllCheckOrNot = function() {
@@ -1540,15 +1540,19 @@ $(document).ready(function(){
     			}else{
     				$('.filterContainer').addClass('filterContainer1400');
     			}
-    			$('.rightFilterContent').width($('.filterContainer').width()-$('.leftFilterContent').width());
+    			$('.rightFilterContent').width($('.filterContainer').width()-$('.leftFilterContent').width() - 10);
     		}
     	}
+
+
+    adjustReportFilterHeight();
 
     	//resize Multi Select Area width
     	$(window).resize(function(){
     		if($('.filterContainer').length>0){
     			multiSelectAreaSet();
     		}
+            adjustReportFilterHeight();
         }) ;
 
     	multiSelectAreaSet();
@@ -1559,9 +1563,23 @@ $(document).ready(function(){
                 content: "Go to the edit project page to edit and update the project details and settings"
             });
         }
-        
-    
 });
+
+/**
+ * Ajudsts the height of report filter controls according to the browser width.
+ */
+function adjustReportFilterHeight() {
+    var height = $('.filterContainer .leftFilterContent').height();
+    $('.filterContainer .multiSelectArea .multiSelectBox').css({'height':(height - 45) + 'px'});
+    $('.filterContainer #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 110) + 'px'});
+    $('.filterContainer .statusMultiSelect .multiSelectBox').css({'height':(height / 2 - 60) + 'px'});
+    $('#billingCostReportsPage .filterContainer #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height / 2 - 76) + 'px'});
+    $('#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox').css({'height':(height + 85) + 'px'});
+    $('#billingCostReportsPage .filterContainer1400 #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 90) + 'px'});
+    $('.filterContainer1400 .statusMultiSelect .multiSelectBox').css({'height':(height - 90) + 'px'});
+    $('#pipelineReportsPage .multiSelectArea .multiSelectBox').css({'height':(height - 37) + 'px'});
+    $('#pipelineReportsPage #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 93) + 'px'});
+}
 
 /*
  * BHCUI-83
@@ -1633,6 +1651,108 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
     
     $('#removeProjectDialog').dialog("open");
     return false;
+}
+
+/**
+ * Show the indicator of report filter dropdown.
+ *
+ * @param object the jquery object represents the dropdown.
+ */
+function showIndicator(object) {
+    object.attr('disabled', true);
+    var indicator = object.parent().find('.indicator');
+    indicator.show();
+}
+
+/**
+ * Hide the indicator of report filter dropdown.
+ *
+ * @param object the jquery object represents the dropdown.
+ */
+function hideIndicator(object) {
+    var indicator = object.parent().find('.indicator');
+    indicator.hide();
+    object.attr('disabled', false);
+}
+
+
+function loadGroupByOptions(selector, customerId, successCallback) {
+
+    showIndicator(selector);
+
+    $.ajax({
+        type:'GET',
+        url:ctx + "/getGroupByOptionsForCustomer",
+        data:{customerId:customerId},
+        cache:false,
+        dataType:'json',
+        success:function (jsonResult) {
+            handleJsonResult(jsonResult,
+                    function (result) {
+                        selector.empty();
+
+                        selector.append($("<option></option>").attr('value', -1).text("No Grouping"));
+
+                        $.each(result, function (index, value) {
+                            selector.append($("<option></option>").attr('value', value.id).text(value.name));
+                        });
+
+                        hideIndicator(selector);
+
+                        successCallback(result);
+
+                    },
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    });
+        }
+    });
+}
+
+function loadGroupValuesForGroup(selector, groupId, successCallback) {
+    showIndicator(selector);
+    selector.empty();
+    selector.parent().find(".reportWarningMessage").hide();
+    $.ajax({
+        type:'GET',
+        url:ctx + "/getGroupValuesForGroupBy",
+        data:{groupKeyId:groupId},
+        cache:false,
+        dataType:'json',
+        success:function (jsonResult) {
+            handleJsonResult(jsonResult,
+                    function (result) {
+                        var hasValue = false;
+
+                        var selectAll = $("<div></div>").attr('class', 'multiOptionRow multiOptionRowChecked hide');
+                        selectAll.append($("<input class='optionAll' type='checkbox' checked='checked'>")
+                                .attr('id', 'groupValuesSelectAll'));
+                        selectAll.append($("<label></label>").attr('title', "Select All").attr('for', 'groupValuesSelectAll').text("Select All"));
+                        selector.append(selectAll);
+
+                        $.each(result, function (index, value) {
+                            var item = $("<div></div>").attr('class', 'multiOptionRow multiOptionRowChecked');
+                            item.append($("<input class='optionItem' type='checkbox' name='formData.groupValues' checked='checked'>")
+                                    .attr('id', 'groupValuesCheckBox' + index).val(value));
+                            item.append($("<label></label>").attr('title', value).attr('for', 'groupValuesCheckBox' + index).text(value));
+                            selector.append(item);
+                            hasValue = true;
+                        });
+
+                        if(!hasValue) {
+                            selector.parent().find(".reportWarningMessage").show();
+                        }
+
+                        hideIndicator(selector);
+
+                        successCallback(result);
+
+                    },
+                    function (errorMessage) {
+                        showErrors(errorMessage);
+                    });
+        }
+    });
 }
 
 /* new code for Release Assembly - TC Cockpit Enterprise Dashboard Update Assembly 1 - add ajax preloader functions */

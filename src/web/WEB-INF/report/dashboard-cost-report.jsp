@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, flexme, GreatKevin, TCSASSEMBLER
-  - Version: 1.5
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, flexme, GreatKevin
+  - Version: 1.6
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
   - - Add a popup window to support the cost breakdown data.
@@ -21,6 +21,8 @@
   - Version 1.5 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) changes:
   - - Update the final panel of cost report to the new one.
   - -
+  - Version 1.6 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) changes:
+  - - Added Group by and group values into the filter panel.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -104,6 +106,7 @@
         				<div class="filterRow">
         					<div class="filterRowLeft">
         						<label for="formData.billingAccountIds">Billing Account:</label>
+                                <img src="/images/dots-white.gif" class="indicator" alt/>
         					</div>
                             <s:select list="viewData.clientBillingProjects"
                                       id="formData.billingAccountId"
@@ -118,6 +121,7 @@
         				<div class="filterRow firstFilterRow">
         					<div class="filterRowLeft">
         						<label>Project Name:</label>
+                                <img src="/images/dots-white.gif" class="indicator" alt/>
         					</div>
                             <s:select list="viewData.projectsLookupMap" name="formData.projectId"
                                                           id="formData.projectId"/>
@@ -154,7 +158,52 @@
         		<!-- .rightFilterContent -->
         		<div class="rightFilterContent">
 
-        			<div class="multiSelectArea">
+                    <div id="groupFilter">
+                        <div class="filterRow firstFilterRow">
+                            <div class="filterRowLeft">
+                                <label for="formDatagroup">Group By:</label>
+                                <img src="/images/dots-white.gif" class="indicator" alt/>
+                            </div>
+                            <s:select id="formDatagroup"
+                                      list="viewData.groupKeys"
+                                      name="formData.groupId"/>
+                        </div>
+                        <div class="multiSelectArea" id="formDatagroupValue">
+                            <div class="multiSelectAreaInner">
+                                <label class="multiSelectAreaTitle">Group Values:
+                                    <img src="/images/dots-white.gif" class="indicator" style="padding-left:4px" alt/>
+                                    <span class="reportWarningMessage hide">No Value Available</span></label>
+                                </label>
+
+                                <div class="multiSelectBox">
+                                    <div class="multiOptionRow multiOptionRowChecked hide">
+                                        <input type="checkbox" class="optionAll" name=""
+                                               id="groupValuesSelectAll" checked="checked">
+                                        <label title="Select All" for="groupValuesSelectAll">Select
+                                            All</label>
+                                    </div>
+                                    <s:iterator value='viewData.groupValues' status='c' var="groupValue">
+                                        <s:set name='needCheck' value='false'/>
+                                        <s:iterator value='formData.groupValues' var="group">
+                                            <s:if test="#group == #groupValue"><s:set name='needCheck'
+                                                                                      value='true'/></s:if>
+                                        </s:iterator>
+                                        <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                            <input type="checkbox"
+                                                   <s:if test='#needCheck'>checked="checked"</s:if>
+                                                   id="groupValuesCheckBox${c.index}" class="optionItem"
+                                                   name="formData.groupValues" value="${groupValue}"/>
+                                            <label for="groupValuesCheckBox${c.index}"
+                                                   title="${groupValue}">${groupValue}</label>
+                                        </div>
+                                    </s:iterator>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end .multiSelectArea -->
+                    </div>
+
+                    <div class="multiSelectArea">
         				<div class="multiSelectAreaInner">
         					<label class="multiSelectAreaTitle">Status:</label>
         					<div class="multiSelectBox">

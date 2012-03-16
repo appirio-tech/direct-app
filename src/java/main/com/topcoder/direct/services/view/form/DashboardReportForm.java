@@ -1,15 +1,22 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>A basic form bean providing the form data submitted by user for getting the report.</p>
+ *
+ * <p>
+ *  Version 1.1 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) updates
+ *  - Adds {@link #groupId}, {@link #groupValues} and their setters and getters.
+ * </p>
  * 
- * @author TCSASSEMBER
- * @version 1.0 (TC Cockpit Permission and Report Update One)
+ * @author TCSASSEMBLER
+ * @version 1.0
+ * @since (TC Cockpit Permission and Report Update One)
  */
 public class DashboardReportForm implements Serializable {
 
@@ -52,6 +59,18 @@ public class DashboardReportForm implements Serializable {
      * <p>Represents the status ids of the participation metrics report. 3 status are available: active, scheduled, completed.</p>
      */
     private long[] statusIds;
+
+    /**
+     * The group by id.
+     * @since 1.1
+     */
+    private long groupId;
+
+    /**
+     * The list of group values.
+     * @since 1.1
+     */
+    private List<String> groupValues;
 
     /**
      * Empty constructor.
@@ -185,5 +204,44 @@ public class DashboardReportForm implements Serializable {
      */
     public void setStatusIds(long[] statusIds) {
         this.statusIds = statusIds;
+    }
+
+    /**
+     * Gets the group id.
+     *
+     * @return the group id.
+     */
+    public long getGroupId() {
+        return groupId;
+    }
+
+    /**
+     * Sets the group id.
+     *
+     * @param groupId the group id.
+     * @since 1.1
+     */
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
+    }
+
+    /**
+     * Gets the group values.
+     *
+     * @return the group values.
+     * @since 1.1
+     */
+    public List<String> getGroupValues() {
+        return groupValues;
+    }
+
+    /**
+     * Sets the group values.
+     *
+     * @param groupValues the group values.
+     * @since 1.1
+     */
+    public void setGroupValues(List<String> groupValues) {
+        this.groupValues = groupValues;
     }
 }

@@ -1,14 +1,17 @@
 /**
- * AUTHOR: TCSDEVELOPER
- * VERSION: 1.2 (TC Cockpit - Billing Cost Report Assembly))
+ * AUTHOR: Blues
+ * VERSION: 1.3 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement)
  *
- * Version 1.1 (TC Cockpit Permission and Report Update One) change log:
+ * Version 1.0 (TC Cockpit Permission and Report Update One) change log:
  * - Change parameter name from projectIds to projectId.
  * - Change parameter name from billingAccountIds to billingAccount.
  * - Change parameter name from customerIds to customerId.
  * 
  * Version 1.1 (TC Accounting Tracking Invoiced Payments) change notes: Add logic to update the invoice record.
+ *
  * Version 1.2 (TC Accounting Tracking Invoiced Payments Part 2) change notes: Add logic to create/update the invoice.
+ *
+ * Version 1.3 (Add ajax indicator for dropdown change and add group by and group values filter)
  *
  * Submits the billing cost report form and trigger cost report excel download.
  */
@@ -117,6 +120,9 @@ $(document).ready(function() {
 
     function loadOptionsByClientId(clientId) {
 
+        showIndicator($("#formData\\.billingAccountId"));
+        showIndicator($("#formData\\.projectId"));
+
         $.ajax({
             type: 'POST',
             url:  "dashboardGetOptionsForClientAJAX",
@@ -152,6 +158,9 @@ $(document).ready(function() {
                             sortDropDown("#formData\\.projectId");
                             sortDropDown("#formData\\.billingAccountId");
 
+                            hideIndicator($("#formData\\.billingAccountId"));
+                            hideIndicator($("#formData\\.projectId"));
+
                         },
                         function(errorMessage) {
                             $('#validationErrors').html(errorMessage);
@@ -164,6 +173,25 @@ $(document).ready(function() {
     $("#formData\\.customerId").change(function() {
 
         var customerId = $(this).val();
+
+        if (customerId <= 0) {
+            $("#formDatagroup option").each(function () {
+                if ($(this).val() > 0) {
+                    $(this).remove();
+                }
+            });
+
+            $("#formDatagroup").attr('disabled', true);
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+
+        } else {
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+            loadGroupByOptions($("#formDatagroup"), customerId, function (result) {
+                $("#formDatagroup").attr('disabled', false);
+                $("#formDatagroup").val(-1);
+                $("#formDatagroupValue").find(".multiSelectBox").empty();
+            });
+        }
 
         loadOptionsByClientId(customerId);
     });
@@ -180,6 +208,8 @@ $(document).ready(function() {
 
             return;
         }
+
+        showIndicator($("#formData\\.projectId"));
 
         $.ajax({
             type: 'POST',
@@ -202,7 +232,13 @@ $(document).ready(function() {
                             $project.append($('<option></option>').val(0).html("All Projects"));
                             $project.val(0);
                             sortDropDown("#formData\\.projectId");
+                            hideIndicator($("#formData\\.projectId"));
 
+                            if ($("#formDatagroup").val() > 0) {
+                                $("#formData\\.projectId").attr('disabled', true);
+                            }
+
+                            $("#formDatagroup").attr('disabled', false);
                         },
                         function(errorMessage) {
                             $('#validationErrors').html(errorMessage);
@@ -211,6 +247,47 @@ $(document).ready(function() {
         });
 
     });
+
+    $("#formData\\.projectId").change(function () {
+        var id = $(this).val();
+        if (id > 0) {
+            // disable the
+            $("#formDatagroup").attr('disabled', true);
+            $("#formDatagroup").val(-1);
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+        } else {
+            $("#formDatagroup").attr('disabled', false);
+        }
+    });
+
+    $("#formDatagroup").change(function () {
+        var groupById = $(this).val();
+
+        if (groupById < 0) {
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+            $("#formDatagroupValue").find(".reportWarningMessage").hide();
+            $("#formData\\.projectId").attr('disabled', false);
+            $("#formData\\.projectId").val(0);
+        } else {
+            $("#formData\\.projectId").attr('disabled', true);
+            $("#formData\\.projectId").val(0);
+            loadGroupValuesForGroup($("#formDatagroupValue").find(".multiSelectBox"), groupById, function (result) {
+            });
+        }
+    });
+
+    // after loading, check the dropdown of project and group by
+
+    if ($("#formDatagroup").val() > 0) {
+        // disable project
+        $("#formData\\.projectId").attr('disabled', true);
+    } else if ($("#formData\\.projectId").val() > 0) {
+        $("#formDatagroup").attr('disabled', true);
+    }
+
+    if ($("#formData\\.customerId").val() <= 0) {
+        $("#formDatagroup").attr('disabled', true);
+    }
     
     var contestIds = [];
     var paymentIds = [];
@@ -227,6 +304,8 @@ $(document).ready(function() {
             $(".errorInfo", $(this).parent()).hide();
         }
     });
+
+
     
     /**
      * Format the date string from MM/dd/yy to yy-MM-dd

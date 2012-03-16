@@ -1,15 +1,7 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.topcoder.clients.invoices.dao.LookupDAO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportDTO;
@@ -18,6 +10,15 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Payment
 import com.topcoder.direct.services.view.form.DashboardBillingCostReportForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling the requests for viewing the billing cost report.</p>
@@ -51,9 +52,18 @@ import com.topcoder.direct.services.view.util.DirectUtils;
  *   when calling DataProvider.getDashboardBillingCostReport.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+  * Version 1.3 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination
+ *  Improvement) change notes:
+  * <ol>
+  *   <li>Added {@link #filterByGroups(java.util.List)} ()} method to filter by group by and group values</li>
+  *   <li>Updated method {@link #executeAction()} to apply filters with group by and group values.</li>
+  * </ol>
+  * </p>
  * 
- * @author Blues, TCSASSEMBER
- * @version 1.2 (TC Cockpit Billing Cost Report Assembly)
+ * @author Blues, TCSASSEMBLER
+ * @version 1.3
  */
 public class DashboardBillingCostReportAction extends DashboardReportBaseAction<DashboardBillingCostReportForm, BillingCostReportDTO> {
 
@@ -142,6 +152,11 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
     /**
      * <p>Handles the incoming request. Retrieves data for Billing Cost Report and binds it to request.</p>
      *
+     * <p>
+     * Version 1.3 updates:
+     * - Add the filter of group by and group values.
+     * </p>
+     *
      * @throws Exception if an unexpected error occurs.
      */
     @Override
@@ -212,14 +227,18 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
 
             Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
                     (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
-                    softwareProjectCategories, studioProjectCategories, paymentTypeIds,
-                    customerId, billingAccountId, statusIds, contestId, form.getInvoiceNumber(), startDate, endDate,
-                    REPORT_CONTEST_STATUS_IDS, BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
+                            softwareProjectCategories, studioProjectCategories, paymentTypeIds,
+                            customerId, billingAccountId, statusIds, contestId, form.getInvoiceNumber(), startDate, endDate,
+                            REPORT_CONTEST_STATUS_IDS, BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
 
             List<BillingCostReportEntryDTO> viewData = new ArrayList<BillingCostReportEntryDTO>();
 
-            for(List<BillingCostReportEntryDTO> contestEntries : billingCosts.values()) {
+            for (List<BillingCostReportEntryDTO> contestEntries : billingCosts.values()) {
                 viewData.addAll(contestEntries);
+            }
+
+            if((form.getInvoiceNumber() == null || form.getInvoiceNumber().trim().length() <= 0) && contestId <= 0) {
+                viewData = filterByGroups(viewData);
             }
 
             Collections.sort(viewData, new Comparator<BillingCostReportEntryDTO>() {
@@ -231,7 +250,34 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             getViewData().setEntries(viewData);
 
         }
-        
+
         this.getViewData().setCanProcessInvoices(DirectUtils.canPerformInvoiceRecords(getCurrentUser()));
+    }
+
+    /**
+     * Filter the list of BillingCostReportEntryDTO by the group by and group values.
+     *
+     * @param listToFilter
+     * @return the filtered list of <code>BillingCostReportEntryDTO</code>
+     * @throws Exception if there is error
+     * @since 1.3
+     */
+    private List<BillingCostReportEntryDTO> filterByGroups(List<BillingCostReportEntryDTO> listToFilter) throws Exception {
+
+        List<BillingCostReportEntryDTO> result = listToFilter;
+
+        if (getFormData().getCustomerId() > 0 && getFormData().getGroupId() > 0) {
+            Set<Long> projectIdsFilter = getMetadataService().searchProjectIds(getFormData().getGroupId(), getFormData().getGroupValues());
+
+            result = new ArrayList<BillingCostReportEntryDTO>();
+
+            for (BillingCostReportEntryDTO dto : listToFilter) {
+                if (projectIdsFilter.contains(dto.getProject().getId())) {
+                    result.add(dto);
+                }
+            }
+        }
+
+        return result;
     }
 }

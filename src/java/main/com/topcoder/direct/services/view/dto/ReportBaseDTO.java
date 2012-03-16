@@ -1,10 +1,11 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>A <code>DTO</code> class providing the basic report data a report.</p>
@@ -43,6 +44,22 @@ public class ReportBaseDTO extends CommonDTO implements Serializable {
      * <p>A <code>Map</code> providing the mapping from status id to status names.</p>
      */
     private Map<Long, String> contestStatus;
+
+    /**
+     * <p>A <code>Map</code> provided the group by id and names for the chosen client if to user</p>
+     *
+     * @since 1.1
+     */
+    private Map<Long, String> groupKeys;
+
+    /**
+     * <p>
+     * A <code>Set</code> provided the group values for the chosen group id to user.
+     * </p>
+     *
+     * @since 1.1
+     */
+    private Set<String> groupValues;
     
     /**
      * <p>A <code>boolean</code> providing the flag indicating whether the participation metrics report data is
@@ -163,5 +180,45 @@ public class ReportBaseDTO extends CommonDTO implements Serializable {
      */
     public void setShowJustForm(boolean showJustForm) {
         this.showJustForm = showJustForm;
+    }
+
+    /**
+     * Gets the group keys.
+     *
+     * @return the group keys.
+     * @since 1.1
+     */
+    public Map<Long, String> getGroupKeys() {
+        return groupKeys;
+    }
+
+    /**
+     * Sets the group keys.
+     *
+     * @param groupKeys the group keys.
+     * @since 1.1
+     */
+    public void setGroupKeys(Map<Long, String> groupKeys) {
+        this.groupKeys = groupKeys;
+    }
+
+    /**
+     * Gets the group values.
+     *
+     * @return the group values.
+     * @since 1.1
+     */
+    public Set<String> getGroupValues() {
+        return groupValues;
+    }
+
+    /**
+     * Sets the group values.
+     *
+     * @param groupValues the group values.
+     * @since 1.1
+     */
+    public void setGroupValues(Set<String> groupValues) {
+        this.groupValues = groupValues;
     }
 }

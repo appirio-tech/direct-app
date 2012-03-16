@@ -1,6 +1,6 @@
 /**
  * AUTHOR: Blues, flexme, TCSASSEMBLER
- * VERSION: 1.4
+ * VERSION: 1.5
  *
  * Version 1.1 change: add toggle trigger for billing cost report.
  *
@@ -14,7 +14,11 @@
  *
  * Version 1.4 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) change log:
  * - Change the filter panel of cost report to the new one.
- * 
+ *
+ *
+ * Version 1.5 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) change log:
+ * - Add ajax indicator for dropdown change and add group by and group values filter
+ *
  * Submits the cost report form and trigger cost report excel download.
  */
 function getCostReportAsExcel(showBreakdown) {
@@ -106,6 +110,9 @@ $(document).ready(function() {
 
     function loadOptionsByClientId(clientId) {
 
+        showIndicator($("#formData\\.billingAccountId"));
+        showIndicator($("#formData\\.projectId"));
+
         $.ajax({
             type: 'POST',
             url:  "dashboardGetOptionsForClientAJAX",
@@ -141,6 +148,9 @@ $(document).ready(function() {
                             sortDropDown("#formData\\.projectId");
                             sortDropDown("#formData\\.billingAccountId");
 
+                            hideIndicator($("#formData\\.billingAccountId"));
+                            hideIndicator($("#formData\\.projectId"));
+
                         },
                         function(errorMessage) {
                             $('#validationErrors').html(errorMessage);
@@ -153,6 +163,25 @@ $(document).ready(function() {
     $("#formData\\.customerId").change(function() {
 
         var customerId = $(this).val();
+
+        if(customerId <= 0) {
+            $("#formDatagroup option").each(function(){
+                if($(this).val() > 0) {
+                    $(this).remove();
+                }
+            });
+
+            $("#formDatagroup").attr('disabled', true);
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+
+        } else {
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+            loadGroupByOptions($("#formDatagroup"), customerId, function (result) {
+                $("#formDatagroup").attr('disabled', false);
+                $("#formDatagroup").val(-1);
+                $("#formDatagroupValue").find(".multiSelectBox").empty();
+            });
+        }
 
         loadOptionsByClientId(customerId);
     });
@@ -169,6 +198,8 @@ $(document).ready(function() {
 
             return;
         }
+
+        showIndicator($("#formData\\.projectId"));
 
         $.ajax({
             type: 'POST',
@@ -192,6 +223,14 @@ $(document).ready(function() {
                             $project.val(0);
                             sortDropDown("#formData\\.projectId");
 
+                            hideIndicator($("#formData\\.projectId"));
+
+                            if($("#formDatagroup").val() > 0) {
+                                $("#formData\\.projectId").attr('disabled', true);
+                            }
+
+                            $("#formDatagroup").attr('disabled', false);
+
                         },
                         function(errorMessage) {
                             $('#validationErrors').html(errorMessage);
@@ -200,6 +239,47 @@ $(document).ready(function() {
         });
 
     });
+
+    $("#formData\\.projectId").change(function(){
+        var id = $(this).val();
+        if(id > 0) {
+            // disable the
+            $("#formDatagroup").attr('disabled', true);
+            $("#formDatagroup").val(-1);
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+        } else {
+            $("#formDatagroup").attr('disabled', false);
+        }
+    });
+
+    $("#formDatagroup").change(function () {
+        var groupById = $(this).val();
+
+        if (groupById < 0) {
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+            $("#formDatagroupValue").find(".reportWarningMessage").hide();
+            $("#formData\\.projectId").attr('disabled', false);
+            $("#formData\\.projectId").val(0);
+        } else {
+            $("#formData\\.projectId").attr('disabled', true);
+            $("#formData\\.projectId").val(0);
+            loadGroupValuesForGroup($("#formDatagroupValue").find(".multiSelectBox"), groupById, function (result) {
+            });
+        }
+    });
+
+    // after loading, check the dropdown of project and group by
+
+    if($("#formDatagroup").val() > 0) {
+        // disable project
+        $("#formData\\.projectId").attr('disabled', true);
+    } else if($("#formData\\.projectId").val() > 0) {
+        $("#formDatagroup").attr('disabled', true);
+    }
+
+    if($("#formData\\.customerId").val() <= 0) {
+        $("#formDatagroup").attr('disabled', true);
+    }
 
     // expandView pop up
     $("#contestDViewMock").overlay({
@@ -391,4 +471,6 @@ $(document).ready(function() {
         }
         resizePopupId = setTimeout(resizePopup, 100);
     });
+
+    adjustReportFilterHeight();
 });

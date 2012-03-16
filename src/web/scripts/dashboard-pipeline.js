@@ -12,8 +12,11 @@
  * Version 1.3 (Release Assembly - TopCoder Cockpit Reports Filter Panels Revamp) updates
  * - Updates the filter panel of pipeline report to the new one.
  *
+ * Version 1.4 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement ) updates
+  * - Add ajax indicator for dropdown change and add group by and group values filter
+ *
  * @author isv, Blues, GreatKevin, TCSASSEMBLER
- * @version 1.3
+ * @version 1.4
  * @since Direct Pipeline Stats Update Assembly
  */
 var ctx = "/direct";
@@ -74,6 +77,123 @@ $(document).ready(function(){
         $(this).parent().remove();
     });
 
+    if ($.browser.msie) {
+        $('.clientsSelection input:checkbox').click(function () {
+            this.blur();
+            this.focus();
+            var box = $(this).parent().parent();
+            var checkedNumber = box.find("input.optionItem:checked").length;
+
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+
+            if ($(this).hasClass('optionAll')) {
+
+                if (box.find("input.optionItem").length > 1 || box.find("input.optionItem").length <= 0) {
+                    $("#formDatagroup").val(-1).attr('disabled', true);
+                    return;
+                } else {
+                    var customerId = $.trim(box.find("input.optionItem").parent().find(".clientIdHolder").text());
+
+                    if (customerId <= 0) {
+                        $("#formDatagroup").val(-1).attr('disabled', true);
+                        return;
+                    }
+
+                    box.find("input").attr('disabled', true);
+
+                    loadGroupByOptions($("#formDatagroup"), customerId, function (result) {
+                        $(".clientsSelection input").attr('disabled', false);
+                    });
+                    return;
+                }
+            }
+
+            if (checkedNumber == 1) {
+                var customerId = $.trim(box.find("input.optionItem:checked").parent().find(".clientIdHolder").text());
+
+                if (customerId <= 0) {
+                    $("#formDatagroup").val(-1).attr('disabled', true);
+                    return;
+                }
+
+                box.find("input").attr('disabled', true);
+
+                loadGroupByOptions($("#formDatagroup"), customerId, function (result) {
+                    $(".clientsSelection input").attr('disabled', false);
+                });
+
+            } else {
+                $("#formDatagroup").val(-1).attr('disabled', true);
+            }
+        });
+    } else {
+        $(".clientsSelection input:checkbox").change(function () {
+            var box = $(this).parent().parent();
+            var checkedNumber = box.find("input.optionItem:checked").length;
+
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+
+            if (checkedNumber == 1) {
+                var customerId = $.trim(box.find("input.optionItem:checked").parent().find(".clientIdHolder").text());
+
+                if (customerId <= 0) {
+                    $("#formDatagroup").val(-1).attr('disabled', true);
+                    return;
+                }
+
+                box.find("input").attr('disabled', true);
+
+                loadGroupByOptions($("#formDatagroup"), customerId, function (result) {
+                    $(".clientsSelection input").attr('disabled', false);
+                });
+
+            } else {
+                $("#formDatagroup").val(-1).attr('disabled', true);
+            }
+        });
+    }
+
+    if ($(".showJustForm").text() == 'true') {
+        $(".clientsSelection input").trigger('change');
+    }
+
+    if($(".clientsSelection input.optionItem:checked").length > 1) {
+        $("#formDatagroupValue").find(".multiSelectBox").empty();
+        $("#formDatagroup").val(-1).attr('disabled', true);
+    } else {
+        $("#formDatagroup").attr('disabled', false);
+    }
+
+    $("#formDatagroup").change(function(){
+
+        var groupById = $(this).val();
+
+        if(groupById < 0) {
+            $("#formDatagroupValue").find(".multiSelectBox").empty();
+            $("#formDatagroupValue").find(".reportWarningMessage").hide();
+        } else {
+            loadGroupValuesForGroup($("#formDatagroupValue").find(".multiSelectBox"), groupById, function(result){});
+        }
+
+    });
+
+    // add a listener to submit the client ids too when submitting the pipeline form
+
+    $("#DashboardSearchForm").submit(function(){
+
+        // get the selected client id
+        $(".clientsSelection input.optionItem:checked").each(function(){
+           var clientId = $(this).parent().find(".clientIdHolder").text();
+            $('<input />').attr('type', 'hidden')
+                    .attr('name', 'formData.clientIds')
+                    .attr('value', clientId)
+                    .appendTo("#DashboardSearchForm");
+
+        });
+
+        return true;
+    });
+
     $('#submitPipelineForm').click(function() {
         var v1 = -1;
         var v2 = -1;
@@ -99,15 +219,23 @@ $(document).ready(function(){
         if (startDate >= endDate) {
             $('#validationErrors').append("Start date should be smaller than end date<br/>");
         }
+
+        // check group values & group id
+        if($("#formDatagroup").val() > 0 && $("#formDatagroupValue input:checked").length == 0) {
+            $('#validationErrors').append("No Group Value is chosen<br/>");
+        }
+
+        if($(".clientsSelection input.optionItem:checked").length == 0) {
+            $('#validationErrors').append("No Client is chosen<br/>");
+        }
+
         if ($('#validationErrors').html() == '' || $('#validationErrors').html() == null) {
             var currentPage = $.trim($('.paginate_active').html());
             $('#pipelineDetailsPageNumber2').val(currentPage);
             $('#formDataExcel').val("false");
-            document.DashboardSearchForm.submit();
-
             modalPreloader();
+            $("#DashboardSearchForm").submit();
         }
-
 
         return false;
     });

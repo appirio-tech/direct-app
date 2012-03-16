@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard;
 
@@ -35,12 +35,20 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>A <code>DTO</code> for Pipeline report view.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (Direct Pipeline Integration Assembly)
+ * <p>
+ *  Version 1.1 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) change notes:
+ *   <ol>
+ *       <li>Add {@link #groupKeys}, {@link #groupValues}</li> and therir getters and setters.
+ *   </ol>
+ * </p>
+ *
+ * @author TCSASSEMBLER
+ * @version 1.1
  */
 public class DashboardPipelineReportDTO extends CommonDTO implements Serializable, Report {
 
@@ -108,9 +116,23 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
     }
 
     /**
-     * <p>A <code>List</code> providing the names for the clients available to user.</p>
+     * <p>A <code>Map</code> providing the client id and names for the clients available to user.</p>
      */
-    private List<String> clients;
+    private Map<Long, String> clients;
+
+    /**
+     * <p>A <code>Map</code> provided the group by id and names for the chosen client if to user</p>
+     * @since 1.1
+     */
+    private Map<Long, String> groupKeys;
+
+    /**
+     * <p>
+     *  A <code>Set</code> provided the group values for the chosen group id to user.
+     * </p>
+     * @since 1.1
+     */
+    private Set<String> groupValues;
 
     /**
      * <p>A <code>List</code> providing the data for weekly summaries.</p>
@@ -314,19 +336,58 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
     /**
      * <p>Gets the names for the clients available to user.</p>
      *
-     * @return a <code>List</code> providing the names for the clients available to user.
+     * @return a <code>Map</code> providing the ids and names for the clients available to user.
      */
-    public List<String> getClients() {
+    public Map<Long, String> getClients() {
         return this.clients;
     }
 
     /**
      * <p>Sets the names for the clients available to user.</p>
      *
-     * @param clients a <code>List</code> providing the names for the clients available to user.
+     * @param clients a <code>Map</code> providing the ids and names for the clients available to user.
      */
-    public void setClients(List<String> clients) {
+    public void setClients(Map<Long, String> clients) {
         this.clients = clients;
+    }
+
+    /**
+     * Gets the group keys.
+     *
+     * @return the group keys.
+     * @since 1.1
+     */
+    public Map<Long, String> getGroupKeys() {
+        return groupKeys;
+    }
+
+    /**
+     * Sets the group keys.
+     *
+     * @param groupKeys the group keys.
+     * @since 1.1
+     */
+    public void setGroupKeys(Map<Long, String> groupKeys) {
+        this.groupKeys = groupKeys;
+    }
+
+    /**
+     * Gets the group values.
+     *
+     * @return the group values.
+     * @since 1.1
+     */
+    public Set<String> getGroupValues() {
+        return groupValues;
+    }
+
+    /**
+     * Sets the group values.
+     *
+     * @param groupValues the groups values.
+     */
+    public void setGroupValues(Set<String> groupValues) {
+        this.groupValues = groupValues;
     }
 
     /**

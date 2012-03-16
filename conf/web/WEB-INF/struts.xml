@@ -551,6 +551,22 @@
             </result>
         </action>
 
+        <action name="getGroupByOptionsForCustomer" method="getGroupByOptionsForCustomer" class="reportCommonAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getGroupValuesForGroupBy" method="getGroupValuesForGroupBy" class="reportCommonAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="updateInvoiceRecords" class="updateInvoiceRecordsAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>

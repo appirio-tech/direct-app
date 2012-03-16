@@ -1,14 +1,7 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostAggregationDTO;
@@ -18,6 +11,14 @@ import com.topcoder.direct.services.view.dto.dashboard.costreport.CostReportDTO;
 import com.topcoder.direct.services.view.form.DashboardCostReportForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling the requests for viewing the cost report.</p>
@@ -49,9 +50,17 @@ import com.topcoder.direct.services.view.util.DirectUtils;
  *     check the user's permission.</li>
  * </ol>
  * </p>
+ *
+ *  <p>
+  * Version 1.3 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) change log:
+  * <ol>
+  *   <li>Added method {@link #filterByGroups(java.util.List)}  to filter the report result by group by and group values.
+  *   <li>Updated method {@link #executeAction()()} to apply filter of group vy and group values</li>
+  * </ol>
+  * </p>
  * 
- * @author Blues, flexme, TCSASSEMBER
- * @version 1.2 (TopCoder Cockpit - Cost Report Assembly)
+ * @author Blues, flexme, TCSASSEMBLER
+ * @version 1.3
  */
 public class DashboardCostReportAction extends DashboardReportBaseAction<DashboardCostReportForm, CostReportDTO> {
 
@@ -114,6 +123,11 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
     /**
      * <p>Handles the incoming request. Retrieves data for Cost Report and binds it to request.</p>
      *
+     * <p>
+     *  Version 1.3 updates:
+     *  - Apply the filters of group by and group values.
+     * </p>
+     *
      * @throws Exception if an unexpected error occurs.
      */
     @Override
@@ -152,6 +166,8 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
             List<CostDetailsDTO> costDetails = DataProvider.getDashboardCostReportDetails(getCurrentUser(), projectId, softwareProjectCategories, studioProjectCategories,
                     customerId, billingAccountId, statusIds, startDate, endDate, REPORT_CONTEST_STATUS_IDS);
 
+            costDetails = filterByGroups(costDetails);
+
             getViewData().setCostDetails(costDetails);
 
             if (!getFormData().isExcel()) {
@@ -162,6 +178,33 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
                 getViewData().setStatusAggregation(aggregateCostDetails(costDetails, CostAggregationType.STATUS_AGGREGATION));
             }
         }
+    }
+
+    /**
+     * Filters the result list of <code>CostDetailsDTO</code> with group by and group values.
+     *
+     * @param listToFilter the list of <code>CostDetailsDTO</code> to filter.
+     * @return the filtered list of <code>CostDetailsDTO</code>
+     * @throws Exception if there is error
+     * @since 1.3
+     */
+    private List<CostDetailsDTO> filterByGroups(List<CostDetailsDTO> listToFilter) throws Exception {
+        
+        List<CostDetailsDTO> result = listToFilter;
+        
+        if(getFormData().getCustomerId() > 0 && getFormData().getGroupId() > 0) {
+            Set<Long> projectIdsFilter = getMetadataService().searchProjectIds(getFormData().getGroupId(), getFormData().getGroupValues());
+            
+            result = new ArrayList<CostDetailsDTO>();
+            
+            for(CostDetailsDTO dto : listToFilter) {
+                if(projectIdsFilter.contains(dto.getProject().getId())) {
+                    result.add(dto);
+                }
+            }
+        }
+
+        return result;
     }
 
     /**

@@ -44,6 +44,9 @@
  * - (Release Assembly - TC Direct Cockpit Release Two) updates:
  * - Add new css for not choose 2nd place copilot posting button
  * - Adjust the button style in copilot posting submission page to remove underline link in button
+ *
+ * - (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) updates:
+ * - Add new css for the new group by and group values for report filters
  */
 
 
@@ -7539,7 +7542,7 @@ P.billingAccountArchive A {
     min-height: 10px;
     padding-bottom: 10px;
     float: left;
-    min-width: 186px;
+   /* min-width: 186px; */
     display: inline;
 }
 
@@ -7615,24 +7618,34 @@ P.billingAccountArchive A {
 
 .multiSelectArea .multiSelectAreaInner {
     float: right;
-    width: 165px;
+    width: 100%;
     display: inline;
 }
 
 .multiSelectArea label.multiSelectAreaTitle {
     font-size: 12px;
     font-weight: bold;
+    margin-left: 10%;
     color: #333333;
     padding-bottom: 12px;
     display: block;
 }
 
 .multiSelectArea .multiSelectBox {
-    width: 163px;
+    width: 90%;
+    margin-left: 10%;
     height: 126px;
     border: 1px solid #bdbdbd;
     overflow: scroll;
     background-color: #fffffc;
+}
+
+#participationMetricsReports .multiSelectArea label.multiSelectAreaTitle {
+    margin-left: 0%;
+}
+
+#participationMetricsReports .multiSelectArea .multiSelectBox {
+    margin-left: 0%;
 }
 
 .multiSelectArea .multiSelectBox .multiOptionRow {
@@ -7641,7 +7654,7 @@ P.billingAccountArchive A {
     min-height: 13px;
     padding-top: 4px;
     padding-bottom: 4px;
-    width: 141px;
+    width: 100%;
 }
 
 .multiSelectArea .multiSelectBox .multiOptionRowChecked {
@@ -7657,7 +7670,7 @@ P.billingAccountArchive A {
 
 .multiSelectArea .multiSelectBox label {
     float: left;
-    width: 122px;
+    width: 84%;
     padding-left: 5px;
     display: inline;
     line-height: 13px;
@@ -7678,26 +7691,18 @@ P.billingAccountArchive A {
     margin-right: 0;
 }
 
-#pipelineReportsPage .filterContainer1400 .leftFilterContent {
-    width: 414px;
-    overflow: visible;
+#pipelineReportsPage .filterContainer #groupFilter .filterRowLeft {
+    display: block;
+    font-weight: bold;
+    line-height: 22px;
+    padding-bottom: 8px;
+    width: 180px;
 }
 
-#pipelineReportsPage .filterContainer1400 #datefilter label {
-    line-height: 15px;
-    padding-bottom: 14px;
-    width: 190px;
-}
-
-#pipelineReportsPage .filterContainer1400 #datefilter input.text {
-    clear: left;
-    width: 154px;
-    float: left;
-}
-
-#pipelineReportsPage .filterContainer1400 #datefilter .firstFilterRow,
-#pipelineReportsPage .filterContainer1400 #pipelineDataFilter .firstFilterRow {
-    width: 214px;
+#pipelineReportsPage .filterContainer #groupFilter select {
+    color: #000001;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
 }
 
 #pipelineReportsPage .filterContainer1400 #pipelineDataFilter .adjustFilterRow .filterRowLeft {
@@ -7706,38 +7711,36 @@ P.billingAccountArchive A {
     /*padding-bottom:16px;*/
 }
 
-#pipelineReportsPage .filterContainer1400 #pipelineDataFilter .adjustFilterRow  .filterRowLeft select {
-    width: 126px;
+#pipelineReportsPage #groupFilter, #pipelineReportsPage .multiSelectArea {
+    float: left;
+    width: 24.8%;
 }
 
-#pipelineReportsPage .filterContainer1400 #pipelineDataFilter span.to {
-    margin-left: 5px;
-    margin-right: 5px;
+#pipelineReportsPage #groupFilter .multiSelectArea {
+    width: 100%;
 }
 
-#pipelineReportsPage .filterContainer1400 #pipelineDataFilter input.text {
-    clear: left;
-    width: 151px;
+#pipelineReportsPage #groupFilter .filterRow {
+    width: 100%;
 }
 
-#pipelineReportsPage .filterContainer1400 #pipelineDataFilter input.text2 {
-    width: 171px !important;
+#pipelineReportsPage .filterContainer  #groupFilter .filterRowLeft {
+    margin-top: 15px;
 }
 
-#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectAreaInner {
-    width: 176px;
+#pipelineReportsPage .filterContainer  #groupFilter .filterRowLeft,
+#pipelineReportsPage .filterContainer  #groupFilter select {
+    width: 90%;
+    float: right;
 }
 
-#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox {
-    width: 174px;
+#pipelineReportsPage .filterContainer1400 .multiSelectArea,
+#pipelineReportsPage .filterContainer1400 #groupFilter {
+    width: 24.3%;
 }
 
-#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow {
-    width: 152px;
-}
-
-#pipelineReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox label {
-    width: 133px;
+#pipelineReportsPage .filterContainer  #groupFilter .filterRowLeft {
+    margin-top: 0px;
 }
 
 /* costDetails Page and costReports Page */
@@ -7770,7 +7773,8 @@ P.billingAccountArchive A {
 }
 
 #costReportsPage .filterContainer #customerFilter select,
-#costReportsPage .filterContainer #projectFilter select {
+#costReportsPage .filterContainer #projectFilter select,
+#costReportsPage .filterContainer #groupFilter select {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #000001;
@@ -7795,7 +7799,8 @@ P.billingAccountArchive A {
 }
 
 #costReportsPage .filterContainer #customerFilter .filterRowLeft,
-#costReportsPage .filterContainer #projectFilter .filterRowLeft {
+#costReportsPage .filterContainer #projectFilter .filterRowLeft,
+#costReportsPage .filterContainer #groupFilter .filterRowLeft {
     width: 180px;
     line-height: 22px;
     font-weight: bold;
@@ -7803,33 +7808,60 @@ P.billingAccountArchive A {
     display: block;
 }
 
-#costReportsPage .filterContainer #customerFilter select {
+#costReportsPage .filterContainer #customerFilter select,
+#costReportsPage .filterContainer #projectFilter select{
     width: 198px;
 }
 
-#costReportsPage .filterContainer #projectFilter select {
-    width: 260px;
+#costReportsPage .filterContainer #groupFilter select {
+    width: 165px;
 }
 
+#costReportsPage .filterContainer #groupFilter {
+    float: left;
+    margin-left: 10px;
+    width: 32.3%;
+    margin-top: 2px;
+}
+
+#costReportsPage #groupFilter .multiSelectArea {
+    width: 100%;
+}
+
+#costReportsPage #groupFilter .filterRow {
+    width: 100%;
+}
+
+#costReportsPage #groupFilter .filterRow .filterRowLeft {
+    width: 90%;
+    float: right;
+}
+
+#costReportsPage #groupFilter .filterRow select {
+    width: 90%;
+    float: right;
+}
+
+
 #costReportsPage .multiSelectArea {
-    width: 49.9%;
+    width: 32.3%;
 }
 
 #costReportsPage .multiSelectArea .multiSelectAreaInner {
-    width: 255px;
+    width:100%;
 }
 
 #costReportsPage .multiSelectArea .multiSelectBox {
-    width: 253px;
+    width: 90%;
     height: 240px;
 }
 
 #costReportsPage .multiSelectArea .multiSelectBox .multiOptionRow {
-    width: 231px;
+    width: 110%;
 }
 
 #costReportsPage .multiSelectArea .multiSelectBox  label {
-    width: 200px;
+    width: 85%;
 }
 
 #costReportsPage a.button6 span.right {
@@ -7856,26 +7888,36 @@ P.billingAccountArchive A {
     width: 214px;
 }
 
+#costReportsPage .filterContainer1400 #groupFilter .firstFilterRow {
+    width: 100%;
+}
+
 #costReportsPage .filterContainer1400 #projectFilter select {
     width: 412px;
 }
 
+#costReportsPage .filterContainer1400 #groupFilter {
+    width: 32.3%
+}
+
+#costReportsPage .filterContainer1400 #groupFilter select {
+    width: 91%;
+    float: right;
+}
+
+#costReportsPage .filterContainer1400 #groupFilter .multiSelectArea {
+    width: 100%;
+}
+
 #costReportsPage .filterContainer1400 .multiSelectArea .multiSelectAreaInner {
-    width: 280px;
+    width: 100%;
 }
 
 #costReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox {
-    width: 278px;
+    width: 90%;
     height: 135px;
 }
 
-#costReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow {
-    width: 256px;
-}
-
-#costReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow label {
-    width: 233px;
-}
 
 /* costDetails Page new icon and some repair */
 #costDetails th.viewType {
@@ -7942,25 +7984,24 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #billingCostReportsPage .filterContainer .leftFilterContent {
-    width: 295px;
+    width: 275px;
     position: relative;
 }
 
 #billingCostReportsPage .filterContainer #customerFilter select,
 #billingCostReportsPage .filterContainer #projectFilter select,
-#billingCostReportsPage .filterContainer #contestfilter input {
+#billingCostReportsPage .filterContainer #contestfilter input,
+#billingCostReportsPage .filterContainer #invoiceFilter input {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 11px;
     color: #000001;
 }
 
-#billingCostReportsPage .filterContainer #customerFilter select {
-    width: 198px;
-}
-
+#billingCostReportsPage .filterContainer #customerFilter select,
 #billingCostReportsPage .filterContainer #projectFilter select {
     width: 198px;
 }
+
 
 #billingCostReportsPage .filterContainer #datefilter .filterRow {
     width: 200px;
@@ -7981,7 +8022,9 @@ TABLE.pipelineStats TH.tableTitle span {
 
 #billingCostReportsPage .filterContainer #customerFilter .filterRowLeft,
 #billingCostReportsPage .filterContainer #projectFilter .filterRowLeft,
-#billingCostReportsPage .filterContainer #contestfilter .filterRowLeft {
+#billingCostReportsPage .filterContainer #contestfilter .filterRowLeft,
+#billingCostReportsPage .filterContainer #invoiceFilter .filterRowLeft,
+#billingCostReportsPage .filterContainer #groupFilter .filterRowLeft {
     width: 180px;
     line-height: 22px;
     font-weight: bold;
@@ -7995,39 +8038,77 @@ TABLE.pipelineStats TH.tableTitle span {
     right: 0px;
 }
 
+#billingCostReportsPage .filterContainer #invoiceFilter{
+			position:absolute;
+			top:123px;
+			right:3px;
+		}
+
 @-moz-document url-prefix(){	/* firefox hack */
 			#billingCostReportsPage .filterContainer #contestfilter{
 				top:62px;
 			}
 		}
+
 #billingCostReportsPage .filterContainer #contestfilter .filterRow {
     min-width: 70px;
     width: 70px;
 }
 
-#billingCostReportsPage .filterContainer #contestfilter input {
-    width: 70px;
+#billingCostReportsPage .filterContainer #contestfilter input,
+#billingCostReportsPage .filterContainer #invoiceFilter .filterRow,
+#billingCostReportsPage .filterContainer #invoiceFilter input {
+    width: 65px;
+}
+
+#billingCostReportsPage #groupFilter {
+    width: 100%;
+    float: left;
+}
+
+#billingCostReportsPage #groupFilter select {
+    width: 90%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000001;
+    float: right;
+}
+
+#billingCostReportsPage #groupFilter .multiSelectArea, #billingCostReportsPage #groupFilter .filterRow {
+    width: 100%;
+    min-width: 150px;
+}
+
+#billingCostReportsPage .filterContainer #groupFilter .filterRowLeft {
+    width: 90%;
+    float: right;
+}
+
+#billingCostReportsPage .filterContainer .col {
+    float: left;
+    width: 33.3%;
 }
 
 #billingCostReportsPage .multiSelectArea {
     width: 33.3%;
 }
 
-#billingCostReportsPage .multiSelectArea .multiSelectAreaInner {
-    width: 165px;
+#billingCostReportsPage .multiSelectArea .multiSelectAreaInner,
+#billingCostReportsPage .statusMultiSelect {
+    width: 100%;
 }
 
 #billingCostReportsPage .multiSelectArea .multiSelectBox {
-    width: 163px;
+    width: 90%;
     height: 240px;
 }
 
 #billingCostReportsPage .multiSelectArea .multiSelectBox .multiOptionRow {
-    width: 141px;
+    width: 110%;
 }
 
 #billingCostReportsPage .multiSelectArea .multiSelectBox  label {
-    width: 122px;
+    width: 85%;
 }
 
 #billingCostReportsPage a.button6 span.right {
@@ -8038,13 +8119,25 @@ TABLE.pipelineStats TH.tableTitle span {
     width: 414px;
 }
 
+img.indicator {
+    display: none;
+}
+
+.reportWarningMessage {
+    font-size: 11px;
+    color: red;
+    font-weight: normal;
+    padding-left: 5px;
+}
+
 #billingCostReportsPage .filterContainer1400 #datefilter .filterRow {
     padding-bottom: 18px;
     padding-top: 5px;
 }
 
 #billingCostReportsPage .filterContainer1400 #customerFilter .filterRowLeft,
-#billingCostReportsPage .filterContainer1400 #projectFilter .filterRowLeft {
+#billingCostReportsPage .filterContainer1400 #projectFilter .filterRowLeft,
+#billingCostReportsPage .filterContainer1400 #groupFilter .filterRowLeft {
     padding-bottom: 10px;
 }
 
@@ -8055,47 +8148,40 @@ TABLE.pipelineStats TH.tableTitle span {
 }
 
 #billingCostReportsPage .filterContainer1400 #contestfilter {
-    top: 69px;
-}
-#billingCostReportsPage #contestfilter .filterRow {
-		float: none;
-		display: block;
+    top: 70px;
+    right: 100px;
 }
 
-#billingCostReportsPage .filterContainer1400 #contestfilter .filterRow {
-    float: left;
-		display: inline;
+#billingCostReportsPage .filterContainer1400 #invoiceFilter {
+    top: 70px;
+    right: -3px;
 }
 
 @-moz-document url-prefix(){	/* firefox hack */
-					#billingCostReportsPage .filterContainer1400 #contestfilter{
-						top:66px;
+					#billingCostReportsPage .filterContainer1400 #contestfilter,#billingCostReportsPage .filterContainer1400 #invoiceFilter{
+						top:65px;
 					}
 				}
-#billingCostReportsPage .filterContainer1400 #contestfilter .filterRow {
+@-moz-document url-prefix(){	/* firefox hack */
+					#billingCostReportsPage .filterContainer1400 #contestfilter{
+						right:100px;
+					}
+				}
+
+#billingCostReportsPage .filterContainer1400 #contestfilter .filterRow,
+#billingCostReportsPage .filterContainer1400 #invoiceFilter .filterRow {
     min-width: 100px;
     width: 100px;
 }
 
-#billingCostReportsPage .filterContainer1400 #contestfilter input {
+#billingCostReportsPage .filterContainer1400 #contestfilter input,
+#billingCostReportsPage .filterContainer1400 #invoiceFilter input {
     width: 90px;
 }
 
-#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectAreaInner {
-    width: 176px;
-}
-
-#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox {
-    width: 174px;
+#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox,
+#billingCostReportsPage .filterContainer1400 #groupFilter .multiSelectArea .multiSelectBox {
     height: 137px;
-}
-
-#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox .multiOptionRow {
-    width: 152px;
-}
-
-#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox  label {
-    width: 133px;
 }
 
 .pipelineFilter #customerFilter, .pipelineFilter #projectNameFilter, .pipelineSearch #customerFilter, .pipelineSearch #projectNameFilter {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
@@ -15,8 +15,13 @@ import java.util.List;
 /**
  * <p>A form bean providing the data submitted by user for filtering the pipeline report records.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (Direct Pipeline Integration Assembly)
+ * <p>
+ * Version 1.1 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement ) updates:
+ * - Adds {@link #clientIds}, {@link #groupId}, {@link #groupValues} and their getters and setters.
+ * </p>
+ *
+ * @author TCSASSEMBLER
+ * @version 1.1
  */
 public class DashboardPipelineReportForm implements Serializable {
 
@@ -31,7 +36,8 @@ public class DashboardPipelineReportForm implements Serializable {
                              ContestType.ARCHITECTURE, ContestType.COMPONENT_DESIGN, ContestType.COMPONENT_DEVELOPMENT,
                              ContestType.RIA_COMPONENT, ContestType.RIA_BUILD, ContestType.UI_PROTOTYPE,
                              ContestType.ASSEMBLY, ContestType.TEST_SUITES, ContestType.TEST_SCENARIOS,
-                             ContestType.COPILOT_POSTING, ContestType.CONTENT_CREATION, ContestType.REPORTING};
+                             ContestType.COPILOT_POSTING, ContestType.CONTENT_CREATION,
+                             ContestType.REPORTING, ContestType.MARATHON_MATCH, ContestType.BUG_HUNT};
 
     /**
      * <p>A <code>ContestStatus</code> array listing the statuses types to be selected by default.</p>
@@ -60,6 +66,12 @@ public class DashboardPipelineReportForm implements Serializable {
      * <p>A <code>String[]</code> providing the client names to be used for filtering the contests.</p>
      */
     private String[] clients;
+
+    /**
+     * <p>A <code>long[]</code> providing the client ids to be used for filtering the contests.</p>
+     * @since 1.1
+     */
+    private long[] clientIds;
 
     /**
      * <p>The startDate field.</p>
@@ -108,6 +120,16 @@ public class DashboardPipelineReportForm implements Serializable {
      * for.</p>
      */
     private List<PipelineNumericalFilterType> numericalFilterTypes = new ArrayList<PipelineNumericalFilterType>();
+
+    /**
+     * A <code>long</code> provided the id of the group by option.
+     */
+    private long groupId;
+
+    /**
+     * A <code>List<String></code> providing the group value options
+     */
+    private List<String> groupValues;
 
     /**
      * <p>Constructs new <code>DashboardPipelineReportForm</code> instance. This implementation does nothing.</p>
@@ -368,6 +390,66 @@ public class DashboardPipelineReportForm implements Serializable {
         if (numericalFilterMinValues != null) {
             this.numericalFilterMinValues.addAll(Arrays.asList(numericalFilterMinValues));
         }
+    }
+
+    /**
+     * Gets the group id.
+     *
+     * @return the group id.
+     * @since 1.1
+     */
+    public long getGroupId() {
+        return groupId;
+    }
+
+    /**
+     * Sets the group id.
+     *
+     * @param groupId the group id.
+     * @since 1.1
+     */
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
+    }
+
+    /**
+     * Gets the group values.
+     *
+     * @return the group values.
+     * @since 1.1
+     */
+    public List<String> getGroupValues() {
+        return groupValues;
+    }
+
+    /**
+     * Sets the group values.
+     *
+     * @param groupValues the group values.
+     * @since 1.1
+     */
+    public void setGroupValues(List<String> groupValues) {
+        this.groupValues = groupValues;
+    }
+
+    /**
+     * Gets client ids.
+     *
+     * @return the client ids.
+     * @since 1.1
+     */
+    public long[] getClientIds() {
+        return clientIds;
+    }
+
+    /**
+     * Sets the client ids.
+     *
+     * @param clientIds the client ids.
+     * @since 1.1
+     */
+    public void setClientIds(long[] clientIds) {
+        this.clientIds = clientIds;
     }
 
     /**

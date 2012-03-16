@@ -1,10 +1,12 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
 import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
@@ -29,7 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,8 +59,15 @@ import java.util.TreeSet;
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.0.2 (Release Assembly - TC Direct UI Improvement Assembly 3)
+ * <p>
+  * Version 1.1 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) Change notes:
+  *   <ol>
+  *     <li>Updated {@link #executeAction()} to add filter by group by and group values.</li>
+  *   </ol>
+  * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.1
  */
 public class DashboardPipelineAction extends BaseDirectStrutsAction {
 
@@ -133,6 +144,11 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
     /**
      * <p>Handles the incoming request. Retrieves data for Pipeline report and binds it to request.</p>
      *
+     * <p>
+     *  Update in version 1.1:
+     *  - Add filter of group by and group values
+     * </p>
+     *
      * @throws Exception if an unexpected error occurs.
      */
     @Override
@@ -141,6 +157,22 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
         HttpServletRequest request = DirectUtils.getServletRequest();
         this.sessionData = new SessionData(request.getSession());
         TCSubject currentUser = getCurrentUser();
+
+        List<Project> clientBillingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
+        Map<Long, String> allClients = new HashMap<Long, String>();
+        for (Project project : clientBillingProjects) {
+            Client client = project.getClient();
+            if (client != null) {
+                allClients.put(client.getId(), client.getName());
+            }
+        }
+        // for contest without client
+        allClients.put(0L, "One Off");
+
+        getViewData().setClients(allClients);
+        getViewData().setGroupKeys(new LinkedHashMap<Long, String>());
+        getViewData().getGroupKeys().put(-1L, "No Grouping");
+        getViewData().setGroupValues(new LinkedHashSet<String>());
 
         // If necessary get and process report data
         if (!getViewData().getShowJustForm()) {
@@ -199,8 +231,34 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             PipelineServiceFacade pipelineServiceFacade = getPipelineServiceFacade();
             List<CommonPipelineData> dataList = pipelineServiceFacade.getCommonPipelineData(currentUser, startDate,
                                                                                             endDate, false);
+
+            // start group by and group values filtering here
+            Set<Long> projectIdsFilter = null;
+
+            if (getFormData().getClientIds().length == 1) {
+                // set Group By drop down view data
+                final List<DirectProjectMetadataKey> clientProjectMetadataKeys =
+                        getMetadataKeyService().getClientProjectMetadataKeys(getFormData().getClientIds()[0], true);
+
+
+                for (DirectProjectMetadataKey key : clientProjectMetadataKeys) {
+                    getViewData().getGroupKeys().put(key.getId(), key.getName());
+                }
+
+                if (getFormData().getGroupId() > 0) {
+                    // set Group Values multiple selection view data
+                    final List<DirectProjectMetadata> values =
+                            getMetadataService().getProjectMetadataByKey(getFormData().getGroupId());
+                    for (DirectProjectMetadata value : values) {
+                        getViewData().getGroupValues().add(value.getMetadataValue());
+                    }
+                    projectIdsFilter = getMetadataService().searchProjectIds(getFormData().getGroupId(), getFormData().getGroupValues());
+                }
+            }
+            // end group by and group values filtering here
+
             for (CommonPipelineData data : dataList) {
-                if (matchesFormParameters(data)) {
+                if (matchesFormParameters(data) && matchProjectIds(data, projectIdsFilter)) {
                     pipelineDetails.add(data);
                     clients.add(data.getClientName());
 
@@ -273,7 +331,6 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             summariesList.add(totalSummary);
 
             // Set view data with collected pipeline data
-            getViewData().setClients(new ArrayList<String>(clients));
             getViewData().setSummaries(summariesList);
             getViewData().setContests(pipelineDetails);
             getViewData().setClientScheduledLaunchedContestStats(
@@ -290,18 +347,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                 new ArrayList<PipelineLaunchedContestsDTO>(billingStats.values()));
         } else {
             // Get the clients for current user
-            List<Project> clientBillingProjects = getProjectServiceFacade().getClientProjectsByUser(currentUser);
-            Set<String> clients = new HashSet<String>();
-            for (Project project : clientBillingProjects) {
-                Client client = project.getClient();
-                if (client != null) {
-                    clients.add(client.getName());
-                }
-            }
-            // for contest without client
-            clients.add("One Off");
-            getViewData().setClients(new ArrayList<String>(clients));
-            getFormData().setClients(clients.toArray(new String[clients.size()]));
+            getFormData().setClients(allClients.values().toArray(new String[allClients.values().size()]));
             SimpleDateFormat dateFormat = new SimpleDateFormat(DirectUtils.DATE_FORMAT);
             Date nearestSunday = getSundayDate(new Date());
             Date endDate = new Date(nearestSunday.getTime() + 4 * 7 * 24 * 3600 * 1000L);
@@ -325,6 +371,24 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                 this.sessionData.setCurrentProjectContests(contests);
             }
         }
+    }
+
+    /**
+     * Matches the pipeline data against a set of project ids. If the pipeline data belong to any of projects
+     * in <code>projectIdsToMatch</code>, return true, otherwise, false false.
+     *
+     * @param data the pipeline data to check.
+     * @param projectIdsToMatch the set of project ids to match.
+     * @return true f the pipeline data belong to any of projects
+     * in <code>projectIdsToMatch</code>, otherwise, false false.
+     * @since 1.1
+     */
+    private boolean matchProjectIds(CommonPipelineData data, Set<Long> projectIdsToMatch) {
+        if(projectIdsToMatch == null) {
+            return true;
+        }
+
+        return projectIdsToMatch.contains(data.getProjectId());
     }
 
     /**

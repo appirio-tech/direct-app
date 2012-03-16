@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, GreatKevin, TCSASSEMBLER
-  - Version: 1.6
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin
+  - Version: 1.7
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
@@ -19,6 +19,9 @@
   -
   - Version 1.6 (TC Accounting Tracking Invoiced Payments Part 2) changes:
   - - Added invoice number, invoice date and bug description to the report detail table.
+  -
+  - Version 1.7 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) changes:
+  - - Added Group by and group values into the filter panel.
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -102,6 +105,7 @@
 				<div class="filterRow">
 					<div class="filterRowLeft">
 						<label for="formData.billingAccountIds">Billing Account:</label>
+                        <img src="/images/dots-white.gif" class="indicator" alt/>
 					</div>
                     <s:select list="viewData.clientBillingProjects"
                               id="formData.billingAccountId"
@@ -117,6 +121,7 @@
 				<div class="filterRow firstFilterRow">
 					<div class="filterRowLeft">
 						<label>Project Name:</label>
+                        <img src="/images/dots-white.gif" class="indicator" alt/>
 					</div>
                     <s:select list="viewData.projectsLookupMap" name="formData.projectId"
                               id="formData.projectId"/>
@@ -154,47 +159,99 @@
 					<div class="clearFix"></div>
 				</div><!-- end .filterRow -->
 
-				<div class="filterRow">
-					<div class="filterRowLeft" id="invoiceNumberFilter">
-						<label>Invoice #:</label>
-					</div>
-                    <s:textfield id="formData.invoiceNumber" name="formData.invoiceNumber"  cssClass="text"/>
-					<div class="clearFix"></div>
-				</div><!-- end .filterRow -->
 			</div><!-- end .contestfilter -->
+            <div id="invoiceFilter">
 
+                <div class="filterRow">
+                    <div class="filterRowLeft">
+                        <label>Invoice #:</label>
+                    </div>
+                    <input type="text" name="formData.InvoiceNo" value="" id="InvoiceNo" class="text"/>
+
+                    <div class="clearFix"></div>
+                </div>
+                <!-- end .filterRow -->
+
+            </div>
+            <!-- end .invoiceFilter -->
 		</div>
 		<!-- end .leftFilterContent -->
 
 		<!-- .rightFilterContent -->
 		<div class="rightFilterContent">
+              <div class="col">
+                    <div class="multiSelectArea statusMultiSelect">
+                        <div class="multiSelectAreaInner">
+                            <label class="multiSelectAreaTitle">Status:</label>
 
-            <div class="multiSelectArea">
-                <div class="multiSelectAreaInner">
-                    <label class="multiSelectAreaTitle">Status:</label>
+                            <div class="multiSelectBox">
+                                <div class="multiOptionRow multiOptionRowChecked">
+                                    <input type="checkbox" checked="checked" id="StatusSelectAll"
+                                           name="StatusSelectAll" class="optionAll"/>
+                                    <label for="StatusSelectAll" title="Select All">Select All</label>
+                                </div>
 
-                    <div class="multiSelectBox">
-                        <div class="multiOptionRow multiOptionRowChecked">
-                            <input type="checkbox" checked="checked" id="StatusSelectAll"
-                                   name="StatusSelectAll" class="optionAll"/>
-                            <label for="StatusSelectAll" title="Select All">Select All</label>
-                        </div>
+                                <s:iterator value='viewData.contestStatus' status='s'>
+                                    <s:set name='needCheck' value='false'/>
+                                    <s:iterator value='formData.statusIds' var="statusId">
+                                        <s:if test="#statusId == key.longValue()"><s:set name='needCheck' value='true'/></s:if>
+                                    </s:iterator>
+                                    <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                        <input type="checkbox" <s:if test='#needCheck'>checked="checked"</s:if> id="StatusSelectCheckBox${s.index}" class="optionItem" name="formData.statusIds" value="${key}"/>
+                                        <label for="StatusSelectCheckBox${s.index}" title="${value}">${value}</label>
+                                    </div>
+                                </s:iterator>
 
-                        <s:iterator value='viewData.contestStatus' status='s'>
-                            <s:set name='needCheck' value='false'/>
-                            <s:iterator value='formData.statusIds' var="statusId">
-                                <s:if test="#statusId == key.longValue()"><s:set name='needCheck' value='true'/></s:if>
-                            </s:iterator>
-                            <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
-                                <input type="checkbox" <s:if test='#needCheck'>checked="checked"</s:if> id="StatusSelectCheckBox${s.index}" class="optionItem" name="formData.statusIds" value="${key}"/>
-                                <label for="StatusSelectCheckBox${s.index}" title="${value}">${value}</label>
                             </div>
-                        </s:iterator>
-
+                        </div>
                     </div>
-                </div>
-            </div>
-			<!-- end .multiSelectArea -->
+                    <!-- end .multiSelectArea -->
+
+                  <div id="groupFilter">
+                      <div class="filterRow firstFilterRow">
+                          <div class="filterRowLeft">
+                              <label for="formDatagroup">Group By:</label>
+                              <img src="/images/dots-white.gif" class="indicator" alt/>
+                          </div>
+                          <s:select id="formDatagroup"
+                                    list="viewData.groupKeys"
+                                    name="formData.groupId"/>
+                      </div>
+                      <div class="multiSelectArea" id="formDatagroupValue">
+                          <div class="multiSelectAreaInner">
+                              <label class="multiSelectAreaTitle">Group Values:<img src="/images/dots-white.gif"
+                                                                                    class="indicator" alt/>
+                                  <span class="reportWarningMessage hide">No Value Available</span>
+                              </label>
+
+                              <div class="multiSelectBox">
+                                  <div class="multiOptionRow multiOptionRowChecked hide">
+                                      <input type="checkbox" class="optionAll" name=""
+                                             id="groupValuesSelectAll" checked="checked">
+                                      <label title="Select All" for="groupValuesSelectAll">Select
+                                          All</label>
+                                  </div>
+                                  <s:iterator value='viewData.groupValues' status='c' var="groupValue">
+                                      <s:set name='needCheck' value='false'/>
+                                      <s:iterator value='formData.groupValues' var="group">
+                                          <s:if test="#group == #groupValue"><s:set name='needCheck'
+                                                                                    value='true'/></s:if>
+                                      </s:iterator>
+                                      <div class="multiOptionRow <s:if test='#needCheck'>multiOptionRowChecked</s:if>">
+                                          <input type="checkbox"
+                                                 <s:if test='#needCheck'>checked="checked"</s:if>
+                                                 id="groupValuesCheckBox${c.index}" class="optionItem"
+                                                 name="formData.groupValues" value="${groupValue}"/>
+                                          <label for="groupValuesCheckBox${c.index}"
+                                                 title="${groupValue}">${groupValue}</label>
+                                      </div>
+                                  </s:iterator>
+                              </div>
+                          </div>
+                      </div>
+                                          <!-- end .multiSelectArea -->
+                    </div>
+               </div>
 
             <div class="multiSelectArea">
                 <div class="multiSelectAreaInner">
