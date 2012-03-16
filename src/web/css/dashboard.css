@@ -8317,7 +8317,7 @@ a.downloadAllbtn:hover span {
         }
         .newSidebar .topBtns a.launch:hover{
             background-image:url(../images/launch-contest-icon-hover.png);
-            color:#ffff00;
+            color:#ff0000;
         }
     .newSidebar .contestList{
         background:url(../images/sidebar-top-bg.gif) no-repeat 0 0;
