@@ -68,3 +68,4 @@
 <script type="text/javascript" src="/scripts/dashboard.js?v=214359"></script>
 <script type="text/javascript" src="/scripts/loadHelps.js?v=211775"></script>
 <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
+<script type="text/javascript" src="/scripts/maintenance.js"></script>

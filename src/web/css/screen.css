@@ -2754,3 +2754,81 @@ ul.errorMessage {
     padding: 13px 155px 13px 13px;
     width: 20px;
 }
+
+
+/*
+ * topcoder-maintenance-notification styles
+ * 
+ */
+#topcoder-maintenance-notification{
+	width:auto;
+	min-width:960px;
+	height:89px;
+	background:url(../images/bg-topcoder-maintenance.gif) repeat-x left top;
+	position:absolute;
+	z-index:999;
+	top:-89px;
+	left:0;
+	right:0;
+	}
+
+	#topcoder-maintenance-notification .homeContent{
+		width:960px;
+		margin:0 auto;
+		}
+
+		#topcoder-maintenance-notification .alert{
+			width:820px;
+			float:left;
+			display:inline;
+			margin-left:25px;
+			margin-top:13px;
+			padding-left:42px;
+			background:url(../images/logo-topcoder-maintenance.gif) 0 0 no-repeat;
+			}	
+
+			#topcoder-maintenance-notification .title{
+				display:block;
+				margin-bottom:3px;
+				font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+				font-size:16px;
+				font-weight:bold;
+				color:#d10000;
+				line-height:1em;
+				background:none;
+				}
+	
+			#topcoder-maintenance-notification .desc{
+				display:block;
+				color:#333333;
+				font-size:11px;
+				line-height:14px;
+				}
+
+		#topcoder-maintenance-notification .noAsk{
+			width:auto;
+			float:right;
+			display:inline;
+			margin-top:8px;
+			margin-right:20px;
+			}
+
+
+	#topcoder-maintenance-notification a.close{
+		width:auto;
+		float:right;
+		display:inline;
+		overflow:hidden;
+		padding-left:14px;
+		font-size:11px;
+		color:#333333;
+		clear:both;
+		text-decoration:underline;
+		background:url(../images/ie6-close-icon.png) 0 center no-repeat;
+		}
+	
+	#topcoder-maintenance-notification a.close:hover{
+		text-decoration:none;
+		}
+
+
