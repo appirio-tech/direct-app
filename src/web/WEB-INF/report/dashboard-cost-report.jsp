@@ -161,7 +161,7 @@
                     <div id="groupFilter">
                         <div class="filterRow firstFilterRow">
                             <div class="filterRowLeft">
-                                <label for="formDatagroup">Group By:</label>
+                                <label for="formDatagroup">Project Filters:</label>
                                 <img src="/images/dots-white.gif" class="indicator" alt/>
                             </div>
                             <s:select id="formDatagroup"
@@ -170,7 +170,7 @@
                         </div>
                         <div class="multiSelectArea" id="formDatagroupValue">
                             <div class="multiSelectAreaInner">
-                                <label class="multiSelectAreaTitle">Group Values:
+                                <label class="multiSelectAreaTitle">Project Filter Values:
                                     <img src="/images/dots-white.gif" class="indicator" style="padding-left:4px" alt/>
                                     <span class="reportWarningMessage hide">No Value Available</span></label>
                                 </label>

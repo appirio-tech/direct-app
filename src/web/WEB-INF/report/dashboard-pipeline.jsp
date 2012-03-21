@@ -163,7 +163,7 @@
                                 <div id="groupFilter">
                                     <div class="filterRow firstFilterRow">
                                         <div class="filterRowLeft">
-                                            <label for="formDatagroup">Group By:</label>
+                                            <label for="formDatagroup">Project Filters:</label>
                                             <img src="/images/dots-white.gif" class="indicator"/>
                                         </div>
 
@@ -174,7 +174,7 @@
 
                                     <div class="multiSelectArea" id="formDatagroupValue">
                                         <div class="multiSelectAreaInner">
-                                            <label class="multiSelectAreaTitle">Group Values:<img
+                                            <label class="multiSelectAreaTitle">Project Filter Values:<img
                                                     src="/images/dots-white.gif" class="indicator" alt
                                                     style="padding-left:4px"/><span class="reportWarningMessage hide">No Value Available</span></label>
 

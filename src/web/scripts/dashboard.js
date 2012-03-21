@@ -1566,13 +1566,13 @@ $(document).ready(function(){
 });
 
 /**
- * Ajudsts the height of report filter controls according to the browser width.
+ * Adjusts the height of report filter controls according to the browser width.
  */
 function adjustReportFilterHeight() {
     var height = $('.filterContainer .leftFilterContent').height();
-    $('.filterContainer .multiSelectArea .multiSelectBox').css({'height':(height - 45) + 'px'});
+    $('.filterContainer .multiSelectArea .multiSelectBox').css({'height':(height - 40) + 'px'});
     $('.filterContainer #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 110) + 'px'});
-    $('.filterContainer .statusMultiSelect .multiSelectBox').css({'height':(height / 2 - 60) + 'px'});
+    $('.filterContainer .statusMultiSelect .multiSelectBox').css({'height':(height / 2 - 55) + 'px'});
     $('#billingCostReportsPage .filterContainer #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height / 2 - 76) + 'px'});
     $('#billingCostReportsPage .filterContainer1400 .multiSelectArea .multiSelectBox').css({'height':(height + 85) + 'px'});
     $('#billingCostReportsPage .filterContainer1400 #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 90) + 'px'});
