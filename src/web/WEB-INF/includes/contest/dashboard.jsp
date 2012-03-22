@@ -200,12 +200,13 @@
                         <!-- End .column -->
                         <div class="column">
                     </s:if>
-                    <p class="<s:if test='viewData.contestStats.multipleRound'>multipleSubmission</s:if>">
-                        <label>Submissions</label>:
+                    <p class="<s:if test='viewData.contestStats.multipleRound'>multipleSubmission</s:if>">                        
                         <s:if test="viewData.contestStats.multipleRound">
-                          <strong> ${viewData.contestStats.submissionsNumber}</strong> (M:<strong>${viewData.contestStats.milestoneSubmissionNumber}</strong> /F:<strong>${viewData.contestStats.finalSubmissionNumber}</strong> )
+                        	<label>Milestone submissions</label>: ${viewData.contestStats.milestoneSubmissionNumber}                          
+                          <label>Final submissions</label>: ${viewData.contestStats.finalSubmissionNumber}
                         </s:if>
                         <s:else>
+                        	  <label>Submissions</label>:
                             ${viewData.dashboard.numberOfSubmissions}
                         </s:else>
 
