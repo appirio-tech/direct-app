@@ -43,7 +43,7 @@
                     <link:studioSubmissionsGrid contestId="${contestStats.contest.id}">
                         <span class="left">
                             <s:if test="viewData.contestStats.multipleRound">
-                                <span class="right">Submissions  ${viewData.contestStats.submissionsNumber} (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>
+                                <span class="right">Submissions (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>
                             </s:if>
                             <s:else>
                             <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
