@@ -40,7 +40,7 @@
     <![endif]-->
     <script type="text/javascript" src="/scripts/tableSearchBar.js?v=210396"></script>
     <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
-    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js?v=213431"></script>
+    <script type="text/javascript" src="/scripts/dashboard-billing-cost-report.js?v=214400"></script>
     <link rel="stylesheet" href="/css/dashboard-enterprise.css?v=210282" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/jquery.multiSelect.css?v=196003" media="all" type="text/css"/>
 

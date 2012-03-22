@@ -36,9 +36,9 @@
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/filter-panel-ie7.css?v=210396"/>
     <![endif]-->
-    <script type="text/javascript" src="/scripts/jquery.multiselect.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.multiselect.js?v=196003"></script>
     <script type="text/javascript" src="/scripts/tableSearchBar.js?v=210396"></script>
-    <script type="text/javascript" src="/scripts/dashboard-pipeline.js?v=210738"></script>
+    <script type="text/javascript" src="/scripts/dashboard-pipeline.js?v=214400"></script>
 
     <c:if test="${not viewData.showJustForm}">
         <script type="text/javascript">
