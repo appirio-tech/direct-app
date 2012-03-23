@@ -258,9 +258,9 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             // end group by and group values filtering here
 
             for (CommonPipelineData data : dataList) {
+                allClients.put(data.getClientId(), data.getClientName());
                 if (matchesFormParameters(data) ) {
                     clients.add(data.getClientName());
-					allClients.put(data.getClientId(), data.getClientName());
 
                     if (matchProjectIds(data, projectIdsFilter)) {
                         pipelineDetails.add(data);
