@@ -235,7 +235,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             // start group by and group values filtering here
             Set<Long> projectIdsFilter = null;
 
-            if (getFormData().getClientIds().length == 1) {
+            if (getFormData().getClientIds() != null && getFormData().getClientIds().length == 1) {
                 // set Group By drop down view data
                 final List<DirectProjectMetadataKey> clientProjectMetadataKeys =
                         getMetadataKeyService().getClientProjectMetadataKeys(getFormData().getClientIds()[0], true);
@@ -261,6 +261,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                 if (matchesFormParameters(data) && matchProjectIds(data, projectIdsFilter)) {
                     pipelineDetails.add(data);
                     clients.add(data.getClientName());
+					allClients.put(data.getClientId(), data.getClientName());
 
                     // Collect summary data
                     Date weekOf = getWeekOf(data.getStartDate());
@@ -331,6 +332,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             summariesList.add(totalSummary);
 
             // Set view data with collected pipeline data
+			getViewData().setClients(allClients);
             getViewData().setSummaries(summariesList);
             getViewData().setContests(pipelineDetails);
             getViewData().setClientScheduledLaunchedContestStats(

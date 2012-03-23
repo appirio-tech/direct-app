@@ -225,9 +225,9 @@ $(document).ready(function(){
             $('#validationErrors').append("No Group Value is chosen<br/>");
         }
 
-        if($(".clientsSelection input.optionItem:checked").length == 0) {
-            $('#validationErrors').append("No Client is chosen<br/>");
-        }
+        //if($(".clientsSelection input.optionItem:checked").length == 0) {
+        //    $('#validationErrors').append("No Client is chosen<br/>");
+        //}
 
         if ($('#validationErrors').html() == '' || $('#validationErrors').html() == null) {
             var currentPage = $.trim($('.paginate_active').html());
