@@ -258,62 +258,64 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             // end group by and group values filtering here
 
             for (CommonPipelineData data : dataList) {
-                if (matchesFormParameters(data) && matchProjectIds(data, projectIdsFilter)) {
-                    pipelineDetails.add(data);
+                if (matchesFormParameters(data) ) {
                     clients.add(data.getClientName());
 					allClients.put(data.getClientId(), data.getClientName());
 
-                    // Collect summary data
-                    Date weekOf = getWeekOf(data.getStartDate());
-                    PipelineSummaryDTO summary;
-                    if (!summaries.containsKey(weekOf)) {
-                        summary = new PipelineSummaryDTO();
-                        summary.setWeekOf(weekOf);
-                        summary.setIsTotal(false);
-                        summaries.put(weekOf, summary);
-                    } else {
-                        summary = summaries.get(weekOf);
-                    }
-
-                    Double contestFee = data.getContestFee();
-                    if (contestFee != null) {
-                        summary.setContestsFee(summary.getContestsFee() + contestFee);
-                    }
-
-
-                    Double totalPrize = data.getTotalPrize();
-                    if (totalPrize != null) {
-                        summary.setMemberCosts(summary.getMemberCosts() + totalPrize);
-                    }
-
-                    summary.setAllContestsCount(summary.getAllContestsCount() + 1);
-
-                    String contestStatus = data.getSname();
-                    boolean isDraft = ContestStatus.DRAFT.getName().equals(contestStatus);
-                    boolean isScheduled = ContestStatus.SCHEDULED.getName().equals(contestStatus);
-                    boolean isCancelled = ContestStatus.CANCELLED.getName().equals(contestStatus);
-                    boolean isLaunched = !(isDraft || isScheduled || isCancelled);
-
-                    if (isLaunched) {
-                        summary.setLaunchedContestsCount(summary.getLaunchedContestsCount() + 1);
-                    }
-
-                    // Collect scheduled contests
-                    collectScheduledLaunchedContestStats(clientStats, isScheduled, isLaunched, isDraft, data.getClientName());
-                    collectScheduledLaunchedContestStats(categoryStats, isScheduled, isLaunched, isDraft,
-                                                         data.getContestCategory());
-                    collectScheduledLaunchedContestStats(projectStats, isScheduled, isLaunched, isDraft, data.getPname());
-                    collectScheduledLaunchedContestStats(billingStats, isScheduled, isLaunched, isDraft, data.getCpname());
-
-                    String[] copilots = data.getCopilots();
-                    if (copilots != null) {
-                        for (String copilot : copilots) {
-                            collectScheduledLaunchedContestStats(copilotStats, isScheduled, isLaunched, isDraft, copilot);
+                    if (matchProjectIds(data, projectIdsFilter)) {
+                        pipelineDetails.add(data);
+                        // Collect summary data
+                        Date weekOf = getWeekOf(data.getStartDate());
+                        PipelineSummaryDTO summary;
+                        if (!summaries.containsKey(weekOf)) {
+                            summary = new PipelineSummaryDTO();
+                            summary.setWeekOf(weekOf);
+                            summary.setIsTotal(false);
+                            summaries.put(weekOf, summary);
+                        } else {
+                            summary = summaries.get(weekOf);
                         }
-                    }
-                    String manager = data.getManager();
-                    if (manager != null && manager.trim().length() > 0) {
-                        collectScheduledLaunchedContestStats(managerStats, isScheduled, isLaunched, isDraft, manager);
+
+                        Double contestFee = data.getContestFee();
+                        if (contestFee != null) {
+                            summary.setContestsFee(summary.getContestsFee() + contestFee);
+                        }
+
+
+                        Double totalPrize = data.getTotalPrize();
+                        if (totalPrize != null) {
+                            summary.setMemberCosts(summary.getMemberCosts() + totalPrize);
+                        }
+
+                        summary.setAllContestsCount(summary.getAllContestsCount() + 1);
+
+                        String contestStatus = data.getSname();
+                        boolean isDraft = ContestStatus.DRAFT.getName().equals(contestStatus);
+                        boolean isScheduled = ContestStatus.SCHEDULED.getName().equals(contestStatus);
+                        boolean isCancelled = ContestStatus.CANCELLED.getName().equals(contestStatus);
+                        boolean isLaunched = !(isDraft || isScheduled || isCancelled);
+
+                        if (isLaunched) {
+                            summary.setLaunchedContestsCount(summary.getLaunchedContestsCount() + 1);
+                        }
+
+                        // Collect scheduled contests
+                        collectScheduledLaunchedContestStats(clientStats, isScheduled, isLaunched, isDraft, data.getClientName());
+                        collectScheduledLaunchedContestStats(categoryStats, isScheduled, isLaunched, isDraft,
+                                                             data.getContestCategory());
+                        collectScheduledLaunchedContestStats(projectStats, isScheduled, isLaunched, isDraft, data.getPname());
+                        collectScheduledLaunchedContestStats(billingStats, isScheduled, isLaunched, isDraft, data.getCpname());
+
+                        String[] copilots = data.getCopilots();
+                        if (copilots != null) {
+                            for (String copilot : copilots) {
+                                collectScheduledLaunchedContestStats(copilotStats, isScheduled, isLaunched, isDraft, copilot);
+                            }
+                        }
+                        String manager = data.getManager();
+                        if (manager != null && manager.trim().length() > 0) {
+                            collectScheduledLaunchedContestStats(managerStats, isScheduled, isLaunched, isDraft, manager);
+                        }
                     }
                 }
             }
