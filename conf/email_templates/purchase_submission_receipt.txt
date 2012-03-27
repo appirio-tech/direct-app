@@ -6,10 +6,12 @@ You can track the status of this competition, and all your competitions, by visi
 
 There you can\: 
 
-        + Track the progress of your competitions
-        + View information for competitions 
+        + Engage the TopCoder Community in your projects
+        + Track the progress of your projects and competitions
+        + View metrics and performance statistics for your projects and competitions
+        + Collaborate with your team members and the TopCoder Community
         + Modify competitions that have not launched
-        + Select winners (if necessary for this competition)
+        + Select winners (if necessary for this competition) and download the results of each competition
         + And much more
 
 The following submissions(s) have been purchased\: 
