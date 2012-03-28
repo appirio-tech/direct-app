@@ -817,6 +817,11 @@
           class="com.topcoder.direct.services.view.action.project.UpdateProjectForumWatchAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+	
+	<bean id="syncUserAction"
+          class="com.topcoder.direct.services.view.action.dashboard.SyncUserAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
 
     <!-- configuration for the direct project metadata services and key service -->
 
