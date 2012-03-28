@@ -776,6 +776,7 @@ function drawChart() {
             data: data,
             cache: false,
             dataType: 'json',
+			timeout: 90 * 1000,
             success: function(jsonResult) {
                 handleJsonResult(
                     jsonResult,
@@ -809,6 +810,7 @@ function drawChart() {
             data: data,
             cache: false,
             dataType: 'json',
+			timeout: 90 * 1000,
             success: function(jsonResult) {
                 handleJsonResult(
                     jsonResult,
