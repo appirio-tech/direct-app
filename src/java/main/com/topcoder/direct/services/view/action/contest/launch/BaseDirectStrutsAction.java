@@ -17,6 +17,7 @@ import com.topcoder.service.facade.admin.AdminServiceFacade;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
+import com.topcoder.service.facade.user.UserServiceFacade;
 import com.topcoder.service.pipeline.PipelineServiceFacade;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.review.specification.SpecificationReviewService;
@@ -226,6 +227,11 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      */
     private MilestoneService milestoneService;
 
+    /**
+     * Represents the user service facade.
+     */
+    private UserServiceFacade userServiceFacade;
+    
     /**
      * <p>
      * Creates a <code>BaseDirectStrutsAction</code> instance.
@@ -694,5 +700,23 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      */
     public void setMilestoneService(MilestoneService milestoneService) {
         this.milestoneService = milestoneService;
+    }
+
+    /**
+     * Gets the user service facade.
+     * 
+     * @return the user service facade.
+     */
+    public UserServiceFacade getUserServiceFacade() {
+        return userServiceFacade;
+    }
+
+    /**
+     * Sets the user service facade.
+     * 
+     * @param userServiceFacade the user service facade.
+     */
+    public void setUserServiceFacade(UserServiceFacade userServiceFacade) {
+        this.userServiceFacade = userServiceFacade;
     }
 }

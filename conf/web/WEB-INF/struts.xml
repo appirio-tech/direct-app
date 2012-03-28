@@ -462,6 +462,14 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="syncUser" class="syncUserAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+        
         <action name="dashboardNotifications" class="com.topcoder.direct.services.view.action.notification.DashboardNotificationsAction">
             <!--<interceptor-ref name="securedPreProcessorStack"/>-->
             <interceptor-ref name="baseStack"/>

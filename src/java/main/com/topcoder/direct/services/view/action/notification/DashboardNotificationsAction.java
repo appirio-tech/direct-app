@@ -57,6 +57,11 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
      */
     private boolean viewContestFeeOption;
 
+    /**
+     * Represents whether the user can sync user with JIRA and wiki.
+     */
+    private boolean syncUser;
+    
     static {
         PREFERENCES = new ArrayList<UserPreferenceDTO>();
 
@@ -94,6 +99,7 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         request.setAttribute("currentUserHandle", sessionData.getCurrentUserHandle());
 
         viewContestFeeOption = DirectUtils.isSuperAdmin(user) || DirectUtils.isTCAccounting(user);
+        syncUser = DirectUtils.isTcStaff(user);
 
         notifications = getContestServiceFacade().getNotificationsForUser(user, user.getUserId());
 
@@ -206,5 +212,12 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
         this.viewContestFeeOption = viewContestFeeOption;
     }
 
-
+    /**
+     * Returns whether the user can sync user with JIRA and wiki.
+     * 
+     * @return the syncUser true if the user can sync user with JIRA and wiki, false otherwise.
+     */
+    public boolean isSyncUser() {
+        return syncUser;
+    }
 }
