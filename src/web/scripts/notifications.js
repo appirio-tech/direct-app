@@ -157,8 +157,8 @@ function syncUser() {
                 showServerError(jsonResult.error.errorMessage);
             } else {
                 var result = jsonResult.result['return'];
-                var html = "Sync jira " + (result.syncJIRA ? "successful" : "failure") + "<br/>";
-                html += "Sync wiki " + (result.syncWIKI ? "successful" : "failure");
+                var html = "Synchronize JIRA " + (result.syncJIRA ? "successful" : "failed") + "<br/>";
+                html += "Synchronize WIKI " + (result.syncWIKI ? "successful" : "failed");
                 showSuccessfulMessage(html);
             }
         }
