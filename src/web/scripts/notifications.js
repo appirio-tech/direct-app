@@ -137,6 +137,34 @@ function savePreference() {
     
 }
 
+function syncUser() {
+    var handle = $("#handle").val();
+    if (handle.length == 0) {
+        showErrors("Please input handle");
+        return;
+    }
+    
+    $.ajax({
+        type: 'POST',
+        url:'syncUser?handle=' + handle,
+        dataType: "json",
+        cache:false,
+        beforeSend:modalPreloader,
+        complete:modalClose,
+        success:function(jsonResult) {
+            modalClose();
+            if (!jsonResult['result']) {
+                showServerError(jsonResult.error.errorMessage);
+            } else {
+                var result = jsonResult.result['return'];
+                var html = "Sync jira " + (result.syncJIRA ? "successful" : "failure") + "<br/>";
+                html += "Sync wiki " + (result.syncWIKI ? "successful" : "failure");
+                showSuccessfulMessage(html);
+            }
+        }
+    });
+}
+
 /*
 $(document).ready(function() {
     $('#loading').hide();

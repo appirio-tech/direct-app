@@ -41,6 +41,7 @@
 		
 		var currentPanel;
 		var canViewContestFeeOption = <s:property value="viewContestFeeOption" />;
+        var canSyncUser = <s:property value="syncUser" />;
         $(function() {
             var limit = 50;
             $(".shorten").each(function() {
@@ -60,6 +61,10 @@
 			    document.getElementById("area1").innerHTML = document.getElementById("area2-fee").innerHTML;
 			    document.getElementById("area2-fee").innerHTML = "";
 				$("#area1 .areaHeader select").val("fee");
+		   } else if (currentPanel == "sync" && canSyncUser) {
+                document.getElementById("area1").innerHTML = document.getElementById("area2-sync").innerHTML;
+			    document.getElementById("area2-sync").innerHTML = "";
+				$("#area1 .areaHeader select").val("sync");
 		   } else {		    
 				document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
 				document.getElementById("area2-noti").innerHTML = "";
@@ -78,6 +83,8 @@
 			} else if (currentPanel == "fee") {
 				// for newly added contest-fee
 				document.getElementById("area2-fee").innerHTML = document.getElementById("area1").innerHTML;
+			} else if (currentPanel == "sync") {
+                document.getElementById("area2-sync").innerHTML = document.getElementById("area1").innerHTML;
 			} else {
 				document.getElementById("area2-perm").innerHTML = document.getElementById("area1").innerHTML;
 			}
@@ -102,6 +109,10 @@
 			    document.getElementById("area1").innerHTML = document.getElementById("area2-noti").innerHTML;
 				document.getElementById("area2-noti").innerHTML = "";
                 $("#area1 .areaHeader select").val("noti");
+			} else if (pn == "sync") {
+                document.getElementById("area1").innerHTML = document.getElementById("area2-sync").innerHTML;
+			    document.getElementById("area2-sync").innerHTML = "";
+				$("#area1 .areaHeader select").val("sync");
 			} else {
 				// for newly added contest-fee
 				document.getElementById("area1").innerHTML = document.getElementById("area2-fee").innerHTML;
@@ -173,6 +184,9 @@
 												<s:if test="viewContestFeeOption">
 													<option value="fee">Contest Fee</option>
 												</s:if>
+                                                <s:if test="syncUser">
+                                                <option value="sync">Sync User</option>
+                                                </s:if>
                                             </select>
                                         </span>
                                     </div>
@@ -365,6 +379,9 @@
 												<s:if test="viewContestFeeOption">
 													<option value="fee">Contest Fee</option>
 												</s:if>
+                                                <s:if test="syncUser">
+                                                <option value="sync">Sync User</option>
+                                                </s:if>
                                         </select>
                                     </span>
                                     </div>
@@ -480,6 +497,9 @@
 												<option value="noti">Notifications</option>
                                                 <option value="perm">Permissions</option>												
 												<option value="fee">Contest Fee</option>												
+                                                <s:if test="syncUser">
+                                                <option value="sync">Sync User</option>
+                                                </s:if>
                                         </select>
                                     </span>
                                 </div>
@@ -497,6 +517,41 @@
                         </div>
                     </div>
                   </s:if>     
+   
+                    <s:if test="syncUser">
+                    <div id="area2-sync" class="hide">
+                        <div class="area1Content">
+                        	<div class="currentPage">
+                                <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
+                                <strong>Sync User</strong>
+                            </div>
+                             
+                            <div class="areaHeader">
+                                <h2 class="title contestTitle">Sync User</h2>
+                                <div class="select">
+                                        Select a Setting Panel:
+                                        <span name="settingPanel">
+                                        <select name="select" onchange="changepn(this.value)">
+												<option value="noti">Notifications</option>
+                                                <option value="perm">Permissions</option>
+                                                <s:if test="viewContestFeeOption">
+                                                <option value="fee">Contest Fee</option>
+                                                </s:if>
+                                                <option value="sync">Sync User</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- End .areaHeader -->
+                            <div>
+                                <div style="width:300px;">
+                                    <label>Handle:</label> <input type="text" size="15" id="handle"/>
+                                    <a class="button6 applyButton" href="javascript:syncUser();"><span class="left"><span class="right">Sync</span></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </s:if>
 
                 </div>
                 <!-- End #mainContent -->
