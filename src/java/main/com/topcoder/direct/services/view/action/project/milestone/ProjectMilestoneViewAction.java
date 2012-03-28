@@ -190,6 +190,8 @@ public class ProjectMilestoneViewAction extends BaseDirectStrutsAction implement
                     data.put("start", CALENDAR_DATE_FORMAT.format(m.getDueDate()));
                 }
 
+                data.put("description", m.getDescription());
+
                 if (m.getOwners() != null && m.getOwners().size() > 0) {
                     ResponsiblePerson rp = m.getOwners().get(0);
 

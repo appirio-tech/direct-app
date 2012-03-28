@@ -128,6 +128,10 @@ public class ProjectMilestoneOperationAction extends BaseDirectStrutsAction {
             // reverse the current completion status
             m.setCompleted(!m.isCompleted());
 
+            if(getFormData().getCompletionDate() != null && m.isCompleted() == true) {
+                m.setCompletionDate(getFormData().getCompletionDate());
+            }
+
             // update
             getMilestoneService().update(m);
 

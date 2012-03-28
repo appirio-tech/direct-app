@@ -671,6 +671,7 @@ a.grayButton:hover .text {
 .milestoneCalView .fc-event-skin {
     border: 0 !important;
     background: none;
+    cursor:pointer;
 }
 
 .milestoneCalView .fc-milestone-completed {
@@ -704,5 +705,103 @@ a.grayButton:hover .text {
    float: left;
    padding-left: 10px;
 }
+
+.setDatePopup{
+    background:url(/images/popup-box.png) no-repeat 0 0;
+    height:253px;
+    width:227px;
+    position:absolute;
+    z-index:5;
+    font-size:12px;
+    padding:5px 22px 5px 30px;
+    display:none;
+}
+
+.setDatePopup h4 {
+    line-height: 46px;
+    font-weight: bold;
+}
+
+.setDatePopup dl {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.setDatePopup dt {
+    padding-bottom: 6px;
+}
+
+.setDatePopup label {
+    padding-right: 4px;
+}
+
+.setDatePopup input.text {
+    border: 1px solid #eee;
+    border-top: 2px solid #bebebe;
+    height: 18px;
+    line-height: 18px;
+    width: 156px;
+    padding: 0 5px;
+}
+
+.setDatePopup p {
+    font-size: 11px;
+    color: #666;
+    padding: 3px 20px 8px 0;
+    line-height: 12px;
+}
+
+.setDatePopup .buttonLine {
+    border-top: 1px dashed #999;
+    padding-top: 13px;
+}
+
+.setDatePopup .buttonLine .done {
+    width: 46px;
+    text-align: center;
+}
+
+.setDatePopup .buttonLine a.cancel {
+    text-decoration: underline;
+    color: #ff0000;
+}
+
+.setDatePopup .buttonLine a.cancel:hover {
+    text-decoration: none;
+}
+
+.setDatePopup .buttonLine span {
+    padding: 0 3px;
+    font-size: 11px;
+    color: #666;
+}
+
+.milestoneTips {
+    background: url("/images/edit/tipsBackground.png") repeat-x scroll 0 0 #E7E7E7;
+    border: 1px solid #BDBDBD;
+    display: none;
+    padding: 10px;
+    position: absolute;
+    width: 202px;
+    z-index: 100;
+    left:10px;
+    top:20px;
+}
+.milestoneTips .triangle {
+    background: url("/images/edit/triangle.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    height: 7px;
+    left: 34px;
+    position: absolute;
+    top: -7px;
+    width: 11px;
+}
+.milestoneTips p{
+    color: #333333;
+    font-family: Tahoma,Geneva,sans-serif;
+    font-size: 11px;
+    text-decoration: none;
+}
+
 
 

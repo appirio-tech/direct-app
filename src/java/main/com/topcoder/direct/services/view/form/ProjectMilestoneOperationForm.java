@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.form;
 
 import com.topcoder.direct.services.project.milestone.model.Milestone;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,6 +32,11 @@ public class ProjectMilestoneOperationForm extends ProjectIdForm {
      * A list of project milestones to process.
      */
     private List<Milestone> milestones;
+
+    /**
+     * The completion  date of the milestone.
+     */
+	private Date completionDate;
 
     /**
      * Gets the milestone id.
@@ -84,5 +90,23 @@ public class ProjectMilestoneOperationForm extends ProjectIdForm {
      */
     public void setMilestones(List<Milestone> milestones) {
         this.milestones = milestones;
+    }
+
+    /**
+     * Gets the compeltion date of the milestone.
+     * 
+     * @return the completion date of the milestone.
+     */
+    public Date getCompletionDate() {
+        return completionDate;
+    }
+
+    /**
+     *Sets the completion date of the milestone.
+     *
+     *@param completionDate the completion date of the milestone.
+     */
+    public void setCompletionDate(Date completionDate) {
+        this.completionDate = completionDate;
     }
 }

@@ -424,6 +424,10 @@
 		{
 			return _w.call(this, 'display', e);
 		},
+
+        dpClearSelected : function() {
+            return _w.call(this, 'clearSelected');
+        },
 /**
  * Sets a function or array of functions that is called when each TD of the date picker popup is rendered to the page
  *

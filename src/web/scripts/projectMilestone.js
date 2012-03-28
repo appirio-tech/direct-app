@@ -99,7 +99,7 @@ var insertMilestoneIntoList = function (result) {
             var _date = result.status == 'completed' ?
                 $.datepicker.parseDate('mm/dd/yy', $(dd).find(".date input[name='completionDate']").val()) :
                 $.datepicker.parseDate('mm/dd/yy', $(dd).find(".date input[name='dueDate']").val());
-            if ((!completed && _date.getTime() > date.getTime()) || (completed && _date.getTime() > date.getTime())) {
+            if ((!completed && _date.getTime() > date.getTime()) || (completed && _date.getTime() < date.getTime())) {
                 $(dd).before(item);
                 break;
             }
@@ -122,7 +122,8 @@ $(document).ready(function () {
 
     // initialize all the date pickers used in project milestone pages
     $(" .multiMilestones .dueDate input,.newOutLay .dateLine input.text").datePicker({
-        startDate:'01/01/00'
+        startDate:'01/01/00',
+        clickInput: true
     }).change(function () {
             $(this).removeClass("tip");
             if ($(this).val() != '' && $(this).val() != 'mm/dd/yyyy') {
@@ -162,10 +163,40 @@ $(document).ready(function () {
         if (!$(this).is(":checked")) {
             return true;
         }
+
+        if ($("#setDatePopup").is(":visible")) {
+            $("#setDatePopup").hide();
+            $("#setDatePopup").data("trigger").attr("disabled", "");
+            $("#setDatePopup").data("trigger").attr("checked", "");
+        }
+        $("#setDatePopup input.text").val($.datepicker.formatDate('mm/dd/yy', new Date()));
+        $("#setDatePopup input.text").dpSetSelected($("#setDatePopup input.text").val());
+        $("#setDatePopup input#curDate").attr("checked", "checked");
+
+
         var _this = $(this);
         _this.attr("disabled", "disabled");
 
+        $("#setDatePopup").show().css({
+            "left":$(this).offset().left + 20 + "px",
+            "top":$(this).offset().top - 22 + "px"
+        }).data("trigger", _this);
+
+    })
+
+    $("#setDatePopup a.cancel").click(function () {
+        $("#setDatePopup").hide();
+        var trigger = $("#setDatePopup").data("trigger");
+        trigger.attr("disabled", "");
+        trigger.attr("checked", "");
+        return false;
+    })
+
+    $("#setDatePopup .done").click(function () {
+        $("#setDatePopup").hide();
+        var _this = $("#setDatePopup").data("trigger");
         var ms = _this.parents(".project").parent();
+
 
         ms.find(".projectD span a").hide();
         ms.find(".projectD img").remove();
@@ -178,6 +209,13 @@ $(document).ready(function () {
 
         var formData = {};
         formData.milestoneId = ms.find("input[name='milestoneId']").val();
+
+        // check if "current date" is selected
+        if(!$("#curDate").is(":checked")) {
+            // not checked, need to set completion date
+            var completionDate = $("#setDatePopup input.text").val();
+            formData.completionDate = completionDate;
+        }
 
         $.ajax({
             type:"POST",
@@ -202,6 +240,16 @@ $(document).ready(function () {
                 );
             }
         });
+    })
+
+    $("#setDatePopup input.text").datePicker({
+        createButton:false,
+        startDate:'01/01/1900',
+        verticalOffset:22
+    })
+
+    $("#setDatePopup #pickupDate").click(function () {
+        $("#setDatePopup input.text").dpDisplay();
     })
 
     var loadResponsiblePersonForProject = function (projectId, selector, selectionValue) {
@@ -303,7 +351,18 @@ $(document).ready(function () {
         }
 
         $("#editMilestoneModal").find("textarea[name='projectDesc']").val($.trim(description)).trigger('keyup');
-        $("#editMilestoneModal").find("input[name='projectDuedate']").val(ms.find(".date input[name='dueDate']").val());
+
+        if(ms.find(".date input[name='completionDate']").length != 0) {
+            // have completion date, edit completion date
+            $("#editMilestoneModal").find("input[name='projectDuedate']").val(ms.find(".date input[name='completionDate']").val());
+            $("#editMilestoneModal .dateLine label").text("Completion Date :");
+        } else {
+            $("#editMilestoneModal").find("input[name='projectDuedate']").val(ms.find(".date input[name='dueDate']").val());
+            $("#editMilestoneModal .dateLine label").text("Due Date :");
+        }
+
+        $("#editMilestoneModal input.text").dpSetSelected($("#editMilestoneModal").find("input[name='projectDuedate']").val());
+
         $("#editMilestoneModal").find("input[name='emailNotify']").attr('checked', '');
         if(ms.find("input[name='notification']").val() == 'true') {
             $("#editMilestoneModal").find("input[name='emailNotify']").attr('checked', 'checked');
@@ -346,6 +405,8 @@ $(document).ready(function () {
 
             if(modalTrigger.data("status") == 'completed') {
                 request.formData.milestone.completed = true;
+                request.formData.milestone.completionDate = request.formData.milestone.dueDate;
+                request.formData.milestone.dueDate = ms.find("input[name='dueDate']").val();
             }
 
 
@@ -384,6 +445,7 @@ $(document).ready(function () {
         modal.find("textarea[name='projectDesc']").val('').trigger('keyup').removeClass('invalid').parent().find(".errorMessage").text('');
         modal.find("input[name='projectDuedate']").val('mm/dd/yyyy').addClass('tip').removeClass('invalid').parent().find(".errorMessage").text('');
         modal.find("input[name='emailNotify']").attr('checked', '');
+        modal.find("input.text").dpClearSelected();
     }
 
     var validateMilestoneModalInput = function (modalId) {
@@ -658,6 +720,26 @@ $(document).ready(function () {
                             }
                             break;
                     }
+
+                    var tcTip = $("<div/>", {
+                        "class":"milestoneTips"
+                    });
+                    $("<div/>", {
+                        "class":"triangle"
+                    }).appendTo(tcTip);
+                    $("<p/>", {
+                        "text":event.description
+                    }).appendTo(tcTip);
+                    tcTip.appendTo(inner.parent());
+
+                    inner.find(".fc-event-title").hover(function () {
+                        tcTip.css("top", $(this).height() + 5 + "px");
+                        inner.parent().css("z-index", 9);
+                        tcTip.show();
+                    }, function () {
+                        tcTip.hide();
+                        inner.parent().css("z-index", 8);
+                    });
                 },
                 eventAfterRender:function (event, element) {
                     if (event["status"] == "overdue") {
