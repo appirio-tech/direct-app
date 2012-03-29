@@ -496,6 +496,7 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },
+                { "sType": "html" },
                 { "sType": "simple-date" },
                 { "sType": "simple-date" }
             ]
@@ -587,6 +588,7 @@ $(document).ready(function() {
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "html" },
+                { "sType": "html" },
 				{ "sType": "html" },
                 { "sType": "html" },
                 { "sType": "simple-date" },
@@ -608,6 +610,7 @@ $(document).ready(function() {
     var ths = $("#billingCostReportSection .paginatedDataTable thead th").length - 1;
     var aoColumns = [
                 { "sType": "simple-date" },             
+                { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },
                 { "sType": "html" },

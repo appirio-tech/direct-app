@@ -4,6 +4,9 @@
 package com.topcoder.direct.services.view.action.report;
 
 import com.topcoder.clients.invoices.dao.LookupDAO;
+import com.topcoder.direct.services.project.metadata.entities.dao.TcDirectProject;
+import com.topcoder.direct.services.project.metadata.entities.dto.MetadataKeyIdValueFilter;
+import com.topcoder.direct.services.project.metadata.entities.dto.MetadataValueOperator;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
@@ -16,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -265,15 +269,49 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
     private List<BillingCostReportEntryDTO> filterByGroups(List<BillingCostReportEntryDTO> listToFilter) throws Exception {
 
         List<BillingCostReportEntryDTO> result = listToFilter;
+        Set<Long> projectIdsHasGroupId = null;
 
         if (getFormData().getCustomerId() > 0 && getFormData().getGroupId() > 0) {
-            Set<Long> projectIdsFilter = getMetadataService().searchProjectIds(getFormData().getGroupId(), getFormData().getGroupValues());
+            Map<Long, String> projectIdsFilterWithValue = getMetadataService().searchProjectIdsWithMetadataValues(
+                    getFormData().getGroupId(), getFormData().getGroupValues());
+
+            if (getFormData().getGroupValues() != null) {
+                boolean hasNone = false;
+                for (String v : getFormData().getGroupValues()) {
+                    if (v.toLowerCase().equals("none")) {
+                        hasNone = true;
+                        break;
+                    }
+                }
+
+                if (hasNone) {
+                    MetadataKeyIdValueFilter idValueFilter = new MetadataKeyIdValueFilter();
+                    idValueFilter.setMetadataValue("");
+                    idValueFilter.setMetadataValueOperator(MetadataValueOperator.LIKE);
+                    idValueFilter.setProjectMetadataKeyId(getFormData().getGroupId());
+                    final List<TcDirectProject> projectsHasGroupId = getMetadataService().searchProjects(idValueFilter);
+                    projectIdsHasGroupId = new HashSet<Long>();
+                    if (projectsHasGroupId != null) {
+                        for (TcDirectProject p : projectsHasGroupId) {
+                            projectIdsHasGroupId.add(p.getProjectId());
+                        }
+                    }
+                }
+            }
 
             result = new ArrayList<BillingCostReportEntryDTO>();
 
             for (BillingCostReportEntryDTO dto : listToFilter) {
-                if (projectIdsFilter.contains(dto.getProject().getId())) {
+                if (projectIdsFilterWithValue.containsKey(dto.getProject().getId())) {
+                    dto.setProjectFilterValue(projectIdsFilterWithValue.get(dto.getProject().getId()));
                     result.add(dto);
+                }
+
+                if (projectIdsHasGroupId != null) {
+                    if (!projectIdsHasGroupId.contains(dto.getProject().getId())) {
+                        dto.setProjectFilterValue("None");
+                        result.add(dto);
+                    }
                 }
             }
         }

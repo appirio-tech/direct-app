@@ -3,6 +3,9 @@
  */
 package com.topcoder.direct.services.view.action.report;
 
+import com.topcoder.direct.services.project.metadata.entities.dao.TcDirectProject;
+import com.topcoder.direct.services.project.metadata.entities.dto.MetadataKeyIdValueFilter;
+import com.topcoder.direct.services.project.metadata.entities.dto.MetadataValueOperator;
 import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostAggregationDTO;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostAggregationType;
@@ -15,6 +18,7 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -189,19 +193,55 @@ public class DashboardCostReportAction extends DashboardReportBaseAction<Dashboa
      * @since 1.3
      */
     private List<CostDetailsDTO> filterByGroups(List<CostDetailsDTO> listToFilter) throws Exception {
-        
+
         List<CostDetailsDTO> result = listToFilter;
-        
-        if(getFormData().getCustomerId() > 0 && getFormData().getGroupId() > 0) {
-            Set<Long> projectIdsFilter = getMetadataService().searchProjectIds(getFormData().getGroupId(), getFormData().getGroupValues());
-            
-            result = new ArrayList<CostDetailsDTO>();
-            
-            for(CostDetailsDTO dto : listToFilter) {
-                if(projectIdsFilter.contains(dto.getProject().getId())) {
-                    result.add(dto);
+        Set<Long> projectIdsHasGroupId = null;
+
+        if (getFormData().getCustomerId() > 0 && getFormData().getGroupId() > 0) {
+            Map<Long, String> projectIdsFilterWithValue = getMetadataService().searchProjectIdsWithMetadataValues(
+                    getFormData().getGroupId(), getFormData().getGroupValues());
+
+            if (getFormData().getGroupValues() != null) {
+                boolean hasNone = false;
+                for (String v : getFormData().getGroupValues()) {
+                    if (v.toLowerCase().equals("none")) {
+                        hasNone = true;
+                        break;
+                    }
+                }
+
+                if (hasNone) {
+                    MetadataKeyIdValueFilter idValueFilter = new MetadataKeyIdValueFilter();
+                    idValueFilter.setMetadataValue("");
+                    idValueFilter.setMetadataValueOperator(MetadataValueOperator.LIKE);
+                    idValueFilter.setProjectMetadataKeyId(getFormData().getGroupId());
+                    final List<TcDirectProject> projectsHasGroupId = getMetadataService().searchProjects(idValueFilter);
+                    projectIdsHasGroupId = new HashSet<Long>();
+                    if (projectsHasGroupId != null) {
+                        for (TcDirectProject p : projectsHasGroupId) {
+                            projectIdsHasGroupId.add(p.getProjectId());
+                        }
+                    }
                 }
             }
+
+            result = new ArrayList<CostDetailsDTO>();
+
+            for (CostDetailsDTO dto : listToFilter) {
+                if (projectIdsFilterWithValue.containsKey(dto.getProject().getId())) {
+                    dto.setProjectFilterValue(projectIdsFilterWithValue.get(dto.getProject().getId()));
+                    result.add(dto);
+                }
+
+
+                if (projectIdsHasGroupId != null) {
+                    if (!projectIdsHasGroupId.contains(dto.getProject().getId())) {
+                        dto.setProjectFilterValue("None");
+                        result.add(dto);
+                    }
+                }
+            }
+
         }
 
         return result;

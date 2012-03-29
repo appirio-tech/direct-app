@@ -585,8 +585,9 @@
                                                 <col width="5%" />
                                                 <col width="5%" />
                                                 <col width="6%" />
-                                                <col width="15%" />
-                                                <col width="18%" />
+                                                <col width="13%" />
+                                                <col width="6%" />
+                                                <col width="14%" />
                                                 <col width="5%" />
                                                 <col width="5%" />
                                                 <col width="5%" />
@@ -595,11 +596,9 @@
                                 </colgroup>
 
 
-
-
                                 <thead>
                                     <tr>
-                                        <th class="tableTitle" colspan="14">
+                                        <th class="tableTitle" colspan="15">
                                             <a href="javascript:void(0)" class="expand">&nbsp;</a>
                                             <span>Pipeline Details</span>
                                         </th>
@@ -613,6 +612,7 @@
                                         <th class="tableColumn">&nbsp;Copilot&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Billing&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Project&nbsp;</th>
+                                        <th class="tableColumn">Filter Value</th>
                                         <th class="tableColumn">&nbsp;Name&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Status&nbsp;</th>
                                         <th class="tableColumn">&nbsp;Repost&nbsp;</th>
@@ -647,6 +647,9 @@
                                                href="<s:url action="projectOverview" namespace="/">
                                                          <s:param name="formData.projectId" value="%{#attr['contest'].projectId}"/>
                                                      </s:url>"><c:out value="${contest.pname}"/></a>
+                                        </td>
+                                        <td>
+                                            <c:out value="${viewData.contestsProjectFilterValues[contest]}"/>
                                         </td>
                                         <td>
                                             <s:if test="%{#attr['contest'].studio}" >

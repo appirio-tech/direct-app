@@ -145,6 +145,11 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
     private List<CommonPipelineData> contests;
 
     /**
+     * The project filter value applied on the pipeline details.
+     */
+    private Map<CommonPipelineData, String> contestsProjectFilterValues;
+
+    /**
      * <p>A <code>boolean</code> providing the flag indicating whether the pipeline report data is to be calculated and
      * displayed.</p>
      */
@@ -453,6 +458,24 @@ public class DashboardPipelineReportDTO extends CommonDTO implements Serializabl
      */
     public void setShowJustForm(boolean showJustForm) {
         this.showJustForm = showJustForm;
+    }
+
+    /**
+     * Gets the project filter mappings to pipeline details.
+     *
+     * @return  the project filter mappings to contest details.
+     */
+    public Map<CommonPipelineData, String> getContestsProjectFilterValues() {
+        return contestsProjectFilterValues;
+    }
+
+    /**
+     * Sets the project filter mappings to pipeline details.
+     *
+     * @param contestsProjectFilterValues the project filter mappings to pipeline details.
+     */
+    public void setContestsProjectFilterValues(Map<CommonPipelineData, String> contestsProjectFilterValues) {
+        this.contestsProjectFilterValues = contestsProjectFilterValues;
     }
 
     /**

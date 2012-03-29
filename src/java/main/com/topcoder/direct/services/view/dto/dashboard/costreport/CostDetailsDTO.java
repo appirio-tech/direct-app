@@ -77,6 +77,12 @@ public class CostDetailsDTO implements Serializable {
     private boolean isStudio;
 
     /**
+     * The project filter value applied.
+     */
+    private String projectFilterValue;
+    
+
+    /**
      * Gets the client/customer of the contest.
      *
      * @return the client of the contest.
@@ -274,11 +280,39 @@ public class CostDetailsDTO implements Serializable {
         this.total = total;
     }
 
+    /**
+     * Gets is studio flag.
+     *
+     * @return is studio flag.
+     */
     public boolean isStudio() {
         return isStudio;
     }
 
+    /**
+     * Sets is studio flag.
+     *
+     * @param studio is studio flag.
+     */
     public void setStudio(boolean studio) {
         isStudio = studio;
+    }
+
+    /**
+     * Gets the project filter value.
+     *
+     * @return the project filter value.
+     */
+    public String getProjectFilterValue() {
+        return projectFilterValue;
+    }
+
+    /**
+     * Sets the project filter value.
+     *
+     * @param projectFilterValue the project filter value.
+     */
+    public void setProjectFilterValue(String projectFilterValue) {
+        this.projectFilterValue = projectFilterValue;
     }
 }

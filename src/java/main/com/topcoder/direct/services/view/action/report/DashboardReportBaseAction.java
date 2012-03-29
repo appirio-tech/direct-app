@@ -308,6 +308,9 @@ public abstract class DashboardReportBaseAction<FORMT extends DashboardReportFor
                 for (DirectProjectMetadata value : values) {
                     getViewData().getGroupValues().add(value.getMetadataValue());
                 }
+                
+                // add None option to the end
+                getViewData().getGroupValues().add("None");
             }
         }
     }

@@ -375,8 +375,8 @@
     <thead>
     <tr>
         <th class="tableTitle" colspan="
-        <c:if test="${viewData.canProcessInvoices}">19</c:if>
-        <c:if test="${!viewData.canProcessInvoices}">15</c:if>        
+        <c:if test="${viewData.canProcessInvoices}">20</c:if>
+        <c:if test="${!viewData.canProcessInvoices}">16</c:if>
         
         ">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
@@ -392,6 +392,7 @@
         <th class="tableColumn">&nbsp;Customer&nbsp;</th>
         <th class="tableColumn">&nbsp;Billing&nbsp;</th>
         <th class="tableColumn">&nbsp;Project&nbsp;</th>
+        <th class="tableColumn">Filter Value</th>
         <th class="tableColumn">&nbsp;Contest&nbsp;</th>
         <th class="tableColumn">&nbsp;Contest ID&nbsp;</th>
         <th class="tableColumn">&nbsp;Reference ID&nbsp;</th>
@@ -441,6 +442,9 @@
 
                 </a>
 
+            </td>
+            <td>
+                <s:property value="projectFilterValue"/>
             </td>
             <td>
 

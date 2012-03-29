@@ -1723,6 +1723,7 @@ function loadGroupValuesForGroup(selector, groupId, successCallback) {
             handleJsonResult(jsonResult,
                     function (result) {
                         var hasValue = false;
+                        var count = 0;
 
                         var selectAll = $("<div></div>").attr('class', 'multiOptionRow multiOptionRowChecked hide');
                         selectAll.append($("<input class='optionAll' type='checkbox' checked='checked'>")
@@ -1737,11 +1738,19 @@ function loadGroupValuesForGroup(selector, groupId, successCallback) {
                             item.append($("<label></label>").attr('title', value).attr('for', 'groupValuesCheckBox' + index).text(value));
                             selector.append(item);
                             hasValue = true;
+                            count = index;
                         });
 
-                        if(!hasValue) {
-                            selector.parent().find(".reportWarningMessage").show();
-                        }
+                        var noneItem = $("<div></div>").attr('class', 'multiOptionRow multiOptionRowChecked');
+                        noneItem.append($("<input class='optionItem' type='checkbox' name='formData.groupValues' checked='checked'>")
+                                .attr('id', 'groupValuesCheckBox' + (count+1)).val("None"));
+                        noneItem.append($("<label></label>").attr('title', "None").attr('for', 'groupValuesCheckBox' + (count+1)).text("None"));
+
+                        selector.append(noneItem);
+
+//                        if(!hasValue) {
+//                            selector.parent().find(".reportWarningMessage").show();
+//                        }
 
                         hideIndicator(selector);
 

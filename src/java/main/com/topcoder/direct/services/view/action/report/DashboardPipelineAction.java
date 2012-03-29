@@ -7,6 +7,9 @@ import com.topcoder.clients.model.Client;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
+import com.topcoder.direct.services.project.metadata.entities.dao.TcDirectProject;
+import com.topcoder.direct.services.project.metadata.entities.dto.MetadataKeyIdValueFilter;
+import com.topcoder.direct.services.project.metadata.entities.dto.MetadataValueOperator;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatus;
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -225,6 +229,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             Map<String, PipelineLaunchedContestsDTO> projectStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
             Map<String, PipelineLaunchedContestsDTO> categoryStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
             Map<String, PipelineLaunchedContestsDTO> billingStats = new TreeMap<String, PipelineLaunchedContestsDTO>();
+            getViewData().setContestsProjectFilterValues(new HashMap<CommonPipelineData, String>());
 
             // Get pipeline data based on criteria provided by the user and evaluate various view data based on data
             // returned by service
@@ -233,7 +238,8 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                                                                                             endDate, false);
 
             // start group by and group values filtering here
-            Set<Long> projectIdsFilter = null;
+            Map<Long, String> projectIdsFilter = null;
+            Set<Long> projectIdsHasGroupId = null;
 
             if (getFormData().getClientIds() != null && getFormData().getClientIds().length == 1) {
                 // set Group By drop down view data
@@ -252,7 +258,36 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                     for (DirectProjectMetadata value : values) {
                         getViewData().getGroupValues().add(value.getMetadataValue());
                     }
-                    projectIdsFilter = getMetadataService().searchProjectIds(getFormData().getGroupId(), getFormData().getGroupValues());
+
+                    getViewData().getGroupValues().add("None");
+
+                    projectIdsFilter = getMetadataService().searchProjectIdsWithMetadataValues(getFormData().getGroupId(), getFormData().getGroupValues());
+
+                    // check if group values contains 'none'
+                    if(getFormData().getGroupValues() != null) {
+                        boolean hasNone = false;
+                        for(String v : getFormData().getGroupValues()) {
+                            if(v.toLowerCase().equals("none")) {
+                                hasNone = true;
+                                break;
+                            }
+                        }
+
+                        if (hasNone) {
+                            MetadataKeyIdValueFilter idValueFilter = new MetadataKeyIdValueFilter();
+                            idValueFilter.setMetadataValue("");
+                            idValueFilter.setMetadataValueOperator(MetadataValueOperator.LIKE);
+                            idValueFilter.setProjectMetadataKeyId(getFormData().getGroupId());
+                            final List<TcDirectProject> projectsHasGroupId = getMetadataService().searchProjects(idValueFilter);
+                            projectIdsHasGroupId = new HashSet<Long>();
+                            if (projectsHasGroupId != null) {
+                                for(TcDirectProject p : projectsHasGroupId) {
+                                    projectIdsHasGroupId.add(p.getProjectId());
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
             // end group by and group values filtering here
@@ -262,7 +297,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
                 if (matchesFormParameters(data) ) {
                     clients.add(data.getClientName());
 
-                    if (matchProjectIds(data, projectIdsFilter)) {
+                    if (matchProjectIds(data, projectIdsFilter, projectIdsHasGroupId)) {
                         pipelineDetails.add(data);
                         // Collect summary data
                         Date weekOf = getWeekOf(data.getStartDate());
@@ -387,12 +422,25 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
      * in <code>projectIdsToMatch</code>, otherwise, false false.
      * @since 1.1
      */
-    private boolean matchProjectIds(CommonPipelineData data, Set<Long> projectIdsToMatch) {
+    private boolean matchProjectIds(CommonPipelineData data, Map<Long, String> projectIdsToMatch, Set<Long> projectIdsHasGroupId) {
         if(projectIdsToMatch == null) {
+            getViewData().getContestsProjectFilterValues().put(data, "");
             return true;
         }
 
-        return projectIdsToMatch.contains(data.getProjectId());
+        if(projectIdsHasGroupId != null) {
+            if(!projectIdsHasGroupId.contains(data.getProjectId())) {
+                getViewData().getContestsProjectFilterValues().put(data, "none");
+                return true;
+            }
+        }
+
+        if(projectIdsToMatch.containsKey(data.getProjectId())) {
+            getViewData().getContestsProjectFilterValues().put(data, projectIdsToMatch.get(data.getProjectId()));
+            return true;
+        }
+
+        return false;
     }
 
     /**

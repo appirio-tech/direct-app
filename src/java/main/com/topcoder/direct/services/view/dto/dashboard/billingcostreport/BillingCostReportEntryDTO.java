@@ -90,7 +90,7 @@ public class BillingCostReportEntryDTO implements Serializable {
      * The payment type name of the payment entry.
      */
     private String paymentType;
-
+    
     /**
      * The ID of the payment.
      * 
@@ -137,8 +137,15 @@ public class BillingCostReportEntryDTO implements Serializable {
 
     private boolean isStudio;
 
-
+    /**
+     * The reference id of the invoice.
+     */
     private String referenceId;
+
+    /**
+     * The project filter value applied.
+     */
+    private String projectFilterValue;
 
     /**
      * The payment description.
@@ -544,5 +551,23 @@ public class BillingCostReportEntryDTO implements Serializable {
      */
     public void setInvoiceRecordId(long invoiceRecordId) {
         this.invoiceRecordId = invoiceRecordId;
+    }
+
+    /**
+     * Gets the project filter value.
+     *
+     * @return the project filter value applied.
+     */
+    public String getProjectFilterValue() {
+        return projectFilterValue;
+    }
+
+    /**
+     * Sets the project filter value.
+     *
+     * @param projectFilterValue the project filter value applied.
+     */
+    public void setProjectFilterValue(String projectFilterValue) {
+        this.projectFilterValue = projectFilterValue;
     }
 }
