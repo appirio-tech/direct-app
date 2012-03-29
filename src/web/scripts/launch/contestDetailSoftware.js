@@ -41,8 +41,13 @@
  * Version 1.4.4 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp)
  * - Updated updateContestCostData method to check Studio type.
  *
- * @author isv, minhu
- * @version 1.4.4
+ * Version 1.5 (Module Assembly - Contest Fee Based on % of Member Cost User Part)
+ * - Modify contest fee calculation. If the billing is configured by percentage of member cost,
+ * - the contest fee will be calculated as a percentage of the member cost.
+ * - Changed methods: updateContestCostData, savePrizeSection, saveTypeSection.
+ *
+ * @author isv, minhu, pvmagacho
+ * @version 1.5
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -263,7 +268,8 @@ $(document).ready(function(){
    
    // prizes
    $('input[name="prizeRadio"]').click(function(){
-   	  fillPrizes();
+      var billingProjectId = $('select#billingProjects').val();
+   	  fillPrizes(billingProjectId);
    });
    
    $('#swFirstPlace').bind('keyup',function() {
@@ -656,6 +662,9 @@ function retrieveContestCostWithoutAdminFee() {
  * Type Section Functions
  */
 function populateTypeSection() {
+        var p = mainWidget.softwareCompetition.projectHeader.properties;
+        var contestPercentage = parseFloat(p['Contest Fee Percentage']);
+
 	//edit
 	$('#contestTypes').getSetSSValue(mainWidget.competitionType+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
 	$('#contestName').val(mainWidget.softwareCompetition.assetDTO.name);
@@ -683,6 +692,11 @@ function populateTypeSection() {
   //billing account
   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
   $('#billingProjects').getSetSSValue(billingProjectId);
+  if (contestPercentage!= null && contestPercentage > 0) {
+      $('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2) + ' (' + contestPercentage * 100 + '% markup)');
+  } else {
+      $('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
+  }
   //potential rollback
 	$('#billingProjects').trigger("change");
 	if(isBillingEditable()) {
@@ -716,7 +730,13 @@ function saveTypeSection() {
       success: function(jsonResult) {
          handleSaveAsDraftContestResult(jsonResult);
          populateTypeSection();  
-		 populateRoundSection();
+	 populateRoundSection(); 
+         if (mainWidget.competitionType == "SOFTWARE") {
+            var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+            if (billingFeesPercentage[billingProjectId]!= null && billingFeesPercentage[billingProjectId].contestFeePercentage!=null) {
+                populatePrizeSection();
+            }
+         }
          showTypeSectionDisplay();         			
       },
       beforeSend: beforeAjax,
@@ -1205,9 +1225,10 @@ function updateContestCostData() {
     var reliability = parseFloat(p['Reliability Bonus Cost']);
     var specReview = parseFloat(p['Spec Review Cost']);
     var digitalRun = parseFloat(p['DR points']);
-    var contestFee = parseFloat(mainWidget.softwareCompetition.adminFee);
+    var contestFee = parseFloat(p['Admin Fee']);
+    var contestPercentage = parseFloat(p['Contest Fee Percentage']);
     var copilotFee = parseFloat(mainWidget.softwareCompetition.copilotCost);
-
+    
     // (1) set the first place prize
     $('#swFirstPlace').val(firstPlacePrize.formatMoney(2));
     $('#rswFirstPlace').html(firstPlacePrize.formatMoney(2));
@@ -1229,7 +1250,12 @@ function updateContestCostData() {
     originalPrizes.push(digitalRun + '');
 
     // (6) set the contest fee
-    $('#swContestFee,#rswContestFee').html(contestFee.formatMoney(2));
+    if (contestPercentage!= null && contestPercentage > 0) {
+       $('#rswContestFee').html(contestFee.formatMoney(2) + ' (' + contestPercentage * 100 + '% markup)');
+       $('#swContestFee').html(contestFee.formatMoney(2));
+    } else {
+       $('#swContestFee,#rswContestFee').html(contestFee.formatMoney(2));
+    }
 
     // (7) set the copilot cost
     $('#swCopilotFee,#rswCopilotFee').html(copilotFee.formatMoney(2));
@@ -1242,9 +1268,11 @@ function updateContestCostData() {
     $('#swTotal,#rswTotal').html(total.formatMoney(2));
 
     //totals
-    $('#swPrize_low').html((getContestTotal(feeObject, 'low') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-    $('#swPrize_medium').html((getContestTotal(feeObject, 'medium') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-    $('#swPrize_high').html((getContestTotal(feeObject, 'high') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+    if (mainWidget.competitionType != 'STUDIO') {
+        $('#swPrize_low').html((getContestTotal(feeObject, 'low') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+        $('#swPrize_medium').html((getContestTotal(feeObject, 'medium') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+        $('#swPrize_high').html((getContestTotal(feeObject, 'high') + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+    }
 
     //if custom, make the first place editable
    if(prizeType == 'custom') {
@@ -1301,7 +1329,13 @@ function savePrizeSection() {
       success: function(jsonResult) {
          handleSaveAsDraftContestResult(jsonResult);
          populatePrizeSection();  
-         showPrizeSectionDisplay();         			
+         showPrizeSectionDisplay();      
+         if (mainWidget.competitionType == "STUDIO") {
+            var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
+            if (billingFeesPercentage[billingProjectId]!= null && billingFeesPercentage[billingProjectId].contestFeePercentage!=null) {
+                populateTypeSection();
+            }
+         }			
       },
       beforeSend: beforeAjax,
       complete: afterAjax            

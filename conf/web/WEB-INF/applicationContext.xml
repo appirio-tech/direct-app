@@ -276,6 +276,9 @@
 
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
           parent="baseDirectStrutsAction">
+        <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
+        <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
     </bean>
 
     <bean id="projectAction" class="com.topcoder.direct.services.view.action.contest.launch.ProjectAction"

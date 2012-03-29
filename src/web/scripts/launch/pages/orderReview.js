@@ -9,13 +9,18 @@
  * Version 1.2 TC Direct Replatforming Release 1 change note
  * - Many changes were made to work for the new studio contest type and multiround type.
  *
- * Versino 1.3 TC Direct Replatforming Release 2 change notes:
+ * Version 1.3 TC Direct Replatforming Release 2 change notes:
  * - Display the milestone prizes for software contest.
  * - Display the specification review cost for studio contest.
  * - The studio contest can start specification review when the contest is activated.
  * 
- * @author TCSASSEMBLER
- * @version 1.3
+ * Version 1.4 - Module Assembly - Contest Fee Based on % of Member Cost User Part
+ * - Modify contest fee calculation. If the billing is configured by percentage of member cost,
+ * - the contest fee will be calculated as a percentage of the member cost.
+ * - Changed method: updateOrderReviewStudio.
+ *
+ * @author TCSASSEMBLER, pvmagacho
+ * @version 1.4
  */
 /**
  * Update order review page of software contest.
@@ -138,6 +143,19 @@ function updateOrderReviewStudio() {
    $('#orSpecificationReviewPayment').html(specificationReviewPayment.formatMoney(2));
    $('#orReviewPayment').html(reviewPayment.formatMoney(2));
    $('#orCopilotFee').html(copilotCost.formatMoney(2));
+   
+   // Modify admin Fee if contest percentage is to be used
+   if (billingFeesPercentage[billingProjectId]!= null) {
+       var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
+       if (contestFeePercentage!=null) {
+           var memberCost = contestPrizesTotal + milestonePrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
+           mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = contestFeePercentage * memberCost;
+           mainWidget.softwareCompetition.adminFee = contestFeePercentage * memberCost;
+           mainWidget.softwareCompetition.projectHeader.setAdminFee(mainWidget.softwareCompetition.projectHeader.contestAdministrationFee);
+           mainWidget.softwareCompetition.projectHeader.setContestFeePercentage(contestFeePercentage);
+       }
+   }
+   
    var adminFee = mainWidget.softwareCompetition.projectHeader.contestAdministrationFee;
    $('#orAdminFee1').html('$'+adminFee.formatMoney(0));
    $('#orAdminFee2').html('$'+(adminFee + specificationReviewPayment + copilotCost + reviewPayment).formatMoney(0));

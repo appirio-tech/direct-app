@@ -309,11 +309,13 @@
                       <td class="sec_tab_prize"><strong>Spec Review Fee:</strong> $<span id="rswSpecCost"></span></td>
                    </tr>
                    <tr class="rightbor">
-                     	<td class="first_tab"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
-                      <td class="sec_tab_prize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
-                       <td class="sec_tab_prize"><strong>Contest Fee:</strong> $<span id="rswContestFee"></span></td>
+                       <td class="first_tab"  align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"></span></td>
+                       <td class="sec_tab_prize"><strong>Digital Run:</strong> $<span id="rswDigitalRun"></span></td>
                        <td class="sec_tab_prize"><strong>Copilot Fee:</strong> $<span id="rswCopilotFee"></span></td>
-                      <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal"></span></td>
+                       <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal"></span></td>
+                   </tr>
+                   <tr class="rightbor">
+                       <td class="first_tab"  align="left"><strong>Contest Fee:</strong> $<span id="rswContestFee"></span></td>
                    </tr>
               </table>
 				</div><!-- End .detailsContent -->												

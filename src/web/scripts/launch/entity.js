@@ -30,9 +30,15 @@
  * Changes in version 1.4 (Release Assembly - TopCoder BugHunt Competition Integration):
  * <li>Add bug hunt to the contest types when creating new contest.</li>
  * </p>
+ * <p>
+ * Changes in version 1.5 (Module Assembly - Contest Fee Based on % of Member Cost User Part):
+ * <ul>
+ * <li>Added the 'Contest Fee Percentage' to the properties field of the Project class.</li>
+ * </ul>
+ * </p>
  * 
- * @author duxiaoyang, TCSASSEMBLER
- * @version 1.4
+ * @author duxiaoyang, TCSASSEMBLER, pvmagacho
+ * @version 1.5
  */
 if(!com) {
    var com = {};
@@ -370,6 +376,14 @@ com.topcoder.direct.Project = function() {
 	  
 	  this.getAdminFee = function() {
 	  	  return this.properties['Admin Fee'];
+	  }
+      
+	  this.setContestFeePercentage = function(contestFeePercentage) {
+	  	  this.properties['Contest Fee Percentage'] = contestFeePercentage;
+	  }
+	  
+	  this.getContestFeePercentage = function() {
+	  	  return this.properties['Contest Fee Percentage'];
 	  }
 
 	  this.setSpecReviewCost = function(specReviewCost) {

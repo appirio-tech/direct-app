@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.topcoder.clients.model.Project;
 import com.topcoder.clients.model.ProjectContestFee;
+import com.topcoder.clients.model.ProjectContestFeePercentage;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -17,6 +18,8 @@ import com.topcoder.management.project.DesignComponents;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceException;
 import com.topcoder.service.facade.project.DAOFault;
+
+import com.topcoder.direct.services.view.action.accounting.BaseContestFeeAction;
 
 /**
  * <p>
@@ -28,10 +31,16 @@ import com.topcoder.service.facade.project.DAOFault;
  * - New method getDirectProjectCopilots to return copilots of direct project as JSON.
  * </p>
  *
- * @author BeBetter, TCSDEVELOPER
- * @version 1.1
+ * <p> Version 1.2 Changes (Module Assembly - Contest Fee Based on % of Member Cost User Part):
+ * - Modified method getBillingProjectContestFees. Added support for fee percentage.
+ * - If the billing is configured by percentage of member cost, the contest fee will be calculated 
+ * - as a percentage of the member cost.
+ * </p>
+ *
+ * @author BeBetter, TCSDEVELOPER, pvmagacho
+ * @version 1.2
  */
-public class CommonAction extends BaseDirectStrutsAction {
+public class CommonAction extends BaseContestFeeAction {
     /**
      * <p>
      * Billing project id field.
@@ -127,12 +136,20 @@ public class CommonAction extends BaseDirectStrutsAction {
      * @throws Exception if any error occurs
      */
     public String getBillingProjectContestFees() throws Exception {
-        TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
-        List<ProjectContestFee> contestFees = getAdminServiceFacade().getContestFeesByProject(tcSubject,
-            billingProjectId);
-
         Map<String, Object> result = new HashMap<String, Object>();
-        result.put("fees", contestFees);
+        
+        // set the percentage info
+        ProjectContestFeePercentage percentage = getContestFeePercentageService().getByProjectId(billingProjectId);
+        if (percentage != null && percentage.isActive()) {
+            result.put("percentage", percentage);
+        } else {
+            // Only return fee if percentage is not set
+            TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
+            List<ProjectContestFee> contestFees = getAdminServiceFacade().getContestFeesByProject(tcSubject,
+                billingProjectId);
+            result.put("fees", contestFees);
+        }
+        
         setResult(result);
         return SUCCESS;
     }
