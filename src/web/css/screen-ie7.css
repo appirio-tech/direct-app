@@ -83,3 +83,7 @@
 .newSidebar .contestList .tableBody col.last{
    width:45px;
 }
+
+#projectsResult TABLE.resultTable   TD SPAN {
+    margin-left: 25px;
+}

@@ -1,16 +1,22 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.dashboard;
 
-import com.topcoder.direct.services.view.action.AbstractAction;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
+import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardSearchCriteriaType;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardSearchResultsDTO;
 import com.topcoder.direct.services.view.form.DashboardSearchForm;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,19 +26,31 @@ import java.util.Map;
  * <p>
  * Version 2.0 - add result for excel download.
  * </p>
- *
+ * <p/>
  * <p>
  * Version 2.0.1 (Direct Release 6 Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Excluded <code>Members/Admin</code> option from dashboard search criteria types.</li>
- *   </ol>
+ * <ol>
+ * <li>Excluded <code>Members/Admin</code> option from dashboard search criteria types.</li>
+ * </ol>
  * </p>
  *
- * @author isv, BeBetter, TCSDEVELOPER
- * @version 2.0.1
+ * <p>
+ *  Version 2.1 (Release Assembly - TC Cockpit All Projects Management Page Update) change notes:
+ *  <ol>
+ *  <li>
+ *      Change the parent class from AbstractAction to BaseDirectStrutsAction so metadata service can be utilized.
+ *  </li>
+ *  <li>
+ *      Add method {@link #executeAction} to get project metadata for each project and set into the view.
+ *  </li>
+ *  </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, TCSASSEMBLER
+ * @version 2.1
  */
-public class DashboardSearchAction extends AbstractAction implements ViewAction<DashboardSearchResultsDTO>,
-    FormAction<DashboardSearchForm> {
+public class DashboardSearchAction extends BaseDirectStrutsAction implements ViewAction<DashboardSearchResultsDTO>,
+        FormAction<DashboardSearchForm> {
 
     /**
      * <p>
@@ -109,6 +127,61 @@ public class DashboardSearchAction extends AbstractAction implements ViewAction<
      */
     public DashboardSearchForm getFormData() {
         return this.formData;
+    }
+
+    /**
+     * Gets the project metadata of which group flag is true for search projects and all projects page.
+     *
+     * @throws Exception if error.
+     * @since 2.1
+     */
+    @Override
+    protected void executeAction() throws Exception {
+        // get the metadata for the projects if is the request is project search or all projects page
+        if (DashboardSearchCriteriaType.PROJECTS == getFormData().getSearchIn()
+                || getRequestData().getRequest().getRequestURI().endsWith("allProjects")
+                || getRequestData().getRequest().getRequestURI().endsWith("allProjects.action")) {
+
+            // projects should be in view data now (set by the action pre processor)
+            final List<DashboardProjectSearchResultDTO> projects = viewData.getProjects();
+
+            // Helper map to store the mapping of project id to DashboardProjectSearchResultDTO
+            Map<Long, DashboardProjectSearchResultDTO> helperMap = new HashMap<Long, DashboardProjectSearchResultDTO>();
+
+            List<Long> allProjectIds = new ArrayList<Long>();
+
+            for (DashboardProjectSearchResultDTO item : projects) {
+                allProjectIds.add(item.getData().getProjectId());
+                helperMap.put(item.getData().getProjectId(), item);
+            }
+
+            if (this.getMetadataKeyService() == null) {
+                throw new IllegalStateException("The direct project metadata service is not initialized.");
+            }
+
+            // Gets all project metadata for the projects in list
+            final List<DirectProjectMetadata> projectMetadataByProjects = this.getMetadataService().getProjectMetadataByProjects(allProjectIds);
+
+            for (DirectProjectMetadata metadata : projectMetadataByProjects) {
+                // only add metadata used for grouping (grouping = true)
+                if (metadata.getProjectMetadataKey().getGrouping() != null && metadata.getProjectMetadataKey().getGrouping()) {
+                    long projectId = metadata.getTcDirectProjectId();
+                    Map<DirectProjectMetadataKey, List<DirectProjectMetadata>> data
+                            = helperMap.get(projectId).getProjectsMetadataMap();
+
+                    if (data == null) {
+                        data = new HashMap<DirectProjectMetadataKey, List<DirectProjectMetadata>>();
+                        helperMap.get(projectId).setProjectsMetadataMap(data);
+                    }
+
+                    if (!data.containsKey(metadata.getProjectMetadataKey())) {
+                        data.put(metadata.getProjectMetadataKey(), new ArrayList<DirectProjectMetadata>());
+                    }
+
+                    data.get(metadata.getProjectMetadataKey()).add(metadata);
+                }
+            }
+        }
     }
 
     /**

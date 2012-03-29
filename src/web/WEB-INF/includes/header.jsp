@@ -55,8 +55,9 @@
     <c:otherwise>
     <s:if test="viewData.isAllProjectsPage == true">
     <a href="<s:url action='allProjects' namespace='/'/>" class="logo">
-    <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
-    <span id="projectTitleSpan"> All Projects</span>
+        <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
+        <span id="projectTitleSpan"> All Projects</span>
+    </a>
     </s:if>
     <s:else>
     <a href="<s:url action='currentProjectOverview' namespace='/'><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>" class="logo"

@@ -6157,7 +6157,7 @@ A.button11{
 
 .resultTableContainer .bottom1 {
     position: static;
-    margin-top: -6px;
+    margin-top: -1px;
 }
 
 .resultTableContainer .bottom2 {
@@ -6242,21 +6242,47 @@ A.button11{
     text-align: left;
 }
 
-table.resultTable td a {
+#projectsResult table.resultTable td a {
     text-decoration: underline;
 }
 
-table.resultTable td a.button1 {
+#projectsResult table.resultTable td a.button1 {
     text-decoration: none;
 }
 
-table.resultTable td a:hover {
+#projectsResult table.resultTable td a:hover {
     text-decoration: none;
 }
 
-table.resultTable td a.button1:hover {
+#projectsResult table.resultTable td a.button1:hover {
     text-decoration: none;
 }
+
+#projectsResult table.resultTable td a {
+    text-decoration: underline;
+    padding: 0 3px 5px;
+    position: relative;
+}
+
+#allProjectsPageContent {
+    min-width: 1380px;
+}
+
+table.resultTable td.last a {
+    display: inline-block;
+    text-align: left;
+}
+table.resultTable td.last a.short {
+    width: 57px;
+}
+table.resultTable td.last a.long {
+    width: 86px;
+}
+    table.resultTable td.last a img {
+        margin-right: 3px;
+        position: relative;
+        top: 2px;
+    }
 
 .resultTableContainer table.resultTable .button1 {
     margin-left: 6px;
@@ -6823,29 +6849,36 @@ div.rightColumn .activity TABLE {
     margin-top:5px;
 }
 
+
+#projectsResult TABLE.resultTable TD SPAN {
+    float: left;
+    margin-left: 16%;
+}
+
 #projectsResult TABLE.resultTable   TD SPAN.completed {
     color: #00c600;
-    background: url(../images/dot-green.png) no-repeat left 1px;
+    background: url(../images/status_completed_icon.png) no-repeat left 1px;
 }
+
 
 #projectsResult TABLE.resultTable   TD SPAN.active {
     color: #177de3;
-    background: url(../images/dot-blue.png) no-repeat left 1px;
+    background: url(../images/status_active_icon.png) no-repeat left 1px;
 }
 
 #projectsResult TABLE.resultTable   TD SPAN.archived {
     color: #ffb000;
-    background: url(../images/dot-yellow.png) no-repeat left 1px;
+    background: url(../images/status_archived_icon.png) no-repeat left 1px;
 }
 
 #projectsResult TABLE.resultTable   TD SPAN.deleted {
     color: #dc0000;
-    background: url(../images/dot-red.png) no-repeat left 1px;
+    background: url(../images/status_delete_icon.png) no-repeat left 1px;
 }
 
 #projectsResult TABLE.resultTable TD SPAN {
     font-weight: bold;
-    padding-left: 14px;
+    padding:5px 0px 5px 28px;
 }
 
 .messageContestName {

@@ -429,14 +429,23 @@ import com.topcoder.web.common.tag.HandleTag;
  * </p>
  * 
  * <p>
-  * Version 3.6 (Release Assembly - TC Direct Cockpit Release Two) change log:
-  * <ol>
-  *     <li>Add method ${@link #setSoftwareMilestoneSubmissionsData(com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO)}.</li>
-  * </ol>
-  * </p>
- * 
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues, TCSASSEMBLER
- * @version 3.6
+ * Version 3.6 (Release Assembly - TC Direct Cockpit Release Two) change log:
+ * <ol>
+ *     <li>Add method ${@link #setSoftwareMilestoneSubmissionsData(com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO)}.</li>
+ * </ol>
+ * </p>
+ *
+ * <p>
+ * Version 3.7 (Release Assembly - TC Cockpit All Projects Management Page Update) change log:
+ * <ol>
+ *     <li>
+ *         Update method {@link #getProjectData(com.topcoder.security.TCSubject)} to add project forum data.
+ *     </li>
+ * </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues, GreatKevin
+ * @version 3.7
  * @since 1.0
  */
 public class DataProvider {
@@ -1001,6 +1010,9 @@ public class DataProvider {
             data.setProjectName(resultContainer.getStringItem(i, "project_name"));
             data.setDirectProjectStatusId(resultContainer.getLongItem(i, "project_status_id"));
             data.setProjectCreationDate(resultContainer.getTimestampItem(i, "create_date"));
+            if (resultContainer.getItem(i, "project_forum_id").getResultData() != null) {
+                data.setProjectForumCategoryId(Long.parseLong(resultContainer.getStringItem(i, "project_forum_id")));
+            }
 
             // draft
             data.getDraft().setTotalNumber(resultContainer.getIntItem(i, "num_draft"));

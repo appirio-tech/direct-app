@@ -1,7 +1,7 @@
 <%--
-  - Author: GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin, TCSASSEMBLER
+  - Version: 1.4
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the search result of project search.
   -
@@ -13,6 +13,10 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes:
   - - Add customer
+  -
+  - Version 1.4 (Release Assembly - TC Cockpit All Projects Management Page Update) changes:
+  - - Add project metadata data
+  - - Change the operation buttons to new ones, add edit and project forum button
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -23,16 +27,17 @@
 
             <colgroup>
 
-                <col width="23%"/>
+                <col width="22%"/>
                 <col width="8%"/>
-                <col width="9%"/>
+                <col width="8%"/>
                 <col width="6%"/>
                 <col width="7%"/>
                 <col width="6%"/>
                 <col width="6%"/>
                 <col width="6%"/>
-                <col width="9%"/>
+                <col width="11%"/>
                 <col width="20%"/>
+                <col width="" />
                 <col width="" />
             </colgroup>
 
@@ -50,6 +55,7 @@
                 <th>Project Status</th>
                 <th>Operations</th>
                 <th class='hide'></th>
+                <th class='hide'></th>
             </tr>
             </thead>
             <tbody>
@@ -57,7 +63,7 @@
             <s:iterator value="viewData.projects" status="status">
                 <s:set var="project" value="project" scope="page"/>
                 <s:set var="projectSummary" value="data" scope="page"/>
-                <tr>
+                <tr id="projectRow${projectSummary.projectId}">
                     <td class="first">
                         <link:projectOverview project="${project}"/>
                     </td>
@@ -84,24 +90,45 @@
                     </td>
                     <td class="last">
 
-                        <a href="javascript:void(0)" id="archiveProjectButton${projectSummary.projectId}"
-                           onclick="updateDirectProjectStatus(${projectSummary.projectId}, 2)"
-                           class="button1 <s:if test='projectStatusType.projectStatusId == 1L'>show</s:if>"><span
-                                class="btnR"><span
-                                class="btnC"><span class="btnIcon">Archive</span></span></span></a>
-                        <a href="javascript:void(0)" id="reactivateProjectButton${projectSummary.projectId}"
-                           onclick="updateDirectProjectStatus(${projectSummary.projectId}, 1)"
-                           class="button1 <s:if test='projectStatusType.projectStatusId == 2L'>show</s:if>"><span
-                                class="btnR"><span
-                                class="btnC"><span class="btnIcon">Activate</span></span></span></a>
-                        <a href="javascript:void(0)" id="deleteProjectButton${projectSummary.projectId}"
-                           onclick="updateDirectProjectStatus(${projectSummary.projectId}, 3)"
-                           class="button1 <s:if test='projectStatusType.projectStatusId != 3L && projectStatusType.projectStatusId != 4L'>show</s:if>"><span
-                                class="btnR"><span
-                                class="btnC"><span class="btnIcon">Delete</span></span></span></a>
+                        <a class="short operation activateOperation <s:if test='projectStatusType.projectStatusId != 2L'>hide</s:if>"
+                           href="javascript:;" onclick="updateDirectProjectStatus(${projectSummary.projectId}, 1)">
+                            <img src="/images/activate-icon.png" alt=""/>Activate
+                        </a>
+                        <a class="short operation archiveOperation <s:if test='projectStatusType.projectStatusId != 1L'>hide</s:if>"
+                           href="javascript:;" onclick="updateDirectProjectStatus(${projectSummary.projectId}, 2)">
+                            <img src="/images/archive-icon.png" alt=""/>Archive
+                        </a>
+
+                        <a class="long operation deleteOperation <s:if test='projectStatusType.projectStatusId == 3L || projectStatusType.projectStatusId == 4L'>hide</s:if>"
+                           href="javascript:;"  onclick="updateDirectProjectStatus(${projectSummary.projectId}, 3)">
+                            <img src="/images/remove-milestone-icon.png" alt=""/>Delete
+                        </a>
+
+                        <s:if test='projectStatusType.projectStatusId == 1L || projectStatusType.projectStatusId == 2L'>
+                            <br class="secondRowSeparator"/>
+                        </s:if>
+
+                        <a class="short" target="_blank" href='<s:url action="editProject" namespace="/"><s:param name="formData.projectId" value="data.projectId"/></s:url>'><img src="/images/edit-icon.png" alt=""/>Edit</a>
+                        <a class="long" target="_blank" <s:if test="data.projectForumCategoryId == null || data.projectForumCategoryId <=0"> style='visibility: hidden;' </s:if>
+                           href="https://apps.topcoder.com/forums/?module=Category&categoryID=${projectSummary.projectForumCategoryId}">
+                            <img src="/images/forum-link-icon.png" alt=""/>Project Forum
+                        </a>
 
                     </td>
                     <td class="hide"><span>${projectSummary.customerId == -1 ? 'none' : projectSummary.customerId}</span></td>
+                    <td class="hide metadataTD">
+                        <s:if test="projectsMetadataMap != null">
+                            <s:iterator value="projectsMetadataMap">
+                                <span class="metadataGroup">
+                                     <span class="metadataKeyId"><s:property value="key.id"/></span>
+                                     <span class="metadataKeyName"><s:property value="key.name"/></span>
+                                     <s:iterator value="value">
+                                         <span class="metadataValue"><s:property value="metadataValue"/></span>
+                                     </s:iterator>
+                                </span>
+                            </s:iterator>
+                        </s:if>
+                    </td>
                 </tr>
             </s:iterator>
 

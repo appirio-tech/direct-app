@@ -1,9 +1,13 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  *
  * The JS script for data table filter panel.
  *
- * @version 1.0
+ * @version 1.0 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar)
+ *
+ * Version 1.1 (Release Assembly - TC Cockpit All Projects Management Page Update) changes:
+ * - Add handling for project filters and project filter values select in all projects and search project pages.
+ *
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -85,6 +89,11 @@ var parseDateValue = function(rawDate) {
 
 var handleName;
 var tableHandle;
+
+// store the mapping of project filters - metadata key
+var currentProjectFilters = {};
+// store the mapping of meta data keys to values
+var currentProjectFilterValuesMap = {};
 
 var setupFilterPanel = function () {
 
@@ -251,13 +260,104 @@ var setupFilterPanel = function () {
     $('#customerFilter').change(function () {
         var str = $(this).val();
         $(".customerSelectMask").find(".inputSelect input").val(str);
+
+        var customerId;
+
         $(".customerSelectMask  ul li a").each(function (index, element) {
             if ($(this).html() == str) {
-                var id = $(this).parent().data("id");
-                var id = $(this).parent().trigger('click');
+                customerId = $(this).parent().data("id");
+                $(this).parent().trigger('click');
             }
         });
+
+        // handle the change of project filters and project filter values select, only apply for
+        // all projects page and project search page
+        if ($("#allProjectsFilter").size() > 0) {
+            if (str != 'All Customers' && str != 'No Customer') {
+                $("#groupBy").attr('disabled', false).val('no');
+                $("#groupValue").attr('disabled', false).val('all');
+
+                // reset the cache maps
+                currentProjectFilters = {};
+                currentProjectFilterValuesMap = {};
+
+                // remove existing options
+                $("#groupBy option:gt(0)").remove();
+                $("#groupValue option:gt(0)").remove();
+
+                // load project filters options
+                $("#projectsResult table.projectStats tr").each(function(){
+                    var metadataTD = $(this).find("td.metadataTD");
+                    metadataTD.find(".metadataGroup").each(function(){
+                        var keyId = $(this).find(".metadataKeyId").text();
+                        var keyName = $(this).find(".metadataKeyName").text();
+                        if(currentProjectFilters[keyId] == null) {
+                            currentProjectFilters[keyId] = keyName;
+                        }
+                        if (currentProjectFilterValuesMap[keyId] == null) {
+                            currentProjectFilterValuesMap[keyId] = {};
+                        }
+
+                        $(this).find(".metadataValue").each(function(){
+                            var value = $(this).text();
+                            currentProjectFilterValuesMap[keyId][value] = value;
+                        });
+
+                    });
+                });
+
+                var a = [], b = {};
+
+                $.each(currentProjectFilters, function (key, value) {
+                    a.push(value);
+                    b[value] = key;
+                });
+
+                a.sort();
+                for(var i = 0; i < a.length; ++i) {
+                    $("#groupBy").append($("<option></option>").attr('value', b[a[i]]).text(a[i]));
+                }
+
+            } else {
+                $("#groupBy").val('no').attr('disabled', true);
+                $("#groupValue").val('all').attr('disabled', true);
+            }
+        }
+
     });
+
+    if ($("#allProjectsFilter").size() > 0) {
+        // setup the change event for "Project Filters" select
+        $("#groupBy").change(function () {
+            var keyId = $(this).val();
+            if (keyId == 'no') {
+                $("#groupValue option:gt(0)").remove();
+            } else {
+                $("#groupValue option:gt(0)").remove();
+                var valuesMap = currentProjectFilterValuesMap[keyId];
+                var valuesArray = [];
+                $.each(valuesMap, function(key, value) {
+                    valuesArray.push(key);
+                });
+                valuesArray.sort();
+                valuesArray.push("None");
+                $.each(valuesArray, function (index, value) {
+                    $("#groupValue").append($("<option></option>").attr('value', value).text(value));
+                });
+            }
+            tableHandle.fnFilter('');
+        });
+
+        // setup the change event for "Project Filter Values" select
+        $("#groupValue").change(function(){
+            tableHandle.fnFilter('');
+        });
+
+        $("#groupBy").val('no');
+        $("#groupValue").val('all');
+        $("#projectStatusFilter").val('All');
+    }
+
 
     $('#projectStatusFilter').change(function () {
         var str = $(this).val();
@@ -349,7 +449,8 @@ $(function() {
     var left = $('#activeContestsFilterSearch').parent().width() - 333;
     $('#activeContestsFilterSearch').css({'margin-left':left + 'px'});
     if ($('.filterContent .column3').prev().hasClass('column2')) {
-        $('.filterContent .column3').css({'width':'300px'})
+        $('.filterContent .column3').css({'width':'300px'});
+        $('#allProjectsFilter .filterContent .column3').css({'width':'340px'})
     }
     if (jQuery.browser.msie && jQuery.browser.version == 9) {
         $('.filterSearch').find('img').css({'margin-left':'-22px'});
@@ -377,7 +478,9 @@ $(function() {
         $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'32px'});
     });
 
-    $('.collapse').trigger('click');
+    if($("#allProjectsFilter").length == 0) {
+        $('.collapse').trigger('click');
+    }
 
     handleName = $('.paginatedDataTable').parent().parent().parent().attr('id');
     if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().attr('id');
@@ -406,6 +509,49 @@ $(function() {
     } else if (handleName == 'vmFilter') {
         var additionalColumnNumber = $("#contest_vms thead th").length - 11;
         startDateCol = 7 + additionalColumnNumber;
+    }
+
+    if ($("#allProjectsFilter").size() > 0) {
+        // setup customer filter grouping for project filters and project filter values
+        $.fn.dataTableExt.afnFiltering.push(function (oSettings, aData, iDataIndex) {
+
+            if($('#groupBy').attr('disabled') == true) {
+                return true;
+            }
+            var keyId = $('#groupBy').val();
+            var result = false;
+            if (keyId == 'no') return true;
+            else {
+                var filterValue = $("#groupValue").val().toLowerCase();
+                if (filterValue == 'all') {
+                    return true;
+                } else {
+                    if (aData[11] == null || $.trim(aData[11]).length == 0) {
+                        return filterValue == 'none';
+                    }
+                    var data = $("<div></div>").html(aData[11]);
+                    var findKey = false;
+                    data.find(".metadataGroup").each(function(){
+                       if($(this).find(".metadataKeyId").text() == keyId) {
+                           findKey = true;
+                           // check the value
+                           $(this).find(".metadataValue").each(function(){
+                              if($(this).text().toLowerCase() == filterValue) {
+                                  result = true;
+                              }
+                           });
+                       }
+                    });
+
+                }
+            }
+
+            if(findKey == false && filterValue == 'none') {
+                return true;
+            }
+
+            return result;
+        });
     }
 
     // The plugin function for adding a new filtering routine

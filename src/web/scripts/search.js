@@ -45,9 +45,12 @@
  *
  * Version 1.8.1 - (TC Accounting Tracking Invoiced Payments Part 2:
  *  - Add logic to update the disabled state of invoice process button in billing cost report page.
+ *
+ * Version 1.8.2 - (Release Assembly - TC Cockpit All Projects Management Page Update):
+ * - Add a hidden column for $.allProjectTable
  *  
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, TCSASSEMBLER
- * @version 1.8.1
+ * @version 1.8.2
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -264,17 +267,6 @@ $(document).ready(function() {
         }
     }
 
-
-    if ($("#projectsResult")) {
-        $("#projectsResult td.last a").each(function() {
-            if (!$(this).hasClass('show')) {
-                $(this).hide();
-            }
-
-        });
-    }
-
-
     $.allProjectTable = $("#projectsResult .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
         "bStateSave": false,
@@ -299,6 +291,7 @@ $(document).ready(function() {
             { "sType": "direct-projectNumber" },
             { "sType": "direct-projectNumber" },
             { "sType": "project-status" },
+            null,
             null,
             null
         ]

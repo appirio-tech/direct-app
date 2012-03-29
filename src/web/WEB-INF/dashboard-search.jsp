@@ -1,7 +1,7 @@
 <%--
-  - Author: greatKevin, winsty, GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: winsty, GreatKevin
+  - Version: 1.4
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
   -
@@ -10,6 +10,8 @@
   - Version 1.2.1 (Release Assembly - TopCoder Cockpit Project Status Management) changes: add direct project manage JS into head.
   - Version 1.3 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
   - Add the filter panel for the all projects and project search reuslt page
+  - Version 1.4 (Release Assembly - TC Cockpit All Projects Management Page Update)
+  - Add project filters and project filter values to filter panel
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -34,7 +36,7 @@
 <div id="wrapper">
     <div id="wrapperInner">
         <div id="container">
-            <div id="content">
+            <div id="allProjectsPageContent">
 
                 <jsp:include page="includes/header.jsp"/>
 
@@ -112,16 +114,30 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class='column2'>
+                                                <div class='row'>
+                                                    <span class='title'>Project Filters</span>
+                                                    <select id='groupBy' disabled="disabled">
+                                                        <option value='no'>No Filter Applied</option>
+                                                    </select>
+                                                </div>
+                                                <div class='row'>
+                                                    <span class='title'>Project Filter Values</span>
+                                                    <select id='groupValue' disabled="disabled">
+                                                        <option value='all'>All Filter Values</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <!--end .column1-->
                                             <div class='column3'>
                                                 <div class='row'>
-                                                    <span class='title dateLabel'>Project Creation Date</span>
+                                                    <span class='title dateLabel'>Creation Date</span>
                                                     <input id='startDateBegin' type='text' class='date-pick'/>
                                                     <span class='title toLabel'>To</span>
                                                     <input id='startDateEnd' type='text' class='date-pick'/>
                                                 </div>
                                                 <div class='row'>
-                                                    <span class='title dateLabel'>Project Completion Date</span>
+                                                    <span class='title dateLabel'>Complete Date</span>
                                                     <input id='endDateBegin' type='text' class='date-pick'/>
                                                     <span class='title toLabel'>To</span>
                                                     <input id='endDateEnd' type='text' class='date-pick'/>

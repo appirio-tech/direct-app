@@ -1,9 +1,12 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  *
  * Manages the cockpit project status, used by the show all projects page.
  *
- * @version 1.0 (Release Assembly - TopCoder Cockpit Project Status Management)
+ * version 1.0 (Release Assembly - TopCoder Cockpit Project Status Management)
+ *
+ * Version 1.1 (Release Assembly - TC Cockpit All Projects Management Page Update) changes
+ * - Update to use the new icons for status change operations.
  */
 
 
@@ -14,6 +17,9 @@
  * @param statusId the project status id
  */
 function updateDirectProjectStatus(directProjectId, statusId) {
+
+    var row = $("#projectRow" + directProjectId);
+
     modalPreloader();
     $.ajax({
         type: 'POST',
@@ -35,19 +41,15 @@ function updateDirectProjectStatus(directProjectId, statusId) {
                         // update the project buttons
                         if (result.updatedStatusId == 2) {
                             // archived
-                            $("#reactivateProjectButton" + result.directProjectId).show();
-                            $("#archiveProjectButton" + result.directProjectId).hide();
-                            $("#deleteProjectButton" + result.directProjectId).show();
+                            row.find("a.operation").show();
+                            row.find("a.archiveOperation").hide();
                         } else if (result.updatedStatusId == 1) {
                             // activated
-                            $("#reactivateProjectButton" + result.directProjectId).hide();
-                            $("#archiveProjectButton" + result.directProjectId).show();
-                            $("#deleteProjectButton" + result.directProjectId).show();
+                            row.find("a.operation").show();
+                            row.find("a.activateOperation").hide();
                         } else if (result.updatedStatusId == 3 || result.updatedStatusId == 4) {
                             // completed or deleted, hide all buttons
-                            $("#reactivateProjectButton" + result.directProjectId).hide();
-                            $("#archiveProjectButton" + result.directProjectId).hide();
-                            $("#deleteProjectButton" + result.directProjectId).hide();
+                            row.find("a.operation, .secondRowSeparator").hide();
                         }
 
                         if ($("#projectsResult").length > 0) {
@@ -56,6 +58,31 @@ function updateDirectProjectStatus(directProjectId, statusId) {
                             var index = $.allProjectTable.fnGetPosition(statusTD.get(0));
 
                             $.allProjectTable.fnUpdate(statusTD.html(), index[0], index[1]);
+
+                            var projectStatusFilter = tableHandle.fnGetData();
+                            var len = projectStatusFilter.length;
+                            var currentValue = $('#projectStatusFilter').val();
+                            var statusMap = {};
+                            for (var i = 0; i < len; i++) {
+                                var index1 = projectStatusFilter[i][8].indexOf('>');
+                                var index2 = projectStatusFilter[i][8].indexOf('<', 1);
+                                var value = projectStatusFilter[i][8].substring(index1 + 1, index2);
+
+                                statusMap[value] = true;
+                            }
+                            $('#projectStatusFilter option:gt(0)').remove();
+                            $.each(statusMap, function (key, value) {
+                                $('#projectStatusFilter').append("<option value=" + key + ">" + key + "</option>");
+                            });
+
+                            if(currentValue == null || currentValue == '' || (typeof currentValue === undefined)) {
+                                currentValue = "All";
+                            }
+
+                            console.log(currentValue);
+
+                            $("#projectStatusFilter").val(currentValue);
+                            $("#projectStatusFilter").trigger('change');
                         }
 
                     } else if (result.warning) {
@@ -70,7 +97,3 @@ function updateDirectProjectStatus(directProjectId, statusId) {
         }
     });
 }
-
-$(document).ready(function() {
-
-});

@@ -150,6 +150,10 @@
     width: 270px;
 }
 
+#allProjectsFilter #customerFilter {
+    width: 230px;
+}
+
 #projectStatusFilter {
     width: 150px;
 }
@@ -180,9 +184,23 @@
     margin-right: -15px;
 }
 
+#allProjectsFilter.filterPanel .filterContent .inner .column2 {
+    width: 27.5%;
+    margin-left: -50px;
+}
+
 .filterPanel .filterContent .inner .column2 select {
     width: 90px;
 
+}
+
+#allProjectsFilter.filterPanel .filterContent .inner .column2 select {
+    width: 150px;
+
+}
+
+#allProjectsFilter.filterPanel .filterContent .inner .column2 .title {
+    width: 120px;
 }
 
 .filterPanel .filterContent .inner .column2 .title {
@@ -249,7 +267,7 @@
 }
 
 #allProjectsFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
-    width: 150px;
+    width: 100px;
 }
 
 #allProjectsFilter.filterPanel .filterContent .inner .column3 {
