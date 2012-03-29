@@ -21,9 +21,9 @@
     <![endif]-->
     <ui:projectPageType tab="milestone"/>
     <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/projectMilestone.css?v=214041" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/projectMilestone.css?v=214829" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
-    <script type="text/javascript" src="/scripts/projectMilestone.js?v=214061"></script>
+    <script type="text/javascript" src="/scripts/projectMilestone.js?v=214829"></script>
     <script type="text/javascript">
         var tcDirectProjectId = <s:property value="formData.projectId"/>;
     </script>

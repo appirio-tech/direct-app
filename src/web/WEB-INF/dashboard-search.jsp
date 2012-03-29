@@ -29,7 +29,7 @@
     </s:if>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
-    <script type="text/javascript" src="/scripts/directProjectManage.js?v=210396"></script>
+    <script type="text/javascript" src="/scripts/directProjectManage.js?v=214865"></script>
 </head>
 
 <body id="page">

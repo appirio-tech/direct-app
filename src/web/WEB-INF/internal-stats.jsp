@@ -13,7 +13,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <link rel="stylesheet" href="/css/filter-panel.css?v=211271" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/filter-panel.css?v=214865" media="all" type="text/css"/>
     <c:set var="PAGE_TYPE" value="internal" scope="request"/>
     <script type="text/javascript">
         $('.collapse').live('click', function() {

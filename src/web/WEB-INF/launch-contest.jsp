@@ -16,13 +16,13 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <c:set var="PAGE_TYPE" value="launch" scope="request"/>
-    <script type="text/javascript" src="/scripts/launch/entity.js?v=214142"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=214359"></script>
+    <script type="text/javascript" src="/scripts/launch/entity.js?v=214861"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=214861"></script>
     <script type="text/javascript" src="/scripts/launchcontest.js?v=213082"></script>
     <script type="text/javascript" src="/scripts/launch/pages/selection.js?v=207440"></script>
     <script type="text/javascript" src="/scripts/launch/pages/overview.js?v=207440"></script>
     <script type="text/javascript" src="/scripts/launch/pages/review.js?v=210691"></script>
-    <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=207440"></script>
+    <script type="text/javascript" src="/scripts/launch/pages/orderReview.js?v=214861"></script>
 </head>
 
 <body id="page">

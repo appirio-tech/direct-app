@@ -22,7 +22,7 @@
     <jsp:include page="/WEB-INF/includes/htmlhead.jsp"/>
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
-    <script type="text/javascript" src="/scripts/notifications.js?v=207440"></script>
+    <script type="text/javascript" src="/scripts/notifications.js?v=214844"></script>
   <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.dialog.css?v=185283" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/ui.theme.css?v=185283" media="all" type="text/css"/>
