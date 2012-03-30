@@ -163,10 +163,10 @@
             <div id="invoiceFilter">
 
                 <div class="filterRow">
-                    <div class="filterRowLeft">
+                    <div class="filterRowLeft" id="invoiceNumberFilter">
                         <label>Invoice #:</label>
                     </div>
-                    <input type="text" name="formData.InvoiceNo" value="" id="InvoiceNo" class="text"/>
+                    <s:textfield id="formData.invoiceNumber" name="formData.invoiceNumber"  cssClass="text"/>
 
                     <div class="clearFix"></div>
                 </div>
