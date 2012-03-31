@@ -1,4 +1,16 @@
-// JavaScript Document
+/**
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ *
+ * The JS script for scorecard.
+ *
+ *  Version 2.0 - TCCC-4119 - scorecard - update right side bar
+ *  - Created document header.
+ *  - Modified scorecard right side bar to match direct application right side bar.
+ *
+ * @author TCSASSEMBLER, pvmagacho
+ * @version 2.0
+ */
+ 
 $(document).ready(function(){
     
     /*-------------------------- Show/hide the dropdown list --*/
@@ -250,6 +262,7 @@ $(document).ready(function(){
     });
 
     /*help center widget tab function*/
+    $(".darkenBtn,#helpCenterWidget h6").css("text-shadow", "0 -1px 1px #221d1a");
 
     $("#helpCenterWidget .tabList li a.tab").click(function() {
         $("#helpCenterWidget .tabContent").hide();
@@ -287,7 +300,27 @@ $(document).ready(function(){
         $("#FAQTabContent").show();
         $("#FAQTab").addClass("actived");
 
-    });	
+    });	    
+    
+    var ua = navigator.userAgent.toLowerCase();
+        
+    // FF 3
+	if(ua.match(/firefox\/([\d.]+)/)!=null && ua.match(/firefox\/([\d.]+)/)[1].split('.')[0]>2){
+		$("#helpCenterWidget ul.tabList a#moreTab,#helpCenterWidget ul.tabList a#lessTab").css("padding","0 14px");
+		$(".dashboardPage #helpCenterWidget .tabContent").css({"position":"relative","top":"-5px"});
+		$(".dashboardPage #helpCenterWidget ul.tabList a#moreTab,.dashboardPage #helpCenterWidget ul.tabList a#lessTab").css("padding","0 12px");
+	}
+	// FF 4
+	if(ua.match(/firefox\/([\d.]+)/)!=null && ua.match(/firefox\/([\d.]+)/)[1].split('.')[0]>3){
+		$("#helpCenterWidget ul.tabList a#moreTab,#helpCenterWidget ul.tabList a#lessTab").css("padding","0 14px");
+		$(".dashboardPage #helpCenterWidget .tabContent").css({"position":"relative","top":"-6px"});
+		$(".dashboardPage #helpCenterWidget ul.tabList a#moreTab,.dashboardPage #helpCenterWidget ul.tabList a#lessTab").css("padding","0 13px");
+	}
+    
+    // IE 7
+    if ($.browser.msie && $.browser.version == 7.0) {
+        $(".contestsContent").css("overflow-x", "hidden");
+    }
 });
 
 function resetForm(className) {

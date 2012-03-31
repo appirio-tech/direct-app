@@ -1,6 +1,21 @@
+/**
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
+ *
+ * The JS script for scorecard's right side bar.
+ *
+ *  Version 2.0 - TCCC-4119 - scorecard - update right side bar
+ *  - Created document header.
+ *  - Modified scorecard right side bar to match direct application right side bar.
+ *
+ * @author TCSASSEMBLER, pvmagacho
+ * @version 2.0
+ */
+ 
 var rightSidebarData = {};
 var currentProjectName = "";
 var contestData;
+var isInProjectScope;
+var currentProjectContests;
 
 // JavaScript Document
 $(document).ready(function(){
@@ -68,17 +83,7 @@ $(document).ready(function(){
        }
 
     //------------------------------------------------- Contests List
-    /* sort contest by title */
-    sortTitle = function(){
-         var sorting = [[1,0]];
-        $("#contestsTable").trigger("sorton",[sorting]);
-        $("#contestsTable tbody tr").removeClass("even");
-        $("#contestsTable tbody tr").removeClass("even");
-        $("#contestsTable tbody tr").each(function(){
-            $("#contestsTable tbody tr:odd").addClass("even");
-        });
-    }
-
+        
     filterProject = function(){
         if ($("#dropDown1").attr("display") == "none") {
             showHideProjectList();
@@ -92,67 +97,45 @@ $(document).ready(function(){
                 $(this).css('display', '');
             }
         });
-    }
+    }    
     
-    /* sort contest by status */
-    sortStatus = function(){
-        var sorting = [[0,0]];
-        $("#contestsTable").trigger("sorton",[sorting]);
-        $("#contestsTable tbody tr").removeClass("even");
-        $("#contestsTable  tbody tr").removeClass("even");
-        $("#contestsTable tbody tr").each(function(){
-            $("#contestsTable tbody tr:odd").addClass("even");
-        });
-    }
-    
-    /* sort contest by type */
-    sortType = function(){
-        var sorting = [[2,0]];
-        $("#contestsTable").trigger("sorton",[sorting]);
-        $("#contestsTable tbody tr").removeClass("even");
-        $("#contestsTable tbody tr").removeClass("even");
-        $("#contestsTable tbody tr").each(function(){
-            $("#contestsTable tbody tr:odd").addClass("even");
-        });
-    }
-    
-    /* get the selected index and sort the contests table */
-    sortTable = function(mySelect){
-        var selected = mySelect.options[mySelect.selectedIndex].value;
-        
-        if( selected == "title" )
-            sortTitle();
-        else if(selected == "status")
-            sortStatus();
-        else 
-            sortType();
-    }
-
     showHideProjectList = function(){
-        $("#dropDown1").slideToggle(100);
-        $("#sortTableBy").toggle();
-
+		var list = $("#dropDown1 .dropList");
+        if(list.is(":hidden")){
+            list.show();
+        }else{
+            list.hide();    
+        }        
+        
         if($(".projectSelectMask .contestsDropDown UL").height() > 200) {
             $(".projectSelectMask .contestsDropDown UL").css('width', 233);
         }
     }
-
+    
     showHideCustomerList = function(){
-        var  contestsDropDown = $(".customerSelectMask .contestsDropDown");
-        if(contestsDropDown.is(":hidden")){
+		var  contestsDropDown = $(".customerSelectMask .contestsDropDown");
+        if (contestsDropDown.is(":hidden")) {
             $(".customerSelectMask .contestsDropDown").hide();
         }
-        contestsDropDown.slideToggle(100);
-    }
-
+        
+        var list = contestsDropDown.find("ul");
+        if(list.is(":hidden")){
+            $(".dropdownWidget .dropList").hide();
+            list.show();
+        }else{
+            list.hide();    
+        }        
+        //contestsDropDown.slideToggle(100);
+	}
+    
     $(".customerSelectMask .inputSelect input").focus(function(){
         showHideCustomerList();
     });
     $(".customerSelectMask .inputSelect a").click(function(){
         showHideCustomerList();
     });
-
-    var updateCustomerDropDown  = function(dropDownWrapper,items){
+        
+    var updateCustomerDropDown  = function(dropDownWrapper,items, customerName){
         var dropDown = dropDownWrapper.find(".contestsDropDown ul");
         var input = dropDownWrapper.find(".inputSelect input");
         dropDown.find("li").remove();
@@ -161,8 +144,10 @@ $(document).ready(function(){
             var li = $("<li><a class='longWordsBreak' href='#'></a></li>");
             li.data("id",item.id);
             li.find("a").text(item.value);
-            if(index == 0){
+            if(customerName == undefined && index == 0){
                 input.val(item.value);
+            } else {
+                input.val(customerName);
             }
             li.appendTo(dropDown);
         })
@@ -221,7 +206,6 @@ $(document).ready(function(){
         dropDown.find("li:odd").addClass("even");
     }
 
-
     function compareProject(projectA, ProjectB) {
         if (projectA.value.toLowerCase() < ProjectB.value.toLowerCase())
             return -1;
@@ -240,7 +224,7 @@ $(document).ready(function(){
             return 1;
         return 0;
     }
-
+    
     var getCustomers = function(){
         var arr = [{"id":"","value":"All Customers"}];
         var count = 0;
@@ -274,28 +258,32 @@ $(document).ready(function(){
         return arr;
     }
     var customerList = getCustomers();
-    updateCustomerDropDown($(".customerSelectMask"),customerList);
+    //updateCustomerDropDown($(".customerSelectMask"), customerList);
 
+    var getCustomerWithProject = function(projectName) {
+        var result = {};
 
-    $(".customerSelectMask  UL LI").click(function() {
-        var mask = $(this).parents(".customerSelectMask");
-        mask.find("input").val($(this).find("a").text());
-        mask.find(".contestsDropDown").slideToggle(100);
-        updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
-        if ($("#activeContests").length > 0) {
-            $.activeContestsDataTable.fnFilter($(this).data("id"), 10);
-            $.activeContestsDataTable.fnSort([
-                [3,'desc']
-            ]);
-            var customer = "";
-            if ($(this).data("id") != "0" && $(this).data("id") != "") {
-                customer = $(this).text();
+        result.id = '';
+        result.name = 'All Customers';
+
+        $.each(customerList, function(index, item) {
+            var projects = item.projects;
+            if (!(item.id == '' || item.id == 'none')) {
+                for (var p in projects) {
+                    if (typeof(projects[p]) != "function") {
+                        var name = projects[p];
+                        if ($.trim(name) == $.trim(projectName)) {
+                            result.id = item.id;
+                            result.name = item.value;
+                        }
+                    }
+                }
             }
-            updateBreadcrumb(customer);
-        }
-        return false;
-    })
+        });
 
+        return result;
+    }
+    
     var getProjects = function(id){
         var arr = [];
         $.each(customerList,function(index,item){
@@ -327,8 +315,16 @@ $(document).ready(function(){
 
         return arr;
     }
-    updateProjectDropDown($(".projectSelectMask"),getProjects(""));
-
+    
+    if (typeof (currentProjectName) != "undefined" && currentProjectName != '') {
+        var result = getCustomerWithProject(currentProjectName);
+        updateCustomerDropDown($(".customerSelectMask"), customerList, result.name);
+        updateProjectDropDown($(".projectSelectMask"), getProjects(result.id));
+    } else {
+        updateCustomerDropDown($(".customerSelectMask"), customerList);
+        updateProjectDropDown($(".projectSelectMask"),getProjects(""));
+    }
+    
     var count = 0;
     $("#contestsContent").html('');
 
@@ -336,19 +332,110 @@ $(document).ready(function(){
         var templateData = value;
         templateData.i = count++;
 
-        var row = '<tr onclick="document.location.href=' + '\'/direct/contest/detail.action?projectId=' + templateData.id + "';this.style.cursor='pointer';\"" +
-        " class='" +  "'>"  + 
-        '<td width="15%" class="status">' +
-            '<span class="' +  templateData.status + '"><span>a</span></span>' +
-        '</td><td width="70%">' +
-            templateData.title +
-        '</td><td width="15%" class="type"><div style="display:table-cell;vertical-align:middle;">' +
-                '<img alt="' + templateData.type + '"src="/images/' + templateData.type + '_small.png"/>' + '</div></td></tr>';
+        var row = '<tr onclick="document.location.href=' + '\'/direct/contest/detail.action?projectId=' + templateData.id + "';this.style.cursor='pointer';\"" + " class='" +  "'>"  + 
+                  '<td>' + '<span class="' +  templateData.status + '"></span></td>' +
+                  '<td class="leftAlign">' + templateData.title + '</td>' + 
+                  '<td class="type">' + '<img alt="' + templateData.type + '" src="/images/' + templateData.type + '_small.png"/>' + '</td></tr>';
 
         $("#contestsContent").append(row);
     });
-    /*---------------------- Show the scrollbar when the number of contests is more than 10----*/
+            
+	/* sort contests */
+    if ($("#contestsTable").length > 0) {
+        $("#contestsTable").tablesorter();
+        
+        $("#rightTableHeader .statusTh").click().click();
+    }
+    
+	/* sort contest by title */
+	sortTitle = function(){
+		 var sorting = [[1,0]];
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr").each(function(){
+			$("#contestsTable tr:even").addClass("even");
+		});
+	}
+	
+	/* sort contest by status */
+	sortStatus = function(){
+		var sorting = [[0,1]];
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr").each(function(){
+			$("#contestsTable tr:even").addClass("even");
+		});
+	}
 
+    if ($("#contestsTable tbody tr").length > 0) {
+        sortStatus();
+    }
+
+	/* sort contest by type */
+	sortType = function(){
+		var sorting = [[2,0]];
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr").each(function(){
+			$("#contestsTable tr:even").addClass("even");
+		});
+	}
+	
+	/* get the selected index and sort the contests table */
+	sortTable = function(mySelect){
+		var selected = mySelect.options[mySelect.selectedIndex].value;
+		
+		if( selected == "title" )
+			sortTitle();
+		else if(selected == "status")
+			sortStatus();
+		else 
+			sortType();
+	}
+/*
+    $(".customerSelectMask  UL LI").click(function() {
+        var mask = $(this).parents(".customerSelectMask");
+        mask.find("input").val($(this).find("a").text());
+        mask.find(".contestsDropDown").slideToggle(100);
+        updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
+        if ($("#activeContests").length > 0) {
+            $.activeContestsDataTable.fnFilter($(this).data("id"), 10);
+            $.activeContestsDataTable.fnSort([
+                [3,'desc']
+            ]);
+            var customer = "";
+            if ($(this).data("id") != "0" && $(this).data("id") != "") {
+                customer = $(this).text();
+            }
+            updateBreadcrumb(customer);
+        }
+        return false;
+    })
+ */   
+ 
+    $(".customerSelectMask UL LI").click(function() {
+        var mask = $(this).parents(".customerSelectMask");
+        mask.find("input").val($(this).find("a").text());
+        
+        if (!mask.find(".contestsDropDown .dropList").is(":hidden")) {
+            mask.find(".contestsDropDown .dropList").hide();
+        }
+        updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
+        if ($("#activeContests").length > 0) {
+            $.activeContestsDataTable.fnFilter($(this).data("id"), 10);
+            $.activeContestsDataTable.fnSort([
+                [3,'desc']
+            ]);
+            var customer = "";
+            if ($(this).data("id") != "0" && $(this).data("id") != "") {
+                customer = $(this).text();
+            }
+            updateBreadcrumb(customer);
+        }
+        return false;
+    })	
+    
+    /*---------------------- Show the scrollbar when the number of contests is more than 10----*/
 
     adjustContestListHeight();
 
@@ -357,17 +444,6 @@ $(document).ready(function(){
         scrollbarWidth: 17,
         showArrows: true
     });
-
-
-    if ($("#contestsTable tbody tr").length > 0) {
-        $("#contestsTable").tablesorter();
-        sortTitle();
-        $("#contestsTable tbody tr").removeClass("even");
-        $("#contestsTable tbody tr:odd").addClass("even");
-    } else {
-       $(".contestsContent").css('width', '250px');
-    }
-
 
     /*-------------------------- Show/hide the dropdown list --*/
 
@@ -529,3 +605,60 @@ $(document).ready(function(){
         ]
     });
 });    
+
+ /* Add js code for  https://apps.topcoder.com/bugs/browse/TCCC-4119 */
+$(document).ready(function(){
+
+     var zIndex = 100;
+     $(".newSidebar .dropdownWidget").each(function(){
+        $(this).css("z-index",zIndex--);    
+     });
+        
+    $(".newSidebar .contestList .tableHeader span").click(function(){
+        var header = $(this).parent();
+        if($(this).hasClass("down")){
+            $(this).removeClass("down").addClass("up");
+        }else if($(this).hasClass("up")){
+            $(this).removeClass("up").addClass("down");    
+        }else{
+            header.find("span").removeClass("down").removeClass("up");
+            $(this).addClass("down");
+        }
+        
+        var o = 0;
+        if ($(this).hasClass("down")) {
+            o = 1;
+        }
+        
+        var oo;
+        
+        if ($(this).hasClass("statusTh")) {
+            oo = 0;
+        } else if ($(this).hasClass("titleTh")) {
+            oo = 1;
+        } else {
+            oo = 2;
+        }
+        
+		var sorting = [[oo, o]];
+        $("#contestsTable").trigger("sorton",[sorting]);
+        $("#contestsTable tr").removeClass("even");
+		$("#contestsTable tr:even").addClass("even");
+    })
+
+    $(".newSidebar .contestList .tableBody td").live("mouseenter",function(){
+        $(this).parent().addClass("hover");
+    })
+    $(".newSidebar .contestList .tableBody td").live("mouseleave",function(){
+        $(this).parent().removeClass("hover");
+    })
+
+    $(document).click(function(event){
+
+        if($(event.target).parents(".dropList").length == 0){
+            //$(".dropdownWidget .dropList").hide(); 
+        }
+         
+    });
+
+})

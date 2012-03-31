@@ -1,5 +1,13 @@
-/* CSS Document */
-/* SCORECARD */
+/*
+ * CSS for pages under scorecards.
+ *
+ * Changes:
+ *
+ *  Version 2.0 - TCCC-4119 - scorecard - update right side bar
+ *  - Created document header.
+ *  - Modified scorecard right side bar to match direct application right side bar.
+ *
+ */
 
 /*------------
 	MEMBER
@@ -808,6 +816,7 @@ BODY#page{
 #area2{
 	float: right;
 	width: 272px;
+    overflow: hidden;
 }
 
 .box{
@@ -863,7 +872,7 @@ BODY#page{
 	right: 13px;
 }
 
-/* The drop down list */
+/* The drop down list */ 
 .box .contestsDropDown{
 	border: 1px solid #d0d2d3;
 	background-color: #FFF;
@@ -879,13 +888,11 @@ BODY#page{
 	margin: 0 !important;
 	padding: 0 !important;
 	list-style: none;
-	width: 250px;
 }
 
 .contestsDropDown UL LI{
 	margin: 0 !important;
 	padding: 3px 6px!important;
-	width: 238px;
 	cursor: pointer;
 }
 
@@ -930,7 +937,7 @@ BODY#page{
 	padding-left: 1px;
 	padding-right: 1px;
 	width: 250px;
-	height: auto;
+	height: 237px;
 	overflow: auto;
 }
 
@@ -995,6 +1002,10 @@ BODY#page{
 	background: url(../../images/awarding_ico.png) no-repeat;
 }
 
+.contestsContent .failedReview{
+	background: url(../../images/milestone_ico.png) no-repeat;
+}
+
 .contestsContent .highlight TD{
 	background-color: #ffffcc !important;
 	font-weight: bold;
@@ -1032,6 +1043,106 @@ BODY#page{
 
 .contestsContent .sType{
 	background: url(../../images/s_type.png) no-repeat;
+}
+
+.contestsContent .WType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .PType{
+	background: url(../images/p_type.png) no-repeat;
+}
+
+.contestsContent .LType{
+	background: url(../images/l_type.png) no-repeat;
+}
+
+.contestsContent .SType{
+	background: url(../images/s_type.png) no-repeat;
+}
+
+.contestsContent .WdType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .IType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .PrType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .AdType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .FType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .BType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .MdType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .OType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .WdType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .SpType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .ArType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .CdType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .CvType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .AsType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .TType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .TsType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .RbType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .RcType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .AgType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .MType{
+	background: url(../images/w_type.png) no-repeat;
+}
+
+.contestsContent .CpType{
+	background: url(../images/w_type.png) no-repeat;
 }
 
 P.projectArchive{
@@ -4505,4 +4616,256 @@ a.modalTitleBtn {
     display: block !important;
     padding-left: 1px;
     padding-top: 2px;
+}
+
+/* Add css code for https://apps.topcoder.com/bugs/browse/TCCC-4119 */
+
+    .newSidebar .topBtns{
+        background:url(../../images/sidebar-top-bg.gif) no-repeat 0 0;
+        padding:16px 0 8px 10px;
+        overflow:hidden;
+    }
+        .newSidebar .topBtns a{
+            float:left;
+            color:#fffffe;
+            padding-top:67px;
+            background-repeat:no-repeat;
+            background-position:0 0;
+            margin-right:9px;
+            text-decoration:none;
+            font-size:11px;
+            text-align:center;
+        }
+        .newSidebar .topBtns a:hover{
+            text-decoration:none;
+            color:#ff0000;
+        }
+        .newSidebar .topBtns a.copilot{
+            background-image:url(../../images/copilot-icon.png);
+            width:76px;
+        }
+        .newSidebar .topBtns a.copilot:hover{
+            background-image:url(../../images/copilot-icon-hover.png); 
+        }
+        .newSidebar .topBtns a.start{
+            background-image:url(../../images/start-project-icon.png);
+            width:80px;
+        }
+        .newSidebar .topBtns a.start:hover{
+            background-image:url(../../images/start-project-icon-hover.png);
+        }
+        .newSidebar .topBtns a.launch{
+            background-image:url(../../images/launch-contest-icon.png);
+            width:78px;
+        }
+        .newSidebar .topBtns a.launch:hover{
+            background-image:url(../../images/launch-contest-icon-hover.png);
+            color:#ff0000;
+        }
+    .newSidebar .contestList{
+        background:url(../../images/sidebar-top-bg.gif) no-repeat 0 0;
+        padding:16px 0 4px;
+        position:relative;
+    }
+        .newSidebar .contestList .tr{
+            position:absolute;
+            right:-1px;
+            top:-1px;
+            background:url(../../images/box-corner1.gif) no-repeat -4px 0;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        }
+        .newSidebar .contestList .tl{
+            position:absolute;
+            left:-1px;
+            top:-1px;
+            background:url(../../images/box-corner1.gif) no-repeat 0 0;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        }
+        .newSidebar .contestList .bl{
+            position:absolute;
+            left:-1px;
+            bottom:-1px;
+            background:url(../../images/box-corner1.gif) no-repeat 0 -4px;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        }
+        .newSidebar .contestList .br{
+            position:absolute;
+            right:-1px;
+            bottom:-1px;
+            background:url(../../images/box-corner1.gif) no-repeat -4px -4px;
+            height:4px;
+            width:4px;
+            overflow:hidden;
+        } 
+        .newSidebar .contestListMask{
+            border:1px solid #000;
+            background:url(../../images/contest--box-bg.gif) repeat-x #e7e7e7 0 0;
+            width:252px;
+            margin:0 auto;
+            padding-bottom:3px;
+            position:relative;
+        }
+             .newSidebar .contestList .filter{
+                padding:0 0 14px 14px;    
+             }
+                 .newSidebar .contestList .filter label{
+                    color:#333;
+                     font-weight:bold;
+                     font-size:11px;
+                     display:block;
+                     padding:12px 0 5px;
+                 }
+                 .newSidebar .contestList .filter .dropdownWidget{
+                     background:url(../../images/dropdown-box.gif) no-repeat 0 0;
+                     height:22px;
+                     width:220px;
+                     position:relative;
+                     padding:0 2px;
+                 }
+                     .newSidebar .contestList .filter .dropdownWidget input{
+                          border:0;
+                          height:18px;
+                         line-height:18px;
+                         padding:0 3px;
+                         width:188px;
+                         color:#333;
+                         font-size:11px; 
+	                    font-family: Arial, Helvetica, sans-serif;
+                     }
+                     .newSidebar .contestList .filter .dropdownWidget a.arrow{
+                           background:url(../../images/dropdown-box-arrow.gif) no-repeat 0 0;
+                          height:20px;
+                         width:20px;
+                         position:absolute;
+                         right:3px;
+                         top:1px;
+                     }
+                     .newSidebar .contestList .filter .dropdownWidget .dropList{
+                          position:absolute;
+                          top:22px;
+                          width:222px;
+                          max-height:200px;
+                          overflow:auto;
+                          border: 1px solid #D0D2D3;
+                          left:0;
+                         display:none;
+                     }
+                         .newSidebar .contestList .filter .dropdownWidget .dropList li{
+                               background-color: #FFFFFF;
+                               font-size:11px;
+                                cursor:pointer; 
+                         }
+                         .newSidebar .contestList .filter .dropdownWidget .dropList a{
+                              display:block;
+                             padding:3px 5px;
+                             text-decoration:none;
+                             line-height:16px;
+                         }
+                         .newSidebar .contestList .dropdownWidget .dropList .even a{
+                             background:#F3F3F3;
+                         }
+                          .newSidebar .contestList .dropdownWidget .dropList a:hover,
+                          .newSidebar .contestList .dropdownWidget .dropList .even a:hover{
+                                background:#ffffcc;   
+                          }
+             .newSidebar .contestList .tableHeader{
+                background:url(../../images/thead-bg.gif) repeat-x 0 0;
+                height:33px;
+                 border-top:1px solid #d2d2d2;
+                 border-bottom:1px solid #d2d2d2;
+             }
+                .newSidebar .contestList .tableHeader span{
+                    text-align:center;
+                    font-size:11px;
+                    color:#353454;
+                    float:left;
+                    height:25px;
+                    padding-top:8px;
+                    cursor:pointer
+                }
+                .newSidebar .contestList .tableHeader span.down{
+                    background:url(../../images/arrow-down.png) no-repeat center 23px; 
+                }
+                .newSidebar .contestList .tableHeader span.up{
+                    background:url(../../images/arrow-up.png) no-repeat center 23px;
+                }
+                .newSidebar .contestList .tableHeader span.statusTh{
+                     width:42px;
+                     border-right:1px solid #d0d0d0;
+                }
+                .newSidebar .contestList .tableHeader span.titleTh{
+                     width:142px;
+                     border-right:1px solid #d0d0d0;
+                     border-left:1px solid #fff;
+                }
+                .newSidebar .contestList .tableHeader span.typeTh{
+                     width:46px;
+                     border-left:1px solid #fff;
+                }
+
+        .newSidebar .contestList .tableBody{
+            background:#fffffe;
+            max-height:300px;
+            overflow:auto;
+        }
+            .newSidebar .contestList .tableBody table{
+                width:100%;
+                font-size:11px;
+                color:#343436;
+            }
+            .newSidebar .contestList .tableBody table td{
+                cursor:pointer;
+                padding:5px 3px;
+                border-bottom:1px solid #d2d2d2;
+                vertical-align:middle;
+                text-align:center;
+            }
+            .newSidebar .contestList .tableBody table td.leftAlign{
+                text-align:left;
+            }
+             .newSidebar .contestList .tableBody table .even td{
+                background:#ececec;   
+             }
+             .newSidebar .contestList .tableBody table .hover td{
+                background:#ffffcc;
+                font-weight:bold;
+                 color:#ff0000;
+             }
+            .newSidebar .contestList .tableBody table span.running{
+                background:url("../../images/running_ico.png") no-repeat  0 0;
+                display:inline-block;
+                width:11px;
+                height:11px;
+            }
+            .newSidebar .contestList .tableBody table span.draft{
+                background:url("../../images/draft_ico.png") no-repeat  0 0;
+                display:inline-block;
+                width:11px;
+                height:11px;
+            }
+        .newSidebar .archiveLink{
+            text-align:right;
+            padding:0 11px 12px 0;
+        }
+            .newSidebar .archiveLink a{
+                background:url(../../images/archive.png) no-repeat 0 center;
+                padding-left:26px;
+                display:inline-block;
+                color:#fcfcfc;
+                text-decoration:none;
+                font-size:11px;
+            }
+            .newSidebar .archiveLink a:hover{
+                text-decoration:underline;
+            }
+
+#helpCenterWidget{
+    padding-top:9px;
+    background:url(../../images/sidebar-top-bg.gif) no-repeat 0 0;
 }
