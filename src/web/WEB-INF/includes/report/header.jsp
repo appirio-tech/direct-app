@@ -29,7 +29,7 @@
                         <option value="PIPELINE" <s:if test="viewData.reportType.toString() == 'PIPELINE'">selected="selected"</s:if>>
                             Pipeline</option>
                         <option value="COST" <s:if test="viewData.reportType.toString() == 'COST'">selected="selected"</s:if>>
-                            Cost</option>
+                            Cost Analysis</option>
                         <option value="BILLING_COST" <s:if test="viewData.reportType.toString() == 'BILLING_COST'">selected="selected"</s:if>>
                             Invoice History</option>
                         <option value="PARTICIPATION" <s:if test="viewData.reportType.toString() == 'PARTICIPATION'">selected="selected"</s:if>>

@@ -65,7 +65,7 @@
 <div class="area1Content">
 
 <jsp:include page="/WEB-INF/includes/report/header.jsp">
-    <jsp:param name="reportTitle" value="Cost Report"/>
+    <jsp:param name="reportTitle" value="Cost Analysis"/>
 </jsp:include>
 
 <%-- cost report form --%>
@@ -292,7 +292,7 @@
     <tr>
         <th class="tableTitle" colspan="4">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
-            <span>Aggregation Cost Report</span>
+            <span>Aggregation Cost Analysis</span>
         </th>
         <th class="tableTitle viewType">
             <label for="aggregationCostReportType">View By:</label>
