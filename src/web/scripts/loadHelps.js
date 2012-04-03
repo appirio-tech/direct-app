@@ -16,15 +16,15 @@
 
 // config video widget
 var videoLink = "https://www.youtube.com/v/ubU0_mVtxJcxx";
-var allVideoLink = "https://www.topcoder.com/help/?page_id=900";
+var allVideoLink = "http://www.topcoder.com/help/template-video/?subject=startproject&catIdx=18";
 
 // config help center widget
 
 /** the contents for the FAQ tab */
 var FAQ = { links: [
+            { text: "Who are the copilots?", link: "http://www.topcoder.com/help/p=301/?subject=startproject"},
             { text: "How to monitor Forum Activity?", link: "https://www.topcoder.com/help/?p=622"},
             { text: "What is TopCoder forum?", link: "https://www.topcoder.com/help/?p=620"},
-            { text: "How to Extend deadline?", link: "https://www.topcoder.com/help/?p=618"},
             { text: "How to increase Prize?", link: "https://www.topcoder.com/help/?p=616"},
             { text: "What can I do once a contest is running?", link: "https://www.topcoder.com/help/?p=614"},
             { text: "What types of forums does TopCoder provide?", link: "https://www.topcoder.com/help/?p=606"},
@@ -36,38 +36,38 @@ var FAQ = { links: [
 /** the contents for the Video tab */
 var VIDEO = { links: [
             { text: "My Game Plan", link: "https://www.topcoder.com/help/?p=118"},
-            { text: "Contest Health", link: "https://www.topcoder.com/help/?p=102"},
+            { text: "How to get a copilot", link: "http://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
             { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"},
-            { text: "Manufacturing Software", link: "https://www.topcoder.com/help/?p=433"},
-            { text: "Component Architecture", link: "https://www.topcoder.com/help/?p=431"},
+            { text: "Cockpit - Login", link: "http://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
+            { text: "Cockpit - Project Dashboard 1", link: "http://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
             { text: "Cockpit: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
-            { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"}
+            { text: "Cockpit - Contest Dashboard 1", link: "http://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
-            viewAllLink: "https://www.topcoder.com/help/?page_id=90"
+            viewAllLink: "http://www.topcoder.com/help/template-video/?subject=startproject&catIdx=18"
 };
 
 /** the contents for the tutorial tab */
 var TUTORIAL = { links: [
-            { text: "How to delete Draft contest", link: "https://www.topcoder.com/help/?p=817"},
-            { text: "How to create a bug ticket in JIRA and move it to Mod Dash", link: "https://www.topcoder.com/help/?p=815"},
-            { text: "How to post new version of a contest", link: "https://www.topcoder.com/help/?p=807"},
-            { text: "How to repost a contest", link: "https://www.topcoder.com/help/?p=805"},
-            { text: "How to increase contest prize (while the contest is running)", link: "https://www.topcoder.com/help/?p=801"},
-            { text: "How to extend contest deadline (while the contest is running)", link: "https://www.topcoder.com/help/?p=797"},
-            { text: "How to launch a Copilot Contest", link: "https://www.topcoder.com/help/?p=791"}
+            { text: "My Game Plan", link: "https://www.topcoder.com/help/?p=118"},
+            { text: "How to get a copilot", link: "http://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
+            { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"},
+            { text: "Cockpit - Login", link: "http://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
+            { text: "Cockpit - Project Dashboard 1", link: "http://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
+            { text: "Cockpit: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
+            { text: "Cockpit - Contest Dashboard 1", link: "http://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "https://www.topcoder.com/help/?page_id=86"
 };
 
 /** the contents for the example tab */
 var EXAMPLE = { links: [
-            { text: "My Game Plan", link: "https://www.topcoder.com/help/?p=118"},
-            { text: "Contest Health", link: "https://www.topcoder.com/help/?p=102"},
+            { text: "Sample Project", link: "http://www.topcoder.com/how-it-works/"},
+            { text: "How to get a copilot", link: "http://www.topcoder.com/help/2012/03/13/how-to-get-a-copilot/?subject=startproject"},
             { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"},
-            { text: "Manufacturing Software", link: "https://www.topcoder.com/help/?p=433"},
-            { text: "Component Architecture", link: "https://www.topcoder.com/help/?p=431"},
+            { text: "Cockpit - Login", link: "http://www.topcoder.com/help/2012/03/27/cockpit-login/?subject=startproject"},
+            { text: "Cockpit - Project Dashboard 1", link: "http://www.topcoder.com/help/2012/03/27/cockpit-project-dashboard-1/?subject=startproject"},
             { text: "Cockpit: Setting Permissions", link: "https://www.topcoder.com/help/?p=729"},
-            { text: "Launching a Conceptualization Contest", link: "https://www.topcoder.com/help/?p=583"}
+            { text: "Cockpit - Contest Dashboard 1", link: "http://www.topcoder.com/help/2012/03/27/cockpit-contest-dashboard-1/?subject=startproject"}
             ],
             viewAllLink: "https://www.topcoder.com/help/?page_id=95"
 };
