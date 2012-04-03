@@ -156,7 +156,7 @@
         </div>        
         
         <div class="archiveLink">
-            <a href="<s:url action='allProjects'/>">Project Archive</a>
+            <a href="<s:url action='allProjects'/>">All Projects</a>
         </div>           
     </div>
 
