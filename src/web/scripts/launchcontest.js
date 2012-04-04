@@ -24,8 +24,11 @@
  * Version 1.4 Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change note:
  * - integrate the new cockpit tinyMCE editor
  *
- * @author GreatKevin
- * @version 1.4
+ * Version 1.5 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) change notes:
+ * - Add the handle of "auto bug hunt creation" checkbox for assembly contest
+ *
+ * @author GreatKevin, TCSASSEMBLER
+ * @version 1.5
  */
 $(document).ready(function() {
 
@@ -272,6 +275,11 @@ $(document).ready(function() {
         $('#enforceCCAToolTip').hide();
     });
 
+    $('#assembly_bug_hunt .helpme').hover(function () {
+        showPopup(this, 'bugHuntForAssemblyToolTip');
+    }, function () {
+        $('#bugHuntForAssemblyToolTip').hide();
+    });
 
     $('#Round1HelpIcon .helpIcon').hover(function() {
         showPopup(this, 'contestRound1ToolTip');
@@ -507,6 +515,15 @@ function onContestTypeChange() {
        if(isContestSaved()) {
           currentTypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
        }
+
+    if(typeId == 14 && contestType == 'SOFTWARE') {
+        // show the bug hunt check box and default set to checked
+        $("#assembly_bug_hunt").show();
+        $("#bug_hunt_CheckBox").attr('checked', 'checked');
+    } else {
+        $("#assembly_bug_hunt").hide();
+        $("#bug_hunt_CheckBox").removeAttr('checked');
+    }
 
     if (isContestSaved() && mainWidget.competitionType != contestType) {
         showErrors("You can not switch between studio and software after it is saved.");

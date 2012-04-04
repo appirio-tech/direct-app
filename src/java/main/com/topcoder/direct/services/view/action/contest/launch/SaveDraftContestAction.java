@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -14,6 +14,10 @@ import java.util.Map;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.clients.model.ProjectContestFee;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
+import com.topcoder.management.project.ProjectPropertyType;
+import com.topcoder.management.project.ProjectType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -135,8 +139,24 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ol>
  * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv
- * @version 1.6.2
+ * <p>
+ * Version 1.6.3 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) change notes:
+ * <ul>
+ *     <li>
+ *         Updated {@link #initializeSoftwareCompetition(com.topcoder.service.project.SoftwareCompetition)} to initialize
+ *         the bug hunt project header for assembly contest with auto bug hunt creation set to true.
+ *     </li>
+ *     <li>
+ *         Added {@link #populateBugHuntAutoCreationContestHeader(com.topcoder.management.project.Project,
+ *         com.topcoder.management.project.Project)} to setup the bug hunt project header
+ *         - set up the first place prize
+ *         - set up the admin fee for the bug hunt contest
+ *     </li>
+ * </ul>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, Veve, isv, TCSASSEMBLER
+ * @version 1.6.3
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -168,6 +188,15 @@ public class SaveDraftContestAction extends ContestAction {
      * </p>
      */
     private static final String PROJECT_HEADER_FIRST_PLACE_COST = "First Place Cost";
+
+
+    /**
+     * <p>
+     * Constant for the default first place prize of the auto created bug hunt contest.
+     * </p>
+     * @since 1.6.3
+     */
+    private static final double PROJECT_HEADER_BUG_HUNT_STANDARD_PRIZE = 200;
 
     /**
      * <p>
@@ -441,6 +470,14 @@ public class SaveDraftContestAction extends ContestAction {
      */
     private List<String> fileTypes;
 
+
+    /**
+     * <p>
+     * Auto create bug hunt flag, default to false.
+     * </p>
+     */
+    private boolean autoCreateBugHunt = false;
+
     /**
      * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
@@ -689,7 +726,7 @@ public class SaveDraftContestAction extends ContestAction {
      * @param softwareCompetition software competition
      * @since Direct Launch Software Contests Assembly
      */
-    protected void initializeCompetition(SoftwareCompetition softwareCompetition) {
+    protected void initializeCompetition(SoftwareCompetition softwareCompetition) throws Exception {
         // asset DTO
         AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
         if (assetDTOTemp.getVersionNumber() == null) {
@@ -796,12 +833,17 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Initializes the software competition object for software contest.
      * </p>
+     *
+     * <p>
+     *  Updates in 1.6.3:
+     *  - Set up the bug hunt project header for assembly contest which needs auto creation.
+     * </p>
      * 
      * @param softwareCompetition
      *            software competition
      * @since Direct Launch Software Contests Assembly
      */
-    private void initializeSoftwareCompetition(SoftwareCompetition softwareCompetition) {
+    private void initializeSoftwareCompetition(SoftwareCompetition softwareCompetition) throws Exception {
         // asset DTO
         AssetDTO assetDTOTemp = softwareCompetition.getAssetDTO();
         
@@ -825,6 +867,60 @@ public class SaveDraftContestAction extends ContestAction {
                     .put(PROJECT_HEADER_FIRST_PLACE_COST,
                             projectHeaderTemp.getProperties().get(PROJECT_HEADER_FIRST_PLACE_COST));
         }
+
+        if(isAssembly(projectHeaderTemp) && getAutoCreateBugHunt()) {
+            softwareCompetition.setBugHuntProjectHeader(new com.topcoder.management.project.Project());
+            populateBugHuntAutoCreationContestHeader(softwareCompetition.getBugHuntProjectHeader(),
+                    softwareCompetition.getProjectHeader());
+
+        }
+    }
+
+
+    /**
+     * Sets up the first place prize and contest fee (admin fee) for the auto created bug race. It reads the contest
+     * fee for the billing account from the contest fee service. If the fee does not exist or billing account not set,
+     * use the default fee.
+     *
+     * @param bugHuntHeader the bug hunt project header.
+     * @param assemblyHeader the assembly project header
+     * @throws Exception if any error occurs.
+     * @since 1.6.3
+     */
+    private void populateBugHuntAutoCreationContestHeader(com.topcoder.management.project.Project bugHuntHeader,
+                                                          com.topcoder.management.project.Project assemblyHeader) throws Exception {
+        // set the first place prize for the auto creation bug hunt contest
+        bugHuntHeader.getProperties().put(PROJECT_HEADER_FIRST_PLACE_COST,
+                String.valueOf(PROJECT_HEADER_BUG_HUNT_STANDARD_PRIZE));
+
+        // get the billing project id used by the assembly contest
+        long billingAccountId = 0;
+
+        // set to default first
+        double bugHuntAdminFee = ConfigUtils.getSoftwareContestFees().get(String.valueOf(ContestType.BUG_HUNT.getId())).getContestFee();
+
+        if (assemblyHeader.getProperties().get(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY) != null) {
+            billingAccountId = Long.parseLong(assemblyHeader.getProperties().get(ProjectPropertyType.BILLING_PROJECT_PROJECT_PROPERTY_KEY));
+        }
+
+        if (billingAccountId != 0) {
+            // billing account set, check if specific feed configuration exist for the billing account
+            final List<ProjectContestFee> contestFeesByProject =
+                    getAdminServiceFacade().getContestFeesByProject(DirectUtils.getTCSubjectFromSession(), billingAccountId);
+
+            if (contestFeesByProject != null) {
+                for(ProjectContestFee fee : contestFeesByProject) {
+                    if (fee.getContestTypeId() == ContestType.BUG_HUNT.getId()) {
+                        // specific fee configuration exists for bug hunt, use the specific value
+                        bugHuntAdminFee = fee.getContestFee();
+                        break;
+                    }
+                }
+            }
+        }
+
+        // set the admin fee into the bug hunt project header
+        bugHuntHeader.getProperties().put(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY, String.valueOf(bugHuntAdminFee));
     }
 
     /**
@@ -853,6 +949,20 @@ public class SaveDraftContestAction extends ContestAction {
     private boolean isDesign(com.topcoder.management.project.Project projectHeader) {
         long projectCategoryId = projectHeader.getProjectCategory().getId();
         return (projectCategoryId == PROJECT_CATEGORY_DESIGN);
+    }
+
+    /**
+     * <p>
+     * Determines if the project is assembly.
+     * </p>
+     *
+     * @param projectHeader the project header.
+     * @return true if it's of type assembly, false otherwise.
+     * @since 1.6.3
+     */
+    private boolean isAssembly(com.topcoder.management.project.Project projectHeader) {
+        long projectCategoryId = projectHeader.getProjectCategory().getId();
+        return (projectCategoryId == ContestType.ASSEMBLY.getId());
     }
 
     /**
@@ -1675,5 +1785,13 @@ public class SaveDraftContestAction extends ContestAction {
             throw new IllegalStateException("The contest service facade is not set.");
         }
         return contestServiceFacade;
+    }
+
+    public boolean getAutoCreateBugHunt() {
+        return autoCreateBugHunt;
+    }
+
+    public void setAutoCreateBugHunt(boolean autoCreateBugHunt) {
+        this.autoCreateBugHunt = autoCreateBugHunt;
     }
 }

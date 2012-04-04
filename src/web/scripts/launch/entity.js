@@ -30,15 +30,15 @@
  * Changes in version 1.4 (Release Assembly - TopCoder BugHunt Competition Integration):
  * <li>Add bug hunt to the contest types when creating new contest.</li>
  * </p>
+ *
  * <p>
- * Changes in version 1.5 (Module Assembly - Contest Fee Based on % of Member Cost User Part):
- * <ul>
- * <li>Added the 'Contest Fee Percentage' to the properties field of the Project class.</li>
- * </ul>
+ *  Version 1.4.1 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) change notes:
+ *  - Add constant SOFTWARE_CATEGORY_ID_ASSEMBLY
  * </p>
+ *
  * 
- * @author duxiaoyang, TCSASSEMBLER, pvmagacho
- * @version 1.5
+ * @author duxiaoyang, TCSASSEMBLER
+ * @version 1.4.1
  */
 if(!com) {
    var com = {};
@@ -145,6 +145,7 @@ var SOFTWARE_CATEGORY_ID_CONCEPT = 23;
 var SOFTWARE_CATEGORY_ID_SPEC = 6;
 var SOFTWARE_CATEGORY_ID_CONTENT = 35;
 var SOFTWARE_CATEGORY_ID_MARATHON = 37;
+var SOFTWARE_CATEGORY_ID_ASSEMBLY = 14;
 
 var DRAFT_STATUS = "Draft";
  
@@ -157,7 +158,7 @@ var projectCategoryArray = [
 {id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application', hasMulti:true},
 {id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application', hasMulti:true},
 {id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application', hasMulti:true},
-{id:14,                                name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_ASSEMBLY,     name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:true},
 {id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application', hasMulti:true},
 {id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application', hasMulti:true},
 {id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:false},
@@ -376,14 +377,6 @@ com.topcoder.direct.Project = function() {
 	  
 	  this.getAdminFee = function() {
 	  	  return this.properties['Admin Fee'];
-	  }
-      
-	  this.setContestFeePercentage = function(contestFeePercentage) {
-	  	  this.properties['Contest Fee Percentage'] = contestFeePercentage;
-	  }
-	  
-	  this.getContestFeePercentage = function() {
-	  	  return this.properties['Contest Fee Percentage'];
 	  }
 
 	  this.setSpecReviewCost = function(specReviewCost) {

@@ -1,22 +1,22 @@
 <%--
   - Author: TCSASSEMBLER
   - Version: 1.2
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 1012 TopCoder Inc., All Rights Reserved.
   -
+  - Description: Contest selection page.
+
   - Version 1.0.1 (TC Direct Software Contest Creation Update Assembly) changes: add display of copilots of software contest.
   - Version 1.0.2 (TC Direct Release Bug Fix Assembly) changes: change time zone from GMT-04 to UTC-05.
   - Version 1.0.3 (Release Assembly - Direct Improvements Assembly Release 3) changes: add current date on server to populate start/end date.
---%>
-<%--
-  - Author: TCSASSEMBER
-  - Version: 1.1
-  - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
   -
-  - Description: Contest selection page.
   -
   - Version 1.1 - Direct - Repost and New Version Assembly Change Note
   - - Studio contest type is rendered by javascript now.
   - - Add support for multi round type for both software contest and studio contest.
+  -
+  - Version 1.2 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) change notes:
+  - - add the check box "Create Bug Hunt Contest" for assembly contest
+  -
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -42,6 +42,12 @@
                     <input id="lccCheckBox" type="checkbox" />
                     <span class="lcc">Enforce CCA</span>
                     <a href="javascript:;" class="helpme" ><img src="/images/help_ico5.gif" alt="help" /></a>
+                  </div>
+
+                  <div id="assembly_bug_hunt" class="bug_hunt_chk hide">
+                      <input id="bug_hunt_CheckBox" type="checkbox"/>
+                      <span class="bug_hunt">Create Bug Hunt Contest</span>
+                      <a href="javascript:;" class="helpme"><img src="/images/help_ico5.gif" alt="help"/></a>
                   </div>
 
                   <div class="help"><span class="new_style">Contest Type Information</span></div>

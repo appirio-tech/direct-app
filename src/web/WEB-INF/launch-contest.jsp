@@ -1,11 +1,14 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.2
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of creating project in dashboard.
   -
   - Version 1.1 (TC Direct UI Improvement Assembly 2) changes: Solve help information layout issues.
+  -
+  - Version 1.2 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) changes:
+  - - Add tooltip for "Create Bug Hunt Contest" checkbox
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -285,6 +288,35 @@
 
                 <div class="tooltipContent">
                     <p>In some cases, when clients would like to hold a "private" competition that has confidentiality terms in addition to the usual click-through terms, the competition will require a Competition Confidentiality Agreement or "CCA" document to be completed prior to participation in the competition. http://apps.topcoder.com/wiki<br/>/display/tc/Competition+<br/>Confidentiality+Agreement+<br/>%28CCA%29</p>
+                </div><!-- End .tooltipContent -->
+
+            </div></div>
+        </div></div></div>
+    </div>
+  <!-- End .tooltipContainer -->
+</div>
+
+<div class="tooltipArea">
+    <div id="bugHuntForAssemblyToolTip" class="tooltipContainer">
+        <span class="arrow"></span>
+        <div class="tooltipLeft"><div class="tooltipRight"><div class="tooltipBottom">
+            <div class="tooltipBottomLeft"><div class="tooltipBottomRight">
+
+                <div class="tooltipCaption">
+                    <div class="tooltipCaptionLeft"><div class="tooltipCaptionRight">
+                        <div class="tooltipCaptionInner">
+                            <h2>Help</h2>
+                            <a href="javascript:;" class="closeIco"></a>
+                        </div><!-- End .tooltipCaptionInner -->
+                    </div></div>
+                </div><!-- End .tooltipCaption -->
+
+                <div class="tooltipContent">
+                    <p>
+                        Check this checkbox to automatically create a bug hunt competition for your assembly competition.
+                        The bug hunt competition will start after your assembly competition to find out the potential
+                        bugs of your assembly.
+                    </p>
                 </div><!-- End .tooltipContent -->
 
             </div></div>

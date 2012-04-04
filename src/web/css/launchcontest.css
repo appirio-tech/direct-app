@@ -9,27 +9,40 @@
 	line-height:36px;
 	}
 
+#launchContestOut .lcc {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding-right: 5px;
+    vertical-align: baseline;
+    color: #333333;
+}
 
-#launchContestOut .lcc{
-	font-family:Arial, Helvetica, sans-serif;
-	
-	font-size:12px;
-	padding-right:5px;
-	vertical-align:baseline;
-	
-	color:#333333;
-	}
+#launchContestOut .lcc_chk {
+    width: 120px;
+    height: 28px;
+    float: left;
+    display: inline;
+    padding-left: 24px;
+    padding-top: 5px;
+}
 
+#launchContestOut .bug_hunt {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding-right: 5px;
+    vertical-align: baseline;
+    color: #333333;
+}
 
-#launchContestOut .lcc_chk{
-					width:120px;
-					height:28px;
-					float:left;
-					display:inline;
-					padding-left:24px;
-					
-	padding-top:5px;
-	}
+#launchContestOut .bug_hunt_chk {
+    width: 195px;
+    height: 28px;
+    float: left;
+    display: inline;
+    padding-left: 24px;
+    padding-top: 5px;
+}
+
 
 #launchContestOut .hide{
 	display:none;
