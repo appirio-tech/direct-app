@@ -242,6 +242,7 @@
 ###########################
 @jiraIssueURLPrefix@=http://www.dev.topcoder.com/bugs/browse/
 @jiraProfilePrefix@=http://www.dev.topcoder.com/bugs/secure/ViewProfile.jspa?name=
+@jiraBugRaceProject@=TEST
 
 ##############
 # struts.xml #

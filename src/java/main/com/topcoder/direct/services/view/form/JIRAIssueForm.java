@@ -1,0 +1,210 @@
+/*
+ * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ */
+package com.topcoder.direct.services.view.form;
+
+import java.io.Serializable;
+
+/**
+ * <p>A form bean providing the data submitted by user for creating/updating a JIRA issue.</p>
+ *
+ * @author TCSASSEMBER
+ * @version 1.0
+ */
+public class JIRAIssueForm implements Serializable {
+    /**
+     * <p>Represents the serial version unique id.</p>
+     */
+    private static final long serialVersionUID = -435431124446L;
+
+    /**
+     * <p>Represents the id of the JIRA issue.</p>
+     */
+    private String issueId;
+    
+    /**
+     * <p>Represents the name of the JIRA issue.</p>
+     */
+    private String name;
+    
+    /**
+     * <p>Represents the environment of the JIRA issue.</p>
+     */
+    private String environment;
+    
+    /**
+     * <p>Represents the description of the JIRA issue.</p>
+     */
+    private String description;
+    
+    /**
+     * <p>Represents the first place payment of the JIRA issue.</p>
+     */
+    private float firstPlacePayment;
+    
+    /**
+     * <p>Represents the payment status of the JIRA issue.</p>
+     */
+    private String paymentStatus;
+    
+    /**
+     * <p>Represents the TCO points of the JIRA issue.</p>
+     */
+    private int tcoPoints;
+    
+    /**
+     * <p>Represents whether the issue is CCA only.</p>
+     */
+    private boolean cca;
+    
+    /**
+     * <p>Empty constructor.</p>
+     */
+    public JIRAIssueForm() {
+        
+    }
+
+    /**
+     * <p>Gets the id of the issue.</p>
+     * 
+     * @return the id of the issue.
+     */
+    public String getIssueId() {
+        return issueId;
+    }
+
+    /**
+     * <p>Sets the id of the issue.</p>
+     * 
+     * @param issueId the id of the issue.
+     */
+    public void setIssueId(String issueId) {
+        this.issueId = issueId;
+    }
+
+    /**
+     * <p>Gets the name of the issue.</p>
+     * 
+     * @return the name of the issue.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * <p>Sets the name of the issue.</p>
+     * 
+     * @param name the name of the issue.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * <p>Gets the environment of the issue.</p>
+     * 
+     * @return the environment of the issue.
+     */
+    public String getEnvironment() {
+        return environment;
+    }
+
+    /**
+     * <p>Sets the environment of the issue.</p>
+     * 
+     * @param environment the environment of the issue.
+     */
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    /**
+     * <p>Gets the description of the issue.</p>
+     * 
+     * @return the description of the issue.
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * <p>Sets the description of the issue.</p>
+     * 
+     * @param description the description of the issue.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * <p>Gets the first place payment of the issue.</p>
+     * 
+     * @return the first place payment of the issue
+     */
+    public float getFirstPlacePayment() {
+        return firstPlacePayment;
+    }
+
+    /**
+     * <p>Sets the first place payment of the issue.</p>
+     * 
+     * @param firstPlacePayment the first place payment of the issue.
+     */
+    public void setFirstPlacePayment(float firstPlacePayment) {
+        this.firstPlacePayment = firstPlacePayment;
+    }
+
+    /**
+     * <p>Gets the payment status of the issue.</p>
+     * 
+     * @return the payment status of the issue.
+     */
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    /**
+     * <p>Sets the payment status of the issue.</p>
+     * 
+     * @param paymentStatus the payment status of the issue.
+     */
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    /**
+     * <p>Gets the TCO points of the issue.</p>
+     * 
+     * @return the tcoPoints the TCO points of the issue.
+     */
+    public int getTcoPoints() {
+        return tcoPoints;
+    }
+
+    /**
+     * <p>Sets the TCO points of the issue.</p>
+     * 
+     * @param tcoPoints the TCO points of the issue.
+     */
+    public void setTcoPoints(int tcoPoints) {
+        this.tcoPoints = tcoPoints;
+    }
+
+    /**
+     * <p>Gets the flag indicates whether the issue is CCA only.</p>
+     * 
+     * @return the true if the issue is CCA only, false otherwise.
+     */
+    public boolean isCca() {
+        return cca;
+    }
+
+    /**
+     * <p>Sets the flag indicates whether the issue is CCA only.</p>
+     * 
+     * @param cca true if the issue is CCA only, false otherwise.
+     */
+    public void setCca(boolean cca) {
+        this.cca = cca;
+    }
+}

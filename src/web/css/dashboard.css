@@ -47,6 +47,9 @@
  *
  * - (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) updates:
  * - Add new css for the new group by and group values for report filters
+ *
+ * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 1) updates:
+ * - Add new css for add/edit JIRA issue in contest issue tracking page.
  */
 
 
@@ -5733,6 +5736,18 @@ Contest links
     color: #ff9000;
 }
 
+.issueSelectionContent .rowItem .shortDetails .button11 {
+    display: inline;
+    float: right;
+    margin-top: -12px;
+    width: auto;
+}
+.issueSelectionContent .rowItem .longDetails .button11 {
+    float: right;
+    margin-top: 70px;
+}
+
+
 /* longDetails */
 .issueSelectionContent .rowItem .longDetails {
     border-top: #eaebeb solid 2px;
@@ -5781,6 +5796,180 @@ Contest links
 
 .issueSelectionContent .rowItem .longDetails li.linkList dd {
     width: 100%;
+}
+
+.issueSelectionContent .inputContainer{
+	display:none;
+	padding:20px 0;
+	min-height:100px;
+}
+	
+.issueSelectionContent .inputContainer label{
+    width:210px;
+    min-height:23px;
+    position:absolute;
+    padding-bottom:14px;
+    text-align:right;
+    padding-right:10px;
+    line-height:23px;
+}
+		
+.issueSelectionContent .inputContainer label.required{
+    color:#FF0001;
+}
+		
+.issueSelectionContent .inputContainer .row{
+    min-height:23px;
+    padding-left:220px;
+    padding-bottom:14px;
+}
+		
+.issueSelectionContent .inputContainer .row strong{
+    display:block;
+}
+		
+.issueSelectionContent .inputContainer .row p{
+    line-height:16px;
+}
+			
+.issueSelectionContent .inputContainer .row p.projectText{
+    line-height:23px;
+}
+		
+.issueSelectionContent .inputContainer p.bug{
+    padding-left:18px;
+    line-height:23px;
+    background:url(../images/bug.gif) no-repeat left center;
+}
+			
+.issueSelectionContent .inputContainer .row p.infoText{
+    color:#999999;
+}
+		
+/* image */
+.issueSelectionContent .inputContainer .row img{
+    vertical-align:top;
+}
+		
+/* input */	
+.issueSelectionContent .inputContainer .row .text{
+    width:158px;
+    height:15px;
+    padding:3px 0;
+    margin-bottom:2px;
+    border:#acacac solid 1px;
+    line-height:15px;
+    background:#fffffd;
+}
+			
+.issueSelectionContent .inputContainer .row .payeeText{
+    width:220px;
+}
+					
+.issueSelectionContent .inputContainer .row .largeText{
+    width:85%;
+}
+		
+/* text area */	
+.issueSelectionContent .inputContainer .row .textarea{
+    max-width:85%;
+    width:85%;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:2px 0;
+    border:#acacac solid 1px;
+}
+		
+/* select */	
+.issueSelectionContent .inputContainer .row .select{
+    margin-bottom:2px;
+}
+		
+.issueSelectionContent .inputContainer .row .selectOption{
+    width:155px;
+}
+			
+.issueSelectionContent .inputContainer .row .selectAssignee{
+    width:195px;
+}
+			
+.issueSelectionContent .inputContainer .row .largeSelect{
+    width:85%;
+}
+
+/* link */	
+.issueSelectionContent .inputContainer .row a{
+    margin-left:6px;
+    color:#5d90c7;
+    text-decoration:none;
+}
+    
+.issueSelectionContent .inputContainer .row a:hover{
+    text-decoration:underline !important;
+}
+
+/* select item */	
+.issueSelectionContent .inputContainer .row .selectItem{
+    min-height:16px;
+    padding:4px 0 6px 0;
+    line-height:17px;
+}
+    
+.issueSelectionContent .inputContainer .row label{
+    font-weight:bold;
+    display:block;
+    line-height:23px;
+}
+    
+.issueSelectionContent .inputContainer .row .selectItem span{
+    display:block;
+}
+
+.issueSelectionContent .inputContainer .row .selectItem a{
+    margin-left:0;
+}
+
+/* suggestion */			
+.issueSelectionContent .inputContainer .row .addSelected{
+    margin-left:0px;
+    line-height:18px;
+}
+    
+.issueSelectionContent .inputContainer .row .suggestionLabel a{
+    margin-left:4px;
+}
+
+/* button */
+.issueSelectionContent .inputContainer .buttonBox{
+margin-left:220px;
+}
+
+.issueSelectionContent .inputContainer .button6{
+    width:auto;
+    float:left;
+}
+
+.issueSelectionContent .ccaRequired {
+    display: inline;
+    float: left;
+    height: 13px;
+    margin-right: 4px;
+    overflow: hidden;
+    width: 13px;
+}
+
+.issueTabs .button6 {
+    margin-right: 26px;
+    margin-top: 6px;
+}
+
+#ccaRequiredLabel {
+    cursor: pointer;
+    display: inline;
+    float: left;
+    font-weight: normal;
+    line-height: 15px;
+    padding: 0;
+    width: auto;
 }
 
 /* Cockpit Contest Details - Issue Tracking */

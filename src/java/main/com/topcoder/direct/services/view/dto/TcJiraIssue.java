@@ -1,16 +1,17 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto;
-
-import com.atlassian.jira.rpc.soap.client.RemoteCustomFieldValue;
-import com.atlassian.jira.rpc.soap.client.RemoteIssue;
-import com.topcoder.direct.services.configs.ConfigUtils;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.atlassian.jira.rpc.soap.client.RemoteCustomFieldValue;
+import com.atlassian.jira.rpc.soap.client.RemoteIssue;
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 
 /**
  * The DTO class which is used to store the data for a Jira issue of TopCoder.
@@ -19,8 +20,18 @@ import java.util.Date;
  * - Add getProjectID, and isBugRace.
  * </p>
  *
- * @author Veve
- * @version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 assembly)
+ * <p>
+ * Version 1.2 (TC Direct Issue Tracking Tab Update Assembly 1) change notes:
+ *   <ol>
+ *     <li>Added {@link #getEnvironment()}, {@link #getPaymentStatus()}, {@link #getTCOPoints()}, {@link #getIssueId()},
+ *     {@link #getSecurityLevelId()} methods to return the environment, payment status, TCO points, issue id, and
+ *     security level id of the issue.</li>
+ *     <li>Added {@link #isCca()} to checks whether the JIRA issue is CCA required.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author Veve, TCSASSEMBER
+ * @version 1.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 assembly)
  */
 public class TcJiraIssue implements Serializable {
 
@@ -54,6 +65,13 @@ public class TcJiraIssue implements Serializable {
      */
     private String resolutionName;
 
+    /**
+     * The security leve id of the issue.
+     * 
+     * @since 1.2
+     */
+    private Long securityLevelId;
+    
     /**
      * Creates a TcJiraIssue instance.
      */
@@ -333,4 +351,103 @@ public class TcJiraIssue implements Serializable {
         return getProjectName().trim().toLowerCase().equals(bugRaceProjectName);
     }
 
+    /**
+     * Gets the environment from the JIRA issue.
+     * 
+     * @return the environment of the JIRA issue.
+     * @since 1.2
+     */
+    public String getEnvironment() {
+        return issue.getEnvironment();
+    }
+    
+    /**
+     * Gets the description from the JIRA issue.
+     * 
+     * @return the description of the JIRA issue.
+     * @since 1.2
+     */
+    public String getDescription() {
+        return issue.getDescription();
+    }
+    
+    /**
+     * Gets the payment status from the JIRA issue.
+     * 
+     * @return the payment status of the JIRA issue.
+     * @since 1.2
+     */
+    public String getPaymentStatus() {
+        RemoteCustomFieldValue[] customValues = this.issue.getCustomFieldValues();
+        for (RemoteCustomFieldValue rcf : customValues) {
+            if (rcf.getCustomfieldId().trim().toLowerCase().equals(
+                    ConfigUtils.getIssueTrackingConfig().getPaymentStatusFieldId().trim().toLowerCase())) {
+                return rcf.getValues()[0];
+            }
+        }
+
+        // not found, return -1 by default
+        return "-1";
+    }
+    
+    /**
+     * Gets the TCO Points from the JIRA issue.
+     * 
+     * @return the TCO Points of the JIRA issue.
+     * @since 1.2
+     */
+    public int getTCOPoints() {
+        RemoteCustomFieldValue[] customValues = this.issue.getCustomFieldValues();
+        for (RemoteCustomFieldValue rcf : customValues) {
+            if (rcf.getCustomfieldId().trim().toLowerCase().equals(
+                    ConfigUtils.getIssueTrackingConfig().getTcoPointsFieldId().trim().toLowerCase())) {
+                String points = rcf.getValues()[0];
+                if (points != null && points.trim().length() > 0) {
+                    return Integer.parseInt(points);
+                } else {
+                    return -1;
+                }
+            }
+        }
+
+        // not found, return -1 by default
+        return -1;
+    }
+    
+    /**
+     * Gets the issue id from the JIRA issue.
+     * 
+     * @return the issue id of the JIRA issue.
+     * @since 1.2
+     */
+    public String getIssueId() {
+        return issue.getId();
+    }
+
+    /**
+     * Gets the security level id of the JIRA issue.
+     * 
+     * @return the security level id of the JIRA issue.
+     * @since 1.2
+     */
+    public Long getSecurityLevelId() {
+        try {
+            if (securityLevelId == null) {
+                securityLevelId = JiraRpcServiceWrapper.getSecurityLevelId(getIssueKey());
+            }
+        } catch (Exception e) {
+            return -1L;
+        }
+        return securityLevelId;
+    }
+    
+    /**
+     * <p>Checks whether the JIRA issue is CCA only.</p>
+     * 
+     * @return true if the JIRA issue is CCA only, false otherwise.
+     * @since 1.2
+     */
+    public boolean isCca() {
+        return ConfigUtils.getIssueTrackingConfig().getSecurityNDAId().equals(getSecurityLevelId());
+    }
 }

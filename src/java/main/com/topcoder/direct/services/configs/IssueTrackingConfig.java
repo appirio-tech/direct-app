@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.configs;
 
@@ -18,8 +18,17 @@ import java.util.List;
  *     - Added projectIDField, and badContestHealthIssuesNumber.
  * </p>
  *
- * @author Veve
- * @version 1.1
+ * <p>
+ * Version 1.2 (TC Direct Issue Tracking Tab Update Assembly 1) change notes:
+ *   <ol>
+ *     <li>Added {@link #paymentStatusFieldId}, {@link #tcoPointsFieldId}, {@link #applicationNameFieldId}
+ *     , {@link #bugTypeFieldId}, {@link #securityOpenId}, {@link #securityNDAId} fields.
+ *     Also the getters/setters were added.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author Veve, TCSASSEMBER
+ * @version 1.2
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "IssueTrackingConfiguration")
@@ -87,7 +96,54 @@ public class IssueTrackingConfig {
     @XmlElement
     private String projectIDField;
 
+    /**
+     * The custom field id for Payment Status.
+     * 
+     * @since 1.2
+     */
+    @XmlElement
+    private String paymentStatusFieldId;
+    
+    /**
+     * The custom field id for TCO Points.
+     * 
+     * @since 1.2
+     */
+    @XmlElement
+    private String tcoPointsFieldId;
 
+    /**
+     * The custom field id for Application or Component Name.
+     * 
+     * @since 1.2
+     */
+    @XmlElement
+    private String applicationNameFieldId;
+    
+    /**
+     * The custom field id for Bug Type.
+     * 
+     * @since 1.2
+     */
+    @XmlElement
+    private String bugTypeFieldId;
+    
+    /**
+     * The id of security "Open" level.
+     * 
+     * @since 1.2
+     */
+    @XmlElement
+    private Long securityOpenId;
+    
+    /**
+     * The id of security "NDA Members Only" level.
+     * 
+     * @since 1.2
+     */
+    @XmlElement
+    private Long securityNDAId;
+    
     /**
      * A list of status id that represents an issue is resolved or closed.
      */
@@ -372,5 +428,123 @@ public class IssueTrackingConfig {
         this.projectIDField = projectIDField;
     }
 
-  
+    /**
+     * Gets the custom field id of Payment Status.
+     * 
+     * @return the custom field id of Payment Status.
+     * @since 1.2
+     */
+    public String getPaymentStatusFieldId() {
+        return paymentStatusFieldId;
+    }
+
+    /**
+     * Sets the custom field id of Payment Status.
+     * 
+     * @param paymentStatusFieldId the custom field id of Payment Status.
+     * @since 1.2
+     */
+    public void setPaymentStatusFieldId(String paymentStatusFieldId) {
+        this.paymentStatusFieldId = paymentStatusFieldId;
+    }
+
+    /**
+     * Gets the custom field id of TCO Points.
+     * 
+     * @return the custom field id of TCO Points.
+     * @since 1.2
+     */
+    public String getTcoPointsFieldId() {
+        return tcoPointsFieldId;
+    }
+
+    /**
+     * Sets the custom field id of TCO Points.
+     * 
+     * @param tcoPointsFieldId the custom field id of TCO Points.
+     * @since 1.2
+     */
+    public void setTcoPointsFieldId(String tcoPointsFieldId) {
+        this.tcoPointsFieldId = tcoPointsFieldId;
+    }
+
+    /**
+     * Gets the custom field id for Application or Component Name.
+     * 
+     * @return the custom field id for Application or Component Name.
+     * @since 1.2
+     */
+    public String getApplicationNameFieldId() {
+        return applicationNameFieldId;
+    }
+
+    /**
+     * Sets the custom field id for Application or Component Name.
+     * 
+     * @param applicationNameFieldId the custom field id for Application or Component Name.
+     * @since 1.2
+     */
+    public void setApplicationNameFieldId(String applicationNameFieldId) {
+        this.applicationNameFieldId = applicationNameFieldId;
+    }
+
+    /**
+     * Gets the custom field for Bug Type.
+     * 
+     * @return the custom field for Bug Type.
+     * @since 1.2
+     */
+    public String getBugTypeFieldId() {
+        return bugTypeFieldId;
+    }
+
+    /**
+     * Sets the custom field for Bug Type.
+     * 
+     * @param bugTypeFieldId the custom field for Bug Type.
+     * @since 1.2
+     */
+    public void setBugTypeFieldId(String bugTypeFieldId) {
+        this.bugTypeFieldId = bugTypeFieldId;
+    }
+
+    /**
+     * Gets the id of of security "Open" level.
+     * 
+     * @return the id of of security "Open" level.
+     * @since 1.2
+     */
+    public Long getSecurityOpenId() {
+        return securityOpenId;
+    }
+
+    /**
+     * Sets the id of of security "Open" level.
+     * 
+     * @param securityOpenId the id of of security "Open" level.
+     * @since 1.2
+     */
+    public void setSecurityOpenId(Long securityOpenId) {
+        this.securityOpenId = securityOpenId;
+    }
+
+    /**
+     * Gets the id of of security "NDA Members Only" level.
+     * 
+     * @return the id of of security "NDA Members Only" level.
+     * @since 1.2
+     */
+    public Long getSecurityNDAId() {
+        return securityNDAId;
+    }
+
+    /**
+     * Sets the id of of security "NDA Members Only" level.
+     * 
+     * @param securityNDAId the id of of security "NDA Members Only" level.
+     * @since 1.2
+     */
+    public void setSecurityNDAId(Long securityNDAId) {
+        this.securityNDAId = securityNDAId;
+    }
 }

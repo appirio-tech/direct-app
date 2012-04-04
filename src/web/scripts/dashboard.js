@@ -46,9 +46,12 @@
  * 
  *  Version 2.4 - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement
  *  - Add the js codes to load group by by customer id and load group values by group by id via ajax
+ *  
+ *  Version 2.5 - TC Direct Issue Tracking Tab Update Assembly 1
+ *  - Add the js codes to handle add/edit JIRA issue in contest issue tracking page.
  *
- * @author tangzx, Blues, GreatKevin
- * @version 2.4
+ * @author tangzx, Blues, GreatKevin, flexme
+ * @version 2.5
  */
 $(document).ready(function(){
 						   
@@ -902,6 +905,8 @@ $(document).ready(function(){
     $('#bugRace .issueSelectionContent div.rowItem:visible:last').addClass('lastRowItem');
     $("#bugRace tbody>tr:visible:last").addClass("lastTr");
 
+    $(".viewAll input").attr("checked", "");
+
     //view all for issue
     $('.checkbox').live('click', function() {
         if ($(this).attr('checked')) {
@@ -947,6 +952,217 @@ $(document).ready(function(){
         $(this).parent().find('.hideDetails').show();
         $(this).parent().parent().parent().find('.shortDetails').hide();
         $(this).parent().parent().parent().find('.longDetails').show();
+    });
+
+// when click "Add New" button in contest tracking page under Bug Race tab
+    $('#bugRace .btnAddNew').click(function() {
+        $('.issueSelectionContent .inputContainer').show();
+        $('.issueSelectionContent .content').hide();
+        $('.issueSelectionContent .inputContainer .btnCreate').show();
+        $('.issueSelectionContent .inputContainer .btnUpdate').hide();
+        $("#issueId").val("");
+        $("#cca").attr("checked", "");
+        $('label').removeClass('required');
+        $('.issueSelectionContent .inputContainer label:lt(2)').show();
+        $('.issueSelectionContent .inputContainer .row:lt(2)').show();
+        $('.issueSelectionContent .inputContainer .text,.issueSelectionContent .inputContainer .textarea').val('');
+        $('#paymentStatus')[0].selectedIndex = 0;
+        $('#tcoPoints')[0].selectedIndex = 0;
+        if ($.browser.msie && ($.browser.version == "7.0")) {
+            $("label:contains('Summary')").css('padding-top','0');
+        }
+        $("#bugRace .viewAll").hide();
+        return false;
+    });
+
+    // when click "Cancel" button in "Add Bug Race" form panel in contest tracking page
+    $('#bugRace .btnCancel').click(function() {
+        $('.issueSelectionContent .content').show();
+        $('.issueSelectionContent .inputContainer').hide();
+        $('label').removeClass('required');
+        $("#bugRace .viewAll").show();
+        return false;
+    });
+    
+    // when click "Edit" button in contest tracking page under Bug Race tab
+    $('#bugRace .issueSelectionContent .button11').live("click", function() {
+        $('.issueSelectionContent .inputContainer').show();
+        $('.issueSelectionContent .content').hide();
+        $('.issueSelectionContent .inputContainer label:lt(2)').hide();
+        $('.issueSelectionContent .inputContainer .row:lt(2)').hide();
+        $('.issueSelectionContent .inputContainer .btnUpdate').show();
+        $('.issueSelectionContent .inputContainer .btnCreate').hide();
+        if ($.browser.msie && ($.browser.version == "7.0")) {
+            $("label:contains('Summary')").css('padding-top','20px');                       
+        }
+        var rowItem = $(this).parents(".rowItem");
+        $("#issueName").val(rowItem.find(".contestName").val());
+        $("#issueId").val(rowItem.find("input.issueId").val());
+        $("#environment").val(rowItem.find(".environment").val());
+        $("#description").val(rowItem.find(".description").val());
+        $("#bugRace .issueSelectionContent .firstPayment").val(rowItem.find(".prize").val());
+        $("#paymentStatus").val(rowItem.find(".paymentStatus").val());
+        $("#tcoPoints").val(rowItem.find(".tcoPoints").val());
+        $("#cca").attr("checked", rowItem.find("input.issueCCA").val() == "true" ? "checked" : "");
+        $("#bugRace .viewAll").hide();
+        return false;
+    });
+    
+    // fill the row using the bug race data
+    function fillBugRaceRow(row, bugRace) {
+        row.find("input.contestName").val(bugRace.issueSummary);
+        row.find(".description").val(bugRace.description);
+        row.find(".environment").val(bugRace.environment);
+        row.find("input.prize").val(bugRace.prize);
+        row.find("input.paymentStatus").val(bugRace.paymentStatus);
+        row.find("input.tcoPoints").val(bugRace.tcoPoints);
+        row.find("input.issueId").val(bugRace.issueId);
+        row.find("input.issueCCA").val($("#cca").is(":checked") ? "true" : "false");
+        row.find("p.issueLink a").attr("href", bugRace.issueLink).html(bugRace.projectName + " / " + bugRace.issueKey);
+        row.find("p.issueName a").attr("href", bugRace.issueLink).text(bugRace.issueSummary);
+        row.find("div.shortDetails dd.issueStatus strong").addClass(bugRace.issueStatusClass).html(bugRace.statusName);
+        row.find("div.shortDetails dd.issueCreationDate").html(bugRace.creationDateString);
+        row.find("div.longDetails dd.issueStatus strong").addClass(bugRace.issueStatusClass).html(bugRace.statusName);
+        row.find("div.longDetails dd.issueResolution").html(bugRace.resolutionName);
+        row.find("div.longDetails dd.issuePrize").html("$" + bugRace.prize.formatMoney(2));
+        row.find("div.longDetails dd.issueVotes").html(bugRace.votesNumber);
+        row.find("div.longDetails dd.issueReporter a").attr("href", bugRace.reporterProfile).html(bugRace.reporter);
+        var assigneeHtml;
+        if (bugRace.assignee == 'Unassigned' || bugRace.assignee == '0') {
+            assigneeHtml = "Unassigned";
+        } else {
+            assigneeHtml = '<a href="' + bugRace.assigneeProfile + '" target="_blank">' + bugRace.assignee + '</a>';
+        }
+        row.find("div.longDetails dd.issueAssignee").html(assigneeHtml);
+        row.find("div.longDetails dd.issueCreationDate").html(bugRace.creationDateString);
+        row.find("div.longDetails dd.issueUpdateDate").html(bugRace.updateDateString);
+        row.find("div.longDetails dd.issueDueDate").html(bugRace.dueDateString);
+    }
+    
+    // validate the Add Bug Race form in contest issue tracking page
+    function validateBugForm(obj) {
+        var flag = 1;
+        if ($(obj).parents('.inputContainer').find('.firstPayment').val() != '0') {
+            if(!$(obj).parents('.inputContainer').find('.firstPayment').val().match(/^0*$/)){
+                $(obj).parents('.inputContainer').find('.firstPayment').val($(obj).parents('.inputContainer').find('.firstPayment').val().replace(/^0*/,''));
+            } else {
+                if ($(obj).parents('.inputContainer').find('.firstPayment').val()) {
+                    $(obj).parents('.inputContainer').find('.firstPayment').val('0');    
+                } else {
+                    $(obj).parents('.inputContainer').find('.firstPayment').val('');    
+                }
+            }
+        }
+        $(obj).parents('.inputContainer').find('label').removeClass('required');
+        if (!$(obj).parents('.inputContainer').find('.firstPayment').val().match(/^\d+$/)) {
+            flag = 0;
+            $(obj).parents('.inputContainer').find('.firstPayment').parent().prev().addClass('required');
+        }
+        if (!$(obj).parents('.inputContainer').find('.summary').val()) {
+            flag = 0;
+            $(obj).parents('.inputContainer').find('.summary').parent().prev().addClass('required');
+        }
+        if (!flag) {
+            showErrors("Please input the required fields");
+            return false;
+        }
+        return true;
+    }
+    
+    // add a new JIRA issue (Bug Race)
+    $('#bugRace .btnCreate').click(function() {
+        if (validateBugForm(this)) {
+            $.ajax({
+                type: 'POST',
+                url:'addBugRace',
+                data: $('#bugForm').serialize(),
+                dataType: "json",
+                cache:false,
+                async:true,
+                beforeSend: modalPreloader,
+                complete: modalClose,
+                success: function(jsonResult) {
+                    handleJsonResult(jsonResult,
+                        function(result) {
+                            var row = $("#rowItemTemplate>div").clone().addClass("rowItem");
+                            fillBugRaceRow(row, result);
+                            row.appendTo("#bugRace .issueSelectionContent .content");
+                            $('.issueSelectionContent .content').show();
+                            $('.issueSelectionContent .inputContainer').hide();
+                            var total1 = parseInt($($("#bugRace .total dl dd")[0]).text());
+                            var total2 = parseInt($($("#bugRace .total dl dd")[1]).text());
+                            total1++;
+                            total2++;
+                            $($("#bugRace .total dl dd")[0]).text(total1);
+                            $($("#bugRace .total dl dd")[1]).text(total2);
+                            var options = $("#bugRace .viewSort select option");
+                            options[0].text="All Bug Races(" + total1 + ")";
+                            options[1].text="Ongoing Bug Races(" + total2 + ")";
+                            $("li.bugRaceTab a span").text("Bug Race (" + total1 + ")");
+                            bugSortFunction();
+                            
+                            if ($("#bugRace .viewAll input").is(":checked")) {
+                                $('.hideDetails').show();
+                                $('.viewDetails').hide();
+                                $('.longDetails').show();
+                                $('.shortDetails').hide();
+                                $('.checkbox').attr('checked', true);
+                            }
+                            $("#bugRace .viewAll").show();
+                        },
+                        function(errorMessage) {
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+        }
+        return false;
+    });
+    
+    // update a JIRA issue (Bug Race)
+    $('#bugRace .btnUpdate').live('click', function() {
+        if (validateBugForm(this)) {
+            $.ajax({
+                type: 'POST',
+                url:'updateBugRace',
+                data: $('#bugForm').serialize(),
+                dataType: "json",
+                cache:false,
+                async:true,
+                beforeSend: modalPreloader,
+                complete: modalClose,
+                success: function(jsonResult) {
+                    handleJsonResult(jsonResult,
+                        function(result) {
+                            var rowItem = $("input.issueId[value='" + $("#issueId").val() + "']").parents(".rowItem");
+                            rowItem.find(".description").val($("#description").val());
+                            rowItem.find(".environment").val($("#environment").val());
+                            rowItem.find(".contestName").val($("#issueName").val());
+                            rowItem.find(".prize").val($("#firstPayment").val());
+                            rowItem.find(".paymentStatus").val($("#paymentStatus").val());
+                            rowItem.find(".tcoPoints").val($("#tcoPoints").val());
+                            rowItem.find(".issueContestHead .issueName a").text($("#issueName").val());
+                            rowItem.find("dd.issuePrize").html("$" + parseFloat($("#firstPayment").val()).formatMoney(2));
+                            rowItem.find(".issueCCA").val($("#cca").is(":checked") ? "true" : "false");
+                            
+                            $('.issueSelectionContent .content').show();
+                            $('.issueSelectionContent .inputContainer').hide();
+                            $("#bugRace .viewAll").show();
+                            return;
+                        },
+                        function(errorMessage) {
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+        }
+        return false;
+    });
+    
+    $('#bugRace .firstPayment').keypress(function(event) {
+        if (event.which != 8 && (event.which < 48 || event.which > 57)){
+            return false;
+        }
     });
 
     function bugSortFunction() {

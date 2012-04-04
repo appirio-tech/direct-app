@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util.jira;
 
@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.atlassian.jira.rpc.soap.client.JiraSoapService;
 import com.atlassian.jira.rpc.soap.client.RemoteAuthenticationException;
+import com.atlassian.jira.rpc.soap.client.RemoteFieldValue;
 import com.atlassian.jira.rpc.soap.client.RemoteIssue;
 import com.atlassian.jira.rpc.soap.client.RemoteResolution;
 import com.atlassian.jira.rpc.soap.client.RemoteStatus;
@@ -29,9 +30,22 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  * - Added {@link #getIssuesForDirectProject(List<? extends ContestBriefDTO>)} method
  * - Added {@link #getIssuesFromJQLQuery(String)} method
  * </p>
+ * 
+ * <p>
+ * Version 1.2 (TC Direct Issue Tracking Tab Update Assembly 1) change notes:
+ *   <ol>
+ *     <li>Added {@link #createIssue(RemoteIssue, Long)} method to create a new JIRA issue with security level.</li>
+ *     <li>Added {@link #getIssueById(String)} method to retrieve JIRA issue by id.</li>
+ *     <li>Added {@link #updateIssue(String, RemoteFieldValue[])} method to update an existing JIRA issue.</li>
+ *     <li>Added {@link #getSecurityLevelId(String)} method to retrieve the security level id of the JIRA issue.</li>
+ *     <li>Added {@link #getResolutionNames()} method to retrieve the issue resolution names.<li>
+ *     <li>Added {@link #getIssueStatusNames()} method to retrieve the issue status names.<li>
+ *     <li>Updated {@link #getIssuesForContest(long)} method to fix the bug of not retrieving issues from JIRA.</li>
+ *   </ol>
+ * </p>
  *
- * @author Veve
- * @version 1.1 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly)
+ * @author Veve, TCSASSEMBER
+ * @version 1.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly)
  */
 public class JiraRpcServiceWrapper {
 
@@ -106,7 +120,7 @@ public class JiraRpcServiceWrapper {
                 ISSUE_STATUS_NAMES.put(s.getId(), s.getName());
             }
         }
-
+        
     }
 
     /**
@@ -137,6 +151,26 @@ public class JiraRpcServiceWrapper {
     }
 
     /**
+     * <p>Creates a new JIRA issue with security level.</p>
+     * 
+     * @param issue the JIRA issue to be created.
+     * @param securityLevelId the security level id.
+     * @return the new created JIRA issue.
+     * @throws Exception if any error occurs.
+     * @since 1.2
+     */
+    public static TcJiraIssue createIssue(RemoteIssue issue, Long securityLevelId)   throws Exception {
+        // if soap session is not established, initialize a soap session first
+        if (soapSession == null) {
+            initializeSoapSession();
+        }
+
+        JiraSoapService service = soapSession.getJiraSoapService();
+        String token = soapSession.getAuthenticationToken();
+        return new TcJiraIssue(service.createIssueWithSecurityLevel(token, issue, securityLevelId));
+    }
+    
+    /**
      * Gets all the issues for specified contest id.
      *
      * @param contestId the id of the contest.
@@ -144,14 +178,6 @@ public class JiraRpcServiceWrapper {
      * @throws Exception if any error occurs.
      */
     public static List<TcJiraIssue> getIssuesForContest(long contestId) throws Exception {
-
-        long time = System.currentTimeMillis();
-
-
-        if(true) {
-            return new ArrayList<TcJiraIssue>();
-        }
-
         // throw IllegalArgumentException when the contest id is not positive
         if (contestId <= 0 ) {
             throw new IllegalArgumentException("contest id should be positive.");
@@ -201,7 +227,70 @@ public class JiraRpcServiceWrapper {
         return result;
     }
 
+    /**
+     * <p>Gets the JIRA issue by issue id.</p>
+     * 
+     * @param issueId the issue id.
+     * @return the retrieved JIRA issue.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.2
+     */
+    public static TcJiraIssue getIssueById(String issueId) throws Exception {
+        try {
+            if (soapSession == null) {
+                initializeSoapSession();
+            }
+            
+            JiraSoapService service = soapSession.getJiraSoapService();
+            String token = soapSession.getAuthenticationToken();
+            return new TcJiraIssue(service.getIssueById(token, issueId));
+        } catch (Exception ex) {
+            logger.error("Error when executing method getIssueById" + ", issue id is :" + issueId, ex);
+            throw ex;
+        }
+    }
+    
+    /**
+     * <p>Updates a JIRA issue.</p>
+     * 
+     * @param issueKey the key of the issue which to be updated.
+     * @param filedValues the field values to be updated.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.2
+     */
+    public static void updateIssue(String issueKey, RemoteFieldValue[] filedValues) throws Exception {
+        try {
+            if (soapSession == null) {
+                initializeSoapSession();
+            }
+            
+            JiraSoapService service = soapSession.getJiraSoapService();
+            String token = soapSession.getAuthenticationToken();
+            service.updateIssue(token, issueKey, filedValues);
+        } catch (Exception ex) {
+            logger.error("Error when executing method updateIssue" + ", issue key is :" + issueKey, ex);
+            throw ex;
+        }
+    }
 
+    /**
+     * <p>Gets security level id for a JIRA issue.</p>
+     * 
+     * @param issueKey the JIRA issue key.
+     * @return the security level id of a JIRA issue.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.2
+     */
+    public static Long getSecurityLevelId(String issueKey) throws Exception {
+        if (soapSession == null) {
+            initializeSoapSession();
+        }
+        
+        JiraSoapService service = soapSession.getJiraSoapService();
+        String token = soapSession.getAuthenticationToken();
+        return Long.parseLong(service.getSecurityLevel(token, issueKey).getId());
+    }
+    
     /**
      * Gets a list of TcJiraIssue by calling remote service with the specified JQL query.
      *
@@ -267,5 +356,25 @@ public class JiraRpcServiceWrapper {
         retryAttemptCount = 0;
 
         return result;
+    }
+    
+    /**
+     * <p>Gets the map used to store the mapping of resolution id to resolution name.</p>
+     * 
+     * @return the map used to store the mapping of resolution id to resolution name.
+     * @since 1.2
+     */
+    public static Map<String, String> getResolutionNames() {
+        return RESOLUTION_NAMES;
+    }
+    
+    /**
+     * <p>Gets the map used to store the mapping of issue status id to issue status name.</p>
+     * 
+     * @return the map used to store the mapping of issue status id to issue status name.
+     * @since 1.2
+     */
+    public static Map<String, String> getIssueStatusNames() {
+        return ISSUE_STATUS_NAMES;
     }
 }

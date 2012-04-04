@@ -34,7 +34,7 @@
 
 	<!-- the name of the project for hosting bug race -->
 
-	<bugRaceProjectName>BUGR</bugRaceProjectName>
+	<bugRaceProjectName>@jiraBugRaceProject@</bugRaceProjectName>
 
 	<!-- the custom field id fo custom filed 'first place prize' -->
 
@@ -43,7 +43,24 @@
 	<!-- the custom field id fo custom filed 'project ID Field' -->
 	<projectIDField>customfield_10093</projectIDField>
 
-
+    <!-- the custom field id of custom filed 'Payment Status' -->
+    <paymentStatusFieldId>customfield_10030</paymentStatusFieldId>
+    
+    <!-- the custom field id of custom filed 'TCO Points' -->
+    <tcoPointsFieldId>customfield_10080</tcoPointsFieldId>
+    
+    <!-- the custom field id of custom filed 'Application or Component Name' -->
+    <applicationNameFieldId>customfield_10072</applicationNameFieldId>
+    
+    <!-- the custom field id of custom filed 'Bug Type' -->
+    <bugTypeFieldId>customfield_10073</bugTypeFieldId>
+    
+    <!-- the id of security "Open" level -->
+    <securityOpenId>10041</securityOpenId>
+    
+    <!-- the id of security "NDA Members Only" level -->
+    <securityNDAId>10043</securityNDAId>
+    
 	<!-- the JQL query used for software contest -->
 	<softwareContestJQLQuery>ProjectID ~ </softwareContestJQLQuery>
 

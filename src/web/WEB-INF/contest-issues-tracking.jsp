@@ -1,13 +1,16 @@
 <%--
   - Author: TCSDEVELOPER, TCSASSEMBLER
-  - Version: 1.0.2
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.0.3
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the issues and bug races of the contest.
   - Version 1.0.1 - Fix an issue with assignee display
   -
   - Version 1.0.2 (TC Direct Contest Dashboard Update Assembly) change Notes: 
   - 1.Add dashboard header.  
+  -
+  - Version 1.0.3 (TC Direct Issue Tracking Tab Update Assembly 1) change Notes: 
+  - - Add support to add/edit JIRA issue under Bug Race tab.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -71,6 +74,12 @@
                                 <div class="viewAll">
                                     <input type="checkbox" class="checkbox" /><label>View All Details</label>
                                 </div>
+                                
+                                <a class="button6 btnAddNew" href="#">
+                                    <span class="left">
+                                        <span class="right">ADD NEW</span>
+                                    </span>
+                                </a>
 
 							</div><!-- End #issueTabs -->
 
@@ -106,12 +115,19 @@
 
                                                 	<!-- row -->
                                                     <div class="rowItem">
-
+                                                        <input type="hidden" class="contestName" value="${bugRace.issueSummary}"/>
+                                                        <textarea class="hide description"><s:property value="#attr.bugRace.description"/></textarea>
+                                                        <textarea class="hide environment"><s:property value="#attr.bugRace.environment"/></textarea>
+                                                        <input type="hidden" class="prize" value="<fmt:formatNumber value="${bugRace.prize}" pattern="#0"/>"/>
+                                                        <input type="hidden" class="paymentStatus" value="${bugRace.paymentStatus}"/>
+                                                        <input type="hidden" class="tcoPoints" value="${bugRace.TCOPoints}"/>
+                                                        <input type="hidden" class="issueId" value="${bugRace.issueId}"/>
+                                                        <input type="hidden" class="issueCCA" value="${bugRace.cca}"/>
                                                         <!-- head -->
                                                         <div class="issueContestHead">
                                                             <div class="bugContestTitle">
-                                                                <p><a href='<c:url value="${bugRace.issueLink}"/>' target="_blank"><c:out value="${bugRace.projectName}"/> / <c:out value="${bugRace.issueKey}"/></a></p>
-                                                                <p class="issueName"><a href='<c:url value="${bugRace.issueLink}"/>' target="_blank"><c:out value="${bugRace.issueSummary}"/></a></p>
+                                                                <p class="issueLink"><a href='<c:url value="${bugRace.issueLink}"/>' target="_blank"><c:out value="${bugRace.projectName}"/> / <c:out value="${bugRace.issueKey}"/></a></p>
+                                                                <p class="issueName"><a href='<c:url value="${bugRace.issueLink}"/>' target="_blank"><s:property value="#attr.bugRace.issueSummary"/></a></p>
                                                             </div>
                                                             <div class="viewAndShow">
                                                                 <a href="javascript:;" class="viewDetails">View Details</a>
@@ -127,8 +143,15 @@
                                                                 <dt>Status : </dt>
                                                                 <dd class="issueStatus"><strong class="${bugRace.issueStatusClass}"><c:out value="${bugRace.statusName}"/></strong></dd>
                                                                 <dt>Created : </dt>
-                                                                <dd><c:out value="${bugRace.creationDateString}"/></dd>
+                                                                <dd class="issueCreationDate"><c:out value="${bugRace.creationDateString}"/></dd>
                                                             </dl>
+                                                            <a class="button11" href="#">
+                                                                <span class="btnR">
+                                                                    <span class="btnC">
+                                                                        <span class="btnIcon">Edit</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
                                                             <div class="clear"></div>
                                                         </div>
                                                         <!-- End .shortDetails -->
@@ -142,13 +165,13 @@
                                                                     <h3>Details</h3>
                                                                     <dl>
                                                                         <dt>Status :</dt>
-                                                                        <dd><strong class="${bugRace.issueStatusClass}"><c:out value="${bugRace.statusName}"/></strong></dd>
+                                                                        <dd class="issueStatus"><strong class="${bugRace.issueStatusClass}"><c:out value="${bugRace.statusName}"/></strong></dd>
                                                                         <dt>Resolution :</dt>
-                                                                        <dd><c:out value="${bugRace.resolutionName}"/></dd>
+                                                                        <dd class="issueResolution"><c:out value="${bugRace.resolutionName}"/></dd>
                                                                         <dt>1st Prize :</dt>
-                                                                        <dd><fmt:formatNumber value="${bugRace.prize}" pattern="$###,##0.00"/></dd>
+                                                                        <dd class="issuePrize"><fmt:formatNumber value="${bugRace.prize}" pattern="$###,##0.00"/></dd>
                                                                         <dt>Votes :</dt>
-                                                                        <dd><c:out value="${bugRace.votesNumber}"/></dd>
+                                                                        <dd class="issueVotes"><c:out value="${bugRace.votesNumber}"/></dd>
                                                                     </dl>
                                                                 </li>
                                                                 <!-- End detail -->
@@ -158,9 +181,9 @@
                                                                     <h3>People</h3>
                                                                     <dl>
                                                                         <dt>Reporter :</dt>
-                                                                        <dd><a href="${bugRace.reporterProfile}" target="_blank"><c:out value="${bugRace.reporter}"/></a></dd>
+                                                                        <dd class="issueReporter"><a href="${bugRace.reporterProfile}" target="_blank"><c:out value="${bugRace.reporter}"/></a></dd>
                                                                         <dt>Assignee :</dt>
-                                                                        <dd>
+                                                                        <dd class="issueAssignee">
                                                                             <c:choose>
                                                                                 <c:when test="${bugRace.assignee == 'Unassigned'}">
                                                                                     Unassigned
@@ -182,11 +205,11 @@
                                                                     <h3>Dates</h3>
                                                                     <dl>
                                                                         <dt>Created :</dt>
-                                                                        <dd><c:out value="${bugRace.creationDateString}"/></dd>
+                                                                        <dd class="issueCreationDate"><c:out value="${bugRace.creationDateString}"/></dd>
                                                                         <dt>Updated :</dt>
-                                                                        <dd><c:out value="${bugRace.updateDateString}"/></dd>
+                                                                        <dd class="issueUpdateDate"><c:out value="${bugRace.updateDateString}"/></dd>
                                                                         <dt>Due :</dt>
-                                                                        <dd><c:out value="${bugRace.dueDateString}"/></dd>
+                                                                        <dd class="issueDueDate"><c:out value="${bugRace.dueDateString}"/></dd>
                                                                     </dl>
                                                                 </li>
                                                                 <!-- End .dates -->
@@ -203,6 +226,13 @@
                                                                 <!-- End issue link -->
                                                             </ul>
 
+                                                            <a class="button11" href="#">
+                                                                <span class="btnR">
+                                                                    <span class="btnC">
+                                                                        <span class="btnIcon">Edit</span>
+                                                                    </span>
+                                                                </span>
+                                                            </a>
                                                             <div class="clear"></div>
 
                                                         </div>
@@ -211,8 +241,186 @@
                                                     </div>
                                                </c:forEach>
                                                     <!-- row -->
+                                                    
+                                                    <!-- row -->
+                                                    <div id="rowItemTemplate" class="hide">
+                                                        <div>
+                                                            <input type="hidden" class="contestName" value=""/>
+                                                            <textarea class="hide description"></textarea>
+                                                            <textarea class="hide environment"></textarea>
+                                                            <input type="hidden" class="prize" value=""/>
+                                                            <input type="hidden" class="paymentStatus" value=""/>
+                                                            <input type="hidden" class="tcoPoints" value=""/>
+                                                            <input type="hidden" class="issueId" value=""/>
+                                                            <input type="hidden" class="issueCCA" value="false"/>
+                                                            <!-- head -->
+                                                            <div class="issueContestHead">
+                                                                <div class="bugContestTitle">
+                                                                    <p class="issueLink"><a href='' target="_blank"></a></p>
+                                                                    <p class="issueName"><a href='' target="_blank"></a></p>
+                                                                </div>
+                                                                <div class="viewAndShow">
+                                                                    <a href="javascript:;" class="viewDetails">View Details</a>
+                                                                    <a href="javascript:;" class="hideDetails hidden">Hide Details</a>
+                                                                </div>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                            <!-- End .issueContestHead -->
+
+                                                            <!-- short details -->
+                                                            <div class="shortDetails">
+                                                                <dl>
+                                                                    <dt>Status : </dt>
+                                                                    <dd class="issueStatus"><strong></strong></dd>
+                                                                    <dt>Created : </dt>
+                                                                    <dd class="issueCreationDate"></dd>
+                                                                </dl>
+                                                                <a class="button11" href="#">
+                                                                    <span class="btnR">
+                                                                        <span class="btnC">
+                                                                            <span class="btnIcon">Edit</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                            <!-- End .shortDetails -->
+
+                                                            <!-- long details -->
+                                                            <div class="longDetails hidden">
+
+                                                                <ul>
+                                                                    <!-- detail -->
+                                                                    <li class="detailList">
+                                                                        <h3>Details</h3>
+                                                                        <dl>
+                                                                            <dt>Status :</dt>
+                                                                            <dd class="issueStatus"><strong></strong></dd>
+                                                                            <dt>Resolution :</dt>
+                                                                            <dd class="issueResolution"></dd>
+                                                                            <dt>1st Prize :</dt>
+                                                                            <dd class="issuePrize"></dd>
+                                                                            <dt>Votes :</dt>
+                                                                            <dd class="issueVotes"></dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <!-- End detail -->
+
+                                                                    <!-- people -->
+                                                                    <li class="peopleList">
+                                                                        <h3>People</h3>
+                                                                        <dl>
+                                                                            <dt>Reporter :</dt>
+                                                                            <dd class="issueReporter"><a href="" target="_blank"></a></dd>
+                                                                            <dt>Assignee :</dt>
+                                                                            <dd class="issueAssignee"></dd>
+                                                                            <dt>Voters :</dt>
+                                                                            <dd>Not Available Now</dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <!-- End people -->
+
+                                                                    <!-- dates -->
+                                                                    <li class="datesList">
+                                                                        <h3>Dates</h3>
+                                                                        <dl>
+                                                                            <dt>Created :</dt>
+                                                                            <dd class="issueCreationDate"></dd>
+                                                                            <dt>Updated :</dt>
+                                                                            <dd class="issueUpdateDate"></dd>
+                                                                            <dt>Due :</dt>
+                                                                            <dd class="issueDueDate"></dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <!-- End .dates -->
+
+                                                                    <!-- issue link -->
+                                                                    <li class="linkList">
+                                                                        <h3>Issue Links</h3>
+                                                                        <dl>
+                                                                            <dd><p>This issue is cloned by:</p>
+                                                                                Not Available Now
+                                                                            </dd>
+                                                                        </dl>
+                                                                    </li>
+                                                                    <!-- End issue link -->
+                                                                </ul>
+
+                                                                <div class="clear"></div>
+
+                                                            </div>
+                                                            <!-- End .longDetails -->
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <!-- End .content -->
+                                                <!-- add new issue -->
+                                                <div class="inputContainer">
+                                                    <form id="bugForm" method="POST">
+                                                    <input type="hidden" name="projectId" value="${projectId}"/>
+                                                    <input type="hidden" id="issueId" name="issue.issueId" value=""/>
+                                                    <label>Project:</label>
+                                                    <div class="row">
+                                                        <p class="projectText">Bug Race Competitions (Mod Dash)</p>
+                                                    </div>
+                                                    <label>Issue Type:</label>
+                                                    <div class="row">
+                                                        <p class="bug">Bug</p>
+                                                    </div>
+                                                    <label><em>*Contest Name:</em></label>
+                                                    <div class="row">
+                                                        <input type="text" class="text largeText summary" id="issueName" name="issue.name"/>
+                                                    </div>
+                                                    <label>&nbsp;</label>
+                                                    <div class="row" id="ccaRow">
+                                                        <input type="checkbox" class="ccaRequired" id="cca" name="issue.cca" value="true"/>
+                                                        <label for="cca" id="ccaRequiredLabel">CCA required</label>
+                                                    </div>
+                                                    <label>Environment:</label>
+                                                    <div class="row">
+                                                        <textarea rows="" cols="" class="textarea" id="environment" name="issue.environment"></textarea>
+                                                        <p>For example operating system, software platform and/or hardware specifications (include as appropriate for the issue).</p>
+                                                    </div>
+                                                    <label>Description:</label>
+                                                    <div class="row">
+                                                        <textarea rows="12" cols="" class="textarea" id="description" name="issue.description"></textarea>
+                                                    </div>
+                                                    <label>1st place:</label>
+                                                    <div class="row">
+                                                        <input type="text" class="text firstPayment" id="firstPayment" name="issue.firstPlacePayment"/>
+                                                        <p>Payment amounts in US $ for the issue.</p>
+                                                    </div>
+                                                    <label><em>*Payment Status:</em></label>
+                                                    <div class="row">
+                                                        <select class="selectOption" id="paymentStatus" name="issue.paymentStatus">
+                                                            <option selected="selected" value="Payment Required">Payment Required</option>
+                                                            <option value="Payment Owed">Payment Owed</option>
+                                                            <option value="Paid">Paid</option>
+                                                            <option value="Payment On Hold">Payment On Hold</option>
+                                                        </select>
+                                                        <p>Status of payment for the bug if a payment is required.</p>
+                                                    </div>
+                                                    <label><em>*TCO Points:</em></label>
+                                                    <div class="row">
+                                                        <select class="selectOption" id="tcoPoints" name="issue.tcoPoints">
+                                                            <option selected="selected" value="0">0</option>
+                                                            <option value="10">10</option>
+                                                            <option value="20">20</option>
+                                                            <option value="30">30</option>
+                                                        </select>
+                                                        <p>Select the amount of TCO Mod Dash points that this Bug Race is worth. Bug Races with TCO Points are part of the Mod Dash. Set the amount <br />to 0 (zero) if you do not want to include your Bug Race in the TCO tournament.</p>
+                                                    </div>
+                                                    <div class="buttonBox">
+                                                        <a href="#" class="button6 btnUpdate"><span class="left"><span class="right">Update</span></span></a>
+                                                        <a href="#" class="button6 btnCreate"><span class="left"><span class="right">Create</span></span></a>
+                                                        <a href="#" class="button6 btnCancel"><span class="left"><span class="right">Cancel</span></span></a>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <!-- End .addContent -->
+                                                
+                                                <div class="clear"></div>
+                                            </div>
                                                 <div class="clear"></div>
 
                                             </div>
