@@ -54,8 +54,8 @@
         </c:when>
     <c:otherwise>
     <s:if test="viewData.isAllProjectsPage == true">
-    <a href="<s:url action='allProjects' namespace='/'/>" class="logo">
-        <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
+    <a href="<s:url action='allProjects' namespace='/'/>" class="logo" style="left: 25px; top: 60px">
+        <img src="/images/all_projects_ico.png" alt="Projects" class="projectTitle"/>
         <span id="projectTitleSpan"> All Projects</span>
     </a>
     </s:if>

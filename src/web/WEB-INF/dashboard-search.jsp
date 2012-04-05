@@ -48,10 +48,12 @@
 
                     <div class="area1Content">
 					<div class="areaHeader">
+                    <s:if test="viewData.isAllProjectsPage != true">
                         <h2 class="title">
 						<s:if test="viewData.isAllProjectsPage == false">Search</s:if>
 						<s:if test="viewData.isAllProjectsPage == true">Projects</s:if>
 						</h2>
+                    </s:if>
                     </div><!-- End .areaHeader -->
 
 					<s:if test="viewData.isAllProjectsPage == false">
