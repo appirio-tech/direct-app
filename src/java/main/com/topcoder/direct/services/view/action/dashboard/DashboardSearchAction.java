@@ -146,39 +146,41 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
             final List<DashboardProjectSearchResultDTO> projects = viewData.getProjects();
 
             // Helper map to store the mapping of project id to DashboardProjectSearchResultDTO
-            Map<Long, DashboardProjectSearchResultDTO> helperMap = new HashMap<Long, DashboardProjectSearchResultDTO>();
+            if (projects.size() > 0) {
+                Map<Long, DashboardProjectSearchResultDTO> helperMap = new HashMap<Long, DashboardProjectSearchResultDTO>();
 
-            List<Long> allProjectIds = new ArrayList<Long>();
+                List<Long> allProjectIds = new ArrayList<Long>();
 
-            for (DashboardProjectSearchResultDTO item : projects) {
-                allProjectIds.add(item.getData().getProjectId());
-                helperMap.put(item.getData().getProjectId(), item);
-            }
+                for (DashboardProjectSearchResultDTO item : projects) {
+                    allProjectIds.add(item.getData().getProjectId());
+                    helperMap.put(item.getData().getProjectId(), item);
+                }
 
-            if (this.getMetadataKeyService() == null) {
-                throw new IllegalStateException("The direct project metadata service is not initialized.");
-            }
+                if (this.getMetadataKeyService() == null) {
+                    throw new IllegalStateException("The direct project metadata service is not initialized.");
+                }
 
-            // Gets all project metadata for the projects in list
-            final List<DirectProjectMetadata> projectMetadataByProjects = this.getMetadataService().getProjectMetadataByProjects(allProjectIds);
+                // Gets all project metadata for the projects in list
+                final List<DirectProjectMetadata> projectMetadataByProjects = this.getMetadataService().getProjectMetadataByProjects(allProjectIds);
 
-            for (DirectProjectMetadata metadata : projectMetadataByProjects) {
-                // only add metadata used for grouping (grouping = true)
-                if (metadata.getProjectMetadataKey().getGrouping() != null && metadata.getProjectMetadataKey().getGrouping()) {
-                    long projectId = metadata.getTcDirectProjectId();
-                    Map<DirectProjectMetadataKey, List<DirectProjectMetadata>> data
-                            = helperMap.get(projectId).getProjectsMetadataMap();
+                for (DirectProjectMetadata metadata : projectMetadataByProjects) {
+                    // only add metadata used for grouping (grouping = true)
+                    if (metadata.getProjectMetadataKey().getGrouping() != null && metadata.getProjectMetadataKey().getGrouping()) {
+                        long projectId = metadata.getTcDirectProjectId();
+                        Map<DirectProjectMetadataKey, List<DirectProjectMetadata>> data
+                                = helperMap.get(projectId).getProjectsMetadataMap();
 
-                    if (data == null) {
-                        data = new HashMap<DirectProjectMetadataKey, List<DirectProjectMetadata>>();
-                        helperMap.get(projectId).setProjectsMetadataMap(data);
+                        if (data == null) {
+                            data = new HashMap<DirectProjectMetadataKey, List<DirectProjectMetadata>>();
+                            helperMap.get(projectId).setProjectsMetadataMap(data);
+                        }
+
+                        if (!data.containsKey(metadata.getProjectMetadataKey())) {
+                            data.put(metadata.getProjectMetadataKey(), new ArrayList<DirectProjectMetadata>());
+                        }
+
+                        data.get(metadata.getProjectMetadataKey()).add(metadata);
                     }
-
-                    if (!data.containsKey(metadata.getProjectMetadataKey())) {
-                        data.put(metadata.getProjectMetadataKey(), new ArrayList<DirectProjectMetadata>());
-                    }
-
-                    data.get(metadata.getProjectMetadataKey()).add(metadata);
                 }
             }
         }
