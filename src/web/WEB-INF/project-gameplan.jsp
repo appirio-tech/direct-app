@@ -21,7 +21,7 @@
 
                 <jsp:include page="includes/header.jsp"/>
 
-                <div id="mainContent">
+                <div id="mainContent" class="noRightBar">
 
                     <jsp:include page="includes/right.jsp"/>
 
@@ -33,20 +33,21 @@
                         </a> &gt;
                         <strong>Game Plan</strong>
                     </div>
-                    <div class="areaHeader">
-                        <h2 class="title">Game Plan Gantt Chart</h2>
+                    <div class="areaHeader" style="width:400px">
+                        <div style="float:left"><h2 class="title">Game Plan Gantt Chart</h2> </div>
+                        <div style="float:right; padding-top: 4px;">
+                        <a style="text-align: center; " class="button5"
+                           href="javascript:ganttChartControl.printToWindow();">Full Screen View</a>
+                        </div>
                     </div>
 
 
                     <jsp:include page="includes/project/projectStats.jsp"/>
 
                     <div class="container2">
-                           
                         <!-- error information container -->
-    					<div style="padding-top:20px">                    
-									<a style="float:right; text-align: center;" class="button5" href="javascript:ganttChartControl.printToWindow();">Full Screen View</a>
-						  </div>
- <div id="ganttChartError"></div>
+
+                        <div id="ganttChartError" class="hide"></div>
                         <!-- gantt chart container-->
                         <div id="ganttChartDiv"></div>
 

@@ -8760,3 +8760,15 @@ a.downloadAllbtn:hover span {
 width: 140px!important;
 }
 
+#mainContent.noRightBar {
+    background: none;
+}
+
+.noRightBar #area1 {
+    padding-right: 0px;
+}
+
+.noRightBar #area2 {
+    display: none;
+}
+

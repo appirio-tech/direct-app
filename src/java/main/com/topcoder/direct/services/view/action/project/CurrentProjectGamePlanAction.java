@@ -238,7 +238,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             // generate software contest data
             for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
                 long id = swc.getProjectId();
-                String name = (swc.getProjectStatus().equals("Draft") ? "Draft-" : "") + swc.getProjectName() + " (" + swc.getProjectType() + ")";
+                String name = (swc.getProjectStatus().equals("Draft") ? "Draft-" : "") + swc.getProjectType() + " - " + swc.getProjectName();
                 String startTime = GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
                 // calculate the duration in hours
                 long duration = calculateDuration(swc.getStartDate(), swc.getEndDate());
