@@ -53,6 +53,10 @@
         <copilotFee>600</copilotFee>
 	</contestType>
 	
+	<contestType contestTypeId="9"><!-- Bug Hunt -->
+        <copilotFee>600</copilotFee>
+	</contestType>
+	
 	<contestType contestTypeId="37"><!-- MM -->
         <copilotFee>600</copilotFee>
 	</contestType>
