@@ -479,7 +479,7 @@ $(function() {
     });
 
     if($("#allProjectsFilter").length == 0) {
-        $('.collapse').trigger('click');
+        // $('.collapse').trigger('click');
     }
 
     handleName = $('.paginatedDataTable').parent().parent().parent().attr('id');
