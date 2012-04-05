@@ -190,22 +190,23 @@ public class BillingCostReportDTO extends ReportBaseDTO {
         row.getCell(2).setStringValue("Customer");
         row.getCell(3).setStringValue("Billing");
         row.getCell(4).setStringValue("Project");
-        row.getCell(5).setStringValue("Contest");
-        row.getCell(6).setStringValue("Contest ID");
-        row.getCell(7).setStringValue("Reference ID");
-        row.getCell(8).setStringValue("Category");
-        row.getCell(9).setStringValue("Status");
-        row.getCell(10).setStringValue("Launch Date");
-        row.getCell(11).setStringValue("Completion Date");
-        row.getCell(12).setStringValue("Actual Total Member Cost");
-        row.getCell(13).setStringValue("Payment Type");
-        row.getCell(14).setStringValue("Amount");
-		row.getCell(15).setStringValue("Invoice Number");
-		row.getCell(16).setStringValue("Invoice Date");
-		row.getCell(17).setStringValue("Invoice Amount");
+        row.getCell(5).setStringValue("Filter Value");
+        row.getCell(6).setStringValue("Contest");
+        row.getCell(7).setStringValue("Contest ID");
+        row.getCell(8).setStringValue("Reference ID");
+        row.getCell(9).setStringValue("Category");
+        row.getCell(10).setStringValue("Status");
+        row.getCell(11).setStringValue("Launch Date");
+        row.getCell(12).setStringValue("Completion Date");
+        row.getCell(13).setStringValue("Actual Total Member Cost");
+        row.getCell(14).setStringValue("Payment Type");
+        row.getCell(15).setStringValue("Amount");
+		row.getCell(16).setStringValue("Invoice Number");
+		row.getCell(17).setStringValue("Invoice Date");
+		row.getCell(18).setStringValue("Invoice Amount");
 		if (isCanProcessInvoices())
 		{
-			row.getCell(18).setStringValue("Payment ID");
+			row.getCell(19).setStringValue("Payment ID");
 		}
 
         // insert sheet data from 2nd row
@@ -225,74 +226,76 @@ public class BillingCostReportDTO extends ReportBaseDTO {
 
             // set the project name
             row.getCell(4).setStringValue(costDetail.getProject().getName());
+            
+            row.getCell(5).setStringValue(costDetail.getProjectFilterValue() == null ? "None" : costDetail.getProjectFilterValue());
 
             // set the contest name
-            row.getCell(5).setStringValue(costDetail.getContest().getName());
+            row.getCell(6).setStringValue(costDetail.getContest().getName());
 
             // set the contest id
-            row.getCell(6).setNumberValue(costDetail.getContest().getId());
+            row.getCell(7).setNumberValue(costDetail.getContest().getId());
 
             // set the reference id
             if (costDetail.getReferenceId() == null || costDetail.getReferenceId().equals(""))
             {
-                row.getCell(7).setStringValue("None");
+                row.getCell(8).setStringValue("None");
             }
             else
             {
-                row.getCell(7).setStringValue(String.valueOf(costDetail.getReferenceId()));
+                row.getCell(8).setStringValue(String.valueOf(costDetail.getReferenceId()));
             }
 
             // set the contest type
-            row.getCell(8).setStringValue(costDetail.getContestType().getName());
+            row.getCell(9).setStringValue(costDetail.getContestType().getName());
 
             // set the status
-            row.getCell(9).setStringValue(costDetail.getStatus());
+            row.getCell(10).setStringValue(costDetail.getStatus());
 
             // set the Launch date
-            row.getCell(10).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
+            row.getCell(11).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
 
             // set the completion date
-            row.getCell(11).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
+            row.getCell(12).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
 
             // set the actual total member cost, the 'active' and 'scheduled' contest does not have actual member cost
             //if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
-                row.getCell(12).setNumberValue((costDetail.getActualTotalMemberCost()));
+                row.getCell(13).setNumberValue((costDetail.getActualTotalMemberCost()));
             
 
             // set the payment type
-            row.getCell(13).setStringValue(costDetail.getPaymentType());
+            row.getCell(14).setStringValue(costDetail.getPaymentType());
 
             // set the amount
-            row.getCell(14).setNumberValue((costDetail.getPaymentAmount()));
+            row.getCell(15).setNumberValue((costDetail.getPaymentAmount()));
 			
 			if (costDetail.getInvoiceNumber() == null || costDetail.getInvoiceNumber().equals(""))
-			{
-				row.getCell(15).setStringValue("-");
-			}
-			else 
-			{
-				row.getCell(15).setStringValue((costDetail.getInvoiceNumber()));
-			}
-			
-			if (costDetail.getInvoiceDate() == null || costDetail.getInvoiceDate().equals(""))
 			{
 				row.getCell(16).setStringValue("-");
 			}
 			else 
 			{
-				row.getCell(16).setStringValue(dateFormatter.format(costDetail.getInvoiceDate()));
+				row.getCell(16).setStringValue((costDetail.getInvoiceNumber()));
+			}
+			
+			if (costDetail.getInvoiceDate() == null || costDetail.getInvoiceDate().equals(""))
+			{
+				row.getCell(17).setStringValue("-");
+			}
+			else 
+			{
+				row.getCell(17).setStringValue(dateFormatter.format(costDetail.getInvoiceDate()));
 			}
 			
 			
-			if (row.getCell(17) != null)
+			if (row.getCell(18) != null)
 			{
-				row.getCell(17).setNumberValue((costDetail.getInvoiceAmount()));
+				row.getCell(18).setNumberValue((costDetail.getInvoiceAmount()));
 			}
 			
 			
-			if (isCanProcessInvoices() && row.getCell(18) != null)
+			if (isCanProcessInvoices() && row.getCell(19) != null)
 			{
-				row.getCell(18).setNumberValue((costDetail.getPaymentId()));
+				row.getCell(19).setNumberValue((costDetail.getPaymentId()));
 			}
 			
 			

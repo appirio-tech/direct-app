@@ -192,6 +192,7 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
         row.getCell(index++).setStringValue("Customer");
         row.getCell(index++).setStringValue("Billing");
         row.getCell(index++).setStringValue("Project");
+        row.getCell(index++).setStringValue("Filter Value");
         row.getCell(index++).setStringValue("Contest");
         row.getCell(index++).setStringValue("Contest Type");
         row.getCell(index++).setStringValue("Status");
@@ -238,6 +239,8 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
 
             // set the project name
             row.getCell(index++).setStringValue(costDetail.getProject().getName());
+            
+            row.getCell(index++).setStringValue(costDetail.getProjectFilterValue() == null ? "None" : costDetail.getProjectFilterValue());
 
             // set the contest name
             row.getCell(index++).setStringValue(costDetail.getContest().getName());
