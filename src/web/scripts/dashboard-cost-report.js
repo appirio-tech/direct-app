@@ -353,19 +353,19 @@ $(document).ready(function() {
                             }
                             totalCompleted += fullfillment;
                             $(this).children("td:not(:last)").each(function(i) {
-                                if (i >= 10) {
-                                    $(this).html("$" + breakdown[i - 10]);
+                                if (i >= 11) {
+                                    $(this).html("$" + breakdown[i - 11]);
                                 }
                             });
                             if (fullfillment > 0) {
                                 $(this).children("td").each(function(i) {
-                                    if (i >= 7) {
-                                        totalCost[i - 7] += parseFloat($(this).text().replace(reg1,"").replace(reg2,""));
+                                    if (i >= 8) {
+                                        totalCost[i - 8] += parseFloat($(this).text().replace(reg1,"").replace(reg2,""));
                                     }
                                 });
                             }
                         });
-                        totalCompleted = totalCompleted == 0 ? 1 : totalCompleted;
+                        totalCompleted = (totalCompleted == 0 ? 1 : totalCompleted);
                         $("#breakdownBody table tfoot tr td").each(function(i) {
                             if (i >= 1) {
                                 $(this).html("$" + new Number(totalCost[i - 1] / totalCompleted).toFixed(2));
@@ -444,7 +444,7 @@ $(document).ready(function() {
             $("#dataTableLength").trigger("change");
 
             if (projectIds.length > 0) {
-                $("#breakdownBody table").append("<tfoot><tr><td colspan='7' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
+                $("#breakdownBody table").append("<tfoot><tr><td colspan='8' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
                 loadBreakdownData(projectIds);
             }
         } else {

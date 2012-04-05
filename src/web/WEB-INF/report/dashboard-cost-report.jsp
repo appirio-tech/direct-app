@@ -589,6 +589,7 @@
                                 <th class="tableColumn sorting">Customer</th>
                                 <th class="tableColumn sorting_desc">Billing</th>
                                 <th class="tableColumn sorting">Project</th>
+                                <th class="tableColumn sorting">Filter Value</th>
                                 <th class="tableColumn sorting">Contest</th>
                                 <th class="tableColumn sorting">Contest Type</th>
                                 <th class="tableColumn sorting">Status</th>
