@@ -49,11 +49,13 @@ public class SyncUserAction extends BaseDirectStrutsAction {
         try {
             userServiceFacade.syncJiraUser(user, handle);
         } catch (Exception e) {
+		    System.out.println("---------------------------------------------e-"+e);
             syncJIRA = false;
         }
         try {
             userServiceFacade.getConfluenceUser(user, handle);
         } catch (Exception e) {
+			System.out.println("--------33333333333333333333333-------------------------------------e-"+e);
             syncWIKI = false;
         }
         Map<String, Boolean> result = new HashMap<String, Boolean>();

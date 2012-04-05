@@ -25,8 +25,8 @@
     <link rel="stylesheet" href="/css/ganttchart.css?v=198728" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=210661"></script>
     <script type="text/javascript" src="/scripts/dhtmlxgantt.js?v=209663"></script>
-	<script type="text/javascript" src="/scripts/launch/entity.js?v=214861"></script>
-	<script type="text/javascript" src="/scripts/launch/main.js?v=214861"></script>
+	<script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
+	<script type="text/javascript" src="/scripts/launch/main.js?v=215011"></script>
     <script type="text/javascript">
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;

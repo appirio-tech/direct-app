@@ -63,7 +63,7 @@
     <script type="text/javascript" src="/scripts/AJAXProcessor.js?v=176771"></script>
     <script type="text/javascript" src="/scripts/RSSProcessor.js?v=176771"></script>
     <script type="text/javascript" src="/scripts/FeedLoader.js?v=213163"></script>
-    <script type="text/javascript" src="/scripts/loadHelps.js?v=211775"></script>
+    <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
 
 
     <script type="text/javascript">

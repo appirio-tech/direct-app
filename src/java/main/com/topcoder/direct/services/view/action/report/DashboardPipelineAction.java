@@ -167,7 +167,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
         for (Project project : clientBillingProjects) {
             Client client = project.getClient();
             if (client != null) {
-                allClients.put(client.getId(), client.getName());
+                allClients.put(client.getId(), client.getName());  System.out.println("---------client.getId(), client.getName()------------------------------------"+client.getId() +".."+client.getName());
             }
         }
         // for contest without client
@@ -293,7 +293,7 @@ public class DashboardPipelineAction extends BaseDirectStrutsAction {
             // end group by and group values filtering here
 
             for (CommonPipelineData data : dataList) {
-                allClients.put(data.getClientId(), data.getClientName());
+                allClients.put(data.getClientId(), data.getClientName()); System.out.println("---------data.getClientId(), data.getClientName()-----------------------------------"+data.getClientId() +".."+data.getClientName());
                 if (matchesFormParameters(data) ) {
                     clients.add(data.getClientName());
 
