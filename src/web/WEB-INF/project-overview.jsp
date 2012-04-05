@@ -411,7 +411,7 @@
                             <div class="dashboardTable">
                                 <dl>
                                     <dt>
-                                        <a href="javascript:void(0)" class="expand">Project Health</a>
+                                        <a href="javascript:void(0)" class="expand">Active Contests Health</a>
                                     </dt>
                                     <dd>
                                         <div class="projectHealthHeader">
