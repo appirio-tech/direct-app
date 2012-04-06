@@ -190,12 +190,14 @@
 # applicationContext.xml #
 ##########################
 # typical windows configuration
-@loginProcessor@=com.topcoder.direct.services.view.processor.security.MockLoginProcessor
-@pptLoginProcessor@=com.topcoder.ppt.security.MockLoginProcessor
+@loginProcessor@=com.topcoder.direct.services.view.processor.security.EJBLoginProcessor
+@pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
+@analyticsLoginProcessor@=com.topcoder.analytics.view.security.EJBLoginProcessor
 
 # typical VM configuration
 #@loginProcessor@=com.topcoder.direct.services.view.processor.security.LoginProcessor
 #@pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
+#@analyticsLoginProcessor@=com.topcoder.analytics.view.security.EJBLoginProcessor
 
 ###########################
 # liquidPortalService.xml #
@@ -302,3 +304,4 @@
 @ApplicationServer.SECURITY_CONTEXT_FACTORY@=org.jnp.interfaces.NamingContextFactory
 
 @excelFile@=/Users/macbookpro/Downloads/Revenue_sample.xlsx
+@analyticsRssFeedURL@=http://www.topcoder.com/feed/?cat=35
