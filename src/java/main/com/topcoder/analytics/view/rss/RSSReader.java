@@ -10,10 +10,10 @@ package com.topcoder.analytics.view.rss;
  * @version 1.0
  */
 public interface RSSReader {
-	/**
-	 * Reads an RSS feed from a URL.
-	 * @param url URL to read RSS from.
-	 * @return the RSS feed.
-	 */
-	public RSSFeed read(String url);
+    /**
+     * Reads an RSS feed from a URL.
+     * @param url URL to read RSS from.
+     * @return the RSS feed.
+     */
+    public RSSFeed read(String url);
 }

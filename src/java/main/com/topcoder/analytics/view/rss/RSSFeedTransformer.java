@@ -12,10 +12,10 @@ package com.topcoder.analytics.view.rss;
  * @version 1.0
  */
 public interface RSSFeedTransformer<T> {
-	/**
-	 * Transforms the raw data into RSSFeed object.
-	 * @param rawData The raw data to be transformed.
-	 * @return transformed data as RSSFeed.
-	 */
-	public RSSFeed transform(T rawData);
+    /**
+     * Transforms the raw data into RSSFeed object.
+     * @param rawData The raw data to be transformed.
+     * @return transformed data as RSSFeed.
+     */
+    public RSSFeed transform(T rawData);
 }

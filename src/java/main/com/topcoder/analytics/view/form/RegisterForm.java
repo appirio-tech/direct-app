@@ -14,42 +14,42 @@ public class RegisterForm {
      * Represents the handle of the user.
      */
     private String handle;
-    
+
     /**
      * Represents the password of the user.
      */
     private String password;
-    
+
     /**
      * Represents the first name of the user.
      */
     private String firstName;
-    
+
     /**
      * Represents the last name of the user.
      */
     private String lastName;
-    
+
     /**
      * Represents the email of the user.
      */
     private String email;
-    
+
     /**
      * Represents the verification code.
      */
     private String verificationCode;
-    
+
     /**
      * Construct a new <code>RegisterForm</code> instance.
      */
     public RegisterForm() {
-        
+
     }
 
     /**
      * Gets the handle of the user.
-     * 
+     *
      * @return the handle of the user.
      */
     public String getHandle() {
@@ -58,7 +58,7 @@ public class RegisterForm {
 
     /**
      * Sets the handle of the user.
-     * 
+     *
      * @param handle the handle of the user.
      */
     public void setHandle(String handle) {
@@ -67,7 +67,7 @@ public class RegisterForm {
 
     /**
      * Gets the password of the user.
-     * 
+     *
      * @return the password of the user.
      */
     public String getPassword() {
@@ -76,7 +76,7 @@ public class RegisterForm {
 
     /**
      * Sets the password of the user.
-     * 
+     *
      * @param password the password of the user.
      */
     public void setPassword(String password) {
@@ -85,7 +85,7 @@ public class RegisterForm {
 
     /**
      * Gets the first name of the user.
-     * 
+     *
      * @return the first name of the user.
      */
     public String getFirstName() {
@@ -94,7 +94,7 @@ public class RegisterForm {
 
     /**
      * Sets the first name of the user.
-     * 
+     *
      * @param firstName the first name of the user.
      */
     public void setFirstName(String firstName) {
@@ -103,7 +103,7 @@ public class RegisterForm {
 
     /**
      * Gets the last name of the user.
-     * 
+     *
      * @return the last name of the user.
      */
     public String getLastName() {
@@ -112,7 +112,7 @@ public class RegisterForm {
 
     /**
      * Sets the last name of the user.
-     * 
+     *
      * @param lastName the last name of the user.
      */
     public void setLastName(String lastName) {
@@ -121,7 +121,7 @@ public class RegisterForm {
 
     /**
      * Gets the email of the user.
-     * 
+     *
      * @return the email of the user.
      */
     public String getEmail() {
@@ -130,7 +130,7 @@ public class RegisterForm {
 
     /**
      * Sets the email of the user.
-     * 
+     *
      * @param email the email of the user.
      */
     public void setEmail(String email) {
@@ -139,7 +139,7 @@ public class RegisterForm {
 
     /**
      * Gets the verification code.
-     * 
+     *
      * @return the verification code.
      */
     public String getVerificationCode() {
@@ -148,7 +148,7 @@ public class RegisterForm {
 
     /**
      * Sets the verification code.
-     * 
+     *
      * @param verificationCode the verification code.
      */
     public void setVerificationCode(String verificationCode) {

@@ -33,31 +33,31 @@ public class IndexAction extends ActionSupport {
      */
     public IndexAction() {
     }
-    
+
     /**
      * Handles the incoming request.
      *
      * @return Action.SUCCESS
      */
     public String execute() {
-    	// retrieve RSS for viewing in home page
-    	ServletActionContext.getRequest().setAttribute("rssFeed", rssReader.read(rssFeedUrl));
+        // retrieve RSS for viewing in home page
+        ServletActionContext.getRequest().setAttribute("rssFeed", rssReader.read(rssFeedUrl));
         return SUCCESS;
     }
 
-	/**
-	 * Sets the value for rssReader.
-	 * @param rssReader the rssReader to set
-	 */
-	public void setRssReader(RSSReader rssReader) {
-		this.rssReader = rssReader;
-	}
+    /**
+     * Sets the value for rssReader.
+     * @param rssReader the rssReader to set
+     */
+    public void setRssReader(RSSReader rssReader) {
+        this.rssReader = rssReader;
+    }
 
-	/**
-	 * Sets the value for rssFeedUrl.
-	 * @param rssFeedUrl the rssFeedUrl to set
-	 */
-	public void setRssFeedUrl(String rssFeedUrl) {
-		this.rssFeedUrl = rssFeedUrl;
-	}
+    /**
+     * Sets the value for rssFeedUrl.
+     * @param rssFeedUrl the rssFeedUrl to set
+     */
+    public void setRssFeedUrl(String rssFeedUrl) {
+        this.rssFeedUrl = rssFeedUrl;
+    }
 }

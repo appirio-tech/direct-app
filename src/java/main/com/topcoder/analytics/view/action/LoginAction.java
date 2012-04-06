@@ -25,17 +25,17 @@ public class LoginAction extends BaseAjaxAction {
      * injected by Spring.
      */
     private LoginProcessor loginProcessor;
-    
+
     /**
      * A <code>String</code> providing the user name submitted by user.
      */
     private String username;
-    
+
     /**
      * A <code>String</code> providing the password submitted by user.
      */
     private String password;
-    
+
     /**
      * A <code>boolean</code> flag indicating whether user selected <code>Remember Me</code> option or not.
      */
@@ -43,7 +43,7 @@ public class LoginAction extends BaseAjaxAction {
 
     /**
      * Sets the user name submitted by user.
-     * 
+     *
      * @param username the user name submitted by user.
      */
     public void setUsername(String username) {
@@ -52,7 +52,7 @@ public class LoginAction extends BaseAjaxAction {
 
     /**
      * Sets the password submitted by user.
-     * 
+     *
      * @param password the password submitted by user.
      */
     public void setPassword(String password) {
@@ -61,7 +61,7 @@ public class LoginAction extends BaseAjaxAction {
 
     /**
      * Sets the flag indicating whether user selected <code>Remember Me</code> option or not.
-     * 
+     *
      * @param rememberMe flag indicating whether user selected <code>Remember Me</code> option or not.
      */
     public void setRememberMe(boolean rememberMe) {
@@ -70,7 +70,7 @@ public class LoginAction extends BaseAjaxAction {
 
     /**
      * Sets the <code>LoginProcessor</code> used to perform authentication.
-     * 
+     *
      * @param loginProcessor the <code>LoginProcessor</code> used to perform authentication.
      */
     public void setLoginProcessor(LoginProcessor loginProcessor) {
@@ -83,7 +83,7 @@ public class LoginAction extends BaseAjaxAction {
     public LoginAction() {
         super();
     }
-    
+
     /**
      * Handles the incoming request. Perform authentication for the user.
      */

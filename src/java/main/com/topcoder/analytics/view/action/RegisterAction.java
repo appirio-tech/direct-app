@@ -29,20 +29,20 @@ public class RegisterAction extends BaseAjaxAction {
      * Represents the serial version unique id.
      */
     private static final long serialVersionUID = 1906721920613739600L;
-    
+
     /**
      * A <code>RegisterForm</code> providing the register data submitted by user.
      */
     private RegisterForm formData;
-    
+
     /**
      * The <code>UserService</code> instance. It will be injected by Spring.
      */
     private UserService userService;
-    
+
     /**
      * Sets the <code>UserService</code> instance.
-     * 
+     *
      * @param userService he <code>UserService</code> instance.
      */
     public void setUserService(UserService userService) {
@@ -51,7 +51,7 @@ public class RegisterAction extends BaseAjaxAction {
 
     /**
      * Gets the register data submitted by user.
-     * 
+     *
      * @return the register data submitted by user.
      */
     public RegisterForm getFormData() {
@@ -60,7 +60,7 @@ public class RegisterAction extends BaseAjaxAction {
 
     /**
      * Sets the register data submitted by user.
-     * 
+     *
      * @param formData the register data submitted by user.
      */
     public void setFormData(RegisterForm formData) {
@@ -74,10 +74,10 @@ public class RegisterAction extends BaseAjaxAction {
         super();
         this.formData = new RegisterForm();
     }
-    
+
     /**
      * Handles the incoming request. Register a new user.
-     * 
+     *
      * @throws Exception if any error occurs
      */
     public void executeAction() throws Exception {
@@ -87,7 +87,7 @@ public class RegisterAction extends BaseAjaxAction {
         checkRequired("handle", "handle", formData.getHandle());
         checkRequired("email", "email", formData.getEmail());
         checkRequired("regPassword", "password", formData.getPassword());
-        
+
         HttpSession session = ServletActionContext.getRequest().getSession();
         String randomString = (String) session.getAttribute("captcha_str");
         session.removeAttribute("captcha_str");
@@ -97,13 +97,13 @@ public class RegisterAction extends BaseAjaxAction {
         if (hasFieldErrors()) {
             return;
         }
-        
+
         // check whether the handle has already exists
         if (handleExists(formData.getHandle())) {
             addFieldError("handle", "The handle already exists");
             return;
         }
-        
+
         User user = new User();
         user.setEmailAddress(formData.getEmail());
         user.setFirstName(formData.getFirstName());
@@ -111,19 +111,19 @@ public class RegisterAction extends BaseAjaxAction {
         user.setHandle(formData.getHandle());
         user.setPassword(formData.getPassword());
         long userId = userService.registerUser(user);
-        
+
         // add user to LADP server
         addTopCoderMemberProfile(userId, user.getHandle(), user.getPassword());
-        
+
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("success", true);
         result.put("userId", userId);
         setResult(result);
     }
-    
+
     /**
      * Checks the parameter value is presented. If not, a field error message will be added.
-     * 
+     *
      * @param fieldName the filed name of the parameter value
      * @param message the message to be displayed for end user
      * @param value the parameter value
@@ -133,7 +133,7 @@ public class RegisterAction extends BaseAjaxAction {
             addFieldError("field", "Please fill your " + message);
         }
     }
-    
+
     /**
      * Updates the <code>status</code> attributed for <code>LDAP</code> entry corresponding to specified
      * <code>TopCoder</code> member profile with <code>Active</code> status.
@@ -155,11 +155,11 @@ public class RegisterAction extends BaseAjaxAction {
                 ldapClient.disconnect();
             } catch (LDAPClientException e) {
                 LOGGER.error("Failed to disconnect from LDAP server while activating user account. "
-                          + "The process is not interrupted.", e);     
+                          + "The process is not interrupted.", e);
             }
         }
     }
-    
+
     /**
      * Check if handle exists.
      *

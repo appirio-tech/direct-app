@@ -16,7 +16,7 @@ import com.topcoder.shared.util.DBMS;
 
 /**
  * <p>Common utility class.</p>
- * 
+ *
  * @author flexme
  * @version 1.0
  */
@@ -25,9 +25,9 @@ public final class Util {
      * A private constructor.
      */
     private Util() {
-        
+
     }
-    
+
     /**
      * Gets the TCSubject instance for the given user.
      *

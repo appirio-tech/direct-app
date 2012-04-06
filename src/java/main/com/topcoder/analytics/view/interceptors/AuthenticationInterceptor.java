@@ -26,7 +26,7 @@ import com.topcoder.web.common.security.SessionPersistor;
  * the session using <code>userSessionIdentityKey</code>. If found, it allows the action to proceed. If not, it will check
  * whether the TC SSO cookie is presented, if yes, it will use the TC SSO Cookie to perform login.
  * </p>
- * 
+ *
  * @author flexme
  * @version 1.0
  */
@@ -35,7 +35,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
      * Represents the serial version unique id.
      */
     private static final long serialVersionUID = 5218377458678401239L;
-    
+
     /**
      * Represents the user session identity key attribute.
      */
@@ -61,7 +61,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         if (userSessionIdentityKey == null) {
             throw new IllegalStateException("userSessionIdentityKey has not been injected.");
         }
-        
+
         HttpSession session = ServletActionContext.getRequest().getSession();
         HttpServletRequest request = ServletActionContext.getRequest();
 
@@ -83,7 +83,7 @@ public class AuthenticationInterceptor extends AbstractInterceptor {
         // process the action and return its result
         return invocation.invoke();
     }
-    
+
     /**
      * Getter for the user session identity key.
      *

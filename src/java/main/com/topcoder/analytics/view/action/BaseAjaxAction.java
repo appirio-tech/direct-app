@@ -26,20 +26,20 @@ public abstract class BaseAjaxAction extends ActionSupport {
      * Represents the logger.
      */
     protected static final Logger LOGGER = Logger.getLogger(BaseAjaxAction.class);
-    
+
     /**
      * Represents the result which will be returned as JSON to browser.
      */
     private Object result;
-    
+
     /**
-     * The whole JSON data will will be returned as JSON to browser. 
+     * The whole JSON data will will be returned as JSON to browser.
      */
     private Map<String, Object> jsonData;
-    
+
     /**
      * Gets the result which will be returned as JSON to browser.
-     * 
+     *
      * @return the result which will be returned as JSON to browser.
      */
     protected Object getResult() {
@@ -48,7 +48,7 @@ public abstract class BaseAjaxAction extends ActionSupport {
 
     /**
      * Sets the result which will be returned as JSON to browser.
-     * 
+     *
      * @param result the result which will be returned as JSON to browser.
      */
     protected void setResult(Object result) {
@@ -56,9 +56,9 @@ public abstract class BaseAjaxAction extends ActionSupport {
     }
 
     /**
-     * Gets the whole JSON data will will be returned as JSON to browser. 
-     * 
-     * @return the whole JSON data will will be returned as JSON to browser. 
+     * Gets the whole JSON data will will be returned as JSON to browser.
+     *
+     * @return the whole JSON data will will be returned as JSON to browser.
      */
     public Map<String, Object> getJsonData() {
         return jsonData;
@@ -70,7 +70,7 @@ public abstract class BaseAjaxAction extends ActionSupport {
     public BaseAjaxAction() {
         jsonData = new HashMap<String, Object>();
     }
-    
+
     /**
      * Handles the incoming request. It will wrap the necessary data into jsonData map which will be returned as JSON
      * to browser.
@@ -93,7 +93,7 @@ public abstract class BaseAjaxAction extends ActionSupport {
         }
         return SUCCESS;
     }
-    
+
     /**
      * This is the template method where the action logic will be performed by children classes.
      *

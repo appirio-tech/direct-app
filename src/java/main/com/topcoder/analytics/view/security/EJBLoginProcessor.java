@@ -22,7 +22,7 @@ import com.topcoder.web.common.security.SessionPersistor;
 
 /**
  * <p>The processor the perform user authentication. It uses security EJB to perform authentication.</p>
- * 
+ *
  * @author flexme
  * @version 1.0
  */
@@ -32,7 +32,7 @@ public class EJBLoginProcessor implements LoginProcessor {
      * The expire time for main site when 'remember me' flag is not set. Is set to 1 day.
      */
     private static final int MAIN_COOKIE_TIME = 60 * 60 * 24;
-    
+
     /**
      * The Direct SSO cookie.
      */
@@ -42,21 +42,21 @@ public class EJBLoginProcessor implements LoginProcessor {
      * A <code>Logger</code> to be used for logging the events encountered while processing the requests.
      */
     private static final Logger LOGGER = Logger.getLogger(EJBLoginProcessor.class);
-    
+
     /**
      * Constructs new <code>EJBLoginProcessor</code> instance. This implementation does nothing.
      */
     public EJBLoginProcessor() {
-        
+
     }
-    
+
     /**
      * Perform authentication for a user.
-     * 
+     *
      * @param username the handle of the user.
      * @param password the password of the user.
-     * @param rememberMe a flag indicates whether the login state of the user should be remembered. 
-     * @return true if the login is successful, false otherwise. 
+     * @param rememberMe a flag indicates whether the login state of the user should be remembered.
+     * @return true if the login is successful, false otherwise.
      */
     public boolean login(String username, String password, boolean rememberMe) {
         try {

@@ -71,28 +71,28 @@
                 var html;
 
                 if(results=="Too short"){
-                    html ='<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength-empty.png">' +
-                        '<img alt="" src="i/password-strength-empty.png">' +
-                        '<img alt="" src="i/password-strength-empty.png">'+
+                    html ='<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength-empty.png">' +
+                        '<img alt="" src="/images/analytics/password-strength-empty.png">' +
+                        '<img alt="" src="/images/analytics/password-strength-empty.png">'+
                         '<div class="clear"></div>' ;
                 }else if(results=="Weak"){
-                    html ='<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength-empty.png">' +
-                        '<img alt="" src="i/password-strength-empty.png">'+
+                    html ='<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength-empty.png">' +
+                        '<img alt="" src="/images/analytics/password-strength-empty.png">'+
                         '<div class="clear"></div>' ;
                 }else if(results=="Good"){
-                    html ='<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength-empty.png">'+
+                    html ='<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength-empty.png">'+
                         '<div class="clear"></div>' ;
                 }else if(results=="Strong"){
-                    html ='<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength.png">' +
-                        '<img alt="" src="i/password-strength.png">'+
+                    html ='<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength.png">' +
+                        '<img alt="" src="/images/analytics/password-strength.png">'+
                         '<div class="clear"></div>' ;
                 }
 

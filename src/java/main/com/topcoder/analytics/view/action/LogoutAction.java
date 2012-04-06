@@ -29,12 +29,12 @@ public class LogoutAction extends BaseAjaxAction {
      * Construct a new <code>LogoutAction</code> instance.
      */
     public LogoutAction() {
-        
+
     }
-    
+
     /**
      * Handles the incoming request. Clear the state of current user.
-     * 
+     *
      * @throws Exception if any error occurs
      */
     protected void executeAction() throws Exception {
