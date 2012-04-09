@@ -92,7 +92,7 @@
                                             <!-- video wrapper --> 
                                             <div class="videoWrap">
                                                 <object type="application/x-shockwave-flash" data="http://www.youtube.com/watch?v=wUVMK6EhQaU&hd=1" width="327" height="208">
-                                                    <param name="movie"  value="http://www.youtube.com/v/y4TjXnpgVow" />
+                                                    <param name="movie"  value="http://www.youtube.com/watch?v=wUVMK6EhQaU&hd=1" />
                                                     <param name="FlashVars" value="playerMode=embedded" />
                                                 </object>
                                             </div>
