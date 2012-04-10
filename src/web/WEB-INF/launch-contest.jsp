@@ -313,9 +313,9 @@
 
                 <div class="tooltipContent">
                     <p>
-                        Check this checkbox to automatically create a bug hunt competition for your assembly competition.
-                        The bug hunt competition will start after your assembly competition to find out the potential
-                        bugs of your assembly.
+                        Check this box to automatically create a Bug Hunt Competition for your Assembly Competition.
+                        The Bug Hunt Competition will start at the end of your Assembly Competition. The Bug Hunt will
+                        help proactively identify potential issues, enhancements, and changes.
                     </p>
                 </div><!-- End .tooltipContent -->
 
