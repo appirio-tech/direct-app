@@ -568,8 +568,6 @@
                 <include name="tcwebcommon.jar" />
             </fileset>
         </copy>
-        <copy tofile="${jboss.home}/server/${server.name}/conf/security.keystore" overwrite="true"
-              file="${configdir}/security.keystore" />
     </target>
 
     <target name="first_deploy" depends="clean, deploy-jboss-files, deploy-static-files, deploy" description="setup the local clean jboss instance to run the direct application">
