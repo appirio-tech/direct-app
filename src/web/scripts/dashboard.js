@@ -50,8 +50,11 @@
  *  Version 2.5 - TC Direct Issue Tracking Tab Update Assembly 1
  *  - Add the js codes to handle add/edit JIRA issue in contest issue tracking page.
  *
- * @author tangzx, Blues, GreatKevin, flexme
- * @version 2.5
+ *  Version 2.6 - Adding Contest Approval Feature in Direct
+ *  - Added the js code to submit Approval scorecard
+ *
+ * @author tangzx, Blues, GreatKevin, isv
+ * @version 2.6
  */
 $(document).ready(function(){
 						   
@@ -1779,6 +1782,64 @@ $(document).ready(function(){
                 content: "Go to the edit project page to edit and update the project details and settings"
             });
         }
+
+    $('#radioApproveReject').click(function (e) {
+        $('.approvalRejectSection').show();
+    });
+    
+    $('#radioApproveApproved').click(function (e) {
+        $('.approvalRejectSection').hide();
+    });
+    
+    $('textarea.hint').focus(function () {
+        if ($(this).hasClass('hint')) {
+            $(this).val('');
+        }
+    });
+    
+    $('textarea.hint').blur(function (e) {
+        if (!$(this).val()) {
+            if (!$(this).hasClass('hint')) {
+                $(this).addClass('hint');
+            }
+            $(this).val($(this).attr('name'));
+        }
+        else if ($(this).val() != $(this).attr('name')) {
+            $(this).removeClass('hint');
+        }
+    });
+
+    $('#submitApprovalButton').click(function() {
+        var d = $(this).attr('rel').split('_');;
+        var projectId = parseInt(d[1]); 
+        var submissionId = parseInt(d[0]); 
+        var rejectionReason = $('.rejectTextarea').val();
+        var approved = $('#radioApproveApproved:checked').length > 0;
+        if (!approved && $.trim(rejectionReason) == '') {
+            showErrors('Reason for rejection is required');
+        } else {
+            $.ajax({
+                       type:'POST',
+                       url:ctx + "/contest/submitApproval",
+                       data:{approved:approved, rejectionReason:rejectionReason, projectId:projectId, submissionId:submissionId},
+                       cache:false,
+                       dataType:'json',
+                       beforeSend:modalPreloader,
+                       complete:modalClose,
+                       success:function (jsonResult) {
+                           handleJsonResult(jsonResult,
+                                            function (result) {
+                                                $('.ApprovalSection').html('<p>The submission has been ' +
+                                                                           (approved ? 'approved' : 'rejected') +
+                                                                           '.</p>');
+                                            },
+                                            function (errorMessage) {
+                                                showErrors(errorMessage);
+                                            });
+                       }
+                   });
+        }
+    });
 });
 
 /**

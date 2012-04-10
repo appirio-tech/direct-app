@@ -950,6 +950,12 @@
             </result>
         </action>
 
+        <action name="submitApproval" class="submitApprovalAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="studioNoWinner" class="studioNoWinnerAction">
             <result>/WEB-INF/studio-nowinner.jsp</result>
         </action>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -30,6 +30,9 @@ import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
 import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.review.data.Review;
+import com.topcoder.project.service.ProjectServices;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.ProjectData;
@@ -307,8 +310,16 @@ import com.topcoder.web.common.cache.MaxAge;
  * </ol>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, TCSASSEMBLER
- * @version 1.8.3
+ * <p>
+ * Version 1.8.4 (Module Assembly - Adding Contest Approval Feature in Direct Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #hasReview(ProjectServices, long, long, long)} method.</li>
+ *     <li>Added {@link #getUserResourceByRole(long, SoftwareCompetition, long)} method.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe
+ * @version 1.8.4
  */
 public final class DirectUtils {
     /**
@@ -1797,5 +1808,48 @@ public final class DirectUtils {
         return contestTypes;
     }
 
+    /**
+     * <p>Gets the resource of specified role for specified user for specified contest.</p>
+     * 
+     * @param userId a <code>long</code> providing the ID of a user.
+     * @param contest a <code>SoftwareCompetition</code> providing the details for contest. 
+     * @param resourceRoleId a <code>long</code> providing the ID for desired resource role.
+     * @return a <code>Resource</code> of specified role for existing user or <code>null</code> if such resource is not
+     *         found.
+     * @since 1.8.4
+     */
+    public static Resource getUserResourceByRole(long userId, SoftwareCompetition contest, long resourceRoleId) {
+        Resource[] resources = contest.getResources();
+        for (Resource resource : resources) {
+            if (resource.getResourceRole().getId() == resourceRoleId) {
+                String resourceUserId = resource.getProperty("External Reference ID");
+                if (userId == Long.parseLong(resourceUserId)) {
+                    return resource;
+                }
+            }
+        }
+        return null;
+    }
 
+    /**
+     * <p>Checks if there ia a review of specified type by specified reviewer for specified project.</p>
+     * 
+     * @param projectServices a <code>ProjectServices</code> providing interface to project services. 
+     * @param projectId a <code>long</code> providing the contest ID.
+     * @param scorecardTypeId a <code>long</code> providing the ID for scorecard type.
+     * @param reviewerResourceId a <code>long</code> providing the ID for reviewer resource.
+     * @return <code>true</code> if ; <code>false</code> otherwise.
+     * @since 1.8.4
+     */
+    public static boolean hasReview(ProjectServices projectServices, long projectId, long scorecardTypeId, 
+                                    long reviewerResourceId) {
+        Review[] reviews = projectServices.getReviews(projectId, scorecardTypeId);
+        for (Review review : reviews) {
+            long reviewResourceId = review.getAuthor();
+            if (reviewResourceId == reviewerResourceId) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

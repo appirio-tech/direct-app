@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSDEVELOPER, TCSASSEMBLER
-  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Two)
+  - Author: isv
+  - Version 1.3 (Release Assembly - TC Direct Cockpit Release Two)
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Software contest in a list view.
@@ -10,6 +10,9 @@
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Two) change Notes:
   - - add miletone submissions and sub tabs for switch between milestone and final round
+  -
+  - Version 1.3 (Module Assembly - Adding Contest Approval Feature in Direct) change Notes:
+  - - added Approval section
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -20,6 +23,7 @@
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/htmlhead.jsp"/>
+    <!-- ${viewData.approvalCommitted} ${viewData.showApproval}-->
 </head>
 
 <body id="page">
@@ -232,6 +236,9 @@
                                                 <s:set var="viewData" value="viewData" scope="page"/>
                                                     <h2>All Final Round Submissions</h2>
 
+<%--
+                                                <table class="${viewData.showApproval ? 'softwareStatsApproval' : 'softwareStats'}" 
+--%>
                                                 <table class="softwareStats" cellpadding="0" cellspacing="0">
                                                     <colgroup>
                                                         <col width="5%"/>
@@ -386,6 +393,43 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
+                                            <c:if test="${viewData.showApproval}">
+                                                <div class="ApprovalSection">
+                                                    <c:choose>
+                                                        <c:when test="${viewData.approvalCommitted}">
+                                                            <p>The submission has been approved.</p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p>
+                                                                <input type="radio" name="radioApprove"
+                                                                       id="radioApproveApproved"/>
+                                                                <label for="radioApproveApproved">Approved.</label>
+                                                                All requirements are met.
+                                                            </p>
+
+                                                            <p>
+                                                                <input type="radio" name="radioApprove"
+                                                                       id="radioApproveReject"/>
+                                                                <label for="radioApproveReject">Rejected.</label>
+                                                                At least one requirement has not been met and is
+                                                                identified
+                                                                below.
+                                                            </p>
+
+                                                            <p class="approvalRejectSection hide">
+                                                                <textarea class="hint rejectTextarea" cols="" rows=""
+                                                                          name="Reasons for rejection.">Reasons for rejection.</textarea>
+                                                            </p>
+
+                                                            <div class="buttons">
+                                                                <a class="buttonRed1" href="javascript:;" 
+                                                                   rel="${firstPlaceWinner.submissionId}_${firstPlaceWinner.projectId}"
+                                                                   id="submitApprovalButton"><span>SAVE AND MARK COMPLETE</span></a>
+                                                            </div>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                            </c:if>
 
                                             </s:if>
                                             <s:if test="roundType.toString() == 'MILESTONE'">

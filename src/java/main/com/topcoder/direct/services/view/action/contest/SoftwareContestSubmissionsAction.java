@@ -20,8 +20,11 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.SoftwareCompetition;
+import org.apache.log4j.Logger;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing a list of submissions for
@@ -54,11 +57,33 @@ import com.topcoder.service.project.SoftwareCompetition;
   * </ol>
   * </p>
  *
+ * <p>
+ * Version 1.2 (Module Assembly - Adding Contest Approval Feature in Direct Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added logic for checking if user can perform Approval and if approval is already completed by user.</li>
+ *   </ol>
+ * </p>
+ *
  *
  * @author TCSASSEMBLER
- * @version 1.1 (Release Assembly - TC Direct Cockpit Release Two)
+ * @version 1.2 (Release Assembly - TC Direct Cockpit Release Two)
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
+
+    /**
+     * <p>A <code>long</code> providing the ID for <code>Approver</code> resource role.</p>
+     */
+    private static final long RESOURCE_ROLE_APPROVER_ID = 10;
+
+    /**
+     * <p>A <code>long</code> providing the ID for <code>Approval</code> scorecard type.</p>
+     */
+    private static final long SCORECARD_TYPE_APPROVAL_ID = 3;
+
+    /**
+     * <p>Logger for this class.</p>
+     */
+    private static final Logger logger = Logger.getLogger(SoftwareContestSubmissionsAction.class);
 
     /**
      * <p>A <code>ProjectIdForm</code> providing the parameters of the incoming request.</p>
@@ -192,6 +217,7 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
     @Override
     public void executeAction() throws Exception {
         getFormData().setProjectId(getProjectId());
+
         // Get current session
         HttpServletRequest request = DirectUtils.getServletRequest();
         this.sessionData = new SessionData(request.getSession());
@@ -199,7 +225,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         // Get current user
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
-        SoftwareCompetition softwareCompetition = getContestServiceFacade().getSoftwareContestByProjectId(currentUser, getFormData().getProjectId());
+        SoftwareCompetition softwareCompetition 
+            = getContestServiceFacade().getSoftwareContestByProjectId(currentUser, getFormData().getProjectId());
 
         boolean hasMilestoneRound = DirectUtils.isMultiRound(softwareCompetition);
 
@@ -213,9 +240,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
         if (hasMilestoneRound) {
             if (roundType == ContestRoundType.FINAL) {
-
-                boolean isMilestoneRoundConfirmed = DirectUtils.getContestCheckout(softwareCompetition, ContestRoundType.MILESTONE);
-
+                boolean isMilestoneRoundConfirmed 
+                    = DirectUtils.getContestCheckout(softwareCompetition, ContestRoundType.MILESTONE);
                 if (!isMilestoneRoundConfirmed) {
                     // if the milestone is not confirmed, redirect to milestone submission page
                     this.redirectToMilestone = true;
@@ -225,8 +251,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         }
 
         if (roundType == ContestRoundType.FINAL) {
-        // Set submissions, winners, reviewers data
-        DataProvider.setSoftwareSubmissionsData(getViewData());
+            // Set submissions, winners, reviewers data
+            DataProvider.setSoftwareSubmissionsData(getViewData());
         } else {
             DataProvider.setSoftwareMilestoneSubmissionsData(getViewData());
         }
@@ -256,6 +282,26 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
 
         DirectUtils.setDashboardData(currentUser, getProjectId(), viewData,
                 getContestServiceFacade(), true);
+        
+        // Determine if user can perform approval
+        boolean approvalPhaseIsOpen = DirectUtils.isPhaseOpen(softwareCompetition, PhaseType.APPROVAL_PHASE);
+        boolean userHasWriteFullPermission = DirectUtils.hasWritePermission(this, currentUser, getProjectId(), false);
+        Resource approverResource = DirectUtils.getUserResourceByRole(currentUser.getUserId(), softwareCompetition,
+                                                                      RESOURCE_ROLE_APPROVER_ID);
+        boolean isApprovalCommitted = false;
+        if (approverResource != null) {
+            isApprovalCommitted = DirectUtils.hasReview(getProjectServices(), getProjectId(), 
+                                                        SCORECARD_TYPE_APPROVAL_ID, approverResource.getId());
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Context for approval by user " + currentUser.getUserId() + " for project " + getProjectId() 
+                         + ": approvalPhaseIsOpen = " + approvalPhaseIsOpen + ", userHasWriteFullPermission = " 
+                         + userHasWriteFullPermission + ", approverResource = " + approverResource 
+                         + ", isApprovalCommitted = " + isApprovalCommitted);
+        }
+
+        getViewData().setShowApproval((approvalPhaseIsOpen || isApprovalCommitted) && userHasWriteFullPermission);
+        getViewData().setApprovalCommitted(isApprovalCommitted);
 
         // add final fixes of the contest if exist
         setFinalFixes(DataProvider.getContestFinalFixes(getProjectId()));

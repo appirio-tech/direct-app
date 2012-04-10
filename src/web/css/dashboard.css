@@ -50,7 +50,10 @@
  *
  * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 1) updates:
  * - Add new css for add/edit JIRA issue in contest issue tracking page.
- */
+  *
+ * - (Module Assembly - Adding Contest Approval Feature in Direct) updates:
+ * - Add new css for the Approval section on Submissions page
+*/
 
 
 BODY#page{
@@ -8772,3 +8775,90 @@ width: 140px!important;
     display: none;
 }
 
+/* BUGR-6252 add for approval phase new design */
+.ApprovalSection {
+    font-size: 12px;
+    padding-left: 20px;
+    border-top: 1px solid #bcbcbc;
+    padding-top: 20px;
+    color: #333333;
+}
+
+.ApprovalSection p {
+    padding-bottom: 10px;
+}
+
+.ApprovalSection p.smallerText {
+    font-size: 11px;
+    padding-top: 15px;
+}
+
+.ApprovalSection input {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.ApprovalSection label {
+    font-weight: bold;
+}
+
+.ApprovalSection .buttons {
+    padding-bottom: 20px;
+    padding-top: 13px;
+}
+
+.ApprovalSection .approvalRejectSection {
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-right: 20px;
+}
+
+.ApprovalSection .approvalRejectSection textarea {
+    height: 85px;
+    width: 100%;
+    border: 1px solid #adb0b2;
+    font-size: 12px;
+    padding: 5px;
+}
+
+.ApprovalSection .approvalRejectSection textarea.hint {
+    color: #6c6c6c;
+}
+
+A.buttonRed1 {
+    background: url("../images/button-left.png") no-repeat scroll left top transparent;
+    color: #FFFFFF;
+    display: inline-block;
+    font-family: "Myriad Pro", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 24px;
+    overflow: hidden;
+    padding-left: 4px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: 2px;
+}
+
+A.buttonRed1 span {
+    background: url("../images/button-right.png") no-repeat scroll right top transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 24px;
+    padding: 0 15px;
+
+}
+
+A.buttonRed1:hover {
+    background-position: left -24px;
+}
+
+A.buttonRed1:hover span {
+    background-position: right -24px;
+}
+
+TABLE.softwareStatsApproval {
+    width: 100%;
+    border: 1px solid #bdbdbd;
+}

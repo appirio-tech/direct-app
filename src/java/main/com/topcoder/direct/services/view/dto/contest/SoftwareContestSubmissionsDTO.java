@@ -3,7 +3,6 @@
  */
 package com.topcoder.direct.services.view.dto.contest;
 
-import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
@@ -30,10 +29,19 @@ import java.util.List;
   * - add property milestoneWinners to store the winner of the milestone round.
   * </p>
  *
- * @author isv, TCSASSEMBLER
- * @version 1.0.3
+ * <p>
+ * Version 1.0.4 (Adding Contest Approval feature in Direct Assembly 1.0) Change notes:
+ *   <ol>
+ *     <li>Added {@link #showApproval} property.</li>
+ *     <li>Added {@link #approvalCommitted} property.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv
+ * @version 1.0.4
  */
-public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implements ProjectIdForm.Aware, ContestStatsDTO.Aware {
+public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implements ProjectIdForm.Aware, 
+                                                                                   ContestStatsDTO.Aware {
 
     /**
      * <p>A <code>long</code> providing the ID of software project.</p>
@@ -70,6 +78,22 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      * @since 1.0.3
      */
     private List<SoftwareContestWinnerDTO> milestoneWinners;
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether the section for performing approval by user is to
+     * be shown or not.</p>
+     * 
+     * @since 1.0.4
+     */
+    private boolean showApproval;
+
+    /**
+     * <p>A <code>boolean</code> providing the flag indicating whether the approval scorecard is alrady submitted by
+     * user.</p>
+     * 
+     * @since 1.0.4
+     */
+    private boolean approvalCommitted;
 
     /**
      * <p>Constructs new <code>SoftwareContestSubmissionsDTO</code> instance. This implementation does nothing.</p>
@@ -296,5 +320,49 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      */
     public void setMilestoneWinners(List<SoftwareContestWinnerDTO> milestoneWinners) {
         this.milestoneWinners = milestoneWinners;
+    }
+
+    /**
+     * <p>Gets the flag indicating whether the section for performing approval by user is to be shown or not.</p>
+     *
+     * @return a <code>boolean</code> providing the flag indicating whether the section for performing approval by user
+     *         is to be shown or not.
+     * @since 1.0.4
+     */
+    public boolean getShowApproval() {
+        return this.showApproval;
+    }
+
+    /**
+     * <p>Sets the flag indicating whether the section for performing approval by user is to be shown or not.</p>
+     *
+     * @param showApproval a <code>boolean</code> providing the flag indicating whether the section for performing
+     *                     approval by user is to be shown or not.
+     * @since 1.0.4
+     */
+    public void setShowApproval(boolean showApproval) {
+        this.showApproval = showApproval;
+    }
+
+    /**
+     * <p>Gets the flag indicating whether the approval scorecard is alrady submitted by user.</p>
+     *
+     * @return a <code>boolean</code> providing the flag indicating whether the approval scorecard is alrady submitted
+     *         by user.
+     * @since 1.0.4
+     */
+    public boolean getApprovalCommitted() {
+        return this.approvalCommitted;
+    }
+
+    /**
+     * <p>Sets the flag indicating whether the approval scorecard is alrady submitted by user.</p>
+     *
+     * @param approvalCommitted a <code>boolean</code> providing the flag indicating whether the approval scorecard is
+     *                          alrady submitted by user.
+     * @since 1.0.4
+     */
+    public void setApprovalCommitted(boolean approvalCommitted) {
+        this.approvalCommitted = approvalCommitted;
     }
 }
