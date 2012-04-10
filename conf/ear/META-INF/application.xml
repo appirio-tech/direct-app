@@ -223,7 +223,7 @@
     <module>
         <web>
             <web-uri>analytics.war</web-uri>
-            <context-root>/direct/analytics</context-root>
+            <context-root>/analytics</context-root>
         </web>
     </module>    
     <module>
