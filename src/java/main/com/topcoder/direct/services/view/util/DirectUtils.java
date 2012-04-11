@@ -313,7 +313,7 @@ import com.topcoder.web.common.cache.MaxAge;
  * <p>
  * Version 1.8.4 (Module Assembly - Adding Contest Approval Feature in Direct Assembly 1.0) Change notes:
  *   <ol>
- *     <li>Added {@link #hasReview(ProjectServices, long, long, long)} method.</li>
+ *     <li>Added {@link #hasReview(ProjectServices, SoftwareCompetition, long, long, long)} method.</li>
  *     <li>Added {@link #getUserResourceByRole(long, SoftwareCompetition, long)} method.</li>
  *   </ol>
  * </p>
@@ -1832,24 +1832,37 @@ public final class DirectUtils {
     }
 
     /**
-     * <p>Checks if there ia a review of specified type by specified reviewer for specified project.</p>
-     * 
-     * @param projectServices a <code>ProjectServices</code> providing interface to project services. 
-     * @param projectId a <code>long</code> providing the contest ID.
-     * @param scorecardTypeId a <code>long</code> providing the ID for scorecard type.
+     * <p>Checks if there is a review of specified type by specified reviewer for specified project and specified phase
+     * type. This method is intended for phases which require just a single review by single resource (like Approval 
+     * or Final Review).</p>
+     *
+     * @param projectServices    a <code>ProjectServices</code> providing interface to project services.
+     * @param contest            a <code>SoftwareCompetition</code> providing the contest details.
+     * @param phaseTypeId        a <code>long</code> providing the ID for phase type.
+     * @param scorecardTypeId    a <code>long</code> providing the ID for scorecard type.
      * @param reviewerResourceId a <code>long</code> providing the ID for reviewer resource.
      * @return <code>true</code> if ; <code>false</code> otherwise.
      * @since 1.8.4
      */
-    public static boolean hasReview(ProjectServices projectServices, long projectId, long scorecardTypeId, 
-                                    long reviewerResourceId) {
-        Review[] reviews = projectServices.getReviews(projectId, scorecardTypeId);
+    public static boolean hasReview(ProjectServices projectServices, SoftwareCompetition contest, long phaseTypeId, 
+                                    long scorecardTypeId, long reviewerResourceId) {
+        int phasesCnt = 0;
+        Set<Phase> phases = contest.getProjectPhases().getPhases();
+        for (Phase phase : phases) {
+            if (phase.getPhaseType().getId() == phaseTypeId) {
+                phasesCnt++;
+            }
+        }
+        
+        int reviewsCnt = 0;
+        Review[] reviews = projectServices.getReviews(contest.getId(), scorecardTypeId);
         for (Review review : reviews) {
             long reviewResourceId = review.getAuthor();
             if (reviewResourceId == reviewerResourceId) {
-                return true;
+                reviewsCnt++;
             }
         }
-        return false;
+        
+        return (reviewsCnt == phasesCnt);
     }
 }

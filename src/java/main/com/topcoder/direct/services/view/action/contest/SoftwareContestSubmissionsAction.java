@@ -290,7 +290,8 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
                                                                       RESOURCE_ROLE_APPROVER_ID);
         boolean isApprovalCommitted = false;
         if (approverResource != null) {
-            isApprovalCommitted = DirectUtils.hasReview(getProjectServices(), getProjectId(), 
+            isApprovalCommitted = DirectUtils.hasReview(getProjectServices(), softwareCompetition,
+                                                        PhaseType.APPROVAL_PHASE.getId(),
                                                         SCORECARD_TYPE_APPROVAL_ID, approverResource.getId());
         }
         if (logger.isDebugEnabled()) {
