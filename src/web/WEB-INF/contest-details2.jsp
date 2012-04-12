@@ -40,8 +40,8 @@
     //]]>
     </script>
     <script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>
-    <script type="text/javascript" src="/scripts/launch/main.js?v=215011"></script>
-    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=214861"></script>
+    <script type="text/javascript" src="/scripts/launch/main.js?v=215290"></script>
+    <script type="text/javascript" src="/scripts/launch/contestDetailSoftware.js?v=215290"></script>
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
 </head>
 
