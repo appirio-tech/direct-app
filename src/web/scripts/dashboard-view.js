@@ -94,7 +94,7 @@ $(document).ready(function(){
     if ($("#enterpriseHealthTable").length != 0) {
         // Load project contests health data via AJAX call
         $.ajax({
-                   type:'get',
+                   type:'POST',
                    url:'dashboardEnterpriseHealthAJAX',
                    cache:false,
                    dataType:'json',
@@ -151,7 +151,7 @@ $(document).ready(function(){
         var request = {};
         request['projectId'] = tcDirectProjectId;
         $.ajax( {
-            type : 'get',
+            type : 'POST',
             url : 'projectContestsHealthAJAX',
             cache : false,
             data : request,

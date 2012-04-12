@@ -247,7 +247,7 @@ function getDraftsRatio(viewType) {
     request['formData.viewType'] = viewType;
 
     $.ajax({
-       type: 'GET',
+       type: 'POST',
        url:  ctx + "/dashboardPipelineDraftsRatio",
        data: request,
        cache: false,

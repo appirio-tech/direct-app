@@ -89,7 +89,7 @@ $(document).ready(function(){
    	//Get the contest and populate each section
    // loading some configuration data
    $.ajax({
-      type: 'GET',
+      type: 'POST',
       url:  ctx+"/contest/detailJson",
       data: {"contestId":paramContestId},
       cache: false,

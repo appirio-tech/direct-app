@@ -499,7 +499,7 @@ function drawChart() {
         $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
         checkCategoryIds();
         $.ajax({
-            type: 'get',
+            type: 'POST',
             url: formActionUrl,
             data: formData,
             cache: false,
@@ -567,7 +567,7 @@ function drawChart() {
         showDrillInLoadingIndicator();
         checkCategoryIds();
         $.ajax({
-            type: 'get',
+            type: 'POST',
             url: formActionUrl,
             data: formData,
             cache: false,
@@ -618,7 +618,7 @@ function drawChart() {
         $('#zoomMessage').html('Loading...').css('color', 'red').css('font-weight', 'bold');
         checkCategoryIds();
         $.ajax({
-                   type: 'get',
+                   type: 'POST',
                    url:  formActionUrl,
                    data: formData,
                    cache: false,

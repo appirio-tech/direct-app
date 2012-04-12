@@ -117,7 +117,7 @@ if (!window.vmService) var vmService = {
         modalPreloader();
 
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url:'launchVMInstance',
             data: data,
             dataType: "json",
@@ -154,7 +154,7 @@ if (!window.vmService) var vmService = {
         modalPreloader();
 
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url:'showVMInstances',
             dataType: "json",
             cache:false,

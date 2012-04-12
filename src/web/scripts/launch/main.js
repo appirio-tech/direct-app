@@ -108,7 +108,7 @@ $(document).ready(function() {
 
    // loading some configuration data
    $.ajax({
-      type: 'GET',
+      type: 'POST',
       url:  ctx+"/launch/getStudioConfigs",
       data: {},
       cache: false,
@@ -422,7 +422,7 @@ function getContestFeesForBillingProject(billingProjectId) {
 	  var request = {billingProjectId:billingProjectId};
 	  
     $.ajax({
-       type: 'GET',
+       type: 'POST',
        url:  ctx + "/launch/getBillingProjectContestFees",
        data: request,
        cache: false,
@@ -460,7 +460,7 @@ function getCopilotsByDirectProjectId(directProjectId) {
     var request = {directProjectId:directProjectId};
 
     $.ajax({
-       type: 'GET',
+       type: 'POST',
        url:  ctx + "/launch/getDirectProjectCopilots",
        data: request,
        cache: false,
@@ -1533,7 +1533,7 @@ function updateCategories(callback) {
 
    // loading categories data for the given catalog id
    $.ajax({
-      type: 'GET',
+      type: 'POST',
       url:  ctx+"/launch/getCategories",
       data: {'catalogId' : catalogId },
       cache: false,

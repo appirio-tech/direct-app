@@ -171,7 +171,7 @@ function validateFieldsContestSelectionSoftware() {
 
 function fillDevFromSelectedDesign(designContestId) {
    $.ajax({
-      type: 'GET',
+      type: 'POST',
       url:  ctx+"/contest/detailJson",
       data: {"projectId":designContestId},
       cache: false,
@@ -314,7 +314,7 @@ function saveAsDraftContestSelection() {
 
 function initContestNamesFromDesign() {   
    $.ajax({
-      type: 'GET',
+      type: 'POSt',
       url:  ctx + "/launch/getDesignComponents",
       data: {},
       cache: false,

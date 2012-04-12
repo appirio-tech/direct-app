@@ -28,7 +28,7 @@ $(document).ready(function() {
     });
 
     $(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
-        modalClose();
+        modalClose(); console.log(thrownError);
         showGeneralError();
     });
 

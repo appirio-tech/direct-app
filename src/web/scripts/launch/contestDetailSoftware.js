@@ -164,7 +164,7 @@ $(document).ready(function(){
    	//Get the contest and populate each section
    // loading some configuration data
    $.ajax({
-      type: 'GET',
+      type: 'POST',
       url:  ctx+"/contest/detailJson",
       data: {"projectId":paramContestId},
       cache: false,
@@ -1829,7 +1829,7 @@ function saveDocumentSection() {
          handleSaveAsDraftContestResult(jsonResult);
 		 // gets the documents details
 	   $.ajax({
-		  type: 'GET',
+		  type: 'POST',
 		  url:  ctx+"/contest/detailJson",
 		  data: {"projectId":paramContestId},
 		  cache: false,
@@ -1954,7 +1954,7 @@ function getCopilotsByDirectProjectId(directProjectId) {
     var request = {directProjectId:directProjectId};
 
     $.ajax({
-       type: 'GET',
+       type: 'POST',
        url:  ctx + "/launch/getDirectProjectCopilots",
        data: request,
        cache: false,

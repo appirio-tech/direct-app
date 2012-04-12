@@ -331,7 +331,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            type: 'get',
+            type: 'POST',
             url: action,
             data: request,
             cache: false,

@@ -1052,7 +1052,7 @@ $(document).ready(function() {
         var request = {"searchText":searchText};
 
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url:  "getUser",
             data: request,
             cache: false,
@@ -1372,7 +1372,7 @@ $(document).ready(function() {
 
     // loads the copilots data for project copilots management widget
     $.ajax({
-        type : 'get',
+        type : 'POST',
         url : 'getProjectCopilotsWidgetData',
         cache : false,
         data : request,

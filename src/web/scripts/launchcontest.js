@@ -707,7 +707,7 @@ function getCapacityDatesForStudioSubType(studioSubtypeId) {
             contestTypeId : studioSubtypeId
         };
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url:  ctx + "/launch/getCapacityFullDates",
             data: request,
             cache: false,
