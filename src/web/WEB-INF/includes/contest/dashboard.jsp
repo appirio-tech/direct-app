@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, Veve, TCSASSEMBLER
-  - Version: 1.3 (Release Assembly - TC Direct Cockpit Release One)
+  - Author: isv, Veve, GreatKevin
+  - Version: 1.4
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Dashboard area for Contest Details page.
@@ -12,6 +12,9 @@
   - Version 1.3 (Release Assembly - TC Direct Cockpit Release One) change notes:
   - - Add milestone submission number and final submission number in registration box if
   -   the contest is of multiple rounds
+  -
+  - Version 1.4 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+  - - Add start time and end time of the phase and hide in the timeline of contest dashboard
   -
   - Description: Contest Dashboard area for Contest Details page
 --%>
@@ -99,7 +102,8 @@
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
-
+                                <span class="tooltipStartTime hide"><fmt:formatDate value="${phase.startTime}" pattern="MM/dd/yyyy HH:mm"/></span>
+                                <span class="tooltipEndTime hide"><fmt:formatDate value="${phase.endTime}" pattern="MM/dd/yyyy HH:mm"/></span>
                                 <c:if test="${phase.phaseStatus.phaseStatusId == 2 && !alreadyShowDate}">
                                     <c:set var="alreadyShowDate" value="true"/>
                                     <div class="phaseDate">

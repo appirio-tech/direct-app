@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 /**
  * This javascript file is used to render get a copilot page.
@@ -14,8 +14,11 @@
  * - Move some codes out for handling select from copilot pool page request.
  * - Update the logic of Carousel.
  *
- * @author tangzx, duxiaoyang
- * @version 1.2
+ * Changes in version 1.3 (	Release Assembly - TC Direct Cockpit Release Three version 1.0):
+ * - Add the codes to sort the copilot jcarousel by the total contest descending
+ *
+ * @author tangzx, duxiaoyang, TCSASSEMBLER
+ * @version 1.3
  */
 $(document).ready(function(){
 	//z-index for step bar
@@ -384,7 +387,11 @@ $(document).ready(function(){
     $('.navThumb a').live('click',
             function() {
                 var idx = $(this).attr('id').split('-')[1];
+
+                var a = $(this).parents('ul').find('.current a');
+
                 var currentIdx = $(this).parents('ul').find('.current a').attr('id').split('-')[1];
+
                 var totalItems= $('.foot-bar .currentThumb').text().split('/')[1];
                 totalItems=parseInt(totalItems,10);
                 $('#copilot-' + currentIdx).fadeTo('fast', 0, function() {
@@ -404,6 +411,19 @@ $(document).ready(function(){
                 $('.foot-bar .currentThumb').html('<strong>'+ (parseInt(idx,10)+1) +'</strong> / '+totalItems);
             });
 });
+
+var sortCopilot = function (x, y) {
+    var Xindex = $(x).find("a").attr('id').split('-')[1];
+    var yindex = $(y).find("a").attr('id').split('-')[1];
+
+    var copilotX = $('#copilot-' + Xindex);
+    var copilotY = $('#copilot-' + yindex);
+
+    var totalX = copilotX.find(".colLeft .row:eq(2) span").text();
+    var totalY = copilotY.find(".colLeft .row:eq(2) span").text();
+
+    return totalX > totalY ? -1 : 1;
+};
 
 function handleCopilotStatisticsResult(result) {    
     //alert(result.length);
@@ -428,6 +448,29 @@ function handleCopilotStatisticsResult(result) {
         $("input.field_" + index + "_currentContests").val(item.member.currentContests);
                 
     });
+
+    window.setTimeout(function () {
+           var temp = $(".ad-thumb-list li").sort(sortCopilot);
+           $(".ad-thumb-list").empty();
+        $(".ad-thumb-list").html(temp);
+
+        var map = {};
+
+        $(".ad-thumb-list li").each(function (index) {
+            var Xindex = $(this).find("a").attr('id').split('-')[1];
+            map[Xindex] = index;
+            $(this).find("a").attr('id', 'thumbNo-' + index);
+        })
+
+        $(".copilot-details").each(function () {
+            var currentIndex = $(this).attr('id').split('-')[1];
+            var newIndex = map[currentIndex];
+            $(this).attr('id', 'copilot-' + newIndex);
+        });
+
+        $(".ad-thumb-list li:eq(0) a").trigger('click');
+    }, 500);
+
 }
 
 /* function to style the input file */

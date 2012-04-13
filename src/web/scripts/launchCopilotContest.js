@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  *
  * This javascript file is used to render elements to launch copilot contest page, and handle
  * events.
@@ -22,10 +22,22 @@
  *
  * Version 1.6 Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change note:
  * - integrate the new cockpit tinyMCE editor
+ *
+ * Version 1.6.1 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+ * - check whether the public description is filled under step 1 of creating copilot posting
  * 
- * @author duxiaoyang, GreatKevin
- * @version 1.6
+ * @author duxiaoyang, GreatKevin, TCSASSEMBLER
+ * @version 1.6.1
  */
+
+var roundMinutes = function(date) {
+
+    date.setHours(date.getHours() + Math.round(date.getMinutes()/60));
+    date.setMinutes(0);
+
+    return date;
+}
+
 $(document).ready(function(){
 
     setupTinyMCE('allDescription', 12000);
@@ -45,8 +57,15 @@ $(document).ready(function(){
     /**
      * Initiate date pick.
      */
+    var postTime = Date.parse($.trim($("#currentCopilotDate").val()));
+    postTime.add({hours:24});
+    postTime = roundMinutes(postTime);
+
     if($('.date-pick').length > 0){
-        $(".date-pick").datePicker().val($.trim($("#currentCopilotDate").val())).trigger('change');
+        $(".date-pick").datePicker().val(postTime.toString('MM/dd/yyyy')).trigger('change');
+        var hours = postTime.toString('HH');
+        $("#startTime option:eq(" + parseInt(hours) + ")").attr('selected', 'selected');
+        $(".startEtSelect .selectedTxt").text(hours + ":00");
     }
 
     /**
@@ -414,6 +433,10 @@ function validateStepInputs() {
             if(!checkRequired(contestName)) {
                 errors.push('Copilot Opportunity Title could not be empty.');
             }
+            if (!checkRequired(allDescription)) {
+                errors.push('Public Description cannot be empty.');
+            }
+
             
             if(errors.length > 0) {
                 break;

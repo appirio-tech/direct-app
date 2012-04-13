@@ -345,7 +345,12 @@ a.smallRed span.right {
 						padding-bottom:28px;
 						position:relative;
 					}
-				
+
+                    .get-a-copilot .stepFirst.stepContainer .geryContent .rowItem p {
+                        margin-bottom: 20px;
+                        padding-bottom:35px;
+                    }
+
 					.get-a-copilot .stepContainer .geryContent .rowItem label {
 						width:170px;
 						padding-right:30px;
@@ -389,6 +394,18 @@ a.smallRed span.right {
 						position:absolute;
 						bottom:14px;
 					}
+
+                    .get-a-copilot .stepFirst.stepContainer .geryContent .rowItem p .tips {
+                        bottom: 3px;
+                    }
+
+                    .projectNameTips {
+                        font-size: 11px;
+                        font-family: Tahoma, Geneva, sans-serif;
+                        margin-left: 210px;
+                        margin-bottom: 10px;
+                    }
+
 					label.other {
 						display:block;
 						float:none;

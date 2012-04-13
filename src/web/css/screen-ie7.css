@@ -87,3 +87,7 @@
 #projectsResult TABLE.resultTable   TD SPAN {
     margin-left: 25px;
 }
+
+.get-a-copilot .stepFirst.stepContainer .geryContent .rowItem p .tips {
+    position: relative;
+}

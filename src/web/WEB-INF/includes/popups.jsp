@@ -1,6 +1,6 @@
 <%--
   - Author: winsty, GreatKevin
-  - Version: 1.9
+  - Version: 2.0
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -36,7 +36,10 @@
   - - add modal window for the project description in project overview page
   -
   - Version 1.9 - Module Assembly - TC Cockpit Project Milestones Management Front End
-    - - add modal window for the project milestone management in project milestone page
+  - - add modal window for the project milestone management in project milestone page
+  -
+  - Version 2.0 - Release Assembly - TC Direct Cockpit Release Three version 1.0
+  - - Add tooltip for the timeline of contest dashboard in contest details page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -1237,5 +1240,42 @@
         <!-- End #addProjectResult -->
     </div>
     <!-- End #addProjectDialog -->
+
+    <div id="timeLineTip" class="tooltipContainer tooltipForum hide">
+        <span class="arrow"></span>
+
+        <div class="tooltipLeft">
+            <div class="tooltipRight">
+                <div class="tooltipBottom">
+                    <div class="tooltipBottomLeft">
+                        <div class="tooltipBottomRight">
+
+                            <div class="tooltipCaption">
+                                <div class="tooltipCaptionLeft">
+                                    <div class="tooltipCaptionRight">
+                                        <div class="tooltipCaptionInner">
+                                            <h2 class="tooltipPhaseName"></h2>
+                                            <a class="closeIco" onclick="$('#timeLineTip').css('display','none')"
+                                               href="javascript:;"></a>
+                                        </div>
+                                        <!-- End .tooltipCaptionInner -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End .tooltipCaption -->
+
+                            <div class="tooltipContent">
+                                <p><span class="label">Start:</span> <span class="tooltipStartTime">04/12/2011 11:00</span></p>
+
+                                <p><span class="label">End:</span> <span class="tooltipEndTime">04/12/2011 11:00</span></p>
+                            </div>
+                            <!-- End .tooltipContent -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- End .popups -->

@@ -63,7 +63,7 @@
                         <td><span id="publicDescriptionSummary"></span></td>
                     </tr>
                     <tr>
-                        <td><label>Specific Description:</label></td>
+                        <td><label>Private Description:</label></td>
                         <td><span id="specificDescriptionSummary"></span></td>
                     </tr>
                 </table>
@@ -80,7 +80,7 @@
             <div class="title"><!-- columns title -->
                 <div class="titleLeft"><div class="titleRight">
                     <a href="javascript:;" class="edit" name="editStep1"></a>
-                    <h2>Document Upload</h2>
+                    <h2>Attach Files</h2>
                 </div></div>
             </div><!-- End .title -->
             

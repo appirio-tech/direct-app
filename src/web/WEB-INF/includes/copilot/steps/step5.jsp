@@ -1,11 +1,13 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.1
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Update in version 1.1 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+  - - Update the top note of step 5.
   -
   - Description: The step 5 of post a copilot.
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.0 (TC Cockpit Post a Copilot Assembly 1).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -14,7 +16,9 @@
     <div class="form">
         <div class="noteContainer">
             <p>
-            In this step you will be directed to set your billing account for this project. Please fill out the form below:
+                In order to post this Copilot Opportunity to the community you will need to select a Billing Account. 
+                This will tell us how to invoice you. If you do not have a Billing Account in the list below and feel you should, 
+                please email <a href="mailto:support@topcoder.com">support@topcoder.com</a>
            </p>
         </div>
         

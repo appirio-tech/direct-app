@@ -1,11 +1,15 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: GreatKevin
+  - Version: 1.1
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+  - - Update the top note of the step 4.
+  - - Update the title
+  - - Update the default copilot posting start time to 24 hours from current time and round to nearest hour.
   -
   - Description: The step 4 of post a copilot.
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.0 (TC Cockpit Post a Copilot Assembly 1).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -16,7 +20,7 @@
         
         <div class="noteContainer">
             <p>
-            In this step you will be directed to set schedule for your project. Please fill out the form below:
+            Tell us when you would like this Copilot Opportunity to start. You may post it now, or schedule it for a later date.
            </p>
         </div>
         
@@ -27,7 +31,7 @@
             
             <div class="title"><!-- columns title -->
                 <div class="titleLeft"><div class="titleRight">
-                    <h2>Project Schedule</h2>
+                    <h2>Copilot Opportunity Schedule</h2>
                 </div></div>
             </div><!-- End .title -->
             
@@ -98,7 +102,7 @@
                         <div id="launchContestOut" class="noBorder">
                             <div class="row schedule">
                                 <jsp:useBean id="currentDate" class="java.util.Date" />
-                                <input id="currentCopilotDate" type="hidden" value='<fmt:formatDate value="${currentDate}" type="date" pattern="MM/dd/yyyy" />' />
+                                <input id="currentCopilotDate" type="hidden" value='<fmt:formatDate value="${currentDate}" type="date" pattern="MM/dd/yyyy HH:mm" />' />
                                 
                                 <input id="startDate" name="startDate" type="text"  class="text date-pick" readonly="true"/>
                                 <div class="startEtSelect">

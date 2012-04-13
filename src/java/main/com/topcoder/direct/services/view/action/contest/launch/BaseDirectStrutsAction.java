@@ -30,6 +30,8 @@ import com.topcoder.web.ejb.user.UserPreferenceHome;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -82,26 +84,36 @@ import java.util.List;
  * </ul>
  * </p>
  * <p>
-  * Version 1.3 - Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0
-  * <ul>
-  * <li>Add direct project metadata and direct project metadata key service.</li>
-  * </ul>
-  * </p>
-  * <p>
-  * Version 1.4 - Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One Change Note
-  * <ul>
-  * <li>Add <code>permissionServiceFacade</code> reference.</li>
-  * </ul>
-  * </p>
+ * Version 1.3 - Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0
+ * <ul>
+ * <li>Add direct project metadata and direct project metadata key service.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Version 1.4 - Release Assembly - TC Cockpit Create Project Refactoring Assembly Part One Change Note
+ * <ul>
+ * <li>Add <code>permissionServiceFacade</code> reference.</li>
+ * </ul>
+ * </p>
  *  <p>
-   * Version 1.5 - Module Assembly - TC Cockpit Project Milestones Service Integration and Testing Change Note
-   * <ul>
-   * <li>Add <code>permissionServiceFacade</code> reference.</li>
-   * </ul>
-   * </p>
+ * Version 1.5 - Module Assembly - TC Cockpit Project Milestones Service Integration and Testing Change Note
+ * <ul>
+ * <li>Add <code>permissionServiceFacade</code> reference.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * Version 1.6 - (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+ * <ul>
+ *  <li>
+ *      Add sorting by project name ignoring case to {@link #getProjects()}
+ *  </li>  
+ * </ul>
+ * </p>
+ *
  *
  * @author fabrizyo, FireIce, murphydog, GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
@@ -442,7 +454,7 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
 
         List<ProjectData> projects = new ArrayList<ProjectData>();
 
-         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("direct_my_projects");
         request.setProperty("uid", String.valueOf(getCurrentUser().getUserId()));
@@ -458,6 +470,9 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
             projects.add(project);
         }
 
+        // sort the projects by project name ignore case
+        Collections.sort(projects, new ProjectDataNameComparator());
+        
         return projects;
     }
 
@@ -718,5 +733,16 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      */
     public void setUserServiceFacade(UserServiceFacade userServiceFacade) {
         this.userServiceFacade = userServiceFacade;
+    }
+
+    /**
+     * Comparator to sort the ProjectData instance by the name ignoring the case.
+     *
+     * @since 1.6
+     */
+    private class ProjectDataNameComparator implements Comparator<ProjectData> {
+        public int compare(ProjectData o1, ProjectData o2) {
+            return o1.getName().compareToIgnoreCase(o2.getName());
+        }
     }
 }

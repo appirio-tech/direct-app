@@ -19,7 +19,7 @@ There you can\:
 The following competition(s) have been scheduled\:
 %endif%
 %if:PAID='YES'%
-An additional payment has been applied for the competition\:
+Your contest payment has been updated\:
 %endif%
 --------------------------------------------------------------------
 
@@ -36,7 +36,9 @@ Total\:      $%TOTAL_COST%
 %endif%
 %if:PAID='YES'%
 ---------------------------------------------------------------------
-Additional Cost\:      $%TOTAL_COST%
+*Updated Estimated Cost\:    $%CONTEST_COST%
+
+Updated Total Cost\:      $%TOTAL_COST%
 -------------------------------------------------------------------
 %endif%
 

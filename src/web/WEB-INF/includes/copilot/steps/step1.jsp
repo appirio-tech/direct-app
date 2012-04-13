@@ -1,11 +1,14 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.0
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.1
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: The step 1 of post a copilot.
+  -
+  - Version 1.1 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+  - - Update the words used in the step 1 and add new tips for project name and file uploading.
+  -
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.0 (TC Cockpit Post a Copilot Assembly 1).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -16,7 +19,8 @@
         <div class="noteContainer">
             
            <p>
-            In this step you will be directed to fill out basic information about your project. This information will be useful for the copilot as reference material what is needed and done to complete this project. And this information will explain to the copilot what exactly the results you want for this project. Please fill out the form below:
+               In this step you will fill out basic information about your project. Your goal here is to portray your needs to the copilots.
+               You don't need to be overly detailed (you can always expand on details in the forum), but rather focus on initiating a comfortable dialog with the copilots.
            </p>
         </div>
         
@@ -44,6 +48,8 @@
                 </select>
                 <a href="javascript:;" class="button6" id="addNewProject"><span class="left"><span class="right">ADD NEW</span></span></a>
             </div>
+            <div class="projectNameTips">Select an existing project or add a new one. The copilot opportunity you are about to create will be placed in this project.
+            Your Project Name is NOT visible to the community.</div>
             <!--End .rowItem-->
             
         </div>
@@ -58,7 +64,6 @@
                 </div></div>
             </div><!-- End .title -->
             
-            <span class="attention">Please feel free to tell about your project in this section. This information will be valuable material for the copilot.</span>
             <div class="rowItem">
                 <p>
                     <label>Copilot Opportunity Title<span class="red">*</span></label>
@@ -66,17 +71,19 @@
                 </p>
                 
                 <p>
-                    <label>Public Description</label>
+                    <label>Public Description<span class="red">*</span></label>
                     <textarea rows="10" cols="10" id="allDescription"></textarea>
                     
-                    <span class="tips">Enter a description that you want everyone to see</span>
+                    <span class="tips">All TopCoder Community members will be able to see this description. It should be a general overview of our project.
+                        Try to capture your basic goals <br/> and needs within 1-2 paragraphs. Do not put any confidential or sensitive information in this section.</span>
                 </p>
                 
                 <p>
-                    <label>Specific Description</label>
+                    <label>Private Description</label>
                     <textarea rows="10" cols="10" id="privateDescription"></textarea>
                     
-                    <span class="tips">Enter a description that is only viewable to copilots that register for this posting</span>
+                    <span class="tips">Only <a target="_blank" href='<s:url action="selectFromCopilotPool"/>'>copilots</a> that register for this Copilot Opportunity will see this description.
+                        If you have information that you only want to make available to <br/> the copilot community then you should enter that here.</span>
                 </p>
             </div>
             <!--End .rowItem-->
@@ -88,10 +95,10 @@
         <div class="row uploadContent copilotFileUploadDiv">
             <div class="title"><!-- columns title -->
                 <div class="titleLeft"><div class="titleRight">
-                    <h2>Document Upload</h2>
+                    <h2>Attach Files</h2>
                 </div></div>
             </div><!-- End .title -->
-            
+            <span class="attention">Files you upload will be available as downloads to the copilots that register for this opportunity.</span>
             <div class="rowItem">
                 <p>
                     <label>Select Document</label>

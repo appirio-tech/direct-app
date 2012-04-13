@@ -1,13 +1,17 @@
 <%--
-  - Author: TCSASSEMBLER, duxiaoyang
-  - Version: 1.1
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: duxiaoyang, GreatKevin
+  - Version: 1.2
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: The step 2 of post a copilot.
+  -
   - Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
   -   Retrieve copilot types from action and display on the page.
+  -
+  - Changes in version 1.2 (Release Assembly - TC Direct Cockpit Release Three version 1.0):
+  -   Update the top notes in the step 2
+  -
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.1 (TC Cockpit Post a Copilot Assembly 2).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -16,7 +20,9 @@
     <div class="form">
         <div class="noteContainer">
             <p>
-            In this step you will be directed to select the skills and experience needed by a copilot to work on your project, based on the type of your project. Please fill out the form below: 
+                Tell the copilots what type of experience or expertise you are looking for. This is not asking that the
+                copilot has developed these types of applications. Instead, you are telling the copilots that you would
+                like someone who has experience delivering these types of applications or projects.
            </p>
         </div>
         

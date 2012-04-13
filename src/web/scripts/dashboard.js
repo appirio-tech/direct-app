@@ -53,8 +53,12 @@
  *  Version 2.6 - Adding Contest Approval Feature in Direct
  *  - Added the js code to submit Approval scorecard
  *
+ *  Version 2.7 - Release Assembly - TC Direct Cockpit Release Three version 1
+ *  - Add the js codes to display tooltip for timeline in contest dashboard of contest details page
+ *
+ *
  * @author tangzx, Blues, GreatKevin, isv
- * @version 2.6
+ * @version 2.7
  */
 $(document).ready(function(){
 						   
@@ -1466,7 +1470,13 @@ $(document).ready(function(){
 		$(".appositeContainer.studio .issueModule").css("width","24.7%");
 	} 
 	*/
+    var currentPhase = null;
+
 	function adjust(){
+
+        var timelineTip = $("#timeLineTip");
+        var isTimelineTipShow = timelineTip.is(":visible");
+
 		if($(".dashboardModule .content .timelineContainer").parents(".dashboardModule").width() > 830){
 			$(".dashboardModule .content .timelineContainer").css("padding", "41px 29px 39px");
 			$(".dashboardModule .content .timelineContainer .startDate").css("left", "30px");
@@ -1512,6 +1522,12 @@ $(document).ready(function(){
 			} 
 			*/
 		}
+
+        if (isTimelineTipShow) {
+            setTimeout(function () {
+               // timeLineHover(currentPhase);
+            }, 200);
+        }
 	}
 	adjust();
 	$(window).resize(function(){
@@ -1552,6 +1568,48 @@ $(document).ready(function(){
 	    $(window).resize(function() {
 	        window.setTimeout(updateTimeline, 50);
 	    });
+
+        var timeLineHover = function (object) {
+            var pos = object.offset();
+            var obj = $("#timeLineTip");
+            var t = pos.top - obj.height() - 5;
+            obj.css("top", t).css("left", pos.left + object.outerWidth() / 2 - obj.width() / 2);
+            var arrow = $("#timeLineTip .arrow");
+            arrow.css("top", obj.height() - 1);
+            arrow.css("left", obj.width() / 2 - 2);
+
+            var startTime = object.parent().find(".tooltipStartTime").text();
+            var endTime = object.parent().find(".tooltipEndTime").text();
+
+
+            $("#timeLineTip .tooltipCaptionInner h2").html(object.text());
+            $("#timeLineTip  .tooltipStartTime").text(startTime);
+            $("#timeLineTip  .tooltipEndTime").text(endTime);
+
+            var li = object.parent();
+            if ($(li).attr("class") != "") {
+                obj.removeClass().addClass("tooltipContainer tooltipForum " + $(li).attr("class"));
+            } else {
+                obj.removeClass().addClass("tooltipContainer tooltipForum");
+            }
+            obj.show();
+            currentPhase = object;
+        }
+
+        var timeLineHoverConfig = {
+            sensitivity:3, // number = sensitivity threshold (must be 1 or higher)
+            interval:300, // number = milliseconds for onMouseOver polling interval
+            timeout:300, // number = milliseconds delay before onMouseOut
+            over:function () {
+                timeLineHover($(this));
+            },
+            out:function () {
+               // do nothing
+               $("#timeLineTip").hide();
+            }
+        }
+
+        $(".progressContainer li .phaseName").hoverIntent(timeLineHoverConfig);
     }
 
     $(" .contestViews  .contestCView .loading").css("opacity", "0.8");

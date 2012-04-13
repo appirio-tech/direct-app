@@ -1,13 +1,17 @@
 <%--
-  - Author: TCSASSEMBLER, duxiaoyang
-  - Version: 1.1
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: duxiaoyang, TCSASSEMBLER
+  - Version: 1.2
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: The step 3 of post a copilot.
+  -
   - Changes in version 1.1 (TC Cockpit Post a Copilot Assembly 2):
   -   Added id attribute for budget selection.
+  -
+  - Changes in version 1.2 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+  -   Update the top note of step 3.
+  -
   - Since: TC Cockpit Post a Copilot Assembly 1
-  - Version 1.1 (TC Cockpit Post a Copilot Assembly 2).
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -17,7 +21,8 @@
         
        <div class="noteContainer">
             <p>
-           In this step you will be directed to choose what you have estimated budget for this project or not. Please fill out the form below:
+                If you have a strict budget that you need to stick to, let the copilots know what it is.
+                Many people prefer to exclude their budgets at this point to avoid adding bias to the copilots' plans.
            </p>
        </div>
        

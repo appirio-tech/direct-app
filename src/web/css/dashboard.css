@@ -8862,3 +8862,51 @@ TABLE.softwareStatsApproval {
     width: 100%;
     border: 1px solid #bdbdbd;
 }
+
+#timeLineTip.tooltipContainer {
+    width: 150px;
+}
+
+#timeLineTip.tooltipContainer SPAN.arrow{
+		position: absolute;
+		bottom: 0px;
+		display: block;
+		width: 8px;
+		height: 7px;
+		background: url(/images/popup_new_arrow.png) no-repeat;
+        z-index:10000;
+	}
+#timeLineTip.tooltipContainer span.label {
+    width: 30px;
+    display: inline-block;
+}
+#timeLineTip.tooltipForum  .tooltipCaption {
+    background:url("/images/tooltip_bg_normal.png") repeat-x scroll 0 0 transparent;
+}
+#timeLineTip.tooltipForum .tooltipCaptionLeft {
+    background:url("/images/tooltip_bg_left_normal.png") no-repeat scroll left center transparent;
+}
+#timeLineTip.tooltipForum  .tooltipCaptionRight {
+    background:url("/images/tooltip_bg_right_normal.png") no-repeat scroll right center transparent;
+}
+
+#timeLineTip.tooltipForum.current .tooltipCaption {
+    background:url("/images/tooltip_bg_current.png") repeat-x scroll 0 0 transparent;
+}
+#timeLineTip.tooltipForum.current .tooltipCaptionLeft {
+    background:url("/images/tooltip_bg_left_current.png") no-repeat scroll left center transparent;
+}
+#timeLineTip.tooltipForum.current .tooltipCaptionRight {
+    background:url("/images/tooltip_bg_right_current.png") no-repeat scroll right center transparent;
+}
+
+#timeLineTip.tooltipForum.completed .tooltipCaption {
+    background:url("/images/tooltip_bg_completed.png") repeat-x scroll 0 0 transparent;
+}
+#timeLineTip.tooltipForum.completed .tooltipCaptionLeft {
+    background:url("/images/tooltip_bg_left_completed.png") no-repeat scroll left center transparent;
+}
+#timeLineTip.tooltipForum.completed .tooltipCaptionRight {
+    background:url("/images/tooltip_bg_right_completed.png") no-repeat scroll right center transparent;
+}
+

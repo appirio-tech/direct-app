@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues
-  - Version: 1.2
-  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, TCSASSEMBLER
+  - Version: 1.2.1
+  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: HTML header file linking to the CSS and javascript files. It is included by all the other JSP pages.
   -
@@ -10,6 +10,9 @@
   -
   - Version 1.2 - Release Assembly - TC Cockpit Sidebar Header and Footer Update
   - 1) included the loadHelps.js which loads the contents of help widget in right sidebar.
+  -
+  - Version 1.2.1 (Release Assembly - TC Direct Cockpit Release Three version 1.0)
+  - 1) Add a new JS jquery.hoverIntent.minified.js which helps to control the mouse hover event trigger time
 --%>
 <title>TopCoder Cockpit</title>
 
@@ -64,6 +67,7 @@
 <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
 <script type="text/javascript" src="/scripts/tinyMCE/tiny_mce/tiny_mce.js?v=210496"></script>
 <script type="text/javascript" src="/scripts/jquery.autocomplete.js?v=183826"></script>
+<script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js"></script>
 
 <script type="text/javascript" src="/scripts/dashboard.js?v=215199"></script>
 <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
