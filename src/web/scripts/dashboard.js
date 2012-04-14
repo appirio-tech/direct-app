@@ -962,21 +962,21 @@ $(document).ready(function(){
     });
 
 // when click "Add New" button in contest tracking page under Bug Race tab
-    $('#bugRace .btnAddNew').click(function() {
-        $('.issueSelectionContent .inputContainer').show();
-        $('.issueSelectionContent .content').hide();
-        $('.issueSelectionContent .inputContainer .btnCreate').show();
-        $('.issueSelectionContent .inputContainer .btnUpdate').hide();
+    $('#issue .btnAddNew, #bugRace .btnAddNew').click(function() {
+        $("li.bugRaceTab a").click();
+        $('#bugRace .issueSelectionContent .inputContainer').show();
+        $('#bugRace .issueSelectionContent .content').hide();
+        $('#bugRace .issueSelectionContent .inputContainer .btnCreate').show();
+        $('#bugRace .issueSelectionContent .inputContainer .btnUpdate').hide();
         $("#issueId").val("");
         $("#cca").attr("checked", "");
-        $('label').removeClass('required');
-        $('.issueSelectionContent .inputContainer label:lt(2)').show();
-        $('.issueSelectionContent .inputContainer .row:lt(2)').show();
-        $('.issueSelectionContent .inputContainer .text,.issueSelectionContent .inputContainer .textarea').val('');
-        $('#paymentStatus')[0].selectedIndex = 0;
+        $('#bugRace label').removeClass('required');
+        $('#bugRace .issueSelectionContent .inputContainer label:lt(2)').show();
+        $('#bugRace .issueSelectionContent .inputContainer .row:lt(2)').show();
+        $('#bugRace .issueSelectionContent .inputContainer .text,.issueSelectionContent .inputContainer .textarea').val('');
         $('#tcoPoints')[0].selectedIndex = 0;
         if ($.browser.msie && ($.browser.version == "7.0")) {
-            $("label:contains('Summary')").css('padding-top','0');
+            $("#bugRace label:contains('Summary')").css('padding-top','0');
         }
         $("#bugRace .viewAll").hide();
         return false;
@@ -991,12 +991,11 @@ $(document).ready(function(){
         return false;
     });
     
-    // when click "Edit" button in contest tracking page under Bug Race tab
+	// when click "Edit" button in contest tracking page under Bug Race tab
     $('#bugRace .issueSelectionContent .button11').live("click", function() {
         $('.issueSelectionContent .inputContainer').show();
         $('.issueSelectionContent .content').hide();
-        $('.issueSelectionContent .inputContainer label:lt(2)').hide();
-        $('.issueSelectionContent .inputContainer .row:lt(2)').hide();
+        $('.issueSelectionContent .inputContainer .row:lt(1)').hide();
         $('.issueSelectionContent .inputContainer .btnUpdate').show();
         $('.issueSelectionContent .inputContainer .btnCreate').hide();
         if ($.browser.msie && ($.browser.version == "7.0")) {
@@ -1008,7 +1007,6 @@ $(document).ready(function(){
         $("#environment").val(rowItem.find(".environment").val());
         $("#description").val(rowItem.find(".description").val());
         $("#bugRace .issueSelectionContent .firstPayment").val(rowItem.find(".prize").val());
-        $("#paymentStatus").val(rowItem.find(".paymentStatus").val());
         $("#tcoPoints").val(rowItem.find(".tcoPoints").val());
         $("#cca").attr("checked", rowItem.find("input.issueCCA").val() == "true" ? "checked" : "");
         $("#bugRace .viewAll").hide();
@@ -1146,7 +1144,6 @@ $(document).ready(function(){
                             rowItem.find(".environment").val($("#environment").val());
                             rowItem.find(".contestName").val($("#issueName").val());
                             rowItem.find(".prize").val($("#firstPayment").val());
-                            rowItem.find(".paymentStatus").val($("#paymentStatus").val());
                             rowItem.find(".tcoPoints").val($("#tcoPoints").val());
                             rowItem.find(".issueContestHead .issueName a").text($("#issueName").val());
                             rowItem.find("dd.issuePrize").html("$" + parseFloat($("#firstPayment").val()).formatMoney(2));

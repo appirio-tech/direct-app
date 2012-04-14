@@ -136,7 +136,7 @@ public class CreateJIRAIssueAction extends StudioOrSoftwareContestAction {
                 // First Place Payment
                 createRemoteCustomFieldValue(config.getPrizeFieldId(), String.valueOf(issue.getFirstPlacePayment())),
                 // Payment Status
-                createRemoteCustomFieldValue(config.getPaymentStatusFieldId(), issue.getPaymentStatus()),
+                createRemoteCustomFieldValue(config.getPaymentStatusFieldId(), "Payment Required"),
                 // TCO Points
                 createRemoteCustomFieldValue(config.getTcoPointsFieldId(), String.valueOf(issue.getTcoPoints())),
                 // Project ID

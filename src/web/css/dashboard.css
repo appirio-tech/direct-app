@@ -5899,17 +5899,6 @@ Contest links
     width:85%;
 }
 
-/* link */	
-.issueSelectionContent .inputContainer .row a{
-    margin-left:6px;
-    color:#5d90c7;
-    text-decoration:none;
-}
-    
-.issueSelectionContent .inputContainer .row a:hover{
-    text-decoration:underline !important;
-}
-
 /* select item */	
 .issueSelectionContent .inputContainer .row .selectItem{
     min-height:16px;

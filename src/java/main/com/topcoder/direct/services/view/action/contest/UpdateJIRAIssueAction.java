@@ -86,8 +86,6 @@ public class UpdateJIRAIssueAction extends StudioOrSoftwareContestAction {
                 new RemoteFieldValue("summary", new String[] {String.valueOf(issue.getName())}),
                 // First Place Payment
                 new RemoteFieldValue(config.getPrizeFieldId(), new String[] {String.valueOf(issue.getFirstPlacePayment())}),
-                // Payment Status
-                new RemoteFieldValue(config.getPaymentStatusFieldId(), new String[] {String.valueOf(issue.getPaymentStatus())}),
                 // TCO Points
                 new RemoteFieldValue(config.getTcoPointsFieldId(), new String[] {String.valueOf(issue.getTcoPoints())}),
                 // Security Level

@@ -77,7 +77,7 @@
                                 
                                 <a class="button6 btnAddNew" href="#">
                                     <span class="left">
-                                        <span class="right">ADD NEW</span>
+                                        <span class="right">Launch Bug Race</span>
                                     </span>
                                 </a>
 
@@ -345,6 +345,14 @@
                                                                     </li>
                                                                     <!-- End issue link -->
                                                                 </ul>
+                                                                
+                                                                <a class="button11" href="#">
+                                                                    <span class="btnR">
+                                                                        <span class="btnC">
+                                                                            <span class="btnIcon">Edit</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
 
                                                                 <div class="clear"></div>
 
@@ -359,13 +367,8 @@
                                                     <form id="bugForm" method="POST">
                                                     <input type="hidden" name="projectId" value="${projectId}"/>
                                                     <input type="hidden" id="issueId" name="issue.issueId" value=""/>
-                                                    <label>Project:</label>
                                                     <div class="row">
-                                                        <p class="projectText">Bug Race Competitions (Mod Dash)</p>
-                                                    </div>
-                                                    <label>Issue Type:</label>
-                                                    <div class="row">
-                                                        <p class="bug">Bug</p>
+                                                        <p class="projectText">Fill in the details about the Bug Race you want to launch below. When you click the Activate button, it will publish your Bug Race to the TopCoder Community on the <a href="https://apps.topcoder.com/bugs/browse/BUGR" target="_blank">Active Bug Races</a> page.</p>
                                                     </div>
                                                     <label><em>*Contest Name:</em></label>
                                                     <div class="row">
@@ -390,16 +393,6 @@
                                                         <input type="text" class="text firstPayment" id="firstPayment" name="issue.firstPlacePayment"/>
                                                         <p>Payment amounts in US $ for the issue.</p>
                                                     </div>
-                                                    <label><em>*Payment Status:</em></label>
-                                                    <div class="row">
-                                                        <select class="selectOption" id="paymentStatus" name="issue.paymentStatus">
-                                                            <option selected="selected" value="Payment Required">Payment Required</option>
-                                                            <option value="Payment Owed">Payment Owed</option>
-                                                            <option value="Paid">Paid</option>
-                                                            <option value="Payment On Hold">Payment On Hold</option>
-                                                        </select>
-                                                        <p>Status of payment for the bug if a payment is required.</p>
-                                                    </div>
                                                     <label><em>*TCO Points:</em></label>
                                                     <div class="row">
                                                         <select class="selectOption" id="tcoPoints" name="issue.tcoPoints">
@@ -412,7 +405,7 @@
                                                     </div>
                                                     <div class="buttonBox">
                                                         <a href="#" class="button6 btnUpdate"><span class="left"><span class="right">Update</span></span></a>
-                                                        <a href="#" class="button6 btnCreate"><span class="left"><span class="right">Create</span></span></a>
+                                                        <a href="#" class="button6 btnCreate"><span class="left"><span class="right">Activate</span></span></a>
                                                         <a href="#" class="button6 btnCancel"><span class="left"><span class="right">Cancel</span></span></a>
                                                     </div>
                                                     <div class="clear"></div>
@@ -457,6 +450,12 @@
                                                         <div class="viewAll">
                                                             <input type="checkbox" class="checkbox" /><label>View All Details</label>
                                                         </div>
+                                                        
+                                                        <a class="button6 btnAddNew" href="#">
+                                                            <span class="left">
+                                                                <span class="right">Launch Bug Race</span>
+                                                            </span>
+                                                        </a>
 
                                                     </div><!-- End #issueTabs -->
 
