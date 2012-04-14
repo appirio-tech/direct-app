@@ -1,0 +1,1650 @@
+/*
+ * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ *
+ * Used for the new project creation flows (presentation, mobile, etc.).
+ *
+ * @version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+ */
+ 
+/* stepFirst */
+.stepContainer2 .geryContent{
+	width:100%;
+	position:relative;
+	border:#bdbdbd solid 1px;
+	}
+
+	.stepContainer2 .geryContent .topBar,.stepContainer2 .geryContent .BottomBar{
+		height:35px;
+		background:#bdbdbd;
+		}
+		
+	/* button */
+	.stepContainer2 .geryContent .nextStepButton{
+		margin-top:5px;
+		margin-right:10px;
+		}
+		
+	.stepContainer2 .geryContent .BottomBar .nextStepButton{
+		margin-top:6px;
+		}
+		
+	.stepContainer2 .geryContent .prevStepButton{
+		margin-top:5px;
+		margin-left:10px;
+		}
+		
+	.stepContainer2 .geryContent .noteContainer{
+		border:#fbcc00 solid 1px;
+		background:#fffecd;
+		}
+		
+	/* form */
+	.stepFirst2 .geryContent .form{
+		padding:20px 0 18px; 
+		}
+		
+		.stepFirst2 .geryContent .row{
+			clear:both;
+			margin-left:46px;
+			padding-bottom:7px;
+			}
+			
+			.stepFirst2 .geryContent .row .toolTip{
+				margin-right:7px;
+				}
+				
+			.stepFirst2 .geryContent .row label{
+				width:134px;
+				float:left;
+				display:inline;
+				line-height:25px;
+				font-family:Tahoma, Arial, Helvetica, sans-serif;
+				font-size:12px;
+				}
+			.stepFirst2 .geryContent .row span.label{
+				float:left;
+				display:inline;
+				line-height:25px;
+				font-family:Tahoma, Arial, Helvetica, sans-serif;
+				font-size:12px;
+				}
+				
+			.stepFirst2 .geryContent .row span.red{
+				color:#ff0000;
+				}
+				
+			.stepFirst2 .geryContent .row .intro{
+				width:auto;
+				float:right;
+				display:inline;
+				margin-right:12px;
+				font-family:Tahoma, Arial, Helvetica, sans-serif;
+				font-size:11px;
+				color:#666666;
+				line-height:25px;
+				} 
+
+            .stepFirst2 .geryContent .row .message{
+				width:373px; 
+				margin-left:157px; 
+				font-size:11px;
+				color:#999999; 
+                overflow:hidden;
+                padding:2px 0 0 0;
+                height:14px;
+                }
+				.stepFirst2 .geryContent .row .message .remaning{
+					float:right;
+				 }
+				.stepFirst2 .geryContent .row .message .errorText{
+					color:#ec1c23;
+				 }
+                .stepFirst2 .geryContent .row .errorIcon{
+                    background:url(../images/error-icon2.png) no-repeat left center;
+                    height:10px;
+                    width:10px;
+                    float:left;
+                    margin-left:7px;
+                    margin-top:7px;
+                 }
+                .stepFirst2 .geryContent .descProject .errorIcon{
+                    margin-top:57px;
+                 }
+
+            /* input */
+			.stepFirst2 .geryContent .row .text{
+				width:353px;
+				height:19px;
+				float:left;
+				display:inline;
+				padding:2px 7px;
+				background:#ffffff;
+				border:#a8abad solid 1px;
+				font-family:Tahoma, Arial, Helvetica, sans-serif;
+				font-size:12px;
+				color:#6c6c6c;
+				}
+			
+			/* textarea */
+			.stepFirst2 .geryContent .row textarea{
+				width:auto;
+				height:127px;
+				padding:2px 7px;
+				border:#a8abad solid 1px;
+				font-family:Tahoma, Arial, Helvetica, sans-serif;
+				font-size:12px;
+				color:#6c6c6c;
+                float:left;
+                overflow:auto;
+                }
+		    .stepFirst2 .geryContent .row input.error2,.stepFirst2 .geryContent .row textarea.error2{
+                background-color:#ffe4e4;
+            }
+
+            .stepContainer2 .geryContent .noteMask{ 
+				padding:9px 10px 16px 20px;
+                background:url(../images/note-bg-01.png) #e9e9e9 repeat-x left top; 
+                font-family:Tahoma, Arial, Helvetica, sans-serif;
+                font-size:11px;
+                border-bottom:1px solid #bdbdbd;
+            }
+            .stepContainer2 .geryContent .noteMask.collapse{
+                background:url(../images/note-bg-02.png) #e9e9e9 repeat-x left top;
+                padding-bottom:4px;
+             }
+            .stepFifth2 .geryContent .noteMask{
+                background:url(../images/note-bg-03.png) #e9e9e9 repeat-x left top; 
+             }
+                .stepContainer2 .geryContent .noteMask dt{
+                    overflow:hidden;
+                    line-height:16px;
+                    padding-bottom:6px;
+                }
+                    .stepContainer2 .geryContent .noteMask dt strong{
+                        background:url(../images/note-icon.png) no-repeat left center;
+                        padding-left:18px;
+                        font-size:12px;
+                        float:left;
+                    }
+                    .stepContainer2 .geryContent .noteMask dt a{
+                        background:url(../images/minus.png) no-repeat left center;
+                        padding-left:16px;
+                        float:right;
+                        width:26px;
+                    }
+                    .stepContainer2 .geryContent .noteMask dt a:hover{
+                        text-decoration:none;
+                    }
+                    .stepContainer2 .geryContent .noteMask.collapse dt a{
+                        background:url(../images/plus.png) no-repeat left center;
+                    }
+                .stepContainer2 .geryContent .noteMask dd{
+                    background:url(../images/bullet.png) no-repeat left top;
+                    margin-top:6px;
+                    padding-left:12px;
+                    padding-right:80px;
+                }
+                 .stepThird2 .geryContent .noteMask dd{
+                     margin-top:10px;
+                 }
+                 .stepThird2 .geryContent .noteMask dd.first{
+                     margin-top:6px;
+                 }
+                 .stepFourth2 .geryContent .noteMask dd{
+                     margin-top:9px;
+                     padding-right:15px;
+                 }
+                 .stepFourth2 .geryContent .noteMask dd.first{
+                     margin-top:6px;
+                 }
+                .stepContainer2 .geryContent .noteMask.collapse dd{
+                    display:none;    
+                }
+                    .stepContainer2 .geryContent .noteMask dd a:hover{
+                        text-decoration:none;
+                    }
+
+
+            .stepContainer2 .geryContent .noteContainer{
+				margin:0 28px;
+				padding:6px 15px;
+				}
+				
+				.stepContainer2 .geryContent .noteContainer dt{
+					padding-bottom:13px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					font-size:11px;
+					font-weight:bold;
+					line-height:1em;
+					}
+					
+				.stepContainer2 .geryContent .noteContainer dd{
+					padding-bottom:14px;
+					padding-left:9px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					font-size:11px;
+					line-height:12px;
+					background:url(../images/dd-icon.png) no-repeat left 5px;
+					}
+					
+					.stepContainer2 .geryContent .noteContainer dd a{
+						color:#0000ff;
+						text-decoration:none;
+						}
+						
+					.stepContainer2 .geryContent .noteContainer dd a:hover{
+						text-decoration:underline;
+						}
+					
+				.stepContainer2 .geryContent .noteContainer .noIcon dd{
+					padding-left:0;
+					padding-bottom:8px;
+					background:none;
+					}	
+					
+				.stepContainer2 .geryContent .noteContainer dd.last{
+					padding-bottom:8px;
+					}
+	
+	/* corner */
+	.stepContainer2 .geryContent .corner{
+		width:3px;
+		height:3px;
+		display:block;
+		overflow:hidden;
+		position:absolute;
+		background-image:url(../images/grey_corner.png);
+		background-repeat:no-repeat;
+		}
+		
+	.stepContainer2 .geryContent .tl{
+		top:-1px;
+		left:-1px;
+		background-position:0 0;
+		}
+		
+	.stepContainer2 .geryContent .tr{
+		top:-1px;
+		right:-1px;
+		background-position:-3px 0;
+		}
+		
+	.stepContainer2 .geryContent .bl{
+		bottom:-1px;
+		left:-1px;
+		background-position:0 -3px;
+		}
+		
+	.stepContainer2 .geryContent .br{
+		bottom:-1px;
+		right:-1px;
+		background-position:-3px -3px;
+		}
+
+/* stepSecond */
+.stepSecond2 .geryContent .form{
+	padding:23px 0 32px; 
+	}
+
+	.stepSecond2 .projectTypeSelect{
+		margin-left:38px;
+		}	
+		
+	.stepSecond2 .projectList{
+		padding-bottom:30px;
+		}
+		
+		/* projectTypeSelect */
+		.stepSecond2 .projectTypeSelect label{
+			width:81px;
+			float:left;
+			display:inline;
+			font-family:Tahoma, Arial, Helvetica, sans-serif;
+			font-size:12px;
+			line-height:21px;
+			}
+			
+		.stepSecond2 .projectTypeSelect select{
+			width:186px;
+			}
+			
+		/* projectItem */
+		.stepSecond2 .projectItem{
+			width:273px;
+			float:left;
+			display:inline;
+			margin-left:34px;
+			padding-top:18px;
+			}
+			
+		.stepSecond2 .projectItem .projectContainer .top{
+			width:273px;
+			padding-top:12px;
+			background:url(../images/selectProject_top.png) no-repeat left top;
+			}
+			
+		.stepSecond2 .projectItem .projectContainer .bottom{
+			width:100%;
+			padding-bottom:12px;
+			background:url(../images/selectProject_bottom.png) no-repeat left bottom;
+			}
+			
+		.stepSecond2 .projectItem .projectContainer .bg{
+			width:100%;
+			height:258px;
+			padding-top:3px;
+			background:url(../images/selectProject_bg.png) repeat-y left top;
+			}
+			
+		.stepSecond2 .projectItem .hover .top{
+			width:273px;
+			padding-top:12px;
+			background:url(../images/selectProject_top_hover.png) no-repeat left top;
+			}
+			
+		.stepSecond2 .projectItem .hover .bottom{
+			width:100%;
+			padding-bottom:12px;
+			background:url(../images/selectProject_bottom_hover.png) no-repeat left bottom;
+			}
+			
+		.stepSecond2 .projectItem .hover .bg{
+			width:100%;
+			height:258px;
+			padding-top:3px;
+			background:url(../images/selectProject_bg_hover.png) repeat-y left top;
+			}
+			
+		.stepSecond2 .projectItem .projectContainer .custom{
+			width:273px;
+			height:285px;
+			background:url(../images/custom.png) no-repeat center 4px;
+			}
+			
+		.stepSecond2 .projectItem .hover .custom{
+			width:273px;
+			height:285px;
+			background:url(../images/custom_hover.png) no-repeat center top;
+			}
+			
+			/* radioBox */
+			.stepSecond2 .projectItem .radioBox{
+				height:17px;
+				padding:12px 0 0 0;
+				margin-left:4px;
+				}
+				
+				.stepSecond2 .projectItem .radioBox .radio{
+					width:auto;
+					float:left;
+					display:inline;
+					margin-right:6px;
+					}
+					
+				.stepSecond2 .projectItem .radioBox label{
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					font-size:12px;
+					}
+					
+			/* pic */
+			.stepSecond2 .projectItem .projectContainer .projectPic{
+				width:232px;
+				margin:0 auto;
+				margin-bottom:10px;
+				padding:3px;
+				border:#a8abad solid 1px;
+				}
+				
+			/* table */
+			.stepSecond2 .projectItem .projectContainer table{
+				width:263px;
+				margin-left:5px;
+				border-collapse:collapse;
+				}
+				
+				.stepSecond2 .projectItem .projectContainer table td{
+					height:27px;
+					padding:0 6px;
+					font-family:Tahoma, Arial, Helvetica, sans-serif;
+					font-size:12px;
+					color:#666666;
+					font-weight:bold;
+					border-top:#d0d2d3 solid 1px;
+					border-bottom:#d0d2d3 solid 1px;
+					background:#ffffff;
+					}
+					
+				.stepSecond2 .projectItem .projectContainer table td.firstTd{
+					border-right:#d0d2d3 solid 1px;
+					background:#f3f3f3;
+					font-weight:normal;
+					text-indent:4px;
+					}
+					
+					.stepSecond2 .projectItem .projectContainer table td select{
+						width:119px;
+						}
+						
+			/* buttonArea */
+			.stepSecond2 .projectItem .projectContainer .buttonArea{
+				height:21px;
+				padding-top:7px;
+				text-align:center;
+				}
+				
+				.stepSecond2 .projectItem .projectContainer .buttonArea .blackButton{
+					width:100px;
+					height:21px;
+					float:left;
+					display:inline;
+					font-size:12px;
+					color:#fffffe;
+					line-height:21px;
+					text-align:center;
+					text-decoration:none;
+					background:url(../images/blackButton.png) no-repeat left top;
+					}
+					
+				.stepSecond2 .projectItem .projectContainer .buttonArea .blackButton:hover{
+					background:url(../images/blackButton.png) no-repeat left -21px;
+					}
+
+				.stepSecond2 .projectItem .projectContainer .buttonArea .detailButton{
+					margin-left:14px;
+					margin-right:44px;
+					}
+
+/* stepThird */
+.stepThird2 .form{ 
+	padding:26px 36px;
+	}
+	
+	.stepThird2 .tableOut{
+		padding-bottom:5px;
+		}
+	
+	.stepThird2 table.projectStats th{
+		font-family:Tahoma, Arial, Helvetica, sans-serif;
+		font-size:12px;
+		font-weight:bold;
+		}
+		
+	.stepThird2 table.projectStats td{
+		font-family:Tahoma, Arial, Helvetica, sans-serif;
+		font-size:20px;
+		font-weight:bold;
+		}
+		
+	.stepThird2 #ganttChartDiv{
+		min-height:264px;
+		position:relative;
+		}
+		
+	.stepThird2 .geryContent .noteContainer{
+		margin:0;
+		margin-top:24px;
+		}
+ 
+/* ------------------------------------------------------ */
+/*new styles*/
+/* ------------------------------------------------------ */
+.newProjectStep .left{
+    float: left;
+}
+.newProjectStep .right{
+    float: right;
+}
+
+input{
+    color: #6C6C6C;
+}
+.clear{
+    clear: both;
+    width: 0;
+    height: 0;
+}
+.stepFirst2 .geryContent{
+    font-family: Tahoma,Arial,Helvetica,sans-serif;
+}
+    .stepFirst2 .geryContent .row{
+        padding-bottom: 5px;
+        margin-left: 35px;
+    }
+    .stepSecond2 .geryContent .left{
+        padding-top : 25px;
+        height: 240px;
+    }
+    .stepFirst2 .geryContent .left.first{
+        width: 40%;
+        border-right: 1px solid #ebebeb;
+    }
+    .stepFirst2 .geryContent .left.center{
+        width: 31%;
+        border-right: 1px solid #ebebeb;
+    }
+    .stepFirst2 .geryContent .left.last{
+        width: 28%;
+    }
+    .stepThird2 .geryContent .left{
+        width: 25%;
+        padding: 0;
+        height: auto;
+    }
+    .stepThird2 .geryContent .left.last{
+        width: 24%;
+    }
+        .stepThird2 .geryContent .left .rightBorder {
+            min-height: 475px;
+            border-right: 1px solid #ebebeb;
+            padding-top: 25px;
+        }
+        .stepThird2 .geryContent .left.last .rightBorder {
+            border-right: none;
+        }
+        .stepFirst2 .geryContent .left .input {
+            width: 75%;
+            border: 1px solid #a9acae;
+            margin: 5px 22px;
+            display: inline-block;
+            position: relative;
+        }
+        .stepFirst2 .geryContent .left .input.disabled {
+            border: 1px solid #babcbd;
+        }
+        .stepFirst2 .geryContent .left .input.error2 {
+            background-color: #ffe4e4;
+        }
+            .stepFirst2 .geryContent .left .input span.errorIcon{
+                position: absolute;
+                right: -15px;
+                top: 50%;
+                margin-top: -5px;
+            }
+            .mobile .stepThird2 .geryContent .left .input span.errorIcon{
+                display: none;
+            }
+        .stepFirst2 .geryContent .formats label{
+            padding-left: 20px;
+            width: 75%;
+            position: relative;
+        }
+        .stepFirst2 .geryContent .formats label.last{
+            padding-left: 20px;
+            width:18px;
+            position: relative;
+        }
+            .stepFirst2 .geryContent .formats span.input{
+                margin: 0 0 3px;
+                float: left;
+                width: 170px;
+            }
+            .stepThird2 .geryContent .formats span.input{
+                margin: 0;
+                float: left;
+                width: 170px;
+            }
+            .stepFirst2 .geryContent .formats span.input input.waterMark{
+                color: #9c9c9c;
+            }
+            .stepFirst2 .geryContent .formats label input{
+                margin-right: 5px;
+                position: relative;
+                top: 0;
+            }
+            .stepFirst2 .geryContent .formats label span{
+                line-height: 25px;
+            }
+            .stepFirst2 .geryContent .formats label.last input{
+                margin-right: 0;
+            }
+        .stepFirst2 .geryContent .row .message{
+            width: 75%;
+            margin: 0 22px;
+            height: auto;
+        }
+        .stepThird2 .geryContent .row .message{
+            padding-bottom: 4px;
+        }
+        .stepFirst2 .geryContent .row .message.noMargin{
+            margin: 0;
+        }
+        .stepFirst2 .geryContent .row .message.padding{
+            padding-left: 20px;
+        }
+            .stepFirst2 .geryContent .row .message.padding a.addField{
+                float: left;
+                height: 14px;
+                padding-left: 20px;
+                background: url("../images/add-field-icon.png") no-repeat;
+                line-height: 14px;
+                display: inline-block;
+                margin-top: 5px;
+                margin-left: 103px;
+            }
+            .stepFirst2 .geryContent .row .message.padding a:hover.addField{
+                background: url("../images/add-field-icon.png") no-repeat 0 -14px;
+            }
+            .stepFirst2 .geryContent .left .input input{
+                height: 21px;
+                padding: 1px;
+                border: 1px solid transparent;
+                width: 95%;
+                background: transparent;
+            }
+            .stepFirst2 .geryContent .left .input textarea{
+                height: 93px;
+                padding: 1px;
+                border: 1px solid transparent;
+                width: 95%;
+                float: none;
+                background: transparent;
+            }
+    .stepFirst2 .geryContent {
+        font-family: Tahoma,Arial,Helvetica,sans-serif;
+    }
+    .stepFirst2 .geryContent .content{
+        padding: 25px 48px;
+    }
+        .stepFirst2 .geryContent .leftCnt .selector div.text, .stepFirst2 .geryContent .rightCnt .selector div.text{
+            font-size: 11px;
+            color: #999;
+            padding: 8px 14px 10px;
+            height: 30px;
+        }
+    .stepFirst2 .geryContent .rightCnt{
+        float: right;
+        width: 50%;
+    }
+    .stepFirst2 .geryContent .leftCnt{
+        float: left;
+        width: 50%;
+    }
+    .stepFirst2 .geryContent .disable{
+        color: #666;
+    }
+        .stepFirst2 .geryContent .leftCnt .cnt{
+            padding-right: 10px;
+        }
+        .stepFirst2 .geryContent .rightCnt .cnt{
+            padding-left: 10px;
+        }
+        .stepFirst2 .geryContent .cnt .selector label input{
+            margin-right: 5px;
+        }
+
+            .stepFirst2 .geryContent .content .top{
+                padding-left: 7px;
+                background: url("../images/top-active.png") no-repeat;
+            }
+                .stepFirst2 .geryContent .content .top .r{
+                    padding-right: 7px;
+                    background: url("../images/top-active.png") no-repeat 100% -14px;
+                }
+                    .stepFirst2 .geryContent .content .top .r .c{
+                        height: 7px;
+                        background: url("../images/top-active.png") repeat-x 0 -7px;
+                    }
+            .stepFirst2 .geryContent .content .bg{
+                padding-right: 4px;
+                background: url("../images/bg-active.png") repeat-y 100% 0;
+                min-height: 100px;
+                border-left: 1px solid #bdbdbd;
+                font-size: 12px;
+            }
+                .stepFirst2 .geryContent .content .bg .bgContnt{
+                    padding-bottom: 27px;
+                }
+                    .stepFirst2 .geryContent .content .bg .bgContnt .title{
+                        height: 40px;
+                        line-height: 40px;
+                        padding: 0 10px;
+                        border-bottom: 1px solid #d0d2d3;
+                    }
+                    .stepFirst2 .geryContent .content .bg .bgContnt .row{
+                        background-color: #f3f3f3;
+                        border-bottom: 1px solid #d0d2d3;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .stepFirst2 .geryContent .content .disable .bg .bgContnt .row{
+                        background-color: #f9f9f9;
+                    }
+                        .stepFirst2 .geryContent .content .bg .bgContnt .row .left{
+                            float: left;
+                            padding: 9px;
+                            width: 32%;
+                        }
+                            .stepFirst2 .geryContent .content .bg .bgContnt .row .left label{
+                                line-height: 16px;
+                                padding-left: 15px;
+                                position: relative;
+                                width: 90%;
+                            }
+                            .stepFirst2 .geryContent .content .bg .bgContnt .row .left input{
+                                left: -1px;
+                                top: 1px;
+                                position: absolute;
+                            }
+                        .stepFirst2 .geryContent .content .bg .bgContnt .row .right{
+                            float: right;
+                            width: 60%;
+                            background-color: #fff;
+                            padding: 8px;
+                            min-height: 48px;
+                            border-left: 1px solid #d0d2d3;
+                            font-size: 11px;
+                        }
+                        .stepFirst2 .geryContent .content .bg .bgContnt .row.first .right{
+                            min-height: 48px;
+                        }
+                        .stepFirst2 .geryContent .content .bg .bgContnt .row.last .right{
+                            min-height: 73px;
+                        }
+                            .stepFirst2 .geryContent .content .bg .bgContnt .row .right .textarea{
+                                width: 94%;
+                                height: 50px;
+                                border: 1px solid #adb0b2;
+                                /*overflow: hidden;*/
+                                margin-top: 5px;
+                                position: relative;
+                            }
+                            .stepFirst2 .geryContent .content .bg .bgContnt .row .right .textarea.error2{
+                                background-color: #FFE4E4;
+                            }
+                                .stepFirst2 .geryContent .content .bg .bgContnt .row .right .textarea textarea{
+                                    height: 44px;
+                                    border: 1px solid transparent;
+                                    background: transparent;
+                                }
+                                .stepFirst2 .geryContent .content .bg .bgContnt .row .right .textarea  .errorIcon{
+                                    position: absolute;
+                                    float: none;
+                                    margin: 0;
+                                    top: 20px;
+                                    right: -15px;
+                                }
+            .stepFirst2 .geryContent .content .bottom{
+                padding-left: 7px;
+                background: url("../images/bottom-active.png") no-repeat;
+            }
+                .stepFirst2 .geryContent .content .bottom .r{
+                    padding-right: 7px;
+                    background: url("../images/bottom-active.png") no-repeat 100% -14px;
+                }
+                    .stepFirst2 .geryContent .content .bottom .r .c{
+                        height: 7px;
+                        background: url("../images/bottom-active.png") repeat-x 0 -7px;
+                    }
+            .stepFirst2 .geryContent .content .disable .top{
+                padding-left: 7px;
+                background: url("../images/top-disable.png") no-repeat;
+            }
+                .stepFirst2 .geryContent .content .disable .top .r{
+                    padding-right: 7px;
+                    background: url("../images/top-disable.png") no-repeat 100% -14px;
+                }
+                    .stepFirst2 .geryContent .content .disable .top .r .c{
+                        height: 7px;
+                        background: url("../images/top-disable.png") repeat-x 0 -7px;
+                    }
+            .stepFirst2 .geryContent .content .disable .bg{
+                padding-right: 4px;
+                background: url("../images/bg-disable.png") repeat-y 100% 0;
+                min-height: 100px;
+                border-left: 1px solid #bdbdbd;
+            }
+            .stepFirst2 .geryContent .content .disable .bottom{
+                padding-left: 7px;
+                background: url("../images/bottom-disable.png") no-repeat;
+            }
+                .stepFirst2 .geryContent .content .disable .bottom .r{
+                    padding-right: 7px;
+                    background: url("../images/bottom-disable.png") no-repeat 100% -14px;
+                }
+                .stepFirst2 .geryContent .content .disable .bottom .r .c{
+                    height: 7px;
+                    background: url("../images/bottom-disable.png") repeat-x 0 -7px;
+                }
+
+/*ToolTip*/
+
+.toolTip .toolTipContainer{
+    width: 240px;
+    position: absolute;
+    z-index: 10000;
+}
+.stepFirst2 .geryContent .row .toolTip{
+    position: relative;
+    z-index: 1000;
+}
+
+/*validation error text*/
+.stepFirst2 .geryContent .row .message .errorText{
+    display: none;
+}
+
+.stepThird2 .geryContent .left .row{
+    margin-left: 15px;
+}
+.stepFirst2 .geryContent .row span.label.errorText{
+    color: #EC1C23;
+}
+
+.stepFourth2{}
+    .stepFourth2 .geryContent{
+    }
+    .stepFourth2 .top{
+        padding: 25px 25px 0;
+        font-size: 12px;
+    }
+    .stepFourth2 .tableContainer .row, .stepFourth2 .tableContainer .last{
+        padding-top: 15px;
+    }
+    .stepFourth2 .top .row.url, .stepFourth2 .top .row.upload, .stepFourth2 .top .row.source, .stepFourth2 .top .button{
+        padding-left: 80px;
+        width: 746px;
+        display: none;
+        position: relative;
+    }
+    .stepFourth2 .top .row.upload,.stepFourth2 .top .button{
+        display: block;
+        position: relative;
+    }
+    .stepFourth2 .top .row.url input.text, .stepFourth2 .top .row.upload input.text{
+        width: 730px;
+        height: 20px;
+    }
+    .stepFourth2 .top .row.upload input.textUploadPhoto {
+        width: 635px;
+        float: left;
+    }
+    .stepFourth2 .top .row.upload .browserWrapper {
+        float: left;
+        position: relative;
+        margin-left: 5px;
+        margin-top: 2px;
+    }
+        .stepFourth2 .top .row.upload .browserWrapper input.file{
+            width: 90px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .stepFourth2 .top .row.upload .browserWrapper .btn{
+            display: block;
+            background: url("../images/browse-btn.png") no-repeat;
+            width: 90px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #fffffe;
+        }
+        .stepFourth2 .top .row.upload .browserWrapper .btn.hover{
+            background: url("../images/browse-btn.png") no-repeat 0 -24px;
+        }
+            .stepFourth2 .top .row.upload .browserWrapper .btn a{
+                text-decoration: none;
+                font-weight: bold;
+                color: #fffffe;
+            }
+    .stepFourth2 .top .row.source textarea{
+        width: 730px;
+        height: 74px;
+        padding: 2px 7px;
+    }
+    .stepFourth2 .inputs {
+        padding-bottom: 25px;
+        border-bottom: 1px solid #ebebeb;
+        /*height: 144px;*/
+    }
+        .stepFourth2 .inputs .top{
+            padding-top: 0;
+        }
+        .stepFourth2 .inputs .button a.addBtn{
+            float: right;
+            text-align: center;
+            display: block;
+            height: 24px;
+            line-height: 24px;
+            width: 118px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fffffe;
+            background: url("../images/addNewItem.png") no-repeat;
+            text-decoration: none;
+        }
+        .stepFourth2 .inputs .button a:hover.addBtn{
+            background: url("../images/addNewItem.png") no-repeat 0 -24px;
+        }
+        .stepFourth2 .top .filter .row.first {
+            height: 40px;
+        }
+        .stepFourth2 .top .row .toolTip{
+            margin: 0 5px 0 0;
+        }
+        .stepFourth2 .top .row .label{
+            width: 55px;
+            display: inline-block;
+        }
+        .stepFourth2 .top .row span{
+            float: left;
+        }
+        .stepFourth2 .top .row label{
+            display: inline-block;
+            line-height: 21px;
+            position: relative;
+            margin-left: 24px;
+            float: left;
+        }
+        .stepFourth2 .top .row label.first{
+            margin-left: 0;
+        }
+            .stepFourth2 .top .row label input{
+                position: relative;
+                top: 1px;
+                margin-right: 4px;
+            }
+            .stepFourth2 .top .row .inputCnt{
+                float: left;
+                position: relative;
+            }
+                .stepFourth2 .top .row .inputCnt .errorIcon{
+                    margin-top: -5px;
+                    position: absolute;
+                    right: -15px;
+                    top: 12px;
+                    width: 10px;
+                    height: 10px;
+                    background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                    display: none;
+                }
+        .stepFourth2 .top .row input.text, .stepFourth2 .top .row textarea {
+            border: 1px solid #A8ABAD;
+            color: #6C6C6C;
+            display: inline;
+            font-family: Tahoma,Arial,Helvetica,sans-serif;
+            font-size: 12px;
+            height: 17px;
+            line-height: 17px;
+            padding: 2px 7px;
+            width: 170px;
+        }
+        
+.tableContainer{
+    min-height: 335px;
+}
+.stepFourth2 table.addedItem, .stepFifth2 table.addedItem{
+    width: 100%;
+    display: none;
+    border-bottom: 1px solid #ebebeb;
+}
+.stepFifth2 table.addedItem{
+    display: inline-table;
+}
+    .stepFourth2 table.addedItem th, .stepFifth2 table.addedItem th{
+        height: 34px;
+        line-height: 34px;
+        border-right: 1px solid #48413e;
+        border-left: 1px solid #716865;
+        background: url("../images/table-header.png") repeat-x;
+        color: #cacaca;
+        font-size: 13px;
+    }
+    .stepFourth2 table.addedItem th.first, .stepFifth2 table.addedItem th.first{
+        border-left: none;
+    }
+    .stepFourth2 table.addedItem td, .stepFifth2 table.addedItem td{
+        font-size: 12px;
+        color: #464646;
+        padding: 5px 0 5px 15px;
+        line-height: 20px;
+        height: 20px;
+        vertical-align: top;
+    }
+    .stepFourth2 table.addedItem .alt td, .stepFifth2 table.addedItem .alt td{
+        background-color: #f5f5f5;
+    }
+        .stepFourth2 table.addedItem td a.url, .stepFifth2 table.addedItem td a.url{
+            color: #0072bc;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .stepFourth2 table.addedItem td a.remove{
+            padding-left: 15px;
+            display: inline-block;
+            background: url("../images/remove-icon2.png") no-repeat 0 6px;
+        }
+        .stepFourth2 input[type=text]{
+            background-color: #fff;
+        }
+        .stepFourth2 .errorText{
+            display: none;
+            color: #EC1C23;
+        }
+        .stepFourth2 input.error2, .stepFourth2 textarea.error2{
+            background-color: #FFE4E4;
+        }
+
+/*step fifth style*/
+.stepFifth2 .title{
+    height: 35px;
+    line-height: 35px;
+    background: url("../images/title-grey-bg.png") repeat-x;
+    font-size: 16px;
+    padding-left: 20px;
+    color: #1a1a1a;
+}
+    .stepFifth2 .title a.makeChanges{
+        background: url("../images/make-changes.png") no-repeat scroll 0 0 transparent;
+        color: #C0BEBD;
+        display: inline-block;
+        float: right;
+        font-size: 11px;
+        height: 22px;
+        line-height: 22px;
+        margin-right: 5px;
+        margin-top: 7px;
+        text-align: center;
+        text-decoration: none;
+        width: 89px;
+        cursor: pointer;
+    }
+    .stepFifth2 .title a:hover.makeChanges{
+        background: url("../images/make-changes.png") no-repeat 0 -22px;
+    }
+.stepFifth2 .content{
+    padding: 18px 20px;
+    font-size: 12px;
+}
+    .stepFifth2 .content .row{
+        height: 30px;
+        line-height: 30px;
+    }
+        .stepFifth2 .content .firstCol{
+            width: 275px;
+        }
+/*confirm button*/
+.stepFifth2 .confirmButton{
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 12px;
+}
+    .stepFifth2 .confirmButton a{
+        background: url("../images/confirmButton.png") no-repeat;
+        color: #FFFFFe;
+        display: block;
+        font-size: 12px;
+        font-weight: bold;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        text-decoration: none;
+        width: 160px;
+        margin: 0 auto;
+        text-transform: uppercase;
+    }
+    .stepFifth2 .confirmButton a:hover{
+        background: url("../images/confirmButton.png") no-repeat 0 -24px;
+    }
+/*proceed*/
+.stepFifth2 .proceed{
+    height: 58px;
+    padding: 0 18px;
+}
+    .stepFifth2 .proceed .message{
+        height: 36px;
+        line-height: 36px;
+        background-color: #fffdcd;
+        border: 1px solid #fbcc00;
+        font-size: 14px;
+        padding: 0 13px;
+        display: none;
+    }
+        .stepFifth2 .message a{
+            float: right;
+            width: 60px;
+            height: 18px;
+            text-decoration: none;
+            color: #fffffe;
+            font-size: 11px;
+            font-weight: bold;
+            background: url("../images/yes-no-button.png") no-repeat;
+            line-height: 18px;
+            text-align: center;
+            margin: 9px 0 0 9px;
+        }
+        .stepFifth2 .message a:hover{
+            background: url("../images/yes-no-button.png") no-repeat 0 -18px;
+        }
+
+/*modal*/
+#modalBackground{
+    background: transparent url("../images/modalwindow-bg.png");
+    position: fixed;
+}
+/*preLoader*/
+#preLoader{
+    width: 100px;
+    height: 80px;
+    background: url("../images/preLoader.gif") no-repeat;
+    position: fixed;
+    top: 200px;
+    margin-left: -40px;
+    left: 50%;
+    z-index: 10001;
+    display: none;
+}
+/*info modal*/
+#infoModalMobile{
+    width: 360px;
+    display: none;
+}
+    #infoModalMobile .modalTop{
+        padding-top: 10px;
+        background: url("../images/info-modal-top.png") no-repeat;
+    }
+        #infoModalMobile .modalTop .modalBottom{
+            padding-bottom: 10px;
+            background: url("../images/info-modal-bottom.png") no-repeat 0 100%;
+        }
+            #infoModalMobile .modalTop .modalBottom .modal-content{
+                border-left: 6px solid #000;
+                border-right: 6px solid #000;
+                padding : 25px 29px 15px;
+                background: url("../images/info-modal-bg.png") repeat-x;
+            }
+                #infoModalMobile .modalTop .modalBottom .modal-content .title{
+                    font-size: 14px;
+                    padding-bottom: 10px;
+                    font-weight: bold;
+                    text-align: center;
+                }
+                #infoModalMobile .modalTop .modalBottom .modal-content .msg{
+                    font-size: 12px;
+                    line-height: 18px;
+                }
+                #infoModalMobile .modalTop .modalBottom .modal-content .button{
+                    width: 243px;
+                    margin: 0 auto;
+                    padding-top: 25px;
+                }
+                    #infoModalMobile .modalTop .modalBottom .modal-content .button a{
+                        float: left;
+                        text-align: center;
+                        text-decoration: none;
+                        color: #fffffe;
+                        font-weight: bold;
+                        font-size: 12px;
+                        height: 24px;
+                        line-height: 24px;
+                        text-transform: uppercase;
+                    }
+                    #infoModalMobile .modalTop .modalBottom .modal-content .button a.projectOverView{
+                        width: 133px;
+                        background: url("../images/project-overview-btn.png") no-repeat;
+                        margin-right: 8px;
+                    }
+                    #infoModalMobile .modalTop .modalBottom .modal-content .button a:hover.projectOverView{
+                        background: url("../images/project-overview-btn.png") no-repeat 0 -24px;
+                    }
+                    #infoModalMobile .modalTop .modalBottom .modal-content .button a.dashboard{
+                        width: 91px;
+                        background: url("../images/dashboard-btn.png") no-repeat;
+                    }
+                    #infoModalMobile .modalTop .modalBottom .modal-content .button a:hover.dashboard{
+                        background: url("../images/dashboard-btn.png") no-repeat 0 -24px;
+                    }
+
+#infoModalPresentation{
+    width: 360px;
+    display: none;
+}
+    #infoModalPresentation .modalTop{
+        padding-top: 10px;
+        background: url("../images/info-modal-top.png") no-repeat;
+    }
+        #infoModalPresentation .modalTop .modalBottom{
+            padding-bottom: 10px;
+            background: url("../images/info-modal-bottom.png") no-repeat 0 100%;
+        }
+            #infoModalPresentation .modalTop .modalBottom .modal-content{
+                border-left: 6px solid #000;
+                border-right: 6px solid #000;
+                padding : 25px 29px 15px;
+                background: url("../images/info-modal-bg.png") repeat-x;
+            }
+                #infoModalPresentation .modalTop .modalBottom .modal-content .title{
+                    font-size: 14px;
+                    padding-bottom: 10px;
+                    font-weight: bold;
+                    text-align: center;
+                }
+                #infoModalPresentation .modalTop .modalBottom .modal-content .msg{
+                    font-size: 12px;
+                    line-height: 18px;
+                }
+                #infoModalPresentation .modalTop .modalBottom .modal-content .button{
+                    width: 243px;
+                    margin: 0 auto;
+                    padding-top: 25px;
+                }
+                    #infoModalPresentation .modalTop .modalBottom .modal-content .button a{
+                        float: left;
+                        text-align: center;
+                        text-decoration: none;
+                        color: #fffffe;
+                        font-weight: bold;
+                        font-size: 12px;
+                        height: 24px;
+                        line-height: 24px;
+                        text-transform: uppercase;
+                    }
+                    #infoModalPresentation .modalTop .modalBottom .modal-content .button a.projectOverView{
+                        width: 133px;
+                        background: url("../images/project-overview-btn.png") no-repeat;
+                        margin-right: 8px;
+                    }
+                    #infoModalPresentation .modalTop .modalBottom .modal-content .button a:hover.projectOverView{
+                        background: url("../images/project-overview-btn.png") no-repeat 0 -24px;
+                    }
+                    #infoModalPresentation .modalTop .modalBottom .modal-content .button a.dashboard{
+                        width: 91px;
+                        background: url("../images/dashboard-btn.png") no-repeat;
+                    }
+                    #infoModalPresentation .modalTop .modalBottom .modal-content .button a:hover.dashboard{
+                        background: url("../images/dashboard-btn.png") no-repeat 0 -24px;
+                    }
+
+/*style for mobile*/
+.stepFirst2 .content .platform{
+    width: 63%;
+}
+    .stepFirst2 .content .platform .row{
+        min-height: 100px;
+        padding-left: 135px;
+        padding-right: 30px;
+        margin-left: 0;
+    }
+        .stepFirst2 .content .platform .row label{
+            font-size: 12px;
+            float: none;
+            position: relative;
+        }
+            .stepFirst2 .content .platform .row label input{
+                margin-right: 5px;
+                position: relative;
+                top: 1px;
+             }
+        .stepFirst2 .content .platform .row .note{
+            font-size: 11px;
+            float: none;
+            position: relative;
+            color: #999;
+        }
+    .stepFirst2 .content .platform .row.cross{
+        background: url("../images/cross-icon.png") no-repeat -13px 0;
+    }
+    .stepFirst2 .content .platform .row.native{
+        background: url("../images/native-icon.png") no-repeat -13px 0;
+    }
+    .stepFirst2 .content .platform .row.web{
+        background: url("../images/web-icon.png") no-repeat -13px 0;
+    }
+.mobile p .errorText{
+    display: none;
+    color: #EC1C23;
+}
+.stepFirst2 .content .desc{
+    width: 36%;
+    height: 400px;
+    border-left: 1px solid #d5d5d5;
+    color: #666;
+    font-size: 12px;
+    padding-top: 10px;
+}
+    .stepFirst2 .content .desc .options{
+        padding-left: 25px;
+    }
+    .stepFirst2 .content .desc .nativeOption{
+        display: none;
+    }
+        .stepFirst2 .content .desc .options .opt{
+            padding-left: 18px;
+            padding-top: 20px;
+        }
+        .stepFirst2 .content .desc .options .opt label{
+            width: 100%;
+            height: 23px;
+            line-height: 23px;
+            display: inline-block;
+            float: none;
+        }
+            .stepFirst2 .content .desc .options .opt label input{
+                margin-right: 5px;
+            }
+        .stepFirst2 .content .desc .options .opt label.last{
+            width: auto;
+            float: left;
+        }
+        .stepFirst2 .content .desc .options .opt .inputCnt{
+            float: left;
+            margin-left: 5px;
+            position: relative;
+            display: inline;
+            width: 177px;
+        }
+            .stepFirst2 .content .desc .options .opt .inputCnt p.message{
+                position: static;
+                /*padding-left: 62px;*/
+            }
+            .stepFirst2 .content .desc .options .opt .inputCnt input{
+                border: 1px solid #A8ABAD;
+                color: #6C6C6C;
+                display: inline;
+                font-family: Tahoma,Arial,Helvetica,sans-serif;
+                font-size: 12px;
+                height: 17px;
+                line-height: 17px;
+                padding: 2px 7px;
+                width: 160px;
+            }
+            .stepFirst2 .content .desc .options .opt .inputCnt input.error2{
+                background-color: #FFE4E4;
+            }
+            .mobile .stepSecond2 .inputCnt input.text.error2{
+                background-color: #FFE4E4;
+            }
+            .mobile .content .inputCnt span.errorIcon{
+                position: absolute;
+                right: -15px;
+                top: 6px;
+                background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                width: 10px;
+                height: 10px;
+                display: none;
+            }
+            .mobile .content .inputCnt p.message{
+                position: absolute;
+            }
+
+/*mobile step second*/
+.mobile .stepSecond2 .original{
+    margin:  15px 20px;
+    border-top: 1px solid #a8abad;
+    border-left: 1px solid #a8abad;
+    background: url("../images/bg-active.png") repeat-y scroll 100% 0 transparent;
+    position: relative;
+}
+    .mobile .stepSecond2 .original .content{
+        background: url("../images/original-bottom.png") repeat-x scroll 0 100% transparent;
+        padding-bottom: 5px;
+        font-size: 12px;
+    }
+        .mobile .stepSecond2 .original .content .left{
+            height: 130px;
+        }
+        .mobile .stepSecond2 .original .content .left.disable{
+            color: #d1d1d1;
+        }
+        .mobile .stepSecond2 .original .content .left.first{
+            width: 450px;
+            border-right: 1px solid #cbcbcb;
+            background-color: #f3f3f3;
+        }
+            .mobile .stepSecond2 .original .content .left .title{
+                padding-left: 30px;
+                font-weight: bold;
+            }
+            .mobile .stepSecond2 .original .content .left .note{
+                padding: 5px 0 5px 30px;
+                font-size: 11px;
+                color: #999;
+            }
+            .mobile .stepSecond2 .original .content .left .text{
+                padding: 5px 0 5px 30px;
+                font-size: 12px;
+            }
+            .mobile .stepSecond2 .original .content .left label{
+                padding-left: 50px;
+                display: block;
+                line-height: 25px;
+                position: relative;
+            }
+            .mobile .stepSecond2 .original .content .left label.other{
+                display: inline-block;
+            }
+                .mobile .stepSecond2 .original .content .left label.other input{
+                    margin-right: 0;
+                }
+                .mobile .stepSecond2 .original .content .left label input{
+                    position: relative;
+                    top: 1px;
+                    margin-right: 5px;
+                }
+            .mobile .stepSecond2 .left .inputCnt{
+                display: inline;
+                position: relative;
+                float: left;
+            }
+                .mobile .stepSecond2 .left .inputCnt p.message {
+                    position: static;
+                }
+                    .mobile .stepSecond2 .left p.message .errorText{
+                        color: #EC1C23;
+                        padding-left: 20px;
+                    }
+                    .mobile .stepSecond2 .left .inputCnt p.message .errorText{
+                        color: #EC1C23;
+                        padding-left: 0;
+                    }
+                .mobile .stepSecond2 .left .errorIcon {
+                    background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                    display: none;
+                    height: 10px;
+                    margin-left: 4px;
+                    width: 10px;
+                    padding: 0;
+                    position: absolute;
+                    top: 6px;
+                }
+                .mobile .stepSecond2 .inputCnt .left .errorIcon {
+                    background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                    display: none;
+                    height: 10px;
+                    position: absolute;
+                    right: -15px;
+                    top: 2px;
+                    width: 10px;
+                    padding: 0;
+                }
+
+                .mobile .stepSecond2 .original .content .left .inputCnt input.text{
+                    border: 1px solid #A8ABAD;
+                    color: #6C6C6C;
+                    display: inline;
+                    font-family: Tahoma,Arial,Helvetica,sans-serif;
+                    font-size: 12px;
+                    height: 17px;
+                    line-height: 17px;
+                    padding: 2px 7px;
+                    width: 200px;
+                }
+                .mobile .stepSecond2 .original .content .left.disable .inputCnt input.text{
+                    border: 1px solid #e5e6e6;
+                    color: #e1e1e1;
+                }
+    .mobile .stepSecond2 .original .tl{
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: url("../images/original-corners.jpg") no-repeat;
+        top: -1px;
+        left: -1px;
+    }
+    .mobile .stepSecond2 .original .tr{
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: url("../images/original-corners.jpg") no-repeat 0 -8px;
+        top: -1px;
+        right: 0;
+    }
+    .mobile .stepSecond2 .original .br{
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: url("../images/original-corners.jpg") no-repeat 0 -16px;
+        bottom: 0;
+        right: 0;
+    }
+    .mobile .stepSecond2 .original .bl{
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: url("../images/original-corners.jpg") no-repeat 0 -24px;
+        bottom: 0;
+        left: -1px;
+    }
+.mobile .stepSecond2 .products {
+    margin: 5px 20px;
+}
+    .mobile .stepSecond2 .products .left{
+        width: 30%;
+        border-right: 1px solid #d5d5d5;
+        min-height: 320px;
+        padding: 5px 0 5px 15px;
+        font-size: 12px;
+    }
+    .mobile .stepSecond2 .products .left.last{
+        width: auto;
+        border-right: none;
+        height: 320px;
+    }
+        .mobile .stepSecond2 .products .left .toolTip{
+            margin-top: 0;
+        }
+        .mobile .stepSecond2 .products .left .label{
+            font-size: 12px;
+            font-weight: bold;
+            padding-left: 5px;
+            color: #333;
+        }
+        .mobile .stepSecond2 .products .left label{
+            display: inline-block;
+            padding-left: 20px;
+            position: relative;
+            padding-top: 5px;
+        }
+        .mobile .stepSecond2 .products .left .icon{
+            height: 103px;
+            width: 210px;
+            margin: 10px 20px;
+        }
+        .mobile .stepSecond2 .products .left .formFactor{
+            background: url("../images/form-factor.jpg") no-repeat 50% 0;
+        }
+        .mobile .stepSecond2 .products .left .screenOrientation{
+            background: url("../images/screen-orientation.jpg") no-repeat 50% 0;
+        }
+        .mobile .stepSecond2 .products .left .screenResolution{
+            background: url("../images/screen-resolution.jpg") no-repeat 50% 0;
+            width: 310px;
+        }
+        .mobile .stepSecond2 .products .left label.select2{
+            font-size: 11px;
+            color: #999;
+        }
+            .mobile .stepSecond2 .products .left label input{
+                position: relative;
+                top: 1px;
+                margin-right: 5px;
+            }
+            .mobile .stepSecond2 .products .left span{
+                padding-left: 42px;
+                font-size: 11px;
+                color: #999;
+                right: -58px;
+            }
+            .mobile .stepSecond2 .left label.other{
+                display: inline-block;
+                float: left;
+            }
+                .mobile .stepSecond2 .left label.other input{
+                    margin-right: 0;
+                }
+            .mobile .stepSecond2 .left .inputCnt input.text{
+                border: 1px solid #A8ABAD;
+                color: #6C6C6C;
+                display: inline;
+                font-family: Tahoma,Arial,Helvetica,sans-serif;
+                font-size: 12px;
+                height: 17px;
+                line-height: 17px;
+                padding: 2px 7px;
+                width: 170px;
+            }
+
+/*step fourth*/
+.mobile .stepThird2 .left label.select2{
+    color: #999999;
+    font-size: 11px;
+}
+.mobile .stepThird2 .left .icons{
+    height: 110px;
+    width: 200px;
+    margin-left: 15px;
+}
+.mobile .stepThird2 .left .motion{
+    background: url("../images/motion-icon.jpg") no-repeat 50% 50%;
+}
+.mobile .stepThird2 .left .geolocation{
+    background: url("../images/geoLocation-icon.jpg") no-repeat 50% 50%;
+}
+.mobile .stepThird2 .left .camera{
+    background: url("../images/camera-icon.jpg") no-repeat 50% 50%;
+}
+.mobile .stepThird2 .left .additionalFeature{
+    background: url("../images/additional-feature-icon.jpg") no-repeat 50% 50%;
+}
+.mobile .stepThird2 .left span.desk{
+    color: #999999;
+    float: left;
+    font-size: 11px;
+    padding-left: 40px;
+    padding-right: 30px;
+}
+
+/* ------------------------------------------------------ */
+/* Fixes */
+/* ------------------------------------------------------ */
+.stepContainer2 .message{
+    background-color: #ffffff;
+}
+
+.stepFirst2 .geryContent .row label {
+    width: 75%;
+    float: left;
+    display: inline;
+    line-height: 25px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.stepFirst2 .geryContent .row span.label {
+    float: left;
+    display: inline;
+    line-height: 25px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.stepFirst2 .geryContent .row .toolTip {
+    margin-right: 7px;
+}
+
+.message2 {
+background-color: #FFC;
+margin: 0px 0;
+}

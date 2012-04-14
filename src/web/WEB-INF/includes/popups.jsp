@@ -949,6 +949,39 @@
         </div>
     </div>
 </div>
+
+    <div id="infoModalMobile">
+        <div class="modalTop">
+            <div class="modalBottom">
+                <div class="modal-content">
+                    <div class="title">Your mobile project has been launched.</div>
+                    <div class="msg">Our management team is reviewing your full specifications in order to assign the most qualified copilot to your project. You can expect to hear from your new copilot within 48 hours.</div>
+                    <div class="button">
+                        <a class="projectOverView" href="javascript:;">Project Overview</a>
+                        <a class="dashboard" href='<s:url action="dashboardActive" namespace="/"/>'>Dashboard</a>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="infoModalPresentation">
+        <div class="modalTop">
+            <div class="modalBottom">
+                <div class="modal-content">
+                    <div class="title">Your presentation project has been launched.</div>
+                    <div class="msg">Our management team is reviewing your full specifications in order to assign the most qualified copilot to your project. You can expect to hear from your new copilot within 48 hours.</div>
+                    <div class="button">
+                        <a class="projectOverView" href="javascript:;">Project Overview</a>
+                        <a class="dashboard" href='<s:url action="dashboardActive" namespace="/"/>'>Dashboard</a>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </s:if>
 
         <s:if test='%{#request.CURRENT_TAB  == "createNewProject"}'>

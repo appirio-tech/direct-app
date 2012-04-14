@@ -4,9 +4,35 @@
  * Javascript file for the new creation project process.
  *
  * @version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1)
- * @author: TCSASSEMBLER
+ *
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+ *              change note: added support for new mobile and presentation project creation flow.
+ *
+ * @author: TCSASSEMBLER, KennyAlive
+ * @version 1.1
  */
+ 
+ var PROJECT_TYPE_CUSTOM = 0;
+ var PROJECT_TYPE_MOBILE = 1;
+ var PROJECT_TYPE_PRESENTATION = 2;
 
+// Defines which project type's wizard is active at the moment. 
+var activeProjectType = PROJECT_TYPE_CUSTOM;
+
+/**
+* Gets the type of the project.
+* NOTE: probably this function should return activeProjectType. It's better to remove in the future stepsChoices from the
+* project since it's a messy thing. Now stepsChoices only used by custom project type but not by the mobile or presentation projects.
+*/
+function getProjectType() {
+    if (stepsChoices['step1'] == 'custom') {
+        return PROJECT_TYPE_CUSTOM;
+    } else if (stepsChoices['step1'] == 'Mobile Project Type') {
+        return PROJECT_TYPE_MOBILE;
+    } else if (stepsChoices['step1'] == 'Presentation Project Type') {
+        return PROJECT_TYPE_PRESENTATION;
+    }
+}
 
 /**
  * Creates the game plan for the create new project page.
@@ -42,13 +68,6 @@ function createChartControl(htmlDiv, hasTreePanel) {
 }
 
 /**
- * Checks whether the project is presentation project.
- */
-function isPresentationProject() {
-    return stepsChoices['step1'] == 'Presentation Project Type';
-}
-
-/**
  * Recreates the game plan.
  *
  * @param htmlDiv the id of the div to put generated game plan in
@@ -64,101 +83,55 @@ function recreateChartControl(htmlDiv, hasTreePanel) {
 // remember user's choices
 var stepsChoices = {};
 
-/**
- * Moves to the step with the given step number.
- *
- * @param stepNumber the step number from 1 - 6.
- */
-var goCreateProjectStep = function(stepNumber) {
+function removeError(box) {
+    box.parent().find(".errorText,.errorIcon").remove();
+    box.removeClass("error");
+}
 
-    if (stepNumber < 1 || stepNumber > 6) {
-        return;
+function validate(box) {
+    var value = $.trim(box.val());
+    var tips = box.data("tips") ? box.data("tips") : "";
+    if (value == "" || value == tips) {
+        box.parent().find(".message").append('<span class="errorText">This field cannot be left empty.</span>');
+        box.addClass("error").val("");
+        box.after('<span class="errorIcon"></span>');
+        return false;
     }
+    return true;
+}
 
-    $(".newProjectStep").hide();
-    if (isPresentationProject() && (stepNumber == 3 || stepNumber ==  4 || stepNumber == 5)) {
-        $("#newPPTProjectStep" + stepNumber).show();
-    } else {
-        $("#newProjectStep" + stepNumber).show();
-    }
-
-    // text area
-    $('.stepSecond textarea').css('width', $('.stepSecond .row').width() - 206);
-
-    $(".stepBar li").each(function() {
-        var index = $(this).index() + 1;
-        var s = $(this).find(">span");
-        if (index < stepNumber) {
-            // completed
-            s.removeClass();
-            s.addClass("istatus").addClass("complete");
-        } else if (index == stepNumber) {
-            s.removeClass();
-            s.addClass("istatus").addClass("active");
-        } else {
-            s.removeClass().addClass("istatus").addClass("inext");
-            s.find(".bg").html("Step " + index);
+function validate2(box){
+    var valid = true;
+    for(var i = 0; i <box.length; i++){
+        var value = $.trim($(box[i]).val());
+        var tips;
+        if(box.hasClass("waterMark")){
+            tips = $(box[i]).attr("title")?$(box[i]).attr("title"):"";
+        }else{
+            tips="";
         }
-
-        if (index <= stepNumber) {
-            // add link
-            var linkHTML = $("#stepBarLinkTemplate").html();
-            s.find(".bg").html(linkHTML);
-            var stepLink = s.find(".bg a");
-            stepLink.html("Step " + index);
-
-            stepLink.unbind('click');
-            stepLink.attr("href", "javascript:goCreateProjectStep(" + index + ");");
-
-
-            if(stepNumber >= 3 && stepsChoices['step1'] == 'custom' && index == 3) {
-                s.addClass("finished");
-                s.find("a").unbind('click').attr("href", "javascript:;");
+        if(!$(box[i]).is(':disabled')){
+            if(value == "" || value == tips){
+                $(box[i]).parent().addClass("error2");
+                $(box[i]).parent().next().next("p.message").find(".errorText").show();
+                $(box[i]).after('<span class="errorIcon"></span>');
+                valid = false;
             }
         }
-    });
+    }
+    return valid;
+}
 
-    if (stepNumber == 6) {
-        $(".stepBar li").each(function() {
-            var index = $(this).index() + 1;
-            var s = $(this).find(">span");
-            s.addClass("finished");
-            s.find("a").unbind('click').attr("href", "javascript:;");
-
-        });
-    }
-
-    if(stepsChoices['step1'] == 'custom') {
-        $("#customGamePlanRadio").attr('checked', true);
-    }
-
-    if (stepNumber == 3 && isPresentationProject()) {
-        //new add line
-        $('.stepThird .tfooter td .addMoreButtonBox .text').css('width',$('.stepThird .tfooter td .addMoreButtonBox').width() - 142);
-    }
-    if (stepNumber == 4 && !isPresentationProject()) {
-        if(stepsChoices['step4'] == 'chooseCopilot') {
-            $("#newProjectStep4 .radioYes").attr("checked", "checked");
-        } else if (stepsChoices['step4'] == 'createCopilot') {
-            $("#newProjectStep4 .radioYes").attr("checked", "checked");
-        } else if (stepsChoices['step4'] == 'noCopilot') {
-            $("#newProjectStep4 .radioNo").attr("checked", "checked");
-        }
-    }
-
-    if(stepNumber == 4 && isPresentationProject()) {
-        $('#descriptionInput').width($('.stepForth .otherTypeAreaInputBox').width() - 450);
-    }
-    if (stepNumber == 5 && isPresentationProject()) {
-        $('#customFileDescription').width($('.addMoreParts .topRowWrapper').width() - 112);
-        $('.stepFifth .browserInput').width($('.stepFifth .browserParts .topRowWrapper').width() - 26);
-    }
-};
+function removeError2(box){
+    $(box).parent().find(".errorIcon").remove();
+    $(box).parent().siblings().find(".errorText").hide();
+    $(box).parent().removeClass("error2");
+}
 
 var generateConfirmationPage = function(projectId, projectName) {
     // determine what to show in the final confirmation page
     if ($(".stepSixth").length > 0) {
-        var isPPT = isPresentationProject();
+        var isPPT = false;
         var step1 = stepsChoices["step1"];
         var step4 = stepsChoices["step4"];
         var step2Size;
@@ -287,73 +260,37 @@ function htmlEncode(html) {
 }
 
 /**
- * Create the public description content for copilot contest of Presentation Project.
+ * Create request data to create draft copilot contest.
  */
-function createCopilotContestPublicDescription() {
-    var content = "";
-    var projectName = htmlEncode($("#newProjectName").val());
-    var projectDescription = htmlEncode($("#newProjectDescription").val());
-    var subject = htmlEncode($(".stepForth textarea.subject").val());
-    var overallMessage = htmlEncode($(".stepForth textarea.overallMessage").val());
-    var importantPoints = htmlEncode($(".stepForth textarea.importantPoints").val());
-    var restrictions = htmlEncode($(".stepForth textarea.restrictions").val());
-    var specialRequirements = htmlEncode($(".stepForth textarea.specialRequirements").val());
-    var audiences = "";
-    $(".stepThird .speciealForm .selectRadioBox .radio:checked").each(function() {
-        if (audiences.length > 0) {
-            audiences += ', ';
-        }
-        audiences += htmlEncode($(this).parents('tr').find('td.labelTd').text());
-    });
-    var deliverableTypes = "";
-    $(".stepForth .deliverablesTypeItem input[type='checkbox']:checked").each(function() {
-        deliverableTypes += $(this).next().text() + '<br/>';
-    });
-    $(".stepForth .speciealForm .otherTypeTableWrapper tbody tr").each(function() {
-        if ($(this).hasClass("tfooter")) return;
-        var ext = $(".strExtension", $(this)).html();
-        var desc = $(".strDesc", $(this)).html();
-        deliverableTypes += ext + ' : ' + desc + '<br/>';
-    });
-    
-    content += '<p><strong>Project Name:</strong> ' + projectName + '</p>';
-    content += '<p><strong>Project Overview:</strong><br/>' + projectDescription + '</p>';
-    content += '<p><strong>What is the subject of your presentation?</strong><br/>' + subject + '</p>';
-    content += '<p><strong>What is the overall message for your audience?</strong><br/>' + overallMessage + '</p>';
-    content += '<p><strong>What are the most important points you want to get across?</strong><br/>' + importantPoints + '</p>';
-    content += '<p><strong>Do you have any restrictions pertaining to the presentation graphics?</strong><br/>' + restrictions + '</p>';
-    content += '<p><strong>Are there any other special requirements we should know about?</strong><br/>' + specialRequirements + '</p>';
-    content += '<p><strong>Target Audience:</strong><br/>' + audiences + '</p>';
-    content += '<p><strong>Deliverable Type:</strong><br/>' + deliverableTypes + '</p>';
-    return content;
-}
-
-/**
- * Create request data to create draft copilot conetst for Presentation Project.
- */
-function createDraftContestRequestForPresentationProject(projectName) {
-    mainWidget.competitionType = "SOFTWARE";
-    
-    mainWidget.softwareCompetition.projectHeader.projectCategory = {};
-    mainWidget.softwareCompetition.projectHeader.projectCategory.id = 29;
-    mainWidget.softwareCompetition.projectHeader.projectCategory.name = "Copilot Posting";
-    mainWidget.softwareCompetition.projectHeader.projectCategory.projectType = {};
-    mainWidget.softwareCompetition.projectHeader.projectCategory.projectType.id = 2;
-    mainWidget.softwareCompetition.projectHeader.projectCategory.projectType.name = "Application";
-   
-    mainWidget.softwareCompetition.assetDTO.directjsDesignNeeded = false;
-    mainWidget.softwareCompetition.assetDTO.directjsDesignId = -1;   
-      
-    mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
-    
-    var contestName = projectName + " Copilot Opportunity";
-    mainWidget.softwareCompetition.assetDTO.name = contestName;
-    mainWidget.softwareCompetition.projectHeader.tcDirectProjectName = projectName;
-    mainWidget.softwareCompetition.projectHeader.projectSpec.detailedRequirements = createCopilotContestPublicDescription();
-    mainWidget.softwareCompetition.projectHeader.projectSpec.privateDescription = "";
-    mainWidget.softwareCompetition.projectHeader.setProjectName(contestName);
-    
+function createDraftContestRequest(projectName, projectType) {
     var projectHeader = mainWidget.softwareCompetition.projectHeader;
+    var assetDTO = mainWidget.softwareCompetition.assetDTO;
+
+    mainWidget.competitionType = "SOFTWARE";
+
+    projectHeader.projectCategory = {};
+    projectHeader.projectCategory.id = 29;
+    projectHeader.projectCategory.name = "Copilot Posting";
+    projectHeader.projectCategory.projectType = {};
+    projectHeader.projectCategory.projectType.id = 2;
+    projectHeader.projectCategory.projectType.name = "Application";
+    projectHeader.setConfidentialityTypePublic();
+
+    var contestName = projectName + " Copilot Opportunity";
+    assetDTO.name = contestName;
+    assetDTO.directjsDesignNeeded = false;
+    assetDTO.directjsDesignId = -1;
+        
+    projectHeader.tcDirectProjectName = projectName;
+    projectHeader.projectSpec.privateDescription = "";
+    projectHeader.setProjectName(contestName);
+
+    if (projectType == PROJECT_TYPE_MOBILE) {
+        projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_MobileProject();
+    } else if (projectType == PROJECT_TYPE_PRESENTATION) {
+        projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_PresentationProject();
+    }
+
     var amount = 150.0;
     projectHeader.setFirstPlaceCost(amount);
     // set all prize to 0 except first place cost
@@ -364,27 +301,39 @@ function createDraftContestRequestForPresentationProject(projectName) {
     projectHeader.setMilestoneBonusCost(0);
     projectHeader.setAdminFee(0);
     projectHeader.setSpecReviewCost(0);
-    
+
     var prizes = [];
     prizes.push(new com.topcoder.direct.Prize(1, amount, CONTEST_PRIZE_TYPE_ID, 1));
-    mainWidget.softwareCompetition.projectHeader.prizes = prizes;
-    mainWidget.softwareCompetition.projectHeader.setBillingProject(0);
+    projectHeader.prizes = prizes;
+    projectHeader.setBillingProject(0);
     delete mainWidget.softwareCompetition.assetDTO.productionDate;
-    
+
     var request = saveAsDraftRequestSoftware();
-    request['presentationProject'] = true;
+    request['createCopilotPosting'] = true;
+    if (projectType == PROJECT_TYPE_PRESENTATION) {
+        request['presentationProject'] = true;
+    }
     return request;
 }
 
 // final step
 var createNewProject = function() {
-    var isPPT = isPresentationProject();
+    var projectType = getProjectType();
+
     // get project name and project description
     var projectName = $("#newProjectName").val();
     var projectDescription = $("#newProjectDescription").val();
-
     var permissions = [];
-    if (!isPPT) {
+    var request = {};
+    
+    // At the moment presentation flow defines its own fields to specify project name and description.
+    // For the case of presentation flow, the project name and description defined on the 1st step of the generic flow is ignored.
+    if (projectType == PROJECT_TYPE_PRESENTATION) {
+        projectName = $('#newPresentationProjectStep2 input.title').val();
+        projectDescription = $('#newPresentationProjectStep2 textarea').val();
+    }
+
+    if (projectType == PROJECT_TYPE_CUSTOM) {
         // get permissions
         $('.stepFifth .checkPermissions .userRow').each(function() {
             var permission = {};
@@ -410,12 +359,8 @@ var createNewProject = function() {
             }
 
         });
-    }
 
-    var request = {};
-    if (isPPT) {
-        request = createDraftContestRequestForPresentationProject(projectName);
-    } else {
+        // initialize custom project request
         var step4 = stepsChoices["step4"];
 
         if(step4 == 'chooseCopilot') {
@@ -431,7 +376,10 @@ var createNewProject = function() {
             request['createCopilotPosting'] = true;
 
         }
+    } else {
+        request = createDraftContestRequest(projectName, projectType);
     }
+
     request['projectName'] = projectName;
     request['projectDescription'] = projectDescription;
     request['permissions'] = permissions;
@@ -444,18 +392,27 @@ var createNewProject = function() {
         data: request,
         cache: false,
         dataType: 'json',
-        async : false,
+        async : true,
         success: function (jsonResult) {
             handleJsonResult(jsonResult,
                 function(result) {
-                    var projectName = result.projectName;
-                    var projectId = result.projectId;
-
-                    modalClose();
-
-                    generateConfirmationPage(projectId, projectName);
-
-                    goCreateProjectStep(6);
+                    if (projectType == PROJECT_TYPE_CUSTOM) {
+                        var projectName = result.projectName;
+                        var projectId = result.projectId;
+                        modalClose();
+                        generateConfirmationPage(projectId, projectName);
+                        goCreateProjectStep(6);
+                    } else if (projectType == PROJECT_TYPE_MOBILE) {
+                        $("#infoModalMobile").unbind("click").click(function() {
+                            window.location.href = '/direct/projectOverview?formData.projectId=' + result.projectId;
+                        });
+                        addressLoadModal("#infoModalMobile");
+                    } else if (projectType == PROJECT_TYPE_PRESENTATION) {
+                        $("#infoModalPresentation").unbind("click").click(function() {
+                            window.location.href = '/direct/projectOverview?formData.projectId=' + result.projectId;
+                        });
+                        addressLoadModal("#infoModalPresentation");
+                    }
                 },
                 function(errorMessage) {
                     modalClose();
@@ -515,7 +472,314 @@ var createNewProject = function() {
     }
 })(jQuery)
 
+var initStepBar = function(stepBarTemplateId) {
+    var html = $('#' + stepBarTemplateId).html();
+    $('.stepBar').empty().html(html);
 
+    var totalSteps = $('.stepBar li').length;
+
+    // set z-index for step bar items
+    $('.stepBar li').each(function() {
+        var iNum = $('.stepBar li').index(this);
+        $(this).css('z-index', totalSteps - iNum);
+    });
+
+    // width for step bar
+    $('.stepBar li').css('width', ($('.stepBar').width() / totalSteps) + 16);
+    $('.stepBar li:first').css('width', ($('.stepBar').width() / totalSteps) + 15);
+
+    // update the step bar width and textarea width when the browser size is changed
+    $(window).resize(function() {
+        $('.stepBar li').css('width', ($('.stepBar').width() / totalSteps) + 16);
+        $('.stepBar li:first').css('width', ($('.stepBar').width() / totalSteps) + 15);
+        $('.stepSecond textarea').css('width', $('.stepSecond .row').width() - 206);
+
+        // add line
+        $('.stepThird .tfooter td .addMoreButtonBox .text').css('width',($('.stepThird .tfooter td .addMoreButtonBox').width() - 142));
+    });
+};
+
+var updateStepBar = function(stepNumber) {
+    $(".stepBar li").each(function() {
+        var index = $(this).index() + 1;
+        var s = $(this).find(">span");
+
+        if (index < stepNumber) {
+            s.removeClass();
+            s.addClass("istatus").addClass("complete");
+        } else if (index == stepNumber) {
+            s.removeClass();
+            s.addClass("istatus").addClass("active");
+        } else {
+            s.removeClass().addClass("istatus").addClass("inext");
+            s.find(".bg").html("Step " + index);
+        }
+
+        if (index <= stepNumber) { // add link to completed steps
+            var linkHTML = $("#stepBarLinkTemplate").html();
+            s.find(".bg").html(linkHTML);
+
+            var stepLink = s.find(".bg a");
+            stepLink.html("Step " + index);
+            stepLink.unbind('click');
+
+            if (activeProjectType == PROJECT_TYPE_CUSTOM) {
+                stepLink.attr("href", "javascript:goCreateProjectStep(" + index + ");");
+
+                if(stepNumber >= 3 && index == 3) {
+                    s.addClass("finished");
+                    s.find("a").unbind('click').attr("href", "javascript:;");
+                }
+            } else if (activeProjectType == PROJECT_TYPE_MOBILE) {
+                stepLink.attr("href", "javascript:goMobileProjectStep(" + index + ");");
+            } else if (activeProjectType == PROJECT_TYPE_PRESENTATION) {
+                stepLink.attr("href", "javascript:goCreatePresentationProjectStep(" + index + ");");
+            }
+        }
+    });
+};
+
+/**
+* Files uploading functionality during new project creation.
+* This should contain the upload logic for all project creation flow types.
+*/
+var initNewProjectDocumentsUpload = function() {
+    // prepare uploader object
+    var swUploader = new AjaxUpload(null, {
+        action: ctx + '/launch/documentUpload',
+        name: 'document',
+        responseType: 'json',
+        onSubmit: function(file , ext) {
+            swCurrentDocument['fileName'] = file;
+            swUploader.setData({
+                studio:false,
+                contestFileDescription:swCurrentDocument['description'],
+                documentTypeId:swCurrentDocument['documentTypeId']
+            });
+            modalPreloader();
+        },
+        onComplete: function(file, jsonResult) { handleJsonResult(jsonResult,
+                function(result) {
+                    swCurrentDocument['documentId'] = result.documentId;
+                    swDocuments.push(swCurrentDocument);
+                    swCurrentDocument = {};
+
+                    // add new table row with info about uploaded file
+                    var type;
+                    var typeRadioBtn = $(".stepFourth2 input[name=type]:checked");
+                    if ($.trim(typeRadioBtn.val()) == "other"){
+                        type = typeRadioBtn.parent().next().find("input").val();
+                    } else {
+                        type = typeRadioBtn.parent().text();
+                    }
+
+                    var source = $(".stepFourth2 input[name=source]:checked").parent().text();
+                    var val = "<a class='url' href='" + $(".stepFourth2 .upload input[type=file]").val() + "'>" 
+                          + $(".stepFourth2 .upload input.text").val() + "</a> ";
+
+                    var tr = "<tr><td>" + type + "</td>" 
+                        + "<td>" + source + "</td>"
+                        + "<td>" + val + "</td>"
+                        + "<td><a href='javascript:' class='remove' rel='" + result.documentId + "'>Remove</a></td></tr>";
+
+                    $(".stepFourth2 table.addedItem tbody").append(tr);
+                    $(".stepFourth2 table.addedItem").show();
+                    tableZebraEffect($(".stepFourth2 table.addedItem"));
+
+                    // since the uploader removes file input element from the DOM we should restore it
+                    // in order to be able to upload new files.
+                    var wrapper = $('.stepFourth2 .browserWrapper');
+                    wrapper.append('<input type="file" class="file" name="document"/>');
+                    wrapper.find('.file').css({opacity:'0'});
+                    wrapper.find('.file').change(function() {
+                        var fileName = getFileName(wrapper.find('.file').val());
+                        $('.stepFourth2 .textUploadPhoto').val(fileName);
+                    });
+
+                    modalClose();
+                },
+                function(errorMessage) {
+                    showErrors(errorMessage);
+                    modalClose();
+                });
+        }
+    }, false);
+
+    // event handler for upload button from step4 for presentation and mobile wizards
+    $(".stepFourth2 .addBtn").click(function(){
+        if (!validateStep4()) {
+            return false;
+        }
+
+        var type;
+        var typeRadioBtn = $(".stepFourth2 input[name=type]:checked");
+        if ($.trim(typeRadioBtn.val()) == "other") {
+            type = typeRadioBtn.parent().next().find("input").val();
+        } else {
+            type = typeRadioBtn.parent().text();
+        }
+
+        var sourceId = $(".stepFourth2 input[name=source]:checked").val();
+
+        if (sourceId == "upload") {
+            var input = $(".stepFourth2 .upload input[type=file]").get(0);
+            swUploader.setInput(input);
+            swCurrentDocument['description'] = type;
+            swCurrentDocument['documentTypeId'] = SUPPORTING_DOCUMENTATION_DOCUMENT_TYPE_ID;
+            swUploader.submit();
+        } else if (sourceId == "url") {
+            var url = $(".stepFourth2 .url input.text").val();
+            var val = "<a class='url' href='" + url + "'>" + url + "</a> ";
+            var source = $(".stepFourth2 input[name=source]:checked").parent().text();
+
+            var rel = type + ": " + htmlEncode(url);
+            var tr = "<tr><td>" + type + "</td>" 
+                + "<td>" + source + "</td>"
+                + "<td>" + val + "</td>"
+                + "<td><a href='javascript:;' class='remove additionalRequirement' rel='" 
+                + rel + "'>Remove</a></td></tr>";
+
+            $(".stepFourth2 table.addedItem tbody").append(tr);
+            $(".stepFourth2 table.addedItem").show();
+            tableZebraEffect($(".stepFourth2 table.addedItem"));
+        } else if (sourceId == "source") {
+            var val = htmlEncode($(".stepFourth2 .source textarea").val());
+            var source = $(".stepFourth2 input[name=source]:checked").parent().text();
+
+            var rel = type + ": " + val;
+            var tr = "<tr><td>" + type + "</td>" 
+                + "<td>" + source + "</td>"
+                + "<td>" + val + "</td>"
+                + "<td><a href='javascript:;' class='remove additionalRequirement' rel='" 
+                + rel + "'>Remove</a></td></tr>";
+
+            $(".stepFourth2 table.addedItem tbody").append(tr);
+            $(".stepFourth2 table.addedItem").show();
+            tableZebraEffect($(".stepFourth2 table.addedItem"));
+        }
+    });
+
+    // event handler for removing uploaded document
+    $('.stepFourth2 table.addedItem a.remove').live('click',function(){
+        var v = $(this);
+        var documentId = v.attr("rel");
+        $.ajax({
+            type: 'POST',
+            url:  ctx+"/launch/removeDocument",
+            data: {
+                documentId: documentId,
+                studio: false
+            },
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        var documentId = result.documentId;
+                        $.each(swDocuments, function(i,doc) {
+                            if(doc && doc.documentId == documentId) {
+                                swDocuments.splice(i,1);
+                            }
+                        });
+                        v.parent().parent().remove();
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                    }
+                );
+            }
+        });
+    });
+};
+
+var validateStep4 = function() {
+    var error = false;
+
+    var typeRadioBtn = $(".stepFourth2 input[name=type]:checked");
+    if ($.trim(typeRadioBtn.val()) == "other") {
+        var otherInput = $(".stepFourth2 input[name=other]");
+
+        otherInput.removeClass("error2");
+        otherInput.next().find(".errorText").hide();
+        otherInput.parent().find(".errorIcon").hide();
+
+        if ($.trim(otherInput.val()) == "" || $.trim(otherInput.val()) == "other") {
+            otherInput.addClass("error2");
+            otherInput.next().find(".errorText").show();
+            otherInput.parent().find(".errorIcon").show();
+            error = true;
+        }
+    }
+
+    var source = $(".stepFourth2 input[name=source]:checked").parent().text();
+    var sVal = $(".stepFourth2 input[name=source]:checked").val();
+
+    if (sVal == "source") {
+        var textarea = $(".stepFourth2 .source textarea");
+        if ($.trim(textarea.val()) == "") {
+            textarea.addClass("error2");
+            textarea.next().find(".errorText").show();
+            error = true;
+        } else {
+            textarea.removeClass("error2");
+            textarea.next().find(".errorText").hide();
+        }
+    } else if (sVal == "url") {
+        var input = $(".stepFourth2 .url input.text");
+        if ($.trim(input.val()) == "" || $.trim(input.val()) == "http://") {
+            input.addClass("error2");
+            input.siblings("p").find(".errorText").show();
+            error = true;
+        } else {
+            input.removeClass("error2");
+            input.siblings("p").find(".errorText").hide();
+        }
+    } else if (sVal == "upload") {
+        var input = $(".stepFourth2 .upload input.text");
+        if ($.trim(input.val()) == "") {
+            input.addClass("error2");
+            input.siblings("p").find(".errorText").show();
+            error = true;
+        } else {
+            input.removeClass("error2");
+            input.siblings("p").find(".errorText").hide();
+        }
+    } else { // unknown value
+        error = true;
+    }
+
+    return !error;
+};
+
+/*set zebra effect for table*/
+function tableZebraEffect(table){
+    $(table).find("tbody tr").removeClass("alt");
+    $(table).find("tbody tr:even").addClass("alt");
+}
+
+/*
+ * Get the file name and drop the other letters in URL.
+ * getFileName()
+ * @ return string
+ */
+function getFileName(url) {
+    var tmp,last;
+    last = url.lastIndexOf('\\');
+    tmp = url.substring(last + 1, url.length);
+    return tmp;
+}
+
+function setValidationStatus2(jqueryElem, isValid) {
+    if (isValid) {
+        jqueryElem.removeClass("error2");
+        jqueryElem.siblings("p").find("span").hide();
+        jqueryElem.siblings("span.errorIcon").hide();
+    } else {
+        jqueryElem.addClass("error2");
+        jqueryElem.siblings("p").find("span").show();
+        jqueryElem.siblings("span.errorIcon").show();
+    }
+}
 
 $(document).ready(function() {
     // text-shadow
@@ -524,29 +788,7 @@ $(document).ready(function() {
     $('.stepBar li .complete a').css('text-shadow', '0px 1px 0px #53661C');
     $(".notePresentation").css("resize", "none");
 
-    // z-index for step bar
-    $('.stepBar li').each(function() {
-        var totalStep = $('.stepBar li').length;
-        var iNum = $('.stepBar li').index(this);
-        $(this).css('z-index', totalStep - iNum);
-    });
-
-    // comment this statement because we want to disable some checkboxes
-    // $('.stepFirst .radio,.stepForth .radio').attr('checked', '');
-
-    // width for step bar
-    $('.stepBar li').css('width', ($('.stepBar').width() / 6) + 17);
-    $('.stepBar li:first').css('width', ($('.stepBar').width() / 6) + 15);
-    
-    // update the step bar width and textarea width when the browser size is changed
-    $(window).resize(function() {
-        $('.stepBar li').css('width', ($('.stepBar').width() / 6) + 17);
-        $('.stepBar li:first').css('width', ($('.stepBar').width() / 6) + 15);
-        $('.stepSecond textarea').css('width', $('.stepSecond .row').width() - 206);
-        //new add line
-        $('.stepThird .tfooter td .addMoreButtonBox .text').css('width',($('.stepThird .tfooter td .addMoreButtonBox').width() - 142));
-    });
-
+    initStepBar('stepBarCustom');
 
     // Sets up the toolTip
     $('.toolTip').hover(function() {
@@ -614,160 +856,39 @@ $(document).ready(function() {
         }
     }
     var key = Request.QueryString('id');
-
-
-    // STEP 1 project type and project plan validations
-    $('.stepFirst .geryContent .nextStepButton').click(function() {
-        var falgRadio = false, jPar;
-        $('.stepFirst .radio').each(function() {
-            if ($(this).attr('checked')) {
-                falgRadio = true;
-            }
-        });
-        if (!falgRadio) {
-            // no project plan is chosen
-            addresscloseModal();
-            addressLoadModal('#errortModal');
-        } else {
-            jPar = $('.stepFirst .radio:checked').parent();
-            var pType = jPar.find('label').text();
-            if (pType == 'Custom') {
-
-                // if custom, show the custom confirm modal
-                addresscloseModal();
-                addressLoadModal('#customConfirmModal');
-
-                // $.cookie("step2-size", null);
-                stepsChoices['step1'] = 'custom';
-
-            } else if (pType == 'Presentation Project Type') {
-                stepsChoices['step1'] = 'Presentation Project Type';
-                goCreateProjectStep(2);
-            } else {
-                // $.cookie("step2", "gameplan");
-                // $.cookie("step2-size", jPar.parent().find(".selProjSize").val());
-                // window.location.href = 'start-a-new-project-step-3.html';
-                showErrors("Does not support now, will be implemented in next assembly.");
-            }
-        }
-    });
-
-    $(".stepSecond .nextStepButton").click(function() {
-
-        removeError($(".stepSecond .descProject textarea"));
-        var valid1 = validate($(".stepSecond .descProject textarea"));
-
-        removeError($(".stepSecond .projectName input"));
-        var valid2 = validate($(".stepSecond .projectName input"));
-
-        if (valid1 && valid2) {
-            var step1 = stepsChoices['step1'];
-            if(step1 == 'custom') {
-                goCreateProjectStep(4);
-            } else {
-                goCreateProjectStep(3);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    });
-
-    $('.stepForth .geryContent .nextStepButton').click(function() {
-        if (isPresentationProject()) {
-            var refuse = false;
-            $('.stepForth .notePresentation').each(function() {
-                var val = $.trim($(this).val());
-
-                if(val.length == 0){
-                    $(this).addClass('errorInput');
-                    $(this).siblings('.errorText').show();
-                    $(this).siblings('.errorIcon').show();
-                    refuse = true;
-                }
-            });
-
-            if($('.stepForth .speciealForm .deliverablesTypeItem :checked').length == 0){
-                $('.stepForth .errorStatusTips').css('display','inline');
-                refuse = true;
-            }
-            if(refuse) return false;
-            goCreateProjectStep(5);
-        } else {
-            var copilotYesNoChecked = false;
-
-            $('.stepForth .radio').each(function() {
-                if ($(this).attr('checked')) {
-                    copilotYesNoChecked = true;
-                }
-            });
-
-            // checked value
-            var val = $('.stepForth .radio:checked').val();
-
-            if (!copilotYesNoChecked) {
-
-                addresscloseModal();
-                addressLoadModal('#errortModalStep4');
-
-            } else if (val == "yes") {
-
-                addresscloseModal();
-                addressLoadModal('#errorcModal');
-
-            } else if (val == "no") {
-
-                stepsChoices['step4'] = 'noCopilot';
-                goCreateProjectStep(5);
-            }
-        }
-    });
-
-    $(".stepContainer .prevStepButton").live('click', function(){
+    
+    $(".stepContainer .prevStepButton, .stepContainer2 .prevStepButton").live('click', function(){
         var previousStep = $(".stepBar .active").parent().index();
 
-        if(previousStep == 3 && stepsChoices['step1'] == 'custom') {
-             previousStep = 1;
-        }
-
-        goCreateProjectStep(previousStep);
-    });
-
-    $('.stepFifth .geryContent .nextStepButton').click(function() {
-        if (isPresentationProject()) {
-            addresscloseModal();
-            addressLoadModal('#createProjectConfirm');
-        } else {
-            var hasUserPermissionAdded = false;
-
-            $('.stepFifth .checkPermissions .userRow').each(function() {
-                    hasUserPermissionAdded = true;
-            });
-            if ($('.addUserPlan').is(":visible")) {
-                if ((!hasUserPermissionAdded)) {
-
-                    addresscloseModal();
-                    addressLoadModal('#alertModal');
-
-                } else {
-
-                    addresscloseModal();
-                    addressLoadModal('#createProjectConfirm');
-
-                }
+        if (activeProjectType == PROJECT_TYPE_CUSTOM) {
+            if (previousStep == 3 && stepsChoices['step1'] == 'custom') {
+                 previousStep = 1;
+            }
+            goCreateProjectStep(previousStep);
+        } else if (activeProjectType == PROJECT_TYPE_MOBILE) {
+            if (previousStep == 0) {
+                activeProjectType = PROJECT_TYPE_CUSTOM;
+                initStepBar('stepBarCustom');
+                goCreateProjectStep(1);
             } else {
-
-                addresscloseModal();
-                addressLoadModal('#alertModal');
-
+                goMobileProjectStep(previousStep);
+            }
+        } else if (activeProjectType == PROJECT_TYPE_PRESENTATION) {
+            if (previousStep == 0) {
+                activeProjectType = PROJECT_TYPE_CUSTOM;
+                initStepBar('stepBarCustom');
+                goCreateProjectStep(1);
+            } else {
+                goCreatePresentationProjectStep(previousStep);
             }
         }
     });
 
-    // custom project type confirmation button
-    $("#customConfirmModal .button6").live('click', function(){
-        goCreateProjectStep(2);
-    });
+    // initialize project creation wizards
+    initCustomProjectFlow();
+    initMobileProjectFlow();
+    initPresentationProjectFlow();
+        
 
     //detail modal
     $('.stepFirst .geryContent .detailButton').click(function() {
@@ -1084,11 +1205,7 @@ $(document).ready(function() {
 
     $('#alertModal .step6Button').live('click', function() {
         addresscloseModal();
-        if (isPresentationProject()) {
-            createNewProject();
-        } else {
-            addressLoadModal('#createProjectConfirm');
-        }
+        addressLoadModal('#createProjectConfirm');
     });
 
 
@@ -1190,24 +1307,6 @@ $(document).ready(function() {
     });
 
 
-    // validate step 2
-    function validate(box) {
-        var value = $.trim(box.val());
-        var tips = box.data("tips") ? box.data("tips") : "";
-        if (value == "" || value == tips) {
-            box.parent().find(".message").append('<span class="errorText">This field cannot be left empty.</span>');
-            box.addClass("error").val("");
-            box.after('<span class="errorIcon"></span>');
-            return false;
-        }
-        return true;
-    }
-
-    function removeError(box) {
-        box.parent().find(".errorText,.errorIcon").remove();
-        box.removeClass("error");
-    }
-
     $(".stepSecond .projectName input.text,.stepSecond .descProject textarea").keyup(function() {
         removeError($(this));
     });
@@ -1234,7 +1333,7 @@ $(document).ready(function() {
             $(".stepForth .chooseCopilot .selection").hide();
         }
     });
-    
+
         /** Copilot management widget codes **/
 
     var request = {};
@@ -1455,7 +1554,7 @@ $(document).ready(function() {
         stepsChoices['step4'] = 'createCopilot';
         goCreateProjectStep(5);
     });
-    
+
     // choose copilot
     $(".stepForth .chooseYourCopilot").click(function() {
         if (widgetResult == undefined) {
@@ -1543,16 +1642,16 @@ $(document).ready(function() {
         addresscloseModal();
         createNewProject();
     });
-    
+
     // check custom project plan by default for now
     $("#customGamePlanRadio").click();
-    
+
     // presentation project step 3 : Add more audience type
-    //add more button 
+    //add more button
     $('.stepThird .addMoreButton').click(function(){
         var val = $.trim($(this).siblings('input').val());
         var cache,audienceName,existFlat = false;
-        
+
         $('.stepThird .speciealForm table .labelTd').each(function(){
             if(val == $.trim($(this).text())){
                 existFlat = true;
@@ -1575,10 +1674,10 @@ $(document).ready(function() {
                 $('.stepThird .addMoreButtonBox input').addClass('errorInput');
                 $('.stepThird .addMoreButtonBox .errorNameExist,.addMoreButtonBox .errorStatus div').show();
             }
-            
+
         }
     });
-    //focus text field remove the error status 
+    //focus text field remove the error status
     $('.stepThird .addMoreButtonBox :text').focus(function(){
         $('.stepThird .addMoreButtonBox .errorStatusTips,.addMoreButtonBox .errorStatus div,.addMoreButtonBox .errorNameExist').hide();
         $('.stepThird .addMoreButtonBox input').removeClass('errorInput')
@@ -1586,18 +1685,6 @@ $(document).ready(function() {
     $(".stepThird .selectRadioBox .radio").click(function() {
         if ($(".stepThird .selectRadioBox .radio:checked").length > 0) {
             $('.stepThird .topNotice .redError').hide();
-        }
-    });
-    $(".stepThird .nextStepButton").click(function() {
-        if (isPresentationProject()) {
-            $('.topNotice .redError').hide();
-            if ($(".stepThird .selectRadioBox .radio:checked").length == 0) {
-                $('.stepThird .topNotice .redError').show();
-                return false;
-            }
-            goCreateProjectStep(4);
-        } else {
-            // TODO: will be implemented in next assemblies
         }
     });
     // presentation project step 4 : Presentation Style
@@ -1608,44 +1695,44 @@ $(document).ready(function() {
     // click box for add hover status
     $('.stepForth .styleContainer').click(function(){
         $('.stepForth .styleItem').removeClass('itemHover');
-        $(this).parent().addClass('itemHover');    
+        $(this).parent().addClass('itemHover');
         $('.stepForth .styleSelectList').find('.radio').attr('checked','');
         $(this).parent().find('.radio').attr('checked','checked');
     });
-    
+
     // click label for add hover status
     $('.stepForth .styleItem label').click(function(){
-        $(this).parent().find('.radio').attr('checked','checked');    
+        $(this).parent().find('.radio').attr('checked','checked');
         $('.stepForth .styleItem').removeClass('itemHover');
         $(this).parent().parent().addClass('itemHover');
     });
-    
+
     // add focus for radio when clicking the label
     $('.stepForth .pageLengthSetArea label').live('click',function(){
         $(this).prev(':radio').trigger('click');
     });
-        
+
     // remove error status
     $('.stepForth .speciealForm .styleItem').click(function(){
         $('.errorStatusTips').hide();
     });
-    
+
     //remove error status
     $('.stepForth .notePresentation').focus(function(){
         $(this).siblings('.errorText').hide();
         $(this).siblings('.errorIcon').hide();
         $(this).removeClass('errorInput');
     });
-    
+
     // presentation project step 5: Files
     $(".stepFifth .noMediaAsset").show();
-    
+
     $(window).resize(function(){
         $('#customFileDescription').width($('.addMoreParts .topRowWrapper').width() - 112);
         $('.stepFifth .browserInput').width($('.stepFifth .browserParts .topRowWrapper').width() - 26);
         $('#descriptionInput').width($('.stepForth .otherTypeAreaInputBox').width() - 450);
     });
-    
+
     //set opacity for #uploadFile button
     $('#uploadFile').css('opacity', '0.01');
     if($.browser.msie){
@@ -1665,7 +1752,7 @@ $(document).ready(function() {
             $('#uploadFile').trigger('click');
         });
     }
-    
+
     // uploader
     var swUploader =
         new AjaxUpload(null, {
@@ -1689,7 +1776,7 @@ $(document).ready(function() {
                         var documentId = result.documentId;
                         swCurrentDocument['documentId'] = documentId;
                         swDocuments.push(swCurrentDocument);
-                        
+
                         var cache = $('<tr class="itemLine"></tr>');
                         cache.append('<td class="firstTd"><a href="#">'+file+'</a><span class="description">('+htmlEncode(swCurrentDocument['description'])+')</span></td><td class="deleteTd"><a href="javascript:;" title="delete" class="deleteRowIcon" rel="' + documentId + '"></a></td>');
                         cache.insertBefore($('.stepFifth .mediaAssetTableWrapper table .tfooter'));
@@ -1723,7 +1810,7 @@ $(document).ready(function() {
                         $("#selectFileDescription").val(0);
                         $("#customFileDescription").val("Custom File Description");
                         swCurrentDocument = {};
-                        
+
                         modalClose();
                     },
                     function(errorMessage) {
@@ -1732,7 +1819,7 @@ $(document).ready(function() {
                     });
             }
         }, false);
-    
+
     //add more button and validation
     $('.stepFifth .mediaAssetTableWrapper .uploadFileButton').click(function(){
         var fileVal = $('.stepFifth .browserInput').val();
@@ -1740,7 +1827,7 @@ $(document).ready(function() {
         var description;
         var refuse = false;
         var cache;
-        
+
         if(fileVal.length == 0 || fileVal == 'File Name'){
             $('.stepFifth .browserInput').addClass('errorInput');
             $('.stepFifth .browserParts .topRowWrapper .errorText').show();
@@ -1772,14 +1859,14 @@ $(document).ready(function() {
             return false;
         }
     });
-    
+
     //upload
     $('#uploadFile').click(function(){
         $('.stepFifth .browserInput').removeClass('errorInput');
         $('.stepFifth .browserParts .topRowWrapper .errorText').hide();
         $('.stepFifth .browserParts .topRowWrapper .errorIcon').hide();
     });
-    
+
     //remove error status
     $('#selectFileDescription').focus(function(){
         $('#selectFileDescription').parent().removeClass('errorInput');
@@ -1789,7 +1876,7 @@ $(document).ready(function() {
             $('.stepFifth .addMoreParts .subButtonBox .errorIcon').hide();
         }
     });
-    
+
     //remove error status and focus, blur
     $('#customFileDescription')
         .focus(function(){
@@ -1807,8 +1894,8 @@ $(document).ready(function() {
                 $(this).val("Instructions (tell us how to use the uploaded file)");
             }
         });
-    
-    //delete button 
+
+    //delete button
     $(".stepForth .otherTypeTableWrapper .deleteRowIcon").live("click",function(){
         $(this).parent().parent().remove();
     });
@@ -1850,7 +1937,7 @@ $(document).ready(function() {
             }
         });
     });
-    
+
     //add more file type
     $('.stepForth .otherTypeAreaInputBox .addFileType').click(function(){
         var fileVal = $.trim($('#fileType').val());
@@ -1880,31 +1967,31 @@ $(document).ready(function() {
         }else{
             return false;
         }
-        
+
     });
-    
+
     //remove error status
     $('#fileType,#descriptionInput').focus(function(){
         $(this).removeClass('errorInput');
         $(this).siblings('.errorIcon').hide();
         $(this).siblings('.errorText').hide();
     });
-    
+
     //add hover status for deliverablesTypeItem
     $('.stepForth .deliverablesTypeItem .typeContainer').click(function(){
         if($(this).parent().find(':checkbox').attr('checked')){
-            $(this).parent().removeClass('itemHover');    
+            $(this).parent().removeClass('itemHover');
             $(this).parent().find(':checkbox').attr('checked','');
         }else{
-            $(this).parent().addClass('itemHover');    
+            $(this).parent().addClass('itemHover');
             $(this).parent().find(':checkbox').attr('checked','checked');
             $('.stepForth .errorStatusTips').css('display','none');
         }
     });
-    
+
     //add hover status for deliverablesTypeItem
     $('.stepForth .deliverablesTypeItem label').click(function(){
-        
+
         if($(this).parent().find(':checkbox').attr('checked')){
             $(this).parent().parent().removeClass('itemHover');
             $(this).parent().find(':checkbox').attr('checked','');
@@ -1914,10 +2001,10 @@ $(document).ready(function() {
             $('.stepForth .errorStatusTips').css('display','none');
         }
     });
-    
+
     //validation for check box
     $('.stepForth .deliverablesTypeItem :checkbox').click(function(){
-        
+
         if($(this).attr('checked')){
             $(this).parent().parent().addClass('itemHover');
             $('.stepForth .errorStatusTips').css('display','none');
@@ -1925,7 +2012,7 @@ $(document).ready(function() {
             $(this).parent().parent().removeClass('itemHover');
         }
     });
-    
+
     createChartControl('ganttChartDiv', true);
 
     $(window).resize(function() {
@@ -1933,7 +2020,7 @@ $(document).ready(function() {
             recreateChartControl('ganttChartDiv', true);
         }
     });
-    
+
     $("#uploadFile").hover(function(){
         $("#browserButton").css("background-position", "left -72px");
         $("#browserButton .btnR").css("background-position", "right -120px");
@@ -1943,4 +2030,22 @@ $(document).ready(function() {
         $("#browserButton .btnR").css("background-position", "right -48px");
         $("#browserButton .btnC").css("background-position", "left -24px");
     });
+
+    /*water mark for input fields*/
+    $(".newProjectStep input").live("focus blur",  function(e) {
+        if (e.type == "focusin") {
+            $(this).removeClass("waterMark");
+            if($.trim($(this).val())==$(this).attr("title")){
+                $(this).val("");
+            }
+        }
+        else{
+            if($.trim($(this).val())==""){
+                $(this).val($(this).attr("title"));
+                $(this).addClass("waterMark");
+            }
+        }
+    });
+    
+    initNewProjectDocumentsUpload();
 });
