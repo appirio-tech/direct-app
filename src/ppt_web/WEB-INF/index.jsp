@@ -213,7 +213,7 @@
             </div>
             <!--end .top-->
             <div class="bottom">
-                CopyrightTopcoder,Inc.2001-2011 | <a href="javascript:;">Terms of Use</a> | <a href="https://www.topcoder.com/reg/privacy_policy.jsp">Privacy Policy</a>
+                CopyrightTopcoder,Inc.2001-<script type="text/javascript">d=new Date();document.write(d.getFullYear());</script> | <a href="javascript:;">Terms of Use</a> | <a href="https://www.topcoder.com/reg/privacy_policy.jsp">Privacy Policy</a>
             </div>
             <!--end .bottom-->
         </div>
