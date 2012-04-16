@@ -222,7 +222,7 @@
                 <c:if test="${not empty sessionScope.userHandle}">
                 <li><a href="/direct/createNewProject.action" id="menu_start_new" class="startNP">Start new project</a></li>
                 </c:if>
-                <li><a href="http://info.topcoder.com/blog" id="menu_blog">Blog</a></li>
+                <li><a href="http://www.topcoder.com/blog" id="menu_blog">Blog</a></li>
                 <li><a href="http://www.topcoder.com/help" id="menu_help">Help</a></li>
                 <li>
                     <c:if test="${empty sessionScope.userHandle}">
@@ -469,8 +469,8 @@
     	<div id="footer_top_content">
             <ul class="link_footer">
             	<li><a href="http://www.topcoder.com">TopCoder Home</a></li>
-                <li><a href="http://www.topcoder.com/tc">Community</a></li>
-                <li><a href="http://www.topcoder.com/cockpit">Cockpit</a></li>
+                <li><a href="http://community.topcoder.com">Community</a></li>
+                <li><a href="http://www.topcoder.com/direct">Cockpit</a></li>
                 <li><a href="#">Duis aute irure</a></li>
             </ul>
             <ul class="link_footer">
@@ -481,10 +481,10 @@
             </ul>
             <div id="share_wrap">
             	<span class="share_title">Share : </span>
-                <a href="#" class="facebook_link share_link"></a>
-                <a href="#" class="twitter_link share_link"></a>
-                <a href="#" class="gplus_link share_link"></a>
-                <a href="#" class="lin_link share_link"></a>
+                <a href="https://www.facebook.com/TopCoderInc" class="facebook_link share_link"></a>
+                <a href="https://www.twitter.com/TopCoder" class="twitter_link share_link"></a>
+                <a href="https://plus.google.com/104268008777050019973" class="gplus_link share_link"></a>
+                <a href="https://www.linkedin.com/company/topcoder" class="lin_link share_link"></a>
             </div>
             <div class="clear"></div>
         </div>
@@ -493,7 +493,7 @@
     <!-- Begin #footer_bottom-->
     <div id="footer_bottom">
     	<div id="footer_bottom_content">
-            Copyright TopCoder, Inc. 2001-2012
+            Copyright TopCoder, Inc. 2001-<script type="text/javascript">d=new Date();document.write(d.getFullYear());</script>
             <a href="http://www.topcoder.com" id="footer_logo"></a>
         </div>
     </div>
