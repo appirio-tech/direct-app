@@ -404,21 +404,30 @@
             <div class="img"><img alt="" src="/images/mobile/step_1.png" width="167" height="108" /></div>
             <h1><span class="step_number">01.</span>Tell us what you need</h1>
             <div class="step_content">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                	We start by listening because we know that your mobile project
+					is unique. Whether you have narrow specifications to implement
+					or a broad vision that you need help refining, we listen to what
+					you want to achieve. Then we put together a plan to get you there.
             </div>
         </div>
         <div class="step_div_item" id="step_2">
             <div class="img"><img alt="" src="/images/mobile/step_2.png" width="128" height="118" /></div>
             <h1><span class="step_number">02.</span>Let the world compete</h1>
             <div class="step_content">
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Your mobile app is developed through a series of contests among
+				TopCoder's community of over 400,000 members. In each part of the
+				project, multiple workers compete to deliver the best solution
+				in their area of expertise.
             </div>
         </div>
         <div class="step_div_item" id="step_3">
             <div class="img"><img alt="" src="/images/mobile/step_3.png" width="122" height="137" /></div>
             <h1><span class="step_number">03.</span>Get winning results</h1>
             <div class="step_content">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                TopCoder's methodology delivers better code in less time than
+				traditional approaches. From architecture and graphics to assembly
+				and debugging, it's all done by competition. The end result is
+				an impeccable mobile app that will delight your users.
             </div>
         </div>
         <div class="clear"></div>
@@ -432,29 +441,61 @@
         <span class="press_button">In the press</span>
         <div class="press_col_container">
             <div class="press_col_head" id="pres_col_head_1">
-                <h1><a href="#">Duis aute irure dolor</a></h1>
+                <h1><a
+					href="http://www.topcoder.com/blog/2012/01/harvard-business-school-and-topcoder-community-fuel-entrepreneurship-with-groundbreaking-online-innovation-platform/"
+					>Harvard Business School uses TopCoder platform to teach online
+					leadership</a></h1>
             </div>
             <div class="press_col_head" id="pres_col_head_2">
-                <h1><a href="#">Ut enim ad minim</a></h1>
+                <h1><a
+					href="http://www.yourpublicmedia.org/content/wnpr/open-innovation-government"
+					>NPR interviews TopCoder CEO about NASA and Harvard
+					initiatives</a></h1>
             </div>
             <div class="press_col_head" id="pres_col_head_3">
-                <h1><a href="#">Excepteur sint occaecat</a></h1>
+                <h1><a
+					href="http://www.topcoder.com/blog/2012/01/united-states-government-selects-topcoder-to-be-hub-of-center-for-excellence/"
+					>NASA partners with TopCoder to form Center of Excellence for
+					Open Innovation</a></h1>
             </div>
             <div class="press_col_head" id="pres_col_head_4">
-                <h1><a href="#">Exercitation ullamco laboris nisi ut aliquip ex ea commodo</a></h1>
+                <h1><a
+					href="http://www.topcoder.com/blog/2011/12/the-uspto-launches-50000-innovation-challenge-powered-by-topcoder/"
+					>U.S. Patent and Trademark Office launches innovation challenge
+					with TopCoder</a></h1>
             </div>
             <div class="clear"></div>
             <div class="press_col" id="pres_col_1">
-                <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</a>
+                <a
+	href="http://www.topcoder.com/blog/2012/01/harvard-business-school-and-topcoder-community-fuel-entrepreneurship-with-groundbreaking-online-innovation-platform/"
+	> TopCoder has built a virtual business creation environment
+	for the Harvard MBA program. Students use the TopCoder platform
+	to gain practical experience in conceptualizing, building,
+	and managing online businesses. </a>
             </div>
             <div class="press_col" id="pres_col_2">
-                <a href="#">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a>
+                <a
+	href="http://www.yourpublicmedia.org/content/wnpr/open-innovation-government"
+	> The company takes real-world problems from companies
+	like Facebook, PayPal, Lending Tree -- and increasingly from
+	government agencies such as NASA -- and offers a prize for the
+	best solution. </a>
             </div>
             <div class="press_col" id="pres_col_3">
-                <a href="#">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sunt in culpa qui officia deserunt mollit anim id est laborum.</a>
+                <a
+	href="http://www.topcoder.com/blog/2012/01/united-states-government-selects-topcoder-to-be-hub-of-center-for-excellence/"
+	> The federal administration has directed NASA to expand its
+	TopCoder-powered innovation program to all federal agencies
+	and departments. Recent successes include the optimization of
+	a medical kit for space missions. </a>
             </div>
             <div class="press_col" id="pres_col_4">
-                <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
+                <a
+	href="http://www.topcoder.com/blog/2011/12/the-uspto-launches-50000-innovation-challenge-powered-by-topcoder/"
+	> The USPTO is inviting software developers, academics, and the
+	TopCoder community to develop specialized algorithms to help
+	bring the seven million patents in its archives into the digital
+	age. </a>
             </div>
             <div class="clear"></div>
         </div>
@@ -471,13 +512,13 @@
             	<li><a href="http://www.topcoder.com">TopCoder Home</a></li>
                 <li><a href="http://community.topcoder.com">Community</a></li>
                 <li><a href="http://www.topcoder.com/direct">Cockpit</a></li>
-                <li><a href="#">Duis aute irure</a></li>
+                <li><a href="http://studio.topcoder.com">Studio Community</a></li>
             </ul>
             <ul class="link_footer">
-            	<li><a href="#">Duis aute irure</a></li> 
-                <li><a href="#">Dolor in reprehenderit</a></li> 
-                <li><a href="#">Voluptate velit esse</a></li> 
-                <li><a href="#">Cillum dolore</a></li> 
+            	<li><a href="http://community.topcoder.com/ntl/">NASA Tournament Lab</a></li> 
+                <li><a href="http://community.topcoder.com/hbs-field/">Harvard FIELD Platform</a></li> 
+                <li><a href="http://community.topcoder.com/tco12/">2012 TopCoder Open</a></li> 
+				<li><a href="#"></a></li> 
             </ul>
             <div id="share_wrap">
             	<span class="share_title">Share : </span>
