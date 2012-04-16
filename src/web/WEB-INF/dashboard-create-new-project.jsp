@@ -23,10 +23,10 @@
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="createNewProject"/>
     <link rel="stylesheet" href="/css/newCockpitProject.css?v=210469" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/projectCreateFlows.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/projectCreateFlows.css?v=215356" media="all" type="text/css"/>
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/newCockpitProject-ie7.css?v=210469"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/projectCreateFlows-ie7.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/projectCreateFlows-ie7.css?v=215356" />
     <![endif]-->
     <link rel="stylesheet" href="/css/ganttchart.css?v=198728" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=210661"></script>
@@ -37,9 +37,9 @@
         // an non-existent project id for retrieving copilot data
         var tcDirectProjectId = 99999999;
     </script>
-    <script type="text/javascript" src="/scripts/project-create-flow-custom.js"></script>
-    <script type="text/javascript" src="/scripts/project-create-flow-mobile.js"></script>
-    <script type="text/javascript" src="/scripts/project-create-flow-presentation.js"></script>
+    <script type="text/javascript" src="/scripts/project-create-flow-custom.js?v=215356"></script>
+    <script type="text/javascript" src="/scripts/project-create-flow-mobile.js?v=215356"></script>
+    <script type="text/javascript" src="/scripts/project-create-flow-presentation.js?v=215356"></script>
     <script type="text/javascript" src="/scripts/newCockpitProject.js?v= 215290"></script>
 </head>
 

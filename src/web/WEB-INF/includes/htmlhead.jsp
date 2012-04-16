@@ -22,7 +22,7 @@
 <!-- External CSS -->
 <link rel="stylesheet" href="/css/screen.css?v=214495" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/launchcontest.css?v=215011" media="all" type="text/css"/>
-<link rel="stylesheet" href="/css/dashboard.css?v=215199" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/dashboard.css?v=215352" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/thickbox.css?v=192822" media="all" type="text/css" />
 <link rel="stylesheet" href="/css/jScrollPane.css?v=176771" media="all" type="text/css"/>
 <link rel="stylesheet" href="/css/jquery-ui-1.7.2.custom.css?v=206355" media="all" type="text/css"/>
@@ -35,7 +35,7 @@
 <![endif]-->
 
 <!--[if IE 7]>
-<link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie7.css?v=214865"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie7.css?v=215325"/>
 <![endif]-->
 
 <!--[if IE 8]>
@@ -67,9 +67,9 @@
 <script type="text/javascript" src="/scripts/jquery.validate.js?v=179836"></script>
 <script type="text/javascript" src="/scripts/tinyMCE/tiny_mce/tiny_mce.js?v=210496"></script>
 <script type="text/javascript" src="/scripts/jquery.autocomplete.js?v=183826"></script>
-<script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js?v=215325"></script>
 
-<script type="text/javascript" src="/scripts/dashboard.js?v=215199"></script>
+<script type="text/javascript" src="/scripts/dashboard.js?v=215352"></script>
 <script type="text/javascript" src="/scripts/loadHelps.js?v=215005"></script>
 <script type="text/javascript" src="/scripts/modalWindows.js?v=211035"></script>
 <script type="text/javascript" src="/scripts/maintenance.js?v=214603"></script>
