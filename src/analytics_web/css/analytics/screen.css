@@ -666,9 +666,10 @@ body{
                         #mainContainer .pressClippingsSection a.seeAllArticlesLink{
                             margin-left:10px;
                             font-size:12px;
-                            font-weight:bold;
-                            text-align:right;
+                            font-weight:bold;                            
                             color:#f90000;
+                            padding: 20px 0;
+                            display: block;
                             }
 
             /* contactUsArticle */
@@ -773,7 +774,7 @@ body{
 
                 /* parentSitesArticle */
                 #mainContainer .bottomSection .testimonialsArticle{
-                    width:358px;
+                    width:540px;
                     float:left;
                     display:inline;
                     }
@@ -791,7 +792,7 @@ body{
                         }
 
                     #mainContainer .bottomSection .testimonialsArticle .figure .detail{
-                        width:205px;
+                        width:380px;
                         float:left;
                         display:inline;
                         position:relative;
@@ -848,7 +849,7 @@ body{
 
                     #mainContainer .bottomSection .testimonialsArticle .figure p{
                         padding-top:4px;
-                        padding-left:224px;
+                        padding-left:400px;
                         font-size:12px;
                         font-weight:bold;
                         color:#555555;
@@ -941,6 +942,14 @@ body{
 
                         #mainContainer .bottomSection .contactUsArticle .command a.linkelnLink{
                             background-image:url(../../images/analytics/linkeln-icon.png);
+                            }
+                            
+                        #mainContainer .bottomSection .contactUsArticle .command a.gplusLink{
+			    background-image:url(../../images/analytics/gplus-icon.png);
+                            }
+                        
+                        #mainContainer .bottomSection .contactUsArticle .command a.youtubeLink{
+			    background-image:url(../../images/analytics/youtube-icon.png);
                             }
 
                         #mainContainer .bottomSection .contactUsArticle .command a.faceboxLink:hover{

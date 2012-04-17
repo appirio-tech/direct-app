@@ -14,7 +14,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<title>LANDINGPAGE</title>
+<title>TopCoder Analytics</title>
 <%@ include file="/WEB-INF/includes/header.jsp" %>
 <script type="text/javascript"><!--
     var ctx = '<c:out value="${ctx}"/>';
@@ -34,8 +34,8 @@
             <div class="logo"><a href="http://www.topcoder.com/tc"><img src="/images/analytics/tc-logo.png" alt="TOPCODER" /></a></div>
             <div class="nav">
                 <ul>
-                    <li><a href="javascript:;">Start New Project</a></li>
-                    <li><a href="http://info.topcoder.com/blog">Blog</a></li>
+                    <li><a href="/direct/createNewProject.action">Start New Project</a></li>
+                    <li><a href="http://www.topcoder.com/blog">Blog</a></li>
                     <li><a href="http://www.topcoder.com/help">Help</a></li>
                     <li><a href="javascript:;" id="loginLink">Login</a></li>
                 </ul>
@@ -43,7 +43,7 @@
             <div class="loginNav">
                 <ul>
                     <li><a href="/direct/createNewProject.action">Start New Project</a></li>
-                    <li><a href="http://info.topcoder.com/blog">Blog</a></li>
+                    <li><a href="http://www.topcoder.com/blog">Blog</a></li>
                     <li><a href="http://www.topcoder.com/help">Help</a></li>
                     <li><a href="javascript:;" id="logoutLink">Logout</a></li>
                     <li class="welcome"><span>|</span>Welcome <a href="javascript:;" class="loggedUsername"><c:out value="${sessionScope.userHandle}"/></a>!</li>
@@ -95,8 +95,8 @@
         <div class="banner">
             <div class="bannerInner">
                 <h2>Big Data + Big Community <strong>= Big Results</strong></h2>
-                <p>TopCoder Analitics Solutions helps you predict and improve your business outcome, reduce costs and make decisions faster. If you want to reach your goals in no time take advange of TopCoder Analytics today!</p>
-                <a href="javascript:;" class="btnGetStartedNow">Get Started Now!</a>
+                <p>TopCoder Analytics Solutions helps you predict and improve your business outcome, reduce costs and make decisions faster. If you want to reach your goals in no time take advange of TopCoder Analytics today!</p>
+                <a href="/direct/createNewProject.action" class="btnGetStartedNow">Get Started Now!</a>
             </div>
         </div>
         <!-- End .banner -->
@@ -246,28 +246,15 @@
                 <div class="bottomSectionInner">
                     <!-- article -->
                     <div class="article topcoderArticle">
-                        <h3>Top Coder</h3>
+                        <h3>TopCoder</h3>
                         <ul>
-                            <li><a href="javascript:;">Home</a></li>
+                            <li><a href="http://www.topcoder.com">Home</a></li>
                             <li><a href="http://community.topcoder.com/tc">Community</a></li>
                             <li><a href="http://www.topcoder.com/direct">Cockpit</a></li>
                             <li><a href="http://www.topcoder.com/reg">Register</a></li>
                         </ul>
                     </div>
                     <!-- End .topcoderArticle -->
-                    <!-- article -->
-                    <div class="article parentSitesArticle">
-                        <h3>Partner Sites</h3>
-                        <ul>
-                            <li><a href="javascript:;">Lorem Ipsum Dolor Sit</a></li>
-                            <li><a href="javascript:;">Lorem Ipsum Dolor Sit</a></li>
-                            <li><a href="javascript:;">Lorem Ipsum Dolor Sit</a></li>
-                            <li><a href="javascript:;">Lorem Ipsum Dolor Sit</a></li>
-                            <li><a href="javascript:;">Lorem Ipsum Dolor Sit</a></li>
-                            <li><a href="javascript:;">Lorem Ipsum Dolor Sit</a></li>
-                        </ul>
-                    </div>
-                    <!-- End .parentSitesArticle -->
                     <!-- article -->
                     <div class="article testimonialsArticle">
                         <h3>Testimonials</h3>
@@ -286,12 +273,12 @@
                         <div class="figure">
                             <img src="/images/analytics/google-map-pic.jpg" alt="GOOGLE MAP" />
                             <div class="detail">
-                                <p>The Company Name Inc.8901 Marmora Lorem Ipsum  D04 89GR.</p>
+                                <p>TopCoder, Inc.<br>95 Glastonbury Blvd.<br>Glastonbury, CT 06033 U.S.A.</p>
                                 <dl>
                                     <dt>Telephone:</dt>
-                                    <dd>+1 800 603 6035</dd>
+                                    <dd>1-866-867-2633</dd>
                                     <dt>FAX:</dt>
-                                    <dd>+1 800 889 9898</dd>
+                                    <dd>860-657-4276</dd>
                                 </dl>
                             </div>
                             <div class="clear"></div>
@@ -301,6 +288,8 @@
                             <a href="http://www.facebook.com/TopCoderInc" class="faceboxLink">Facebox</a>
                             <a href="http://www.twitter.com/TopCoder" class="twitterLink">Twitter</a>
                             <a href="http://www.linkedin.com/company/topcoder" class="linkelnLink">Linkeln</a>
+                            <a href="https://plus.google.com/104268008777050019973" class="gplusLink">Google+</a>
+                            <a href="http://youtube.com/topcoderinc" class="youtubeLink">YouTube</a>
                         </div>
                     </div>
                     <!-- End .contactUsArticle -->
