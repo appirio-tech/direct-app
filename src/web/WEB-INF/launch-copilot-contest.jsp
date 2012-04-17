@@ -203,8 +203,7 @@
                                                     <a href="<s:url action='postACopilot' namespace='/copilot'/>" class="button2">
                                                         <span class="left"><span class="right">Engage the Copilots</span></span>
                                                     </a>
-                                                    <span class="or">or</span>
-                                                    <a href="<s:url action='selectFromCopilotPool' namespace='/copilot'/>" class="button2"> <span class="left"><span class="right">Choose a Copilot</span></span></a>                                                    
+                                                                             
                                                 </div>
                                                 <!--End .buttonArea-->
                                             </div>
