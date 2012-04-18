@@ -8,6 +8,9 @@
  * Version 1.1 (Release Assembly - TC Cockpit All Projects Management Page Update) changes:
  * - Add handling for project filters and project filter values select in all projects and search project pages.
  *
+ * Version 1.2 (Release Assembly - TC Cockpit Enterprise Calendar Revamp)
+ * - Add filter panel for the enterprise milestone calendar
+ *
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -116,6 +119,7 @@ var setupFilterPanel = function () {
 
     $('.customerSelectMask .contestsDropDown li a').each(function () {
         var value = $(this).html();
+
         if (value != 'All Customers')
             $('#customerFilter').append("<option value='" + value + "'>" + value + "</option>");
     })
@@ -324,7 +328,127 @@ var setupFilterPanel = function () {
             }
         }
 
+        // handle the customer change for enterprise calendar
+        if ($(".enterpriseCalendar").length > 0) {
+
+            var selector = $("#groupBy");
+
+            $("#groupValue option:gt(0)").remove();
+
+            if (str != 'All Customers' && str != 'No Customer') {
+                $.ajax({
+                    type:'GET',
+                    url:ctx + "/getGroupByOptionsForCustomer",
+                    data:{customerId:customerId},
+                    cache:false,
+                    dataType:'json',
+                    success:function (jsonResult) {
+                        handleJsonResult2(jsonResult,
+                                function (result) {
+                                    selector.empty();
+
+                                    selector.append($("<option></option>").attr('value', 0).text("No Filter Applied"));
+
+                                    $.each(result, function (index, value) {
+                                        selector.append($("<option></option>").attr('value', value.id).text(value.name));
+                                    });
+
+                                    $("#groupBy").val('0').attr('disabled', false);
+                                    $("#groupValue").val('all').attr('disabled', false);
+
+                                },
+                                function (errorMessage) {
+                                    showErrors(errorMessage);
+                                });
+                    }
+                });
+            } else {
+                $("#groupBy").val('0').attr('disabled', true);
+                $("#groupValue").val('all').attr('disabled', true);
+            }
+
+            if (str == 'No Customer') {
+                customerId = 0;
+            } else if (str == 'All Customers') {
+                customerId = -1;
+            }
+
+            loadEnterpriseCalendar(customerId, null, null, true);
+        }
+
     });
+
+
+    if ($(".enterpriseCalendar").length > 0) {
+
+        // set up the change event for "Project Filters"
+        $("#groupBy").change(function () {
+            var filterId = $(this).val();
+            var reload = $("#groupValue").val() != 'all';
+
+            // clear the project filter values drop down
+            $("#groupValue option:gt(0)").remove();
+
+            if (filterId == 0) {
+                // No Filter Applied
+                $("#groupValue").val('all');
+                $("#groupValue").attr('disabled', false);
+            } else {
+                // load filter values
+                $.ajax({
+                    type:'GET',
+                    url:ctx + "/getGroupValuesForGroupBy",
+                    data:{groupKeyId:filterId},
+                    cache:false,
+                    dataType:'json',
+                    success:function (jsonResult) {
+                        handleJsonResult2(jsonResult,
+                                function (result) {
+
+                                    $.each(result, function (index, value) {
+                                        $("#groupValue").append($("<option></option>").attr('value', value).text(value));
+                                    });
+
+                                    // append none item
+                                    $("#groupValue").append($("<option></option>").attr('value', 'none').text('None'));
+
+                                },
+                                function (errorMessage) {
+                                    showErrors(errorMessage);
+                                });
+                    }
+                });
+            }
+
+            if (reload) {
+                $("#customerFilter").trigger('change');
+            }
+
+        });
+
+        // set up the change event for "Project Filter Values"
+        $("#groupValue").change(function () {
+            var value = $(this).val();
+            var customerValue = $("#customerFilter").val();
+
+            var customerId;
+
+            $(".customerSelectMask  ul li a").each(function (index, element) {
+                if ($(this).html() == customerValue) {
+                    customerId = $(this).parent().data("id");
+                }
+            });
+
+            if (value.toLowerCase() == 'all') {
+                loadEnterpriseCalendar(customerId, null, null, true);
+            } else {
+                var projectFilterId = $("#groupBy").val();
+                loadEnterpriseCalendar(customerId, projectFilterId, value, true);
+            }
+
+        });
+
+    }
 
     if ($("#allProjectsFilter").size() > 0) {
         // setup the change event for "Project Filters" select
@@ -450,7 +574,8 @@ $(function() {
     $('#activeContestsFilterSearch').css({'margin-left':left + 'px'});
     if ($('.filterContent .column3').prev().hasClass('column2')) {
         $('.filterContent .column3').css({'width':'300px'});
-        $('#allProjectsFilter .filterContent .column3').css({'width':'340px'})
+        $('#allProjectsFilter .filterContent .column3').css({'width':'340px'});
+        $('#enterpriseCalendarFilter .filterContent .column3').css({'width':'auto'});
     }
     if (jQuery.browser.msie && jQuery.browser.version == 9) {
         $('.filterSearch').find('img').css({'margin-left':'-22px'});
@@ -477,10 +602,6 @@ $(function() {
         $(this).parent().parent().parent().parent().css({"margin-bottom":"0px","height":'32px'});
         $(this).parent().parent().parent().parent().find(".rightSide").css({"height":'32px'});
     });
-
-    if($("#allProjectsFilter").length == 0) {
-        // $('.collapse').trigger('click');
-    }
 
     handleName = $('.paginatedDataTable').parent().parent().parent().attr('id');
     if (handleName == "" || typeof(handleName) === 'undefined') handleName = $('.paginatedDataTable').parent().parent().attr('id');
@@ -619,6 +740,10 @@ $(function() {
         });
 
     setupFilterPanel();
+
+    if ($(".enterpriseCalendar .milestoneCalView").length > 0) {
+        $("#customerFilter").trigger('change');
+    }
 
     //reset the filter panel for consistency
     if (document.getElementById("filterPanelForm") != null) {

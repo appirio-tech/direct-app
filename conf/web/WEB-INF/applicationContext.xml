@@ -279,6 +279,11 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="dashboardMilestoneCalendar"
+          class="com.topcoder.direct.services.view.action.dashboard.DashboardMilestoneCalendarAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
           parent="baseDirectStrutsAction">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>
@@ -1008,16 +1013,4 @@
       scope="prototype" parent="baseDirectStrutsAction">
       <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
     </bean>
-
-
-    <bean id="createJIRABugIssueAction" class="com.topcoder.direct.services.view.action.contest.CreateJIRAIssueAction"
-          scope="prototype" parent="baseDirectStrutsAction">
-        <property name="jiraProject" value="@jiraBugRaceProject@"/>
-        <property name="issueTypeId" value="1"/>
-    </bean>
-    <bean id="submitApprovalAction"
-          class="com.topcoder.direct.services.view.action.contest.SubmitApprovalAction"
-          scope="prototype" parent="baseDirectStrutsAction">
-    </bean>
-
 </beans>

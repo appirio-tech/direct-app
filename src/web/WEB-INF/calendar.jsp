@@ -1,10 +1,13 @@
 <%--
-  - Author: TCSDEVELOPER
-  - Version: 1.1
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Author: TCSASSEMBLER
+  - Version: 1.2
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - Direct Improvements Assembly Release 3) changes:
   - Set the today in calendar with the today date on server, not on the client side.
+  -
+  - Version 1.2 (Release Assembly - TC Cockpit Enterprise Calendar Revamp) changes:
+  - Update the page to show the milestones not activities
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -15,43 +18,13 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
-    <script type="text/javascript" src="/scripts/fullcalendar.min.js?v=205096"></script>
-    <link rel="stylesheet" href="/css/fullcalendar.css?v=176771" media="all" type="text/css" />
-    <script type="text/javascript">
-        function getCalendarConfig() {
-			var currentDate = new Date($.trim($("#calendarToday").text()));
-            
-			return {
-            header: {
-                left: 'prev',
-                center: 'title',
-                right: 'next'
-            },
-            editable: false,
-            dayNamesShort: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-            year: currentDate.getFullYear(),
-            month:currentDate.getMonth(),
-			events: [
-                <s:iterator value="viewData.latestActivities.activities" status="status1">
-                    <s:iterator value="value" status="status2">
-                        <s:set var="date" value='date'/>
-                        {
-                            title: '<a href=# class="<s:property value='type.shortName'/>" onmouseover=showPopup(this,\'levent<s:property value="#status1.index"/>_<s:property value="#status2.index"/>\')><s:property value='type.name'/></a>',
-                            start: new Date(${tcdirect:getYear(date)}, ${tcdirect:getMonth(date)}, ${tcdirect:getDay(date)})
-                        },
-                    </s:iterator>
-                </s:iterator>
-                <s:iterator value="viewData.upcomingActivities.activities" status="status">
-                    <s:set var="date" value='date'/>
-                {
-                    title: '<a href=# class="<s:property value='type.shortName'/>" onmouseover=showPopup(this,\'uevent<s:property value="#status.index"/>\')><s:property value='type.name'/></a>',
-                    start: new Date(${tcdirect:getYear(date)}, ${tcdirect:getMonth(date)}, ${tcdirect:getDay(date)})
-                },
-                </s:iterator>
-                {}
-            ]
-        }}
-    </script>
+    <jsp:include page="includes/paginationSetup.jsp"/>
+    <jsp:include page="includes/filterPanel.jsp"/>
+    <link rel="stylesheet" href="/css/milestone-fullCalendar.css?v=214041" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/projectMilestone.css" media="all" type="text/css"/>
+    <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
+    <script type="text/javascript" src="/scripts/milestone-fullCalendar.js?v=214041"></script>
+
 </head>
 
 <body id="page">
@@ -67,14 +40,81 @@
                     <jsp:include page="includes/right.jsp"/>
 
                     <div id="area1"><!-- the main area -->
-                        <div class="area1Content">
-                        <div class="areaHeader">
-                            <h2 class="title">Calendar</h2>
-                            <a href="<s:url action="dashboard" namespace="/"/>" class="button1"><span>List view</span></a>
-                        </div><!-- End .areaHeader -->
+                        <div class="area1Content milestoneManage enterpriseCalendar">
+                            <div class="areaHeader">
+                                <h2 class="title">Roadmap</h2>
+                            </div>
+                            <!-- End .areaHeader -->
 
-                        <div id="calendar"></div>
-							<span id="calendarToday" style="display:none"><s:date name="calendarToday" format="MM/dd/yyyy"/></span>
+                            <form id="filterPanelForm" autocompleted="off">
+                                <div class='filterPanel' id='enterpriseCalendarFilter'>
+                                    <div class='filterHead'>
+                                        <div class='rightSide'>
+                                            <div class='inner'>
+                                                <div class='filterText'>
+                                                    <a href='javascript:;' class='collapse'><img
+                                                            src='/images/filter-panel/expand_icon.png' alt=''/></a>
+                                                    <span class='title'>Filter</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterHead-->
+                                    <div class='filterContent'>
+                                        <div class='rightSide'>
+                                            <div class='inner'>
+                                                <div class='column1'>
+                                                    <div class='row'>
+                                                        <span class='title'>Customer</span>
+                                                        <select id='customerFilter'>
+                                                            <option value='All Customers'>All Customers</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class='column2'>
+                                                    <div class='row'>
+                                                        <span class='title'>Project Filters</span>
+                                                        <select id='groupBy' disabled="disabled">
+                                                            <option value='0'>No Filter Applied</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end .column1-->
+                                                <div class='column3'>
+                                                    <div class='row'>
+                                                        <span class='title'>Project Filter Values</span>
+                                                        <select id='groupValue' disabled="disabled">
+                                                            <option value='all'>All Filter Values</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--end .column3-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterHead-->
+                                    <div class='filterBottom'>
+                                        <div class='rightSide'>
+                                            <div class='inner'></div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterBottom-->
+                                    <div class='collapseBottom hide'>
+                                        <div class='rightSide'>
+                                            <div class='inner'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            <div class="milestoneCalView">
+
+                            </div>
+
+                            <span id="calendarToday" style="display:none"><s:date name="calendarToday"
+                                                                                  format="MM/dd/yyyy"/></span>
+
                             <jsp:include page="includes/copilotArea.jsp"/>
                         </div>
                     </div>
@@ -93,19 +133,6 @@
 <!-- End #wrapper -->
 
 <jsp:include page="includes/popups.jsp"/>
-
-<div class="tooltipArea">
-    <s:iterator value="viewData.latestActivities.activities" status="status1">
-        <s:iterator value="value" status="status2" var="activity">
-            <s:set var="index" value="#status1.index + '_' + #status2.index"/>
-            <ui:calendarEvent activity="${activity}" index="levent${index}"/>
-        </s:iterator>
-    </s:iterator>
-    <s:iterator value="viewData.upcomingActivities.activities" status="status" var="activity">
-        <s:set var="index" value="#status.index"/>
-        <ui:calendarEvent activity="${activity}" index="uevent${index}"/>
-    </s:iterator>
-</div><!-- End .tooltipArea -->
 
 </body>
 <!-- End #page -->

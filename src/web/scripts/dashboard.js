@@ -56,9 +56,10 @@
  *  Version 2.7 - Release Assembly - TC Direct Cockpit Release Three version 1
  *  - Add the js codes to display tooltip for timeline in contest dashboard of contest details page
  *
- *
- * @author tangzx, Blues, GreatKevin, isv
- * @version 2.7
+ *  Version 2.8 - Release Assembly - TC Cockpit Enterprise Calendar Revamp
+ *  - Add the js codes to load enterprise calendar data for the enterprise calendar page
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin
+ * @version 2.8
  */
 $(document).ready(function(){
 						   
@@ -587,17 +588,6 @@ $(document).ready(function(){
 	$("table.project TR").mouseout(function(){
 			$(this).removeClass("hover");
 	});
-	
-	/*------------------------------------------------------------ Calendar --*/
-
-    try {
-
-        if ($("#calendar").length > 0) {
-        $('#calendar').fullCalendar(getCalendarConfig());
-        }
-
-    } catch(e) {
-    }
 
 	/*----------------- this function is for demonstration purpose, it will show some contests on the contests list --*/
 	showContestsDemo = function(){
@@ -1896,6 +1886,170 @@ $(document).ready(function(){
         }
     });
 });
+
+
+var calendarData;
+var isEnterpriseCalendarShown;
+
+function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue, showModal) {
+    var formData = {};
+
+    formData.customerId = customerId;
+
+    if (projectFilterId != null) {
+        formData.projectFilterId = projectFilterId;
+    }
+
+    if (projectFilterValue != null) {
+        formData.projectFilterValue = projectFilterValue;
+    }
+
+    if(showModal) {
+        modalPreloader();
+    }
+    
+    isEnterpriseCalendarShown = false;
+
+    $.ajax({
+        type:'POST',
+        url:'dashboardMilestoneCalendar',
+        data:{formData:formData},
+        dataType:"html",
+        cache:false,
+        success:function (result) {
+
+            if (result.indexOf("calendarData") != -1) {
+                $(result).find("#allResponsiblePerson").insertAfter(".enterpriseCalendar .milestoneCalView");
+                calendarData = jQuery.parseJSON($(result).find("#calendarData").html());
+
+                if (calendarData != null) {
+                        $('.milestoneCalView').empty();
+
+                        // build the handle map
+                        var userHandleColorMap = {};
+
+                        $("#allResponsiblePerson a").each(function () {
+                            var handle = $.trim($(this).text());
+                            var color = $(this).attr('class');
+                            var url = $(this).attr('href');
+
+                            userHandleColorMap[handle] = {color:color, url:url};
+                        });
+
+                        // update handle color and link first
+                        $.each(calendarData.events, function (index, item) {
+                            if (item.person && item.person.name) {
+                                if (userHandleColorMap[item.person.name] != null) {
+                                    item.person.color = userHandleColorMap[item.person.name].color;
+                                    item.person.url = userHandleColorMap[item.person.name].url;
+                                }
+                            }
+                        });
+
+                        $('.milestoneCalView').fullCalendar({
+                            header:{
+                                left:'prev',
+                                center:'title',
+                                right:'next'
+                            },
+                            editable:false,
+                            dayNamesShort:['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                            //events:calendarData.events,
+                            eventRender:function (event, element) {
+                                var inner = element.find(".fc-event-inner");
+
+                                inner.click(function(e){
+                                    e.preventDefault();
+                                    window.open('projectMilestoneView?formData.viewType=list&formData.projectId=' + event.projectId, '');
+                                });
+
+                                switch (event["status"]) {
+                                    case 'completed':
+                                        element.addClass("fc-milestone-completed");
+                                        if (event.person) {
+                                            $("<a/>", {
+                                                "text":event.person.name,
+                                                "href":event.person.url,
+                                                "class":event.person.color
+                                            }).appendTo(inner);
+                                        }
+                                        break;
+                                    case 'upcoming':
+                                        element.addClass("fc-milestone-upcoming");
+                                        if (event.person) {
+                                            $("<a/>", {
+                                                "text":event.person.name,
+                                                "href":event.person.url,
+                                                "class":event.person.color
+                                            }).appendTo(inner);
+                                        }
+                                        break;
+                                    case 'overdue':
+                                        element.addClass("fc-milestone-overdue");
+                                        if (event.person) {
+                                            $("<a/>", {
+                                                "text":event.person.name,
+                                                "href":event.person.url,
+                                                "class":event.person.color
+                                            }).appendTo(inner);
+                                        }
+                                        break;
+                                }
+
+                                var tcTip = $("<div/>", {
+                                    "class":"milestoneTips"
+                                });
+                                $("<div/>", {
+                                    "class":"triangle"
+                                }).appendTo(tcTip);
+                                $("<h2/>", {
+                                    "text":event.projectName,
+                                    "class":"tipsTitle"
+                                }).appendTo(tcTip);
+                                $("<p/>", {
+                                    "text":event.description
+                                }).appendTo(tcTip);
+                                tcTip.appendTo(inner.parent());
+
+                                inner.find(".fc-event-title").hover(function () {
+                                    tcTip.css("top", $(this).height() + 5 + "px");
+                                    inner.parent().css("z-index", 9);
+                                    tcTip.show();
+                                }, function () {
+                                    tcTip.hide();
+                                    inner.parent().css("z-index", 8);
+                                });
+                            },
+                            eventAfterRender:function (event, element) {
+                                if (event["status"] == "overdue") {
+                                    $('.milestoneCalView .fc-content tbody td:eq(' + element.data("tdIndex") + ")").addClass("fc-overdue");
+                                }
+                            },
+                            viewDisplay:function () {
+                                $(".milestoneCalView .fc-today .fc-day-number").html("TODAY");
+                                // this will be replaced with the ajax call in Assembly
+                                if (!isEnterpriseCalendarShown) {
+                                	isEnterpriseCalendarShown = true;
+                                	
+	                                $.each(calendarData.events, function (index, item) {
+	                                    $('.milestoneCalView').fullCalendar("renderEvent", item, true);
+	                                })
+	                              }
+                            }
+                        });
+                    }
+
+                if(showModal) {
+                    modalAllClose();
+                }
+            } else {
+                showErrors("Fail to load the milestone data");
+            }
+        }
+    });
+
+
+}
 
 /**
  * Adjusts the height of report filter controls according to the browser width.

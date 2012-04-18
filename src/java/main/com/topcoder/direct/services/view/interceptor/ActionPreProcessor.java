@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.interceptor;
 
@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.contest.ContestDetailsAction;
 import com.topcoder.direct.services.view.action.dashboard.CalendarAction;
+import com.topcoder.direct.services.view.action.dashboard.DashboardMilestoneCalendarAction;
 import com.topcoder.direct.services.view.action.dashboard.DashboardSearchAction;
 import com.topcoder.direct.services.view.action.project.CreateProjectAction;
 import com.topcoder.direct.services.view.action.dashboard.DashboardAction;
@@ -57,9 +58,17 @@ import com.topcoder.direct.services.view.processor.stats.TopCoderDirectFactsProc
  *  </li>
  *   </ul>
  * </p>
+ * <p>Version 1.4 (Release Assembly - TC Cockpit Enterprise Calendar Revamp) change notes:
+ *   <ul>
+ *     <li>Update {@link #getRequestProcessor(com.topcoder.direct.services.view.action.TopCoderDirectAction)} to
+ *     remove the upcoming activities and latest activities processor for Calendar Action and add preProcessor
+ *     for DashboardMilestoneCalendarAction.
+ *  </li>
+ *   </ul>
+ * </p>
  *
- * @author isv, Blues
- * @version 1.3
+ * @author isv, Blues, TCSASSEMBLER
+ * @version 1.4
  */
 public class ActionPreProcessor implements Interceptor {
 
@@ -161,9 +170,8 @@ public class ActionPreProcessor implements Interceptor {
                                                                new UpcomingActivitiesProcessor()});
         } else if (action instanceof CalendarAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new CoPilotStatsProcessor(),
-                                                               new UserProjectsProcessor(),
-                                                               new LatestActivitiesProcessor(),
-                                                               new UpcomingActivitiesProcessor()});
+                                                               new UserProjectsProcessor()
+                                                              });
         } else if (action instanceof LandingPage) {
             return new ProcessorsGroup(new RequestProcessor[] {new TopCoderDirectFactsProcessor(),
                                                                new CoPilotStatsProcessor()});
@@ -195,7 +203,9 @@ public class ActionPreProcessor implements Interceptor {
                                                                });
         } else if (action instanceof InternalStatsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
-        }else {
+        } else if (action instanceof DashboardMilestoneCalendarAction) {
+                    return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
+        } else {
             return null;
         }
     }

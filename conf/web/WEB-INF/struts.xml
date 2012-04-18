@@ -218,6 +218,11 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="dashboardMilestoneCalendar" class="dashboardMilestoneCalendar">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboardMilestoneCalendarData.jsp</result>
+        </action>
+
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
@@ -311,14 +316,6 @@
         <action name="contestIssuesTracking" class="com.topcoder.direct.services.view.action.contest.ContestIssuesTrackingAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
-        </action>
-		<action name="updateBugRace" class="com.topcoder.direct.services.view.action.contest.UpdateJIRAIssueAction">
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success" type="json"/>
-        </action>
-        <action name="addBugRace" class="createJIRABugIssueAction">
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success" type="json"/>
         </action>
         <action name="projectOverview" class="projectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
@@ -948,12 +945,6 @@
                             <param name="projectId">${formData.projectId}</param>
                             <param name="roundType">MILESTONE</param>
             </result>
-        </action>
-
-        <action name="submitApproval" class="submitApprovalAction">
-            <interceptor-ref name="securedContestStack"/>
-            <result name="success" type="json"/>
-            <result name="error" type="json"/>
         </action>
 
         <action name="studioNoWinner" class="studioNoWinnerAction">

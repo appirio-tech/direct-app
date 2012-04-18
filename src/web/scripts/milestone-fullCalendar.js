@@ -2277,7 +2277,13 @@ function BasicView(element, calendar, viewName) {
 	function updateCells(firstTime) {
 		var dowDirty = firstTime || rowCnt == 1; // could the cells' day-of-weeks need updating?
 		var month = t.start.getMonth();
-		var today = clearTime(new Date());
+        var todayOnServer = $.trim($("#calendarToday").text());
+        var today;
+        if (todayOnServer == null) {
+            today = clearTime(new Date());
+        } else {
+            today = clearTime(new Date(todayOnServer));
+        }
 		var cell;
 		var date;
 		var row;
@@ -3110,7 +3116,15 @@ function AgendaView(element, calendar, viewName) {
 		var headCell;
 		var bodyCell;
 		var date;
-		var today = clearTime(new Date());
+
+        var todayOnServer = $.trim($("#calendarToday").text());
+        var today;
+        if (todayOnServer == null) {
+            today = clearTime(new Date());
+        } else {
+            today = clearTime(new Date(todayOnServer));
+        }
+
 		for (i=0; i<colCnt; i++) {
 			date = colDate(i);
 			headCell = dayHeadCells.eq(i);

@@ -4,6 +4,9 @@
  * Used for the project management pages.
  *
  * @version 1.0 (Module Assembly - TC Cockpit Project Milestones Management Front End)
+ *
+ * Version 1.1 (Release Assembly - TC Cockpit Enterprise Calendar Revamp)
+ * - Add css for the title of the milestone tip
  */
 .projectMilestoneListViewPage {
     min-width: 1024px !important;
@@ -694,6 +697,10 @@ a.grayButton:hover .text {
     background: #ffe4e4;
 }
 
+.milestoneCalView .fc-view {
+	overflow:visible;
+}
+
 #new-modal .invalid {
     background: none repeat scroll 0 0 #FFE1E0;
     border: 1px solid #FF0000;
@@ -799,6 +806,13 @@ a.grayButton:hover .text {
 .milestoneTips p{
     color: #333333;
     font-family: Tahoma,Geneva,sans-serif;
+    font-size: 11px;
+    text-decoration: none;
+}
+
+.milestoneTips .tipsTitle {
+    color: #333333;
+    font-family: Tahoma, Geneva, sans-serif;
     font-size: 11px;
     text-decoration: none;
 }

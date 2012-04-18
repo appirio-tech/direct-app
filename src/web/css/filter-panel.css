@@ -298,3 +298,40 @@
 #VMFilter.filterPanel .filterContent .inner .column1 {
     width: 500px;
 }
+
+#enterpriseCalendarFilter {
+    margin-bottom: 20px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column1,
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column2,
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column3 {
+    width: auto;
+    margin-left: 25px;
+    margin-right: 0px;
+    min-width: 0px;
+    margin-top: 10px;
+    height: 50px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent,
+#enterpriseCalendarFilter.filterPanel .filterContent .rightSide {
+    height: 50px;
+}
+
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column1 .row .title {
+    width: 70px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column1 .row select {
+    width: 230px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column2 .row select {
+    width: 200px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column3 .row .title {
+    width: 130px;
+}
