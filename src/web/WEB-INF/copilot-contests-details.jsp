@@ -147,7 +147,7 @@
                     <strong id="projectNameTextLabel">
                         <c:forEach items="${projects}" var="p">
                             <c:if test="${p.projectId eq projectHeader.tcDirectProjectId}">
-                                <c:out value="${p.name}"/>
+                                <a href="../projectOverview?formData.projectId=${p.projectId}">${p.name}</a>
                             </c:if>
                         </c:forEach>
                     </strong>
@@ -383,7 +383,7 @@
 <div class="editMask">
     <div class="infoPanel scheduleInfo ">
         <h3>
-            <span class="icon">Copilot Posting Schedule</span>
+            <span class="icon">Schedule</span>
             <if:isEditable typedContestBrief="${contestDTO}">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
@@ -407,7 +407,7 @@
     </div>
     <div class="schedule editPanel">
         <h3>
-            <span class="icon">Contest Schedule</span>
+            <span class="icon">Schedule</span>
             <a href="javascript:"><img class="edit_type" alt="edit" src="/images/edit_red.png"/></a>
         </h3>
 
