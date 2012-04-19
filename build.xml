@@ -448,6 +448,14 @@
             </fileset>
         </copy>
     </target>
+    
+    <target name="version-deploy-jsp" depends="update-revision-numbers-for-jsp">
+        <copy todir="${jboss_deploy_dir}/direct.ear/direct.war" overwrite="true">
+            <fileset dir="${build_distdir}/direct.war">
+                <include name="**/*.jsp"/>
+            </fileset>
+        </copy>        
+    </target>
 
     <target name="deploy-apache-static" if="is_vm" description="copies all static resources to Apache htdocs. Only used on a (unix) VM.">
       <mkdir dir="${apache_tcdocs}/images"/>
