@@ -372,13 +372,16 @@ $(document).ready(function(){
         $('.foot-bar .currentThumb').html('<strong>1</strong> / '+ totalItems);						
     }
     
-    $('.ad-thumb-list img').load(function(){
-        grayscaleImg($(this));
-    });
-    
-    if ($.browser.msie) {
+	if($.browser.webkit) {
+		$('.ad-thumb-list img').load(function(){
+			grayscaleImg($(this));
+		});
+		/* may increase pageload perf in Safari by using code below; however, image visibly in color briefly before grayscale */ 
+	    //window.setTimeout(resetNavThumb, 300);
+    } else {
         resetNavThumb();
     }
+	
     window.setTimeout(function(){
         carouselInit();
     } ,500);
