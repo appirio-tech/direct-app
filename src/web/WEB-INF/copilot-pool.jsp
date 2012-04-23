@@ -20,7 +20,7 @@
     
     <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css" />
     <link rel="stylesheet" href="/css/newProject.css?v=210944" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/get-a-copilot.css?v=215325" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/get-a-copilot.css?v=215576" media="all" type="text/css"/> 
     <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
     
     <script type="text/javascript" src="/scripts/jquery.pagination.js?v=210944"></script>
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="/scripts/jquery.tinysort.min.js?v=210944"></script>
 	<script type="text/javascript" src="/scripts/jquery.carouFredSel.js?v=213033"></script>
     <script type="text/javascript" src="/scripts/newProject.js?v=209631"></script>
-    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=215325"></script> 
+    <script type="text/javascript" src="/scripts/get-a-copilot.js?v=215576"></script> 
     <script type="text/javascript" src="/scripts/select-a-copilot.js?v=211902"></script> 
     
 </head>
