@@ -340,13 +340,13 @@
                     <div id="headline_title_middle">
                         <div id="headline_middle_title_top">                    	
                             <div class="top">Your software wants</div>
-                            <div class="bottom">to take road trip</div>
+                            <div class="bottom">to take a road trip</div>
                         </div>
                     </div>
                     <div id="headline_title_bottom"></div>
                     <div id="headline_subtitle">
                         <div id="headline_subtitle_top">                    
-                            TopCoder develops application for all mobile platforms:
+                            TopCoder develops applications for all mobile platforms:
                         </div>
                     </div>
                     <div id="headline_subtitle_bottom"></div>
