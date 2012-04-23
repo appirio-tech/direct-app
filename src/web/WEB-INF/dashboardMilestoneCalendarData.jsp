@@ -22,10 +22,10 @@
             "events": [
             <s:iterator value="viewData.milestones" status="status1">
                 {
-                "title": "(<s:property value="viewData.projects[projectId]"/>) <s:property value="name"/>",
+                "title": "(<s:property value="viewData.projects[projectId]"/>) ${fn:replace(name, '"', '\\"')}",
                 "start": "<s:if test="completed"><fmt:formatDate pattern="yyyy-MM-dd" value="${completionDate}"/></s:if><s:else><fmt:formatDate pattern="yyyy-MM-dd" value="${dueDate}"/></s:else>",
                 "status": "<s:property value="status.toString().toLowerCase()"/>",
-                "description": "<s:property value="description"/>",
+                "description": "${fn:replace(description, '"', '\\"')}",
                 "projectId" : "<s:property value='projectId'/>",
                 "projectName": "<s:property value="viewData.projects[projectId]"/>"
                 <s:if test="owners != null && owners.size > 0">
