@@ -2,7 +2,7 @@
 
 A message from TopCoder.
 
-We have scheduled your competition.  Your Copilot Opportunity will be posted to the TopCoder Community at the start time you scheduled, or within the next few minutes if you chose the option to post it immediately.  Once the Copilot Opportunity is posted, you can 
+Thank you for engaging the TopCoder Copilots.  Your Copilot Opportunity will be posted to the TopCoder Community at the start time you scheduled, or within the next few minutes if you chose the option to post it immediately.  Once the Copilot Opportunity is posted, you can 
 expect to recieve email updates as the Copilot Opportunity progresses as well as when Copilots ask you questions in the forums.  The Copilots have 3 days to ask questions and submit their plans for your project.  After the competition submission phase is complete, you 
 will be able to review all of the Copilots and their submissions, and then choose one or more Copilots to manage your project.
 
@@ -11,23 +11,22 @@ You can track the status of this competition, and all your competitions, by visi
 There you can\: 
 
         + Engage the TopCoder Community in your projects
-        + Track the progress of your projects and competitions
+        + Track progress and manage your projects and competitions
         + View metrics and performance statistics for your projects and competitions
         + Collaborate with your team members and the TopCoder Community
-        + Modify competitions that have not launched
+        + Manage competitions
         + Select winners (if necessary for this competition) and download the results of each competition
         + And much more
 
-The following competition(s) have been scheduled\:
+The following Copilot Opportunity has been scheduled\:
 %endif%
 %if:PAID='YES'%
-An additional payment has been applied for the competition\:
+An additional payment has been applied for the Copilot Opportunity\:
 %endif%
 --------------------------------------------------------------------
 
-Competition Type\:   %COMPETITION_TYPE%
-Competition Title\:  %COMPETITION_TITLE%
-Project\:       %PROJECT_NAME%
+Project Name\:       %PROJECT_NAME%
+Copilot Opportunity Title\:  %COMPETITION_TITLE%
 Scheduled Launch Time\:  %LAUNCH_TIME%
 %if:PAID='NO'%
 *Estimated Cost\:    $%CONTEST_COST%
@@ -42,7 +41,7 @@ Additional Cost\:      $%TOTAL_COST%
 -------------------------------------------------------------------
 %endif%
 
-# * The Estimated Cost includes the contest fee as well as an estimate of the members costs for the competition.  The actual cost will be presented in Cockpit (http\://www.topcoder.com/direct) at the conclusion of the competition.
+# * The Estimated Cost includes the contest fee as well as an estimate of prizes for the selected Copilot(s).  The actual cost will be presented in Cockpit (https\://www.topcoder.com/direct) at the conclusion of the competition.
 #
 #You will be invoiced for the contest fee when the competition launches.  The remainder of the costs will be invoiced after the competition completes.
 #
