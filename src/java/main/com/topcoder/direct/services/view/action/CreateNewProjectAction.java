@@ -381,7 +381,7 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         cp.setAssetDTO(getAssetDTOForNewSoftware());
 
         String name = getAssetDTO().getName();
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.equals("")) {
             name = directProject.getName();
         }
         cp.getAssetDTO().setName(name);
