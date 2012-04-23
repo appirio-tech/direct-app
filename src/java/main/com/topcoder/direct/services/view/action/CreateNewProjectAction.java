@@ -379,7 +379,13 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     private SoftwareCompetition createCopilotDraftPosting(ProjectData directProject) throws Exception {
         SoftwareCompetition cp = new SoftwareCompetition();
         cp.setAssetDTO(getAssetDTOForNewSoftware());
-        cp.getAssetDTO().setName(getAssetDTO().getName());
+
+        String name = getAssetDTO().getName();
+        if (name == null || name.isEmpty()) {
+            name = directProject.getName();
+        }
+        cp.getAssetDTO().setName(name);
+
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(new Date());
         c.add(Calendar.DAY_OF_MONTH, 2);
@@ -397,14 +403,16 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         projectHeader.setProperty("Billing Project", "0");
         projectHeader.setProperty("Confidentiality Type", "public");
         projectHeader.setProperty("Copilot Cost", "0");
-        projectHeader.setProperty("Project Name", getAssetDTO().getName());
+        projectHeader.setProperty("Project Name", name);
         projectHeader.setTcDirectProjectId(directProject.getProjectId());
         projectHeader.setTcDirectProjectName(directProject.getName());
 
         // set spec info - do not need spec review
         ProjectSpec projectSpec = new ProjectSpec();
         projectSpec.setProjectSpecId(0L);
-        projectSpec.setDetailedRequirements(getProjectHeader().getProjectSpec().getDetailedRequirements());
+        if (getProjectHeader() != null && getProjectHeader().getProjectSpec() != null) {
+            projectSpec.setDetailedRequirements(getProjectHeader().getProjectSpec().getDetailedRequirements());
+        }
         projectHeader.setProjectSpec(projectSpec);
 
         // add prize

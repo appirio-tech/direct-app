@@ -378,7 +378,7 @@ function createCopilotContestDescription_PresentationProject() {
     var additionalRequirements = "";
     $(".stepFourth2 table.addedItem tbody").find("tr a.additionalRequirement").each(function() {
         var info = $(this).attr('rel');
-        additionalRequirements += '<p>' + info + '</p>';        
+        additionalRequirements += '<p style="width:600px;word-wrap: break-word;">' + info + '</p>';        
     });
     if (additionalRequirements != "") {
         content += '<p><strong>Additional requirements:</strong><br/></p>';

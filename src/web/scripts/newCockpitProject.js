@@ -649,7 +649,7 @@ var initNewProjectDocumentsUpload = function() {
             var rel = type + ": " + val;
             var tr = "<tr><td>" + type + "</td>" 
                 + "<td>" + source + "</td>"
-                + "<td>" + val + "</td>"
+                + "<td><p class='directEntryText'>" + val + "</p></td>"
                 + "<td><a href='javascript:;' class='remove additionalRequirement' rel='" 
                 + rel + "'>Remove</a></td></tr>";
 

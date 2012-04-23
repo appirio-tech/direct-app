@@ -1003,6 +1003,12 @@ input{
         height: 20px;
         vertical-align: top;
     }
+    
+    .stepFourth2 table.addedItem p.directEntryText, .stepFifth2 table.addedItem p.directEntryText{
+        width:600px;
+        word-wrap: break-word;
+     }
+    
     .stepFourth2 table.addedItem .alt td, .stepFifth2 table.addedItem .alt td{
         background-color: #f5f5f5;
     }
