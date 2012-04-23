@@ -1593,6 +1593,18 @@ a.smallRed span.right {
 		.carouselNav .navThumb img:focus{
 			outline: none;
 		}
+		.carouselNav ul.loading a
+		{
+			background: url(../images/preloader-loading.gif) no-repeat center;
+		}
+		.carouselNav ul.loading img
+		{
+			visibility: hidden;
+		}
+		.carouselNav li.current img
+		{
+			visibility: visible;
+		}
 		.carouselNav ul li.current a{
 			background: url(../images/caro-nav-current.png) center top no-repeat;
 		}

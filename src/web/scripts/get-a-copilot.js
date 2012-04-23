@@ -372,15 +372,18 @@ $(document).ready(function(){
         $('.foot-bar .currentThumb').html('<strong>1</strong> / '+ totalItems);						
     }
     
-	if($.browser.webkit) {
-		$('.ad-thumb-list img').load(function(){
-			grayscaleImg($(this));
+	if ($.browser.msie)
+	{
+		resetNavThumb();
+	}
+	else
+	{
+		$('.ad-thumb-list').addClass('loading');
+		$(window).load(function(){
+			resetNavThumb();			
+			$('.ad-thumb-list').removeClass('loading');
 		});
-		/* may increase pageload perf in Safari by using code below; however, image visibly in color briefly before grayscale */ 
-	    //window.setTimeout(resetNavThumb, 300);
-    } else {
-        resetNavThumb();
-    }
+	}
 	
     window.setTimeout(function(){
         carouselInit();
