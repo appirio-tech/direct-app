@@ -404,7 +404,7 @@
                             <table cellspacing="10" class="det_font_tab">
                    <tr class="rightbor">
                         <td class="first_tab"  align="left"><strong>Main Prizes</strong></td>
-                         <td class="sec_tab_prize"><strong>Additional Prizes (optional)</strong></td>
+                         <td class="sec_tab_prize"><strong>Additional Prizes</strong></td>
                      </tr>
                      <tr class="rightbor">
                         <td class="first_tab_prize"><strong>First Prize

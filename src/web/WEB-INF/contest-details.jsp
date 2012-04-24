@@ -206,7 +206,7 @@
                                                 <table class="projectStats" cellpadding="0" cellspacing="0">
                                                     <thead>
                                                         <tr>
-                                                            <th>Additional Prizes (optional)</th>
+                                                            <th>Additional Prizes</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
