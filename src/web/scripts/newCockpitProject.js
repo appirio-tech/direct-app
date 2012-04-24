@@ -326,13 +326,6 @@ var createNewProject = function() {
     var permissions = [];
     var request = {};
     
-    // At the moment presentation flow defines its own fields to specify project name and description.
-    // For the case of presentation flow, the project name and description defined on the 1st step of the generic flow is ignored.
-    if (projectType == PROJECT_TYPE_PRESENTATION) {
-        projectName = $('#newPresentationProjectStep2 input.title').val();
-        projectDescription = $('#newPresentationProjectStep2 textarea').val();
-    }
-
     if (projectType == PROJECT_TYPE_CUSTOM) {
         // get permissions
         $('.stepFifth .checkPermissions .userRow').each(function() {
