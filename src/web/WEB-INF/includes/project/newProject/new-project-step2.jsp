@@ -131,7 +131,7 @@
                             <td class="dataCost">$ 00000.00</td>
                         </tr>
                         <tr>
-                            <td class="firstTd">No of Contents</td>
+                            <td class="firstTd">No of Contests</td>
                             <td class="dataNumCont">00</td>
                         </tr>
                     </table>
@@ -192,7 +192,7 @@
                             <td class="dataCost">$ 00000.00</td>
                         </tr>
                         <tr>
-                            <td class="firstTd">No of Contents</td>
+                            <td class="firstTd">No of Contests</td>
                             <td class="dataNumCont">00</td>
                         </tr>
                     </table>
@@ -253,7 +253,7 @@
                             <td class="dataCost">$ 00000.00</td>
                         </tr>
                         <tr>
-                            <td class="firstTd">No of Contents</td>
+                            <td class="firstTd">No of Contests</td>
                             <td class="dataNumCont">00</td>
                         </tr>
                     </table>
