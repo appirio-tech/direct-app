@@ -16,7 +16,7 @@
 
 <!-- step title -->
 <div class="stepTitle">
-    <h3><span>2</span>Choose a type and size of project.</h3>
+    <h3><span>2</span>Choose a type and size for your project.</h3>
      <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
 </div>
 <!-- End .stepTitle -->
@@ -41,7 +41,7 @@
             <strong>Note:</strong>
             <a href="javascript:void(0)">Hide</a>
         </dt>
-        <dd>Our project templates contain ready-made contest schedules for standard project types. Experienced users
+        <dd>Our project templates contain sample contest schedules for standard project types. Experienced users
             of the TopCoder platform may opt for a custom project and draft their own contests.
         </dd>
         <dd>Within your chosen template, select the size of your project in order to determine the contest schedule.

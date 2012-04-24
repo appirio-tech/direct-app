@@ -41,11 +41,10 @@
                         <strong>Note:</strong>
                         <a href="javascript:void(0)">Hide</a>
                     </dt>
-                    <dd>We recommend that you build one presentation per project, especially
-if this is your first time using the TopCoder platform.
-                    </dd>
                     <dd>The project name and summary are meant to help you keep track of your
 own project, and will not be shown to TopCoder members.
+                    </dd>
+                    <dd>If you are undecided on a name and description, you will be able to edit them later after you create the project.
                     </dd>
                 </dl>
             </div>
@@ -58,7 +57,7 @@ own project, and will not be shown to TopCoder members.
                 <div class="row projectName">
 
                     <a href="javascript:;" class="toolTip" id="toolTip1"
-                       rel='&lt;p&gt;&lt;b&gt;60 characters maximum&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Examples: "Acme Widget Pitch",&lt;/p&gt; &lt;p&gt;"2012 Biocomputing Symposium Keynote"&lt;/p&gt;'></a>
+                       rel='&lt;p&gt;&lt;b&gt;60 characters maximum&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Examples: "Acme Mobile App",&lt;/p&gt; &lt;p&gt;"2012 Biocomputing Symposium Keynote"&lt;/p&gt;'></a>
                     <label>Project Name <span class="red">*</span></label>
                     <input id="newProjectName" type="text" class="text" maxlength="60"/>
                     <span class="intro">All fields marked with <span class="red">*</span> are mandatory</span>
@@ -75,7 +74,7 @@ own project, and will not be shown to TopCoder members.
                 <div class="row descProject">
 
                     <a href="javascript:;" class="toolTip" id="toolTip2"
-                       rel="&lt;p&gt;&lt;b&gt;A brief description of the project for your own use.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;In subsequent steps, you will be able to provide detailed&lt;/p&gt; &lt;p&gt;instructions for use by our members when they compete to build&lt;/p&gt;&lt;p&gt;your presentation.&lt;/p&gt;"></a>
+                       rel="&lt;p&gt;&lt;b&gt;A brief description of the project for your own use.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;In subsequent steps, you will be able to provide detailed&lt;/p&gt; &lt;p&gt;instructions for use by our members when they participate on &lt;/p&gt;&lt;p&gt;your project.&lt;/p&gt;"></a>
                     <label>Project Description<span class="red">*</span></label>
                     <textarea id="newProjectDescription" rows="10" cols="10"></textarea>
 
