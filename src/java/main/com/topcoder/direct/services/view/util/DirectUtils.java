@@ -789,7 +789,7 @@ public final class DirectUtils {
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
             if (phase.getPhaseType().getId() == PhaseType.MILESTONE_SUBMISSION_PHASE.getId()) {
                 return phase.getActualEndDate() != null ? phase.getActualEndDate() :
-                    new Date(getRegistrationPhase(softwareCompetition).getFixedStartDate().getTime() + phase.getLength());
+                    phase.getScheduledEndDate();
             }
         }
         return null;
@@ -809,7 +809,27 @@ public final class DirectUtils {
         for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
             if (phase.getPhaseType().getId() == PhaseType.SUBMISSION_PHASE.getId()) {
                 return phase.getActualEndDate() != null ? phase.getActualEndDate() :
-                    new Date(getRegistrationPhase(softwareCompetition).getFixedStartDate().getTime() + phase.getLength());
+                    phase.getScheduledEndDate();
+            }
+        }
+        return null;
+    }
+	
+	/**
+     * <p>Gets the submission phase end date for a contest.
+     *
+     * @param softwareCompetition the contest
+     * @return the submission phase end date
+     */
+    public static Date getRegistrationStartDate(SoftwareCompetition softwareCompetition) {
+        if (softwareCompetition == null || softwareCompetition.getProjectPhases() == null) {
+            return null;
+        }
+
+        for (Phase phase : softwareCompetition.getProjectPhases().getPhases()) {
+            if (phase.getPhaseType().getId() == PhaseType.REGISTRATION_PHASE.getId()) {
+                return phase.getActualStartDate() != null ? phase.getActualStartDate() :
+                    phase.getScheduledStartDate();
             }
         }
         return null;

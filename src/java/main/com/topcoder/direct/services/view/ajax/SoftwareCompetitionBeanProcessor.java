@@ -123,7 +123,7 @@ public class SoftwareCompetitionBeanProcessor implements JsonBeanProcessor {
         result.put("projectStatus", project.getProjectStatus());
         result.put("projectCategory", project.getProjectCategory());
         result.put("contestName", assetDTO.getName());
-        result.put("startDate", assetDTO.getProductionDate());
+        result.put("startDate", DirectUtils.getDateString(DirectUtils.getRegistrationStartDate(bean)));
         result.put("tcDirectProjectId", project.getTcDirectProjectId());
         result.put("tcDirectProjectName", project.getTcDirectProjectName());
         result.put("billingProjectId", project.getProperties().get("Billing Project"));
