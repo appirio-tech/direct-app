@@ -39,9 +39,15 @@ import com.topcoder.security.TCSubject;
  *   create/update invoice record.</li>
  * </ol>
  * </p>
+ * <p>
+ * Versions 1.2: (Module Assembly - Contest Fee Based on Percentage of Member Cost Cockpit Pages Update):
+ * <ul>
+ *   <li>Added {@link #executeAction()} to support % based contest fee.</li>
+ * </ul>
+ * </p>
  * 
- * @author flexme
- * @version 1.1 (TC Accounting Tracking Invoiced Payments)
+ * @author flexme, minhu
+ * @version 1.2
  */
 public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
 
@@ -176,8 +182,8 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     throw new DirectException("Can't find the invoice type:" + invoiceTypeName);
                 }
                 if (paymentIds.get(i) > 0) {
-                    // payment_id > 0, get invoice record by payment_id
-                    record = invoiceRecordDAO.getByPayment(paymentIds.get(i));
+                    // payment_id > 0, get invoice record by payment_id and invoice_type_id
+                    record = invoiceRecordDAO.getByPaymentAndInvoiceType(paymentIds.get(i), invoiceType.getId());
                 } else {
                     // payment_id = 0, get invoice record by contest_id and invoice_type_id
                     record = invoiceRecordDAO.getByContestAndInvoiceType(contestIds.get(i), invoiceType.getId());
@@ -203,7 +209,8 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
                     record.setContestId(recordData.getContestId());
                     if (paymentIds.get(i) > 0) {
                         record.setPaymentId(paymentIds.get(i));
-                        record.setInvoiceType(DirectUtils.getInvoiceType(recordData.getInvoiceType().trim(), invoiceTypes));
+                        //record.setInvoiceType(DirectUtils.getInvoiceType(recordData.getInvoiceType().trim(), invoiceTypes));
+                        record.setInvoiceType(invoiceType);
                     } else {
                         record.setInvoiceType(invoiceType);
                     }

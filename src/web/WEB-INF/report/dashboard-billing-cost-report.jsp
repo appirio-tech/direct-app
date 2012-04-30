@@ -528,7 +528,8 @@
                 </c:if>
             </td>
             <td>
-                <s:property value="paymentId"/>
+                <s:if test="paymentId!=0 && paymentType=='Contest Fee'">for <s:property value="paymentId"/></s:if>
+                <s:else><s:property value="paymentId"/></s:else>
             </td>            
             <td>
                 <input type="checkbox" name="invoiceRecordProcessed" paymentid="${paymentId}" contestid="${contest.id}" invoicetype="${paymentType}" invoiceamount="${paymentAmount}" <c:if test="${processed}">checked="checked" disabled="disabled"</c:if> invoiceid="${invoiceId}" invoicerecordid="${invoiceRecordId}" invoicenumber="${invoiceNumber}" invoicedate="<s:date name="invoiceDate" format="MM/dd/yyyy" />"/>
