@@ -633,6 +633,7 @@
 
     <!-- Builds the WAR file for web application module -->
     <target name="war" depends="clean, init, compile" description="Builds the WAR file">
+
         <war warfile="temp.war" webxml="${tokenized_conf}/web/WEB-INF/web.xml">
             <webinf dir="${tokenized_conf}/web/WEB-INF" includes="applicationContext.xml"/>
             <webinf dir="${configdir}/web/WEB-INF" includes="tld/*.tld"/>
@@ -653,6 +654,14 @@
 
         <unzip src="temp.war" dest="${component.war}"/>
         <delete file="temp.war"/>
+
+        <if>
+            <equals arg1="${version}" arg2="true"/>
+            <then>
+                <echo message="start versioning the JSP files before war"/>
+                <antcall target="version-deploy-jsp"/>
+            </then>
+        </if>
     </target>
     
     <!-- Builds the PPT WAR file for web application module -->
