@@ -1062,6 +1062,8 @@ $(document).ready(function (e) {
 
             var formData = {formData:{newCustomKey:newKey}};
 
+            formData.formData.projectId = $("input[name='editProjectId']").val();
+
             modalAllClose();
             modalPreloader();
 
