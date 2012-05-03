@@ -604,7 +604,8 @@
             <path>
                 <fileset dir="${webdir}">
                     <include name="**/*.js"/>
-                    <exclude name="**/tinyMCE/*"/>
+                    <exclude name="**/tinyMCE/"/>
+					<exclude name="**/jquery*.js/"/>
                 </fileset>
             </path>
         </foreach>
