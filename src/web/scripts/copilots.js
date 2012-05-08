@@ -22,8 +22,11 @@
  * Version 1.5.1 (Release Assembly - TC Direct Cockpit Release One) changes:
  * - Fix the bug of not setting copilot posting payments property when saving.
  *
+ * Version 1.5.2 (BUGR-6609) changes:
+ * - Update the submission end date and contest end date when the contest was updated.
+ *
  * @author GreatKevin, isv, TCSASSEMBLER
- * @version 1.5.1
+ * @version 1.5.2
  */
 
 var currentDocument = {};
@@ -41,8 +44,18 @@ var budget = '';
 var copilotTypes = [];
 var extraInfos = [];
 
+/**
+ * Parse the date to be displayed in Schedule section.
+ */
+function parseDate(d) {
+    return Date.parse(d,'MM/dd/yyyy HH:mm').toString("MM/dd/yyyy T HH:mm EST ").replace('T ','at ').replace('EST','EST (UTC-05)');
+}
+    
 $(document).ready(function() {
-
+    
+    $("#startDateLabel").html(parseDate($("#startDateLabel").text()));
+    $("#subEndDateLabel").html(parseDate($("#subEndDateLabel").text()));
+    $("#endDateLabel").html(parseDate($("#endDateLabel").text()));
     initDialog('errorDialog', 500);
 
     var SelectOptions = {
@@ -787,6 +800,8 @@ function handleDraftSaving(jsonResult) {
                              exsitingDocuments.push(d);
                          });
                          restorePrevData();
+                         $("#subEndDateLabel").html(parseDate(result.subEndDate));
+                         $("#endDateLabel").html(parseDate(result.endDate));
                          showSuccessfulMessage("Your copilot posting has been saved successfully.");
 
                      },

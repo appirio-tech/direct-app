@@ -155,8 +155,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.6.4 (BUGR-6609) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getSoftwareResult(SoftwareCompetition)} method to include the submission end date.</li>
+ *   </ol>
+ * </p>
+ *
  * @author fabrizyo, FireIce, Veve, isv, TCSASSEMBLER
- * @version 1.6.3
+ * @version 1.6.4
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -1152,6 +1159,7 @@ public class SaveDraftContestAction extends ContestAction {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("projectId", softwareCompetition.getProjectHeader().getId());
         result.put("endDate", DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition)));
+        result.put("subEndDate", DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(softwareCompetition)));
         result.put("paidFee", DirectUtils.getPaidFee(softwareCompetition));
         result.put("projectStatus", softwareCompetition.getProjectHeader().getProjectStatus());
         result.put("hasSpecReview", DirectUtils.hasSpecReview(softwareCompetition));

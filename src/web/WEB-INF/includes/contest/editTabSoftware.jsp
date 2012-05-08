@@ -1,6 +1,6 @@
 <%--
-  - Version: 1.5
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.6
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders edit softeware contest page.
   -
@@ -25,6 +25,9 @@
   - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change notes)
   - Fix the contest requirements preview and integrate the new cockpit tinyMCE editor.
   - Version 1.5 (Release Assembly - Contest Edit and Upload Update) changes: fixes for TCCC-3724, TCCC-3604
+  -
+  - Version 1.6 (BUGR-6609) Change notes:
+  - - Added the submission end date in Schedule section.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -164,6 +167,16 @@
                 <td class="first_tab"><strong>Milestone End Date/Time</strong></td>
                 <td class="sec_tab">&nbsp;</td>
                 <td><span id="rMilestoneDate"></span></td>
+             </tr>
+             <tr>
+                <td class="first_tab"><strong>Submission End Date/Time</strong></td>
+                <td class="sec_tab">&nbsp;</td>
+                <td><span id="rSubEndDate"></span></td>
+             </tr>
+             <tr>
+                <td class="first_tab"><strong>End Date/Time</strong></td>
+                <td class="sec_tab">&nbsp;</td>
+                <td><span id="rEndDate"></span></td>
              </tr>
         </table>        
         

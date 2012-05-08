@@ -1,7 +1,7 @@
 <%--
   - Author: isv
-  - Version: 1.4
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.5
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Direct - Release Bug Fix Assembly) Change notes:
   - - Change time zone from GMT-04 to UTC-05.
@@ -15,6 +15,9 @@
   - Version 1.4 (Release Assembly - TC Cockpit Contest Edit and Upload Update) Change notes:
   - Fixed bug TCCC-3739. Date/Time inputs for contest start time are initialized in JS code block from this page
   - Fixed bug TCCC-3760. The link for downloading the document is corrected.
+  -
+  - Version 1.5 (BUGR-6609) Change notes:
+  - - Added the submission end date and contest end date in Schedule section.
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -393,15 +396,16 @@
         <div class="infoPanelMask">
             <ul>
                 <li>
-                    <label>Start Time:</label>
+                    <label style="width:200px;">Start Date/Time:</label>
                     <span id="startDateLabel"><fmt:formatDate value="${tcdirect:toDate(assetDTO.productionDate)}"
-                                                              pattern="MM/dd/yyyy HH:mm zzz"/></span>
+                                                              pattern="MM/dd/yyyy HH:mm"/></span>
                 </li>
-<%--
                 <li>
-                    <label>End Time:</label> <span id="endDateLabel">08/22/2010 8:00 EST</span>
+                    <label style="width:200px;">Submission End Date/Time:</label> <span id="subEndDateLabel">${subEndDate}</span>
                 </li>
---%>
+                <li>
+                    <label style="width:200px;">End Date/Time:</label> <span id="endDateLabel">${contestEndDate}</span>
+                </li>
             </ul>
         </div>
     </div>

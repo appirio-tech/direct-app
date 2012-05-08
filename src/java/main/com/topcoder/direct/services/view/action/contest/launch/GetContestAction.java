@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
@@ -114,9 +114,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * true.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.5 - BUGR-6609 Change Note
+ * <ul>
+ * <li>Added {@link #subEndDate} and {@link #contestEndDate} fields. Also the getters were added.</li>
+ * </ul>
+ * </p>
  *
  * @author fabrizyo, FireIce, isv, morehappiness
- * @version 1.4
+ * @version 1.5
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -195,6 +201,18 @@ public class GetContestAction extends ContestAction {
     private String otherManagingExperienceString;
 
     /**
+     * The submission end date.
+     * @since 1.5
+     */
+    private String subEndDate;
+    
+    /**
+     * The contest end date.
+     * @since 1.5
+     */
+    private String contestEndDate;
+    
+    /**
      * <p>
      * Creates a <code>GetContestAction</code> instance.
      * </p>
@@ -252,6 +270,8 @@ public class GetContestAction extends ContestAction {
             softwareCompetition.setType(CompetionType.STUDIO);
         }
         setResult(softwareCompetition);
+        subEndDate = DirectUtils.getDateString(DirectUtils.getSubmissionEndDate(softwareCompetition));
+        contestEndDate = DirectUtils.getDateString(DirectUtils.getEndDate(softwareCompetition));
 
         // depends on the type :
         // 1. if contest, store softwareCompetition in session
@@ -592,6 +612,22 @@ public class GetContestAction extends ContestAction {
         this.type = type;
     }
 
+    /**
+     * Gets the submission end date.
+     * @since 1.5
+     */
+    public String getSubEndDate() {
+        return subEndDate;
+    }
+    
+    /**
+     * Gets the contest end date.
+     * @since 1.5
+     */
+    public String getContestEndDate() {
+        return contestEndDate;
+    }
+    
     /**
      * <p>
      * The static type enum to indicate in which mode this action is being called.

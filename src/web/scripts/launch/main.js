@@ -45,8 +45,11 @@
  * - Update saveAsDraftRequestSoftware() to set the autoCreateBugHunt if contest type is assembly and autoCreateBugHunt
  * check box is checked
  *
+ * Version 1.9.1 (BUGR-6609) changes:
+ * - Update the submission end date and contest end date when the contest was updated.
+ *
  * @author isv, TCSASSEMBLER
- * @version 1.9
+ * @version 1.9.1
  */
 
  /**
@@ -643,6 +646,7 @@ function handleSaveAsDraftContestResultSoftware(jsonResult) {
 
         //update endDate
         mainWidget.softwareCompetition.endDate = parseDate(result.endDate);
+        mainWidget.softwareCompetition.subEndDate = parseDate(result.subEndDate);
         mainWidget.softwareCompetition.paidFee = result.paidFee;
     },
     function(errorMessage) {
@@ -663,6 +667,7 @@ function handleSaveAsDraftContestResultStudio(jsonResult) {
 
         //update admin fee, to be fixed
         mainWidget.softwareCompetition.projectHeader.contestAdministrationFee = result.paidFee;
+        mainWidget.softwareCompetition.endDate = parseDate(result.endDate);
 
     },
     function(errorMessage) {
