@@ -372,13 +372,15 @@ $(document).ready(function() {
 
     })
 
+    var copilotCarouselSetting = {scroll:1,visible:1};
+
+    if ($.browser.msie  && parseInt($.browser.version, 10) === 7) {
+        copilotCarouselSetting.wrap = 'circular';
+    }
+
     // display the jcarousel for project copilots
     if ($('#projectCopilotsCarousel').length > 0) {
-        $('#projectCopilotsCarousel').jcarousel({
-            scroll: 1,
-            visible: 1,
-			wrap: 'circular'
-        });
+        $('#projectCopilotsCarousel').jcarousel(copilotCarouselSetting);
 
     }
 
