@@ -19,6 +19,7 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.user.UserService;
 import com.topcoder.shared.util.logging.Logger;
 
 import java.util.ArrayList;
@@ -139,6 +140,13 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      */
     private DirectProjectMetadataService projectMetadataService;
 
+    private UserService userService;
+
+
+    /**
+     * The flag determines whether it's a call to export project general info.
+     */
+    private boolean export = false;
 
     /**
      * Gets the project service facade.
@@ -252,45 +260,63 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 setDashboardProjectStat();
 
                 // get project issues
-                List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
-                Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
+                ProjectData project = null;
 
-                int totalUnresolvedIssues = 0;
-                int totalOngoingBugRaces = 0;
+                // get the project forum information and update the project name and project id
+                // because they are not shown when the project has no contests
+                project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), formData.getProjectId());
 
-                // update dashboard health
-                for(Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
-                    totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
-                    totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
-                }
+                if (!export) {
+                    List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
+                    Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
 
-                // set the project name if it's not set yet
-                for (ProjectBriefDTO project : getViewData().getUserProjects().getProjects()) {
-                    if (project.getId() == getSessionData().getCurrentProjectContext().getId()) {
-                        getSessionData().getCurrentProjectContext().setName(project.getName());
+                    int totalUnresolvedIssues = 0;
+                    int totalOngoingBugRaces = 0;
+
+                    // update dashboard health
+                    for(Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
+                        totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
+                        totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
                     }
-                }
 
-                getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
-                getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
+                    // set the project name if it's not set yet
+                    for (ProjectBriefDTO projectDTO : getViewData().getUserProjects().getProjects()) {
+                        if (projectDTO.getId() == getSessionData().getCurrentProjectContext().getId()) {
+                            getSessionData().getCurrentProjectContext().setName(project.getName());
+                        }
+                    }
+
+                    getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
+                    getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
+
+                    getViewData().getProjectStats().getProject().setName(project.getName());
+                    getViewData().getProjectStats().getProject().setId(project.getProjectId());
+                    getViewData().getProjectStats().getProject().setProjectForumCategoryId(project.getForumCategoryId());
+
+                    // Check if the project's forum has any threads
+                    long forumThreadsCount = DataProvider.getTopCoderDirectProjectForumThreadsCount(project.getProjectId());
+                    getViewData().setHasForumThreads(forumThreadsCount > 0);
+                }
 
                 // gets and sets the statistics of the project copilots
                 setCopilotStats(DataProvider.getDirectProjectCopilotStats(formData.getProjectId()));
 
-                // get the project forum information and update the project name and project id
-                // because they are not shown when the project has no contests
-                ProjectData project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), formData.getProjectId());
-
-                getViewData().getProjectStats().getProject().setName(project.getName());
-                getViewData().getProjectStats().getProject().setId(project.getProjectId());
-                getViewData().getProjectStats().getProject().setProjectForumCategoryId(project.getForumCategoryId());
-
-                // Check if the project's forum has any threads
-                long forumThreadsCount = DataProvider.getTopCoderDirectProjectForumThreadsCount(project.getProjectId());
-                getViewData().setHasForumThreads(forumThreadsCount > 0);
-
                 // set all data for project general information table to the view data
                 setProjectGeneralInfo(project);
+
+                if(export) {
+                    for(long clientId : viewData.getProjectGeneralInfo().getClientManagers()) {
+                        viewData.getProjectGeneralInfo().getClientManagersHandles().put(clientId, userService.getUserHandle(clientId));
+                    }
+                    for(long managerId : viewData.getProjectGeneralInfo().getTopcoderManagers()) {
+                        viewData.getProjectGeneralInfo().getTopcoderManagersHandles().put(managerId, userService.getUserHandle(managerId));
+                    }
+                    for(ProjectCopilotStatDTO copilot : getCopilotStats()) {
+                        viewData.getProjectGeneralInfo().getCopilotHandles().put(copilot.getCopilotInfo().getUserId(), copilot.getCopilotInfo().getHandle());
+                    }
+
+                    return "download";
+                }
                 
                 
             } catch (Exception e) {
@@ -404,5 +430,26 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         getViewData().getProjectGeneralInfo().setActualCost((int) Math.round(getViewData().getDashboardProjectStat().getTotalProjectCost()));
         
         DataProvider.setProjectGeneralInfo(getViewData().getProjectGeneralInfo());
+    }
+
+    /**
+     * Sets the flag of export.
+     *
+     * @param export flag on whether export.
+     */
+    public void setExport(boolean export) {
+        this.export = export;
+    }
+
+    public boolean getExport() {
+        return this.export;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

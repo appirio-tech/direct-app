@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.dto.project;
 
 import com.topcoder.service.project.ProjectData;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,8 +21,13 @@ import java.util.Map;
  *     - Add properties for projected cost, projected duration, 5 project ratings and additional project info.
  * </p>
  *
- * @version 1.1
- * @author GreatKevin
+ * <p>
+ *     Version 1.1.1 (Module Assembly - TC Cockpit Direct Project Related Services Update and Integration)
+ *     - Add the status label for draft status.
+ * </p>
+ *
+ * @version 1.1.1
+ * @author GreatKevin, TCSASSEMBLER
  */
 public class ProjectGeneralInfoDTO {
 
@@ -83,6 +89,21 @@ public class ProjectGeneralInfoDTO {
     private List<Long> topcoderManagers = new ArrayList<Long>();
 
     /**
+     * The client managers handles map.
+     */
+    private Map<Long, String> clientManagersHandles = new HashMap<Long, String>();
+
+    /**
+     * The topcoder managers handles map.
+     */
+    private Map<Long, String> topcoderManagersHandles = new HashMap<Long, String>();
+
+    /**
+     * The project copilots handle.
+     */
+    private Map<Long, String> copilotHandles = new HashMap<Long, String>();
+
+    /**
      * The business impact rating of project.
      * @since 1.1
      */
@@ -132,6 +153,8 @@ public class ProjectGeneralInfoDTO {
             return "Deleted";
         } else if (project.getProjectStatusId() == 4L) {
             return "Completed";
+        } else if (project.getProjectStatusId() == 5L) {
+            return "Draft";
         }
 
         return "unknown";
@@ -457,5 +480,29 @@ public class ProjectGeneralInfoDTO {
      */
     public void setProjectedDuration(Integer projectedDuration) {
         this.projectedDuration = projectedDuration;
+    }
+
+    public Map<Long, String> getClientManagersHandles() {
+        return clientManagersHandles;
+    }
+
+    public void setClientManagersHandles(Map<Long, String> clientManagersHandles) {
+        this.clientManagersHandles = clientManagersHandles;
+    }
+
+    public Map<Long, String> getTopcoderManagersHandles() {
+        return topcoderManagersHandles;
+    }
+
+    public void setTopcoderManagersHandles(Map<Long, String> topcoderManagersHandles) {
+        this.topcoderManagersHandles = topcoderManagersHandles;
+    }
+
+    public Map<Long, String> getCopilotHandles() {
+        return copilotHandles;
+    }
+
+    public void setCopilotHandles(Map<Long, String> copilotHandles) {
+        this.copilotHandles = copilotHandles;
     }
 }

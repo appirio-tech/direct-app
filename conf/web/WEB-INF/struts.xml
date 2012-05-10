@@ -317,10 +317,22 @@
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
         </action>
+
         <action name="projectOverview" class="projectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
         </action>
+
+        <action name="projectInfoExport" class="projectExportAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="download" type="stream">
+                <param name="contentDisposition">attachment;filename=${viewData.exportFileName}</param>
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">viewData.exportExcel</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
          <action name="projectIssueTracking" class="com.topcoder.direct.services.view.action.project.ProjectIssuesTrackingAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-issues-tracking.jsp</result>

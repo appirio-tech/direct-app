@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.processor.project;
 
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.action.project.ProjectOverviewAction;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.processor.RequestProcessor;
@@ -44,8 +45,13 @@ public class UpcomingProjectActivitiesProcessor implements RequestProcessor<Form
      * @param action an <code>Object</code> representing the current action mapped to incoming request.
      */
     public void processRequest(FormAction<ProjectIdForm> action) {
+        boolean loadData = true;
 
-        if (action instanceof ViewAction) {
+        if(action instanceof ProjectOverviewAction) {
+            loadData = !((ProjectOverviewAction) action).getExport();
+        }
+
+        if (action instanceof ViewAction && loadData) {
             ViewAction viewAction = (ViewAction) action;
             Object data = viewAction.getViewData();
             if (data instanceof UpcomingActivitiesDTO.Aware) {

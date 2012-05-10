@@ -2,6 +2,7 @@
     overflow: hidden;
     background: url(/images/dashboard-table-bg.png) repeat-x left top;
     margin-bottom: 20px;
+    position: relative;
 }
 
 .projectInforDiv .projectInforTitle {
@@ -27,6 +28,23 @@
 
 .projectInforDiv .projectInforTitle a.collapse {
     background: url(/images/icon-collapse.png) no-repeat left center;
+}
+
+.projectInforDiv .exportProject {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}
+.projectInforDiv .exportProject a {
+    background: url("/images/export-icon.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    display: block;
+    font-size: 12px;
+    line-height: 22px;
+    padding-left: 25px;
+}
+.projectInforDiv .exportProject a:hover {
+    text-decoration: none;
 }
 
 .projectInformation {

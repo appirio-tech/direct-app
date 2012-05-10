@@ -3,12 +3,31 @@
  */
 package com.topcoder.direct.services.view.dto.project;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.CommonDTO;
 import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.excel.Row;
+import com.topcoder.excel.Sheet;
+import com.topcoder.excel.Workbook;
+import com.topcoder.excel.impl.ExcelSheet;
+import com.topcoder.excel.impl.ExcelWorkbook;
+import com.topcoder.excel.output.Biff8WorkbookSaver;
+import com.topcoder.excel.output.WorkbookSaver;
 
 /**
  * <p>
@@ -21,43 +40,43 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
  * <li>Added {@link #dashboardProjectStat} and {@link #contests} parameters. </li>
  * </ul>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.1 (Cockpit Performance Improvement Project Overview and Manage Copilot Posting Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Updated {@link #contests} variable to map objects of {@link ContestHealthDTO} type instead of
- *     <code>ContestDashboardDTO</code> type.</li>
- *   </ol>
+ * <ol>
+ * <li>Updated {@link #contests} variable to map objects of {@link ContestHealthDTO} type instead of
+ * <code>ContestDashboardDTO</code> type.</li>
+ * </ol>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.2 (Project Health Update Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Removed <code>contests</code> variable as project contests health status is now retrieved separately via AJAX
- *     call.</li>
- *   </ol>
+ * <ol>
+ * <li>Removed <code>contests</code> variable as project contests health status is now retrieved separately via AJAX
+ * call.</li>
+ * </ol>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.3 (TopCoder Cockpit Project Overview R2 Project Forum Backend Assembly 1.0) Change notes:
- *   <ol>
- *     <li>Added {@link #hasForumThreads} property with respective accessor/mutator methods.</li>
- *   </ol>
+ * <ol>
+ * <li>Added {@link #hasForumThreads} property with respective accessor/mutator methods.</li>
+ * </ol>
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.4 (Module Assembly - TC Cockpit Project Overview Project General Info) Change notes:
- *   <ol>
- *     <li>Added {@link #projectGeneralInfo} property with respective accessor/mutator methods.</li>
- *   </ol>
+ * <ol>
+ * <li>Added {@link #projectGeneralInfo} property with respective accessor/mutator methods.</li>
+ * </ol>
  * </p>
  *
  * @author isv, Blues
  * @version 1.4
  */
 public class ProjectOverviewDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
-                                                             UpcomingActivitiesDTO.Aware,
-                                                             LatestProjectActivitiesDTO.Aware {
+        UpcomingActivitiesDTO.Aware,
+        LatestProjectActivitiesDTO.Aware {
 
     /**
      * <p>A <code>ProjectStatsDTO</code> providing statistics on project.</p>
@@ -77,7 +96,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
 
     /**
      * <p>A <code>boolean</code> providing the flag indicating whether the project forum has any threads or not.</p>
-     * 
+     *
      * @since 1.3
      */
     private boolean hasForumThreads;
@@ -142,7 +161,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * <p>Sets the details on upcoming activities for projects associated with current user.</p>
      *
      * @param upcomingActivities a <code>LatestActivitiesDTO</code> providing the details on latest activities for
-     *        projects associated with current user.
+     *                           projects associated with current user.
      */
     public void setUpcomingActivities(UpcomingActivitiesDTO upcomingActivities) {
         this.upcomingActivities = upcomingActivities;
@@ -161,7 +180,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      * <p>Sets the latest activities on requested project.</p>
      *
      * @param latestProjectActivities a <code>LatestProjectActivitiesDTO</code> providing details on latest activities on
-     *        requested project.
+     *                                requested project.
      */
     public void setLatestProjectActivities(LatestProjectActivitiesDTO latestProjectActivities) {
         this.latestProjectActivities = latestProjectActivities;
@@ -180,8 +199,7 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
     /**
      * Sets the dashboardProjectStat field.
      *
-     * @param dashboardProjectStat
-     *            the dashboardProjectStat to set
+     * @param dashboardProjectStat the dashboardProjectStat to set
      * @since 1.0.1
      */
     public void setDashboardProjectStat(
@@ -228,5 +246,250 @@ public class ProjectOverviewDTO extends CommonDTO implements Serializable, Proje
      */
     public void setProjectGeneralInfo(ProjectGeneralInfoDTO projectGeneralInfo) {
         this.projectGeneralInfo = projectGeneralInfo;
+    }
+
+    public InputStream getExportExcel() {
+        try {
+
+            Workbook workbook = new ExcelWorkbook();
+            Sheet sheet = new ExcelSheet(getProjectGeneralInfo().getProject().getName(), (ExcelWorkbook) workbook);
+            insertSheetData(sheet);
+            workbook.addSheet(sheet);
+
+            // Create a new WorkBookSaver
+            WorkbookSaver saver = new Biff8WorkbookSaver();
+            ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+            saver.save(workbook, saveTo);
+            return new ByteArrayInputStream(saveTo.toByteArray());
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw new IllegalStateException(e);
+        }
+    }
+
+    /**
+     * <p>Inserts the sheet data.</p>
+     *
+     * @param sheet the sheet.
+     */
+    private void insertSheetData(Sheet sheet) throws Exception {
+        // the date format used for displaying 'completion date'
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        final String NOT_SET = "NOT SET";
+
+        // set up the sheet header first
+        Row row = sheet.getRow(1);
+        int index = 1;
+
+        row.getCell(index++).setStringValue("Field");
+        row.getCell(index++).setStringValue("Value1");
+        row.getCell(index++).setStringValue("Value1");
+        row.getCell(index++).setStringValue("Value2");
+        row.getCell(index++).setStringValue("Value3");
+        row.getCell(index++).setStringValue("Value4");
+        row.getCell(index++).setStringValue("Value5");
+        row.getCell(index++).setStringValue("Value6");
+
+        // insert sheet data from 2nd row
+        int rowIndex = 2;
+
+        // project name
+        row = sheet.getRow(rowIndex++);
+
+        row.getCell(1).setStringValue("Project Name");
+        row.getCell(2).setStringValue(getProjectGeneralInfo().getProject().getName());
+
+        // project description
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Project Description");
+        row.getCell(2).setStringValue(getProjectGeneralInfo().getProject().getDescription() == null
+                ? NOT_SET : getProjectGeneralInfo().getProject().getDescription());
+
+        // project type
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Project Type");
+        row.getCell(2).setStringValue(getProjectGeneralInfo().getProject().getProjectType() == null
+                ? NOT_SET : getProjectGeneralInfo().getProject().getProjectType().getName());
+
+        // project status
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Project Status");
+        row.getCell(2).setStringValue(getProjectGeneralInfo().getStatusLabel());
+
+        // total budget
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Total Budget");
+        if(getProjectGeneralInfo().getTotalBudget() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setNumberValue(getProjectGeneralInfo().getTotalBudget());
+        }
+
+        // Actual Cost
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Actual Cost");
+        row.getCell(2).setNumberValue(getProjectGeneralInfo().getActualCost());
+
+        // Projected Cost
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Projected Cost");
+        row.getCell(2).setNumberValue(getProjectGeneralInfo().getProjectedCost());
+
+        // Planned duration
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Planned Duration");
+        if(getProjectGeneralInfo().getPlannedDuration() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setNumberValue(getProjectGeneralInfo().getPlannedDuration());
+        }
+
+        // Actual Duration
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Actual Duration");
+        row.getCell(2).setNumberValue(getProjectGeneralInfo().getActualDuration());
+
+        // Projected Duration
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Projected Duration");
+        row.getCell(2).setNumberValue(getProjectGeneralInfo().getProjectedDuration());
+
+        // Jira link
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Bug Tracker");
+        if(getProjectGeneralInfo().getJira() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setStringValue(getProjectGeneralInfo().getJira());
+        }
+
+        // SVN link
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("SVN Link");
+        if(getProjectGeneralInfo().getSvn() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setStringValue(getProjectGeneralInfo().getSvn());
+        }
+
+        // Forum
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Forum Link");
+        if(getProjectGeneralInfo().getProject().getForumCategoryId() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setStringValue("https://apps.topcoder.com/forums/?module=Category&categoryID=" + getProjectGeneralInfo().getProject().getForumCategoryId());
+        }
+
+
+        // client managers
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Client Managers");
+        if(getProjectGeneralInfo().getClientManagers() == null || getProjectGeneralInfo().getClientManagers().size() <= 0) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            index = 2;
+
+            for(String handle : getProjectGeneralInfo().getClientManagersHandles().values()) {
+                row.getCell(index++).setStringValue(handle);
+            }
+        }
+
+        // TopCoder managers
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("TopCoder Project Managers");
+        if(getProjectGeneralInfo().getTopcoderManagers() == null || getProjectGeneralInfo().getTopcoderManagers().size() <= 0) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            index = 2;
+
+            for(String handle : getProjectGeneralInfo().getTopcoderManagersHandles().values()) {
+                row.getCell(index++).setStringValue(handle);
+            }
+        }
+
+        // Copilots
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Copilots");
+        if(getProjectGeneralInfo().getCopilotHandles() == null || getProjectGeneralInfo().getCopilotHandles().size() <= 0) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            index = 2;
+
+            for(String handle : getProjectGeneralInfo().getCopilotHandles().values()) {
+                row.getCell(index++).setStringValue(handle);
+            }
+        }
+
+        // Business Impact
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Business Impact");
+        if(getProjectGeneralInfo().getBusinessImpactRating() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setNumberValue(getProjectGeneralInfo().getBusinessImpactRating());
+        }
+
+        // Risk Level
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Risk Level");
+        if(getProjectGeneralInfo().getRiskLevelRating() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setNumberValue(getProjectGeneralInfo().getRiskLevelRating());
+        }
+
+        // Cost Level
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Cost Level");
+        if(getProjectGeneralInfo().getCostRating() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setNumberValue(getProjectGeneralInfo().getCostRating());
+        }
+
+        // Difficulty
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("Difficulty");
+        if(getProjectGeneralInfo().getDifficultyRating() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setNumberValue(getProjectGeneralInfo().getDifficultyRating());
+        }
+
+        // ROI
+        row = sheet.getRow(rowIndex++);
+        row.getCell(1).setStringValue("ROI");
+        if(getProjectGeneralInfo().getRoiRating() == null) {
+            row.getCell(2).setStringValue(NOT_SET);
+        } else {
+            row.getCell(2).setNumberValue(getProjectGeneralInfo().getRoiRating());
+        }
+
+        // additional information
+        final Map<String, List<String>> additionalProjectInfo = getProjectGeneralInfo().getAdditionalProjectInfo();
+
+        for(String fieldName : additionalProjectInfo.keySet()) {
+            row = sheet.getRow(rowIndex++);
+            row.getCell(1).setStringValue(fieldName);
+
+            List<String> values = additionalProjectInfo.get(fieldName);
+
+            if(values == null || values.size() <= 0) {
+                row.getCell(2).setStringValue(NOT_SET);
+            } else {
+                index = 2;
+
+                for(String value : values) {
+                    row.getCell(index++).setStringValue(value);
+                }
+            }
+        }
+
+    }
+
+    public String getExportFileName() {
+        return this.projectGeneralInfo.getProject().getName().replaceAll(" ", "_") + ".xls";
     }
 }
