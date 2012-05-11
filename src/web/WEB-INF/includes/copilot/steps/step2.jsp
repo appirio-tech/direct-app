@@ -40,7 +40,7 @@
             <div class="rowItem">
                 <label>I prefer that the copilot has previously managed the following type(s) of projects<span class="red">*</span></label>
                 <div class="checkType">
-                    <span>Please check the type of projects that meet your requirement :</span>
+                    <span>Please check the type of project(s) that mostly closely reflect your project:</span>
                     
                     <div class="normal">
                         <ul class="type1">
