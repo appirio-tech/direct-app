@@ -444,8 +444,18 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 3.8 (Release Assembly - TC Direct Cockpit Release Four) change log:
+ * <ol>
+ *     <li>
+ *         Update method {@link #setSoftwareSubmissionsData(com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO)}
+ *         to not set winner if the submission is not passed review.
+ *     </li>
+ * </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, Blues, GreatKevin
- * @version 3.7
+ * @version 3.8
  * @since 1.0
  */
 public class DataProvider {
@@ -1833,6 +1843,11 @@ public class DataProvider {
     /**
      * <p>Sets the specified DTO with data for requested project submissions.</p>
      *
+     * <p>
+     * Update in version 3.8 (Release Assembly - TC Direct Cockpit Release Four)
+     * - do not set first place winner and second place winner if the submission does not passed review
+     * </p>
+     *
      * @param dto a <code>SoftwareContestSubmissionsDTO</code> to be set with data for project submissions.
      * @throws Exception if an unexpected error occurs.
      * @since 1.2.1
@@ -1918,7 +1933,7 @@ public class DataProvider {
             submissions.add(submission);
 
             Integer placement = submission.getPlacement();
-            if (placement != null && placement < 3) {
+            if (placement != null && placement < 3 && submission.getPassedReview()) {
                 SoftwareContestWinnerDTO winner = new SoftwareContestWinnerDTO();
                 winner.setFinalScore(submission.getFinalScore());
                 winner.setHandle(submitter.getHandle());

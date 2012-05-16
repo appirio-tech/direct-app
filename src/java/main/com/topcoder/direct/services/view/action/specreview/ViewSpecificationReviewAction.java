@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 
 package com.topcoder.direct.services.view.action.specreview;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.management.deliverable.Submission;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.util.HtmlUtils;
 
@@ -69,6 +70,12 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  *  <li>Update {@link #execute()} to use the projectId instead of contestId</li>
  * </ul>
  * </p>
+ *
+ * <p>
+ *    Version 1.2 (Release Assembly - TC Direct Cockpit Release Four) change notes:
+ *    - Fix TCCC 4174 check for active specification submission. If there is active specification
+ *    submission, do not display the resubmit specification review button.
+ * </p>
 
  * <p>
  * <b>Thread safety:</b> This class is mutable and not thread safe. This should
@@ -80,11 +87,17 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  * safe.
  * </p>
  * 
- * @author caru, TCSDEVELOPER, morehappiness
- * @version 1.1
+ * @author caru, morehappiness, GreatKevin
+ * @version 1.2
  * @since 1.0
  */
 public class ViewSpecificationReviewAction extends SpecificationReviewAction {
+
+    /**
+     * Represents the specification submission type.
+     * @since 1.2
+     */
+    private static final int CONTEST_SPEC_SUBMISSION_TYPE_ID = 2;
 
     /**
      * <p>
@@ -161,6 +174,12 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
      * <p>
      * Executes the request to view a specification review.
      * </p>
+     *
+     * <p>
+     * Update in version 1.2:
+     * - Check if the contest has active spec submission and set into the view data. The view JSP will use
+     * it to determine whether to display the resubmit spec button.
+     * </p>
      * 
      * <p>
      * No exception is thrown by this method. If any exception occurs, the
@@ -199,6 +218,12 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
                                         "specificationReviewService has not been injected."));
             }
 
+            if (getContestServiceFacade() == null) {
+                // check if contest service facade is initialized
+                return Helper.handleActionError(this,
+                           new ViewSpecificationReviewActionException("contestServiceFacade has not been injected."));
+            }
+
             // fetch the specification review, status and comments
             List<SpecificationReview> specificationReviews = specificationReviewService
                     .getAllSpecificationReviews(getTCSubject(), getProjectId());
@@ -206,7 +231,7 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             SpecificationReviewStatus specificationReviewStatus = specificationReviewService
                     .getSpecificationReviewStatus(getTCSubject(),
                             getProjectId());
-            
+
             List<SpecReviewComment> specReviewComments = specReviewCommentService
                     .getSpecReviewComments(getTCSubject(), getProjectId(),
                             isStudio());
@@ -284,7 +309,21 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             result.setSpecReviewComments(specReviewComments);
             result.setSpecComments(specComments);
             result.setResponses(lastResponses);
-            
+
+            // check if there is active contest spec submission
+
+            // get all the active specification submission of the contest, should be 0 or 1
+            final Submission[] activeSpecSubmission = getContestServiceFacade().getSoftwareActiveSubmissions(
+                    getProjectId(), CONTEST_SPEC_SUBMISSION_TYPE_ID);
+
+            if (activeSpecSubmission != null && activeSpecSubmission.length >= 1) {
+                // there is active specification submission
+                result.setHasActiveSpecSubmission(true);
+            } else {
+                // no active specification submission
+                result.setHasActiveSpecSubmission(false);
+            }
+
             // for normal request flow prepare various data to be displayed to
             // user
             // Set contest stats

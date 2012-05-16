@@ -354,9 +354,11 @@
                                                                         <c:when test="${passedScreening}">
                                                                             <c:choose>
                                                                                 <c:when test="${submission.finalScore ne null}">
+                                                                                    <span class="${submission.passedReview ? 'icoPassedReview' : 'icoFailedReview'}">
                                                                                         <fmt:formatNumber
                                                                                                 value="${submission.finalScore}"
                                                                                                       pattern="##0.00"/>
+                                                                                    </span>
                                                                                 </c:when>
                                                                                 <c:otherwise>n/a</c:otherwise>
                                                                             </c:choose>

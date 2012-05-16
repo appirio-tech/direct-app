@@ -867,6 +867,11 @@
             <result>/WEB-INF/contest-details2.jsp</result>
         </action>
 
+        <action name="specReviewScheduled" method="specReviewScheduled" class="contestDetailJSONAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="detailJson" class="contestDetailJSONAction">
             <result name="success" type="json" />
             <result name="error" type="json" />

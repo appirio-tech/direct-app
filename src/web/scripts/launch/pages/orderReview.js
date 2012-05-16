@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Rerender the order review page.
@@ -19,8 +19,11 @@
  * - the contest fee will be calculated as a percentage of the member cost.
  * - Changed method: updateOrderReviewStudio.
  *
- * @author TCSASSEMBLER, pvmagacho
- * @version 1.4
+ * Version 1.5 - Release Assembly - TC Direct Cockpit Release Four updates:
+ * - ask user to choose start spec review when activating the contest in launch contest
+ *
+ * @author pvmagacho, GreatKevin
+ * @version 1.5
  */
 /**
  * Update order review page of software contest.
@@ -145,7 +148,7 @@ function updateOrderReviewStudio() {
    $('#orCopilotFee').html(copilotCost.formatMoney(2));
    
    // Modify admin Fee if contest percentage is to be used
-   if (billingFeesPercentage[billingProjectId]!= null) {
+   if (typeof billingFeesPercentage != 'undefined' && billingFeesPercentage[billingProjectId]!= null) {
        var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
        if (contestFeePercentage!=null) {
            var memberCost = contestPrizesTotal + milestonePrizesTotal + specificationReviewPayment + reviewPayment + copilotCost; /* + calculateStudioCupPoints() ; left to FF. */
@@ -229,37 +232,68 @@ function activateContest() {
         "YES",
         function() {
             closeModal();
-            // construct request data
-            activateContestSoftware();
+            showActivateSpecReviewModal();
         }
     );
 
 }
 
 /**
- * Activate software contest.
+ * Show the activate and spec review modal.
+ * @since 1.5
  */
-function activateContestSoftware() {	
-   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
-   if(billingProjectId < 0) {
-   	  showErrors("no billing project is selected.");
-   	  return;
-   }   
+function showActivateSpecReviewModal() {
+    // show spec review popup
+    $('#TB_overlay').show();
+    $('#TB_window_custom').show();
+    $('.TB_overlayBG').css('height', document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
+    $('#TB_window_custom').css({
+        //'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window_custom").width() / 2)) + 'px'
+        'left':$(window).width() / 2 - $('#TB_window_custom').width() / 2,
+        'top':($(window).height() / 2 - $('#TB_window_custom').height() / 2) + $(window).scrollTop()
+    });
 
-   //construct request data
-   var request = saveAsDraftRequest();
-   request['activationFlag'] = true;
+    // set button click
+    $('#TB_window_custom .review-now').attr("href", "javascript:activateContestSoftware('now')");
+    $('#TB_window_custom .review-later').attr("href", "javascript:activateContestSoftware('later')");
+}
 
-   $.ajax({
-      type: 'POST',
-      url:  "saveDraftContest",
-      data: request,
-      cache: false,
-      dataType: 'json',
-      success: handleActivationResult,
-      beforeSend: beforeAjax,
-      complete: afterAjax            
-   }); 
+function hideActivateSpecReviewModal() {
+    $('#TB_overlay').hide();
+    $('#TB_window_custom').hide();
+}
+
+/**
+ * Activate software contest.
+ *
+ * Update in version 1.5:
+ * - Start spec review when activate the contest
+ */
+function activateContestSoftware(mode) {
+    var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject()
+    if (billingProjectId < 0) {
+        showErrors("no billing project is selected.");
+        return;
+    }
+
+    //construct request data
+    var request = saveAsDraftRequest();
+    request['activationFlag'] = true;
+    request['specReviewStartMode'] = mode;
+
+    $.ajax({
+        type:'POST',
+        url:"saveDraftContest",
+        data:request,
+        cache:false,
+        dataType:'json',
+        success:handleActivationResult,
+        beforeSend: function() {
+            hideActivateSpecReviewModal();
+            modalPreloader();
+        },
+        complete:afterAjax
+    });
 }
 
 /**
@@ -270,7 +304,8 @@ function activateContestSoftware() {
 function handleActivationResult(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
-       var startSpecReviewUrl = "../contest/startSpecReview.action?projectId=";
+       hideActivateSpecReviewModal();
+       // var startSpecReviewUrl = "../contest/startSpecReview.action?projectId=";
        mainWidget.softwareCompetition.projectHeader.id = result.projectId;
        if(mainWidget.isSoftwareContest()) {
          //show as receipt
@@ -289,17 +324,18 @@ function handleActivationResult(jsonResult) {
          //remove all edit icons
          $('#orderReviewPage a.tipLink').hide();
        }
-       // show go to my spec review pop div
-       if (result.hasSpecReview && !result.isSpecReviewStarted) {
-    	   if(mainWidget.isSoftwareContest()) {
-    		   $('#swOrderReview_bottom_review').show();
-    	   } else {
-    		   $('#orderReview_bottom_review').show();
-    	   }
-       }
-       startSpecReviewUrl += result.projectId + "&";
-        $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
-        $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
+
+//       // show go to my spec review pop div
+//       if (result.hasSpecReview && !result.isSpecReviewStarted) {
+//    	   if(mainWidget.isSoftwareContest()) {
+//    		   $('#swOrderReview_bottom_review').show();
+//    	   } else {
+//    		   $('#orderReview_bottom_review').show();
+//    	   }
+//       }
+//       startSpecReviewUrl += result.projectId + "&";
+//        $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
+//        $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");
     },
     function(errorMessage) {
         showServerError(errorMessage);

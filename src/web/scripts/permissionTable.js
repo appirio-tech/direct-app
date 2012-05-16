@@ -23,8 +23,11 @@
  * Version 1.1 - Release Assembly - TC Direct Cockpit Release One
  * - Saving the permissions via ajax instead of submitting a form.
  *
+ * Version 1.2 - Release Assembly - TC Direct Cockpit Release Four
+ * - Remove the user permission id when removing a user project permission to fix TCCC-4173.
+ *
  * @author TCSASSEMBLER
- * @version 1.1 (Release Assembly - TC Direct Cockpit Release One)
+ * @version 1.2
  */
 //$(function() {
 /**
@@ -1139,6 +1142,7 @@ $.permission = {
       // cancel all permissions and delete it
       project.setSingleUserPermission(userId, false, false, false);
       delete project.userPermissions[userId];
+      delete project.userPermissionIds[userId];
       project.getUserPermissionsHtml();
 
       // remove the row

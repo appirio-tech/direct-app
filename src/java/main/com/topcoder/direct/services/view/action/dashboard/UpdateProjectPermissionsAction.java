@@ -41,8 +41,16 @@ import java.util.Map;
  *         change UpdateProjectPermissionsAction to be ajax styled
  *     </li>
  * </p>
- * @author isv, TCSASSEMBLER
- * @version 1.2
+ *
+ * <p>
+ *     Version 1.3 (Release Assembly - TC Direct Cockpit Release Four)
+ *     <li>
+ *         update executeAction() to fix the issue that cannot remove read permission for the user.
+ *     </li>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.3
  * @since Direct Permissions Setting Back-end and Integration Assembly 1.0
  */
 public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
@@ -95,8 +103,11 @@ public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
                 permissionTypeId = 3;
             } else if (permission.getPermission().toLowerCase().equals("write")) {
                 permissionTypeId = 2;
-            } else {
+            } else if (permission.getPermission().toLowerCase().equals("read")) {
                 permissionTypeId = 1;
+            } else {
+                // remove
+                permissionTypeId = -1;
             }
 
             for (Permission upp : userProjectPermissions) {
@@ -109,8 +120,8 @@ public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
             }
 
             if (add) {
-            permissions.add(permission);
-        }
+                permissions.add(permission);
+            }
 
 
         }

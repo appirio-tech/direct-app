@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.specreview;
 
@@ -34,8 +34,15 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  *   </ol>
  * </p>
  *
- * @author caru, TCSDEVELOPER, TCSASSEMBLER
- * @version 1.1
+ * <p>
+ * Version 1.2 (Release Assembly - TC Direct Cockpit Release Four)
+ * <ol>
+ *     <li>Add {@link #hasActiveSpecSubmission} field and getter/setter for it</li>
+ * </ol>
+ * </p>
+ *
+ * @author caru, GreatKevin
+ * @version 1.2
  */
 public class ViewSpecificationReviewActionResultData extends CommonDTO {
 
@@ -105,6 +112,13 @@ public class ViewSpecificationReviewActionResultData extends CommonDTO {
      * The contest dashboard data.s
      */
     private ContestDashboardDTO dashboard;
+
+    /**
+     * Flag to indicate whether there is active spec submission for spec review.
+     *
+     * @since 1.2
+     */
+    private boolean hasActiveSpecSubmission;
     
     /**
      * Default constructor, creates new instance.
@@ -276,5 +290,23 @@ public class ViewSpecificationReviewActionResultData extends CommonDTO {
         this.dashboard = dashboard;
     }
 
-    
+    /**
+     * Gets the hasActiveSpecSubmission flag.
+     *
+     * @return the hasActiveSpecSubmission flag.
+     * @since 1.2
+     */
+    public boolean isHasActiveSpecSubmission() {
+        return hasActiveSpecSubmission;
+    }
+
+    /**
+     * Sets the hasActiveSpecSubmission flag.
+     *
+     * @param hasActiveSpecSubmission the hasActiveSpecSubmission flag.
+     * @since 1.2
+     */
+    public void setHasActiveSpecSubmission(boolean hasActiveSpecSubmission) {
+        this.hasActiveSpecSubmission = hasActiveSpecSubmission;
+    }
 }

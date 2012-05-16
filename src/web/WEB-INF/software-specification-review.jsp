@@ -1,11 +1,15 @@
 <%--
   - Author: TCSASSEMBLER
+  -
   - Version 1.1 (HTML Cockpit Spec Review Assembly assembly)
   -
   - Version 1.2 (TC Direct Contest Dashboard Update Assembly) change Notes: 
-  - 1.Add dashboard header.  
+  - 1.Add dashboard header.
+  -
+  - Version 1.2.1 (Release Assembly - TC Direct Cockpit Release Four) change notes:
+  - - Uses the new flag hasActiveSpecSubmssion to check if need to display resubmit spec button
   -  
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the specification reivew view.
 --%>
@@ -105,7 +109,13 @@
                                                                 Spec Review in Progress...
                                                             </c:if>    
                                                             <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
-                                                                Waiting For Fixes...
+
+                                                               <c:when  test="${viewData.hasActiveSpecSubmission}">
+                                                                   The submission has been received.
+                                                               </c:when >
+                                                               <c:otherwise>
+                                                                   Waiting For Fixes...
+                                                               </c:otherwise>
                                                             </c:if>
                                                             <c:if test="${viewData.specificationReviewStatus eq 'NO_SPEC_REVIEW'}">
                                                                 No Spec Review Now...
@@ -260,7 +270,7 @@
                                                             <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
                                                         </c:if>
                                                         
-                                                        <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
+                                                        <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES' and !viewData.hasActiveSpecSubmission}">
                                                             <div id="resubmit">
                                                                 <a href="javascript:;" class="resubmit"><img src="/images/resubmit.png" alt="resubmit" /></a>
                                                                 <br />

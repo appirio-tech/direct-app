@@ -50,10 +50,13 @@
  *
  * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 1) updates:
  * - Add new css for add/edit JIRA issue in contest issue tracking page.
-  *
+ *
  * - (Module Assembly - Adding Contest Approval Feature in Direct) updates:
  * - Add new css for the Approval section on Submissions page
-*/
+ *
+ * - (Release Assembly - TC Direct Cockpit Release Four) updates:
+ * - Add class icoPassedReview and iconFailReview
+ */
 
 
 BODY#page{
@@ -3406,6 +3409,20 @@ span.icoTHDownload{
 	line-height: 14px;
 	padding: 0 22px 0 0;
 	background:url(../images/ico_false.png) no-repeat right 0;
+}
+
+.icoPassedReview{
+    height: 30px;
+    line-height: 14px;
+    padding: 0 22px 0 0;
+    background:url(../images/ico_true.png) no-repeat right 0;
+}
+
+.icoFailedReview{
+    height: 30px;
+    line-height: 14px;
+    padding: 0 22px 0 0;
+    background:url(../images/ico_false.png) no-repeat right 0;
 }
 
 .icoTrue, .icoFalse, a.scores{

@@ -25,8 +25,11 @@
  * Version 1.5.2 (BUGR-6609) changes:
  * - Update the submission end date and contest end date when the contest was updated.
  *
- * @author GreatKevin, isv, TCSASSEMBLER
- * @version 1.5.2
+ * Version 1.5.3 (Release Assembly - TC Direct Cockpit Release Four) changes:
+ * - Change project name to a link to project overview page.
+ *
+ *  @author GreatKevin, isv, GreatKevin
+ * @version 1.5.3
  */
 
 var currentDocument = {};
@@ -561,7 +564,7 @@ function updateProjectGeneralInfo(notSendToServer) {
     }
             
     $('#contestNameTextLabel').html(contestName);
-    $('#projectNameTextLabel').html(projectName);
+    $('#projectNameTextLabel').html('<a href="../projectOverview?formData.projectId=' + projectId + '">' + projectName + '</a>');
     $('#billingProjectNameTextLabel').html(accountName);
     $('#projects').val(projectId);
     $('#contestNameInput').val(contestName);

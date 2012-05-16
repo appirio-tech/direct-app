@@ -40,6 +40,9 @@
   -
   - Version 2.0 - Release Assembly - TC Direct Cockpit Release Three version 1.0
   - - Add tooltip for the timeline of contest dashboard in contest details page
+  -
+  - Version 2.1 - Release Assembly - TC Direct Cockpit Release Four
+  - - Add modal background for spec review modal
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -136,6 +139,7 @@
     </div><!-- End #repostDialog -->
 
 
+    <div id="TB_overlay" class="TB_overlayBG" style="display:none"></div>
 
     <div id="TB_window_custom" class="specrev-window">
         <h1>Plan Specification Review</h1>

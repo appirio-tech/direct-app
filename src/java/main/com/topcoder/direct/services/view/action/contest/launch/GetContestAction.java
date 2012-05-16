@@ -5,6 +5,7 @@ package com.topcoder.direct.services.view.action.contest.launch;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,13 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.topcoder.direct.services.project.milestone.model.Milestone;
 import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.direct.services.view.util.AuthorizationProvider;
+import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.resource.Resource;
 import com.topcoder.management.resource.ResourceRole;
+import com.topcoder.service.project.ProjectData;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.direct.services.exception.DirectException;
@@ -120,9 +125,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <li>Added {@link #subEndDate} and {@link #contestEndDate} fields. Also the getters were added.</li>
  * </ul>
  * </p>
+ * <p>
+ * Version 1.6 - Release Assembly - TC Direct Cockpit Release Four change note
+ * <ol>
+ *     <li>Update {@link #getProjectName(long)} to use project service to retrieve project name</li>
+ * </ol>
+ * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness
- * @version 1.5
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin
+ * @version 1.6
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -360,6 +371,46 @@ public class GetContestAction extends ContestAction {
     }
 
     /**
+     * Gets whether the contest is scheduled
+     * @since 1.6
+     */
+    public String specReviewScheduled() {
+        try {
+
+            if (null == getContestServiceFacade()) {
+                throw new IllegalStateException("The contest service facade is not initialized.");
+            }
+
+            if (projectId <= 0) {
+                throw new DirectException("projectId less than 0 or not defined.");
+            }
+
+            final Submission[] activeSpecSubmission = getContestServiceFacade().getSoftwareActiveSubmissions(
+                    getProjectId(), 2);
+
+            Map<String, String> result = new HashMap<String, String>();
+
+            if (activeSpecSubmission != null && activeSpecSubmission.length >= 1) {
+                // there is active specification submission
+                result.put("specReviewScheduled", "true");
+            } else {
+                // no active specification submission
+                result.put("specReviewScheduled", "false");
+            }
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            // set the error message into the ajax response
+            if (getModel() != null) {
+                setResult(e);
+            }
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+
+    /**
      * <p>
      * Gets the project id.
      * </p>
@@ -432,12 +483,6 @@ public class GetContestAction extends ContestAction {
         if (viewData == null) {
             viewData = new ContestDetailsDTO();
 
-            final long testContestId = 4;
-            ContestDTO contestDTO = DataProvider.getContest(testContestId);
-            viewData.setContest(contestDTO);
-
-            // project
-
             // right side
             List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getSessionData().getCurrentUserId());
             UserProjectsDTO userProjectsDTO = new UserProjectsDTO();
@@ -507,25 +552,25 @@ public class GetContestAction extends ContestAction {
      * name population.
      * </p>
      *
+     * <p>
+     * Update in version 1.6 - use project service facade to get the project name
+     * </p>
+     *
      * @param projectId client project id
      * @return the project name. It could be null if no match is found.
      * @throws Exception if any error occurs
      */
     private String getProjectName(long projectId) throws Exception {
         try {
-            /*
-             * for (ProjectData project : getProjects()) { if (projectId == project.getProjectId()) { return
-             * project.getName(); } }
-             */
-            List<ProjectBriefDTO> projects = DataProvider.getUserProjects(getCurrentUser().getUserId());
+            // for project which is not active, the project name cannot be find u
 
-            for (ProjectBriefDTO project : projects) {
-                if (projectId == project.getId()) {
-                    return project.getName();
-                }
+            final ProjectData project = getProjectServiceFacade().getProject(getCurrentUser(), projectId);
+
+            if (project != null) {
+                return project.getName();
+            } else {
+                return null;
             }
-
-            return null;
         } catch (Exception e) {
             return null;
         }

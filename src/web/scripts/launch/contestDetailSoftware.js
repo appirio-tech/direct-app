@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 /**
  * Contest Detail Javascript
@@ -46,8 +46,11 @@
  * - the contest fee will be calculated as a percentage of the member cost.
  * - Changed methods: updateContestCostData, savePrizeSection, saveTypeSection.
  *
- * @author isv, minhu, pvmagacho
- * @version 1.5
+ * Version 1.6 (Release Assembly - TC Direct Cockpit Release Four) updates:
+ * - Show start spec review when user activates the contest
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin
+ * @version 1.6
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1870,22 +1873,59 @@ function activateContestEdit() {
    	  showErrors("no billing project is selected.");
    	  return;
    }
+   showActivateSpecReviewModal();
+}
 
-   //construct request data
-   var request = saveAsDraftRequest();
-   request['activationFlag'] = true;
+/**
+ * Show activate and start spec review modal.
+ *
+ * @since 1.6
+ */
+function showActivateSpecReviewModal() {
+    // show spec review popup
+    $('#TB_overlay').show();
+    $('#TB_window_custom').show();
+    $('.TB_overlayBG').css('height', document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight);
+    $('#TB_window_custom').css({
+        //'margin': '0 auto 0 ' + parseInt((document.documentElement.clientWidth / 2) - ($("#TB_window_custom").width() / 2)) + 'px'
+        'left':$(window).width() / 2 - $('#TB_window_custom').width() / 2,
+        'top':($(window).height() / 2 - $('#TB_window_custom').height() / 2) + $(window).scrollTop()
+    });
 
-   $.ajax({
-      type: 'POST',
-      url:  ctx + "/launch/saveDraftContest",
-      data: request,
-      cache: false,
-      dataType: 'json',
-      success: handleActivationResultEdit,
-      beforeSend: beforeAjax,
-      complete: afterAjax            
-   });  
-      
+    // set button click
+    $('#TB_window_custom .review-now').attr("href", "javascript:activateAndStartSpecReview('now')");
+    $('#TB_window_custom .review-later').attr("href", "javascript:activateAndStartSpecReview('later')");
+}
+
+/**
+ * Hides activate and start spec review modal.
+ *
+ * @since 1.6
+ */
+function hideActivateSpecReviewModal() {
+    $('#TB_overlay').hide();
+    $('#TB_window_custom').hide();
+}
+
+function activateAndStartSpecReview(mode) {
+    //construct request data
+    var request = saveAsDraftRequest();
+    request['activationFlag'] = true;
+    request['specReviewStartMode'] = mode;
+
+    $.ajax({
+        type: 'POST',
+        url:  ctx + "/launch/saveDraftContest",
+        data: request,
+        cache: false,
+        dataType: 'json',
+        success: handleActivationResultEdit,
+        beforeSend: function() {
+            hideActivateSpecReviewModal();
+            modalPreloader();
+        },
+        complete: afterAjax
+    });
 }
 
 
@@ -1893,15 +1933,13 @@ function handleActivationResultEdit(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         mainWidget.softwareCompetition.paidFee = result.paidFee;
-        showSpecReview(result);
-
-        // can't change the multi round type if conetst is not draft 
+        // can't change the multiple - round type if contest is not draft
         if (result.projectStatus.name != DRAFT_STATUS) {
             canEditMultiRound = false;
             $('#resubmit').hide();
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully.");
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully and specification review has bee scheduled.");
     },
     function(errorMessage) {
         showServerError(errorMessage);
@@ -1934,8 +1972,32 @@ function showSpecReview(contestJson) {
    // only if contest is active (activated), has spec review phases, and sepc review phaase have not started
    if(contestJson.hasSpecReview && !contestJson.isSpecReviewStarted 
           && contestJson.projectStatus.id == PROJECT_STATUS_ACTIVE) {
-       $('#swEdit_bottom_review').show();
+
+       $.ajax({
+           type: 'POST',
+           url:  ctx+"/contest/specReviewScheduled",
+           data: {"projectId":paramContestId},
+           cache: false,
+           dataType: 'json',
+           async : true,
+           success: function (jsonResult) {
+               handleJsonResult(jsonResult,
+                   function(result) {
+                        if(result.specReviewScheduled) {
+                            $('#swEdit_bottom_review').hide();
+                        } else {
+                            $('#swEdit_bottom_review').show();
+                        }
+                   },
+                   function(errorMessage) {
+                       showServerError(errorMessage);
+                   })
+           }
+       });
+
        startSpecReviewUrl += contestJson.contestId + "&studio=false&";
+
+
    }
    $('#TB_window_custom .review-now').attr("href", startSpecReviewUrl + "startMode=now");
    $('#TB_window_custom .review-later').attr("href", startSpecReviewUrl + "startMode=later");

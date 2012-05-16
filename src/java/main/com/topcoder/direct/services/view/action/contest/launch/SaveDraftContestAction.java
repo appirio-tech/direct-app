@@ -161,9 +161,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Updated {@link #getSoftwareResult(SoftwareCompetition)} method to include the submission end date.</li>
  *   </ol>
  * </p>
+ * 
+ * <p>
+ * Version 1.6.5 (Release Assembly - TC Direct Cockpit Release Four) updates
+ * <ol>
+ *     <li>Update the logic Start spec review when activating the contest.</li>
+ * </ol>
+ * </p>
  *
- * @author fabrizyo, FireIce, Veve, isv, TCSASSEMBLER
- * @version 1.6.4
+ * @author fabrizyo, FireIce, Veve, isv, GreatKevin
+ * @version 1.6.5
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -303,6 +310,20 @@ public class SaveDraftContestAction extends ContestAction {
      * @since Direct Launch Software Contests Assembly
      */
     private static final String PROJECT_PROPERTIES_KEY_BILLING_PROJECT_ID = "Billing Project";
+
+    /**
+     * Represents the start mode value for <code>now</code>.
+     *
+     * @since 1.6.5
+     */
+    private static final String START_MODE_NOW = "now";
+
+    /**
+     * Represents the start mode value for <code>later</code>.
+     *
+     * @since 1.6.5
+     */
+    private static final String START_MODE_LATER = "later";
 
     /**
      * <p>
@@ -487,6 +508,15 @@ public class SaveDraftContestAction extends ContestAction {
 
     /**
      * <p>
+     * The spec review start mode, 'now' or 'later'.
+     * </p>
+     *
+     * @since 1.6.5
+     */
+    private String specReviewStartMode;
+
+    /**
+     * <p>
      * Creates a <code>SaveDraftContestAction</code> instance.
      * </p>
      */
@@ -529,7 +559,7 @@ public class SaveDraftContestAction extends ContestAction {
             updateSoftwareCompetitionCopilotResource();
 
             if (isActivation(softwareCompetition)) {
-                softwareCompetition = activateSoftwareCompeition(softwareCompetition);
+                softwareCompetition = activateSoftwareCompetition(softwareCompetition);
             } else {
                 softwareCompetition = contestServiceFacade.updateSoftwareContest(tcSubject, softwareCompetition,
                         tcDirectProjectId, milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
@@ -545,7 +575,7 @@ public class SaveDraftContestAction extends ContestAction {
 
             if (competitionType == CompetitionType.STUDIO || competitionType == CompetitionType.SOFTWARE) {
                 if (isActivation(softwareCompetition)) {
-                    softwareCompetition = activateSoftwareCompeition(softwareCompetition);
+                    softwareCompetition = activateSoftwareCompetition(softwareCompetition);
                 } else {
                     softwareCompetition = contestServiceFacade.createSoftwareContest(tcSubject, softwareCompetition,
                             tcDirectProjectId, milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
@@ -1043,6 +1073,11 @@ public class SaveDraftContestAction extends ContestAction {
      * <p>
      * Activates the software competition.
      * </p>
+     *
+     * <p>
+     * Update in 1.6.5 (Release Assembly - TC Direct Cockpit Release Four)
+     * - start the spec review of the contest (if exists) when activating the contest.
+     * </p>
      * 
      * @param softwareCompetition
      *            the software competition data
@@ -1052,14 +1087,28 @@ public class SaveDraftContestAction extends ContestAction {
      * @throws Exception
      *             if any error occurs
      */
-    private SoftwareCompetition activateSoftwareCompeition(SoftwareCompetition softwareCompetition) throws Exception {
+    private SoftwareCompetition activateSoftwareCompetition(SoftwareCompetition softwareCompetition) throws Exception {
         softwareCompetition.getAssetDTO().setCompComments(getCurrentUser().getUserId() + "");
 
         // set the direct project name of software competition
         DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
+
+        if (softwareCompetition.getProjectHeader().getProjectCategory().getId() != 29L) {
+            // do not check for copilot posting
+            if (getSpecReviewStartMode() == null || !(getSpecReviewStartMode().equals(START_MODE_NOW) || getSpecReviewStartMode().equals(START_MODE_LATER))) {
+                throw new IllegalArgumentException("The start mode of specification review is neither now nor later.");
+            }
+        }
+
+        boolean startSpecReviewNow = false;
+
+        if (getSpecReviewStartMode() != null && getSpecReviewStartMode().equals(START_MODE_NOW)) {
+            startSpecReviewNow = true;
+        }
 		
-		SoftwareContestPaymentResult result = getContestServiceFacade().processContestPurchaseOrderSale(
-                getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition), milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+		SoftwareContestPaymentResult result = getContestServiceFacade().purchaseActivateContestAndStartSpecReview(
+                getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
+                milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
 
         // return result.getSoftwareCompetition();
         // retrieve the software contest again, seems the contest sale is not updated
@@ -1801,5 +1850,13 @@ public class SaveDraftContestAction extends ContestAction {
 
     public void setAutoCreateBugHunt(boolean autoCreateBugHunt) {
         this.autoCreateBugHunt = autoCreateBugHunt;
+    }
+
+    public String getSpecReviewStartMode() {
+        return specReviewStartMode;
+    }
+
+    public void setSpecReviewStartMode(String specReviewStartMode) {
+        this.specReviewStartMode = specReviewStartMode;
     }
 }
