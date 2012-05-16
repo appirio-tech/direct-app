@@ -300,6 +300,12 @@ public class GetContestAction extends ContestAction {
         // Set contest stats
         ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
         getViewData().setContestStats(contestStats);
+				
+		// Set current project context based on selected contest
+		getSessionData().setCurrentProjectContext(contestStats.getContest().getProject());
+		getSessionData().setCurrentSelectDirectProjectID(contestStats.getContest().getProject().getId());
+		
+
 
         getViewData().setDashboard(
             DataProvider.getContestDashboardData(projectId, DirectUtils.isStudio(softwareCompetition), false));
