@@ -42,7 +42,7 @@
                     <div id="area1"><!-- the main area -->
                         <div class="area1Content milestoneManage enterpriseCalendar">
                             <div class="areaHeader">
-                                <h2 class="title">Roadmap</h2>
+                                <h2 class="title roadmap">Roadmap</h2>
                             </div>
                             <!-- End .areaHeader -->
 
@@ -107,9 +107,13 @@
                                 </div>
                             </form>
 
+                            <div class="roadmapViewArea">
+                                <div class="loading">
+                                    <img src="/images/loadingAnimation.gif" alt=""/>
+                                </div>
+                                <div class="milestoneCalView">
 
-                            <div class="milestoneCalView">
-
+                                </div>
                             </div>
 
                             <span id="calendarToday" style="display:none"><s:date name="calendarToday"

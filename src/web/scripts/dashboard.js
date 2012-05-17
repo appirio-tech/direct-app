@@ -1905,10 +1905,14 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
     }
 
     if(showModal) {
-        modalPreloader();
+        // modalPreloader();
+        $(".roadmapViewArea").css('min-height', '600px');
+        $(".roadmapViewArea .loading").css("opacity", "0.6");
+        $(".roadmapViewArea .loading").show();
     }
     
     isEnterpriseCalendarShown = false;
+
 
     $.ajax({
         type:'POST',
@@ -1963,6 +1967,8 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                                     window.open('projectMilestoneView?formData.viewType=list&formData.projectId=' + event.projectId, '');
                                 });
 
+                                var milestoneNameClass = "upcoming";
+
                                 switch (event["status"]) {
                                     case 'completed':
                                         element.addClass("fc-milestone-completed");
@@ -1973,6 +1979,7 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                                                 "class":event.person.color
                                             }).appendTo(inner);
                                         }
+                                        milestoneNameClass = "completed";
                                         break;
                                     case 'upcoming':
                                         element.addClass("fc-milestone-upcoming");
@@ -1983,6 +1990,7 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                                                 "class":event.person.color
                                             }).appendTo(inner);
                                         }
+                                        milestoneNameClass = "upcoming";
                                         break;
                                     case 'overdue':
                                         element.addClass("fc-milestone-overdue");
@@ -1993,8 +2001,14 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                                                 "class":event.person.color
                                             }).appendTo(inner);
                                         }
+                                        milestoneNameClass = "overdue";
                                         break;
                                 }
+
+                                var name = $("<span class='milestoneName'></span>").addClass(milestoneNameClass).text(event.title);
+                                var project = $("<span></span>").text(event.projectName);
+
+                                inner.find(".fc-event-title").empty().append(name).append(project);
 
                                 var tcTip = $("<div/>", {
                                     "class":"milestoneTips"
@@ -2040,7 +2054,8 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                     }
 
                 if(showModal) {
-                    modalAllClose();
+                    // modalAllClose();
+                    $(".roadmapViewArea .loading").hide();
                 }
             } else {
                 showErrors("Fail to load the milestone data");

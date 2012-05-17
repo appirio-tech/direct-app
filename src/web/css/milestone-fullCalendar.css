@@ -349,6 +349,29 @@ a.fc-event {
     font-size:11px;
     }
 
+.fc-event-title .milestoneName {
+    /*-moz-border-radius: 3px;*/
+    /*-webkit-border-radius: 3px;*/
+    /*-khtml-border-radius: 3px;*/
+    /*border-radius: 3px;*/
+    /*padding: 2px 4px 2px 4px;*/
+    /*//color: white;*/
+    margin-right: 3px;
+    font-weight: bold;
+}
+
+.fc-event-title .completed {
+    color: #009f00;
+}
+
+.fc-event-title .upcoming {
+    color: #D4A104;
+}
+
+.fc-event-title .overdue {
+    color: #bf0404;
+}
+
 .fc .ui-resizable-handle { /*** TODO: don't use ui-resizable anymore, change class ***/
 	display: block;
 	position: absolute;

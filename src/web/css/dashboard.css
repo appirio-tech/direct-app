@@ -628,6 +628,11 @@ BODY#page{
 	padding-top: 5px;
 	font-weight: bold;
 }
+
+#area1 H2.roadmap{ /* main content title */
+    background: url(/images/roadmap_icon.png) no-repeat left center;
+}
+
 #area1 .select{
 	float:right;
 	font-size: 12px;
@@ -7148,10 +7153,10 @@ div.rightColumn .activity TABLE {
     text-align:center;
     vertical-align:middle;
 }
-.contestViews .contestCView{
+.contestViews .contestCView, .roadmapViewArea {
     position:relative;
 }
-    .contestViews  .contestCView .loading{
+    .contestViews  .contestCView .loading, .roadmapViewArea .loading{
         position:absolute;
         left:0;
         top:0;
@@ -7161,7 +7166,7 @@ div.rightColumn .activity TABLE {
         z-index:100;
         text-align:center;
     }
-        .contestViews  .contestCView .loading img{
+        .contestViews  .contestCView .loading img, .roadmapViewArea .loading img {
             display:inline-block;
             margin-top:260px;
         }
