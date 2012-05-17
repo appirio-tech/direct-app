@@ -667,6 +667,7 @@ function retrieveContestCostWithoutAdminFee() {
 function populateTypeSection() {
         var p = mainWidget.softwareCompetition.projectHeader.properties;
         var contestPercentage = parseFloat(p['Contest Fee Percentage']);
+		var adminFee = parseFloat(p['Admin Fee']);
 
 	//edit
 	$('#contestTypes').getSetSSValue(mainWidget.competitionType+mainWidget.softwareCompetition.projectHeader.projectCategory.id);
@@ -681,7 +682,7 @@ function populateTypeSection() {
 	if (mainWidget.softwareCompetition.projectHeader.tcDirectProjectName != null) {
 		$('#rProjectName').html(mainWidget.softwareCompetition.projectHeader.tcDirectProjectName);
 	}
-	$('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
+	//$('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
   
   if (mainWidget.softwareCompetition.copilotUserId <=0) {
   	 $("#rCopilots").html("Unassigned");
@@ -695,10 +696,10 @@ function populateTypeSection() {
   //billing account
   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
   $('#billingProjects').getSetSSValue(billingProjectId);
-  if (contestPercentage!= null && contestPercentage > 0) {
-      $('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2) + ' (' + contestPercentage * 100 + '% markup)');
+  if (contestPercentage!= null && contestPercentage > 0) {  
+      $('#rAdminFee').html(parseFloat(adminFee).formatMoney(2) + ' (' + contestPercentage * 100 + '% markup)');
   } else {
-      $('#rAdminFee').html(parseFloat(mainWidget.softwareCompetition.adminFee).formatMoney(2));
+      $('#rAdminFee').html(parseFloat(adminFee).formatMoney(2));
   }
   //potential rollback
 	$('#billingProjects').trigger("change");
