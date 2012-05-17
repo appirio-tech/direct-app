@@ -789,7 +789,7 @@ a.grayButton:hover .text {
     display: none;
     padding: 10px;
     position: absolute;
-    width: 202px;
+    width: 250px;
     z-index: 100;
     left:10px;
     top:20px;
@@ -813,7 +813,7 @@ a.grayButton:hover .text {
 .milestoneTips .tipsTitle {
     color: #333333;
     font-family: Tahoma, Geneva, sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     text-decoration: none;
 }
 

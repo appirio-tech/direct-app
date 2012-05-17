@@ -2017,6 +2017,10 @@ function loadEnterpriseCalendar(customerId, projectFilterId, projectFilterValue,
                                     "class":"triangle"
                                 }).appendTo(tcTip);
                                 $("<h2/>", {
+                                    "text":event.title,
+                                    "class":"tipsTitle"
+                                }).appendTo(tcTip);
+                                $("<h2/>", {
                                     "text":event.projectName,
                                     "class":"tipsTitle"
                                 }).appendTo(tcTip);
