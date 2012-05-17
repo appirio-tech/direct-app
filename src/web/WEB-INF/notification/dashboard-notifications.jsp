@@ -241,7 +241,17 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="checkPermissions">
-                                                   
+                                                    <tr class="applyForAll">
+                                                        <td class="markRed">Apply to All Projects</td>
+                                                        <td class="checkbox">
+                                                            <input id="timeCheckAllId" class="selectUser select_timeline" type="checkbox" onclick="notifications.selectAll(this, 'timeline');" autocomplete="off">
+                                                            <label for="timeCheckAllId"> Timeline </label>
+                                                        </td>
+                                                        <td class="checkbox">
+                                                            <input id="forumCheckAllId" class="selectUser select_forum" type="checkbox" onclick="notifications.selectAll(this, 'forum');" autocomplete="off">
+                                                            <label for="forumCheckAllId">Forum</label>
+                                                        </td>
+                                                    </tr>
 
 
                                                     <c:forEach items="${notifications}" var="projectNotifications" varStatus="i">
@@ -251,12 +261,12 @@
                                                         <tr class="select_project">
                                                             <td><div onclick="showHideGroup(this,'${projectClass}');" class="group expand">${projectNotifications.name}</div></td>
                                                             <td class="checkbox">
-                                                           <!--     <input id='${projectCheckTimeId}' class="selectUser select_timeline" type="checkbox" onclick="notifications.selectProject(this, 'timeline', ${projectNotifications.projectId});" autocomplete="off">
-                                                                <label for='${projectCheckTimeId}'>Timeline</label>-->
+                                                                <input id='${projectCheckTimeId}' class="selectUser select_timeline" type="checkbox" onclick="notifications.selectProject(this, 'timeline', ${projectNotifications.projectId});" autocomplete="off">
+                                                                <label for='${projectCheckTimeId}'>Timeline</label>
                                                             </td>
                                                             <td class="checkbox">
-                                                              <!--  <input id='${projectCheckForumId}' class="selectUser select_forum" type="checkbox" onclick="notifications.selectProject(this, 'forum', ${projectNotifications.projectId});" autocomplete="off">
-                                                                <label for='${projectCheckForumId}'>Forum</label>-->
+                                                                <input id='${projectCheckForumId}' class="selectUser select_forum" type="checkbox" onclick="notifications.selectProject(this, 'forum', ${projectNotifications.projectId});" autocomplete="off">
+                                                                <label for='${projectCheckForumId}'>Forum</label>
                                                             </td>
                                                         </tr>
 
