@@ -225,7 +225,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
                 long duration = calculateDuration(sc.getStartDate(), sc.getEndDate());
                 long percentage = calculateProgressPercentage(sc.isStarted(), sc.isFinished(), duration, sc.getEndDate());
 
-                result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1));
+                result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, sc.getContestStatus()));
             }
 
             Map<Long, SoftwareProjectData> idMapping = new HashMap<Long, SoftwareProjectData>();
@@ -238,16 +238,21 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             // generate software contest data
             for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
                 long id = swc.getProjectId();
-                String name = (swc.getProjectStatus().equals("Draft") ? "Draft-" : "") + swc.getProjectType() + " - " + swc.getProjectName();
+                String name = swc.getProjectType() + " - " + swc.getProjectName();
                 String startTime = GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
                 // calculate the duration in hours
                 long duration = calculateDuration(swc.getStartDate(), swc.getEndDate());
                 long percentage = calculateProgressPercentage(swc.isStarted(), swc.isFinished(), duration,
                         swc.getEndDate());
 
-                if(swc.getProjectStatus().equals("Draft")) {
+                String contestStatus = swc.getProjectStatus();
+
+                if(contestStatus.equals("Draft")) {
                     // set percentage to 0 if draft
                     percentage = 0;
+                } else if (contestStatus.contains("Cancelled")) {
+                    contestStatus = "Cancelled";
+                    percentage = 100;
                 }
 
                 // software contest will only have single dependency contest
@@ -268,7 +273,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
                 }
 
-                result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId));
+                result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
             }
         }
 
@@ -321,13 +326,14 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
      * @param duration      the duration of the contest.
      * @param percentage    the contest progress percentage.
      * @param predecessorId the contest id this contest depends on.
+     * @param status the contest status
      * @return the generated data in string format.
      */
     private static String generateContestGamePlanData(long id, String name, String startTime, long duration, long percentage,
-                                               long predecessorId) {
+                                               long predecessorId, String status) {
         StringBuilder contestData = new StringBuilder();
 
-        contestData.append("<task id=\"" + id + "\">");
+        contestData.append("<task id=\"" + id + "\" status=\"" + status + "\">");
         contestData.append("<name>" + name + "</name>");
         contestData.append("<est>" + startTime + "</est>");
         contestData.append("<duration>" + duration + "</duration>");

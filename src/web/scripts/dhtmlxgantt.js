@@ -27,6 +27,20 @@ To use this component please contact sales@dhtmlx.com to obtain license
 var ganttSoftwareContestUrl = "./contest/detail.action?projectId=";
 var ganttContestUrl = ganttSoftwareContestUrl;
 var ganttProjectUrl = "./currentProjectOverview.action";
+
+function getProgressBackground(status) {
+    if (status.toLowerCase() == 'active') {
+        return 'active_progress_filled.png';
+    } else if (status.toLowerCase() == 'draft') {
+        return 'draft_progress_filled.png';
+    } else if (status.toLowerCase() == 'cancelled') {
+        return 'cancelled_progress_filled.png';
+    } else if (status.toLowerCase() == 'completed') {
+        return 'completed_progress_filled.png';
+    }
+
+    return 'progress_filled.png';
+}
  
 function GanttProjectInfo(id, name, startDate)
 {
@@ -177,7 +191,7 @@ GanttProjectInfo.prototype.getTaskByIdInTree = function(parentTask, id)
  * @type:  public
  * @topic: 0
  */
-function GanttTaskInfo(id, name, est, duration, percentCompleted, predecessorTaskId)
+function GanttTaskInfo(id, name, est, duration, percentCompleted, predecessorTaskId, status)
 {
     this.Id = id;
     this.Name = name;
@@ -194,6 +208,7 @@ function GanttTaskInfo(id, name, est, duration, percentCompleted, predecessorTas
     this.previousChildTask = null;
     this.nextParentTask = null;
     this.previousParentTask = null;
+    this.status = status;
 }
 /**
  * @desc: Addition of child task to the parent task
@@ -1211,7 +1226,7 @@ GanttProject.prototype.insertTask = function(id, name, EST, Duration, PercentCom
             return false;
         }
 
-        task = new GanttTaskInfo(id, name, EST, Duration, PercentCompleted, predecessorTaskId);
+        task = new GanttTaskInfo(id, name, EST, Duration, PercentCompleted, predecessorTaskId, null);
 
         if (!this.Chart.checkPosParentTask(parentTask, task)) {
             this.Chart.Error.throwError("DATA_INSERT_ERROR", 19, [parentTaskId,id]);
@@ -1306,7 +1321,7 @@ GanttProject.prototype.insertTask = function(id, name, EST, Duration, PercentCom
 
         EST = EST || this.Project.StartDate;
 
-        task = new GanttTaskInfo(id, name, EST, Duration, PercentCompleted, predecessorTaskId);
+        task = new GanttTaskInfo(id, name, EST, Duration, PercentCompleted, predecessorTaskId, null);
 
         if (task.EST <= this.Chart.startDate) {
             this.Chart.Error.throwError("DATA_INSERT_ERROR", 18, [task.Id]);
@@ -1912,7 +1927,7 @@ GanttTask.prototype.setPercentCompleted = function(percentCompleted)
             imgPrF.style.width = (percentCompleted * this.TaskInfo.Duration * this.Chart.hourInPixelsWork) / 100 + "px";
             imgPrF.style.height = this.Chart.heightTaskItem + "px";
             cellTblTask.appendChild(imgPrF);
-            imgPrF.src = this.Chart.imgs + "progress_filled.png";
+            imgPrF.src = this.Chart.imgs + getProgressBackground(this.TaskInfo.status);
 
             cellTblTask = document.createElement("td");
             this.cTaskItem[0].childNodes[0].firstChild.rows[0].appendChild(cellTblTask);
@@ -1947,7 +1962,7 @@ GanttTask.prototype.setPercentCompleted = function(percentCompleted)
 
         } else
         {
-            this.cTaskItem[0].childNodes[0].firstChild.rows[0].cells[0].firstChild.src = this.Chart.imgs + "progress_filled.png";
+            this.cTaskItem[0].childNodes[0].firstChild.rows[0].cells[0].firstChild.src = this.Chart.imgs + getProgressBackground(this.TaskInfo.status);
         }
     }
 
@@ -2211,6 +2226,7 @@ GanttChart.prototype.doLoadDetails = function(isLocal)
     var duration = null;
     var percentCompleted = null;
     var predecessorTaskId = null;
+    var status = null;
 
     //var prArr = [];
     //var tsArr = [];
@@ -2234,8 +2250,8 @@ GanttChart.prototype.doLoadDetails = function(isLocal)
             duration = (this.xmlLoader.doXPath("./duration", taskArr[i])[0].firstChild == null) ? "" : this.xmlLoader.doXPath("./duration", taskArr[i])[0].firstChild.nodeValue;
             percentCompleted = (this.xmlLoader.doXPath("./percentcompleted", taskArr[i])[0].firstChild == null) ? "" : this.xmlLoader.doXPath("./percentcompleted", taskArr[i])[0].firstChild.nodeValue;
             predecessorTaskId = (this.xmlLoader.doXPath("./predecessortasks", taskArr[i])[0].firstChild == null) ? "" : this.xmlLoader.doXPath("./predecessortasks", taskArr[i])[0].firstChild.nodeValue;
-
-            var task = new GanttTaskInfo(id, name, new Date(est[0], (parseInt(est[1]) - 1), est[2]), duration, percentCompleted, predecessorTaskId);
+            status = taskArr[i].getAttribute("status");
+            var task = new GanttTaskInfo(id, name, new Date(est[0], (parseInt(est[1]) - 1), est[2]), duration, percentCompleted, predecessorTaskId, status);
             var childTasksNode = this.xmlLoader.doXPath("./childtasks", taskArr[i]);
             var childTasksArr = this.xmlLoader.doXPath("./task", childTasksNode[0]);
 
@@ -2274,7 +2290,7 @@ GanttChart.prototype.readChildTasksXML = function(parentTask, childTasksArrXML)
         duration = (this.xmlLoader.doXPath("./duration", childTasksArrXML[i])[0].firstChild == null) ? "" : this.xmlLoader.doXPath("./duration", childTasksArrXML[i])[0].firstChild.nodeValue;
         percentCompleted = (this.xmlLoader.doXPath("./percentcompleted", childTasksArrXML[i])[0].firstChild == null) ? "" : this.xmlLoader.doXPath("./percentcompleted", childTasksArrXML[i])[0].firstChild.nodeValue;
         predecessorTaskId = (this.xmlLoader.doXPath("./predecessortasks", childTasksArrXML[i])[0].firstChild == null) ? "" : this.xmlLoader.doXPath("./predecessortasks", childTasksArrXML[i])[0].firstChild.nodeValue;
-        var task = new GanttTaskInfo(id, name, new Date(est[0], (parseInt(est[1]) - 1), est[2]), duration, percentCompleted, predecessorTaskId);
+        var task = new GanttTaskInfo(id, name, new Date(est[0], (parseInt(est[1]) - 1), est[2]), duration, percentCompleted, predecessorTaskId, null);
         task.ParentTask = parentTask;
 
         parentTask.addChildTask(task);
@@ -4236,7 +4252,7 @@ GanttProject.prototype.createProjectItem = function()
     projectItem.appendChild(tblProjectItem);
     tblProjectItem.cellPadding = "0";
     tblProjectItem.cellSpacing = "0";
-    tblProjectItem.style.cssText = "border: solid 1px #EC1C23;";
+    tblProjectItem.style.cssText = "border: solid 1px #BC810D;";
     var width = this.Duration * this.Chart.hourInPixelsWork;
     tblProjectItem.width = ((width == 0) ? 1 : width) + "px";
     tblProjectItem.style.width = ((width == 0) ? 1 : width) + "px";
@@ -4885,7 +4901,7 @@ GanttTask.prototype.createTaskItem = function()
         imgPr.style.width = (this.TaskInfo.PercentCompleted * this.TaskInfo.Duration * this.Chart.hourInPixelsWork) / 100 + "px";
         imgPr.style.height = this.Chart.heightTaskItem + "px";
         cellTblTask.appendChild(imgPr);
-        imgPr.src = this.Chart.imgs + "progress_filled.png";
+        imgPr.src = this.Chart.imgs + getProgressBackground(this.TaskInfo.status);
     }
 
     if (this.TaskInfo.PercentCompleted != 100)
@@ -5142,15 +5158,20 @@ GanttTask.prototype.createTaskDescItem = function()
 GanttTask.prototype.checkWidthTaskNameItem = function()
 {
     var tName = this.TaskInfo.Name;
-    var draft = false;
     var color = "#7D7D7D";
-    if(tName.indexOf("Draft-") == 0) {
-        draft = true;
-        tName = tName.substr(6);
-        this.TaskInfo.Name = tName;
-        color = "#006600";
+
+    var contestStatus = this.TaskInfo.status.toLowerCase();
+
+    if(contestStatus == 'draft') {
+        color = "#6f6f71";
+    } else if(contestStatus == 'completed') {
+        color = "#009f00";
+    } else if(contestStatus == 'active') {
+        color = "#0369cf";
+    } else if(contestStatus == 'cancelled') {
+        color = "#DB4848";
     }
-    
+
     if (this.cTaskNameItem[0].offsetWidth + this.cTaskNameItem[0].offsetLeft > this.Chart.maxWidthPanelNames)
     {
         var width = this.cTaskNameItem[0].offsetWidth + this.cTaskNameItem[0].offsetLeft - this.Chart.maxWidthPanelNames;

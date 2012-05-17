@@ -2161,15 +2161,27 @@ TABLE.contests TD{
 		font-weight: bold;
 		padding-left: 14px;
 	}
-    
-    TABLE.contests TD SPAN.draft{ 
-        color: #00c600;
-        background: url(../images/draft_ico.png) no-repeat left 1px;
-    }
-    TABLE.contests TD SPAN.running{ 
-        color: #177de3;
-        background: url(../images/running_ico.png) no-repeat left 1px;
-    }
+
+TABLE.contests TD SPAN.completed {
+    color: #009f00;
+    background: url(/images/completed_status_ico.png) no-repeat left 1px;
+}
+
+TABLE.contests TD SPAN.cancelled {
+    color: #DB4848;
+    background: url(/images/cancelled_status_ico.png) no-repeat left 1px;
+}
+
+TABLE.contests TD SPAN.draft {
+    color: #6f6f71;
+    background: url(/images/draft_status_ico.png) no-repeat left 1px;
+}
+
+TABLE.contests TD SPAN.running {
+    color: #0369cf;
+    background: url(/images/active_status_ico.png) no-repeat left 1px;
+}
+
     TABLE.contests TD SPAN.awarding{ 
         color: #ffb000;
         background: url(../images/awarding_ico.png) no-repeat left 1px;
@@ -7175,16 +7187,16 @@ div.rightColumn .activity TABLE {
         border: #000 solid 1px;
     }
     .calendarLegends .draftLegendColor {
-        background-color:#64992c;
+        background-color:#6f6f71;
     }
     .calendarLegends .activeLegendColor {
-        background-color:#206cff;
+        background-color:#0369cf;
     }
     .calendarLegends .completedLegendColor {
-        background-color:#c94a4a;
+        background-color:#009f00;
     }
     .calendarLegends .cancelledLegendColor {
-        background-color:#f7c480;
+        background-color:#DB4848;
     }
     .calendarLegends .legendText {
         padding-left: 5px;
@@ -8726,17 +8738,38 @@ a.downloadAllbtn:hover span {
                  color:#ff0000;
              }
             .newSidebar .contestList .tableBody table span.running{
-                background:url("../images/running_ico.png") no-repeat  0 0;
+                background:url("/images/active_status_ico.png") no-repeat  0 0;
                 display:inline-block;
-                width:11px;
-                height:11px;
+                width:12px;
+                height:12px;
             }
             .newSidebar .contestList .tableBody table span.draft{
-                background:url("../images/draft_ico.png") no-repeat  0 0;
+                background:url("/images/draft_status_ico.png") no-repeat  0 0;
                 display:inline-block;
-                width:11px;
-                height:11px;
+                width:12px;
+                height:12px;
             }
+
+.newSidebar .contestList .tableBody table span.scheduled{
+    background:url("/images/active_status_ico.png") no-repeat  0 0;
+    display:inline-block;
+    width:12px;
+    height:12px;
+}
+
+.newSidebar .contestList .tableBody table span.cancelled{
+    background:url("/images/cancelled_status_ico.png") no-repeat  0 0;
+    display:inline-block;
+    width:12px;
+    height:12px;
+}
+
+.newSidebar .contestList .tableBody table span.completed{
+    background:url("/images/completed_status_ico.png") no-repeat  0 0;
+    display:inline-block;
+    width:12px;
+    height:12px;
+}
         .newSidebar .archiveLink{
             text-align:right;
             padding:0 11px 12px 0;

@@ -317,21 +317,21 @@ a.fc-event {
 	}
 
 .fc-content .fc-completed, .fc-content .fc-completed .fc-event-skin {
-    border-color: #C94A4A;
-    background-color: #C94A4A;
+    border-color: #009f00;
+    background-color: #009f00;
 }
 
 .fc-content .fc-cancelled, .fc-content .fc-cancelled .fc-event-skin {
-    border-color: #F7C480;
-    background-color: #f7c480;
+    border-color: #DB4848;
+    background-color: #DB4848;
 }
 .fc-content .fc-active,.fc-content .fc-active .fc-event-skin{
-    border-color:#206CFF;
-    background-color:#206CFF;
+    border-color:#0369cf;
+    background-color:#0369cf;
 }
 .fc-content .fc-draft,.fc-content .fc-draft .fc-event-skin{
-    border-color:#64992c;
-    background-color:#64992c;
+    border-color:#6f6f71;
+    background-color:#6f6f71;
 }
 
 .fc-event-inner {
