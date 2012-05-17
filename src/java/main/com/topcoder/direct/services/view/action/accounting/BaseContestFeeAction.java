@@ -311,9 +311,9 @@ public abstract class BaseContestFeeAction extends BaseDirectStrutsAction {
         
         // check percentage value
         double percentage = getFormData().getContestFeePercentage(); 
-        if (!getFormData().isContestFeeFixed() && (percentage < 0 || percentage > 1)) {
+        if (!getFormData().isContestFeeFixed() && (percentage < 0 || percentage > 2)) {
             addFieldError(FORMDATA_CONTEST_FEE_PERCENTAGE,
-                "Value for contest fee percentage should be in [0, 1.0].");
+                "Value for contest fee percentage should be in [0, 2.0].");
         } else if (map.get(FORMDATA_CONTEST_FEE_PERCENTAGE) != null &&
                         map.get(FORMDATA_CONTEST_FEE_PERCENTAGE).isEmpty()) {
             map = getFieldErrors();
