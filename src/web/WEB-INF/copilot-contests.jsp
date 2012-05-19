@@ -210,7 +210,7 @@
                                                     </td>
                                                     <td>
                                                         <s:if test="%{#attr['contest'].status.name == 'Completed'}">
-                                                            <span>Completed</span>
+                                                            <span class="completed">Completed</span>
                                                         </s:if>
                                                         <s:if test="%{#attr['contest'].status.shortName == 'draft' 
                                                             || #attr['contest'].status.shortName == 'running'
