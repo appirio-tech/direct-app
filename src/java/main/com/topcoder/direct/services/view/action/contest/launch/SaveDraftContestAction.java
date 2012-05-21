@@ -1093,22 +1093,24 @@ public class SaveDraftContestAction extends ContestAction {
         // set the direct project name of software competition
         DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
 
-        if (softwareCompetition.getProjectHeader().getProjectCategory().getId() != 29L) {
-            // do not check for copilot posting
-            if (getSpecReviewStartMode() == null || !(getSpecReviewStartMode().equals(START_MODE_NOW) || getSpecReviewStartMode().equals(START_MODE_LATER))) {
-                throw new IllegalArgumentException("The start mode of specification review is neither now nor later.");
+        SoftwareContestPaymentResult result;
+
+        if (getSpecReviewStartMode() == null || !(getSpecReviewStartMode().equals(START_MODE_NOW) || getSpecReviewStartMode().equals(START_MODE_LATER))) {
+            result = getContestServiceFacade().processContestPurchaseOrderSale(
+                    getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
+                    milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime());
+        } else {
+            boolean startSpecReviewNow = false;
+
+            if (getSpecReviewStartMode() != null && getSpecReviewStartMode().equals(START_MODE_NOW)) {
+                startSpecReviewNow = true;
             }
+
+            result = getContestServiceFacade().purchaseActivateContestAndStartSpecReview(
+                    getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
+                    milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
         }
 
-        boolean startSpecReviewNow = false;
-
-        if (getSpecReviewStartMode() != null && getSpecReviewStartMode().equals(START_MODE_NOW)) {
-            startSpecReviewNow = true;
-        }
-		
-		SoftwareContestPaymentResult result = getContestServiceFacade().purchaseActivateContestAndStartSpecReview(
-                getCurrentUser(), softwareCompetition, getPaymentData(softwareCompetition),
-                milestoneDate, endDate == null ? null : endDate.toGregorianCalendar().getTime(), startSpecReviewNow);
 
         // return result.getSoftwareCompetition();
         // retrieve the software contest again, seems the contest sale is not updated
