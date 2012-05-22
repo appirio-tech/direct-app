@@ -6,6 +6,7 @@ package com.topcoder.direct.services.view.dto;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.atlassian.jira.rpc.soap.client.RemoteCustomFieldValue;
@@ -15,25 +16,81 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 
 /**
  * The DTO class which is used to store the data for a Jira issue of TopCoder.
- *
+ * <p/>
  * <p>Version 1.1 TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 assembly change note:
  * - Add getProjectID, and isBugRace.
  * </p>
- *
+ * <p/>
  * <p>
  * Version 1.2 (TC Direct Issue Tracking Tab Update Assembly 1) change notes:
- *   <ol>
- *     <li>Added {@link #getEnvironment()}, {@link #getPaymentStatus()}, {@link #getTCOPoints()}, {@link #getIssueId()},
- *     {@link #getSecurityLevelId()} methods to return the environment, payment status, TCO points, issue id, and
- *     security level id of the issue.</li>
- *     <li>Added {@link #isCca()} to checks whether the JIRA issue is CCA required.</li>
- *   </ol>
+ * <ol>
+ * <li>Added {@link #getEnvironment()}, {@link #getPaymentStatus()}, {@link #getTCOPoints()}, {@link #getIssueId()},
+ * {@link #getSecurityLevelId()} methods to return the environment, payment status, TCO points, issue id, and
+ * security level id of the issue.</li>
+ * <li>Added {@link #isCca()} to checks whether the JIRA issue is CCA required.</li>
+ * </ol>
  * </p>
- * 
- * @author Veve, TCSASSEMBER
- * @version 1.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking version 1.0 assembly)
+ *
+ * <p>
+ * Version 1.3 (TopCoder Cockpit - Bug Race Project Contests View) change notes:
+ * <ol>
+ *     <li>Add constant {@link #ISSUE_RESOLUTION_FIXED}</li>
+ *     <li>Add constant {@link #ISSUE_STATUS_CLOSED}</li>
+ *     <li>Add constant {@link #ISSUE_STATUS_IN_PROGRESS}</li>
+ *     <li>Add constant {@link #ISSUE_STATUS_ON_HOLD}</li>
+ *     <li>Add constant {@link #ISSUE_STATUS_OPEN}</li>
+ *     <li>Add constant {@link #ISSUE_STATUS_REOPENED}</li>
+ *     <li>Add constant {@link #ISSUE_STATUS_RESOLVED}</li>
+ *
+ * </ol>
+ * </p>
+ *
+ * @author Veve, GreatKevin
+ * @version 1.3
  */
 public class TcJiraIssue implements Serializable {
+
+    /**
+     * Constant to represent issue status - open.
+     * @since 1.3
+     */
+    public static final String ISSUE_STATUS_OPEN = "Open";
+
+    /**
+     * Constant to represent issue status - in progress.
+     * @since 1.3
+     */
+    public static final String ISSUE_STATUS_IN_PROGRESS = "In Progress";
+
+    /**
+     * Constant to represent issue status - Reopened.
+     * @since 1.3
+     */
+    public static final String ISSUE_STATUS_REOPENED = "Reopened";
+
+    /**
+     * Constant to represent issue status - resolved.
+     * @since 1.3
+     */
+    public static final String ISSUE_STATUS_RESOLVED = "Resolved";
+
+    /**
+     * Constant to represent issue status - closed.
+     * @since 1.3
+     */
+    public static final String ISSUE_STATUS_CLOSED = "Closed";
+
+    /**
+     * Constant to represent issue status - on hold.
+     * @since 1.3
+     */
+    public static final String ISSUE_STATUS_ON_HOLD = "On Hold";
+
+    /**
+     * Constant to represent issue resolution type - Fixed.
+     * @since 1.3
+     */
+    public static final String ISSUE_RESOLUTION_FIXED = "Fixed";
 
     /**
      * The data format used for format the create and update dates for the issues.
@@ -67,11 +124,11 @@ public class TcJiraIssue implements Serializable {
 
     /**
      * The security leve id of the issue.
-     * 
+     *
      * @since 1.2
      */
     private Long securityLevelId;
-    
+
     /**
      * Creates a TcJiraIssue instance.
      */
@@ -98,6 +155,16 @@ public class TcJiraIssue implements Serializable {
     }
 
     /**
+     * Gets the title of the issue.
+     *
+     * @return the title of the issue.
+     * @since 1.3
+     */
+    public String getTitle() {
+        return this.issue.getSummary();
+    }
+
+    /**
      * Gets the jira project name of the jira issue.
      *
      * @return the jira project name of the jira issue.
@@ -118,17 +185,76 @@ public class TcJiraIssue implements Serializable {
     /**
      * Gets the issue status CSS class to present the status color.
      *
+     * <p>
+     * Update in version 1.3 - TopCoder Cockpit - Bug Race Project Contests View changes:
+     * - Change the hardcoded status string to constant representing the status.
+     * </p>
+     *
      * @return the status CSS class.
      */
     public String getIssueStatusClass() {
         String statusName = getStatusName().trim().toLowerCase();
 
-        if (statusName.equals("resolved") || statusName.equals("closed")) {
+        if (statusName.equals(ISSUE_STATUS_RESOLVED.toLowerCase())
+                || statusName.equals(ISSUE_STATUS_CLOSED.toLowerCase())) {
             return "resolved";
-        } else if (statusName.equals("in progress")) {
+        } else if (statusName.equals(ISSUE_STATUS_IN_PROGRESS.toLowerCase())) {
             return "progress";
         } else {
             return "open";
+        }
+    }
+
+    /**
+     * Gets the status of bug race when considering it as a contest.
+     *
+     * @return the contest like status of the issue.
+     * @since 1.3
+     */
+    public String getContestLikeStatus() {
+        String statusName = getStatusName().trim().toLowerCase();
+
+        if (statusName.equals(ISSUE_STATUS_RESOLVED.toLowerCase())) {
+            if (getResolutionName().equals(ISSUE_RESOLUTION_FIXED)) {
+                return "Completed";
+            } else {
+                return "Cancelled";
+            }
+        } else if (statusName.equals(ISSUE_STATUS_CLOSED.toLowerCase())) {
+            // for fixed resolution, return completed, other return cancelled
+            if (getResolutionName().equals(ISSUE_RESOLUTION_FIXED)) {
+                return "Completed";
+            } else {
+                return "Cancelled";
+            }
+        } else if (statusName.equals(ISSUE_STATUS_OPEN.toLowerCase())
+                || statusName.equals(ISSUE_STATUS_REOPENED.toLowerCase())
+                || statusName.equalsIgnoreCase(ISSUE_STATUS_OPEN.toLowerCase())) {
+            return "Active";
+        } else if (statusName.equals(ISSUE_STATUS_ON_HOLD.toLowerCase())) {
+            return "On Hold";
+        } else {
+            return "n/a";
+        }
+    }
+
+    /**
+     * Gets the CSS class of the issue when considering it as a contest.
+     *
+     * @return the css class
+     * @since 1.3
+     */
+    public String getContestLikeStatusClass() {
+        String contestStatus = getContestLikeStatus();
+
+        if (contestStatus.equals("Active")) {
+            return "running";
+        } else if (contestStatus.equals("Completed")) {
+            return "completed";
+        } else if (contestStatus.equals("Cancelled")) {
+            return "cancelled";
+        } else {
+            return "";
         }
     }
 
@@ -291,6 +417,51 @@ public class TcJiraIssue implements Serializable {
     }
 
     /**
+     * Gets the end date of the issue when considering it as a contest.
+     *
+     * @return the end date of the issue.
+     * @since 1.3
+     */
+    public Date getEndDate() {
+        String statusName = getStatusName().trim().toLowerCase();
+        if (statusName.equals(ISSUE_STATUS_RESOLVED.toLowerCase())
+                || statusName.equals(ISSUE_STATUS_CLOSED.toLowerCase())
+                || statusName.equals(ISSUE_STATUS_ON_HOLD.toLowerCase())) {
+            // use updated time as resolved time
+            return issue.getUpdated().getTime();
+        }
+
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.setTime(new Date());
+        Calendar creationDate = Calendar.getInstance();
+        creationDate.setTime(getCreationDate());
+        Calendar dueDate = null;
+
+        if (getDueDate() != null) {
+            dueDate = Calendar.getInstance();
+            dueDate.setTime(getDueDate());
+        }
+
+        if (dueDate != null && currentDate.compareTo(dueDate) < 0) {
+            return getDueDate();
+        }
+
+        if (dueDate == null) {
+            final long difference = currentDate.getTimeInMillis() - creationDate.getTimeInMillis();
+            if (difference / (1000 * 60 * 60) - 48 <= 0) {
+                // use creation time + 48 hours
+                creationDate.add(Calendar.HOUR, 48);
+                return creationDate.getTime();
+            }
+        }
+
+        // none of the previous cases, use current time + 24 hours
+        currentDate.add(Calendar.HOUR, 24);
+
+        return currentDate.getTime();
+    }
+
+    /**
      * Gets the string representation of the issue creation date.
      *
      * @return the string representation of the issue creation date.
@@ -329,8 +500,8 @@ public class TcJiraIssue implements Serializable {
     public Long getProjectID() {
         RemoteCustomFieldValue[] values = this.issue.getCustomFieldValues();
 
-        for(RemoteCustomFieldValue value : values) {
-            if(value.getCustomfieldId().trim().toLowerCase().equals(ConfigUtils.getIssueTrackingConfig().getProjectIDField().trim().toLowerCase())) {
+        for (RemoteCustomFieldValue value : values) {
+            if (value.getCustomfieldId().trim().toLowerCase().equals(ConfigUtils.getIssueTrackingConfig().getProjectIDField().trim().toLowerCase())) {
                 return Long.parseLong(value.getValues()[0].trim());
             }
         }
@@ -338,7 +509,7 @@ public class TcJiraIssue implements Serializable {
         return null;
     }
 
-   
+
     /**
      * Check if the issue is a bug race.
      *
@@ -353,27 +524,27 @@ public class TcJiraIssue implements Serializable {
 
     /**
      * Gets the environment from the JIRA issue.
-     * 
+     *
      * @return the environment of the JIRA issue.
      * @since 1.2
      */
     public String getEnvironment() {
         return issue.getEnvironment();
     }
-    
+
     /**
      * Gets the description from the JIRA issue.
-     * 
+     *
      * @return the description of the JIRA issue.
      * @since 1.2
      */
     public String getDescription() {
         return issue.getDescription();
     }
-    
+
     /**
      * Gets the payment status from the JIRA issue.
-     * 
+     *
      * @return the payment status of the JIRA issue.
      * @since 1.2
      */
@@ -389,10 +560,10 @@ public class TcJiraIssue implements Serializable {
         // not found, return -1 by default
         return "-1";
     }
-    
+
     /**
      * Gets the TCO Points from the JIRA issue.
-     * 
+     *
      * @return the TCO Points of the JIRA issue.
      * @since 1.2
      */
@@ -413,10 +584,10 @@ public class TcJiraIssue implements Serializable {
         // not found, return -1 by default
         return -1;
     }
-    
+
     /**
      * Gets the issue id from the JIRA issue.
-     * 
+     *
      * @return the issue id of the JIRA issue.
      * @since 1.2
      */
@@ -426,7 +597,7 @@ public class TcJiraIssue implements Serializable {
 
     /**
      * Gets the security level id of the JIRA issue.
-     * 
+     *
      * @return the security level id of the JIRA issue.
      * @since 1.2
      */
@@ -440,10 +611,10 @@ public class TcJiraIssue implements Serializable {
         }
         return securityLevelId;
     }
-    
+
     /**
      * <p>Checks whether the JIRA issue is CCA only.</p>
-     * 
+     *
      * @return true if the JIRA issue is CCA only, false otherwise.
      * @since 1.2
      */

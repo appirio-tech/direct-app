@@ -35,6 +35,7 @@
                     </div>
                     <div class="areaHeader" style="width:400px">
                         <div style="float:left"><h2 class="title">Game Plan Gantt Chart</h2> </div>
+                        <input type="hidden" id="projectIDHolder" value="${formData.projectId}"/>
                         <div style="float:right; padding-top: 4px;">
                         <a style="text-align: center; " class="button5"
                            href="javascript:ganttChartControl.printToWindow();">Full Screen View</a>

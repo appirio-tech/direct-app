@@ -1,13 +1,15 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import org.apache.struts2.ServletActionContext;
 
@@ -19,8 +21,13 @@ import java.util.*;
  *      The action processes the project contests calendar view request and return the result as json.
  *  </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Release Assembly - TopCoder Cockpit Project Contests Calendar View)
+ *  <p>
+ *   Version 1.1 - TopCoder Cockpit - Bug Race Project Contests View changes:
+ *   - Add bug races of the project to contest calendar view.
+ *  </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
 
@@ -81,6 +88,11 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
      * Gets the contests of the project and transform the data into the JSON that the front end fullcalendar plugin can
      * consume. The JSON data will be returned via AJAX to the front end per request.
      *
+     * <p>
+     * Update in version 1.1:
+     * - Add bug races into contests calendar view.
+     * </p>
+     *
      * @throws Exception if any error occurs.
      */
     @Override
@@ -102,6 +114,9 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
 
         result.put("events", contestsJsonList);
 
+        // set to store all the contest ids
+        Set<Long> contestIds = new HashSet<Long>();
+
         for (ProjectContestDTO c : contests) {
 
             // map to store data of one contest
@@ -116,6 +131,23 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
 
             contestsJsonList.add(contestJson);
 
+            contestIds.add(c.getContest().getId());
+        }
+
+        if(contestIds.size() > 0) {
+            // get the bug races of all the contests of project
+            final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
+            for(TcJiraIssue bugRace : bugRaceForDirectProject) {
+                Map<String, String> contestJson = new HashMap<String, String>();
+
+                contestJson.put("id", bugRace.getIssueKey());
+                contestJson.put("title", bugRace.getIssueKey() + " " + bugRace.getTitle());
+                contestJson.put("url", bugRace.getIssueLink());
+                contestJson.put("start", CONTEST_DATE_FORMAT.format(bugRace.getCreationDate()));
+                contestJson.put("end", CONTEST_DATE_FORMAT.format(bugRace.getEndDate()));
+                contestJson.put("status", getJsonContestStatus(bugRace.getContestLikeStatus()));
+                contestsJsonList.add(contestJson);
+            }
         }
 
         // set the current date on TC server

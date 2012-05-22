@@ -1,13 +1,15 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.gameplan.GamePlanService;
 import com.topcoder.service.util.gameplan.SoftwareProjectData;
@@ -30,8 +32,13 @@ import java.util.*;
  * This class is mutable and stateful: it's not thread safe.
  * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.0
+ * <p>
+ * Version 1.1 updates:
+ * - Include bug races into the game plan.
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1 (TopCoder Cockpit - Bug Race Project Contests View)
  */
 public class CurrentProjectGamePlanAction extends AbstractAction {
 
@@ -128,9 +135,13 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
         // string which is used to store response data
         String responseData;
 
-        if (this.getSessionData().getCurrentProjectContext() != null) {
+        if (this.getSessionData().getCurrentProjectContext() != null || getFormData() != null) {
             // Get current selected project from session
             projectId = this.getSessionData().getCurrentProjectContext().getId();
+
+            if(getFormData().getProjectId() > 0) {
+                projectId = getFormData().getProjectId();
+            }
 
             // Get project game plan data from Game Plan Service
             TCDirectProjectGamePlanData data = getGamePlanService().retrieveGamePlanData(user, projectId);
@@ -193,10 +204,15 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
     /**
      * Generate the game plan XML data with the given DTO TCDirectProjectGamePlanData.
      *
+     * <p>
+     * Update in version 1.1:
+     * - Update the generation codes to inlude bug races for project into the gantt chart.
+     * </p>
+     *
      * @param gamePlan the TCDirectProjectGamePlanData which stores the data.
      * @return the generated data response.
      */
-    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan) {
+    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan) throws Exception {
         // create a string builder to store the XML result
         StringBuilder result = new StringBuilder();
 
@@ -207,7 +223,18 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
         // Get the direct project name from session
         String directProjectName = gamePlan.getTcDirectProjectName();
 
-        Date directProjectStartDate = getDirectProjectStartDate(gamePlan);
+        // the list to store bug race of the project
+        List<TcJiraIssue> bugRaceForDirectProject = null;
+
+        Set<Long> contestIds = getAllContestsIdsFromGamePlan(gamePlan);
+
+        if(contestIds.size() > 0) {
+            // if there are contest IDs, search for the bug races
+            bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
+        }
+
+        // get the start date of the project
+        Date directProjectStartDate = getDirectProjectStartDate(gamePlan, bugRaceForDirectProject);
 
         // append the direct project header
         result.append("<project id=\"" + directProjectId + "\" name=\"" +
@@ -218,7 +245,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
             // generate studio contests data
             for (StudioProjectData sc : gamePlan.getStudioProjects()) {
-                long id = sc.getContestId();
+                String id = String.valueOf(sc.getContestId());
                 String name = sc.getContestName() + " (" + sc.getContestType() + ")";
                 String startTime = GAME_PLAN_DATE_FORMAT.format(sc.getStartDate());
                 // calculate the duration in hours
@@ -237,7 +264,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
             // generate software contest data
             for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
-                long id = swc.getProjectId();
+                String id = String.valueOf(swc.getProjectId());
                 String name = swc.getProjectType() + " - " + swc.getProjectName();
                 String startTime = GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
                 // calculate the duration in hours
@@ -275,7 +302,32 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
                 result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
             }
+
+
+            // generate bug race data
+            if (contestIds.size() > 0) {
+
+                for (TcJiraIssue bugRace : bugRaceForDirectProject) {
+                    String id = bugRace.getIssueKey();
+                    String name = "Bug Race - " + bugRace.getIssueKey() + " " + bugRace.getTitle();
+                    String startTime = GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate());
+                    long duration = calculateDuration(bugRace.getCreationDate(), bugRace.getEndDate());
+                    String contestLikeStatus = bugRace.getContestLikeStatus();
+                    boolean isFinished = contestLikeStatus.equals("Completed")
+                            || contestLikeStatus.equals("Cancelled")
+                            || contestLikeStatus.equals("On Hold");
+                    long percentage = calculateProgressPercentage(true, isFinished, duration, bugRace.getEndDate());
+
+                    if(contestLikeStatus.toLowerCase().equals("on hold") || contestLikeStatus.toLowerCase().equals("n/a")) {
+                        contestLikeStatus = "cancelled";
+                    }
+
+                    result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
+                }
+            }
+
         }
+
 
         // append the direct project footer
         result.append("</project></projects>");
@@ -329,12 +381,12 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
      * @param status the contest status
      * @return the generated data in string format.
      */
-    private static String generateContestGamePlanData(long id, String name, String startTime, long duration, long percentage,
+    private static String generateContestGamePlanData(String id, String name, String startTime, long duration, long percentage,
                                                long predecessorId, String status) {
         StringBuilder contestData = new StringBuilder();
 
         contestData.append("<task id=\"" + id + "\" status=\"" + status + "\">");
-        contestData.append("<name>" + name + "</name>");
+        contestData.append("<name><![CDATA[" + name + "]]></name>");
         contestData.append("<est>" + startTime + "</est>");
         contestData.append("<duration>" + duration + "</duration>");
         contestData.append("<percentcompleted>" + percentage + "</percentcompleted>");
@@ -359,12 +411,20 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
      * Calculate the direct project start date. It picks up the earliest start date
      * among all the studio and software contests as the direct project start date.
      *
+     * <p>
+     * Version 1.1 TopCoder Cockpit - Bug Race Project Contests View Updates:
+     * - update calculation logic to consider bug races start date too
+     * </p>
+     *
      * @param gamePlan the game plan data which stores project contests.
+     * @param bugRaceForDirectProject the bug races of the project.
      * @return the calculated project start date.
      */
-    private static Date getDirectProjectStartDate(TCDirectProjectGamePlanData gamePlan) {
-        if (gamePlan.getSoftwareProjects().size() == 0 && gamePlan.getStudioProjects().size() == 0) {
-            // if there is no software & studio contests, return null for start date
+    private static Date getDirectProjectStartDate(TCDirectProjectGamePlanData gamePlan, List<TcJiraIssue> bugRaceForDirectProject) {
+        if (gamePlan.getSoftwareProjects().size() == 0
+                && gamePlan.getStudioProjects().size() == 0
+                && (bugRaceForDirectProject == null || bugRaceForDirectProject.size() == 0) ) {
+            // if there is no software & studio contests & bug races, return null for start date
             return null;
         }
 
@@ -389,7 +449,34 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             }
         }
 
+        // check bug races
+        if(bugRaceForDirectProject != null && bugRaceForDirectProject.size() > 0) {
+            for(TcJiraIssue bugRace : bugRaceForDirectProject) {
+                if(bugRace.getCreationDate().before(startDate)) {
+                    startDate = bugRace.getCreationDate();
+                }
+            }
+        }
+
         return startDate;
     }
 
+    /**
+     * Gets the all the contest ids of the software contests and studio contests in the game plan.
+     *
+     * @param gamePlan the game plan data.
+     * @return the set of contest ids.
+     * @since 1.1
+     */
+    private static Set<Long> getAllContestsIdsFromGamePlan(TCDirectProjectGamePlanData gamePlan) {
+        Set<Long> contestIds = new HashSet<Long>();
+        for (StudioProjectData studioContest : gamePlan.getStudioProjects()) {
+            contestIds.add(studioContest.getContestId());
+        }
+        for (SoftwareProjectData softwareContest : gamePlan.getSoftwareProjects()) {
+            contestIds.add(softwareContest.getProjectId());
+        }
+
+        return contestIds;
+    }
 }

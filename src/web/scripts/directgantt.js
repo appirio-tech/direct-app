@@ -54,9 +54,13 @@ function hasError(response) {
 
 $(document).ready(function() {
 
+    var projectId = $("#projectIDHolder").val();
+    var request = {formData:{projectId:projectId}};
+
     $.ajax({
         type: "GET",
         url: "projectGamePlan",
+        request:request,
         dataType: "text",
         cache:false,
         success: function(xml) {

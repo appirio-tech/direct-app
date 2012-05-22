@@ -48,9 +48,12 @@
  *
  * Version 1.8.2 - (Release Assembly - TC Cockpit All Projects Management Page Update):
  * - Add a hidden column for $.allProjectTable
+ *
+ * Version 1.8.3 - (TopCoder Cockpit - Bug Race Project Contests View)
+ * - Update to fix the sorting of the forum/registrants/submission in project contests list view
  *  
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, TCSASSEMBLER
- * @version 1.8.2
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin
+ * @version 1.8.3
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -235,6 +238,29 @@ $(document).ready(function() {
        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     };
 
+    jQuery.fn.dataTableExt.oSort['link-number-asc'] = function (a, b) {
+        var x = getNumberOfTheLink(a);
+        var y = getNumberOfTheLink(b);
+
+        //alert("status A:" + x + " status B:" + y);
+
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    };
+
+    jQuery.fn.dataTableExt.oSort['link-number-desc'] = function (a, b) {
+        var x = getNumberOfTheLink(a);
+        var y = getNumberOfTheLink(b);
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    };
+
+    function getNumberOfTheLink(text) {
+        if(text.indexOf('href') == -1) {
+            return -1;
+        }
+
+        return parseInt($.trim($(text).text()));
+    }
+
     function getProjectStatus(text) {
         text = text.toLowerCase();
 
@@ -393,9 +419,9 @@ $(document).ready(function() {
 				{ "sType": "html" },
 				{ "sType": "date-direct" },
                 { "sType": "date-direct" },
-				{ "sType": "html" },
-				{ "sType": "html" },
-				{ "sType": "html" },
+				{ "sType": "link-number" },
+				{ "sType": "link-number" },
+				{ "sType": "link-number" },
 				{ "sType": "html" },
 				null
 			]

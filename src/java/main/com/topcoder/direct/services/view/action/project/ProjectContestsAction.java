@@ -1,18 +1,21 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.project;
 
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>A <code>Struts</code> action to be used for handling requests for viewing the <code>Project Contests</code> page
@@ -23,8 +26,13 @@ import java.util.List;
  *     - Add getter to return current date on server
  * </p>
  *
- * @author isv
- * @version 1.1
+ * <p>
+ *     Version 1.2 - TopCoder Cockpit - Bug Race Project Contests View changes:
+ *     - Add bug races as project contests to contest list view.
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.2
  */
 public class ProjectContestsAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectContestsDTO> {
@@ -87,10 +95,22 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
         String result = super.execute();
         if (SUCCESS.equals(result)) {
             List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
+
             if (contests.isEmpty()) {
                 getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
             } else {
                 getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
+
+                // add bug races to the contests
+                Set<Long> contestIds = new HashSet<Long>();
+
+                for(ProjectContestDTO c : contests) {
+                    contestIds.add(c.getContest().getId());
+                }
+
+                final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
+
+                getViewData().setProjectBugRaces(bugRaceForDirectProject);
             }
 
             // set the current direct project id in session, the contest details codes incorrectly

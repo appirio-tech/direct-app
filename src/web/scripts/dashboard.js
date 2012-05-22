@@ -58,8 +58,12 @@
  *
  *  Version 2.8 - Release Assembly - TC Cockpit Enterprise Calendar Revamp
  *  - Add the js codes to load enterprise calendar data for the enterprise calendar page
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin
- * @version 2.8
+ *
+ *  Version 2.9 - TopCoder Cockpit - Bug Race Project Contests View update:
+ *  - Hide the filter panel in project contests calendar view
+ *
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, TCSASSEMBLER
+ * @version 2.9
  */
 $(document).ready(function(){
 						   
@@ -1614,11 +1618,12 @@ $(document).ready(function(){
             views.find(".contestTView").show();
             views.find(".contestCView").hide();
             views.find(".calendarLegends").hide();
+            $("#ProjectsContestsFilter").show();
         } else {
             views.find(".contestTView").hide();
             views.find(".contestCView").show();
             views.find(".calendarLegends").show();
-
+            $("#ProjectsContestsFilter").hide();
             // get direct project ID
             var directProjectId = $.trim($("#currentDirectProjectID").html());
             var request = {"directProjectId":directProjectId};

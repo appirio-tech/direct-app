@@ -1,17 +1,26 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
 
 import com.topcoder.direct.services.view.dto.CommonDTO;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>A DTO class providing the data for <code>Project Contests</code> page view for single project.</p>
  *
- * @author isv
- * @version 1.0
+ * <p>
+ * Version 1.1 - TopCoder Cockpit - Bug Race Project Contests View changes:
+ * <ol>
+ *     <li>Add the property {@link #projectBugRaces}</li>
+ * </ol>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.1
  */
 public class ProjectContestsDTO extends CommonDTO implements Serializable, ProjectStatsDTO.Aware,
                                                              ProjectContestsListDTO.Aware {
@@ -39,6 +48,14 @@ public class ProjectContestsDTO extends CommonDTO implements Serializable, Proje
      * <p>A <code>ProjectContestsListDTO</code> providing the details for the contests for requested project.</p>
      */
     private ProjectContestsListDTO projectContests;
+
+    /**
+     * <p>
+     * A list of <code>TcJiraIssue</code> which presents the bug races of the project.
+     * </p>
+     * @since 1.1
+     */
+    private List<TcJiraIssue> projectBugRaces;
 
     /**
      * <p>Constructs new <code>ProjectContestsDTO</code> instance. This implementation does nothing.</p>
@@ -81,5 +98,25 @@ public class ProjectContestsDTO extends CommonDTO implements Serializable, Proje
      */
     public void setProjectContests(ProjectContestsListDTO projectContests) {
         this.projectContests = projectContests;
+    }
+
+    /**
+     * Gets the bug races of the project.
+     *
+     * @return the bug races of the project.
+     * @since 1.1
+     */
+    public List<TcJiraIssue> getProjectBugRaces() {
+        return projectBugRaces;
+    }
+
+    /**
+     * Sets the bug races of the project.
+     *
+     * @param projectBugRaces the bug races of the project.
+     * @since 1.1
+     */
+    public void setProjectBugRaces(List<TcJiraIssue> projectBugRaces) {
+        this.projectBugRaces = projectBugRaces;
     }
 }

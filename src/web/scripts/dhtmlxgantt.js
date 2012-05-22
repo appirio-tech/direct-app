@@ -27,6 +27,7 @@ To use this component please contact sales@dhtmlx.com to obtain license
 var ganttSoftwareContestUrl = "./contest/detail.action?projectId=";
 var ganttContestUrl = ganttSoftwareContestUrl;
 var ganttProjectUrl = "./currentProjectOverview.action";
+var ganttBugRaceUrlPrefix = "https://apps.topcoder.com/bugs/browse/";
 
 function getProgressBackground(status) {
     if (status.toLowerCase() == 'active') {
@@ -4885,7 +4886,7 @@ GanttTask.prototype.createTaskItem = function()
     divTaskItem.appendChild(tblTaskItem);
     tblTaskItem.cellPadding = "0";
     tblTaskItem.cellSpacing = "0";
-    tblTaskItem.width = this.TaskInfo.Duration * this.Chart.hourInPixelsWork + "px";
+    tblTaskItem.width = (this.TaskInfo.PercentCompleted != 0 && this.TaskInfo.Duration == 0) ? 1 : this.TaskInfo.Duration * this.Chart.hourInPixelsWork + "px";
     tblTaskItem.style.cssText = "border: solid 1px #BC810D;";
 
     var rowTblTask = tblTaskItem.insertRow(tblTaskItem.rows.length);

@@ -6,8 +6,10 @@ package com.topcoder.direct.services.view.util.jira;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -44,8 +46,16 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  *   </ol>
  * </p>
  *
- * @author Veve, TCSASSEMBER
- * @version 1.2 (TC Cockpit Bug Tracking R1 Cockpit Project Tracking assembly)
+ * <p>
+ * Version 1.3 (TopCoder Cockpit - Bug Race Project Contests View) change notes:
+ * <ol>
+ *     <li>Add method {@link #getBugRaceForDirectProject(java.util.List)}</li>
+ *     <li>Add method {@link #getBugRaceForDirectProject(java.util.Set)}</li>
+ * </ol>
+ * </p>
+ *
+ * @author Veve, TCSASSEMBLER
+ * @version 1.3
  */
 public class JiraRpcServiceWrapper {
 
@@ -226,6 +236,58 @@ public class JiraRpcServiceWrapper {
 
         return result;
     }
+
+    /**
+     * Gets the bug race for the direct project.
+     *
+     * @param contests a list of contests.
+     * @return a list of <code>TcJiraIssue</code> instances representing bug races.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.3
+     */
+    public static List<TcJiraIssue> getBugRaceForDirectProject(List<? extends ContestBriefDTO> contests) throws Exception {
+        Set<Long> contestIds = new HashSet<Long>();
+        for(ContestBriefDTO cdto : contests) {
+            contestIds.add(cdto.getId());
+        }
+        return getBugRaceForDirectProject(contestIds);
+    }
+
+    /**
+     * Gets the bug race for the direct project.
+     *
+     * @param contestIds a list of contest ids.
+     * @return a list of <code>TcJiraIssue</code> instances representing bug races.
+     * @throws Exception if an unexpected error occurs.
+     * @since 1.3
+     */
+    public static List<TcJiraIssue> getBugRaceForDirectProject(Set<Long> contestIds) throws Exception {
+
+        // when the input is null or empty, return an empty result
+        if (contestIds == null || contestIds.size() == 0 ) {
+            return  new ArrayList<TcJiraIssue>();
+        }
+
+        // build the JQL query first
+        String softwareQuery = ConfigUtils.getIssueTrackingConfig().getSoftwareContestJQLQuery();
+
+        StringBuffer jqlQueryBuilder = new StringBuffer();
+
+        for(Long contestId : contestIds) {
+            jqlQueryBuilder.append((softwareQuery ) + contestId);
+            jqlQueryBuilder.append(" OR ");
+        }
+
+        // remove the last " OR " which is not needed
+        String jqlQuery = jqlQueryBuilder.substring(0, jqlQueryBuilder.length() - 3) +
+                " AND project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " order by Created DESC";
+
+        List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
+
+        return result;
+    }
+
+
 
     /**
      * <p>Gets the JIRA issue by issue id.</p>
