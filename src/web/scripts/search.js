@@ -614,6 +614,7 @@ $(document).ready(function() {
 				{ "sType": "html" },
 				{ "sType": "html" },
 				{ "sType": "html" },
+				{ "sType": "html" },
                 { "sType": "html" },
 				{ "sType": "html" },
                 { "sType": "html" },

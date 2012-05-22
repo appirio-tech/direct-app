@@ -450,7 +450,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="9">
+        <th class="tableTitle" colspan="10">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Cost Details</span>
         </th>
@@ -465,6 +465,7 @@
         <th class="tableColumn">&nbsp;Project&nbsp;</th>
         <th class="tableColumn">&nbsp;Filter Value&nbsp;</th>
         <th class="tableColumn">&nbsp;Contest&nbsp;</th>
+		<th class="tableColumn">&nbsp;Contest Id&nbsp;</th>
         <th class="tableColumn">&nbsp;Contest Type&nbsp;</th>
         <th class="tableColumn">&nbsp;Status&nbsp;</th>
         <th class="tableColumn">&nbsp;Completion Date&nbsp;</th>
@@ -496,6 +497,11 @@
             <td>
                 <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['item'].contest.id}"/></s:url>">
                     <c:out value="${item.contest.name}"/>
+                </a>
+            </td>
+			<td>
+                <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['item'].contest.id}"/></s:url>">
+                    <c:out value="${item.contest.id}"/>
                 </a>
             </td>
             <td>
