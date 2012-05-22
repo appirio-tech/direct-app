@@ -109,13 +109,14 @@
                                                                 Spec Review in Progress...
                                                             </c:if>    
                                                             <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES'}">
-
+															<c:choose>
                                                                <c:when  test="${viewData.hasActiveSpecSubmission}">
                                                                    The submission has been received.
                                                                </c:when >
                                                                <c:otherwise>
                                                                    Waiting For Fixes...
                                                                </c:otherwise>
+															</c:choose>
                                                             </c:if>
                                                             <c:if test="${viewData.specificationReviewStatus eq 'NO_SPEC_REVIEW'}">
                                                                 No Spec Review Now...
