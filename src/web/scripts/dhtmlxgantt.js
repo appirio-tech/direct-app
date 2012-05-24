@@ -5182,7 +5182,7 @@ GanttTask.prototype.checkWidthTaskNameItem = function()
         this.cTaskNameItem[0].innerHTML = tName;
     }
     
-    var urlTemplate = this.TaskInfo.Id > 30000000 ? ganttSoftwareContestUrl : ganttContestUrl;
+    var urlTemplate = this.TaskInfo.Name.indexOf("Bug Race -") == 0 ? ganttBugRaceUrlPrefix : ganttSoftwareContestUrl;
     
     this.cTaskNameItem[0].innerHTML = "<a href=\"" + urlTemplate + this.TaskInfo.Id + '" target="_blank">' + "<font color='" + color + "'>" + tName + "</font></a>";
 
