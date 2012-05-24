@@ -23,7 +23,6 @@
 <div class="modal"></div>
 <!-- Begin .outer_container_showcase-->
 <div class="outer_container_showcase">
-	<div class="close_div"><a href="#" id="close_showcase"></a><div class="clear"></div></div>
     <!-- Begin .slide_container_outer-->
     <div class="slide_container_outer">
     <div class="slide_container_inner">
@@ -34,67 +33,116 @@
                 <div class="slides_container">
                     <!-- Begin Slide 1-->
                     <div class="slide" id="slide_1">	
-                        <div class="image_showcase" ><img src="/images/mobile/ipad_content_showcase_1.png" width="278" height="349" alt="Slide 1" /></div>
+                        <div class="image_showcase landscape" ><img src="/images/mobile/ipad_content_showcase_1.png" alt="Slide 1" /></div>
                         <div class="showcase_content">
-                            <div class="showcase_title">TOPCODER MOBILE PLATFORM APP</div>
-                            <p class="bigger">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+	<div class="showcase_title">Cessna iPad App</div>
+
+	<p>The Cessna Aircraft Company asked TopCoder to develop an
+	aircraft cataloging and pricing application for the iPad. The
+	specifications called for a touch-friendly interface that
+	would allow users to store and retrieve a multitude of details
+	about an inventory of aircraft, including specialized data on
+	operational parameters and an intricate calculation of fixed
+	and total costs.</p>
+
+	<p>TopCoder's competitive community of application architects
+	and graphic designers reduced the complexity of the application
+	to a set of color-coded, logically ordered pages tailored to
+	the iPad's display format. Developers then competed to rapidly
+	prototype and assemble the app.</p>
+
+	<p>"It was a heck of a lot to get done in six weeks," said
+	Janelle Beczak, the client's IT Manager for Mobile Apps.</p>
+
                         </div>
                         <div class="clear"></div>
                     </div>
                     <!-- End Slide 1-->
                     <!-- Begin Slide 2-->
                     <div class="slide" id="slide_2">	
-                        <div class="image_showcase" ><img src="/images/mobile/ipad_content_showcase_2.png" width="278" height="349" alt="Slide 2" /></div>
+                        <div class="image_showcase landscape" ><img src="/images/mobile/ipad_content_showcase_2.png" alt="Slide 2" /></div>
                         <div class="showcase_content">
-                            <div class="showcase_title">ACME IPHONE APP</div>
-                            <p class="bigger">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+	<div class="showcase_title">Accenture Innovation Program</div>
+
+	<p>The global consulting firm Accenture required a tablet-based
+	application that would guide users on an interactive exploration
+	of the Accenture Innovation Centers. TopCoder began the
+	development process by wireframing the user flow and designing
+	a full set of interface screens.</p>
+
+	<p>The next step was implementing the screens in HTML5
+	with cutting-edge JavaScript transitions that replicate the
+	interactivity of native mobile apps. The outcome was a live
+	web prototype that, once wrapped in an iOS library, functioned
+	as a native iPad application. This method allows the prototype
+	to be reused to target other hardware platforms, resulting in
+	dramatic cost savings compared to developing multiple native
+	apps by traditional means.</p>
+
                         </div>
                         <div class="clear"></div>
                     </div>
                     <!-- End Slide 2-->
                     <!-- Begin Slide 3-->
                     <div class="slide" id="slide_3">	
-                        <div class="image_showcase" ><img src="/images/mobile/ipad_content_showcase_3.png" width="278" height="349" alt="Slide 3" /></div>
+                        <div class="image_showcase" ><img src="/images/mobile/ipad_content_showcase_3.png" alt="Slide 3" /></div>
                         <div class="showcase_content">
-                            <div class="showcase_title">MEGAN COMPANY MOBILE DASHBOARD</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
+
+	<div class="showcase_title">Pipe Bending Calculator</div>
+
+	<p>Greenlee, a major manufacturer of industrial and electrical
+	tools, sought to develop a mobile application that would assist
+	contractors in simulating pipe bends. This allows the correct
+	pipe fittings to be selected for the constraints of a given
+	application. Greenlee wanted a more powerful and mobile solution
+	than the Excel spreadsheets that were previously used to carry
+	out pipe bending calculations.</p>
+
+	<p>TopCoder translated the spreadsheet formulas into an intuitive
+	representation that allows users to manipulate the simulated pipe
+	bends not just as numbers, but as a visual depiction of what the
+	pipe would actually look like. The designers of TopCoder Studio
+	competed to develop a compact, smartphone-friendly interface
+	that allows workers and engineers to quickly calculate the most
+	suitable pipe bends in the field.</p>
+
+						</div>
                         <div class="clear"></div>
                     </div>
                     <!-- End Slide 3-->
                     <!-- Begin Slide 4-->
                     <div class="slide" id="slide_4">	
-                        <div class="image_showcase" ><img src="/images/mobile/ipad_content_showcase_4.png" width="278" height="349" alt="Slide 4" /></div>
+                        <div class="image_showcase" ><img src="/images/mobile/ipad_content_showcase_4.png" alt="Slide 4" /></div>
                         <div class="showcase_content">
-                            <div class="showcase_title">TOPCODER COCKPIT FOR IPAD</div>
-                            <p class="bigger">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
+
+	<div class="showcase_title">TopCoder Mobile App</div>
+
+	<p>Here at TopCoder, we like to eat our own cooking. We use the
+	same competitive process for internal projects as we do to develop
+	top-notch software for external clients. When the need arose for
+	our members to participate in TopCoder activities while on the
+	go, we naturally turned to the community itself to develop the
+	TopCoder mobile app. We required an app that would allow members
+	to easily browse contest listings, read news, and participate
+	in the forums, all within a smartphone's display area.</p>
+
+	<p>After designing the interface through wireframing
+	and storyboarding contests, we had our developers build a
+	cross-platform app that targets both iOS and Android phones with
+	little additional effort. The cross-platform approach has proven
+	to be valuable as we continue to refine and expand the TopCoder
+	app in response to member requests.</p>
+
+						</div>
                         <div class="clear"></div>
                     </div>
                     <!-- End Slide 4-->
                     <div class="clear"></div>
                 </div>
-                <div class="clear"></div>
                 <!-- End .slides_container -->
+                <div class="clear"></div>
                 <a href="#" class="prev" id="prevButton"></a>
                 <a href="#" class="next" id="nextButton"></a>
                 <div class="pagination">
@@ -114,7 +162,6 @@
 
 <!-- Begin .outer_container_register-->
 <div class="outer_container_register">
-	<div class="close_div"><a href="#" id="close_register"></a><div class="clear"></div></div>
     <div class="register_container_outer">
     	<div class="register_container_inner">
     	<h1>REGISTER</h1>
@@ -215,7 +262,7 @@
 	<div id="header_nav">	
     	<div id="header_nav_content">
         	<a href="/mobile/index.action" id="logo_top"></a>
-            <ul id="nav_menu">
+            <ul id="nav_menu" <c:if test="${not empty sessionScope.userHandle}">class="logged_nav_menu"</c:if>>
                 <c:if test="${empty sessionScope.userHandle}">
             	<li><a href="#" id="menu_start_new" class="navLogin startNP">Start new project</a></li>
                 </c:if>
@@ -224,13 +271,14 @@
                 </c:if>
                 <li><a href="http://www.topcoder.com/blog" id="menu_blog">Blog</a></li>
                 <li><a href="http://www.topcoder.com/help" id="menu_help">Help</a></li>
+                <li <c:if test="${empty sessionScope.userHandle}">style="display:none;"</c:if>><a href="#" id="menu_logout">Log out</a></li>
                 <li>
                     <c:if test="${empty sessionScope.userHandle}">
                 	<div class="logindiv"><a href="#" id="menu_login" class="navLogin">Log in</a></div>
                     <div class="hide logged_acc">Hello <a href="#" id="profile">mobdev!</a></div>
                     </c:if>
                     <c:if test="${not empty sessionScope.userHandle}">
-                	<div class="logindiv hide"><a href="#" id="menu_login" class="navLogin">Log in</a></div>
+                    <div class="logindiv hide"><a href="#" id="menu_login" class="navLogin">Log in</a></div>
                     <div class="logged_acc">Hello <a href="http://www.topcoder.com/tc?module=SimpleSearch&ha=${sessionScope.userHandle}" id="profile">${sessionScope.userHandle}</a></div>
                     </c:if>
                 </li>
@@ -275,15 +323,15 @@
                     <div class="tablet">
                         <div class="tablet_content">
                             <div class="tablet_content_inner">
-                                <div class="tablet_top">What We Have Developed</div>
+                                <div class="tablet_top">A few apps we've built</div>
                                 <div class="tablet_bottom">
                                     <ul class="menu_tablet">
                                         <li id="li_1">
                                             <a href="#0" id="menu_1" class="mySlidePaggination">
                                                 <span class="showcase_trigger" id="tr_1"></span>
-                                                <span class="table_cell"><span>TopCoder Mobile Platform</span></span>
+                                                <span class="table_cell"><span>Cessna iPad App</span></span>
                                                 <span class="menu_content">
-                                                    <span class="top">TopCoder Mobile Platform</span>
+                                                    <span class="top">Cessna iPad App</span>
                                                     <span class="middle"><img alt="" src="/images/mobile/ipad_content_1.png" /></span>
                                                     <span class="bottom">Click to view details</span>
                                                 </span>
@@ -292,9 +340,9 @@
                                         <li id="li_2">
                                             <a href="#1" id="menu_2" class="mySlidePaggination">
                                                 <span class="showcase_trigger" id="tr_2"></span>
-                                                <span class="table_cell"><span>Acme iPhone App</span></span>
+                                                <span class="table_cell"><span>Accenture Innovation Program</span></span>
                                                 <span class="menu_content">
-                                                    <span class="top">Acme iPhone App</span>
+                                                    <span class="top">Accenture Innovation Program</span>
                                                     <span class="middle"><img alt="" src="/images/mobile/ipad_content_2.png" /></span>
                                                     <span class="bottom">Click to view details</span>
                                                 </span>
@@ -303,9 +351,9 @@
                                         <li id="li_3">
                                             <a href="#2" id="menu_3" class="mySlidePaggination">
                                                 <span class="showcase_trigger" id="tr_3"></span>
-                                                <span class="table_cell"><span>Megan Company Mobile Dashboard</span></span>
+                                                <span class="table_cell"><span>Pipe Bending Calculator</span></span>
                                                 <span class="menu_content">
-                                                    <span class="top">Megan Company Mobile Dashboard</span>
+                                                    <span class="top">Pipe Bending Calculator</span>
                                                     <span class="middle"><img alt="" src="/images/mobile/ipad_content_3.png" /></span>
                                                     <span class="bottom">Click to view details</span>
                                                 </span>
@@ -314,9 +362,9 @@
                                         <li class="last" id="li_4">
                                             <a href="#3" id="menu_4" class="mySlidePaggination">
                                                 <span class="showcase_trigger" id="tr_4"></span>
-                                                <span class="table_cell"><span>TopCoder Cockpit for iPad</span></span>
+                                                <span class="table_cell"><span>TopCoder Mobile App</span></span>
                                                 <span class="menu_content">
-                                                    <span class="top">TopCoder Cockpit for iPad</span>
+                                                    <span class="top">TopCoder Mobile App</span>
                                                     <span class="middle"><img alt="" src="/images/mobile/ipad_content_4.png" /></span>
                                                     <span class="bottom">Click to view details</span>
                                                 </span>
@@ -339,8 +387,8 @@
                     <div id="headline_title_top"></div>
                     <div id="headline_title_middle">
                         <div id="headline_middle_title_top">                    	
-                            <div class="top">Your software wants</div>
-                            <div class="bottom">to take a road trip</div>
+                            <div class="top">Your software wants to</div>
+                            <div class="bottom">take a road trip</div>
                         </div>
                     </div>
                     <div id="headline_title_bottom"></div>
@@ -356,7 +404,7 @@
                 <div id="phone_wrapper">
                     <div class="phone">
                         <img alt="" src="/images/mobile/phone_01.png" width="91" height="110" />
-                        <div class="phone_tooltip">iOs</div>
+                        <div class="phone_tooltip">iOS</div>
                     </div>
                     <div class="phone">
                         <img alt="" src="/images/mobile/phone_02.png" width="91" height="110" />

@@ -226,6 +226,7 @@ table {
 	float:left;
 	font-family: 'Lato', sans-serif;
 }
+
 /* Login */
 #login_wrap{
 	float:right;
@@ -328,10 +329,15 @@ table {
 	width:81px;
 	background:url(../../images/mobile/nav_button_04.png) no-repeat top;
 }
+#nav_menu #menu_logout {
+    background: url(../../images/mobile/nav_button_04.png) no-repeat scroll center top transparent;
+    width: 81px;
+}
 #nav_menu #menu_start_new:hover,
 #nav_menu #menu_blog:hover,
 #nav_menu #menu_help:hover,
 #nav_menu #menu_login:hover,
+#nav_menu #menu_logout:hover,
 #nav_menu .focused{
 	background-position:bottom;
 }
@@ -449,6 +455,7 @@ table {
 /* daskdjaskl jd asl*/
 .outer_container_showcase{
 	position:absolute;
+    margin-top: 65px;
 	width:100%;
 	z-index:5;
 	display:none;
@@ -475,7 +482,7 @@ table {
 	width:100%;
 	background:url(../../images/mobile/pop_up_bg_01.jpg) no-repeat center top #fff;
 }#container_showcase {
-	width:960px;
+	width:1080px;
 	margin:0 auto;
 	position:relative;
 	z-index:0;
@@ -485,13 +492,14 @@ table {
 	left:4px;
 	z-index:100;
 }#slides .slide {
-	width:670px;
+	width:800px;
 	display:block;
 	position:absolute;
-	max-height:350px;	
+	max-height:380px;	
 }.image_showcase{
 	display:block;
 	float:left;
+    height:380px;
 }.showcase_title{
 	font-size:28px;
 	color:#fefc2c;
@@ -501,8 +509,8 @@ table {
 }.showcase_content{
 	display:block;
 	float:left;
-	width:344px;
-	margin-left:48px;
+	width:390px;
+	margin-left:30px;
 }.showcase_content .bigger{
 	font-size:16px;
 	line-height:20px;
@@ -511,7 +519,7 @@ table {
 	font-size:14px;
 	line-height:18px;
 }.slides_container {
-	width:670px;
+	width:800px;
 	margin:auto;
 	overflow:hidden;
 	position:relative;
@@ -570,6 +578,7 @@ table {
 	position:absolute;
 	width:100%;
 	z-index:5;
+    margin-top:65px;
 	display:none;
 }.outer_container_register .close_div{
 	display:block;

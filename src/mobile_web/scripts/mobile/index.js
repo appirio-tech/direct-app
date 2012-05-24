@@ -24,18 +24,22 @@ $(document).ready(function(e) {
 		.css("height","25px")
 		.css("padding-top","2px");
     }
+    $(".menu_content_overlay").hide();
 	
 	/* event handler for tablet & showcase */
-	$(".showcase_trigger").hover(function(e) {
-		$(".menu_tablet li").removeClass("menu_tablet_li_hover");
-		$(this).parents("li").addClass("menu_tablet_li_hover");
-		$(".menu_content_overlay").hide();
-	});
+	$(".showcase_trigger").hover(showMiniScreenshot);
+	$(".mySlidePaggination").hover(showMiniScreenshot);
 	$("#tablet_home_button").click(function(){
 		 $(".menu_tablet a").removeClass("menu_tablet_li_hover");
 		$(".menu_tablet li").removeClass("menu_tablet_li_hover");
 		 $(".menu_content_overlay").show();
 		 return false;
+	});
+    $(".modal").click(function(){
+		$(".outer_container_showcase").fadeOut();
+		$(".outer_container_register").fadeOut();
+		$(".modal").fadeOut();
+		return false;
 	});
 	$("#close_showcase").click(function(){
 		$(".outer_container_showcase").fadeOut();
@@ -225,7 +229,9 @@ $(document).ready(function(e) {
         
                                 $(".logindiv").hide();
                                 $(".logged_acc").show();
+                                $("#menu_logout").parent().show();
                                 $("#profile").html(h.val());
+                                $("#nav_menu").addClass("logged_nav_menu");
                                 $("#profile").attr("href", "http://www.topcoder.com/tc?module=SimpleSearch&ha=" + h.val());
                                 $("#login_wrap").hide();
                                 $("#nav_menu").show();
@@ -275,14 +281,14 @@ $(document).ready(function(e) {
 	//event handler for showcase
 	var current=1;
 	var numSlide=0;
-	var width=670;
+	var width=800;
 	$(".slide").css("left",width+"px");
 	$("#slide_"+current).css("left","0"); 
 	$('.slide').each(function(){
 		numSlide++;
 	});
 	$(".linkSlide").click(function(){
-		var newO=(($(this).attr("id")).split("_"))[1];
+		var newO=parseInt((($(this).attr("id")).split("_"))[1]);
 		
 		if(newO!=current){
 			var mode=(newO>current)?"next":"prev";
@@ -307,18 +313,22 @@ $(document).ready(function(e) {
 		}
 		return false;
 	});
-	$(".showcase_trigger").click(function(){
+	var showDetails = function() {
 		$(".outer_container_showcase").fadeIn();
 		$(".modal").fadeIn();
-		var num=parseInt((($(this).attr("id")).split("_"))[1]);
+		var num=parseInt((($(this).parent().attr("id")).split("_"))[1]);
 		$(".slide").css("left",width+"px");
 		$("#slide_"+num).css("left","0"); 
 		$(".linkSlide").parent().removeClass("current");
 		$("#linkSlide_"+num).parent().addClass("current");
 		$(".slides_container").css("height",$("#slide_"+num).height());
-		current=num;
+		current = num;
 		return false;
-	});
+	}
+
+	$(".showcase_trigger").click(showDetails);
+	$(".menu_content").click(showDetails);
+    
     $("#proccess_login_button").click(function() {
         var username = $('#handle_login').val();
 		var password = $('#password_login').val();
@@ -345,6 +355,8 @@ $(document).ready(function(e) {
                     $(".logindiv").hide();
                     $(".logged_acc").show();
                     $("#profile").html(username);
+                    $("#menu_logout").parent().show();
+                    $("#nav_menu").addClass("logged_nav_menu");
                     $("#profile").attr("href", "http://www.topcoder.com/tc?module=SimpleSearch&ha=" + username);
                     $("#login_wrap").hide();
                     $("#nav_menu").show();
@@ -360,7 +372,40 @@ $(document).ready(function(e) {
           }
         });
     });
+    
+    $("#menu_logout").click(function() {
+        $.ajax({
+            type: 'GET',
+            url:  ctx + "/logout",
+            data: "",
+            cache: false,
+            dataType: 'json',
+            async : false,
+            success: function(jsonResult) {
+            	$(".logindiv").show();
+                $(".logged_acc").hide();
+                $("#nav_menu").removeClass("logged_nav_menu");
+                $("#menu_logout").hide();
+                $(".startNP").addClass("navLogin").click(function() {
+                    $(document).scrollTop(0);
+                    $("#handle_login").val("");
+                    $("#password_login").val("");
+                    $("#login_wrap").show();
+                    $("#nav_menu").hide();
+                    return false;
+                });
+                $(".startNP").attr("href", "#");
+            }
+		});
+    });
 });
+
+function showMiniScreenshot() {
+	$(".menu_tablet li").removeClass("menu_tablet_li_hover");
+	$(this).parents("li").addClass("menu_tablet_li_hover");
+	$(".menu_content_overlay").hide();
+}
+
 function PasswordStrength(passw){
 	// initialized point to 0
 	var pts = 0;
