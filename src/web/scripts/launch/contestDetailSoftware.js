@@ -54,6 +54,7 @@
  */
 // can edit multi round
 var canEditMultiRound = true;
+var contestHasSpecReview = true;
 
 $(document).ready(function(){	
 
@@ -1874,7 +1875,13 @@ function activateContestEdit() {
    	  showErrors("no billing project is selected.");
    	  return;
    }
-   showActivateSpecReviewModal();
+
+    if (contestHasSpecReview) {
+        showActivateSpecReviewModal();
+    } else {
+        activateAndStartSpecReview('none');
+    }
+
 }
 
 /**
@@ -1940,7 +1947,11 @@ function handleActivationResultEdit(jsonResult) {
             $('#resubmit').hide();
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully and specification review has bee scheduled.");
+        var specResponse = " and specification review has bee scheduled.";
+        if(!contestHasSpecReview) {
+            specResponse = ".";
+        }
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse);
     },
     function(errorMessage) {
         showServerError(errorMessage);
@@ -1969,7 +1980,7 @@ function showSpecReview(contestJson) {
 
    var startSpecReviewUrl = "../contest/startSpecReview.action?projectId=";
    var PROJECT_STATUS_ACTIVE = 1;
-
+   contestHasSpecReview = contestJson.hasSpecReview;
    // only if contest is active (activated), has spec review phases, and sepc review phaase have not started
    if(contestJson.hasSpecReview && !contestJson.isSpecReviewStarted 
           && contestJson.projectStatus.id == PROJECT_STATUS_ACTIVE) {
