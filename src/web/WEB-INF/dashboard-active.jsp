@@ -34,6 +34,30 @@
 
 <body id="page">
 
+<!-- topcoder maintenance module -->
+	<div id="topcoder-maintenance-notification">
+		<div class="content">
+			<div class="alert">
+				<span class="title">TopCoder System Maintenance</span>
+				<span class="desc">
+					TopCoder will be performing routine maintenance on our network hardware on Thursday, May 31st between 20:00 EDT (GMT/UTC -4) and 21:00 EDT (GMT/UTC -4). <br/>
+
+					During this time, you may experience some sporadic system outages. <br/>
+
+					We apologize for any inconvenience that this may cause.
+
+				</span>
+			</div>
+			<div class="noAsk">
+				<a href="javascript:;" class="close">Close</a>
+				<div class="clear"></div>
+				<div class="noAakInner"><input type="checkbox" id="noAskAgain" /><label>Don&acute;t show again</label>
+			  </div>
+			</div>
+		</div>
+	</div>
+<!-- topcoder maintenance module ends -->
+
 <!-- ie6 notification module -->
 <div id="ie6-notification">
     <div class="content">
