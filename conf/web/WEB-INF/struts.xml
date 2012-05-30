@@ -503,6 +503,14 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="updateDirectProjectNotifications" method="updateDirectProjectNotifications" class="updateNotificationsAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="dashboardVMAction" class="dashboardVMAction">
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/vmmanager/dashboard-vm-management.jsp</result>

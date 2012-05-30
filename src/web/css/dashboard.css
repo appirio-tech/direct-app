@@ -56,6 +56,9 @@
  *
  * - (Release Assembly - TC Direct Cockpit Release Four) updates:
  * - Add class icoPassedReview and iconFailReview
+ *
+ * - (Release Assembly - TC Cockpit Project Forum Settings) updates:
+ * - Add classes for project notification table in setting notification page
  */
 
 
@@ -2235,6 +2238,15 @@ TABLE.contests TH.permCol{
 
 TABLE.notifications{
 	border: 1px solid #a8abad;
+    margin-bottom: 0px !important;
+}
+
+div.dashboardNotificationsDiv .bottom1 {
+    margin-top: 5px;
+}
+
+#projectForumNotifications {
+    margin-bottom: 20px;
 }
 
 TABLE.notifications TR.applyForAll{

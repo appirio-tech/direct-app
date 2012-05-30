@@ -1,9 +1,11 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.notification;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.notification.ProjectNotification;
+import com.topcoder.service.facade.project.notification.DirectProjectNotification;
 import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.RowNotFoundException;
 import com.topcoder.web.ejb.user.UserPreference;
@@ -33,8 +36,16 @@ import com.topcoder.web.ejb.user.UserPreference;
  *   </ol>
  * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.1
+ * <p>
+ * Version 1.2 (Release Assembly - TC Cockpit Project Forum Settings) Change notes:
+ *   <ol>
+ *     <li>Added {@link #projectNotifications} and its getter and setter</li>
+ *     <li>Updated {@link #executeAction()} to populate the projectNotifications for the view</li>
+ *   </ol>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.2
  */
 public class DashboardNotificationsAction extends BaseDirectStrutsAction {
     private static final List<UserPreferenceDTO> PREFERENCES;
@@ -48,7 +59,17 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
      */
     private List<ProjectNotification> notifications;
 
+    /**
+     * List of user preference.
+     */
     private List<UserPreferenceDTO> preferences;
+
+    /**
+     * List of project forum notification settings.
+     *
+     * @since 1.2
+     */
+    private List<DirectProjectNotification> projectNotifications;
 
     /**
      * The user can view contest fee option or not.
@@ -84,9 +105,19 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
     /**
      * Executes action by fetching necessary data from the back-end.
      *
+     * <p>
+     *     Updated in version 1.2 (Release Assembly - TC Cockpit Project Forum Settings)
+     *     - Populate the projectNotifications to redener in the view.
+     * </p>
+     *
      * @throws Exception if any error occurs
      */
     protected void executeAction() throws Exception {
+
+        if(getProjectServiceFacade() == null) {
+            throw new IllegalStateException("Project Service Facade is not initialized.");
+        }
+
         TCSubject user = getUser();
         HttpServletRequest request = DirectUtils.getServletRequest();
 
@@ -135,6 +166,9 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
             preference.setValue(value);
             preferences.add(preference);
         }
+
+        projectNotifications = getProjectServiceFacade().getProjectNotifications(user, user.getUserId());
+        Collections.sort(projectNotifications, new ProjectNotificationComparator());
     }
 
     /**
@@ -219,5 +253,35 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
      */
     public boolean isSyncUser() {
         return syncUser;
+    }
+
+    /**
+     * Gets the project notifications.
+     *
+     * @return the project notifications.
+     * @since 1.2
+     */
+    public List<DirectProjectNotification> getProjectNotifications() {
+        return projectNotifications;
+    }
+
+    /**
+     * Sets the project notifications.
+     *
+     * @param projectNotifications the project notifications.
+     * @since 1.2
+     */
+    public void setProjectNotifications(List<DirectProjectNotification> projectNotifications) {
+        this.projectNotifications = projectNotifications;
+    }
+
+    /**
+     * The comparator used to sort project notifications by name
+     * @since 1.2
+     */
+    private static class ProjectNotificationComparator implements Comparator<DirectProjectNotification> {
+        public int compare(DirectProjectNotification o1, DirectProjectNotification o2) {
+            return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+        }
     }
 }

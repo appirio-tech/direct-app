@@ -1,15 +1,17 @@
 <%--
-  - Author: greatKevin, winsty, isv
-  - Version: 1.4
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: greatKevin, winsty, isv, TCSASSEMBLER
+  - Version: 1.5
+  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the user notifications.
   -
   - Version 1.1 (TC Direct - Page Layout Update Assembly 2) changes: fixed layout issues.
   - Version 1.2 (TC Direct UI Improvement Assembly 1) changes notes: Solve "checkbox exists when no data in Settings > Permissions".
   - Version 1.3 (Release Assembly - Project Contest Fee Management) changes notes: Added contest fee option to the page.
-  - Version 1.4 (Release Assembly - Project Contest Fees Management Update 1) changes notes: Added option for contest 
-   -fee creation to the page.
+  - Version 1.4 (Release Assembly - Project Contest Fees Management Update 1) changes notes: Added option for contest
+  - fee creation to the page.
+  - Version 1.5 (Release Assembly - TC Cockpit Project Forum Settings) change notes:
+  - - Add the new project forum notifications table into the page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -232,7 +234,83 @@
 
                   <div class="dashboardNotificationsDiv">
 
+                      <div id="projectForumNotifications">
+                          <table id="projectNotifications" class="projectStats notifications" cellpadding="0"
+                                 cellspacing="0">
+                              <thead>
+                              <tr>
+                                  <th class="permCol">Project Name</th>
+                                  <th class="permCol2">Project Forum</th>
+                              </tr>
+                              </thead>
+                              <tbody class="checkPermissions">
+
+
+                              <s:iterator value="projectNotifications">
+
+                                  <tr class="select_project">
+                                      <td>
+                                          <div><s:property value="name"/></div>
+                                      </td>
+                                      <td class="checkbox2">
+                                          <input type="hidden" name="projectForumCategoryId" value="${forumId}"/>
+                                          <input type="hidden" name="projectForumProjectId" value="${projectId}"/>
+                                          <input id='projectForumCheckId${projectId}' class="selectUser select_forum"
+                                                 type="checkbox" autocomplete="off" <s:if test='forumNotification == true'>checked="checked"</s:if> />
+                                          <label for='projectForumCheckId${projectId}'>Forum</label>
+                                      </td>
+                                  </tr>
+
+                              </s:iterator>
+                              </tbody>
+
+                          </table>
+
+
+                          <div class="container2Left">
+                              <div class="container2Right">
+                                  <div class="container2Bottom">
+                                      <div class="container2BottomLeft">
+                                          <div class="container2BottomRight">
+
+
+
+                                              <div class="pagination">
+
+                                                  <div class="pages bottom2"></div>
+
+                                                  <div class="showPages bottom1"><!-- number of rows that can be displayed on the same page -->
+                                                      <label><strong>Show:</strong></label>
+                                                      <select id="projectForumPageSize" class="normalOption" onchange="projectForumPageChange()">
+                                                          <option value="10" selected="selected">10</option>
+                                                          <option value="25">25</option>
+                                                          <option value="50">50</option>
+                                                          <option value="1000000">All</option>
+                                                      </select>
+                                                      <span>per page</span>
+                                                  </div>
+                                              </div>
+
+
+
+                                              <div class="panel2">
+                                                  <a class="button9" id="saveProjectForumNotifications" href="javascript:saveProjectForumNotifications();">Save Notifications</a>
+                                              </div>
+
+                                          </div>
+
+
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+
+
+
                                         <form id="dashboard-notifications-form">
+
                                             <table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
                                                 <thead>
                                                     <tr>
@@ -291,51 +369,51 @@
                                                 </tbody>
 
                                             </table>
-
-                                               </form>
-
-
-
-                                              <div class="container2Left">
-                                                            <div class="container2Right">
-                                                                <div class="container2Bottom">
-                                                                    <div class="container2BottomLeft">
-                                                                        <div class="container2BottomRight">
+                                            <div class="container2Left">
+                                                <div class="container2Right">
+                                                    <div class="container2Bottom">
+                                                        <div class="container2BottomLeft">
+                                                            <div class="container2BottomRight">
 
 
 
-                                                                            <div class="pagination">
+                                                                <div class="pagination">
 
-                                                                                    <div class="pages bottom2"></div>
+                                                                    <div class="pages bottom2"></div>
 
-                                                                                    <div class="showPages bottom1"><!-- number of rows that can be displayed on the same page -->
-                                                                                        <label><strong>Show:</strong></label>
-                                                                                        <select id="pageSize" class="normalOption" onchange="notifications.refreshTable();">
-                                                                                            <option value="10">10</option>
-                                                                                            <option value="25">25</option>
-                                                                                            <option value="50">50</option>
-                                                                                            <option value="1000000" selected="selected">All</option>
-                                                                                        </select>
-                                                                                        <span>per page</span>
-                                                                                    </div>
-
-                                                                                    <!-- End .pages -->
-                                                                                    <!-- End .showPages -->
-                                                                                </div>
-
-
-
-                                                                            <div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
-                                                                                    <a class="button9" href="javascript:notifications.update();">Save Notifications</a>
-                                                                                </div>
-
-                                                                        </div>
-
-
+                                                                    <div class="showPages bottom1"><!-- number of rows that can be displayed on the same page -->
+                                                                        <label><strong>Show:</strong></label>
+                                                                        <select id="pageSize" class="normalOption" onchange="notifications.refreshTable();">
+                                                                            <option value="10">10</option>
+                                                                            <option value="25">25</option>
+                                                                            <option value="50">50</option>
+                                                                            <option value="1000000" selected="selected">All</option>
+                                                                        </select>
+                                                                        <span>per page</span>
                                                                     </div>
+
+                                                                    <!-- End .pages -->
+                                                                    <!-- End .showPages -->
                                                                 </div>
+
+
+
+                                                                <div class="panel2"><!-- this area containt the print, export to excel, export to pdf links -->
+                                                                    <a class="button9" href="javascript:notifications.update();">Save Notifications</a>
+                                                                </div>
+
                                                             </div>
-                                              </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+
+
+
                                             <!-- End .projectsStats -->
 
                     <!-- End .pagination -->
