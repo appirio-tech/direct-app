@@ -583,6 +583,7 @@ function initContest(contestJson) {
     if (!hasContestWritePermission) {
         $('a.button11').hide();
         $("#resubmit").hide();
+        $(".activateButton").hide();
         $("#swEdit_bottom_review").hide();
     } else if(isCompleted || isCancelled) {
         $('a.button11').hide();
@@ -1199,7 +1200,8 @@ function populatePrizeSection(initFlag) {
 	if(initFlag) {
 		//show activate button if it needs to : the fee is not paied up fully
 		if(mainWidget.softwareCompetition.projectHeader.projectStatus.name == DRAFT_STATUS) {
-			$('#resubmit').show(); 
+			$('#resubmit').show();
+            $(".activateButton").show();
             startedContest = false;
 		}         
 	}
@@ -1945,6 +1947,7 @@ function handleActivationResultEdit(jsonResult) {
         if (result.projectStatus.name != DRAFT_STATUS) {
             canEditMultiRound = false;
             $('#resubmit').hide();
+            $(".activateButton").hide();
         }
         var contestName = mainWidget.softwareCompetition.assetDTO.name;
         var specResponse = " and specification review has bee scheduled.";

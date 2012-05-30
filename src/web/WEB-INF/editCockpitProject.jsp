@@ -239,7 +239,11 @@
     <div class="projectMetaArea singleMetaArea pStatus" id="editProjectStatus">
         <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Status :</h3>
         <ul class="projectMetaAreaField radioContainer">
-
+            <li>
+                <input autocomplete="off" name="projectStatus" type="radio" value="5"
+                       <s:if test='viewData.project.projectStatusId == 5L'>checked="checked"</s:if> />
+                <label class="draftStatus">Draft</label>
+            </li>
             <li>
                 <input autocomplete="off" name="projectStatus" class="radioFix" type="radio" value="1"
                        <s:if test='viewData.project.projectStatusId == 1L'>checked="checked"</s:if> />

@@ -35,6 +35,10 @@ height: 1%;
 
 }
 
+h2.contestTitle {
+    display: inline-block;
+}
+
 .projectCopilotsList .jcarousel-item-horizontal,
 #projectCopilotsCarouselWrapper .jcarousel-item-placeholder-horizontal {
     width: 330px;

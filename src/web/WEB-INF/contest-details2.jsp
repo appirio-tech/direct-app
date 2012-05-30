@@ -25,7 +25,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/dashboard-ie7.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css" />
     <![endif]-->    
     <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css" />
     
@@ -69,10 +69,11 @@
                     <div class="areaHeader">
                         <h2 class="title contestTitle" style="background:url('/images/<s:property value="viewData.contest.contestType.letter"/>.png') no-repeat scroll left center transparent">
                         <s:property value="viewData.contestStats.contest.title"/>  <img id="contestLoading" style="display:none" src="/images/dots-white.gif"/>
+                            <a href="javascript:activateContestEdit();" class="activateButton" style="float:right;display: none"></a>
                         </h2>
 
-
                     </div><!-- End .areaHeader -->
+
 
                     <jsp:include page="includes/contest/dashboard.jsp"/>
 

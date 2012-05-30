@@ -155,6 +155,10 @@
     background-image: url(/images/status_active_icon.png);
 }
 
+#draft .columeSecond .projectStatus p.completedStatus {
+    background-image: url(/images/status_draft_icon.png);
+}
+
 /* projectTechnology */
 .columeSecond .projectTechnology {
     padding-bottom: 18px;

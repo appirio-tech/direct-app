@@ -500,11 +500,17 @@ a.buttonGray:hover span {
     float: left;
 }
 
-.editPage label.activeStatus {
+.editPage label.draftStatus {
     padding: 0 6px 0 27px;
-    background: transparent url(/images/status_active_icon.png) 0 0 no-repeat;
+    background: transparent url(/images/status_draft_icon.png) 0 0 no-repeat;
     font-size: 14px;
 }
+
+.editPage label.activeStatus {
+     padding: 0 6px 0 27px;
+     background: transparent url(/images/status_active_icon.png) 0 0 no-repeat;
+     font-size: 14px;
+ }
 
 .editPage label.archivedStatus {
     padding: 0 6px 0 27px;

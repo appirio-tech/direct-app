@@ -31,7 +31,12 @@ public enum ProjectStatusType {
     /**
      * The completed project status.
      */
-    COMPLETED(4L, "Completed");
+    COMPLETED(4L, "Completed"),
+
+    /**
+     * The draft project status.
+     */
+    DRAFT(5L, "Draft");
 
     /**
      * The id of the project status.

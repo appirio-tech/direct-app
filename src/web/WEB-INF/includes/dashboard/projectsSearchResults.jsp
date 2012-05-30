@@ -90,7 +90,7 @@
                     </td>
                     <td class="last">
 
-                        <a class="short operation activateOperation <s:if test='projectStatusType.projectStatusId != 2L'>hide</s:if>"
+                        <a class="short operation activateOperation <s:if test='projectStatusType.projectStatusId != 2L && projectStatusType.projectStatusId != 5L'>hide</s:if>"
                            href="javascript:;" onclick="updateDirectProjectStatus(${projectSummary.projectId}, 1)">
                             <img src="/images/activate-icon.png" alt=""/>Activate
                         </a>

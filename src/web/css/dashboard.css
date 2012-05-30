@@ -6603,7 +6603,7 @@ table.resultTable td.last a.long {
             background: url("../images/active-icon.png") no-repeat 10px 2px;
         }
         .dashboardModule .heading .active span{
-            color: #00b306;
+            color: #0369CF;
         }
         .dashboardModule .heading .draft{
             background: url("../images/draft-icon.png") no-repeat 10px 2px;
@@ -7101,6 +7101,11 @@ div.rightColumn .activity TABLE {
 #projectsResult TABLE.resultTable   TD SPAN.deleted {
     color: #dc0000;
     background: url(../images/status_delete_icon.png) no-repeat left 1px;
+}
+
+#projectsResult TABLE.resultTable   TD SPAN.draft {
+    color: #6F6F71;
+    background: url(../images/draft-icon.png) no-repeat left 1px;
 }
 
 #projectsResult TABLE.resultTable TD SPAN {

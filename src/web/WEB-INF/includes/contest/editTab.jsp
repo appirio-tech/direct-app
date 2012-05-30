@@ -703,7 +703,7 @@
 <!-- End Document Upload -->
 
 <div id="resubmit" class="hide">
-      <a href="javascript:activateContestEdit();" class="button4">Activate</a>
+    <a href="javascript:activateContestEdit();" class="activateButton"></a>
 </div>
                                         
 <div class="panel">
