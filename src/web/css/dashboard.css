@@ -2172,36 +2172,36 @@ TABLE.contests TD{
 
 TABLE.contests TD SPAN.completed {
     color: #009f00;
-    background: url(/images/completed_status_ico.png) no-repeat left 1px;
+    background: url(/images/completed_status_ico.png) no-repeat left 0px;
 }
 
 TABLE.contests TD SPAN.cancelled {
     color: #DB4848;
-    background: url(/images/cancelled_status_ico.png) no-repeat left 1px;
+    background: url(/images/cancelled_status_ico.png) no-repeat left 0px;
 }
 
 TABLE.contests TD SPAN.draft {
     color: #6f6f71;
-    background: url(/images/draft_status_ico.png) no-repeat left 1px;
+    background: url(/images/draft_status_ico.png) no-repeat left 0px;
 }
 
 TABLE.contests TD SPAN.running {
     color: #0369cf;
-    background: url(/images/active_status_ico.png) no-repeat left 1px;
+    background: url(/images/active_status_ico.png) no-repeat left 0px;
 }
 
     TABLE.contests TD SPAN.awarding{ 
         color: #ffb000;
-        background: url(../images/awarding_ico.png) no-repeat left 1px;
+        background: url(../images/awarding_ico.png) no-repeat left 0px;
     }
     TABLE.contests TD SPAN.milestone{ 
         color: #dc0000;
-        background: url(../images/milestone_ico.png) no-repeat left 1px;
+        background: url(../images/milestone_ico.png) no-repeat left 0px;
     }
 
 TABLE.contests TD SPAN.failedReview{
     color: #dc0000;
-    background: url(../images/milestone_ico.png) no-repeat left 1px;
+    background: url(../images/milestone_ico.png) no-repeat left 0px;
 }
 
 TABLE.contests A.button{
