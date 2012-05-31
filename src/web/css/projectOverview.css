@@ -433,13 +433,11 @@
     padding-top: 4px;
     font-size: 12px;
     font-weight: bold;
-    color: #ff9900;
     line-height: 12px;
     background: url(/images/projectManagers_icon.png) no-repeat left top;
 }
 
 .managersBox .projectManagers ul li a {
-    color: #ff9900;
     text-decoration: none;
 }
 
