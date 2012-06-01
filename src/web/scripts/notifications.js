@@ -304,4 +304,3 @@ $(document).ready(function() {
     // initialize the project forum notifications map
     loadProjectForumNotifications();
 });
-*/
