@@ -252,7 +252,7 @@
 
                                   <tr class="select_project">
                                       <td>
-                                          <div> <a  href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="projectId"/></s:url>">
+                                          <div> <a  href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="projectId"/></s:url>">
 
                                               <s:property value="name"/>
 
