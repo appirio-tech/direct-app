@@ -230,6 +230,8 @@
 
                             <div class="line"></div>
 
+              <h5 style="margin-bottom:6px">Project Forum Notifications</h5>
+
               <div class="container2">
 
                   <div class="dashboardNotificationsDiv">
@@ -250,7 +252,11 @@
 
                                   <tr class="select_project">
                                       <td>
-                                          <div><s:property value="name"/></div>
+                                          <div> <a  href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="projectId"/></s:url>">
+
+                                              <s:property value="name"/>
+
+                                          </a></div>
                                       </td>
                                       <td class="checkbox2">
                                           <input type="hidden" name="projectForumCategoryId" value="${forumId}"/>
@@ -308,13 +314,13 @@
                       </div>
 
 
-
+                      <h5 style="margin-bottom:6px">Contest Timeline/Forum Notifications</h5>
                                         <form id="dashboard-notifications-form">
 
                                             <table id="notifications" class="projectStats notifications" cellpadding="0" cellspacing="0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="permCol">Project / Contest Settings</th>
+                                                        <th class="permCol">Contest Settings</th>
                                                         <th class="permCol2" colspan="2">Notifications</th>
                                                     </tr>
                                                 </thead>

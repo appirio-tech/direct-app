@@ -2236,6 +2236,10 @@ TABLE.contests TH.permCol{
 	width: 19%;
 }
 
+.dashboardNotificationsDiv a:hover {
+    text-decoration: none;
+}
+
 TABLE.notifications{
 	border: 1px solid #a8abad;
     margin-bottom: 0px !important;
