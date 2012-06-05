@@ -597,6 +597,7 @@
                                 <th class="tableColumn sorting">Project</th>
                                 <th class="tableColumn sorting">Filter Value</th>
                                 <th class="tableColumn sorting">Contest</th>
+								<th class="tableColumn sorting">Contest Id</th>
                                 <th class="tableColumn sorting">Contest Type</th>
                                 <th class="tableColumn sorting">Status</th>
                                 <th class="tableColumn sorting">Completion Date</th>

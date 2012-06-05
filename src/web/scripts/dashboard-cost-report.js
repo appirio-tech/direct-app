@@ -353,14 +353,14 @@ $(document).ready(function() {
                             }
                             totalCompleted += fullfillment;
                             $(this).children("td:not(:last)").each(function(i) {
-                                if (i >= 11) {
-                                    $(this).html("$" + breakdown[i - 11]);
+                                if (i >= 12) {
+                                    $(this).html("$" + breakdown[i - 12]);
                                 }
                             });
                             if (fullfillment > 0) {
                                 $(this).children("td").each(function(i) {
-                                    if (i >= 8) {
-                                        totalCost[i - 8] += parseFloat($(this).text().replace(reg1,"").replace(reg2,""));
+                                    if (i >= 9) {
+                                        totalCost[i - 9] += parseFloat($(this).text().replace(reg1,"").replace(reg2,""));
                                     }
                                 });
                             }
@@ -444,7 +444,7 @@ $(document).ready(function() {
             $("#dataTableLength").trigger("change");
 
             if (projectIds.length > 0) {
-                $("#breakdownBody table").append("<tfoot><tr><td colspan='8' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
+                $("#breakdownBody table").append("<tfoot><tr><td colspan='9' style='text-align:left;padding:5px;' class='alignLeft'>Average</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>");
                 loadBreakdownData(projectIds);
             }
         } else {
