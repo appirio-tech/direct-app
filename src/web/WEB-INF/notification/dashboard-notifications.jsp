@@ -232,7 +232,7 @@
 
                             <div class="line"></div>
 
-              <h5 style="margin-bottom:6px">Project Forum Notifications</h5>
+         <!--     <h5 style="margin-bottom:6px">Project Forum Notifications</h5>
 
               <div class="container2">
 
@@ -287,7 +287,7 @@
 
                                                   <div class="pages bottom2"></div>
 
-                                                  <div class="showPages bottom1"><!-- number of rows that can be displayed on the same page -->
+                                                  <div class="showPages bottom1">
                                                       <label><strong>Show:</strong></label>
                                                       <select id="projectForumPageSize" class="normalOption" onchange="projectForumPageChange()">
                                                           <option value="10" selected="selected">10</option>
@@ -313,7 +313,7 @@
                               </div>
                           </div>
 
-                      </div>
+                      </div>-->
 
 
                       <h5 style="margin-bottom:6px">Contest Timeline/Forum Notifications</h5>
