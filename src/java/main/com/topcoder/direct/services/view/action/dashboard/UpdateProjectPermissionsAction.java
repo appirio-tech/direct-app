@@ -8,6 +8,7 @@ import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActio
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.permission.Permission;
+import com.topcoder.service.permission.PermissionType;
 import com.topcoder.service.permission.ProjectPermission;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -49,8 +50,15 @@ import java.util.Map;
  *     </li>
  * </p>
  *
+ * <p>
+ *     Version 1.3.1 (Release Assembly - TC Cockpit Project Report Permission) change notes:
+ *     <li>
+ *         update {@link #executeAction()} to support the new report permission.
+ *     </li>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.3
+ * @version 1.3.1
  * @since Direct Permissions Setting Back-end and Integration Assembly 1.0
  */
 public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
@@ -100,11 +108,13 @@ public class UpdateProjectPermissionsAction extends BaseDirectStrutsAction {
             long permissionTypeId;
 
             if (permission.getPermission().toLowerCase().equals("full")) {
-                permissionTypeId = 3;
+                permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_FULL;
             } else if (permission.getPermission().toLowerCase().equals("write")) {
-                permissionTypeId = 2;
+                permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_WRITE;
             } else if (permission.getPermission().toLowerCase().equals("read")) {
-                permissionTypeId = 1;
+                permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_READ;
+            } else if (permission.getPermission().toLowerCase().equals("report")) {
+                permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_REPORT;
             } else {
                 // remove
                 permissionTypeId = -1;

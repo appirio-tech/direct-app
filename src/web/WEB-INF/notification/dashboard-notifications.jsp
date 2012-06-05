@@ -12,6 +12,8 @@
   - fee creation to the page.
   - Version 1.5 (Release Assembly - TC Cockpit Project Forum Settings) change notes:
   - - Add the new project forum notifications table into the page.
+  - Version 1.6 (Release Assembly - TC Cockpit Project Report Permission) change notes:
+  - - Add new column 'report permission' to the permission table
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -485,6 +487,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th class="permCol">Project Name</th>
+                                                        <th class="permCol2">Report</th>
                                                         <th class="permCol2">Read</th>
                                                         <th class="permCol2">Write</th>
                                                         <th class="permCol2">Full Access</th>
@@ -506,6 +509,7 @@
                                                                 User List <img src="/images/up.png" alt=""/></a>
 
                                                         </th>
+                                                        <th class="permCol2">Report</th>
                                                         <th class="permCol2">Read</th>
                                                         <th class="permCol2">Write</th>
                                                         <th class="permCol2">Full Access</th>
@@ -517,6 +521,9 @@
                                                                href="javascript:void(0)"><span>Add More Users</span></a>
                                                             <a id="u_deleteUsersA" class="button1"
                                                                href="javascript:void(0)"><span>Delete Selected Users</span></a>
+                                                        </td>
+                                                        <td class="checkbox">
+                                                            <input type="checkbox" class="selectUser"/>
                                                         </td>
                                                         <td class="checkbox">
                                                             <input type="checkbox" class="selectUser"/>

@@ -14,11 +14,11 @@
  * </p>
  *
  * Version 1.0.2 TC Direct UI Improvement Assembly 1 (BHCUI-38, BHCUI-70, BHCUI-98) Change notes:
- *  -Solve "checkbox exists when no data in Settings > Permissions"
+ *  - Solve "checkbox exists when no data in Settings > Permissions"
  *  - User can't delete the permision of himself. When deleting other's permision, there is a dialog to make sure this action.
  *
  * Version 1.0.3 - Release Assembly - TC Direct UI Improvement Assembly 3
- * - Fix the li issue under error dialogue of notificaiton page
+ * - Fix the li issue under error dialogue of notification page
  *
  * Version 1.1 - Release Assembly - TC Direct Cockpit Release One
  * - Saving the permissions via ajax instead of submitting a form.
@@ -26,8 +26,11 @@
  * Version 1.2 - Release Assembly - TC Direct Cockpit Release Four
  * - Remove the user permission id when removing a user project permission to fix TCCC-4173.
  *
+ * Version 2.0 - Release Assembly - TC Cockpit Project Report Permission
+ * - Update the javascript codes to support the newly added project permission type: 'report'
+ *
  * @author TCSASSEMBLER
- * @version 1.2
+ * @version 2.0
  */
 //$(function() {
 /**
@@ -61,7 +64,7 @@ function requestPermissions() {
         responseType:"text",
         sendingData:"nothing",
         onSuccess:function (processor) {
-      handleJsonResult(JSON.parse(processor.getResponseText()));
+            handlePermissionJsonResult(JSON.parse(processor.getResponseText()));
             $("#permissions .applyForAll:gt(0)").remove();
     }
   });
@@ -73,16 +76,17 @@ function requestPermissions() {
    * @param jsonResult
    *            json result
    */
-var handleJsonResult = function handleJsonResult(jsonResult) {
+var handlePermissionJsonResult = function handleJsonResult(jsonResult) {
     if (!jsonResult['result']) {
       $.permission.showErrors("fail to get project permissions");
     }
 
     jsonResult = jsonResult['result']['return'];
         if (jsonResult.length != 0) {
-        $("#permissions thead").append('<tr class="applyForAll"><td class="markRed"></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td></td></tr>');
+        $("#permissions thead").append('<tr class="applyForAll"><td class="markRed"></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td class="checkbox"><input type="checkbox" class="selectUser"/></td><td></td></tr>');
     }
     for (var i = 0; i < jsonResult.length; i++) {
+      jsonResult[i].tperm = false;
       jsonResult[i].rperm = false;
       jsonResult[i].wperm = false;
       jsonResult[i].fperm = false;
@@ -90,6 +94,8 @@ var handleJsonResult = function handleJsonResult(jsonResult) {
         jsonResult[i].wperm = true;
       } else if (jsonResult[i].permission == "read") {
         jsonResult[i].rperm = true;
+      } else if (jsonResult[i].permission == "report") {
+          jsonResult[i].tperm = true;
       } else if (jsonResult[i].permission == "full") {
         jsonResult[i].fperm = true;
       }
@@ -103,25 +109,26 @@ var handleJsonResult = function handleJsonResult(jsonResult) {
    */
 //	$("#permission_submit").click(
 function pbutton_submit() {
-        if (!$.permission.tableCreateComplete) {
-          $.permission.showErrors("fail to load data");
-          return;
-        }
-        var ret = {};
-        ret['result'] = {};
-        ret['result']['return'] = {};
-        ret['result']['return']['permissions'] = [];
+
+    if (!$.permission.tableCreateComplete) {
+        $.permission.showErrors("fail to load data");
+        return;
+    }
+    var ret = {};
+    ret['result'] = {};
+    ret['result']['return'] = {};
+    ret['result']['return']['permissions'] = [];
 
     $.each($.permission.projects, function (pId, project) {
-          var pName = project.projectName;
-          var isStudio = project.studio;
+        var pName = project.projectName;
+        var isStudio = project.studio;
         $.each(project.updateUserPermissions, function (uId, uP) {
             ret['result']['return']['permissions'].push(uP
                 .getReturnObj(pId, pName, isStudio));
-          });
         });
+    });
 
-        var result = JSON.stringify(ret);
+    var result = JSON.stringify(ret);
     var request = {permissionsJSON:result};
 
     modalPreloader();
@@ -138,7 +145,7 @@ function pbutton_submit() {
                 function (result) {
                     if (result) {
                         var data = result;
-                        $.each(data, function(index, item){
+                        $.each(data, function (index, item) {
                             var projectId = item.projectId;
                             var userId = item.userId;
                             var permission = item.permission;
@@ -149,19 +156,19 @@ function pbutton_submit() {
                             $.permission.projects[projectId].updateUserPermissions = {};
                             $.permission.projects[projectId].userPermissionIds[userId] = permissionId;
 
-                            if(permission == "") {
+                            if (permission == "") {
                                 // remove
                                 $.permission.deleteUserOnProject(userId, projectId);
                             }
 
-                            if(removeTotalProject == 'true') {
+                            if (removeTotalProject == 'true') {
                                 $("#permissions .checkPermissions tr").each(function () {
-                                    if($(this).hasClass('subTr')) {
-                                        if($(this).attr('id').indexOf('project' + projectId + 'user') != -1) {
+                                    if ($(this).hasClass('subTr')) {
+                                        if ($(this).attr('id').indexOf('project' + projectId + 'user') != -1) {
                                             $(this).remove();
                                         }
                                     } else {
-                                        if($(this).find('div').attr('id').indexOf('project' + projectId) != -1) {
+                                        if ($(this).find('div').attr('id').indexOf('project' + projectId) != -1) {
                                             $(this).remove();
                                         }
                                     }
@@ -169,7 +176,7 @@ function pbutton_submit() {
 
                                 $("#permissions .checkPermissions tr:not(.subTr)").each(function (index) {
                                     $(this).removeClass();
-                                    if(index % 2 == 0) {
+                                    if (index % 2 == 0) {
                                         $(this).attr('class', 'even');
                                     } else {
                                         $(this).attr('class', 'odd');
@@ -185,7 +192,7 @@ function pbutton_submit() {
                         showErrors(result.warning);
                     } else {
                         showErrors("Unknown response from the server side.");
-      }
+                    }
                 },
                 function (errorMessage) {
                     showErrors(errorMessage);
@@ -250,6 +257,11 @@ $.permission = {
      * The class name for hidden.
      */
     HIDDEN_CLASS:"hide",
+
+    /**
+     * The report permission,
+     */
+    PERMISSION_TYPE_T:"t",
 
     /**
      * The read permission.
@@ -406,11 +418,15 @@ $.permission = {
       this.rperm = projectJson.rperm;
       this.wperm = projectJson.wperm;
       this.fperm = projectJson.fperm;
+      this.tperm = projectJson.tperm;
+
       this.html;
 
       /**
-       * Get pperm string from rperm, wperm and fperm.
+       * Get pperm string from tperm, rperm, wperm and fperm.
        *
+       * @param tperm
+       *            the report permission
        * @param rperm
        *            the read permission
        * @param wperm
@@ -419,32 +435,37 @@ $.permission = {
        *            the full permission
        * @return the pperm
        */
-      this.getPperm = function getPperm(rperm, wperm, fperm) {
-        var pperm;
-        if (fperm) {
-          pperm = "full";
-        } else {
-          if (wperm) {
-            pperm = "write";
-          } else if (rperm) {
-            pperm = "read";
-          } else {
-            pperm = "";
-          }
-        }
+      this.getPperm = function getPperm(tperm, rperm, wperm, fperm) {
+          var pperm;
 
-        return pperm;
+          if (fperm) {
+              pperm = "full";
+          } else {
+              if (wperm) {
+                  pperm = "write";
+              } else if (rperm) {
+                  pperm = "read";
+              } else if (tperm) {
+                  pperm = "report";
+              } else {
+                  pperm = "";
+              }
+          }
+
+          return pperm;
       };
 
-      /**
+        /**
        * The orignal pperm.
        */
-      this.originalPperm = this.getPperm(this.rperm, this.wperm,
+      this.originalPperm = this.getPperm(this.tperm, this.rperm, this.wperm,
           this.fperm);
 
       /**
        * Set permission.
        *
+       * @param tperm
+       *            the report permission
        * @param rperm
        *            the read permission
        * @param wperm
@@ -453,13 +474,14 @@ $.permission = {
        *            the full permission
        * @return whether this user permission is changed
        */
-      this.setPermission = function setPermission(rperm, wperm, fperm) {
+      this.setPermission = function setPermission(tperm, rperm, wperm, fperm) {
+        this.tperm = tperm;
         this.rperm = rperm;
         this.wperm = wperm;
         this.fperm = fperm;
 
         this.toHtml();
-        var changed = !(this.getPperm(this.rperm, this.wperm,
+        var changed = !(this.getPperm(this.tperm, this.rperm, this.wperm,
             this.fperm) == this.originalPperm);
 
         return changed;
@@ -473,34 +495,37 @@ $.permission = {
        * @return generated html
        */
       this.toHtml = function toHtml(projectId) {
-        var p = $.permission;
-        var combileId = "p_project" + projectId + "userPermission"
-            + this.userId;
-        var html = "";
-        html += "<tr id='" + combileId + "' class='group" + projectId
-            + " subTr hide'>\n";
-        html += "<td><a href='javascript:$.permission.deleteUserOnProject("
-            + this.userId;
-        html += ","
-            + projectId
-            + ");pbutton_submit();' class='subgroup'><img src='/images/remove.png' alt='' />";
-        html += " &nbsp;" + this.handle + "</a></td>\n";
+          var p = $.permission;
+          var combileId = "p_project" + projectId + "userPermission"
+              + this.userId;
+          var html = "";
+          html += "<tr id='" + combileId + "' class='group" + projectId
+              + " subTr hide'>\n";
+          html += "<td><a href='javascript:$.permission.deleteUserOnProject("
+              + this.userId;
+          html += ","
+              + projectId
+              + ");pbutton_submit();' class='subgroup'><img src='/images/remove.png' alt='' />";
+          html += " &nbsp;" + this.handle + "</a></td>\n";
 
-        html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
-            p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_R, this.userId,
-            this.rperm, projectId);
-        html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
-            p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_W, this.userId,
-            this.wperm, projectId);
-        html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
-            p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_F, this.userId,
-            this.fperm, projectId);
+          html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_T, this.userId,
+              this.tperm, projectId);
+          html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_R, this.userId,
+              this.rperm, projectId);
+          html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_W, this.userId,
+              this.wperm, projectId);
+          html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_F, this.userId,
+              this.fperm, projectId);
 
-        html += "<td ></td>\n";
-        html += "</tr>\n";
+          html += "<td ></td>\n";
+          html += "</tr>\n";
 
-        this.html = html;
-        return html;
+          this.html = html;
+          return html;
       };
 
       /**
@@ -512,7 +537,7 @@ $.permission = {
        *            the project name
        */
       this.getReturnObj = function getReturnObj(projectId, projectName, studio) {
-        var pperm = this.getPperm(this.rperm, this.wperm, this.fperm);
+        var pperm = this.getPperm(this.tperm, this.rperm, this.wperm, this.fperm);
 
         return {
                 userId:this.userId,
@@ -536,6 +561,7 @@ $.permission = {
       this.projectId = projectJson.projectId;
       this.projectName = projectJson.projectName;
       this.studio = projectJson.studio;
+      this.tperm = projectJson.tperm;
       this.rperm = projectJson.rperm;
       this.wperm = projectJson.wperm;
       this.fperm = projectJson.fperm;
@@ -544,6 +570,8 @@ $.permission = {
       /**
        * Set permission.
        *
+       * @param tperm
+       *            the report permission
        * @param rperm
        *            the read permission
        * @param wperm
@@ -551,7 +579,8 @@ $.permission = {
        * @param fperm
        *            the full permission
        */
-      this.setPermission = function setPermission(rperm, wperm, fperm) {
+      this.setPermission = function setPermission(tperm, rperm, wperm, fperm) {
+        this.tperm = tperm;
         this.rperm = rperm;
         this.wperm = wperm;
         this.fperm = fperm;
@@ -567,34 +596,37 @@ $.permission = {
        * @return generate html
        */
       this.toHtml = function toHtml(userId) {
-        var p = $.permission;
-        var combileId = "u_user" + userId + "projectPermission"
-            + this.projectId;
-        var html = "";
-        html += "<tr id='" + combileId + "' class='group" + userId
-            + " subTr hide'>\n";
-        html += "<td><a href='javascript:$.permission.deleteUserOnProject("
-            + userId;
-        html += ","
-            + this.projectId
-            + ");pbutton_submit();' class='subgroup'><img src='/images/remove.png' alt='' />";
-        html += " &nbsp;" + this.projectName + "</a></td>\n";
+          var p = $.permission;
+          var combileId = "u_user" + userId + "projectPermission"
+              + this.projectId;
+          var html = "";
+          html += "<tr id='" + combileId + "' class='group" + userId
+              + " subTr hide'>\n";
+          html += "<td><a href='javascript:$.permission.deleteUserOnProject("
+              + userId;
+          html += ","
+              + this.projectId
+              + ");pbutton_submit();' class='subgroup'><img src='/images/remove.png' alt='' />";
+          html += " &nbsp;" + this.projectName + "</a></td>\n";
 
-        html += p.getCheckboxString(p.TABLE_TYPE_USERS,
-            p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_R, this.projectId,
-            this.rperm, userId);
-        html += p.getCheckboxString(p.TABLE_TYPE_USERS,
-            p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_W, this.projectId,
-            this.wperm, userId);
-        html += p.getCheckboxString(p.TABLE_TYPE_USERS,
-            p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_F, this.projectId,
-            this.fperm, userId);
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_T, this.projectId,
+              this.tperm, userId);
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_R, this.projectId,
+              this.rperm, userId);
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_W, this.projectId,
+              this.wperm, userId);
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_DETAIL, p.PERMISSION_TYPE_F, this.projectId,
+              this.fperm, userId);
 
-        html += "<td ></td>\n";
-        html += "</tr>\n";
+          html += "<td ></td>\n";
+          html += "</tr>\n";
 
-        this.html = html;
-        return html;
+          this.html = html;
+          return html;
       };
     },
 
@@ -607,12 +639,13 @@ $.permission = {
     project:function (projectJson) {
       this.projectId = projectJson.projectId;
       this.projectName = projectJson.projectName;
-            this.studio = projectJson.studio;
+      this.studio = projectJson.studio;
       this.userPermissions = {};
       this.updateUserPermissions = {};
       this.userPermissionsHtml;
       this.groupState = 0;
       this.html;
+      this.tperm = true;
       this.rperm = true;
       this.wperm = true;
       this.fperm = true;
@@ -631,8 +664,7 @@ $.permission = {
           // add a row to table
         }
 
-        this
-            .setSingleUserPermission(uPermission.userId,
+        this.setSingleUserPermission(uPermission.userId, uPermission.tperm,
                 uPermission.rperm, uPermission.wperm,
                 uPermission.fperm);
       };
@@ -652,6 +684,9 @@ $.permission = {
         html += this.projectName;
         html += "</div></td>\n";
 
+        html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
+            p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_T, this.projectId,
+            this.tperm);
         html += p.getCheckboxString(p.TABLE_TYPE_PROJECTS,
             p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_R, this.projectId,
             this.rperm);
@@ -689,6 +724,8 @@ $.permission = {
        *
        * @param userId
        *            the user id
+       * @param tperm
+       *            the report permission
        * @param rperm
        *            the read permission
        * @param wperm
@@ -698,11 +735,11 @@ $.permission = {
        * @param notChangeProjectRow
        *            not to change the project row, optional
        */
-        this.setSingleUserPermission = function setSingleUserPermission(userId, rperm, wperm, fperm, notChangeProjectRow) {
+        this.setSingleUserPermission = function setSingleUserPermission(userId, tperm, rperm, wperm, fperm, notChangeProjectRow) {
         if (this.userPermissions[userId] == null) {
           return;
         }
-        var changed = this.userPermissions[userId].setPermission(rperm,
+        var changed = this.userPermissions[userId].setPermission(tperm, rperm,
             wperm, fperm);
 
         if (changed) {
@@ -718,13 +755,13 @@ $.permission = {
           var selectString = "#p_project" + this.projectId
               + "userPermission" + userId;
           var tr = $(selectString);
-          $.permission.setTrCheckStatus(tr, rperm, wperm, fperm);
+          $.permission.setTrCheckStatus(tr, tperm, rperm, wperm, fperm);
         }
 
         if ($.permission.tableCreateComplete
             && $.permission.currentTable == 0) {
           var user = $.permission.users[userId];
-          user.setSingleProjectPermission(this.projectId, rperm,
+          user.setSingleProjectPermission(this.projectId, tperm, rperm,
               wperm, fperm, true);
           user.updateMainPermission();
         }
@@ -735,37 +772,40 @@ $.permission = {
        * selected.
        */
       this.updateMainPermission = function updateMainPermission() {
-        this.rperm = true;
-        this.wperm = true;
-        this.fperm = true;
+          this.tperm = true;
+          this.rperm = true;
+          this.wperm = true;
+          this.fperm = true;
 
-        var mark = true;
-        var hasUser = false;
-            for (var userId in this.userPermissions) {
-          hasUser = true;
-          var uP = this.userPermissions[userId];
+          var mark = true;
+          var hasUser = false;
+          for (var userId in this.userPermissions) {
+              hasUser = true;
+              var uP = this.userPermissions[userId];
 
-          this.rperm = this.rperm && uP.rperm;
-          this.wperm = this.wperm && uP.wperm;
-          this.fperm = this.fperm && uP.fperm;
+              this.tperm = this.tperm && uP.tperm;
+              this.rperm = this.rperm && uP.rperm;
+              this.wperm = this.wperm && uP.wperm;
+              this.fperm = this.fperm && uP.fperm;
 
-          if (!this.rperm && !this.wperm && !this.fperm) {
-            mark = false;
-            break;
+              if (!this.tperm && !this.rperm && !this.wperm && !this.fperm) {
+                  mark = false;
+                  break;
+              }
           }
-        }
 
-        if (!hasUser) {
-          this.rperm = false;
-          this.wperm = false;
-          this.fperm = false;
-        }
+          if (!hasUser) {
+              this.tperm = false;
+              this.rperm = false;
+              this.wperm = false;
+              this.fperm = false;
+          }
 
-        var selectString = "#p_project" + this.projectId;
-        var tr = $(selectString).parent().parent();
-        $.permission.setTrCheckStatus(tr, this.rperm, this.wperm, this.fperm);
+          var selectString = "#p_project" + this.projectId;
+          var tr = $(selectString).parent().parent();
+          $.permission.setTrCheckStatus(tr, this.tperm, this.rperm, this.wperm, this.fperm);
 
-        $.permission.updateAllPermission();
+          $.permission.updateAllPermission();
       };
 
       /**
@@ -777,34 +817,40 @@ $.permission = {
        *            not to change the head row, optional
        */
         this.setMainPermission = function setMainPermission(permissionType, notUpdateAllPermission) {
-        if (permissionType == $.permission.PERMISSION_TYPE_R) {
-          this.rperm = !this.rperm;
-        }
-        if (permissionType == $.permission.PERMISSION_TYPE_W) {
-          this.wperm = !this.wperm;
-        }
-        if (permissionType == $.permission.PERMISSION_TYPE_F) {
-          this.fperm = !this.fperm;
-        }
+            if (permissionType == $.permission.PERMISSION_TYPE_T) {
+                this.tperm = !this.tperm;
+            }
+            if (permissionType == $.permission.PERMISSION_TYPE_R) {
+                this.rperm = !this.rperm;
+            }
+            if (permissionType == $.permission.PERMISSION_TYPE_W) {
+                this.wperm = !this.wperm;
+            }
+            if (permissionType == $.permission.PERMISSION_TYPE_F) {
+                this.fperm = !this.fperm;
+            }
 
             for (var userId in this.userPermissions) {
-          var uP = this.userPermissions[userId];
+                var uP = this.userPermissions[userId];
 
-          if (permissionType == $.permission.PERMISSION_TYPE_R) {
-            this.setSingleUserPermission(userId, this.rperm,
-                uP.wperm, uP.fperm, true);
-          } else if (permissionType == $.permission.PERMISSION_TYPE_W) {
-            this.setSingleUserPermission(userId, uP.rperm,
-                this.wperm, uP.fperm, true);
-          } else if (permissionType == $.permission.PERMISSION_TYPE_F) {
-            this.setSingleUserPermission(userId, uP.rperm,
-                uP.wperm, this.fperm, true);
-          }
-        }
+                if (permissionType == $.permission.PERMISSION_TYPE_T) {
+                    this.setSingleUserPermission(userId, this.tperm, uP.rperm,
+                        uP.wperm, uP.fperm, true);
+                } else if (permissionType == $.permission.PERMISSION_TYPE_R) {
+                    this.setSingleUserPermission(userId, uP.tperm, this.rperm,
+                        uP.wperm, uP.fperm, true);
+                } else if (permissionType == $.permission.PERMISSION_TYPE_W) {
+                    this.setSingleUserPermission(userId, uP.tperm, uP.rperm,
+                        this.wperm, uP.fperm, true);
+                } else if (permissionType == $.permission.PERMISSION_TYPE_F) {
+                    this.setSingleUserPermission(userId, uP.tperm, uP.rperm,
+                        uP.wperm, this.fperm, true);
+                }
+            }
 
-        if (!notUpdateAllPermission) {
-          $.permission.updateAllPermission();
-        }
+            if (!notUpdateAllPermission) {
+                $.permission.updateAllPermission();
+            }
       };
 
     },
@@ -822,6 +868,7 @@ $.permission = {
       this.projectPermissionsHtml;
       this.groupState = 0;
       this.html;
+      this.tperm;
       this.rperm;
       this.wperm;
       this.fperm;
@@ -838,7 +885,7 @@ $.permission = {
         }
 
         this
-            .setSingleProjectPermission(pPermission.projectId,
+            .setSingleProjectPermission(pPermission.projectId, pPermission.tperm,
                 pPermission.rperm, pPermission.wperm,
                 pPermission.fperm);
       };
@@ -861,18 +908,21 @@ $.permission = {
         html += this.handle;
         html += "</div></td>\n";
 
-        html += p.getCheckboxString(p.TABLE_TYPE_USERS,
-            p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_R, this.userId,
-            this.rperm);
-        html += p.getCheckboxString(p.TABLE_TYPE_USERS,
-            p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_W, this.userId,
-            this.wperm);
-        html += p.getCheckboxString(p.TABLE_TYPE_USERS,
-            p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_F, this.userId,
-            this.fperm);
-        html += "<td class='checkbox'>";
-        html += "<a href='javascript:$.permission.handleAssignProjectClick(";
-        html += this.userId + ")' class='addProject'></a>";
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_T, this.userId,
+              this.tperm);
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_R, this.userId,
+              this.rperm);
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_W, this.userId,
+              this.wperm);
+          html += p.getCheckboxString(p.TABLE_TYPE_USERS,
+              p.SRC_TYPE_MAIN, p.PERMISSION_TYPE_F, this.userId,
+              this.fperm);
+          html += "<td class='checkbox'>";
+          html += "<a href='javascript:$.permission.handleAssignProjectClick(";
+          html += this.userId + ")' class='addProject'></a>";
 
         // Check whether it is current user
         var currentUser = $(".helloUser li:first a").html();
@@ -910,6 +960,8 @@ $.permission = {
        *
        * @param projectId
        *            the project id
+       * @param tperm
+       *            the report permission
        * @param rperm
        *            the read permission
        * @param wperm
@@ -919,11 +971,11 @@ $.permission = {
        * @param notChangeProjectRow
        *            not to change the project row, optional
        */
-        this.setSingleProjectPermission = function setSingleProjectPermission(projectId, rperm, wperm, fperm, notChangeUserRow) {
+        this.setSingleProjectPermission = function setSingleProjectPermission(projectId, tperm, rperm, wperm, fperm, notChangeUserRow) {
         if (this.projectPermissions[projectId] == null) {
           return;
         }
-        this.projectPermissions[projectId].setPermission(rperm, wperm,
+        this.projectPermissions[projectId].setPermission(tperm, rperm, wperm,
             fperm);
 
         this.getProjectPermissionsHtml();
@@ -933,13 +985,13 @@ $.permission = {
           var selectString = "#u_user" + this.userId
               + "projectPermission" + projectId;
           var tr = $(selectString);
-          $.permission.setTrCheckStatus(tr, rperm, wperm, fperm);
+          $.permission.setTrCheckStatus(tr, tperm, rperm, wperm, fperm);
         }
 
         if ($.permission.tableCreateComplete
             && $.permission.currentTable == 1) {
           var project = $.permission.projects[projectId];
-          project.setSingleUserPermission(this.userId, rperm, wperm,
+          project.setSingleUserPermission(this.userId, tperm, rperm, wperm,
               fperm, true);
           project.updateMainPermission();
         }
@@ -950,6 +1002,7 @@ $.permission = {
        * selected.
        */
       this.updateMainPermission = function updateMainPermission() {
+        this.tperm = true;
         this.rperm = true;
         this.wperm = true;
         this.fperm = true;
@@ -960,24 +1013,26 @@ $.permission = {
           hasProject = true;
           var pP = this.projectPermissions[projectId];
 
+          this.tperm = this.tperm && pP.tperm;
           this.rperm = this.rperm && pP.rperm;
           this.wperm = this.wperm && pP.wperm;
           this.fperm = this.fperm && pP.fperm;
 
-          if (!this.rperm && !this.wperm && !this.fperm) {
+          if (!this.tperm && !this.rperm && !this.wperm && !this.fperm) {
             mark = false;
             break;
           }
         }
 
         if (!hasProject) {
+          this.tperm = false;
           this.rperm = false;
           this.wperm = false;
           this.fperm = false;
         }
         var selectString = "#u_user" + this.userId;
         var tr = $(selectString).parent().parent();
-        $.permission.setTrCheckStatus(tr, this.rperm, this.wperm, this.fperm);
+        $.permission.setTrCheckStatus(tr, this.tperm, this.rperm, this.wperm, this.fperm);
 
         $.permission.updateAllPermission();
       };
@@ -991,35 +1046,42 @@ $.permission = {
        *            not update head row, optional
        */
         this.setMainPermission = function setMainPermission(permissionType, notUpdateAllPermission) {
-        if (permissionType == $.permission.PERMISSION_TYPE_R) {
-          this.rperm = !this.rperm;
-        }
-        if (permissionType == $.permission.PERMISSION_TYPE_W) {
-          this.wperm = !this.wperm;
-        }
-        if (permissionType == $.permission.PERMISSION_TYPE_F) {
-          this.fperm = !this.fperm;
-        }
+            if (permissionType == $.permission.PERMISSION_TYPE_T) {
+                this.tperm = !this.tperm;
+            }
+            if (permissionType == $.permission.PERMISSION_TYPE_R) {
+                this.rperm = !this.rperm;
+            }
+            if (permissionType == $.permission.PERMISSION_TYPE_W) {
+                this.wperm = !this.wperm;
+            }
+            if (permissionType == $.permission.PERMISSION_TYPE_F) {
+                this.fperm = !this.fperm;
+            }
 
             for (var projectId in this.projectPermissions) {
-          var pP = this.projectPermissions[projectId];
+                var pP = this.projectPermissions[projectId];
 
-          if (permissionType == $.permission.PERMISSION_TYPE_R) {
-            this.setSingleProjectPermission(projectId, this.rperm,
-                pP.wperm, pP.fperm, true);
-          } else if (permissionType == $.permission.PERMISSION_TYPE_W) {
-            this.setSingleProjectPermission(projectId, pP.rperm,
-                this.wperm, pP.fperm, true);
-          } else if (permissionType == $.permission.PERMISSION_TYPE_F) {
-            this.setSingleProjectPermission(projectId, pP.rperm,
-                pP.wperm, this.fperm, true);
-          }
-        }
+                if (permissionType == $.permission.PERMISSION_TYPE_T) {
+                    this.setSingleProjectPermission(projectId, this.tperm, pP.rperm,
+                        pP.wperm, pP.fperm, true);
+                }
+                else if (permissionType == $.permission.PERMISSION_TYPE_R) {
+                    this.setSingleProjectPermission(projectId, pP.tperm, this.rperm,
+                        pP.wperm, pP.fperm, true);
+                } else if (permissionType == $.permission.PERMISSION_TYPE_W) {
+                    this.setSingleProjectPermission(projectId, pP.tperm, pP.rperm,
+                        this.wperm, pP.fperm, true);
+                } else if (permissionType == $.permission.PERMISSION_TYPE_F) {
+                    this.setSingleProjectPermission(projectId, pP.tperm, pP.rperm,
+                        pP.wperm, this.fperm, true);
+                }
+            }
 
-        if (!notUpdateAllPermission) {
-          $.permission.updateAllPermission();
-        }
-      };
+            if (!notUpdateAllPermission) {
+                $.permission.updateAllPermission();
+            }
+        };
     },
 
     /**
@@ -1027,39 +1089,43 @@ $.permission = {
      * are checked.
      */
     updateAllPermission:function () {
-      var rperm = true;
-      var wperm = true;
-      var fperm = true;
-      var tr;
+        var tperm = true;
+        var rperm = true;
+        var wperm = true;
+        var fperm = true;
+        var tr;
 
-      // update project table
+        // update project table
         $("#projects .group").each(function () {
-        var p = $.permission;
-        var projectId = $(this).attr("id");
-        projectId = projectId.substring("p_project".length);
+            var p = $.permission;
+            var projectId = $(this).attr("id");
+            projectId = projectId.substring("p_project".length);
 
-        rperm = rperm && p.projects[projectId].rperm;
-        wperm = wperm && p.projects[projectId].wperm;
-        fperm = fperm && p.projects[projectId].fperm;
-      });
-      tr = $("#projects .applyForAll");
-      $.permission.setTrCheckStatus(tr, rperm, wperm, fperm);
+            tperm = tperm && p.projects[projectId].tperm;
+            rperm = rperm && p.projects[projectId].rperm;
+            wperm = wperm && p.projects[projectId].wperm;
+            fperm = fperm && p.projects[projectId].fperm;
+        });
+        tr = $("#projects .applyForAll");
+        $.permission.setTrCheckStatus(tr, tperm, rperm, wperm, fperm);
 
-      // update user table
-      rperm = true;
-      wperm = true;
-      fperm = true;
+        // update user table
+        tperm = true;
+        rperm = true;
+        wperm = true;
+        fperm = true;
         $("#users .group").each(function () {
-        var p = $.permission;
-        var userId = $(this).attr("id");
-        userId = userId.substring("u_user".length);
+            var p = $.permission;
+            var userId = $(this).attr("id");
+            userId = userId.substring("u_user".length);
 
-        rperm = rperm && p.users[userId].rperm;
-        wperm = wperm && p.users[userId].wperm;
-        fperm = fperm && p.users[userId].fperm;
-      });
-      tr = $("#users .applyForAll");
-      $.permission.setTrCheckStatus(tr, rperm, wperm, fperm);
+            tperm = tperm && p.users[userId].tperm
+            rperm = rperm && p.users[userId].rperm;
+            wperm = wperm && p.users[userId].wperm;
+            fperm = fperm && p.users[userId].fperm;
+        });
+        tr = $("#users .applyForAll");
+        $.permission.setTrCheckStatus(tr, tperm, rperm, wperm, fperm);
     },
 
     /**
@@ -1083,19 +1149,25 @@ $.permission = {
                   var tr = $(this).parent().parent();
                   var inputs = tr.find("input");
 
-                  if (permissionType == p.PERMISSION_TYPE_R
+                    if (permissionType == p.PERMISSION_TYPE_T
+                        && project.tperm != checked) {
+                        $(inputs[0]).attr("checked", checked);
+                        project.setMainPermission(
+                            permissionType, true);
+                    }
+                  else if (permissionType == p.PERMISSION_TYPE_R
                       && project.rperm != checked) {
-                    $(inputs[0]).attr("checked", checked);
+                    $(inputs[1]).attr("checked", checked);
                     project.setMainPermission(
                         permissionType, true);
                   } else if (permissionType == p.PERMISSION_TYPE_W
                       && project.wperm != checked) {
-                    $(inputs[1]).attr("checked", checked);
+                    $(inputs[2]).attr("checked", checked);
                     project.setMainPermission(
                         permissionType, true);
                   } else if (permissionType == p.PERMISSION_TYPE_F
                       && project.fperm != checked) {
-                    $(inputs[2]).attr("checked", checked);
+                    $(inputs[3]).attr("checked", checked);
                     project.setMainPermission(
                         permissionType, true);
                   }
@@ -1103,27 +1175,32 @@ $.permission = {
       } else {
         $("#users .group").each(
                 function () {
-              var p = $.permission;
-              var userId = $(this).attr("id");
-              userId = userId.substring("u_user".length);
-              var user = p.users[userId];
-              var tr = $(this).parent().parent();
-              var inputs = tr.find("input");
+                    var p = $.permission;
+                    var userId = $(this).attr("id");
+                    userId = userId.substring("u_user".length);
+                    var user = p.users[userId];
+                    var tr = $(this).parent().parent();
+                    var inputs = tr.find("input");
 
-              if (permissionType == p.PERMISSION_TYPE_R
-                  && user.rperm != checked) {
-                $(inputs[1]).attr("checked", checked);
-                user.setMainPermission(permissionType, true);
-              } else if (permissionType == p.PERMISSION_TYPE_W
-                  && user.wperm != checked) {
-                $(inputs[2]).attr("checked", checked);
-                user.setMainPermission(permissionType, true);
-              } else if (permissionType == p.PERMISSION_TYPE_F
-                  && user.fperm != checked) {
-                $(inputs[3]).attr("checked", checked);
-                user.setMainPermission(permissionType, true);
-              }
-            });
+                    if (permissionType == p.PERMISSION_TYPE_T
+                        && user.tperm != checked) {
+                        $(inputs[1]).attr("checked", checked);
+                        user.setMainPermission(permissionType, true);
+                    }
+                    else if (permissionType == p.PERMISSION_TYPE_R
+                        && user.rperm != checked) {
+                        $(inputs[2]).attr("checked", checked);
+                        user.setMainPermission(permissionType, true);
+                    } else if (permissionType == p.PERMISSION_TYPE_W
+                        && user.wperm != checked) {
+                        $(inputs[3]).attr("checked", checked);
+                        user.setMainPermission(permissionType, true);
+                    } else if (permissionType == p.PERMISSION_TYPE_F
+                        && user.fperm != checked) {
+                        $(inputs[4]).attr("checked", checked);
+                        user.setMainPermission(permissionType, true);
+                    }
+                });
       }
     },
 
@@ -1140,7 +1217,7 @@ $.permission = {
       var project = this.projects[projectId];
 
       // cancel all permissions and delete it
-      project.setSingleUserPermission(userId, false, false, false);
+      project.setSingleUserPermission(userId, false, false, false, false);
       delete project.userPermissions[userId];
       delete project.userPermissionIds[userId];
       project.getUserPermissionsHtml();
@@ -1157,7 +1234,7 @@ $.permission = {
       var user = this.users[userId];
 
       // cancel all permissions and delete it
-      user.setSingleProjectPermission(projectId, false, false, false);
+      user.setSingleProjectPermission(projectId, false, false, false, false);
       delete user.projectPermissions[projectId];
       user.getProjectPermissionsHtml();
 
@@ -1323,6 +1400,7 @@ $.permission = {
                   var JSON = new Object();
                   JSON['userId'] = userId;
                   JSON['handle'] = handle;
+                  JSON['tperm'] = false;
                   JSON['rperm'] = false;
                   JSON['wperm'] = false;
                   JSON['fperm'] = false;
@@ -1359,7 +1437,8 @@ $.permission = {
             var JSON = new Object();
             JSON['userId'] = uId;
             JSON['handle'] = handle;
-            JSON['rperm'] = true;
+            JSON['tperm'] = true;
+            JSON['rperm'] = false;
             JSON['wperm'] = false;
             JSON['fperm'] = false;
             uPermission = new $.permission.userPermission(JSON);
@@ -1402,6 +1481,7 @@ $.permission = {
       var obj = {
             userId:userId,
             handle:handle,
+            tperm:false,
             rperm:false,
             wperm:false,
             fperm:false
@@ -1417,7 +1497,7 @@ $.permission = {
 
       this.currentTable = 1;
         this.oUserTable.fnAddData([ $(tds[0]).html(), $(tds[1]).html(),
-          $(tds[2]).html(), $(tds[3]).html(), $(tds[4]).html() ]);
+          $(tds[2]).html(), $(tds[3]).html(), $(tds[4]).html(), $(tds[5]).html() ]);
 
       var addDiv = $("#u_user" + userId);
         addDiv.parent().parent().find("td").each(function (tdIndex) {
@@ -1457,6 +1537,7 @@ $.permission = {
             handle:handle,
             projectId:projectId,
             projectName:projectName,
+            tperm:false,
             rperm:false,
             wperm:false,
             fperm:false
@@ -1562,6 +1643,7 @@ $.permission = {
                     {"bSortable":false},
                     {"bSortable":false},
                     {"bSortable":false},
+                    {"bSortable":false},
                     {"bSortable":false}
                   ]
               });
@@ -1591,6 +1673,7 @@ $.permission = {
                     {"bSortable":false},
                     {"bSortable":false},
                     {"bSortable":false},
+                    {"bSortable":false},
                     {"bSortable":false}
                 ]
               });
@@ -1617,19 +1700,25 @@ $.permission = {
       var tableIds = [ "#projects", "#users" ];
         for (var i = 0; i < tableIds.length; i++) {
         var inputs = $(tableIds[i] + " .applyForAll input");
-        $(inputs[0]).click(
+            $(inputs[0]).click(
+                function () {
+                    $.permission.setAllPermission(
+                        $.permission.PERMISSION_TYPE_T, $(this)
+                            .attr("checked"));
+                });
+        $(inputs[1]).click(
                 function () {
               $.permission.setAllPermission(
                   $.permission.PERMISSION_TYPE_R, $(this)
                       .attr("checked"));
             });
-        $(inputs[1]).click(
+        $(inputs[2]).click(
                 function () {
               $.permission.setAllPermission(
                   $.permission.PERMISSION_TYPE_W, $(this)
                       .attr("checked"));
             });
-        $(inputs[2]).click(
+        $(inputs[3]).click(
                 function () {
               $.permission.setAllPermission(
                   $.permission.PERMISSION_TYPE_F, $(this)
@@ -1761,6 +1850,8 @@ $.permission = {
      *
      * @param tr
      *            the tr to set
+     * @param tperm
+     *            the report permission to set
      * @param rperm
      *            the read permission to set
      * @param wperm
@@ -1768,10 +1859,11 @@ $.permission = {
      * @param fperm
      *            the full permission to set
      */
-    setTrCheckStatus:function (tr, rperm, wperm, fperm) {
-        $(tr.children()[1]).children().attr("checked", rperm);
-            $(tr.children()[2]).children().attr("checked", wperm);
-            $(tr.children()[3]).children().attr("checked", fperm);
+    setTrCheckStatus:function (tr, tperm, rperm, wperm, fperm) {
+        $(tr.children()[1]).children().attr("checked", tperm);
+        $(tr.children()[2]).children().attr("checked", rperm);
+        $(tr.children()[3]).children().attr("checked", wperm);
+        $(tr.children()[4]).children().attr("checked", fperm);
     },
 
     /**
@@ -1793,11 +1885,14 @@ $.permission = {
         if (srcType == this.SRC_TYPE_DETAIL) {
           var project = this.projects[mainId];
           var uP = project.userPermissions[id];
+          var tp = uP.tperm;
           var rp = uP.rperm;
           var wp = uP.wperm;
           var fp = uP.fperm;
 
-          if (permissionType == this.PERMISSION_TYPE_R) {
+          if (permissionType == this.PERMISSION_TYPE_T) {
+            tp = !tp;
+          } else if (permissionType == this.PERMISSION_TYPE_R) {
             rp = !rp;
           } else if (permissionType == this.PERMISSION_TYPE_W) {
             wp = !wp;
@@ -1805,7 +1900,7 @@ $.permission = {
             fp = !fp;
           }
 
-          project.setSingleUserPermission(id, rp, wp, fp);
+          project.setSingleUserPermission(id, tp, rp, wp, fp);
 
         } else if (srcType == this.SRC_TYPE_MAIN) {
           var project = this.projects[id];
@@ -1816,11 +1911,14 @@ $.permission = {
         if (srcType == this.SRC_TYPE_DETAIL) {
           var user = this.users[mainId];
           var pP = user.projectPermissions[id];
+          var tP = pP.tperm;
           var rp = pP.rperm;
           var wp = pP.wperm;
           var fp = pP.fperm;
 
-          if (permissionType == this.PERMISSION_TYPE_R) {
+          if (permissionType == this.PERMISSION_TYPE_T) {
+            tp = !tp;
+          } else if (permissionType == this.PERMISSION_TYPE_R) {
             rp = !rp;
           } else if (permissionType == this.PERMISSION_TYPE_W) {
             wp = !wp;
@@ -1828,7 +1926,7 @@ $.permission = {
             fp = !fp;
           }
 
-          user.setSingleProjectPermission(id, rp, wp, fp);
+          user.setSingleProjectPermission(id, tp, rp, wp, fp);
         } else if (srcType == this.SRC_TYPE_MAIN) {
           var user = this.users[id];
 
