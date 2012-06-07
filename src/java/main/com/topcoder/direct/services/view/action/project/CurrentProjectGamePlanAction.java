@@ -148,7 +148,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
             List<SoftwareProjectData> softwareProjects = data.getSoftwareProjects();
 
-            System.out.println("******************************************");
+       /*     System.out.println("******************************************");
 
             for (SoftwareProjectData spt : softwareProjects) {
                 System.out.println("name:" + spt.getProjectName());
@@ -162,7 +162,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
             }
 
-            System.out.println("******************************************");
+            System.out.println("******************************************"); */
 
             if (data == null) {
                 responseData = ERROR_HEADER + DATA_RETRIEVAL_ERROR_MSG;
