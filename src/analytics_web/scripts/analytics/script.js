@@ -250,6 +250,18 @@ $(document).ready(function(){
     $('#button4').live('click',function(){
         $('#detailModalCarousel').anythingSlider(4);
     });
+    $('#button5').live('click',function(){
+        $('#detailModalCarousel').anythingSlider(5);
+    });
+    $('#button6').live('click',function(){
+        $('#detailModalCarousel').anythingSlider(6);
+    });
+    $('#button7').live('click',function(){
+        $('#detailModalCarousel').anythingSlider(7);
+    });
+    $('#button8').live('click',function(){
+        $('#detailModalCarousel').anythingSlider(8);
+    });
 
     function setFieldErrorForRegistration(errorSets, fieldName, errorFieldName, errorMessage) {
         var v = $(fieldName).parent().parent().find('label');

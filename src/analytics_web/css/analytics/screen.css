@@ -1071,6 +1071,7 @@ body{
         float:left;
         display:inline;
         background:url(../../images/analytics/carousel-item.png) no-repeat left top;
+        position: relative;
         }
 
         #showcaseCarousel li .title{
@@ -1116,6 +1117,30 @@ body{
                 margin-left:6px;
                 }
 
+            #showcaseCarousel li .lifetech img{
+                width:auto;
+                float:left;
+                display:inline;
+                margin-top:41px;
+                margin-left:6px;
+            }
+
+            #showcaseCarousel li .nasa img{
+                width:auto;
+                float:left;
+                display:inline;
+                margin-top:31px;
+                margin-left:15px;
+            }
+
+            #showcaseCarousel li .uspto img{
+                width:auto;
+                float:left;
+                display:inline;
+                margin-top:25px;
+                margin-left:19px;
+            }
+
         #showcaseCarousel li dl{
             margin-left:26px;
             }
@@ -1140,8 +1165,9 @@ body{
                 }
 
         #showcaseCarousel li .btn{
-            margin-top:10px;
-            margin-left:108px;
+            position: absolute;
+            bottom:30px;
+            left:108px;
             }
 
 /* modal */

@@ -127,89 +127,7 @@
             <div class="clear"></div>
         </div>
         <!-- End .section -->
-        <!-- section -->
-        <div class="section showcaseSection">
-            <h2>Showcase</h2>
-            <ul id="showcaseCarousel">
-                <li>
-                    <div class="title nas">
-                        <h3>Crater Detection</h3>
-                        <img src="/images/analytics/small-nsa-logo.png" alt="NAS" />
-                    </div>
-                    <dl>
-                        <dt>Client:</dt>
-                        <dd>NASA NTL</dd>
-                        <dt>Contest:</dt>
-                        <dd><a href="javascript:;">NASA NTL Marathon Match 2</a></dd>
-                        <dt>Problem:</dt>
-                        <dd>Detect craters in a given set of orbital images taken under various illumination conditions and camera poses.</dd>
-                        <dt>Competitors:</dt>
-                        <dd>70</dd>
-                        <dt>Winner:</dt>
-                        <dd><a href="javascript:;">nhzp339</a></dd>
-                    </dl>
-                    <a href="javascript:;" class="btn" id="button1"><span class="left"><span class="right">View Details</span></span></a>
-                </li>
-                <li>
-                    <div class="title intel">
-                        <h3>Intel Multi-Threading</h3>
-                        <img src="/images/analytics/small-intel-logo.png" alt="INTEL" />
-                    </div>
-                    <dl>
-                        <dt>Client:</dt>
-                        <dd>intel</dd>
-                        <dt>Contest:</dt>
-                        <dd><a href="javascript:;">Intel Multi-Threading Competition 4</a></dd>
-                        <dt>Problem:</dt>
-                        <dd>Nearest Neighbors - given two sets of points in N-dimensional space A and B, for every point b in set B, find the point a in set A that is...</dd>
-                        <dt>Competitors:</dt>
-                        <dd>274</dd>
-                        <dt>Winner:</dt>
-                        <dd><a href="javascript:;">aanbar</a></dd>
-                    </dl>
-                    <a href="javascript:;" class="btn" id="button2"><span class="left"><span class="right">View Details</span></span></a>
-                </li>
-                <li>
-                    <div class="title lindenLab">
-                        <h3>J2KDecode</h3>
-                        <img src="/images/analytics/small-linden-lab-logo.png" alt="LINDEN-LAB" />
-                    </div>
-                    <dl>
-                        <dt>Client:</dt>
-                        <dd>Linden Lab</dd>
-                        <dt>Contest:</dt>
-                        <dd><a href="javascript:;">Linden Lab OpenJPEG </a></dd>
-                        <dt>Problem:</dt>
-                        <dd>Build the OpenJPEG library to improve the decode speed of  JPEF2000 image format across a network channel. </dd>
-                        <dt>Competitors:</dt>
-                        <dd>93</dd>
-                        <dt>Winner:</dt>
-                        <dd><a href="javascript:;">Psyho</a></dd>
-                    </dl>
-                    <a href="javascript:;" class="btn" id="button3"><span class="left"><span class="right">View Details</span></span></a>
-                </li>
-                <li>
-                    <div class="title nas">
-                        <h3>Crater Detection</h3>
-                        <img src="/images/analytics/small-nas-logo.png" alt="NAS" />
-                    </div>
-                    <dl>
-                        <dt>Client:</dt>
-                        <dd>NAS</dd>
-                        <dt>Contest:</dt>
-                        <dd><a href="javascript:;">NSA Marathon Match 1</a></dd>
-                        <dt>Problem:</dt>
-                        <dd>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut.</dd>
-                        <dt>Competitors:</dt>
-                        <dd>100</dd>
-                        <dt>Winner:</dt>
-                        <dd><a href="javascript:;">gset123</a></dd>
-                    </dl>
-                    <a href="javascript:;" class="btn" id="button4"><span class="left"><span class="right">View Details</span></span></a>
-                </li>
-            </ul>
-        </div>
-        <!-- End .section -->
+        <%@ include file="/WEB-INF/includes/showcases.jsp" %>
         <!-- section -->
         <div class="section middleSection">
             <!-- section -->
@@ -301,5 +219,6 @@
     <!-- End #mainContainer -->
 
 <%@ include file="/WEB-INF/includes/footer.jsp" %>
+<%@ include file="/WEB-INF/includes/modal.jsp" %>
 </body>
 </html>
