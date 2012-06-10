@@ -1,14 +1,16 @@
 
 <%--
-  - Author: TCSASSEMBLER, TCSASSEMBLER
-  - Version: 1.1
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: KennyAlive, TCSASSEMBLER
+  - Version: 1.2
+  - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the new create new project step 2.
   -
   - Version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1 v1.0)
   - Version 1.1 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
-                change notes: new mobile and presentation project type flow. Removed old presentation flow.
+  -             change notes: new mobile and presentation project type flow. Removed old presentation flow.
+  - Version 1.2 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  -             change notes: new analytics project type flow.
 --%>
 
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -178,6 +180,67 @@
                             <td>
                                 <select class="selProjSize">
                                         <option value="0">Small</option>
+                                    <option value="1">Medium</option>
+                                    <option value="2">Large</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="firstTd">Total Duration</td>
+                            <td class="dataDur">000 days</td>
+                        </tr>
+                        <tr>
+                            <td class="firstTd">Total Cost</td>
+                            <td class="dataCost">$ 00000.00</td>
+                        </tr>
+                        <tr>
+                            <td class="firstTd">No of Contests</td>
+                            <td class="dataNumCont">00</td>
+                        </tr>
+                    </table>
+
+                    <div class="buttonArea">
+                        <a href="javascript:;" class="blackButton detailButton">Details</a>
+                        <a href="javascript:;" class="blackButton gamePlanButton">Game Plan</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End .projectContainer -->
+
+</div>
+<!-- End .projectItem -->
+
+<!-- item -->
+<div class="projectItem">
+
+    <div class="radioBox">
+        <input type="radio" name="gamePlanType" class="radio"/><label>Analytics Project Type</label>
+
+    </div>
+
+    <!-- container -->
+    <div class="projectContainer">
+        <div class="top">
+            <div class="bottom">
+                <div class="bg">
+
+                    <!-- img -->
+                    <div class="projectPic"><img src="/images/projectItem.png" alt=""/></div>
+                    <!-- End .comingSoon -->
+
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <colgroup>
+                            <col width="50%"/>
+                            <col width="50%"/>
+                        </colgroup>
+                        <tr>
+                            <td class="firstTd">Size of Project</td>
+                            <td>
+                                <select class="selProjSize">
+                                    <option value="0">Small</option>
                                     <option value="1">Medium</option>
                                     <option value="2">Large</option>
                                 </select>

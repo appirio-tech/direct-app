@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  *
  * Javascript file for the new creation project process.
  *
@@ -8,30 +8,28 @@
  * @version 1.1 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
  *              change note: added support for new mobile and presentation project creation flow.
  *
- * @author: TCSASSEMBLER, KennyAlive
- * @version 1.1
+ * @version 1.2 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow) change notes: 
+ *              added support for new analytics project type creation flow.
+ *              updated to remove the messy using of stepsChoices['step1'] and use activeProjectType instead.
+ *              updated stepsChoices['step4'] to stepsChoices['require-copilot-step'].
+ *
+ * @author: KennyAlive, TCSASSEMBLER
+ * @version 1.2
  */
  
  var PROJECT_TYPE_CUSTOM = 0;
  var PROJECT_TYPE_MOBILE = 1;
  var PROJECT_TYPE_PRESENTATION = 2;
+ var PROJECT_TYPE_ANALYTICS = 3;
 
 // Defines which project type's wizard is active at the moment. 
 var activeProjectType = PROJECT_TYPE_CUSTOM;
 
 /**
 * Gets the type of the project.
-* NOTE: probably this function should return activeProjectType. It's better to remove in the future stepsChoices from the
-* project since it's a messy thing. Now stepsChoices only used by custom project type but not by the mobile or presentation projects.
 */
 function getProjectType() {
-    if (stepsChoices['step1'] == 'custom') {
-        return PROJECT_TYPE_CUSTOM;
-    } else if (stepsChoices['step1'] == 'Mobile Project Type') {
-        return PROJECT_TYPE_MOBILE;
-    } else if (stepsChoices['step1'] == 'Presentation Project Type') {
-        return PROJECT_TYPE_PRESENTATION;
-    }
+    return activeProjectType;
 }
 
 /**
@@ -133,7 +131,7 @@ var generateConfirmationPage = function(projectId, projectName) {
     if ($(".stepSixth").length > 0) {
         var isPPT = false;
         var step1 = stepsChoices["step1"];
-        var step4 = stepsChoices["step4"];
+        var step4 = stepsChoices['require-copilot-step'];
         var step2Size;
 
         // add project name
@@ -289,6 +287,8 @@ function createDraftContestRequest(projectName, projectType) {
         projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_MobileProject();
     } else if (projectType == PROJECT_TYPE_PRESENTATION) {
         projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_PresentationProject();
+    } else if (projectType == PROJECT_TYPE_ANALYTICS) {
+        projectHeader.projectSpec.detailedRequirements = createCopilotContestDescription_AnalyticsProject();
     }
 
     var amount = 150.0;
@@ -326,14 +326,21 @@ var createNewProject = function() {
     var permissions = [];
     var request = {};
     
+    var permissionsRows; 
     if (projectType == PROJECT_TYPE_CUSTOM) {
-        // get permissions
-        $('.stepFifth .checkPermissions .userRow').each(function() {
+        permissionsRows = $('#newProjectStep5 .userRow');
+    } else if (projectType == PROJECT_TYPE_ANALYTICS) {
+        permissionsRows = $('#newAnalyticsProjectStep6 .userRow');
+    }
+    
+    // get permissions
+    if (permissionsRows) {
+        permissionsRows.each(function() {
             var permission = {};
             var userId = $(this).find('div.group').attr('id').substring(6);
             var userName = $.trim($(this).find('div.group').html());
             var permissionType;
-
+    
             // check permission from higher
             if ($(this).find('.fullPermissionSelect:checked').length > 0) {
                 permissionType = "full";
@@ -342,34 +349,35 @@ var createNewProject = function() {
             } else if ($(this).find('.readPermissionSelect:checked').length > 0) {
                 permissionType = "read";
             }
-
+    
             if (permissionType != undefined && permissionType != null) {
                 permission['userId'] = userId;
                 permission['handle'] = userName;
                 permission['permission'] = permissionType;
-
+    
                 permissions.push(permission);
             }
-
         });
+    }
 
+    request['createCopilotPosting'] = true;   
+    if (projectType == PROJECT_TYPE_CUSTOM || projectType == PROJECT_TYPE_ANALYTICS) {
         // initialize custom project request
-        var step4 = stepsChoices["step4"];
-
+        var step4 = stepsChoices['require-copilot-step'];    
         if(step4 == 'chooseCopilot') {
             var copilotIds = [];
             $.each(stepsChoices["copilots"], function(index, value) {
                 copilotIds[copilotIds.length] = value.copilotProfileId;
             });
             request['copilotIds'] = copilotIds;
+            if (projectType != PROJECT_TYPE_ANALYTICS) {
+                request['createCopilotPosting'] = false;    
+            }
+        } else if (step4 == "noCopilot" && projectType != PROJECT_TYPE_ANALYTICS) {
             request['createCopilotPosting'] = false;
-
-        } else if (step4 == "createCopilot") {
-
-            request['createCopilotPosting'] = true;
-
         }
-    } else {
+    }
+    if (request['createCopilotPosting']) {
         request = createDraftContestRequest(projectName, projectType);
     }
 
@@ -405,6 +413,12 @@ var createNewProject = function() {
                             window.location.href = '/direct/projectOverview?formData.projectId=' + result.projectId;
                         });
                         addressLoadModal("#infoModalPresentation");
+                    } else if (projectType == PROJECT_TYPE_ANALYTICS) {
+                        modalClose();
+                        $("#confirmProjectName").html(result.projectName);
+                        $("#confirmOverviewLink").attr("href",
+                            ctx + "/projectOverview.action?formData.projectId="+ result.projectId);
+                        goAnalyticsProjectStep(8);
                     }
                 },
                 function(errorMessage) {
@@ -480,11 +494,21 @@ var initStepBar = function(stepBarTemplateId) {
     // width for step bar
     $('.stepBar li').css('width', ($('.stepBar').width() / totalSteps) + 16);
     $('.stepBar li:first').css('width', ($('.stepBar').width() / totalSteps) + 15);
+    if (totalSteps == 7) {
+        $('.stepBar li:last').css('width', ($('.stepBar').width() / totalSteps) + 24);
+    } else if (totalSteps == 6) {
+        $('.stepBar li:last').css('width', ($('.stepBar').width() / totalSteps) + 20);
+    }
 
     // update the step bar width and textarea width when the browser size is changed
     $(window).resize(function() {
         $('.stepBar li').css('width', ($('.stepBar').width() / totalSteps) + 16);
         $('.stepBar li:first').css('width', ($('.stepBar').width() / totalSteps) + 15);
+        if (totalSteps == 7) {
+            $('.stepBar li:last').css('width', ($('.stepBar').width() / totalSteps) + 24);
+        } else if (totalSteps == 6) {
+            $('.stepBar li:last').css('width', ($('.stepBar').width() / totalSteps) + 20);
+        }
         $('.stepSecond textarea').css('width', $('.stepSecond .row').width() - 206);
 
         // add line
@@ -527,6 +551,8 @@ var updateStepBar = function(stepNumber) {
                 stepLink.attr("href", "javascript:goMobileProjectStep(" + index + ");");
             } else if (activeProjectType == PROJECT_TYPE_PRESENTATION) {
                 stepLink.attr("href", "javascript:goCreatePresentationProjectStep(" + index + ");");
+            } else if (activeProjectType == PROJECT_TYPE_ANALYTICS && stepNumber != 8) {
+                stepLink.attr("href", "javascript:goAnalyticsProjectStep(" + index + ");");
             }
         }
     });
@@ -558,36 +584,56 @@ var initNewProjectDocumentsUpload = function() {
                     swCurrentDocument = {};
 
                     // add new table row with info about uploaded file
-                    var type;
-                    var typeRadioBtn = $(".stepFourth2 input[name=type]:checked");
-                    if ($.trim(typeRadioBtn.val()) == "other"){
-                        type = typeRadioBtn.parent().next().find("input").val();
+                    if (activeProjectType == PROJECT_TYPE_ANALYTICS) {
+                        var fileTd = $(".step6 .textUploadPhoto").val();    
+                        var tr = '<tr><td class="first">Upload</td><td>'+fileTd+
+                            '</td><td class="last"><a href="javascript:;" class="remove" rel="'+result.documentId+
+                            '">Remove</a></td></tr>';
+                        $(".analyticsSteps .step6 table").show();
+                        $(".analyticsSteps .step6 tbody tr:last").before($(tr));
+                        $(".analyticsSteps .step6 tbody tr").removeClass("even");
+                        $(".analyticsSteps .step6 tbody tr:odd").addClass("even");
+
+                        // since the uploader removes file input element from the DOM we should restore it
+                        // in order to be able to upload new files.
+                        var wrapper = $('.step6 .browserWrapper');
+                        wrapper.append('<input type="file" class="file" name="document"/>');
+                        wrapper.find('.file').css({opacity:'0'});
+                        wrapper.find('.file').change(function() {
+                            var fileName = getFileName(wrapper.find('.file').val());
+                            $('.step6 .textUploadPhoto').val(fileName);
+                        });
                     } else {
-                        type = typeRadioBtn.parent().text();
+                        var type;
+                        var typeRadioBtn = $(".stepFourth2 input[name=type]:checked");
+                        if ($.trim(typeRadioBtn.val()) == "other"){
+                            type = typeRadioBtn.parent().next().find("input").val();
+                        } else {
+                            type = typeRadioBtn.parent().text();
+                        }
+    
+                        var source = $(".stepFourth2 input[name=source]:checked").parent().text();
+                        var val = $(".stepFourth2 .upload input.text").val();
+    
+                        var tr = "<tr><td>" + type + "</td>" 
+                            + "<td>" + source + "</td>"
+                            + "<td>" + val + "</td>"
+                            + "<td><a href='javascript:' class='remove' rel='" + result.documentId + "'>Remove</a></td></tr>";
+    
+                        $(".stepFourth2 table.addedItem tbody").append(tr);
+                        $(".stepFourth2 table.addedItem").show();
+                        tableZebraEffect($(".stepFourth2 table.addedItem"));
+
+                        // since the uploader removes file input element from the DOM we should restore it
+                        // in order to be able to upload new files.
+                        var wrapper = $('.stepFourth2 .browserWrapper');
+                        wrapper.append('<input type="file" class="file" name="document"/>');
+                        wrapper.find('.file').css({opacity:'0'});
+                        wrapper.find('.file').change(function() {
+                            var fileName = getFileName(wrapper.find('.file').val());
+                            $('.stepFourth2 .textUploadPhoto').val(fileName);
+                        });
                     }
-
-                    var source = $(".stepFourth2 input[name=source]:checked").parent().text();
-                    var val = "<a class='url' href='" + $(".stepFourth2 .upload input[type=file]").val() + "'>" 
-                          + $(".stepFourth2 .upload input.text").val() + "</a> ";
-
-                    var tr = "<tr><td>" + type + "</td>" 
-                        + "<td>" + source + "</td>"
-                        + "<td>" + val + "</td>"
-                        + "<td><a href='javascript:' class='remove' rel='" + result.documentId + "'>Remove</a></td></tr>";
-
-                    $(".stepFourth2 table.addedItem tbody").append(tr);
-                    $(".stepFourth2 table.addedItem").show();
-                    tableZebraEffect($(".stepFourth2 table.addedItem"));
-
-                    // since the uploader removes file input element from the DOM we should restore it
-                    // in order to be able to upload new files.
-                    var wrapper = $('.stepFourth2 .browserWrapper');
-                    wrapper.append('<input type="file" class="file" name="document"/>');
-                    wrapper.find('.file').css({opacity:'0'});
-                    wrapper.find('.file').change(function() {
-                        var fileName = getFileName(wrapper.find('.file').val());
-                        $('.stepFourth2 .textUploadPhoto').val(fileName);
-                    });
 
                     modalClose();
                 },
@@ -598,6 +644,65 @@ var initNewProjectDocumentsUpload = function() {
         }
     }, false);
 
+    $(".step6 .documents .action a").click(function(){
+        var inputRow = $(".step6 .documents .inputRow:visible");
+        var type="Analytics project other document";
+        var val = $.trim(inputRow.find(".text").val()); 
+        var source = "Direct entry";
+        if(inputRow.hasClass("isUpload")){
+            source = "Upload";
+        }else if(inputRow.hasClass("isUrl")){
+            source = "Remote file (URL)";
+        }
+        if(val == "" || source == "Remote file (URL)" && val=="http://"){
+            inputRow.parent().addClass("error");    
+        }else{
+            // check duplicate for non-Upload type
+            if (source != "Upload") {
+                var ok=true;
+                $(".analyticsSteps .step6 table tr").each(function() {
+                    if ($.trim($(this).find("td:eq(0)").text()) == source) {
+                        if ($.trim($(this).find("td:eq(1)").text()) == val) {
+                            ok=false;
+                            return false;
+                        }
+                    }                      
+                });
+                if (!ok) {
+                    showErrors("The item was already added.");
+                    return false;
+                }
+            }            
+            var tr;
+            if (source == "Upload") {
+                var input = $(".step6 .browserWrapper input[type=file]").get(0);
+                swUploader.setInput(input);
+                swCurrentDocument['description'] = type;
+                swCurrentDocument['documentTypeId'] = SUPPORTING_DOCUMENTATION_DOCUMENT_TYPE_ID;
+                swUploader.submit();
+            } else if (source == "Remote file (URL)") {
+                var alink = "<a class='url' href='" + val + "'>" + val + "</a> ";
+                var rel = type + ": " + htmlEncode(val);
+                tr = '<tr><td class="first">'+source+'</td><td>'+alink+
+                    '</td><td class="last"><a href="javascript:;" class="remove" rel="'+rel+
+                    '">Remove</a></td></tr>';
+            } else {
+                val=htmlEncode(val);
+                var rel = type + ": " + val;
+                tr = '<tr><td class="first">'+source+'</td><td>'+val+
+                    '</td><td class="last"><a href="javascript:;" class="remove" rel="'+rel+
+                    '">Remove</a></td></tr>';
+            }
+            if (tr) {
+                $(".analyticsSteps .step6 table").show();
+                $(".analyticsSteps .step6 tbody tr:last").before($(tr));
+                $(".analyticsSteps .step6 tbody tr").removeClass("even");
+                $(".analyticsSteps .step6 tbody tr:odd").addClass("even");
+            }
+        }
+        return false;
+    })
+    
     // event handler for upload button from step4 for presentation and mobile wizards
     $(".stepFourth2 .addBtn").click(function(){
         if (!validateStep4()) {
@@ -653,9 +758,22 @@ var initNewProjectDocumentsUpload = function() {
     });
 
     // event handler for removing uploaded document
-    $('.stepFourth2 table.addedItem a.remove').live('click',function(){
+    $('.stepFourth2 table.addedItem a.remove,.step6 table a.remove').live('click',function(){
         var v = $(this);
-        var documentId = v.attr("rel");
+        var documentId = parseInt(v.attr("rel"));
+        var removeRow = function () {
+            v.parent().parent().remove();
+            if (activeProjectType == PROJECT_TYPE_ANALYTICS) {   
+                $(".analyticsSteps .step6 tbody tr").removeClass("even");
+                $(".analyticsSteps .step6 tbody tr:odd").addClass("even");
+            } else {
+                tableZebraEffect($(".stepFourth2 table.addedItem"));
+            }
+        };
+        if (!documentId) {
+            removeRow();
+            return false;
+        }
         $.ajax({
             type: 'POST',
             url:  ctx+"/launch/removeDocument",
@@ -674,7 +792,7 @@ var initNewProjectDocumentsUpload = function() {
                                 swDocuments.splice(i,1);
                             }
                         });
-                        v.parent().parent().remove();
+                        removeRow();
                     },
                     function(errorMessage) {
                         showErrors(errorMessage);
@@ -774,6 +892,9 @@ function setValidationStatus2(jqueryElem, isValid) {
     }
 }
 
+ // cache the project copilots initialization data
+var widgetResult;
+
 $(document).ready(function() {
     // text-shadow
     $('.solveProblem .inner h3,.stepBar li span.bg,.stepFifth .geryContent .downloadProfile .profileLeft').css('text-shadow', '0px 1px 0px #ffffff');
@@ -854,7 +975,7 @@ $(document).ready(function() {
         var previousStep = $(".stepBar .active").parent().index();
 
         if (activeProjectType == PROJECT_TYPE_CUSTOM) {
-            if (previousStep == 3 && stepsChoices['step1'] == 'custom') {
+            if (previousStep == 3) {
                  previousStep = 1;
             }
             goCreateProjectStep(previousStep);
@@ -874,6 +995,14 @@ $(document).ready(function() {
             } else {
                 goCreatePresentationProjectStep(previousStep);
             }
+        } else if (activeProjectType == PROJECT_TYPE_ANALYTICS) {
+            if (previousStep == 0) {
+                activeProjectType = PROJECT_TYPE_CUSTOM;
+                initStepBar('stepBarCustom');
+                goCreateProjectStep(1);
+            } else {
+                goAnalyticsProjectStep(previousStep);
+            }
         }
     });
 
@@ -881,6 +1010,7 @@ $(document).ready(function() {
     initCustomProjectFlow();
     initMobileProjectFlow();
     initPresentationProjectFlow();
+    initAnalyticsProjectFlow();
         
 
     //detail modal
@@ -1088,7 +1218,7 @@ $(document).ready(function() {
 
         // load the users in the permission table to the right list
         $('#addUserModal .addUserForm .addUserRight ul').empty();
-        $(".checkPermissions .userRow").each(function() {
+        $(".stepFifth:visible .checkPermissions .userRow").each(function() {
             var userTag = $(this).find('div.group');
             var userName = $.trim(userTag.html());
             var userId = $.trim(userTag.attr('id')).substring(6);
@@ -1100,7 +1230,7 @@ $(document).ready(function() {
     var getAddedUser = function() {
         var addedUser = {};
 
-        $('.stepFifth .addUserPlan table .checkPermissions .userRow').each(function(){
+        $('.stepFifth:visible .addUserPlan table .checkPermissions .userRow').each(function(){
             var user = $(this).find("div.group");
             var userName = $.trim(user.html());
             var userId = user.attr('id').substring(6);
@@ -1128,12 +1258,12 @@ $(document).ready(function() {
 
             if(addedUser[$(this).attr('id')] == undefined) {
                 // only add these which do not exist in the permission table
-                $('.stepFifth .addUserPlan table .checkPermissions').append ('<tr class="userRow">' + html + '</tr>');
+                $('.stepFifth:visible .addUserPlan table .checkPermissions').append ('<tr class="userRow">' + html + '</tr>');
             }
         });
 
         // remove the ones does not exist in the right list
-        $('.stepFifth .addUserPlan table .checkPermissions .userRow').each(function(){
+        $('.stepFifth:visible .addUserPlan table .checkPermissions .userRow').each(function(){
             var id = $(this).find("div.group").attr('id').substring(6);
             if(userToAdd[id] == undefined) {
                 $(this).remove();
@@ -1198,7 +1328,11 @@ $(document).ready(function() {
 
     $('#alertModal .step6Button').live('click', function() {
         addresscloseModal();
-        addressLoadModal('#createProjectConfirm');
+        if (activeProjectType == PROJECT_TYPE_CUSTOM) {
+            addressLoadModal('#createProjectConfirm');
+        } else if (activeProjectType == PROJECT_TYPE_ANALYTICS) {
+            goAnalyticsProjectStep(7);
+        }
     });
 
 
@@ -1212,42 +1346,41 @@ $(document).ready(function() {
     }
 
     //all
-    $('.applyForAll td:eq(1) .selectUser').click(function() {
+    $('.stepFifth:visible .applyForAll td:eq(1) .selectUser').live('click',function() {
         if ($(this).attr('checked')) {
-            $('.checkPermissions tr').each(function() {
+            $('.stepFifth:visible .checkPermissions tr').each(function() {
                 $(this).find('td:eq(1) .selectUser').attr('checked', 'checked');
             });
         } else {
-            $('.checkPermissions tr').each(function() {
+            $('.stepFifth:visible .checkPermissions tr').each(function() {
                 $(this).find('td:eq(1) .selectUser').attr('checked', '');
             });
         }
     });
 
-    $('.applyForAll td:eq(2) .selectUser').click(function() {
+    $('.stepFifth:visible .applyForAll td:eq(2) .selectUser').live('click',function() {
         if ($(this).attr('checked')) {
-            $('.checkPermissions tr').each(function() {
+            $('.stepFifth:visible .checkPermissions tr').each(function() {
                 $(this).find('td:eq(2) .selectUser').attr('checked', 'checked');
             });
         } else {
-            $('.checkPermissions tr').each(function() {
+            $('.stepFifth:visible .checkPermissions tr').each(function() {
                 $(this).find('td:eq(2) .selectUser').attr('checked', '');
             });
         }
     });
 
-    $('.applyForAll td:eq(3) .selectUser').click(function() {
+    $('.stepFifth:visible .applyForAll td:eq(3) .selectUser').live('click',function() {
         if ($(this).attr('checked')) {
-            $('.checkPermissions tr').each(function() {
+            $('.stepFifth:visible .checkPermissions tr').each(function() {
                 $(this).find('td:eq(3) .selectUser').attr('checked', 'checked');
             });
         } else {
-            $('.checkPermissions tr').each(function() {
+            $('.stepFifth:visible .checkPermissions tr').each(function() {
                 $(this).find('td:eq(3) .selectUser').attr('checked', '');
             });
         }
     });
-
 
     /*$('.stepForth .form dl.radioList dd span').click(function(){
      if($(this).parent().find('.radio').attr('checked')){
@@ -1331,8 +1464,6 @@ $(document).ready(function() {
 
     var request = {};
     request['directProjectId'] = tcDirectProjectId;
-     // cache the project copilots initialization data
-    var widgetResult;
 
     // mapping of copilot profile id to
     var copilotMapping = {};
@@ -1539,13 +1670,21 @@ $(document).ready(function() {
     // step 4 cookie function
     $("#selectionConfirmationModal a.confirmBtn").click(function() {
         // $.cookie("step4", "chooseCopilot");
-        stepsChoices['step4'] = 'chooseCopilot';
-        goCreateProjectStep(5);
+        stepsChoices['require-copilot-step'] = 'chooseCopilot';
+        if (activeProjectType == PROJECT_TYPE_CUSTOM) {
+            goCreateProjectStep(5);
+        } else if (activeProjectType == PROJECT_TYPE_ANALYTICS){
+            goAnalyticsProjectStep(3);
+        }
     })
     $("#createPostingModal .buttonArea a.button6").click(function() {
         // $.cookie("step4", "createCopilot");
-        stepsChoices['step4'] = 'createCopilot';
-        goCreateProjectStep(5);
+        stepsChoices['require-copilot-step'] = 'createCopilot';
+        if (activeProjectType == PROJECT_TYPE_CUSTOM) {
+            goCreateProjectStep(5);
+        } else if (activeProjectType == PROJECT_TYPE_ANALYTICS){
+            goAnalyticsProjectStep(3);
+        }
     });
 
     // choose copilot
@@ -1554,7 +1693,7 @@ $(document).ready(function() {
             showErrors("Please wait for the loading of the copilot data");
         }
 
-        if(stepsChoices['step4'] != 'chooseCopilot' || stepsChoices['copilots'].length == 0) {
+        if(stepsChoices['require-copilot-step'] != 'chooseCopilot' || stepsChoices['copilots'].length == 0) {
             initializeWidget(widgetResult);
         }
 
@@ -1627,7 +1766,7 @@ $(document).ready(function() {
     // step 2 cookie function
     $("#customConfirmModal .buttonArea a.button6").click(function() {
         // $.cookie("step2", "custom");
-        stepsChoices['step1'] = 'custom';
+        activeProjectType = PROJECT_TYPE_CUSTOM;
         goCreateProjectStep(4); // skip the page 3
     });
 

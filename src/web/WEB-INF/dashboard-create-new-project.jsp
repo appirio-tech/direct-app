@@ -1,7 +1,7 @@
 <%--
-  - Author: TCSASSEMBLER, KennyAlive
-  - Version: 1.2
-  - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  - Author: TCSASSEMBLER, KennyAlive, TCSASSEMBLER
+  - Version: 1.3
+  - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the create new project process.
   -
@@ -10,7 +10,10 @@
   - Version 1.1 change notes: Added pages for steps of creating Presentation Project.
   -
   - Version 1.2 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
-                change notes: New presentation and mobile project type creation flow.
+  -             change notes: New presentation and mobile project type creation flow.
+  -
+  - Version 1.3 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
+  -             change notes: New analytics project type creation flow.
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -41,6 +44,7 @@
     <script type="text/javascript" src="/scripts/project-create-flow-mobile.js?v=215566"></script>
     <script type="text/javascript" src="/scripts/project-create-flow-presentation.js?v=215566"></script>
     <script type="text/javascript" src="/scripts/newCockpitProject.js?v= 215290"></script>
+    <script type="text/javascript" src="/scripts/project-create-flow-analytics.js"></script>
 </head>
 
 <body id="page">
@@ -90,6 +94,18 @@
                                 </ul>
                             </div>
 
+                            <div id="stepBarAnalytics" class="hide">
+                            	<ul>
+                                	<li class="first"><span class="active istatus"><span class="arrow"><span class="bg"><a href="start-a-new-analytics-project-step-1.html">Step 1</a></span></span></span></li>
+                                    <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 2</span></span></span></li>
+                                    <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 3</span></span></span></li>
+                                    <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 4</span></span></span></li>
+                                    <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 5</span></span></span></li>
+                                    <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 6</span></span></span></li>
+                                    <li class="last"><span class="istatus inext"><span class="arrow"><span class="bg">Step 7</span></span></span></li>
+                                </ul>
+                            </div>
+
                             <div class="stepBar">
                             </div>
                             <!-- end step bar -->
@@ -114,7 +130,15 @@
                                 <!-- common jsp for both mobile and presentation flow --> 
                                 <jsp:include page="includes/project/newProject/detailed-specification-step4.jsp"/>
                                 
-                                
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step1.jsp"/>
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step2.jsp"/>
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step3.jsp"/>
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step4.jsp"/>
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step5.jsp"/>
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step6.jsp"/>
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step7.jsp"/>
+                                <jsp:include page="includes/project/newProject/analytics/new-analytics-project-step-confirmation.jsp"/>
+                               
                             </div>
 
                         </div>

@@ -1,10 +1,12 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  *
  * Used for the new project creation process, included by the JSP file dashboard-create-new-project.jsp
  *
  * @version 1.0 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1)
  *
+ * @version 1.1 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow) change notes: 
+ *              added support for new analytics project type creation flow.
  */
 @charset "utf-8";
 /* CSS Document */
@@ -4242,35 +4244,1076 @@ table.notifications TH.permCol2{
 }
 
 
+a.smallRedBtn{
+    background: url("/images/smallRedButton.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFE;
+    float: right;
+    font-size: 11px;
+    font-weight: bold;
+    height: 18px;
+    line-height: 18px; 
+    text-align: center;
+    text-decoration: none;
+    width: 60px;
+}
+a.smallRedBtn:hover{
+    background-position:0 -18px;
+}
+a.browserBtn{
+    background: url("/images/browse-btn.png") no-repeat scroll 0 0 transparent; 
+    color: #FFFFFE;
+    display: block;
+    font-weight: bold;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    width: 90px;
+    float:left; 
+}
+a.browserBtn:hover,
+a.browserBtn.hover{
+    background-position:0 -24px;
+}
+a.grayBtn{
+    background: url("/images/make-changes.png") no-repeat scroll 0 0 transparent; 
+    color: #C0BEBD;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    font-size: 11px;
+    height: 22px;
+    line-height: 22px; 
+    text-align: center;
+    text-decoration: none;
+    width: 89px;
+}
+a.grayBtn:hover{
+    background-position:0 -22px;
+}
+.fieldBtn{
+    background: url( /images/gray-button-2.png) no-repeat left top;
+    display: inline-block;
+    padding-left: 5px;
+    text-decoration:none;
+    float:left;
+    margin-right:15px;
+    margin-bottom:6px;
+}
+
+    .fieldBtn .btnMask {
+        background: url( /images/gray-button-2.png ) no-repeat right -52px;
+        padding-right: 5px;
+        display: inline-block; 
+    }
+
+        .fieldBtn .btnText {
+            background: url( /images/gray-button-2.png ) repeat-x left -26px;
+            display: inline-block;
+            height: 26px;
+            line-height: 26px;
+            color: #333;
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
+            padding: 0 2px; 
+        }
+         .fieldBtn .btnText i{ 
+            padding-left:2px;
+            font-weight:normal;
+            font-style:normal;
+             text-decoration:underline; 
+         }
+         .fieldBtn .btnText a.rm{
+             background:url(/images/rm-icon.png) no-repeat 0 0;
+             height:9px;
+             width:9px;
+             overflow:hidden;
+             display:inline-block;
+         }
+
+.analyticsSteps{
+    color:#333;
+    font-family: Tahoma,Arial,Helvetica,sans-serif;
+    font-size:13px;
+}
+    .analyticsSteps .disableMask{
+        height:100%;
+        width:100%;
+        background:url(/images/i.png) repeat 0 0;
+        position:absolute;
+        left:0;
+        top:0;
+        z-index:6;
+    }
+    .analyticsSteps input.text{
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #A8ABAD;
+        color: #6C6C6C;
+        display: inline-block; 
+        font-family: Tahoma,Arial,Helvetica,sans-serif;
+        font-size: 12px;
+        height: 19px;
+        padding: 2px 7px;
+        width: 353px;
+    }
+    .analyticsSteps textarea{
+        border: 1px solid #A8ABAD;
+        color: #6C6C6C; 
+        font-family: Tahoma,Arial,Helvetica,sans-serif;
+        font-size: 12px;
+        height: 127px;
+        overflow: auto;
+        padding: 2px 7px;
+        width:300px;
+    }
+    .analyticsSteps .intro{
+        color: #666666;
+        text-align: right;
+        font-size: 11px;
+        line-height: 25px;
+        margin-right: 12px;
+        width: auto;
+    }
+        .analyticsSteps .intro .red{
+            color:#FF0000;
+        }
+    .analyticsSteps .title{
+        font-size:13px;
+    }
+        .analyticsSteps .title a.toolTip{
+            margin-top:0;
+        }
+        .analyticsSteps .title label{
+            display:block;
+            padding-left:25px;
+        }
+            .analyticsSteps .title label span{
+                color:#ff0000;
+            }
+    .analyticsSteps .sliderCtl{
+        padding:10px 0 0 32px;
+        position:relative;
+    }
+        .analyticsSteps .sliderCtl .ruler{ 
+            font-size:11px;  
+            overflow:hidden;
+            position:relative;
+            padding-bottom:5px;
+        }
+            .analyticsSteps .sliderCtl .ruler span{
+                width:53.2px;  
+                color:#626262;
+                float:left;
+            }
+            .analyticsSteps .sliderCtl .ruler span.last{
+                width:auto;
+                position:absolute;
+                left:524px;
+                top:0;
+            }
+            .analyticsSteps .sliderCtl .ruler span.first span{
+                padding-left:2px;    
+            }
+        .analyticsSteps .sliderCtl .slider{
+            width:542px;
+            border-radius:0;
+            background:url(/images/slider1.png) no-repeat 0 -10px;
+            height:10px;
+            border:0; 
+            float:left;
+        }
+            .analyticsSteps .sliderCtl .ui-slider-horizontal .ui-slider-range-max{
+                background:url(/images/slider1.png) no-repeat right 0;
+            }
+            .analyticsSteps .sliderCtl .ui-slider-horizontal .ui-slider-handle{
+                background:url(/images/slider-mark.png) no-repeat 0 0;
+                height:34px;
+                width:20px;
+                border:0;
+                top:-5px;
+                border-radius:0;
+                margin-left:-4px;
+            }
+        .analyticsSteps .sliderCtl .val{ 
+            float:left; 
+            margin-top:-16px;
+            padding-top: 0px !important;
+            padding-left: 16px !important;
+            margin-left:40px;
+            position:relative;
+        }
+            .analyticsSteps .sliderCtl .val.error{
+                background:url(/images/error-icon.png) no-repeat 0 center; 
+            }
+            .analyticsSteps .sliderCtl .val input{ 
+                float:left;
+                width:45px;
+             }
+            .analyticsSteps .sliderCtl .error input{
+                 background:#FFE4E4;
+             }
+            .analyticsSteps .sliderCtl .val p.errorTxt{
+                color:#EC1C23;
+                font-size:11px; 
+                position:absolute;
+                width:240px;
+                bottom:-20px;
+                left:16px;
+                display:none;
+             }
+             .analyticsSteps .sliderCtl .error p.errorTxt{
+                 display:block;
+             }
+            .analyticsSteps .sliderCtl .val span{
+                float:left;
+                font-size:11px;
+                display:inline-block;
+                line-height:24px;
+                padding-left:12px;
+                color:#666;
+             }  
+        /* step2 */
+        .analyticsSteps .step2 .eBudget{
+            border-bottom:1px solid #bdbdbd;
+            padding:4px 24px 35px;
+        } 
+            .analyticsSteps .step2 .eTimeline{ 
+                padding:30px 24px 35px; 
+            }
+                .analyticsSteps .step2 .eTimeline .disableMask{
+                    width:560px;
+                    left:26px;
+                    height:60px;
+                }
+                .analyticsSteps .eTimeline .sliderCtl .ruler span{
+                    width:67px; 
+                }
+                .analyticsSteps .eTimeline .sliderCtl .val span,
+                .analyticsSteps .eBudget .sliderCtl .val span{
+                    font-weight:normal;
+                    padding-left:12px;
+                }
+                .analyticsSteps .eTimeline .sliderCtl .val input,
+                .analyticsSteps .eBudget .sliderCtl .val input{
+                    font-weight:normal;
+                }
+                .analyticsSteps .eTimeline .sliderCtl .radio{
+                    position:absolute;
+                    left:0;
+                    top:24px;
+                }
+                .analyticsSteps .eTimeline .dp{
+                    margin-top:48px;
+                    overflow:hidden;
+                    position:relative;
+                }
+                    .analyticsSteps .step2 .dp .disableMask{
+                        width:560px;
+                        left:26px;
+                        height:30px;
+                    }
+                    .analyticsSteps .eTimeline .dp input.radio{
+                        float:left;
+                        margin-top:5px;
+                        margin-right:18px;
+                    }
+                    .analyticsSteps .eTimeline .dp input.text{
+                        width:75px;
+                        float:left;
+                    }
+                    .analyticsSteps .eTimeline .dp label{
+                        float:left;
+                        line-height:24px;
+                        padding-right:10px;
+                    }
+                    .analyticsSteps .eTimeline .dp span{
+                        float:left;
+                        line-height:24px;
+                        padding:0 36px;
+                    }
+                    .analyticsSteps .eTimeline .dp p.errorTxt{
+                        color:#EC1C23;
+                        font-size:11px;
+                        float:left;
+                        line-height:24px;
+                        background:url(/images/error-icon.png) no-repeat 0 center;
+                        padding-left:16px;
+                        margin-left:20px;
+                        display:none;
+                    }
+
+                    .analyticsSteps .eTimeline .dp.error p.errorTxt{
+                        display:block;    
+                    }
+                    .analyticsSteps .eTimeline .dp.error input.text{
+                        background:#FFE4E4;
+                    }
+        /* step4 */
+        .analyticsSteps .step4 {
+            padding:10px 0 95px 0;
+            font-family: Arial,Helvetica,sans-serif;
+            font-size:12.5px;
+        }
+            .analyticsSteps .step4 .intro{
+                line-height:12px;    
+            }
+            .analyticsSteps .step4 .row{
+                padding-left:30px !important;
+                padding-bottom:20px !important;
+                border-bottom:1px solid #bdbdbd;
+                position:relative;
+                overflow:hidden;
+            }
+                .analyticsSteps .step4 .row label{
+                    display:block;
+                    font-size:12.5px;
+                    padding-bottom:5px;
+                }
+                .analyticsSteps .step4 .row label span.red{
+                    color:#ff0000;
+                }
+                .analyticsSteps .step4 .row textarea{
+                    width:95%;
+                    height:105px;
+                    float:left;
+                }
+                .analyticsSteps .step4 .row .errorIcon{
+                    background: url("../images/error-icon.png") no-repeat left center;
+                    float: left;
+                    height: 10px;
+                    margin-left: 7px;
+                    margin-top: 50px;
+                    width: 10px;
+                    display:none;
+                }
+                .analyticsSteps .step4 .row .errorTxt{
+                    width:200px;
+                    font-size:11px;
+                    color:#EC1C23;
+                    bottom:4px;
+                    left:30px;
+                    position:absolute;
+                    display:none;
+                }
+                .analyticsSteps .step4 .error .errorIcon,
+                .analyticsSteps .step4 .error .errorTxt{
+                    display:block;
+                }
+                .analyticsSteps .step4 .error textarea{
+                    background:#FFE4E4;
+                }
+            .analyticsSteps .step4 table{
+                width:100%; 
+            }
+                .analyticsSteps .step4 td{
+                   border-bottom:1px solid #bdbdbd;
+                    vertical-align:top;
+                }
+                .analyticsSteps .step4 td.left{
+                    padding:24px 10px 12px 30px;
+                }
+                    .analyticsSteps .step4 td .leftMask{
+                        padding:24px 10px 12px 30px;
+                    }
+                 
+                .analyticsSteps .step4 td.right{
+                    padding:24px 15px 26px 24px;
+                   border-left:1px solid #bdbdbd;
+                   min-height:292px;
+                   font-size:13px; 
+                   background:url(/images/gray-bg-1.gif) #ffffff repeat-x 0 bottom;
+                }
+            .analyticsSteps .step4 td .radios{
+                overflow:hidden;
+                padding:20px 25px 24px;
+            }
+                .analyticsSteps .step4 td .radios input{
+                    float:left;
+                    margin-top:2px;
+                }
+                .analyticsSteps .step4 td .radios label{
+                    float:left;
+                    padding:0 34px 0 4px;
+                }
+            .analyticsSteps .step4 td label{
+                display:block;
+            }
+            .analyticsSteps .step4 td textarea{
+                width:92%;
+                height:104px;
+                margin-top:20px;
+            }
+                .analyticsSteps .step4 td.right label{
+                   font-weight:bold;
+                }
+                .analyticsSteps .step4 td.right p{
+                   padding-bottom:28px;
+                }
+                .analyticsSteps .step4 td.right a.more{
+                   font-size:11px;
+                    color:#ec1c23;
+                    display:inline-block;
+                    margin-top:10px;
+                }
+                .analyticsSteps .step4 td.right a.more:hover{
+                    text-decoration:none;
+                }
+                .analyticsSteps .step4 td.right em span{
+                    color:#ff0000;   
+                }
+                .analyticsSteps .step4 td.right .fieldList{
+                    overflow:hidden;
+                    margin-top:-10px;
+                }
+                    .analyticsSteps .step4 td.right .fieldList span{
+                        float:left;
+                        background:url(/images/rm-icon.png) no-repeat 0 center;
+                        padding-left:14px;
+                        line-height:20px;
+                        text-decoration:underline;
+                        margin-right:14px;
+                        font-size:12px;
+                    }
+            .analyticsSteps .step4 .addKnowledge label{
+                font-weight:bold;
+                font-size:12.5px;
+            }
+            .analyticsSteps .step4 .addKnowledge .field{
+                overflow:hidden;
+                padding:10px 0 6px !important;
+            }
+                .analyticsSteps .step4 .addKnowledge .field input.text{
+                    float:left;
+                    width:360px;
+                }
+                .analyticsSteps .step4 .addKnowledge p.fieldMessage {
+                    width: 374px;
+                }                
+                .analyticsSteps .step4 .addKnowledge .field span.errorText{
+                    font-size:11px;
+                    color:#EC1C23;
+                    display:none;
+                    line-height:12px;
+                }
+                .analyticsSteps .step4 .addKnowledge .error span.errorText{
+                    display:block;     
+                }
+                .analyticsSteps .step4 .addKnowledge .error input.text{
+                    background:#FFE4E4; 
+                }
+                .analyticsSteps .step4 .addKnowledge .field a.smallRedBtn{
+                    float:left;
+                    margin:4px 0 0 4px;
+                }
+            .analyticsSteps .step4 .addKnowledge p{
+                font-size:11px;
+            }
+        .analyticsSteps .step4 .currentSelect{
+            border-top:1px solid #bdbdbd;
+            padding:10px 10px 10px 30px;
+        }
+            .analyticsSteps .step4 .currentSelect label{
+                font-weight:bold;
+                padding-bottom:6px;
+            }
+            .analyticsSteps .step4 .currentSelect p{
+                overflow:hidden;
+            }
+
+        /* step5 */
+        .analyticsSteps .step5 { 
+            font-family: Arial,Helvetica,sans-serif;
+            padding-bottom:96px;
+        }
+            .analyticsSteps .step5 .row{
+                overflow:hidden;
+                border-bottom:1px solid #bdbdbd;
+            }
+            .analyticsSteps .step5 .row.q1{
+                border-top:1px solid #bdbdbd;
+            }
+            .analyticsSteps .step5 .row .left{
+                float:left;
+                width:50%;
+            }
+            .analyticsSteps .step5 .row .leftMask{
+                padding:20px 15px 10px 26px;
+            }
+            .analyticsSteps .step5 .row .right{
+                float:left;
+                width:50%;
+            }
+            .analyticsSteps .step5 .row .rightMask{
+                border-left:1px solid #bdbdbd;
+                min-height:98px;
+                padding:16px 15px 10px 30px;
+            }
+            .analyticsSteps .step5 .row .right label{
+                padding-bottom:18px;
+                display:block;
+            }
+            .analyticsSteps .step5 .row .right .textR label{
+                padding-bottom:6px; 
+            }
+            .analyticsSteps .step5 .row .radios{
+                overflow:hidden;
+                padding:28px 25px 10px;
+            }
+                .analyticsSteps .step5 .row .radios input{
+                    float:left;
+                    margin-top:2px;
+                }
+                .analyticsSteps .step5 .row .radios label{
+                    float:left;
+                    padding:0 34px 0 4px;
+                }
+        .analyticsSteps .step5 .sliderCtl{
+            padding-left:0;
+            padding-top:16px;
+        }
+            .analyticsSteps .step5 .sliderCtl .slider{
+                width:358px;
+                background-image:url(../images/slider2.png);
+            }
+            .analyticsSteps .step5 .sliderCtl .ruler span{
+                width:86px;   
+            }
+            .analyticsSteps .step5 .sliderCtl .ruler span.last{
+                left:334px;
+            }
+            .analyticsSteps .step5 .sliderCtl .val{
+                margin-left:10px;  
+            }
+            .analyticsSteps .sliderCtl .val input{
+                text-align:right;
+                font-weight:bold;
+            }
+            .analyticsSteps .sliderCtl .val span{
+                font-weight:bold;
+                font-size:12px;
+                padding-left:4px;
+            }         
+             
+            .analyticsSteps .step5 .q3 .textR p.errorTxt{
+                color:#EC1C23;
+                font-size:11px; 
+                width:240px;
+                display:none;
+                margin-top:4px;
+             }
+             .analyticsSteps .step5 .q3 .error p.errorTxt{
+                 display:block;
+             }
+             
+        .analyticsSteps .step5 .pm{
+            margin-top:30px;
+            background:url(/images/pm-icon.png) no-repeat 0 0;
+            padding-left:44px;
+            line-height:38px;
+        }
+        .analyticsSteps .step5 .q3 .textR input.text{
+            width:48px;
+            text-align:right;
+            font-weight:bold;
+        }
+        .analyticsSteps .step5 .q3 .textR strong{
+            line-height:24px;
+            display:inline-block;
+            padding-left:8px;
+        }
+        .analyticsSteps .step5 .q4 .radios{
+            padding:0;
+        }
+            .analyticsSteps .step5 .q4 .radios .radio{
+                float:left;
+                width:170px;
+                padding-right:20px;
+            }
+            .analyticsSteps .step5 .q4 .radios .radio.last{ 
+                width:90px;
+                padding-right:0;
+            }
+                .analyticsSteps .step5 .q4 .radios .radio label{
+                    float:none;
+                    padding:0 0 0 18px;
+                }
+                .analyticsSteps .step5 .q4 .radios .radio p{
+                    padding-left:18px;
+                }
+        .analyticsSteps .step5 .q5 .rightMask .label{
+            display:inline-block; 
+            padding: 0 16px 0 0;
+        }
+        .analyticsSteps .step5 .q6 .radios{
+            padding:0;
+        }
+        .analyticsSteps .step5 .q6 .rightMask .radio{
+            overflow:hidden;
+            padding-bottom:15px;
+        }
+        .analyticsSteps .step5 .q6 .rightMask .radios label{
+            float:none;
+            padding-left:20px;
+            padding-right:20px;
+        }
+        .analyticsSteps .step5 .q7 .rightMask label{
+            padding-bottom:10px;
+        }
+        .analyticsSteps .step5 .rightMask textarea{
+             height:70px;
+             width:95%;
+        }
+        /* step6 */
+        .analyticsSteps .step6 {
+            padding:15px 0 0 0;
+            font-family: Tahoma,Arial,Helvetica,sans-serif;
+            font-size:12px;
+        }
+            .analyticsSteps .step6 .otherDetails{
+                padding:0 10px 22px 30px !important;
+                overflow:hidden;
+                position:relative;
+            }
+            .analyticsSteps .step6 .otherDetails .errorTxt{
+                 position:absolute;
+                bottom:5px;
+                width:200px;
+                left:56px;
+                font-size:11px;
+                color:#EC1C23;
+                display:none;
+            }
+            .analyticsSteps .step6 .otherDetails .errorIcon{
+                float:left;
+                margin:76px 0 0 8px;;
+                background:url(/images/error-icon.png) no-repeat 0 0;
+                height:10px;
+                width:10px;
+                display:none;
+            }
+            .analyticsSteps .step6 .otherDetails.error .errorTxt,
+            .analyticsSteps .step6 .otherDetails.error .errorIcon{
+                display:block;
+            }
+            .analyticsSteps .step6 .otherDetails.error textarea{
+                background:#FFE4E4;
+            }
+            .analyticsSteps .step6 .otherDetails textarea{
+                width:94%;
+                height:128px;
+                display:block;
+                margin-left:26px;
+                margin-top:20px;
+                float:left;
+            }
+            .analyticsSteps .step6 .documents{
+                padding:20px 20px 40px 30px !important;
+                border-top:1px solid #bdbdbd;
+            }
+                .analyticsSteps .step6 .documents .radios{
+                    height:16px;
+                    padding-bottom:10px;
+                    display:block;
+                } 
+                .analyticsSteps .step6 .documents.error .text{
+                    background:#FFE4E4;
+                }
+                .analyticsSteps .step6 .documents .radios .toolTip{
+                    margin-top:-2px;
+                }
+                .analyticsSteps .step6 .documents .radios label{
+                    float:left;
+                    padding-left:3px;
+                }
+                .analyticsSteps .step6 .documents .radios input{
+                    float:left;
+                    margin-left:15px;
+                }
+                .analyticsSteps .step6 .documents .isUpload{
+                    overflow:hidden;
+                    padding-left:30px;
+                }
+                    .analyticsSteps .step6 .documents .isUpload input.text{
+                        float:left;
+                        width:616px;
+                    }
+                .analyticsSteps .step6 .documents .isUrl{
+                    padding-left:30px; 
+                }
+                    .analyticsSteps .step6 .documents .isUrl input.text{
+                        width:708px;
+                    }
+                .analyticsSteps .step6 .documents .isDirect{
+                    padding-left:30px;
+                }
+                    .analyticsSteps .step6 .documents .isDirect textarea{
+                        width:708px;
+                        height:38px;
+                    }
+                    .analyticsSteps .step6  .documents .action{
+                        width:725px;
+                        overflow:hidden;
+                        padding-left:30px;
+                        padding-top:6px;
+                    }
+                    .analyticsSteps .step6  .documents .errorTxt{
+                         float:left;
+                         color:#EC1C23;
+                        font-size:11px;
+                        display:none;
+                        margin-top: -13px;
+                    }
+                    .analyticsSteps .step6  .documents.error .errorTxt{
+                        display:block;
+                    }
+                .analyticsSteps .step6 table{
+                    width:100%;
+                    background:url(/images/th-bg.gif) repeat-x 0 0; 
+                    table-layout:fixed;
+                }
+                    .analyticsSteps .step6 th{
+                        height:34px;
+                        line-height:34px;
+                        font-weight:bold;
+                        color:#cacaca;
+                        font-size:13px;
+                        text-align:center;
+                        border-left:1px solid #6d6561;
+                        border-right:1px solid #433e3b; 
+                    }
+                    .analyticsSteps .step6 th.first{
+                        border-left:0;
+                        text-align:left;
+                        padding-left:45px;
+                    }
+                    .analyticsSteps .step6 th.last{
+                        border-right:0;
+                    }
+                    .analyticsSteps .step6 td{
+                        border-left:1px solid #e4e4e4;
+                        padding:7px 15px;
+                        text-align:left;
+                        vertical-align:middle;
+                        background:#ffffff;
+                        word-wrap:break-word;
+                    }
+                    .analyticsSteps .step6 .even td{
+                        background:#f5f5f5;
+                    }
+                    .analyticsSteps .step6 td.first{
+                        border-left:0;
+                        padding-left:45px;
+                    }
+                    .analyticsSteps .step6 td.last{
+                        text-align:center; 
+                    }
+                        .analyticsSteps .step6 td a{
+                            color:#0030ff;
+                            text-decoration:underline;
+                        }
+                        .analyticsSteps .step6 td a:hover{ 
+                            text-decoration:none;
+                        }
+                        .analyticsSteps .step6 td a.remove{
+                            color:#333;
+                            font-size:11px;
+                            background:url(/images/rm-icon.png) no-repeat 0 center;
+                            padding-left:14px;
+                            line-height:18px;
+                            display:inline-block;
+                        }
+        /* step8 */
+        .analyticsSteps .step8 { 
+            font-family:Arial,Helvetica,sans-serif;
+            font-size:13px;
+        }
+            .analyticsSteps .step8  .title{
+                background:url(/images/title-bg.gif)  repeat-x 0 0;
+                line-height:31px;
+                height:31px;
+                padding-left:17px;
+            }
+                .analyticsSteps .step8  .title h4{
+                    float:left;
+                    font-weight:bold;
+                }
+                .analyticsSteps .step8  .title a.grayBtn{
+                    margin:4px 8px;
+                }
+            .analyticsSteps .step8  .content{
+                border-top:1px solid #bebebe;
+                border-bottom:1px solid #bebebe;
+                padding:8px 0;
+            }
+                .analyticsSteps .step8  .content .row{
+                    overflow:hidden;
+                    padding:7px 0;
+                }
+                .analyticsSteps .step8  .content .row .left{
+                    float:left;
+                    width:50%; 
+                }
+                .analyticsSteps .step8  .content .row .leftMask{
+                    padding:0 30px 0 12px;
+                }
+                .analyticsSteps .step8  .content .row .right{
+                    float:left;
+                    width:50%;
+                }
+                .analyticsSteps .step8  .content .row .rightMask{
+                    padding:0 30px 0 12px;
+                    word-wrap:break-word;
+                }
+                    .analyticsSteps .step8  .content .row .rightMask table{
+                        width:100%;
+                        border:1px solid #d4d4d4;
+                        border-top:0;
+                        border-collapse:collapse;
+                        table-layout:fixed;
+                    }
+                        .analyticsSteps .step8  .content .row .rightMask th{
+                             background:url(/images/th-bg-1.gif) repeat-x 0 0;
+                            line-height:24px;
+                            height:24px;
+                            color:#cacaca;
+                            font-weight:bold;
+                            font-size:13px;
+                            text-align:left;
+                            padding-left:30px;
+                        }
+                        .analyticsSteps .step8  .content .row .rightMask td{  
+                            text-align:left; 
+                            border-bottom:1px solid #d4d4d4;
+                            padding:4px 10px 4px 30px;
+                        }
+                            .analyticsSteps .step8  .content .row .rightMask td a{
+                                color:#0030ff;
+                                text-decoration:none;
+                             }
+                            .analyticsSteps .step8  .content .row .rightMask td a:hover{
+                                text-decoration:underline;
+                            }
+
+    .analyticsSteps .launchBox{
+        text-align:center;
+    }
+    .analyticsSteps .launchBox a.launchBtn{
+        background:url(/images/launch-button.png) no-repeat 0 0;
+        height:38px;
+        line-height:38px;
+        width:275px;
+        text-align:center;
+        font-family:"Myriad Pro", Arial, Helvetica, Tahoma, sans-serif;
+        font-size:20px;
+        text-shadow:0 -1px 0 #6e0000;
+        text-decoration:none;
+        display:inline-block;
+        color:#fffffe;
+        margin:8px 0;
+    }
+    .analyticsSteps .launchBox a.launchBtn:hover{
+        background-position:0 -38px;
+    }
+    .analyticsSteps .launchBox .proceedMsg{
+        background-color: #FFFDCD;
+        border: 1px solid #FBCC00;  
+        height: 24px;
+        line-height: 24px;
+        padding: 14px 22px;
+        font-family: Arial, Helvetica, Tahoma, sans-serif;
+        font-size:13px;
+        font-weight:bold; 
+        margin:3px 0 6px 0;
+        display:none;
+      }
+    .analyticsSteps .launchBox .proceedMsg p{
+        float:left;
+    }
+    .analyticsSteps .launchBox .proceedMsg a.smallRedBtn{
+        float:right;
+        margin:6px 10px 0 16px;
+    }
+
+    .analyticsSteps .stepContainer .left,.analyticsSteps .stepContainer .right{
+        float:none;
+    }
+
+    .analyticsSteps .stepContainer table{
+        border-collapse:separate;
+    }
+    
+    .analyticsSteps .step4 div.row.error, 
+    .analyticsSteps .step6 div.otherDetails.error{
+        background: none repeat scroll 0 0 transparent;
+        padding-top:0px !important;
+    }
+    
+    .analyticsSteps .step6 div.documents.error{
+        background: none repeat scroll 0 0 transparent;
+    }
+    
+    .analyticsSteps .step4 div.field.error{
+        background: none repeat scroll 0 0 transparent;
+    }   
+    .analyticsSteps .step5 .q3 .textR.error{
+        background: none repeat scroll 0 0 transparent;
+        padding-top:0px !important;
+        padding-left:0px !important;
+    }
+    .analyticsSteps .step5 .q3 .textR.error input {
+        background: none repeat scroll 0 0 #FFE4E4;
+    }
+    .analyticsSteps .step4 .addKnowledge span.remaning {   
+        color: #999999;
+        font-size: 11px;
+        float:right;
+    }
+
+    .analyticsSteps .step6 .documents .isUpload .browserWrapper {
+        float: left;
+        margin-left: 5px;
+        margin-top: 2px;
+        position: relative;
+    }
+
+    .analyticsSteps .step6 .documents .isUpload .browserWrapper input.file {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 90px;
+    }
+    .analyticsSteps .step6 .documents .isUpload .browserWrapper .btn {
+        background: url("/images/browse-btn.png") no-repeat scroll 0 0 transparent;
+        color: #FFFFFE;
+        display: block;
+        font-weight: bold;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        text-decoration: none;
+        width: 90px;
+    }
+    .analyticsSteps .step6 .documents .isUpload .browserWrapper .btn.hover {
+        background: url("/images/browse-btn.png") no-repeat scroll 0 -24px transparent;
+    }
+    .analyticsSteps .step6 .documents .isUpload .browserWrapper .btn a {
+        color: #FFFFFE;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .analyticsSteps .step6 .documents .isUpload .browserWrapper .btn span {
+        float: left;
+    }
+
+    .analyticsSteps .step6 .documents .action {
+        padding-top: 15px;
+    }
+    
+    .analyticsSteps .step6 .documents .action a.addBtn {
+        float: right;
+        text-align: center;
+        display: block;
+        height: 24px;
+        line-height: 24px;
+        width: 118px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #FFFFFE;
+        background: url("/images/addNewItem.png") no-repeat scroll 0 0 transparent;
+        text-decoration: none;
+    }
+    .analyticsSteps .step6 .documents .action .addBtn.hover {
+        background: url("/images/addNewItem.png") no-repeat scroll 0 -24px transparent;
+    }
 
 
+.confirmStep .stepTitle {
+    padding: 22px 0 14px;
+}
+.confirmStep .stepTitle h3 {
+    font-size: 31px;
+    font-weight: bold;
+}
+.confirmStep .topBar {
+    height: auto !important;
+}
+.confirmStep .topBar dl {
+    padding: 8px 15px;
+}
+.confirmStep .topBar dt {
+    font-size: 14px;
+    font-weight: bold;
+}
+.confirmStep .topBar dd {
+    font-size: 13px;
+}
+.confirmStep .content {
+    font-family: Arial,Helvetica,Tahoma,sans-serif;
+}
+.confirmStep .content dt {
+    background: url("/images/title-bg.gif") repeat-x scroll 0 0 transparent;
+    border-bottom: 1px solid #BDBDBD;
+    font-size: 13px;
+    font-weight: bold;
+    height: 31px;
+    line-height: 31px;
+    padding-left: 17px;
+}
+.confirmStep .content dd {
+    border-bottom: 1px solid #BDBDBD;
+    overflow: hidden;
+    padding: 15px 0 15px 16px;
+}
+.confirmStep .content dd.para {
+    padding: 8px 0 8px 16px;
+}
+.confirmStep .content dd .num {
+    background: url("/images/stepIcon.png") no-repeat scroll left top transparent;
+    display: inline-block;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 22px;
+    height: 31px;
+    line-height: 30px;
+    margin-right: 8px;
+    padding-right: 1px;
+    text-align: center;
+    width: 30px;
+}
+.confirmStep .content dd p {
+    font-size: 14px;
+    line-height: 30px;
+}
+.confirmStep .content dd.multiLine p {
+    line-height: 16px;
+}
+.confirmStep .content dd p span {
+    display: block;
+    font-size: 12px;
+}
+.confirmStep a.overviewBtn {
+    background: url("/images/overview-button.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFE;
+    display: inline-block;
+    float: right;
+    font-size: 11px;
+    font-weight: bold;
+    height: 21px;
+    line-height: 20px;
+    margin: 6px 8px 0 0;
+    text-align: center;
+    text-decoration: none;
+    width: 106px;
+}
+.confirmStep a.overviewBtn:hover {
+    background-position: 0 -21px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.stepForth .form .chooseCopilot dt a.button6 span.right,
+.stepForth .form .chooseCopilot dt a.button6 span.left {
+    float:none;
+}
 
 
 
