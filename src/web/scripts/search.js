@@ -51,9 +51,12 @@
  *
  * Version 1.8.3 - (TopCoder Cockpit - Bug Race Project Contests View)
  * - Update to fix the sorting of the forum/registrants/submission in project contests list view
+ *
+ * Version 1.8.4 - (Module Assembly - Add Monthly Platform Fee Feature to Admin Page)
+ * - Add support for platform fee table.
  *  
- * @author BeBetter, isv, Blues, tangzx, GreatKevin
- * @version 1.8.3
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu
+ * @version 1.8.4
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -116,8 +119,8 @@ $(document).ready(function() {
 		if (trim(b) != '') {
 			var frDateb = trim(b).split(' ');
 			var frTimeb = frDateb[1].split(':');
-			frDateb = frDateb[0].split('/');
-			var y = (frDateb[2] + frDateb[0] + frDateb[1] + frTimeb[0] + frTimeb[1]) * 1;		                
+			var frDateb2 = frDateb[0].split('/');
+			var y = (frDateb2[2] + frDateb2[0] + frDateb2[1] + frTimeb[0] + frTimeb[1]) * 1;		                
 		} else {
 			var y = 10000000000000;		                
 		}
@@ -138,8 +141,8 @@ $(document).ready(function() {
         if (trim(b) != '') {
             var frDateb = trim(b).split(' ');
             var frTimeb = frDateb[1].split(':');
-            frDateb = frDateb[0].split('/');
-            var y = (frDateb[2] + frDateb[0] + frDateb[1] + frTimeb[0] + frTimeb[1]) * 1;
+            var frDateb2 = frDateb[0].split('/');
+            var y = (frDateb2[2] + frDateb2[0] + frDateb2[1] + frTimeb[0] + frTimeb[1]) * 1;
         } else {
             var y = 10000000000000;
         }
@@ -477,6 +480,29 @@ $(document).ready(function() {
 			]
 
     });
+
+    $.platformFeesDataTable = $("#platformFees .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+		"bAutoWidth": false,
+			  "oLanguage": {
+ 			  	"sLengthMenu": sStdMenu + " per page",
+                "sInfoFiltered":""
+ 			  },            
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [[3,'desc'], [1,'desc']],
+		"aoColumns": [
+				{ "sType": "html" },
+				{ "sType": "html" },
+				{ "sType": "money" },
+				{ "sType": "date-direct" },
+				{ "bSortable": false }
+			]
+
+    });    
     
     $("#notificationsContent .paginatedDataTable").dataTable({
         "iDisplayLength": 10,

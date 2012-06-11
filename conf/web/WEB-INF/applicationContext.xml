@@ -965,6 +965,22 @@
         <property name="sessionFactory" ref="projectFeeSessionFactory"/>
     </bean>
 
+    <bean name="customerPlatformFeeService" class="com.topcoder.clients.dao.impl.CustomerPlatformFeeServiceImpl" scope="prototype">
+        <property name="loggerName" value="com.topcoder.clients.dao.impl.CustomerPlatformFeeServiceImpl"/>
+        <property name="persistence" ref="customerPlatformFeePersistence"/>
+    </bean>
+
+    <bean name="customerPlatformFeePersistence" class="com.topcoder.clients.dao.impl.CustomerPlatformFeeDAOImpl" scope="prototype">
+        <property name="loggerName" value="com.topcoder.clients.dao.impl.CustomerPlatformFeeDAOImpl"/>
+        <property name="sessionFactory" ref="projectFeeSessionFactory"/>
+    </bean>
+
+    <bean name="customerPlatformFeeAction" class="com.topcoder.direct.services.view.action.accounting.CustomerPlatformFeeAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="loggerName" value="com.topcoder.accounting.fees.view.action.accounting.CustomerPlatformFeeAction"/>
+        <property name="customerPlatformFeeService" ref="customerPlatformFeeService"/>
+    </bean>
+    
     <bean name="contestFeesHomeAction" class="com.topcoder.direct.services.view.action.accounting.ContestFeesHomeAction"
           scope="prototype" parent="baseDirectStrutsAction">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>

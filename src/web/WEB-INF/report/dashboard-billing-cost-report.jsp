@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, GreatKevin
-  - Version: 1.7
+  - Author: Blues, GreatKevin, TCSASSEMBLER
+  - Version: 1.8
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
@@ -22,6 +22,9 @@
   -
   - Version 1.7 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) changes:
   - - Added Group by and group values into the filter panel.
+  -
+  - Version 1.8 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) changes:
+  - - Updated to support platform fee records.
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -462,7 +465,7 @@
 
             </td>
             <td>
-                 <s:property value="contest.id"/>
+                <s:if test="paymentType!='Platform Fee'"><s:property value="contest.id"/></s:if>
             </td>
             <td>
                 <s:if test="referenceId != null && referenceId != ''">
@@ -487,9 +490,9 @@
             </td>
             
             <c:if test="${viewData.canProcessInvoices}">
-                <td class="invoiceAmount">
-                    ${actualTotalMemberCost}
-                </td>            
+                <s:if test="paymentType!='Platform Fee'">
+                   <td class="invoiceAmount">${actualTotalMemberCost}</td>  
+                </s:if><s:else><td/></s:else>
             </c:if>
             
             <td>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.accounting;
 
@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.topcoder.direct.services.view.util.ContestFeeAuthorizationProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.TCSubject;
 import com.topcoder.util.log.Log;
 import com.topcoder.util.log.LogManager;
 
@@ -16,8 +17,14 @@ import com.topcoder.util.log.LogManager;
  * Thread safety: The class is mutable and not thread safe. But it'll not caused thread safety issue if used under
  * Spring container.
  * 
- * @author winstips, TCSDEVELOPER
- * @version 1.0
+ * <p>Version 1.1: (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) change notes:
+ * <ol>
+ *   <li>Updated {@link #intercept(ActionInvocation)} to populate clients map for CustomerPlatformFeeAction.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author winstips, TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.1
  */
 public class ContestFeeAccessInterceptor implements Interceptor {
     /**
@@ -50,10 +57,15 @@ public class ContestFeeAccessInterceptor implements Interceptor {
         if (actionInvocation == null) {
             throw new IllegalArgumentException("actionInvocation should not be null.");
         }
-        long currentUserId = DirectUtils.getTCSubjectFromSession().getUserId();
-        if (! this.contestFeeAuthorizationProvider.isUserGrantedAccessToContestFee(currentUserId)) {
+        TCSubject user = DirectUtils.getTCSubjectFromSession();
+        if (! this.contestFeeAuthorizationProvider.isUserGrantedAccessToContestFee(user.getUserId())) {
             return "permissionDenied";
         } else {
+            // populate the clients map
+            if (actionInvocation.getAction() instanceof CustomerPlatformFeeAction) {
+                ((CustomerPlatformFeeAction)actionInvocation.getAction()).setClients(
+                    DirectUtils.getAllClients(user));
+            }
             return actionInvocation.invoke();
 
         }

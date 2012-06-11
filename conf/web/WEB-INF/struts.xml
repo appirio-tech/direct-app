@@ -748,6 +748,35 @@
             <result name="input">/WEB-INF/billing/billing_account_create_fees_list.jsp</result>
         </action>
 
+        <action name="checkRecordExist" method="checkRecordExist" class="customerPlatformFeeAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="listCustomerPlatformFee" class="customerPlatformFeeAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success">/WEB-INF/billing/customer_platform_fee_list.jsp</result>
+        </action>
+
+        <action name="enterCreateCustomerPlatformFee" method="enterCreateCustomerPlatformFee" class="customerPlatformFeeAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success">/WEB-INF/billing/customer_platform_fee.jsp</result>
+        </action>
+
+        <action name="enterUpdateCustomerPlatformFee" method="enterUpdateCustomerPlatformFee" class="customerPlatformFeeAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success">/WEB-INF/billing/customer_platform_fee.jsp</result>
+        </action>
+
+        <action name="createUpdateCustomerPlatformFee" method="createUpdateCustomerPlatformFee" class="customerPlatformFeeAction">
+            <interceptor-ref name="projectFeeStack"/>
+            <result name="success" type="redirectAction">
+                <param name="actionName">listCustomerPlatformFee</param>
+            </result>
+            <result name="error">/WEB-INF/billing/customer_platform_fee.jsp</result>
+        </action>        
+        
         <action name="internalStats" class="com.topcoder.direct.services.view.action.stats.InternalStatsAction">
           <param name="excelFile">@excelFile@</param>
           <interceptor-ref name="securedInternalStatsStack"/>

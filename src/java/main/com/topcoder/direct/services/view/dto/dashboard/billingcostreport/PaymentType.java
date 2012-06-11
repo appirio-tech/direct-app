@@ -1,14 +1,23 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
+
 
 /**
  * <p/>
  * An enumeration over the payments types used when billing a contest.
  *
- * @author Blues
- * @version 1.0 (TC Cockpit Billing Cost Report Assembly)
+ * 
+ * <p>Version 1.1: (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) change notes:
+ * <ol>
+ *   <li>Added {@link #PLATFORM_FEE}.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author Blues, TCSASSEMBLER
+ * @version 1.1
+ * @since 1.0 (TC Cockpit Billing Cost Report Assembly)
  */
 public enum PaymentType {
     /**
@@ -59,7 +68,14 @@ public enum PaymentType {
     /**
      * Misc payment type.
      */
-    MISC(10, "Misc");
+    MISC(10, "Misc"),
+    
+    /**
+     * Platform fee payment type.
+     *
+     * @since 1.1
+     */
+    PLATFORM_FEE(11, "Platform Fee");
 
     /**
      * The id of the payment type.

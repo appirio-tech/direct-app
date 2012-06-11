@@ -66,8 +66,16 @@ import java.util.Set;
   * </ol>
   * </p>
  * 
+ * <p>
+ * Version 1.4: (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) change notes:
+ * <ol>
+ *   <li>Updated method {@link #executeAction()} and {@link #filterByGroups(java.util.List)}
+ *   to support customer Platform Fee records. </li>
+ * </ol>
+ * </p>
+ * 
  * @author Blues, TCSASSEMBLER
- * @version 1.3
+ * @version 1.4
  */
 public class DashboardBillingCostReportAction extends DashboardReportBaseAction<DashboardBillingCostReportForm, BillingCostReportDTO> {
 
@@ -217,10 +225,12 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         List<Long> softwareProjectCategoriesList = new ArrayList<Long>();
         List<Long> studioProjectCategoriesList = new ArrayList<Long>();
 
-        for (Long categoriesId : form.getProjectCategoryIds()) {
-            if (categoriesId > 100) {
-                studioProjectCategoriesList.add(categoriesId - 100);
-            } else softwareProjectCategoriesList.add(categoriesId);
+        if (form.getProjectCategoryIds() != null) {
+            for (Long categoriesId : form.getProjectCategoryIds()) {
+                if (categoriesId > 100) {
+                    studioProjectCategoriesList.add(categoriesId - 100);
+                } else softwareProjectCategoriesList.add(categoriesId);
+            }
         }
 
         long[] softwareProjectCategories = DirectUtils.covertLongListToArray(softwareProjectCategoriesList);
@@ -244,10 +254,35 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             if((form.getInvoiceNumber() == null || form.getInvoiceNumber().trim().length() <= 0) && contestId <= 0) {
                 viewData = filterByGroups(viewData);
             }
+            
+            // filter out the platform fee items
+            final boolean ignorePlatformFee = 
+                (contestId > 0 || projectId > 0 || billingAccountId > 0 || customerId <= 0);
+            if (ignorePlatformFee) {
+                List<BillingCostReportEntryDTO> viewData2 = new ArrayList<BillingCostReportEntryDTO>();
+                for (BillingCostReportEntryDTO item : viewData) {
+                    if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(item.getPaymentType())) {
+                        viewData2.add(item);
+                    }
+                }
+                viewData = viewData2;
+            }
 
             Collections.sort(viewData, new Comparator<BillingCostReportEntryDTO>() {
                 public int compare(BillingCostReportEntryDTO one, BillingCostReportEntryDTO other) {
-                    return (int) (one.getContest().getId() - other.getContest().getId());
+                    if (ignorePlatformFee) {
+                        return (int) (one.getContest().getId() - other.getContest().getId());
+                    } else {
+                        boolean isPlatformFee1 = PaymentType.PLATFORM_FEE.getDescription().
+                            equalsIgnoreCase(one.getPaymentType());
+                        boolean isPlatformFee2 = PaymentType.PLATFORM_FEE.getDescription().
+                            equalsIgnoreCase(other.getPaymentType());
+                        if (isPlatformFee1 == isPlatformFee2) {
+                            return (int) (one.getContest().getId() - other.getContest().getId());
+                        } else {
+                            return isPlatformFee1 ? 1 : -1;
+                        }
+                    }
                 }
             });
 
@@ -302,15 +337,19 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             result = new ArrayList<BillingCostReportEntryDTO>();
 
             for (BillingCostReportEntryDTO dto : listToFilter) {
-                if (projectIdsFilterWithValue.containsKey(dto.getProject().getId())) {
-                    dto.setProjectFilterValue(projectIdsFilterWithValue.get(dto.getProject().getId()));
+                if (PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(dto.getPaymentType())) {
                     result.add(dto);
-                }
-
-                if (projectIdsHasGroupId != null) {
-                    if (!projectIdsHasGroupId.contains(dto.getProject().getId())) {
-                        dto.setProjectFilterValue("None");
+                } else {
+                    if (projectIdsFilterWithValue.containsKey(dto.getProject().getId())) {
+                        dto.setProjectFilterValue(projectIdsFilterWithValue.get(dto.getProject().getId()));
                         result.add(dto);
+                    }
+    
+                    if (projectIdsHasGroupId != null) {
+                        if (!projectIdsHasGroupId.contains(dto.getProject().getId())) {
+                            dto.setProjectFilterValue("None");
+                            result.add(dto);
+                        }
                     }
                 }
             }

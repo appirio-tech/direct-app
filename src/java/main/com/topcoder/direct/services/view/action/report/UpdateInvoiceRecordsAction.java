@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
@@ -41,13 +41,20 @@ import com.topcoder.security.TCSubject;
  * </p>
  * <p>
  * Versions 1.2: (Module Assembly - Contest Fee Based on Percentage of Member Cost Cockpit Pages Update):
- * <ul>
- *   <li>Added {@link #executeAction()} to support % based contest fee.</li>
- * </ul>
+ * <ol>
+ *   <li>Updated {@link #executeAction()} to support % based contest fee.</li>
+ * </ol>
  * </p>
  * 
- * @author flexme, minhu
- * @version 1.2
+ * <p>
+ * Version 1.3: (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) change notes:
+ * <ol>
+ *   <li>Updated method {@link #executeAction()} to support customer Platform Fee records. </li>
+ * </ol>
+ * </p>
+ * 
+ * @author flexme, minhu, TCSASSEMBLER
+ * @version 1.3
  */
 public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
 
@@ -143,7 +150,9 @@ public class UpdateInvoiceRecordsAction extends BaseDirectStrutsAction {
         // paymentId can unique determine contest_id, billing_account_id, payment_type. We need to get contest_id,
         // billingaccount_id, payment_type from database by payment_id.
         // For paymentId = 0 and contestId > 0, we need to get billing_account_id from database by contest_id.
-        List<InvoiceRecordBriefDTO> recordDatas = DataProvider.getInvoiceRecordRelatedData(contestIds, paymentIds);
+        // For platform fee records, its contest_id = customer_platform_fee_id and its billing_account_id = 0.
+        List<InvoiceRecordBriefDTO> recordDatas = DataProvider.getInvoiceRecordRelatedData(
+            contestIds, paymentIds, invoiceTypeNames);
         
         TCSubject tcSubject = DirectStrutsActionsHelper.getTCSubjectFromSession();
         String userId = String.valueOf(tcSubject.getUserId());

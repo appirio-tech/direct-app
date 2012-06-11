@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -87,6 +88,7 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjec
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
@@ -465,9 +467,19 @@ import com.topcoder.web.common.tag.HandleTag;
  *     TCS_CATALOG database.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 3.9 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) change log:
+ * <ol>
+ *     <li>
+ *         Update method {@link #getDashboardBillingCostReport(List, TCSubject, long, long[], long[], long[],
+ *         long, long, long[], long, String, Date, Date, Map, Map)} and method {@link #getInvoiceRecordRelatedData(
+ *         List, List, List)} to support the platform fee records.
+ *     </li>
+ * </ol>
+ * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, flexme, Veve, duxiaoyang, Blues, GreatKevin
- * @version 3.8.1
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, minhu
+ * @version 3.9
  * @since 1.0
  */
 public class DataProvider {
@@ -3667,21 +3679,32 @@ public class DataProvider {
         Map<Long, List<BillingCostReportEntryDTO>> data = new HashMap<Long, List<BillingCostReportEntryDTO>>();
 
         if (contestId <= 0) {
-            if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
-                return data;
-            }
-
-            if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
-                return data;
-            }
-
             if (paymentTypeIds == null || paymentTypeIds.length == 0) {
                 return data;
             }
-            if (projectStatusIds == null || (projectStatusIds.length == 0)) {
-                return data;
+            
+            // check if need to show Platform Fee records
+            boolean showPlatformFee = false;
+            for (long paymentTypeId : paymentTypeIds) {
+                if (PaymentType.PLATFORM_FEE.getId() == paymentTypeId) {
+                    showPlatformFee = true;
+                    break;
+                }
             }
 
+            if (!showPlatformFee) {
+                if ((projectCategoryIds == null && studioProjectCategoryIds == null)) {
+                    return data;
+                }
+    
+                if ((projectCategoryIds == null ? 0 : projectCategoryIds.length) + (studioProjectCategoryIds == null ? 0 : studioProjectCategoryIds.length) == 0) {
+                    return data;
+                }
+                
+                if (projectStatusIds == null || (projectStatusIds.length == 0)) {
+                    return data;
+                }
+            }
         }
 
         GregorianCalendar calendar = new GregorianCalendar();
@@ -3747,8 +3770,10 @@ public class DataProvider {
 
         // prepare status filter
         Set<Long> statusFilter = new HashSet<Long>();
-        for (long statusId : projectStatusIds) {
-            statusFilter.add(statusId);
+        if (projectStatusIds != null) {
+            for (long statusId : projectStatusIds) {
+                statusFilter.add(statusId);
+            }
         }
 
         // prepare payment type filter
@@ -3762,12 +3787,11 @@ public class DataProvider {
             BillingCostReportEntryDTO costDTO = new BillingCostReportEntryDTO();
 
             // set status first
-            costDTO.setStatus(row.getStringItem("contest_status").trim());
+            String status = row.getStringItem("contest_status");
+            costDTO.setStatus(status == null ? null : status.trim());
 
             // filter by status
-            if (!statusFilter.contains(statusMapping.get(costDTO.getStatus().toLowerCase()))) {
-                continue;
-            }
+            if (status != null && !statusFilter.contains(statusMapping.get(costDTO.getStatus().toLowerCase()))) continue;
 
             // get payment type
             String paymentType = row.getStringItem("line_item_category");
@@ -4667,7 +4691,8 @@ public class DataProvider {
      * @throws Exception if any error occurs.
      * @since 2.9.1
      */
-    public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<Long> contestIds, List<Long> paymentIds) throws Exception {
+    public static List<InvoiceRecordBriefDTO> getInvoiceRecordRelatedData(List<Long> contestIds, List<Long> paymentIds,
+            List<String> invoiceTypeNames) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
         request.setContentHandle("tc_direct_contest_payment_invoice");
@@ -4678,11 +4703,13 @@ public class DataProvider {
         contestIdsSet.add(0L);
         // prepare for the query parameters
         for (int i = 0; i < contestIds.size(); i++) {
-            if (paymentIds.get(i) > 0) {
-                paymentIdsList.add(paymentIds.get(i));
-            } else {
-                // use contest_id if payment_id is zero
-                contestIdsSet.add(contestIds.get(i));
+            if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
+                if (paymentIds.get(i) > 0) {
+                    paymentIdsList.add(paymentIds.get(i));
+                } else {
+                    // use contest_id if payment_id is zero
+                    contestIdsSet.add(contestIds.get(i));
+                }
             }
         }
         request.setProperty("pids", concatenate(contestIdsSet, ","));
@@ -4711,10 +4738,18 @@ public class DataProvider {
 
         List<InvoiceRecordBriefDTO> result = new ArrayList<InvoiceRecordBriefDTO>();
         for (int i = 0; i < contestIds.size(); i++) {
-            if (paymentIds.get(i) > 0) {
-                result.add(paymentInvoiceMap.get(paymentIds.get(i)));
+            if (!PaymentType.PLATFORM_FEE.getDescription().equalsIgnoreCase(invoiceTypeNames.get(i))) {
+                if (paymentIds.get(i) > 0) {
+                    result.add(paymentInvoiceMap.get(paymentIds.get(i)));
+                } else {
+                    result.add(contestInvoiceMap.get(contestIds.get(i)));
+                }
             } else {
-                result.add(contestInvoiceMap.get(contestIds.get(i)));
+                InvoiceRecordBriefDTO record = new InvoiceRecordBriefDTO();
+                record.setBillingAccountId(0);
+                record.setContestId(contestIds.get(i));
+                record.setInvoiceType(PaymentType.PLATFORM_FEE.getDescription());
+                result.add(record);
             }
         }
         return result;

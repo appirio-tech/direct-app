@@ -1,7 +1,7 @@
 <%--
   - Author: greatKevin, winsty, isv, TCSASSEMBLER
-  - Version: 1.5
-  - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.7
+  - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the user notifications.
   -
@@ -14,6 +14,8 @@
   - - Add the new project forum notifications table into the page.
   - Version 1.6 (Release Assembly - TC Cockpit Project Report Permission) change notes:
   - - Add new column 'report permission' to the permission table
+  - Version 1.7 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) changes notes: Added platform fee
+   -management and creation functions to the page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -594,6 +596,12 @@
                                 <p class="billingAccountArchive"><a
                                         href='<s:url action="createContestFeesHome" namespace="/"/>'>Project Contest
                                     Fees Creation for Billing Accounts</a></p>
+                                    
+                                <p class="billingAccountArchive"><a
+                                        href='<s:url action="listCustomerPlatformFee" namespace="/"/>'>Platform Fee Management for Client</a></p>
+
+                                <p class="billingAccountArchive"><a
+                                        href='<s:url action="enterCreateCustomerPlatformFee" namespace="/"/>'>Platform Fee Creation for Client</a></p>
                             </div>
                         </div>
                     </div>

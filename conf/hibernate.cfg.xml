@@ -21,6 +21,7 @@
         <mapping class="com.topcoder.clients.model.Company"/>
         <mapping class="com.topcoder.clients.model.ProjectContestFee"/>
         <mapping class="com.topcoder.clients.model.ProjectContestFeePercentage"/>
+        <mapping class="com.topcoder.clients.model.CustomerPlatformFee"/>
 <!--
 		<mapping class="com.topcoder.clients.model.ContestFeeDetails"/>
 -->
