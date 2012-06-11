@@ -1,22 +1,14 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.report;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationType;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestCopilotDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestDetailDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationReportDTO;
 import com.topcoder.direct.services.view.form.DashboardReportForm;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -31,16 +23,25 @@ import com.topcoder.direct.services.view.util.DirectUtils;
  * <ol>
  *   <li>This class has been refactoring. It's extended from <code>DashboardReportBaseAction</code>. The base class will
  *   parse and validate the parameters, prepare for the common data used by the report page.</li>
- *   <li>Updated method {@link #aggregateParticipationDetails(List, ParticipationAggregationType)} to aggregation the
- *   unique winners, total final winners and total milestone winners data.</li>
+ *   <li>Updated method <code></code>aggregateParticipationDetails(List, ParticipationAggregationType)</code> to 
+ *   aggregation the unique winners, total final winners and total milestone winners data.</li>
  *   <li>Updated method {@link #executeAction()()} to pass <code>TCSubject</code> object to method
  *     <code>DataProvided.getDashboardParticipationReport</code> which will use <code>TCSubject</code> to
  *     check the user's permission.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Cockpit - Member Participation Metrics Report Performance Enhancement Assembly) 
+ * Change notes:
+ *   <ol>
+ *     <li>Re-worked the {@link #executeAction()} method to delegate complete report data calculation to 
+ *     {@link DataProvider} class.</li>
+ *   </ol>
+ * </p>
  * 
  * @author TCSASSEMBER
- * @version 1.1 (TC Cockpit Participation Metrics Report Part One Assembly 1)
+ * @version 1.2 (TC Cockpit Participation Metrics Report Part One Assembly 1)
  */
 public class DashboardParticipationMetricsReportAction extends DashboardReportBaseAction<DashboardReportForm, ParticipationReportDTO> {
     
@@ -80,244 +81,39 @@ public class DashboardParticipationMetricsReportAction extends DashboardReportBa
         long customerId = form.getCustomerId();
         long billingAccountId = form.getBillingAccountId();
         long[] statusIds = form.getStatusIds();
+        String[] statusNames = new String[statusIds.length];
+        for (int i = 0; i < statusIds.length; i++) {
+            long statusId = statusIds[i];
+            String statusName = REPORT_CONTEST_STATUS.get(statusId);
+            statusNames[i] = statusName;
+        }
         Date startDate = DirectUtils.getDate(form.getStartDate());
         Date endDate = DirectUtils.getDate(form.getEndDate());
         
         // If necessary get and process report data
         if (!getViewData().isShowJustForm()) {
-            String[] status = new String[statusIds.length];
-            for (int i = 0; i < statusIds.length; i++) {
-                status[i] = REPORT_CONTEST_STATUS.get(statusIds[i]);
-            }
-            // The copilots data of Participation Metrics Report
-            List<ParticipationContestCopilotDTO> contestCopilots = new ArrayList<ParticipationContestCopilotDTO>();
-            // The contest detail data of Participation Metrics Report
-            List<ParticipationContestDetailDTO> contestDetails = new ArrayList<ParticipationContestDetailDTO>();
+            // Create empty DTOs to collect report data  
+            ParticipationBasicReportDTO basicMetrics = new ParticipationBasicReportDTO();
+            List<ParticipationAggregationReportDTO> billingAggregation 
+                = new ArrayList<ParticipationAggregationReportDTO>();
+            List<ParticipationAggregationReportDTO> projectAggregation
+                = new ArrayList<ParticipationAggregationReportDTO>();
+            List<ParticipationAggregationReportDTO> contestTypeAggregation
+                = new ArrayList<ParticipationAggregationReportDTO>();
+            List<ParticipationAggregationReportDTO> statusAggregation
+                = new ArrayList<ParticipationAggregationReportDTO>();
+
+            // Query for report data
             DataProvider.getDashboardParticipationReport(
-                    getCurrentUser(), projectId, categoryIds, customerId, billingAccountId, status, startDate, endDate, contestCopilots, contestDetails);
-            
-            // Get the basic metrics data
-            getViewData().setParticipationBasicReport(getBasicMetrics(contestCopilots));
-            // Aggregate the contest detail data
-            getViewData().setBillingAggregation(aggregateParticipationDetails(contestDetails, ParticipationAggregationType.BILLING_ACCOUNT_AGGREGATION));
-            getViewData().setProjectAggregation(aggregateParticipationDetails(contestDetails, ParticipationAggregationType.DIRECT_PROJECT_AGGREGATION));
-            getViewData().setContestTypeAggregation(aggregateParticipationDetails(contestDetails, ParticipationAggregationType.CONTEST_TYPE_AGGREGATION));
-            getViewData().setStatusAggregation(aggregateParticipationDetails(contestDetails, ParticipationAggregationType.STATUS_AGGREGATION));
-        }
-    }
+                getCurrentUser(), projectId, categoryIds, customerId, billingAccountId, statusNames, startDate, endDate,
+                basicMetrics, billingAggregation, projectAggregation, contestTypeAggregation, statusAggregation);
 
-    /**
-     * Get the participation basic metrics data from the contest copilots data.
-     * 
-     * @param contestCopilots a <code>List</code> providing the contest copilots data.
-     * @return the participation basic metrics data.
-     */
-    private ParticipationBasicReportDTO getBasicMetrics(List<ParticipationContestCopilotDTO> contestCopilots) {
-        ParticipationBasicReportDTO basicMetrics = new ParticipationBasicReportDTO();
-        Set<Long> projects = new HashSet<Long>();
-        Set<Long> contests = new HashSet<Long>();
-        Set<Long> copilots = new HashSet<Long>(); 
-        for (ParticipationContestCopilotDTO copilot : contestCopilots) {
-            projects.add(copilot.getProjectId());
-            contests.add(copilot.getContestId());
-            if (copilot.getCopilot() > 0) {
-                copilots.add(copilot.getCopilot());
-            }
-        }
-        basicMetrics.setTotalProjects(projects.size());
-        basicMetrics.setTotalContests(contests.size());
-        basicMetrics.setTotalCopilots(copilots.size());
-        return basicMetrics;
-    }
-
-    /**
-     * Generates the aggregation participation metrics report from the contest participation details.
-     * The <code>aggregationType</code> indicates which fields of the contest participation details will be used to group.
-     *
-     * @param participationDetails the contest participation details data.
-     * @param aggregationType the aggregation type of the aggregation report.
-     * @return the generated aggregation report data.
-     */
-    private List<ParticipationAggregationReportDTO> aggregateParticipationDetails(List<ParticipationContestDetailDTO> participationDetails, ParticipationAggregationType aggregationType)
-        throws Exception {
-        Map<String, AggregationRow> aggregationDTOMap = new HashMap<String, DashboardParticipationMetricsReportAction.AggregationRow>();
-        
-        for (ParticipationContestDetailDTO detail : participationDetails) {
-            // get the key used for aggregation report
-            IdNamePair pair = getAggregationKey(detail, aggregationType);
-            AggregationRow item = aggregationDTOMap.get(pair.getName() + "-" + pair.getId());
-            if (item == null) {
-                // does not exist, create a new AggregationRow
-                item = new AggregationRow();
-                item.groupName = pair.getName();
-                
-                aggregationDTOMap.put(pair.getName() + "-" + pair.getId(), item);
-            }
-            
-            if (detail.getRegistrant() > 0) {
-                item.totalRegistrants++;
-                item.uniqueRegistrants.add(detail.getRegistrant());
-            }
-            if (detail.getCountry() != null) {
-                item.registrantCountries.add(detail.getCountry());
-            }
-            if (detail.isHasSubmit()) {
-                // The resource has submitted a submission
-                item.totalSubmitters++;
-                item.uniqueSubmitters.add(detail.getRegistrant());
-                if (detail.getCountry() != null) {
-                    item.submitterCountries.add(detail.getCountry());
-                }
-            }
-            if (detail.isHasWinFinal() || detail.isHasWinMilestone()) {
-                // The resource is the winner
-                item.uniqueWinners.add(detail.getRegistrant());
-                if (detail.getCountry() != null) {
-                    item.winnerCountries.add(detail.getCountry());
-                }
-
-                if (detail.isHasWinFinal()) {
-                    item.totalWinners++;
-                    item.totalFinalWinners++;
-                }
-                if (detail.isHasWinMilestone()) {
-                    item.totalWinners++;
-                    item.totalMilestoneWinners++;
-                }
-            }
-        }
-        
-        List<ParticipationAggregationReportDTO> aggregationReport = new ArrayList<ParticipationAggregationReportDTO>();
-        for (Map.Entry<String, AggregationRow> entry : aggregationDTOMap.entrySet()) {
-            ParticipationAggregationReportDTO report = new ParticipationAggregationReportDTO();
-            AggregationRow row = entry.getValue();
-            report.setGroupName(row.groupName);
-            report.setTotalRegistrants(row.totalRegistrants);
-            report.setUniqueRegistrants(row.uniqueRegistrants.size());
-            report.setRegistrantCountries(row.registrantCountries.size());
-            report.setTotalSubmitters(row.totalSubmitters);
-            report.setUniqueSubmitters(row.uniqueSubmitters.size());
-            report.setSubmitterContries(row.submitterCountries.size());
-            report.setTotalWinners(row.totalWinners);
-            report.setWinnerCountries(row.winnerCountries.size());
-            report.setMilestoneWinners(row.totalMilestoneWinners);
-            report.setFinalWinners(row.totalFinalWinners);
-            report.setTotalUniqueWinners(row.uniqueWinners.size());
-            aggregationReport.add(report);
-        }
-        
-        return aggregationReport;
-    }
-    
-    /**
-     * Gets the field value in ParticipationContestDetailDTO which is used for aggregation by aggregation type.
-     *
-     * @param detail the cost participation detail
-     * @param aggregationType the aggregation type.
-     * @return the field value in ParticipationContestDetailDTO which is used for aggregation by aggregation type.
-     */
-    private IdNamePair getAggregationKey(ParticipationContestDetailDTO detail, ParticipationAggregationType aggregationType) {
-        if (aggregationType == ParticipationAggregationType.BILLING_ACCOUNT_AGGREGATION) {
-            return detail.getBilling();
-        } else if (aggregationType == ParticipationAggregationType.DIRECT_PROJECT_AGGREGATION) {
-            return detail.getProject();
-        } else if (aggregationType == ParticipationAggregationType.STATUS_AGGREGATION) {
-            IdNamePair status = new IdNamePair();
-            status.setName(detail.getStatus());
-            return status;
-        } else return detail.getContestType();
-    }
-    
-    /**
-     * <p>A simple POJO class holding the data for an aggregation row of a specified aggregation type on
-     * the contest participation details data.</p>
-     * 
-     * <p>
-     * Version 1.1 (TC Cockpit Permission and Report Update One) change log:
-     * <ol>
-     *   <li>Added {@link #uniqueWinners} field.</li>
-     *   <li>Added {@link #totalMilestoneWinners} field.</li>
-     *   <li>Added {@link #totalFinalWinners} field.</li>
-     * </ol>
-     * </p>
-     * 
-     * @author TCSASSEMBER
-     * @version 1.1
-     */
-    class AggregationRow {
-        /**
-         * <p>A <code>String</code> providing the name of the aggregation group.</p>
-         */
-        String groupName;
-        
-        /**
-         * <p>An <code>int</code> providing the number of total registrants of the aggregation group.</p>
-         */
-        int totalRegistrants;
-        
-        /**
-         * <p>A <code>Set</code> providing all the registrants of the aggregation group.</p>
-         */
-        Set<Long> uniqueRegistrants;
-        
-        /**
-         * <p>A <code>Set</code> providing all the registrant countries of the aggregation group.</p>
-         */
-        Set<String> registrantCountries;
-        
-        /**
-         * <p>An <code>int</code> providing the number of total submitters of the aggregation group.</p>
-         */
-        int totalSubmitters;
-        
-        /**
-         * <p>A <code>Set</code> providing all the submitters of the aggregation group.</p>
-         */
-        Set<Long> uniqueSubmitters;
-        
-        /**
-         * <p>A <code>Set</code> providing all the submitter countries of the aggregation group.</p>
-         */
-        Set<String> submitterCountries;
-        
-        /**
-         * <p>An <code>int</code> providing the number of winners of the aggregation type.</p>
-         */
-        int totalWinners;
-        
-        /**
-         * <p>A <code>Set</code> providing all the submitters who have win of the aggregation group.</p>
-         * @since 1.1
-         */
-        Set<Long> uniqueWinners;
-        
-        /**
-         * <p>An <code>int</code> providing the number of milestone winners of the aggregation type.</p>
-         * @since 1.1
-         */
-        int totalMilestoneWinners;
-        
-        /**
-         * <p>An <code>int</code> providing the number of final winners of the aggregation type.</p>
-         * @since 1.1
-         */
-        int totalFinalWinners;
-
-        /**
-         * <p>A <code>Set</code> providing all the winner countries of the aggregation group.</p>
-         */
-        Set<String> winnerCountries;
-        
-        /**
-         * <p>Construct a new <code>AggregationRow</code> instance.</p>
-         */
-        AggregationRow() {
-            uniqueRegistrants = new HashSet<Long>();
-            registrantCountries = new HashSet<String>();
-            uniqueSubmitters = new HashSet<Long>();
-            submitterCountries = new HashSet<String>();
-            winnerCountries = new HashSet<String>();
-            uniqueWinners = new HashSet<Long>();
+            // Set view data with report data
+            getViewData().setParticipationBasicReport(basicMetrics);
+            getViewData().setBillingAggregation(billingAggregation);
+            getViewData().setProjectAggregation(projectAggregation);
+            getViewData().setContestTypeAggregation(contestTypeAggregation);
+            getViewData().setStatusAggregation(statusAggregation);
         }
     }
 }
