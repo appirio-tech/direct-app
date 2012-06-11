@@ -166,8 +166,10 @@ public class DashboardNotificationsAction extends BaseDirectStrutsAction {
             preference.setValue(value);
             preferences.add(preference);
         }
-
-        projectNotifications = getProjectServiceFacade().getProjectNotifications(user, user.getUserId());
+		
+		
+		// dont call for now
+        projectNotifications = new ArrayList<DirectProjectNotification>(); //getProjectServiceFacade().getProjectNotifications(user, user.getUserId());
         Collections.sort(projectNotifications, new ProjectNotificationComparator());
     }
 
