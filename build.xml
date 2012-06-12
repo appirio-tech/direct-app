@@ -274,6 +274,7 @@
         <copy file="${poi-ooxml-schemas.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${dom4j-1.6.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xmlbeans-2.3.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${jrss.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
 
         <!-- EJB components -->
