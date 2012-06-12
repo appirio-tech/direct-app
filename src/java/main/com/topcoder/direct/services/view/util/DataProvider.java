@@ -478,7 +478,13 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, minhu
+ * <p>
+ * Version 3.9 (Module Assembly - TC Cockpit Public Page for TopCoder Road map and RSS syndication) change log:
+ * <ol>
+ *     <li>Add method {@link #getDirectProjectsForClient(String)}</li>
+ * </ol>
+ * </p>
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, minhu, GreatKevin
  * @version 3.9
  * @since 1.0
  */
@@ -3380,6 +3386,41 @@ public class DataProvider {
         }
 
         return result;
+    }
+
+    /**
+     * Gets all the projects of a client, returned as a map with project id as key and project name as value.
+     *
+     * @param clientName the name of the client
+     * @return the all projects map.
+     * @throws Exception if there is any error.
+     * @since 3.9
+     */
+    public static Map<Long, String> getDirectProjectsForClient(String clientName) throws Exception {
+        String handlerName = "client_direct_project_ids";
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+
+        Request request = new Request();
+
+        request.setContentHandle(handlerName);
+        request.setProperty("clientname", clientName);
+        ResultSetContainer resultContainer = dataAccess.getData(request).get(handlerName);
+
+        Map<Long, String> directProjects = new HashMap<Long, String>();
+
+        if (resultContainer != null) {
+
+            for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+                long directProjectId = row.getLongItem("direct_project_id");
+                String directProjectName = row.getStringItem("direct_project_name");
+
+                directProjects.put(directProjectId, directProjectName);
+
+            }
+        }
+
+        return directProjects;
     }
 
     /**

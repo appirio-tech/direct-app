@@ -367,6 +367,15 @@
           <property name="type" value="COPILOT_CONTEST" />
     </bean>
 
+    <bean id="publicTopCoderRoadmap" class="com.topcoder.direct.services.view.action.roadmap.PublicRoadMapAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+        <property name="clientName" value="TopCoder" />
+        <property name="completedMilestonePastDays" value="150"/>
+        <property name="channelTitle" value="TopCoder Roadmap"/>
+        <property name="channelDescription" value="Road Map of the TopCoder systems development" />
+        <property name="channelLink" value="https://www.topcoder.com/direct/TopCoderRoadmap" />
+    </bean>
+
     <bean id="contestDetailAction" class="com.topcoder.direct.services.view.action.contest.launch.GetContestAction"
           parent="contestAction" scope="prototype">
           <property name="type" value="CONTEST" />
