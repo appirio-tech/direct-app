@@ -37,6 +37,7 @@ $(document).ready(function() {
            showErrors("The amount value should not be greater than 99999.99.");
            return false;
        }
+       $('#fee_amount').val(amount);
        
        modalPreloader();
        $.ajax({
