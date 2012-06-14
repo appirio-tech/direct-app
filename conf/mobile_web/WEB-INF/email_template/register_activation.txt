@@ -1,0 +1,9 @@
+Thank you for registering with TopCoder!
+
+Your TopCoder activation code is %ACTIVATION_CODE%
+
+To activate your account, navigate to the following WWW URL:
+
+%ACTIVATION_URL%
+
+If you cannot click on the web address above, please copy the address into your web browser to continue. If the address spans two lines, please make sure you copy and paste both sections without any spaces between them.
