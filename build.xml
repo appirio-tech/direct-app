@@ -670,7 +670,8 @@
     <target name="ppt_war" depends="war, ppt_compile" description="Builds the PPT WAR file">
         <war warfile="tempppt.war" webxml="${tokenized_conf}/ppt_web/WEB-INF/web.xml">
             <webinf dir="${tokenized_conf}/ppt_web/WEB-INF" includes="applicationContext.xml"/>
-            <classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="struts.xml"/>
+            <classes dir="${tokenized_conf}/ppt_web/WEB-INF/email_template" includes="register_activation.txt"/>
+			<classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="validators.xml"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
             <classes dir="${build_classdir}" includes="com/topcoder/ppt/**/*.class"/>
@@ -689,6 +690,7 @@
             <webinf dir="${tokenized_conf}/mobile_web/WEB-INF" includes="applicationContext.xml"/>
             <classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="validators.xml"/>
+			<classes dir="${tokenized_conf}/mobile_web/WEB-INF/email_template" includes="register_activation.txt"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
             <classes dir="${build_classdir}" includes="com/topcoder/ppt/**/*.class"/>
             <fileset dir="${mobile_webdir}">
@@ -706,6 +708,7 @@
             <webinf dir="${tokenized_conf}/analytics_web/WEB-INF" includes="applicationContext.xml"/>
             <classes dir="${tokenized_conf}/analytics_web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/analytics_web/WEB-INF" includes="validators.xml"/>
+			<classes dir="${tokenized_conf}/analytics_web/WEB-INF/email_template" includes="register_activation.txt"/>
             <classes dir="${build_classdir}" includes="com/topcoder/analytics/**/*.class"/>
             <fileset dir="${analytics_webdir}">
                 <include name="**/*.jsp"/>
