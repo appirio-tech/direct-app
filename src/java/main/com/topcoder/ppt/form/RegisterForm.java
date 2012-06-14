@@ -5,9 +5,17 @@ package com.topcoder.ppt.form;
 
 /**
  * <p>A form bean providing the parameters for registering a user.</p>
- *
- * @author flexme
- * @version 1.0
+ * 
+ * <p>
+ * Version 1.1 (Module Assembly - TC Registration Feature in Popup Windows) change notes:
+ * <ol>
+ *  <li>Added {@link #moduleFrom} field and its getter and setter.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author flexme, TCSASSEMBLER
+ * @version 1.1 (Module Assembly - TC Registration Feature in Popup Windows)
+ * @since 1.0
  */
 public class RegisterForm {
     /**
@@ -39,6 +47,11 @@ public class RegisterForm {
      * Represents the verification code.
      */
     private String verificationCode;
+    
+    /**
+     * Represents if this is ppt module or mobile module.
+     */
+    private String moduleFrom;
     
     /**
      * Construct a new <code>RegisterForm</code> instance.
@@ -153,5 +166,25 @@ public class RegisterForm {
      */
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    /**
+     * <p>
+     * Getter of moduleFrom field.
+     * </p>
+     * @return the moduleFrom
+     */
+    public String getModuleFrom() {
+        return moduleFrom;
+    }
+
+    /**
+     * <p>
+     * Setter of moduleFrom field.
+     * </p>
+     * @param moduleFrom the moduleFrom to set
+     */
+    public void setModuleFrom(String moduleFrom) {
+        this.moduleFrom = moduleFrom;
     }
 }

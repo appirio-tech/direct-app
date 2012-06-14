@@ -367,8 +367,13 @@ $(document).ready(function(){
                                 return;
                             }
                         }
+						setTimeout(function(){
+	                      $('.loginSection').hide();
+	                    }, 500);
+                        closeModal();
+                        alert("Your account has been created, please check your email and activate it.");
                         //$('#registerModal .indicatorMsg').html('Account created.<br/>Thank you for your registration!');
-                        $.ajax({
+/*                        $.ajax({
                             type: 'POST',
                             url:  ctx + "/login.action",
                             data: {"username":handle, "password":password, "rememberMe":false},
@@ -397,7 +402,7 @@ $(document).ready(function(){
                                         showErrorMessage(errorMessage);
                                     });
                             }
-                        });
+                        });*/
                     },
                     function(errorMessage) {
                         showErrorMessage(errorMessage);

@@ -33,6 +33,11 @@
             <result type="json" />
         </action>
 
+        <action name="activate" class="activateAction">
+            <result name="success">/WEB-INF/activateSuccess.jsp</result>
+            <result name="error">/WEB-INF/error.jsp</result>
+        </action>
+
         <action name="logout" class="logoutAction">
             <result type="json" />
         </action>

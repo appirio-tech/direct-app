@@ -321,6 +321,7 @@
         <copy file="${pipeline_service_persistence.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${project.jar}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${user.jar}" todir="${build_distdir}" overwrite="true"/>
+        <copy file="${ldap_sdk_interface.jar}" todir="${build_distdir}" overwrite="true"/>
         <!-- war files -->
         <copy file="${contest_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>
         <copy file="${admin_service_facade_demo.war}" todir="${build_distdir}" overwrite="true"/>

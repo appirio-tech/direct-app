@@ -14,13 +14,13 @@
   http://www.springframework.org/schema/security/spring-security-2.0.xsd">
   
     <context:property-placeholder location="classpath:app.properties"/>
-  
+
     <!-- AuthenticationInterceptor -->
     <bean id="authenticationInterceptor"
           class="com.topcoder.ppt.interceptors.AuthenticationInterceptor">
         <property name="userSessionIdentityKey" value="user"/>
     </bean>
-    
+
     <bean id="userService" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="UserServiceBean/remote"/>
         <property name="cache" value="true"/>
@@ -42,8 +42,15 @@
     <bean id="loginAction" class="com.topcoder.ppt.action.LoginAction" scope="prototype">
         <property name="loginProcessor" ref="loginProcessor" />
     </bean>
-    
+
     <bean id="registerAction" class="com.topcoder.ppt.action.RegisterAction" scope="prototype">
+        <property name="userService" ref="userService"/>
+        <property name="activationEmailBodyTemplateFile" value="@activation_email_body_template_file@"/>
+        <property name="activationEmailSubject" value="@activation_email_subject@"/>
+        <property name="activationEmailFromAddress" value="@activation_email_from_address@"/>
+    </bean>
+    
+    <bean id="activateAction" class="com.topcoder.ppt.action.ActivateAction" scope="prototype">
         <property name="userService" ref="userService"/>
     </bean>
     

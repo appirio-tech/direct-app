@@ -286,7 +286,7 @@ $(document).ready(function() {
             $.ajax({
               type: 'POST',
               url:  ctx + "/register",
-              data: "formData.firstName="+firstName+"&formData.lastName="+lastName+"&formData.handle="+handle+"&formData.email="+emailAddress+"&formData.password="+password+"&formData.verificationCode="+veriCode,
+              data: "formData.firstName="+firstName+"&formData.lastName="+lastName+"&formData.handle="+handle+"&formData.email="+emailAddress+"&formData.password="+password+"&formData.verificationCode="+veriCode+"&formData.moduleFrom=ppt",
               cache: false,
               dataType: 'json',
               async : false,
@@ -320,36 +320,40 @@ $(document).ready(function() {
                             return;
                         }
                     }
-                    $('#registerModal .indicatorMsg').html('Account created.<br/>Thank you for your registration!');
-                    $.ajax({
-                      type: 'POST',
-                      url:  ctx + "/login",
-                      data: {"username":handle, "password":password, "rememberMe":false},
-                      cache: false,
-                      dataType: 'json',
-                      async : false,
-                      success: function(jsonResult) {
-                        handleJsonResult(jsonResult,
-                        function(result) {
-                            if (result.success) {
-                                setTimeout(function(){
-                                    $('#greybackground').remove();
-                                    $('#registerModal').hide();
-                                    $('.nav .welcomeSection').show();
-                                    $('.nav .loginSection').hide();	
-                                    $(".handle").html(handle);
-                                    $(".startNP").removeClass("navLogin").unbind();
-                                    $(".startNP").attr("href", "/direct/createNewProject.action");
-                                },500);
-                            } else {
-                                alert("Can't login");
-                            }
-                        },
-                        function(errorMessage) {
-                            showErrorMessage(errorMessage);
-                        });
-                      }
-                    });
+                    setTimeout(function(){
+                      $('#greybackground').remove();
+                      $('#registerModal').hide();	
+                    },500);
+                    alert("Your account has been created, please check your email and activate it.");
+//                    $.ajax({
+//                      type: 'POST',
+//                      url:  ctx + "/login",
+//                      data: {"username":handle, "password":password, "rememberMe":false},
+//                      cache: false,
+//                      dataType: 'json',
+//                      async : false,
+//                      success: function(jsonResult) {
+//                        handleJsonResult(jsonResult,
+//                        function(result) {
+//                            if (result.success) {
+//                                setTimeout(function(){
+//                                    $('#greybackground').remove();
+//                                    $('#registerModal').hide();
+//                                    $('.nav .welcomeSection').show();
+//                                    $('.nav .loginSection').hide();	
+//                                    $(".handle").html(handle);
+//                                    $(".startNP").removeClass("navLogin").unbind();
+//                                    $(".startNP").attr("href", "/direct/createNewProject.action");
+//                                },500);
+//                            } else {
+//                                alert("Can't login");
+//                            }
+//                        },
+//                        function(errorMessage) {
+//                            showErrorMessage(errorMessage);
+//                        });
+//                      }
+//                    });
                 },
                 function(errorMessage) {
                     showErrorMessage(errorMessage);

@@ -245,6 +245,11 @@
   <property name="jira_user_soap_client.path" value="jira_user_soap_client/${jira_user_soap_client.version}" />
   <property name="jira_user_soap_client.jar" value="${tcs_libdir}/${jira_user_soap_client.path}/${jira_user_soap_client.jar.name}" />
 
+  <property name="ldap_sdk_interface.version" value="1.0.2" />
+  <property name="ldap_sdk_interface.jar.name" value="ldap_sdk_interface.jar" />
+  <property name="ldap_sdk_interface.path" value="ldap_sdk_interface/${ldap_sdk_interface.version}" />
+  <property name="ldap_sdk_interface.jar" value="${tcs_libdir}/${ldap_sdk_interface.path}/${ldap_sdk_interface.jar.name}" />
+
   <property name="liquid_portal_service.version" value="1.0.0" />
   <property name="liquid_portal_service.jar.name" value="liquid_portal_service.jar" />
   <property name="liquid_portal_service.path" value="liquid_portal_service/${liquid_portal_service.version}" />

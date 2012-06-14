@@ -182,7 +182,7 @@ $(document).ready(function(e) {
         $.ajax({
               type: 'POST',
               url:  ctx + "/register",
-              data: "formData.firstName="+fN.val()+"&formData.lastName="+lN.val()+"&formData.handle="+h.val()+"&formData.email="+e.val()+"&formData.password="+pas.val()+"&formData.verificationCode="+verCode.val(),
+              data: "formData.firstName="+fN.val()+"&formData.lastName="+lN.val()+"&formData.handle="+h.val()+"&formData.email="+e.val()+"&formData.password="+pas.val()+"&formData.verificationCode="+verCode.val()+"&formData.moduleFrom=mobile",
               cache: false,
               dataType: 'json',
               async : false,
@@ -214,38 +214,44 @@ $(document).ready(function(e) {
                             return;
                         }
                     }
-                    $.ajax({
-                      type: 'POST',
-                      url:  ctx + "/login",
-                      data: {"username":h.val(), "password":pas.val(), "rememberMe":false},
-                      cache: false,
-                      dataType: 'json',
-                      async : false,
-                      success: function(jsonResult) {
-                        handleJsonResult(jsonResult,
-                        function(result) {
-                            if (result.success) {
-                                $("#close_register").click();
-        
-                                $(".logindiv").hide();
-                                $(".logged_acc").show();
-                                $("#menu_logout").parent().show();
-                                $("#profile").html(h.val());
-                                $("#nav_menu").addClass("logged_nav_menu");
-                                $("#profile").attr("href", "http://www.topcoder.com/tc?module=SimpleSearch&ha=" + h.val());
-                                $("#login_wrap").hide();
-                                $("#nav_menu").show();
-                                $(".startNP").removeClass("navLogin").unbind();
-                                $(".startNP").attr("href", "/direct/createNewProject.action");
-                            } else {
-                                alert("Can't login");
-                            }
-                        },
-                        function(errorMessage) {
-                            showErrorMessage(errorMessage);
-                        });
-                      }
-                    });
+                    $(".outer_container_register").fadeOut();
+                    $(".modal").fadeOut();
+                    $("#login_wrap").hide();
+                    $("#nav_menu").show();
+
+                    alert("Your account has been created, please check your email and activate it.");
+//                    $.ajax({
+//                      type: 'POST',
+//                      url:  ctx + "/login",
+//                      data: {"username":h.val(), "password":pas.val(), "rememberMe":false},
+//                      cache: false,
+//                      dataType: 'json',
+//                      async : false,
+//                      success: function(jsonResult) {
+//                        handleJsonResult(jsonResult,
+//                        function(result) {
+//                            if (result.success) {
+//                                $("#close_register").click();
+//        
+//                                $(".logindiv").hide();
+//                                $(".logged_acc").show();
+//                                $("#menu_logout").parent().show();
+//                                $("#profile").html(h.val());
+//                                $("#nav_menu").addClass("logged_nav_menu");
+//                                $("#profile").attr("href", "http://www.topcoder.com/tc?module=SimpleSearch&ha=" + h.val());
+//                                $("#login_wrap").hide();
+//                                $("#nav_menu").show();
+//                                $(".startNP").removeClass("navLogin").unbind();
+//                                $(".startNP").attr("href", "/direct/createNewProject.action");
+//                            } else {
+//                                alert("Can't login");
+//                            }
+//                        },
+//                        function(errorMessage) {
+//                            showErrorMessage(errorMessage);
+//                        });
+//                      }
+//                    });
                 },
                 function(errorMessage) {
                     showErrorMessage(errorMessage);
