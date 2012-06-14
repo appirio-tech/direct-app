@@ -305,3 +305,10 @@
 
 @excelFile@=/Users/macbookpro/Downloads/Revenue_sample.xlsx
 @analyticsRssFeedURL@=http://www.topcoder.com/feed/?cat=35
+
+################################
+# ppt and analytics activation #
+################################
+@activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/ppt.war/WEB-INF/classes/email_template/register_activation.txt
+@activation_email_from_address@=service@topcoder.com
+@activation_email_subject@=TopCoder Activation
