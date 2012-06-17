@@ -743,6 +743,7 @@
     <pathelement location="${resource_management.jar}" />
     <pathelement location="${review_data_structure.jar}" />
     <pathelement location="${review_management.jar}" />
+    <pathelement location="${email_engine.jar}"/>
     <pathelement location="${scorecard_data_structure.jar}" />
     <pathelement location="${team_management.jar}" />
     <pathelement location="${user_service_facade.jar}" />

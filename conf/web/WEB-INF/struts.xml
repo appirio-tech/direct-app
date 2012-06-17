@@ -243,6 +243,12 @@
             <result name="success">/WEB-INF/dashboardMilestoneCalendarData.jsp</result>
         </action>
 
+        <action name="dashboardSendFeedback" class="dashboardSendFeedback">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="createProjectView" class="com.topcoder.direct.services.view.action.ForwardAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>

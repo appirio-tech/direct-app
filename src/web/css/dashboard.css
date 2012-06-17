@@ -8975,3 +8975,134 @@ TABLE.softwareStatsApproval {
     background:url("/images/tooltip_bg_right_completed.png") no-repeat scroll right center transparent;
 }
 
+/* Add css code for BUGR-6759 */
+.fbMask{
+    position:fixed;
+    right:5px; 
+    bottom:0;
+    z-index:200;
+}
+    .fbMask .fbBox{
+        height:40px;
+        overflow:hidden;
+        font-size:18px;
+        color:#000;
+        margin-right:15px;
+        width:488px;
+    }
+        .fbMask .fbBox a.fbBtn{
+            display:inline-block;
+            background:url(../images/feedback-btn.png) no-repeat 0 0;
+            height:40px;
+            width:210px;
+            text-decoration:none;
+            color:#1a1a1a;
+            font-size:16px;
+            line-height:40px;
+            text-align:center;
+            float:right;
+        }
+        .fbMask .fbBox a.fbBtn:hover,
+        .fbMask .fbBox a.fbBtn.expand{
+            background-position:0 -40px;
+        }
+            .fbMask .fbBox a.fbBtn span{
+                background:url(../images/balloon.png) no-repeat 0 center;
+                padding-left:36px;
+                display:inline-block;
+                cursor:pointer;
+            }
+                .fbMask .fbBox a.fbBtn i{
+                    background:url(../images/expand1.png) no-repeat right center;
+                    padding-right:30px;
+                    display:inline-block;
+                    cursor:pointer;
+                    font-style:normal;
+                }
+                .fbMask .fbBox a.fbBtn.expand i{
+                    background-image:url(../images/collapse.png);
+                }
+        .fbMask .fbBox .fbSubmit{
+            clear:both;
+            background:url(../images/fb-bg.gif) #fffffe repeat-x 0 bottom;
+        }
+            .fbMask .fbBox .fbSubmit .boxTop{
+                background:url(../images/fb-box-top.png) no-repeat 0 0;
+                height:5px;
+                width:488px;
+                overflow:hidden;
+            }
+            .fbMask .fbBox .fbSubmit .boxContent{
+                border-left:1px solid #bdbdbd;
+                border-right:1px solid #bdbdbd;
+                width:438px;
+                height:272px;
+                padding:24px; 
+            }
+            .fbMask .fbBox .fbSubmit p{
+                padding:6px 0 15px;
+            }
+                .fbMask .fbBox .fbSubmit p strong{
+                    color:#b60000;
+                }
+            .fbMask .fbBox .fbSubmit .fbType{
+                overflow:hidden;
+                border:1px solid #c3c3c3;
+                padding:12px 10px 4px;
+                background:#fffffe;
+                margin-bottom:9px;
+            }
+                .fbMask .fbBox .fbSubmit .fbType input{
+                    float:left;
+                 }
+                .fbMask .fbBox .fbSubmit .fbType label{
+                    float:left;
+                    padding-right:16px;
+                    padding-left:4px;
+                    font-size:12px;
+                    color:#6c6c6c;
+                 }
+            .fbMask .fbBox .fbSubmit textarea{
+                border:1px solid #C3C3C3;
+                padding:5px;
+                overflow:auto;
+                font-size:12px;
+                color:#6c6c6c;
+                height:106px;
+                width:426px;
+                font-family:Arial, Helvetica, sans-serif;
+            }
+            .fbMask .fbBox .fbSubmit .action{
+                overflow:hidden;
+                padding-top:12px;
+            }
+                .fbMask .fbBox .fbSubmit .action a{
+                    float:left;
+                    margin:0 8px 0 0;
+                }
+                    .fbMask .fbBox .fbSubmit .action a span.right{ 
+                        padding:4px 20px 0;
+                    }
+    .fbMask .fbMsg{
+        display:none;
+        float:right;
+        background:url(../images/msg-bg.png) no-repeat 0 0;
+        padding-left:4px;
+        height:40px;
+        margin-bottom:4px;
+    }
+        .fbMask .fbMsg span.right{
+            background:url(../images/msg-bg.png) no-repeat right -80px;
+            padding-right:4px;
+            display:inline-block;
+        }
+            .fbMask .fbMsg span.text{
+                background:url(../images/msg-bg.png) repeat-x 0 -40px;
+                padding:0 10px;
+                font-weight:bold;
+                height:40px;
+                line-height:40px;
+                display:inline-block;
+                color:#fff;
+                font-size:12px;
+            }

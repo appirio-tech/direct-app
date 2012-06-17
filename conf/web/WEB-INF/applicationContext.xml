@@ -294,6 +294,11 @@
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
 
+    <bean id="dashboardSendFeedback"
+          class="com.topcoder.direct.services.view.action.dashboard.DashboardSendFeedbackAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+
     <bean id="commonAction" class="com.topcoder.direct.services.view.action.contest.launch.CommonAction"
           parent="baseDirectStrutsAction">
         <property name="loggerName" value="com.topcoder.accounting.fees.view.actions.ContestFeesHomeAction"/>

@@ -109,5 +109,6 @@ $(document).ready(function(){
     var isHomePage = (document.body.className.indexOf('homePage') !== -1);
     if(isHomePage) {
         $("#footer").addClass("homeFooter");
+        $(".fbMask").hide();
     }
 });

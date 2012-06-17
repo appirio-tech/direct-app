@@ -1314,5 +1314,39 @@
             </div>
         </div>
     </div>
+    
+    <!-- Add Feedback Dialog -->
+    <div class="fbMask">
+        <div class="fbBox">
+            <a class="fbBtn" href="javascript:;">
+                <span><i>Cockpit Feedback</i></span>
+            </a>
+            <div class="fbSubmit">
+                <div class="boxTop"></div>
+                <div class="boxContent">
+                    <p>At TopCoder, we <strong>value</strong> what you think. Please share us your thoughts.</p>
+                    <div class="fbType">
+                        <input type="checkbox" name="fbType" id="feedbackType"  checked="checked"/>
+                        <label for="feedbackType">Feedback</label>
+                        <input type="checkbox" name="fbType" id="suggestionType"  checked="checked" />
+                        <label for="suggestionType">Suggestion</label>
+                        <input type="checkbox" name="fbType" id="QuestionType"  checked="checked" />
+                        <label for="QuestionType">Question</label>
+                        <input type="checkbox" name="fbType" id="bugReprotType"  checked="checked" />
+                        <label for="bugReprotType">Bug Report</label>      .
+                    </div>
+                    <textarea cols="6" rows="10"></textarea>
+                    <div class="action">
+                        <a href="javascript:;" class="button6 cancel"><span class="left"><span class="right">CANCEL</span></span></a>
+                        <a href="javascript:;" class="button6 submit"><span class="left"><span class="right">SUBMIT FEEDBACK</span></span></a>
+                    </div>
+                </div>        
+            </div>
+        </div>
+        <div class="fbMsg">
+            <span class="right"><span class="text">Your feedback has been submitted. Thank you.</span></span>
+        </div>
+    </div>
+    <!-- End .fbMask -->
 </div>
 <!-- End .popups -->

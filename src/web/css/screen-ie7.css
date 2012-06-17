@@ -91,3 +91,8 @@
 .get-a-copilot .stepFirst.stepContainer .geryContent .rowItem p .tips {
     position: relative;
 }
+
+/* Add css code for BUGR-6759 */
+.fbMask .fbBox .fbSubmit .fbType input{
+    margin-top:-3px;
+}
