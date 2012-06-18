@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var switchMaintenance = false;
+var switchMaintenance = true;
 
 $(function(){
 	var slide_during=500; //slide animation time during 500ms

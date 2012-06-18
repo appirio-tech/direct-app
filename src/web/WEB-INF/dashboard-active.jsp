@@ -40,11 +40,11 @@
 			<div class="alert">
 				<span class="title">TopCoder System Maintenance</span>
 				<span class="desc">
-					TopCoder will be performing routine maintenance on our network hardware on Thursday, May 31st between 20:00 EDT (GMT/UTC -4) and 21:00 EDT (GMT/UTC -4). <br/>
-
-					During this time, you may experience some sporadic system outages. <br/>
-
+					TopCoder will be performing phase 2 of our network infrastructure upgrade on Wednesday, June 20th between 20:00 EDT (GMT/UTC -4) and 22:00 EDT (GMT/UTC -4).
+					Phase 3 is currently scheduled for Wednesday, June 27th between 20:00 EDT (GMT/UTC -4) and 22:00 EDT (GMT/UTC -4).
+					During these times, you may experience some sporadic system outages.
 					We apologize for any inconvenience that this may cause.
+
 
 				</span>
 			</div>
