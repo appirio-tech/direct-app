@@ -378,6 +378,14 @@ com.topcoder.direct.Project = function() {
 	  this.getAdminFee = function() {
 	  	  return this.properties['Admin Fee'];
 	  }
+      
+	  this.setContestFeePercentage = function(contestFeePercentage) {
+	  	  this.properties['Contest Fee Percentage'] = contestFeePercentage;
+	  }
+	  
+	  this.getContestFeePercentage = function() {
+	  	  return this.properties['Contest Fee Percentage'];
+	  }
 
 	  this.setSpecReviewCost = function(specReviewCost) {
 	  	  this.properties['Spec Review Cost'] = specReviewCost;
