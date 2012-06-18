@@ -280,7 +280,7 @@ public class JiraRpcServiceWrapper {
 
         // remove the last " OR " which is not needed
         String jqlQuery = "(" + jqlQueryBuilder.substring(0, jqlQueryBuilder.length() - 3) +
-                ") AND project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " order by Created DESC";
+                ") AND (project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " OR issuetype='Client Task') order by Created DESC";
 
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
 
