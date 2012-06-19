@@ -5,6 +5,8 @@ package com.topcoder.direct.services.view.form;
 
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.dto.project.edit.ProjectMetadataOperation;
+import com.topcoder.direct.services.view.dto.project.edit.ProjectNotificationSetting;
+import com.topcoder.service.permission.ProjectPermission;
 
 import java.util.List;
 
@@ -18,8 +20,14 @@ import java.util.List;
  *     - Add new form property projectRatings for saving project ratings in Edit Project Page.
  * </p>
  *
+ * <p>
+ *     Version 1.2 (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
+ *     - Add new form properties: project type id, project category id, project permissions, project notifications and contest
+ *     timeline / forum notifications and user id.
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public class SaveProjectSettingsForm extends ProjectIdForm {
 
@@ -83,12 +91,54 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     private ProjectMetadataOperation privacy;
 
-
     /**
      * The project ratings of the project.
      * @since 1.1
      */
     private List<ProjectMetadataOperation> projectRatings;
+
+    /**
+     * The project type id.
+     *
+     * @since 1.2
+     */
+    private long projectTypeId;
+
+    /**
+     * The project category id.
+     * @since 1.2
+     */
+    private long projectCategoryId;
+
+    /**
+     * The project permissions.
+     * @since 1.2
+     */
+    private List<ProjectPermission> projectPermissions;
+
+    /**
+     * The project nofications.
+     * @since 1.2
+     */
+    private List<ProjectNotificationSetting> projectNotifications;
+
+    /**
+     * The contests of which the timeline is turned on.
+     * @since 1.2
+     */
+    private List<Long> contestsTimeline;
+
+    /**
+     * The contests of which the forum notification is turned on.
+     * @since 1.2
+     */
+    private List<Long> contestsNotification;
+
+    /**
+     * The user id.
+     * @since 1.2
+     */
+    private long userId;
 
     /**
      * Gets the name of the project.
@@ -324,5 +374,145 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     public void setProjectRatings(List<ProjectMetadataOperation> projectRatings) {
         this.projectRatings = projectRatings;
+    }
+
+    /**
+     * Gets the project type id.
+     *
+     * @return the project type id.
+     * @since 1.2
+     */
+    public long getProjectTypeId() {
+        return projectTypeId;
+    }
+
+    /**
+     * Sets the project type id.
+     *
+     * @param projectTypeId the project type id.
+     * @since 1.2
+     */
+    public void setProjectTypeId(long projectTypeId) {
+        this.projectTypeId = projectTypeId;
+    }
+
+    /**
+     * Gets the project category id.
+     *
+     * @return the project category id.
+     * @since 1.2
+     */
+    public long getProjectCategoryId() {
+        return projectCategoryId;
+    }
+
+    /**
+     * Sets the project category id.
+     *
+     * @param projectCategoryId the project category id.
+     * @since 1.2
+     */
+    public void setProjectCategoryId(long projectCategoryId) {
+        this.projectCategoryId = projectCategoryId;
+    }
+
+    /**
+     * Gets the project permissions.
+     *
+     * @return the project permissions.
+     * @since 1.2
+     */
+    public List<ProjectPermission> getProjectPermissions() {
+        return projectPermissions;
+    }
+
+    /**
+     * Sets the project permission.
+     *
+     * @param projectPermissions the project permissions.
+     * @since 1.2
+     */
+    public void setProjectPermissions(List<ProjectPermission> projectPermissions) {
+        this.projectPermissions = projectPermissions;
+    }
+
+    /**
+     * Gets the project notifications.
+     *
+     * @return the project notifications.
+     * @since 1.2
+     */
+    public List<ProjectNotificationSetting> getProjectNotifications() {
+        return projectNotifications;
+    }
+
+    /**
+     * Sets the project notifications.
+     *
+     * @param projectNotifications the project notifications.
+     * @since 1.2
+     */
+    public void setProjectNotifications(List<ProjectNotificationSetting> projectNotifications) {
+        this.projectNotifications = projectNotifications;
+    }
+
+    /**
+     * Gets the contest ids of which the timeline notification is turned on.
+     *
+     * @return the contest ids of which the timeline notification is turned on.
+     * @since 1.2
+     */
+    public List<Long> getContestsTimeline() {
+        return contestsTimeline;
+    }
+
+    /**
+     * Sets the contest ids of which the timeline notification is turned on.
+     *
+     * @param contestsTimeline the contest ids of which the timeline notification is turned on.
+     * @since 1.2
+     */
+    public void setContestsTimeline(List<Long> contestsTimeline) {
+        this.contestsTimeline = contestsTimeline;
+    }
+
+    /**
+     * Gets the contest ids of which the forum notification is turned on.
+     *
+     * @return the contest ids of which the forum notification is turned on.
+     * @since 1.2
+     */
+    public List<Long> getContestsNotification() {
+        return contestsNotification;
+    }
+
+    /**
+     * Sets the contest ids of which the forum notification is turned on.
+     *
+     * @param contestsNotification the contest ids of which the forum notification is turned on.
+     * @since 1.2
+     */
+    public void setContestsNotification(List<Long> contestsNotification) {
+        this.contestsNotification = contestsNotification;
+    }
+
+    /**
+     * Gets the user id.
+     *
+     * @return the user id.
+     * @since 1.2
+     */
+    public long getUserId() {
+        return userId;
+    }
+
+    /**
+     * Sets the user id.
+     *
+     * @param userId the user id.
+     * @since 1.2
+     */
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

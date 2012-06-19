@@ -1,12 +1,16 @@
 <%--
-  - Author: GreatKevin, TCSASSEMBLER
-  - Version: 1.1.0
+  - Author: GreatKevin
+  - Version: 1.2.0
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
   -
   - (Version 1.1 Release Assembly - TC Cockpit Edit Project and Project General Info Update) changes:
-  - -- Add edit and save of project ratings.
+  - - Add edit and save of project ratings.
+  -
+  - (version 1.2 Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
+  - - Add edit of project type & category
+  - - Add manage of project permissions, notifications and contest notifications for the user.
   -
   - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
 --%>
@@ -40,15 +44,18 @@
 <div class="currentPage">
     <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
     <a href="<s:url action="allProjects" namespace="/"/>">Projects</a> &gt;
-    <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property
+    <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="formData.projectId"/></s:url>"><s:property
             value="sessionData.currentProjectContext.name"/>
     </a> &gt;
     <strong>Edit Project Details</strong>
 </div>
 
 <div class="spaceWhite"></div>
-<h2 class="contestTitle">Edit Project Details <a name="saveProject" class="buttonRed1 triggerModal saveProjectButton"
-                                                 href="javascript:;"><span>SAVE</span></a></h2>
+<h2 class="contestTitle">Edit Project Details
+    <a name="saveProject" class="buttonRed1 triggerModal saveProjectButton"
+                                                 href="javascript:;"><span>SAVE</span></a>
+    <a class="buttonRed1 cancelProjectButton" href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="formData.projectId"/></s:url>"><span>CANCEL</span></a>
+</h2>
 
 <form class="editProjectForm" action="">
 <input type="hidden" name="editProjectId" value="${formData.projectId}"/>
@@ -72,6 +79,23 @@
     </div>
 </div>
 <!-- End .projectMetaArea -->
+
+
+<!-- start project type selection -->
+<div class="projectMetaArea singleMetaArea projectTypeArea">
+    <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Type:</h3>
+    <div class="comboContainer">
+        <div class="rightSide">
+            <span class="subLabel">Category :</span>
+            <s:select list="viewData.projectCategories" listKey="projectCategoryId" listValue="name"
+                      name="projectCategory" value="viewData.project.projectCategory.projectCategoryId"/>
+        </div>
+        <span class="subLabel firstSubLabel">Type :</span>
+        <s:select list="viewData.projectTypes" listKey="projectTypeId" listValue="name"
+                  name="projectType" value="viewData.project.projectType.projectTypeId"/>
+    </div>
+</div>
+<!-- end project type selection -->
 
 <div class="projectMetaArea multiMetaArea" id="editProjectInfo">
     <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Information :</h3>
@@ -357,9 +381,83 @@
 <!-- End form.editProjectForm -->
 
 <div class="editProjectSaveBtnContainer">
+    <a class="buttonRed1 cancelProjectButton" href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="formData.projectId"/></s:url>"><span>CANCEL</span></a>
     <a name="saveProject" class="buttonRed1 triggerModal saveProjectButton" href="javascript:;"><span>SAVE</span></a>
     <a name="leavePageModal" id="showLeaveButton" class="buttonRed1 triggerModal hidden"
        href="javascript:;"><span>SAVE</span></a>
+</div>
+
+
+<!-- Permissions & Notifications -->
+<s:if test="viewData.canAccessPermissionNotification">
+
+<div class="permissionsNotifications">
+    <a name="permissionsNotifications"/>
+    <h3>Project Permissions &amp; Notifications</h3>
+    <table border="0" cellpadding="0" cellspacing="0" class="tableHeader">
+        <colgroup>
+            <col width="15%" />
+            <col width="45%" />
+            <col />
+            <col />
+            <col width="100" />
+        </colgroup>
+        <thead>
+        <tr>
+            <th class="userColumn"><span>User</span></th>
+            <th>
+                <ul>
+                    <li>Report</li>
+                    <li>Read</li>
+                    <li>Write</li>
+                    <li>Full Access</li>
+                </ul>
+            </th>
+            <th>Project Forum Notification</th>
+            <th>Contest Notifications</th>
+            <th><a name="addUserModal" class="buttonRed1 triggerModal" href="javascript:;" id="addUser"><span>ADD USER</span></a></th>
+        </tr>
+        </thead>
+        <tbody>
+            <s:iterator value="viewData.projectPermissions">
+                <tr>
+                    <td class="permissionUser">
+                        <a href="javascript:;" class="useName"><s:property value='userHandle'/></a>
+                        <input type="hidden" value="<s:property value='userId'/>" />
+                    </td>
+                    <td>
+                        <ul>
+                            <li><input type="radio" name="radio<s:property value='userId'/>" <s:if test="permissionType.permissionTypeId == 0L">checked="checked"</s:if> />
+                            </li>
+                            <li><input type="radio" name="radio<s:property value='userId'/>" <s:if test="permissionType.permissionTypeId == 1L">checked="checked"</s:if> />
+                            </li>
+                            <li><input type="radio" name="radio<s:property value='userId'/>" <s:if test="permissionType.permissionTypeId == 2L">checked="checked"</s:if> />
+                            </li>
+                            <li><input type="radio" name="radio<s:property value='userId'/>" <s:if test="permissionType.permissionTypeId == 3L">checked="checked"</s:if> />
+                            </li>
+                        </ul>
+                    </td>
+                    <td class="alignCenter">
+                        <input type="checkbox" <s:if test="viewData.projectForumNotifications[userId]">checked="checked"</s:if> />
+                    </td>
+                    <td class="alignCenter"><a name="settingModal" class="setting triggerModal" href="javascript:;">Setting</a></td>
+                    <td class="alignCenter"><a name="preloaderModal" class="triggerModal remove"  href="javascript:;">Remove</a></td>
+                </tr>
+
+            </s:iterator>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- End. permissionsNotifications -->
+
+<div class="permissionsButtonContainer">
+    <a class="buttonRed1 cancelProjectButton" href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="formData.projectId"/></s:url>"><span>CANCEL</span></a>
+    <a id="savePermissionNotification" class="buttonRed1" href="javascript:;"><span>SAVE</span></a>
+</div>
+</s:if>
+
 </div>
 
 

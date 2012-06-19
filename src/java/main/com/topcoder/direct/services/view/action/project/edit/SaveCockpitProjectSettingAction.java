@@ -9,13 +9,20 @@ import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectM
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.project.edit.ProjectMetadataOperation;
+import com.topcoder.direct.services.view.dto.project.edit.ProjectNotificationSetting;
 import com.topcoder.direct.services.view.form.SaveProjectSettingsForm;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.notification.ContestNotification;
+import com.topcoder.service.facade.contest.notification.ProjectNotification;
+import com.topcoder.service.facade.project.notification.DirectProjectNotification;
 import com.topcoder.service.permission.Permission;
+import com.topcoder.service.permission.PermissionType;
 import com.topcoder.service.permission.ProjectPermission;
+import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.project.ProjectType;
 import com.topcoder.shared.security.AuthorizationException;
 
 import java.util.*;
@@ -36,8 +43,16 @@ import java.util.*;
   *     - Add methods to assign full permissions for the client managers / topcoder managers when add or update in edit page.
   * </p>
  *
- * @author GreatKevin, TCSASSEMBLER
- * @version 1.2
+ * <p>
+ *     Version 2.0 (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration):
+ *     - Add support to save the project type & category
+ *     - Add support to manage project permissions
+ *     - Add support to manage project forum notifications
+ *     - Add support to manage the contest timeline/forum notifications for the users who have permission on the project
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 2.0
  */
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction implements FormAction<SaveProjectSettingsForm> {
 
@@ -127,6 +142,32 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
         project.setDescription(formData.getProjectDescription());
         project.setProjectStatusId(formData.getProjectStatusId());
 
+        // set project type & category
+        if(getFormData().getProjectTypeId() == -1L) {
+            project.setProjectType(null);
+            project.setProjectCategory(null);
+        } else {
+            final List<ProjectType> allProjectTypes = getProjectServiceFacade().getAllProjectTypes();
+            for(ProjectType pt : allProjectTypes) {
+                if(pt.getProjectTypeId() == getFormData().getProjectTypeId()) {
+                    project.setProjectType(pt);
+                    break;
+                }
+            }
+
+            if(getFormData().getProjectCategoryId() == -1L) {
+                project.setProjectCategory(null);
+            } else {
+                final List<ProjectCategory> categories =
+                        getProjectServiceFacade().getProjectCategoriesByProjectType(getFormData().getProjectTypeId());
+                for(ProjectCategory pc : categories) {
+                    if (pc.getProjectCategoryId() == getFormData().getProjectCategoryId()) {
+                        project.setProjectCategory(pc);
+                        break;
+                    }
+                }
+            }
+        }
 
         getProjectServiceFacade().updateProject(currentUser, project);
 
@@ -343,6 +384,147 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
             result.put("id", String.valueOf(id));
             result.put("single", String.valueOf(getFormData().getNewCustomKey().isSingle()));
             result.put("name", String.valueOf(getFormData().getNewCustomKey().getName()));
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Saves the project permissions and project forum notifications via AJAX.
+     *
+     * @return the struts2 result code.
+     * @since 2.0
+     */
+    public String saveProjectPermissionsAndNotifications() {
+        try {
+            Map<String, String> result = new HashMap<String, String>();
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            // get the project data
+            final ProjectData project = getProjectServiceFacade().getProject(currentUser, getFormData().getProjectId());
+
+            ArrayList<ProjectPermission> permissionsToUpdate = new ArrayList<ProjectPermission>();
+
+            // update the project permissions
+            if (getFormData().getProjectPermissions() != null && getFormData().getProjectPermissions().size() > 0) {
+
+                for (ProjectPermission pp : getFormData().getProjectPermissions()) {
+                    pp.setProjectName(project.getName());
+                    pp.setUserPermissionId(-1);
+
+                    List<Permission> userProjectPermissions = getPermissionServiceFacade().getPermissions(currentUser, pp.getUserId(), pp.getProjectId());
+
+                    boolean add = true;
+                    long permissionTypeId;
+
+                    if (pp.getPermission().toLowerCase().equals("full")) {
+                        permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_FULL;
+                    } else if (pp.getPermission().toLowerCase().equals("write")) {
+                        permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_WRITE;
+                    } else if (pp.getPermission().toLowerCase().equals("read")) {
+                        permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_READ;
+                    } else if (pp.getPermission().toLowerCase().equals("report")) {
+                        permissionTypeId = PermissionType.PERMISSION_TYPE_PROJECT_REPORT;
+                    } else {
+                        // remove
+                        permissionTypeId = -1;
+                    }
+
+                    for (Permission upp : userProjectPermissions) {
+                        if (upp.getPermissionType().getPermissionTypeId() == permissionTypeId) {
+                            add = false;
+                            break;
+                        }
+                        pp.setUserPermissionId(upp.getPermissionId());
+                    }
+
+                    if (add) {
+                        permissionsToUpdate.add(pp);
+                    }
+                }
+
+                getPermissionServiceFacade().updateProjectPermissions(currentUser, permissionsToUpdate, ResourceRole.RESOURCE_ROLE_OBSERVER_ID);
+            }
+
+            // update project notifications
+            if(getFormData().getProjectNotifications() != null && getFormData().getProjectNotifications().size() > 0) {
+
+                for(ProjectNotificationSetting pns : getFormData().getProjectNotifications()) {
+                    DirectProjectNotification dpn = new DirectProjectNotification();
+                    dpn.setForumNotification(pns.isForumNotification());
+                    dpn.setProjectId(pns.getProjectId());
+                    dpn.setName(project.getName());
+                    if(project.getForumCategoryId() == null) {
+                        break;
+                    }
+                    dpn.setForumId(Long.parseLong(project.getForumCategoryId()));
+                    List<DirectProjectNotification> singleList = new ArrayList<DirectProjectNotification>();
+                    singleList.add(dpn);
+                    getProjectServiceFacade().updateProjectNotifications(currentUser, pns.getUserId(), singleList);
+                }
+            }
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Saves the contests timeline/forum notifications for the specified user via AJAX.
+     *
+     * @return the struts2 result code.
+     * @since 2.0
+     */
+    public String saveContestsNotificationsForUser() {
+        try {
+            Map<String, String> result = new HashMap<String, String>();
+
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+            Set<Long> timelineIds = new HashSet<Long>();
+            Set<Long> forumIds = new HashSet<Long>();
+
+            if (getFormData().getContestsTimeline() != null) {
+                timelineIds.addAll(getFormData().getContestsTimeline());
+            }
+
+            if (getFormData().getContestsNotification() != null) {
+                forumIds.addAll(getFormData().getContestsNotification());
+            }
+
+            final List<ProjectNotification> notificationsForUser = getContestServiceFacade().getNotificationsForUser(currentUser, getFormData().getUserId());
+            ProjectNotification projectNotification = null;
+            for (ProjectNotification pn : notificationsForUser) {
+                if (pn.getProjectId() == getFormData().getProjectId()) {
+                    projectNotification = pn;
+                    break;
+                }
+            }
+
+            if (projectNotification != null) {
+                for (ContestNotification cn : projectNotification.getContestNotifications()) {
+                    cn.setForumNotification(forumIds.contains(cn.getContestId()));
+                    cn.setProjectNotification(timelineIds.contains(cn.getContestId()));
+                }
+
+                List<ProjectNotification> toUpdate = new ArrayList<ProjectNotification>();
+                toUpdate.add(projectNotification);
+                getContestServiceFacade().updateNotificationsForUser(currentUser, getFormData().getUserId(), toUpdate);
+            }
+
 
             setResult(result);
 

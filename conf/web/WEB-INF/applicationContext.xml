@@ -266,6 +266,7 @@
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
         <property name="projectMetadataService" ref="directProjectMetadataServices"/>
         <property name="userService" ref="userService"/>
+        <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
     </bean>
 
     <bean id="projectExportAction"

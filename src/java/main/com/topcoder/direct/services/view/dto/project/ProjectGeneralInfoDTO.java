@@ -26,7 +26,13 @@ import java.util.Map;
  *     - Add the status label for draft status.
  * </p>
  *
- * @version 1.1.1
+ * <p>
+ *     Version 1.2 (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
+ *     - Add the property <code>permissionInfo</code>
+ *     - Add the property <code>canAccessPermissionEdit</code>
+ * </p>
+ *
+ * @version 1.2
  * @author GreatKevin, TCSASSEMBLER
  */
 public class ProjectGeneralInfoDTO {
@@ -35,6 +41,12 @@ public class ProjectGeneralInfoDTO {
      * The project data object.
      */
     private ProjectData project;
+
+    /**
+     * The project permission info.
+     * @since 1.2
+     */
+    private ProjectPermissionInfoDTO permissionInfo;
 
     /**
      * The svn link of the project.
@@ -138,6 +150,12 @@ public class ProjectGeneralInfoDTO {
      * @since 1.1
      */
     private Map<String, List<String>> additionalProjectInfo;
+
+    /**
+     * The flag of can access the permission edit link.
+     * @since 1.2
+     */
+    private boolean canAccessPermissionEdit;
 
     /**
      * Gets the label for the project status.
@@ -504,5 +522,45 @@ public class ProjectGeneralInfoDTO {
 
     public void setCopilotHandles(Map<Long, String> copilotHandles) {
         this.copilotHandles = copilotHandles;
+    }
+
+    /**
+     * Gets the project permission info.
+     *
+     * @return the project permission info.
+     * @since 1.2
+     */
+    public ProjectPermissionInfoDTO getPermissionInfo() {
+        return permissionInfo;
+    }
+
+    /**
+     * Sets the project permission info.
+     *
+     * @param permissionInfo the project permission info.
+     * @since 1.2
+     */
+    public void setPermissionInfo(ProjectPermissionInfoDTO permissionInfo) {
+        this.permissionInfo = permissionInfo;
+    }
+
+    /**
+     * Gets the flag of can access permission edit link.
+     *
+     * @return the flag of can access permission edit link.
+     * @since 1.2
+     */
+    public boolean isCanAccessPermissionEdit() {
+        return canAccessPermissionEdit;
+    }
+
+    /**
+     * Sets the flag of can access permission edit link.
+     *
+     * @param canAccessPermissionEdit the flag of can access permission edit link.
+     * @since 1.2
+     */
+    public void setCanAccessPermissionEdit(boolean canAccessPermissionEdit) {
+        this.canAccessPermissionEdit = canAccessPermissionEdit;
     }
 }

@@ -17,7 +17,11 @@ import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.permission.PermissionServiceFacade;
 import com.topcoder.service.facade.project.ProjectServiceFacade;
+import com.topcoder.service.permission.Permission;
+import com.topcoder.service.permission.PermissionType;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.user.UserService;
 import com.topcoder.shared.util.logging.Logger;
@@ -96,9 +100,16 @@ import java.util.Map;
  *     additional project information.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
+ * <ol>
+ *     <li>Add project permission information to the project general info section</li>
+ * </ol>
+ * </p>
  * 
  * @author isv, Veve, Blues, GreatKevin
- * @version 1.3
+ * @version 1.4
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -140,8 +151,16 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      */
     private DirectProjectMetadataService projectMetadataService;
 
+    /**
+     * The user service.
+     */
     private UserService userService;
 
+    /**
+     * The permission service facade.
+     * @since 1.4
+     */
+    private PermissionServiceFacade permissionServiceFacade;
 
     /**
      * The flag determines whether it's a call to export project general info.
@@ -166,6 +185,26 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      */
     public void setProjectServiceFacade(ProjectServiceFacade projectServiceFacade) {
         this.projectServiceFacade = projectServiceFacade;
+    }
+
+    /**
+     * Gets the permission service facade.
+     *
+     * @return the permission service facade.
+     * @since 1.4
+     */
+    public PermissionServiceFacade getPermissionServiceFacade() {
+        return permissionServiceFacade;
+    }
+
+    /**
+     * Sets the permission service facade.
+     *
+     * @param permissionServiceFacade the permission service facade instance.
+     * @since 1.4
+     */
+    public void setPermissionServiceFacade(PermissionServiceFacade permissionServiceFacade) {
+        this.permissionServiceFacade = permissionServiceFacade;
     }
 
     /**
@@ -430,6 +469,43 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         getViewData().getProjectGeneralInfo().setActualCost((int) Math.round(getViewData().getDashboardProjectStat().getTotalProjectCost()));
         
         DataProvider.setProjectGeneralInfo(getViewData().getProjectGeneralInfo());
+
+        // set project permission info
+        setProjectPermissionInfo();
+    }
+
+    /**
+     * Sets the project permission data into the view data.
+     *
+     * @throws Exception if there is any error.
+     * @since 1.4
+     */
+    private void setProjectPermissionInfo() throws Exception {
+        TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        final List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(currentUser, getFormData().getProjectId());
+
+        ProjectPermissionInfoDTO permissionInfo = new ProjectPermissionInfoDTO();
+
+        if (permissionsByProject != null) {
+            for(Permission p : permissionsByProject) {
+                if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_REPORT) {
+                    permissionInfo.setReportPermissionNumber(permissionInfo.getReportPermissionNumber() + 1);
+                } else if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_READ) {
+                    permissionInfo.setReadPermissionNumber(permissionInfo.getReadPermissionNumber() + 1);
+                } else if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_WRITE) {
+                    permissionInfo.setWritePermissionNumber(permissionInfo.getWritePermissionNumber() + 1);
+                } else if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_FULL) {
+                    permissionInfo.setFullPermissionNumber(permissionInfo.getFullPermissionNumber() + 1);
+                }
+            }
+        }
+
+        getViewData().getProjectGeneralInfo().setPermissionInfo(permissionInfo);
+
+        getViewData().getProjectGeneralInfo().setCanAccessPermissionEdit(DirectUtils.isCockpitAdmin(currentUser)
+                || DirectUtils.isTcOperations(currentUser)
+                || DirectUtils.isTcStaff(currentUser));
     }
 
     /**

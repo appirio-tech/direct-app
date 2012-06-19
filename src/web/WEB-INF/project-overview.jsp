@@ -1,7 +1,7 @@
 <%--
   - Author: Veve, isv, BLues, GreatKevin
   -
-  - Version: 1.2
+  - Version: 1.3
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -23,6 +23,8 @@
   - Added new JSP codes for project general information table
   - Version 1.2 - Release Assembly - TC Cockpit Edit Project and Project General Info Change Note:
   - -- Added projected duration, projected cost, project ratings and additional project info into project overview page
+  - Version 1.3 - Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration
+  - - Add the project permission general info.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -119,10 +121,28 @@
 
                                             <div class="projectType">
                                                 <h3>Project Type :</h3>
+                                                <s:if test="viewData.projectGeneralInfo.project.projectType == null && viewData.projectGeneralInfo.project.projectCategory == null">
+                                                    <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set Project Type</a>
+                                                </s:if>
+                                                <s:else>
+                                                    <p><span><s:property value="viewData.projectGeneralInfo.project.projectType.name"/></span>
+                                                        <s:if test="viewData.projectGeneralInfo.project.projectCategory != null">
+                                                         - <span><s:property value="viewData.projectGeneralInfo.project.projectCategory.name"/></span>
+                                                        </s:if>
+                                                    </p>
+                                                </s:else>
 
-                                                <p><span>Not available for now</span>
-                                                    <span></span></p>
                                             </div>
+
+                                            <!-- Project permissions -->
+                                            <div class="projectTechnology">
+                                                <h3>Users with permission :</h3>
+                                                <p>${viewData.projectGeneralInfo.permissionInfo.totalPermissionNumber} Users (Report ${viewData.projectGeneralInfo.permissionInfo.reportPermissionNumber}/ Read ${viewData.projectGeneralInfo.permissionInfo.readPermissionNumber}/ Write ${viewData.projectGeneralInfo.permissionInfo.writePermissionNumber}/ Full ${viewData.projectGeneralInfo.permissionInfo.fullPermissionNumber})</p>
+                                                <s:if test="viewData.projectGeneralInfo.canAccessPermissionEdit">
+                                                    <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>#permissionsNotifications">Edit Project Permission</a>
+                                                </s:if>
+                                            </div>
+                                            <!-- End Project Permissions -->
 
                                             <!-- Project Links -->
                                             <div class="smallProjectLinks">

@@ -6,7 +6,10 @@ package com.topcoder.direct.services.view.dto.project.edit;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.dto.CommonDTO;
+import com.topcoder.service.permission.Permission;
+import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.project.ProjectType;
 
 import java.io.Serializable;
 import java.util.*;
@@ -21,7 +24,12 @@ import java.util.*;
  *     - Add 5 new properties for 5 project ratings.
  * </p>
  *
- * @version 1.1
+ * <p>
+ *     Version 1.2 Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration
+ *     - Add properties for project type, project category, project notifications, contest notifications and project permissions.
+ * </p>
+ *
+ * @version 1.2
  * @author GreatKevin
  */
 public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
@@ -112,6 +120,36 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      * the project.
      */
     private boolean hasFullPermission;
+
+    /**
+     * The project types available.
+     * @since 1.2
+     */
+    private List<ProjectType> projectTypes;
+
+    /**
+     * The project categories available
+     * @since 1.2
+     */
+    private List<ProjectCategory> projectCategories;
+
+    /**
+     * The project user permissions.
+     * @since 1.2
+     */
+    private List<Permission> projectPermissions;
+
+    /**
+     * The project forum notifications.
+     * @since 1.2
+     */
+    private Map<Long, Boolean> projectForumNotifications;
+
+    /**
+     * Whether current user can access the permission notification section.
+     * @since 1.2
+     */
+    private boolean canAccessPermissionNotification;
 
     /**
      * Gets the project data.
@@ -409,5 +447,105 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setHasFullPermission(boolean hasFullPermission) {
         this.hasFullPermission = hasFullPermission;
+    }
+
+    /**
+     * Gets the project types.
+     *
+     * @return the project types.
+     * @since 1.2
+     */
+    public List<ProjectType> getProjectTypes() {
+        return projectTypes;
+    }
+
+    /**
+     * Sets the project types.
+     *
+     * @param projectTypes the project types.
+     * @since 1.2
+     */
+    public void setProjectTypes(List<ProjectType> projectTypes) {
+        this.projectTypes = projectTypes;
+    }
+
+    /**
+     * Gets the project categories.
+     *
+     * @return the project categories.
+     * @since 1.2
+     */
+    public List<ProjectCategory> getProjectCategories() {
+        return projectCategories;
+    }
+
+    /**
+     * Sets the project categories.
+     *
+     * @param projectCategories the project categories.
+     * @since 1.2
+     */
+    public void setProjectCategories(List<ProjectCategory> projectCategories) {
+        this.projectCategories = projectCategories;
+    }
+
+    /**
+     * Gets the project notifications.
+     *
+     * @return the project notifications.
+     * @since 1.2
+     */
+    public Map<Long, Boolean> getProjectForumNotifications() {
+        return projectForumNotifications;
+    }
+
+    /**
+     * Sets the project notifications.
+     *
+     * @param projectForumNotifications the project forum notifications.
+     * @since 1.2
+     */
+    public void setProjectForumNotifications(Map<Long, Boolean> projectForumNotifications) {
+        this.projectForumNotifications = projectForumNotifications;
+    }
+
+    /**
+     * Gets the project permissions.
+     *
+     * @return the project permissions.
+     * @since 1.2
+     */
+    public List<Permission> getProjectPermissions() {
+        return projectPermissions;
+    }
+
+    /**
+     * Sets the project permissions.
+     *
+     * @param projectPermissions the project permissions.
+     * @since 1.2
+     */
+    public void setProjectPermissions(List<Permission> projectPermissions) {
+        this.projectPermissions = projectPermissions;
+    }
+
+    /**
+     * Gets the flag - can access permission notification section.
+     *
+     * @return the flag - can access permission notification section.
+     * @since 1.2
+     */
+    public boolean isCanAccessPermissionNotification() {
+        return canAccessPermissionNotification;
+    }
+
+    /**
+     * Sets the flag - can access permission notification section.
+     *
+     * @param canAccessPermissionNotification the flag - can access permission notification section.
+     * @since 1.2
+     */
+    public void setCanAccessPermissionNotification(boolean canAccessPermissionNotification) {
+        this.canAccessPermissionNotification = canAccessPermissionNotification;
     }
 }

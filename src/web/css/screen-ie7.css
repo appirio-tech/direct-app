@@ -92,7 +92,12 @@
     position: relative;
 }
 
-/* Add css code for BUGR-6759 */
-.fbMask .fbBox .fbSubmit .fbType input{
-    margin-top:-3px;
+#settingModal input,
+.permissionsNotifications input{
+    position:static;
+    top:0;
+}
+
+.specailCol{
+    width:166px !important;
 }

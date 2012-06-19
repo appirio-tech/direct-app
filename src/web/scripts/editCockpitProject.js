@@ -8,10 +8,15 @@
  *  Version 1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info) changes:
  *  - Add javascripts codes to edit and save project ratings.
  *
+ *  Version 2.0 (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
+ *  - Add javascripts to edit project type & category, project permissions, project notifications and contest notifications.
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 2.0
  */
 Date.format = 'mm/dd/yyyy';
+
+var projectPermissionMap = {0:'report', 1:'read', 2:'write', 3:'full'};
 
 var setupEditProjectToolTip = function() {
 
@@ -29,6 +34,13 @@ var setupEditProjectToolTip = function() {
         $(this).tctip({
             title:"Project Description",
             content:'Set the description of your project, max 2000 characters'
+        });
+    });
+
+    $('.projectTypeArea a.toolTipIcon').each(function () {
+        $(this).tctip({
+            title:"Project Type & Category",
+            content:'Set the type and category of the project. After set, it will be displayed on the project overview page'
         });
     });
 
@@ -112,6 +124,390 @@ $(document).ready(function (e) {
             }
 
         });
+
+        // project type change
+        $(".projectTypeArea #projectType").change(function () {
+            var projectTypeId = $(this).val();
+            var category = $(".projectTypeArea #projectCategory");
+            category.find("option").remove();
+            if (projectTypeId == -1) {
+                $("<option/>").attr('value', '-1').text('None').appendTo(category);
+            } else {
+                $.ajax({
+                    type:'post',
+                    url:'getProjectCategories',
+                    data:{projectTypeId:projectTypeId},
+                    cache:false,
+                    dataType:'json',
+                    success:function (jsonResult) {
+                        handleJsonResult2(
+                            jsonResult,
+                            function (result) {
+                                $.each(result, function(key, value){
+                                    $("<option/>").attr('value', key).text(value).appendTo(category)
+                                });
+                                category.val(-1);
+                            },
+                            function (errorMessage) {
+                                showServerError(errorMessage);
+                            });
+                    }
+                });
+            }
+
+        });
+
+        $('.permissionsNotifications tbody tr:odd').addClass('odd');
+        $('#settingModal tbody tr:even').addClass('odd');
+        $('.projectTypeArea .comboContainer select').css('width',($('.projectTypeArea .comboContainer').width() - 150)/2);
+
+        if($('#settingModal .settingTable .tableBody tr').length > 9){
+            if($.browser.mozilla){
+                $('#settingModal .settingTable .tableBody').css('height',$('#settingModal .settingTable .tableBody td').height()*8-1);
+            }else{
+                $('#settingModal .settingTable .tableBody').css('height','240px');
+            }
+            $('#settingModal .settingTable .tableBody').css('overflow-x','hidden');
+            $('#settingModal .settingTable .tableBody').css('overflow-y','auto');
+        }
+
+
+        //scroll
+        $('#addUserModal .addUserForm .addUserLeft .addUserList').css('overflow-y','scroll');
+
+
+        ///////////////// START: Add user permission modal
+
+        var currentUserPermissionModalCache = {};
+
+        $("#addUser").click(function(){
+            modalLoad('#' + $(this).attr('name'));
+            var modal = $("#addUserModal");
+            modal.find(".searchBox input").val('');
+            var leftSide = modal.find('.addUserLeft ul');
+            leftSide.find('li').remove();
+            modal.find('.addUserRight .addUserList ul li').remove();
+
+            // pre-populate the left side of the modal
+            $(".permissionsNotifications td.permissionUser").each(function () {
+                var handle = $(this).find("a").text();
+                var userId = $(this).find("input").val();
+                var entry = {};
+                entry.name = handle;
+                entry.id = userId;
+                currentUserPermissionModalCache[userId] = entry;
+
+                modal.find('.addUserRight .addUserList ul').append($('<li name="' + userId + '">' + handle + '</li>'));
+                var lis = $('li:contains(' + handle + ')', leftSide);
+                lis.remove();
+            });
+
+        });
+
+        $("#addUserModal .saveButton").click(function () {
+            for (var i = 0; i < $('#addUserModal .addUserRight li').length; i++) {
+                var handle = $('#addUserModal .addUserRight li').eq(i).text();
+                var userId = $('#addUserModal .addUserRight li').eq(i).attr('name');
+
+                if(currentUserPermissionModalCache[userId] == null) {
+                    $('.permissionsNotifications table tbody').append('<tr><td class="permissionUser"><a href="javascript:;" class="useName">' + handle
+                        + '</a><input type="hidden" value="' + userId + '" /></td><td><ul><li><input type="radio" name="radio' + userId
+                        + '"  checked="checked" /></li><li><input type="radio" name="radio' + userId
+                        + '" /></li><li><input type="radio" name="radio' + userId
+                        + '" /></li><li><input type="radio" name="radio' + userId
+                        + '" /></li></ul></td><td class="alignCenter"><input type="checkbox" /></td><td class="alignCenter"><a name="settingModal" class="setting triggerModal" href="javascript:;">Setting</a></td><td class="alignCenter"><a name="preloaderModal" class="triggerModal remove"  href="javascript:;">Remove</a></td></tr>');
+                }
+
+            }
+
+            $('.permissionsNotifications tbody tr').removeClass('odd');
+            $('.permissionsNotifications tbody tr:odd').addClass('odd');
+            modalAllClose();
+        });
+
+
+       ///////////////// END: Add user permission modal
+
+
+        // Save project permissions & notifications
+        $("#savePermissionNotification").click(function () {
+            var formData = {};
+            formData.projectPermissions = [];
+            formData.projectNotifications = [];
+            formData.projectId = $("input[name='editProjectId']").val();
+
+            $(".permissionsNotifications tbody tr").each(function () {
+                var handle = $(this).find(".useName").text();
+                var userId = $(this).find(".permissionUser input").val();
+
+                var permissionTypeId = $(this).find("input[type=radio]").index($(this).find("input[type=radio]:checked"));
+
+                var notificationChecked = $(this).find("td:eq(2) input").is(":checked");
+
+                var permission = {};
+                permission.userId = userId;
+                permission.handle = handle;
+                permission.studio = false;
+                permission.permission = projectPermissionMap[permissionTypeId];
+                permission.projectId = formData.projectId;
+
+                formData.projectPermissions.push(permission);
+
+                var notification = {};
+                notification.projectId = formData.projectId;
+                notification.forumNotification = notificationChecked;
+                notification.userId = userId;
+                formData.projectNotifications.push(notification);
+
+            });
+
+            modalPreloader();
+
+            $.ajax({
+                type:'post',
+                url:'saveProjectPermissionsAndNotifications',
+                data:{formData:formData},
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(
+                        jsonResult,
+                        function (result) {
+                            showSuccessfulMessage("Project Permissions and Notifications are successfully updated.")
+                        },
+                        function (errorMessage) {
+                            modalAllClose();
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+
+        });
+
+        // remove user permission from project
+        $(".permissionsNotifications a.remove").live('click', function(){
+            var row = $(this).parents("tr");
+            var formData = {};
+            formData.projectId = $("input[name='editProjectId']").val();
+            formData.projectPermissions = [];
+            var handle = row.find(".useName").text();
+            var userId = row.find(".permissionUser input").val();
+            var permission = {};
+            permission.userId = userId;
+            permission.handle = handle;
+            permission.studio = false;
+            permission.permission = '';
+            permission.projectId = formData.projectId;
+
+            formData.projectPermissions.push(permission);
+
+            modalPreloader();
+
+            $.ajax({
+                type:'post',
+                url:'saveProjectPermissionsAndNotifications',
+                data:{formData:formData},
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(
+                        jsonResult,
+                        function (result) {
+                            row.remove();
+                            $('.permissionsNotifications tbody tr').removeClass('odd');
+                            $('.permissionsNotifications tbody tr:odd').addClass('odd');
+                        },
+                        function (errorMessage) {
+                            modalAllClose();
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+
+        });
+
+        //////////////////// Start contest notification setting modal ///////////////
+
+        $(".permissionsNotifications .setting").live('click', function () {
+
+            modalPreloader();
+
+            var formData = {};
+            formData.projectId = $("input[name='editProjectId']").val();
+            var userId = $(this).parents('tr').find("td.permissionUser input").val();
+            var handle = $(this).parents('tr').find("td.permissionUser a").text();
+            $.ajax({
+                type:'post',
+                url:'getProjectContestsNotificationsForUser',
+                data:{formData:formData, userId:userId},
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(
+                        jsonResult,
+                        function (result) {
+                            var table = $("#settingModal .settingTable tbody");
+                            var checkedStr = ' checked="checked" ';
+                            table.find('tr').remove();
+                            $.each(result, function(index, value){
+
+                                var row = '<tr><td><a href="contest/detail?projectId=' + value.id + '">' + value.name
+                                + '</a><input type="hidden" value="' + value.id +  '" /></td>'
+                                + '<td class="alignCenter"><input type="checkbox"' + (value.timelineNotification == 'true' ? checkedStr : '') + '/></td>'
+                                + '<td class="alignCenter"><input type="checkbox"' + (value.forumNotification == 'true' ? checkedStr : '') +  '/></td></tr>';
+
+                                table.append(row);
+                            });
+
+                            $("#settingModal").find(".userTitle").text(handle);
+                            setupTotalCheckBox();
+                            modalLoad("#settingModal");
+
+                            $("#settingModal").data('currentUserId', userId);
+
+                            if ($('#settingModal .settingTable .tableBody tr').length > 9) {
+                                if ($.browser.mozilla) {
+                                    $('#settingModal .settingTable .tableBody').css('height', $('#settingModal .settingTable .tableBody td').height() * 8 - 1);
+                                } else {
+                                    $('#settingModal .settingTable .tableBody').css('height', '240px');
+                                }
+                                $('#settingModal .settingTable .tableBody').css('overflow-x', 'hidden');
+                                $('#settingModal .settingTable .tableBody').css('overflow-y', 'auto');
+                            }
+                        },
+                        function (errorMessage) {
+                            modalAllClose();
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+
+
+        });
+
+        // modal cancel button
+        $("#settingModal .cancelBtn").click(function () {
+            modalAllClose();
+        });
+
+        // modal save button
+        $("#settingModal .saveSetting").click(function(){
+            modalAllClose();
+            var formData = {};
+            formData.projectId = $("input[name='editProjectId']").val();
+            formData.userId = $("#settingModal").data('currentUserId');
+            formData.contestsTimeline = [];
+            formData.contestsNotification = [];
+
+            $(this).parents(".modalBody").find(".tableBody tbody tr").each(function(){
+                var contestId = $(this).find("td:eq(0) input").val();
+                var timelineChecked = $(this).find("td:eq(1) input").is(":checked");
+                var forumChecked = $(this).find("td:eq(2) input").is(":checked");
+
+                if(timelineChecked) {
+                    formData.contestsTimeline.push(contestId);
+                }
+
+                if(forumChecked) {
+                    formData.contestsNotification.push(contestId);
+                }
+
+            });
+
+            modalPreloader();
+
+            $.ajax({
+                type:'post',
+                url:'saveContestsNotificationsForUser',
+                data:{formData:formData},
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(
+                        jsonResult,
+                        function (result) {
+                            showSuccessfulMessage("The contests notifications setting have been saved.");
+                        },
+                        function (errorMessage) {
+                            modalAllClose();
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+
+        });
+
+        $("#settingModal table tbody tr input[type=checkbox]").live('change', function(){
+            setupTotalCheckBox();
+        });
+
+        var setupTotalCheckBox = function() {
+            var timelineAllChecked = true;
+            var forumAllChecked = true;
+            $('#settingModal table tbody tr').each(function () {
+                timelineAllChecked = timelineAllChecked && $(this).find('td:eq(1)').find('input').is(":checked");
+                forumAllChecked = forumAllChecked && $(this).find('td:eq(2)').find('input').is(":checked");
+            });
+
+            $('#settingModal table th:eq(1) input').attr('checked', timelineAllChecked);
+
+            $('#settingModal table th:eq(2) input').attr('checked', forumAllChecked);
+        };
+
+
+        $('#settingModal table th:eq(1) input').live('click',function(){
+            if($(this).attr('checked')){
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(1)').find('input').attr('checked',true);
+                });
+            }else{
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(1)').find('input').attr('checked',false);
+                });
+            }
+        });
+
+        $('#settingModal table th:eq(2) input').live('click',function(){
+            if($(this).attr('checked')){
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(2)').find('input').attr('checked',true);
+                });
+            }else{
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(2)').find('input').attr('checked',false);
+                });
+            }
+        });
+
+        $('#settingModal table th:eq(1) label').live('click',function(){
+            if($(this).parents('th').find('input').attr('checked')){
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(1)').find('input').attr('checked',false);
+                });
+                $(this).parents('th').find('input').attr('checked',false);
+            }else{
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(1)').find('input').attr('checked',true);
+                });
+                $(this).parents('th').find('input').attr('checked',true);
+            }
+        });
+
+        $('#settingModal table th:eq(2) label').live('click',function(){
+            if($(this).parents('th').find('input').attr('checked')){
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(2)').find('input').attr('checked',false);
+                });
+                $(this).parents('th').find('input').attr('checked',false);
+            }else{
+                $('#settingModal table tr').each(function(){
+                    $(this).find('td:eq(2)').find('input').attr('checked',true);
+                });
+                $(this).parents('th').find('input').attr('checked',true);
+            }
+        });
+
+        //////////////////// End contest notification setting modal ////////////////
 
 
         $('.addCustomMetaBtnContainer .triggerModal').click(function () {
@@ -221,7 +617,7 @@ $(document).ready(function (e) {
             operations.push(operation);
 
             var formData = {};
-
+            formData.projectId = $("input[name='editProjectId']").val();
             if (modalName == 'clientManagersModal') {
                 formData.clientManagers = operations;
             } else {
@@ -286,7 +682,8 @@ $(document).ready(function (e) {
                     $this.enableSlider(true);
                     $('#budgetOutput').trigger('change');
                 }
-            }
+            },
+            step:1000
         });
 
 
@@ -562,6 +959,10 @@ $(document).ready(function (e) {
             // set project status id
             formData.projectStatusId = $("input[name='projectStatus']:checked").val();
 
+            formData.projectTypeId = $("#projectType").val();
+
+            formData.projectCategoryId = $("#projectCategory").val();
+
             // get project budget
             var budgetValue = $.trim($('#budgetOutput').val().replace(/[,]/g, '').replace(/[ ]/g, ''));
             var budgetKey = $.trim($('#budgetOutput').attr('name'));
@@ -772,6 +1173,9 @@ $(document).ready(function (e) {
         // Save the chosen managers
         $('.userManagementModal .saveButton').click(function () {
             var modal = $(this).parents('.userManagementModal:first');
+
+            if(modal.attr('id') == 'addUserModal') return;
+
             var metadataKey = modal.attr('id') == 'clientManagersModal' ? 1 : 2;
             var requestURL = modal.attr('id') == 'clientManagersModal' ? 'saveClientProjectManagers' : 'saveTopCoderManagers';
 
@@ -1130,10 +1534,13 @@ $(document).ready(function (e) {
         $(window).resize(function () {
             var w1 = $('.editProjectForm').width() - 200;
             $('#lim2000').css('max-width', w1 + 'px');
+            $('.projectTypeArea .comboContainer select').css('width',($('.projectTypeArea .comboContainer').width() - 130)/2);
+            modalPosition();
         });
 
         var w1 = $('.editProjectForm').width() - 200;
         $('#lim2000').css('max-width', w1 + 'px');
+
     } catch (e) {
     }
 
@@ -1201,7 +1608,8 @@ function formatNumber(number) {
             enabled:true,
             close:false,
             onExceed:null,
-            onIn:null
+            onIn:null,
+            step:0
         }, s || {});
         this.css('relative');
         this.data('options', s);
@@ -1263,9 +1671,8 @@ function formatNumber(number) {
                 var value = s.value;
                 var minValue = value[0];
                 var maxValue = value[value.length - 1];
-                var distance = maxValue - minValue;
 
-                var value = (left / w) * distance + minValue;
+                var value = Math.round((left / w) * distance) + minValue;
                 if (value <= minValue) {
                     if (s.close) {
                         value = minValue + 1;
@@ -1280,7 +1687,11 @@ function formatNumber(number) {
                 $('.valueRule', wrapper).width(left);
                 var output = s.output;
                 if (output) {
-                    output.val(formatNumber(parseInt(value, 10)));
+                    if(!s.step){
+                        output.val(formatNumber(parseInt(value, 10)));
+                    }else{
+                        output.val(formatNumber(parseInt(parseInt(value, 10)/1000)*1000));
+                    }
                 }
                 return left;
             };

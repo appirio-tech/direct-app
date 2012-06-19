@@ -6,8 +6,11 @@
  * Version 1.1 (Release Assembly - TC Cockpit Edit Project and Project General Info Update version 1.0)
  * - Updated to add project ratings styles.
  *
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
+ * - Updated to add project type & category, project permission & notifications, contests notifications.
+ *
  * Author: GreatKevin
- * Version 1.1
+ * Version 1.2
  */
 .editPage #header .logo {
     font-size: 18px;
@@ -1385,5 +1388,525 @@ div#dp-popup {
 
 .ratingEdit span.active {
     background-position: 0 -21px;
+}
+
+/** Add in edit permission and notifications **/
+
+.editPage #mainContent .editProjectSaveBtnContainer{
+    padding:15px 0 20px 0;
+}
+
+/* permissionsNotifications */
+.permissionsNotifications h3{
+    font-size:18px;
+    line-height:50px;
+}
+
+.permissionsNotifications table{
+    width:100%;
+    table-layout:fixed;
+    border:1px solid #D0D0D1;
+    border-bottom:0;
+    border-collapse:collapse;
+}
+
+.permissionsNotifications .loadingIndicator{
+    height:13px;
+    display:none;
+    padding:10px 0;
+    border:1px solid #D0D0D1;
+    border-top:0;
+    text-align:center;
+}
+
+.permissionsNotifications table th{
+    padding:6px 0px;
+    border:1px solid #D0D0D1;
+    font-size:12px;
+    background:url(/images/big_table_th.png) repeat-x left top #e9e9e9;
+}
+
+.permissionsNotifications table th.userColumn{
+    text-align:left;
+}
+
+.permissionsNotifications table th.userColumn span{
+    display:block;
+    padding-left:10px;
+}
+
+.permissionsNotifications table th li{
+    width:24%;
+    float:left;
+    display:inline;
+    list-style:none;
+}
+
+.permissionsNotifications table th a{
+    width:81px;
+    margin:0 auto;
+}
+
+.permissionsNotifications table td{
+    height:33px;
+    font-size:12px;
+    border:1px solid #D0D0D1;
+}
+
+.permissionsNotifications table .odd td{
+    background-color:#f5f5f5;
+}
+
+.permissionsNotifications table td.alignCenter{
+    text-align:center;
+}
+
+.permissionsNotifications table td .useName{
+    display:inline-block;
+    margin-left:10px;
+    padding-left:21px;
+    font-weight:bold;
+    color:#333333;
+    line-height:16px;
+    text-decoration:none;
+    background:url(/images/clientManagers_icon.png) no-repeat left center;
+}
+
+.permissionsNotifications table td .useName:hover{
+    text-decoration:underline;
+}
+
+.permissionsNotifications table td .setting{
+    display:inline-block;
+    padding-left:21px;
+    font-size:11px;
+    line-height:16px;
+    text-decoration:underline;
+    background:url(/images/icon_setting.png) no-repeat left center;
+}
+
+.permissionsNotifications table td .setting:hover{
+    text-decoration:none;
+}
+
+.permissionsNotifications table td .remove{
+    display:inline-block;
+    padding-left:21px;
+    font-size:11px;
+    line-height:16px;
+    text-decoration:underline;
+    background:url(/images/icon_remove.png) no-repeat left center;
+}
+
+.permissionsNotifications table td .remove:hover{
+    text-decoration:none;
+}
+
+.permissionsNotifications table td li{
+    width:24%;
+    float:left;
+    display:inline;
+    list-style:none;
+    text-align:center;
+}
+
+/* add user modal */
+#addUserModal{
+    width:660px;
+    display:none;
+}
+
+#addUserModal .addUserForm{
+    padding-top:30px;
+    padding-bottom:36px;
+}
+
+/* left */
+#addUserModal .addUserForm .addUserLeft{
+    width:220px;
+    height:300px;
+    float:left;
+    display:inline;
+    margin-left:67px;
+    border:#bcbcbc solid 1px;
+    background:#eeeeee;
+}
+
+#addUserModal .addUserForm .addUserButton{
+    width:74px;
+    height:300px;
+    float:left;
+    display:inline;
+}
+
+/* right */
+#addUserModal .addUserForm .addUserRight{
+    width:220px;
+    height:300px;
+    float:left;
+    display:inline;
+    border:#bcbcbc solid 1px;
+    background:#eeeeee;
+}
+
+/* addUserTitle */
+#addUserModal .addUserForm .addUserTitle{
+    height:33px;
+    font-family:Tahoma, Arial, Helvetica, sans-serif;
+    line-height:33px;
+    background:#3e3532;
+}
+
+#addUserModal .addUserForm .addUserTitle p{
+    width:auto;
+    float:left;
+    display:inline;
+    margin-left:10px;
+    font-size:12px;
+    font-weight:bold;
+    color:#fffffe;
+}
+
+#addUserModal .addUserForm .addUserTitle a{
+    width:auto;
+    float:right;
+    display:inline;
+    margin-right:5px;
+    font-size:12px;
+    color:#c9c9c9;
+    text-decoration:none;
+}
+
+#addUserModal .addUserForm .addUserTitle a:hover{
+    text-decoration:underline;
+}
+
+/* search box */
+#addUserModal .addUserForm .searchBox{
+    height:47px;
+    font-family:Tahoma, Arial, Helvetica, sans-serif;
+    border-bottom:#c6c6c6 solid 1px;
+}
+
+#addUserModal .addUserForm .searchBox .text{
+    width:108px;
+    height:17px;
+    float:left;
+    display:inline;
+    margin-top:12px;
+    margin-left:10px;
+    margin-right:10px;
+    padding:2px;
+    background:#f8f8f8;
+    font-size:12px;
+    border:#a2a1a5 solid 1px;
+}
+
+#addUserModal .addUserForm .searchBox .downloadProfile{
+    width:64px;
+    float:left;
+    display:inline;
+    margin-top:13px;
+}
+
+#addUserModal .addUserForm .searchBox .downloadProfile .profileLeft{
+    width:64px;
+    font-size:12px;
+    text-align:center;
+    text-indent:-2px;
+}
+
+/* copilotManageList */
+#addUserModal .addUserForm .addUserLeft .addUserList{
+    height:219px;
+}
+
+#addUserModal .addUserForm .addUserRight .addUserList{
+    height:266px;
+}
+
+#addUserModal .addUserForm .addUserList li{
+    margin-bottom:1px;
+    padding-left:10px;
+    font-family:Tahoma, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    line-height:20px;
+    height:20px;
+    list-style:none;
+    border-bottom:#c3c4c6 dotted 1px;
+    cursor:pointer;
+}
+
+#addUserModal .addUserForm .addUserList li.selected{
+    background:#c1c1c1;
+}
+
+/* button */
+#addUserModal .addUserForm .addItem{
+    width:34px;
+    height:19px;
+    display:block;
+    margin:0 auto;
+    margin-top:136px;
+    text-indent:-9999px;
+    background:url(/images/add_tech.png) no-repeat left top;
+}
+
+#addUserModal .addUserForm .addItem:hover{
+    background:url(/images/add_tech_hover.png) no-repeat left top;
+}
+
+#addUserModal .addUserForm .removeItem{
+    width:34px;
+    height:19px;
+    display:block;
+    margin:0 auto;
+    margin-top:5px;
+    text-indent:-9999px;
+    background:url(/images/remove_tech.png) no-repeat left top;
+}
+
+#addUserModal .addUserForm .removeItem:hover{
+    background:url(/images/remove_tech_hover.png) no-repeat left top;
+}
+
+#addUserModal .buttonArea .button6{
+    width:100px;
+    float:left;
+    display:inline;
+    margin-left:206px;
+    margin-right:40px;
+}
+
+#addUserModal .buttonArea .cancelButton{
+    margin-left:0;
+}
+
+#addUserModal .buttonArea .button6 span.right{
+    padding:4px 0 0 0;
+    text-align:center;
+}
+
+/* setting modal */
+#settingModal{
+    width:720px;
+    display:none;
+}
+
+#settingModal input,
+.permissionsNotifications input{
+    margin:0 4px;
+    position:relative;
+    top:2px;
+}
+
+#settingModal .settingTable .tableBody{
+    overflow:hidden;
+}
+
+#settingModal .settingTable table{
+    width:100%;
+    table-layout:fixed;
+    border:1px solid #D0D0D1;
+    border-collapse:collapse;
+}
+
+#settingModal .settingTable .tableBody table{
+    border-bottom:0;
+    border-top:0;
+}
+
+#settingModal .settingTable .tableHeader{
+    height:29px;
+    overflow:hidden;
+}
+
+#settingModal table th{
+    height:28px;
+    border:1px solid #D0D0D1;
+    font-size:12px;
+    background:url(/images/modal_table_bg.png) repeat-x left top #e9e9e9;
+}
+
+#settingModal .tableBody table th{
+    display:none;
+}
+
+#settingModal table td{
+    height:29px;
+    font-size:12px;
+    border:1px solid #D0D0D1;
+    background:#fffffd;
+}
+
+#settingModal .tableHeader table td{
+    display:none;
+}
+
+#settingModal table .odd td{
+    background-color:#f5f5f5;
+}
+
+#settingModal table .last td{
+    border-bottom:0;
+}
+
+#settingModal table .first td{
+    border-top:0;
+}
+
+#settingModal table td.alignCenter{
+    text-align:center;
+}
+
+#settingModal table th label{
+    cursor:pointer;
+}
+
+#settingModal table td a{
+    display:inline-block;
+    padding-left:10px;
+    text-decoration:none;
+}
+
+#settingModal table td a:hover{
+    text-decoration:underline;
+}
+
+/* button */
+#settingModal .buttonArea .button6{
+    width:100px;
+    float:left;
+    display:inline;
+    margin-left:214px;
+    margin-right:60px;
+}
+
+#settingModal .buttonArea .cancelBtn{
+    margin-left:0;
+}
+
+#settingModal .buttonArea .button6 span.right{
+    padding:4px 0 0 0;
+    text-align:center;
+}
+
+/* projectTypeArea */
+.editProjectForm .projectTypeArea{
+    height:50px;
+    padding:0 140px 0 194px;
+    margin:12px 0 0 0;
+    position:relative;
+}
+
+.projectTypeArea .firstSubLabel{
+    padding:0 6px 0 0;
+}
+
+.projectTypeArea .rightSide{
+    position:absolute;
+    right:124px;
+}
+
+/* tip */
+.toolTipIconForType{
+    display:block;
+    float:left;
+    width:16px;
+    height:0;
+    padding:16px 0 0 0;
+    overflow:hidden;
+    background:transparent url(/images/edit/toolTipIcon.png) 0 0 no-repeat;
+    margin:3px 6px 0 0;
+}
+
+.toolTipIconForType:hover{
+    background-position:0 -16px;
+}
+
+.toolTipIconForType{
+    text-decoration:none;
+    font-family:Tahoma, Geneva, sans-serif;
+    color:#333;
+    font-size:11px;
+}
+
+.toolTipIconForType p{
+    font-weight:normal;
+}
+
+.toolTipIconForType .tctips{
+    width:184px;
+    left:-13px!important;
+    padding-right:8px;
+    line-height:14px;
+}
+
+.toolTipIconForType .tctips .triangle{
+    left:14px;
+}
+
+/* cancelProjectButton */
+.permissionsButtonContainer{
+    height:26px;
+    padding:15px 0 20px 0;
+}
+
+.editPage .permissionsButtonContainer .buttonRed1{
+    float:right;
+}
+
+.editPage .permissionsButtonContainer .buttonRed1 span{
+    padding:0 25px 0 21px;
+    font-size:12px;
+}
+
+.cancelProjectButton{
+    margin-left:10px;
+}
+
+.editPage .editProjectSaveBtnContainer a.cancelProjectButton span,
+.editPage .permissionsButtonContainer a.cancelProjectButton span{
+    padding:0 21px 0 17px;
+}
+
+/* editPermission */
+.editPermission{
+    padding-left:21px;
+    font-size:11px;
+    color:#ea0107;
+    line-height:18px;
+    text-decoration:underline;
+    background:url(/images/icon_edit.png) no-repeat left center;
+}
+
+.editPermission:hover{
+    text-decoration:none;
+}
+
+/* text shadow */
+.editProjectSaveBtnContainer a,
+.permissionsButtonContainer a,
+.permissionsNotifications table th a,
+#settingModal .buttonArea a,
+#addUserModal .buttonArea a{
+    text-shadow:#c14040 0 -1px 0;
+}
+
+.noneList{
+    display:none !important;
+}
+
+.editPage #area1 .contestTitle .saveProjectButton{
+    right:98px;
+}
+
+.editPage #area1 .contestTitle .cancelProjectButton span{
+    padding:0 21px 0 17px;
+}
+
+#addUser span {
+    display: block;
+    padding: 0px 4px 0px 0px;
 }
 

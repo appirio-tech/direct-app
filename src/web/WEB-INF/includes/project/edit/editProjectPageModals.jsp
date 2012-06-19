@@ -1,9 +1,13 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.0.0
+  - Version: 1.1
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment contains all the modal windows of the edit project page.
+  -
+  - Version 1.1 updates (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
+  - - Add add user permission modal
+  - - Add contests notifications modal
   -
   - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
 --%>
@@ -303,5 +307,156 @@
     <!-- end .modalFooter -->
 </div>
 <!-- end #addCustomeMeta -->
+
+<!-- add user permission -->
+<div id="addUserModal" class="outLay userManagementModal">
+    <div class="inner">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>ADD USERS TO PERMISSION LIST</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <!-- content -->
+        <div class="modalBody">
+            <div class="addUserForm">
+                <div class="addUserLeft">
+                    <!-- title -->
+                    <div class="addUserTitle">
+                        <p>Users</p>
+                        <a href="javascript:;" class="selectAll">Select All</a>
+                    </div>
+                    <!-- End .addUserTitle -->
+                    <!-- search -->
+                    <div class="searchBox">
+                        <input type="text" class="text" value="" />
+                        <a href="javascript:;" class="downloadProfile"><span class="profileLeft">Search</span></a>
+                    </div>
+                    <!-- End .searchBox -->
+                    <!-- list -->
+                    <div class="addUserList">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <!-- End .addUserList -->
+                </div>
+                <div class="addUserButton">
+                    <a href="javascript:;" class="addItem">Add</a>
+                </div>
+                <div class="addUserRight">
+                    <!-- title -->
+                    <div class="addUserTitle">
+                        <p>Existing Users</p>
+                    </div>
+                    <!-- End .addUserTitle -->
+                    <!-- list -->
+                    <div class="addUserList">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <!-- End .addUserList -->
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="buttonArea">
+                <a href="javascript:;" title="SAVE" class="button6 saveButton"><span class="left"><span class="right">SAVE</span></span></a>
+                <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                <div class="clearFix"></div>
+            </div>
+        </div>
+        <!-- End .content -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+</div>
+<!-- end user permission -->
+
+<!-- start contest setting modal -->
+<div id="settingModal" class="outLay">
+    <div class="inner">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span><span class="userTitle">USERNAME</span> - CONTESTS NOTIFICATION SETTING</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <!-- content -->
+        <div class="modalBody">
+            <div class="settingTable">
+                <div class="tableHeader">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <colgroup>
+                            <col />
+                            <col width="150" />
+                            <col width="150" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>Contest</th>
+                            <th><input type="checkbox" />
+                                <label>Timeline Notification</label></th>
+                            <th><input type="checkbox" />
+                                <label>Forum Notification</label></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="3"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tableBody">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <colgroup>
+                            <col />
+                            <col width="150" />
+                            <col width="150" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th colspan="3"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="buttonArea">
+                <a href="javascript:;" title="SAVE" class="button6 closebutton saveSetting"><span class="left"><span class="right">SAVE</span></span></a>
+                <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelBtn"><span class="left"><span class="right">CANCEL</span></span></a>
+                <div class="clearFix"></div>
+            </div>
+        </div>
+        <!-- End .content -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+</div>
+<!-- end contest setting modal -->
+
 </div>
 <!-- End modal -->
