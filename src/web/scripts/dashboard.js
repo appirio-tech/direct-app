@@ -62,8 +62,11 @@
  *  Version 2.9 - TopCoder Cockpit - Bug Race Project Contests View update:
  *  - Hide the filter panel in project contests calendar view
  *
+ * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
+ * - Add js codes to support uploading attachments to JIRA issue in contest issue tracking page.
+ *
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, TCSASSEMBLER
- * @version 2.9
+ * @version 2.10
  */
 $(document).ready(function(){
 						   
@@ -955,6 +958,35 @@ $(document).ready(function(){
         $(this).parent().parent().parent().find('.longDetails').show();
     });
 
+    function restoreBugrFileInputs() {
+        bugrAttachments = [];
+        $(".FileField").val("");
+        $([1,2,3]).each(function() {
+            if ($("#file" + this).length == 0) {
+                var txtfile = $("#txtfile" + this);
+                txtfile.before('<input id="file' + this + '" class="BrowserHidden" type="file" name="document" size="24" onchange="getElementById(\'txtfile' + this + '\').value = getElementById(\'file' + this + '\').value;">');
+                if ($.browser.mozilla) {
+                    // firefox
+                    $("input.BrowserHidden").attr("size", "8");
+                }
+                txtfile.parent().parent().find(".btnUpload").show();
+            }
+        });
+        $('.issueSelectionContent #txtfile1').unbind("click").click(function(){
+            $('.issueSelectionContent #file1').trigger("click");
+        });
+        $('.issueSelectionContent #txtfile2').unbind("click").click(function(){
+            $('.issueSelectionContent #file2').trigger("click");
+        });
+        $('.issueSelectionContent #txtfile3').unbind("click").click(function(){
+            $('.issueSelectionContent #file3').trigger("click");
+        });
+        $("input.BrowserHidden").val("");
+        $("input.BrowserHidden").unbind("change").change(function() {
+            $(this).parent().find(".FileField").val($(this).val());
+        });
+    }
+    
 // when click "Add New" button in contest tracking page under Bug Race tab
     $('#issue .btnAddNew, #bugRace .btnAddNew').click(function() {
         $("li.bugRaceTab a").click();
@@ -973,6 +1005,8 @@ $(document).ready(function(){
             $("#bugRace label:contains('Summary')").css('padding-top','0');
         }
         $("#bugRace .viewAll").hide();
+        $("#attachmentNames").val("");
+        restoreBugrFileInputs();
         return false;
     });
 
@@ -1004,6 +1038,13 @@ $(document).ready(function(){
         $("#tcoPoints").val(rowItem.find(".tcoPoints").val());
         $("#cca").attr("checked", rowItem.find("input.issueCCA").val() == "true" ? "checked" : "");
         $("#bugRace .viewAll").hide();
+        
+        var names = [];
+        rowItem.find(".attachmentName").each(function() {
+            names.push($(this).val());
+        });
+        $("#attachmentNames").val(names.join("\\"));
+        restoreBugrFileInputs();
         return false;
     });
     
@@ -1065,6 +1106,13 @@ $(document).ready(function(){
             showErrors("Please input the required fields");
             return false;
         }
+        if ($("#rdoNo").is(":checked")) {
+            var attIds = [];
+            for (var i = 0; i < bugrAttachments.length; i++) attIds.push(bugrAttachments[i]['documentId']);
+            $("#attachmentIds").val(attIds.join(","));
+        } else {
+            $("#attachmentIds").val("");
+        }
         return true;
     }
     
@@ -1080,6 +1128,7 @@ $(document).ready(function(){
                 async:true,
                 beforeSend: modalPreloader,
                 complete: modalClose,
+                timeout: 36000000,
                 success: function(jsonResult) {
                     handleJsonResult(jsonResult,
                         function(result) {
@@ -1108,6 +1157,17 @@ $(document).ready(function(){
                                 $('.checkbox').attr('checked', true);
                             }
                             $("#bugRace .viewAll").show();
+                            
+                            if (result.attachmentError) {
+                                // error when add attachment
+                            } else {
+                                if ($("#rdoNo").is(":checked")) {
+                                    for (var i = 0; i < bugrAttachments.length; i++)
+                                        row.append('<input class="attachmentName" type="hidden" value="' + bugrAttachments[i]['fileName'] + '">');
+                                } else {
+                                    row.append('<input class="attachmentName" type="hidden" value="Final_Fix_' + ($("#lastClosedFinalFixPhaseId").val()) + '">');
+                                }
+                            }
                         },
                         function(errorMessage) {
                             showServerError(errorMessage);
@@ -1121,6 +1181,18 @@ $(document).ready(function(){
     // update a JIRA issue (Bug Race)
     $('#bugRace .btnUpdate').live('click', function() {
         if (validateBugForm(this)) {
+            // final fix
+            if (!$("#rdoNo").is(":checked")) {
+                var names = $("#attachmentNames").val().split("\\");
+                var fileName = "Final_Fix_" + $("#lastClosedFinalFixPhaseId").val();
+                for (var i = 0; i < names.length; i++) {
+                    if (names[i].indexOf(fileName) === 0) {
+                        showErrors("The final fix already exists in the issue.");
+                        return false;
+                    }
+                }
+            }
+            
             $.ajax({
                 type: 'POST',
                 url:'updateBugRace',
@@ -1130,6 +1202,7 @@ $(document).ready(function(){
                 async:true,
                 beforeSend: modalPreloader,
                 complete: modalClose,
+                timeout: 36000000,
                 success: function(jsonResult) {
                     handleJsonResult(jsonResult,
                         function(result) {
@@ -1146,6 +1219,17 @@ $(document).ready(function(){
                             $('.issueSelectionContent .content').show();
                             $('.issueSelectionContent .inputContainer').hide();
                             $("#bugRace .viewAll").show();
+                            
+                            if (result.attachmentError) {
+                                // error when add attachment
+                            } else {
+                                if ($("#rdoNo").is(":checked")) {
+                                    for (var i = 0; i < bugrAttachments.length; i++)
+                                        rowItem.append('<input class="attachmentName" type="hidden" value="' + bugrAttachments[i]['fileName'] + '">');
+                                } else {
+                                    rowItem.append('<input class="attachmentName" type="hidden" value="Final_Fix_' + ($("#lastClosedFinalFixPhaseId").val()) + '">');
+                                }
+                            }
                             return;
                         },
                         function(errorMessage) {
@@ -1272,7 +1356,127 @@ $(document).ready(function(){
         hideBugRacesEmptyContest();
         bugSortFunction();
     }
+    
+    if ($.browser.mozilla) {
+        // firefox
+        $("input.BrowserHidden").attr("size", "8");
+    }
+    
+    if($(".issueSelectionContent #rdoYes").attr('checked')) {
+        $('.issueSelectionContent #divUpload').hide();
+    } else {
+        $('.issueSelectionContent #divUpload').show();
+    }
+    
+	$('.issueSelectionContent #rdoYes').live('click',function(){
+	 	if($(this).attr('checked')) {
+			$('.issueSelectionContent #divUpload').hide();
+		} else {
+			$('.issueSelectionContent #divUpload').show();
+		}
+	});
+    $('.issueSelectionContent #rdoNo').live('click',function(){
+	 	if($(this).attr('checked')) {
+			$('.issueSelectionContent #divUpload').show();
+		} else {
+			$('.issueSelectionContent #divUpload').hide();
+		}
+	});
+    
+    // bug race attachment uploader
+    var bugrCurrentAttachment = {};
+    var bugrAttachments = [];
+    var currentUploadInput;
+    var bugrUploader =
+        new AjaxUpload(null, {
+            action: ctx + '/launch/documentUpload',
+            name : 'document',
+            responseType : 'json',
+            onSubmit : function(file , ext) {
+                //software document
+                bugrCurrentAttachment['fileName'] = file;
 
+                bugrUploader.setData(
+                {studio:false}
+                );
+
+                modalPreloader();
+            },
+            onComplete : function(file, jsonResult){ handleJsonResult(jsonResult,
+                    function(result) {
+                        var documentId = result.documentId;
+                        bugrCurrentAttachment['documentId'] = documentId;
+                        bugrAttachments.push(bugrCurrentAttachment);
+
+                        bugrCurrentAttachment = {};
+
+                        currentUploadInput.hide();
+                        currentUploadInput.parent().find(".FileField").unbind("click");
+                        
+                        modalClose();
+                    },
+                    function(errorMessage) {
+                        showErrors(errorMessage);
+                        var txtfile = bugrUploader.curRow.find(".FileField");
+                        txtfile.val("");
+                        var ind = txtfile.attr("id").substr(7);
+                        txtfile.before('<input id="file' + ind + '" class="BrowserHidden" type="file" name="document" size="24" onchange="getElementById(\'txtfile' + ind + '\').value = getElementById(\'file' + ind + '\').value;">');
+                        $('#file' + ind).change(function() {
+                            txtfile.val($(this).val());
+                        });
+                        if ($.browser.mozilla) {
+                            // firefox
+                            $("input.BrowserHidden").attr("size", "8");
+                        }
+                        modalClose();
+                    });
+            }
+        }, false); 
+
+    $(".issueSelectionContent .btnUpload").click(function() {
+        bugrUploader.setInput($(this).parent().find("input[type=file]").get(0));
+        bugrUploader.curRow = $(this).parent();
+        
+        var fileName = bugrUploader._input.value;
+
+        var errors = [];
+
+        if (!checkRequired($(this).parent().find("input.FileField").val()) || !checkRequired(fileName)) {
+            errors.push('No file is selected.');
+        }
+        
+        var startIndex = (fileName.indexOf('\\') >= 0 ? fileName.lastIndexOf('\\') : fileName.lastIndexOf('/'));
+        if (startIndex != -1) {
+            fileName = fileName.substring(startIndex + 1);
+        }
+        
+        var ok = true;
+        for (var i = 0; i < bugrAttachments.length; i++) {
+            if (fileName.toLowerCase() == bugrAttachments[i]['fileName'].toLowerCase()) {
+                ok = false;
+                errors.push('The file name already exists.');
+            }
+        }
+        if (ok) {
+            var names = $("#attachmentNames").val().split("\\");
+            for (var i = 0; i < names.length; i++) {
+                if (fileName.length > 0 && fileName.toLowerCase() == names[i].toLowerCase()) {
+                    errors.push('The file name already exists.');
+                }
+            }
+        }
+
+        if(errors.length > 0) {
+            showErrors(errors);
+            return false;
+        }
+        
+        currentUploadInput = $(this);
+
+        bugrUploader.submit();
+        return false;
+    });
+    
     /* added js code */
 	
     /**
@@ -1600,7 +1804,7 @@ $(document).ready(function(){
             }
         }
 
-        $(".progressContainer li .phaseName").hoverIntent(timeLineHoverConfig);
+        $.fn.hoverIntent && $(".progressContainer li .phaseName").hoverIntent(timeLineHoverConfig);
     }
 
     $(" .contestViews  .contestCView .loading").css("opacity", "0.8");

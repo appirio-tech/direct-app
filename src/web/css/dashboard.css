@@ -59,6 +59,9 @@
  *
  * - (Release Assembly - TC Cockpit Project Forum Settings) updates:
  * - Add classes for project notification table in setting notification page
+ *
+ * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
+ * - Add classes for uploading attachments in contest issues tracking page.
  */
 
 
@@ -6012,6 +6015,13 @@ margin-left:220px;
     line-height: 15px;
     padding: 0;
     width: auto;
+}
+
+span.finalFix{
+    padding: 0 5px;
+}
+.shiftTop{
+padding-top: 5px;
 }
 
 /* Cockpit Contest Details - Issue Tracking */

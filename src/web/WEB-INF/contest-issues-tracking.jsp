@@ -1,6 +1,6 @@
 <%--
   - Author: TCSDEVELOPER, TCSASSEMBLER
-  - Version: 1.0.3
+  - Version: 1.0.4
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the issues and bug races of the contest.
@@ -11,6 +11,9 @@
   -
   - Version 1.0.3 (TC Direct Issue Tracking Tab Update Assembly 1) change Notes: 
   - - Add support to add/edit JIRA issue under Bug Race tab.
+  -
+  - Version 1.0.4 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) change Notes: 
+  - - Add support to upload attachment to JIRA issue under Bug Race tab.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -116,6 +119,9 @@
                                                 	<!-- row -->
                                                     <div class="rowItem">
                                                         <input type="hidden" class="contestName" value="${bugRace.issueSummary}"/>
+                                                        <s:iterator value="#attr.bugRace.attachments">
+                                                        <input type="hidden" class="attachmentName" value="<s:property value="filename"/>"/>
+                                                        </s:iterator>
                                                         <textarea class="hide description"><s:property value="#attr.bugRace.description"/></textarea>
                                                         <textarea class="hide environment"><s:property value="#attr.bugRace.environment"/></textarea>
                                                         <input type="hidden" class="prize" value="<fmt:formatNumber value="${bugRace.prize}" pattern="#0"/>"/>
@@ -364,9 +370,12 @@
                                                 <!-- End .content -->
                                                 <!-- add new issue -->
                                                 <div class="inputContainer">
+                                                    <input type="hidden" id="attachmentNames" value=""/>
+                                                    <input type="hidden" id="lastClosedFinalFixPhaseId" value="${viewData.lastClosedFinalFix.id}"/>
                                                     <form id="bugForm" method="POST">
                                                     <input type="hidden" name="projectId" value="${projectId}"/>
                                                     <input type="hidden" id="issueId" name="issue.issueId" value=""/>
+                                                    <input type="hidden" id="attachmentIds" name="attachmentIds" value=""/>
                                                     <div class="row">
                                                         <p class="projectText">Fill in the details about the Bug Race you want to launch below. When you click the Activate button, it will publish your Bug Race to the TopCoder Community on the <a href="https://apps.topcoder.com/bugs/browse/BUGR" target="_blank">Active Bug Races</a> page.</p>
                                                     </div>
@@ -402,6 +411,48 @@
                                                             <option value="30">30</option>
                                                         </select>
                                                         <p>Select the amount of TCO Mod Dash points that this Bug Race is worth. Bug Races with TCO Points are part of the Mod Dash. Set the amount <br />to 0 (zero) if you do not want to include your Bug Race in the TCO tournament.</p>
+                                                    </div>
+                                                    <label>Add Attachments</label>
+                                                    <div class="row shiftTop">
+                                                        <input  name="finalfix" checked="checked"  id="rdoNo" type="radio" value="false"/>
+
+                                                    </div>
+
+                                                    <div id="divUpload">
+                                                        <label><em>File 1:</em></label>
+                                                        <div class="row">
+                                                            <div class="FileUpload">
+
+                                                                <input type="file" size="24" id="file1" class="BrowserHidden" name="document" onchange="getElementById('txtfile1').value = getElementById('file1').value;"/>
+
+                                                                <input id="txtfile1" type="text" class="FileField" readonly="readonly"/>
+                                                            </div>
+
+                                                            <a href="#" class="button6 btnUpload"><span class="left"><span class="right">Upload</span></span></a>
+                                                        </div>
+                                                        <label><em>File 2:</em></label>
+                                                        <div class="row">
+                                                            <div class="FileUpload">
+
+                                                                <input type="file" size="24" id="file2" class="BrowserHidden" name="document" onchange="getElementById('txtfile2').value = getElementById('file2').value;"/>
+
+                                                                <input id="txtfile2" type="text" class="FileField"  readonly="readonly"/>
+                                                            </div><a href="#" class="button6 btnUpload"><span class="left"><span class="right">Upload</span></span></a>
+                                                        </div>
+                                                        <label><em>File 3:</em></label>
+                                                        <div class="row">
+                                                            <div class="FileUpload">
+
+                                                                <input type="file" size="24" id="file3" class="BrowserHidden" name="document" onchange="getElementById('txtfile3').value = getElementById('file3').value;"/>
+
+                                                                <input id="txtfile3" type="text" class="FileField"  readonly="readonly"/>
+                                                            </div><a href="#" class="button6 btnUpload"><span class="left"><span class="right">Upload</span></span></a>
+                                                        </div>
+                                                    </div>
+                                                    <label>Add Final Fix as Attachment:</label>
+                                                    <div class="row shiftTop">
+                                                        <input id="rdoYes" name="finalfix" type="radio" value="true" <c:if test="${viewData.lastClosedFinalFix eq null}">disabled="disabled"</c:if>/>
+
                                                     </div>
                                                     <div class="buttonBox">
                                                         <a href="#" class="button6 btnUpdate"><span class="left"><span class="right">Update</span></span></a>

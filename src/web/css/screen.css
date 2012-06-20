@@ -12,6 +12,9 @@
  *
  * Release Assembly - TopCoder Cockpit Project Overview Update 1
  * 1) Added new CSS styles for project copilot and project forum modules in the project overview page.
+ *
+ * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
+ * - Add classes for uploading attachments in contest issues tracking page.
  */
 
 html,body{
@@ -2830,4 +2833,39 @@ ul.errorMessage {
 		text-decoration:none;
 		}
 
+.issueSelectionContent .FileUpload {
+    position:relative;
+    float: left;
+    width:155px;
+    height:15px;
+}
+
+.issueSelectionContent .FileField {
+    font-size:16px;
+    width: 150px;
+    height: 15px;
+    padding: 3px 0;
+    margin-bottom: 2px;
+    border: #ACACAC solid 1px;
+    display: inline;
+    float: left;
+    position:absolute;
+    left:0;
+    z-index:1;
+    cursor: pointer;
+}
+
+.issueSelectionContent .BrowserHidden {
+    position:absolute;
+    width:150px;
+    height:26px;
+    text-align: right;
+    -moz-opacity:0 ;
+    filter:alpha(opacity: 0);
+    opacity: 0;
+    z-index: 2;
+    display: inline;
+    left: 0;
+    top: 0;
+}
 
