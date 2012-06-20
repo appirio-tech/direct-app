@@ -1054,13 +1054,19 @@
       scope="prototype" parent="baseDirectStrutsAction">
       <property name="copilotProfileDAO" ref="copilotProfileDAO"/>
     </bean>
-	
-	  <bean id="createJIRABugIssueAction" class="com.topcoder.direct.services.view.action.contest.CreateJIRAIssueAction"
-          scope="prototype" parent="baseDirectStrutsAction">
+    
+    <bean id="baseJIRAAttachmentAction" class="com.topcoder.direct.services.view.action.contest.JIRAAttachmentBaseAction"
+        abstract="true" parent="baseDirectStrutsAction">
+        <property name="fileLocation" value="@file_storage_location@"/>
+    </bean>
+    <bean id="createJIRABugIssueAction" class="com.topcoder.direct.services.view.action.contest.CreateJIRAIssueAction"
+          scope="prototype" parent="baseJIRAAttachmentAction">
         <property name="jiraProject" value="@jiraBugRaceProject@"/>
         <property name="issueTypeId" value="1"/>
     </bean>
-	
+    <bean id="updateJIRAIssueAction" class="com.topcoder.direct.services.view.action.contest.UpdateJIRAIssueAction"
+          scope="prototype" parent="baseJIRAAttachmentAction">
+    </bean>
     <bean id="submitApprovalAction"
           class="com.topcoder.direct.services.view.action.contest.SubmitApprovalAction"
           scope="prototype" parent="baseDirectStrutsAction">

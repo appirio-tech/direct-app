@@ -343,7 +343,7 @@
             <interceptor-ref name="securedContestStack"/>
             <result name="success">/WEB-INF/contest-issues-tracking.jsp</result>
         </action>
-		<action name="updateBugRace" class="com.topcoder.direct.services.view.action.contest.UpdateJIRAIssueAction">
+        <action name="updateBugRace" class="updateJIRAIssueAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
         </action>
@@ -351,6 +351,7 @@
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
         </action>
+
         <action name="projectOverview" class="projectOverviewAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
@@ -556,7 +557,7 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-
+        
         <action name="dashboardVMAction" class="dashboardVMAction">
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/vmmanager/dashboard-vm-management.jsp</result>
@@ -1052,7 +1053,7 @@
             <result name="success" type="json"/>
             <result name="error" type="json"/>
         </action>
-
+        
         <action name="studioNoWinner" class="studioNoWinnerAction">
             <result>/WEB-INF/studio-nowinner.jsp</result>
         </action>
