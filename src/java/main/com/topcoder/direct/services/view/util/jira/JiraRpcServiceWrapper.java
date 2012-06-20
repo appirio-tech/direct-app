@@ -14,6 +14,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.atlassian.jira.rpc.soap.client.JiraSoapService;
+import com.atlassian.jira.rpc.soap.client.RemoteAttachment;
 import com.atlassian.jira.rpc.soap.client.RemoteAuthenticationException;
 import com.atlassian.jira.rpc.soap.client.RemoteFieldValue;
 import com.atlassian.jira.rpc.soap.client.RemoteIssue;
@@ -54,8 +55,16 @@ import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>Added method {@link #addAttachments(String, String[], String[])} to upload attachments to issue.</li>
+ *     <li>Added method {@link #getIssueAttachments(String)} to get the attachments of issue.</li>
+ *   </ol>
+ * </p>
+ *  
  * @author Veve, TCSASSEMBLER
- * @version 1.3
+ * @version 1.4
  */
 public class JiraRpcServiceWrapper {
 
@@ -178,6 +187,25 @@ public class JiraRpcServiceWrapper {
         JiraSoapService service = soapSession.getJiraSoapService();
         String token = soapSession.getAuthenticationToken();
         return new TcJiraIssue(service.createIssueWithSecurityLevel(token, issue, securityLevelId));
+    }
+    
+    /**
+     * <p>Add attachments to an issue.</p>
+     * 
+     * @param issueKey the issue to attach to
+     * @param fileNames an array of filenames; each element names an attachment to be uploaded
+     * @param base64Data an array of Base 64 encoded Strings; each element contains the data of the attachment to be uploaded 
+     * @throws Exception if any error occurs
+     * @since 1.4
+     */
+    public static void addAttachments(String issueKey, String[] fileNames, String[] base64Data) throws Exception {
+        if (soapSession == null) {
+            initializeSoapSession();
+        }
+
+        JiraSoapService service = soapSession.getJiraSoapService();
+        String token = soapSession.getAuthenticationToken();
+        service.addBase64EncodedAttachmentsToIssue(token, issueKey, fileNames, base64Data);
     }
     
     /**
@@ -352,6 +380,26 @@ public class JiraRpcServiceWrapper {
         String token = soapSession.getAuthenticationToken();
         return Long.parseLong(service.getSecurityLevel(token, issueKey).getId());
     }
+    
+    /**
+     * <p>Gets the attachments of an issue.</p>
+     * 
+     * @param issueKey the key of the issue.
+     * @return the attachments of the issue.
+     * @throws Exception if any error occurs.
+     * @since 1.4
+     */
+    public static RemoteAttachment[] getIssueAttachments(String issueKey) throws Exception {
+        if (soapSession == null) {
+            initializeSoapSession();
+        }
+        
+        JiraSoapService service = soapSession.getJiraSoapService();
+        String token = soapSession.getAuthenticationToken();
+        
+        return service.getAttachmentsFromIssue(token, issueKey);
+    }
+    
     
     /**
      * Gets a list of TcJiraIssue by calling remote service with the specified JQL query.

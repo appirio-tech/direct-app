@@ -3,11 +3,13 @@
  */
 package com.topcoder.direct.services.view.action.contest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.atlassian.jira.rpc.soap.client.RemoteFieldValue;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.IssueTrackingConfig;
 import com.topcoder.direct.services.exception.DirectException;
-import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.form.JIRAIssueForm;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
@@ -15,10 +17,19 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 /**
  * <p>This class is a Struts action class used to update a JIRA issue.</p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>The based class was changed to <code>JIRAAttachmentBaseAction</code>.</li>
+ *     <li>Update {@link #executeAction()} to process the JIRA attachments.</li>
+ *     <li>Added method {@link #getIssueKey()} to get the corresponding issue key.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.1
  */
-public class UpdateJIRAIssueAction extends StudioOrSoftwareContestAction {
+public class UpdateJIRAIssueAction extends JIRAAttachmentBaseAction {
     /**
      * <p>Represents the serial version unique id.</p>
      */
@@ -28,6 +39,13 @@ public class UpdateJIRAIssueAction extends StudioOrSoftwareContestAction {
      * <p>A <code>JIRAIssueForm</code> instance holding the data submitted by user.</p>
      */
     private JIRAIssueForm issue;
+    
+    /**
+     * <p>Represents the corresponding issue key.</p>
+     * 
+     * @since 1.1
+     */
+    private String issueKey;
     
     /**
      * <p>Gets the <code>JIRAIssueForm</code> instance holding the data submitted by user.</p>
@@ -75,6 +93,7 @@ public class UpdateJIRAIssueAction extends StudioOrSoftwareContestAction {
             throw new DirectException("Have no permission to edit the JIRA issue");
         }
         
+        this.issueKey = jiraIssue.getIssueKey();
         IssueTrackingConfig config = ConfigUtils.getIssueTrackingConfig();
         Long securityLevelId = issue.isCca() ? config.getSecurityNDAId() : config.getSecurityOpenId();
         RemoteFieldValue[] filedValues = new RemoteFieldValue[] {
@@ -92,5 +111,24 @@ public class UpdateJIRAIssueAction extends StudioOrSoftwareContestAction {
                 new RemoteFieldValue("security", new String[] {String.valueOf(securityLevelId)})
         };
         JiraRpcServiceWrapper.updateIssue(jiraIssue.getIssueKey(), filedValues);
+        
+        // process the attachments
+        try {
+            super.executeAction();
+        } catch (Exception e) {
+            Map<String, Object> result = new HashMap<String, Object>();
+            result.put("attachmentError", Boolean.TRUE);
+            setResult(result);
+        }
+    }
+    
+    /**
+     * <p>Gets the corresponding issue key.</p>
+     * 
+     * @return the corresponding issue key.
+     * @since 1.1
+     */
+    protected String getIssueKey() {
+        return this.issueKey;
     }
 }

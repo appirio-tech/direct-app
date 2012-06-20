@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2009 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.util;
 
@@ -17,8 +17,15 @@ import com.topcoder.catalog.entity.CompUploadedFile;
  * temporarily. Since we don't expect a lot of user uploading in the same time so this approach should be applicable.
  * </p>
  *
- * @author BeBetter
- * @version 1.0
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>Change method {@link #getFileMap()} to public.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author BeBetter, TCSASSEMBER
+ * @version 1.1
  */
 public class SessionFileStore {
 
@@ -47,7 +54,7 @@ public class SessionFileStore {
         return getFileMap().get(fileTempId);
     }
 
-    private Map<Long, CompUploadedFile> getFileMap() {
+    public Map<Long, CompUploadedFile> getFileMap() {
         synchronized (session) {
             if (session.getAttribute(SESSION_VAR_FILE_MAP) == null) {
                 session.setAttribute(SESSION_VAR_FILE_MAP, new HashMap<Long, CompUploadedFile>());

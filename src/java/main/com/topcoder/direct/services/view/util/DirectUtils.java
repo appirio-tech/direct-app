@@ -3,6 +3,9 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +20,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.topcoder.catalog.entity.CompUploadedFile;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
@@ -36,12 +40,17 @@ import com.topcoder.project.service.ProjectServices;
 import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.service.project.CompetitionPrize;
 import com.topcoder.service.project.ProjectData;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.axis.encoding.Base64;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.Upload;
 import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.ProjectType;
@@ -318,8 +327,24 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
+ * <p>
+ * 
+ * <p>
+ * Version 1.8.5 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>Added constant {@link #FINAL_FIX_UPLOAD_TYPE_ID}.</li>
+ *     <li>Added method {@link #getLastClosedFinalFixPhase(ProjectServices, long)} to get the last closed
+ *     final fix phase of a project.</li>
+ *     <li>Added method {@link #addAttachmentsToIssue(String, SessionFileStore, String[])} to upload attachments
+ *     to a JIRA issue.</li>
+ *     <li>Added method {@link #addFinalFixToIssue(String, Upload, String)} to upload final fix to a JIRA issue.</li>
+ *     <li>Added method {@link #getFinalFixUpload(long, long, ContestServiceFacade)} to get the final fix upload of
+ *     a specified final fix phase.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe
- * @version 1.8.4
+ * @version 1.8.5
  */
 public final class DirectUtils {
     /**
@@ -446,6 +471,13 @@ public final class DirectUtils {
      */
     private static final int CONTEST_SUBMISSION_TYPE_ID = 1;
 
+    /**
+     * Represents the final fix upload type id.
+     * 
+     * @since 1.8.5
+     */
+    private static final int FINAL_FIX_UPLOAD_TYPE_ID = 3;
+    
     /**
      * <p>
      * Default Constructor.
@@ -1884,5 +1916,104 @@ public final class DirectUtils {
         }
         
         return (reviewsCnt == phasesCnt);
+    }
+    
+    /**
+     * <p>Gets the last closed final fix phase of a specified project.</p>
+     * 
+     * @param projectServices the project services instance.
+     * @param projectId the id of the specified project.
+     * @return the last closed final fix phase of the specified project.
+     * @since 1.8.5
+     */
+    public static Phase getLastClosedFinalFixPhase(ProjectServices projectServices, long projectId) {
+        List<Phase> finalFixPhases = projectServices.getPhasesByType(projectId, "Final Fix");
+        Phase lastClosedFinalFixPhase = null;
+        for (Phase phase : finalFixPhases) {
+            if (phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId()) {
+                lastClosedFinalFixPhase = phase;
+            }
+        }
+        return lastClosedFinalFixPhase;
+    }
+    
+    /**
+     * <p>Upload attachments from <code>SessionFileStore</code> to an issue.</p>
+     * 
+     * @param issueKey the issue key to upload
+     * @param fileStore the instance of <code>SessionFileStore</code>
+     * @param docIds the IDs of the attachments to upload
+     * @throws Exception if any error occurs
+     * @since 1.8.5
+     */
+    public static void addAttachmentsToIssue(String issueKey, SessionFileStore fileStore, String[] docIds)
+        throws Exception {
+        if (docIds.length > 0) {
+            List<Long> docIds2 = new ArrayList<Long>();
+            for (String id : docIds) {
+                if (id.trim().length() > 0) {
+                    docIds2.add(Long.parseLong(id));
+                }
+            }
+            String[] fileNames = new String[docIds2.size()];
+            String[] fileData = new String[docIds2.size()];
+            for (int i = 0; i < docIds2.size(); i++) {
+                CompUploadedFile file = fileStore.getFile(docIds2.get(i));
+                fileNames[i] = file.getUploadedFileName();
+                fileData[i] = Base64.encode(file.getFileData());
+            }
+            JiraRpcServiceWrapper.addAttachments(issueKey, fileNames, fileData);
+        }
+    }
+    
+    /**
+     * <p>Upload final fix as attachment to an issue.</p>
+     * 
+     * @param issueKey the issue key to upload
+     * @param upload the final fix
+     * @param fileLocation the directory location where the final fix submission stored
+     * @throws Exception if any error occurs
+     */
+    public static void addFinalFixToIssue(String issueKey, Upload upload, String fileLocation) throws Exception {
+        int i = upload.getParameter().lastIndexOf('.');
+        String fileName = "Final_Fix_" + upload.getProjectPhase();
+        if (i > 0 && i < upload.getParameter().length() - 1) {
+            fileName = fileName + upload.getParameter().substring(i);
+        }
+        FileInputStream ins = new FileInputStream(fileLocation + File.separator + upload.getParameter());
+        String base64data;
+        try {
+            base64data = Base64.encode(IOUtils.toByteArray(ins));
+        } finally {
+            try {
+                ins.close();
+            } catch (IOException e) {
+                
+            }
+        }
+        
+        JiraRpcServiceWrapper.addAttachments(issueKey, new String[] {fileName}, new String[] {base64data});
+    }
+    
+    /**
+     * <p>Gets the final fix upload associated with a specified final fix phase.</p>
+     * 
+     * @param projectId the if of the project which the final fix upload belongs to
+     * @param phaseId the id of the specified final fix phase
+     * @param facade the contest service facade
+     * @return the final fix upload associated with the specified final fix phase
+     * @throws UploadPersistenceException if any error occurs when retrieving data from database
+     * @throws SearchBuilderException if any error occurs when searching the uploads
+     * @since 1.8.5
+     */
+    public static Upload getFinalFixUpload(long projectId, long phaseId, ContestServiceFacade facade)
+        throws UploadPersistenceException, SearchBuilderException {
+        Upload[] uploads = facade.getActiveUploads(projectId, FINAL_FIX_UPLOAD_TYPE_ID);
+        for (Upload upload : uploads) {
+            if (upload.getProjectPhase() != null && upload.getProjectPhase().longValue() == phaseId) {
+                return upload;
+            }
+        }
+        return null;
     }
 }

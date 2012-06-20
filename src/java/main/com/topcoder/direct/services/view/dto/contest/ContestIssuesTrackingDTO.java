@@ -1,17 +1,17 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
-
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.view.dto.CommonDTO;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
-import com.topcoder.direct.services.view.form.ContestIdForm;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
+import com.topcoder.direct.services.view.form.ContestIdForm;
+import com.topcoder.project.phases.Phase;
 
 /**
  * <p>
@@ -28,8 +28,15 @@ import java.util.List;
  * - remove ContestStatsDTO and corresponding get/set methods.
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>Added filed {@link #lastClosedFinalFix}. Also the getter/setter were added.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author Veve, TCSASSEMBLER
- * @version  1.2
+ * @version  1.3
  */
 public class ContestIssuesTrackingDTO extends BaseContestCommonDTO implements ContestStatsDTO.Aware, ContestIdForm.Aware {
 
@@ -59,7 +66,14 @@ public class ContestIssuesTrackingDTO extends BaseContestCommonDTO implements Co
      * The bug races of the contest.
      */
     private List<TcJiraIssue> bugRaces;
-
+    
+    /**
+     * Represents the last closed final fix phase.
+     * 
+     * @since 1.3
+     */
+    private Phase lastClosedFinalFix;
+    
     /**
      * Gets the contest id.
      *
@@ -201,6 +215,26 @@ public class ContestIssuesTrackingDTO extends BaseContestCommonDTO implements Co
      */
     public int getBugRacesNumber() {
         return bugRaces.size();
+    }
+
+    /**
+     * Gets the last closed final fix phase.
+     * 
+     * @return the last closed final fix phase.
+     * @since 1.3
+     */
+    public Phase getLastClosedFinalFix() {
+        return lastClosedFinalFix;
+    }
+
+    /**
+     * Sets the last closed final fix phase.
+     * 
+     * @param lastClosedFinalFix the last closed final fix phase.
+     * @since 1.3
+     */
+    public void setLastClosedFinalFix(Phase lastClosedFinalFix) {
+        this.lastClosedFinalFix = lastClosedFinalFix;
     }
 }
 

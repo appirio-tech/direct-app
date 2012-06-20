@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.atlassian.jira.rpc.soap.client.RemoteAttachment;
 import com.atlassian.jira.rpc.soap.client.RemoteCustomFieldValue;
 import com.atlassian.jira.rpc.soap.client.RemoteIssue;
 import com.topcoder.direct.services.configs.ConfigUtils;
@@ -45,8 +46,15 @@ import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
  * </ol>
  * </p>
  *
- * @author Veve, GreatKevin
- * @version 1.3
+ * <p>
+ * Version 1.4 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>Added filed {@link #attachments}. Also the getter were added.</li>
+ *   </ol>
+ * </p>
+ * 
+ * @author Veve, GreatKevin, TCSASSEMBER
+ * @version 1.4
  */
 public class TcJiraIssue implements Serializable {
 
@@ -123,12 +131,19 @@ public class TcJiraIssue implements Serializable {
     private String resolutionName;
 
     /**
-     * The security leve id of the issue.
+     * The security level id of the issue.
      *
      * @since 1.2
      */
     private Long securityLevelId;
 
+    /**
+     * The attachments of the issue.
+     * 
+     * @since 1.4
+     */
+    private RemoteAttachment[] attachments;
+    
     /**
      * Creates a TcJiraIssue instance.
      */
@@ -620,5 +635,22 @@ public class TcJiraIssue implements Serializable {
      */
     public boolean isCca() {
         return ConfigUtils.getIssueTrackingConfig().getSecurityNDAId().equals(getSecurityLevelId());
+    }
+    
+    /**
+     * Gets the attachments of the issue.
+     * 
+     * @return the attachments of the issue.
+     * @since 1.4
+     */
+    public RemoteAttachment[] getAttachments() {
+        try {
+            if (attachments == null) {
+                attachments = JiraRpcServiceWrapper.getIssueAttachments(getIssueKey());
+            }
+        } catch (Exception e) {
+            
+        }
+        return attachments;
     }
 }

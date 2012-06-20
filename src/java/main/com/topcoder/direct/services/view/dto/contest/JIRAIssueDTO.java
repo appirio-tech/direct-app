@@ -11,8 +11,15 @@ import com.topcoder.direct.services.view.dto.TcJiraIssue;
  * <p>A DTO providing information of JIRA issue. It can be used to
  * serialize data to JSON format in AJAX calls.</p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>Added filed {@link #attachmentError}. Also the getter/setter were added.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author TCSASSEMBER
- * @version 1.0
+ * @version 1.1
  */
 public class JIRAIssueDTO implements Serializable {
     /**
@@ -124,6 +131,13 @@ public class JIRAIssueDTO implements Serializable {
      * <p>Represents the due date.</p>
      */
     private String dueDateString;
+    
+    /**
+     * <p>A flag indicates whether error occurs when uploading attachments to issue.</p>
+     * 
+     * @since 1.1
+     */
+    private boolean attachmentError;
     
     /**
      * <p>Empty constructor.</p>
@@ -538,5 +552,25 @@ public class JIRAIssueDTO implements Serializable {
      */
     public void setDueDateString(String dueDateString) {
         this.dueDateString = dueDateString;
+    }
+
+    /**
+     * <p>Gets the flag indicates whether error occurs when uploading attachments to issue.</p>
+     * 
+     * @return true if error occurs when uploading attachments to issue, false otherwise.
+     * @since 1.1
+     */
+    public boolean isAttachmentError() {
+        return attachmentError;
+    }
+
+    /**
+     * <p>Sets the flag indicates whether error occurs when uploading attachments to issue.</p>
+     * 
+     * @param attachmentError true if error occurs when uploading attachments to issue, false otherwise.
+     * @since 1.1
+     */
+    public void setAttachmentError(boolean attachmentError) {
+        this.attachmentError = attachmentError;
     }
 }

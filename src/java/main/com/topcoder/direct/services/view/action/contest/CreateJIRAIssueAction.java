@@ -8,7 +8,6 @@ import com.atlassian.jira.rpc.soap.client.RemoteIssue;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.configs.IssueTrackingConfig;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.contest.JIRAIssueDTO;
 import com.topcoder.direct.services.view.form.JIRAIssueForm;
@@ -22,10 +21,19 @@ import com.topcoder.service.project.SoftwareCompetition;
  * <p>This class is a Struts action class used to create a JIRA issue. The created JIRA issue will
  * be stored in <code>result</code> instance. So it can be used in an AJAX way.</p>
  *
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>The based class was changed to <code>JIRAAttachmentBaseAction</code>.</li>
+ *     <li>Update {@link #executeAction()} to process the JIRA attachments.</li>
+ *     <li>Added method {@link #getIssueKey()} to get the corresponding issue key.</li>
+ *   </ol>
+ * </p>
+ * 
  * @author TCSASSEMBLER
- * @version 1.0
+ * @version 1.1
  */
-public class CreateJIRAIssueAction extends StudioOrSoftwareContestAction {
+public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
     /**
      * <p>Represents the serial version unique id.</p>
      */
@@ -154,6 +162,13 @@ public class CreateJIRAIssueAction extends StudioOrSoftwareContestAction {
         newIssue.setStatusName(JiraRpcServiceWrapper.getIssueStatusNames().get(newIssue.getStatusId()));
         
         setResult(new JIRAIssueDTO(newIssue));
+        
+        // process the attachments
+        try {
+            super.executeAction();
+        } catch (Exception e) {
+            ((JIRAIssueDTO) getResult()).setAttachmentError(true);
+        }
     }
     
     /**
@@ -168,5 +183,15 @@ public class CreateJIRAIssueAction extends StudioOrSoftwareContestAction {
         fieldValue.setCustomfieldId(fieldId);
         fieldValue.setValues(new String[] {value});
         return fieldValue;
+    }
+    
+    /**
+     * <p>Gets the corresponding issue key.</p>
+     * 
+     * @return the corresponding issue key.
+     * @since 1.1
+     */
+    protected String getIssueKey() {
+        return ((JIRAIssueDTO) getResult()).getIssueKey();
     }
 }

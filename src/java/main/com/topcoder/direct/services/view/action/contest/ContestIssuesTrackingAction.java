@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -15,6 +15,7 @@ import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.direct.services.view.util.SessionFileStore;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
@@ -35,8 +36,15 @@ import java.util.List;
  * - update executeAction method to set contest dashboard data.
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2 v1.0) change notes:
+ *   <ol>
+ *     <li>Update {@link #executeAction()} to get the last closed final fix phase and clear the 
+ *     temporary attachments in the <code>SessionFileStore</code>.</li>
+ *   </ol>
+ * </p>
  * @author Veve, TCSASSEMBLER
- * @version 1.2
+ * @version 1.3
  */
 public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
 
@@ -103,6 +111,8 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         userProjectsDTO.setProjects(projects);
         getViewData().setUserProjects(userProjectsDTO);
 
+        getViewData().setLastClosedFinalFix(DirectUtils.getLastClosedFinalFixPhase(getProjectServices(), getProjectId()));
+        
         // Set current project contests
         List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(
                 currentUser.getUserId(), contestStats.getContest().getProject().getId());
@@ -114,6 +124,9 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         
         DirectUtils.setDashboardData(currentUser, contestId, viewData,
                 getContestServiceFacade(), !isStudio);
+        
+        // clear the old temporary attachments
+        new SessionFileStore(request.getSession(true)).getFileMap().clear();
     }
 
 
