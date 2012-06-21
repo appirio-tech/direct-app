@@ -2681,7 +2681,7 @@ $(document).ready(function(){
         if(!$(this).hasClass("expand")){
             $(this).addClass("expand");
             $('.fbMask .fbBox').animate({
-                height:"360px"
+                height:"310px"
             }, 500);
         }else{
             $('.fbMask .fbBox').animate({
@@ -2711,7 +2711,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'POST',
             url:'dashboardSendFeedback',
-            data: {feedbackContent: content},
+            data: {feedbackContent: content, feedbackURL: window.location.href},
             dataType: "json",
             cache:false,
             async:true,

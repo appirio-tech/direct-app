@@ -9046,7 +9046,7 @@ TABLE.softwareStatsApproval {
                 border-left:1px solid #bdbdbd;
                 border-right:1px solid #bdbdbd;
                 width:438px;
-                height:272px;
+                height:220px;
                 padding:24px; 
             }
             .fbMask .fbBox .fbSubmit p{
@@ -9055,23 +9055,6 @@ TABLE.softwareStatsApproval {
                 .fbMask .fbBox .fbSubmit p strong{
                     color:#b60000;
                 }
-            .fbMask .fbBox .fbSubmit .fbType{
-                overflow:hidden;
-                border:1px solid #c3c3c3;
-                padding:12px 10px 4px;
-                background:#fffffe;
-                margin-bottom:9px;
-            }
-                .fbMask .fbBox .fbSubmit .fbType input{
-                    float:left;
-                 }
-                .fbMask .fbBox .fbSubmit .fbType label{
-                    float:left;
-                    padding-right:16px;
-                    padding-left:4px;
-                    font-size:12px;
-                    color:#6c6c6c;
-                 }
             .fbMask .fbBox .fbSubmit textarea{
                 border:1px solid #C3C3C3;
                 padding:5px;
@@ -9084,11 +9067,12 @@ TABLE.softwareStatsApproval {
             }
             .fbMask .fbBox .fbSubmit .action{
                 overflow:hidden;
-                padding-top:12px;
+                padding-top:15px;
+                padding-left: 100px;
             }
                 .fbMask .fbBox .fbSubmit .action a{
                     float:left;
-                    margin:0 8px 0 0;
+                    margin:0 8px 0 25px;
                 }
                     .fbMask .fbBox .fbSubmit .action a span.right{ 
                         padding:4px 20px 0;
