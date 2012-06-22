@@ -1315,7 +1315,7 @@
         </div>
     </div>
     
-    <!-- Add Feedback Dialog -->
+    <!-- Add Feedback Dialog 
     <div class="fbMask">
         <div class="fbBox">
             <a class="fbBtn" href="javascript:;">
@@ -1337,6 +1337,6 @@
             <span class="right"><span class="text">Your feedback has been submitted. Thank you.</span></span>
         </div>
     </div>
-    <!-- End .fbMask -->
+    <!-- End .fbMask 
 </div>
 <!-- End .popups -->
