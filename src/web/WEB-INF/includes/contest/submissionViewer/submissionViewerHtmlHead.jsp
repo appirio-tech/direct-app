@@ -59,6 +59,7 @@
 <script type="text/javascript" src="/scripts/jquery.bgiframe.js?v=207894"></script>
 <script type="text/javascript" src="/scripts/jquery.scrollfollow.js?v=179771"></script>
 <script type="text/javascript" src="/scripts/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" src="/scripts/ajaxupload2.js?v=209582"></script>
 
 <script type="text/javascript" src="/scripts/jquery.select.js?v=185283"></script>
 <script type="text/javascript" src="/scripts/studio.js?v=213622"></script>
