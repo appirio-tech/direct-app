@@ -49,8 +49,12 @@
  * Version 1.6 (Release Assembly - TC Direct Cockpit Release Four) updates:
  * - Show start spec review when user activates the contest
  *
- * @author isv, minhu, pvmagacho, GreatKevin
- * @version 1.6
+ * Version 1.6 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+ * - Add place holder support for tinyMCE editors for sutdio contest description, round1 info
+ * - and round2 info fields.
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin, TCSASSEMBER
+ * @version 1.7
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -189,17 +193,25 @@ $(document).ready(function(){
             populateSpecSection(true);
             populateDocumentSection();
 
-              setupTinyMCEWithTemplate('contestDescription', 10000, "studio_templates_list");
+              setupTinyMCEWithTemplateAndPlaceHoder('contestDescription', 10000, "Only members that register for this contest will see this description.", "studio_templates_list");
               setupTinyMCE("swPrivateDescription", 2048);
               setupTinyMCE('contestIntroduction', 2000);
-              setupTinyMCE('round1Info', 2000);
-              setupTinyMCE('round2Info', 2000);
+              setupTinyMCEWithTemplateAndPlaceHoder('round1Info', 2000, "Only members that register for this contest will see this description.");
+              setupTinyMCEWithTemplateAndPlaceHoder('round2Info', 2000, "Only members that register for this contest will see this description.");
               setupTinyMCE('swDetailedRequirements', 12000);
               setupTinyMCE('swGuidelines', 2048);
             
             //execute some actions specific for component design/dev
             //onContestTypeChange();
             $("#contestLoading").hide();
+            var waitForMCE=function() {
+                if (!tinyMCE.get('contestDescription')) {
+                    setTimeout(waitForMCE, 500);
+                    return;
+                }
+                updateMCEPlaceHolderCtl();
+            };
+            setTimeout(waitForMCE, 500);
           },
           function(errorMessage) {
               showServerError(errorMessage);
@@ -340,6 +352,21 @@ function onContestTypeChange() {
    	  }
 }
 
+/**
+ * Fix the id in mainWidget.softwareCompetition.fileTypes.
+ * @since 1.7
+ */
+function fixFileTypeIds() {
+    var types = getSplitFileTypes(mainWidget.softwareCompetition.fileTypes);
+    var fileTypes = [];
+    for (var i = 0; i < types[0].length; i++) {
+        fileTypes.push(types[0][i].value);
+    }
+    for (var i = 0; i < types[1].length; i++) {
+        fileTypes.push(types[1][i]);
+    }
+    mainWidget.softwareCompetition.fileTypes = fileTypes;
+}
 
 function initContest(contestJson) {
    if (!contestJson.projectStudioSpecification) {
@@ -719,12 +746,47 @@ function populateTypeSection() {
   }
 }
 
+/**
+ * Update the tinyMCE editors to support or not support the placeholder function.
+ * @since 1.7
+ */
+function updateMCEPlaceHolderCtl() {
+    if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+        enableMCEPlaceholderText = true;
+        $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
+            var obj = tinyMCE.get(this);
+            if (obj.getContent() == "") {
+                obj.setContent("Only members that register for this contest will see this description.");
+            }
+       });
+     } else {
+        $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
+            var obj = tinyMCE.get(this);
+            if (obj.getContent() == "") {
+                obj.setContent("");
+            }
+       });
+       enableMCEPlaceholderText = false;
+     }
+}
+
 function saveTypeSection() {
    if(!validateFieldsTypeSection()) {
        return;
    }
+   if (mainWidget.competitionType != "SOFTWARE") {
+      if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+        $("#viewableSubmFlag").attr("disabled","disabled");
+        $("#viewableSubmFlag").attr("checked","");
+        mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
+      } else {
+        $("#viewableSubmFlag").attr("disabled","");
+      }
+      populateSpecSection();
+   }
 
    //construct request data
+   fixFileTypeIds();
    var request = saveAsDraftRequest();
 
    $.ajax({
@@ -743,7 +805,8 @@ function saveTypeSection() {
                 populatePrizeSection();
             }
          }
-         showTypeSectionDisplay();         			
+         showTypeSectionDisplay();
+         updateMCEPlaceHolderCtl();
       },
       beforeSend: beforeAjax,
       complete: afterAjax            
@@ -948,6 +1011,7 @@ function saveRoundSection() {
    }
 
    //construct request data
+   fixFileTypeIds();
    var request = saveAsDraftRequest();
 
    $.ajax({
@@ -1315,6 +1379,7 @@ function savePrizeSection() {
    }
 
    //construct request data
+   fixFileTypeIds();
    var request = saveAsDraftRequest();
 
     if (startedContest) {
@@ -1602,7 +1667,7 @@ function populateSpecSection(initFlag) {
       var studioSubtypeId = mainWidget.softwareCompetition.projectHeader.projectCategory.id;
       var types = getStudioFileTypes(studioSubtypeId);
 	  $.each(mainWidget.softwareCompetition.fileTypes, function(i, fileType) {
-		  if(isNotEmpty(fileType)) {
+		  if(isNotEmpty(fileType+"")) {
               var found = false;
               for (var i = 0; i < types.length; i++) {
                   if(types[i].value == fileType) {
@@ -1622,6 +1687,17 @@ function populateSpecSection(initFlag) {
 
       if ($('#viewableSubmFlag').length) {
           $('#viewableSubmFlag').attr('checked', mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] == 'true');
+          if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+                $("#viewableSubmFlag").attr("disabled","disabled");
+                $("#viewableSubmFlag").attr("checked","");
+          } else {
+                $("#viewableSubmFlag").attr("disabled","");
+          }
+      }
+      if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+        $("#contestIntroduction").parent().find(".mceFooterNote").show();
+      } else {
+        $("#contestIntroduction").parent().find(".mceFooterNote").hide();
       }
 
       if ($('#rViewableSubmFlag').length) {
@@ -1824,6 +1900,7 @@ function showDocumentSectionEdit() {
 
 function saveDocumentSection() {
    //construct request data
+   fixFileTypeIds();
    var request = saveAsDraftRequest();
 
    $.ajax({
@@ -1919,6 +1996,7 @@ function hideActivateSpecReviewModal() {
 
 function activateAndStartSpecReview(mode) {
     //construct request data
+    fixFileTypeIds();
     var request = saveAsDraftRequest();
     request['activationFlag'] = true;
     request['specReviewStartMode'] = mode;

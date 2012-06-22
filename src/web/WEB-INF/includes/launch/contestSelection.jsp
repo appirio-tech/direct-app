@@ -1,7 +1,7 @@
 <%--
   - Author: TCSASSEMBLER
-  - Version: 1.2
-  - Copyright (C) 2010 - 1012 TopCoder Inc., All Rights Reserved.
+  - Version: 1.3
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
 
@@ -16,7 +16,8 @@
   -
   - Version 1.2 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) change notes:
   - - add the check box "Create Bug Hunt Contest" for assembly contest
-  -
+  - Version 1.3 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+  -   Added CCA support for studio contest.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -38,7 +39,7 @@
                        </select>
                   </div>
 
-                  <div id="cca" class="lcc_chk software hide" >
+                  <div id="cca" class="lcc_chk" >
                     <input id="lccCheckBox" type="checkbox" />
                     <span class="lcc">Enforce CCA</span>
                     <a href="javascript:;" class="helpme" ><img src="/images/help_ico5.gif" alt="help" /></a>

@@ -13,7 +13,10 @@
  * Version 1.2 Direct Replatforming Release 4 changes notes
  * - Add support to set Maximum Submissions to 5 for studio contest.
  *
- * @version 1.2
+ * Version 1.3 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+ * - Add support CCA for studio contest.
+ *
+ * @version 1.3
  * @author TCSDEVELOPER
  */
 $(document).ready(function() {	 
@@ -274,6 +277,25 @@ function validateFieldsContestSelectionStudio() {
    // set end date
    mainWidget.softwareCompetition.subEndDate = new Date();
    mainWidget.softwareCompetition.subEndDate.setTime(startDate.getTime() + (milestoneDateHours + endDateHours) * 60 * 60 * 1000);
+   if($('#lccCheckBox').is(':checked')) {
+   	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePrivate();
+       enableMCEPlaceholderText = true;
+       $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
+            var obj = tinyMCE.get(this);
+            if (obj.getContent() == "") {
+                obj.setContent("Only members that register for this contest will see this description.");
+            }
+       });
+   } else {
+   	   mainWidget.softwareCompetition.projectHeader.setConfidentialityTypePublic();
+       $(['contestDescription', 'round1Info', 'round2Info']).each(function() {
+            var obj = tinyMCE.get(this);
+            if (obj.getContent() == "") {
+                obj.setContent("");
+            }
+       });
+       enableMCEPlaceholderText = false;
+   }
    
    return true;
 }
@@ -286,6 +308,15 @@ function continueContestSelection() {
    if(mainWidget.isSoftwareContest()) {
    	  showPage('overviewSoftwarePage');
    } else {
+      if (mainWidget.softwareCompetition.projectHeader.isLccchecked()) {
+        $("#viewableSubmFlag").attr("disabled","disabled");
+        $("#viewableSubmFlag").attr("checked","");
+        mainWidget.softwareCompetition.projectHeader.properties['Viewable Submissions Flag'] = 'false';
+        $("#contestIntroduction").parent().find(".mceFooterNote").show();
+      } else {
+        $("#viewableSubmFlag").attr("disabled","");
+        $("#contestIntroduction").parent().find(".mceFooterNote").hide();
+      }
       showPage('overviewPage');
    }
 

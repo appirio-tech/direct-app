@@ -1,6 +1,6 @@
 <%--
-  - Author: isv
-  - Version: 1.4
+  - Author: isv, TCSASSEMBER
+  - Version: 1.5
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: overview page for studio contest.
@@ -12,6 +12,8 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
   - Version 1.4 (Release Assembly - Contest Edit and Upload Update) changes: added text on file size limit.
+  - Version 1.5 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+  -   Disabled the submission visibility functionality.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -21,6 +23,7 @@
         <h3>Contest Introduction</h3>
         <div class="textarea">
             <textarea id="contestIntroduction" rows="10" cols="80"></textarea>
+            <p class="mceFooterNote">All TopCoder Community members will be able to see this description. It should be a general overview of our project. Try to capture your basic goals and needs within 1-2 paragraphs. Do not put any confidential or sensitive information in this section.</p>
         </div>
   </div>
   <!-- end .description -->
@@ -161,7 +164,7 @@
                <h3><span class="icon">Submissions Visibility</span><a class="helpIcon" href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Submissions+Visibility" target="_blank"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInnerSa">
                    <div id="viewableSubmCheckbox" class="checkInput">
-                       <input type="checkbox" id="viewableSubmFlag" value="true" checked="checked">
+                       <input type="checkbox" id="viewableSubmFlag" value="true" disabled="disabled">
                        <label>Submissions are viewable after contest ends. NOTE: all submissions are hidden during the submission phase.</label>
                    </div>
                    <div class="clear"></div>

@@ -27,8 +27,12 @@
  * Version 1.5 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) change notes:
  * - Add the handle of "auto bug hunt creation" checkbox for assembly contest
  *
+ * Version 1.6 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+ * - Add place holder support for tinyMCE editors for sutdio contest description, round1 info
+ * - and round2 info fields.
+ *
  * @author GreatKevin, TCSASSEMBLER
- * @version 1.5
+ * @version 1.6
  */
 $(document).ready(function() {
 
@@ -448,10 +452,10 @@ $(document).ready(function() {
         $(".date-pick").datePicker().val($.trim($("#currentServerDate").text())).trigger('change');
     }
 
-	setupTinyMCEWithTemplate('contestDescription', 10000, "studio_templates_list");
+	setupTinyMCEWithTemplateAndPlaceHoder('contestDescription', 10000, "Only members that register for this contest will see this description.", "studio_templates_list");
     setupTinyMCEWithTemplate('contestIntroduction', 2000);
-	setupTinyMCEWithTemplate('round1Info', 2000);
-	setupTinyMCEWithTemplate('round2Info', 2000);
+	setupTinyMCEWithTemplateAndPlaceHoder('round1Info', 2000, 'Only members that register for this contest will see this description.');
+	setupTinyMCEWithTemplateAndPlaceHoder('round2Info', 2000, 'Only members that register for this contest will see this description.');
 	setupTinyMCEWithHeight('swDetailedRequirements', 12000, "240");
 	setupTinyMCEWithHeight('swGuidelines', 2048, "240");
 

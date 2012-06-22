@@ -1,6 +1,6 @@
 <%--
-  - Version: 1.6
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version: 1.7
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Edit Tab for studio contest detail page
   -
@@ -21,6 +21,8 @@
   -
   - Version 1.6 (Release Assembly - TopCoder Cockpit Submission Viewer Revamp) changes:
   -   Added contestTypes select sub elements to avoid loading scripts error.
+  - Version 1.7 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+  -   Added CCA support for studio contest. Disabled the submission visibility functionality.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -42,6 +44,9 @@
          <span class="name2"><strong>Contest Name</strong></span>
          <span class="value"><strong>: <span id="rContestName"></span></strong></span>
          <br /> <br />
+         <span class="name3"><strong>CCA is</strong></span>
+         <span class="value"><strong>: <span id="rCCA"></span></strong></span>
+		 <br /> <br />
          <span class="name2 billingdisplay"><strong>Billing Account</strong></span>
          <span class="value billingdisplay"><strong>: <span id="rBillingAccount"></span></strong></span>
          <br /> <br />
@@ -67,7 +72,7 @@
           </div><!-- End .caption -->                                               
           
       <div class="detailsContent_det_type_edit">
-                    <div class="det_font" style="border:1px solid #BDBDBD; height:250px;padding-left:10px;">                                              
+                    <div class="det_font" style="border:1px solid #BDBDBD; height:300px;padding-left:10px;">                                              
             <div id="launchContestOut" class="contestTypeEditSection">                                                         
                          <div class="tabOut">                                    
                  <!-- tab contest -->
@@ -105,7 +110,8 @@
                             <input type="text" class="bigin"  id="contestName" />
                             <span id="contestNameText"></span>
                         </span>
-                                  
+                 <br /><br />
+                 <span class="name"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
                  <!-- Billing Account -->
                  <div id="billingAccountDivEdit">
                  <br />
@@ -567,7 +573,7 @@
                       <h3><span class="icon">Contest Introduction</span><a href="javascript:;" class="helpIcon"><span class="hide">Help</span></a></h3>                    
                       <div class="textarea1">
                           <textarea id="contestIntroduction" rows="" cols=""></textarea>
-                          <p class="mceFooterNote">Describe your project and your project goals.</p>
+                          <p class="mceFooterNote">Describe your project and your project goals. All TopCoder Community members will be able to see this description. It should be a general overview of our project. Try to capture your basic goals and needs within 1-2 paragraphs. Do not put any confidential or sensitive information in this section.</p>
                       </div>
 
                 </div>
@@ -608,7 +614,7 @@
                <h3><span class="icon">Submissions Visibility</span><a class="helpIcon" href="http://topcoder.com/wiki/display/tcstudio/Studio+Policies+for+Submissions+Visibility" target="_blank"><span class="hide">Help</span></a></h3>
                <div class="deliverablesInnerSa">
                    <div id="viewableSubmCheckbox" class="checkInput">
-                       <input type="checkbox" id="viewableSubmFlag" value="true">
+                       <input type="checkbox" id="viewableSubmFlag" value="true" disabled="disabled">
                        <label>Submissions are viewable after contest ends. NOTE: all submissions are hidden during the submission phase.</label>
                    </div>
                    <div class="clear"></div>

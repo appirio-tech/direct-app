@@ -17,6 +17,9 @@
  * Version 1.5 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
  * - Add the tctip lib to display the tooltip
  *
+ * Version 1.6 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+ * - Add methods to support place holder text for tinyMCE editors.
+ *
  * @since Launch Contest Assembly - Studio
  */
 $(document).ready(function() {
@@ -574,6 +577,35 @@ function setMaxCharsEventHandlerOnSetup(ed, maxChars) {
 	});
 }
 
+var enableMCEPlaceholderText = true;
+/**
+ * Set the event handler used by tinyMCE to support placeholder text.
+ * @param ed the object
+ * @param placeholder the placeholder text
+ * @since 1.6
+ */
+function setPlacehoderOnSetup(ed, placeholder) {
+    ed.onGetContent.add(function(ed, o) {
+        if (enableMCEPlaceholderText && $(o.content).text() == placeholder) {
+            o.content = "";
+        }
+    });
+    ed.onClick.add(function(ed, e) {
+        if (ed.getContent() == "") {
+            ed.setContent("");
+        }
+    });
+    ed.onInit.add(function(ed, evt) {
+        var dom = ed.dom;
+        var doc = ed.getWin();
+        tinymce.dom.Event.add(doc, 'blur', function(e) {
+            if (enableMCEPlaceholderText && ed.getContent() == "") {
+                ed.setContent(placeholder);
+            }
+        });
+    });
+}
+
 var allowedTags = [
 /<a\s*(href\s*=\s*[^=|^>|^<]*)?>/mg,
 /<(span|ul)\s*(style\s*=\s*[^=|^>|^<]*)?>/mg,
@@ -710,3 +742,26 @@ var setupTinyMCEWithTemplate = function(obj, maxChars, templateListName) {
     options.template_external_list_url = templateListsLocation + templateListName + ".js";
     tinyMCE.init(options);
 }
+
+/**
+ * Sets up the tinyMCE editor with template list loaded and the placeholder text
+ *
+ * @param obj the obj id
+ * @param maxChars the max chars allowed
+ * @param placeholder the place holder text
+ * @param templateListName the name of the template list to load
+ * @since 1.6
+ */
+var setupTinyMCEWithTemplateAndPlaceHoder = function(obj, maxChars, placeholder, templateListName) {
+    var options = jQuery.extend({},cockpitTinyMCEOptions);
+    options.elements = obj;
+    options.setup = function(ed) {
+        setMaxCharsEventHandlerOnSetup(ed, maxChars);
+        setPlacehoderOnSetup(ed, placeholder);
+    };
+    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
+    if (templateListName) {
+        options.template_external_list_url = templateListsLocation + templateListName + ".js";
+    }
+    tinyMCE.init(options);
+};
