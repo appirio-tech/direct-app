@@ -2675,4 +2675,82 @@ $(document).ready(function(){
         }
          
     });
+    
+    /* Add js code for BUGR-6759 */
+    var tip = "Well, I think you can ...";
+    $(".fbMask a.fbBtn").click(function(){
+        if(!$(this).hasClass("expand")){
+            $(this).addClass("expand");
+            $('.fbMask .fbBox').animate({
+                height:"310px"
+            }, 500);
+        }else{
+            $('.fbMask .fbBox').animate({
+                height:"40px"
+            }, 500,function(){
+                $(".fbMask a.fbBtn").removeClass("expand");
+            }); 
+        }
+        return false;
+    })
+    $(".fbMask .fbSubmit  .action a.cancel").click(function(){
+        $('.fbMask .fbBox').animate({
+            height:"40px"
+        }, 500,function(){
+            $(".fbMask a.fbBtn").removeClass("expand");
+            $(".fbMask .fbSubmit textarea").val(tip);   
+        });
+        return false;
+    })
+    $(".fbMask .fbSubmit  .action a.submit").click(function(){
+        var content = $.trim($(".fbMask .fbSubmit textarea").val());
+        var tip = "Well, I think you can ...";
+        if (content == "" || content == tip) {
+            showErrors("Please input your feedback.");
+            return false;
+        }
+        $.ajax({
+            type: 'POST',
+            url:'dashboardSendFeedback',
+            data: {feedbackContent: content, feedbackURL: window.location.href},
+            dataType: "json",
+            cache:false,
+            async:true,
+            success: function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        $(".fbMask .fbMsg").fadeIn();
+                        $(".fbMask .fbSubmit textarea").val(tip);
+                        setTimeout(function() {
+                            $(".fbMask a.fbBtn").removeClass("expand");
+                            $(".fbMask .fbMsg").fadeOut(200,function(){
+                                $('.fbMask .fbBox').animate({
+                                    height:"40px"
+                                }, 500); 
+                            });
+                        },3000)
+                    },
+                    function(errorMessage) {
+                        showServerError(errorMessage);
+                    });
+            }
+        });
+        $('.fbMask .fbBox').animate({
+            height:"0"
+        }, 500);
+        return false;
+    })
+    $(".fbMask .fbSubmit textarea").focusin(function() {
+        var value = $.trim($(this).val());
+        if(value == "" || value == tip) {
+            $(this).removeClass("tipIt").val("");
+        }
+    });
+    $(".fbMask .fbSubmit textarea").focusout(function() {
+        var value = $.trim($(this).val());
+        if(value == "" || value == tip){
+            $(this).addClass("tipIt").val(tip);
+        }
+    });
+    $(".fbMask .fbSubmit textarea").trigger("focusout");
 })
