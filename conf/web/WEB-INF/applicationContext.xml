@@ -819,6 +819,16 @@
         <property name="isAJAX" value="true"/>
     </bean>
 
+    <bean id="downloadAllSoftwareMilestoneSubmissions"
+          class="com.topcoder.direct.services.view.action.contest.DownloadAllSoftwareMilestoneSubmissionsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="fileUpload" ref="fileUpload"/>
+    </bean>
+
+    <bean id="saveSoftwareMilestoneReviewAction"
+        class="com.topcoder.direct.services.view.action.contest.SaveSoftwareMilestoneReviewAction"
+        scope="prototype" parent="baseDirectStrutsAction"></bean>
+        
     <bean id="downloadSoftwareSubmissionAction"
           class="com.topcoder.direct.services.view.action.contest.DownloadSoftwareSubmissionAction"
           scope="prototype" parent="baseDirectStrutsAction">

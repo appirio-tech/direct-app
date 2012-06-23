@@ -1060,6 +1060,22 @@
             </result>
         </action>
 
+        <action name="downloadAllSoftwareMilestoneSubmissions" class="downloadAllSoftwareMilestoneSubmissions">
+            <interceptor-ref name="securedContestStack"/>
+            <result type="stream">
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+
+        <action name="saveSoftwareMilestoneReviewAction" class="saveSoftwareMilestoneReviewAction">
+            <interceptor-ref name="securedContestStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+        
         <action name="submitApproval" class="submitApprovalAction">
             <interceptor-ref name="securedContestStack"/>
             <result name="success" type="json"/>
