@@ -3,17 +3,23 @@
  */
 package com.topcoder.direct.services.view.action.contest;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.StudioOrSoftwareContestAction;
+import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
 import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
@@ -64,9 +70,16 @@ import org.apache.log4j.Logger;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated to support software milestone management.</li>
+ *   </ol>
+ * </p>
+ *
  *
  * @author TCSASSEMBLER
- * @version 1.2 (Release Assembly - TC Direct Cockpit Release Two)
+ * @version 1.3
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -111,6 +124,48 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      * @since 1.1
      */
     private boolean redirectToMilestone;
+
+    /**
+     * <p>Flag used to determine whether current phase is milestone submission.</p>
+     * 
+     * @since 1.3
+     */ 
+    private boolean inMilestoneSubmissionPhase;
+
+    /**
+     * <p>Flag used to determine whether current phase is milestone review.</p>
+     * 
+     * @since 1.3
+     */ 
+    private boolean inMilestoneReviewPhase;
+
+    /**
+     * <p>Flag used to determine whether the milestone review is committed.</p>
+     * 
+     * @since 1.3
+     */ 
+    private boolean milestoneReviewCommitted;
+
+    /**
+     * <p>Flag used to determine whether the user has write permission on the contest.</p>
+     * 
+     * @since 1.3
+     */ 
+    private boolean hasWritePermission;
+
+    /**
+     * <p>Flag used to determine whether current phase is after milestone review.</p>
+     * 
+     * @since 1.3
+     */ 
+    private boolean afterMilestoneReviewPhase;
+
+    /**
+     * <p>The number of milestone winners.</p>
+     * 
+     * @since 1.3
+     */ 
+    private int milestoneWinnersNumber;
 
     /**
      * <p>A <code>SoftwareContestSubmissionsDTO</code> providing the view data for displaying by <code>Software Contest
@@ -249,17 +304,75 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
                 }
             }
         }
+        hasWritePermission = DirectUtils.hasWritePermission(this, currentUser, this.getProjectId(), false);
 
         if (roundType == ContestRoundType.FINAL) {
             // Set submissions, winners, reviewers data
             DataProvider.setSoftwareSubmissionsData(getViewData());
         } else {
+            inMilestoneSubmissionPhase = DirectUtils.isPhaseOpen(
+                softwareCompetition, PhaseType.MILESTONE_SUBMISSION_PHASE);
+            inMilestoneReviewPhase = DirectUtils.isPhaseOpen(
+                softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE);
+            if (!inMilestoneReviewPhase) {
+                // closed = not open and not scheduled
+                afterMilestoneReviewPhase = !DirectUtils.isPhaseScheduled(
+                    softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE);
+            }
             DataProvider.setSoftwareMilestoneSubmissionsData(getViewData());
+            // sort the winner DTOs
+            Collections.sort(getViewData().getMilestoneWinners(), new Comparator<SoftwareContestWinnerDTO>(){
+                // sort based on placement
+                public int compare(SoftwareContestWinnerDTO o1, SoftwareContestWinnerDTO o2) {
+                    return o1.getPlacement() - o2.getPlacement();
+                }                
+            });
+            // sort the milestone submissions 
+            Collections.sort(getViewData().getSubmissions(), new Comparator<SoftwareSubmissionDTO>(){
+                // sort based on review score
+                public int compare(SoftwareSubmissionDTO o1, SoftwareSubmissionDTO o2) {
+                    double score1 = (o1.getReviews() == null || o1.getReviews().size() == 0 ||
+                                    o1.getReviews().get(0).getFinalScore() == null) ? 0 : 
+                                        o1.getReviews().get(0).getFinalScore();
+                    double score2 = (o2.getReviews() == null || o2.getReviews().size() == 0 ||
+                                    o2.getReviews().get(0).getFinalScore() == null) ? 0 : 
+                                        o2.getReviews().get(0).getFinalScore();
+                    if (score1 > score2) return -1;
+                    else if (score1 < score2)return 1;
+                    return 0;
+                }                
+            });
+            
+            // get submission feedback and review score
+            if (inMilestoneReviewPhase || afterMilestoneReviewPhase) {
+                milestoneReviewCommitted = true;
+            }
+            milestoneWinnersNumber = 0;
+            for (SoftwareSubmissionDTO dto : getViewData().getSubmissions()) {
+                if (dto.getReviews() != null && dto.getReviews().size() > 0) {
+                    SoftwareSubmissionReviewDTO review = dto.getReviews().get(0);
+                    dto.setMilestoneFeedback(review.getMilestoneFeedback());
+                    dto.setMilestoneReviewScore(review.getFinalScore());
+                    if (!review.getCommitted()) {
+                        // if there's a review not committed, set the flag to false
+                        milestoneReviewCommitted = false;
+                    }
+                    if (review.getFinalScore() > 10.1)milestoneWinnersNumber++;
+                } else {
+                    // there's no review yet, set the flag to false
+                    milestoneReviewCommitted = false;                    
+                }
+            }           
+            
+            // get general feedback
+            getViewData().setMilestoneSubmissionsGeneralFeedback(
+                getProjectServices().getSoftwareMilestoneSubmissionsGeneralFeedback(getProjectId()));
         }
 
         // For normal request flow prepare various data to be displayed to user
         // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(getCurrentUser(), getProjectId());
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(getCurrentUser(), getProjectId(),
+            softwareCompetition);
         getViewData().setContestStats(contestStats);
 
         // Set projects data
@@ -323,5 +436,65 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         }
 
         return true;
+    }
+
+    /**
+     * Gets the flag used to determine whether current phase is milestone submission.
+     * 
+     * @return the flag used to determine whether current phase is milestone submission
+     * @since 1.3
+     */
+    public boolean isInMilestoneSubmissionPhase() {
+        return inMilestoneSubmissionPhase;
+    }
+
+    /**
+     * Gets the flag used to determine whether current phase is milestone review.
+     * 
+     * @return the flag used to determine whether current phase is milestone review
+     * @since 1.3
+     */
+    public boolean isInMilestoneReviewPhase() {
+        return inMilestoneReviewPhase;
+    }
+
+    /**
+     * Gets the flag used to determine whether current phase is after milestone review.
+     * 
+     * @return the flag used to determine whether current phase is after milestone review
+     * @since 1.3
+     */
+    public boolean isAfterMilestoneReviewPhase() {
+        return afterMilestoneReviewPhase;
+    }
+
+    /**
+     * Gets the flag used to determine whether the milestone review is committed.
+     * 
+     * @return the flag used to determine whether the milestone review is committed
+     * @since 1.3
+     */
+    public boolean isMilestoneReviewCommitted() {
+        return milestoneReviewCommitted;
+    }
+
+    /**
+     * Gets the flag used to determine whether the user has write permission on the contest.
+     * 
+     * @return the flag used to determine whether the user has write permission on the contest
+     * @since 1.3
+     */
+    public boolean isHasWritePermission() {
+        return hasWritePermission;
+    }
+
+    /**
+     * Gets the number of milestone winners.
+     * 
+     * @return the number of milestone winners
+     * @since 1.3
+     */
+    public int getMilestoneWinnersNumber() {
+        return milestoneWinnersNumber;
     }
 }

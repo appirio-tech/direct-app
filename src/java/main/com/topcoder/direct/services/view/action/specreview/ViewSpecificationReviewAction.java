@@ -31,7 +31,9 @@ import com.topcoder.management.scorecard.data.Group;
 import com.topcoder.management.scorecard.data.Question;
 import com.topcoder.management.scorecard.data.Section;
 import com.topcoder.project.phases.PhaseStatus;
+import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.project.SoftwareCompetition;
 import com.topcoder.service.review.comment.specification.SpecReviewComment;
 import com.topcoder.service.review.comment.specification.SpecReviewCommentService;
 import com.topcoder.service.review.comment.specification.UserComment;
@@ -63,6 +65,16 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  *     &lt;result name="success"&gt;/displaySpecReviewComments.jsp&lt;/result&gt;
  * &lt;/action&gt;
  * </pre>
+
+ * <p>
+ * <b>Thread safety:</b> This class is mutable and not thread safe. This should
+ * be fine since different instances of this class should be created to serve
+ * different user requests and will not be shared across user threads (this will
+ * be taken care of by Struts 2 framework). The business services used by this
+ * component are reasonably thread safe and are responsible for handling
+ * transactions. Hence this class can be considered as being effectively thread
+ * safe.
+ * </p>
  * 
  * </p>
  * <p>Version 1.1 change notes:
@@ -76,19 +88,17 @@ import com.topcoder.util.errorhandling.ExceptionUtils;
  *    - Fix TCCC 4174 check for active specification submission. If there is active specification
  *    submission, do not display the resubmit specification review button.
  * </p>
-
+ *
  * <p>
- * <b>Thread safety:</b> This class is mutable and not thread safe. This should
- * be fine since different instances of this class should be created to serve
- * different user requests and will not be shared across user threads (this will
- * be taken care of by Struts 2 framework). The business services used by this
- * component are reasonably thread safe and are responsible for handling
- * transactions. Hence this class can be considered as being effectively thread
- * safe.
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
  * </p>
  * 
- * @author caru, morehappiness, GreatKevin
- * @version 1.2
+ * @author caru, morehappiness, GreatKevin, minhu
+ * @version 1.3
  * @since 1.0
  */
 public class ViewSpecificationReviewAction extends SpecificationReviewAction {
@@ -328,7 +338,8 @@ public class ViewSpecificationReviewAction extends SpecificationReviewAction {
             // user
             // Set contest stats
             ContestStatsDTO contestStats = DirectUtils.getContestStats(
-                    getTCSubject(), getProjectId());
+                    getTCSubject(), getProjectId(), contestServiceFacade.getSoftwareContestByProjectId(
+                        getTCSubject(), getProjectId()));
             result.setContestStats(contestStats);
 
             // Get current session

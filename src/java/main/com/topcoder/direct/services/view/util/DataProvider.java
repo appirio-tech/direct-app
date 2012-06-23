@@ -484,8 +484,17 @@ import com.topcoder.web.common.tag.HandleTag;
  *     <li>Add method {@link #getDirectProjectsForClient(String)}</li>
  * </ol>
  * </p>
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, isv, duxiaoyang, minhu, GreatKevin
- * @version 3.9
+ *
+ * <p>
+ * Version 3.10 (Release Assembly - TopCoder Cockpit Software Milestone Management) change log:
+ * <ol>
+ *     <li>Updated method {@link #setSoftwareMilestoneSubmissionsData(SoftwareContestSubmissionsDTO)}
+ *     to support software milestone management.</li>
+ * </ol>
+ * </p>
+ * 
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, TCSASSEMBLER
+ * @version 3.10
  * @since 1.0
  */
 public class DataProvider {
@@ -1804,10 +1813,13 @@ public class DataProvider {
         for (ResultSetContainer.ResultSetRow reviewRow : reviewsContainer) {
             SoftwareSubmissionReviewDTO milestoneReview = new SoftwareSubmissionReviewDTO();
             milestoneReview.setSubmissionId(reviewRow.getLongItem("submission_id"));
-            milestoneReview.setFinalScore(reviewRow.getFloatItem("final_score"));
-            milestoneReview.setInitialScore(reviewRow.getFloatItem("initial_score"));
             milestoneReview.setReviewId(reviewRow.getLongItem("review_id"));
-            milestoneReview.setCommitted(reviewRow.getBooleanItem("is_committed"));
+            milestoneReview.setCommitted(reviewRow.getBooleanItem("is_committed"));            
+            milestoneReview.setFinalScore(reviewRow.getItem("final_score").getResultData() == null ? 0 :
+                reviewRow.getFloatItem("final_score"));
+            milestoneReview.setInitialScore(reviewRow.getItem("initial_score").getResultData() == null ? 0 :
+                reviewRow.getFloatItem("initial_score"));
+            milestoneReview.setMilestoneFeedback(reviewRow.getStringItem("feedback"));
 
             long submissionId = milestoneReview.getSubmissionId();
 
@@ -1851,6 +1863,8 @@ public class DataProvider {
 
             if(milestonePrizeNumber <= 0) {
                 milestonePrizeNumber = submissionRow.getIntItem("milestone_prize_number");
+                dto.setMilestonePrizeNumber(milestonePrizeNumber);
+                dto.setMilestonePrizeAmount(submissionRow.getDoubleItem("milestone_prize_amount"));
             }
 
             submission.setReviews(milestoneReviewsMap.get(submission.getSubmissionId()));

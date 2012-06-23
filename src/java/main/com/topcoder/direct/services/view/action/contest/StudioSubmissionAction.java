@@ -90,9 +90,17 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ul>
  * </p>
  *
+ * <p>
+ * Version 1.8 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, flexme, minhu
  * @since Submission Viewer Release 1 assembly
- * @version 1.7
+ * @version 1.8
  */
 public class StudioSubmissionAction extends ContestAction {
 
@@ -273,7 +281,7 @@ public class StudioSubmissionAction extends ContestAction {
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, softwareCompetition);
 
             getViewData().setContestStats(contestStats);
 

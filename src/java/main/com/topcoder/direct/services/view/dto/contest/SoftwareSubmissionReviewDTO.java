@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -10,8 +10,16 @@ import java.io.Serializable;
 /**
  * <p>A <code>DTO</code> class providing the data for single software contest submission review.</p>
  *
- * @author TCSDEVELOPER
- * @version 1.0 (Direct Software Submission Viewer assembly)
+ * <p>
+ * Version 1.0.1 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Added {@link #milestoneFeedback} property.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.0.1
+ * @since 1.0 (Direct Software Submission Viewer assembly)
  */
 public class SoftwareSubmissionReviewDTO implements Serializable {
 
@@ -39,6 +47,13 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
      * <p>A <code>Float</code> providing the initial score for review.</p>
      */
     private Float initialScore;
+    
+    /**
+     * <p>A <code>String</code> providing the feedback for the milestone submission.</p>
+     *
+     * @since 1.0.1
+     */
+    private String milestoneFeedback;
 
     /**
      * <p>Constructs new <code>SoftwareSubmissionReviewDTO</code> instance. This implementation does nothing.</p>
@@ -167,6 +182,27 @@ public class SoftwareSubmissionReviewDTO implements Serializable {
                ", reviewId=" + reviewId +
                ", initialScore=" + initialScore +
                ", committed=" + committed +
+               ", milestoneFeedback=" + milestoneFeedback +
                '}';
+    }
+
+    /**
+     * Sets the feedback for the milestone submission.
+     * 
+     * @param milestoneFeedback the feedback for the milestone submission to set
+     * @since 1.0.1
+     */
+    public void setMilestoneFeedback(String milestoneFeedback) {
+        this.milestoneFeedback = milestoneFeedback;
+    }
+
+    /**
+     * Gets the feedback for the milestone submission.
+     * 
+     * @return the feedback for the milestone submission
+     * @since 1.0.1
+     */
+    public String getMilestoneFeedback() {
+        return milestoneFeedback;
     }
 }

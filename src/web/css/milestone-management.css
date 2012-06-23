@@ -1,0 +1,579 @@
+/**
+ * Author: TCSASSEMBLER
+ * Version: 1.0 (Release Assembly - TopCoder Cockpit Software Milestone Management)
+ * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
+ *
+ * The CSS File contains CSS styles used for software milestone management.
+ */
+
+#tcSoftwareMM{
+    font-size:12px;
+    padding-top:14px;
+}
+/* .mmTabs */
+#tcSoftwareMM .mmTabs{
+    background: url("../images/calendar_header.png") repeat-x left top #37302E;
+    height: 35px;
+    padding-left:10px;
+}
+    #tcSoftwareMM .mmTabs a{
+        background: url("../images/bank_selection_tab_left.png") no-repeat left -25px;
+        color: #000000;
+        float: left;
+        font-size: 11px;
+        line-height: 25px;
+        margin: 10px 3px 0 0;
+        padding: 0 0 0 4px;
+        text-decoration: none;
+        text-shadow:1px 0 0 #b8b5b5;
+    }
+    #tcSoftwareMM .mmTabs a.on{
+        background-position:0 0;
+        text-shadow:none;
+    }
+        #tcSoftwareMM .mmTabs a span{
+            background: url("../images/bank_selection_tab_right.png") no-repeat right -25px;
+            cursor: pointer;
+            float: left;
+            height: 25px;
+            text-align: center;
+            padding:0 14px;
+            min-width:50px;
+        }
+        #tcSoftwareMM .mmTabs a.on span{
+            background-position:right 0;
+        }
+/* .notify */
+#tcSoftwareMM .notify{
+    background:url(../images/note-icon-1.png) no-repeat 0 0;
+    padding-left:32px;
+    font-size:11px;
+    color:#333;
+    margin:12px 10px;
+}
+/* .slotsMask */
+#tcSoftwareMM .slotsMask{
+    position:relative; 
+    border:1px solid #cfcfcd;
+    color:#333;
+    font-size:11px;
+    margin:0 10px;
+    height:212px;
+    background:#eaeaea;
+}
+    #tcSoftwareMM .slotsMask h3{
+        font-size:14px;
+        font-weight:bold;
+        line-height:20px;
+        margin:6px 0 10px;
+    }
+    #tcSoftwareMM .slotsMask a{
+        color:#333;
+        text-decoration:underline;
+    }
+  /*  #tcSoftwareMM .slotsMask a:hover{
+        text-decoration:none; 
+    }*/
+    #tcSoftwareMM .slotsMask .slots{
+        background:#eaeaea; 
+        float:left;
+        width:172px;
+        height:210px;
+        border:1px solid #f5f5f5;
+        border-right:0;
+        padding:0 14px;
+    }
+        #tcSoftwareMM .slotsMask .slots h3{
+            background:url(../images/red-star.png) no-repeat 0 2px;
+            padding-left:20px;
+            text-shadow:0 1px 0 #fafafa;
+        }
+            #tcSoftwareMM .slotsMask .slots li.slot{
+                background:url(../images/prize-panel-bg.png) no-repeat 0 -26px;
+                padding-left:6px;
+                display:inline-block;
+                list-style:none;
+                margin-bottom:4px;
+            }
+            #tcSoftwareMM .slotsMask .slots li.on{
+                background-position:0 0;
+            }
+                #tcSoftwareMM .slotsMask .slots li.slot .slotR{
+                    background:url(../images/prize-panel-bg.png) no-repeat right -130px;
+                    padding-right:6px;
+                    display:inline-block;
+                }
+                #tcSoftwareMM .slotsMask .slots li.on .slotR{
+                    background-position: right -104px; 
+                }
+                    #tcSoftwareMM .slotsMask .slots li.slot .text{
+                        background:url(../images/prize-panel-bg.png) repeat-x 0 -78px;
+                        display:inline-block;
+                        line-height:26px;
+                        height:26px;
+                        color:#878686;
+                        width:158px;
+                        text-align:center;
+                        position:relative;
+                        font-size:11px;
+                        font-weight:normal;
+                    }
+                    #tcSoftwareMM .slotsMask .slots li.slot .text .place{
+                        font-size:11px;
+                        font-weight:normal;
+                    }                   
+                    
+                    #tcSoftwareMM .slotsMask .slots li.on .text{
+                        background-position: 0 -52px;
+                        color:#333;
+                        text-align:left;
+                    }
+                    #tcSoftwareMM .slotsMask .slots li.on .place{
+                        padding:0 6px;
+                        display:inline-block;
+                        line-height:26px;
+                    }
+                    #tcSoftwareMM .slotsMask .slots li.slot .sub{
+                        font-weight:bold;
+                        font-size:12px;
+                        display:inline-block;
+                        line-height:26px;
+                    }
+                    #tcSoftwareMM .slotsMask .slots li.slot .rm{
+                        background:url(../images/remove-icon-1.png) no-repeat center 0;
+                        display:inline-block;
+                        height:13px;
+                        width:13px;
+                        position:absolute;
+                        right:0;
+                        top:6px;
+                    }
+                    #tcSoftwareMM .slotsMask .slots li.slot .rm:hover{
+                        background-position:0 -13px;
+                    }
+    #tcSoftwareMM .slotsMask .borderLine{
+        background:url(../images/box-line.gif) repeat-y 0 0;
+        height:212px;
+        width:2px;
+        float:left;
+    }
+    #tcSoftwareMM .slotsMask .feedback{
+        margin-left:218px; 
+        height:210px;
+        border:1px solid #f5f5f5;
+        border-left:0;
+        padding-right:12px;
+    }
+        #tcSoftwareMM .slotsMask .feedback h3{
+            background:url(../images/feedback-icon.png) no-repeat 0 center;
+            padding-left:18px;
+        }
+        #tcSoftwareMM .slotsMask .feedback .fbArea{
+            display:block !important;
+            height:140px;
+            overflow:auto;
+            margin-bottom:9px;
+        }
+        #tcSoftwareMM .slotsMask .feedback .action{
+            text-align:right;
+        }
+            #tcSoftwareMM .slotsMask .feedback .action a.add{
+                background:url(../images/add-feedback.png) no-repeat 0 3px;
+                line-height:16px;
+                padding-left:20px;
+                display:inline-block;
+            }
+            #tcSoftwareMM .slotsMask .feedback .action a.edit{
+                background:url(../images/edit-icon.png) no-repeat 0 center;
+                line-height:16px;
+                padding-left:18px;
+                display:inline-block; 
+            }
+            #tcSoftwareMM .slotsMask .feedback .action a.hide{
+                display:none;
+            }
+    #tcSoftwareMM .slotsMask .corner{
+        position:absolute;
+        height:5px;
+        width:5px;
+        overflow:hidden;
+        background:url(../images/gray-box-corner.gif) no-repeat 0 0; 
+    }
+    #tcSoftwareMM .slotsMask .tl{
+        left:-1px;
+        top:-1px;
+        background-position:0 0;
+    }
+    #tcSoftwareMM .slotsMask .tr{
+        right:-1px;
+        top:-1px;
+        background-position:-5px 0;
+    }
+    #tcSoftwareMM .slotsMask .bl{
+        left:-1px;
+        bottom:-1px;
+        background-position:0 -5px;
+    }
+    #tcSoftwareMM .slotsMask .br{
+        right:-1px;
+        bottom:-1px;
+        background-position:-5px -5px; 
+    }
+/* .ops */
+#tcSoftwareMM .ops{
+    background:#eaeaea;
+    border-top:1px solid #bdbdbd;
+    padding:0 10px;
+    margin:0 1px;
+    height:48px;
+}
+    #tcSoftwareMM .ops a.saveit{
+        background:url(../images/save-icon.png) no-repeat 0 center;
+        color:#333;
+        padding-left:20px;
+        font-size:11px;
+        text-decoration:underline;
+        float:left;
+        margin-top:16px;
+    }
+    #tcSoftwareMM .ops a.saveit:hover{
+        text-decoration:none;
+    }
+    #tcSoftwareMM .ops a.lock{
+        float:right;
+        margin-top:12px;
+    }
+        #tcSoftwareMM .ops a.lock .btnC{ 
+            padding:0 15px;
+        }
+        #tcSoftwareMM .ops a.lock .icon{
+            display:inline-block;
+            cursor:pointer;
+            line-height:24px;
+            background:url(../images/lock-icon.png) no-repeat 0 center;
+            padding-left:15px;
+        }
+/* .mmDataTable */
+    #tcSoftwareMM .mmDataTable .mmPagers {
+        overflow:hidden;
+        color:#333;
+        padding:12px 10px 10px;
+        font-size:11px;
+    }
+        #tcSoftwareMM .mmDataTable .mmPagers .dataTables_length{
+            float:left;   
+        }
+        #tcSoftwareMM .mmDataTable .mmPagers .dataTables_paginate{
+            float:right;
+            font-size:11px;
+            height:auto;
+            margin-top:2px;
+        }
+        #tcSoftwareMM .mmDataTable .mmPagers .first,
+        #tcSoftwareMM .mmDataTable .mmPagers .last{
+            display:none;
+        }
+        #tcSoftwareMM .mmDataTable .mmPagers .paginate_button:hover{
+            text-decoration:underline;
+        }
+        #tcSoftwareMM .mmDataTable .mmPagers .paginate_button,
+        #tcSoftwareMM .mmDataTable .mmPagers .paginate_active{
+            padding:0 3px;
+        }
+        #tcSoftwareMM .mmDataTable .mmPagers .previous{
+            padding-left:10px;
+        }
+        #tcSoftwareMM .mmDataTable .mmPagers .next{
+            padding-right:10px;
+        }
+        #tcSoftwareMM .mmDataTable .mmPagers .paginate_button_disabled {
+            display:none;
+        }
+    #tcSoftwareMM .mmDataTable table{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+    }
+        #tcSoftwareMM .mmDataTable table th{
+            background:url(../images/th-bg-2.gif) repeat-x 0 0;
+            height:28px;
+            color:#333;
+            font-weight: bold;
+            border:1px solid #bdbdbd;
+        }
+            #tcSoftwareMM .mmDataTable table th a.download{
+                line-height:18px;
+                border-left:1px solid #bdbdbd;
+                text-decoration:underline;
+                color:#000000;
+                font-size:11px;
+                font-weight:normal;
+                background:url(../images/download-icon.png) no-repeat 8px center;
+                padding-left:26px;
+                margin-left:4px;
+                display:inline-block;
+            }
+        #tcSoftwareMM .mmDataTable table td{
+            color:#2d2d2d;
+            border:1px solid #bdbdbd;
+            padding:8px 5px;
+            vertical-align:middle;
+            text-align:center; 
+        }
+        #tcSoftwareMM .mmDataTable table td.fbTd{
+            padding:1px 0 1px 3px;
+        }
+        #tcSoftwareMM .mmDataTable table .even td{
+            background:#f5f5f5;
+        }
+        #tcSoftwareMM .mmDataTable table td.pTag0{
+            background:url(../images/prize-1.png) no-repeat 0 0;
+        }
+        #tcSoftwareMM .mmDataTable table td.pTag1{
+            background:url(../images/prize-2.png) no-repeat 0 0;
+        }
+        #tcSoftwareMM .mmDataTable table .even td.pTag0,
+        #tcSoftwareMM .mmDataTable table .even td.pTag1{
+            background-color:#f5f5f5;
+        }
+            #tcSoftwareMM .mmDataTable table td a.submission{
+                 display:inline-block;
+                 line-height:24px;
+                 background:url(../images/submission-icon.png) no-repeat 0 center;
+                 padding-left:28px;
+                text-decoration:underline;
+            } 
+            #tcSoftwareMM .mmDataTable table p.time{
+                padding-top:5px;
+                font-size:11px;
+            }
+    #tcSoftwareMM .mmDataTable .prizes{
+        display:inline-block;   
+    }
+        #tcSoftwareMM .mmDataTable .prizes a{
+            background:url(../images/prize-icon.png) no-repeat 0 0;
+            height:30px;
+            width:30px;
+            display:inline-block;
+            float:left;
+            color:#fff;
+            text-align:center;
+            line-height:30px;
+            font-weight:bold;
+            font-size:16px;
+            text-decoration:none;
+            margin:0 1px 0 2px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a:hover{
+            text-decoration:none;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize1{
+            background-position:0 0;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize1:hover{
+            background-position:0 -300px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize2{
+            background-position:0 -30px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize2:hover{
+            background-position:0 -270px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize3{
+            background-position:0 -60px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize3:hover{
+            background-position:0 -240px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize4{
+            background-position:0 -90px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize4:hover{
+            background-position:0 -210px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize5{
+            background-position:0 -120px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.prize5:hover{
+            background-position:0 -180px;
+        }
+        #tcSoftwareMM .mmDataTable .prizes a.on,
+        #tcSoftwareMM .mmDataTable .prizes a.on:hover{
+            background-position:0 -150px;
+        }
+    #tcSoftwareMM .mmDataTable .fbMask{
+        font-size:11px; 
+        position:relative;
+    }
+        #tcSoftwareMM .mmDataTable .fbMask .fbArea{
+            text-align:left;
+            max-height:86px;
+            overflow:auto;
+            min-height:32px; 
+            display:none;
+            padding:3px 3px 6px;
+        }
+        #tcSoftwareMM .mmDataTable .readonly .fbMask .fbArea{
+            display:block;
+            min-height:44px;
+        }
+        #tcSoftwareMM .mmDataTable .fbMask .edit{
+            text-align:right;
+            padding-right:4px;
+            padding-bottom:4px;
+        }
+            #tcSoftwareMM .mmDataTable .fbMask .edit a{
+                background:url(../images/edit-icon.png) no-repeat 0 center;
+                line-height:16px;
+                padding-left:18px;
+                display:inline-block;
+                 text-decoration:underline;
+            }
+        #tcSoftwareMM .mmDataTable .fbMask .add{
+            text-align:center;
+        }
+        #tcSoftwareMM .mmDataTable .even .fbMask .add{
+            background:#f5f5f5;
+        }
+             #tcSoftwareMM .mmDataTable .fbMask .add a{
+                background:url(../images/add-feedback.png) no-repeat 0 3px;
+                line-height:16px;
+                padding-left:20px;
+                display:inline-block;
+                 text-decoration:underline;
+            }
+           /*  #tcSoftwareMM .mmDataTable .fbMask .add a:hover,
+             #tcSoftwareMM .mmDataTable .fbMask .edit a:hover{
+                text-decoration:none;    
+            }*/
+
+#new-modal.newModal1 .modalHeader .modalHeaderCenter{
+    padding-left:14px;
+}
+#new-modal.newModal1 .modalBodyContent{
+    border-top:1px solid #cccccc;
+}
+#new-modal.newModal1 .modalBody .modalCommandBox a.newButton1{
+    margin:0 11px;    
+}
+#new-modal.newModal1 .modalBody .modalCommandBox a.newButton1 .btnC{
+    padding:0 8px;
+    min-width:46px;
+}
+
+#addFeedbackModal,
+#editFeedbackModal{
+width:572px;
+}
+#addFeedbackModal textarea,
+#editFeedbackModal textarea{
+    background:url(../images/textarea-bg.gif) no-repeat #FFFFFe 0 0;
+    border:1px solid #a8abad;
+    width:510px;
+    padding:5px;
+    height:180px;
+    margin:20px 20px 18px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    overflow:auto;
+}
+
+#lockinSuccessModal, #saveSuccessModal{
+width:410px;
+}
+#lockinSuccessModal .modalBodyContent, #saveSuccessModal .modalBodyContent{
+    padding:15px 10px 30px 28px;    
+}
+    #lockinSuccessModal .modalBodyContent p, #saveSuccessModal .modalBodyContent p{
+        background:url(../images/modal-success.png) no-repeat 0 8px;
+        line-height:56px;
+        font-size:14px;
+        font-weight:bold;
+        color:#333; 
+        padding-left:60px;
+    }
+
+#lockinConfirmModal{
+width:490px;
+}
+#lockinConfirmModal .modalBodyContent{
+    padding:24px 10px 20px 28px;
+}
+    #lockinConfirmModal .modalBodyContent p{
+        background:url(../images/modal-notice.png) no-repeat 0 0;
+        line-height:20px;
+        font-size:14px; 
+        color:#333;
+        padding-left:60px;
+        padding-bottom:20px;
+    }
+        #lockinConfirmModal .modalBodyContent p span{
+            font-size:12px;
+            display:block;
+        }
+
+#lockinNoWinnerModal,
+#lockinNoFeedbackModal,
+#lockinInvalidModal{
+width:490px;
+}
+#lockinNoWinnerModal .modalBodyContent,
+#lockinInvalidModal .modalBodyContent{
+    padding:24px 50px 20px 28px;
+}
+#lockinNoFeedbackModal .modalBodyContent{
+    padding:24px 20px 20px 28px;
+}
+    #lockinNoWinnerModal .modalBodyContent p,
+    #lockinNoFeedbackModal .modalBodyContent p{
+        background:url(../images/modal-notice.png) no-repeat 0 0;
+        line-height:18px;
+        font-size:14px;
+        color:#333;
+        padding-left:60px;
+        padding-bottom:12px;
+    }
+    #lockinInvalidModal .modalBodyContent p{
+        background:url(../images/modal-notice.png) no-repeat 0 0;
+        line-height:20px;
+        font-size:14px;
+        color:#333;
+        padding-left:60px;
+        padding-bottom:22px;
+        padding-top:10px;
+        font-weight:bold;
+    }
+
+        #lockinNoWinnerModal .modalBodyContent p strong,
+        #lockinNoFeedbackModal .modalBodyContent p strong{
+            padding-bottom:6px;
+            display:block;
+        }
+        #lockinNoWinnerModal .modalBodyContent p span,
+        #lockinNoFeedbackModal .modalBodyContent p span{
+            padding-top:6px;
+            font-size:12px;
+            display:block;
+        } 
+
+            
+#bankSelection.multiFinalDiv {
+    margin-top:14px;     
+}
+ 
+#bankSelectionHead ul.multiFinalUL {
+    float:left;
+    margin-left:10px;
+}
+
+#bankSelectionTab.multiFinalUL li span {
+    width:auto;
+    min-width:50px;
+    padding:0 14px;
+}
+
+#editFeedbackModal .error, #addFeedbackModal .error{
+    color:red;
+    margin-top:-10px;
+    margin-left:15px;
+}

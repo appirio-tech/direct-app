@@ -39,8 +39,16 @@ import java.util.List;
  *   </ul>
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
+ * </p>
+ *
  * @author isv, TCSASSEMBLER
- * @version 1.2
+ * @version 1.3
  */
 public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
 
@@ -132,7 +140,7 @@ public class ContestRegistrantsAction extends StudioOrSoftwareContestAction {
         // For normal request flow prepare various data to be displayed to user
         if (!getFormData().isExcel()) {
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, competition);
             getViewData().setContestStats(contestStats);
 
             // Set projects data

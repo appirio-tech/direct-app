@@ -37,8 +37,17 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author isv
- * @version 1.0.4
+ * <p>
+ * Version 1.0.5 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Added {@link #milestonePrizeNumber} property.</li>
+ *     <li>Added {@link #milestonePrizeAmount} property.</li>
+ *     <li>Added {@link #milestoneSubmissionsGeneralFeedback} property.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author isv, TCSASSEMBLER
+ * @version 1.0.5
  */
 public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implements ProjectIdForm.Aware, 
                                                                                    ContestStatsDTO.Aware {
@@ -94,6 +103,27 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      * @since 1.0.4
      */
     private boolean approvalCommitted;
+    
+    /**
+     * <p>The maximum number of milestone prize winners.</p>
+     * 
+     * @since 1.0.5
+     */
+    private int milestonePrizeNumber;
+    
+    /**
+     * <p>The milestone prize amount.</p>
+     * 
+     * @since 1.0.5
+     */
+    private double milestonePrizeAmount;
+    
+    /**
+     * <p>The milestone submissions general feedback.</p>
+     * 
+     * @since 1.0.5
+     */
+    private String milestoneSubmissionsGeneralFeedback;       
 
     /**
      * <p>Constructs new <code>SoftwareContestSubmissionsDTO</code> instance. This implementation does nothing.</p>
@@ -364,5 +394,65 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      */
     public void setApprovalCommitted(boolean approvalCommitted) {
         this.approvalCommitted = approvalCommitted;
+    }
+
+    /**
+     * Gets the maximum number of milestone prize winners.
+     * 
+     * @return the maximum number of milestone prize winners
+     * @since 1.0.5
+     */
+    public int getMilestonePrizeNumber() {
+        return milestonePrizeNumber;
+    }
+
+    /**
+     * Sets the maximum number of milestone prize winners.
+     * 
+     * @param milestonePrizeNumber the maximum number of milestone prize winners to set
+     * @since 1.0.5
+     */
+    public void setMilestonePrizeNumber(int milestonePrizeNumber) {
+        this.milestonePrizeNumber = milestonePrizeNumber;
+    }
+
+    /**
+     * Gets the milestone prize amount.
+     * 
+     * @return the milestone prize amount
+     * @since 1.0.5
+     */
+    public double getMilestonePrizeAmount() {
+        return milestonePrizeAmount;
+    }
+
+    /**
+     * Sets the milestone prize amount.
+     * 
+     * @param milestonePrizeAmount the milestone prize amount to set
+     * @since 1.0.5
+     */
+    public void setMilestonePrizeAmount(double milestonePrizeAmount) {
+        this.milestonePrizeAmount = milestonePrizeAmount;
+    }
+
+    /**
+     * Sets the milestone submissions general feedback.
+     * 
+     * @param milestoneSubmissionsGeneralFeedback the milestone submissions general feedback to set
+     * @since 1.0.5
+     */
+    public void setMilestoneSubmissionsGeneralFeedback(String milestoneSubmissionsGeneralFeedback) {
+        this.milestoneSubmissionsGeneralFeedback = milestoneSubmissionsGeneralFeedback;
+    }
+
+    /**
+     * Gets the milestone submissions general feedback.
+     * 
+     * @return the milestone submissions general feedback
+     * @since 1.0.5
+     */
+    public String getMilestoneSubmissionsGeneralFeedback() {
+        return milestoneSubmissionsGeneralFeedback;
     }
 }

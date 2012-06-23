@@ -1,6 +1,6 @@
 <%--
-  - Author: isv
-  - Version 1.3 (Release Assembly - TC Direct Cockpit Release Two)
+  - Author: isv, TCSASSEMBLER
+  - Version 1.4
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Software contest in a list view.
@@ -13,6 +13,9 @@
   -
   - Version 1.3 (Module Assembly - Adding Contest Approval Feature in Direct) change Notes:
   - - added Approval section
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Software Milestone Management) change Notes:
+  - - updated to support software milestone management
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -23,7 +26,9 @@
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <!-- ${viewData.approvalCommitted} ${viewData.showApproval}-->
+    <link type="text/css" media="all" href="/css/milestone-management.css" rel="stylesheet">
+    <script src="/scripts/jquery.dataTables-1.9.1.min.js" type="text/javascript"></script>
+    <script src="/scripts/milestone-management.js" type="text/javascript"></script>
 </head>
 
 <body id="page">
@@ -60,43 +65,47 @@
 
                                 <div class="container2Left">
                                     <div class="container2Right">
-                                        <div class="container2BottomClear">
-
-                                            <div class="containerNoPadding">
-
-                                            <div id="bankSelection">
-                                                <div id="bankSelectionHead">
-
-                                                    <s:if test="viewData.contestStats.multipleRound">
-                                                        <h3>Multiple Rounds Submissions</h3>
-                                                    </s:if>
-                                                    <s:else>
-                                                        <h3>Single Round Submissions</h3>
-                                                    </s:else>
-
-                                                    <ul id="bankSelectionTab">
-                                                        <s:if test="viewData.contestStats.multipleRound">
-                                                            <li
-                                                                    <s:if test="roundType.toString() == 'FINAL'">class="off"</s:if>>
-                                                                <a href="/direct/contest//softwareSubmissions?projectId=${formData.projectId}&amp;roundType=MILESTONE">
-                                                                    <span>Milestone (R1)</span>
-                                                                </a>
-                                                            </li>
-                                                        </s:if>
-                                                            <li
-                                                                    <s:if test="roundType.toString() == 'MILESTONE'">class="off"</s:if> >
-                                                                <a href="/direct/contest//softwareSubmissions?projectId=${formData.projectId}&amp;roundType=FINAL">
-                                                                    <s:if test="viewData.contestStats.multipleRound">
-                                                                        <span>Final (R2)</span>
-                                                                    </s:if>
-                                                                    <s:else>
-                                                                        <span>Final (R1)</span>
-                                                                    </s:else>
-                                                                </a>
-                                                            </li>
-                                                    </ul>
-                                                </div>
+                                        <div class="container2BottomClear">                                    
+                                        <s:if test="(not viewData.contestStats.multipleRound) or roundType.toString() == 'FINAL'">    
+                                            <div class="containerNoPadding">                          
+                                            <s:if test="not viewData.contestStats.multipleRound">
+                                                <div id="bankSelection">
+                                                <div id="bankSelectionHead">       
+                                                <h3>Single Round Submissions</h3>
+                                                <ul id="bankSelectionTab">
+                                                    <li>
+                                                        <a href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=FINAL">
+                                                            <span>Final (R1)</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </s:if>
+                                            <s:else>    
+                                                <div id="bankSelection" class="multiFinalDiv">
+                                                <div id="bankSelectionHead">  
+                                                <ul id="bankSelectionTab" class="multiFinalUL">                                                  
+                                                    <li class="off">
+                                                        <a href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=MILESTONE">
+                                                            <span>Milestone (${viewData.contestStats.milestoneSubmissionNumber})</span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=FINAL">
+                                                            <span>Final (${viewData.contestStats.finalSubmissionNumber})</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </s:else>
                                             </div>
+                                            </div>
+                                        </s:if>
+                                        <s:else>
+                                            <div id="tcSoftwareMM">
+                                            <div class="mmTabs">
+                                                <a class="on" href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=MILESTONE"><span>Milestone (${viewData.contestStats.milestoneSubmissionNumber})</span></a>
+                                                <a href="/direct/contest/softwareSubmissions?projectId=${formData.projectId}&amp;roundType=FINAL"><span>Final (${viewData.contestStats.finalSubmissionNumber})</span></a>
+                                            </div>
+                                        </s:else>                                            
 
                                             <s:if test="roundType.toString() == 'FINAL'">
 
@@ -435,93 +444,238 @@
 
                                             </s:if>
                                             <s:if test="roundType.toString() == 'MILESTONE'">
-                                                <h2>All Milestone Round Submissions</h2>
-
-                                                <table class="softwareStats" cellpadding="0" cellspacing="0">
-                                                    <colgroup>
-                                                        <col width="20%"/>
-                                                        <col width="20%"/>
-                                                        <col width="20%"/>
-                                                        <col width="20%"/>
-                                                        <col width="20%"/>
-                                                    </colgroup>
-                                                    <thead>
-                                                    <tr>
-                                                        <th rowspan="1"><span class="icoTHDownload"></span></th>
-                                                        <th rowspan="1" class="left">Handle</th>
-                                                        <th rowspan="1">Milestone Submission ID</th>
-                                                        <th rowspan="1">Date Submitted</th>
-                                                        <th rowspan="1">Is Milestone Winner ?</th>
-                                                    </tr>
-
-                                                    </thead>
-                                                    <tbody>
-
-                                                    <c:forEach items="${viewData.submissions}" var="submission"
-                                                               varStatus="loop">
-                                                        <c:set var="passedScreening"
-                                                               value="${submission.passedScreening}"/>
-                                                        <c:set var="passedReview" value="${submission.passedReview}"/>
-                                                        <c:set var="submitter" value="${submission.submitter}"/>
-                                                        <c:set var="isWinner" value="false"/>
-                                                        <c:forEach items="${viewData.milestoneWinners}" var="milestoneWinner">
-                                                            <c:choose>
-                                                                <c:when test="${submitter.id eq milestoneWinner.id}">
-                                                                      <c:set var="isWinner" value="true"/>
-                                                                </c:when>
-                                                            </c:choose>
-                                                        </c:forEach>
-                                                        <c:set var="passedReview" value="${submission.passedReview}"/>
-                                                        <c:choose>
-                                                            <c:when test="${isWinner}">
-                                                                <c:set var="icoStyle" value="gold"/>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <c:set var="icoStyle" value="normal"/>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                        <tr ${loop.index mod 2 > 0 ? 'class="alt"' : ''}>
-                                                            <td>
-                                                                <link:onlineReviewDownloadSubmission
-                                                                        projectId="${param.projectId}"
-                                                                        submissionId="${submission.submissionId}"
-                                                                        styleClass="icoZip ${icoStyle}"></link:onlineReviewDownloadSubmission>
-                                                            </td>
-                                                            <td class="left">
-                                                                <link:user userId="${submitter.id}"
-                                                                           handle="${submitter.handle}"
-                                                                           styleClass="handle"/>
-                                                            </td>
-                                                            <td>
-                                                                <strong><c:out
-                                                                        value="${submission.submissionId}"/></strong>
-                                                            </td>
-                                                            <td>
-                                                                <fmt:formatDate value="${submission.submissionDate}"
-                                                                                pattern="MM.dd.yyyy"/>
-                                                            </td>
-
-                                                            <td>
-                                                                <c:choose>
-                                                                    <c:when test="${submission.passedReview}">
-                                                                        <c:choose>
-                                                                            <c:when test="${isWinner}">
-                                                                                Milestone Winner
-                                                                            </c:when>
-                                                                            <c:when test="${submission.finalScore ne null}">
-                                                                            </c:when>
-                                                                            <c:otherwise>n/a</c:otherwise>
-                                                                        </c:choose>
-                                                                    </c:when>
-                                                                    <c:otherwise>Not Passed Review</c:otherwise>
-                                                                </c:choose>
-                                                            </td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
+                                              <c:choose>
+                                                <c:when test="${inMilestoneSubmissionPhase || inMilestoneReviewPhase && !hasWritePermission}">
+                                                    <div class="mmDataTable"> 
+                                                        <table cellpadding="0" cellspacing="0">
+                                                            <colgroup>
+                                                                <col width="30%"/>
+                                                                <col />
+                                                            </colgroup>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        Submission
+                                                                        <a class="download" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                    </th>
+                                                                    <th>
+                                                                        Submission Date/Time
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <c:forEach items="${viewData.submissions}" var="submission"
+                                                                           varStatus="loop">
+                                                                <tr>
+                                                                    <td>
+                                                                        <link:onlineReviewDownloadSubmission
+                                                                                projectId="${param.projectId}"
+                                                                                submissionId="${submission.submissionId}"
+                                                                                styleClass="submission">#${submission.submissionId}</link:onlineReviewDownloadSubmission>                                                                    
+                                                                    </td>
+                                                                    <td>
+                                                                        <fmt:formatDate value="${submission.submissionDate}"
+                                                                                        pattern="MM/dd/yyyy HH:mm "/>EST
+                                                                    </td>
+                                                                </tr>
+                                                                </c:forEach>
+                                                            </tbody>
+                                                        </table>                                
+                                                    </div>
+                                                </c:when>
+                                                <c:when test="${afterMilestoneReviewPhase || inMilestoneReviewPhase && milestoneReviewCommitted}">                                                
+                                                    <div class="notify">
+                                                        To pick milestone winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Milestones. Do not forget to provide milestone general feedback and individual feedback.
+                                                    </div>                        
+                                                    <div class="slotsMask">
+                                                        <div class="slots">
+                                                            <h3>Milestone Winners</h3>
+                                                            <ul>
+                                                                <s:set var="places" value="{'1st','2nd','3rd','4th','5th'}"/>
+                                                                <c:forEach begin="1" end="${milestoneWinnersNumber}" step="1" var="num">                                                                
+                                                                <li class="slot">
+                                                                    <span class="slotR">
+                                                                        <span class="text">
+                                                                            <span class="place">${places[num-1]} Prize ($${viewData.milestonePrizeAmount})</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </li>
+                                                                </c:forEach>
+                                                            </ul> 
+                                                        </div>
+                                                        <div class="borderLine"></div>
+                                                        <div class="feedback">
+                                                            <h3>General Feedback</h3>
+                                                            <div class="fbArea">${viewData.milestoneSubmissionsGeneralFeedback}</div>
+                                                        </div>
+                                                        <div class="corner tl"></div>
+                                                        <div class="corner tr"></div>
+                                                        <div class="corner bl"></div>
+                                                        <div class="corner br"></div>
+                                                    </div>                        
+                                                    <div class="mmDataTable">
+                                                        <table cellpadding="0" cellspacing="0" class="readonly">
+                                                            <colgroup>
+                                                                <col width="29%"/>
+                                                                <col />
+                                                            </colgroup>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        Submission
+                                                                        <a class="download" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                    </th> 
+                                                                    <th>
+                                                                        Feedback
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <s:iterator value="viewData.submissions" var="submission" status="loop">
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="hidden" name="rankInput" class="finalRank" value="${11-submission.milestoneReviewScore/10}"/>
+                                                                        <link:onlineReviewDownloadSubmission
+                                                                                projectId="${param.projectId}"
+                                                                                submissionId="${submission.submissionId}"
+                                                                                styleClass="submission">#${submission.submissionId}</link:onlineReviewDownloadSubmission> 
+                                                                        <p class="time"><fmt:formatDate value="${submission.submissionDate}"
+                                                                                        pattern="MM/dd/yyyy HH:mm "/>EST</p>
+                                                                    </td>
+                                                                    <td class="fbTd">
+                                                                        <div class="fbMask">
+                                                                            <div class="fbArea show">${submission.milestoneFeedback}</div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </s:iterator>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>              
+                                                </c:when>
+                                                <c:when test="${inMilestoneReviewPhase && !milestoneReviewCommitted}">
+                                                    <div class="notify"> 
+                                                        To pick milestone winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Milestones. Do not forget to provide milestone general feedback and individual feedback.
+                                                    </div>
+                        
+                                                    <div class="slotsMask">
+                                                        <div class="slots">
+                                                            <h3>Milestone Winners</h3>
+                                                            <ul>
+                                                                <s:set var="places" value="{'1st','2nd','3rd','4th','5th'}"/>
+                                                                <c:forEach begin="1" end="${viewData.milestonePrizeNumber}" step="1" var="num">                                                                
+                                                                <li class="slot">
+                                                                    <span class="slotR">
+                                                                        <span class="text">
+                                                                            <span class="place">${places[num-1]} Prize ($${viewData.milestonePrizeAmount})</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </li>
+                                                                </c:forEach>
+                                                            </ul>
+                                                            <a class="clearSlots" href="javascript:;">Clear Slots</a>
+                                                        </div>
+                                                        <div class="borderLine"></div>
+                                                        <div class="feedback">
+                                                            <h3>General Feedback</h3>
+                                                            <s:if test="viewData.milestoneSubmissionsGeneralFeedback == ''||viewData.milestoneSubmissionsGeneralFeedback == null">
+                                                                <div class="fbArea"></div>
+                                                                <div class="action">
+                                                                    <a href="javascript:;" class="add">Provide Feedback</a>
+                                                                    <a href="javascript:;" class="edit hide">Edit</a>
+                                                                </div>
+                                                            </s:if>
+                                                            <s:else>                                                            
+                                                                <div class="fbArea show">${viewData.milestoneSubmissionsGeneralFeedback}</div>
+                                                                <div class="action">
+                                                                    <a href="javascript:;" class="add hide">Provide Feedback</a>
+                                                                    <a href="javascript:;" class="edit">Edit</a>
+                                                                </div>
+                                                            </s:else>
+                                                        </div>
+                                                        <div class="corner tl"></div>
+                                                        <div class="corner tr"></div>
+                                                        <div class="corner bl"></div>
+                                                        <div class="corner br"></div> 
+                                                    </div>
+                        
+                                                    <div class="mmDataTable">
+                                                        <input type="hidden" id="projectIdInput" value="${formData.projectId}"/>
+                                                        <table cellpadding="0" cellspacing="0">
+                                                            <colgroup>
+                                                                <col width="190px"/>
+                                                                <col width="180px"/> 
+                                                                <col />
+                                                            </colgroup>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>
+                                                                        Submission
+                                                                        <a class="download" href="<s:url action='downloadAllSoftwareMilestoneSubmissions' namespace='/contest'/>?projectId=${param.projectId}">Download All</a>
+                                                                    </th>
+                                                                    <th>
+                                                                        Select Placement
+                                                                    </th>
+                                                                    <th>
+                                                                        Feedback
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <s:iterator value="viewData.submissions" var="submission" status="loop">
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="hidden" name="rankInput" value="${11-submission.milestoneReviewScore/10}"/>
+                                                                        <link:onlineReviewDownloadSubmission
+                                                                                projectId="${param.projectId}"
+                                                                                submissionId="${submission.submissionId}"
+                                                                                styleClass="submission">#${submission.submissionId}</link:onlineReviewDownloadSubmission> 
+                                                                        <p class="time"><fmt:formatDate value="${submission.submissionDate}"
+                                                                                        pattern="MM/dd/yyyy HH:mm "/>EST</p>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span class="prizes">
+                                                                            <c:forEach begin="1" end="${viewData.milestonePrizeNumber}" step="1" var="num"> 
+                                                                            <a href="javascript:;" class="prize${num}">${num}</a>
+                                                                            </c:forEach>
+                                                                        </span>
+                                                                    </td>
+                                                                    <td class="fbTd">
+                                                                        <div class="fbMask">
+                                                                            <s:if test="milestoneFeedback==''||milestoneFeedback==null">
+                                                                                <div class="fbArea"></div>
+                                                                                <div class="edit hide">
+                                                                                    <a href="javascript:;">Edit</a>
+                                                                                </div>
+                                                                                <div class="add">
+                                                                                    <a href="javascript:;">Provide Feedback</a>
+                                                                                </div>
+                                                                            </s:if>
+                                                                            <s:else>
+                                                                                <div class="fbArea" style="display:block">${submission.milestoneFeedback}</div>
+                                                                                <div class='edit'>
+                                                                                    <a href="javascript:;">Edit</a>
+                                                                                </div>
+                                                                                <div class="add hide">
+                                                                                    <a href="javascript:;">Provide Feedback</a>
+                                                                                </div>
+                                                                            </s:else>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                </s:iterator>
+                                                            </tbody>                                    
+                                                        </table>
+                                                    </div>
+                        
+                                                    <div class="ops">
+                                                        <a href="javascript:;" class="saveit">Save &amp; Continue later</a> 
+                                                        <a class="newButton1 lock" href="javascript:;"><span class="btnR"><span class="btnC"><span class="icon">LOCK IN MILESTONES</span></span></span></a>
+                                                    </div>              
+                                                </c:when>
+                                                <c:otherwise></c:otherwise>
+                                              </c:choose>
                                             </s:if>
-
                                             </div>
                                             <!-- End .container2Content -->
                                         </div>
@@ -549,6 +703,7 @@
 <!-- End #wrapper -->
 
 <jsp:include page="includes/popups.jsp"/>
+
 </body>
 <!-- End #page -->
 

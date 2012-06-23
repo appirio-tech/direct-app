@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-1012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -18,9 +18,16 @@ import java.util.List;
  *     <li>Added {@link #uploadId} property.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 1.0.2 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Added {@link #milestoneFeedback} property.</li>
+ *     <li>Added {@link #milestoneReviewScore} property.</li>
+ *   </ol>
+ * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.0.1 (Direct Software Submission Viewer assembly)
+ * @author TCSDEVELOPER, TCSASSEMBLER
+ * @version 1.0.2
  */
 public class SoftwareSubmissionDTO implements Serializable {
 
@@ -85,6 +92,21 @@ public class SoftwareSubmissionDTO implements Serializable {
      * @since 1.0.1
      */
     private long uploadId;
+    
+    /**
+     * <p>A <code>String</code> providing the feedback for the milestone submission.</p>
+     *
+     * @since 1.0.2
+     */
+    private String milestoneFeedback;
+
+    
+    /**
+     * <p>A <code>Float</code> providing the milestone review score for the milestone submission.</p>
+     *
+     * @since 1.0.2
+     */
+    private Float milestoneReviewScore;
 
     /**
      * <p>Constructs new <code>SoftwareSubmissionDTO</code> instance. This implementation does nothing.</p>
@@ -310,6 +332,46 @@ public class SoftwareSubmissionDTO implements Serializable {
      */
     public void setUploadId(long uploadId) {
         this.uploadId = uploadId;
+    }
+
+    /**
+     * Sets the feedback for the milestone submission.
+     * 
+     * @param milestoneFeedback the feedback for the milestone submission to set
+     * @since 1.0.2
+     */
+    public void setMilestoneFeedback(String milestoneFeedback) {
+        this.milestoneFeedback = milestoneFeedback;
+    }
+
+    /**
+     * Gets the feedback for the milestone submission.
+     * 
+     * @return the feedback for the milestone submission
+     * @since 1.0.2
+     */
+    public String getMilestoneFeedback() {
+        return milestoneFeedback;
+    }
+
+    /**
+     * Sets the milestone review score for the milestone submission.
+     * 
+     * @param milestoneReviewScore the milestone review score for the milestone submission to set
+     * @since 1.0.2
+     */
+    public void setMilestoneReviewScore(Float milestoneReviewScore) {
+        this.milestoneReviewScore = milestoneReviewScore;
+    }
+
+    /**
+     * Gets the milestone review score for the milestone submission.
+     * 
+     * @return the milestone review score for the milestone submission
+     * @since 1.0.2
+     */
+    public Float getMilestoneReviewScore() {
+        return milestoneReviewScore;
     }
 
 }

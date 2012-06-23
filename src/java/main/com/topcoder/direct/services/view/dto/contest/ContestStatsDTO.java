@@ -23,9 +23,14 @@ import com.topcoder.service.project.CompetitionPrize;
  * Version 1.1 (Release Assembly - TC Direct Cockpit Release One) changes:
  * - Add property milestoneSubmissionNumber, finalSubmissionNumber and isMultipleRound
  * </p>
+ * 
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Software Milestone Management) changes:
+ * - Add property {@link #inMilestoneSubmissionOrMilestoneReview}.
+ * </p>
  *
  * @author isv, Veve, TCSASSEMBLER
- * @version 1.1
+ * @version 1.2
  */
 public class ContestStatsDTO implements Serializable {
 
@@ -123,6 +128,11 @@ public class ContestStatsDTO implements Serializable {
      */
     private boolean isMultipleRound;
 
+    /**
+     * Whether current phase is in milestone submission or milestone review.
+     * @since 1.2
+     */
+    private boolean inMilestoneSubmissionOrMilestoneReview;
 
     /**
      * The current status of the contest.
@@ -501,5 +511,26 @@ public class ContestStatsDTO implements Serializable {
      */
     public void setMultipleRound(boolean multipleRound) {
         isMultipleRound = multipleRound;
+    }
+
+    /**
+     * Sets the flag that indicates whether current phase is in milestone submission or milestone review.
+     * 
+     * @param inMilestoneSubmissionOrMilestoneReview the flag that indicates whether current phase is
+     *      in milestone submission or milestone review
+     * @since 1.2
+     */
+    public void setInMilestoneSubmissionOrMilestoneReview(boolean inMilestoneSubmissionOrMilestoneReview) {
+        this.inMilestoneSubmissionOrMilestoneReview = inMilestoneSubmissionOrMilestoneReview;
+    }
+
+    /**
+     * Gets the flag that indicates whether current phase is in milestone submission or milestone review.
+     * 
+     * @return the flag that indicates whether current phase is in milestone submission or milestone review
+     * @since 1.2
+     */
+    public boolean isInMilestoneSubmissionOrMilestoneReview() {
+        return inMilestoneSubmissionOrMilestoneReview;
     }
 }

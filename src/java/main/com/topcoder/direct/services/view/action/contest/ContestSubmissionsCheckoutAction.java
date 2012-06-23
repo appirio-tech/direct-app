@@ -1,10 +1,8 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,9 +41,17 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ul>
  * </p>
  *
- * @author flexme
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author flexme, minhu
  * @since Submission Viewer Release 3 assembly
- * @version 1.1
+ * @version 1.2
  */
 public class ContestSubmissionsCheckoutAction extends ContestAction {
     /**
@@ -249,7 +255,7 @@ public class ContestSubmissionsCheckoutAction extends ContestAction {
             // For normal request flow prepare various data to be displayed to user
 
             // Set contest stats
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, softwareCompetition);
 
             getViewData().setContestStats(contestStats);
 

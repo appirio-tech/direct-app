@@ -343,8 +343,16 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.8.6 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #getContestStats(TCSubject, long, SoftwareCompetition)} method to
+ *     add parameter softwareCompetition.</li>
+ *   </ol>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe
- * @version 1.8.5
+ * @version 1.8.6
  */
 public final class DirectUtils {
     /**
@@ -581,15 +589,20 @@ public final class DirectUtils {
      *
      * version 1.6.6 changes:
      * - add issues of the contest into contest stats.
+     *
+     * version 1.8.5 changes:
+     * - add parameter softwareCompetition.
      * </p>
      *
      * @param currentUser a <code>TCSubject</code> representing the current user.
      * @param contestId a <code>long</code> providing the ID of a contest.
+     * @param softwareCompetition the contest providing additional information, might be null
      * @return a <code>ContestStatsDTO</code> providing the statistics for specified contest.
      * @throws Exception if an unexpected error occurs while accessing the persistent data store.
      * @since 1.1
      */
-    public static ContestStatsDTO getContestStats(TCSubject currentUser, long contestId)
+    public static ContestStatsDTO getContestStats(TCSubject currentUser, long contestId,
+            SoftwareCompetition softwareCompetition)
         throws Exception {
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
@@ -665,7 +678,12 @@ public final class DirectUtils {
         // gets the number of issues and bug races for contest
         dto.setTotalJiraIssuesNumber(dto.getIssues().getIssuesNumber() + dto.getIssues().getBugRacesNumber());
 
-
+        // set additional properties here
+        if (softwareCompetition != null) {
+            dto.setInMilestoneSubmissionOrMilestoneReview(isPhaseOpen(
+                softwareCompetition, PhaseType.MILESTONE_SUBMISSION_PHASE) || isPhaseOpen(
+                softwareCompetition, PhaseType.MILESTONE_REVIEW_PHASE));            
+        }
         return dto;
     }
 
@@ -1654,7 +1672,8 @@ public final class DirectUtils {
      */
     public static void setDashboardData(TCSubject currentUser, long contestId, BaseContestCommonDTO dto, ContestServiceFacade facade, boolean software) throws Exception {
         if (dto.getContestStats() == null) {
-            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId));
+            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId,
+                facade.getSoftwareContestByProjectId(currentUser, contestId)));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
 
@@ -1674,7 +1693,8 @@ public final class DirectUtils {
      */
     public static void setDashboardData(TCSubject currentUser, long contestId, ViewSpecificationReviewActionResultData dto, ContestServiceFacade facade, boolean software) throws Exception {
         if (dto.getContestStats() == null) {
-            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId));
+            dto.setContestStats(DirectUtils.getContestStats(currentUser, contestId,
+                facade.getSoftwareContestByProjectId(currentUser, contestId)));
         }
         dto.setDashboard(DataProvider.getContestDashboardData(contestId, !software, false));
 

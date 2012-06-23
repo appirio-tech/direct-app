@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.action.contest;
 
@@ -35,8 +35,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  *   </ul>
  * </p>
  *
- * @author TCSDEVELOPER
- * @version 1.1 (Submission Viewer Release 4 assembly)
+ * <p>
+ * Version 1.2 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author TCSDEVELOPER, minhu
+ * @version 1.2
  */
 public class StudioNoWinnerAction extends SaveContestSubmissionRankAction {
 
@@ -155,7 +163,7 @@ public class StudioNoWinnerAction extends SaveContestSubmissionRankAction {
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, softwareCompetition);
             getViewData().setContestStats(contestStats);
 
             // Set projects data

@@ -3,11 +3,11 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,33 +15,32 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.topcoder.direct.services.project.milestone.model.Milestone;
-import com.topcoder.direct.services.view.dto.contest.*;
-import com.topcoder.direct.services.view.util.AuthorizationProvider;
-import com.topcoder.management.deliverable.Submission;
-import com.topcoder.management.resource.Resource;
-import com.topcoder.management.resource.ResourceRole;
-import com.topcoder.service.project.ProjectData;
 import org.apache.struts2.ServletActionContext;
 
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestDetailsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
+import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.project.CopilotContestExtraInfo;
 import com.topcoder.management.project.CopilotContestExtraInfoType;
 import com.topcoder.management.project.Prize;
 import com.topcoder.management.project.Project;
 import com.topcoder.management.project.ProjectCopilotType;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.resource.ResourceRole;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.ContestServiceFacade;
 import com.topcoder.service.project.CompetionType;
+import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.SoftwareCompetition;
 
 /**
@@ -132,8 +131,16 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ol>
  * </p>
  *
- * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin
- * @version 1.6
+ * <p>
+ * Version 1.7 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
+ * </p>
+ *
+ * @author fabrizyo, FireIce, isv, morehappiness, GreatKevin, minhu
+ * @version 1.7
  */
 public class GetContestAction extends ContestAction {
     /**
@@ -298,7 +305,7 @@ public class GetContestAction extends ContestAction {
         }
 
         // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, softwareCompetition);
         getViewData().setContestStats(contestStats);
 				
 		// Set current project context based on selected contest

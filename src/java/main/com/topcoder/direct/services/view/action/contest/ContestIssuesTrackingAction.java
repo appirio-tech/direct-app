@@ -43,8 +43,16 @@ import java.util.List;
  *     temporary attachments in the <code>SessionFileStore</code>.</li>
  *   </ol>
  * </p>
+ * <p>
+ * Version 1.4 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
+ * </p>
+ *
  * @author Veve, TCSASSEMBLER
- * @version 1.3
+ * @version 1.4
  */
 public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
 
@@ -102,7 +110,7 @@ public class ContestIssuesTrackingAction extends StudioOrSoftwareContestAction {
         this.viewData = DataProvider.getContestIssues(contestId);
 
         // Set contest stats
-        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId);
+        ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, contestId, competition);
         getViewData().setContestStats(contestStats);
 
         // Set projects data

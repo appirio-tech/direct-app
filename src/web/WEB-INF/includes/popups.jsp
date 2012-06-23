@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin
-  - Version: 2.0
+  - Author: winsty, GreatKevin, TCSASSEMBLER
+  - Version: 2.2
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -43,10 +43,13 @@
   -
   - Version 2.1 - Release Assembly - TC Direct Cockpit Release Four
   - - Add modal background for spec review modal
+  -
+  - Version 2.2 - Release Assembly - TopCoder Cockpit Software Milestone Management
+  - - Add modal windows for software milestone management
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
-	  <!-- Help Popup -->
+      <!-- Help Popup -->
     <div id="helpPopup" class="hide">
         <div class="helpPopupInner details">
 
@@ -69,12 +72,12 @@
 
     </div>
 
-	  <!-- Repost Dialog -->
+      <!-- Repost Dialog -->
     <div id="repostDialog" title="Repost" class="dialog-box hide">
       <div id="repostForm">
-      	<p>
-      		Are you sure to repost the failed contest?
-      	</p>
+          <p>
+              Are you sure to repost the failed contest?
+          </p>
         <div class="popupButtons">
           <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
           <a href="javascript:;" onclick="repostContest();" class="button1"><span>Yes</span></a>
@@ -83,22 +86,22 @@
 
       <div id="repostResult">
         <p>
-        	Contest has been reposted successfully! <br/>
-        	Click edit button if you want to edit it.
+            Contest has been reposted successfully! <br/>
+            Click edit button if you want to edit it.
         </p>
         <div class="popupButtons">
           <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>Close</span></a>
-        	<a href="javascript:;" onclick="editRepost();" class="button1"><span>Edit</span></a>
+            <a href="javascript:;" onclick="editRepost();" class="button1"><span>Edit</span></a>
         </div>
       </div><!-- End #repostResult -->
     </div><!-- End #repostDialog -->
 
-	  <!-- New Version Dialog -->
+      <!-- New Version Dialog -->
     <div id="newVersionDialog" title="New Version" class="dialog-box hide">
       <div id="newVersionConfirm">
-      	<p>
-      		 Are you sure to release a new version?
-      	</p>
+          <p>
+               Are you sure to release a new version?
+          </p>
         <div class="popupButtons">
           <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
           <a href="javascript:;" onclick="newVersionConfirm();" class="button1"><span>Yes</span></a>
@@ -106,9 +109,9 @@
       </div><!-- End #newVersionStep1 -->
 
       <div id="newVersionDev">
-      	<p>
-      		 Do you want to create corresponding development contest?
-      	</p>
+          <p>
+               Do you want to create corresponding development contest?
+          </p>
         <div class="popupButtons">
           <a href="javascript:;" onclick="newVersionDevYes();" class="button1"><span>Yes</span></a>
           <a href="javascript:;" onclick="newVersionDevNo();" class="button1"><span>No</span></a>
@@ -116,11 +119,11 @@
       </div><!-- End #newVersionDev -->
 
       <div id="newVersionMinor">
-      	<p>
-      		 Do you want to create a major version or minor version?
-      	</p>
+          <p>
+               Do you want to create a major version or minor version?
+          </p>
         <div class="popupButtons">
-        	<a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
+            <a href="javascript:;" onclick="closeDialog(this);" class="button1"><span>Cancel</span></a>
           <a href="javascript:;" onclick="newVersionChooseMajor();" class="button1"><span>Major Version</span></a>
           <a href="javascript:;" onclick="newVersionChooseMinor();" class="button1"><span>Minor Version</span></a>
         </div>
@@ -128,12 +131,12 @@
 
       <div id="newVersionResult">
         <p>
-        	New version has been created successfully! <br/>
-        	Click edit button if you want to edit it.
+            New version has been created successfully! <br/>
+            Click edit button if you want to edit it.
         </p>
         <div class="popupButtons">
           <a href="javascript:;" onclick="refreshPage(this);" class="button1"><span>Close</span></a>
-        	<a href="javascript:;" onclick="editNewVersionProject();" class="button1"><span>Edit</span></a>
+            <a href="javascript:;" onclick="editNewVersionProject();" class="button1"><span>Edit</span></a>
         </div>
       </div><!-- End #repostResult -->
     </div><!-- End #repostDialog -->
@@ -150,7 +153,7 @@
     </div>
 
  <div id="deleteUserConfirmation" title="Do you really want to delete the user?" style="display:none;">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will delete the user from the project. Please confirm you want to delete the user?</p>
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This will delete the user from the project. Please confirm you want to delete the user?</p>
     </div>
 
     <!-- AJAX preloading indicator -->
@@ -221,9 +224,9 @@
                     <div class="modalFooterCenter"></div>
                 </div>
             </div>
-		<!-- end .modalFooter -->
-	</div>
-	    <!-- end #addNewProjectModal -->
+        <!-- end .modalFooter -->
+    </div>
+        <!-- end #addNewProjectModal -->
 
         <!-- #processInvoiceRecord -->
         <div id="processInvoiceRecordModal" class="outLay">
@@ -381,6 +384,262 @@
         </div>
     </div>
         <!-- end copilot manage modal -->
+        
+    <!-- #addFeedbackModal -->
+    <div id="addFeedbackModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>SUBMISSION FEEDBACK</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+                <textarea cols="10" rows="10"></textarea>
+                <p class="error hide">Feedback to add cannot be empty.</p>
+            </div>
+            <div class="modalCommandBox">
+                <a href="javascript:;" class="newButton1 addBtn"><span class="btnR"><span class="btnC">ADD</span></span></a>
+                <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #addFeedbackModal -->
+
+    <!-- #editFeedbackModal -->
+    <div id="editFeedbackModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>EDIT GENERAL FEEDBACK</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+                <textarea cols="10" rows="10"></textarea>
+                <p class="error hide"></p>
+            </div>
+            <div class="modalCommandBox">
+                <a href="javascript:;" class="newButton1 saveBtn"><span class="btnR"><span class="btnC">SAVE</span></span></a>
+                <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">CANCEL</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #editFeedbackModal -->
+                                                      
+    <!-- #saveSuccessModal -->
+    <div id="saveSuccessModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>SUCCESSFULLY SAVED</span>
+                    <a href="javascript:" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+                <p>Milestone winners and Feedback saved.</p> 
+            </div>
+            <div class="modalCommandBox"> 
+                <a href="javascript:" class="newButton1"><span class="btnR"><span class="btnC">OK</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #saveSuccessModal -->
+    
+    <!-- #lockinSuccessModal -->
+    <div id="lockinSuccessModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>SUCCESSFULLY LOCKED IN</span>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+                <p>Milestone winners and Feedback locked.</p> 
+            </div>
+            <div class="modalCommandBox"> 
+                <a href="javascript:" class="newButton1"><span class="btnR"><span class="btnC">OK</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #lockinSuccessModal -->
+ 
+    <!-- #lockinConfirmModal -->
+    <div id="lockinConfirmModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>LOCK IN MILESTONES</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+                <p>Are you sure you want to lock selected submissions?<span>You cannot undo or provide/ edit feedback after lock in.</span></p>
+            </div>
+            <div class="modalCommandBox">
+                <a href="javascript:;" class="newButton1 yesBtn"><span class="btnR"><span class="btnC">YES</span></span></a>
+                <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">NO</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #lockinConfirmModal -->
+
+
+    <!-- #lockinInvalidModal -->
+    <div id="lockinInvalidModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>LOCK IN MILESTONES</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+                <p>The winner you chosen is invalid. You should choose winners with placements starting from 1 consecutively.</p>
+            </div>
+            <div class="modalCommandBox">
+                <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">OK</span></span></a> 
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #lockinInvalidModal -->
+    
+    <!-- #lockinNoWinnerModal -->
+    <div id="lockinNoWinnerModal" class="outLay">
+        <div class="modalHeader">
+            <div class="modalHeaderRight">
+                <div class="modalHeaderCenter">
+                    <span>LOCK IN MILESTONES</span>
+                    <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                </div>
+            </div>
+        </div>
+        <!-- end .modalHeader -->
+
+        <div class="modalBody">
+            <div class="modalBodyContent">
+                <p><strong>No Milestone Winners are selected.</strong>Are you sure you don't want to select any milestone winners for this contest?<span>You cannot undo or provide feedback after lock in.</span></p>
+            </div>
+            <div class="modalCommandBox">
+                <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">GO BACK TO SELECT MILESTONE WINNERS</span></span></a>
+                <a href="javascript:;" class="newButton1 lockinBtn"><span class="btnR"><span class="btnC">LOCK IN MILESTONS</span></span></a>
+            </div>
+        </div>
+        <!-- end .modalBody -->
+
+        <div class="modalFooter">
+            <div class="modalFooterRight">
+                <div class="modalFooterCenter"></div>
+            </div>
+        </div>
+        <!-- end .modalFooter -->
+    </div>
+    <!-- end #lockinNoWinnerModal -->
+    
+    <!-- #lockinNoFeedbackModal -->
+    <div id="lockinNoFeedbackModal" class="outLay">
+    <div class="modalHeader">
+        <div class="modalHeaderRight">
+            <div class="modalHeaderCenter">
+                <span>LOCK IN MILESTONES</span>
+                <a href="javascript:;" class="closeModal" title="Close">Close</a>
+            </div>
+        </div>
+    </div>
+    <!-- end .modalHeader -->
+
+    <div class="modalBody">
+        <div class="modalBodyContent">
+            <p><strong>Neither feedback on milestone winning submissions, nor genaral feedback is provided. </strong>Do you want to continue locking in milestones?<span>You cannot undo or provide feedback after lock in.</span></p>
+        </div>
+        <div class="modalCommandBox">
+        <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">GO BACK TO PROVIDE FEEDBACK</span></span></a>
+            <a href="javascript:;" class="newButton1 lockinBtn"><span class="btnR"><span class="btnC">LOCK IN MILESTONS</span></span></a>
+        </div>
+    </div>
+    <!-- end .modalBody -->
+
+    <div class="modalFooter">
+        <div class="modalFooterRight">
+            <div class="modalFooterCenter"></div>
+        </div>
+    </div>
+    <!-- end .modalFooter -->
+</div>
+    <!-- end #lockinNoFeedbackModal -->
+    
         <s:if test='%{#request.CURRENT_TAB  == "overview" && #request.PAGE_TYPE  == "project"}'>
             <div id="projectDescModal" class="outLay">
                 <div class="inner">

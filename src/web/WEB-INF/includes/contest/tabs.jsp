@@ -1,6 +1,6 @@
 <%--
   - Author: isv, Veve, morehappiness, TCSASSEMBLER
-  - Version: 1.4
+  - Version: 1.5
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page fragment renders the tabs for dashboard and contest pages.
@@ -12,6 +12,8 @@
   - software and studio contest.
   - Version 1.4 (Release Assembly - TC Direct Cockpit Release One) changes: Add milestone submission number and final submission
   - number in the submission tab title for multiple round contest
+  - Version 1.5 (Release Assembly - TopCoder Cockpit Software Milestone Management) changes:
+  - Add milestoneRound parameter for the submissions tab link of studioSubmissionsGrid and softwareSubmissionsList.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -40,7 +42,7 @@
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:180px">
                 <if:isStudioContest contestStats="${contestStats}">
-                    <link:studioSubmissionsGrid contestId="${contestStats.contest.id}">
+                    <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="${contestStats.inMilestoneSubmissionOrMilestoneReview}">
                         <span class="left">
                             <s:if test="viewData.contestStats.multipleRound">
                                 <span class="right">Submissions (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>
@@ -52,7 +54,7 @@
                     </link:studioSubmissionsGrid>
                 </if:isStudioContest>
                 <if:isStudioContest contestStats="${contestStats}" negate="true">
-                    <link:softwareSubmissionsList contestId="${contestStats.contest.id}">
+                    <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="${contestStats.inMilestoneSubmissionOrMilestoneReview}">
                         <span class="left">
                             <s:if test="viewData.contestStats.multipleRound">
                                 <span class="right">Submissions (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>

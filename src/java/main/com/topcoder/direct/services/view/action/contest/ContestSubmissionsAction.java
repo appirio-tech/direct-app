@@ -91,10 +91,18 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     <li>Updated {@link #executeAction()} method to load the <code>Resource</code> data associated with the submissions.</li>
  *   </ul>
  * </p>
+ *
+ * <p>
+ * Version 1.7 (Release Assembly - TopCoder Cockpit Software Milestone Management) Change notes:
+ *   <ol>
+ *     <li>Updated {@link #executeAction()} method to add parameter softwareCompetition when calling
+ *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
+ *   </ol>
+ * </p>
  * 
- * @author isv, flexme
+ * @author isv, flexme, minhu
  * @since Submission Viewer Release 1 assembly
- * @version 1.6
+ * @version 1.7
  */
 public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -339,7 +347,7 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
             // Set contest stats
             //ContestStatsDTO contestStats = DirectUtils.getContestStats(contestServiceFacade, currentUser, contestId);
-            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId);
+            ContestStatsDTO contestStats = DirectUtils.getContestStats(currentUser, projectId, softwareCompetition);
             getViewData().setContestStats(contestStats);
 
             // set the number of prizes
