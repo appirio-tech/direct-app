@@ -119,6 +119,39 @@
                             </div>
                             <!--end .filterPanel-->
                         </form>
+                        <c:if test="${tableData != null || fn:length(sheetTabs) gt 1}">
+                            <div id="downloadPanel">
+                                <!-- start filter panel -->
+                                <div class='filterPanel'>
+                                    <div class='filterHead' style="margin-bottom: -2px; height: 30px;">
+                                        <div class='rightSide' style="height: 30px;">
+                                            <div class='inner'>
+                                                <div class='filterText'>
+                                                    <a href='javascript:;' class='expand'><img src='/images/filter-panel/collapse_icon.png' alt=''/></a>
+                                                    <span class='title'>Download</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterHead-->
+                                    <div class='filterContent hide'>
+                                        <div class='rightSide'>
+                                            <div class='inner'>
+                                                <div class="row">
+                                                    Download excel file:     <input type="button" onClick="location.href='${ctx}/downloadSheet'" value="Download">
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end .filterHead-->
+                                    <div class='filterBottom hide'><div class='rightSide'><div class='inner'></div></div></div>
+                                    <!--end .filterBottom-->
+                                    <div class='collapseBottom'><div class='rightSide'><div class='inner'></div></div></div>
+                                </div>
+                                <!--end .filterPanel-->
+                            </div>
+                        </c:if>
                     </div>
                     </div>
                 </div>

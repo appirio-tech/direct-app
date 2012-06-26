@@ -881,6 +881,17 @@
                 <param name="namespace">/</param>
             </result>
         </action>
+        <action name="downloadSheet" class="com.topcoder.direct.services.view.action.stats.DownloadSheetAction">
+          <param name="excelFile">@excelFile@</param>
+          <interceptor-ref name="securedInternalStatsStack"/>
+            <result type="stream">
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        
     </package>
 
     <package name="base" namespace="/base" extends="default">
