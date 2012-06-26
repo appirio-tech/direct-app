@@ -8,7 +8,6 @@ import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DirectUtils;
-import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.gameplan.GamePlanService;
@@ -16,7 +15,6 @@ import com.topcoder.service.util.gameplan.SoftwareProjectData;
 import com.topcoder.service.util.gameplan.StudioProjectData;
 import com.topcoder.service.util.gameplan.TCDirectProjectGamePlanData;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.DateFormat;
@@ -37,10 +35,15 @@ import java.util.*;
  * - Include bug races into the game plan.
  * </p>
  *
+ * <p>
+ * Version 1.2 (Module Assembly - TopCoder Cockpit Game Plan JSGantt Version) changes:
+ * - Add data generation for the  game plan jsgantt version.
+ * </p>
+ *
  * @author GreatKevin
  * @version 1.1 (TopCoder Cockpit - Bug Race Project Contests View)
  */
-public class CurrentProjectGamePlanAction extends AbstractAction {
+public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
     /**
      * <p>A <code>ProjectIdForm</code> providing the ID of a requested project.</p>
@@ -64,6 +67,13 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
     private static final DateFormat GAME_PLAN_DATE_FORMAT = new SimpleDateFormat("yyyy,M,d");
 
     /**
+     * The format for the date in the jsgantt game plan.
+     *
+     * @since 1.2
+     */
+    private static final DateFormat JSGANTT_GAME_PLAN_DATE_FORMAT = new SimpleDateFormat("M/d/yyyy");
+
+    /**
      * The error message returned when no project is selected to view.
      */
     private static final String NO_PROJECT_ERROR_MSG = "No project is selected to view, please select a project first.";
@@ -73,6 +83,28 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
      * is not finished. This may happen when the contest is hang or late for some reason.
      */
     private static final int NOT_FINISHED_PERCENTAGE = 85;
+
+    /**
+     * The link prefix for the contest details page.
+     *
+     * @since 1.2
+     */
+    private static final String CONTEST_DETAIL_LINK = "contest/detail.action?projectId=";
+
+
+    /**
+     * The link prefix for the project overview page.
+     *
+     * @since 1.2
+     */
+    private static final String PROJECT_OVERVIEW_LINK = "projectOverview.action?formData.projectId=";
+
+    /**
+     * The jira link prefix for all jira issues.
+     *
+     * @since 1.2
+     */
+    private static final String JIRA_LINK = "https://apps.topcoder.com/bugs/browse/";
 
     /**
      * The game plan service which is used to retrieve project game plan data.
@@ -121,6 +153,18 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
     }
 
     /**
+     * <p>
+     * Sets the form data.
+     * </p>
+     *
+     * @param formData the ProjectIdForm to set.
+     * @since 1.2
+     */
+    public void setFormData(ProjectIdForm formData) {
+        this.formData = formData;
+    }
+
+    /**
      * Generate the game plan data XML which will be consumed by the client side JavaScript
      * Gantt chart.
      *
@@ -128,8 +172,32 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
      * @throws Exception if any error occurs.
      */
     public String execute() throws Exception {
-        // Get current user from session
-        TCSubject user = getCurrentUser();
+        generateGamePlanResponseStream(false);
+        return SUCCESS;
+    }
+
+    /**
+     * Generates the game plan data XML which will be consumed by the jsgantt chart.
+     *
+     * @return the result
+     * @throws Exception if any error occurs.
+     * @since 1.2
+     */
+    public String getJsGanttGamePlanData() throws Exception {
+        generateGamePlanResponseStream(true);
+        return SUCCESS;
+    }
+
+
+    /**
+     * Generates the game plan response stream
+     *
+     * @param isJsGantt whether generates for the jsgantt chart.
+     * @throws Exception if any error occurs.
+     * @since 1.2
+     */
+    private void generateGamePlanResponseStream(boolean isJsGantt) throws Exception {
+        TCSubject user = DirectUtils.getTCSubjectFromSession();
 
         long projectId = -1;
         // string which is used to store response data
@@ -146,29 +214,27 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             // Get project game plan data from Game Plan Service
             TCDirectProjectGamePlanData data = getGamePlanService().retrieveGamePlanData(user, projectId);
 
-            List<SoftwareProjectData> softwareProjects = data.getSoftwareProjects();
+            /*     System.out.println("******************************************");
 
-       /*     System.out.println("******************************************");
+           for (SoftwareProjectData spt : softwareProjects) {
+               System.out.println("name:" + spt.getProjectName());
+               System.out.println("current status:" + spt.getProjectStatus());
+               System.out.println("current phase:" + spt.getCurrentPhase());
+               System.out.println("type:" + spt.getProjectType());
+               System.out.println("start date:" + spt.getStartDate());
+               System.out.println("end date:" + spt.getEndDate());
+               System.out.println("dependency ID:" + Arrays.toString(spt.getDependencyProjectIds()));
+               System.out.println("=============================================");
 
-            for (SoftwareProjectData spt : softwareProjects) {
-                System.out.println("name:" + spt.getProjectName());
-                System.out.println("current status:" + spt.getProjectStatus());
-                System.out.println("current phase:" + spt.getCurrentPhase());
-                System.out.println("type:" + spt.getProjectType());
-                System.out.println("start date:" + spt.getStartDate());
-                System.out.println("end date:" + spt.getEndDate());
-                System.out.println("dependency ID:" + Arrays.toString(spt.getDependencyProjectIds()));
-                System.out.println("=============================================");
+           }
 
-            }
-
-            System.out.println("******************************************"); */
+           System.out.println("******************************************"); */
 
             if (data == null) {
                 responseData = ERROR_HEADER + DATA_RETRIEVAL_ERROR_MSG;
             } else {
                 // generate the response data
-                responseData = generateProjectGamePlanData(data);
+                responseData = generateProjectGamePlanData(data, isJsGantt);
             }
 
 
@@ -179,25 +245,6 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
         // send response data as plain text
         inputStream = new ByteArrayInputStream(responseData.getBytes("UTF8"));
-
-        return SUCCESS;
-    }
-
-    /**
-     * Gets current user from the request.
-     *
-     * @return current user as TCSubject or null if request is null.
-     */
-    private TCSubject getCurrentUser() {
-        // get HttpServletRequest
-        HttpServletRequest request = DirectUtils.getServletRequest();
-
-        if (request == null) {
-            // return null if request does not exist.
-            return null;
-        }
-
-        return new SessionData(request.getSession()).getCurrentUser();
     }
 
 
@@ -209,17 +256,21 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
      * - Update the generation codes to inlude bug races for project into the gantt chart.
      * </p>
      *
+     * <p>
+     * Update in version 1.2:
+     * - Add generation codes for the jsgantt chart game plan data.
+     * </p>
+     *
      * @param gamePlan the TCDirectProjectGamePlanData which stores the data.
+     * @param isJSGantt whether generates for the jsgantt
      * @return the generated data response.
      */
-    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan) throws Exception {
+    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan, boolean isJSGantt) throws Exception {
         // create a string builder to store the XML result
         StringBuilder result = new StringBuilder();
 
-        // append the data header
-        result.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><projects>");
-
         long directProjectId = gamePlan.getTcDirectProjectId();
+
         // Get the direct project name from session
         String directProjectName = gamePlan.getTcDirectProjectName();
 
@@ -233,47 +284,64 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
             bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
         }
 
-        // get the start date of the project
-        Date directProjectStartDate = getDirectProjectStartDate(gamePlan, bugRaceForDirectProject);
 
-        // append the direct project header
-        result.append("<project id=\"" + directProjectId + "\" name=\"" +
-                directProjectName + "\" startdate=\"" +
-                (directProjectStartDate == null ? "" : GAME_PLAN_DATE_FORMAT.format(directProjectStartDate)) + "\">");
+        // DATA BEGIN
+        if (!isJSGantt) {
+            // append the data header
+            result.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+
+            // get the start date of the project
+            Date directProjectStartDate = getDirectProjectStartDate(gamePlan, bugRaceForDirectProject);
+
+            // append the direct project header
+            result.append("<projects><project id=\"" + directProjectId + "\" name=\"" +
+                    directProjectName + "\" startdate=\"" +
+                    (directProjectStartDate == null ? "" : GAME_PLAN_DATE_FORMAT.format(directProjectStartDate)) + "\">");
+        } else {
+            result.append("<project>");
+            result.append(generateProjectGamePlanDataJsGantt(directProjectId, directProjectName));
+        }
+
+        List<JsGanttDataBuffer> jsGanttDataBuffer = new ArrayList<JsGanttDataBuffer>();
 
         if (gamePlan != null) {
-
-            // generate studio contests data
-            for (StudioProjectData sc : gamePlan.getStudioProjects()) {
-                String id = String.valueOf(sc.getContestId());
-                String name = sc.getContestName() + " (" + sc.getContestType() + ")";
-                String startTime = GAME_PLAN_DATE_FORMAT.format(sc.getStartDate());
-                // calculate the duration in hours
-                long duration = calculateDuration(sc.getStartDate(), sc.getEndDate());
-                long percentage = calculateProgressPercentage(sc.isStarted(), sc.isFinished(), duration, sc.getEndDate());
-
-                result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, sc.getContestStatus()));
-            }
-
             Map<Long, SoftwareProjectData> idMapping = new HashMap<Long, SoftwareProjectData>();
 
+            final List<SoftwareProjectData> softwareProjects = gamePlan.getSoftwareProjects();
+
+            if (isJSGantt) {
+                Collections.sort(softwareProjects, new Comparator<SoftwareProjectData>() {
+                    public int compare(SoftwareProjectData o1, SoftwareProjectData o2) {
+                        return o1.getStartDate().compareTo(o2.getStartDate());
+                    }
+                });
+            }
+
             // build the id mapping
-            for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
+            for (SoftwareProjectData swc : softwareProjects) {
                 idMapping.put(swc.getProjectId(), swc);
             }
 
             // generate software contest data
-            for (SoftwareProjectData swc : gamePlan.getSoftwareProjects()) {
+            for (SoftwareProjectData swc : softwareProjects) {
                 String id = String.valueOf(swc.getProjectId());
-                String name = swc.getProjectType() + " - " + swc.getProjectName();
-                String startTime = GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
-                // calculate the duration in hours
-                long duration = calculateDuration(swc.getStartDate(), swc.getEndDate());
-                long percentage = calculateProgressPercentage(swc.isStarted(), swc.isFinished(), duration,
-                        swc.getEndDate());
+                String name = swc.getProjectName();
+                String type = swc.getProjectType();
 
+                if(!isJSGantt) {
+                    name = type + " - " + name;
+                }
+
+                String startTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(swc.getStartDate()) : GAME_PLAN_DATE_FORMAT.format(swc.getStartDate());
+                String endTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(swc.getEndDate()) : GAME_PLAN_DATE_FORMAT.format(swc.getEndDate());
                 String contestStatus = swc.getProjectStatus();
 
+                // calculate the duration in hours
+                long duration = calculateDuration(swc.getStartDate(), swc.getEndDate());
+
+                // calculate the completion percentage
+                long percentage = calculateProgressPercentage(swc.isStarted(), swc.isFinished(), duration,
+                        swc.getEndDate());
                 if(contestStatus.equals("Draft")) {
                     // set percentage to 0 if draft
                     percentage = 0;
@@ -300,7 +368,12 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
                 }
 
-                result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
+                if (isJSGantt) {
+                    jsGanttDataBuffer.add(new JsGanttDataBuffer(swc.getStartDate(), swc.getEndDate(), generateContestGamePlanDataJsGantt(id, directProjectId, name, type, startTime,
+                            endTime, percentage, predecessorId, contestStatus, null)));
+                } else {
+                    result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
+                }
             }
 
 
@@ -309,8 +382,17 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
                 for (TcJiraIssue bugRace : bugRaceForDirectProject) {
                     String id = bugRace.getIssueKey();
-                    String name = "Bug Race - " + bugRace.getIssueKey() + " " + bugRace.getTitle();
-                    String startTime = GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate());
+                    String uniqueId = bugRace.getIssueId();
+                    String name = bugRace.getIssueKey() + " " + bugRace.getTitle();
+                    String type = "Bug Race";
+
+                    if(!isJSGantt) {
+                        name = type + " - " + name;
+                    }
+
+                    String startTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate()) : GAME_PLAN_DATE_FORMAT.format(bugRace.getCreationDate());
+                    String endTime = isJSGantt ? JSGANTT_GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate()) : GAME_PLAN_DATE_FORMAT.format(bugRace.getEndDate());
+
                     long duration = calculateDuration(bugRace.getCreationDate(), bugRace.getEndDate());
                     String contestLikeStatus = bugRace.getContestLikeStatus();
                     boolean isFinished = contestLikeStatus.equals("Completed")
@@ -322,18 +404,33 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
                         contestLikeStatus = "cancelled";
                     }
 
-                    result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
+                    if (isJSGantt) {
+
+                        jsGanttDataBuffer.add(new JsGanttDataBuffer(bugRace.getCreationDate(), bugRace.getEndDate(), generateContestGamePlanDataJsGantt(uniqueId, directProjectId, name, type, startTime,
+                                endTime, percentage, -1, contestLikeStatus, id) ));
+                    } else {
+                        result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
+                    }
                 }
             }
-
         }
 
 
         // append the direct project footer
-        result.append("</project></projects>");
+        if(!isJSGantt) {
+            result.append("</project></projects>");
+        } else {
+
+            // sort buffer
+            Collections.sort(jsGanttDataBuffer);
+
+            for(JsGanttDataBuffer entry : jsGanttDataBuffer) {
+                result.append(entry.getDataString());
+            }
+            result.append("</project>");
+        }
 
         return result.toString();
-
     }
 
     /**
@@ -395,6 +492,76 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
 
         return contestData.toString();
     }
+
+    /**
+     *
+     * Generates the data for direct project for jsgantt.
+     *
+     * @param directProjectId the id of the direct project.
+     * @param directProjectName the name of the direct project.
+     * @return generated data
+     * @since 1.2
+     */
+    private static String generateProjectGamePlanDataJsGantt(long directProjectId, String directProjectName) {
+        StringBuilder projectData = new StringBuilder();
+
+        projectData.append("<task>");
+        projectData.append("<pID>" + directProjectId + "</pID>");
+        projectData.append("<pName><![CDATA[" + directProjectName + "]]></pName>");
+        projectData.append("<pStart></pStart><pEnd></pEnd><pColor></pColor>");
+        projectData.append("<pLink>" + PROJECT_OVERVIEW_LINK + directProjectId + "</pLink>");
+        projectData.append("<pMile>0</pMile><pRes></pRes><pComp>0</pComp><pGroup>1</pGroup><pParent>0</pParent>");
+        projectData.append("<pOpen>1</pOpen><pDepend/>");
+        projectData.append("</task>");
+        
+        return projectData.toString();
+    }
+
+
+    /**
+     * Generates the data for the contest for jsgantt
+     *
+     * @param id the id of the contest
+     * @param directProjectId the id of the direct project
+     * @param name the name of the direct project
+     * @param contestType the contest type
+     * @param startTime the start time
+     * @param endTime the end time
+     * @param percentage the completion percentage
+     * @param predecessorId the id of the predecessor
+     * @param status the status
+     * @return generated data
+     * @since 1.2
+     */
+    private static String generateContestGamePlanDataJsGantt(String id, long directProjectId, String name,
+                                                             String contestType, String startTime,
+                                                             String endTime, long percentage,
+                                                             long predecessorId, String status, String key) {
+        StringBuilder contestData = new StringBuilder();
+
+        boolean isBugRace = contestType.equalsIgnoreCase("bug race");
+
+        contestData.append("<task>");
+        contestData.append("<pID>" + id + "</pID>");
+        contestData.append("<pName><![CDATA[" + name + "]]></pName>");
+        contestData.append("<pStart>" + startTime + "</pStart>");
+        contestData.append("<pEnd>" + endTime + "</pEnd>");
+        contestData.append("<pColor>" + status + "</pColor>");
+        contestData.append("<pLink>" + (isBugRace ? JIRA_LINK : CONTEST_DETAIL_LINK) + (isBugRace ? key : id) + "</pLink>");
+        contestData.append("<pMile>0</pMile>");
+        contestData.append("<pRes>" + contestType + "</pRes>");
+        contestData.append("<pComp>" + percentage + "</pComp>");
+        contestData.append("<pGroup>0</pGroup>");
+        contestData.append("<pParent>" + directProjectId + "</pParent>");
+        contestData.append("<pOpen>1</pOpen>");
+        contestData.append("<pDepend>" + (predecessorId > 0 ? predecessorId : "") + "</pDepend>");
+        contestData.append("<pCaption></pCaption>");
+        contestData.append("</task>");
+
+        return contestData.toString();
+    }
+
+
 
     /**
      * Calculate the duration between the given two dates in hours. It
@@ -478,5 +645,85 @@ public class CurrentProjectGamePlanAction extends AbstractAction {
         }
 
         return contestIds;
+    }
+
+    /**
+     * Class to store the generated jsgantt contest data for sorting
+     *
+     * @since 1.2
+     */
+    private static class JsGanttDataBuffer implements Comparable<JsGanttDataBuffer> {
+
+        /**
+         * The generated data string.
+         */
+        private String dataString;
+
+        /**
+         * The start date.
+         */
+        private Date startDate;
+
+        /**
+         * The end date.
+         */
+        private Date endDate;
+
+        /**
+         * Creates a new JsGanttDataBuffer.
+         *
+         * @param startDate the start date.
+         * @param endDate the end date.
+         * @param dataString the data string.
+         */
+        public JsGanttDataBuffer(Date startDate, Date endDate, String dataString) {
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.dataString = dataString;
+        }
+
+        /**
+         * Gets the data string.
+         *
+         * @return the data string.
+         */
+        public String getDataString() {
+            return dataString;
+        }
+
+        /**
+         * Gets the start date.
+         *
+         * @return the start date.
+         */
+        public Date getStartDate() {
+            return startDate;
+        }
+
+
+        /**
+         * Gets the end date.
+         *
+         * @return the end date.
+         */
+        public Date getEndDate() {
+            return endDate;
+        }
+
+
+        /**
+         * Compares to another JsGanttDataBuffer.
+         *
+         * @param toCompare another JsGanttDataBuffer to compare
+         * @return the compare result
+         */
+        public int compareTo(JsGanttDataBuffer toCompare) {
+            int result = startDate.compareTo(toCompare.getStartDate());
+            if (result == 0) {
+               return endDate.compareTo(toCompare.getEndDate());
+            }
+
+            return result;
+        }
     }
 }
