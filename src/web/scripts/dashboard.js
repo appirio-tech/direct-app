@@ -68,6 +68,9 @@
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, TCSASSEMBLER
  * @version 2.10
  */
+
+var mouse_is_inside;
+
 $(document).ready(function(){
 						   
 	var Sys = {};
@@ -1809,28 +1812,14 @@ $(document).ready(function(){
 
     $(" .contestViews  .contestCView .loading").css("opacity", "0.8");
 
-    var isInitView = true;
-
-    $(".contestViews .areaHeader .viewBtns a").click(function() {
-
-
-        if ($(this).hasClass("active")) return;
-        $(this).parent().find("a").removeClass("active");
-        $(this).addClass("active");
-        var views = $(this).parents(".contestViews");
-        if (views.find(".contestTView").is(":hidden")) {
-            views.find(".contestTView").show();
-            views.find(".contestCView").hide();
-            views.find(".calendarLegends").hide();
-            $("#ProjectsContestsFilter").show();
-        } else {
-            views.find(".contestTView").hide();
-            views.find(".contestCView").show();
-            views.find(".calendarLegends").show();
-            $("#ProjectsContestsFilter").hide();
-            // get direct project ID
-            var directProjectId = $.trim($("#currentDirectProjectID").html());
-            var request = {"directProjectId":directProjectId};
+    var loadContestsCalendarView = function () {
+        var views = $(".contestViews");
+        views.find(".contestCView").show();
+        views.find(".calendarLegends").show();
+        var directProjectId = $.trim($("#currentDirectProjectID").html());
+        var formData = {};
+        formData.projectId = directProjectId;
+        var request = {formData:formData};
 
 
             if ($.browser.msie && $.browser.version == 7.0) {
@@ -1903,28 +1892,31 @@ $(document).ready(function(){
 
                         }
 
-                    },
-                    eventRender: function(event, element) {
-                        switch (event["status"]) {
-                            case 'completed':
-                                element.addClass("fc-completed");
-                                break;
-                            case 'cancelled':
-                                element.addClass("fc-cancelled");
-                                break;
-                            case 'active':
-                                element.addClass("fc-active");
-                                break;
-                            case 'draft':
-                                element.addClass("fc-draft");
-                                break;
-                        }
-                    },
-                    editable: false
-                });
-            }
+                },
+                eventRender:function (event, element) {
+                    switch (event["status"]) {
+                        case 'completed':
+                            element.addClass("fc-completed");
+                            break;
+                        case 'cancelled':
+                            element.addClass("fc-cancelled");
+                            break;
+                        case 'active':
+                            element.addClass("fc-active");
+                            break;
+                        case 'draft':
+                            element.addClass("fc-draft");
+                            break;
+                    }
+                },
+                editable:false
+            });
         }
-    });
+    };
+
+    if($("#contestsCalendarView").length > 0) {
+        loadContestsCalendarView();
+    }
 
 
     $('.multiSelectArea .multiSelectBox').css('overflow-x','hidden');
@@ -2673,7 +2665,29 @@ $(document).ready(function(){
         if($(event.target).parents(".dropList").length == 0){
             //$(".dropdownWidget .dropList").hide(); 
         }
+
+        // click other area of the page closes the dropdown menu
+        if($("li#contest div.dropDwnLst").is(':visible') && !mouse_is_inside){
+            $("li#contest div.dropDwnLst").hide();
+        }
          
+    });
+
+    $("li#contest a span.arrow, li#contest a:eq(0)").click(function(){
+        if($("li#contest div.dropDwnLst").is(':visible')){
+            $("li#contest div.dropDwnLst").hide();
+        }else{
+            setTimeout(function(){
+                $("li#contest div.dropDwnLst").show();
+            },100);
+        }
+        return false;
+    });
+
+    $("li#contest div.dropDwnLst").hover(function(){
+        mouse_is_inside=true;
+    }, function(){
+        mouse_is_inside=false;
     });
     
     /* Add js code for BUGR-6759 */

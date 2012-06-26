@@ -410,6 +410,12 @@
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
+    <bean id="batchDraftContestsEditAction" class="com.topcoder.direct.services.view.action.project.ProjectDraftContestsBatchEditAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+        <property name="contestFeeService" ref="contestFeeService"/>
+        <property name="contestFeePercentageService" ref="contestFeePercentageService"/>
+    </bean>
+
     <bean id="launchVMInstanceAction" class="com.topcoder.direct.services.view.action.cloudvm.LaunchVMInstanceAction"
           parent="abstractVMAction" scope="prototype">
         <property name="contestServiceFacade" ref="contestServiceFacade"/>

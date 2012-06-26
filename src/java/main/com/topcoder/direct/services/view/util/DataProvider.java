@@ -3,78 +3,14 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestCopilotDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationContestDetailDTO;
-import com.topcoder.direct.services.view.dto.project.*;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.lang.StringUtils;
-
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.ActivityDTO;
-import com.topcoder.direct.services.view.dto.ActivityType;
-import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
-import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
-import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
-import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
-import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
-import com.topcoder.direct.services.view.dto.UserDTO;
-import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
-import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
-import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
-import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
-import com.topcoder.direct.services.view.dto.contest.RunningPhaseStatus;
-import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
-import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
-import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
+import com.topcoder.direct.services.view.dto.*;
+import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
@@ -90,9 +26,20 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Billing
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
+import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
@@ -107,6 +54,17 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
 import com.topcoder.web.common.tag.HandleTag;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -493,8 +451,15 @@ import com.topcoder.web.common.tag.HandleTag;
  * </ol>
  * </p>
  * 
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, TCSASSEMBLER
- * @version 3.10
+ * <p>
+ * Version 4.0 (Module Assembly - TC Cockpit Project Contests Batch Edit)
+ * <ol>
+ *     <li>Update {@link #getProjectContests(long, long)} to add billing account info for the contest</li>
+ *     <li>Add method {@link #getAllProjectCategoriesGrouped()}</li>
+ * </ol>
+ * </p>
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin
+ * @version 4.0
  * @since 1.0
  */
 public class DataProvider {
@@ -1557,6 +1522,9 @@ public class DataProvider {
             String contestName = resultContainer.getStringItem(i, "contest_name");
             String statusName = resultContainer.getStringItem(i, "status");
             String typeName = resultContainer.getStringItem(i, "contest_type");
+            String billingAccountStr = resultContainer.getStringItem(i, "billing_account_id");
+
+            long billingAccountId = Long.parseLong(billingAccountStr);
 
             //TODO, this is to not affecting existing VMs, will change later
             long contestTypeId = 1;
@@ -1597,6 +1565,7 @@ public class DataProvider {
             }
 
             ContestBriefDTO contestBrief = createContest(contestId, contestName, project, !isStudio, typeName);
+            contestBrief.setBillingAccountId(billingAccountId);
             ContestType type = ContestType.forIdAndFlag(contestTypeId, isStudio);
             ContestStatus status = ContestStatus.forName(statusName);
 
@@ -2225,6 +2194,41 @@ public class DataProvider {
         }
 
         return map;
+    }
+
+    /**
+     * Gets the project categories groupded by software and studio.
+     *
+     * @return the grouped project categories.
+     * @throws Exception if any error occurs.
+     * @since 4.0
+     */
+    public static Map<String, Map<Long, String>> getAllProjectCategoriesGrouped() throws Exception {
+        Map<Long, String> softwareMap = new LinkedHashMap<Long, String>();
+        Map<Long, String> studioMap = new LinkedHashMap<Long, String>();
+
+        final String queryName = "project_categories_replatforming";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            long projectTypeId = row.getLongItem("project_type_id");
+            if (projectTypeId == 1 || projectTypeId == 2) {
+                softwareMap.put(row.getLongItem("project_category_id"), row.getStringItem("name"));
+            }
+            if (projectTypeId == 3) {
+                studioMap.put(row.getLongItem("project_category_id"), row.getStringItem("name"));
+            }
+
+        }
+
+        Map<String, Map<Long, String>> result = new HashMap<String, Map<Long, String>>();
+        result.put("software", softwareMap);
+        result.put("studio", studioMap);
+
+        return result;
     }
 
     /**

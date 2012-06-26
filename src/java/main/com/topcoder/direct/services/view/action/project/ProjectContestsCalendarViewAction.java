@@ -3,10 +3,14 @@
  */
 package com.topcoder.direct.services.view.action.project;
 
+import com.topcoder.direct.services.view.action.FormAction;
+import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
+import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
@@ -14,7 +18,13 @@ import com.topcoder.security.TCSubject;
 import org.apache.struts2.ServletActionContext;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *  <p>
@@ -26,10 +36,17 @@ import java.util.*;
  *   - Add bug races of the project to contest calendar view.
  *  </p>
  *
+ *  <p>
+ *   Version 2.0 - Module Assembly - TC Cockpit Project Contests Batch Edit changes:
+ *   - Make the ProjectContestsCalendarViewAction as the entry action for project contests calendar page
+ *   - Move the codes of generating ajax json data for project contests calendar to {@link #getContestsCalendar()}
+ *  </p>
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 2.0
  */
-public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
+public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
+        ViewAction<ProjectContestsDTO> {
 
     /**
      * The url used for display the contest details page.
@@ -62,26 +79,58 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
     private static final String ACTIVE = "active";
 
     /**
-     * The direct project id.
+     * <p>A <code>ProjectIdForm</code> providing the ID of a requested project.</p>
+     *
+     * @since 2.0
      */
-    private long directProjectId;
+    private ProjectIdForm formData = new ProjectIdForm();
 
     /**
-     * Gets the direct project id.
+     * <p>A <code>ProjectContestsDTO</code> providing the view data for displaying by <code>Project Contests</code>
+     * view.</p>
      *
-     * @return the direct project id.
+     * @since 2.0
      */
-    public long getDirectProjectId() {
-        return directProjectId;
+    private ProjectContestsDTO viewData = new ProjectContestsDTO();
+
+    /**
+     * Gets the form data.
+     *
+     * @return the form data.
+     * @since 2.0
+     */
+    public ProjectIdForm getFormData() {
+        return this.formData;
     }
 
     /**
-     * Sets the direct project id.
+     * Gets the view data.
      *
-     * @param directProjectId the direct project id to set.
+     * @return the view data.
+     * @since 2.0
      */
-    public void setDirectProjectId(long directProjectId) {
-        this.directProjectId = directProjectId;
+    public ProjectContestsDTO getViewData() {
+        return this.viewData;
+    }
+
+    /**
+     * Sets the form data.
+     *
+     * @param formData the form data.
+     * @since 2.0
+     */
+    public void setFormData(ProjectIdForm formData) {
+        this.formData = formData;
+    }
+
+    /**
+     * Sets the view data.
+     *
+     * @param viewData the view data.
+     * @since 2.0
+     */
+    public void setViewData(ProjectContestsDTO viewData) {
+        this.viewData = viewData;
     }
 
     /**
@@ -93,26 +142,42 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
      * - Add bug races into contests calendar view.
      * </p>
      *
+     * <p>
+     * Update in version 2.0:
+     * - Change to the entry for the game plan jsp page.
+     * </p>
+     *
      * @throws Exception if any error occurs.
      */
     @Override
     protected void executeAction() throws Exception {
+        SessionData sessionData = new SessionData(ServletActionContext.getRequest().getSession());
+        sessionData.setCurrentSelectDirectProjectID(getFormData().getProjectId());
+    }
 
-        // get current user from the session
-        TCSubject currentUser = getCurrentUser();
+    /**
+     * Gets the ajax json data for the project contests calendar.
+     *
+     * @return the struts2 result code.
+     * @since 2.0
+     */
+    public String getContestsCalendar() {
+        try {
+            // get current user from the session
+            TCSubject currentUser = getCurrentUser();
 
-        // get the project contests data
-        ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(), getDirectProjectId());
+            // get the project contests data
+            ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(), getFormData().getProjectId());
 
-        // get contests
-        List<ProjectContestDTO> contests = projectContests.getContests();
+            // get contests
+            List<ProjectContestDTO> contests = projectContests.getContests();
 
-        // map to store the json result
-        Map<String, Object> result = new HashMap<String, Object>();
+            // map to store the json result
+            Map<String, Object> result = new HashMap<String, Object>();
 
-        List<Map<String, String>> contestsJsonList = new ArrayList<Map<String, String>>();
+            List<Map<String, String>> contestsJsonList = new ArrayList<Map<String, String>>();
 
-        result.put("events", contestsJsonList);
+            result.put("events", contestsJsonList);
 
         // set to store all the contest ids
         Set<Long> contestIds = new HashSet<Long>();
@@ -155,8 +220,13 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction {
 
         setResult(result);
 
-        SessionData sessionData = new SessionData(ServletActionContext.getRequest().getSession());
-        sessionData.setCurrentSelectDirectProjectID(getDirectProjectId());
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
     }
 
     /**

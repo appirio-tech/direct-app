@@ -62,6 +62,9 @@
  *
  * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
  * - Add classes for uploading attachments in contest issues tracking page.
+ *
+ * - (Module Assembly - TC Cockpit Project Contests Batch Edit ) updates:
+ * - Add CSS for the updated contests tab with dropdown menu
  */
 
 
@@ -286,6 +289,56 @@ BODY#page{
 	#tabs1 UL LI.on A SPAN{
 		background: url(../images/tabs_right_on.png) no-repeat right; /* left corner */
 	}
+
+#tabs1 ul li a span span.arrow{
+    display: inline-block;
+    background: url("/images/dropdown-arrow.png") no-repeat 0 -30px;
+    height: 12px;
+    margin: 0 0 0 5px;
+    width: 15px;
+    float: none;
+    padding: 0;
+}
+
+#tabs1 ul li.on a span span.arrow{
+    background: url("/images/dropdown-arrow.png") no-repeat 0 0;
+}
+#tabs1 ul li:hover a span span.arrow{
+    background: url("/images/dropdown-arrow.png") no-repeat 0 -15px;
+}
+#tabs1 ul li .dropDwnLst{
+    display: none;
+    width: 190px;
+    border: 1px solid #bdbdbd;
+    border-bottom: none;
+    position: absolute;
+    top: 28px;
+    left: 0;
+    z-index: 1000;
+    line-height: 18px;
+    background: url("/images/contest--box-bg.gif") repeat-x #E7E7E7;
+}
+#tabs1 ul li .dropDwnLst .section{
+    border-bottom: 1px solid #bdbdbd;border-top: 1px solid #fff;
+    padding: 9px;
+}
+#tabs1 ul li .dropDwnLst .section h3{
+    font-size: 12px;
+    font-weight: bold;
+}
+#tabs1 ul li .dropDwnLst .section a{
+    font-size: 12px;
+    display: block;
+    float: none;
+    font-weight: normal;
+    color: #000;
+    text-decoration: underline;
+    padding-left: 13px;
+    background: url("/images/dropdown-icon.png") no-repeat 3px 5px;
+}
+#tabs1 ul li .dropDwnLst .section a:hover{
+    text-decoration: none;
+}
 
 /* tabs2 ( the right side tabs ) */
 
@@ -599,6 +652,35 @@ BODY#page{
 }
 
 /*----- area1 ------*/
+
+#area1 .area1Content .batchButtons{
+    position: absolute;
+    top: 7px;
+    right: 0;
+    float: right;
+    font-size: 11px;
+}
+
+#area1 .area1Content .gamePlanBatchButtons {
+    right: 25px;
+}
+
+#area1 .area1Content .batchButtons a{
+    padding-left: 20px;
+    margin-left: 8px;
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+}
+#area1 .area1Content .batchButtons a:hover{
+    text-decoration: none;
+}
+#area1 .area1Content .batchButtons a.batchCreate{
+    background: url("../images/batch-create.png") no-repeat;
+}
+#area1 .area1Content .batchButtons a.batchEdit{
+    background: url("../images/batch-edit.png") no-repeat;
+}
 
 #area1 .currentPage{ /* page links on the top of the page */
 	color: #333;

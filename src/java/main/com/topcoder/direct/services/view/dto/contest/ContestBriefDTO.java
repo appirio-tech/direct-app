@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.contest;
 
@@ -16,9 +16,13 @@ import java.io.Serializable;
  * <p>Version 1.2 (Release Assembly - Cockpit Customer Right Sidebar and Active Contests Coordination version 1.0) change notes:
  * - Add property customerId to store the id of the customer.
  * </p>
+ * <p>
+ *     Version 1.3 (Module Assembly - TC Cockpit Project Contests Batch Edit) changes:
+ *     - Add the field {@link #billingAccountId}
+ * </p>
  *
  * @author isv, GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class ContestBriefDTO implements Serializable {
 
@@ -46,6 +50,13 @@ public class ContestBriefDTO implements Serializable {
      * <p>A <code>String</code> providing the contest type.</p>
      */
     private String contestTypeName;
+
+    /**
+     * The billing account id of the contest.
+     *
+     * @since 1.3
+     */
+    private long billingAccountId;
 
     /**
      * <p>The id of the customer</p>
@@ -145,7 +156,7 @@ public class ContestBriefDTO implements Serializable {
     /**
      * <p>Sets the contest type of this contest.</p>
      *
-     * @param id a <code>String</code> providing the contest type.
+     * @param contestTypeName a <code>String</code> providing the contest type.
      */
     public void setContestTypeName(String contestTypeName) {
         this.contestTypeName = contestTypeName;
@@ -169,6 +180,26 @@ public class ContestBriefDTO implements Serializable {
      */
     public void setCustomerId(long customerId) {
         this.customerId = customerId;
+    }
+
+    /**
+     * Gets the billing account id.
+     *
+     * @return the billing account id.
+     * @since 1.3
+     */
+    public long getBillingAccountId() {
+        return billingAccountId;
+    }
+
+    /**
+     * Sets the billing account id.
+     *
+     * @param billingAccountId the billing account id.
+     * @since 1.3
+     */
+    public void setBillingAccountId(long billingAccountId) {
+        this.billingAccountId = billingAccountId;
     }
 
     /**

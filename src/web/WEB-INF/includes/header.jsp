@@ -22,6 +22,7 @@
   - Version 1.6.2 (Release Assembly - Project Contest Fee Management) changes note: move contest fee into settings tab
   - Version 1.6.3 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) : add edit project button
   - Version 1.6.4 (Module Assembly - TC Cockpit Project Milestones Management Front End) : add the milestone tab for project
+  - Version 1.6.5 (Module Assembly - TC Cockpit Project Contests Batch Edit ): add the dropdown menu for the contests tab in the project section
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -276,10 +277,28 @@
                             <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>"><span>Game Plan</span></a>
                         </li>
 
-                        <li <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
-                            <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">
-                                <span>Contests</span>
+                        <li id="contest" style="position: relative;" <c:if test="${requestScope.CURRENT_TAB eq 'contests'}">class="on"</c:if>>
+                            <a href="javascript:;">
+                                <span>Contests<span class="arrow"></span></span>
                             </a>
+                            <div class="dropDwnLst">
+                                <div class="section">
+                                    <h3>View Contests</h3>
+                                    <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">List View</a>
+                                    <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Calendar View</a>
+                                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Gantt chart View</a>
+                                </div>
+                                <div class="section">
+                                    <h3>Create Contest</h3>
+                                    <a href="<s:url action="home" namespace="/launch"></s:url>">Launch New Contest</a>
+                                    <a href="javascript:;">Quick Create Draft Contest</a>
+                                    <a href="javascript:;">Bulk Creation</a>
+                                </div>
+                                <div class="section">
+                                    <h3>Edit Contest</h3>
+                                    <a href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Bulk Edit Draft Contests</a>
+                                </div>
+                            </div>
                         </li>
 
                          <li <c:if test="${requestScope.CURRENT_TAB eq 'issues'}">class="on"</c:if>>

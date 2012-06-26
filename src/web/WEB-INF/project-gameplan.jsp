@@ -26,13 +26,17 @@
                     <jsp:include page="includes/right.jsp"/>
 
                     <div id="area1"><!-- the main area -->
-                    <div class="area1Content">
+                    <div class="area1Content" style="position: relative;">
                     <div class="currentPage">
                         <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                         <a href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>"><s:property value="sessionData.currentProjectContext.name"/>
                         </a> &gt;
                         <strong>Game Plan</strong>
                     </div>
+                        <div class="batchButtons gamePlanBatchButtons">
+                            <a class="batchCreate" href="javascript:;">Batch Create</a>
+                            <a class="batchEdit" href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>">Batch Edit</a>
+                        </div>
                     <div class="areaHeader" style="width:400px">
                         <div style="float:left"><h2 class="title">Game Plan Gantt Chart</h2> </div>
                         <input type="hidden" id="projectIDHolder" value="${formData.projectId}"/>

@@ -22,6 +22,9 @@
   -
   - Version 1.6 (Release Assembly - 24hrs TopCoder Cockpit Project Contests Calendar View) changes:
   - Add a new view project contests calendar view.
+  -
+  - Version 1.7 (Module Assembly - TC Cockpit Project Contests Batch Edit) changes:
+  - Move contests calendar view to a seperate jsp page.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -34,9 +37,7 @@
     <ui:projectPageType tab="contests"/>
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
-    <link rel="stylesheet" href="/css/fullcalendar-1.5.2.css?v=207789" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
-    <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js?v=207789"></script>
 </head>
 
 <body id="page">
@@ -52,29 +53,27 @@
                     <jsp:include page="includes/right.jsp"/>
 
                      <div id="area1"><!-- the main area -->
-                        <div class="area1Content">
+                        <div class="area1Content" style="position: relative;">
                             <div class="currentPage">
                                 <a href="<s:url action="dashboardActive" namespace="/"/>" class="home">Dashboard</a> &gt;
                                 <strong><s:property value="sessionData.currentProjectContext.name"/></strong>
                                 <span id="currentDirectProjectID" class="hide"><s:property value="sessionData.currentProjectContext.id"/></span>
                             </div>
 
+                            <div class="batchButtons">
+                                <a class="batchCreate" href="javascript:;">Batch Create</a>
+                                <a class="batchEdit" href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>">Batch Edit</a>
+                            </div>
 
                           <div class="contestViews">
                             <div class="areaHeader">
                                 <h2 class="title contestTitle">Contests</h2>
 
-                                <div class="calendarLegends hide">
-                                    <span class="legendColor draftLegendColor"></span><span class="legendText">Draft</span>
-                                    <span class="legendColor activeLegendColor"></span><span class="legendText">Active</span>
-                                    <span class="legendColor completedLegendColor"></span><span class="legendText">Completed</span>
-                                    <span class="legendColor cancelledLegendColor"></span><span class="legendText">Cancelled</span>
-                                </div>
                                 <div class="viewBtns">
                                     <a href="javascript:;" class="listViewBtn active">
                                         <span>List View</span>
                                     </a>
-                                    <a href="javascript:;" class="calendarViewBtn">
+                                    <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>" class="calendarViewBtn">
                                         <span>Calendar</span>
                                     </a>
                                 </div>
@@ -327,12 +326,7 @@
                                 </div>          
                             </div>
 
-                              <span id="calendarToday" class="hide"><s:date name="calendarToday" format="MM/dd/yyyy"/></span>
-                              <div class="contestCView hide">
-                                <div class="loading">
-                                    <img src="/images/loadingAnimation.gif" alt=""/>
-                                </div>
-                                <div class="calendar"></div>
+
                             </div>
 
                           </div>

@@ -3,13 +3,57 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.opensymphony.xwork2.ActionContext;
+import com.topcoder.catalog.entity.CompUploadedFile;
+import com.topcoder.clients.invoices.model.InvoiceType;
+import com.topcoder.clients.model.Project;
+import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
+import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.Upload;
+import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
+import com.topcoder.management.project.Prize;
+import com.topcoder.management.project.ProjectType;
+import com.topcoder.management.resource.Resource;
+import com.topcoder.management.review.data.Review;
+import com.topcoder.project.phases.Phase;
+import com.topcoder.project.phases.PhaseStatus;
+import com.topcoder.project.phases.PhaseType;
+import com.topcoder.project.service.ContestSaleData;
+import com.topcoder.project.service.ProjectServices;
+import com.topcoder.search.builder.SearchBuilderException;
+import com.topcoder.security.RolePrincipal;
+import com.topcoder.security.TCPrincipal;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.ContestServiceException;
+import com.topcoder.service.facade.contest.ContestServiceFacade;
+import com.topcoder.service.facade.project.ProjectServiceFacade;
+import com.topcoder.service.permission.Permission;
+import com.topcoder.service.permission.PermissionServiceException;
+import com.topcoder.service.project.ProjectData;
+import com.topcoder.service.project.SoftwareCompetition;
+import com.topcoder.shared.common.TCContext;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.shared.util.dwload.CacheClearer;
+import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.MaxAge;
+import org.apache.axis.encoding.Base64;
+import org.apache.commons.io.IOUtils;
+import org.apache.struts2.ServletActionContext;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -19,62 +63,13 @@ import javax.transaction.UserTransaction;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.topcoder.catalog.entity.CompUploadedFile;
-import com.topcoder.clients.invoices.model.InvoiceType;
-import com.topcoder.clients.model.Project;
-import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
-import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.action.specreview.ViewSpecificationReviewActionResultData;
-import com.topcoder.direct.services.view.dto.contest.BaseContestCommonDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.direct.services.view.dto.contest.PhasedContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.management.resource.Resource;
-import com.topcoder.management.review.data.Review;
-import com.topcoder.project.service.ProjectServices;
-import com.topcoder.service.permission.PermissionServiceException;
-import com.topcoder.service.project.CompetitionPrize;
-import com.topcoder.service.project.ProjectData;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.axis.encoding.Base64;
-import org.apache.struts2.ServletActionContext;
-
-import com.opensymphony.xwork2.ActionContext;
-import com.topcoder.direct.services.view.dto.contest.*;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
-import com.topcoder.management.deliverable.Submission;
-import com.topcoder.management.deliverable.Upload;
-import com.topcoder.management.deliverable.persistence.UploadPersistenceException;
-import com.topcoder.management.project.Prize;
-import com.topcoder.management.project.ProjectType;
-import com.topcoder.project.phases.Phase;
-import com.topcoder.project.phases.PhaseStatus;
-import com.topcoder.project.phases.PhaseType;
-import com.topcoder.project.service.ContestSaleData;
-import com.topcoder.search.builder.SearchBuilderException;
-import com.topcoder.security.RolePrincipal;
-import com.topcoder.security.TCPrincipal;
-import com.topcoder.security.TCSubject;
-import com.topcoder.service.permission.Permission;
-import com.topcoder.service.facade.contest.ContestServiceException;
-import com.topcoder.service.facade.contest.ContestServiceFacade;
-import com.topcoder.service.project.SoftwareCompetition;
-import com.topcoder.shared.common.TCContext;
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.util.DBMS;
-
-import com.topcoder.shared.util.dwload.CacheClearer;
-import com.topcoder.web.common.CachedDataAccess;
-import com.topcoder.web.common.cache.MaxAge;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -351,8 +346,14 @@ import com.topcoder.web.common.cache.MaxAge;
  *   </ol>
  * </p>
  *
- * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe
- * @version 1.8.6
+ * Version 1.8.7 (Module Assembly - TC Cockpit Project Contests Batch Edit) change notes:
+ * <ol>
+ *     <li>Add method {@link #getCurrentProjectBrief(com.topcoder.service.facade.project.ProjectServiceFacade, long)}</li>
+ * </ol>
+ * </p>
+ *
+ * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
+ * @version 1.8.7
  */
 public final class DirectUtils {
     /**
@@ -2035,5 +2036,27 @@ public final class DirectUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * Gets the project brief DTO of the specified project id.
+     *
+     * @param projectServiceFacade the project service facade
+     * @param directProjectId the id of the direct project.
+     * @return the <code>ProjectBriefDTO</code> instance.
+     * @throws Exception if any error occurs.
+     * @since 1.8.7
+     */
+    public static ProjectBriefDTO getCurrentProjectBrief(ProjectServiceFacade projectServiceFacade, long directProjectId)
+            throws Exception {
+        TCSubject currentUser = getTCSubjectFromSession();
+        final ProjectData project = projectServiceFacade.getProject(currentUser, directProjectId);
+        ProjectBriefDTO projectBriefDTO = new ProjectBriefDTO();
+
+        projectBriefDTO.setId(project.getProjectId());
+        projectBriefDTO.setName(project.getName());
+        projectBriefDTO.setProjectForumCategoryId(project.getForumCategoryId());
+
+        return projectBriefDTO;
     }
 }

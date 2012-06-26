@@ -17,6 +17,7 @@ import com.topcoder.direct.services.view.action.LandingPage;
 import com.topcoder.direct.services.view.action.LoginAction;
 import com.topcoder.direct.services.view.action.TopCoderDirectAction;
 import com.topcoder.direct.services.view.action.project.ProjectContestsAction;
+import com.topcoder.direct.services.view.action.project.ProjectContestsCalendarViewAction;
 import com.topcoder.direct.services.view.action.project.ProjectOverviewAction;
 import com.topcoder.direct.services.view.action.project.SetCurrentProjectAction;
 import com.topcoder.direct.services.view.action.project.ProjectGamePlanAction;
@@ -67,8 +68,13 @@ import com.topcoder.direct.services.view.processor.stats.TopCoderDirectFactsProc
  *   </ul>
  * </p>
  *
- * @author isv, Blues, TCSASSEMBLER
- * @version 1.4
+ * <p>
+ * Version 1.5 (Module Assembly - TC Cockpit Project Contests Batch Edit)
+ * - Add pre processor for ProjectContestsCalendarViewAction
+ * </p>
+ *
+ * @author isv, Blues, GreatKevin
+ * @version 1.5
  */
 public class ActionPreProcessor implements Interceptor {
 
@@ -193,6 +199,9 @@ public class ActionPreProcessor implements Interceptor {
         } else if (action instanceof ProjectContestsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new ProjectContestsListProcessor(),
                                                                new ProjectStatsProcessor(),
+                                                               new UserProjectsProcessor()});
+        } else if (action instanceof ProjectContestsCalendarViewAction) {
+            return new ProcessorsGroup(new RequestProcessor[] {new ProjectStatsProcessor(),
                                                                new UserProjectsProcessor()});
         } else if (action instanceof ContestDetailsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new ContestDetailsProcessor(),
