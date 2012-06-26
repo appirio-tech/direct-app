@@ -45,7 +45,17 @@
 			<value>70016343</value>
 			<value>70016347</value> 
 		</property>
-
+		
+		<property name="pmoUserIds">
+			<value>22839014</value>
+			<value>22841613</value>
+            <value>22693694</value>
+			<value>22840875</value>
+			<value>22931018</value>
+            <value>23038352</value>
+			<value>22831691</value>
+		</property>
+		
 		<property name="fullControlPermissionTypeId">
 			<value>3</value>
 		</property>
