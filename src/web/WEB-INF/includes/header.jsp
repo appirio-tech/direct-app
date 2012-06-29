@@ -286,13 +286,14 @@
                                     <h3>View Contests</h3>
                                     <a href="<s:url action="projectDetails" namespace="/"><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>">List View</a>
                                     <a href="<s:url action="projectContestsCalendar" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Calendar View</a>
-                                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Gantt chart View</a>
+                                    <a href="<s:url action="ProjectGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">Game Plan View</a>
+									 <a href="<s:url action="ProjectJsGanttGamePlanView" namespace="/"> <s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}" /></s:url>">New Game Plan View (Beta)</a>
                                 </div>
                                 <div class="section">
                                     <h3>Create Contest</h3>
                                     <a href="<s:url action="home" namespace="/launch"></s:url>">Launch New Contest</a>
-                                    <a href="javascript:;">Quick Create Draft Contest</a>
-                                    <a href="javascript:;">Bulk Creation</a>
+                                  <!--  <a href="javascript:;">Quick Create Draft Contest</a>
+                                    <a href="javascript:;">Bulk Creation</a>-->
                                 </div>
                                 <div class="section">
                                     <h3>Edit Contest</h3>
