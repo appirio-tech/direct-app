@@ -40,7 +40,7 @@
 </div>
 
 <div class="batchButtons">
-    <a class="batchCreate" href="javascript:;">Batch Create</a>
+    <!--<a class="batchCreate" href="javascript:;">Batch Create</a>-->
     <a class="batchEdit" href="<s:url action="batchDraftContestsEdit" namespace="/"> <s:param name="formData.projectId" value="formData.projectId" /></s:url>">Batch Edit</a>
 </div>
 
