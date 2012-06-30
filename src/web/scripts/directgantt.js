@@ -86,9 +86,9 @@ $(document).ready(function () {
         var request = {formData:{projectId:projectId}};
 
         $.ajax({
-            type:"GET",
+            type:"POST",
             url:"projectGamePlan",
-            request:request,
+            data:request,
             dataType:"text",
             cache:false,
             success:function (xml) {
