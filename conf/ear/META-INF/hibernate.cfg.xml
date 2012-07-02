@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory name="java:comp/env/hibernate/SessionFactory">
         <property name="connection.datasource">java:InformixDS</property>
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
         <property name="dialect">org.hibernate.dialect.InformixDialect</property>
         <property name="transaction.flush_before_completion">true</property>
         <property name="current_session_context_class">org.hibernate.context.JTASessionContext</property>
