@@ -68,7 +68,11 @@
 function filterbyCustomer(id, filterStr) {
     $('#customerFilter').val(filterStr);
     if (handleName == "projectsResult") {
-        tableHandle.fnFilter("<span>"+ id + "</span>", 10);
+        var searchPattern = id;
+        if($.trim(id).length > 0) {
+            searchPattern = "<span>"+ id + "</span>";
+        }
+        tableHandle.fnFilter(searchPattern, 10);
     }
     else if (handleName == "activeContests") {
         tableHandle.fnFilter(id, 10);
