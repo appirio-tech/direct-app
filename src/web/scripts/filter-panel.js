@@ -67,18 +67,18 @@
 
 function filterbyCustomer(id, filterStr) {
     $('#customerFilter').val(filterStr);
+    var searchPattern = id;
+    if($.trim(id).length > 0) {
+        searchPattern = "<span>"+ id + "</span>";
+    }
     if (handleName == "projectsResult") {
-        var searchPattern = id;
-        if($.trim(id).length > 0) {
-            searchPattern = "<span>"+ id + "</span>";
-        }
         tableHandle.fnFilter(searchPattern, 10);
     }
     else if (handleName == "activeContests") {
-        tableHandle.fnFilter(id, 10);
+        tableHandle.fnFilter(searchPattern, 10);
     }
     else if (handleName == "MyCopilotPostings") {
-        tableHandle.fnFilter(id, 9);
+        tableHandle.fnFilter(searchPattern, 9);
     }
 }
 
