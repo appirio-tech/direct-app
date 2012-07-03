@@ -138,9 +138,9 @@
                                             <div class="projectTechnology">
                                                 <h3>Users with permission :</h3>
                                                 <p>${viewData.projectGeneralInfo.permissionInfo.totalPermissionNumber} Users (Report ${viewData.projectGeneralInfo.permissionInfo.reportPermissionNumber}/ Read ${viewData.projectGeneralInfo.permissionInfo.readPermissionNumber}/ Write ${viewData.projectGeneralInfo.permissionInfo.writePermissionNumber}/ Full ${viewData.projectGeneralInfo.permissionInfo.fullPermissionNumber})</p>
-                                                <s:if test="viewData.projectGeneralInfo.canAccessPermissionEdit">
+                                               
                                                     <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>#permissionsNotifications">Edit Project Permission</a>
-                                                </s:if>
+                                           
                                             </div>
                                             <!-- End Project Permissions -->
 
