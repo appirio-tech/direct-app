@@ -454,7 +454,7 @@
 
 <div class="permissionsButtonContainer">
     <a class="buttonRed1 cancelProjectButton" href="<s:url action="projectOverview" namespace="/"><s:param name="formData.projectId" value="formData.projectId"/></s:url>"><span>CANCEL</span></a>
-    <a id="savePermissionNotification" class="buttonRed1" href="javascript:;"><span>SAVE</span></a>
+    <a id="savePermissionNotification" class="buttonRed1" href="javascript:;"><span>SAVE PERMISSIONS</span></a>
 </div>
 </s:if>
 
