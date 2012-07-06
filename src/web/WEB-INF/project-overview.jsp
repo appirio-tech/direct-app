@@ -78,7 +78,16 @@
                             <div class="projectInforDiv">
                                 <div class="projectInforTitle"><a href="javascript:void(0)" class="expand">Project
                                     Information</a></div>
-                                <div class="exportProject"><a href="<s:url action='projectInfoExport'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Export</a></div>
+                                <div class="editProject">
+                                    <a href="<s:url action='editProject'>
+                                    <s:param name='formData.projectId'>${formData.projectId}</s:param></s:url>">
+                                        Edit</a>
+                                </div>
+                                <div class="exportProject">
+                                    <a href="<s:url action='projectInfoExport'>
+                                    <s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">
+                                        Export</a>
+                                </div>
                                 <div class="projectInformation">
 
                                     <div class="projectDetails" id="${fn:toLowerCase(viewData.projectGeneralInfo.statusLabel)}">

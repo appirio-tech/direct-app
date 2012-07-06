@@ -47,6 +47,25 @@
     text-decoration: none;
 }
 
+.projectInforDiv .editProject {
+    position: absolute;
+    right: 80px;
+    top: 7px;
+}
+
+.projectInforDiv .editProject a:hover {
+    text-decoration: none;
+}
+
+.projectInforDiv .editProject a {
+    background: url("../images/edit-project-icon.png") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    display: block;
+    font-size: 12px;
+    line-height: 22px;
+    padding-left: 25px;
+}
+
 .projectInformation {
     background: #fffffe;
     border-left: 1px solid #a9acae;
