@@ -805,7 +805,8 @@ function handleDraftSaving(jsonResult) {
                          restorePrevData();
                          $("#subEndDateLabel").html(parseDate(result.subEndDate));
                          $("#endDateLabel").html(parseDate(result.endDate));
-                         showSuccessfulMessage("Your copilot posting has been saved successfully.");
+                         var contestIndicator = "This is a subjective contest, the client will pick the winners.";
+                         showSuccessfulMessage("Your copilot posting has been saved successfully." + " " + contestIndicator);
 
                      },
                      function(errorMessage) {

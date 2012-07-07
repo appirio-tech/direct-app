@@ -2032,7 +2032,8 @@ function handleActivationResultEdit(jsonResult) {
         if(!contestHasSpecReview) {
             specResponse = ".";
         }
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse);
+        var contestIndicator = "This is an objective contest, TopCoder will declare the winners through member review process.";
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse + " " + contestIndicator);
     },
     function(errorMessage) {
         showServerError(errorMessage);

@@ -6,6 +6,8 @@ Thank you for engaging the TopCoder Copilots.  Your Copilot Opportunity will be 
 expect to recieve email updates as the Copilot Opportunity progresses as well as when Copilots ask you questions in the forums.  The Copilots have 3 days to ask questions and submit their plans for your project.  After the competition submission phase is complete, you 
 will be able to review all of the Copilots and their submissions, and then choose one or more Copilots to manage your project.
 
+This is a subjective contest, the client will pick the winners.
+
 You can track the status of this competition, and all your competitions, by visiting https\://www.topcoder.com/direct
 
 There you can\: 

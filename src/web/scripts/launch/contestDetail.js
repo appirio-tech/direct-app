@@ -894,7 +894,8 @@ function handleActivationResultEdit(jsonResult) {
     handleJsonResult(jsonResult,
     function(result) {
         var contestName = mainWidget.competition.contestData.name;
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully.");
+        var contestIndicator = "This is a subjective contest, the client will pick the winners.";
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully. " + contestIndicator);
         $('#resubmit').hide();
     },
     function(errorMessage) {
