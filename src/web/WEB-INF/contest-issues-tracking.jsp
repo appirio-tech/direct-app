@@ -412,6 +412,12 @@
                                                         </select>
                                                         <p>Select the amount of TCO Mod Dash points that this Bug Race is worth. Bug Races with TCO Points are part of the Mod Dash. Set the amount <br />to 0 (zero) if you do not want to include your Bug Race in the TCO tournament.</p>
                                                     </div>
+                                                    <div id="existingAtt">
+                                                    <label>Existing Attachments:</label>
+                                                    <div class="row shiftTop">
+                                                    </div>
+                                                    </div>
+                                                    
                                                     <label>Add Attachments</label>
                                                     <div class="row shiftTop">
                                                         <input  name="finalfix" checked="checked"  id="rdoNo" type="radio" value="false"/>
@@ -423,21 +429,35 @@
                                                         <div class="row">
                                                             <div class="FileUpload">
 
-                                                                <input type="file" size="24" id="file1" class="BrowserHidden" name="document" onchange="getElementById('txtfile1').value = getElementById('file1').value;"/>
+                                                                <input type="file" id="file1" class="BrowserHidden" name="document" onchange="getElementById('txtfile1').value = getElementById('file1').value;"/>
 
                                                                 <input id="txtfile1" type="text" class="FileField" readonly="readonly"/>
+                                                                
+                                                                <a class="draft button6" href="javascript:;" style="background-position: left top;">
+                                                                    <span class="left" style="background-position: left top;">
+                                                                    <span class="right" style="background-position: right top;">BROWSE</span>
+                                                                    </span>
+                                                                </a>
                                                             </div>
 
-                                                            <a href="#" class="button6 btnUpload"><span class="left"><span class="right">Upload</span></span></a>
+                                                            <a href="#" class="button6 btnUpload"><span class="left"><span class="right">UPLOAD</span></span></a>
                                                         </div>
                                                         <label><em>File 2:</em></label>
                                                         <div class="row">
                                                             <div class="FileUpload">
 
-                                                                <input type="file" size="24" id="file2" class="BrowserHidden" name="document" onchange="getElementById('txtfile2').value = getElementById('file2').value;"/>
+                                                                <input type="file" id="file2" class="BrowserHidden" name="document" onchange="getElementById('txtfile2').value = getElementById('file2').value;"/>
 
                                                                 <input id="txtfile2" type="text" class="FileField"  readonly="readonly"/>
-                                                            </div><a href="#" class="button6 btnUpload"><span class="left"><span class="right">Upload</span></span></a>
+                                                                
+                                                                <a class="draft button6" href="javascript:;" style="background-position: left top;">
+                                                                    <span class="left" style="background-position: left top;">
+                                                                    <span class="right" style="background-position: right top;">BROWSE</span>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                            
+                                                            <a href="#" class="button6 btnUpload"><span class="left"><span class="right">UPLOAD</span></span></a>
                                                         </div>
                                                         <label><em>File 3:</em></label>
                                                         <div class="row">
@@ -446,7 +466,15 @@
                                                                 <input type="file" size="24" id="file3" class="BrowserHidden" name="document" onchange="getElementById('txtfile3').value = getElementById('file3').value;"/>
 
                                                                 <input id="txtfile3" type="text" class="FileField"  readonly="readonly"/>
-                                                            </div><a href="#" class="button6 btnUpload"><span class="left"><span class="right">Upload</span></span></a>
+                                                                
+                                                                <a class="draft button6" href="javascript:;" style="background-position: left top;">
+                                                                    <span class="left" style="background-position: left top;">
+                                                                    <span class="right" style="background-position: right top;">BROWSE</span>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                            
+                                                            <a href="#" class="button6 btnUpload"><span class="left"><span class="right">UPLOAD</span></span></a>
                                                         </div>
                                                     </div>
                                                     <label>Add Final Fix as Attachment:</label>

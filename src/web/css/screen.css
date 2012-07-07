@@ -2836,7 +2836,7 @@ ul.errorMessage {
 .issueSelectionContent .FileUpload {
     position:relative;
     float: left;
-    width:155px;
+    width:255px;
     height:15px;
 }
 
@@ -2849,15 +2849,15 @@ ul.errorMessage {
     border: #ACACAC solid 1px;
     display: inline;
     float: left;
-    position:absolute;
     left:0;
     z-index:1;
     cursor: pointer;
+    margin-right:5px;
 }
 
 .issueSelectionContent .BrowserHidden {
     position:absolute;
-    width:150px;
+    width:100%;
     height:26px;
     text-align: right;
     -moz-opacity:0 ;
@@ -2867,5 +2867,9 @@ ul.errorMessage {
     display: inline;
     left: 0;
     top: 0;
+    cursor: pointer;
+}
+.issueSelectionContent a.draft {
+    margin: 0 3px;
 }
 

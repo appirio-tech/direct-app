@@ -961,6 +961,19 @@ $(document).ready(function(){
         $(this).parent().parent().parent().find('.longDetails').show();
     });
 
+	$("#bugRace .FileUpload").hover(
+		function(){
+			$(this).children(".draft").css("background-position","left bottom");
+			$(this).children(".draft").children("span.left").css("background-position","left bottom");
+			$(this).children(".draft").children("span.left").children("span.right").css("background-position","right bottom");
+		},
+		function(){
+			$(this).children(".draft").css("background-position","left top");
+			$(this).children(".draft").children("span.left").css("background-position","left top");
+			$(this).children(".draft").children("span.left").children("span.right").css("background-position","right top");
+		}
+    );
+
     function restoreBugrFileInputs() {
         bugrAttachments = [];
         $(".FileField").val("");
@@ -1010,6 +1023,7 @@ $(document).ready(function(){
         $("#bugRace .viewAll").hide();
         $("#attachmentNames").val("");
         restoreBugrFileInputs();
+		$("#existingAtt").hide();
         return false;
     });
 
@@ -1021,6 +1035,15 @@ $(document).ready(function(){
         $("#bugRace .viewAll").show();
         return false;
     });
+
+	function updateAttachmentsSection(rowItem) {
+        var atts = [];
+        rowItem.find(".attachmentName").each(function() {
+            atts.push($(this).val());
+        });
+        $("#existingAtt").show();
+        $("#existingAtt .row").html(atts.length > 0 ? atts.join("<br/>") : "None");
+    }
     
 	// when click "Edit" button in contest tracking page under Bug Race tab
     $('#bugRace .issueSelectionContent .button11').live("click", function() {
@@ -1048,6 +1071,7 @@ $(document).ready(function(){
         });
         $("#attachmentNames").val(names.join("\\"));
         restoreBugrFileInputs();
+		updateAttachmentsSection(rowItem);
         return false;
     });
     
