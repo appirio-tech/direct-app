@@ -13,7 +13,7 @@
 
 <div class="orderReview">
 			<h2 class="sectionHead" id="orderReview_title">Order Review</h2>
-			<span class="redAlert hide" id="receiptAlert" >We have scheduled your competition and processed payment.<br/>This is a subjective contest, the client will pick the winners.</span>
+			<span class="redAlert hide" id="receiptAlert" >We have scheduled your competition and processed payment.<br/>Review Style: User Selection.</span>
 			 <!-- overviewBox -->
 			<div class="overviewBox">
 				<table class="overviewData" cellpadding="0" cellspacing="0">
@@ -24,6 +24,10 @@
 					<tr>
 						<th>Competition Type :</th>
 						<td>Studio</td>
+					</tr>
+					<tr>
+						<th>Review Style :</th>
+						<td>User Selection</td>
 					</tr>
 					<tr>
 						<th>Competition Title :</th>

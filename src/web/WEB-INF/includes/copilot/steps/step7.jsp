@@ -14,7 +14,8 @@
     <div class="form">
         <div class="noteContainer">
             <p>
-            Your Copilot Opportunity will be posted to the TopCoder Community at the start time you scheduled, or within the next few minutes if you chose the option to post it immediately. This is a subjective contest, the client will pick the winners.
+            Your Copilot Opportunity will be posted to the TopCoder Community at the start time you scheduled, or within the next few minutes if you chose the option to post it immediately. 
+			Review Style: User Selection.
            </p>
         </div>
         

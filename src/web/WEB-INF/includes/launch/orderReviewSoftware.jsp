@@ -12,7 +12,7 @@
 
 <div class="orderReview">
 			<h2 class="sectionHead" id="swOrderReview_title">Order Review</h2>
-			<span class="redAlert hide" id="swReceiptAlert" >We have scheduled your competition and processed payment.<br/>This is an objective contest, TopCoder will declare the winners through member review process.</span>
+			<span class="redAlert hide" id="swReceiptAlert" >We have scheduled your competition and processed payment.<br/></span>
 			 <!-- overviewBox -->
 			<div class="overviewBox">
 				<table class="overviewData" cellpadding="0" cellspacing="0">
@@ -23,6 +23,10 @@
 					<tr>
 						<th>Competition Type :</th>
 						<td>Software</td>
+					</tr>
+					<tr>
+						<th>Review Style :</th>
+						<td>TopCoder Community Review Board</td>
 					</tr>
 					<tr>
 						<th>Competition Title :</th>

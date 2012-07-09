@@ -2032,8 +2032,8 @@ function handleActivationResultEdit(jsonResult) {
         if(!contestHasSpecReview) {
             specResponse = ".";
         }
-        var contestIndicator = "This is an objective contest, TopCoder will declare the winners through member review process.";
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse + " " + contestIndicator);
+        var contestIndicator = "Review Style:  TopCoder Community Review Board.";
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse + " \n" + contestIndicator);
     },
     function(errorMessage) {
         showServerError(errorMessage);
