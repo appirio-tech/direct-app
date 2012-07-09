@@ -13,7 +13,7 @@
 
 <div class="orderReview">
 			<h2 class="sectionHead" id="orderReview_title">Order Review</h2>
-			<span class="redAlert hide" id="receiptAlert" >We have scheduled your competition and processed payment.<br/>Review Style: User Selection.</span>
+			<span class="redAlert hide" id="receiptAlert" >We have scheduled your competition and processed payment.<br/></span>
 			 <!-- overviewBox -->
 			<div class="overviewBox">
 				<table class="overviewData" cellpadding="0" cellspacing="0">

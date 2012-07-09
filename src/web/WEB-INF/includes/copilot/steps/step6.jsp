@@ -58,6 +58,10 @@
                         <td><label>Copilot Opportunity Title:</label></td>
                         <td><span id="contestNameSummary"></span></td>
                     </tr>
+					<tr>
+                        <td><label>Review Style:</label></td>
+                        <td>User Selection</span></td>
+                    </tr>
                     <tr>
                         <td><label>Public Description:</label></td>
                         <td><span id="publicDescriptionSummary"></span></td>

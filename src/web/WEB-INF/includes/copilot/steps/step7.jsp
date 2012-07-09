@@ -15,7 +15,6 @@
         <div class="noteContainer">
             <p>
             Your Copilot Opportunity will be posted to the TopCoder Community at the start time you scheduled, or within the next few minutes if you chose the option to post it immediately. 
-			Review Style: User Selection.
            </p>
         </div>
         
