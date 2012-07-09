@@ -27,6 +27,7 @@ An additional payment has been applied for the Copilot Opportunity\:
 
 Project Name\:       %PROJECT_NAME%
 Copilot Opportunity Title\:  %COMPETITION_TITLE%
+Review Style\:  User Selection.
 Scheduled Launch Time\:  %LAUNCH_TIME%
 %if:PAID='NO'%
 *Estimated Cost\:    $%CONTEST_COST%
@@ -40,8 +41,6 @@ Total\:      $%TOTAL_COST%
 Additional Cost\:      $%TOTAL_COST%
 -------------------------------------------------------------------
 %endif%
-
-Review Style:  User Selection.
 
 # * The Estimated Cost includes the contest fee as well as an estimate of prizes for the selected Copilot(s).  The actual cost will be presented in Cockpit (https\://www.topcoder.com/direct) at the conclusion of the competition.
 #
