@@ -524,11 +524,20 @@
             <path location="${file}"/>
             <map from="${basedir}/src/web" to="" />
         </pathconvert>
-
+		
         <svnex>
             <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev" />
         </svnex>
-
+        
+        <if>
+ 			<equals arg1="${svn.info.change}" arg2="modified" />
+ 			<then>
+ 			    <echo message="The file is changed" />
+   				<math result="svn.info.lastRev" operand1="${svn.info.lastRev}"
+      					operation="+" operand2="1" datatype="int"/>
+ 			</then>
+ 		</if>
+		<echo message="Revision : ${svn.info.lastRev}" />
         <replaceregexp byline="true">
             <regexp pattern='([href|src])="(.*${pathInPage})(\?v=\d+)?"'/>
             <substitution expression='\1="\2?v=${svn.info.lastRev}"'/>
@@ -543,11 +552,20 @@
             <path location="${file}"/>
             <map from="${basedir}/src/web" to="" />
         </pathconvert>
-
+		<echo message="File : ${file}" />
         <svnex>
-            <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev" />
+            <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev"
+                				    textStatusProperty="svn.info.change"  />
         </svnex>
-        
+        <if>
+ 			<equals arg1="${svn.info.change}" arg2="modified" />
+ 			<then>
+ 			    <echo message="The file is changed" />
+   				<math result="svn.info.lastRev" operand1="${svn.info.lastRev}"
+      					operation="+" operand2="1" datatype="int"/>
+ 			</then>
+ 		</if>
+ 		<echo message="Revision : ${svn.info.lastRev}" />
         <basename property="filename" file="${pathInPage}" suffix=".css"/>
 
         <replaceregexp byline="true">
@@ -565,10 +583,19 @@
             <map from="${basedir}/src/web" to="" />
         </pathconvert>
 
-        <svnex>
-            <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev" />
+       <svnex>
+            <status path="${file}" lastChangedRevisionProperty="svn.info.lastRev"
+                				    textStatusProperty="svn.info.change"  />
         </svnex>
-        
+        <if>
+ 			<equals arg1="${svn.info.change}" arg2="modified" />
+ 			<then>
+ 			    <echo message="The file is changed" />
+   				<math result="svn.info.lastRev" operand1="${svn.info.lastRev}"
+      					operation="+" operand2="1" datatype="int"/>
+ 			</then>
+ 		</if>
+        <echo message="Revision : ${svn.info.lastRev}" />
         <basename property="filename" file="${pathInPage}" suffix=".js"/>
 
         <replaceregexp byline="true">
