@@ -145,6 +145,9 @@
                 <li><label>Copilot Posting Name :</label>
                     <strong id="contestNameTextLabel"><c:out value="${assetDTO.name}"/></strong>
                 </li>
+                <li><label>Review Style :</label>
+                    <strong id="reviewStyleTextLabel">User Selection</strong>
+                </li>
                 <li>
                     <label>Project Name :</label>
                     <strong id="projectNameTextLabel">

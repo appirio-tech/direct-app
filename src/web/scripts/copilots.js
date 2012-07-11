@@ -805,8 +805,7 @@ function handleDraftSaving(jsonResult) {
                          restorePrevData();
                          $("#subEndDateLabel").html(parseDate(result.subEndDate));
                          $("#endDateLabel").html(parseDate(result.endDate));
-                         var contestIndicator = "Review Style: User Selection.";
-                         showSuccessfulMessage("Your copilot posting has been saved successfully." + " \n" + contestIndicator);
+                         showSuccessfulMessage("Your copilot posting has been saved successfully.");
 
                      },
                      function(errorMessage) {

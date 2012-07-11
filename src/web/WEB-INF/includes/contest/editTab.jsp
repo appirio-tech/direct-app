@@ -44,6 +44,9 @@
          <span class="name2"><strong>Contest Name</strong></span>
          <span class="value"><strong>: <span id="rContestName"></span></strong></span>
          <br /> <br />
+         <span class="name2"><strong>Review Style</strong></span>
+         <span class="value"><strong>: User Selection<span id="rReviewStyle"></span></strong></span>
+         <br /> <br />
          <span class="name3"><strong>CCA is</strong></span>
          <span class="value"><strong>: <span id="rCCA"></span></strong></span>
 		 <br /> <br />
@@ -72,7 +75,7 @@
           </div><!-- End .caption -->                                               
           
       <div class="detailsContent_det_type_edit">
-                    <div class="det_font" style="border:1px solid #BDBDBD; height:300px;padding-left:10px;">                                              
+                    <div class="det_font" style="border:1px solid #BDBDBD; height:350px;padding-left:10px;">                                              
             <div id="launchContestOut" class="contestTypeEditSection">                                                         
                          <div class="tabOut">                                    
                  <!-- tab contest -->
@@ -109,6 +112,11 @@
                         <span class="value">
                             <input type="text" class="bigin"  id="contestName" />
                             <span id="contestNameText"></span>
+                        </span>
+                 <br /><br />
+                 <span class="name fixWidthName"><strong>Review Style</strong></span>
+                        <span class="value">
+                            <input type="text" class="bigin"  id="reviewStyle" value="User Selection" disabled="disabled"/>
                         </span>
                  <br /><br />
                  <span class="name"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>

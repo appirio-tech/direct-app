@@ -49,6 +49,9 @@
          <span class="name2"><strong>Contest Name</strong></span>
          <span class="value"><strong>: <span id="rContestName"></span></strong></span>
          <br /> <br />
+         <span class="name2"><strong>Review Style</strong></span>
+         <span class="value"><strong>: TopCoder Community Review Board<span id="rReviewStyle"></span></strong></span>
+         <br /> <br />
          <span class="name3"><strong>CCA is</strong></span>
          <span class="value"><strong>: <span id="rCCA"></span></strong></span>		 
 		 <br /> <br />
@@ -106,7 +109,12 @@
               <span id="contestNameText"></span>
           </span>
           <br /><br />
-                 
+            
+          <span class="name fixWidthName"><strong>Review Style</strong></span>
+          <span class="value">
+              <input type="text" class="bigin"  id="reviewStyle" value="TopCoder Community Review Board" disabled="disabled"/>
+          </span>
+          <br /><br />
 				 <span class="name3"><input type="checkbox" id="chkboxCCA"  /><strong>CCA required</strong></span>
 				 <br /> <br />
 				 <div id="projectEditDiv">

@@ -2032,8 +2032,7 @@ function handleActivationResultEdit(jsonResult) {
         if(!contestHasSpecReview) {
             specResponse = ".";
         }
-        var contestIndicator = "Review Style:  TopCoder Community Review Board.";
-        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse + " \n" + contestIndicator);
+        showSuccessfulMessage("Contest <span class='messageContestName'>" + contestName +"</span> has been activated successfully" + specResponse);
     },
     function(errorMessage) {
         showServerError(errorMessage);

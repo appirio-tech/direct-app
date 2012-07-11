@@ -33,6 +33,10 @@
 						<td><span id="sworContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 					</tr>
 					<tr>
+						<th>Review Style :</th>
+						<td>TopCoder Community Review Board</td>
+					</tr>
+					<tr>
 						<th>Project :</th>
 						<td><span id="sworProjectName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 					</tr>

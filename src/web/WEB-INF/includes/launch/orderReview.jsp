@@ -34,6 +34,10 @@
 						<td><span id="orContestName"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 					</tr>
 					<tr>
+						<th>Review Style :</th>
+						<td>User Selection</td>
+					</tr>
+					<tr>
 						<th>Project :</th>
 						<td><span id="orRoundType"></span><a href="javascript:showPage('contestSelectionPage');" class="tipLink"><img src="/images/penicon.gif" alt="Edit"/></a></td>
 					</tr>
