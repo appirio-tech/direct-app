@@ -222,15 +222,39 @@ public class BillingCostReportDTO extends ReportBaseDTO {
             row.getCell(2).setStringValue(costDetail.getClient().getName());
 
             // set the billing account name
-            row.getCell(3).setStringValue(costDetail.getBilling().getName());
+			if (costDetail.getBilling() == null || costDetail.getBilling().getName() == null ||
+					costDetail.getBilling().getName().equals(""))
+			{
+				row.getCell(3).setStringValue("None");
+			}
+			else 
+			{
+				row.getCell(3).setStringValue(costDetail.getBilling().getName());
+			}
 
             // set the project name
-            row.getCell(4).setStringValue(costDetail.getProject().getName());
+			if (costDetail.getProject() == null || costDetail.getProject().getName() == null
+			     || costDetail.getProject().getName().equals(""))
+			{
+				row.getCell(4).setStringValue("None");
+			}
+			else
+			{
+				row.getCell(4).setStringValue(costDetail.getProject().getName());
+			}
             
             row.getCell(5).setStringValue(costDetail.getProjectFilterValue() == null ? "None" : costDetail.getProjectFilterValue());
 
             // set the contest name
-            row.getCell(6).setStringValue(costDetail.getContest().getName());
+			if (costDetail.getContest() == null || costDetail.getContest().getName() == null
+			     || costDetail.getContest().getName().equals(""))
+			{
+				row.getCell(6).setStringValue("None");
+			}
+			else
+			{
+				row.getCell(6).setStringValue(costDetail.getContest().getName());
+			}
 
             // set the contest id
             row.getCell(7).setNumberValue(costDetail.getContest().getId());
@@ -246,21 +270,48 @@ public class BillingCostReportDTO extends ReportBaseDTO {
             }
 
             // set the contest type
-            row.getCell(9).setStringValue(costDetail.getContestType().getName());
+			if (costDetail.getContestType() == null || costDetail.getContestType().getName() == null
+			     || costDetail.getContestType().getName().equals(""))
+			{
+				row.getCell(9).setStringValue("None");
+			}
+			else
+			{
+				row.getCell(9).setStringValue(costDetail.getContestType().getName());
+			}
 
             // set the status
-            row.getCell(10).setStringValue(costDetail.getStatus());
+			if (costDetail.getStatus() == null || costDetail.getStatus().equals(""))
+			{
+				row.getCell(10).setStringValue("None");
+			}
+			else
+			{
+				row.getCell(10).setStringValue(costDetail.getStatus());
+			}	
 
             // set the Launch date
-            row.getCell(11).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
+			if (costDetail.getLaunchDate() == null)
+			{
+				row.getCell(11).setStringValue("None");
+			}
+			else
+			{
+				row.getCell(11).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
+			}
 
             // set the completion date
-            row.getCell(12).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
+			if (costDetail.getCompletionDate() == null)
+			{
+				row.getCell(12).setStringValue("None");
+			}
+			else
+			{
+				row.getCell(12).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));
+			}
 
-            // set the actual total member cost, the 'active' and 'scheduled' contest does not have actual member cost
-            //if (costDetail.getStatus().trim().toLowerCase().equals("finished")) {
-                row.getCell(13).setNumberValue((costDetail.getActualTotalMemberCost()));
-            
+            // set the actual total member cost,
+            row.getCell(13).setNumberValue((costDetail.getActualTotalMemberCost()));  
 
             // set the payment type
             row.getCell(14).setStringValue(costDetail.getPaymentType());
