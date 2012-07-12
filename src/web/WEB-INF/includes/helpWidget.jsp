@@ -63,6 +63,13 @@
         </ul>
         <a href="" target="_blank" class="viewAllLink">View All</a>
     </div>
+
+    </br>
+    <div>
+        <a href="javascript:;" onclick="window.open('https://www.topcoder.com/direct/TopCoderRoadmap')"><h6>TopCoder Roadmap</h6></a>
+    </div>
+    </br>
+    
     <!--End exampleTabContent-->
     <p class="contactUs">
         <a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/template-help/')" class="darkenBtn"
