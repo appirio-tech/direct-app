@@ -60,7 +60,7 @@
                     </tr>
 					<tr>
                         <td><label>Review Style:</label></td>
-                        <td>User Selection</span></td>
+                        <td><span id="reviewStyleSummary">User Selection</span></td>
                     </tr>
                     <tr>
                         <td><label>Public Description:</label></td>

@@ -755,6 +755,12 @@ a.smallRed span.right {
 					font-size:12px;
 					
 				}
+                .get-a-copilot .stepSix .geryContent .form .rowItem td #contestNameSummary {
+                    line-height:20px;
+                }
+                .get-a-copilot .stepSix .geryContent .form .rowItem td #reviewStyleSummary {
+                    line-height:23px;
+                }
 				
 			.get-a-copilot .buttonBottom {
 				margin-top:15px;
