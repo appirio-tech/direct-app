@@ -205,7 +205,7 @@
         <c:if test="${requestScope.PAGE_TYPE eq 'launch'}">
             <ul>
                 <li class="on">
-                    <a href="<s:url action="dashboard" namespace="/"/>"><span>Dashboard</span></a>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
                 </li>
 
 				<li>
