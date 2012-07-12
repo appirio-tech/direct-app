@@ -108,6 +108,8 @@ function addData(vm) {
 
 if (!window.vmService) var vmService = {
     launch : function(formId) {
+    	$('#launchSuccess').hide();
+    	$('#deleteSuccess').hide();
         var data = $('#' + formId).serialize();
         $(".error").empty();
         var actionArea = $('#launch_vm_button');
@@ -120,6 +122,7 @@ if (!window.vmService) var vmService = {
             type: 'POST',
             url:'launchVMInstance',
             data: data,
+            timeout:20000, // Timeout of 20 secs
             dataType: "json",
             cache:false,
             success:function(r) {
@@ -142,20 +145,24 @@ if (!window.vmService) var vmService = {
 					for (var i=0; i<r.length; i++) { // is able to launch multiple VMs at once
                         addData(r[i]);
                     }
-
-                    setupFilterPanel();
+	                setupFilterPanel();
+	                $('#launchSuccess').html("VMInstance launched successfully");
+	                $('#launchSuccess').show();
                 }
             }
         });
     },
 
     refresh : function() {
+    	$('#launchSuccess').hide();
+    	$('#deleteSuccess').hide();
         $(".error").empty();
         modalPreloader();
 
         $.ajax({
             type: 'POST',
             url:'showVMInstances',
+            timeout:20000, // Timeout of 20 secs
             dataType: "json",
             cache:false,
             success:function(r) {
@@ -178,6 +185,8 @@ if (!window.vmService) var vmService = {
 
     terminate : function(instanceId, elem) {                         
         if (window.confirm("Are you sure you want to terminate this VM?")) {
+        	$('#launchSuccess').hide();
+    		$('#deleteSuccess').hide();
             modalPreloader();
             while (elem.parentNode && elem.parentNode.tagName != "TR"){
                 elem = elem.parentNode;
@@ -188,12 +197,15 @@ if (!window.vmService) var vmService = {
             $.ajax({
                 type: 'POST',
                 url: 'terminateVMInstance',
+                timeout:20000, // Timeout of 20 secs
                 data: {'instanceId' : instanceId},
                 dataType: "json",
                 cache: false,
                 success: function(r) {
                     modalClose();
-                    $(rowElem).find('.vm_instance_status').html(r.result['return'][0]);                                       
+                    $(rowElem).find('.vm_instance_status').html(r.result['return'][0]);
+                    $('#deleteSuccess').html("VMInstance deleted successfully");
+                    $('#deleteSuccess').show();                                       
                 }
             });
         }        

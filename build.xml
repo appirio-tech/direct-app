@@ -275,6 +275,8 @@
         <copy file="${dom4j-1.6.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xmlbeans-2.3.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jrss.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+    	<copy file="${jackson-core.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+    	<copy file="${jackson-mapper.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
 
         <!-- EJB components -->
@@ -539,6 +541,7 @@
                 <include name="ContestCapacity.xml" />
                 <include name="ContestServiceFacade.xml" />
                 <include name="ProjectServiceFacade.xml" />
+            	<include name="CloudVMService.xml"/>
                 <include name="PermissionServiceFacade.xml" />
                 <include name="SpecReviewCommentService.xml" />
                 <include name="SpecReviewService.xml" />

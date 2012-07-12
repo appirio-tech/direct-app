@@ -1,11 +1,13 @@
 <%--
-  - Author: winsty
-  - Version: 1.1
+  - Author: winsty, kanakarajank
+  - Version: 1.2
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of VM management in dashboard.
   -
   - Version 1.1 (TC Direct UI Improvement Assembly 1) changes: Solve "all clear buttons in "VM Management" cannot work"
+  - Version 1.2 Module Assembly - Cloud VM Service Notus Cloud Integration version 1.0
+  -             Added span for showing Successful creation of VM/ Successful Deletion of VM
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -47,7 +49,8 @@
 
                             <p class="msg">Here you can launch Virtual Machines.</p>
 
-
+							<span id="launchSuccess" style="color:green" class="success hide"></span>
+							
                             <div class="form">
                                 <form id="vm-launch-form" name="vm-launch-form" action="javascript:vmService.launch('vm-launch-form');">
 									<div id="vmLaunch">
@@ -123,6 +126,7 @@
 							<hr color="black" class="plain" />
                             <p class="msg">Here you can view and destroy Virtual Machines.</p>
 
+							<span id="deleteSuccess" style="color:green" class="success hide"></span>
 
 
 
