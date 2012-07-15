@@ -24,10 +24,14 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp change notes)
   - Fix the contest requirements preview and integrate the new cockpit tinyMCE editor.
+  -
   - Version 1.5 (Release Assembly - Contest Edit and Upload Update) changes: fixes for TCCC-3724, TCCC-3604
   -
   - Version 1.6 (BUGR-6609) Change notes:
   - - Added the submission end date in Schedule section.
+  -
+  - Version 1.7 (Release Assembly - TC Direct Cockpit Release Five)
+  - - Add DR points flag check box
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -387,18 +391,20 @@
                          <input type="text" class="prizesInput" value="" id="swFirstPlace" readonly="true" />
                          <label class="second">2nd Place</label>
                          <span class="dw">$</span>
-                         <span id="swSecondPlace" class="prizeInfo" style="line-height:30px;"></span>
-                         
+                         <span id="swSecondPlace" class="prizeInfo" style="line-height: 33px;font-size: 12px;font-weight: bold"></span>
                      	</div>
                          <br />
                          <span class="head">
                          <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
                          <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-                         <span class="mid_info">Digital Run:&nbsp;&nbsp;$</span>
+                         <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox"/>
+                         <span class="mid_info">Digital Points:&nbsp;&nbsp;$</span>
                          <span><input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"/></span>
-                         <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
+                         <br />
+                         <span class="first_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
                          <span class="mid_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
                          <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
+                         <br />
                          <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>
                          </span>                                                                
                      </div>

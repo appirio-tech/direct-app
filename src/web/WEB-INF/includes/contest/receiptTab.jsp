@@ -6,6 +6,8 @@
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
   - - Add the milestone prize for software contest receipt if exists
   -
+  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Five) changes:
+  - - Add Launch By information to the JSP page
   -
   - Description: This page fragment renders receipt page content for software contest.
 --%>
@@ -56,7 +58,6 @@
                                             
                                             <s:if test="viewData.contestStats.isStudio == true">
                                                 <h2 class="sectionHead"><s:if test="contestReceipt.finished == true">Receipt</s:if><s:else>Estimated Cost</s:else></h2>
-                                                 <!-- overviewBox -->
                                                 <div class="overviewBox">
                                                     <table cellspacing="0" cellpadding="0" class="overviewData">
                                                         <tbody><tr>
@@ -66,7 +67,7 @@
                                                         </tr>
                                                         <tr>
                                                             <th>Competition Type :</th>
-                                                            <td>${viewData.contest.contestType.name}</td>
+                                                            <td>${result.projectHeader.projectCategory.name}</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Competition Title :</th>
@@ -84,10 +85,21 @@
                                                             <th>Launch Time :</th>
                                                             <td><fmt:formatDate value="${viewData.contestStats.startTime}" pattern="MM/dd/yyyy HH:mm zzz-05"/></td>
                                                         </tr>
+                                                        <tr>
+                                                            <th>Launch By :</th>
+                                                            <td>
+                                                               <s:if test="contestReceipt.contestLauncherId > 0">
+                                                                   <link:user userId="${contestReceipt.contestLauncherId}"/>
+                                                               </s:if>
+                                                               <s:else>
+                                                                    n/a
+                                                               </s:else>
+
+                                                            </td>
+                                                        </tr>
                                                     </tbody></table>
                                                 </div>
-                                                <!-- end .overviewBox>
-                                                
+
                                             </div>
                                             <!-- end .orderReview -->
                                                 <div class="contestDetails">
@@ -171,6 +183,18 @@
                                                             <td><fmt:formatDate value="${viewData.contestStats.startTime}"
                                                                                         pattern="MM/dd/yyyy HH:mm zzz"/></td>
                                                         </tr>
+                                                        <tr>
+                                                            <th>Launch By :</th>
+                                                            <td>
+                                                                <s:if test="contestReceipt.contestLauncherId > 0">
+                                                                    <link:user userId="${contestReceipt.contestLauncherId}"/>
+                                                                </s:if>
+                                                                <s:else>
+                                                                    n/a
+                                                                </s:else>
+
+                                                            </td>
+                                                        </tr>
                                                     </tbody></table>
                                                 </div>
                                                 <!-- end .overviewBox -->
@@ -214,7 +238,7 @@
                                                     <h3>Additional Costs:</h3>
                                                     <table class="prizesTable">
                                                         <tbody><tr>
-                                                            <td>Contest Fee : $${contestFee}</td>
+                                                            <td>Contest Fee : $<fmt:formatNumber value="${contestFee}" pattern="0.00"/> </td>
                                                             <td>Specification Review : $${specificationReviewPayment}</td>
                                                             <td>Review  : $${reviewPayment}</td>
                                                             <td>Copilot Fee  : $${copilotCost}</td>

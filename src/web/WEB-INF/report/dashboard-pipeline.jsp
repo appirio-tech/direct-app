@@ -656,6 +656,10 @@
                                                 <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="contestId" value="%{#attr['contest'].contestId}"/></s:url>">
                                                     <c:out value="${contest.cname}"/></a>
                                             </s:if>
+                                            <s:elseif test="%{#attr['contest'].contestCategory == 'Copilot Posting'}" >
+                                                <a class="longWordsBreak" href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['contest'].contestId}"/></s:url>">
+                                                    <c:out value="${contest.cname}"/></a>
+                                            </s:elseif>
                                             <s:else>
                                                 <a class="longWordsBreak" href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].contestId}"/></s:url>">
                                                     <c:out value="${contest.cname}"/></a>

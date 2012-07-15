@@ -458,8 +458,20 @@ import java.util.Map.Entry;
  *     <li>Add method {@link #getAllProjectCategoriesGrouped()}</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 4.1 (Release Assembly - TC Direct Cockpit Release Five)
+ * <ol>
+ *     <li>Update method {@link #getContestDashboardData(long, boolean, boolean)} to always set registration health to
+ *     healthy for copilot posting</li>
+ *     <li>Update method {@link #getContestReceipt(long, boolean)} to add contest launcher info</li>
+ *     <li>Update method {@link #getProjectContestsHealth(long, long, boolean)} to always set registration health to
+ *     healthy for copilot posting</li>
+ * </ol>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin
- * @version 4.0
+ * @version 4.1
  * @since 1.0
  */
 public class DataProvider {
@@ -2891,8 +2903,9 @@ public class DataProvider {
 
             double reliabilityTotal = getDouble(row, "reliability_total");
             long registrationPhaseStatus = getLong(row, "registration_phase_status");
+            long projectCategoryId = getLong(row, "project_category_id");
 
-            if(isStudio) {
+            if(isStudio || projectCategoryId == 29L) {
                 dto.setRegistrationStatus(RegistrationStatus.HEALTHY);
             } else if (registrationPhaseStatus == 2) {
                 if (reliabilityTotal >= 200) {
@@ -4014,6 +4027,12 @@ public class DataProvider {
         contestReceipt.setTotalCost(result.getDoubleItem(row, "total_cost"));
         contestReceipt.setFinished(result.getStringItem(row, "status").trim().equals("Finished"));
 
+        if(result.getItem(row, "contest_launcher_id").getResultData() != null) {
+            contestReceipt.setContestLauncherId(Long.parseLong(result.getStringItem(row, "contest_launcher_id")));
+        } else {
+            contestReceipt.setContestLauncherId(0);
+        }
+
         return contestReceipt;
     }
 
@@ -4336,7 +4355,14 @@ public class DataProvider {
                     // Evaluate current registration status
                     double reliabilityTotal = getDouble(resultContainer.getRow(i), "reliability_total");
                     long registrationPhaseStatus = getLong(resultContainer.getRow(i), "registration_phase_status");
+                    long projectCategoryId = getLong(resultContainer.getRow(i), "project_category_id");
                     setRegistrationPhaseStatus(contestHealthDTO, reliabilityTotal, registrationPhaseStatus);
+
+                    if(projectCategoryId == 29L) {
+                        // always set to health
+                        contestHealthDTO.setRegistrationStatus(RegistrationStatus.HEALTHY);
+                    }
+
                 }
 
                 // Evaluate current phase status

@@ -48,8 +48,11 @@
  * Version 1.9.1 (BUGR-6609) changes:
  * - Update the submission end date and contest end date when the contest was updated.
  *
- * @author isv, TCSASSEMBLER
- * @version 1.9.1
+ * Version 2.0 (Release Assembly - TC Direct Cockpit Release Five) change notes:
+ * - Fix the DR points, milestone prizes, contest fee percentage calculation etc.
+ *
+ * @author isv, GreatKevin
+ * @version 2.0
  */
 
  /**
@@ -146,6 +149,27 @@ $(document).ready(function() {
        $('#extraPrizes').show();
      }
    }); //click
+
+
+    // digital run check box
+    $('#DRCheckbox').click(function(){
+        if($(this).is(":checked")) {
+            $("#swDigitalRun").removeAttr('disabled');
+            if($("#swDigitalRun").data('previousDR') != undefined) {
+                $("#swDigitalRun").val($("#swDigitalRun").data('previousDR'));
+            }
+        } else {
+            $("#swDigitalRun").data('previousDR', $("#swDigitalRun").val());
+            $("#swDigitalRun").val(0);
+            $("#swDigitalRun").attr('disabled', 'disabled');
+        }
+        fillPrizes();
+    });
+
+    if($("#overviewSoftwarePage").length > 0) {
+        // if it's software contest launch flow, we make the DR flag default checked
+
+    }
 
 
    $('.prizesInner .removeButton').click(function(){
@@ -1096,43 +1120,60 @@ function resetSoftwarePrizes() {
  * @see updateSoftwarePrizes which is for persisting all changes
  */
 function fillPrizes(billingProjectId) {
-   if(!mainWidget.softwareCompetition.projectHeader.projectCategory || mainWidget.softwareCompetition.projectHeader.projectCategory.id < 0) {
-       return;
-   }
+    if (!mainWidget.softwareCompetition.projectHeader.projectCategory || mainWidget.softwareCompetition.projectHeader.projectCategory.id < 0) {
+        return;
+    }
 
-   var prizeType = $('input[name="prizeRadio"]:checked').val();
-   var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
-   var feeObject = softwareContestFees[projectCategoryId];
-   if(!feeObject) {
+    var prizeType = $('input[name="prizeRadio"]:checked').val();
+    var projectCategoryId = mainWidget.softwareCompetition.projectHeader.projectCategory.id + "";
+    var feeObject = softwareContestFees[projectCategoryId];
+    if (!feeObject) {
         showErrors('no fee found for project category ' + projectCategoryId);
         return;
-   }
-   var contestCost = getContestCost(feeObject, prizeType);
+    }
+    var contestCost = getContestCost(feeObject, prizeType);
 
-   if (contestCost == undefined) {
+    if (contestCost == undefined) {
         return;
-   }
+    }
 
-   var firstPlaceAmount = contestCost.firstPlaceCost.formatMoney(2);
+    var firstPlaceAmount = contestCost.firstPlaceCost.formatMoney(2);
 //    originalPrizes = [];
 //    originalPrizes.push(contestCost.firstPlaceCost + '');
 //    originalPrizes.push(contestCost.drCost + '');
-    
-   $('#swFirstPlace').val(firstPlaceAmount);
-   $('#rswFirstPlace').html(firstPlaceAmount);
-   $('#swSecondPlace,#rswSecondPlace').html(contestCost.secondPlaceCost.formatMoney(2));
-   $('#swReviewCost,#rswReviewCost').html(contestCost.reviewBoardCost.formatMoney(2));
-   $('#swReliabilityBonus,#rswReliabilityBonus').html(contestCost.reliabilityBonusCost.formatMoney(2));
-   $('#rswDigitalRun').html(contestCost.drCost.formatMoney(2));
-   $('#swDigitalRun').val(contestCost.drCost.formatMoney(2));
-   
+
+    $('#swFirstPlace').val(firstPlaceAmount);
+    $('#rswFirstPlace').html(firstPlaceAmount);
+    $('#swSecondPlace,#rswSecondPlace').html(contestCost.secondPlaceCost.formatMoney(2));
+    $('#swReviewCost,#rswReviewCost').html(contestCost.reviewBoardCost.formatMoney(2));
+    $('#swReliabilityBonus,#rswReliabilityBonus').html(contestCost.reliabilityBonusCost.formatMoney(2));
+
+    if($('#DRCheckbox').is(":checked")) {
+        $('#rswDigitalRun').html(contestCost.drCost.formatMoney(2));
+        $('#swDigitalRun').val(contestCost.drCost.formatMoney(2));
+    } else {
+        var noDR = 0;
+        $('#rswDigitalRun').html(noDR.formatMoney(2));
+        $('#swDigitalRun').val(noDR.formatMoney(2));
+    }
+
+
+    if(contestCost.specReviewCost != undefined) {
+        $("#swSpecCost").text(contestCost.specReviewCost.formatMoney(2));
+    }
+
     if (billingProjectId == null) {
         billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
     }
 
     var contestBillingFee = -1;
     var contestFeePercentage = null;
-    if(billingFees[billingProjectId]!= null) {
+
+    var isMultipleRound = mainWidget.softwareCompetition.multiRound;
+    // no prize data filled into mainWidget.softwareCompetition
+    var domOnly = mainWidget.softwareCompetition.projectHeader.id < 0;
+
+    if (billingFees[billingProjectId] != null) {
         var fees = billingFees[billingProjectId];
 
         for(var i = 0; i < fees.length; ++i) {
@@ -1144,8 +1185,9 @@ function fillPrizes(billingProjectId) {
      
     if (billingFeesPercentage[billingProjectId]!= null) {
         contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
-        if (contestFeePercentage!=null) {
-            contestBillingFee = (getContestTotal(feeObject, prizeType, false, true, 0) + mainWidget.softwareCompetition.copilotCost) * contestFeePercentage;
+
+        if (contestFeePercentage != null) {
+            contestBillingFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * contestFeePercentage;
         }
     }
     
@@ -1163,21 +1205,26 @@ function fillPrizes(billingProjectId) {
 
    $('#swCopilotFee,#rswCopilotFee').html(mainWidget.softwareCompetition.copilotCost.formatMoney(2)); 
 
-   //totals
-   if (contestFeePercentage==null) {
-        $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType, false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_low').html((getContestTotal(feeObject, 'low', false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_medium').html((getContestTotal(feeObject, 'medium', false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_high').html((getContestTotal(feeObject, 'high', false, true, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-   } else {
-        $('#swTotal,#rswTotal').html(((getContestTotal(feeObject, prizeType, false, true, 0) + mainWidget.softwareCompetition.copilotCost) * (1+contestFeePercentage)).formatMoney(2));
-        $('#swPrize_low').html(((getContestTotal(feeObject, 'low', false, true, 0) + mainWidget.softwareCompetition.copilotCost) * (1+contestFeePercentage)).formatMoney(2));
-        $('#swPrize_medium').html(((getContestTotal(feeObject, 'medium', false, true, 0) + mainWidget.softwareCompetition.copilotCost) * (1+contestFeePercentage)).formatMoney(2));
-        $('#swPrize_high').html(((getContestTotal(feeObject, 'high', false, true, 0) + mainWidget.softwareCompetition.copilotCost) * (1+contestFeePercentage)).formatMoney(2));
-   }
 
-   // spec cost
-   $('#swSpecCost,#rswSpecCost').html(feeObject.specReviewCost.formatMoney(2));
+    //totals
+    if (contestFeePercentage == null) {
+        $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+        $('#swPrize_low').html((getContestTotal(feeObject, 'low', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+        $('#swPrize_medium').html((getContestTotal(feeObject, 'medium', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+        $('#swPrize_high').html((getContestTotal(feeObject, 'high', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+    } else {
+        $('#swTotal,#rswTotal').html(((getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+        $('#swPrize_low').html(((getContestTotal(feeObject, 'low', domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+        $('#swPrize_medium').html(((getContestTotal(feeObject, 'medium', domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+        $('#swPrize_high').html(((getContestTotal(feeObject, 'high', domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+    }
+
+    // spec cost
+    if (contestCost.specReviewCost == undefined) {
+        $('#swSpecCost,#rswSpecCost').html(feeObject.specReviewCost.formatMoney(2));
+    } else {
+        $('#swSpecCost,#rswSpecCost').html(contestCost.specReviewCost.formatMoney(2));
+    }
 
    //if custom, make the first place editable
    if(prizeType == 'custom') {
@@ -1271,6 +1318,10 @@ function updateSoftwarePrizes() {
    if (contestCost == undefined) {
         return;
    }
+
+    var isMultipleRound = mainWidget.softwareCompetition.multiRound;
+    // no prize data filled into mainWidget.softwareCompetition
+    var domOnly = mainWidget.softwareCompetition.projectHeader.id < 0;
    
     if (billingProjectId > 0) {
         if (billingFees != null &&  billingFees[billingProjectId] != null) {
@@ -1289,7 +1340,7 @@ function updateSoftwarePrizes() {
         if (billingFeesPercentage[billingProjectId]!= null) {
             var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
             if (contestFeePercentage!=null) {
-                contestFee = (getContestTotal(feeObject, prizeType, false, true, 0) + mainWidget.softwareCompetition.copilotCost) * contestFeePercentage;
+                contestFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * contestFeePercentage;
                 projectHeader.setContestFeePercentage(contestFeePercentage);
             } else {
                 projectHeader.setContestFeePercentage("0");
@@ -1309,10 +1360,21 @@ function updateSoftwarePrizes() {
    projectHeader.setReviewCost(contestCost.reviewBoardCost);
    projectHeader.setReliabilityBonusCost(contestCost.reliabilityBonusCost);
    projectHeader.setDRPoints(contestCost.drCost);
+   if($("#DRCheckbox").is(":checked")) {
+       projectHeader.properties['Digital Run Flag'] = 'On';
+   } else {
+       projectHeader.properties['Digital Run Flag'] = 'Off';
+   }
+
    projectHeader.setMilestoneBonusCost(0);
    projectHeader.setAdminFee(contestFee);
-   projectHeader.setSpecReviewCost(feeObject.specReviewCost);
-   
+
+   if(contestCost.specReviewCost == undefined) {
+       projectHeader.setSpecReviewCost(feeObject.specReviewCost);
+   } else {
+       projectHeader.setSpecReviewCost(contestCost.specReviewCost);
+   }
+
    var prizes = [];
    prizes.push(new com.topcoder.direct.Prize(1, contestCost.firstPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
    prizes.push(new com.topcoder.direct.Prize(2, contestCost.secondPlaceCost, CONTEST_PRIZE_TYPE_ID, 1));
@@ -1344,7 +1406,30 @@ function updateStudioPrizes() {
        projectHeader.setDRPoints((feeObject.secondPlaceCost + feeObject.firstPlaceCost) * 0.25); 
    }
    projectHeader.setReviewCost(feeObject.reviewCost);
-   projectHeader.setSpecReviewCost(feeObject.specReviewCost);   
+   projectHeader.setSpecReviewCost(feeObject.specReviewCost);
+
+   var billingProjectId =  mainWidget.softwareCompetition.projectHeader.getBillingProject();
+
+   if (billingProjectId > 0) {
+        if (billingFeesPercentage[billingProjectId]!= null) {
+            var contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
+            if (contestFeePercentage!=null) {
+                var total = 0;
+                var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+                for (var i = 0; i < prizes.length; i++) {
+                        total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
+                }
+                total += projectHeader.getReviewCost();
+                total += projectHeader.getSpecReviewCost();
+                total += projectHeader.getDRPoints();
+                var contestFee = (total + mainWidget.softwareCompetition.copilotCost) * contestFeePercentage;
+                projectHeader.setAdminFee(contestFee);
+                projectHeader.setContestFeePercentage(contestFeePercentage);
+            } else {
+                projectHeader.setContestFeePercentage("0");
+            }
+        }
+    }
 }
 
 /**
@@ -1554,7 +1639,9 @@ function calculateDRPoint(firstPlacePrize, secondPlacePrize, reliabilityPrize) {
 function getContestTotal(feeObject, prizeType, useDomElem, noMilestoneCost, actualFee) {
     var contestCost = getContestCost(feeObject, prizeType);
     var total = contestCost.firstPlaceCost + contestCost.secondPlaceCost + contestCost.reviewBoardCost
-    + contestCost.reliabilityBonusCost + contestCost.drCost + (actualFee == null ? feeObject.contestFee : actualFee) + feeObject.specReviewCost;
+    + contestCost.reliabilityBonusCost + ($('#DRCheckbox').is(":checked") ? contestCost.drCost : 0) + (actualFee == null ? feeObject.contestFee : actualFee)
+    + (contestCost.specReviewCost != undefined ? contestCost.specReviewCost : feeObject.specReviewCost);
+
     if (noMilestoneCost) {
     	return total;
     }
@@ -1566,6 +1653,7 @@ function getContestTotal(feeObject, prizeType, useDomElem, noMilestoneCost, actu
     		}
     	}
     } else if (mainWidget.softwareCompetition.multiRound) {
+
     	var prize = parseFloat($("#swMilestonePrize").val());
     	if (!prize) {
     		prize = 0;

@@ -22,7 +22,6 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
 import com.topcoder.direct.services.exception.DirectException;
-import com.topcoder.direct.services.view.action.contest.launch.ContestAction;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestRoundType;
@@ -99,10 +98,17 @@ import com.topcoder.service.project.SoftwareCompetition;
  *     updated method {@link DirectUtils#getContestStats(TCSubject, long, SoftwareCompetition)}.</li>
  *   </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.7.1 (Release Assembly - TC Direct Cockpit Release Five)
+ * <ol>
+ *     <li>Update the executeAction() to set default round type to FULL if it's null.</li>
+ * </ol>
+ * </p>
  * 
- * @author isv, flexme, minhu
+ * @author isv, flexme, minhu, GreatKevin
  * @since Submission Viewer Release 1 assembly
- * @version 1.7
+ * @version 1.7.1
  */
 public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -220,6 +226,12 @@ public class ContestSubmissionsAction extends StudioOrSoftwareContestAction {
             // if confirmed. If Milestone round is not confirmed yet then cause the request to be redirected to
             // Milestone submissions view
             ContestRoundType roundType = getFormData().getRoundType();
+
+            // if round type is not specified, default to FINAL
+            if (roundType == null) {
+                roundType = ContestRoundType.FINAL;
+            }
+
             if (hasMilestoneRound) {
                 if (roundType == ContestRoundType.FINAL) {
                     // if the milestone is not confirmed

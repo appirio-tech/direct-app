@@ -352,8 +352,16 @@ import java.util.*;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 1.8.8 (Release Assembly - TC Direct Cockpit Release Five) change notes:
+ * <li>
+ *    Fix getContestCheckout(SoftwareCompetition competition, ContestRoundType roundType), it should check whether the
+ *    milestone review/review phase is closed.
+ * </li>
+ * </p>
+ *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.8.7
+ * @version 1.8.8
  */
 public final class DirectUtils {
     /**
@@ -1199,11 +1207,11 @@ public final class DirectUtils {
         for (Phase phase : competition.getProjectPhases().getPhases()) {
             if (roundType == ContestRoundType.MILESTONE) {
                 if (phase.getPhaseType().getId() == PhaseType.MILESTONE_REVIEW_PHASE.getId()) {
-                    return !(phase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId());
+                    return phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId();
                 }
             } else if (roundType == ContestRoundType.FINAL) {
                 if (phase.getPhaseType().getId() == PhaseType.REVIEW_PHASE.getId()) {
-                    return !(phase.getPhaseStatus().getId() == PhaseStatus.OPEN.getId());
+                    return phase.getPhaseStatus().getId() == PhaseStatus.CLOSED.getId();
                 }
             }
         }

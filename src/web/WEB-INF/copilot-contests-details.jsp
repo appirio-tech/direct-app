@@ -130,14 +130,16 @@
 
 <div id="launchContestOut" class="launchCopilotContest">
 
+<s:set name="contestStatus" value="viewData.contestStats.contest.status.name"/>
+
 <!-- add new contest -->
 <div class="editMask">
     <div class="addNewContestInfo infoPanel ">
         <h3><span class="icon">General Information</span>
-            <if:isEditable typedContestBrief="${contestDTO}">
+            <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active' || #contestStatus eq 'Completed'">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isEditable>
+            </s:if>
         </h3>
 
         <div class="infoPanelMask">
@@ -158,6 +160,8 @@
                         </c:forEach>
                     </strong>
                 </li>
+
+
                 <li>
                     <label>Billing Account :</label>
                     <strong id="billingProjectNameTextLabel">
@@ -194,7 +198,8 @@
                             Don't have a budget yet.
                         </c:if>
                     </strong>
-                </li>                
+                </li>
+
             </ul>
         </div>
     </div>
@@ -226,13 +231,13 @@
             </div>
 
             <!-- Contest Name -->
-            <div class="row">
+            <div class="row <s:if test="#contestStatus == 'Completed'">hide</s:if>">
                 <label for="contestNameInput2">Create a name for your Copilot Posting :</label>
                 <input type="text" class="text" id="contestNameInput2" value="${assetDTO.name}"/>
             </div>
 
             <!-- Billing Account -->
-            <div class="row">
+            <div class="row <s:if test="#contestStatus != 'Draft'">hide</s:if>">
                 <label for="billingProjects2">Select Your Billing Account :</label>
                 <div class="billingSelect">
                     <select id="billingProjects2">
@@ -248,7 +253,7 @@
             </div>
             
             <!-- Experience -->
-            <div class="row experienceRow">
+            <div class="row experienceRow <s:if test="#contestStatus != 'Draft'">hide</s:if>">
                 <label>Select Copilot Experience :</label>
                 <div class="billingSelect experienceDiv">
                     <ul class="type1">
@@ -276,7 +281,7 @@
             </div>            
             
             <!-- Budget -->
-            <div class="row budgetRow experienceRow">
+            <div class="row budgetRow experienceRow <s:if test="#contestStatus != 'Draft'">hide</s:if>">
                 <label for="projectBudgetInput">Set Budget :</label>
                 
                 <ul>
@@ -290,7 +295,9 @@
                         <label for="notHaveBudget">b. I don't have a budget yet.</label> 
                     </li>
                 </ul>                
-            </div>   
+            </div>
+
+
             
             <p class="save">
                 <a class="cancel_text" href="javascript:" id="cancelContestInfo">cancel</a>
@@ -305,10 +312,10 @@
 <!-- Prize Display -->
 <div class="no_details contest_prize infoPanel">
     <div class="caption_det_prize">
-         <if:isEditable typedContestBrief="${contestDTO}">
+        <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" style="padding-top:20px; padding-right:8px" alt="edit" src="/images/edit.png"/> </a>
-            </if:isEditable>
+         </s:if>
         <div style="height:30px">
             <h2>Prizes </h2>
 
@@ -448,10 +455,10 @@
     <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that you want everyone to see</span>
-            <if:isEditable typedContestBrief="${contestDTO}">
+            <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isEditable>
+            </s:if>
         </h3>
 
         <div class="infoPanelMask previewMask">
@@ -484,10 +491,10 @@
     <div class="htmlDescription descriptionInfo ">
         <h3>
             <span class="icon">Description that is only viewable to copilots that register for this posting</span>
-            <if:isEditable typedContestBrief="${contestDTO}">
+            <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isEditable>
+            </s:if>
         </h3>
 
         <div class="infoPanelMask previewMask">
@@ -521,10 +528,10 @@
     <div class="infoPanel fileUploadInfo ">
         <h3>
             <span class="icon">Files</span>
-            <if:isEditable typedContestBrief="${contestDTO}">
+            <s:if test="#contestStatus eq 'Draft' || #contestStatus eq 'Scheduled' || #contestStatus eq 'Active'">
                 <a href="javascript:" class="editLink">
                     <img class="edit_type" alt="edit" src="/images/edit.png"/> </a>
-            </if:isEditable>
+            </s:if>
         </h3>
 
         <div class="infoPanelMask">

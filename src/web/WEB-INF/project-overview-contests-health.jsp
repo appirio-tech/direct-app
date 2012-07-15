@@ -1,8 +1,11 @@
 <%--
-  - Author: isv
+  - Author: isv, GreatKevin
   -
   - Version: 1.0 (Project Health Update assembly)
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.1 (Release Assembly - TC Direct Cockpit Release Five)
+  - Hide the review column data if the contest is copilot posting or studio contest
   -
   - Description: This page renders the project contests health view.
 --%>
@@ -141,9 +144,9 @@
         </td>
         <%-- Review --%>
         <td>
-            <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting'}" >
-            <a href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>" class="tooltopsBtn">
-            <span class="${value.reviewersSignupStatusColor.name}"></span></a>
+            <s:if test="%{#attr['key'].contestTypeName == 'Copilot Posting' || #attr['key'].software == false}" >
+                <a style="visibility: hidden;" href="<s:url action="copilotContestDetails" namespace="/copilot"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>" class="tooltopsBtn">
+                <span style="visibility: hidden;"  class="${value.reviewersSignupStatusColor.name}"></span></a>
             </s:if>
             <s:else>
             <a href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['key'].id}"/></s:url>" class="tooltopsBtn">

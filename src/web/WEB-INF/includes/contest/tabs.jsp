@@ -14,6 +14,9 @@
   - number in the submission tab title for multiple round contest
   - Version 1.5 (Release Assembly - TopCoder Cockpit Software Milestone Management) changes:
   - Add milestoneRound parameter for the submissions tab link of studioSubmissionsGrid and softwareSubmissionsList.
+  -
+  - Version 1.5.1 (Release Assembly - TC Direct Cockpit Release Five) changes:
+  - - Remove the round information in the submission tab link, the link will automatically detect the milestone/final sub tab.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -40,30 +43,46 @@
                     <span class="left"><span class="right">Registrants (<s:property value="registrantsNumber"/>)</span></span></a>
 
             </li>
-            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:180px">
+            <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'submissions'}">class="on"</c:if> style="min-width:190px">
                 <if:isStudioContest contestStats="${contestStats}">
-                    <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="${contestStats.inMilestoneSubmissionOrMilestoneReview}">
-                        <span class="left">
-                            <s:if test="viewData.contestStats.multipleRound">
-                                <span class="right">Submissions (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>
-                            </s:if>
-                            <s:else>
-                            <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
-                            </s:else>
+                    <s:if test="viewData.contestStats.multipleRound">
+                        <span class="submissionTabSpan">
+                            <span class="noCursor left">
+                                    <span class="noCursor right">Submissions (
+                                        <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="true" styleClass="submissionClick">M:${viewData.contestStats.milestoneSubmissionNumber}</link:studioSubmissionsGrid>/
+                                        <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:studioSubmissionsGrid>
+                                        )
+                                    </span>
+                            </span>
                         </span>
-                    </link:studioSubmissionsGrid>
+                    </s:if>
+                    <s:else>
+                        <link:studioSubmissionsGrid contestId="${contestStats.contest.id}">
+                            <span class="left">
+                                    <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
+                            </span>
+                        </link:studioSubmissionsGrid>
+                    </s:else>
                 </if:isStudioContest>
                 <if:isStudioContest contestStats="${contestStats}" negate="true">
-                    <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="${contestStats.inMilestoneSubmissionOrMilestoneReview}">
-                        <span class="left">
-                            <s:if test="viewData.contestStats.multipleRound">
-                                <span class="right">Submissions (M:${viewData.contestStats.milestoneSubmissionNumber}/F:${viewData.contestStats.finalSubmissionNumber})</span>
-                            </s:if>
-                            <s:else>
-                            <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
-                            </s:else>
+                    <s:if test="viewData.contestStats.multipleRound">
+                        <span class="submissionTabSpan">
+                            <span class="noCursor left">
+                                    <span class="noCursor right">Submissions (
+                                         <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="true" styleClass="submissionClick">M:${viewData.contestStats.milestoneSubmissionNumber}</link:softwareSubmissionsList>/
+                                        <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:softwareSubmissionsList>
+                                        )
+                                    </span>
+                            </span>
                         </span>
-                    </link:softwareSubmissionsList>
+                    </s:if>
+                    <s:else>
+                        <link:softwareSubmissionsList contestId="${contestStats.contest.id}">
+                            <span class="left">
+                                    <span class="right">Submissions (<s:property value="submissionsNumber"/>)</span>
+                            </span>
+                        </link:softwareSubmissionsList>
+                    </s:else>
                 </if:isStudioContest>
             </li>
             <li <c:if test="${requestScope.CURRENT_SUB_TAB eq 'issueTracking'}">class="on"</c:if>>

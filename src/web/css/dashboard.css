@@ -440,7 +440,7 @@ BODY#page{
 		width: auto;
 	}
 	
-		#tabs3 UL LI A{
+		#tabs3 UL LI A, #tabs3 UL LI span.submissionTabSpan{
 			display: block;
 			width: 100%;
 			height: 100%;
@@ -448,17 +448,31 @@ BODY#page{
 			font-size: 12px;
 			font-weight: bold;
 		}
+
+        #tabs3 UL LI span.submissionTabSpan span.noCursor {
+            cursor: default;
+        }
 		
-		#tabs3 UL LI A:hover{
+		#tabs3 UL LI A:hover, #tabs3 UL LI span.submissionTabSpan:hover{
 			background: url(../images/tabs3_bg_hover.png) repeat-x;
 		}
 			
-			#tabs3 UL LI A SPAN{
+			#tabs3 UL LI A SPAN, #tabs3 UL LI span.submissionTabSpan span{
 				float: left;
 				height: 40px;
 				width: 100%;
 				cursor: pointer;
 			}
+
+
+            #tabs3 UL LI span.submissionTabSpan A.submissionClick{
+                float: none;
+                height: auto;
+                width: auto;
+                cursor: pointer;
+                background: none !important;
+                display: inline;
+            }
 			
 			#tabs3 UL LI A.first SPAN.left{ /* tabs left corner */
 				background: url(../images/tabs3_left.png) no-repeat left top;
@@ -472,7 +486,7 @@ BODY#page{
 				background: none; /* no right border for the last tab */
 			}
 			
-			#tabs3 UL LI A SPAN.right{
+			#tabs3 UL LI A SPAN.right, #tabs3 UL LI span.submissionTabSpan span.right{
 				height: 30px;
 				padding-top: 10px;
 				text-align: center;
@@ -493,11 +507,20 @@ BODY#page{
 			/*font-size: 14px;*/
 			font-family: Verdana, Geneva, sans-serif;
 		}
-			#tabs3 UL LI.off A SPAN.right {
+
+        #tabs3 UL LI.on span.submissionTabSpan{ /* tabs on the active state */
+            background: transparent url(../images/tabs3_on.png) repeat-x top !important;
+            color: #FFF;
+            /*font-size: 14px;*/
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+
+			#tabs3 UL LI.off A SPAN.right, #tabs3 UL LI.off span.submissionTabSpan SPAN.right  {
 				color: #a9a9a9;
 			}
 		
-			#tabs3 UL LI.on A SPAN.right{
+			#tabs3 UL LI.on A SPAN.right, #tabs3 UL LI.on span.submissionTabSpan SPAN.right{
 				height: 32px;
 				padding-top: 8px;
 				background: url(../images/tabs3_arrow.png) no-repeat center bottom;

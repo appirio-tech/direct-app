@@ -291,6 +291,7 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         // if round type is not specified, default to FINAL
         if (roundType == null) {
             roundType = ContestRoundType.FINAL;
+            setRoundType(roundType);
         }
 
         if (hasMilestoneRound) {
@@ -304,6 +305,7 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
                 }
             }
         }
+
         hasWritePermission = DirectUtils.hasWritePermission(this, currentUser, this.getProjectId(), false);
 
         if (roundType == ContestRoundType.FINAL) {

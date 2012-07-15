@@ -1022,7 +1022,13 @@
 			.mid_info{
 				margin-left:7px;
 			}
-			
+            .prizesInner_software .mid_info {
+                margin-left:12px;
+            }
+            .contest_prize_edit .save {
+                padding-top: 20px;
+            }
+
 			.last_info{
 				float:right;
 				padding-top:3px;

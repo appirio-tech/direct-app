@@ -17,6 +17,9 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit TinyMCE Editor Revamp) changes: new tinyMCE editor.
   - Version 1.4 (Release Assembly - Contest Edit and Upload Update) changes: added text on file size limit.
+  -
+  - Version 1.5 (Release Assembly - TC Direct Cockpit Release Five) changes:
+  - - Add DR points check flag in software contest details page.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -179,11 +182,13 @@
           <span class="head">
 			  <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
 			  <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
+               <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox" checked="checked"/>
 			  <span class="mid_info">
-				Digital Run:&nbsp;&nbsp;$
+				Digital Points:&nbsp;&nbsp;$
 			  </span>
 			  <input type="text" class="prizesInput" value="" id="swDigitalRun" readonly="true" size="7"/>
-              <span class="mid_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
+              <br/>
+              <span class="first_info">Spec Review Fee:&nbsp;&nbsp;$  <span id="swSpecCost"></span></span>
 			  <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"></span></span>
               <span class="mid_info">Copilot Fee:&nbsp;&nbsp;$  <span id="swCopilotFee"></span></span>
 			  <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$  <span id="swTotal"></span></strong></span>

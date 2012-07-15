@@ -169,8 +169,15 @@ import com.topcoder.service.project.SoftwareCompetition;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version  1.6.6 (Release Assembly - TC Direct Cockpit Release Five) updates
+ * <ol>
+ *     <li>Add the code to save the launcher when activating and paying the contest</li>
+ * </ol>
+ * </p>
+ *
  * @author fabrizyo, FireIce, Veve, isv, GreatKevin
- * @version 1.6.5
+ * @version 1.6.6
  */
 public class SaveDraftContestAction extends ContestAction {
     /**
@@ -203,6 +210,13 @@ public class SaveDraftContestAction extends ContestAction {
      */
     private static final String PROJECT_HEADER_FIRST_PLACE_COST = "First Place Cost";
 
+    /**
+     * <p>
+     * Constant for the key of Contest Launcher property in the project header.
+     * </p>
+     * @since 1.6.6
+     */
+    private static final String CONTEST_LAUNCHER = "Contest Launcher";
 
     /**
      * <p>
@@ -1078,6 +1092,11 @@ public class SaveDraftContestAction extends ContestAction {
      * Update in 1.6.5 (Release Assembly - TC Direct Cockpit Release Four)
      * - start the spec review of the contest (if exists) when activating the contest.
      * </p>
+     *
+     * <p>
+     * Update in 1.6.6 (Release Assembly - TC Direct Cockpit Release Five)
+     * - set the contest launcher into the project header, it will be stored in project_info with id 58
+     * </p>
      * 
      * @param softwareCompetition
      *            the software competition data
@@ -1094,6 +1113,9 @@ public class SaveDraftContestAction extends ContestAction {
         DirectUtils.setSoftwareCompetitionDirectProjectName(softwareCompetition, getProjects());
 
         SoftwareContestPaymentResult result;
+
+        // set the launch user information
+        softwareCompetition.getProjectHeader().setProperty(CONTEST_LAUNCHER, String.valueOf(getCurrentUser().getUserId()));
 
         if (getSpecReviewStartMode() == null || !(getSpecReviewStartMode().equals(START_MODE_NOW) || getSpecReviewStartMode().equals(START_MODE_LATER))) {
             result = getContestServiceFacade().processContestPurchaseOrderSale(

@@ -49,12 +49,15 @@
  * Version 1.6 (Release Assembly - TC Direct Cockpit Release Four) updates:
  * - Show start spec review when user activates the contest
  *
- * Version 1.6 (Release Assembly - TopCoder Studio CCA Integration) change notes:
+ * Version 1.7 (Release Assembly - TopCoder Studio CCA Integration) change notes:
  * - Add place holder support for tinyMCE editors for sutdio contest description, round1 info
  * - and round2 info fields.
  *
- * @author isv, minhu, pvmagacho, GreatKevin, TCSASSEMBER
- * @version 1.7
+ * Version 1.8 (Release Assembly - TC Direct Cockpit Release Five) change notes:
+ * - Fix the DR points, milestone prizes, contest fee percentage calculation etc.
+ *
+ * @author isv, minhu, pvmagacho, GreatKevin
+ * @version 1.8
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -168,6 +171,7 @@ $(document).ready(function(){
        $('#billingProjects').bind("change", function() {
            updateContestFee();
        });
+
 
    	//Get the contest and populate each section
    // loading some configuration data
@@ -473,15 +477,23 @@ function initContest(contestJson) {
 		   delete projectHeader.prizes[i].modificationUser;
 	   }
    }
-   
-   //prizes: if custom level, initiate customCosts object so it is not derived from custom level any more   
+
+    var digitalRunPoints = projectHeader.getDRPoints();
+    var digitalRunFlag = projectHeader.properties['Digital Run Flag'];
+
+    if(digitalRunFlag != 'On' || digitalRunPoints == undefined) {
+        digitalRunPoints = 0;
+    }
+
+   //prizes: if custom level, initiate customCosts object so it is not derived from custom level any more
    if(projectHeader.getCostLevel() == COST_LEVEL_CUSTOM) {
    	    customCosts = {};
         customCosts.firstPlaceCost = parseFloat(projectHeader.getFirstPlaceCost());
         customCosts.secondPlaceCost = parseFloat(projectHeader.getSecondPlaceCost());
         customCosts.reviewBoardCost = parseFloat(projectHeader.getReviewCost());
         customCosts.reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
-        customCosts.drCost = parseFloat(projectHeader.getDRPoints());   	   
+        customCosts.specReviewCost = parseFloat(projectHeader.getSpecReviewCost());
+        customCosts.drCost = parseFloat(digitalRunPoints);
    }
    
    
@@ -506,7 +518,8 @@ function initContest(contestJson) {
         var prize2 = parseFloat(projectHeader.getSecondPlaceCost());
         var reviewCost = parseFloat(projectHeader.getReviewCost());
         var reliabilityBonusCost = parseFloat(projectHeader.getReliabilityBonusCost());
-        var drPointsCost = parseFloat(projectHeader.getDRPoints());
+        var drPointsCost = parseFloat(digitalRunPoints);
+        var specReviewCost = parseFloat(projectHeader.getSpecReviewCost());
 
         // Iterate over billing schemas and try to find which matches the prizes exacly
         // If no such schema found then this indicates that the prizes were updated in O/R
@@ -529,9 +542,11 @@ function initContest(contestJson) {
                 var s_reviewCost = c.reviewBoardCost;
                 var s_reliabilityBonusCost = c.reliabilityBonusCost;
                 var s_drPointsCost = c.drCost;
+                var s_specReviewCost = feesConfig.specReviewCost;
 
                 if ((prize1 != s_prize1) || (prize2 != s_prize2) || (reviewCost != s_reviewCost)
-                        || (reliabilityBonusCost != s_reliabilityBonusCost) || (drPointsCost != s_drPointsCost)) {
+                    || (reliabilityBonusCost != s_reliabilityBonusCost)
+                    || (drPointsCost != s_drPointsCost || digitalRunFlag != 'On') || (specReviewCost != s_specReviewCost)) {
                     customPrizesUsed = true;
                 }
             }
@@ -543,6 +558,7 @@ function initContest(contestJson) {
             customCosts.reviewBoardCost = reviewCost;
             customCosts.reliabilityBonusCost = reliabilityBonusCost;
             customCosts.drCost = drPointsCost;
+            customCosts.specReviewCost = specReviewCost;
             mainWidget.softwareCompetition.projectHeader.setCostLevel(COST_LEVEL_CUSTOM);
         }
     }
@@ -725,8 +741,17 @@ function populateTypeSection() {
   //billing account
   var billingProjectId = mainWidget.softwareCompetition.projectHeader.getBillingProject();
   $('#billingProjects').getSetSSValue(billingProjectId);
-  if (contestPercentage!= null && contestPercentage > 0) {  
-      $('#rAdminFee').html(parseFloat(adminFee).formatMoney(2) + ' (' + contestPercentage * 100 + '% markup)');
+  if (contestPercentage!= null && contestPercentage > 0) {
+      var total = 0;
+      var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
+      for (var i = 0; i < prizes.length; i++) {
+          total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
+      }
+      total += parseFloat(mainWidget.softwareCompetition.projectHeader.getReviewCost());
+      total += parseFloat(mainWidget.softwareCompetition.projectHeader.getSpecReviewCost());
+      total += parseFloat(mainWidget.softwareCompetition.projectHeader.getDRPoints());
+      var contestFee = (total + mainWidget.softwareCompetition.copilotCost) * contestPercentage;
+      $('#rAdminFee').html(parseFloat(contestFee).formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
   } else {
       $('#rAdminFee').html(parseFloat(adminFee).formatMoney(2));
   }
@@ -1257,12 +1282,12 @@ function populatePrizeSection(initFlag) {
 		$('input[name="prizeRadio"][value="' + radioButtonValue + '"]').attr("checked","checked");
 	
 	   // if init flag is true - open contest detail page - show actual cost data
-       if(!initFlag) { fillPrizes(); } else { updateContestCostData();}
+       if(!initFlag) { fillPrizes(); } else { updateContestCostData(); }
 	}
 	// TODO: need to update getCurrentContestTotal to work with studio contest
     
 	if(initFlag) {
-		//show activate button if it needs to : the fee is not paied up fully
+		//show activate button if it needs to : the fee is not paid up fully
 		if(mainWidget.softwareCompetition.projectHeader.projectStatus.name == DRAFT_STATUS) {
 			$('#resubmit').show();
             $(".activateButton").show();
@@ -1295,11 +1320,22 @@ function updateContestCostData() {
     var reviewCost = parseFloat(p['Review Cost']);
     var reliability = parseFloat(p['Reliability Bonus Cost']);
     var specReview = parseFloat(p['Spec Review Cost']);
+    var digitalRunFlag = p['Digital Run Flag'];
+
     var digitalRun = parseFloat(p['DR points']);
+
+    if(digitalRunFlag != 'On' || isNaN(digitalRun)) {
+        // if DR flag is not On or digital run value does not exist, set to 0
+        digitalRun = 0;
+    }
+
     var contestFee = parseFloat(p['Admin Fee']);
     var contestPercentage = parseFloat(p['Contest Fee Percentage']);
     var copilotFee = parseFloat(mainWidget.softwareCompetition.copilotCost);
-    
+    var isMultipleRound = mainWidget.softwareCompetition.multiRound;
+    // no prize data filled into mainWidget.softwareCompetition
+    var domOnly = mainWidget.softwareCompetition.projectHeader.id < 0;
+
     // (1) set the first place prize
     $('#swFirstPlace').val(firstPlacePrize.formatMoney(2));
     $('#rswFirstPlace').html(firstPlacePrize.formatMoney(2));
@@ -1316,14 +1352,32 @@ function updateContestCostData() {
     // (5) set the digital run
     $('#rswDigitalRun').html(digitalRun.formatMoney(2));
     $('#swDigitalRun').val(digitalRun.formatMoney(2));
+
+    if(digitalRunFlag != 'On') {
+        $('#swDigitalRun').attr('disabled', 'disabled');
+        $('#DRCheckbox').removeAttr('checked');
+
+    } else {
+        $('#swDigitalRun').removeAttr('disabled');
+        $('#DRCheckbox').attr('checked', 'checked');
+    }
+
     originalPrizes = [];
     originalPrizes.push(firstPlacePrize + '');
     originalPrizes.push(digitalRun + '');
 
     // (6) set the contest fee
     if (contestPercentage!= null && contestPercentage > 0) {
-       $('#rswContestFee').html(contestFee.formatMoney(2) + ' (' + contestPercentage * 100 + '% markup)');
-       $('#swContestFee').html(contestFee.formatMoney(2));
+        var actualFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * contestPercentage;
+       $('#rswContestFee').html(actualFee.formatMoney(2) + ' (' + (contestPercentage * 100).toFixed(2) + '% markup)');
+       $('#swContestFee').html(actualFee.formatMoney(2));
+
+       if(actualFee != contestFee) {
+           // this can be commented out for debug the contest fee consistency
+           //alert('DEBUG:not matched');
+           contestFee = actualFee;
+       }
+
     } else {
        $('#swContestFee,#rswContestFee').html(contestFee.formatMoney(2));
     }
@@ -1336,6 +1390,13 @@ function updateContestCostData() {
 
     var total = firstPlacePrize + secondPlacePrize + reviewCost + reliability + specReview + digitalRun + contestFee + copilotFee;
 
+    // add milestone prize if there is any
+    $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(i, prize){
+        if(prize.prizeType.id == MILESTONE_PRIZE_TYPE_ID) {
+            total += prize.numberOfSubmissions * prize.prizeAmount;
+        }
+    });
+
     $('#swTotal,#rswTotal').html(total.formatMoney(2));
 
     //totals
@@ -1346,19 +1407,19 @@ function updateContestCostData() {
     }
 
     //if custom, make the first place editable
-   if(prizeType == 'custom') {
-      $('#swFirstPlace').attr('readonly',false);
-      $('#swFirstPlace').val(firstPlacePrize.formatMoney(2));
+    if (prizeType == 'custom') {
+        $('#swFirstPlace').attr('readonly', false);
+        $('#swFirstPlace').val(firstPlacePrize.formatMoney(2));
 
-      $('#swDigitalRun').attr('readonly',false);
-      $('#swDigitalRun').val(digitalRun.formatMoney(2));
-       originalPrizes = [];
-       originalPrizes.push(firstPlacePrize + '');
-       originalPrizes.push(digitalRun + '');
-   } else {
-      $('#swFirstPlace').attr('readonly',true);
-      $('#swDigitalRun').attr('readonly',true);
-   }
+        $('#swDigitalRun').attr('readonly', false);
+        $('#swDigitalRun').val(digitalRun.formatMoney(2));
+        originalPrizes = [];
+        originalPrizes.push(firstPlacePrize + '');
+        originalPrizes.push(digitalRun + '');
+    } else {
+        $('#swFirstPlace').attr('readonly', true);
+        $('#swDigitalRun').attr('readonly', true);
+    }
 }
 
 function isBillingViewable() {
@@ -1511,11 +1572,19 @@ function showPrizeSectionEdit() {
     if (mainWidget.competitionType == "SOFTWARE") {
         var p = mainWidget.softwareCompetition.projectHeader.properties;
         var firstPlacePrize = parseFloat(p['First Place Cost']);
+        var digitalRunFlag = p['Digital Run Flag'];
         var digitalRun = parseFloat(p['DR points']);
+
+        if(digitalRunFlag != 'On' || isNaN(digitalRun)) {
+            digitalRun = 0;
+        }
+
         originalPrizes = [];
         originalPrizes.push(firstPlacePrize + '');
         originalPrizes.push(digitalRun + '');
+
     } else {
+
         originalPrizes = [];
         for (var i = 1; i <=5; i++) {
             var value = $('#prize' + i).val();

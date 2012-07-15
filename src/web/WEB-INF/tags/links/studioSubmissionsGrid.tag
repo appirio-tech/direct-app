@@ -1,10 +1,13 @@
 <%--
-  - Author: isv
-  - Version 1.1 (TC Direct Replatforming Release 3  ) change notes: The parameter name is changed from contestId to projectId.
+  - Author: isv, GreatKevin
+  - Version 1.2
   -
   - Version: 1.1
   - Since: Submission Viewer Release 1 assembly
   - Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Five)
+  - - update to support null round type.
   -
   - Description: This tag renders the HTML markup for A element referencing the page with Studio Submissions Grid
   - page for selected contest.
@@ -18,7 +21,7 @@
 <%@ attribute name="styleClass" required="false" type="java.lang.String" %>
 
 <c:choose>
-    <c:when test="${milestoneRound}">
+    <c:when test="${milestoneRound == true}">
         <a href="<s:url action="submissions" namespace="/contest">
                      <s:param name="projectId" value="%{#attr['contestId']}"/>
                      <s:param name="formData.viewType" value="'GRID'"/>
@@ -27,11 +30,19 @@
             <jsp:doBody/>
         </a>
     </c:when>
-    <c:otherwise>
+    <c:when test="${milestoneRound == false}">
         <a href="<s:url action="submissions" namespace="/contest">
                      <s:param name="projectId" value="%{#attr['contestId']}"/>
                      <s:param name="formData.viewType" value="'GRID'"/>
                      <s:param name="formData.roundType" value="'FINAL'"/>
+                 </s:url>" <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>>
+            <jsp:doBody/>
+        </a>
+    </c:when>
+    <c:otherwise>
+        <a href="<s:url action="submissions" namespace="/contest">
+                     <s:param name="projectId" value="%{#attr['contestId']}"/>
+                     <s:param name="formData.viewType" value="'GRID'"/>
                  </s:url>" <c:if test="${not empty styleClass}">class="${styleClass}"</c:if>>
             <jsp:doBody/>
         </a>

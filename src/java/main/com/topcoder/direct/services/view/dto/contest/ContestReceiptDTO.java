@@ -13,8 +13,13 @@ import java.io.Serializable;
  * - Add the field <code>milestonePrizeNumber</code> to show how many milestone submission can have milestone prize.
  * </p>
  *
+ * <p>
+ * Version 1.2 (Release Assembly - TC Direct Cockpit Release Five) updates:
+ * - Add the field <code>contestLauncherId</code> to store the launcher of the contest.
+ * </p>
+ *
  * @author flexme, TCSASSEMBLER
- * @version 1.1
+ * @version 1.2
  */
 public class ContestReceiptDTO implements Serializable {
     /**
@@ -102,6 +107,13 @@ public class ContestReceiptDTO implements Serializable {
      * Represents whether the contest has been finished.
      */
     private boolean finished;
+
+    /**
+     * The user id of the contest launcher.
+     *
+     * @since 1.2
+     */
+    private long contestLauncherId;
 
     /**
      * <p>Constructs new <code>ContestReceiptDTO</code> instance. This implementation does nothing.</p>
@@ -395,5 +407,25 @@ public class ContestReceiptDTO implements Serializable {
      */
     public void setFinished(boolean finished) {
         this.finished = finished;
+    }
+
+    /**
+     * Gets the user id of the contest launcher.
+     *
+     * @return the user id of the contest launcher.
+     * @since 1.2
+     */
+    public long getContestLauncherId() {
+        return contestLauncherId;
+    }
+
+    /**
+     * Sets the user id of the contest launcher.
+     *
+     * @param contestLauncherId the user id of the contest launcher.
+     * @since 1.2
+     */
+    public void setContestLauncherId(long contestLauncherId) {
+        this.contestLauncherId = contestLauncherId;
     }
 }
