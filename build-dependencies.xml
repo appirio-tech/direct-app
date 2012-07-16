@@ -625,7 +625,13 @@
   <property name="dom4j-1.6.1.jar" value="${poi_libdir}/ooxml-lib/dom4j-1.6.1.jar" />
   <property name="xmlbeans-2.3.0.jar" value="${poi_libdir}/ooxml-lib/xmlbeans-2.3.0.jar" />
 
-  <!-- jRSS -->
+    <!-- Http Client libs -->
+    <property name="httpclient_libdir" value="${ext_libdir}/httpclient"/>
+
+    <!-- IText Flying Saucer libs -->
+    <property name="itext_libdir" value="${ext_libdir}/flyingsaucer"/>
+
+    <!-- jRSS -->
    <property name="jrss.jar" value="${ext_libdir}/jrss/jrss.jar" />
 
   <!-- EJB/Persistence libraries -->
@@ -649,7 +655,7 @@
     <pathelement location="${struts2-convention-plugin-2.1.8.jar}" />
     <pathelement location="${struts2-core-2.1.8.1.jar}" />
     <pathelement location="${struts2-spring-plugin-2.1.8.jar}" />
-	<pathelement location="${struts2-json-plugin-2.1.8.jar}" />
+    <pathelement location="${struts2-json-plugin-2.1.8.jar}" />
     <pathelement location="${xwork-1.2.3.jar}" />
     <pathelement location="${xwork-core-2.1.6.jar}" />
   </path>
@@ -707,7 +713,16 @@
     <pathelement location="${poi-ooxml-schemas.jar}" />
   </path>
 
-  <path id="component.tcs-dependencies">
+    <path id="httpclient.lib">
+        <fileset dir="${httpclient_libdir}" includes="*.jar"/>
+    </path>
+
+    <path id="pdf.lib">
+        <fileset dir="${itext_libdir}" includes="*.jar"/>
+    </path>
+
+
+    <path id="component.tcs-dependencies">
     <pathelement location="${base_exception.jar}" />
     <pathelement location="${configuration_manager.jar}" />
     <pathelement location="${copilot_pool_and_profiles_dao.jar}" />
@@ -775,6 +790,8 @@
     <path refid="commons.libs" />
     <path refid="asm.libs" />
     <path refid="poi.libs" />
+    <path refid="httpclient.lib" />
+    <path refid="pdf.lib" />
     <pathelement location="${jira-soapclient-all.jar}" />
     <pathelement location="${servlet-api.jar}" />
     <pathelement location="${jaxb.jar}" />

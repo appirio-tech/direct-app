@@ -22,8 +22,8 @@
     <property name="javadocsdir" value="${docsdir}/javadocs"/>
     <property name="webdir" value="${srcdir}/web"/>
     <property name="ppt_webdir" value="${srcdir}/ppt_web"/>
-	<property name="mobile_webdir" value="${srcdir}/mobile_web"/>
-	<property name="analytics_webdir" value="${srcdir}/analytics_web"/>
+    <property name="mobile_webdir" value="${srcdir}/mobile_web"/>
+    <property name="analytics_webdir" value="${srcdir}/analytics_web"/>
     <property name="reports" value="${testlogdir}/reports"/>
 
     <!-- Import the dependencies of this build file -->
@@ -69,8 +69,8 @@
     <property name="component.ear" value="${distfilename}.ear"/>
     <property name="component.war" value="${build_distdir}/${distfilename}.war"/>
     <property name="ppt.war" value="${build_distdir}/ppt.war"/>
-	<property name="analytics.war" value="${build_distdir}/analytics.war"/>
-	<property name="mobile.war" value="${build_distdir}/mobile.war"/>
+    <property name="analytics.war" value="${build_distdir}/analytics.war"/>
+    <property name="mobile.war" value="${build_distdir}/mobile.war"/>
     <property name="component.jar" value="${dist_lib}/${component_path}/${distfilename}.jar"/>
     <property name="javadoc.jar" value="javadocs.jar"/>
     <property name="component.tests.jar" value="${dist_lib}/${distfilename}_tests.jar"/>
@@ -116,8 +116,8 @@
     </target>
 
     <target name="init-scorecard" description="update the configurations with tokens for scorecard" >
-	<copy file="${scorecard_dir}/DataSource.groovy.properties" tofile="${scorecard_conf}/DataSource.groovy" overwrite="true"/>
-	<replace replacefilterfile="token.properties" dir="${scorecard_dir}/grails-app/conf"/>
+    <copy file="${scorecard_dir}/DataSource.groovy.properties" tofile="${scorecard_conf}/DataSource.groovy" overwrite="true"/>
+    <replace replacefilterfile="token.properties" dir="${scorecard_dir}/grails-app/conf"/>
     </target>
 
     <target name="compile" description="compile the source code">
@@ -181,7 +181,7 @@
         <copy file="${topcoder_cockpit_project_metadata_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${topcoder_cockpit_project_milestone_services.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${json_object.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
-		<copy file="${topcoder_commons_utility.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy file="${topcoder_commons_utility.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${data_entitlement.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${data_validation.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${database_abstraction.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
@@ -275,6 +275,22 @@
         <copy file="${dom4j-1.6.1.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${xmlbeans-2.3.0.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
         <copy file="${jrss.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
+        <copy todir="${ear_shared_libdir}" overwrite="true">
+            <fileset dir="${httpclient_libdir}">
+                <include name="commons-codec-1.6.jar"/>
+                <include name="commons-logging-1.1.1.jar"/>
+                <include name="fluent-hc-4.2.jar"/>
+                <include name="httpclient-4.2.jar"/>
+                <include name="httpclient-cache-4.2.jar"/>
+                <include name="httpcore-4.2.jar"/>
+                <include name="httpmime-4.2.jar"/>
+            </fileset>
+            <fileset dir="${itext_libdir}" includes="*.jar">
+                <include name="core-renderer-minimal.jar"/>
+                <include name="core-renderer.jar"/>
+                <include name="iText-2.0.8.jar"/>
+            </fileset>
+        </copy>
     	<copy file="${jackson-core.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
     	<copy file="${jackson-mapper.jar}" todir="${ear_shared_libdir}" overwrite="true"/>
 
@@ -362,18 +378,18 @@
         <zip destfile="direct-static.jar">
             <fileset dir="${srcdir}/web">
                 <include name="css/*.css"/>
-				<include name="css/scorecard/**/*.css"/>
+                <include name="css/scorecard/**/*.css"/>
                 <exclude name="scripts/tiny_mce/**/*.*"/>
                 <include name="scripts/*.*"/>
                 <include name="scripts/launch/**/*.*"/>
-				<include name="scripts/scorecard/**/*.*"/>
-				<include name="scripts/tinyMCE/templates/*.html"/>
+                <include name="scripts/scorecard/**/*.*"/>
+                <include name="scripts/tinyMCE/templates/*.html"/>
             </fileset>
             <fileset dir="${srcdir}/ppt_web">
                 <include name="css/**/*.*"/>
                 <include name="scripts/**/*.*"/>
             </fileset>
-        	<fileset dir="${srcdir}/mobile_web">
+            <fileset dir="${srcdir}/mobile_web">
                 <include name="css/**/*.*"/>
                 <include name="scripts/**/*.*"/>
             </fileset>
@@ -440,7 +456,7 @@
                 <include name="images/**/*"/>
                 <include name="scripts/**/*"/>
             </fileset>
-        	<fileset dir="src/mobile_web">
+            <fileset dir="src/mobile_web">
                 <include name="css/**/*"/>
                 <include name="images/**/*"/>
                 <include name="scripts/**/*"/>
@@ -472,7 +488,7 @@
         <fileset dir="${srcdir}/ppt_web/images">
           <include name="**/*" />
         </fileset>
-      	<fileset dir="${srcdir}/mobile_web/images">
+        <fileset dir="${srcdir}/mobile_web/images">
           <include name="**/*" />
         </fileset>
         <fileset dir="${srcdir}/analytics_web/images">
@@ -486,7 +502,7 @@
         <fileset dir="${srcdir}/ppt_web/css">
           <include name="**/*" />
         </fileset>
-      	<fileset dir="${srcdir}/mobile_web/css">
+        <fileset dir="${srcdir}/mobile_web/css">
           <include name="**/*" />
         </fileset>
         <fileset dir="${srcdir}/analytics_web/css">
@@ -500,7 +516,7 @@
         <fileset dir="${srcdir}/ppt_web/scripts">
           <include name="**/*" />
         </fileset>
-      	<fileset dir="${srcdir}/mobile_web/scripts">
+        <fileset dir="${srcdir}/mobile_web/scripts">
           <include name="**/*" />
         </fileset>
         <fileset dir="${srcdir}/analytics_web/scripts">
@@ -674,7 +690,7 @@
         <war warfile="tempppt.war" webxml="${tokenized_conf}/ppt_web/WEB-INF/web.xml">
             <webinf dir="${tokenized_conf}/ppt_web/WEB-INF" includes="applicationContext.xml"/>
             <classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="email_template/**"/>
-			<classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="struts.xml"/>
+            <classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/ppt_web/WEB-INF" includes="validators.xml"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
             <classes dir="${build_classdir}" includes="com/topcoder/ppt/**/*.class"/>
@@ -686,14 +702,14 @@
         <unzip src="tempppt.war" dest="${ppt.war}"/>
         <delete file="tempppt.war"/>
     </target>
-	
-	<!-- Builds the PPT WAR file for web application module -->
+    
+    <!-- Builds the PPT WAR file for web application module -->
     <target name="mobile_war" depends="war, ppt_compile" description="Builds the Mobile WAR file">
         <war warfile="tempmobile.war" webxml="${tokenized_conf}/mobile_web/WEB-INF/web.xml">
             <webinf dir="${tokenized_conf}/mobile_web/WEB-INF" includes="applicationContext.xml"/>
             <classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="validators.xml"/>
-			<classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="email_template/**"/>
+            <classes dir="${tokenized_conf}/mobile_web/WEB-INF" includes="email_template/**"/>
             <classes dir="${tokenized_conf}/web/WEB-INF" includes="MockXmlAuthenticator.xml"/>
             <classes dir="${build_classdir}" includes="com/topcoder/ppt/**/*.class"/>
             <fileset dir="${mobile_webdir}">
@@ -711,8 +727,8 @@
             <webinf dir="${tokenized_conf}/analytics_web/WEB-INF" includes="applicationContext.xml"/>
             <classes dir="${tokenized_conf}/analytics_web/WEB-INF" includes="struts.xml"/>
             <classes dir="${tokenized_conf}/analytics_web/WEB-INF" includes="validators.xml"/>
-			<classes dir="${tokenized_conf}/analytics_web/WEB-INF" includes="email_template/**"/>
-			<classes dir="${tokenized_conf}/analytics_web/WEB-INF/email_template" includes="register_activation.txt"/>
+            <classes dir="${tokenized_conf}/analytics_web/WEB-INF" includes="email_template/**"/>
+            <classes dir="${tokenized_conf}/analytics_web/WEB-INF/email_template" includes="register_activation.txt"/>
             <classes dir="${build_classdir}" includes="com/topcoder/analytics/**/*.class"/>
             <fileset dir="${analytics_webdir}">
                 <include name="**/*.jsp"/>
