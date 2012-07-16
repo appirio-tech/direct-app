@@ -10,6 +10,7 @@ import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
+import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 
 import java.util.Date;
@@ -31,11 +32,22 @@ import java.util.Set;
  *     - Add bug races as project contests to contest list view.
  * </p>
  *
- * @author isv, GreatKevin
- * @version 1.2
+ * <p>
+ *     Version 1.3 - Release Assembly - TopCoder Cockpit Project Contest Results
+ *          Export Part 1
+ *     - Add checking for showing contest download panel
+ * </p>
+ *
+ * @author isv, GreatKevin, TCSASSEMBLER
+ * @version 1.3
  */
 public class ProjectContestsAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectContestsDTO> {
+
+    /**
+     * <p>The constant string for show_contests_download.</p>
+     */
+    private static final String SHOW_CONTESTS_DOWNLOAD = "show_contests_download";
 
     /**
      * <p>A <code>ProjectIdForm</code> providing the ID of a requested project.</p>
@@ -89,10 +101,12 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
      * @return a <code>String</code> referencing the next view or action to route request to. This implementation
      *         returns {@link #SUCCESS} always.
      * @throws Exception if an unexpected error occurs while processing the request.
+     * @since 1.0
      */
     @Override
     public String execute() throws Exception {
         String result = super.execute();
+
         if (SUCCESS.equals(result)) {
             List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
 
@@ -111,12 +125,18 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
                 final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
 
                 getViewData().setProjectBugRaces(bugRaceForDirectProject);
+
+
             }
 
             // set the current direct project id in session, the contest details codes incorrectly
             // use setCurrentProjectContext to override the current chosen direct project with current
             // chosen contest, for the safe, we put the direct project id into session separately again
             getSessionData().setCurrentSelectDirectProjectID(getSessionData().getCurrentProjectContext().getId());
+
+            // set the attribute of flag whether to show the contests download panel
+            getSessionData().getSession().setAttribute(SHOW_CONTESTS_DOWNLOAD, 
+                      DataProvider.showContestsDownload(getSessionData().getCurrentProjectContext().getId()));
 
             return SUCCESS;
         } else {

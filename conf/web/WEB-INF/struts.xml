@@ -367,6 +367,16 @@
                 <param name="inputName">inputStream</param>
             </result>
         </action>
+        
+        <action name="exportResults" class="projectContestsResultsExportAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="stream">
+                <param name="contentDisposition">${contentDisposition}</param>
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+        </action>
 
         <action name="contestRegistrants" class="com.topcoder.direct.services.view.action.contest.ContestRegistrantsAction">
             <interceptor-ref name="securedContestStack"/>

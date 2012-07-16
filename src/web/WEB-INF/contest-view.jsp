@@ -1,5 +1,5 @@
 <%--
-  - Author: BeBetter, isv, tangzx, Blues
+  - Author: BeBetter, isv, tangzx, Blues, TCSASSEMBLER
   - Version: 1.6
   - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
   -
@@ -25,6 +25,9 @@
   -
   - Version 1.7 (Module Assembly - TC Cockpit Project Contests Batch Edit) changes:
   - Move contests calendar view to a seperate jsp page.
+  -
+  - Version 1.8 (Release Assembly - TopCoder Cockpit Project Contest Results Export Part 1 version 1.0) changes:
+  - Add a new panel for exporting project contest results.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -38,6 +41,8 @@
     <jsp:include page="includes/paginationSetup.jsp"/>
     <jsp:include page="includes/filterPanel.jsp"/>
     <script type="text/javascript" src="/scripts/repostcontest.js?v=207440"></script>
+    <script type="text/javascript" src="/scripts/export-panel.js"></script>
+    <link rel="stylesheet" href="/css/exportPanel.css" media="all" type="text/css" />
 </head>
 
 <body id="page">
@@ -81,7 +86,6 @@
                             <!-- End .areaHeader -->
 
                             <jsp:include page="includes/project/projectStats.jsp"/>
-
 
                             <div class='filterPanel' id='ProjectsContestsFilter'>
                                 <div class='filterHead'>
@@ -310,6 +314,8 @@
                                     </table>
                                     <!-- End .projectsStats -->
                                 </div>
+                                
+                          </div>
 
                                 <div class="container2Left">
                                     <div class="container2Right">
@@ -326,13 +332,77 @@
                                 </div>          
                             </div>
 
+                            <!-- the contest result export panel -->
+                            <s:if test="#session.show_contests_download">
+                            <div class='exportPanel' id='ExportContestsPanel'>
+                                <div class='exportHead'>
+                                    <div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class='exportText'>
+                                                <a href='javascript:;' class='exportCollapse' id='ExportContestsExpand'><img
+                                                        src='/images/filter-panel/expand_icon.png' alt=''/></a>
+                                                <span class='title'>Contest Results Export</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end .exportHead-->
+
+                                <div class='exportContent'>
+                                    <form id="exportProjectResultForm" action="exportResults">
+                                    <div class='rightSide'>
+                                        <div class='inner'>
+                                            <div class='column1'>
+                                                <div class='row'>
+                                                    <span class='title'>Contest Completion Date:</span>
+                                                </div>
+                                            </div>
+                                            <!--end .column1-->
+                                            <div class='column2'>
+                                                <div class='row'>
+                                                    <input type="hidden" name="projectId" id="exportProjectId" value='<s:property value="sessionData.currentProjectContext.id"/>'/>
+                                                    <span class='title dateLabel'>Start Date</span>
+                                                    <input id='exportDateBegin' name="startDate" type='text' class='date-pick'/>
+                                                    <span class='title dateLabel'>End Date</span>
+                                                    <input id='exportDateEnd' name="endDate" type='text' class='date-pick'/>
+                                                </div>
+                                            </div>
+                                            <!--end .column2-->
+                                            <div class="column3">
+                                                <div class="row">
+                                                    <a href="javascript:;" class="button6" id="exportBtn">
+                                                      <span class="left">
+                                                         <span class="right">Export</span>
+                                                      </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <!--end .column3-->
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                                <!--end .exportHead-->
+                                <div class='exportBottom'>
+                                    <div class='rightSide'>
+                                        <div class='inner'></div>
+                                    </div>
+                                </div>
+                                <!--end .exportBottom-->
+                                <div class='collapseBottom hide'>
+                                    <div class='rightSide'>
+                                        <div class='inner'></div>
+                                    </div>
+                                </div>
+                            </div>
+                            </s:if>
+                        </div>
 
                             </div>
 
-                          </div>
-                            <!-- End .container2 -->
+
+                          <!-- End .container2 -->
                         </div>
-                    </div>
                 </div>
 
 <div class="clear"></div>

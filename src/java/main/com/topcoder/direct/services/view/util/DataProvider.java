@@ -3,14 +3,100 @@
  */
 package com.topcoder.direct.services.view.util;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.WorkbookUtil;
+import org.w3c.dom.Document;
+
 import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.*;
-import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.direct.services.view.dto.ActivityDTO;
+import com.topcoder.direct.services.view.dto.ActivityType;
+import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
+import com.topcoder.direct.services.view.dto.IdNamePair;
+import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
+import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
+import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
+import com.topcoder.direct.services.view.dto.TcJiraIssue;
+import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
+import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
+import com.topcoder.direct.services.view.dto.UserDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestStatus;
+import com.topcoder.direct.services.view.dto.contest.ContestType;
+import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
+import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
+import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
+import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
+import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
+import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
+import com.topcoder.direct.services.view.dto.contest.RunningPhaseStatus;
+import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
+import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
@@ -41,6 +127,8 @@ import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.Upload;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
@@ -54,17 +142,8 @@ import com.topcoder.shared.util.DBMS;
 import com.topcoder.web.common.CachedDataAccess;
 import com.topcoder.web.common.cache.MaxAge;
 import com.topcoder.web.common.tag.HandleTag;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.lang.StringUtils;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.Map.Entry;
+import org.w3c.dom.Document;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -460,7 +539,15 @@ import java.util.Map.Entry;
  * </p>
  *
  * <p>
- * Version 4.1 (Release Assembly - TC Direct Cockpit Release Five)
+ * Version 4.1 (Release Assembly - TopCoder Cockpit Project Contest Results
+ *          Export Part 1)
+ * <ol>
+ *     <li>Add method for exporting contests submissions.</li>
+ * </ol>
+ * </p>
+ *
+ * <p>
+ * Version 4.2 (Release Assembly - TC Direct Cockpit Release Five)
  * <ol>
  *     <li>Update method {@link #getContestDashboardData(long, boolean, boolean)} to always set registration health to
  *     healthy for copilot posting</li>
@@ -470,8 +557,8 @@ import java.util.Map.Entry;
  * </ol>
  * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin
- * @version 4.1
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy
+ * @version 4.2
  * @since 1.0
  */
 public class DataProvider {
@@ -5134,5 +5221,264 @@ public class DataProvider {
         }
         return b.toString();
     }
+
+    /**
+     * <p>Generates  the <code>Excel</code> worksheet with results for contests for specified <code>TC Direct</code> 
+     * project.</p>
+     *
+     * @param tcDirectProjectId a <code>long</code> providing the ID of <code>TC Direct</code> project to generate 
+     *                          winner sheet for.
+     * @return an <code>InputStream</code> with content of generated worksheet. 
+     * @throws Exception if an unexpected error occurs.
+     * @since 3.11
+     */
+    public static InputStream generateWinnerSheet(long tcDirectProjectId) throws Exception {
+        DateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy HH:mm z");
+        DateFormat dateFormat2 = new SimpleDateFormat("MM.dd.yyyy");
+        
+        // Get project contest results from DB
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("project_contest_results");
+        request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
+        ResultSetContainer projectContestResults = dataAccessor.getData(request).get("project_contest_results");
+        
+        // Convert results to Excel worksheet
+        String sheetName = WorkbookUtil.createSafeSheetName("Contest Results for " + tcDirectProjectId);
+        Workbook wb = new HSSFWorkbook();
+        CreationHelper createHelper = wb.getCreationHelper();
+        Sheet sheet1 = wb.createSheet(sheetName);
+        sheet1.setColumnWidth(0, 12 * 256);
+        sheet1.setColumnWidth(1, 100 * 256);
+        sheet1.setColumnWidth(2, 15 * 256);
+        sheet1.setColumnWidth(3, 20 * 256);
+        sheet1.setColumnWidth(4, 20 * 256);
+
+        // Header
+        Row row = sheet1.createRow(0);
+        createExcelHeaderCell(0, "Contest ID", row);
+        createExcelHeaderCell(1, "Contest Name", row);
+        createExcelHeaderCell(2, "Completed", row);
+        createExcelHeaderCell(3, "1", row);
+        createExcelHeaderCell(4, "2", row);
+
+        // Data
+        int rowIndex = 1; 
+        for (ResultSetContainer.ResultSetRow data : projectContestResults) {
+            row = sheet1.createRow(rowIndex++);
+            row.createCell(0).setCellValue(data.getLongItem("contest_id"));
+            row.createCell(1).setCellValue(data.getStringItem("contest_name"));
+            String completionDateString = data.getStringItem("completion_date");
+            row.createCell(2).setCellValue(dateFormat2.format(dateFormat.parse(completionDateString)));
+            row.createCell(3).setCellValue(data.getStringItem("winner_handle"));
+            TCResultItem runnerUpHandle = data.getItem("runner_up_handle");
+            if (runnerUpHandle != null) {
+                row.createCell(4).setCellValue((String) runnerUpHandle.getResultData());
+            }
+        }
+
+        // Get the input stream with workbook content 
+        ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+        wb.write(saveTo);
+        return new ByteArrayInputStream(saveTo.toByteArray());
+    }
+
+    /**
+     * <p>Generates the <code>PDF</code> document with composite review for specified submission.</p>
+     *
+     * @param loginUrl a <code>String</code> providing the URL for Login controller for Online Review application.
+     * @param username a <code>String</code> providing username to be used to login to Online Review application.
+     * @param password a <code>String</code> providing password to be used to login to Online Review application.
+     * @param compositeReviewBaseURL a <code>String</code> providing the URL for ViewCompositeReview controller for 
+     *                               Online Review application.
+     * @param baseURL a <code>String</code> providing the base URL for Online Review application.
+     * @param submissionId a <code>long</code> providing the ID of submission to generate combined review scorecard for. 
+     * @since 3.11
+     */
+    public static InputStream generateCombinedReviewScorecard(String loginUrl, String username, String password, 
+                                                       String compositeReviewBaseURL, String baseURL, 
+                                                       long submissionId) throws Exception {
+        HttpPost loginRequest = new HttpPost(loginUrl + "?method=login&userName=" + username + "&password=" + password);
+        
+        HttpClient http = new DefaultHttpClient();
+        CookieStore cookieStore = new BasicCookieStore();
+        HttpContext localContext = new BasicHttpContext();
+        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
+        
+        HttpResponse loginResponse = http.execute(loginRequest, localContext);
+        if (loginResponse.getStatusLine().getStatusCode() == 302) {
+            HttpEntity loginResponseEntity = loginResponse.getEntity();
+            if (loginResponseEntity != null) {
+                EntityUtils.consume(loginResponseEntity);
+            }
+
+            HttpGet compositeReviewRequest = new HttpGet(compositeReviewBaseURL + submissionId);
+            HttpResponse compositeReviewResponse = http.execute(compositeReviewRequest, localContext);
+            if (compositeReviewResponse.getStatusLine().getStatusCode() == 200) {
+                HttpEntity compositeReviewPage = compositeReviewResponse.getEntity();
+                if (compositeReviewPage != null) {
+                    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                    documentBuilderFactory.setValidating(false);
+                    documentBuilderFactory.setFeature("http://xml.org/sax/features/namespaces", false);
+                    documentBuilderFactory.setFeature("http://xml.org/sax/features/validation", false);
+                    documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", 
+                                                      false);
+                    documentBuilderFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", 
+                                                      false);
+
+                    DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
+                    InputStream content = compositeReviewPage.getContent();
+                    Document doc = builder.parse(content);
+
+                    ITextRenderer renderer = new ITextRenderer();
+                    renderer.setDocument(doc, baseURL);
+
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    renderer.layout();
+                    renderer.createPDF(os);
+                    os.close();
+
+                    return new ByteArrayInputStream(os.toByteArray());
+                } else {
+                    throw new DirectException("Failed to retrieve composite review for submission: " + submissionId
+                                              + ". Content is empty");
+                }
+            } else {
+                throw new DirectException("Failed to retrieve composite review for submission: " + submissionId 
+                                          + ". HTTP status code: " 
+                                          + compositeReviewResponse.getStatusLine().getStatusCode());
+            }
+        } else {
+            throw new DirectException("Failed to login to Online Review application. HTTP status code: " +
+                                      loginResponse.getStatusLine().getStatusCode());
+        }
+    }
+
+    /**
+     * <p>Creates the header cell with nold text aligned in center for specified row.</p>
+     *
+     * @param index an <code>int</code> providing the index of the cell.
+     * @param title a <code>String</code> providing the text for the cell.
+     * @param row   a <code>Row</code> providing the row to create cell for.
+     * @since 3.11
+     */
+    private static void createExcelHeaderCell(int index, String title, Row row) {
+        Workbook workbook = row.getSheet().getWorkbook();
+
+        Font font = workbook.createFont();
+        font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+
+        CellStyle style = workbook.createCellStyle();
+        style.setFont(font);
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+
+        Cell cell = row.createCell(index);
+        cell.setCellValue(title);
+        cell.setCellStyle(style);
+    }
+
+    /**
+     *
+     * <p>
+     * Gets the contest ids to export for the given project.
+     * </p>
+     * 
+     * @param projectId the direct project id.
+     * @param userId user id.
+     * @param startDate start date to export.
+     * @param endDate end date to export.
+     * @return a map where the key is the contest id and the value is whether the contest is a studio contest (true if it is, otherwise false)
+     * @throws Exception
+     *             If there is any error.
+     * @since 4.1
+     */
+    public static Map<Long, Boolean> getContestIdsToExport(long projectId, long userId, Date startDate, Date endDate)
+            throws Exception {
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+
+        Request request = new Request();
+        request.setContentHandle("contest_ids_to_export");
+        request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        request.setProperty("sdt", formatter.format(startDate));
+        request.setProperty("edt", formatter.format(endDate));
+
+        final ResultSetContainer resultSetContainer = dataAccess.getData(request).get("contest_ids_to_export");
+        Map<Long, Boolean> result = new HashMap<Long, Boolean>();
+        for (ResultSetRow row : resultSetContainer) {
+            result.put(row.getLongItem("contest_id"), row.getBooleanItem("is_studio"));
+        }
+        return result;
+    }
+
+    /**
+     * <p>
+     * Gets the submission ids to export.
+     * </p>
+     * 
+     * @param contestId the contest id
+     * @param isStudio whether the contest is studio
+     * @return a map, the key is the submission id, the value is the file location to export
+     * @throws Exception
+     *             If there is any error.
+     * @since 4.1
+     */
+    public static List<Submission> getContesSubmissionIdsToExport(long contestId, boolean isStudio) throws Exception {
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        if (isStudio) {
+            request.setContentHandle("studio_submission_to_export");
+        } else {
+            request.setContentHandle("software_submission_to_export");
+        }
+        request.setProperty("pj", String.valueOf(contestId));
+        ResultSetContainer resultSetContainer = null;
+        if (isStudio) {
+            resultSetContainer = dataAccess.getData(request).get("studio_submission_to_export");
+        } else {
+            resultSetContainer = dataAccess.getData(request).get("software_submission_to_export");
+        }
+        
+        List<Submission> result = new ArrayList<Submission>();
+        for (ResultSetRow row : resultSetContainer) {
+            Submission s = new Submission();
+            s.setId(row.getLongItem("submission_id"));
+            s.setCreationUser(row.getStringItem("handle"));  // store the handle
+            Upload u = new Upload();
+            u.setOwner(row.getLongItem("user_id"));
+            u.setParameter(row.getStringItem("parameter"));
+            s.setUpload(u);
+            result.add(s);
+        }
+        
+        return result;
+    }   
+
+    /**
+     * <p>
+     * Checks whether should show contests download panel.
+     * </p>
+     *
+     * @param projectId the project id
+     * @return true if should show, otherwise false.
+     * @throws Exception If there is any error.
+     * @since 4.1
+     */
+    public static boolean showContestsDownload(long projectId) throws Exception {
+        DataAccess dataAccess = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("show_contests_download");
+        request.setProperty("tcdirectid", String.valueOf(projectId));
+        
+        final ResultSetContainer resultSetContainer = dataAccess.getData(request).get("show_contests_download");
+        boolean showContestsDownload = false;
+        
+        if (resultSetContainer.size() > 0) {
+            showContestsDownload = true;
+        }   
+        return showContestsDownload;
+    }
+
 }
 

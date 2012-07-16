@@ -149,6 +149,18 @@
         </property>
         <property name="proxyInterface" value="com.topcoder.service.gameplan.GamePlanService"/>
     </bean>
+    
+    <bean id="projectContestsResultsExportAction" class="com.topcoder.direct.services.view.action.project.ProjectContestsResultsExportAction"
+          scope="prototype" parent="baseDirectStrutsAction" init-method = "checkInit">
+        <property name="fileUpload" ref="fileUpload" />
+        <property name="studioSubmissionBase" value="${studio.submission.base}" />
+        <property name="compositeReviewBaseURL" value="@onlinereview.compsitereview.url.prefix@"/>
+        <property name="loginUrl" value="@onlinereview.login.url@"/>
+        <property name="onlineReviewBaseURL" value="@onlinereview.url.base@"/>
+        <property name="username" value="@onlinereview.login.username@"/>
+        <property name="password" value="@onlinereview.login.password@"/>
+    </bean>
+    
 
     <bean id="projectServices" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="ProjectServicesBean/remote"/>
