@@ -88,6 +88,7 @@
 ########################################################
 # typical windows configuration
 @service.provider.url@=localhost:1199
+@studio.submission.base@=/nfs_shares/studiofiles/submissions
 
 # typical VM configuration
 #@service.provider.url@=env.topcoder.com:1599
@@ -307,8 +308,23 @@
 @analyticsRssFeedURL@=http://www.topcoder.com/feed/?cat=35
 
 ################################
-# ppt and analytics activation #
+# ppt, mobile and analytics activation #
 ################################
-@activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/ppt.war/WEB-INF/classes/email_template/register_activation.txt
+@ppt_activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/ppt.war/WEB-INF/classes/email_template/register_activation.txt
+@mobile_activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/mobile.war/WEB-INF/classes/email_template/register_activation.txt
+@analytics_activation_email_body_template_file@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/analytics.war/WEB-INF/classes/email_template/register_activation.txt
 @activation_email_from_address@=service@topcoder.com
 @activation_email_subject@=TopCoder Activation
+
+#######################################
+# securityGroupApplicationContext.xml #
+#######################################
+@emailTemplateFileDir@=/home/direct/jboss-4.2.3.GA/server/default/deploy/direct.ear/email_templates
+@SecurityGroup.InvitationEmailSender@=support@topcoder.com
+@SecurityGroup.AcceptRejectUrlBase@=http://www.topcoder.com/direct/group/acceptRejectGroupInvitationAction.action
+@SecurityGroup.RegistrationUrl@=http://www.topcoder.com/direct/group/acceptRejectGroupInvitationAction.action
+
+#######################################
+# CloudVMService.xml                  #
+#######################################
+@notusBaseUrl@=https://www-180.ibm.com/cloud/innovation/api/rest/20090403
