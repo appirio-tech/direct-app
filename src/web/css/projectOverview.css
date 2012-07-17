@@ -488,6 +488,16 @@ td.contestActivities .review {
     background: url(/images/completed.png) no-repeat left top;
 }
 
+
+td.contestActivities .review .leftLaunch p {
+    background-image: url(/images/completed_icon.png);
+}
+
+
+td.contestActivities .review .rightLaunch p a {
+    color: #ddcc00;
+}
+
 td.contestActivities .leftLaunch {
     width: 76%;
     float: left;
@@ -514,10 +524,6 @@ td.contestActivities .leftLaunch p {
 
 td.contestActivities .completed .leftLaunch p {
     background-image: url(/images/posted_icon.png);
-}
-
-td.contestActivities .review .leftLaunch p {
-    background-image: url(/images/completed_icon.png);
 }
 
 td.contestActivities .leftLaunch a {
@@ -559,10 +565,6 @@ td.contestActivities .rightLaunch p a:hover {
 
 td.contestActivities .completed .rightLaunch p a {
     color: #00a900;
-}
-
-td.contestActivities .review .rightLaunch p a {
-    color: #ddcc00;
 }
 
 /* modal */
@@ -804,5 +806,131 @@ td.contestActivities .review .rightLaunch p a {
 
 .projectEditLink:hover {
     text-decoration: none;
+}
+
+table.project th.activitiesTitle {
+    font-size: 14px;
+}
+table.project td.contestActivities {
+    padding: 0 !important;
+}
+table.project td .ajaxTableLoader {
+    margin: 14px 0 10px;
+    text-align: center;
+}
+td.contestActivities .contestLaunch {
+    background: url("/images/posted.png") no-repeat scroll left top transparent;
+    padding: 7px 15px 10px;
+}
+td.contestActivities .review {
+    background: url("/images/completed.png") no-repeat scroll left top transparent;
+    padding: 7px 15px 10px;
+}
+td.contestActivities .review .leftLaunch p {
+    background-image: url("/images/completed_icon.png");
+}
+td.contestActivities .review .rightLaunch p a {
+    color: #DDCC00;
+}
+
+td.contestActivities .reviewPending {
+    background: url("/images/completed.png") no-repeat scroll left top transparent;
+    padding: 7px 15px 10px;
+}
+td.contestActivities .reviewPending .leftLaunch p {
+    background-image: url("/images/completed_icon.png");
+}
+td.contestActivities .reviewPending .rightLaunch p a {
+    color: #DDCC00;
+}
+
+td.contestActivities .reviewComplete {
+    background: url("/images/completed.png") no-repeat scroll left top transparent;
+    padding: 7px 15px 10px;
+}
+td.contestActivities .reviewComplete .leftLaunch p {
+    background-image: url("/images/completed_icon.png");
+}
+td.contestActivities .reviewComplete .rightLaunch p a {
+    color: #DDCC00;
+}
+
+td.contestActivities .leftLaunch {
+    display: inline;
+    float: left;
+    width: 76%;
+}
+td.contestActivities .leftLaunch h3 {
+    font-size: 12px;
+    line-height: 18px;
+}
+td.contestActivities .leftLaunch p {
+    background-position: left center;
+    background-repeat: no-repeat;
+    color: #FF0000;
+    display: inline;
+    float: left;
+    font-size: 11px;
+    line-height: 18px;
+    margin-right: 20px;
+    padding-left: 24px;
+    width: auto;
+}
+td.contestActivities .contestLaunch .leftLaunch p {
+    background-image: url("/images/posted_icon.png");
+}
+
+td.contestActivities .leftLaunch a {
+    background: url("/images/view_icon.png") no-repeat scroll left center transparent;
+    color: #666666;
+    display: inline;
+    float: left;
+    font-size: 11px;
+    line-height: 18px;
+    padding-left: 16px;
+    width: auto;
+}
+td.contestActivities .leftLaunch a:hover {
+    text-decoration: none;
+}
+td.contestActivities .rightLaunch {
+    display: inline;
+    float: right;
+    padding-top: 3px;
+    width: auto;
+}
+td.contestActivities .rightLaunch p {
+    font-size: 12px;
+    line-height: 18px;
+    text-align: right;
+}
+td.contestActivities .rightLaunch p a {
+    font-weight: bold;
+    text-decoration: none;
+}
+td.contestActivities .rightLaunch p a:hover {
+    text-decoration: underline;
+}
+td.contestActivities .completed .rightLaunch p a {
+    color: #00A900;
+}
+
+
+#projectActivities tbody td{
+    border-top: 0px !important;
+    border-bottom: 1px !important;
+    border-left: 1px !important;
+    border-right: 1px !important;
+    border-style: solid !important;
+    border-color: #BDBDBD !important;
+}
+
+#projectStatistics {
+    min-height: 300px;
+}
+
+#projectStatistics td .ajaxTableLoader {
+    margin: 150px 0 150px 0;
+    text-align: center;
 }
 

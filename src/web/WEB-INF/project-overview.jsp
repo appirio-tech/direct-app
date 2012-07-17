@@ -25,6 +25,8 @@
   - -- Added projected duration, projected cost, project ratings and additional project info into project overview page
   - Version 1.3 - Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration
   - - Add the project permission general info.
+  - Version 1.4 - Release Assembly - TopCoder Cockpit Project Overview Performance Improvement
+  - - Change project stats and activities and part of project information to be loaded via ajax
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -187,7 +189,7 @@
                                                 <h3>Project Budget :</h3>
 
                                                 <s:if test="viewData.projectGeneralInfo.totalBudget != null">
-                                                    <div class="totalBudget">
+                                                    <div class="totalBudget" style="visibility: hidden;">
                                                         <div class="projectedCost">
                                                             <div class="leftProjected">
                                                                 <div class="rightProjected">
@@ -210,13 +212,10 @@
                                                                     value="${viewData.projectGeneralInfo.totalBudget}"
                                                                     type="currency" maxFractionDigits="0"/></dd>
                                                             <dt class="actual">Actual Cost :</dt>
-                                                            <dd class="actualNum"><fmt:formatNumber
-                                                                    value="${viewData.projectGeneralInfo.actualCost}"
-                                                                    type="currency" maxFractionDigits="0"/></dd>
+                                                            <dd class="actualNum actualCostSlot"><span style="font-size:11px">Loading...</span></dd>
                                                             <dt class="projected">Projected Total :</dt>
-                                                            <dd class="projectedNum"><fmt:formatNumber
-                                                                    value="${viewData.projectGeneralInfo.projectedCost}"
-                                                                    type="currency" maxFractionDigits="0"/></dd>
+                                                            <dd class="projectedNum projectedCostSlot"><span style="font-size:11px">Loading...</span></dd>
+                                                            <span class='hide plannedCostValue'>${viewData.projectGeneralInfo.projectedCost}</span>
                                                         </dl>
                                                     </div>
                                                 </s:if>
@@ -225,12 +224,10 @@
                                                     <div class="totalBudgetInfor">
                                                         <dl>
                                                             <dt class="noData">Actual Cost :</dt>
-                                                            <dd><fmt:formatNumber
-                                                                    value="${viewData.projectGeneralInfo.actualCost}" type="currency" maxFractionDigits="0"/></dd>
+                                                            <dd class="actualCostSlot"><span style="font-size:11px">Loading...</span></dd>
                                                             <dt class="noData">Projected Total :</dt>
-                                                            <dd><fmt:formatNumber
-                                                                    value="${viewData.projectGeneralInfo.projectedCost}"
-                                                                    type="currency" maxFractionDigits="0"/></dd>
+                                                            <dd class="projectedCostSlot"><span style="font-size:11px">Loading...</span></dd>
+                                                            <span class='hide plannedCostValue'>${viewData.projectGeneralInfo.projectedCost}</span>
                                                         </dl>
                                                     </div>
                                                     <a class="projectEditLink" href="<s:url action='editProject'><s:param name='formData.projectId'>${viewData.projectGeneralInfo.project.projectId}</s:param></s:url>">Set Project Budget</a>
@@ -635,92 +632,14 @@
                                     <h2 class="title">Project Stats</h2>
                                 </div>
                                 <!-- End .areaHeader -->
-
-
-                                <table class="projectStats projectOverviewStats" cellpadding="0" cellspacing="0">
-                                    <s:push value="viewData.projectStats">
-                                        <tbody>
-                                            <tr>
-                                                <td class="statusName"># of Drafts</td>
-                                                <td><s:property value="draftContestsNumber"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName"># Scheduled</td>
-                                                <td><s:property value="pipelineContestsNumber"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName"># Active</td>
-                                                <td><s:property value="runningContestsNumber"/></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Finished(Completed/Failed/Cancelled)</td>
-                                                <td>${viewData.projectStats.finishedContestsNumber + viewData.dashboardProjectStat.cancelledNumber}(${viewData.dashboardProjectStat.completedNumber}/
-                                                    ${viewData.projectStats.finishedContestsNumber-viewData.dashboardProjectStat.completedNumber}/
-                                                    ${viewData.dashboardProjectStat.cancelledNumber})</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Total Member Cost</td>
-                                                <td>
-                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.totalMemberCost}" pattern="$#,##0.00"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Average Member Cost</td>
-                                                <td>
-                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageMemberCostPerContest}" pattern="$#,##0.00"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Total Contest Fee</td>
-                                                <td>
-                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.totalContestFee}" pattern="$#,##0.00"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Average Contest Fee</td>
-                                                <td>
-                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageContestFeePerContest}" pattern="$#,##0.00"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Total Project Cost</td>
-                                                <td>
-                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.totalProjectCost}" pattern="$#,##0.00"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Average Contest Duration</td>
-                                                <td>
-                                                    <c:out value="${tcdirect:getDurationTextInDays(viewData.dashboardProjectStat.averageContestDuration)}"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Average Fulfillment</td>
-                                                <td>
-                                                    <fmt:formatNumber value="${viewData.dashboardProjectStat.averageFulfillment}" pattern="##0.##"/>%
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Unresolved Issues</td>
-                                                <td>
-                                                    <a href="<s:url action='projectIssueTracking' namespace='/'>
-                                                    <s:param name='formData.projectId' value='formData.projectId'/>
-                                                     <s:param name='subTab'>issues</s:param></s:url>">
-
-                                                    ${viewData.dashboardProjectStat.unresolvedIssuesNumber}</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statusName">Ongoing Bug Races</td>
-                                                <td>
-                                                     <a href="<s:url action='projectIssueTracking' namespace='/'>
-                                                    <s:param name='formData.projectId' value='formData.projectId'/>
-                                                     <s:param name='subTab'>bugRaces</s:param></s:url>">${viewData.dashboardProjectStat.ongoingBugRacesNumber}</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </s:push>
-                                </table><!-- End .projectsStats -->
+                                <table id="projectStatistics" class="projectStats projectOverviewStats" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td><div class="ajaxTableLoader"><img src="/images/loadingAnimation.gif" alt="loading" /></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                               <!-- End .projectsStats -->
                             </div>
 
                             <div class="rightColumn">
@@ -772,61 +691,29 @@
                                 </s:else>
 
 
-                                <div class="areaHeader padding2">
+                                <div class="areaHeader padding2 activityHeader">
                                     <h2 class="title">Project Activities</h2>
                                 </div><!-- End .areaHeader -->
 
+                                <div class="projectTableContainer">
+                                    <span class="leftCorner"></span>
+                                    <span class="rightCorner"></span>
+                                    <table width="100%" cellspacing="0" cellpadding="0" id="projectActivities" class="project">
 
-                                <s:iterator value="viewData.latestProjectActivities.activities">
-                                    <div class="projectTableContainer">
-                                        <span class="leftCorner"></span>
-                                        <span class="rightCorner"></span>
-                                        <table class="project projectActivities" width="100%" cellpadding="0"
-                                               cellspacing="0">
-                                            <thead>
-                                            <tr>
-                                                <th colspan="5"><span class="left"><span class="right">
-                                                    <a href="javascript:;"><s:property
-                                                            value="key.title"/></a></span></span>
-                                                </th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody>
-                                            <s:iterator value="value" status="status">
-                                                <s:set value="originatorId" var="originatorId" scope="page"/>
-                                                <s:set value="originatorHandle" var="originatorHandle" scope="page"/>
-                                                <s:set value="contest" var="contest" scope="page"/>
-                                                <s:set value="date" var="date" scope="page"/>
-
-                                                <tr class="<s:property value='type.shortName'/> <s:if test='#status.index == 4'>hideStart</s:if>">
-                                                    <td class="first <s:property value="type.shortName"/>"></td>
-                                                    <td class="second">
-                                                    <span class="ico <s:property value="type.shortName"/>">
-                                                        <s:property value="type.name"/></span>
-                                                    </td>
-                                                    <td>
-                                                        <a class="longWordsBreak"
-                                                           href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="%{#attr['contest'].id}"/></s:url>">
-                                                            <c:out value="${contest.title}"/></a>
-                                                    </td>
-                                                    <td class="posted">
-                                                        <s:property value="type.actionText"/> :
-                                                        <link:user userId="${originatorId}"
-                                                                   handle="${originatorHandle}"/>
-                                                    </td>
-                                                    <td class="date">
-                                                        <c:out value="${tcdirect:getDateText(date, 'MM/dd/yyyy')}"/>
-                                                    </td>
-                                                </tr>
-
-                                            </s:iterator>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </s:iterator>
-
-                                <jsp:include page="includes/upcomingActivities.jsp"/>
+                                        <thead>
+                                        <tr class="">
+                                            <th class="activitiesTitle"><span class="left"><span class="right">
+                                                    <a href="javascript:;">Recent Activity</a></span></span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><div class="ajaxTableLoader"><img src="/images/loadingAnimation.gif" alt="loading" /></div></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div><!-- End .rightColumn -->
                         <div class="clearFix"></div>
 

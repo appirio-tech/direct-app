@@ -285,6 +285,7 @@
           class="com.topcoder.direct.services.view.action.project.ProjectOverviewAction" scope="prototype">
         <property name="projectServiceFacade" ref="projectServiceFacade"/>
         <property name="projectMetadataService" ref="directProjectMetadataServices"/>
+        <property name="permissionServiceFacade" ref="permissionServiceFacade"/>
         <property name="userService" ref="userService"/>
         <property name="export" value="true"/>
     </bean>

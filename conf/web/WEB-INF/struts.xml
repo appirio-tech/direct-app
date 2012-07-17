@@ -50,6 +50,11 @@
                 <interceptor-ref name="projectAccessGuard"/>
                 <interceptor-ref name="preProcessor"/>
             </interceptor-stack>
+            <interceptor-stack name="securedProjectStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="authnInterceptor"/>
+                <interceptor-ref name="projectAccessGuard"/>
+            </interceptor-stack>
             <interceptor-stack name="securedContestPreProcessorStack">
                 <interceptor-ref name="defaultStack"/>
                 <interceptor-ref name="authnInterceptor"/>
@@ -405,6 +410,17 @@
             <interceptor-ref name="securedProjectPreProcessorStack"/>
             <result name="success">/WEB-INF/project-overview.jsp</result>
         </action>
+
+        <action name="getProjectStatsAjax" method="getProjectStatsAjax" class="projectOverviewAction">
+            <interceptor-ref name="securedProjectStack"/>
+            <result name="success">/WEB-INF/project-overview-project-stats.jsp</result>
+        </action>
+
+        <action name="getProjectActivitiesAjax" method="getProjectActivitiesAjax" class="projectOverviewAction">
+            <interceptor-ref name="securedProjectStack"/>
+            <result name="success">/WEB-INF/project-overview-project-activities.jsp</result>
+        </action>
+
 
         <action name="projectInfoExport" class="projectExportAction">
             <interceptor-ref name="securedProjectPreProcessorStack"/>

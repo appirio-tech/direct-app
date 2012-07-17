@@ -107,9 +107,18 @@ import java.util.Map;
  *     <li>Add project permission information to the project general info section</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 2.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
+ * <li>
+ *     Add methods {@link #getProjectStatsAjax()} and {@link #getProjectActivitiesAjax()} to get the parts of the project
+ *     overview via ajax to improve the performance. The codes to get project stats and activities are removed from
+ *     the preprocessor of the action and execute method of the action.
+ * </li>
+ * </p>
  * 
  * @author isv, Veve, Blues, GreatKevin
- * @version 1.4
+ * @version 2.0
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -282,59 +291,36 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
     @Override
     public String execute() throws Exception {
         String result = super.execute();
+
         if (SUCCESS.equals(result)) {
-            getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
-
-            // set the current direct project id in session, the contest details
-            // codes incorrectly
-            // use setCurrentProjectContext to override the current chosen
-            // direct project with current
-            // chosen contest, for the safe, we put the direct project id into
-            // session separately again
-            getSessionData().setCurrentSelectDirectProjectID(
-                    getSessionData().getCurrentProjectContext().getId());
-
             try {
-                // set dashboard project status
-                setDashboardProjectStat();
+                ProjectStatsDTO projectStats = new ProjectStatsDTO();
+                getViewData().setProjectStats(projectStats);
 
-                // get project issues
-                ProjectData project = null;
+                // get project
+                ProjectData project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), formData.getProjectId());
+                getViewData().getProjectStats().setProject(DirectUtils.createProjectBriefDTOFromProjectData(project));
 
-                // get the project forum information and update the project name and project id
-                // because they are not shown when the project has no contests
-                project = getProjectServiceFacade().getProject(DirectUtils.getTCSubjectFromSession(), formData.getProjectId());
+                getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
+
+                // set the current direct project id in session, the contest details
+                // codes incorrectly
+                // use setCurrentProjectContext to override the current chosen
+                // direct project with current
+                // chosen contest, for the safe, we put the direct project id into
+                // session separately again
+                getSessionData().setCurrentSelectDirectProjectID(
+                        getSessionData().getCurrentProjectContext().getId());
 
                 if (!export) {
-                    List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
-                    Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
-
-                    int totalUnresolvedIssues = 0;
-                    int totalOngoingBugRaces = 0;
-
-                    // update dashboard health
-                    for(Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
-                        totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
-                        totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
-                    }
-
-                    // set the project name if it's not set yet
-                    for (ProjectBriefDTO projectDTO : getViewData().getUserProjects().getProjects()) {
-                        if (projectDTO.getId() == getSessionData().getCurrentProjectContext().getId()) {
-                            getSessionData().getCurrentProjectContext().setName(project.getName());
-                        }
-                    }
-
-                    getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
-                    getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
-
-                    getViewData().getProjectStats().getProject().setName(project.getName());
-                    getViewData().getProjectStats().getProject().setId(project.getProjectId());
-                    getViewData().getProjectStats().getProject().setProjectForumCategoryId(project.getForumCategoryId());
-
                     // Check if the project's forum has any threads
                     long forumThreadsCount = DataProvider.getTopCoderDirectProjectForumThreadsCount(project.getProjectId());
                     getViewData().setHasForumThreads(forumThreadsCount > 0);
+                } else {
+                    // we need actual cost and projected cost for export
+                    projectStats = DataProvider.getProjectStats(DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+                    viewData.setProjectStats(projectStats);
+                    setDashboardProjectStat();
                 }
 
                 // gets and sets the statistics of the project copilots
@@ -385,6 +371,67 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 .getDirectProjectStats(tcDirectProjects, getSessionData().getCurrentUserId());
         getViewData().setDashboardProjectStat(enterpriseProjectStats.get(0));
         DashboardHelper.setAverageContestDurationText(getViewData().getDashboardProjectStat());
+    }
+
+    /**
+     * Gets the project statistics via ajax.
+     *
+     * @return the result code.
+     * @since 2.0
+     */
+    public String getProjectStatsAjax() {
+
+        try {
+            // get project stats
+            ProjectStatsDTO projectStats = DataProvider.getProjectStats(DirectUtils.getTCSubjectFromSession(), getFormData().getProjectId());
+            viewData.setProjectStats(projectStats);
+
+            // get and set dashboard stats
+            setDashboardProjectStat();
+
+            // get and set project issues statistics
+            List<TypedContestBriefDTO> contests = DataProvider.getProjectTypedContests(getSessionData().getCurrentUserId(), formData.getProjectId());
+            Map<ContestBriefDTO, ContestIssuesTrackingDTO> issues = DataProvider.getDirectProjectIssues(contests);
+
+            int totalUnresolvedIssues = 0;
+            int totalOngoingBugRaces = 0;
+
+            for(Map.Entry<ContestBriefDTO, ContestIssuesTrackingDTO> contestIssues : issues.entrySet()) {
+                totalUnresolvedIssues += contestIssues.getValue().getUnresolvedIssuesNumber();
+                totalOngoingBugRaces += contestIssues.getValue().getUnresolvedBugRacesNumber();
+            }
+
+            getViewData().getDashboardProjectStat().setUnresolvedIssuesNumber(totalUnresolvedIssues);
+            getViewData().getDashboardProjectStat().setOngoingBugRacesNumber(totalOngoingBugRaces);
+
+        } catch (Throwable error) {
+            if(getModel() != null) {
+                setResult(error);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Gets the project activities via ajax.
+     *
+     * @return the result code
+     * @since 2.0
+     */
+    public String getProjectActivitiesAjax() {
+
+        try {
+            LatestProjectActivitiesDTO latestActivities
+                    = DataProvider.getLatestActivitiesForProject(DirectUtils.getTCSubjectFromSession().getUserId(), getFormData().getProjectId());
+            viewData.setLatestProjectActivities(latestActivities);
+        } catch (Throwable error) {
+            if(getModel() != null) {
+                setResult(error);
+            }
+        }
+
+        return SUCCESS;
     }
 
     /**
@@ -465,11 +512,17 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         getViewData().getProjectGeneralInfo().setClientManagers(clientManagers);
         getViewData().getProjectGeneralInfo().setTopcoderManagers(tcManagers);
 
-        // set the project cost
-        getViewData().getProjectGeneralInfo().setActualCost((int) Math.round(getViewData().getDashboardProjectStat().getTotalProjectCost()));
+        int actualCost = 0;
+
+        if(getViewData().getDashboardProjectStat() != null) {
+            // for export only
+            actualCost = (int) Math.round(getViewData().getDashboardProjectStat().getTotalProjectCost());
+        }
+
+
+        getViewData().getProjectGeneralInfo().setActualCost(actualCost);
         
         DataProvider.setProjectGeneralInfo(getViewData().getProjectGeneralInfo());
-
         // set project permission info
         setProjectPermissionInfo();
     }
@@ -482,6 +535,10 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      */
     private void setProjectPermissionInfo() throws Exception {
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
+
+        if(getPermissionServiceFacade() == null) {
+            throw new IllegalStateException("The permission service facade is not initialized");
+        }
 
         final List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(currentUser, getFormData().getProjectId());
 
@@ -517,14 +574,29 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         this.export = export;
     }
 
+    /**
+     * Gets the export flag.
+     *
+     * @return the export flag.
+     */
     public boolean getExport() {
         return this.export;
     }
 
+    /**
+     * Gets the user service.
+     *
+     * @return the user service.
+     */
     public UserService getUserService() {
         return userService;
     }
 
+    /**
+     * Sets the user service.
+     *
+     * @param userService the user service.
+     */
     public void setUserService(UserService userService) {
         this.userService = userService;
     }

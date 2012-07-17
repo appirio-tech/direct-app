@@ -3,9 +3,11 @@
  */
 package com.topcoder.direct.services.view.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 import com.topcoder.direct.services.view.action.contest.launch.AggregateDataModel;
+import com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult;
 import com.topcoder.direct.services.view.util.RequestData;
 import com.topcoder.direct.services.view.util.SessionData;
 import org.apache.struts2.ServletActionContext;
@@ -30,8 +32,16 @@ import javax.servlet.http.HttpSession;
   *   </ol>
   * </p>
  *
+ * <p>
+ *  Version 1.2 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part) notes:
+ *  <li>
+ *      Refactor the the ajax support: result key and methods getResult, setResult and isJsonRequest to
+ *      this action from BaseDirectStrutsAction.
+ *  </li>
+ * </p>
+ *
  * @author isv, GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 public abstract class AbstractAction extends ActionSupport implements TopCoderDirectAction, Preparable {
 
@@ -63,6 +73,14 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
      */
     private Throwable error;
 
+    /**
+     * <p>
+     * Represents the result key to store result in the aggregate model.
+     * </p>
+     *
+     * @since 1.2
+     */
+    private static final String RESULT_KEY = "result";
 
     /**
      * <p>
@@ -277,4 +295,49 @@ public abstract class AbstractAction extends ActionSupport implements TopCoderDi
     public void setAction(String action) {
         this.action = action;
     }
+
+    /**
+     * <p>
+     * Set the result of the action to the aggregate model.
+     * </p>
+     * <p>
+     * the object will be under the {@link #RESULT_KEY} key in the model map.
+     * </p>
+     *
+     * @param result the result to set to the model
+     *
+     * @since 1.2
+     */
+    public void setResult(Object result) {
+        getModel().setData(RESULT_KEY, result);
+    }
+
+    /**
+     * <p>
+     * Gets the result from the aggregate model.
+     * </p>
+     * <p>
+     * The result is under the {@link #RESULT_KEY} key in the model map (it can be null if it's not present).
+     * </p>
+     *
+     * @return the result from the model.
+     * @since 1.2
+     */
+    public Object getResult() {
+        return getModel().getData(RESULT_KEY);
+    }
+
+    /**
+     * <p>
+     * Determine if it is json request or not.
+     * </p>
+     *
+     * @return true if it is json request
+     * @throws Exception
+     * @since 1.2
+     */
+    protected boolean isJsonRequest() throws Exception {
+        return ActionContext.getContext().getActionInvocation().getResult() instanceof CustomFormatAJAXResult;
+    }
+
 }

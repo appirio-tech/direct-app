@@ -3,14 +3,12 @@
  */
 package com.topcoder.direct.services.view.action.contest.launch;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.configs.ReferenceDataBean;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataKeyService;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.milestone.MilestoneService;
 import com.topcoder.direct.services.project.milestone.ResponsiblePersonService;
-import com.topcoder.direct.services.view.ajax.CustomFormatAJAXResult;
 import com.topcoder.project.service.ProjectServices;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.admin.AdminServiceFacade;
@@ -111,9 +109,18 @@ import java.util.List;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.7 (Release Assembly - TopCoder Cockpit Project Overview Performance Improvement)
+ * <ul>
+ *     <li>
+ *         Move up the ajax support result key and methods getResult, setResult and isJsonRequest to
+ *         com.topcoder.direct.services.view.action.AbstractAction.
+ *     </li>
+ * </ul>
+ * </p>
  *
  * @author fabrizyo, FireIce, murphydog, GreatKevin
- * @version 1.6
+ * @version 1.7
  */
 public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
@@ -127,13 +134,6 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      * </p>
      */
     private static final long serialVersionUID = 3320745591427458154L;
-
-    /**
-     * <p>
-     * Represents the result key to store result in the aggregate model.
-     * </p>
-     */
-    private static final String RESULT_KEY = "result";
 
     /**
      * <p>
@@ -293,46 +293,6 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
      * @throws Exception if any error occurs
      */
     protected abstract void executeAction() throws Exception;
-
-    /**
-     * <p>
-     * Determine if it is json request or not.
-     * </p>
-     *
-     * @return true if it is json request
-     * @throws Exception
-     */
-    protected boolean isJsonRequest() throws Exception {
-        return ActionContext.getContext().getActionInvocation().getResult() instanceof CustomFormatAJAXResult;
-    }
-
-    /**
-     * <p>
-     * Set the result of the action to the aggregate model.
-     * </p>
-     * <p>
-     * the object will be under the {@link #RESULT_KEY} key in the model map.
-     * </p>
-     *
-     * @param result the result to set to the model
-     */
-    public void setResult(Object result) {
-        getModel().setData(RESULT_KEY, result);
-    }
-
-    /**
-     * <p>
-     * Gets the result from the aggregate model.
-     * </p>
-     * <p>
-     * The result is under the {@link #RESULT_KEY} key in the model map (it can be null if it's not present).
-     * </p>
-     *
-     * @return the result from the model.
-     */
-    public Object getResult() {
-        return getModel().getData(RESULT_KEY);
-    }
 
     /**
      * <p>

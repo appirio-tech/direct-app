@@ -359,9 +359,16 @@ import java.util.*;
  *    milestone review/review phase is closed.
  * </li>
  * </p>
+ * <p>
+ * Version 1.8.9 (Release Assembly - TopCoder Cockpit Project Overview Performance Improvement)
+ * <ol>
+ *     <li>Add method {@link #createProjectBriefDTOFromProjectData(com.topcoder.service.project.ProjectData)}</li>
+ * </ol>
+ * </p>
+ *
  *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.8.8
+ * @version 1.8.9
  */
 public final class DirectUtils {
     /**
@@ -2059,6 +2066,18 @@ public final class DirectUtils {
             throws Exception {
         TCSubject currentUser = getTCSubjectFromSession();
         final ProjectData project = projectServiceFacade.getProject(currentUser, directProjectId);
+
+        return createProjectBriefDTOFromProjectData(project);
+    }
+
+    /**
+     * Creates the <code>ProjectBriefDTO</code> from the <code>ProjectData</code> instance.
+     *
+     * @param project the <code>ProjectData</code> instance.
+     * @return the created <code>ProjectBriefDTO</code> instance
+     * @since 1.8.9
+     */
+    public static ProjectBriefDTO createProjectBriefDTOFromProjectData(ProjectData project) {
         ProjectBriefDTO projectBriefDTO = new ProjectBriefDTO();
 
         projectBriefDTO.setId(project.getProjectId());

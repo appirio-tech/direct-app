@@ -73,8 +73,13 @@ import com.topcoder.direct.services.view.processor.stats.TopCoderDirectFactsProc
  * - Add pre processor for ProjectContestsCalendarViewAction
  * </p>
  *
+ * <p>
+ * Version 1.6 (Release Assembly - TopCoder Cockpit Project Overview Performance Improvement)
+ * - Remove the unneeded pre processors for the ProjectOverviewAction
+ * </p>
+ *
  * @author isv, Blues, GreatKevin
- * @version 1.5
+ * @version 1.6
  */
 public class ActionPreProcessor implements Interceptor {
 
@@ -192,10 +197,7 @@ public class ActionPreProcessor implements Interceptor {
         } else if (action instanceof ForwardAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
         } else if (action instanceof ProjectOverviewAction) {
-            return new ProcessorsGroup(new RequestProcessor[] {new UpcomingProjectActivitiesProcessor(),
-                                                               new LatestProjectActivitiesProcessor(),
-                                                               new ProjectStatsProcessor(),
-                                                               new UserProjectsProcessor()});
+            return new ProcessorsGroup(new RequestProcessor[] {new UserProjectsProcessor()});
         } else if (action instanceof ProjectContestsAction) {
             return new ProcessorsGroup(new RequestProcessor[] {new ProjectContestsListProcessor(),
                                                                new ProjectStatsProcessor(),

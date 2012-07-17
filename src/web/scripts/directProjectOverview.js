@@ -17,24 +17,18 @@
  *   - Additional Project Info
  * </p>
  *
+ * <p>
+ * Version 1.3 (Release Assembly - TopCoder Cockpit Project Overview Performance Improvement)
+ *  - Change the loading of project stats and project activities to ajax
+ * </p>
+ *
  * @author Blues, GreatKevin
- * @version 1.2
+ * @version 1.3
  * @since Release Assembly - TopCoder Cockpit Project Overview Update 1
  */
-$(document).ready(function() {
-
-    $(".projectInforDiv .expand").click(function () {
-        $(this).blur();
-        if ($(this).hasClass("collapse")) {
-            $(".projectInforDiv .projectInformation").show();
-            $(this).removeClass("collapse");
-        } else {
-            $(".projectInforDiv .projectInformation").hide();
-            $(this).addClass("collapse");
-        }
-    });
-
-    var iProjectBudget = parseInt($('.projectBudget dd.actualNum').text().replace('$', '').replace(/,/g, '') / $('.projectBudget dd:first').text().replace('$', '').replace(/,/g, '') * 100);
+var iProjectBudget;
+var calculateProjectBudget = function() {
+    iProjectBudget = parseInt($('.projectBudget dd.actualNum').text().replace('$', '').replace(/,/g, '') / $('.projectBudget dd:first').text().replace('$', '').replace(/,/g, '') * 100);
     var iProjectedTotal = parseInt($('.projectBudget dd.projectedNum').text().replace('$', '').replace(/,/g, '') / $('.projectBudget dd:first').text().replace('$', '').replace(/,/g, '') * 100);
 
     $('.projectBudget .totalBudget .midActual').css('width', 1.87 * iProjectBudget);
@@ -59,6 +53,11 @@ $(document).ready(function() {
         $('.projectBudget .totalBudget .midProjected').css('width', '187px');
     }
 
+    $(".totalBudget").css('visibility', 'visible');
+};
+
+var calculationProjectDuration = function() {
+
     var iprojectDuration = parseInt($('.projectDuration dd.actualNum').text().replace('days', '') / $('.projectDuration dd:first').text().replace('days', '') * 100);
     var iprojectedTotalDuration = parseInt($('.projectDuration dd.projectedNum').text().replace('days', '') / $('.projectDuration dd:first').text().replace('days', '') * 100);
 
@@ -69,7 +68,7 @@ $(document).ready(function() {
         $('.projectDuration .plannedDuration').addClass('green');
         $('.projectDuration .totalBudgetInfor').addClass('green');
         if (iprojectDuration < 5) {
-            $('.projectBudget .totalBudget .actualCost').css('width', 1.95 * iProjectBudget);
+           // $('.projectDuration .plannedDuration .actualDuration').css('width', 1.95 * iprojectDuration);
         }
     } else if (iprojectDuration >= 100) {
         $('.projectDuration .plannedDuration').addClass('red');
@@ -84,7 +83,23 @@ $(document).ready(function() {
         $('.projectDuration .projectedDuration,.projectDuration dt.projected, .projectDuration dd.projectedNum').addClass('red');
         $('.projectDuration .plannedDuration .midProjected').css('width', '187px');
     }
+};
 
+
+$(document).ready(function() {
+
+    $(".projectInforDiv .expand").click(function () {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $(".projectInforDiv .projectInformation").show();
+            $(this).removeClass("collapse");
+        } else {
+            $(".projectInforDiv .projectInformation").hide();
+            $(this).addClass("collapse");
+        }
+    });
+
+    calculationProjectDuration();
 
     function SubstringDemo(str, num) {
         var ss;
@@ -635,5 +650,43 @@ $(document).ready(function() {
 
         return operations;
     }
+
+    $.ajax({
+        type : 'POST',
+        url : 'getProjectStatsAjax',
+        cache : false,
+        timeout:100*1000,
+        data : {formData:{projectId:tcDirectProjectId}},
+        success : function(result) {
+            $("#projectStatistics").find('.ajaxTableLoader').parents("tr").hide();
+            $("#projectStatistics tbody").append(result);
+            var actualCostText = $.trim($("#totalProjectCostValue").text()).replace(/[,.$]/g,'');
+            var actualCost = parseFloat(actualCostText);
+            var projectedCost = actualCost + parseFloat($(".plannedCostValue").text());
+            $(".actualCostSlot").html('$' + actualCost.formatMoney(0));
+            $(".projectedCostSlot").html('$' + projectedCost.formatMoney(0));
+
+            calculateProjectBudget();
+        },
+        error: function(result) {
+            showErrors("Fail to load the project copilots data");
+        }
+    });
+
+    $.ajax({
+        type : 'POST',
+        url : 'getProjectActivitiesAjax',
+        cache : false,
+        timeout:100*1000,
+        data : {formData:{projectId:tcDirectProjectId}},
+        success : function(result) {
+            $("#projectActivities").find('.ajaxTableLoader').parents("tr").hide();
+            $("#projectActivities tbody").append(result);
+        },
+        error: function(result) {
+            showErrors("Fail to load the project copilots data");
+        }
+    });
+
 
 });
