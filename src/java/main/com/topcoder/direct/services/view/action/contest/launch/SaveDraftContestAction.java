@@ -972,6 +972,11 @@ public class SaveDraftContestAction extends ContestAction {
 
         // set the admin fee into the bug hunt project header
         bugHuntHeader.getProperties().put(ProjectPropertyType.ADMIN_FEE_PROJECT_PROPERTY_KEY, String.valueOf(bugHuntAdminFee));
+		if (assemblyHeader.getProperties().get(ProjectPropertyType.CONTEST_FEE_PERCENTAGE_PROJECT_PROPERTY_KEY) != null)
+		{
+			bugHuntHeader.getProperties().put(ProjectPropertyType.CONTEST_FEE_PERCENTAGE_PROJECT_PROPERTY_KEY, 
+			                              assemblyHeader.getProperties().get(ProjectPropertyType.CONTEST_FEE_PERCENTAGE_PROJECT_PROPERTY_KEY));
+		}
     }
 
     /**
