@@ -200,6 +200,16 @@
 #@pptLoginProcessor@=com.topcoder.ppt.security.EJBLoginProcessor
 #@analyticsLoginProcessor@=com.topcoder.analytics.view.security.EJBLoginProcessor
 
+
+#####################################
+# applicationContext.xml direct.war #
+#####################################
+@onlinereview.login.url@=http://tcs.cloud.topcoder.com/review/actions/Login.do
+@onlinereview.login.username@=heffan
+@onlinereview.login.password@=password
+@onlinereview.compsitereview.url.prefix@=http://tcs.cloud.topcoder.com/review/actions/ViewCompositeScorecard.do?method=viewCompositeScorecard&amp;pdf=true&amp;sid=
+@onlinereview.url.base@=http://tcs.cloud.topcoder.com
+
 ###########################
 # liquidPortalService.xml #
 ###########################
