@@ -7,6 +7,7 @@
 
 .exportPanel {
     margin-bottom: 8px;
+	margin-top:20px;
 }
 
 .exportPanel .exportHead {
@@ -27,7 +28,7 @@
 }
 
 .exportPanel .exportHead .exportText {
-    width: 100px;
+    width: 200px;
     float: left;
 }
 
@@ -35,7 +36,7 @@
     line-height: 29px;
 }
 
-.exportPanel .exportHead .inner .expand, .exportPanel .exportHead .inner .collapse {
+.exportPanel .exportHead .inner .exportExpand, .exportPanel .exportHead .inner .exportCollapse {
     margin: 6px 10px 0 3px;
     float: left;
 }
@@ -76,13 +77,13 @@
 
 .exportPanel .exportContent {
     background: url(/images/filter-panel/panel-cotent-l.png) repeat-y left top;
-    height: 65px;
+    height: 40px;
     padding-left: 6px;
 }
 
 .exportPanel .exportContent .rightSide {
     background: url(/images/filter-panel/panel-cotent-r.png) repeat-y right top;
-    height: 65px;
+    height: 40px;
     padding-right: 6px;
 }
 
@@ -91,10 +92,10 @@
 
 .exportPanel .exportContent .inner .column1 {
     float: left;
-    width: 37.5%;
-    height: 65px;
+    width: 15%;
+    height: 60px;
     margin-left: 25px;
-    min-width: 380px;
+    min-width: 200px;
 }
 
 .exportPanel .exportContent .inner .row {
@@ -110,7 +111,7 @@
 }
 
 .exportPanel .exportContent .inner .column1 .row .title {
-    width: 90px;
+    width: 200px;
 }
 
 .exportPanel .exportContent .inner .column1 .row .short {
@@ -119,9 +120,9 @@
 
 .exportPanel .exportContent .inner .column2 {
     float: left;
-    width: 23.5%;
-    min-width: 240px;
-    height: 65px;
+    width: 30%;
+    min-width: 400px;
+    height: 60px;
     margin-left: -10px;
     margin-right: -15px;
 }
@@ -135,18 +136,19 @@
     width: 90px;
 }
 
-.exportPanel .exportContent .inner .column3 {
-    float: left;
-    width: 340px;
-    height: 65px;
-    margin-left: 25px;
-}
 
-.exportPanel .exportContent .inner .column3 .row {
-    margin-top: 8px;
-}
 
-.exportPanel .exportContent .inner .column3 input {
+
+
+
+
+
+
+
+
+
+
+.exportPanel .exportContent .inner .column2 input {
     width: 70px;
     height: 18px;
     float: left;
@@ -154,14 +156,26 @@
     font-size: 12px;
 }
 
-.exportPanel .exportContent .inner .column3 .row .dateLabel {
+.exportPanel .exportContent .inner .column2 .row .dateLabel {
     width: 60px;
 }
 
-.exportPanel .exportContent .inner .column3 .row .toLabel {
+.exportPanel .exportContent .inner .column2 .row .toLabel {
     font-size: 12px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+
+.exportPanel .exportContent .inner .column3 {
+    float: left;
+    width: 150px;
+    height: 60px;
+    margin-left: 25px;
+}
+
+.exportPanel .exportContent .inner .column3 .row {
+    margin-top: 8px;
 }
 
 #enterpriseCalendarExport {
