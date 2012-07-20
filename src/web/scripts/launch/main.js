@@ -1418,10 +1418,10 @@ function updateStudioPrizes() {
                 var prizes = mainWidget.softwareCompetition.projectHeader.prizes;
                 for (var i = 0; i < prizes.length; i++) {
                         total += prizes[i].prizeAmount * prizes[i].numberOfSubmissions;
-                }
-                total += projectHeader.getReviewCost();
-                total += projectHeader.getSpecReviewCost();
-                total += projectHeader.getDRPoints();
+                } 
+                total += parseFloat(projectHeader.getReviewCost());
+                total += parseFloat(projectHeader.getSpecReviewCost());
+                total += parseFloat(projectHeader.getDRPoints());
                 var contestFee = (total + mainWidget.softwareCompetition.copilotCost) * contestFeePercentage;
                 projectHeader.setAdminFee(contestFee);
                 projectHeader.setContestFeePercentage(contestFeePercentage);
