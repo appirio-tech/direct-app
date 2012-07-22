@@ -48,7 +48,7 @@
                     <s:if test="viewData.contestStats.multipleRound">
                         <span class="submissionTabSpan">
                             <span class="noCursor left">
-                                    <span class="noCursor right">Submissions (
+                                    <span class="noCursor right"><link:studioSubmissionsGrid contestId="${contestStats.contest.id}" styleClass="submissionClick">Submissions</link:studioSubmissionsGrid> (
                                         <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="true" styleClass="submissionClick">M:${viewData.contestStats.milestoneSubmissionNumber}</link:studioSubmissionsGrid>/
                                         <link:studioSubmissionsGrid contestId="${contestStats.contest.id}" milestoneRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:studioSubmissionsGrid>
                                         )
@@ -68,7 +68,7 @@
                     <s:if test="viewData.contestStats.multipleRound">
                         <span class="submissionTabSpan">
                             <span class="noCursor left">
-                                    <span class="noCursor right">Submissions (
+                                    <span class="noCursor right"><link:softwareSubmissionsList contestId="${contestStats.contest.id}" styleClass="submissionClick">Submissions</link:softwareSubmissionsList> (
                                          <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="true" styleClass="submissionClick">M:${viewData.contestStats.milestoneSubmissionNumber}</link:softwareSubmissionsList>/
                                         <link:softwareSubmissionsList contestId="${contestStats.contest.id}" milestoneRound="false" styleClass="submissionClick">F:${viewData.contestStats.finalSubmissionNumber}</link:softwareSubmissionsList>
                                         )
