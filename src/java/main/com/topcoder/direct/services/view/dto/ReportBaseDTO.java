@@ -10,8 +10,14 @@ import java.util.Set;
 /**
  * <p>A <code>DTO</code> class providing the basic report data a report.</p>
  * 
+ * <p>Version 1.1: (Module Assembly - TC Cockpit Project Metrics Report  ) change notes:
+ * <ol>
+ *   <li>Added {@link #projectStatus} and it's getter and setter.</li>
+ * </ol>
+ * </p>
+ * 
  * @author TCSASSEMBER
- * @version 1.0 (TC Cockpit Permission and Report Update One)
+ * @version 1.1 (TC Cockpit Project Metrics Report )
  */
 public class ReportBaseDTO extends CommonDTO implements Serializable {
 
@@ -44,6 +50,11 @@ public class ReportBaseDTO extends CommonDTO implements Serializable {
      * <p>A <code>Map</code> providing the mapping from status id to status names.</p>
      */
     private Map<Long, String> contestStatus;
+
+    /**
+     * <p>A <code>Map</code> providing the mapping from status id to project status names.</p>
+     */
+    private Map<Long, String> projectStatus;
 
     /**
      * <p>A <code>Map</code> provided the group by id and names for the chosen client if to user</p>
@@ -221,4 +232,23 @@ public class ReportBaseDTO extends CommonDTO implements Serializable {
     public void setGroupValues(Set<String> groupValues) {
         this.groupValues = groupValues;
     }
+
+    /**
+     * <p>Gets the project status.</p>
+     *
+     * @return the project status.
+     */
+	public Map<Long, String> getProjectStatus() {
+		return projectStatus;
+	}
+
+    /**
+     * <p>Sets the project status.</p>
+     *
+     * @param projectStatus the project status to set.
+     */
+	public void setProjectStatus(Map<Long, String> projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+    
 }

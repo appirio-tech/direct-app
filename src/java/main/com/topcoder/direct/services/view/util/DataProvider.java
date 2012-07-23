@@ -111,6 +111,7 @@ import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatTy
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
+import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
@@ -555,10 +556,15 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
  *     <li>Update method {@link #getProjectContestsHealth(long, long, boolean)} to always set registration health to
  *     healthy for copilot posting</li>
  * </ol>
+ * Version 4.3 (Module Assembly - TC Cockpit Project Metrics Report ) change log:
+ * <ol>
+ *     <li>Add method {@link #getDashboardProjectMetricsReport(TCSubject, long, long, long, String[],
+            Date, Date, List<ProjectMetricsReportEntryDTO>)}</li> method to load project metrics report data.</li>
+ * </ol>
  * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy
- * @version 4.2
+ * @version 4.3
  * @since 1.0
  */
 public class DataProvider {
@@ -1495,6 +1501,91 @@ public class DataProvider {
         stats.setProject(project);
 
         return stats;
+    }
+
+    /**
+     * Gets the project metrics report with the given paramters. The method will retrieve the project metrics
+     * data into parameter <code>statses</code>
+     *
+     * @param currentUser        the current user.
+     * @param projectId          the direct project id.
+     * @param clientId           the client id.
+     * @param billingAccountId   the billing accounts id.
+     * @param projectStatus      the project status.
+     * @param startDate          the start date.
+     * @param endDate            the end date.
+     * @param statses            the project metrics data.
+     * 
+     * @throws Exception if any error occurs.
+     * @since 3.9.1
+     */
+    public static void getDashboardProjectMetricsReport(TCSubject currentUser, long projectId,
+            long clientId, long billingAccountId, long[] projectStatusIds,
+            Date startDate, Date endDate, List<ProjectMetricsReportEntryDTO> statses) throws Exception {
+            
+            if (projectStatusIds == null || (projectStatusIds.length == 0)) {
+                return;
+            }
+
+            // concatenate the filters
+            String projectStatusesList = concatenate(projectStatusIds, ", ");
+
+            // date format to prepare date for query input
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+            DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+            Request request = new Request();
+
+            if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
+                return;
+            }
+
+            request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+            request.setProperty("sdt", dateFormatter.format(startDate));
+            request.setProperty("edt", dateFormatter.format(endDate));
+            request.setProperty("directProjectStatusIds", projectStatusesList);
+            request.setContentHandle("dashboard_project_metrics_report");
+            final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
+            
+            // Project metrics 
+            final ResultSetContainer resultContainer = queryData.get("dashboard_project_metrics_report");
+            for (ResultSetContainer.ResultSetRow row : resultContainer) {
+            
+                ProjectMetricsReportEntryDTO stats = new ProjectMetricsReportEntryDTO();
+                stats.setProjectId(row.getLongItem("tc_direct_project_id"));
+                stats.setProjectName(row.getStringItem("tc_direct_project_name"));
+                stats.setProjectType(row.getStringItem("direct_project_type_name"));
+                stats.setProjectStatus(row.getStringItem("project_status_name"));
+                stats.setProjectFulfillment(row.getDoubleItem("fullfillment"));
+                stats.setTotalBudget(row.getStringItem("planned_budget"));
+                stats.setActualCost(row.getDoubleItem("total_cost"));
+                stats.setProjectedCost(row.getDoubleItem("projected_cost") + row.getDoubleItem("total_cost"));
+                stats.setPlannedCost(0);
+                stats.setStartDate(getDate(row,"create_date"));
+                stats.setCompletionDate(getDate(row,"completion_date"));
+                stats.setTotalContests(row.getIntItem("total_number"));
+                
+                // draft
+                stats.setNumDraft(row.getIntItem("num_draft"));
+                stats.setCostDraft(row.getDoubleItem("cost_draft"));
+
+                // scheduled
+                stats.setNumScheduled(row.getIntItem("num_scheduled"));
+                stats.setCostScheduled(row.getDoubleItem("cost_scheduled"));
+
+                // active
+                stats.setNumActive(row.getIntItem("num_active"));
+                stats.setCostActive(row.getDoubleItem("cost_active"));
+
+                // finished
+                stats.setNumFinished(row.getIntItem("num_finished"));
+                stats.setCostFinished(row.getDoubleItem("cost_finished"));
+
+                // cancelled
+                stats.setNumCanceled(row.getIntItem("num_cancelled"));
+                stats.setCostCanceled(row.getDoubleItem("cost_cancelled"));
+                
+                statses.add(stats);
+            }        
     }
 
     /**

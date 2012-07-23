@@ -14,9 +14,14 @@ import java.util.List;
  *  - Adds {@link #groupId}, {@link #groupValues} and their setters and getters.
  * </p>
  * 
+ * <p>
+ *  Version 1.2 (Module Assembly - TC Cockpit Project Metrics Report ) updates
+ *  - Adds {@link #projectStatusIds}, and it's setters and getters.
+ * </p>
+ * 
  * @author TCSASSEMBLER
- * @version 1.0
- * @since (TC Cockpit Permission and Report Update One)
+ * @version 1.2
+ * @since (TC Cockpit Project Metrics Report)
  */
 public class DashboardReportForm implements Serializable {
 
@@ -59,6 +64,11 @@ public class DashboardReportForm implements Serializable {
      * <p>Represents the status ids of the participation metrics report. 3 status are available: active, scheduled, completed.</p>
      */
     private long[] statusIds;
+    
+    /**
+     * <p>Represents the status ids of the project metrics report. 4 status are available: active, archived, completed, draft.</p>
+     */
+    private long[] projectStatusIds;
 
     /**
      * The group by id.
@@ -244,4 +254,24 @@ public class DashboardReportForm implements Serializable {
     public void setGroupValues(List<String> groupValues) {
         this.groupValues = groupValues;
     }
+
+    /**
+     * <p>Gets the status ids used to filter the project metrics data.</p>
+     *
+     * @return a <code>long</code> array of status ids.
+     */
+	public long[] getProjectStatusIds() {
+		return projectStatusIds;
+	}
+
+
+    /**
+     * <p>Sets the status ids used to filter the project metrics report.</p>
+     *
+     * @param statusIds the status ids
+     */
+	public void setProjectStatusIds(long[] projectStatusIds) {
+		this.projectStatusIds = projectStatusIds;
+	}
+    
 }

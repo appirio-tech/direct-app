@@ -62,11 +62,14 @@
  *  Version 2.9 - TopCoder Cockpit - Bug Race Project Contests View update:
  *  - Hide the filter panel in project contests calendar view
  *
- * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
+ *  Version 2.10 - Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
  * - Add js codes to support uploading attachments to JIRA issue in contest issue tracking page.
  *
+ *  Version 2.11 - Module Assembly - TC Cockpit Project Metrics Report  update:
+ *  - Add support for project metrics report
+ * 
  * @author tangzx, Blues, GreatKevin, isv, GreatKevin, TCSASSEMBLER
- * @version 2.10
+ * @version 2.11
  */
 
 var mouse_is_inside;
@@ -112,6 +115,8 @@ $(document).ready(function(){
             window.location.href = '/direct/dashboardBillingCostReport' + synchronizeFilters();
         } else if (reportType == 'PARTICIPATION') {
             window.location.href = '/direct/dashboardParticipationReport' + synchronizeFilters();
+        } else if (reportType == 'PROJECT_METRICS') {
+            window.location.href = '/direct/dashboardProjectMetricsReport' + synchronizeFilters();
         }
     });
 	
