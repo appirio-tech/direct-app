@@ -171,6 +171,9 @@ $(document).ready(function (e) {
             $('#settingModal .settingTable .tableBody').css('overflow-y','auto');
         }
 
+        if($("#hasFullPermissionOnly").val() == 'true') {
+            $('.permissionsNotifications input').attr('disabled', 'disabled');
+        }
 
         //scroll
         $('#addUserModal .addUserForm .addUserLeft .addUserList').css('overflow-y','scroll');
@@ -373,6 +376,12 @@ $(document).ready(function (e) {
                                 }
                                 $('#settingModal .settingTable .tableBody').css('overflow-x', 'hidden');
                                 $('#settingModal .settingTable .tableBody').css('overflow-y', 'auto');
+                            }
+
+                            if($("#hasFullPermissionOnly").val() == 'true') {
+                                $('#settingModal input').attr('disabled', 'disabled');
+                            } else {
+                                $('#settingModal input').removeAttr('disabled');
                             }
                         },
                         function (errorMessage) {

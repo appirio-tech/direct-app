@@ -299,6 +299,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         for(Permission p : projectPermissions) {
             if(p.getUserId() == currentUser.getUserId()) {
                 if(p.getPermissionType().getPermissionTypeId() == 3L) {
+                    // has full permission
                     this.viewData.setHasFullPermission(true);
                 }
             }

@@ -101,7 +101,9 @@
     <h3 class="projectMetaAreaLabel"><a class="toolTipIcon" href="javascript:;"></a>Project Information :</h3>
 
     <s:if test="viewData.hasFullPermission">
-
+        <s:if test="!viewData.canAccessPermissionNotification">
+            <input type="hidden" id="hasFullPermissionOnly" value="true">
+        </s:if>
     <div class="projectMetaAreaField oddRowItem">
         <h4 class="projectMetaLabel cmIcon">Client Manager Handles :</h4>
 
@@ -389,7 +391,7 @@
 
 
 <!-- Permissions & Notifications -->
-<s:if test="viewData.canAccessPermissionNotification">
+<s:if test="viewData.canAccessPermissionNotification || viewData.hasFullPermission">
 
 <div class="permissionsNotifications">
     <a name="permissionsNotifications"/>
