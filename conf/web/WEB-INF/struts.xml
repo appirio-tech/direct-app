@@ -688,6 +688,20 @@
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-participation-report.jsp</result>
         </action>
+        
+        <action name="dashboardProjectMetricsReport" class="dashboardShowProjectMetricsReportAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-project-metrics-report.jsp</result>
+        </action>
+        
+        <action name="dashboardGetProjectMetricsReport" class="dashboardProjectMetricsReportAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success">/WEB-INF/report/dashboard-project-metrics-report.jsp</result>
+        </action>
 
         <action name="dashboardGetParticipationReport" class="dashboardParticipationReportAction">
             <interceptor-ref name="baseStack"/>
