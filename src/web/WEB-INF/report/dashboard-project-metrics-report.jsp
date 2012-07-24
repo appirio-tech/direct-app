@@ -42,7 +42,7 @@
 </jsp:include>
 
 <!-- .pipelineFilter -->
-<div class="pipelineFilter" id="participationMetricsReports">
+<div class="pipelineFilter" id="projectMetricsReports">
 
     <!-- .filterTitle -->
     <div class="filterTitle">
@@ -145,10 +145,10 @@
 <!-- End .pipelineFilter -->
 
 <s:if test="not viewData.showJustForm and not hasActionErrors()">
-<!-- participationMetricsReportsSection -->
-<div id="participationMetricsReportsSection">
-
-<table id="participationMetricsReportAggregationArea" class="pipelineStats" cellpadding="0" cellspacing="0">
+<!-- projectMetricsReportsSection -->
+<div id="projectMetricsReportsSection">
+<div class="resultTableContainer">
+<table id="costDetails" class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
     <!-- <colgroup>
         <col width="21%" />
         <col width="9%" />
@@ -177,7 +177,6 @@
             <th class="tableColumn">Active</th>
             <th class="tableColumn">Finished</th>
             <th class="tableColumn">Canceled</th>
-            <th class="tableColumn">Project<br />Fulfillment</th>
             <th class="tableColumn">Total<br />Budget</th>
             <th class="tableColumn">Actual<br />Cost</th>
             <th class="tableColumn">Projected<br />Cost</th>
@@ -185,6 +184,7 @@
             <th class="tableColumn">Start<br />Date</th>
             <th class="tableColumn">Completion<br />Date</th>
             <th class="tableColumn">Total<br /><nobr>#of Contests</nobr></th>
+            <th class="tableColumn">Project<br />Fulfillment</th>
         </tr>
     </thead>
     <tbody>
@@ -220,9 +220,6 @@
                 ${item.numCanceled}/<fmt:formatNumber value="${item.costCanceled}" pattern="$#,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.projectFulfillment}" pattern="##0.##"/>%
-            </td>
-            <td>
                 <fmt:formatNumber value="${item.totalBudget}" pattern="$#,##0.00"/>
             </td>
             <td>
@@ -235,17 +232,40 @@
                 <fmt:formatNumber value="${item.plannedCost}" pattern="$#,##0.00"/>
             </td>
             <td>
-                <fmt:formatDate value="${item.startDate}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                <c:if test="${not (item.startDate eq null)}">
+                    <fmt:formatDate value="${item.startDate}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                </c:if>
             </td>
             <td>
-                <fmt:formatDate value="${item.completionDate}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                <c:if test="${not (item.completionDate eq null)}">
+                    <fmt:formatDate value="${item.completionDate}" pattern="MM/dd/yyyy HH:mm"/> ET (GMT-400)
+                </c:if>     
             </td>
             <td>${item.totalContests}</td>
+            <td>
+                <fmt:formatNumber value="${item.projectFulfillment}" pattern="##0.##"/>%
+            </td>
         </tr>
         </c:forEach>
     </tbody>
 </table>
 
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
 </div>
 </s:if>
 

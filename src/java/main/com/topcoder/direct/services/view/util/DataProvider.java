@@ -1556,10 +1556,8 @@ public class DataProvider {
                 stats.setProjectType(row.getStringItem("direct_project_type_name"));
                 stats.setProjectStatus(row.getStringItem("project_status_name"));
                 stats.setProjectFulfillment(row.getDoubleItem("fullfillment"));
-                stats.setTotalBudget(row.getStringItem("planned_budget"));
-                stats.setActualCost(row.getDoubleItem("total_cost"));
-                stats.setProjectedCost(row.getDoubleItem("projected_cost") + row.getDoubleItem("total_cost"));
-                stats.setPlannedCost(0);
+                stats.setTotalBudget(row.getStringItem("total_budget"));
+                stats.setActualCost(row.getDoubleItem("actual_cost"));
                 stats.setStartDate(getDate(row,"create_date"));
                 stats.setCompletionDate(getDate(row,"completion_date"));
                 stats.setTotalContests(row.getIntItem("total_number"));
@@ -1584,6 +1582,11 @@ public class DataProvider {
                 stats.setNumCanceled(row.getIntItem("num_cancelled"));
                 stats.setCostCanceled(row.getDoubleItem("cost_cancelled"));
                 
+                stats.setProjectedCost(row.getDoubleItem("cost_draft") + row.getDoubleItem("cost_scheduled") +
+                		row.getDoubleItem("cost_active") + row.getDoubleItem("cost_finished") +
+                		row.getDoubleItem("cost_cancelled"));
+                
+                stats.setPlannedCost(row.getDoubleItem("planned_cost"));
                 statses.add(stats);
             }        
     }

@@ -7649,6 +7649,200 @@ div.rightColumn .activity TABLE {
     padding-left:20px;
     text-align:left;
 }
+/* project metrics report Page */
+#projectMetricsReports{
+    margin-bottom:20px;
+}
+#projectMetricsReports select{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#000001;
+}
+#projectMetricsReports .filterContainer{
+    position:relative;
+    padding-top:8px;
+    min-height:260px;
+}
+#projectMetricsReports .filterLeftTwoParts{
+    display:block;
+    padding-right:380px;
+    min-height:50px;
+    overflow:hidden;
+    min-width:360px;
+}
+    #projectMetricsReports .filterContainer .filterColumnPart{
+        float:left;
+        width:49.9%;
+        display:inline;
+        overflow:hidden;
+    }
+    #projectMetricsReports .filterContainer .filterColumnThird{
+        position:absolute;
+        right:19px;
+        top:8px;
+        width:380px;
+        min-height:10px;
+        z-index:99;
+    }
+    #projectMetricsReports .filterContainer .mainContentForFilter{
+        padding-top:63px;
+        min-height:50px;
+        overflow:hidden;
+    }
+        #projectMetricsReports .filterContainer .mainContentForFilter .leftFilterContent{
+            width:200px;
+        }
+        #projectMetricsReports .filterContainer .mainContentForFilter .rightFilterContent{
+            margin-top:0px;
+        }
+        #projectMetricsReports .filterContainer .filterProject2 label,
+        #projectMetricsReports .filterContainer .filterCustomerName label,
+        #projectMetricsReports .filterContainer .filterBillingAccount label{
+            line-height:22px;
+            font-weight:bold;
+            padding-bottom:8px;
+            display:block;
+        }
+        #projectMetricsReports .filterContainer .filterProject2 select{
+            width:380px;
+        }
+        #projectMetricsReports .filterContainer .filterCustomerName select,
+        #projectMetricsReports .filterContainer .filterBillingAccount select{
+            width:170px;
+        }
+        
+        #projectMetricsReports .filterContainer #datefilter .filterRow{
+            clear:left;
+            float:none;
+            width:174px;
+            min-width:174px;
+            display:block;
+            min-height:20px;
+            overflow:hidden;
+        }
+        #projectMetricsReports .filterContainer .filterRow{
+            padding-bottom:10px;
+        }
+        #projectMetricsReports .filterContainer #datefilter .firstFilterRow{
+            padding-bottom:19px;
+        }
+        #projectMetricsReports .filterContainer #datefilter .text{
+            width:128px;
+        }
+        #projectMetricsReports .filterContainer #datefilter label{
+            font-size:12px;
+            font-weight:bold;
+            color:#333333;
+            padding-bottom:12px;
+            display:block;
+            line-height:normal;
+            width:auto;
+        }
+        #projectMetricsReports .filterContainer #datefilter .firstFilterRow label{
+            padding-top:16px;
+        }
+        #projectMetricsReports .filterColumnPart .multiSelectArea{
+            width:170px;
+            float:none;
+            display:block;
+        }
+            #projectMetricsReports .filterColumnPart .multiSelectArea .multiSelectAreaInner{
+                width:170px;
+                float:none;
+                display:block;
+            }
+            #projectMetricsReports .multiSelectArea .multiSelectAreaInner label.multiSelectAreaTitle{
+                padding-top:16px;
+            }
+            #projectMetricsReports .filterColumnPart .multiSelectArea .multiSelectBox{
+                width:168px;
+            }
+                #projectMetricsReports .filterColumnPart .multiSelectArea .multiSelectBox .multiOptionRow{
+                    width:146px;
+                }
+                #projectMetricsReports .filterColumnPart .multiSelectArea .multiSelectBox  label{
+                    width:114px;
+                }
+        #projectMetricsReports .filterColumnThird .multiSelectArea{
+            width:380px;
+            float:none;
+            display:block;
+        }
+            #projectMetricsReports .filterColumnThird .multiSelectArea .multiSelectAreaInner{
+                width:380px;
+                float:none;
+                display:block;
+            }
+            #projectMetricsReports .filterColumnThird .multiSelectArea .multiSelectBox{
+                width:378px;
+            }
+                #projectMetricsReports .filterColumnThird .multiSelectArea .multiSelectBox .multiOptionRow{
+                    width:356px;
+                }
+                #projectMetricsReports .filterColumnThird .multiSelectArea .multiSelectBox  label{
+                    width:324px;
+                }
+                
+                #projectMetricsReports a.button6 span.right{
+                    padding:4px 27px 0px;
+                }
+
+
+#projectMetricsReportsSection table.pipelineStats{
+    margin-bottom:0px;
+    }
+#projectMetricsReportsSection th.tableTitle a.expand{
+    background: url(../images/icon-expand.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#fffffe;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+#projectMetricsReportsSection th.tableTitle a.collapse{
+    background: url(../images/icon-collapse.png) no-repeat left center;
+    text-decoration:none;
+    font-size:14px;
+    color:#fffffe;
+    padding-left:20px;
+    display:inline-block;
+    font-weight:bold;
+    height:32px;
+    margin-left: 5px;
+}
+#projectMetricsReportsSection TABLE.pipelineStats TH.tableTitle span{
+    margin-left:6px;
+}
+#projectMetricsReportsSection th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+#projectMetricsReportArea th.viewType{
+    text-align: right;
+    padding-right: 5px;
+}
+
+#projectMetricsReportsSection .pipelineStats thead tr.scData th,
+#projectMetricsReportsSection .pipelineStats thead tr.subTheadRow th{
+    background:#eaeaea url(../images/bg-sub-table-header.png) left top repeat-x;
+    border-right:1px solid #bdbdbd;
+    font-size:12px;
+    padding-left:2px;
+    padding-right:2px;
+}
+
+#projectMetricsReportArea thead tr.scData th,
+#projectMetricsReportArea tbody td{
+    font-size:12px;
+    padding:6px 0px;
+    vertical-align:middle;
+    border:1px solid #ced0d1;
+    border-bottom:none;
+}
+
 /* END ADD 09/08 2011 BUGR-5250 */
 
 /* pipelineReports Page */

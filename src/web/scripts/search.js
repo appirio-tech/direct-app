@@ -653,6 +653,38 @@ $(document).ready(function() {
 
     });
     
+    $.projectReportDataTable = $("#projectMetricsReportsSection .paginatedDataTable").dataTable({
+        "iDisplayLength": 25,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+              "oLanguage": {
+                   "sLengthMenu": sStdMenu + " per page"
+               },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+                { "sType": "html-trimmed" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "direct-projectNumber" },
+                { "sType": "direct-projectNumber" },
+                { "sType": "direct-projectNumber" },
+                { "sType": "direct-projectNumber" },
+                { "sType": "direct-projectNumber" },
+                { "sType": "money" },
+                { "sType": "money" },
+                { "sType": "money" },
+                { "sType": "money" },
+                { "sType": "date-direct" },
+                { "sType": "date-direct" },
+                { "sType": "html" },
+                { "sType": "html" }
+            ]
+
+    });
+    
     $.fn.dataTableExt.afnSortData['dom-checkbox'] = function(oSettings, iColumn) {
         var aData = [];
         $('td:eq('+iColumn+') input', oSettings.oApi._fnGetTrNodes(oSettings) ).each( function () {
