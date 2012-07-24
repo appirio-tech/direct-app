@@ -350,7 +350,7 @@ public class ProjectContestsResultsExportAction extends ContestAction {
                     int read;
 
                     // get the Results and Winners
-                    ZipEntry outputEntry = new ZipEntry(CONTESTS + File.separator + "Winners." + new SimpleDateFormat("MM-dd-yy").format(new Date()) + ".xlsx");
+                    ZipEntry outputEntry = new ZipEntry(CONTESTS + File.separator + "Winners." + new SimpleDateFormat("MM-dd-yy").format(new Date()) + ".xls");
                     zos.putNextEntry(outputEntry);
                     is = DataProvider.generateWinnerSheet(getProjectId());
                     while ((read = is.read(buffer)) != -1) {
@@ -402,7 +402,7 @@ public class ProjectContestsResultsExportAction extends ContestAction {
      *             uploaded file.
      */
     public String getContentDisposition() throws Exception {
-        return "attachment; filename=\"COE.Results." + new SimpleDateFormat("MM-dd-yy").format(new Date()) + ".zip\"";
+        return "attachment; filename=\"Results." + new SimpleDateFormat("MM-dd-yy").format(new Date()) + ".zip\"";
     }
 
     /**
