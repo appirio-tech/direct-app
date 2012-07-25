@@ -26,27 +26,29 @@
     </div>
     <!--End copyright-->
     <!--Add Feedback Dialog-->
-    <div class="fbMask">
-        <div class="fbBox">
-            <a class="fbBtn" href="javascript:;">
-                <span><i>Feedback</i></span>
-            </a>
-            <div class="fbSubmit">
-                <div class="boxTop"></div>
-                <div class="boxContent">
-                    <p>Have some feedback?  Encountered an issue?  Please share with us.</p>
-                    <textarea cols="6" rows="10"></textarea>
-                    <div class="action">
-                        <a href="javascript:;" class="button6 cancel"><span class="left"><span class="right">Cancel</span></span></a>
-                        <a href="javascript:;" class="button6 submit"><span class="left"><span class="right">Submit</span></span></a>
+    <c:if test="${requestScope.CURRENT_TAB ne 'enterprise'}">
+        <div class="fbMask">
+            <div class="fbBox">
+                <a class="fbBtn" href="javascript:;">
+                    <span><i>Feedback</i></span>
+                </a>
+                <div class="fbSubmit">
+                    <div class="boxTop"></div>
+                    <div class="boxContent">
+                        <p>Have some feedback?  Encountered an issue?  Please share with us.</p>
+                        <textarea cols="6" rows="10"></textarea>
+                        <div class="action">
+                            <a href="javascript:;" class="button6 cancel"><span class="left"><span class="right">Cancel</span></span></a>
+                            <a href="javascript:;" class="button6 submit"><span class="left"><span class="right">Submit</span></span></a>
+                        </div>
                     </div>
-                </div>        
+                </div>
+            </div>
+            <div class="fbMsg">
+                <span class="right"><span class="text">Your feedback has been submitted. Thank you.</span></span>
             </div>
         </div>
-        <div class="fbMsg">
-            <span class="right"><span class="text">Your feedback has been submitted. Thank you.</span></span>
-        </div>
-    </div>
+    </c:if>
     <!--End .fbMask--> 
 </div>
 

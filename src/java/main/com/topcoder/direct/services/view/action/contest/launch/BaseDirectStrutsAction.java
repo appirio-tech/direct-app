@@ -119,8 +119,16 @@ import java.util.List;
  * </ul>
  * </p>
  *
+ * <p>
+ * Version 1.8 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
+ * <ul>
+ *     <li>
+ *         Update {@link #getProjects()} to add a project status request parameter.
+ *     </li>
+ * </ul>
+ * </p>
  * @author fabrizyo, FireIce, murphydog, GreatKevin
- * @version 1.7
+ * @version 1.8
  */
 public abstract class BaseDirectStrutsAction extends com.topcoder.direct.services.view.action.AbstractAction  {
     /**
@@ -416,10 +424,12 @@ public abstract class BaseDirectStrutsAction extends com.topcoder.direct.service
 
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_projects");
+        String myProjectsHandle = "direct_my_projects_v2";
+        request.setContentHandle(myProjectsHandle);
         request.setProperty("uid", String.valueOf(getCurrentUser().getUserId()));
+        request.setProperty("directProjectStatusId", "1");
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(myProjectsHandle);
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");

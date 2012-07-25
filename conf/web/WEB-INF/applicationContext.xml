@@ -330,6 +330,14 @@
           abstract="true">
     </bean>
 
+    <bean id="enterpriseDashboardEntryAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.BaseDashboardAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
+
+    <bean id="enterpriseDashboardFinancialAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.DashboardFinancialAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
+
     <bean id="launchContestAction" class="com.topcoder.direct.services.view.action.contest.launch.LaunchContestAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>

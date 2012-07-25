@@ -3,31 +3,63 @@
  */
 package com.topcoder.direct.services.view.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
+import com.topcoder.clients.invoices.model.InvoiceType;
+import com.topcoder.direct.services.configs.ConfigUtils;
+import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
+import com.topcoder.direct.services.exception.DirectException;
+import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
+import com.topcoder.direct.services.view.dto.*;
+import com.topcoder.direct.services.view.dto.contest.*;
+import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
+import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
+import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
+import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
+import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
+import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
+import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
+import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
+import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
+import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
+import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
+import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
+import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.management.deliverable.Submission;
+import com.topcoder.management.deliverable.Upload;
+import com.topcoder.security.TCSubject;
+import com.topcoder.service.facade.contest.CommonProjectContestData;
+import com.topcoder.service.facade.contest.ProjectSummaryData;
+import com.topcoder.service.project.ProjectData;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
+import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
+import com.topcoder.shared.util.DBMS;
+import com.topcoder.web.common.CachedDataAccess;
+import com.topcoder.web.common.cache.MaxAge;
+import com.topcoder.web.common.tag.HandleTag;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
@@ -54,97 +86,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.w3c.dom.Document;
-
-import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
-import com.topcoder.clients.invoices.model.InvoiceType;
-import com.topcoder.direct.services.configs.ConfigUtils;
-import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
-import com.topcoder.direct.services.exception.DirectException;
-import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
-import com.topcoder.direct.services.view.dto.ActivityDTO;
-import com.topcoder.direct.services.view.dto.ActivityType;
-import com.topcoder.direct.services.view.dto.CoPilotStatsDTO;
-import com.topcoder.direct.services.view.dto.IdNamePair;
-import com.topcoder.direct.services.view.dto.LatestActivitiesDTO;
-import com.topcoder.direct.services.view.dto.MemberPhotoDTO;
-import com.topcoder.direct.services.view.dto.SoftwareContestWinnerDTO;
-import com.topcoder.direct.services.view.dto.TcJiraIssue;
-import com.topcoder.direct.services.view.dto.TopCoderDirectFactsDTO;
-import com.topcoder.direct.services.view.dto.UpcomingActivitiesDTO;
-import com.topcoder.direct.services.view.dto.UserDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestCopilotDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestDashboardDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestFinalFixDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestReceiptDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestRegistrantDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatsDTO;
-import com.topcoder.direct.services.view.dto.contest.ContestStatus;
-import com.topcoder.direct.services.view.dto.contest.ContestType;
-import com.topcoder.direct.services.view.dto.contest.DependenciesStatus;
-import com.topcoder.direct.services.view.dto.contest.DependencyDTO;
-import com.topcoder.direct.services.view.dto.contest.ForumPostDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseDTO;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseStatus;
-import com.topcoder.direct.services.view.dto.contest.ProjectPhaseType;
-import com.topcoder.direct.services.view.dto.contest.RegistrationStatus;
-import com.topcoder.direct.services.view.dto.contest.ReviewersSignupStatus;
-import com.topcoder.direct.services.view.dto.contest.RunningPhaseStatus;
-import com.topcoder.direct.services.view.dto.contest.SoftwareContestSubmissionsDTO;
-import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionDTO;
-import com.topcoder.direct.services.view.dto.contest.SoftwareSubmissionReviewDTO;
-import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
-import com.topcoder.direct.services.view.dto.copilot.CopilotProjectDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardContestSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardMemberSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardProjectSearchResultDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardContestStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardDetailedProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardStatType;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
-import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
-import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
-import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
-import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
-import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
-import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
-import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
-import com.topcoder.management.deliverable.Submission;
-import com.topcoder.management.deliverable.Upload;
-import com.topcoder.security.TCSubject;
-import com.topcoder.service.facade.contest.CommonProjectContestData;
-import com.topcoder.service.facade.contest.ProjectSummaryData;
-import com.topcoder.service.project.ProjectData;
-import com.topcoder.shared.dataAccess.DataAccess;
-import com.topcoder.shared.dataAccess.Request;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
-import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer.ResultSetRow;
-import com.topcoder.shared.dataAccess.resultSet.TCResultItem;
-import com.topcoder.shared.util.DBMS;
-import com.topcoder.web.common.CachedDataAccess;
-import com.topcoder.web.common.cache.MaxAge;
-import com.topcoder.web.common.tag.HandleTag;
-import org.w3c.dom.Document;
 import org.xhtmlrenderer.pdf.ITextRenderer;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * <p>An utility class providing the methods for getting various data from persistent data store. Such a data is usually
@@ -563,6 +517,16 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
  * </ol>
  * </p>
  *
+ *
+ * <p>
+ * Version 4.3 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
+ * <ol>
+ *     <li>Update method {@link #getUserProjects(long)}  and {@link #getUserProjectsList(long)}</li>
+ *     <li>Add method {@link #getAllDirectProjectStatus()}</li>
+ *     <li>Add method {@link #getEnterpriseDashboardProjectsFinancialInfo(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)}</li>
+ *     <li>Add method {@link #getEnterpriseDashboardTotalSpend(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)}</li>
+ * </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy
  * @version 4.3
  * @since 1.0
@@ -1351,12 +1315,13 @@ public class DataProvider {
     public static List<ProjectBriefDTO> getUserProjects(long userId) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_projects");
+        request.setContentHandle("direct_my_projects_v2");
         request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("directProjectStatusId", "1");
 
         List<ProjectBriefDTO> projects = new ArrayList<ProjectBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects_v2");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -1399,12 +1364,13 @@ public class DataProvider {
     public static List<ProjectBriefDTO> getUserProjectsList(long userId) throws Exception {
         DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
         Request request = new Request();
-        request.setContentHandle("direct_my_projects");
+        request.setContentHandle("direct_my_projects_v2");
         request.setProperty("uid", String.valueOf(userId));
+        request.setProperty("directProjectStatusId", "0");
 
         List<ProjectBriefDTO> projects = new ArrayList<ProjectBriefDTO>();
 
-        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects");
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_projects_v2");
         final int recordNum = resultContainer.size();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "tc_direct_project_id");
@@ -2384,6 +2350,30 @@ public class DataProvider {
         final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
         for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
             map.put(row.getLongItem("project_category_id"), row.getStringItem("name"));
+        }
+
+        return map;
+    }
+
+    /**
+     * Gets all the direct project status from the persistence. The key is the status id, the value
+     * is the status name.
+     *
+     * @return the map of the direct project status.
+     * @throws Exception if an error occurs.
+     * @since 4.3
+     */
+    public static Map<Long, String> getAllDirectProjectStatus() throws Exception {
+        Map<Long, String> map = new LinkedHashMap<Long, String>();
+
+        final String queryName = "all_direct_project_status";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            map.put(row.getLongItem("direct_project_status_id"), row.getStringItem("direct_project_status_name"));
         }
 
         return map;
@@ -5185,6 +5175,167 @@ public class DataProvider {
             projectGeneralInfo.setProjectedCost(projectGeneralInfo.getActualCost());
         }
         
+    }
+
+    /**
+     * Gets the direct project ids filtered out by the enterprise dashboard filter.
+     *
+     * @param filterForm the filter form.
+     * @return an array of filtered direct project ids.
+     * @throws Exception if an error occurs.
+     * @since 4.3
+     */
+    private static long[] getEnterpriseDashboardFilteredProjectIds(EnterpriseDashboardFilterForm filterForm)
+            throws Exception {
+
+        if(filterForm.getDirectProjectId() != 0) {
+            return new long[] {filterForm.getDirectProjectId()};
+        }
+
+        // get the set of the projects for the client
+        Map<Long, String> projects = DirectUtils.getProjectsForClient(DirectUtils.getTCSubjectFromSession(), filterForm.getClientId());
+
+        if (projects == null || projects.size() == 0) {
+            return new long[0];
+        }
+
+        long[] projectIds = new long[projects.size()];
+        int count = 0;
+        for (Long id : projects.keySet()) {
+            projectIds[count++] = id;
+        }
+
+        String tcDirectProjectIds = concatenate(projectIds, ", ");
+
+        // page size should start from 0
+        String pagination = "SKIP " + filterForm.getPageSize() * filterForm.getPageNumber() + " FIRST " + filterForm.getPageSize();
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_filter_projects";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("pagination", pagination);
+        request.setProperty("directProjectStatusId", String.valueOf(filterForm.getProjectStatusId()));
+        request.setProperty("tcdirectids", tcDirectProjectIds);
+        request.setProperty("metakeyid", String.valueOf(filterForm.getProjectFilterId()));
+        request.setProperty("metavalue", filterForm.getProjectFilterValue());
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        long[] result = new long[recordNum];
+        for (int i = 0; i < recordNum; i++) {
+            long tcDirectProjectId = resultContainer.getLongItem(i, "project_id");
+            result[i] = tcDirectProjectId;
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the enterprise dashboad total spend data.
+     *
+     * @param filterForm the <code>EnterpriseDashboardFilterForm</code> instance
+     * @return a list of <code>EnterpriseDashboardTotalSpendDTO</code>
+     * @throws Exception if any error occurs.
+     * @since 4.3
+     */
+    public static List<EnterpriseDashboardTotalSpendDTO> getEnterpriseDashboardTotalSpend(
+            EnterpriseDashboardFilterForm filterForm) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
+
+        if(projectIds == null || projectIds.length == 0) {
+            return new ArrayList<EnterpriseDashboardTotalSpendDTO>();
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_total_spend";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+        DateFormat sourceDataFormatter = new SimpleDateFormat("MMM''yy");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(sourceDataFormatter.parse(filterForm.getStartMonth()));
+        calendar.add(Calendar.MONTH, -2);
+        request.setProperty("sdt", dateFormatter.format(calendar.getTime()));
+        request.setProperty("edt", dateFormatter.format(sourceDataFormatter.parse(filterForm.getEndMonth())));
+
+        long startMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
+
+        calendar.setTime(sourceDataFormatter.parse(filterForm.getEndMonth()));
+
+        long endMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
+
+        Map<Long, EnterpriseDashboardTotalSpendDTO> resultMap = new LinkedHashMap<Long, EnterpriseDashboardTotalSpendDTO>();
+        for(long m = startMonthCount; m <= endMonthCount; m++) {
+            EnterpriseDashboardTotalSpendDTO item = new EnterpriseDashboardTotalSpendDTO();
+            item.setTotalSpend(0);
+            int year = (int) m / 12;
+            int month = (int) m % 12;
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            item.setDate(calendar.getTime());
+            resultMap.put(m, item);
+        }
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+            double monthCost = resultContainer.getDoubleItem(i, "monthcost");
+            EnterpriseDashboardTotalSpendDTO item = resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
+            item.setTotalSpend((long)Math.round(monthCost));
+        }
+
+        List<EnterpriseDashboardTotalSpendDTO> result = new ArrayList<EnterpriseDashboardTotalSpendDTO>(resultMap.values());
+
+        for(int i = 2; i < result.size(); ++i) {
+            long average = (result.get(i).getTotalSpend() + result.get(i - 1).getTotalSpend() + result.get(i - 2).getTotalSpend()) / 3;
+            result.get(i).setAverageSpend(average);
+        }
+
+        return result.subList(2, result.size());
+    }
+
+    /**
+     * Gets the enterprise dashboard financial section data.
+     *
+     * @param form the <code>EnterpriseDashboardProjectFinancialDTO</code> instance
+     * @return a list of <code>EnterpriseDashboardTotalSpendDTO</code>
+     * @throws Exception if any error occurs
+     * @since 4.3
+     */
+    public static List<EnterpriseDashboardProjectFinancialDTO> getEnterpriseDashboardProjectsFinancialInfo(
+            EnterpriseDashboardFilterForm form) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(form);
+        List<EnterpriseDashboardProjectFinancialDTO> result = new ArrayList<EnterpriseDashboardProjectFinancialDTO>();
+
+        if(projectIds == null || projectIds.length == 0) {
+            // return empty result
+            return result;
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_projects_financial";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            EnterpriseDashboardProjectFinancialDTO item = new EnterpriseDashboardProjectFinancialDTO();
+            item.setProjectId(resultContainer.getLongItem(i, "tc_direct_project_id"));
+            item.setProjectName(resultContainer.getStringItem(i, "tc_direct_project_name"));
+            item.setBudget(resultContainer.getLongItem(i,"tc_direct_project_budget"));
+            item.setActualCost(Math.round(resultContainer.getDoubleItem(i, "total_cost")));
+            item.setPlannedCost(Math.round(resultContainer.getDoubleItem(i, "total_planned_cost")));
+            result.add(item);
+        }
+
+        return result;
     }
 
     /**

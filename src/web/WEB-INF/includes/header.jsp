@@ -23,6 +23,7 @@
   - Version 1.6.3 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0) : add edit project button
   - Version 1.6.4 (Module Assembly - TC Cockpit Project Milestones Management Front End) : add the milestone tab for project
   - Version 1.6.5 (Module Assembly - TC Cockpit Project Contests Batch Edit ): add the dropdown menu for the contests tab in the project section
+  - Version 1.6.6 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part): add the new enterprise dashboard
 --%>
 <%@ page import="com.topcoder.direct.services.view.action.cloudvm.DashboardVMAction" %>
 <%@ page import="com.topcoder.direct.services.view.util.DirectUtils" %>
@@ -55,6 +56,9 @@
             <c:choose>
                 <c:when test="${requestScope.CURRENT_TAB eq 'overview'}">
                     <a href="javascript:;" class="logo overviewLogo">Dashboard</a>
+                </c:when>
+                <c:when test="${requestScope.CURRENT_TAB eq 'enterprise'}">
+                    <a class="logo" href="javascript:;"> <img alt="Enterprise Dashboard" src="/images/enterprise_dashboard_logo.png"></a>
                 </c:when>
                 <c:otherwise>
                     <a href="<s:url action="dashboardActive" namespace="/"/>" class="logo">
@@ -311,23 +315,24 @@
     </ui:isProjectPage>
 
     <ui:isDashboardPage>
-        <div id="tabs1">
-             <ul>
-                 <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
-                     <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span class="dashboardSpan">Overview</span></a>
-                 </li>
-				<li <c:if test="${requestScope.CURRENT_TAB eq 'active'}">class="on"</c:if>>
-                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
-                </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
-                    <a href="<s:url action="calendar" namespace="/"/>"><span class="dashboardSpan">Roadmap</span></a>
-                </li>
-                <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
-                    <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
-                </li>
-             </ul>
-        </div>
-            
+        <c:if test="${requestScope.CURRENT_TAB ne 'enterprise'}">
+            <div id="tabs1">
+                 <ul>
+                     <li <c:if test="${requestScope.CURRENT_TAB eq 'overview'}">class="on"</c:if>>
+                         <a href="<s:url action="dashboardEnterprise" namespace="/"/>"><span class="dashboardSpan">Overview</span></a>
+                     </li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'active'}">class="on"</c:if>>
+                        <a href="<s:url action="dashboardActive" namespace="/"/>"><span class="dashboardSpan">Active Contests</span></a>
+                    </li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'dashboard'}">class="on"</c:if>>
+                        <a href="<s:url action="calendar" namespace="/"/>"><span class="dashboardSpan">Roadmap</span></a>
+                    </li>
+                    <li <c:if test="${requestScope.CURRENT_TAB eq 'latest'}">class="on"</c:if>>
+                        <a href="<s:url action="dashboardLatest" namespace="/"/>"><span class="dashboardSpan">Latest Activities</span></a>
+                    </li>
+                 </ul>
+            </div>
+        </c:if>
      </ui:isDashboardPage>
      
      <ui:isCopilotPage>
@@ -368,5 +373,6 @@
         </ul>
     </div><!-- End #tabs2 -->
 </div><!-- End #header -->
-
-<jsp:include page="modalWindows.jsp"/>
+<c:if test="${requestScope.CURRENT_TAB ne 'enterprise'}">
+    <jsp:include page="modalWindows.jsp"/>
+</c:if>
