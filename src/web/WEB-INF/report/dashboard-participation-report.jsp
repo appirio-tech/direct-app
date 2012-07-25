@@ -226,9 +226,9 @@
             <th class="tableColumn">Total<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
-            <th class="tableColumn">Milestone<br />Winners</th>
-            <th class="tableColumn">Final<br />Winners</th>
-            <th class="tableColumn">Total<br />Winners</th>
+            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Final<br />Wins</th>
+            <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
             <th class="tableColumn">Winner<br />Countries</th>
         </tr>
