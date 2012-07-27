@@ -107,6 +107,8 @@ public class UpdateJIRAIssueAction extends JIRAAttachmentBaseAction {
                 new RemoteFieldValue(config.getPrizeFieldId(), new String[] {String.valueOf(issue.getFirstPlacePayment())}),
                 // TCO Points
                 new RemoteFieldValue(config.getTcoPointsFieldId(), new String[] {String.valueOf(issue.getTcoPoints())}),
+                // bug type
+                new RemoteFieldValue(config.getBugTypeFieldId(), new String[] {issue.getType()}),
                 // Security Level
                 new RemoteFieldValue("security", new String[] {String.valueOf(securityLevelId)})
         };

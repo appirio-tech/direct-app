@@ -145,6 +145,11 @@ public class TcJiraIssue implements Serializable {
     private RemoteAttachment[] attachments;
     
     /**
+     * The bug type of the issue.
+     */
+    private String type;
+    
+    /**
      * Creates a TcJiraIssue instance.
      */
     public TcJiraIssue() {
@@ -652,5 +657,23 @@ public class TcJiraIssue implements Serializable {
             
         }
         return attachments;
+    }
+    
+    /**
+     * Gets the bug type of the issue.
+     * 
+     * @return the bug type of the issue.
+     */
+    public String getType() {
+        RemoteCustomFieldValue[] customValues = this.issue.getCustomFieldValues();
+        for (RemoteCustomFieldValue rcf : customValues) {
+            if (rcf.getCustomfieldId().trim().toLowerCase().equals(
+                    ConfigUtils.getIssueTrackingConfig().getBugTypeFieldId().trim().toLowerCase())) {
+                return rcf.getValues()[0];
+            }
+        }
+
+        // not found, return -1 by default
+        return "-1";
     }
 }

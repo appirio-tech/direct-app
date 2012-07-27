@@ -38,16 +38,6 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
      * <p>Represents the serial version unique id.</p>
      */
     private static final long serialVersionUID = 101024028591L;
-
-    /**
-     * <p>Represents the default Bug Type of software contest bug.</p>
-     */
-    private static final String DEFAULT_SOFTWARE_BUG_TYPE = "Bug Fix";
-    
-    /**
-     * <p>Represents the default Bug Type of studio contest bug.</p>
-     */
-    private static final String DEFAULT_STUDIO_BUG_TYPE = "Studio Bug";
     
     /**
      * <p>A <code>JIRAIssueForm</code> instance holding the data submitted by user.</p>
@@ -123,7 +113,6 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
         
         SoftwareCompetition competition = contestServiceFacade.getSoftwareContestByProjectId(currentUser, projectId);
         DirectUtils.setSoftwareCompetitionDirectProjectName(competition, getProjects());
-        String bugType = DirectUtils.isStudio(competition)? DEFAULT_STUDIO_BUG_TYPE : DEFAULT_SOFTWARE_BUG_TYPE;
         
         // create a new JIRA issue
         RemoteIssue remoteIssue = new RemoteIssue();
@@ -153,7 +142,7 @@ public class CreateJIRAIssueAction extends JIRAAttachmentBaseAction {
                 createRemoteCustomFieldValue(config.getApplicationNameFieldId(),
                         competition.getProjectHeader().getTcDirectProjectName()),
                 // Bug Type
-                createRemoteCustomFieldValue(config.getBugTypeFieldId(), bugType)
+                createRemoteCustomFieldValue(config.getBugTypeFieldId(), issue.getType())
         });
         
         TcJiraIssue newIssue = JiraRpcServiceWrapper.createIssue(

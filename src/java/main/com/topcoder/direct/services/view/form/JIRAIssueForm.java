@@ -58,6 +58,11 @@ public class JIRAIssueForm implements Serializable {
     private boolean cca;
     
     /**
+     * <p>Represents the bug type.<p>
+     */
+    private String type;
+    
+    /**
      * <p>Empty constructor.</p>
      */
     public JIRAIssueForm() {
@@ -206,5 +211,23 @@ public class JIRAIssueForm implements Serializable {
      */
     public void setCca(boolean cca) {
         this.cca = cca;
+    }
+
+    /**
+     * <p>Gets the bug type.</p>
+     * 
+     * @return the bug type.
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * <p>Sets the bug type.</p>
+     * 
+     * @param type the bug type to set
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 }

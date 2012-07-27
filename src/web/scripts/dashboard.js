@@ -1068,6 +1068,7 @@ $(document).ready(function(){
         $("#bugRace .issueSelectionContent .firstPayment").val(rowItem.find(".prize").val());
         $("#tcoPoints").val(rowItem.find(".tcoPoints").val());
         $("#cca").attr("checked", rowItem.find("input.issueCCA").val() == "true" ? "checked" : "");
+		$("#bugType").val(rowItem.find("input.issueType").val());
         $("#bugRace .viewAll").hide();
         
         var names = [];
@@ -1090,6 +1091,7 @@ $(document).ready(function(){
         row.find("input.tcoPoints").val(bugRace.tcoPoints);
         row.find("input.issueId").val(bugRace.issueId);
         row.find("input.issueCCA").val($("#cca").is(":checked") ? "true" : "false");
+		row.find("input.issueType").val($("#bugType").val());
         row.find("p.issueLink a").attr("href", bugRace.issueLink).html(bugRace.projectName + " / " + bugRace.issueKey);
         row.find("p.issueName a").attr("href", bugRace.issueLink).text(bugRace.issueSummary);
         row.find("div.shortDetails dd.issueStatus strong").addClass(bugRace.issueStatusClass).html(bugRace.statusName);
@@ -1247,6 +1249,7 @@ $(document).ready(function(){
                             rowItem.find(".issueContestHead .issueName a").text($("#issueName").val());
                             rowItem.find("dd.issuePrize").html("$" + parseFloat($("#firstPayment").val()).formatMoney(2));
                             rowItem.find(".issueCCA").val($("#cca").is(":checked") ? "true" : "false");
+							rowItem.find(".issueType").val($("#bugType").val());
                             
                             $('.issueSelectionContent .content').show();
                             $('.issueSelectionContent .inputContainer').hide();

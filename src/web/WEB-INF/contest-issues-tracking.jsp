@@ -129,6 +129,7 @@
                                                         <input type="hidden" class="tcoPoints" value="${bugRace.TCOPoints}"/>
                                                         <input type="hidden" class="issueId" value="${bugRace.issueId}"/>
                                                         <input type="hidden" class="issueCCA" value="${bugRace.cca}"/>
+                                                        <input type="hidden" class="issueType" value="${bugRace.type}"/>
                                                         <!-- head -->
                                                         <div class="issueContestHead">
                                                             <div class="bugContestTitle">
@@ -259,6 +260,7 @@
                                                             <input type="hidden" class="tcoPoints" value=""/>
                                                             <input type="hidden" class="issueId" value=""/>
                                                             <input type="hidden" class="issueCCA" value="false"/>
+                                                            <input type="hidden" class="issueType" value=""/>
                                                             <!-- head -->
                                                             <div class="issueContestHead">
                                                                 <div class="bugContestTitle">
@@ -411,6 +413,14 @@
                                                             <option value="30">30</option>
                                                         </select>
                                                         <p>Select the amount of TCO Mod Dash points that this Bug Race is worth. Bug Races with TCO Points are part of the Mod Dash. Set the amount <br />to 0 (zero) if you do not want to include your Bug Race in the TCO tournament.</p>
+                                                    </div>
+                                                    <label>Issue Type:</label>
+                                                    <div class="row">
+                                                        <select id="bugType" name="issue.type">
+                                                            <option value="Bug Fix">Bug Fix</option>
+                                                            <option value="Studio Bug">Studio Bug</option>
+                                                        </select>
+                                                        <p class="projectText">Bug Races in Studio Bug type will show up in <a href="http://studio.topcoder.com/?module=ViewActiveBugRaces">Active Studio Bug Race Competitions</a> list.</p>
                                                     </div>
                                                     <div id="existingAtt">
                                                     <label>Existing Attachments:</label>
