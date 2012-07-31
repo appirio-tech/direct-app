@@ -180,7 +180,7 @@
                     <div id="area1"><!-- the main area -->
                         <div class="area1Content">
 
-                            <div class="spaceWhite"></div>
+                            <div class="spaceWhite"><a href="<s:url action="overview" namespace="/enterpriseDashboard"/>" class="enterpriseDashboardBeta">Try the NEW Enterprise Dashboard</a></div>
                             <div class="dashboardTable">
                                 <dl>
                                     <dt>

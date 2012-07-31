@@ -1392,4 +1392,15 @@ td.fontGreen{
     top: auto;
     width: 7px;
 }
+
+.enterpriseDashboardBeta {
+    float: right;
+    color: #E10000;
+    font-size: 11px;
+    line-height: 25px;
+    text-decoration: underline;
+    background: url("../images/beta-icon.gif") no-repeat scroll center right transparent;
+    padding-right:45px;
+    display: inline-block;
+}
 /* end */
