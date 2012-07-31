@@ -259,7 +259,7 @@
             <result name="success">/WEB-INF/dashboard-create-project.jsp</result>
         </action>
 
-         <action name="createNewProject" class="com.topcoder.direct.services.view.action.ForwardAction">
+         <action name="createNewProject" class="com.topcoder.direct.services.view.action.project.CreateProjectViewAction">
             <interceptor-ref name="securedPreProcessorStack"/>
             <result name="success">/WEB-INF/dashboard-create-new-project.jsp</result>
         </action>
