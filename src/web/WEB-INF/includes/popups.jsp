@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin, TCSASSEMBLER
-  - Version: 2.2
+  - Author: winsty, GreatKevin, TCSASSEMBLER, TCSASSEMBLY
+  - Version: 2.3
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -46,6 +46,9 @@
   -
   - Version 2.2 - Release Assembly - TopCoder Cockpit Software Milestone Management
   - - Add modal windows for software milestone management
+  -
+  - Version 2.3 - Release Assembly - TC Direct Project Forum Configuration Assembly
+  - - Added popup for forum configuration
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -1431,6 +1434,91 @@
                             </div>
                         </div>
         </s:if>
+
+        <div id="createForumConfirmModal" class="outLay newModal">
+            <div class="barTop">
+                <div class="barTopR"><div class="barTopM"></div></div>
+            </div>
+            <div class="barMid">
+                <div class="barMidR"><div class="barMidM">
+                    <!-- title -->
+                    <div class="modal-title">
+                        <h2>INSERT CUSTOM FORUM CONFIRMATION</h2>
+                        <a href="javascript:;" class="closeModal">Close</a>
+                    </div>
+                    <!-- End .modal-title -->
+                    <!-- content -->
+                    <div class="modal-content">
+                        <div class="modalContainer">
+                            <dl>
+                                <dd>
+                                    You've successfully created a Custom forum. It wil appear under the Forum list, So you can insert another Forum or you can delete an existing one, You Must have one Forum in the List.
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="buttonArea">
+                            <a href="javascript:;" title="OK" class="closebutton button6"><span class="left"><span class="right">OK</span></span></a>
+                        </div>
+                </div>
+                <!-- End .content --> 
+            </div></div>
+        </div>
+        <div class="barBot">
+            <div class="barBotR"><div class="barBotM"></div></div>
+        </div>
+    </div>
+
+        <div id="createForumModal" class="outLay newModal">
+        <div class="modalTop"><div class="modalBottom"><div class="modalBg">
+            <div class="inner">
+                <!-- title -->
+                <div class="modal-title">
+                    <h2>INSERT CUSTOM FORUM</h2>
+                    <a href="javascript:;" class="closeModal">Close</a>
+                </div>
+                <!-- End .modal-title -->
+                <!-- content -->
+                <div class="modal-content">
+                    <div class="addUserForm">
+                        <div class="forumModelContent">
+                            <!-- form -->
+                            <div class="form">
+                                <!-- row -->
+                                <div class="row projectName">
+                                    <span class="intro">All fields marked with <span class="red">*</span> are mandatory</span>
+                                </div>
+                                <!-- row -->
+                                <div class="row projectName">
+                                    <a href="javascript:;" class="toolTip" id="toolTip1" rel='&lt;p&gt;&lt;b&gt;30 characters max.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Examples: "XYZ System Upgrade",&lt;/p&gt; &lt;p&gt;"ABC Refactoring", "XYZ Website" etc.&lt;/p&gt;'></a>
+                                    <label>Forum Name <span class="red">*</span></label>
+                                    <input type="text" class="text" maxlength="30" /> 
+                                    <div class="clear"></div> 
+                                    <p class="message"/>
+                                </div>
+                                <!-- End .row -->
+                                <!-- row -->
+                                <div class="row descProject">
+                                    <a href="javascript:;" class="toolTip" id="toolTip2" rel="&lt;p&gt;&lt;b&gt;A short description about the project,&lt;/b&gt; such as:&lt;/p&gt;&lt;p&gt;Is this a new application or an upgrade of an existing application ?&lt;/p&gt; &lt;p&gt;What is the scope of your project ?&lt;/p&gt;&lt;p&gt;What application do you want to build ?&lt;/p&gt;&lt;p&gt;What is your main objective for building the application ?&lt;/p&gt;"></a>
+                                    <label>Description<span class="red">*</span></label>
+                                    <textarea rows="10" cols="10" ></textarea> 
+                                    <div class="clear"></div> 
+                                    <p class="message"/>
+                                </div>
+                                <!-- End .row -->  
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="buttonArea">
+                        <a href="javascript:;" title="SAVE" class="button6 saveButton1"><span class="left"><span class="right">INSERT</span></span></a>
+                        <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                    </div>
+                </div>
+                <!-- End .content -->
+            </div>
+        </div></div></div>
+    </div>
     </div>
 
     <s:if test='%{#request.CURRENT_TAB == "milestone"}'>

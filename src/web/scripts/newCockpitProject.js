@@ -13,8 +13,11 @@
  *              updated to remove the messy using of stepsChoices['step1'] and use activeProjectType instead.
  *              updated stepsChoices['step4'] to stepsChoices['require-copilot-step'].
  *
- * @author: KennyAlive, TCSASSEMBLER
- * @version 1.2
+ * @version 1.3 (Release Assembly - TC Direct Project Forum Configuration Assembly) change notes:
+ *              added forums configuration for new custom project creation flow.
+ *
+ * @author: KennyAlive, TCSASSEMBLER, TCSASSEMBLY
+ * @version 1.3
  */
  
  var PROJECT_TYPE_CUSTOM = 0;
@@ -324,9 +327,10 @@ var createNewProject = function() {
     var projectName = $("#newProjectName").val();
     var projectDescription = $("#newProjectDescription").val();
     var permissions = [];
+    var forums = [];
     var request = {};
     
-    var permissionsRows; 
+    var permissionsRows;
     if (projectType == PROJECT_TYPE_CUSTOM) {
         permissionsRows = $('#newProjectStep5 .userRow');
     } else if (projectType == PROJECT_TYPE_ANALYTICS) {
@@ -358,6 +362,21 @@ var createNewProject = function() {
                 permissions.push(permission);
             }
         });
+    }
+    
+    // get forums configuration
+    if (projectType == PROJECT_TYPE_CUSTOM) {
+        $('.stepSixth .forums tr').each(function(i) {
+            if (i >= 2) {
+                var forum = {};
+                forum['forumName'] = $(this).find('td:eq(0) span').html();
+                forum['forumDescription'] = $(this).find('td:eq(1) span').html();
+                forums.push(forum);
+            }
+        });
+        if (forums.length > 0) {
+            request['forums'] = forums;
+        }
     }
 
     request['createCopilotPosting'] = true;   
@@ -402,7 +421,7 @@ var createNewProject = function() {
                         var projectId = result.projectId;
                         modalClose();
                         generateConfirmationPage(projectId, projectName);
-                        goCreateProjectStep(6);
+                        goCreateProjectStep(7);
                     } else if (projectType == PROJECT_TYPE_MOBILE) {
                         $("#infoModalMobile").unbind("click").click(function() {
                             window.location.href = '/direct/projectOverview?formData.projectId=' + result.projectId;
@@ -952,7 +971,7 @@ $(document).ready(function() {
     // close the modal window
     addresscloseModal = function() {
         $('#modalBackground').hide();
-        $('#errortModal,#detailModal,#gamePlanModal,#addUserModal,#deleteUserModal,#deleteConfirmModal,#alertModal,#selectionConfirmationModal,#createPostingModal,#customConfirmModal,#errorcModal,#createProjectConfirm,#errortModalStep4').hide();
+        $('#errortModal,#detailModal,#gamePlanModal,#addUserModal,#deleteUserModal,#deleteConfirmModal,#alertModal,#selectionConfirmationModal,#createPostingModal,#customConfirmModal,#errorcModal,#createProjectConfirm,#errortModalStep4,#createForumModal,#createForumConfirmModal').hide();
     }
 
     // reposition the modal window when the browser size is changed
@@ -1329,7 +1348,7 @@ $(document).ready(function() {
     $('#alertModal .step6Button').live('click', function() {
         addresscloseModal();
         if (activeProjectType == PROJECT_TYPE_CUSTOM) {
-            addressLoadModal('#createProjectConfirm');
+            goCreateProjectStep(6);
         } else if (activeProjectType == PROJECT_TYPE_ANALYTICS) {
             goAnalyticsProjectStep(7);
         }

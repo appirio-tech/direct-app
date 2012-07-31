@@ -10,8 +10,11 @@
  *              updated to remove the messy using of stepsChoices['step1'] and use activeProjectType instead.
  *              updated stepsChoices['step4'] to stepsChoices['require-copilot-step'].
  *
- * @author: KennyAlive, TCSASSEMBLER
- * @version 1.1
+ * @version 1.2 (Release Assembly - TC Direct Project Forum Configuration Assembly) change notes:
+ *              added functions for manage forums page and popups.
+ *
+ * @author: KennyAlive, TCSASSEMBLER, TCSASSEMBLY
+ * @version 1.2
  */
  
 function initCustomProjectFlow() {
@@ -19,6 +22,7 @@ function initCustomProjectFlow() {
     initCustomStep2();
     initCustomStep4();
     initCustomStep5();
+    initCustomStep6();
 }
 
 /**
@@ -27,7 +31,7 @@ function initCustomProjectFlow() {
  * @param stepNumber the step number from 1 - 6.
  */
 var goCreateProjectStep = function(stepNumber) {
-    if (stepNumber < 1 || stepNumber > 6) {
+    if (stepNumber < 1 || stepNumber > 7) {
         return;
     }
 
@@ -199,17 +203,83 @@ function initCustomStep5() {
         var hasUserPermissionAdded = ($('#newProjectStep5 .stepFifth .checkPermissions .userRow').length >0);
         if ($('.addUserPlan').is(":visible")) {
             if ((!hasUserPermissionAdded)) {
-
                 addresscloseModal();
                 addressLoadModal('#alertModal');
-
             } else {
-                addresscloseModal();
-                addressLoadModal('#createProjectConfirm');
+                goCreateProjectStep(6);
             }
         } else {
             addresscloseModal();
             addressLoadModal('#alertModal');
         }
+        return false;
     });
+}
+
+//-----------------------------------------------
+//Step 6
+//-----------------------------------------------
+function initCustomStep6() {
+    $('#newProjectStep6 .stepSixth .geryContent .nextStepButton').click(function() {
+        addresscloseModal();
+        addressLoadModal('#createProjectConfirm');
+    });
+
+    $('.stepSixth .addForum').click(function(){
+        $('#createForumModal input, #createForumModal textarea').val('');
+        addresscloseModal();
+        addressLoadModal('#createForumModal');
+    });    
+ 
+    $("#createForumModal .projectName input.text,#createForumModal .descProject textarea").keyup(function() {
+        removeError($(this));
+    });
+
+    $('#createForumModal .saveButton1').click(function() {
+        removeError($("#createForumModal .descProject textarea"));
+        var valid1 =  validateForum($("#createForumModal .descProject textarea")); 
+
+        removeError($("#createForumModal .projectName input"));
+        var valid2 = validateForum($("#createForumModal .projectName input"));
+
+        if (valid1 && valid2) {
+            var tmpTR = $("<tr>");
+            var tmpTD = $("<td>");
+            tmpTD.append('<input class="selectUserCheck" type="checkbox">');
+            tmpTD.append('<span class="group">' + $("#createForumModal .projectName input").val() + '</span>');
+            tmpTR.append(tmpTD);
+            tmpTD = $("<td>");
+            tmpTD.append('<span class="group">' + $("#createForumModal .descProject textarea").val() + '</span>');
+            tmpTR.append(tmpTD);
+            tmpTD = $('<td class="checkbox">');
+            tmpTD.append('<a class="deleteIcon" href="javascript:;">')
+            tmpTR.append(tmpTD);
+            $(".stepSixth .forums").append(tmpTR);
+
+            addresscloseModal();
+            addressLoadModal('#createForumConfirmModal');
+        } 
+    });
+
+    $(".stepSixth .forums .deleteIcon").live("click", function() {
+        $(this).parents("tr").remove();
+    });
+
+    $('.stepSixth .forums .deleteSelect').click(function() {
+        $(".stepSixth .forums .selectUserCheck:checked").each(function() {
+            $(this).parents('tr').remove();
+        });
+    });
+}
+
+function validateForum(box){
+    var value = $.trim(box.val());
+    var tips = box.data("tips")?box.data("tips"):"";  
+    if(value == "" || value == tips){
+        box.parent().find(".message").append('<span class="errorText">This field cannot be left empty.</span>');
+        box.addClass("error").val("");
+        box.after('<span class="errorIcon"></span>');
+        return false;
+    }
+    return true;
 }

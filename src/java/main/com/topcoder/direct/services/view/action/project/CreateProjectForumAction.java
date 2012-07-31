@@ -30,8 +30,15 @@ import java.util.Map;
  *    </ol>  
  * </p>
  *
- * @author GreatKevin, isv
- * @version 1.2
+ * <p>
+ * Version 1.3 (Release Assembly - TC Direct Project Forum Configuration Assembly ) change notes:
+ *    <ol>
+ *        <li>Updated according to the change in project service facade.</li>
+ *    </ol>  
+ * </p>
+ *
+ * @author GreatKevin, isv, TCSASSEMBLY
+ * @version 1.3
  */
 public class CreateProjectForumAction extends BaseDirectStrutsAction {
 
@@ -104,7 +111,7 @@ public class CreateProjectForumAction extends BaseDirectStrutsAction {
             // Create project forums
             logger.debug("Calling Forums EJB for creating the forum for project " + getTcDirectProjectId());
             long forumId = getProjectServiceFacade().createTopCoderDirectProjectForum(currentUser,
-                                                                                      projectData.getProjectId(), null);
+                                                                                      projectData.getProjectId(), null, null);
             result.put("projectForumId", forumId);
         } else {
             logger.error("User does not have write permission for project " + getTcDirectProjectId());

@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER, KennyAlive, TCSASSEMBLER
-  - Version: 1.3
+  - Author: TCSASSEMBLER, KennyAlive, TCSASSEMBLER, duxiaoyang
+  - Version: 1.4
   - Copyright (C) 2011-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides the create new project process.
@@ -14,6 +14,9 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit Start New Analytics Projects Flow)
   -             change notes: New analytics project type creation flow.
+  -
+  - Version 1.4 (Release Assembly - TC Direct Project Forum Configuration Assembly)
+  -             change notes: Added a new step for custom project type.
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -80,7 +83,8 @@
                                     <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 3</span></span></span></li>
                                     <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 4</span></span></span></li>
                                     <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 5</span></span></span></li>
-                                    <li class="last"><span class="istatus inext"><span class="arrow"><span class="bg">Step 6</span></span></span></li>
+                                    <li><span class="istatus inext"><span class="arrow"><span class="bg">Step 6</span></span></span></li>
+                                    <li class="last"><span class="istatus inext"><span class="arrow"><span class="bg">Step 7</span></span></span></li>
                                 </ul>
                             </div>
 
@@ -116,6 +120,7 @@
                                 <jsp:include page="includes/project/newProject/new-project-step4.jsp"/>
                                 <jsp:include page="includes/project/newProject/new-project-step5.jsp"/>
                                 <jsp:include page="includes/project/newProject/new-project-step6.jsp"/>
+                                <jsp:include page="includes/project/newProject/new-project-step7.jsp"/>
 
                                 <jsp:include page="includes/project/newProject/mobile/new-mobile-project-step1.jsp"/>
                                 <jsp:include page="includes/project/newProject/mobile/new-mobile-project-step2.jsp"/>

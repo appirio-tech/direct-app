@@ -41,6 +41,7 @@ import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectForumTemplateDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
@@ -527,8 +528,14 @@ import java.util.Map.Entry;
  *     <li>Add method {@link #getEnterpriseDashboardTotalSpend(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)}</li>
  * </ol>
  * </p>
+ * <p>
+ * Version 4.4 (Release Assembly - TC Direct Project Forum Configuration Assembly)
+ * <ol>
+ *     <li>Added {@link #getDirectProjectForumTemplates(long)} method.</li>
+ * </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy
- * @version 4.3
+ * @version 4.4
  * @since 1.0
  */
 public class DataProvider {
@@ -5446,6 +5453,35 @@ public class DataProvider {
 
             aggregator.add(dto);
         }
+    }
+
+    /**
+     * <p>
+     * Gets the direct project forum templates defined in database.
+     * </p>
+     * @param projectType
+     *            the direct project type id.
+     * @return a list of <code>ProjectForumTemplateDTO</code> representing the project forum template.
+     * @throws Exception
+     *             if any error occurs.
+     */
+    public static List<ProjectForumTemplateDTO> getDirectProjectForumTemplates(long projectType) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_project_forum_template");
+        request.setProperty("pt", "" + projectType);
+        final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
+
+        final ResultSetContainer templateResult = queryData.get("direct_project_forum_template");
+        List<ProjectForumTemplateDTO> templates = new ArrayList<ProjectForumTemplateDTO>();
+        for (ResultSetContainer.ResultSetRow row : templateResult) {
+            ProjectForumTemplateDTO template = new ProjectForumTemplateDTO();
+            template.setForumName(row.getStringItem("name"));
+            template.setForumDescription(row.getStringItem("description"));
+            templates.add(template);
+        }
+
+        return templates;
     }
 
     /**

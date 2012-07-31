@@ -15,6 +15,7 @@ import javax.xml.datatype.DatatypeFactory;
 import com.topcoder.direct.services.copilot.model.CopilotProject;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.action.contest.launch.SaveDraftContestAction;
+import com.topcoder.direct.services.view.dto.project.ProjectForumTemplateDTO;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.management.project.*;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
@@ -63,9 +64,15 @@ import java.util.*;
  *       detailed requirements fields.</li>
  *   </ol>
  * </p>
+ * Version 1.3.2 (Release Assembly - TC Direct Project Forum Configuration Assembly) change notes:
+ *   <ol>
+ *       <li>Added <code>forums</code> field.</li>
+ *       <li>Modified {@link #executeAction()} to setup customized forums for the new project.</li>
+ *   </ol>
+ * </p>
  *
- * @author Veve, isv, KennyAlive
- * @version 1.3.1
+ * @author Veve, isv, KennyAlive, TCSASSEMBLY
+ * @version 1.3.2
  */
 public class CreateNewProjectAction extends SaveDraftContestAction {
 
@@ -109,6 +116,11 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
      * The permissions to add to the new project.
      */
     private List<ProjectPermission> permissions;
+
+    /**
+     * The project forum configuration.
+     */
+    private List<ProjectForumTemplateDTO> forums;
 
     /**
      * A flag indicates whether the project is presentation project.
@@ -225,6 +237,26 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
     }
 
     /**
+     * <p>
+     * Gets the project forum configuration.
+     * </p>
+     * @return the project forum configuration.
+     */
+    public List<ProjectForumTemplateDTO> getForums() {
+        return forums;
+    }
+
+    /**
+     * <p>
+     * Sets the project forum configuration.
+     * </p>
+     * @param forums the project forum configuration to set.
+     */
+    public void setForums(List<ProjectForumTemplateDTO> forums) {
+        this.forums = forums;
+    }
+
+    /**
      * Gets the flag indicates whether the project is presentation project.
      *
      * @return true if the project is presentation project, false otherwise.
@@ -303,8 +335,17 @@ public class CreateNewProjectAction extends SaveDraftContestAction {
         projectData.setName(getProjectName());
         projectData.setDescription(getProjectDescription());
 
-        // delegate to ProjectServiceFacade to create the project.
-        projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions());
+        if (forums != null) {
+            Map<String, String> forumsMap = new HashMap<String, String>();
+            for (ProjectForumTemplateDTO forum : forums) {
+                forumsMap.put(forum.getForumName(), forum.getForumDescription());
+            }
+            // delegate to ProjectServiceFacade to create the project.
+            projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions(), forumsMap);
+        } else {
+            // delegate to ProjectServiceFacade to create the project.
+            projectData = projectServiceFacade.createTCDirectProject(currentUser, projectData, getPermissions());
+        }
 
         // put data into result
         result.put("projectName", projectData.getName());

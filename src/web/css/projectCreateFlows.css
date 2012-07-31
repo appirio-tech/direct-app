@@ -2,8 +2,11 @@
  * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
  *
  * Used for the new project creation flows (presentation, mobile, etc.).
+ * Changes in version 1.1 (Release Assembly - TC Direct Project Forum Configuration Assembly):
+ *   Added styles for new manage forums page and popups.
  *
- * @version 1.0 (Release Assembly - TopCoder Cockpit Start New Mobile and PPT Projects Flow)
+ * @version 1.1
+ * @since 1.0
  */
  
 /* stepFirst */
@@ -1653,4 +1656,390 @@ input{
 .message2 {
 background-color: #FFC;
 margin: 0px 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Added in Release Assembly - TC Direct Project Forum Configuration Assembly */
+/* -------------------------------------------------------------------------- */
+div.stepSixth .form {
+    min-height: 566px;
+    padding: 25px 0 32px;
+}
+
+div.stepSixth div.tableOut {
+    margin: 0 38px;
+    padding-bottom: 15px;
+}
+
+div.stepSixth table.forums th,div.stepSixth table.forums td {
+    padding: 0 8px;
+    vertical-align: middle;
+    width: auto;
+}
+
+div.stepSixth table.forums tr.applyForAll {
+    background-color: #FFFFCC;
+}
+
+div.stepSixth table.forums td {
+    line-height: 18px;
+    height: 40px;
+}
+
+div.stepSixth table.forums tr.applyForAll td {
+    background: none repeat scroll 0 0 #E8E8E8;
+    text-align: center;
+    color: #C60000;
+    font-size: 12px;
+}
+
+div.stepSixth table.forums tr.applyForAll td a {
+    display: inline-block;
+    margin: 0 5px;
+    width: 118px;
+}
+
+div.stepSixth table.forums tr.applyForAll td a span {
+    padding-right: 5px;
+    width: 113px;
+}
+
+div.stepSixth table.forums tr td span.placeholder {
+    width: 23px;
+}
+
+div.stepSixth table.forums tr td span.group {
+    display: inline;
+    float: left;
+    width: auto;
+    padding-left: 14px;
+    font-size: 12px;
+    text-align: left;
+}
+
+div.stepSixth table.forums tr td span.predefined {
+    padding-left: 37px;
+}
+
+div.stepSixth table.forums td .deleteIcon {
+    width: 23px;
+    height: 23px;
+    margin: 0 5px;
+    display: inline-block;
+    background: url(../images/deleteIcon.png) no-repeat left top;
+}
+
+div.stepSixth table.forums td .deleteIcon:hover {
+    background: url(../images/deleteIcon.png) no-repeat left -23px;
+}
+
+div.stepSixth table.forums td .selectUserCheck {
+    display: inline;
+    float: left;
+    margin-right: 10px;
+    margin-top: 2px;
+    width: auto;
+}
+
+#createForumModal {
+    width: 660px;
+    display: none;
+}
+
+#createForumModal .addUserForm {
+    margin-top: 0px;
+    padding-bottom: 0px;
+}
+
+/* left */
+#createForumModal .addUserForm .addUserLeft {
+    width: 230px;
+    height: 272px;
+    float: left;
+    display: inline;
+    margin-left: 52px;
+    border: #bcbcbc solid 1px;
+    background: #eeeeee;
+}
+
+#createForumModal .addUserForm .addUserButton {
+    width: 77px;
+    height: 272px;
+    float: left;
+    display: inline;
+}
+
+/* right */
+#createForumModal .addUserForm .addUserRight {
+    width: 230px;
+    height: 272px;
+    float: left;
+    display: inline;
+    border: #bcbcbc solid 1px;
+    background: #eeeeee;
+}
+
+/* addUserTitle */
+#createForumModal .addUserForm .addUserTitle {
+    height: 35px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    line-height: 35px;
+    background: #3e3532;
+}
+
+#createForumModal .addUserForm .addUserTitle p {
+    width: auto;
+    float: left;
+    display: inline;
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fffffe;
+}
+
+#createForumModal .addUserForm .addUserTitle a {
+    width: auto;
+    float: right;
+    display: inline;
+    margin-right: 5px;
+    font-size: 12px;
+    color: #c9c9c9;
+    text-decoration: none;
+}
+
+#createForumModal .addUserForm .addUserTitle a:hover {
+    text-decoration: underline;
+}
+
+/* search box */
+#createForumModal .addUserForm .searchBox {
+    height: 50px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    border-bottom: #c6c6c6 solid 1px;
+}
+
+#createForumModal .addUserForm .searchBox .text {
+    width: 115px;
+    height: 17px;
+    float: left;
+    display: inline;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 1px;
+    background: #f8f8f8;
+    font-size: 11px;
+    border: #a2a1a5 solid 1px;
+}
+
+#createForumModal .addUserForm .searchBox .downloadProfile {
+    width: 67px;
+    float: left;
+    display: inline;
+    margin-top: 15px;
+}
+
+#createForumModal .addUserForm .searchBox .downloadProfile .profileLeft
+    {
+    width: 67px;
+    font-size: 12px;
+    text-align: center;
+    text-indent: -2px;
+}
+
+/* addUserList */
+#createForumModal .addUserForm .addUserLeft .addUserList {
+    height: 186px;
+}
+
+#createForumModal .addUserForm .addUserRight .addUserList {
+    height: 237px;
+}
+
+#createForumModal .addUserForm .addUserList li {
+    margin-bottom: 1px;
+    padding-left: 10px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 19px;
+    list-style: none;
+    border-bottom: #c3c4c6 dotted 1px;
+    cursor: pointer;
+}
+
+#createForumModal .addUserForm .addUserList li.selected {
+    background: #c1c1c1;
+}
+
+/* button */
+#createForumModal .addUserForm .addItem {
+    width: 34px;
+    height: 19px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 136px;
+    text-indent: -9999px;
+    background: url(../images/add_tech.png) no-repeat left top;
+}
+
+#createForumModal .addUserForm .addItem:hover {
+    background: url(../images/add_tech_hover.png) no-repeat left top;
+}
+
+#createForumModal .addUserForm .removeItem {
+    width: 34px;
+    height: 19px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 5px;
+    text-indent: -9999px;
+    background: url(../images/remove_tech.png) no-repeat left top;
+}
+
+#createForumModal .addUserForm .removeItem:hover {
+    background: url(../images/remove_tech_hover.png) no-repeat left top;
+}
+
+#createForumModal .buttonArea .button6 {
+    width: 100px;
+    float: left;
+    display: inline;
+    margin-left: 206px;
+    margin-right: 40px;
+}
+
+#createForumModal .buttonArea .cancelButton {
+    margin-left: 0;
+}
+
+#createForumModal .buttonArea .button6 span.right {
+    padding: 4px 0 0 0;
+    text-align: center;
+}
+
+/* form */
+.forumModelContent .form {
+    padding: 0;
+}
+
+.forumModelContent .row {
+    clear: both;
+    margin-left: 46px;
+    padding-bottom: 7px;
+}
+
+.forumModelContent .row .toolTip {
+    margin-right: 7px;
+}
+
+.forumModelContent .row label {
+    width: 134px;
+    float: left;
+    display: inline;
+    line-height: 25px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.forumModelContent .row span.red {
+    color: #ff0000;
+}
+
+.forumModelContent .row .intro {
+    width: auto;
+    float: right;
+    display: inline;
+    margin-right: 12px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #666666;
+    line-height: 25px;
+}
+
+.forumModelContent .row .message {
+    width: 373px;
+    margin-left: 157px;
+    font-size: 11px;
+    color: #999999;
+    overflow: hidden;
+    padding: 2px 0 0 0;
+    height: 14px;
+    background-color: transparent;
+}
+
+.forumModelContent .row .message .remaning {
+    float: right;
+}
+
+.forumModelContent .row .message .errorText {
+    color: #ec1c23;
+}
+
+.forumModelContent .row .errorIcon {
+    background: url(../images/error-icon.png) no-repeat left center;
+    height: 10px;
+    width: 10px;
+    float: left;
+    margin-left: 7px;
+    margin-top: 7px;
+}
+
+.forumModelContent .descProject .errorIcon {
+    margin-top: 57px;
+}
+
+/* input */
+.forumModelContent .row .text {
+    width: 353px;
+    height: 19px;
+    float: left;
+    display: inline;
+    padding: 2px 7px;
+    background: #ffffff;
+    border: #a8abad solid 1px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #6c6c6c;
+}
+
+/* textarea */
+.forumModelContent .row textarea {
+    width: 353px;
+    height: 127px;
+    padding: 2px 7px;
+    border: #a8abad solid 1px;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #6c6c6c;
+    float: left;
+    overflow: auto;
+}
+
+.forumModelContent .row input.error,.forumModelContent .row textarea.error {
+    background: none;
+    background-color: #ffe4e4;
+    padding: 2px 7px !important;
+}
+
+#createForumConfirmModal {
+    display: none;
+    width: 609px;
+}
+
+#createForumConfirmModal .modalContainer {
+    background: url(../images/gray-bg.gif) repeat-x scroll left top #ECECEC;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    padding: 10px 0px 10px 24px;
+}
+
+#createForumConfirmModal .modalContainer dl {
+    background: url("../images/selection-bg.png") no-repeat scroll left top transparent;
+    min-height: 100px;
+    padding-left: 117px;
+}
+
+#createForumConfirmModal .modalContainer dd {
+    color: #666666;
+    padding: 17px 110px 0 6px;
 }
