@@ -1452,7 +1452,7 @@
                         <div class="modalContainer">
                             <dl>
                                 <dd>
-                                    You've successfully created a Custom forum. It wil appear under the Forum list, So you can insert another Forum or you can delete an existing one, You Must have one Forum in the List.
+                                    You have successfully added a new topic to your project forum. It wil appear under the Forum list, So you can insert another Forum or you can delete an existing one, You Must have one Forum in the List.
                                 </dd>
                             </dl>
                         </div>

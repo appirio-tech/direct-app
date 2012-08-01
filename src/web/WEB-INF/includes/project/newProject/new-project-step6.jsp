@@ -10,7 +10,7 @@
 
     <!-- step title -->
     <div class="stepTitle">
-        <h3><span>6</span>Manage Forums</h3>
+        <h3><span>6</span>Manage Project Forum</h3>
         <a href='<s:url action="dashboardActive" namespace="/"/>' class="button4">Back to Dashboard</a>
     </div>
     <!-- End .stepTitle -->
@@ -34,8 +34,8 @@
                         <strong>Note:</strong>
                         <a href="javascript:void(0)">Hide</a>
                     </dt>
-                    <dd>Create custom forums with description or remove the forums already in the list.</dd>
-                    <dd>Forum 'Project Requirements' can not be deleted.</dd>
+                    <dd>Your project will have a private forum associated to it.  Use this screen to configure the topics you will have in your forum.  By default, one has been created for you.</dd>
+                    <dd>The topic named “Project Discussion” cannot be removed.</dd>
                 </dl>
             </div><!-- End .noteMask -->                                        
 
@@ -52,7 +52,7 @@
                             <col width="45" />
                         </colgroup>
                         <tr>
-                            <th class="first">Forum Lists</th>
+                            <th class="first">Project Forum Topics</th>
                             <th>Description</th>
                             <th class="last"></th> 
                         </tr>
