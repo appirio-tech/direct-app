@@ -1403,4 +1403,11 @@ td.fontGreen{
     padding-right:45px;
     display: inline-block;
 }
+
+.newEnterpriseDashboardIcon {
+    display: inline-block;
+    float: right;
+    width: auto;
+    padding: 5px 6px 0px 0px;
+}
 /* end */

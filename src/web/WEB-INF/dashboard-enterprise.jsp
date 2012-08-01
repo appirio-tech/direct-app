@@ -180,7 +180,7 @@
                     <div id="area1"><!-- the main area -->
                         <div class="area1Content">
 
-                            <div class="spaceWhite"><a href="<s:url action="overview" namespace="/enterpriseDashboard"/>" class="enterpriseDashboardBeta">Try the NEW Enterprise Dashboard</a></div>
+                            <div class="spaceWhite"><a href="<s:url action="overview" namespace="/enterpriseDashboard"/>" class="enterpriseDashboardBeta">Try the NEW Enterprise Dashboard</a><img src="/images/new_dashboard_icon.png" class="newEnterpriseDashboardIcon"/></div>
                             <div class="dashboardTable">
                                 <dl>
                                     <dt>
