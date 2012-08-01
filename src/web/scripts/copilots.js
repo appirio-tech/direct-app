@@ -47,6 +47,18 @@ var budget = '';
 var copilotTypes = [];
 var extraInfos = [];
 
+var billingFees = {};
+
+var billingFeesPercentage = {};
+
+var contestBillingFee = 0;
+
+var contestFeePercentage = 0;
+
+var currentBillingAccount = 0;
+
+var loadedBillingAccount = 0;
+
 /**
  * Parse the date to be displayed in Schedule section.
  */
@@ -55,7 +67,12 @@ function parseDate(d) {
 }
     
 $(document).ready(function() {
-    
+
+    getContestFeesForBillingProject($("#billingProjects2").val());
+
+    currentBillingAccount = $("#billingProjects2").val();
+    loadedBillingAccount =  $("#billingProjects2").val();
+
     $("#startDateLabel").html(parseDate($("#startDateLabel").text()));
     $("#subEndDateLabel").html(parseDate($("#subEndDateLabel").text()));
     $("#endDateLabel").html(parseDate($("#endDateLabel").text()));
@@ -177,7 +194,9 @@ $(document).ready(function() {
             showErrors(errors);
         } else {
             hideEdit($(this));
+            setupContestFee($("#billingProjects2").val(), false);
             updateProjectGeneralInfo();
+            currentBillingAccount = $("#billingProjects2").val();
         }
 
         return false;
@@ -195,6 +214,7 @@ $(document).ready(function() {
 
     $('#savePrize').click(function() {
         hideEdit($(this));
+        setupContestFee(currentBillingAccount, true);
         updatePrize();
     });
 
@@ -256,6 +276,13 @@ $(document).ready(function() {
         return false;
     });
 
+    if($("#contestFeePercentageValue").length > 0) {
+        var cp = parseFloat($("#contestFeePercentageValue").val());
+        if (cp > 0) {
+            $(".percentageInfo").text("( " + (cp * 100).toFixed(1) + "% markup )");
+            contestFeePercentage = cp;
+        }
+    }
 
     $('input[name=firstPlacePrize]').keyup(function() {
         var amount = parseFloat($(this).val());
@@ -263,12 +290,31 @@ $(document).ready(function() {
         if(isNaN(amount)) return;
 
         var second = ((amount) / 2).toFixed(1);
-        var total = (amount + parseFloat(second)).toFixed(1);
+        var total = (amount + parseFloat(second));
+
+        if($("#contestFeePercentageValue").length > 0) {
+            var totalPrize = (amount + parseFloat(second));
+            var cp = parseFloat($("#contestFeePercentageValue").val());
+            if (cp > 0) {
+                var contestFee = (totalPrize * cp).toFixed(1);
+                $("#swContestFee").text(contestFee);
+                $(".percentageInfo").text("( " + (cp * 100).toFixed(1) + "% markup )");
+            }
+        }
+
+        total = (total + parseFloat($("#swContestFee").text())).toFixed(1);
+
         $("#swSecondPlace").text(second);
         $("#swTotal").text(total);
     });
 
-
+    $("#billingProjects2").change(function(){
+        var billingAccountId = $(this).val();
+        if (billingAccountId > 0) {
+            getContestFeesForBillingProject(billingAccountId);
+        }
+        setupContestFee(billingAccountId, false);
+    });
 
     $('#addNewProject2').click(function() {
         clearAddNewProjectForm();
@@ -619,9 +665,9 @@ function updatePrize() {
 
     $("#rswFirstPlace").html(amount.toFixed(1));
     $("#rswSecondPlace").html((amount/2).toFixed(1))
-
-    var total = parseFloat($("#rswFirstPlace").text()) + parseFloat($("#rswSecondPlace").text()) + parseFloat($("#rswContestFee").text());
-    $("#rswTotal").text(total.toFixed(1));
+//
+//    var total = parseFloat($("#rswFirstPlace").text()) + parseFloat($("#rswSecondPlace").text()) + parseFloat($("#rswContestFee").text());
+//    $("#rswTotal").text(total.toFixed(1));
 }
 
 function updateProjectFiles() {
@@ -659,6 +705,7 @@ function validateContestInput() {
  * Activate software contest.
  */
 function activateContest() {
+    setupContestFee(currentBillingAccount, false);
     var request = saveAsDraftRequest();
     request['activationFlag'] = true;
 
@@ -727,6 +774,11 @@ function saveAsDraftRequest() {
     
     request['projectHeader.projectCopilotTypes'] = copilotTypes;
     request['projectHeader.copilotContestExtraInfos'] = extraInfos;
+
+    request["projectHeader.properties['Contest Fee Percentage']"] = contestFeePercentage;
+
+    var contestFee = parseFloat($("#swContestFee").text()).toFixed(1);
+    request["projectHeader.properties['Admin Fee']"] = contestFee;
     
     return request;
 }
@@ -832,7 +884,6 @@ function sendSaveDraftRequestToServer() {
     });
 }
 
-
 function beforeAjax() {
 	 modalPreloader();
 }
@@ -854,4 +905,93 @@ function removeCopilotExtraInfo(infoType) {
 			extraInfos.push(info);
 		}
 	}
+}
+
+function getContestFeesForBillingProject(billingProjectId) {
+    if(billingFees[billingProjectId] != null) {
+        return billingFees[billingProjectId];
+    }
+
+    var fees = [];
+
+    var percentage = {};
+
+    var request = {billingProjectId:billingProjectId};
+
+    $.ajax({
+        type: 'POST',
+        url:  ctx + "/launch/getBillingProjectContestFees",
+        data: request,
+        cache: false,
+        async: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    if (result.percentage) {
+                        // set percentage if not null
+                        percentage = result.percentage;
+                    }
+                    if(result.fees) {
+                        fees = result.fees;
+                    }
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+
+    billingFees[billingProjectId] = fees;
+    billingFeesPercentage[billingProjectId] = percentage;
+    return fees;
+}
+
+function setupContestFee(billingProjectId, updatePrize) {
+    contestFeePercentage = 0;
+
+    if (billingFees[billingProjectId] != null) {
+        var fees = billingFees[billingProjectId];
+        contestBillingFee = 0;
+        for(var i = 0; i < fees.length; ++i) {
+            if(fees[i].contestTypeId == 29) {
+                contestBillingFee = fees[i].contestFee;
+            }
+        }
+    }
+
+    if (billingFeesPercentage[billingProjectId] != null && billingFeesPercentage[billingProjectId].contestFeePercentage != undefined) {
+        contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
+
+        if (contestFeePercentage != null && contestFeePercentage > 0) {
+            var readAmount = parseFloat($("#rswFirstPlace").text());
+            var writeAmount = parseFloat($("input[name=firstPlacePrize]").val());
+            var totalAmount = (updatePrize ? writeAmount : readAmount) * 1.5;
+
+            contestBillingFee = (totalAmount * contestFeePercentage);
+        }
+    }
+
+    var prize = parseFloat($('input[name=firstPlacePrize]').val());
+    var total = prize * 1.5 + contestBillingFee;
+
+    $("#rswContestFee").text(contestBillingFee.toFixed(1));
+    $("#swContestFee").text(contestBillingFee.toFixed(1));
+
+    if(billingProjectId == loadedBillingAccount) {
+        if($("#contestFeePercentageValue").length > 0) {
+            contestFeePercentage = parseFloat($("#contestFeePercentageValue").val());
+        } else {
+            contestFeePercentage = 0;
+        }
+    }
+
+    if (contestFeePercentage > 0) {
+        $(".percentageInfo").text("( " + (contestFeePercentage * 100).toFixed(1) + "% markup )");
+    } else {
+        $(".percentageInfo").text('');
+    }
+
+    $("#rswTotal").text(total.toFixed(1));
+    $("#swTotal").text(total.toFixed(1));
 }

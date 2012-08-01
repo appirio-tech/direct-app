@@ -1314,7 +1314,7 @@ function updateSoftwarePrizes() {
 
    var feeObject = softwareContestFees[projectCategoryId];
    var contestCost = getContestCost(feeObject, prizeType);
-   
+
    if (contestCost == undefined) {
         return;
    }

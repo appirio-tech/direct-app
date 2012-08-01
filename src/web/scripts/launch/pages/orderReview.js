@@ -66,9 +66,20 @@ function updateOrderReviewSoftware() {
    $('#sworSecondPlaceCost').html(secondPrize.formatMoney(2));
    var drPoints = mainWidget.softwareCompetition.projectHeader.getDRPoints();
    $('#sworDRPoints').html(drPoints.formatMoney(2));
+
+   if(!$("#DRCheckbox").is(":checked")) {
+       $('#sworDRPoints').parents("td").hide();
+   } else {
+       $('#sworDRPoints').parents("td").show()
+   }
    var reliabilityBonusCost = mainWidget.softwareCompetition.projectHeader.getReliabilityBonusCost();
    $('#sworReliabilityBonusCost').html(reliabilityBonusCost.formatMoney(2));
-   var contestPrizeCost = firstPrize + secondPrize + drPoints + reliabilityBonusCost;
+   var contestPrizeCost = firstPrize + secondPrize + reliabilityBonusCost;
+
+    if($("#DRCheckbox").is(":checked")) {
+        contestPrizeCost += drPoints;
+    }
+
    $('#sworContestPrizeCost').html(contestPrizeCost.formatMoney(2));
 
    var specificationReviewPayment = mainWidget.softwareCompetition.projectHeader.getSpecReviewCost();

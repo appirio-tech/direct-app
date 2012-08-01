@@ -186,6 +186,12 @@
                             <span id="amountSummarySecond"></span>
                         </td>
                     </tr>
+                    <tr>
+                        <td><label>Contest Fee:</label></td>
+                        <td>
+                            <span id="contestFeeTotal"></span>
+                        </td>
+                    </tr>
 					<tr>
                         <td><label>Total:</label></td>
                         <td>

@@ -300,6 +300,16 @@ $(document).ready(function(){
 			$(this).parent().find('.prizeInfo').html(secondPrize);
 		}
     });
+
+    setupContestFee($("#billingProjects").val());
+
+    $("#billingProjects").change(function(){
+        var billingAccountId = $(this).val();
+        if (billingAccountId > 0) {
+            getContestFeesForBillingProject(billingAccountId);
+        }
+        setupContestFee(billingAccountId);
+    });
 });
 
 (function($) {
@@ -601,7 +611,6 @@ function validateStepInputs() {
                 
                 $("#amountSummaryFirst").html("$" + amount);
 				$("#amountSummarySecond").html("$" + parseFloat(amount / 2));
-				$("#amountSummaryTotal").html("$" + parseFloat(amount * 3 / 2));
             }
             break;
         case 5:
@@ -613,6 +622,10 @@ function validateStepInputs() {
             } else {
                 $("#billingSummary").html("");
             }
+            var amount = mainWidget.softwareCompetition.projectHeader.prizes[0].prizeAmount;
+            $("#contestFeeTotal").html("$" + parseFloat(mainWidget.softwareCompetition.projectHeader.getAdminFee()).toFixed(1))
+            $("#amountSummaryTotal").html("$" + (parseFloat(amount * 3 / 2) + parseFloat(mainWidget.softwareCompetition.projectHeader.getAdminFee())).toFixed(1));
+
             break;
             
     }
@@ -797,6 +810,38 @@ function initPanel() {
     fillPrizes();
 };
 
+function setupContestFee(billingProjectId) {
+    var contestBillingFee = 0;
+    var contestFeePercentage = null;
+
+    mainWidget.softwareCompetition.projectHeader.properties['Contest Fee Percentage'] = 0;
+
+    if (billingFees[billingProjectId] != null) {
+        var fees = billingFees[billingProjectId];
+
+        for(var i = 0; i < fees.length; ++i) {
+            if(fees[i].contestTypeId == 29) {
+                contestBillingFee = fees[i].contestFee;
+            }
+        }
+    }
+
+    if (billingFeesPercentage[billingProjectId] != null) {
+        contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
+
+        if (contestFeePercentage != null && contestFeePercentage > 0) {
+            var totalAmount = 0;
+            $.each(mainWidget.softwareCompetition.projectHeader.prizes, function(index, entry){
+                totalAmount += entry.prizeAmount;
+            });
+            contestBillingFee = (totalAmount * contestFeePercentage).toFixed(2);
+            mainWidget.softwareCompetition.projectHeader.properties['Contest Fee Percentage'] = contestFeePercentage;
+        }
+    }
+
+    mainWidget.softwareCompetition.projectHeader.setAdminFee(contestBillingFee);
+}
+
 /**
  * Handle save as draft action.
  */
@@ -814,6 +859,9 @@ function saveAsDraft() {
     if (!request['startDate']) {
         delete request['startDate'];
     }
+
+    request['projectHeader'].properties['Contest Fee Percentage'] = mainWidget.softwareCompetition.projectHeader.properties['Contest Fee Percentage'];
+    request['projectHeader'].properties['Admin Fee'] = mainWidget.softwareCompetition.projectHeader.getAdminFee();
     
     $.ajax({
         type: 'POST',

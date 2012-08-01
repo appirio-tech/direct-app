@@ -182,7 +182,7 @@
           <span class="head">
 			  <span class="first_info">Review Cost:&nbsp;&nbsp;$ <span id="swReviewCost"></span></span>
 			  <span class="mid_info">Reliability Bonus:&nbsp;&nbsp;$ <span id="swReliabilityBonus"></span></span>
-               <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox" checked="checked"/>
+               <span class="mid_info">&nbsp;Digital Run:&nbsp;</span><input type="checkbox" id="DRCheckbox" checked="checked" autocomplete="off"/>
 			  <span class="mid_info">
 				Digital Points:&nbsp;&nbsp;$
 			  </span>

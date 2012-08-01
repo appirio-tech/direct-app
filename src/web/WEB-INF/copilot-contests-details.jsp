@@ -329,7 +329,11 @@
                 <td style="width:120px" align="left"><strong>1st Place:</strong> $<span id="rswFirstPlace"> <c:out value="${projectHeader.properties['First Place Cost']}"/></span></td>
                 </td>
                 <td style="width:120px" align="left"><strong>2nd Place:</strong> $<span id="rswSecondPlace"> <c:out value="${projectHeader.properties['Second Place Cost']}"/></span></td>
-                <td style="width:120px"><strong>Contest Fee:</strong> $<span id="rswContestFee"><c:out value="${projectHeader.properties['Admin Fee']}"/></span></td>
+                <td style=""><strong>Contest Fee:</strong> $<span id="rswContestFee"><c:out value="${projectHeader.properties['Admin Fee']}"/></span> <span class="percentageInfo"></span>
+                    <c:if test="${projectHeader.properties['Contest Fee Percentage'] != null}">
+                        <input type="hidden" id="contestFeePercentageValue" value="${projectHeader.properties['Contest Fee Percentage']}" />
+                    </c:if>
+                </td>
 
                 <td class="sec_tab_prize"><strong>Contest Total:</strong> $<span id="rswTotal">
                  <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/>
@@ -370,7 +374,7 @@
                     <span class="dw">$</span>
                     <span id="swSecondPlace" class="prizeInfo" style="line-height:30px;"><c:out value="${projectHeader.properties['Second Place Cost']}"/></span>
                     <span class="mid_info">Contest Fee:&nbsp;&nbsp;$  <span id="swContestFee"><c:out
-                            value="${projectHeader.properties['Admin Fee']}"/></span></span>
+                            value="${projectHeader.properties['Admin Fee']}"/></span><span class="percentageInfo"></span></span>
                 </div>
                 <br/>
                 <span class="last_info"><strong>Contest Total:&nbsp;&nbsp;$ <span id="swTotal"> <c:out value="${projectHeader.properties['First Place Cost']  + projectHeader.properties['Second Place Cost'] + projectHeader.properties['Admin Fee']}"/></span></strong></span>
