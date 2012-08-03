@@ -543,9 +543,11 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
         final List<Permission> permissionsByProject = getPermissionServiceFacade().getPermissionsByProject(currentUser, getFormData().getProjectId());
 
         ProjectPermissionInfoDTO permissionInfo = new ProjectPermissionInfoDTO();
-
+		boolean hasFullPermission = false;
+	
         if (permissionsByProject != null) {
-            for(Permission p : permissionsByProject) {
+            for(Permission p : permissionsByProject) { 
+	
                 if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_REPORT) {
                     permissionInfo.setReportPermissionNumber(permissionInfo.getReportPermissionNumber() + 1);
                 } else if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_READ) {
@@ -554,15 +556,17 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                     permissionInfo.setWritePermissionNumber(permissionInfo.getWritePermissionNumber() + 1);
                 } else if(p.getPermissionType().getPermissionTypeId() == PermissionType.PERMISSION_TYPE_PROJECT_FULL) {
                     permissionInfo.setFullPermissionNumber(permissionInfo.getFullPermissionNumber() + 1);
+					if (p.getUserId() == currentUser.getUserId())
+					{
+						hasFullPermission = true;
+					}
                 }
             }
         }
 
         getViewData().getProjectGeneralInfo().setPermissionInfo(permissionInfo);
 
-        getViewData().getProjectGeneralInfo().setCanAccessPermissionEdit(DirectUtils.isCockpitAdmin(currentUser)
-                || DirectUtils.isTcOperations(currentUser)
-                || DirectUtils.isTcStaff(currentUser));
+        getViewData().getProjectGeneralInfo().setCanAccessPermissionEdit(hasFullPermission);
     }
 
     /**

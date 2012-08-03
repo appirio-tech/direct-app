@@ -323,9 +323,7 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         this.viewData.setProjectForumNotifications(projectNotifications);
 
         // set current user permission
-        this.viewData.setCanAccessPermissionNotification(DirectUtils.isCockpitAdmin(currentUser)
-                || DirectUtils.isTcOperations(currentUser)
-                || DirectUtils.isTcStaff(currentUser));
+        this.viewData.setCanAccessPermissionNotification(this.viewData.getHasFullPermission());
 
         List<DirectProjectMetadata> allProjectMetadata = getMetadataService().getProjectMetadataByProject(formData.getProjectId());
 
