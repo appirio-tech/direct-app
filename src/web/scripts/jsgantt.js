@@ -1050,7 +1050,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
                 }
 
                 vLeftTable +=
-                    '<span onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",1024,768); style="cursor:pointer"> ' + (vTaskList[i].getName().length > 70 ? vTaskList[i].getName().substring(0,67) + '...' :  vTaskList[i].getName()) + '</span></NOBR></TD>' ;
+                    '<a href="' + vTaskList[i].getLink() + '" target="_blank" style="cursor:pointer;text-decoration:none"> ' + (vTaskList[i].getName().length > 70 ? vTaskList[i].getName().substring(0,67) + '...' :  vTaskList[i].getName()) + '</a></NOBR></TD>' ;
 
                 if(vShowRes ==1) vLeftTable += '  <TD class=gname style="WIDTH: 60px; HEIGHT: 20px; TEXT-ALIGN: center; BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid;" align=center><NOBR>' + JSGantt.GetShortenContestType(vTaskList[i].getResource()) + '</NOBR></TD>' ;
                 if(vShowDur ==1) vLeftTable += '  <TD class=gname style="WIDTH: 45px; HEIGHT: 20px; TEXT-ALIGN: center; BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid;" align=center><NOBR>' + vTaskList[i].getDuration(vFormat) + '</NOBR></TD>' ;
@@ -2091,6 +2091,7 @@ JSGantt.taskLink = function(pRef,pWidth,pHeight)
 
     var OpenWindow=window.open(pRef, "" + pRef, "height="+vHeight+",width="+vWidth+",resizable=1,scrollbars=1");
 
+    return false;
 };
 
 /**
