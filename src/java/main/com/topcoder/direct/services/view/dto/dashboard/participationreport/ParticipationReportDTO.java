@@ -16,7 +16,6 @@ import java.util.Map;
 import com.topcoder.direct.services.view.dto.ReportAggregationBaseDTO;
 import com.topcoder.direct.services.view.dto.ReportType;
 import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
-import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.ProjectMetricsReportEntryDTO;
 import com.topcoder.excel.Row;
 import com.topcoder.excel.Sheet;
 import com.topcoder.excel.Workbook;
