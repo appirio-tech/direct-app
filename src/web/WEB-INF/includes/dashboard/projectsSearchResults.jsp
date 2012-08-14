@@ -74,16 +74,11 @@
                     <td>
 
                     </td>
-                    <td>${projectSummary.draft.totalNumber}/<fmt:formatNumber
-                            value="${projectSummary.draft.totalPayment}" type="currency"/></td>
-                    <td>${projectSummary.scheduled.totalNumber}/<fmt:formatNumber
-                            value="${projectSummary.scheduled.totalPayment}" type="currency"/></td>
-                    <td>${projectSummary.active.totalNumber}/<fmt:formatNumber
-                            value="${projectSummary.active.totalPayment}" type="currency"/></td>
-                    <td>${projectSummary.finished.totalNumber}/<fmt:formatNumber
-                            value="${projectSummary.finished.totalPayment}" type="currency"/></td>
-                    <td>${projectSummary.cancelled.totalNumber}/<fmt:formatNumber
-                            value="${projectSummary.cancelled.totalPayment}" type="currency"/></td>
+                    <td>${projectSummary.draft.totalNumber}</td>
+                    <td>${projectSummary.scheduled.totalNumber}</td>
+                    <td>${projectSummary.active.totalNumber}</td>
+                    <td>${projectSummary.finished.totalNumber}</td>
+                    <td>${projectSummary.cancelled.totalNumber}</td>
                     <td><span class='<s:property value="projectStatusType.projectStatusName.toLowerCase()"/>'
                               id="projectStatus${projectSummary.projectId}"
                               name="<s:property value="projectStatusType.projectStatusId"/>">${projectStatusType.projectStatusName}</span>

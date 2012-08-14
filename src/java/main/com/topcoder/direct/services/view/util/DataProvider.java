@@ -1109,24 +1109,19 @@ public class DataProvider {
 
             // draft
             data.getDraft().setTotalNumber(resultContainer.getIntItem(i, "num_draft"));
-            data.getDraft().setTotalPayment(resultContainer.getDoubleItem(i, "cost_draft"));
 
             // scheduled
             data.getScheduled().setTotalNumber(resultContainer.getIntItem(i, "num_scheduled"));
-            data.getScheduled().setTotalPayment(resultContainer.getDoubleItem(i, "cost_scheduled"));
 
             // active
             data.getActive().setTotalNumber(resultContainer.getIntItem(i, "num_active"));
-            data.getActive().setTotalPayment(resultContainer.getDoubleItem(i, "cost_active"));
 
             // finished
             data.getFinished().setTotalNumber(resultContainer.getIntItem(i, "num_finished"));
-            data.getFinished().setTotalPayment(resultContainer.getDoubleItem(i, "cost_finished"));
 
             // cancelled
             data.getCancelled().setTotalNumber(resultContainer.getIntItem(i, "num_cancelled"));
-            data.getCancelled().setTotalPayment(resultContainer.getDoubleItem(i, "cost_cancelled"));
-
+            
             projectData.add(data);
         }
 

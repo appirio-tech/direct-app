@@ -7592,6 +7592,11 @@ div.rightColumn .activity TABLE {
     text-align: left;
     font-size: 14px;
 }
+
+#participationMetricsReportsSection #participationMetricsReportAggregationArea {
+    margin-bottom: 0px;
+}
+
 #participationMetricsReportAggregationArea th.viewType{
     text-align: right;
     padding-right: 5px;

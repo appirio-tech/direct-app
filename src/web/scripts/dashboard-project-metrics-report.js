@@ -4,6 +4,11 @@
  * AUTHOR: TCSASSEMBER
  * VERSION: 1.0 (TC Cockpit Project Metrics Report  )
  */
+function getMetricsReportAsExcel() {
+    $('#formDataExcel').val("true");
+    document.dashboardProjectMetricsReportForm.submit();
+}
+
 $(document).ready(function() {
 
     // initialize the multiple checkboxes selection
@@ -119,6 +124,7 @@ $(document).ready(function() {
     });
 
     $("#reportMetricsReportSubmit").click(function() {
+        $('#formDataExcel').val("false");
         $("#dashboardProjectMetricsReportForm").submit();
         modalPreloader();
     });

@@ -83,6 +83,12 @@ public class DashboardReportForm implements Serializable {
     private List<String> groupValues;
 
     /**
+     * <p>A <code>boolean</code> flag indicating whether the retrieved data is expected to be converted into
+     * <code>Excel</code> format or not.</p>
+     */
+    private boolean excel;
+    
+    /**
      * Empty constructor.
      */
     public DashboardReportForm() {
@@ -273,5 +279,22 @@ public class DashboardReportForm implements Serializable {
 	public void setProjectStatusIds(long[] projectStatusIds) {
 		this.projectStatusIds = projectStatusIds;
 	}
-    
+	
+    /**
+     * <p>Gets whether the returned result is an excel file to download.</p>
+     *
+     * @return the flag to indicate whether the result is an excel file to download.
+     */
+    public boolean isExcel() {
+        return excel;
+    }
+
+    /**
+     * <p>Sets whether the returned result should be an excel file to download.</p>
+     *
+     * @param excel the flag to set.
+     */
+    public void setExcel(boolean excel) {
+        this.excel = excel;
+    }
 }

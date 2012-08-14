@@ -58,6 +58,7 @@
     <!-- .filterContainer -->
     <s:form method="get" action="dashboardGetProjectMetricsReport" namespace="/"
             id="dashboardProjectMetricsReportForm">
+    <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
     <div class="filterContainer">
         <div class="filterLeftTwoParts">
             <div class="filterColumnPart">
@@ -179,8 +180,8 @@
             <th class="tableColumn">Canceled</th>
             <th class="tableColumn">Total<br />Budget</th>
             <th class="tableColumn">Actual<br />Cost</th>
-            <th class="tableColumn">Projected<br />Cost</th>
             <th class="tableColumn">Planned<br />Cost</th>
+            <th class="tableColumn">Total<br />Projected Cost</th>
             <th class="tableColumn">Start<br />Date</th>
             <th class="tableColumn">Completion<br />Date</th>
             <th class="tableColumn">Total<br /><nobr>#of Contests</nobr></th>
@@ -226,10 +227,10 @@
                 <fmt:formatNumber value="${item.actualCost}" pattern="$#,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.projectedCost}" pattern="$#,##0.00"/>
+                <fmt:formatNumber value="${item.plannedCost}" pattern="$#,##0.00"/>
             </td>
             <td>
-                <fmt:formatNumber value="${item.plannedCost}" pattern="$#,##0.00"/>
+                <fmt:formatNumber value="${item.projectedCost}" pattern="$#,##0.00"/>
             </td>
             <td>
                 <c:if test="${not (item.startDate eq null)}">
@@ -257,6 +258,10 @@
                         <div class="container2BottomRight">
 
                             <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getMetricsReportAsExcel();" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
                             </div>
 
                         </div>

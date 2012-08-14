@@ -4,6 +4,11 @@
  * AUTHOR: TCSASSEMBER
  * VERSION: 1.0 (TC Cockpit Participation Metrics Report Part One Assembly 1 )
  */
+function getParticipationReportAsExcel() {
+    $('#formDataExcel').val("true");
+    document.dashboardParticipationReportForm.submit();
+}
+
 $(document).ready(function() {
 
     // initialize the multiple checkboxes selection
@@ -119,6 +124,7 @@ $(document).ready(function() {
     });
 
     $("#participationReportSubmit").click(function() {
+        $('#formDataExcel').val("false");
         $("#dashboardParticipationReportForm").submit();
         modalPreloader();
     });

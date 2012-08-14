@@ -61,6 +61,23 @@ public class DashboardParticipationMetricsReportAction extends DashboardReportBa
     }
     
     /**
+     * <p>Handles the incoming request.
+     *
+     * @return <code>SUCCESS</code> if request is to be forwarded to respective view or <code>download</code> if
+     *         response is to be written to client directly.
+     */
+    @Override
+    public String execute() throws Exception {
+        String result = super.execute();
+        if (SUCCESS.equals(result)) {
+            if (getFormData().isExcel()) {
+                return "download";
+            }
+        }
+        return result;
+    }
+    
+    /**
      * <p>Handles the incoming request. Retrieves data for Participation Metrics Report
      * and binds it to request.</p>
      *

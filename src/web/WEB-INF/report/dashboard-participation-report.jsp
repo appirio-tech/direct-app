@@ -61,6 +61,7 @@
     <!-- .filterContainer -->
     <s:form method="get" action="dashboardGetParticipationReport" namespace="/"
             id="dashboardParticipationReportForm">
+    <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
     <div class="filterContainer">
         <div class="filterLeftTwoParts">
             <div class="filterColumnPart">
@@ -315,6 +316,25 @@
         </c:forEach>
     </tbody>
 </table>
+
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getParticipationReportAsExcel();" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 </div>
 </s:if>
