@@ -1,6 +1,6 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.3
+  - Author: GreatKevin
+  - Version: 1.4
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest selection page.
@@ -16,8 +16,12 @@
   -
   - Version 1.2 (Release Assembly - TopCoder Bug Hunt Assembly Integration 2) change notes:
   - - add the check box "Create Bug Hunt Contest" for assembly contest
+  -
   - Version 1.3 (Release Assembly - TopCoder Studio CCA Integration) change notes:
   -   Added CCA support for studio contest.
+  -
+  - Version 1.4 (Release Assembly - TopCoder Cockpit Billing Account Project Association) change notes:
+  -   Add link to add billing account to project
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
@@ -103,13 +107,11 @@
       <div class="row">
           <label>Billing Account :</label>
           <div class="billingSelect">
-              <select id="billingProjects" name="billingProject">
+             <select id="billingProjects" name="billingProject">
                 <option value="0">Please select an existing account</option>
-                <s:iterator value="billingProjects">
-                <option value='<s:property value="projectId" />'><s:property value="name" /></option>
-                </s:iterator>
              </select>
           </div>
+          <a href="javascript:;" target="_blank" class="addBilling hide">Add Billing to project</a>
       </div>
 
       <!-- Copilot for Software Contest -->

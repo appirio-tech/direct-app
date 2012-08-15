@@ -11,8 +11,11 @@
  *  Version 2.0 (Release Assembly - TopCoder Cockpit Project Dashboard Project Type and Permission Notifications Integration)
  *  - Add javascripts to edit project type & category, project permissions, project notifications and contest notifications.
  *
+ *  Version 2.1 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
+ *  - Add js to add/remove project billing accounts.
+ *
  * @author GreatKevin
- * @version 2.0
+ * @version 2.1
  */
 Date.format = 'mm/dd/yyyy';
 
@@ -174,6 +177,8 @@ $(document).ready(function (e) {
         if($("#hasFullPermissionOnly").val() == 'true') {
             $('.permissionsNotifications input').attr('disabled', 'disabled');
         }
+
+        sortDropDown("select[name='projectBillingAccount']");
 
         //scroll
         $('#addUserModal .addUserForm .addUserLeft .addUserList').css('overflow-y','scroll');
@@ -517,6 +522,87 @@ $(document).ready(function (e) {
         });
 
         //////////////////// End contest notification setting modal ////////////////
+
+
+
+        /////////////////// Start billing account management //////////////////////
+        $("a.addBillingButton").click(function(){
+            var formData = {};
+            formData.projectId = $("input[name='editProjectId']").val();
+            formData.projectBillingAccountId = $("select[name='projectBillingAccount']").val();
+
+            if(formData.projectBillingAccountId <= 0) {
+                $("#billingSelection .errorMessage").text("Please select a billing account");
+                return;
+            } else {
+                $("#billingSelection .errorMessage").empty();
+            }
+
+            modalPreloader();
+
+            $.ajax({
+                type:'post',
+                url:'associateProjectBillingAccount',
+                data:{formData:formData},
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(
+                        jsonResult,
+                        function (result) {
+                            $("select[name='projectBillingAccount'] option[value='" + result.billingId +"']").remove();
+
+                            var newBilling = $('<div class="billingAccountEntry"><span></span><a class="removeBilling" href="javascript:;">Remove</a><input type="hidden"/></div>');
+                            newBilling.find("span").text(result.billingName);
+                            newBilling.find("input").val(result.billingId);
+                            $("#billingDisplay").append(newBilling);
+
+                        },
+                        function (errorMessage) {
+                            modalAllClose();
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+
+        });
+
+        $("a.removeBilling").live('click', function(){
+            var formData = {};
+            formData.projectId = $("input[name='editProjectId']").val();
+            var billingAccountEntry = $(this).parent();
+            formData.projectBillingAccountId = billingAccountEntry.find('input').val();
+
+            modalPreloader();
+
+            $.ajax({
+                type:'post',
+                url:'removeProjectBillingAccount',
+                data:{formData:formData},
+                cache:false,
+                dataType:'json',
+                success:function (jsonResult) {
+                    handleJsonResult(
+                        jsonResult,
+                        function (result) {
+
+                            $("<option></option>").val(result.billingId).text(result.billingName).appendTo($("select[name='projectBillingAccount']"));
+
+                            sortDropDown("select[name='projectBillingAccount']");
+
+                            billingAccountEntry.remove();
+
+                        },
+                        function (errorMessage) {
+                            modalAllClose();
+                            showServerError(errorMessage);
+                        });
+                }
+            });
+        });
+
+
+        /////////////////// End billing account management ////////////////////////
 
 
         $('.addCustomMetaBtnContainer .triggerModal').click(function () {

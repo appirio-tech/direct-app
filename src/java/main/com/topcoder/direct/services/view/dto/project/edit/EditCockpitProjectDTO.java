@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.dto.project.edit;
 
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.dto.CommonDTO;
@@ -29,7 +30,12 @@ import java.util.*;
  *     - Add properties for project type, project category, project notifications, contest notifications and project permissions.
  * </p>
  *
- * @version 1.2
+ * <p>
+ *     Version 1.3 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
+ *     - Add property {@link #billingAccounts} and its getter and setter
+ * </p>
+ *
+ * @version 1.3
  * @author GreatKevin
  */
 public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
@@ -150,6 +156,12 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      * @since 1.2
      */
     private boolean canAccessPermissionNotification;
+
+    /**
+     * The billing accounts the project has.
+     * @since 1.3
+     */
+    private List<com.topcoder.clients.model.Project> billingAccounts;
 
     /**
      * Gets the project data.
@@ -547,5 +559,25 @@ public class EditCockpitProjectDTO extends CommonDTO implements Serializable {
      */
     public void setCanAccessPermissionNotification(boolean canAccessPermissionNotification) {
         this.canAccessPermissionNotification = canAccessPermissionNotification;
+    }
+
+    /**
+     * Gets the billing accounts the project has.
+     *
+     * @return the billing accounts the project has.
+     * @since 1.3
+     */
+    public List<Project> getBillingAccounts() {
+        return billingAccounts;
+    }
+
+    /**
+     * Sets the billing accounts the project has.
+     *
+     * @param billingAccounts the billing accounts the project has.
+     * @since 1.3
+     */
+    public void setBillingAccounts(List<Project> billingAccounts) {
+        this.billingAccounts = billingAccounts;
     }
 }

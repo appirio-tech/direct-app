@@ -1910,3 +1910,39 @@ div#dp-popup {
     padding: 0px 4px 0px 0px;
 }
 
+.addBillingButton {
+    position:absolute;
+    right:10px;
+    top:10px;
+}
+
+.projectMetaAreaField  a.addBillingButton span {
+    font-size: 12px;
+    padding: 0 11px 0 7px;
+}
+
+div.billingAccountEntry {
+    font-size:12px;
+}
+
+a.removeBilling, a.removeBilling:visited{
+    color: #e10000;
+    font-size: 11px;
+    -webkit-text-size-adjust: none;
+    line-height: 25px;
+    text-decoration: underline;
+    margin-left: 5px;
+
+}
+a.removeBilling:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.errorMessage {
+    color: #ff0001;
+    font-size: 11px;
+}
+
+
+

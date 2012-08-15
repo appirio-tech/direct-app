@@ -1,9 +1,11 @@
 <%--
   - Author: GreatKevin
-  - Version: 1.2.0
+  - Version: 1.3.0
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This JSP page is the edit project page.
+  -
+  - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
   -
   - (Version 1.1 Release Assembly - TC Cockpit Edit Project and Project General Info Update) changes:
   - - Add edit and save of project ratings.
@@ -12,7 +14,8 @@
   - - Add edit of project type & category
   - - Add manage of project permissions, notifications and contest notifications for the user.
   -
-  - Version 1.0 (Module Assembly - TopCoder Cockpit Project Dashboard Edit Project version 1.0)
+  - (Version 1.3 Release Assembly - TopCoder Cockpit Billing Account Project Association)
+  - - Add associate/remove project billing account feature
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -182,6 +185,28 @@
 
         <div class="inputContainer">
             <input id="jiraAddress" name="${viewData.jiraURL.id}" type="text" value="<s:property value='viewData.jiraURL.metadataValue'/>" class="textInput" autocomplete="off"/>
+        </div>
+    </div>
+
+    <div class="projectMetaAreaField oddRowItem">
+        <h4 class="projectMetaLabel ptypeIcon">Project Billing Account:</h4>
+        <div class="comboContainer" id="billingSelection">
+            <select name="projectBillingAccount" autocomplete="off">
+                <option value="0">Select Billing Account to add</option>
+                <s:iterator value='availableBillingAccounts'>
+                    <option value="<s:property value='id'/>"><s:property value='name'/></option>
+                </s:iterator>
+            </select>
+            <span class="errorMessage"></span>
+        </div>
+        <a name="addBillingAccount" class="buttonRed1 addBillingButton" href="javascript:;"><span>ASSOCIATE BILLING</span></a>
+        <div class="comboContainer" id="billingDisplay">
+            <s:iterator value='viewData.billingAccounts'>
+                <div class="billingAccountEntry">
+                    <span><s:property value='name'/></span><a class="removeBilling" href="javascript:;">Remove</a>
+                    <input type="hidden" value="<s:property value='id'/>"/>
+                </div>
+            </s:iterator>
         </div>
     </div>
 

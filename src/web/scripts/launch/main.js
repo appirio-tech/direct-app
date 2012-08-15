@@ -51,8 +51,11 @@
  * Version 2.0 (Release Assembly - TC Direct Cockpit Release Five) change notes:
  * - Fix the DR points, milestone prizes, contest fee percentage calculation etc.
  *
+ * Version 2.1 (Release Assembly - TopCoder Cockpit Billing Account Project Association) change notes:
+ * - Add method getBillingAccountsByDirectProjectId(directProjectId)
+ *
  * @author isv, GreatKevin
- * @version 2.0
+ * @version 2.1
  */
 
  /**
@@ -557,6 +560,31 @@ function getCopilotsByDirectProjectId(directProjectId) {
     });
 
     directProjectCopilots[directProjectId] = returnValue;
+    return returnValue;
+}
+
+function getBillingAccountsByDirectProjectId(directProjectId) {
+    var returnValue = {};
+    var request = {directProjectId:directProjectId};
+
+    $.ajax({
+        type: 'POST',
+        url:  ctx + "/launch/getBillingAccountsForProject",
+        data: request,
+        cache: false,
+        async: false,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult(jsonResult,
+                function(result) {
+                    returnValue = result;
+                },
+                function(errorMessage) {
+                    showServerError(errorMessage);
+                });
+        }
+    });
+
     return returnValue;
 }
 

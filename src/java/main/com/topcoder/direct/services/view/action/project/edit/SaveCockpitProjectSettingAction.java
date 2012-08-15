@@ -51,8 +51,14 @@ import java.util.*;
  *     - Add support to manage the contest timeline/forum notifications for the users who have permission on the project
  * </p>
  *
+ * <p>
+ *     Version 2.1 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
+ *     - Add method {@link #associateProjectBillingAccount()}
+ *     - Add method {@link #removeProjectBillingAccount()}
+ * </p>
+ *
  * @author GreatKevin
- * @version 2.0
+ * @version 2.1
  */
 public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction implements FormAction<SaveProjectSettingsForm> {
 
@@ -394,6 +400,97 @@ public class SaveCockpitProjectSettingAction extends BaseDirectStrutsAction impl
         }
 
         return SUCCESS;
+    }
+
+    /**
+     * Handles the associate project billing account ajax request.
+     *
+     * @return result code
+     * @since 2.1
+     */
+    public String associateProjectBillingAccount() {
+        try {
+            // check permission
+            String billingAccountName = canAccessBillingAccount(getFormData().getProjectBillingAccountId());
+            if(billingAccountName == null) {
+                throw new IllegalArgumentException("You don't have permission access to this billing account");
+            }
+
+            Map<String, String> result = new HashMap<String, String>();
+
+            getProjectServiceFacade().addBillingAccountToProject(getFormData().getProjectId(),
+                    getFormData().getProjectBillingAccountId());
+
+            result.put("projectId", String.valueOf(getFormData().getProjectId()));
+            result.put("billingId", String.valueOf(getFormData().getProjectBillingAccountId()));
+            result.put("billingName", billingAccountName);
+            result.put("operation", "associate");
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Handles the ajax request to remove the project billing account.
+     *
+     * @return result code
+     * @since 2.1
+     */
+    public String removeProjectBillingAccount() {
+        try {
+            // check permission
+            String billingAccountName = canAccessBillingAccount(getFormData().getProjectBillingAccountId());
+            if(billingAccountName == null) {
+                throw new IllegalArgumentException("You don't have permission access to this billing account");
+            }
+            Map<String, String> result = new HashMap<String, String>();
+
+            getProjectServiceFacade().removeBillingAccountFromProject(getFormData().getProjectId(),
+                    getFormData().getProjectBillingAccountId());
+
+            result.put("projectId", String.valueOf(getFormData().getProjectId()));
+            result.put("billingId", String.valueOf(getFormData().getProjectBillingAccountId()));
+            result.put("billingName", billingAccountName);
+            result.put("operation", "remove");
+
+            setResult(result);
+
+        } catch (Throwable e) {
+            if (getModel() != null) {
+                setResult(e);
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    /**
+     * Checks whether the user has permission to access the specified billing account id, if yes, return
+     * the billing account name, if no result null.
+     *
+     * @param billingAccountId the billing account id
+     * @return if yes, return
+     * the billing account name, if no result null.
+     * @throws Exception if any error
+     * @since 2.1
+     */
+    private String canAccessBillingAccount(long billingAccountId) throws Exception {
+        final List<ProjectData> billingProjects = getBillingProjects();
+
+        for(ProjectData bp : billingProjects) {
+            if(bp.getProjectId() == billingAccountId) {
+                return bp.getName();
+            }
+        }
+
+        return null;
     }
 
     /**

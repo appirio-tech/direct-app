@@ -26,8 +26,13 @@ import java.util.List;
  *     timeline / forum notifications and user id.
  * </p>
  *
+ * <p>
+ *     Version 1.3 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
+ *     - Add the property {@link #projectBillingAccountId}
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.2
+ * @version 1.3
  */
 public class SaveProjectSettingsForm extends ProjectIdForm {
 
@@ -139,6 +144,12 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      * @since 1.2
      */
     private long userId;
+
+    /**
+     * The billing account id to set.
+     * @since 1.3
+     */
+    private long projectBillingAccountId;
 
     /**
      * Gets the name of the project.
@@ -514,5 +525,25 @@ public class SaveProjectSettingsForm extends ProjectIdForm {
      */
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    /**
+     * Gets the billing account id to set.
+     *
+     * @return the billing account id to set.
+     * @since 1.3
+     */
+    public long getProjectBillingAccountId() {
+        return projectBillingAccountId;
+    }
+
+    /**
+     * Sets the billing account id of the project.
+     *
+     * @param projectBillingAccountId the billing account id of the project.
+     * @since 1.3
+     */
+    public void setProjectBillingAccountId(long projectBillingAccountId) {
+        this.projectBillingAccountId = projectBillingAccountId;
     }
 }

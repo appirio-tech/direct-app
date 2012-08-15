@@ -31,8 +31,11 @@
  * - Add place holder support for tinyMCE editors for sutdio contest description, round1 info
  * - and round2 info fields.
  *
- * @author GreatKevin, TCSASSEMBLER
- * @version 1.6
+ * Version 1.7 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
+ * - Add js to populate billing accounts based on project selection.
+ *
+ * @author GreatKevin
+ * @version 1.7
  */
 $(document).ready(function() {
 
@@ -459,6 +462,8 @@ $(document).ready(function() {
 	setupTinyMCEWithHeight('swDetailedRequirements', 12000, "240");
 	setupTinyMCEWithHeight('swGuidelines', 2048, "240");
 
+    handleProjectDropDownChange();
+
 }); // end of jQuery onload
 
 //capacity dates
@@ -471,6 +476,26 @@ var copilotDropdownFlag = false;
 function handleProjectDropDownChange() {
     var value = $('.projectSelect select').getSetSSValue();
 
+    var billingAccounts = getBillingAccountsByDirectProjectId(value);
+
+    $("#billingProjects").empty();
+    $("#billingProjects").append($('<option></option>').val(0).html("Please select an existing account"));
+
+    $.each(billingAccounts, function(key, value) {
+        $("#billingProjects").append($('<option></option>').val(key).html(value));
+    });
+    $("#billingProjects").val(0);
+    $("#billingProjects").resetSS();
+    $("#billingProjects").getSetSSValue(0);
+
+    if(value > 0) {
+        $("a.addBilling").show();
+        $("a.addBilling").attr("href", "../editProject?formData.projectId=" + value + "#addBillingAccount");
+    } else {
+        $("a.addBilling").hide();
+        $("a.addBilling").attr("href", "javascript:;");
+    }
+
     var result = getCopilotsByDirectProjectId(value);
 
     var copilots = result.copilots;
@@ -482,7 +507,6 @@ function handleProjectDropDownChange() {
     $contestCopilots.append($('<option></option>').val(0).html("Unassigned"));
 
     $.each(copilots, function(key, value) {
-
         $contestCopilots.append($('<option></option>').val(key).html(value));
     });
 

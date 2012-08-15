@@ -4,11 +4,13 @@
 package com.topcoder.direct.services.view.action.project.edit;
 
 
+import com.topcoder.clients.model.Project;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.UserProjectsDTO;
 import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
@@ -24,14 +26,7 @@ import com.topcoder.service.project.ProjectCategory;
 import com.topcoder.service.project.ProjectData;
 import com.topcoder.service.project.ProjectType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -57,7 +52,13 @@ import java.util.Map;
  *     </ui>
  * </p>
  *
- * @version 2.0
+ * <p>
+ *     Version 2.1 (Release Assembly - TopCoder Cockpit Billing Account Project Association)
+ *    - Add method {@link #getAvailableBillingAccounts()} to get the unassociated billing accounts for project.
+ *    - update method {@link #executeAction()} to set associated project billing accounts.
+ * </p>
+ *
+ * @version 2.1
  * @author GreatKevin
  */
 public class EditCockpitProjectAction extends BaseDirectStrutsAction implements FormAction<ProjectIdForm>,
@@ -215,6 +216,11 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         // get current user from session
         TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
 
+        // check if project service facade EJB3 service is initialized and injected
+        if(getProjectServiceFacade() == null) {
+            throw new IllegalStateException("The project service facade is not initialized.");
+        }
+
         // get the general project information
         ProjectData projectData = getProjectServiceFacade().getProject(currentUser, getFormData().getProjectId());
 
@@ -270,6 +276,8 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
             projectData.setProjectCategory(NONE_PROJECT_CATEGORY);
         }
 
+        // set project billing accounts
+        viewData.setBillingAccounts(getProjectServiceFacade().getBillingAccountsByProject(getFormData().getProjectId()));
 
         List<ProjectBriefDTO> projects
                 = DataProvider.getUserProjects(currentUser.getUserId());
@@ -445,6 +453,36 @@ public class EditCockpitProjectAction extends BaseDirectStrutsAction implements 
         }
 
         return SUCCESS;
+    }
+
+
+    /**
+     * Gets the available billing accounts for user to select.
+     *
+     * @return the available billing accounts for user to select.
+     * @throws Exception if there is any error.
+     * @since 2.1
+     */
+    public List<IdNamePair> getAvailableBillingAccounts() throws Exception {
+        final List<ProjectData> allBillingProjects = getBillingProjects();
+        Set<Long> associatedBillings = new HashSet<Long>();
+        for(Project bp : viewData.getBillingAccounts()) {
+            associatedBillings.add(bp.getId());
+        }
+
+
+        List<IdNamePair> result = new ArrayList<IdNamePair>();
+
+        for(ProjectData bp : allBillingProjects) {
+            if(!associatedBillings.contains(bp.getProjectId())) {
+                IdNamePair billing = new IdNamePair();
+                billing.setId(bp.getProjectId());
+                billing.setName(bp.getName());
+                result.add(billing);
+            }
+        }
+
+        return result;
     }
 
     /**

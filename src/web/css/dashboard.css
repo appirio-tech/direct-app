@@ -65,6 +65,9 @@
  *
  * - (Module Assembly - TC Cockpit Project Contests Batch Edit ) updates:
  * - Add CSS for the updated contests tab with dropdown menu
+ *
+ * - (Release Assembly - TopCoder Cockpit Billing Account Project Association) updates
+ * - Add CSS for add billing account link in launch contest flow
  */
 
 
@@ -9404,3 +9407,18 @@ TABLE.softwareStatsApproval {
                 color:#fff;
                 font-size:12px;
             }
+
+a.addBilling, a.addBilling:visited{
+    color: #e10000;
+    font-size: 11px;
+    -webkit-text-size-adjust: none;
+    line-height: 30px;
+    text-decoration: underline;
+    margin-left: 0px;
+
+}
+a.addBilling:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+

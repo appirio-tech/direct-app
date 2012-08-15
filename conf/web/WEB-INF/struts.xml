@@ -547,6 +547,20 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="removeProjectBillingAccount" class="saveCockpitProjectSettingAction"
+                method="removeProjectBillingAccount">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="associateProjectBillingAccount" class="saveCockpitProjectSettingAction"
+                method="associateProjectBillingAccount">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="saveProjectPermissionsAndNotifications" class="saveCockpitProjectSettingAction"
                 method="saveProjectPermissionsAndNotifications">
             <interceptor-ref name="securedProjectPreProcessorStack"/>
@@ -1044,6 +1058,12 @@
         </action>
 
         <action name="getBillingProjectContestFees" method="getBillingProjectContestFees" class="commonAction">
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="getBillingAccountsForProject" method="getBillingAccountsForProject" class="commonAction">
+            <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
