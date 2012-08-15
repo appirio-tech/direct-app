@@ -773,7 +773,6 @@ function renderPipelineWidget(resultJson) {
     var scheduledData = new Array();
     if (resultJson.length) {
         for (var i = 0; i < resultJson.length; i++) {
-            console.log(resultJson[i].date);
             xAxisCate.push(resultJson[i].date);
             finishedData.push(parseInt(resultJson[i].completedContests) == 0 ? null : parseInt(resultJson[i].completedContests));
             activeData.push(parseInt(resultJson[i].activeContests) == 0 ? null : parseInt(resultJson[i].activeContests));
