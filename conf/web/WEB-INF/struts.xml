@@ -1464,6 +1464,10 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/financial.jsp</result>
         </action>
+        <action name="pipeline" class="enterpriseDashboardEntryAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success">/WEB-INF/enterpriseDashboard/pipeline.jsp</result>
+        </action>
         <action name="getTotalSpend" method="getTotalSpend" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
@@ -1474,7 +1478,11 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-
+        <action name="getContestsPipeline" method="getContestsPipeline" class="enterpriseDashboardPipelineAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
     </package>
 
 </struts>

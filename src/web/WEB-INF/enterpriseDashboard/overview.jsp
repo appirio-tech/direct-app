@@ -1,6 +1,10 @@
 <%--
-  - Author: TCSASSEMLBER
+  - Author: GreatKevin
   - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
+  -
+  - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
+  - - Add pipeline widget
+  -
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: The overview page of the new enterprise dashboard
@@ -304,7 +308,7 @@
                                 <div class="pipelinehTitle">
                                     <h3>Pipeline</h3>
                                     <a href="javascript:;" class="icon" rel="A graph depicting the projects in Pipeline is shown here.">!</a>
-                                    <a href="javascript:;" class="viewAllLink">View All</a>
+                                    <a href="<s:url action='pipeline' namespace='/enterpriseDashboard'/>" class="viewAllLink">View All</a>
                                 </div>
                                 <!-- title -->
 

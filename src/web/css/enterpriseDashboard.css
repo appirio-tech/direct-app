@@ -5,8 +5,11 @@
 *
 * Version 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
 *
-* Author: TCSASSEMBLER
-* Version 1.0
+* Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part)
+* - Updates the colors of pipeline aggregation header
+*
+* Author: GreatKevin
+* Version 1.1
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
     background: none repeat scroll 0 0 transparent;
@@ -1402,7 +1405,7 @@ input{
 			}
 		
 		#mainSection .pipelineSection .numberSection li{
-			width:25%;
+			width:20%;
 			height:48px;
 			float:left;
 			display:inline;
@@ -1434,7 +1437,7 @@ input{
 				}
 				
 			#mainSection .pipelineSection .numberSection li.finished strong{
-				color:#939393;
+				color:#2f9c0d;
 				}
 				
 			#mainSection .pipelineSection .numberSection li.active strong{
@@ -1442,11 +1445,15 @@ input{
 				}
 				
 			#mainSection .pipelineSection .numberSection li.draft strong{
-				color:#2f9c0d;
+				color:#939393;
 				}
 				
 			#mainSection .pipelineSection .numberSection li.failed strong{
 				color:#e83308;
+				}
+				
+			#mainSection .pipelineSection .numberSection li.scheduled strong{
+				color:#FF850B;
 				}
 				
 	#mainSection .pipelineSection .corner{

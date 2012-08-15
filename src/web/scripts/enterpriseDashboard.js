@@ -5,8 +5,11 @@
  *
  * Version 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
  *
- * @author TCSASSEMBLER
- * @version 1.0
+ * Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
+ * - Add js codes for the pipeline page and pipeline widget in the overview page.
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 var chart;
 var financialTable;
@@ -761,6 +764,354 @@ function renderFinancial(json) {
     }
 };
 
+function renderPipelineWidget(resultJson) {
+    var xAxisCate = new Array();
+    var finishedData = new Array();
+    var activeData = new Array();
+    var draftData = new Array();
+    var failedData = new Array();
+    var scheduledData = new Array();
+    if (resultJson.length) {
+        for (var i = 0; i < resultJson.length; i++) {
+            console.log(resultJson[i].date);
+            xAxisCate.push(resultJson[i].date);
+            finishedData.push(parseInt(resultJson[i].completedContests) == 0 ? null : parseInt(resultJson[i].completedContests));
+            activeData.push(parseInt(resultJson[i].activeContests) == 0 ? null : parseInt(resultJson[i].activeContests));
+            draftData.push(parseInt(resultJson[i].draftContests) == 0 ? null : parseInt(resultJson[i].draftContests));
+            failedData.push(parseInt(resultJson[i].failedContests) == 0 ? null : parseInt(resultJson[i].failedContests));
+            scheduledData.push(parseInt(resultJson[i].scheduledContests) == 0 ? null : parseInt(resultJson[i].scheduledContests));
+        }
+    }
+
+    var pointWidth = 30;
+
+    if(xAxisCate.length > 6 && xAxisCate.length < 10 ) {
+        pointWidth = 25;
+    } if (xAxisCate.length >= 10) {
+        pointWidth = 20;
+    }
+
+    if (resultJson.length) {
+        chart = new Highcharts.Chart({
+            chart:{
+                renderTo:'overviewPipeline',
+                type:'column',
+                marginTop:10,
+                marginLeft:14,
+                marginRight:14,
+                marginBottom:20
+            },
+            credits:{
+                text:''
+            },
+            navigation:{
+                buttonOptions:{
+                    enabled:false
+                }
+            },
+            title:{
+                text:null
+            },
+            xAxis:{
+                categories:xAxisCate,
+                labels:{
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'9px',
+                        color:'#898989'
+                    },
+                    formatter:function () {
+                        return this.value.substring(5, 8).toUpperCase() + '\'' + parseInt(this.value).toString().substring(2, 4);
+                    }
+                }
+            },
+            yAxis:{
+                min:0,
+                title:{
+                    text:null
+                },
+                stackLabels:{
+                    enabled:true
+                },
+                labels:{
+                    enabled:false
+                },
+                gridLineWidth:0
+            },
+            legend:{
+                align:'left',
+                verticalAlign:'top',
+                borderWidth:0,
+                borderRadius:0,
+                y:-10,
+                itemStyle:{
+                    fontFamily:'Arial',
+                    fontSize:'9px',
+                    color:'#898989'
+                },
+                labelFormatter:function () {
+                    return this.name.replace('Contests', '');
+                },
+                reversed:true
+            },
+            tooltip:{
+                useHTML:true,
+                backgroundColor:null,
+                borderRadius:0,
+                borderWidth:0,
+                shadow:false,
+                style:{
+                    margin:'0px',
+                    padding:'0px',
+                    fontFamily:'Arial',
+                    fontSize:'11px',
+                    color:'#333333'
+                },
+                formatter:function () {
+                    return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                        parseInt(this.point.category) + ' ' + this.point.category.substring(5)
+                        + '</strong><div>' +
+                        this.series.name
+                        + ':' +
+                        this.point.y
+                        + '</div></div></div>';
+                }
+            },
+            plotOptions:{
+                column:{
+                    stacking:'normal',
+                    dataLabels:{
+                        enabled:true,
+                        color:'#ffffff',
+                        style:{
+                            fontFamily:'Arial',
+                            fontSize:'11px',
+                            fontWeight:'bold'
+                        },
+                        formatter:function () {
+                            return this.y == 0 ? null : this.y;
+                        }
+                    },
+                    shadow:false,
+                    borderColor:Highcharts.getOptions().borderColor
+                },
+                series:{
+                    pointWidth:pointWidth
+                }
+            },
+            series:[
+                {
+                    name:'Failed Contests',
+                    data:failedData,
+                    color:'#e83308',
+                    borderColor:'#a80b00'
+                },
+                {
+                    name:'Draft Contests',
+                    data:draftData,
+                    color:'#939393',
+                    borderColor:'#777777'
+                },
+                {
+                    name:'Active Contests',
+                    data:activeData,
+                    color:'#2fcafa',
+                    borderColor:'#0096c7'
+                },
+                {
+                    name:'Scheduled Contests',
+                    data:scheduledData,
+                    color:'#FF850B',
+                    borderColor:'#FF850B'
+                },
+                {
+                    name:'Finished Contests',
+                    data:finishedData,
+                    color:'#2f9c0d',
+                    borderColor:'#187000'
+                }
+            ]
+        });
+    } else {
+        $('#overviewPipeline').empty().append('<div class="noData">No data available</div>');
+    }
+}
+
+function renderPipelinePage(resultJson) {
+    var xAxisCate = new Array();
+    var finishedData = new Array();
+    var activeData = new Array();
+    var draftData = new Array();
+    var failedData = new Array();
+    var scheduledData = new Array();
+    var finishedDataTotal = 0, activeDataTotal = 0, draftDataTotal = 0, failedDataTotal = 0, scheduledDataTotal = 0;
+    $.each(resultJson, function (idx, item) {
+        finishedDataTotal += parseInt(item.completedContests);
+        activeDataTotal += parseInt(item.activeContests);
+        draftDataTotal += parseInt(item.draftContests);
+        failedDataTotal += parseInt(item.failedContests);
+        scheduledDataTotal += parseInt(item.scheduledContests);
+    });
+
+    if (resultJson.length) {
+        $.each(resultJson, function (idx, item) {
+            xAxisCate.push(item.date);
+            finishedData.push(parseInt(item.completedContests) == 0 ? null : parseInt(item.completedContests));
+            activeData.push(parseInt(item.activeContests) == 0 ? null : parseInt(item.activeContests));
+            draftData.push(parseInt(item.draftContests) == 0 ? null : parseInt(item.draftContests));
+            failedData.push(parseInt(item.failedContests) == 0 ? null : parseInt(item.failedContests));
+            scheduledData.push(parseInt(item.scheduledContests) == 0 ? null : parseInt(item.scheduledContests));
+        });
+    }
+
+    $('.pipelineSection ul').empty().append('<li class="finished">Total Finished Contests<strong>' + finishedDataTotal + '</strong></li><li class="active">Total Active Contests<strong>' + activeDataTotal + '</strong></li><li class="scheduled">Total Scheduled Contests<strong>' + scheduledDataTotal + '</strong></li><li class="draft">Total Draft Contests<strong>' + draftDataTotal + '</strong></li><li class="last failed">Total Failed Contests<strong>' + failedDataTotal + '</strong></li>');
+    if (resultJson.length) {
+        chart = new Highcharts.Chart({
+            chart:{
+                renderTo:'pipelineChart',
+                type:'column',
+                marginBottom:60
+            },
+            credits:{
+                text:''
+            },
+            navigation:{
+                buttonOptions:{
+                    enabled:false
+                }
+            },
+            title:{
+                text:null
+            },
+            xAxis:{
+                categories:xAxisCate,
+                labels:{
+                    style:{
+                        fontFamily:'Arial',
+                        fontSize:'11px',
+                        color:'#898989'
+                    },
+                    formatter:function () {
+                        return this.value.substring(5, 8).toUpperCase() + '\'' + parseInt(this.value).toString().substring(2, 4);
+                    }
+                },
+                tickLength:0
+            },
+            yAxis:{
+                min:0,
+                title:{
+                    text:null
+                },
+                stackLabels:{
+                    enabled:true
+                },
+                labels:{
+                    enabled:false
+                },
+                gridLineWidth:0
+            },
+            legend:{
+                align:'center',
+                verticalAlign:'bottom',
+                y:16,
+                backgroundColor:'#ebebeb',
+                borderColor:'#CCC',
+                borderWidth:1,
+                borderRadius:0,
+                symbolPadding:6,
+                itemWidth:150,
+                itemStyle:{
+                    fontFamily:'Arial',
+                    fontWeight:'bold',
+                    fontSize:'11px',
+                    color:'#898989'
+                },
+                reversed:true
+            },
+            tooltip:{
+                useHTML:true,
+                backgroundColor:null,
+                borderRadius:0,
+                borderWidth:0,
+                shadow:false,
+                style:{
+                    margin:'0px',
+                    padding:'0px',
+                    fontFamily:'Arial',
+                    fontSize:'11px',
+                    color:'#333333'
+                },
+                formatter:function () {
+                    return '<div class="tooltip" style="border:#bdbdbd solid 1px;"><div class="tooltipInner"><strong>' +
+                        parseInt(this.point.category) + ' ' + this.point.category.substring(5)
+                        + '</strong><div>' +
+                        this.series.name
+                        + ': ' +
+                        this.point.y
+                        + '</div></div></div>';
+                }
+            },
+            plotOptions:{
+                column:{
+                    stacking:'normal',
+                    dataLabels:{
+                        enabled:true,
+                        color:'#ffffff',
+                        style:{
+                            fontFamily:'Arial',
+                            fontSize:'11px',
+                            fontWeight:'bold'
+                        },
+                        formatter:function () {
+                            return this.y == 0 ? null : this.y;
+                        }
+                    },
+                    shadow:false,
+                    borderColor:Highcharts.getOptions().borderColor
+                },
+                series:{
+                    pointWidth:48
+                }
+            },
+            series:[
+                {
+                    name:'Failed Contests',
+                    data:failedData,
+                    color:'#e83308',
+                    borderColor:'#a80b00'
+                },
+                {
+                    name:'Draft Contests',
+                    data:draftData,
+                    color:'#939393',
+                    borderColor:'#777777'
+
+                },
+                {
+                    name:'Active Contests',
+                    data:activeData,
+                    color:'#2fcafa',
+                    borderColor:'#0096c7'
+                },
+                {
+                    name:'Scheduled Contests',
+                    data:scheduledData,
+                    color:'#FF850B',
+                    borderColor:'#FF850B'
+                },
+                {
+                    name:'Finished Contests',
+                    data:finishedData,
+                    color:'#2f9c0d',
+                    borderColor:'#187000'
+                }
+            ]
+        });
+    } else {
+        $('.pipelineSection #pipelineChart').empty().append('<div class="noData">No data available</div>');
+    }
+}
+
 
 function loadTotalSpend(resultHandler) {
     if($("#overviewTotalSpend").length > 0) {
@@ -796,6 +1147,34 @@ function loadTotalSpend(resultHandler) {
                         }
                     });
                     renderCurrentPrevMonthSpend();
+                },
+                function(errorMessage) {
+                    showErrors(errorMessage);
+                });
+        }
+    });
+}
+
+function loadPipeline(resultHandler) {
+    if($("#pipelineChartWrapper").length > 0) {
+        $("#pipelineChart").empty().html('<div class="ajaxTableLoader"><img alt="loading" src="/images/rss_loading.gif"></div>');
+        $(".numberSectionInner ul").empty().html('<li class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></li>');
+    }
+    if($("#overviewPipeline").length > 0) {
+        $("#overviewPipeline").empty().html('<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>');
+    }
+
+    $.ajax({
+        type: 'POST',
+        url:  "getContestsPipeline",
+        data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
+        cache: false,
+        timeout:100000,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult2(jsonResult,
+                function(result) {
+                    resultHandler(result);
                 },
                 function(errorMessage) {
                     showErrors(errorMessage);
@@ -885,13 +1264,13 @@ function loadCurrentPrevMonthSpend() {
 }
 
 
-
 function renderOverviewTab() {
     currentMonthLoaded = false;
     prevMonthLoaded = false;
     loadTotalSpend(renderTotalSpendWidget);
     loadFinancial(renderOverviewFinancial);
     loadCurrentPrevMonthSpend();
+    loadPipeline(renderPipelineWidget);
 }
 
 function renderFinancialTab() {
@@ -1279,6 +1658,14 @@ $(document).ready(function () {
 
         $("#filterButton").click(function(){
             renderFinancialTab();
+        });
+    }
+
+    if ($(".pipelineIcon").parents("li").hasClass("active")) {
+        loadPipeline(renderPipelinePage);
+
+        $("#filterButton").click(function(){
+            loadPipeline(renderPipelinePage);
         });
     }
 

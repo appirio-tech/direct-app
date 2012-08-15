@@ -338,6 +338,10 @@
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>
 
+    <bean id="enterpriseDashboardPipelineAction" class="com.topcoder.direct.services.view.action.enterpriseDashboard.DashboardPipelineAction"
+          parent="baseDirectStrutsAction" scope="prototype">
+    </bean>
+
     <bean id="launchContestAction" class="com.topcoder.direct.services.view.action.contest.launch.LaunchContestAction"
           parent="baseDirectStrutsAction" scope="prototype">
     </bean>

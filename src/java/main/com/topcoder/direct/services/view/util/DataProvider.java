@@ -32,6 +32,7 @@ import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRa
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineScheduledContestsViewType;
 import com.topcoder.direct.services.view.dto.dashboard.projectreport.ProjectMetricsReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDashboardVolumeViewDTO;
+import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
 import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
@@ -48,6 +49,7 @@ import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDash
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
 import com.topcoder.management.deliverable.Upload;
+import com.topcoder.management.project.ProjectStatus;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.facade.contest.CommonProjectContestData;
 import com.topcoder.service.facade.contest.ProjectSummaryData;
@@ -534,8 +536,16 @@ import java.util.Map.Entry;
  *     <li>Added {@link #getDirectProjectForumTemplates(long)} method.</li>
  * </ol>
  * </p>
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy
- * @version 4.4
+ *
+ * <p>
+ * Version 4.5 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
+ * <ol>
+ *     <li>Add method {@link #getEnterpriseDashboardContestsPipeline(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)}</li>
+ * </ol>
+ * </p>
+ *
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin
+ * @version 4.5
  * @since 1.0
  */
 public class DataProvider {
@@ -5298,6 +5308,111 @@ public class DataProvider {
         }
 
         return result.subList(2, result.size());
+    }
+
+    /**
+     * Gets the contests pipeline data for new enterprise dashboard, each <code>EnterpriseDashboardMonthPipelineDTO</code> represents
+     * the pipeline stats dat for one month in the filtered range.
+     *
+     * @param filterForm the <code>EnterpriseDashboardFilterForm</code> instance which contains all the filter data
+     * @return a list of <code>EnterpriseDashboardMonthPipelineDTO</code>
+     * @throws Exception if any error
+     * @since 4.5
+     */
+    public static List<EnterpriseDashboardMonthPipelineDTO> getEnterpriseDashboardContestsPipeline(EnterpriseDashboardFilterForm filterForm) throws Exception {
+        long[] projectIds = getEnterpriseDashboardFilteredProjectIds(filterForm);
+
+        if(projectIds == null || projectIds.length == 0) {
+            return new ArrayList<EnterpriseDashboardMonthPipelineDTO>();
+        }
+
+        String filteredProjectIds = concatenate(projectIds, ", ");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        String query = "enterprise_dashboard_contests_pipeline";
+        Request request = new Request();
+        request.setContentHandle(query);
+        request.setProperty("tcdirectids", filteredProjectIds);
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+        DateFormat sourceDataFormatter = new SimpleDateFormat("MMM''yy");
+        Date startDate = sourceDataFormatter.parse(filterForm.getStartMonth());
+        Date endDate = sourceDataFormatter.parse(filterForm.getEndMonth());
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        long startMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
+
+        calendar.setTime(endDate);
+
+        long endMonthCount = calendar.get(Calendar.YEAR)  * 12 + calendar.get(Calendar.MONTH);
+
+        Map<Long, EnterpriseDashboardMonthPipelineDTO> resultMap = new LinkedHashMap<Long, EnterpriseDashboardMonthPipelineDTO>();
+        for(long m = startMonthCount; m <= endMonthCount; m++) {
+            EnterpriseDashboardMonthPipelineDTO item = new EnterpriseDashboardMonthPipelineDTO();
+            int year = (int) m / 12;
+            int month = (int) m % 12;
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            item.setDate(calendar.getTime());
+            resultMap.put(m, item);
+        }
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
+        final int recordNum = resultContainer.size();
+        for (int i = 0; i < recordNum; i++) {
+            String currentPhase = resultContainer.getStringItem(i, "current_phase");
+            String status = resultContainer.getStringItem(i, "sname");
+            String newStatus = resultContainer.getStringItem(i, "newstatus");
+            String phases = resultContainer.getStringItem(i, "phases");
+
+            long monthCount = resultContainer.getLongItem(i, "monthcount");
+            EnterpriseDashboardMonthPipelineDTO item = resultMap.get((monthCount/100) * 12 + (monthCount % 100) -1);
+
+            if (currentPhase != null && ((String)status).equalsIgnoreCase(ProjectStatus.ACTIVE.getName())) {
+                // active
+                item.setTotalActiveContests(item.getTotalActiveContests() + 1);
+            } else if (newStatus != null && ((String)status).equalsIgnoreCase(ProjectStatus.ACTIVE.getName())) {
+                // all phases are done, then it is completed
+                if (phases != null && ((String)phases).trim().equalsIgnoreCase("Completed"))
+                {
+                    item.setTotalCompletedContests(item.getTotalCompletedContests() + 1);
+                }
+                else if (phases != null && ((String)phases).trim().equalsIgnoreCase("Active"))
+                {
+                    item.setTotalActiveContests(item.getTotalActiveContests() + 1);
+                }
+                else
+                {
+                    if(newStatus.trim().equalsIgnoreCase("Draft")) {
+                        item.setTotalDraftContests(item.getTotalDraftContests() + 1);
+                    } else {
+                        item.setTotalScheduledContests(item.getTotalScheduledContests() + 1);
+                    }
+                }
+            } else if(!((String)status).equalsIgnoreCase(ProjectStatus.ACTIVE.getName())) {
+
+                if (((String)status).equalsIgnoreCase(ProjectStatus.CANCELLED_CLIENT_REQUEST.getName())
+                        || ((String)status).equalsIgnoreCase(ProjectStatus.CANCELLED_REQUIREMENTS_INFEASIBLE.getName()))
+                {
+                    item.setTotalFailedContests(item.getTotalFailedContests() + 1);
+                }
+                else if (((String)status).equalsIgnoreCase(ProjectStatus.DRAFT.getName()))
+                {
+                    item.setTotalDraftContests(item.getTotalDraftContests() + 1);
+                }
+                else
+                {
+                    item.setTotalCompletedContests(item.getTotalCompletedContests() + 1);
+                }
+            }
+
+
+        }
+
+        List<EnterpriseDashboardMonthPipelineDTO> result = new ArrayList<EnterpriseDashboardMonthPipelineDTO>(resultMap.values());
+
+        return result;
     }
 
     /**
