@@ -544,8 +544,15 @@ import java.util.Map.Entry;
  * </ol>
  * </p>
  *
+ * <p>
+ * Version 4.6 (Release Assembly - TC Direct Cockpit Release Six) changes:
+ * <ol>
+ *     <li>Add method {@link #getInvoiceNumbersFromBilling(long)}</li>
+ *     <li>Add method {@link #getProjectsForInvoiceNumberAndBilling(String, long)}</li>
+ * </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin
- * @version 4.5
+ * @version 4.6
  * @since 1.0
  */
 public class DataProvider {
@@ -4169,6 +4176,62 @@ public class DataProvider {
         }
 
         return data;
+    }
+
+    /**
+     * Gets a list of invoice numbers from the billing account id.
+     *
+     *
+     * @param billingAccountId the id of the billing account.
+     * @return a list of string representing the invoice numbers.
+     * @throws Exception if any error.
+     * @since 4.5
+     */
+    public static List<String> getInvoiceNumbersFromBilling(long billingAccountId) throws Exception {
+        List<String> result = new ArrayList<String>();
+
+        final String queryName = "get_invoice_number_from_billing";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("billingaccountid", String.valueOf(billingAccountId));
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            result.add(row.getStringItem("invoice_number"));
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets a list of projects from the invoice number and billing account id.
+     *
+     * @param invoiceNumber the invoice number.
+     * @param billingAccountId the id of the billing account.
+     * @return a list of projects, each project is stored in a <code>IdNamePair</code> instance.
+     * @throws Exception if any error.
+     * @since 4.5
+     */
+    public static List<IdNamePair> getProjectsForInvoiceNumberAndBilling(String invoiceNumber, long billingAccountId) throws Exception {
+        List<IdNamePair> result = new ArrayList<IdNamePair>();
+
+        final String queryName = "get_projects_from_billing_and_invoice_number";
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle(queryName);
+        request.setProperty("billingaccountid", String.valueOf(billingAccountId));
+        request.setProperty("invoicenumber", invoiceNumber);
+
+        final ResultSetContainer resultSetContainer = dataAccessor.getData(request).get(queryName);
+        for (ResultSetContainer.ResultSetRow row : resultSetContainer) {
+            IdNamePair item = new IdNamePair();
+            item.setId(row.getLongItem("direct_project_id"));
+            item.setName(row.getStringItem("direct_project_name"));
+            result.add(item);
+        }
+
+        return result;
     }
 
     /**

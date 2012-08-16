@@ -68,6 +68,9 @@
  *
  * - (Release Assembly - TopCoder Cockpit Billing Account Project Association) updates
  * - Add CSS for add billing account link in launch contest flow
+ *
+ * - (Release Assembly - TC Direct Cockpit Release Six) updates:
+ * - Update the CSS for billing cost report (invoice history report)
  */
 
 
@@ -4994,6 +4997,7 @@ TABLE.pipelineStats TH.tableTitle span {
     font-weight:bold;
     height:32px;
     margin-left: 5px;
+    float: left;
 }
 
 #billingCostReportSection th.tableTitle a.collapse{
@@ -8629,6 +8633,92 @@ TABLE.pipelineStats TH.tableTitle span {
 			top:123px;
 			right:3px;
 		}
+
+#billingCostReportsPage .filterRowLeft {
+    display: inline;
+    float: left;
+    font-weight: bold;
+    line-height: 22px;
+    width: 112px;
+}
+
+#billingCostReportsPage select {
+    color: #000001;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    height: 22px;
+}
+
+#billingCostReportsPage .filterContainer1400 .adjustFilterRow .filterRowLeft
+{
+    height: 18px;
+    line-height: 15px;
+    padding-bottom: 16px;
+}
+
+#billingCostReportsPage .text {
+    border: 1px solid #BDBDBD;
+    color: #6C6C6C;
+    display: inline;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 6px;
+    width: 58px;
+}
+
+#billingCostReportsPage .filterContainer1400 .text {
+    clear: left;
+    width: 183px;
+}
+
+#billingCostReportsPage .filterContainer1400 .firstFilterRow {
+    width: 214px;
+}
+
+#billingCostReportsPage .filterContainer1400 .statusMultiSelect .multiSelectBox {
+    height: 85px !important;
+}
+
+#billingCostReportSection TABLE TH.tableTitle span {
+    display: inline;
+    float: left;
+    height: 32px;
+    line-height: 32px;
+    padding-top: 0;
+    vertical-align: baseline;
+}
+
+#aggregationCostReport, .basicInvoiceHist{
+    margin-top: 20px;
+}
+#aggregationCostReport th.tableTitle, .basicInvoiceHist th.tableTitle {
+    text-align: left;
+    font-size: 14px;
+}
+#aggregationCostReport .tableTitleWhite th, .basicInvoiceHist.tableTitleWhite th{
+    height: 34px;
+    background: url(/images/bg-newbox-header.png) left -36px repeat-x;
+    font-size: 14px;
+    color: #333;
+}
+#aggregationCostReport td{
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    height: 28px;
+}
+
+#billingCostReportSection {
+    border: 0;
+}
+
+#billingCostDetails_wrapper {
+    border-left: 1px solid #A8ABAD;
+}
+
 
 @-moz-document url-prefix(){	/* firefox hack */
 			#billingCostReportsPage .filterContainer #contestfilter{

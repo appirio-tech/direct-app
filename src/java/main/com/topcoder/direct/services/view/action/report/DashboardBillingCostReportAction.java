@@ -7,6 +7,7 @@ import com.topcoder.clients.invoices.dao.LookupDAO;
 import com.topcoder.direct.services.project.metadata.entities.dao.TcDirectProject;
 import com.topcoder.direct.services.project.metadata.entities.dto.MetadataKeyIdValueFilter;
 import com.topcoder.direct.services.project.metadata.entities.dto.MetadataValueOperator;
+import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.BillingCostReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
@@ -73,9 +74,19 @@ import java.util.Set;
  *   to support customer Platform Fee records. </li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.5 (Release Assembly - TC Direct Cockpit Release Six) changes:
+ * <ol>
+ *     <li>
+ *   Updated method {@link #executeAction()} to handle invoice number drop down and calculate data for the aggregation
+ *   statistics of billing cost report.
+ *     </li>
+ * </ol>
+ * </p>
  * 
- * @author Blues, TCSASSEMBLER
- * @version 1.4
+ * @author Blues, GreatKevin
+ * @version 1.5
  */
 public class DashboardBillingCostReportAction extends DashboardReportBaseAction<DashboardBillingCostReportForm, BillingCostReportDTO> {
 
@@ -187,6 +198,15 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
         long customerId = form.getCustomerId();
         long[] statusIds = form.getStatusIds();
         long[] paymentTypeIds = form.getPaymentTypeIds();
+        String invoiceNumberInput = form.getInvoiceNumber();
+        String invoiceNumberSelection = form.getInvoiceNumberSelection();
+        String invoiceNumber = null;
+
+        if(invoiceNumberInput != null && invoiceNumberInput.trim().length() > 0) {
+            invoiceNumber = invoiceNumberInput;
+        } else if(invoiceNumberSelection != null && invoiceNumberSelection.trim().length() > 0) {
+            invoiceNumber = invoiceNumberSelection;
+        }
 
         long contestId = 0;
 
@@ -210,6 +230,35 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
 
         // set all the payment types to view data to populate payment type selection
         getViewData().setPaymentTypes(BILLING_COST_REPORT_PAYMENT_TYPES);
+
+        boolean invoiceNumberSelectionIsSet = invoiceNumberSelection != null && (invoiceNumberSelection.trim().length() > 0);
+
+        if(isFirstCall && !invoiceNumberSelectionIsSet) {
+            invoiceNumberSelection = "";
+        }
+
+        List<String> invoiceNumbers = new ArrayList<String>();
+
+        final List<String> invoiceNumbersFromBilling = DataProvider.getInvoiceNumbersFromBilling(billingAccountId);
+
+        if(invoiceNumbersFromBilling != null && invoiceNumbersFromBilling.size() > 0) {
+            invoiceNumbers.add("");
+            invoiceNumbers.addAll(invoiceNumbersFromBilling);
+        }
+
+        getViewData().setInvoiceNumbers(invoiceNumbers);
+
+        // narrow down project if invoiceNumberSelectionIsSet
+        if(invoiceNumberSelectionIsSet && billingAccountId > 0) {
+            Map<Long, String> invoicedProjects = new HashMap<Long, String>();
+            invoicedProjects.put(0L, "All projects");
+            final List<IdNamePair> projectsForInvoiceNumberAndBilling =
+                    DataProvider.getProjectsForInvoiceNumberAndBilling(invoiceNumberSelection, billingAccountId);
+            for(IdNamePair item : projectsForInvoiceNumberAndBilling) {
+                invoicedProjects.put(item.getId(), item.getName());
+            }
+            getViewData().setProjectsLookupMap(invoicedProjects);
+        }
 
         if (!getViewData().isShowJustForm() && form.getContestId() != null && form.getContestId().trim().length() > 0) {
 
@@ -242,7 +291,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             Map<Long, List<BillingCostReportEntryDTO>> billingCosts = DataProvider.getDashboardBillingCostReport
                     (lookupDAO.getAllInvoiceTypes(), getCurrentUser(), projectId,
                             softwareProjectCategories, studioProjectCategories, paymentTypeIds,
-                            customerId, billingAccountId, statusIds, contestId, form.getInvoiceNumber(), startDate, endDate,
+                            customerId, billingAccountId, statusIds, contestId, invoiceNumber, startDate, endDate,
                             REPORT_CONTEST_STATUS_IDS, BILLING_COST_REPORT_PAYMENT_TYPES_IDS);
 
             List<BillingCostReportEntryDTO> viewData = new ArrayList<BillingCostReportEntryDTO>();
@@ -287,8 +336,26 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
             });
 
             getViewData().setEntries(viewData);
+            
+		        // count the total contest number and  bug race number
+		        Set<Long> uniqueContestSet = new HashSet<Long>();
+		        Set<String> uniqueBugRaces = new HashSet<String>();
+		
+		        for(BillingCostReportEntryDTO entry : getViewData().getEntries()) {
+		            if(entry.getContest() != null) {
+		                uniqueContestSet.add(entry.getContest().getId());
+		            }
+		            if(entry.getPaymentType().equalsIgnoreCase("bugs")) {
+		                uniqueBugRaces.add(entry.getReferenceId());
+		            }
+		        }
+		
+		        // set aggregation stats
+		        getViewData().setTotalContestsNumber(uniqueContestSet.size());
+		        getViewData().setTotalBugRacesNumber(uniqueBugRaces.size());
 
         }
+
 
         this.getViewData().setCanProcessInvoices(DirectUtils.canPerformInvoiceRecords(getCurrentUser()));
     }

@@ -6,11 +6,14 @@ package com.topcoder.direct.services.view.action.report;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadataKey;
 import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsAction;
+import com.topcoder.direct.services.view.dto.IdNamePair;
+import com.topcoder.direct.services.view.util.DataProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +24,15 @@ import java.util.Set;
  * it provides method to get group by options for a selected customer and method to get group values for
  * a selected group by option.
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement)
+ * <p>
+ *  Version 1.1 (Release Assembly - TC Direct Cockpit Release Six) changes:
+ *  <li>
+ *      Add properties {@link #billingAccountId} and {@link #invoiceNumber} and their getter and setter.
+ *  </li>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class ReportCommonAction extends BaseDirectStrutsAction {
 
@@ -35,6 +45,20 @@ public class ReportCommonAction extends BaseDirectStrutsAction {
      * The id of the group key used to get group values options.
      */
     private long groupKeyId;
+
+    /**
+     * The billing account id.
+     *
+     * @since 1.1
+     */
+    private long billingAccountId;
+
+    /**
+     * The invoice number.
+     *
+     * @since 1.1
+     */
+    private String invoiceNumber;
 
     /**
      * Gets the customer id.
@@ -70,6 +94,46 @@ public class ReportCommonAction extends BaseDirectStrutsAction {
      */
     public void setGroupKeyId(long groupKeyId) {
         this.groupKeyId = groupKeyId;
+    }
+
+    /**
+     * Gets the billing account id.
+     *
+     * @return the billing account id.
+     * @since 1.1
+     */
+    public long getBillingAccountId() {
+        return billingAccountId;
+    }
+
+    /**
+     * Sets the billing account id.
+     *
+     * @param billingAccountId the billing account id.
+     * @since 1.1
+     */
+    public void setBillingAccountId(long billingAccountId) {
+        this.billingAccountId = billingAccountId;
+    }
+
+    /**
+     * Gets the invoice number.
+     *
+     * @return the invoice number.
+     * @since 1.1
+     */
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    /**
+     * Sets the invoice number.
+     *
+     * @param invoiceNumber the invoice number.
+     * @since 1.1
+     */
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
     }
 
     /**
@@ -140,6 +204,48 @@ public class ReportCommonAction extends BaseDirectStrutsAction {
             List<String> result = new ArrayList<String>(valuesSet);
 
             Collections.sort(result);
+
+            setResult(result);
+
+        } catch (Throwable e) {
+
+            // set the error message into the ajax response
+            if (getModel() != null) {
+                setResult(e.getMessage());
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    public String getInvoiceNumbersForBillingAccount() {
+        try {
+
+            final List<String> invoiceNumbers = DataProvider.getInvoiceNumbersFromBilling(getBillingAccountId());
+
+            setResult(invoiceNumbers);
+
+        } catch (Throwable e) {
+
+            // set the error message into the ajax response
+            if (getModel() != null) {
+                setResult(e.getMessage());
+            }
+        }
+
+        return SUCCESS;
+    }
+
+    public String getProjectsForInvoiceNumberAndBillingAccount() {
+        try {
+            Map<String, String> result = new LinkedHashMap<String, String>();
+
+            final List<IdNamePair> projectsForInvoiceNumberAndBilling =
+                    DataProvider.getProjectsForInvoiceNumberAndBilling(getInvoiceNumber(), getBillingAccountId());
+
+            for(IdNamePair item : projectsForInvoiceNumberAndBilling) {
+                result.put(String.valueOf(item.getId()), item.getName());
+            }
 
             setResult(result);
 

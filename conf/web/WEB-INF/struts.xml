@@ -765,6 +765,22 @@
             <result name="error" type="json"/>
         </action>
 
+        <action name="getInvoiceNumbersForBillingAccount" method="getInvoiceNumbersForBillingAccount" class="reportCommonAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
+        <action name="getProjectsForInvoiceNumberAndBillingAccount" method="getProjectsForInvoiceNumberAndBillingAccount" class="reportCommonAction">
+            <interceptor-ref name="baseStack"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authnInterceptor"/>
+            <result name="success" type="json"/>
+            <result name="error" type="json"/>
+        </action>
+
         <action name="updateInvoiceRecords" class="updateInvoiceRecordsAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>

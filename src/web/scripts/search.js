@@ -828,6 +828,19 @@ $(document).ready(function() {
         }
     });
 
+    $("#aggregationCostReport .expand").click(function() {
+        $(this).blur();
+        if ($(this).hasClass("collapse")) {
+            $(this).parent().parent().next().show();
+            $(this).parent().parent().parent().next().show();
+            $(this).removeClass("collapse");
+        } else {
+            $(this).parent().parent().next().hide();
+            $(this).parent().parent().parent().next().hide();
+            $(this).addClass("collapse");
+        }
+    });
+
     $("#pipelineScheduledContests .expand").click(function() {
         $(this).blur();
         if ($(this).hasClass("collapse")) {

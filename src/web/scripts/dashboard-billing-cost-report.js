@@ -1,6 +1,6 @@
 /**
- * AUTHOR: Blues
- * VERSION: 1.3 (Release Assembly - TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement)
+ * AUTHOR: Blues, GreatKevin
+ * VERSION: 1.4 (Release Assembly - TC Direct Cockpit Release Six)
  *
  * Version 1.0 (TC Cockpit Permission and Report Update One) change log:
  * - Change parameter name from projectIds to projectId.
@@ -12,6 +12,10 @@
  * Version 1.2 (TC Accounting Tracking Invoiced Payments Part 2) change notes: Add logic to create/update the invoice.
  *
  * Version 1.3 (Add ajax indicator for dropdown change and add group by and group values filter)
+ *
+ * Version 1.4 (Release Assembly - TC Direct Cockpit Release Six) changes:
+ * - Add the handler for invoice number dropdown
+ * - Update billing account dropdown handler to populate invoice numbers dropdown
  *
  * Submits the billing cost report form and trigger cost report excel download.
  */
@@ -108,6 +112,8 @@ $(document).ready(function() {
                             sortDropDown("#formData\\.projectId");
                             sortDropDown("#formData\\.billingAccountId");
 
+                            $("#formData\\.invoiceNumberSelection").empty();
+
                             hideIndicator($("#formData\\.billingAccountId"));
                             hideIndicator($("#formData\\.projectId"));
 
@@ -156,6 +162,8 @@ $(document).ready(function() {
 
             loadOptionsByClientId(customerId);
 
+            $("#formData\\.invoiceNumberSelection option").remove();
+
             return;
         }
 
@@ -196,6 +204,84 @@ $(document).ready(function() {
             }
         });
 
+        showIndicator($("#formData\\.invoiceNumberSelection"));
+
+        $.ajax({
+            type: 'POST',
+            url:  "getInvoiceNumbersForBillingAccount",
+            data: {'billingAccountId':billingId},
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        var invoiceNumbers = result;
+                        var $invoice = $("#formData\\.invoiceNumberSelection");
+
+                        $invoice.html("");
+                        $invoice.append($('<option></option>').val("").html(""));
+                        $.each(invoiceNumbers, function(index, value) {
+                            $invoice.append($('<option></option>').val(value).html(value));
+                        });
+
+                        $invoice.val("");
+                        hideIndicator($("#formData\\.invoiceNumberSelection"));
+                    },
+                    function(errorMessage) {
+                        $('#validationErrors').html(errorMessage);
+                    });
+            }
+        });
+
+    });
+
+    $("#formData\\.invoiceNumberSelection").change(function() {
+
+        var invoiceNumber = $(this).val();
+        var billingId = $("#formData\\.billingAccountId").val();
+
+        if (!invoiceNumber || invoiceNumber == "") {
+            // no invoice number is selected, use billing account
+            $("#formData\\.billingAccountId").change();
+            return;
+        }
+
+        showIndicator($("#formData\\.projectId"));
+
+        $.ajax({
+            type: 'POST',
+            url:  "getProjectsForInvoiceNumberAndBillingAccount",
+            data: {'billingAccountId':billingId, 'invoiceNumber':invoiceNumber},
+            cache: false,
+            dataType: 'json',
+            success: function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        var projects = result;
+                        var $project = $("#formData\\.projectId");
+
+                        $project.html("");
+                        $.each(projects, function(key, value) {
+                            $project.append($('<option></option>').val(key).html(value));
+                        });
+
+                        // append the default "select all"
+                        $project.append($('<option></option>').val(0).html("All Projects"));
+                        $project.val(0);
+                        sortDropDown("#formData\\.projectId");
+                        hideIndicator($("#formData\\.projectId"));
+
+                        if ($("#formDatagroup").val() > 0) {
+                            $("#formData\\.projectId").attr('disabled', true);
+                        }
+
+                        $("#formDatagroup").attr('disabled', false);
+                    },
+                    function(errorMessage) {
+                        $('#validationErrors').html(errorMessage);
+                    });
+            }
+        });
     });
 
     $("#formData\\.projectId").change(function () {

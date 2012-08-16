@@ -67,9 +67,12 @@
  *
  *  Version 2.11 - Module Assembly - TC Cockpit Project Metrics Report  update:
  *  - Add support for project metrics report
+ *
+ *  Version 2.2 - Release Assembly - TC Direct Cockpit Release Six
+ *  - Update the codes to auto adjust width and height of billing cost report.
  * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, TCSASSEMBLER
- * @version 2.11
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin
+ * @version 2.2
  */
 
 var mouse_is_inside;
@@ -2020,29 +2023,8 @@ $(document).ready(function(){
 
         selectAllCheckOrNot();
 
-
-
-    	//Multi Select Area width
-    	function multiSelectAreaSet(){
-            var bestWidth = 1380;
-
-            if ($("#costReportsPage").length > 0) {
-                bestWidth = 1340;
-            }
-
-    		var width = $(window).width();
-    		if($('.filterContainer').length>0){
-    			if(width < bestWidth){
-    				$('.filterContainer').removeClass('filterContainer1400');
-    			}else{
-    				$('.filterContainer').addClass('filterContainer1400');
-    			}
-    			$('.rightFilterContent').width($('.filterContainer').width()-$('.leftFilterContent').width() - 10);
-    		}
-    	}
-
-
-    adjustReportFilterHeight();
+        adjustReportFilterHeight();
+        multiSelectAreaSet();
 
     	//resize Multi Select Area width
     	$(window).resize(function(){
@@ -2052,7 +2034,7 @@ $(document).ready(function(){
             adjustReportFilterHeight();
         }) ;
 
-    	multiSelectAreaSet();
+
 
         if($(".editIcon").length > 0 && $('.editIcon').tctip )  {
             $('.editIcon').tctip({
@@ -2317,6 +2299,26 @@ function adjustReportFilterHeight() {
     $('.filterContainer1400 .statusMultiSelect .multiSelectBox').css({'height':(height - 90) + 'px'});
     $('#pipelineReportsPage .multiSelectArea .multiSelectBox').css({'height':(height - 37) + 'px'});
     $('#pipelineReportsPage #groupFilter .multiSelectArea .multiSelectBox').css({'height':(height - 93) + 'px'});
+}
+
+
+//Multi Select Area width
+function multiSelectAreaSet(){
+    var bestWidth = 1380;
+
+    if ($("#costReportsPage").length > 0) {
+        bestWidth = 1340;
+    }
+
+    var width = $(window).width();
+    if($('.filterContainer').length>0){
+        if(width < bestWidth){
+            $('.filterContainer').removeClass('filterContainer1400');
+        }else{
+            $('.filterContainer').addClass('filterContainer1400');
+        }
+        $('.rightFilterContent').width($('.filterContainer').width()-$('.leftFilterContent').width() - 10);
+    }
 }
 
 /*

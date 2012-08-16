@@ -1,6 +1,6 @@
 <%--
-  - Author: Blues, GreatKevin, TCSASSEMBLER
-  - Version: 1.8
+  - Author: Blues, GreatKevin
+  - Version: 1.9
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the view for cost report including form and report data.
@@ -25,6 +25,10 @@
   -
   - Version 1.8 (Module Assembly - Add Monthly Platform Fee Feature to Admin Page) changes:
   - - Updated to support platform fee records.
+  -
+  - Version 1.9 (Release Assembly - TC Direct Cockpit Release Six)
+  - - Add aggregation stats table to show total contests number, total bug races number and total amount.
+  - - Add invoice number dropdown
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -99,10 +103,9 @@
 					<div class="filterRowLeft">
 						<label for="formData.customerId">Customer Name:</label>
 					</div>
+                    <div class="clearFix"></div>
                     <s:select list="viewData.clientAccounts" id="formData.customerId"
                               name="formData.customerId" size="1"/>
-
-					<div class="clearFix"></div>
 				</div><!-- end .filterRow -->
 
 				<div class="filterRow">
@@ -110,28 +113,57 @@
 						<label for="formData.billingAccountIds">Billing Account:</label>
                         <img src="/images/dots-white.gif" class="indicator" alt/>
 					</div>
+                    <div class="clearFix"></div>
                     <s:select list="viewData.clientBillingProjects"
                               id="formData.billingAccountId"
                               name="formData.billingAccountId" size="1"/>
-					<div class="clearFix"></div>
-
 				</div><!-- end .filterRow -->
-
+                <div class="clearFix"></div>
 			</div><!-- end .customerFilter -->
 
 			<div id="projectFilter">
 
-				<div class="filterRow firstFilterRow">
+                <div class="filterRow firstFilterRow">
+                    <div class="filterRowLeft">
+                        <label>Invoice:</label>
+                        <img src="/images/dots-white.gif" class="indicator" alt/>
+                    </div>
+                    <div class="clearFix"></div>
+                    <s:select list="viewData.invoiceNumbers" name="formData.invoiceNumberSelection"
+                              id="formData.invoiceNumberSelection"/>
+
+                </div>
+
+				<div class="filterRow">
 					<div class="filterRowLeft">
 						<label>Project Name:</label>
                         <img src="/images/dots-white.gif" class="indicator" alt/>
 					</div>
+                    <div class="clearFix"></div>
                     <s:select list="viewData.projectsLookupMap" name="formData.projectId"
                               id="formData.projectId"/>
-					<div class="clearFix"></div>
 				</div><!-- end .filterRow -->
-
+                <div class="clearFix"></div>
 			</div><!-- end .projectfilter -->
+
+
+            <div class="clearFix"></div>
+            <div class="filterRow adjustFilterRow firstFilterRow">
+                <div class="filterRowLeft">
+                    <label for="formData.contestID">Contest ID:</label>
+                </div>
+                <s:textfield id="formData.contestId" name="formData.contestId"  cssClass="text"/>
+                <div class="clearFix"></div>
+            </div>
+            <!-- end .filterRow -->
+
+            <div class="filterRow adjustFilterRow">
+                <div class="filterRowLeft">
+                    <label for="formData.invoiceNO">Invoice #:</label>
+                </div>
+                <s:textfield id="formData.invoiceNumber" name="formData.invoiceNumber"  cssClass="text"/>
+                <div class="clearFix"></div>
+            </div>
 
 			<div id="datefilter">
 
@@ -152,30 +184,6 @@
 
 			</div><!-- end .datefilter -->
 
-			<div id="contestfilter">
-
-				<div class="filterRow">
-					<div class="filterRowLeft" id="contestIDFilter">
-						<label>Contest ID:</label>
-					</div>
-                    <s:textfield id="formData.contestId" name="formData.contestId"  cssClass="text"/>
-					<div class="clearFix"></div>
-				</div><!-- end .filterRow -->
-
-			</div><!-- end .contestfilter -->
-            <div id="invoiceFilter">
-
-                <div class="filterRow">
-                    <div class="filterRowLeft" id="invoiceNumberFilter">
-                        <label>Invoice #:</label>
-                    </div>
-                    <s:textfield id="formData.invoiceNumber" name="formData.invoiceNumber"  cssClass="text"/>
-
-                    <div class="clearFix"></div>
-                </div>
-                <!-- end .filterRow -->
-
-            </div>
             <!-- end .invoiceFilter -->
 		</div>
 		<!-- end .leftFilterContent -->
@@ -336,7 +344,11 @@
     </div>
    </s:form>
 	<!-- End .filterContainer -->
-
+    <script type="text/javascript">
+        $('.multiSelectArea .multiSelectBox').css('overflow-x','hidden');
+        multiSelectAreaSet();
+        adjustReportFilterHeight();
+    </script>
 </div>
 
 
@@ -371,6 +383,28 @@
 <input type="hidden" id="currentDate" value="<s:date name="currentDate" format="MM/dd/yyyy" />" />
 
 <div id="billingCostReportSection" class="resultTableContainer">
+
+    <%-- aggregation invoice report --%>
+<table cellspacing="0" cellpadding="0" class="pipelineStats basicInvoiceHist" id="aggregationCostReport">
+    <thead>
+    <tr>
+        <th colspan="3" class="tableTitle"><a class="expand" href="javascript:void(0)">&nbsp;</a> <span>Basic Invoice History Information</span></th>
+    </tr>
+
+    <tr class="tableTitleWhite">
+        <th class="tableColumn">Total Contest:</th>
+        <th class="tableColumn">Total Bug Races:</th>
+        <th class="tableColumn">Total Amount:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>${viewData.totalContestsNumber}</td>
+        <td>${viewData.totalBugRacesNumber}</td>
+        <td><fmt:formatNumber value="${viewData.totalAmount}" pattern="$###,##0.00"/></td>
+    </tr>
+    </tbody>
+</table>
 
     <%-- Cost report Details --%>
 <table id="billingCostDetails" class="billingCostReport resultTable paginatedDataTable" cellpadding="0"

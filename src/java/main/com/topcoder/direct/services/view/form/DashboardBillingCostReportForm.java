@@ -1,19 +1,33 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 -2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.form;
 
 /**
  * <p>A form bean providing the form data submitted by user for getting the billing cost report.</p>
  *
- * @author Blues
- * @version 1.0 (TC Cockpit Billing Cost Report Assembly)
+ * <p>
+ *  Version 1.1 (Release Assembly - TC Direct Cockpit Release Six) changes:
+ *  <ol>
+ *      <li>Add property {@link #invoiceNumberSelection} and its getter and setter.</li>
+ *  </ol>
+ * </p>
+ *
+ * @author Blues, GreatKevin
+ * @version 1.1
  */
 public class DashboardBillingCostReportForm extends DashboardCostReportForm {
     /**
      * Represents the filtered payment type ids submitted by billing cost report form.
      */
     private long[] paymentTypeIds;
+
+    /**
+     * The invoice number selected in the dropdown.
+     *
+     * @since 1.1
+     */
+    private String invoiceNumberSelection;
 
     /**
      * Represents the invoice number submitted by billing cost report form.
@@ -54,5 +68,25 @@ public class DashboardBillingCostReportForm extends DashboardCostReportForm {
      */
     public void setInvoiceNumber(String invoiceNumber) {
         this.invoiceNumber = invoiceNumber;
+    }
+
+    /**
+     * Gets the invoice number selected.
+     *
+     * @return the invoice number selected.
+     * @since 1.1
+     */
+    public String getInvoiceNumberSelection() {
+        return invoiceNumberSelection;
+    }
+
+    /**
+     * Sets the invoice number selected.
+     *
+     * @param invoiceNumberSelection the invoice number selected.
+     * @since 1.1
+     */
+    public void setInvoiceNumberSelection(String invoiceNumberSelection) {
+        this.invoiceNumberSelection = invoiceNumberSelection;
     }
 }

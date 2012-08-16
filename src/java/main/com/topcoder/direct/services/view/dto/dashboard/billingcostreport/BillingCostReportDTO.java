@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.billingcostreport;
 
@@ -39,14 +39,24 @@ import com.topcoder.excel.output.WorkbookSavingException;
  * </p>
  * 
  * <p>
- * Version 1.1 (TC Accounting Tracking Invoiced Payments) change notes:
+ * Version 1.2 (TC Accounting Tracking Invoiced Payments) change notes:
  * <ol>
  *   <li>Added {@link #canProcessInvoices} field.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Direct Cockpit Release Six)
+ * <ol>
+ *   <li>
+ *       Add properties {@link #invoiceNumbers}, {@link #totalContestsNumber} and {@link #totalBugRacesNumber} and their
+ *       getters and setters.
+ *   </li>
+ * </ol>
+ * </p>
  * 
- * @author Blues, TCSASSEMBER
- * @version  1.1 (TC Cockpit Billing Cost Report Assembly v1.0)
+ * @author Blues, GreatKevin
+ * @version  1.3
  */
 public class BillingCostReportDTO extends ReportBaseDTO {
 
@@ -59,6 +69,27 @@ public class BillingCostReportDTO extends ReportBaseDTO {
      * <p>A <code>Map</code> providing the mapping from payment type IDs to names.</p>
      */
     private Map<Long, String> paymentTypes;
+
+    /**
+     * The invoice numbers.
+     *
+     * @since 1.3
+     */
+    private List<String> invoiceNumbers;
+
+    /**
+     * The total contests number.
+     *
+     * @since 1.3
+     */
+    private int totalContestsNumber;
+
+    /**
+     * The total bug races number.
+     *
+     * @since 1.3
+     */
+    private int totalBugRacesNumber;
 
     /**
      * <p>A flag indicates whether the user can perform operators on invoice records.</p>
@@ -144,7 +175,68 @@ public class BillingCostReportDTO extends ReportBaseDTO {
     public void setCanProcessInvoices(boolean canProcessInvoices) {
         this.canProcessInvoices = canProcessInvoices;
     }
-    
+
+    /**
+     * Gets the invoice numbers.
+     *
+     * @return the invoice numbers.
+     * @since 1.3
+     */
+    public List<String> getInvoiceNumbers() {
+        return invoiceNumbers;
+    }
+
+    /**
+     * Sets the invoice numbers.
+     *
+     * @param invoiceNumbers the invoice numbers.
+     *
+     * @since 1.3
+     */
+    public void setInvoiceNumbers(List<String> invoiceNumbers) {
+        this.invoiceNumbers = invoiceNumbers;
+    }
+
+    /**
+     * Gets the total contests number.
+     *
+     * @return the total contests number.
+     * @since 1.3
+     */
+    public int getTotalContestsNumber() {
+        return totalContestsNumber;
+    }
+
+    /**
+     * Sets the total contests number.
+     *
+     * @param totalContestsNumber the total contests number.
+     * @since 1.3
+     */
+    public void setTotalContestsNumber(int totalContestsNumber) {
+        this.totalContestsNumber = totalContestsNumber;
+    }
+
+    /**
+     * Sets the total bug races number.
+     *
+     * @return the total bug races number.
+     * @since 1.3
+     */
+    public int getTotalBugRacesNumber() {
+        return totalBugRacesNumber;
+    }
+
+    /**
+     * Sets the total bug races number.
+     *
+     * @param totalBugRacesNumber the total bug races number.
+     * @since 1.3
+     */
+    public void setTotalBugRacesNumber(int totalBugRacesNumber) {
+        this.totalBugRacesNumber = totalBugRacesNumber;
+    }
+
     /**
      * <p>Gets the excel file download stream for billing cost report.</p>
      *
