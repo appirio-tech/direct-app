@@ -71,7 +71,7 @@
 			});
 
 			if (ed.settings.content_css !== false)
-				ed.contentCSS.push(url + '/css/content.css');
+				ed.contentCSS.push(url + '/css/direct/content.css');
 
 			ed.onClick.add(t._showMenu, t);
 			ed.onContextMenu.add(t._showMenu, t);

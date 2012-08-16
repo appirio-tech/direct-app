@@ -11,7 +11,7 @@ function createChartControl(htmlDiv, xml) {
 
     // Setup paths and behavior
     ganttChartControl.setImagePath("/images/gantt/");
-    ganttChartControl.setStylePath("/css/ganttchart.css");
+    ganttChartControl.setStylePath("/css/direct/ganttchart.css");
     ganttChartControl.setEditable(false);
     ganttChartControl.showContextMenu(false);
     ganttChartControl.showTreePanel(true);
