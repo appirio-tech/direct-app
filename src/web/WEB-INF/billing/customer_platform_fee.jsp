@@ -16,7 +16,7 @@
     <jsp:include page="../includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="project_fee"/>
 	<jsp:include page="../includes/paginationSetup.jsp"/>
-    <link rel="stylesheet" href="/css/platform-fee.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/platform-fee.css" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/platform-fee.js"></script>
 <!--[if IE 6]>
     <script type="text/javascript" src="/scripts/DD_belatedPNG.js?v=185283"></script>

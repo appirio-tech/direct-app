@@ -1,0 +1,412 @@
+/* copilotsIntroduction */
+#copilotsIntroduction{
+	font-size:12px;
+	color:#333333;
+	min-height:640px;
+}
+	#copilotsIntroduction .getCopilots{
+		height:76px;
+		margin-right:15px;
+		overflow:hidden;
+		background:url(../images/copilot_area1_icon_bg.png) right 20px no-repeat;
+	}
+		#copilotsIntroduction .getCopilots .introductionHeadIcon{
+			float: left;
+			position: relative;
+			top: 32px;
+		}
+		
+		#copilotsIntroduction .getCopilots h2{
+			padding-top:32px;
+			padding-left:42px;
+			font-size:16px;
+			line-height:36px;
+		}
+	
+	#copilotsIntroduction .getCopilotsStep{
+		height:100px;
+		padding-left:3px;
+		background:url(../images/bg_copilots_title.png) left top no-repeat;
+	}
+		#copilotsIntroduction .getCopilotsStep .getCopilotsStepRight{
+			height:100px;
+			padding-right:3px;
+			background:url(../images/bg_copilots_title.png) right -200px no-repeat;
+		}
+		#copilotsIntroduction .getCopilotsStep .getCopilotsStepCenter{
+			height:100px;
+			background:url(../images/bg_copilots_title.png) left -100px repeat-x;
+		}
+			#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent{
+				height:92px;
+				background:url(../images/bg_copilots_title_light.png) left top repeat-x;
+				padding-top:8px;
+			}
+				#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent li{
+					width:30%;
+					float:left;
+					display:inline;
+					list-style:none;
+					color:#FFFFFE;
+					font-size:16px;
+					line-height:18px;
+				}
+				#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent li.second{
+					width:36%;
+				}
+					#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent li span{
+						float:left;
+						width:46px;
+						height:70px;
+						padding-left:15px;
+						padding-top:4px;
+					}
+					#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent li div{
+						padding-right:20px;
+					}
+					#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent li.second div{
+						padding-right:30px;
+					}
+	
+	#copilotsIntroduction .copilotsSummery{
+		padding-top:18px;
+		padding-left:350px;
+		padding-bottom:30px;
+		position: relative;
+		min-height:302px;
+	}
+		#copilotsIntroduction .copilotsSummery .summerySection{
+		padding-bottom:8px;
+		}
+			#copilotsIntroduction .copilotsSummery .summerySection h3{
+				font-size:16px;
+				color:#333333;
+				padding-bottom:12px;
+			}
+			#copilotsIntroduction .copilotsSummery .summerySection p,#copilotsIntroduction .copilotsSummery .summerySection ul{
+				color:#333333;
+				line-height:15px;
+				padding-bottom:6px;
+			}
+			#copilotsIntroduction .copilotsSummery .summerySection li{
+				list-style:none;
+				padding-left:15px;
+				line-height:16px;
+				background:url(../images/icon_list_copilots.png) left center no-repeat;
+			}
+		#copilotsIntroduction .copilotsSummery .videoBox{
+			position:absolute;
+			top: 0px;
+			left:0;
+			width:330px;
+			height:350px;
+			padding-top:20px;
+		}
+			#copilotsIntroduction .copilotsSummery .videoBox .video{
+				width:330px;
+				height:220px;
+				position:relative;
+				overflow:hidden;
+			}
+			.video .corner{
+				width:5px;
+				height:5px;
+				display:block;
+				position:absolute;
+				background:url(../images/corner_video.png) left top no-repeat;
+			}
+			.video .tl{
+				left:0;
+				top:0;
+				background-position:0px 0px;
+			}
+			.video .tr{
+				right:0;
+				top:0;
+				background-position:-5px 0px;
+			}
+			.video .bl{
+				left:0;
+				bottom:0;
+				background-position:0px -5px;
+			}
+			.video .br{
+				right:0;
+				bottom:0;
+				background-position:-5px -5px;
+			}
+			
+			#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch{
+				clear:left;
+				float:left;
+				width:auto;
+				height:64px;
+				display:inline;
+				margin-left:45px;
+				margin-top:23px;
+				background:url(../images/button_launch.png) left top no-repeat;
+				padding-left:4px;
+				text-decoration:none;
+			}
+			#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch:hover{
+				text-decoration:none;
+			}
+				#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch .buttonLaunchRight{
+					float:left;
+					width:auto;
+					height:64px;
+					display:inline;
+					background:url(../images/button_launch.png) right -128px no-repeat;
+					padding-right:4px;
+				}
+				#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch .buttonLaunchCenter{
+					float:left;
+					width:auto;
+					height:50px;
+					padding-top:14px;
+					padding-left:12px;
+					padding-right:10px;
+					display:inline;
+					background:url(../images/button_launch.png) left -64px repeat-x;
+				}
+				#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch .buttonLaunchCenter img{
+					float:left;
+					width:auto;
+					padding-right:12px;
+					display:inline;
+				}
+				#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch .buttonLaunchCenter .buttonWords{
+					float:left;
+					width:164px;
+					font-size:14px;
+					line-height:18px;
+					font-weight:bold;
+					text-align:center;
+					color:#fffffe;
+					display:inline;
+				}
+	
+	#copilotsIntroduction .useCopilot{
+		font-size:12px;
+		line-height:15px;
+		color:#333333;
+	}
+		#copilotsIntroduction .useCopilot h3{
+			padding-bottom:12px;
+		}
+		#copilotsIntroduction .useCopilot .useCopilotSummery{
+			padding-left:5px;
+			background:url(../images/bg_use_summery.png) left top no-repeat;
+			height:180px;
+		}
+			#copilotsIntroduction .useCopilot .useCopilotSummery .useCopilotSummeryRight{
+				padding-right:5px;
+				background:url(../images/bg_use_summery.png) right -360px no-repeat;
+				height:180px;
+			}
+			#copilotsIntroduction .useCopilot .useCopilotSummery .useCopilotSummeryCenter{
+				background:url(../images/bg_use_summery.png) left -180px repeat-x;
+				height:165px;
+				padding-top:15px;
+				padding-left:22px;
+				padding-right:320px;
+				position:relative;
+			}
+				#copilotsIntroduction .useCopilot .useCopilotSummery .useCopilotSummeryCenter p{
+					padding-bottom:6px;
+				}
+				#copilotsIntroduction .useCopilot .useCopilotSummery .howMuchCosts{
+					width:276px;
+					position:absolute;
+					right:15px;
+					top:23px;
+				}
+					#copilotsIntroduction .useCopilot .useCopilotSummery .howMuchCosts .howMuchCostsHeader{
+						width:276px;
+						height:5px;
+						background:url(../images/bg_how_costs.png) left top no-repeat;
+						overflow:hidden;
+					}
+					#copilotsIntroduction .useCopilot .useCopilotSummery .howMuchCosts .howMuchCostsFooter{
+						width:276px;
+						height:5px;
+						background:url(../images/bg_how_costs.png) right top no-repeat;
+						overflow:hidden;
+					}
+					#copilotsIntroduction .useCopilot .useCopilotSummery .howMuchCosts .howMuchCostsContent{
+						width:248px;
+						background:url(../images/bg_how_costs.png) -276px top repeat-y;
+						padding:10px 10px 8px 18px;
+						overflow:hidden;
+					}
+					
+
+				#copilotsIntroduction .useCopilot .useCopilotSummery li{
+					list-style:none;
+					padding-left:15px;
+					line-height:18px;
+					background:url(../images/icon_list_copilots.png) left center no-repeat;
+				}
+			#copilotsIntroduction .useCopilot .howGetCopilot{
+				padding-top:27px;
+				padding-right:350px;
+			}
+.specialArea #area1{
+	padding-bottom:68px;
+	}
+	
+/* end #copilotsIntroduction*/
+
+/* copilot-contests */
+	#copilotsIntroduction .myCopilotsContests{
+		height:76px;
+		margin-right:15px;
+		overflow:hidden;
+	}
+		#copilotsIntroduction .myCopilotsContests .introductionHeadIcon{
+			float: left;
+			position: relative;
+			top: 32px;
+		}
+		
+		#copilotsIntroduction .myCopilotsContests h2{
+			padding-top:32px;
+			padding-left:42px;
+			font-size:16px;
+			line-height:36px;
+		}
+
+/* end copilot-contests */
+
+/* copilot-registrants*/
+
+.tabs3Special .tableContainer, .tabs4Special .tableContainer{
+	padding-top:20px;
+}
+.tabs3Special  .copilotRegistrants{
+	padding-top:40px;
+}
+.tabs3Special .newContestsStatus .photo{
+	text-align:left;
+}
+	.tabs3Special .newContestsStatus .photo img{
+		float:left;
+		width:auto;
+		display:inline;
+		margin:0 12px 0 14px;
+	}
+	.tabs3Special .newContestsStatus .photo span{
+		float:left;
+		width:auto;
+		display:inline;
+		padding-top:8px;
+	}
+
+	/* button for copilot */
+.memberProfile{
+	margin:0 auto;
+	display:block;
+	width:99px;
+	height:21px;
+	padding-right:23px;
+	background:url(../images/button_profile_member_right.png) right top no-repeat;
+	overflow:hidden;
+	line-height:20px;
+	text-decoration:none;
+	color:#362f2d;
+	font-weight:bold;
+}
+	.memberProfile span.profileLeft{
+		display:block;
+		height:21px;
+		width:99px;
+		background:url(../images/button_profile_left.png) left top no-repeat;
+		overflow:hidden;
+	}
+.memberProfile:hover{
+	background-position:right -21px;
+}
+	.memberProfile:hover span.profileLeft{
+		background-position:left -21px;
+	}
+
+.copilotProfile{
+	margin:8px auto 0;
+	display:block;
+	width:99px;
+	height:21px;
+	padding-right:23px;
+	background:url(../images/button_profile_copilot_right.png) right top no-repeat;
+	overflow:hidden;
+	line-height:20px;
+	text-decoration:none;
+	color:#362f2d;
+	font-weight:bold;
+}
+	.copilotProfile span.profileLeft{
+		display:block;
+		height:21px;
+		width:99px;
+		background:url(../images/button_profile_left.png) left top no-repeat;
+		overflow:hidden;
+	}
+.copilotProfile:hover{
+	background-position:right -21px;
+}
+	.copilotProfile:hover span.profileLeft{
+		background-position:left -21px;
+	}
+
+.downloadProfile{
+	margin:0 auto;
+	display:block;
+	width:94px;
+	height:21px;
+	padding-left:3px;
+	background:url(../images/button-sm-left.png) left top no-repeat;
+	overflow:hidden;
+	line-height:20px;
+	text-decoration:none;
+	color:#362f2d;
+	font-weight:bold;
+}
+	.downloadProfile span.profileLeft{
+		display:block;
+		height:21px;
+		width:94px;
+		background:url(../images/button-sm-right.png) right top no-repeat;
+		overflow:hidden;
+	}
+.downloadProfile:hover{
+	background-position:left -21px;
+}
+	.downloadProfile:hover span.profileLeft{
+		background-position:right -21px;
+	}
+
+.chooseCopilotButton{
+	margin:0 auto;
+	display:block;
+	width:141px;
+	height:21px;
+	padding-left:3px;
+	background:url(../images/button-sm-red-left.png) left top no-repeat;
+	overflow:hidden;
+	line-height:20px;
+	text-decoration:none;
+	color:#fffffe;
+	font-weight:bold;
+}
+	.chooseCopilotButton span.profileLeft{
+		display:block;
+		height:21px;
+		width:141px;
+		background:url(../images/button-sm-red-right.png) right top no-repeat;
+		overflow:hidden;
+	}
+.chooseCopilotButton:hover{
+	background-position:left -21px;
+}
+	.chooseCopilotButton:hover span.profileLeft{
+		background-position:right -21px;
+	}

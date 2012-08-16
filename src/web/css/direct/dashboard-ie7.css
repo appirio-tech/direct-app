@@ -1,0 +1,99 @@
+ 
+#winnerPanel{
+height: 1%;
+}
+.winnerCol{ float:left; width: 49%; }
+
+.containerNoPadding{ height: 1%;}
+
+#bankSelectionFolder { width: 180px; }
+#bankSelectionContent{ overflow:visible; height: 1%; } 
+
+.submissionAction ul{ float:left; margin: 10px 0 0 15px;  } 
+.submissionListAction .dialog-mini-wrapper{ margin: 0 0 0 -27px; }
+#area2{ overflow:hidden;  } 
+.project-box-mid{ margin: 0 0 -12px 0; } 
+
+.additionalCol{ width: 140px; }   
+.posAbsolute{ top:  55px; left: 0px; }
+#dropdownWrapper .dd .ddTitle{
+	margin-bottom:-3px;
+}
+
+/* new added for contest dashboard */
+.appositeContainer .registrationModule{ margin-right:0.9%; z-index:1; position:relative; }
+.appositeContainer.studio .forumModule{ margin-right:0.57%; }
+.appositeContainer .registrationModule .statusP .helpBtn,
+.appositeContainer .registrationModule .statusP .helpBtn:visited{ top:-2px; }
+.appositeContainer .registrationModule .tooltipContainer{ top:-36px; }
+/* end */
+
+.comparisonView .summary .tabsContent,.volumeView .summary .tabsContent{
+    clear:none;
+}
+.graphArea .visualization .chartWrapper{
+
+}
+
+h2.contestTitle {
+    display: inline-block;
+}
+
+.projectCopilotsList .jcarousel-item-horizontal,
+#projectCopilotsCarouselWrapper .jcarousel-item-placeholder-horizontal {
+    width: 330px;
+}
+.projectCopilotsList .jcarousel-container-horizontal {
+    width: 330px;
+    border: 1px solid #fff;
+}
+.projectCopilotsList .jcarousel-clip-horizontal {
+    width: 330px;
+    overflow:hidden!important;
+}
+
+#projectCopilotsCarouselWrapper{
+    display:block!important;
+    width: 330px!important;
+    height: 155px!important;
+    overflow:hidden!important;
+}
+
+#projectCopilotsCarousel .itemContainer{
+	  min-height:145px;
+	  padding-bottom:10px;
+	  overflow:hidden;
+	  width: 304px!important;
+	  margin-left: 26px; 
+}
+#projectCopilotsCarousel .itemContainer .userInfor .userInforInner{
+	padding-left: 0!important;
+}
+
+#projectCopilotsCarousel .itemContainer .userPhoto{
+	float:left!important;  
+	width:78px!important;  
+}
+
+#projectCopilotsCarousel .itemContainer .userInfor{
+	float:left;
+	width:200px; 
+}
+.jcarousel-skin-tango .jcarousel-next-horizontal {
+    position: absolute;
+    top: 40%;
+    right: 23px; 
+}
+
+/* new added for project milestone management */
+#editMilestoneModal .modalBody p.notify label,
+#addMilestoneModal .modalBody p.notify label{
+    padding-top:4px;
+}
+.milestoneManage .milestoneList dd .project .projectT label{
+    padding-top:3px;
+}
+.milestoneManage .milestoneList dd .project .projectT a{
+    margin-top:3px;
+}
+

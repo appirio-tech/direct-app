@@ -16,17 +16,17 @@
     <title>TopCoder Cockpit</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="/css/screen.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/screen.css" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie7.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie7.css"/>
     <![endif]-->
     <!--[if IE 8]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie8.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie8.css"/>
     <![endif]-->
     <!--[if IE 9]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie9.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css"/>
     <![endif]-->
-    <link rel="stylesheet" href="/css/public-roadmap.css" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/public-roadmap.css" media="all" type="text/css"/>
 
     <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="/scripts/common.js"></script>

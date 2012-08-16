@@ -26,7 +26,7 @@
     <ui:projectPageType tab="contests"/>
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <link type="text/css" media="all" href="/css/milestone-management.css" rel="stylesheet">
+    <link type="text/css" media="all" href="/css/direct/milestone-management.css" rel="stylesheet">
     <script src="/scripts/jquery.dataTables-1.9.1.min.js" type="text/javascript"></script>
     <script src="/scripts/milestone-management.js" type="text/javascript"></script>
 </head>

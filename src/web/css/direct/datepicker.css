@@ -1,0 +1,249 @@
+/*************************************************************** date pick *********************************************/
+a.dp-choose-date {
+	width:23px;
+	height:22px;
+	float:left;
+	display:inline;
+	margin-top:0px;
+	margin-left:6px;
+	overflow:hidden;
+	text-indent:-2000px;
+	background:url(../images/calendar.png) no-repeat;
+}
+a.dp-choose-date:hover{
+	background-position:left -22px;
+}
+
+.dp-choose-date{
+	display:none;
+}
+
+table.jCalendar {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width:100%;
+}
+
+table.jCalendar thead th {
+	border-top:#bdc2c5 solid 2px;
+}
+table.jCalendar th {
+	font-family:Arial, Helvetica, sans-serif;
+	padding:5px 0px;
+	text-align:center;
+	font-size:11px;
+	color:#fffffe;
+	background-color:#d2080b;
+}
+
+table.jCalendar td {
+	color: #555555;
+	padding:6px;
+	font-weight:bold;
+	text-align: center;
+	border:#bdc2c5 solid 2px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+table.jCalendar tr td.other-month {
+	color: #cacaca;
+}
+
+table.jCalendar td.today {
+	background: #f89a9b;
+	color: #ffffff;
+	font-weight:bold;
+}
+
+table.jCalendar td.selected {
+	background: #d2080b;
+	color: #fff;
+}
+
+table.jCalendar td.selected.dp-hover {
+	background: #d2080b;
+	color: #fff;
+}
+
+table.jCalendar td.dp-hover,
+table.jCalendar tr.activeWeekHover td {
+	background: #878787;
+	color: #fff;
+}
+
+table.jCalendar tr.selectedWeek td {
+	background: #f66;
+	color: #fff;
+}
+
+table.jCalendar td.disabled, table.jCalendar td.disabled.dp-hover {
+	background: #dfe1e3;
+	color: #888;
+}
+
+table.jCalendar td.unselectable,
+table.jCalendar td.unselectable:hover,
+table.jCalendar td.unselectable.dp-hover {
+	background: #ccc;
+	color: #000;
+}
+
+/* For the popup */
+
+/* NOTE - you will probably want to style a.dp-choose-date - see how I did it in demo.css */
+
+div.dp-popup {
+	font-size: 11px;
+	font-family: arial, sans-serif;
+	line-height: 1.2em;
+}
+div.dp-popup .datePickerWrapper{
+	padding-top:4px;
+	background:url(../images/datePicker-bg-top.png) left top no-repeat;
+}
+div.dp-popup .datePickerWrapper .datePickerBottom{
+	padding-bottom:6px;
+	background:url(../images/datePicker-bg-bottom.png) left bottom no-repeat;
+}
+div.dp-popup .datePickerWrapper .datePickerCenter{
+	width:208px;
+	padding:0 2px;
+	background:url(../images/datePicker-bg-center.png) left top repeat-y;
+}
+div.dp-popup .datePickerWrapper .datePickerCenterInner{
+	position: relative;
+	width:198px;
+	padding:3px 5px;
+	background:#ffffff url(../images/datePicker-bg-center-repeat.png) left top repeat-x;
+}
+
+div#dp-popup {
+	position: absolute;
+	z-index: 10002;
+}
+
+div.dp-popup h2 {
+	font-size: 11px;
+	text-align: center;
+	padding: 4px 0 10px;
+	color:#555555;
+}
+
+a#dp-close {
+	font-size: 11px;
+	padding: 4px 0;
+	text-align: center;
+	display: block;
+}
+
+a#dp-close:hover {
+	text-decoration: underline;
+}
+
+div.dp-popup a {
+	color: #000;
+	text-decoration: none;
+	padding: 3px 1px 0;
+	margin-top:3px;
+}
+
+div.dp-popup div.dp-nav-prev {
+	position: absolute;
+	top: 2px;
+	left: 4px;
+	width: 100px;
+}
+
+div.dp-popup div.dp-nav-prev a {
+	width:17px !important;
+	height:17px !important;
+	padding:0;
+	margin-top:3px;
+	margin-left:1px;
+	margin-right:1px;
+	overflow:hidden;
+	float: left;
+	display:inline;
+}
+
+/* Opera needs the rules to be this specific otherwise it doesn't change the cursor back to pointer after you have disabled and re-enabled a link */
+div.dp-popup div.dp-nav-prev a, div.dp-popup div.dp-nav-next a {
+	cursor: pointer;
+}
+
+div.dp-popup div.dp-nav-prev a.disabled, div.dp-popup div.dp-nav-next a.disabled {
+	cursor: default;
+}
+
+div.dp-popup div.dp-nav-next {
+	position: absolute;
+	top: 2px;
+	right: 4px;
+	width: 100px;
+}
+
+div.dp-popup div.dp-nav-next a {
+	width:17px !important;
+	height:17px !important;
+	padding:0;
+	margin-top:3px;
+	margin-left:1px;
+	margin-right:1px;
+	overflow:hidden;
+	float: right;
+	display:inline;
+}
+
+div.dp-popup a.disabled {
+	cursor: default;
+	color: #aaa;
+}
+
+div.dp-popup td {
+	cursor: pointer;
+}
+
+div.dp-popup td.disabled {
+	cursor: default;
+}
+.dp-nav-prev-year{
+	background:url(../images/datePicker-year-prev.png) left top no-repeat;
+}
+.dp-nav-next-year{
+	background:url(../images/datePicker-year-next.png) left top no-repeat;
+}
+.dp-nav-prev-month{
+	background:url(../images/datePicker-month-prev.png) left top no-repeat;
+}
+.dp-nav-next-month{
+	background:url(../images/datePicker-month-next.png) left top no-repeat;
+}
+.dp-nav-prev-year:hover,
+.dp-nav-next-year:hover,
+.dp-nav-prev-month:hover,
+.dp-nav-next-month:hover{
+	background-position:left -17px;
+}
+.dp-nav-prev-year,.dp-nav-next-year{
+	display:none;
+}
+/*date picker*/
+.date .text{
+	width:auto;
+	float:left;
+	display:inline;
+}
+
+#placeHolder{
+	font-size:36px;
+	text-align:center;
+	line-height:350px;
+	font-weight:bold;
+	}
+	
+.clear{
+	width:1px;
+	height:1px;
+	clear:both;
+	overflow:hidden;
+	}

@@ -25,7 +25,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-    <link rel="stylesheet" href="/css/editProject.css?v=213353" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/editProject.css?v=213353" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/editCockpitProject.js?v=213353"></script>
     <ui:projectPageType tab="editProject"/>
 </head>

@@ -43,7 +43,7 @@
     <ui:contestPageType tab="submissions"/>
     <jsp:include page="includes/contest/submissionViewer/submissionViewerHtmlHead.jsp"/>
                                          
-    <link rel="stylesheet" href="/css/submission_viewer.css?v=214359"  type="text/css" />
+    <link rel="stylesheet" href="/css/direct/submission_viewer.css?v=214359"  type="text/css" />
     <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js?v=211035"></script>
     <script type="text/javascript" src="/scripts/jquery.jcarousel.min.js?v=211035"></script>
     <script type="text/javascript" src="/scripts/json2.js?v=186145"></script>

@@ -38,11 +38,11 @@
     <jsp:include page="includes/htmlhead.jsp"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=214041" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041" />
     <![endif]-->
     <ui:projectPageType tab="overview"/>
-    <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/projectOverview.css?v=213353" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/projectOverview.css?v=213353" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/jquery.dataTables.js?v=192711"></script>
     <script type="text/javascript" src="/scripts/jquery.ba-throttle-debounce.js?v=203928"></script>
     <script type="text/javascript" src="/scripts/dashboard-view.js?v=215290"></script>

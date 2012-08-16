@@ -17,12 +17,12 @@
     <jsp:include page="../includes/htmlhead.jsp"/>
 
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie7.css?v=214041"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie7.css?v=214041"/>
     <![endif]-->
     <ui:projectPageType tab="milestone"/>
-    <link rel="stylesheet" href="/css/dashboard-view.css?v=212459" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/projectMilestone.css?v=215476" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/milestone-fullCalendar.css?v=214041" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/dashboard-view.css?v=212459" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/projectMilestone.css?v=215476" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/milestone-fullCalendar.css?v=214041" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/jquery.tools.min.js?v=192105"></script>
     <script type="text/javascript" src="/scripts/milestone-fullCalendar.js?v=215476"></script>
     <script type="text/javascript" src="/scripts/projectMilestone.js?v=214829"></script>

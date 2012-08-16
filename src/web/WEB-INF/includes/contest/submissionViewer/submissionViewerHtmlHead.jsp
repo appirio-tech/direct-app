@@ -21,20 +21,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- External CSS -->
-<link rel="stylesheet" href="/css/screen.css?v=214495" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/dashboard.css?v=214405" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/jScrollPane.css?v=176771" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/thickbox.css?v=192822" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/jquery.selectbox.css?v=185283"  type="text/css" />
+<link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/dashboard.css?v=214405" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/jScrollPane.css?v=176771" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/jquery.selectbox.css?v=185283"  type="text/css" />
 <s:if test="formData.viewType.toString() == 'SINGLE' || formData.viewType.toString() == 'CHECKOUT'">
-<link rel="stylesheet" href="/css/jquery-ui-1.7.2.custom.css?v=206355"  type="text/css" />
+<link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355"  type="text/css" />
 </s:if>
 <!--[if IE 6]>
-<link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie6.css?v=203928" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie6.css?v=203928" />
 <![endif]-->
 <s:if test="formData.viewType.toString() == 'NOWINNER'">
-<link rel="stylesheet" href="/css/nowinner.css?v=189618" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/nowinner.css?v=189618" media="all" type="text/css" />
 </s:if>
 
 <!-- External javascript -->

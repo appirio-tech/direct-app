@@ -11,7 +11,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>                                         
-    <link rel="stylesheet" href="/css/submission_viewer.css?v=214359"  type="text/css" />
+    <link rel="stylesheet" href="/css/direct/submission_viewer.css?v=214359"  type="text/css" />
     <script type="text/javascript" src="/scripts/jquery-1.6.2.min.js?v=211035"></script>
     <script type="text/javascript" src="/scripts/submission_viewer.js?v=211210"></script>
 </head>

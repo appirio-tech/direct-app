@@ -28,13 +28,13 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:dashboardPageType tab="createNewProject"/>
-    <link rel="stylesheet" href="/css/newCockpitProject.css?v=210469" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/projectCreateFlows.css?v=215566" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/newCockpitProject.css?v=210469" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/projectCreateFlows.css?v=215566" media="all" type="text/css"/>
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/newCockpitProject-ie7.css?v=210469"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/projectCreateFlows-ie7.css?v=215356" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/newCockpitProject-ie7.css?v=210469"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/projectCreateFlows-ie7.css?v=215356" />
     <![endif]-->
-    <link rel="stylesheet" href="/css/ganttchart.css?v=198728" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/ganttchart.css?v=198728" media="all" type="text/css"/>
     <script type="text/javascript" src="/scripts/dhtmlxcommon.js?v=210661"></script>
     <script type="text/javascript" src="/scripts/dhtmlxgantt.js?v=209663"></script>
 	<script type="text/javascript" src="/scripts/launch/entity.js?v=215011"></script>

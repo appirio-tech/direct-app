@@ -29,11 +29,11 @@
     <jsp:include page="/WEB-INF/includes/paginationSetup.jsp"/>
     <ui:dashboardPageType tab="dashboard"/>
     <script type="text/javascript" src="/scripts/notifications.js?v=214844"></script>
-  <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/ui.dialog.css?v=185283" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/ui.theme.css?v=185283" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/ui.core.css?v=185283" media="all" type="text/css"/>
-    <link rel="stylesheet" href="/css/permissions.css?v=193435" media="all" type="text/css"/>
+  <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/ui.dialog.css?v=185283" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/ui.theme.css?v=185283" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/ui.core.css?v=185283" media="all" type="text/css"/>
+    <link rel="stylesheet" href="/css/direct/permissions.css?v=193435" media="all" type="text/css"/>
 
     <script type="text/javascript" id ="js-ui" src="/scripts/ui.dialog.js?v=185283"></script>
     <script type="text/javascript" id="js-ajax" src="/scripts/AjaxPermissionProcessor.js?v=186145"></script>

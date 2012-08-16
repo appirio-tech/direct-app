@@ -1,0 +1,75 @@
+.tabs3Special .launchCopilotContest .infoPanel ul li .normal label {
+    font-weight: normal;
+}
+
+.launchCopilotContest .infoPanel ul.leftEditUl {
+    padding-left: 190px;
+}
+
+#launchContestOut .addNewContest .row.experienceRow {
+    height:250px;
+}
+
+#launchContestOut .addNewContest .row.experienceRow.budgetRow {
+    height:80px;
+}
+
+.experienceRow ul {
+    float: left;
+    width: auto;
+    list-style: none outside none;
+}
+
+.experienceRow ul li {
+    margin-bottom: 13px;
+    width: 261px;
+}
+
+.experienceRow ul li input {
+    margin-right: 5px;
+}
+
+#launchContestOut .addNewContest .experienceRow ul li label {
+    float: none;
+    padding: 0;
+    position: relative;
+    top: -1px;
+    width: auto;
+    font-size: 12px;
+    padding-right: 30px;    
+}
+
+#launchContestOut.launchCopilotContest .addNewContest .experienceRow label.otherExperience {
+    width:50px;
+    margin-left:0px
+}
+
+#launchContestOut .addNewContest .row.experienceRow.budgetRow ul{
+    float: left;
+}
+
+#launchContestOut .addNewContest .row.experienceRow.budgetRow ul li{
+    margin-bottom: 30px;
+    width: auto;
+}
+
+#launchContestOut .addNewContest .row.experienceRow.budgetRow ul li label{
+    float: left;
+    font-size: 12px;
+    padding-right: 30px;
+    width: 170px;
+    margin-left:0px;
+}
+
+#launchContestOut .addNewContest .row.experienceRow.budgetRow ul li input.text{
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #A8ABAD;
+    color: #6C6C6C;
+    display: inline;
+    font-family: Tahoma,Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 19px;
+    padding: 2px 7px;
+    float: none;
+    width: 168px;
+}

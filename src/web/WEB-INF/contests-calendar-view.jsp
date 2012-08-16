@@ -15,7 +15,7 @@
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
     <ui:projectPageType tab="contests"/>
-    <link rel="stylesheet" href="/css/fullcalendar-1.5.2.css?v=207789" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/fullcalendar-1.5.2.css?v=207789" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/fullcalendar-1.5.2.min.js?v=207789"></script>
 </head>
 

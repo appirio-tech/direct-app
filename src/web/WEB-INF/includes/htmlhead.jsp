@@ -20,30 +20,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- External CSS -->
-<link rel="stylesheet" href="/css/screen.css?v=214495" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/launchcontest.css?v=215011" media="all" type="text/css"/>
-<link rel="stylesheet" href="/css/dashboard.css?v=215352" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/thickbox.css?v=192822" media="all" type="text/css" />
-<link rel="stylesheet" href="/css/jScrollPane.css?v=176771" media="all" type="text/css"/>
-<link rel="stylesheet" href="/css/jquery-ui-1.7.2.custom.css?v=206355" media="all" type="text/css"/>
-<link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css"/>
-<link rel="stylesheet" href="/css/datepicker.css?v=211688" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/direct/screen.css?v=214495" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/launchcontest.css?v=215011" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/thickbox.css?v=192822" media="all" type="text/css" />
+<link rel="stylesheet" href="/css/direct/jScrollPane.css?v=176771" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/direct/jquery-ui-1.7.2.custom.css?v=206355" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
+<link rel="stylesheet" href="/css/direct/datepicker.css?v=211688" media="all" type="text/css"/>
 
 <!--[if IE 6]>
-<link rel="stylesheet" type="text/css" media="screen" href="/css/dashboard-ie6.css?v=203928" />
-<link rel="stylesheet" type="text/css" media="screen" href="/css/homepage-ie6.css?v=176771"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/dashboard-ie6.css?v=203928" />
+<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/homepage-ie6.css?v=176771"/>
 <![endif]-->
 
 <!--[if IE 7]>
-<link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie7.css?v=215325"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie7.css?v=215325"/>
 <![endif]-->
 
 <!--[if IE 8]>
-<link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie8.css?v=203310"/>
+<link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie8.css?v=203310"/>
 <![endif]-->
 
 <!--[if IE 9]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/screen-ie9.css?v=203310"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/direct/screen-ie9.css?v=203310"/>
 <![endif]-->
 
 <!-- External javascript -->

@@ -1,0 +1,103 @@
+/**
+ * The CSS File contains CSS styles used specifically used for rendering IE7.
+ *
+ * Release Assembly - TC Cockpit Sidebar Header and Footer Update changes:
+ * 1) Added new styles for help center widget.
+ */
+.add_comment_cancel_text{
+	margin-right: 22px;
+}
+
+.spec_review_odd_question{
+	margin-top:10px;
+	padding-bottom: 10px;
+	background-color:#F5F5F5;
+}
+
+.no_details .add_your_comment {
+	padding: 0px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+.no_details .add_your_comment .textarea1{
+	height:90px;
+	margin-left: 25px;
+	margin-right: 70px;
+}
+
+.dashboardPage .tabContent {
+    position: relative;
+    top: -1px;
+}
+
+.homePage .tabContent {
+    position: relative;
+    top: -13px;
+}
+
+.tabContent ul li {
+    padding-bottom: 5px;
+    background: url(../images/grayArrow.gif) no-repeat 0 7px;
+}
+
+.tabMore {
+    position: relative;
+    left: -9px;
+}
+
+.homePage #helpCenterWidget .contactUs {
+    margin-top: 0px;
+}
+
+#helpCenterWidget .contactUs {
+    margin-top: 13px;
+}
+
+.customUploadWrap {
+	width:525px;
+}
+
+.postFrame {
+	width:431px;
+}
+
+.stepNav {
+		padding:25px 0 0;
+}
+
+.homePageRSS {
+    background: url("../images/feed-icon.gif") no-repeat scroll center center transparent;
+    display: block;
+    padding-left: 13px;
+    padding-top: 18px;
+    width: 26px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+/* Add css code for https://apps.topcoder.com/bugs/browse/BUGR-6104 */
+.newSidebar .contestList .tableBody table{
+   width:235px;
+}
+.newSidebar .contestList .tableBody col.last{
+   width:45px;
+}
+
+#projectsResult TABLE.resultTable   TD SPAN {
+    margin-left: 25px;
+}
+
+.get-a-copilot .stepFirst.stepContainer .geryContent .rowItem p .tips {
+    position: relative;
+}
+
+#settingModal input,
+.permissionsNotifications input{
+    position:static;
+    top:0;
+}
+
+.specailCol{
+    width:166px !important;
+}

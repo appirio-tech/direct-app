@@ -1,0 +1,337 @@
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #333;
+    font-weight: bold;
+}
+
+.filterPanel {
+    margin-bottom: 8px;
+}
+
+.filterPanel .filterHead {
+    background: url(/images/filter-panel/panel-head-l.png) no-repeat left top;
+    height: 32px;
+    padding-left: 6px;
+}
+
+.filterPanel .filterHead .rightSide {
+    background: url(/images/filter-panel/panel-head-r.png) no-repeat right top;
+    height: 32px;
+    padding-right: 7px;
+}
+
+.filterPanel .filterHead .inner {
+    background: url(/images/filter-panel/panel-head-m.png) repeat-x left top;
+    height: 32px;
+}
+
+.filterPanel .filterHead .filterText {
+    width: 100px;
+    float: left;
+}
+
+.filterPanel .filterHead .inner .title {
+    line-height: 29px;
+}
+
+.filterPanel .filterHead .inner .expand, .filterPanel .filterHead .inner .collapse {
+    margin: 6px 10px 0 3px;
+    float: left;
+}
+
+.filterPanel .filterHead .inner .searchContainer {
+    width: 310px;
+    float: right;
+    margin: 1px 0px;
+}
+
+.filterPanel .filterHead .inner .searchContainer .filterSearch {
+    width: 250px;
+    height: 20px;
+    border: 1px solid #999;
+    float: right;
+    background: url(/images/filter-panel/search_icon.png) no-repeat 98% 3px #fff;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+
+.filterPanel .filterHead .inner .searchContainer input {
+    width: 227px;
+    height: 20px;
+    border: none;
+    background: none;
+}
+
+.filterPanel .filterHead .inner .searchContainer a img {
+    position: absolute;
+    margin-top: 8px;
+    margin-left: -20px;
+}
+
+.filterPanel .filterBottom {
+    background: url(/images/filter-panel/panel-bottom-l.png) no-repeat left top;
+    height: 6px;
+    padding-left: 6px;
+}
+
+.filterPanel .filterBottom .rightSide {
+    background: url(/images/filter-panel/panel-bottom-r.png) no-repeat right top;
+    height: 6px;
+    padding-right: 6px;
+}
+
+.filterPanel .filterBottom .inner {
+    background: url(/images/filter-panel/panel-bottom-m.png) repeat-x left top;
+    height: 6px;
+}
+
+.filterPanel .collapseBottom {
+    background: url(/images/filter-panel/collapse-bottom-l.png) no-repeat left top;
+    height: 5px;
+    padding-left: 7px;
+}
+
+.filterPanel .collapseBottom .rightSide {
+    background: url(/images/filter-panel/collapse-bottom-r.png) no-repeat right top;
+    height: 5px;
+    padding-right: 7px;
+}
+
+.filterPanel .collapseBottom .inner {
+    background: url(/images/filter-panel/collapse-bottom-m.png) repeat-x left top;
+    height: 5px;
+}
+
+.filterPanel .filterContent {
+    background: url(/images/filter-panel/panel-cotent-l.png) repeat-y left top;
+    height: 65px;
+    padding-left: 6px;
+}
+
+.filterPanel .filterContent .rightSide {
+    background: url(/images/filter-panel/panel-cotent-r.png) repeat-y right top;
+    height: 65px;
+    padding-right: 6px;
+}
+
+.filterPanel .filterContent .inner {
+}
+
+.filterPanel .filterContent .inner .column1 {
+    float: left;
+    width: 37.5%;
+    height: 65px;
+    margin-left: 25px;
+    min-width: 380px;
+}
+
+.filterPanel .filterContent .inner .row {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+}
+
+.filterPanel .filterContent .inner .row .title {
+    font-size: 11px;
+    float: left;
+    line-height: 20px;
+}
+
+.filterPanel .filterContent .inner .column1 .row .title {
+    width: 90px;
+}
+
+.filterPanel .filterContent .inner .column1 .row .short {
+    width: 65px;
+}
+
+#customerFilter, #projectNameFilter {
+    width: 270px;
+}
+
+#allProjectsFilter #customerFilter {
+    width: 230px;
+}
+
+#projectStatusFilter {
+    width: 150px;
+}
+
+#contestTypeFilter, #contestStatusFilter {
+    width: 145px;
+}
+
+#CopilotPosingFilter .column1 {
+    min-width: 450px;
+}
+
+#CopilotPosingFilter .column1 .title {
+    width: 140px;
+}
+
+#ProjectsContestsFilter .column1 {
+    width: 38%;
+    min-width: 430px;
+}
+
+.filterPanel .filterContent .inner .column2 {
+    float: left;
+    width: 23.5%;
+    min-width: 240px;
+    height: 65px;
+    margin-left: -10px;
+    margin-right: -15px;
+}
+
+#allProjectsFilter.filterPanel .filterContent .inner .column2 {
+    width: 27.5%;
+    margin-left: -50px;
+}
+
+.filterPanel .filterContent .inner .column2 select {
+    width: 90px;
+
+}
+
+#allProjectsFilter.filterPanel .filterContent .inner .column2 select {
+    width: 150px;
+
+}
+
+#allProjectsFilter.filterPanel .filterContent .inner .column2 .title {
+    width: 120px;
+}
+
+.filterPanel .filterContent .inner .column2 .title {
+    width: 90px;
+}
+
+.filterPanel .filterContent .inner .column3 {
+    float: left;
+    width: 340px;
+    height: 65px;
+    margin-left: 25px;
+}
+
+.filterPanel .filterContent .inner .column3 .row {
+    margin-top: 8px;
+}
+
+.filterPanel .filterContent .inner .column3 input {
+    width: 70px;
+    height: 18px;
+    float: left;
+    color: #6c6c6c;
+    font-size: 12px;
+}
+
+.filterPanel .filterContent .inner .column3 .row .dateLabel {
+    width: 60px;
+}
+
+.filterPanel .filterContent .inner .column3 .row .toLabel {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* --- searchBar only --- */
+.searchBar {
+
+}
+
+.searchBar .filterHead {
+    margin-bottom: -2px;
+    width: 325px;
+}
+
+.searchBar .filterHead .filterSearch {
+    margin-top: 5px;
+}
+
+.searchBar .filterHead .inner .title {
+    line-height: 33px;
+}
+
+.searchBar .collapseBottom {
+    width: 324px;
+}
+
+.filterContent a.dp-choose-date {
+    margin-right: 0px;
+}
+
+#ProjectsContestsFilter select {
+    width: 250px;
+}
+
+#allProjectsFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
+    width: 100px;
+}
+
+#allProjectsFilter.filterPanel .filterContent .inner .column3 {
+    width: 450px;
+}
+
+#VMFilter.filterPanel .filterContent .inner .column1 .row .title {
+    width: 105px;
+}
+
+#VMFilter.filterPanel .filterContent .inner .column3 .row .dateLabel {
+    width:90px;
+}
+
+
+#VMFilter.filterPanel #contestNameFilter {
+    width: 350px;
+}
+
+#VMFilter.filterPanel #memberHandleFilter {
+    width: 200px;
+}
+
+#VMFilter.filterPanel #vmUsageFilter {
+    width: 250px;
+}
+
+#VMFilter.filterPanel .filterContent .inner .column1 {
+    width: 500px;
+}
+
+#enterpriseCalendarFilter {
+    margin-bottom: 20px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column1,
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column2,
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column3 {
+    width: auto;
+    margin-left: 25px;
+    margin-right: 0px;
+    min-width: 0px;
+    margin-top: 10px;
+    height: 50px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent,
+#enterpriseCalendarFilter.filterPanel .filterContent .rightSide {
+    height: 50px;
+}
+
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column1 .row .title {
+    width: 70px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column1 .row select {
+    width: 230px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column2 .row select {
+    width: 200px;
+}
+
+#enterpriseCalendarFilter.filterPanel .filterContent .inner .column3 .row .title {
+    width: 130px;
+}

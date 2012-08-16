@@ -18,10 +18,10 @@
     <c:set var="PAGE_TYPE" value="copilot" scope="request"/>
     <c:set var="CURRENT_TAB" value="launchCopilot" scope="request"/>
     
-    <link rel="stylesheet" href="/css/modal.css?v=211772" media="all" type="text/css" />
-    <link rel="stylesheet" href="/css/newProject.css?v=210944" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/get-a-copilot.css?v=215576" media="all" type="text/css"/> 
-    <link rel="stylesheet" href="/css/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/newProject.css?v=210944" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/direct/get-a-copilot.css?v=215576" media="all" type="text/css"/> 
+    <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css?v=176771" media="all" type="text/css" />
     
     <script type="text/javascript" src="/scripts/jquery.pagination.js?v=210944"></script>
     <script type="text/javascript" src="/scripts/jquery.dataTables.min.js?v=178111"></script>
