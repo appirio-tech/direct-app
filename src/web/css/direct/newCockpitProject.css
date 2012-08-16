@@ -3544,7 +3544,7 @@ a.button9{
 
 a.button10{
 	float:left;
-	background:transparent url(../images/button10.png) no-repeat left top;
+	background:transparent url(../../images/button10.png) no-repeat left top;
 	font-size:12px;
 	font-weight:bold;
 	text-decoration:none;
@@ -3554,14 +3554,14 @@ a.button10{
 
 	a.button10 span.left{
 		float:left;
-		background:transparent url(../images/button10.png) no-repeat right -48px;
+		background:transparent url(../../images/button10.png) no-repeat right -48px;
 		padding-right:3px;;
 		cursor:pointer;
 		overflow:hidden;
 	}
 	a.button10 span.right{
 		float:left;
-		background:transparent url(../images/button10.png) left -24px repeat-x;
+		background:transparent url(../../images/button10.png) left -24px repeat-x;
 		cursor:pointer;
 		line-height:22px;
 		height:24px;
@@ -4067,11 +4067,11 @@ table.notifications a.subgroup{ /* group name link */
 	}
 
 table.notifications a.expand{
-	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+	background: url(../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 	}
 	
 table.notifications a.collapse{
-	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+	background: url(../../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
 	}
 
 table.notifications .group{ 
@@ -4579,7 +4579,7 @@ a.grayBtn:hover{
                     float:left;
                 }
                 .analyticsSteps .step4 .row .errorIcon{
-                    background: url("../images/error-icon.png") no-repeat left center;
+                    background: url("../../images/error-icon.png") no-repeat left center;
                     float: left;
                     height: 10px;
                     margin-left: 7px;
@@ -4774,7 +4774,7 @@ a.grayBtn:hover{
         }
             .analyticsSteps .step5 .sliderCtl .slider{
                 width:358px;
-                background-image:url(../images/slider2.png);
+                background-image:url(../../images/slider2.png);
             }
             .analyticsSteps .step5 .sliderCtl .ruler span{
                 width:86px;   

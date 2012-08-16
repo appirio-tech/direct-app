@@ -36,7 +36,7 @@ html .fc,
 /* Header
 ------------------------------------------------------------------------*/
 .fc-header{
-     background: url("../images/calendar_header.png") repeat-x scroll left top #37302E;
+     background: url("../../images/calendar_header.png") repeat-x scroll left top #37302E;
     color: #FFFFFF; 
     font-size: 14px !important;
     height: 33px !important;
@@ -184,7 +184,7 @@ html .fc,
     text-indent:-1000em;*/
     }
 .fc-button-prev{
-     background: url("../images/calendar_left_button.png") no-repeat scroll right bottom transparent;
+     background: url("../../images/calendar_left_button.png") no-repeat scroll right bottom transparent;
     display: block;
     height: 12px;
     margin-left: 10px !important;
@@ -193,7 +193,7 @@ html .fc,
     margin-top:9px;
 }
 .fc-button-next{
-     background: url("../images/calendar_right_button.png") no-repeat scroll right bottom transparent;
+     background: url("../../images/calendar_right_button.png") no-repeat scroll right bottom transparent;
     display: block;
     height: 12px; 
     margin-right:10px !important;

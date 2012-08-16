@@ -1,5 +1,5 @@
 a.multiSelect {
-	background: #FFF url(../images/dropdown.blue.png) right center no-repeat;
+	background: #FFF url(../../images/dropdown.blue.png) right center no-repeat;
 	border: solid 1px #BBB;
 	padding-right: 20px;
 	position: relative;
@@ -26,7 +26,7 @@ a.multiSelect span
 }
 
 a.multiSelect.hover {
-	background-image: url(../images/dropdown.blue.hover.png);
+	background-image: url(../../images/dropdown.blue.hover.png);
 }
 
 a.multiSelect.active, 
@@ -35,7 +35,7 @@ a.multiSelect.focus {
 }
 
 a.multiSelect.active {
-	background-image: url(../images/dropdown.blue.active.png);
+	background-image: url(../../images/dropdown.blue.active.png);
 }
 
 .multiSelectOptions {

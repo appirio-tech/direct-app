@@ -50,7 +50,7 @@ a{
 
 #header{
 	height:120px;
-	background:url(../images/header_dash_bg.png) repeat-x;
+	background:url(../../images/header_dash_bg.png) repeat-x;
 	position:relative;
 	}
 
@@ -68,7 +68,7 @@ a{
 	padding-left:40px;
 	padding-top:7px;
 	padding-bottom:3px;
-	background:url(../images/project_logo.png) no-repeat left;
+	background:url(../../images/project_logo.png) no-repeat left;
 	}
 
 #header .helloUser{ /* this area will contain the logout, help links*/
@@ -110,14 +110,14 @@ a{
 		}
 		
 	#header .helloUser a.help{
-		background:url(../images/help_ico6.png) no-repeat right 0;
+		background:url(../../images/help_ico6.png) no-repeat right 0;
 		padding-right:20px;
 		padding-top:2px;
 		font-weight:bold;
 		}
 	
 	#header .helloUser a.help:hover{
-		background:url(../images/help_ico6.png) no-repeat right -17px;
+		background:url(../../images/help_ico6.png) no-repeat right -17px;
 		}
 		
 /*-----------------
@@ -169,23 +169,23 @@ a{
 	
 	#tabs0 ul li.on a{
 		color:#262626;
-		background:url(../images/top_nav_button_left.png) left top no-repeat;
+		background:url(../../images/top_nav_button_left.png) left top no-repeat;
 		}
 	
 	#tabs0 ul li.on a:hover {
 		}
 
 	#tabs0 ul li.on a span{
-		background:url(../images/top_nav_button.png) right top no-repeat;
+		background:url(../../images/top_nav_button.png) right top no-repeat;
 		}
 
 	#tabs0 ul li a:hover{
 		color:#262626;
-		background:url(../images/top_nav_button_left.png) 0 -21px no-repeat;
+		background:url(../../images/top_nav_button_left.png) 0 -21px no-repeat;
 		}
 	
 	#tabs0 ul li a:hover span{
-		background:url(../images/top_nav_button.png) right -21px no-repeat;
+		background:url(../../images/top_nav_button.png) right -21px no-repeat;
 		}
 /* tabs1 ( the main tabs )*/
 #tabs1{
@@ -210,12 +210,12 @@ a{
 		font-size:12px;
 		font-weight:bold;
 		text-decoration:none;
-		background:#000 url(../images/tabs_left.png) no-repeat left top; /* left corner */
+		background:#000 url(../../images/tabs_left.png) no-repeat left top; /* left corner */
 		float:left;
 		}
 	
 	#tabs1 ul li a span{
-		background:url(../images/tabs_right.png) no-repeat right top; /* right corner */
+		background:url(../../images/tabs_right.png) no-repeat right top; /* right corner */
 		float:left;
 		height:20px;
 		width:100px;
@@ -241,11 +241,11 @@ a{
 	
 	#tabs1 ul li.on a{
 		color:#ec1c23;
-		background:url(../images/tabs_left_on.png) no-repeat left; /* left corner */
+		background:url(../../images/tabs_left_on.png) no-repeat left; /* left corner */
 		}
 	
 	#tabs1 ul li.on a span{
-		background:url(../images/tabs_right_on.png) no-repeat right; /* left corner */
+		background:url(../../images/tabs_right_on.png) no-repeat right; /* left corner */
 		}
 
 /* tabs2 ( the right side tabs ) */
@@ -276,12 +276,12 @@ a{
 		font-size:12px;
 		font-weight:bold;
 		text-decoration:none;
-		background:#000 url(../images/tabs2_left.png) no-repeat left top; /* left corner */
+		background:#000 url(../../images/tabs2_left.png) no-repeat left top; /* left corner */
 		float:left;
 		}
 	
 	#tabs2 ul li a span{
-		background:url(../images/tabs2_right.png) no-repeat right top; /* right corner */
+		background:url(../../images/tabs2_right.png) no-repeat right top; /* right corner */
 		float:left;
 		height:20px;
 		width:100px;
@@ -326,7 +326,7 @@ a{
 
 #tabs3 ul{
 	height:40px;
-	background:url(../images/tabs3_bg.png) repeat-x top;
+	background:url(../../images/tabs3_bg.png) repeat-x top;
 	list-style:none;
 	margin:0;
 	padding:0;
@@ -358,7 +358,7 @@ a{
 			}
 		
 		#tabs3 ul li a:hover{
-			background:url(../images/tabs3_bg_hover.png) repeat-x;
+			background:url(../../images/tabs3_bg_hover.png) repeat-x;
 			}
 			
 			#tabs3 ul li a span{
@@ -369,11 +369,11 @@ a{
 				}
 			
 			#tabs3 ul li a.first span.left{ /* tabs left corner */
-				background:url(../images/tabs3_left.png) no-repeat left top;
+				background:url(../../images/tabs3_left.png) no-repeat left top;
 				}
 			
 			#tabs3 ul li a.last span.left{ /* tabs right corner */
-				background:url(../images/tabs3_right.png) no-repeat right top;
+				background:url(../../images/tabs3_right.png) no-repeat right top;
 				}
 			
 			#tabs3 ul li a.last span.right{
@@ -384,7 +384,7 @@ a{
 				height:30px;
 				padding-top:10px;
 				text-align:center;
-				background:url(../images/tabs3_border.png) no-repeat top right;
+				background:url(../../images/tabs3_border.png) no-repeat top right;
 				}
 			
 			#tabs3 ul li a.first:hover span.left{
@@ -396,7 +396,7 @@ a{
 				}
 		
 		#tabs3 ul li.on a{
-			background:transparent url(../images/tabs3_on.png) repeat-x top !important;
+			background:transparent url(../../images/tabs3_on.png) repeat-x top !important;
 			color:#FFF;
 			font-family:Verdana, Geneva, sans-serif;
 			}
@@ -408,15 +408,15 @@ a{
 			#tabs3 ul li.on a span.right{
 				height:32px;
 				padding-top:8px;
-				background:url(../images/tabs3_arrow.png) no-repeat center bottom;
+				background:url(../../images/tabs3_arrow.png) no-repeat center bottom;
 				}
 			
 			#tabs3 ul li.on a.first span.left{
-				background:url(../images/tabs3_left_on.png) no-repeat left;
+				background:url(../../images/tabs3_left_on.png) no-repeat left;
 				}
 			
 			#tabs3 ul li.on a.last span.left{
-				background:url(../images/tabs3_right_on.png) no-repeat right;
+				background:url(../../images/tabs3_right_on.png) no-repeat right;
 				}
 				
             .tabs3Special #tabs3 ul li{
@@ -438,7 +438,7 @@ a{
 		margin:0;
 		padding:0;
 		height:21px;
-		background:url(../images/content_border.png) repeat-x bottom;
+		background:url(../../images/content_border.png) repeat-x bottom;
 		}
 	
 		.tabs4 ul li{
@@ -449,7 +449,7 @@ a{
 		
 			.tabs4 ul li a{
 				float:left;
-				background:url(../images/tabs4_left.png) no-repeat left;
+				background:url(../../images/tabs4_left.png) no-repeat left;
 				font-size:12px;
 				text-decoration:none;
 				cursor:pointer;
@@ -457,18 +457,18 @@ a{
 			
 			.tabs4 ul li a span{
 				float:left;
-				background:url(../images/tabs4_right.png) no-repeat right;
+				background:url(../../images/tabs4_right.png) no-repeat right;
 				padding:3px 10px 3px 10px;
 				cursor:pointer;
 				}
 			
 			.tabs4 ul li.on a{
-				background:url(../images/tabs4_left_on.png) no-repeat left;
+				background:url(../../images/tabs4_left_on.png) no-repeat left;
 				font-weight:bold;
 				}
 			
 			.tabs4 ul li.on a span{
-				background:url(../images/tabs4_right_on.png) no-repeat right;
+				background:url(../../images/tabs4_right_on.png) no-repeat right;
 				}
 			
 .tabs4Content{
@@ -511,7 +511,7 @@ a{
 		}
 	
 	#area1 .currentPage a.home{
-		background:url(../images/home_ico.png) no-repeat left 2px;
+		background:url(../../images/home_ico.png) no-repeat left 2px;
 		padding-left:15px;
 		}
 	
@@ -584,7 +584,7 @@ a{
 		
 	#footer .socialNetwork a,
 	#footer .socialNetwork a:visited{
-		background-image:url(../images/followIcon.gif);
+		background-image:url(../../images/followIcon.gif);
 		background-repeat:no-repeat;
 		width:16px;
 		height:16px;
@@ -620,7 +620,7 @@ a{
 			
 		#footer .copyright a,
 		#footer .copyright a:visited{
-			background:url(../images/footerSeparator.gif) no-repeat left center;
+			background:url(../../images/footerSeparator.gif) no-repeat left center;
 			color:#333;
 			text-decoration:none;
 			display:inline-block;
@@ -636,7 +636,7 @@ a{
 -----------------*/
 
 #mainContent{
-	background:#FFF url(../images/area2_bg2.png) repeat-y right;
+	background:#FFF url(../../images/area2_bg2.png) repeat-y right;
 	width:100%;
 	overflow:hidden;
 	color:#333;
@@ -706,7 +706,7 @@ a{
 			.stepBar li span.arrow{
 				display:block;
 				padding-right:20px;
-				background:url(../images/step-next-arrow.png) no-repeat right top;
+				background:url(../../images/step-next-arrow.png) no-repeat right top;
 				}
 				
 			.stepBar li span.bg{
@@ -720,23 +720,23 @@ a{
 				text-align:center;
 				text-indent:-20px;
 				text-transform:uppercase;
-				background:url(../images/step-next-bg.png) repeat-x left top;
+				background:url(../../images/step-next-bg.png) repeat-x left top;
 				}
 			
 			.stepBar li span.active span.arrow{
-				background:url(../images/step-active-arrow.png) no-repeat right top;
+				background:url(../../images/step-active-arrow.png) no-repeat right top;
 				}
 				
 			.stepBar li span.active span.bg{
-				background:url(../images/step-active-bg.png) repeat-x left top;
+				background:url(../../images/step-active-bg.png) repeat-x left top;
 				}
 				
 			.stepBar li span.complete span.arrow{
-				background:url(../images/step-complete-arrow.png) no-repeat right top;
+				background:url(../../images/step-complete-arrow.png) no-repeat right top;
 				}
 				
 			.stepBar li span.complete span.bg{
-				background:url(../images/step-complete-bg.png) repeat-x left top;
+				background:url(../../images/step-complete-bg.png) repeat-x left top;
 				}
 				
 			.stepBar li.last span.istatus span.arrow{
@@ -746,31 +746,31 @@ a{
 				
 			.stepBar li.first span.active{
 				padding-left:5px;
-				background:url(../images/step-first-active.png) no-repeat left top;
+				background:url(../../images/step-first-active.png) no-repeat left top;
 				}
 				
 			.stepBar li.first span.complete{
 				padding-left:5px;
-				background:url(../images/step-first-complete.png) no-repeat left top;
+				background:url(../../images/step-first-complete.png) no-repeat left top;
 				}
 			.stepBar li.first span.inext{
 				height:35px;
-				background:url(../images/step-first-next.png) no-repeat left top;
+				background:url(../../images/step-first-next.png) no-repeat left top;
 				padding-left:5px;
 				}	
 				
 			.stepBar li.last span.inext{
 				height:35px;
-				background:url(../images/step-last-next.png) no-repeat right top;
+				background:url(../../images/step-last-next.png) no-repeat right top;
 				}
 				
 			.stepBar li.last span.active{
 				height:35px;
-				background:url(../images/step-last-active.png) no-repeat right top;
+				background:url(../../images/step-last-active.png) no-repeat right top;
 				}
 			.stepBar li.last span.complete{
 				height:35px;
-				background:url(../images/step-last-complete.png) no-repeat right top;
+				background:url(../../images/step-last-complete.png) no-repeat right top;
 				}	
 				
 	/* step title */
@@ -802,7 +802,7 @@ a{
 			font-size:22px;
 			font-family:Arial, Helvetica, sans-serif;
 			text-align:center;
-			background:url(../images/stepIcon.png) no-repeat left top;
+			background:url(../../images/stepIcon.png) no-repeat left top;
 			}
 			
 		.stepTitle .button4{
@@ -823,13 +823,13 @@ a{
 			font-weight:bold;
 			color:#fffffe;
 			line-height:24px;
-			background:url(../images/nextStep_button.png) no-repeat left top;
+			background:url(../../images/nextStep_button.png) no-repeat left top;
 			text-indent:8px;
 			text-decoration:none;
 			}
 			
 		.nextStepButton:hover{
-			background:url(../images/nextStep_button.png) no-repeat left -24px;
+			background:url(../../images/nextStep_button.png) no-repeat left -24px;
 			}
 			
 		.prevStepButton{
@@ -841,13 +841,13 @@ a{
 			font-weight:bold;
 			color:#fffffe;
 			line-height:24px;
-			background:url(../images/prevStep_button.png) no-repeat left top;
+			background:url(../../images/prevStep_button.png) no-repeat left top;
 			text-indent:32px;
 			text-decoration:none;
 			}
 			
 		.prevStepButton:hover{
-			background:url(../images/prevStep_button.png) no-repeat left -24px;
+			background:url(../../images/prevStep_button.png) no-repeat left -24px;
 			}	
 			
 		/* toolTip */
@@ -858,11 +858,11 @@ a{
 			display:inline;
 			position:relative;
 			text-decoration:none;
-			background:url(../images/iconToolTip.png) no-repeat left top;
+			background:url(../../images/iconToolTip.png) no-repeat left top;
 			}
 			
 		.toolTip:hover{
-			background:url(../images/iconToolTip.png) no-repeat left -24px;
+			background:url(../../images/iconToolTip.png) no-repeat left -24px;
 			}
 			
 			.toolTip .toolTipContainer{
@@ -870,7 +870,7 @@ a{
 				position:absolute;
 				margin-top:35px;
 				border:#bdbdbd solid 1px;
-				background:url(../images/toolTip_bgs.png) repeat-x left top #e7e7e7;
+				background:url(../../images/toolTip_bgs.png) repeat-x left top #e7e7e7;
 				}
 				
 			.toolTip .toolTipContainer .arrow{
@@ -879,7 +879,7 @@ a{
 				overflow:hidden;
 				margin-top:-7px;
 				margin-left:7px;
-				background:url(../images/toolTip_arrow.png) no-repeat left top;
+				background:url(../../images/toolTip_arrow.png) no-repeat left top;
 				}
 			
 			.toolTip .toolTipContainer p{
@@ -1032,7 +1032,7 @@ a{
 					font-family:Tahoma, Arial, Helvetica, sans-serif;
 					font-size:11px;
 					line-height:12px;
-					background:url(../images/dd-icon.png) no-repeat left 5px;
+					background:url(../../images/dd-icon.png) no-repeat left 5px;
 					}
 					
 					.stepContainer .geryContent .noteContainer dd a{
@@ -1061,7 +1061,7 @@ a{
 		display:block;
 		overflow:hidden;
 		position:absolute;
-		background-image:url(../images/grey_corner.png);
+		background-image:url(../../images/grey_corner.png);
 		background-repeat:no-repeat;
 		}
 		
@@ -1130,51 +1130,51 @@ a{
 		.stepSecond .projectItem .projectContainer .top{
 			width:273px;
 			padding-top:12px;
-			background:url(../images/selectProject_top.png) no-repeat left top;
+			background:url(../../images/selectProject_top.png) no-repeat left top;
 			}
 			
 		.stepSecond .projectItem .projectContainer .bottom{
 			width:100%;
 			padding-bottom:12px;
-			background:url(../images/selectProject_bottom.png) no-repeat left bottom;
+			background:url(../../images/selectProject_bottom.png) no-repeat left bottom;
 			}
 			
 		.stepSecond .projectItem .projectContainer .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
-			background:url(../images/selectProject_bg.png) repeat-y left top;
+			background:url(../../images/selectProject_bg.png) repeat-y left top;
 			}
 			
 		.stepSecond .projectItem .hover .top{
 			width:273px;
 			padding-top:12px;
-			background:url(../images/selectProject_top_hover.png) no-repeat left top;
+			background:url(../../images/selectProject_top_hover.png) no-repeat left top;
 			}
 			
 		.stepSecond .projectItem .hover .bottom{
 			width:100%;
 			padding-bottom:12px;
-			background:url(../images/selectProject_bottom_hover.png) no-repeat left bottom;
+			background:url(../../images/selectProject_bottom_hover.png) no-repeat left bottom;
 			}
 			
 		.stepSecond .projectItem .hover .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
-			background:url(../images/selectProject_bg_hover.png) repeat-y left top;
+			background:url(../../images/selectProject_bg_hover.png) repeat-y left top;
 			}
 			
 		.stepSecond .projectItem .projectContainer .custom{
 			width:273px;
 			height:285px;
-			background:url(../images/custom.png) no-repeat center 4px;
+			background:url(../../images/custom.png) no-repeat center 4px;
 			}
 			
 		.stepSecond .projectItem .hover .custom{
 			width:273px;
 			height:285px;
-			background:url(../images/custom_hover.png) no-repeat center top;
+			background:url(../../images/custom_hover.png) no-repeat center top;
 			}
 			
 			/* radioBox */
@@ -1252,11 +1252,11 @@ a{
 					line-height:21px;
 					text-align:center;
 					text-decoration:none;
-					background:url(../images/blackButton.png) no-repeat left top;
+					background:url(../../images/blackButton.png) no-repeat left top;
 					}
 					
 				.stepSecond .projectItem .projectContainer .buttonArea .blackButton:hover{
-					background:url(../images/blackButton.png) no-repeat left -21px;
+					background:url(../../images/blackButton.png) no-repeat left -21px;
 					}
 				
 				.stepSecond .projectItem .projectContainer .buttonArea .detailButton{
@@ -1414,7 +1414,7 @@ a{
 				border:0px solid #FFFFFF;
 				padding:3px 8px;	
 				font-size:10px;
-				background:transparent url(../images/dot.png) repeat-x scroll bottom center;
+				background:transparent url(../../images/dot.png) repeat-x scroll bottom center;
 				}
 				
 			.stepFifth #projects table tr.applyForAll td{
@@ -1435,11 +1435,11 @@ a{
 				height:23px;
 				margin:0 5px;
 				display:inline-block;
-				background:url(../images/folder.png) no-repeat left top;
+				background:url(../../images/folder.png) no-repeat left top;
 				}
 				
 			.stepFifth #projects table td .folderIcon:hover{
-				background:url(../images/folder_active.png) no-repeat left top;
+				background:url(../../images/folder_active.png) no-repeat left top;
 				}
 				
 			.stepFifth #projects table td .deleteIcon{
@@ -1447,11 +1447,11 @@ a{
 				height:23px;
 				margin:0 5px;
 				display:inline-block;
-				background:url(../images/deleteIcon.png) no-repeat left top;
+				background:url(../../images/deleteIcon.png) no-repeat left top;
 				}
 				
 			.stepFifth #projects table td .deleteIcon:hover{
-				background:url(../images/deleteIcon.png) no-repeat left -23px;
+				background:url(../../images/deleteIcon.png) no-repeat left -23px;
 				}
 				
 			.stepFifth #projects table td .downloadProfile{
@@ -1494,7 +1494,7 @@ a{
 			font-family:Tahoma, Arial, Helvetica, sans-serif;
 			font-size:14px;
 			line-height:20px;
-			background:url(../images/ico_true.png) no-repeat left 4px;
+			background:url(../../images/ico_true.png) no-repeat left 4px;
 			}
 			
 		.stepSixth .projectOverView{
@@ -1543,7 +1543,7 @@ a{
 						font-family:Arial, Helvetica, sans-serif;
 						text-align:center;
 						line-height:31px;
-						background:url(../images/stepIcon.png) no-repeat left top;
+						background:url(../../images/stepIcon.png) no-repeat left top;
 						}
 					
 					.stepSixth .projectOverView dl.topStep dd span.icon{
@@ -1558,7 +1558,7 @@ a{
 						text-align:center;
 						line-height:31px;
 						color:#fffffe;
-						background:url(../images/stepRedIcon.png) no-repeat left top;
+						background:url(../../images/stepRedIcon.png) no-repeat left top;
 						}
 						
 					.stepSixth .projectOverView dl dd p{
@@ -1604,68 +1604,68 @@ a{
 		
 		#new-modal .inner{
 			margin:0 4px;
-			background:url(../images/modalBg.png) repeat-x left top #e8e8e8;
+			background:url(../../images/modalBg.png) repeat-x left top #e8e8e8;
 			}	
 		
 		#new-modal .smallModal .modalTop{
 			padding-top:8px;
-			background:url(../images/small_modal_top.png) no-repeat left top;
+			background:url(../../images/small_modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .smallModal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/small_modal_bottom.png) no-repeat left bottom;
+			background:url(../../images/small_modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .smallModal .modalBg{
-			background:url(../images/small_modal_bg.png) repeat-y left top;
+			background:url(../../images/small_modal_bg.png) repeat-y left top;
 			}
 			
 		#new-modal .modal .modalTop{
 			padding-top:8px;
-			background:url(../images/modal_top.png) no-repeat left top;
+			background:url(../../images/modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .modal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/modal_bottom.png) no-repeat left bottom;
+			background:url(../../images/modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .modal .modalBg{
-			background:url(../images/modal_bg.png) repeat-y left top;
+			background:url(../../images/modal_bg.png) repeat-y left top;
 			}
 			
 		#new-modal .largeModal .modalTop{
 			padding-top:8px;
-			background:url(../images/large_modal_top.png) no-repeat left top;
+			background:url(../../images/large_modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .largeModal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/large_modal_bottom.png) no-repeat left bottom;
+			background:url(../../images/large_modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .largeModal .modalBg{
-			background:url(../images/large_modal_bg.png) repeat-y left top;
+			background:url(../../images/large_modal_bg.png) repeat-y left top;
 			}
 			
 		#new-modal .minModal .modalTop{
 			padding-top:8px;
-			background:url(../images/min_modal_top.png) no-repeat left top;
+			background:url(../../images/min_modal_top.png) no-repeat left top;
 			}
 			
 		#new-modal .minModal .modalBottom{
 			padding-bottom:8px;
-			background:url(../images/min_modal_bottom.png) no-repeat left bottom;
+			background:url(../../images/min_modal_bottom.png) no-repeat left bottom;
 			}
 			
 		#new-modal .minModal .modalBg{
-			background:url(../images/min_modal_bg.png) repeat-y left top;
+			background:url(../../images/min_modal_bg.png) repeat-y left top;
 			}
 		
 	#new-modal .modal-title{
 		height:32px;
-		background:url(../images/modal_title.png) repeat-x left top;
+		background:url(../../images/modal_title.png) repeat-x left top;
 		}
 		
 		#new-modal .modal-title h2{
@@ -1686,11 +1686,11 @@ a{
 			text-indent:-9999px;
 			margin-top:-8px;
 			margin-right:-4px;
-			background:url(../images/modal_close.png) no-repeat left top;
+			background:url(../../images/modal_close.png) no-repeat left top;
 			}
 			
 		#new-modal .modal-title .closeModal:hover{
-			background:url(../images/modal_close.png) no-repeat left -30px;
+			background:url(../../images/modal_close.png) no-repeat left -30px;
 			}
 			
 		/* buttonArea */
@@ -1769,7 +1769,7 @@ a{
 			padding-left:15px;
 			font-size:12px;
 			line-height:20px;
-			background:url(../images/modal_bullet.png) no-repeat left 5px;
+			background:url(../../images/modal_bullet.png) no-repeat left 5px;
 			}
 			
 	/* detailModal */
@@ -1973,11 +1973,11 @@ a{
 					margin:0 auto;
 					margin-top:136px;
 					text-indent:-9999px;
-					background:url(../images/add_tech.png) no-repeat left top;
+					background:url(../../images/add_tech.png) no-repeat left top;
 					}
 					
 				#addUserModal .addUserForm .addItem:hover{
-					background:url(../images/add_tech_hover.png) no-repeat left top;
+					background:url(../../images/add_tech_hover.png) no-repeat left top;
 					}
 					
 				#addUserModal .addUserForm .removeItem{
@@ -1987,11 +1987,11 @@ a{
 					margin:0 auto;
 					margin-top:5px;
 					text-indent:-9999px;
-					background:url(../images/remove_tech.png) no-repeat left top;
+					background:url(../../images/remove_tech.png) no-repeat left top;
 					}
 					
 				#addUserModal .addUserForm .removeItem:hover{
-					background:url(../images/remove_tech_hover.png) no-repeat left top;
+					background:url(../../images/remove_tech_hover.png) no-repeat left top;
 					}
 					
 				#addUserModal .buttonArea .button6{
@@ -2091,7 +2091,7 @@ a{
 
 a.button1{
 	float:left;
-	background:transparent url(../images/button_left.png) no-repeat left;
+	background:transparent url(../../images/button_left.png) no-repeat left;
 	font-size:12px;
 	font-weight:bold;
 	color:#362f2d;
@@ -2100,7 +2100,7 @@ a.button1{
 
 	a.button1 span{
 		float:left;
-		background:transparent url(../images/button_right.png) no-repeat right;
+		background:transparent url(../../images/button_right.png) no-repeat right;
 		padding:5px 10px 2px 10px;
 		cursor:pointer;
 		height:20px;
@@ -2113,7 +2113,7 @@ a.button1{
 	
 a.button2{
 	display:block;
-	background:transparent url(../images/button.png) no-repeat top;
+	background:transparent url(../../images/button.png) no-repeat top;
 	width:253px;
 	height:24px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -2126,7 +2126,7 @@ a.button2{
 }
 
 	a.button2:hover{
-		background:transparent url(../images/button.png) no-repeat bottom;
+		background:transparent url(../../images/button.png) no-repeat bottom;
 	}
 
 a.button3{
@@ -2134,7 +2134,7 @@ a.button3{
 	text-align:center;
 	margin:0 auto;
 	text-decoration:none;
-	background:url(../images/button2.png) no-repeat top;
+	background:url(../../images/button2.png) no-repeat top;
 	width:232px;
 	height:25px;
 	color:#333333;
@@ -2150,7 +2150,7 @@ a.button3:hover{
 
 a.button4{
 	display:block;
-	background:transparent url(../images/button3.png) no-repeat top;
+	background:transparent url(../../images/button3.png) no-repeat top;
 	width:144px;
 	height:18px;
 	padding-top:3px;
@@ -2168,7 +2168,7 @@ a.button4:hover{
 
 a.button5{
 	display:block;
-	background:transparent url(../images/button4.png) no-repeat top;
+	background:transparent url(../../images/button4.png) no-repeat top;
 	width:144px;
 	height:18px;
 	padding-top:3px;
@@ -2187,7 +2187,7 @@ a.button6,
 a.button7,
 a.button8{
 	float:right;
-	background:url(../images/button5_left.png) no-repeat left top;
+	background:url(../../images/button5_left.png) no-repeat left top;
 	font-weight:bold;
 	font-size:12px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -2209,48 +2209,48 @@ a.button8{
 	}
 
 a.button7{
-	background:url(../images/button7_bg.png) repeat-x top;
+	background:url(../../images/button7_bg.png) repeat-x top;
 	color:#333;
 }
 
 	a.button7 span.left{
 		display:block;
-		background:url(../images/button7_left.png) no-repeat left top;
+		background:url(../../images/button7_left.png) no-repeat left top;
 		padding:0;
 	}
 	
 	a.button7 span.right{
 		display:block;
-		background:url(../images/button7_right.png) no-repeat right top;
+		background:url(../../images/button7_right.png) no-repeat right top;
 	}
 
 a.button8{
-	background:url(../images/button8_bg.png) repeat-x top;
+	background:url(../../images/button8_bg.png) repeat-x top;
 	color:#fffffd !important;
 }
 
 	a.button8 span.left{
-		background:url(../images/button8_left.png) no-repeat left top;
+		background:url(../../images/button8_left.png) no-repeat left top;
 		padding:0;
 	}
 	
 	a.button8 span.right{
-		background:url(../images/button8_right.png) no-repeat right top;
+		background:url(../../images/button8_right.png) no-repeat right top;
 		padding:5px 27px 0 27px;
 		height:21px;
 	}
 
 a.button6{
-	background:url(../images/button5_bg.png) repeat-x top;
+	background:url(../../images/button5_bg.png) repeat-x top;
 }
 
 	a.button6 span.left{
-		background:url(../images/button5_left.png) no-repeat left top;
+		background:url(../../images/button5_left.png) no-repeat left top;
 		padding:0;
 	}
 	
 	a.button6 span.right{
-		background:url(../images/button5_right.png) no-repeat right top;
+		background:url(../../images/button5_right.png) no-repeat right top;
 		padding:4px 27px 0 27px;
 		height:20px;
 	}
@@ -2294,7 +2294,7 @@ a.button8:hover{
 
 a.button9{
 	display:block;
-	background:transparent url(../images/button9.png) no-repeat top;
+	background:transparent url(../../images/button9.png) no-repeat top;
 	width:126px;
 	height:15px;
 	font-family:Arial, Helvetica, sans-serif;
@@ -2306,12 +2306,12 @@ a.button9{
 	}
 
 	a.button9:hover{
-		background:transparent url(../images/button9.png) no-repeat bottom;
+		background:transparent url(../../images/button9.png) no-repeat bottom;
 	}
 
 a.button10{
 	float:left;
-	background:transparent url(../images/button10.png) no-repeat left top;
+	background:transparent url(../../images/button10.png) no-repeat left top;
 	font-size:12px;
 	font-weight:bold;
 	text-decoration:none;
@@ -2321,14 +2321,14 @@ a.button10{
 
 	a.button10 span.left{
 		float:left;
-		background:transparent url(../images/button10.png) no-repeat right -48px;
+		background:transparent url(../../images/button10.png) no-repeat right -48px;
 		padding-right:3px;;
 		cursor:pointer;
 		overflow:hidden;
 	}
 	a.button10 span.right{
 		float:left;
-		background:transparent url(../images/button10.png) left -24px repeat-x;
+		background:transparent url(../../images/button10.png) left -24px repeat-x;
 		cursor:pointer;
 		line-height:22px;
 		height:24px;
@@ -2352,7 +2352,7 @@ a.button10{
 ----------------*/
 a.button11{
 	display:inline-block;
-	background:transparent url(../images/button11.png) left top no-repeat;
+	background:transparent url(../../images/button11.png) left top no-repeat;
 	font-size:11px;
 	color:#313131;
 	padding-left:2px;
@@ -2361,21 +2361,21 @@ a.button11{
 
 	a.button11 .btnR{
 		float:left;
-		background:transparent url(../images/button11.png) right -50px no-repeat;
+		background:transparent url(../../images/button11.png) right -50px no-repeat;
 		cursor:pointer;
 		padding-right:2px;
 		height:25px;
 	}	
 		a.button11 .btnR .btnC{
 			float:left;
-			background:transparent url(../images/button11.png) left -25px repeat-x;
+			background:transparent url(../../images/button11.png) left -25px repeat-x;
 			cursor:pointer;
 			height:25px;
 			padding:0 8px;
 		}	
 			a.button11 .btnR .btnC .btnIcon{
 				float:left;
-				background:url(../images/button11-icon.gif) left center no-repeat;
+				background:url(../../images/button11-icon.gif) left center no-repeat;
 				line-height:24px;
 				cursor:pointer;
 				height:25px;
@@ -2399,7 +2399,7 @@ a.button11{
 	width:94px;
 	height:21px;
 	padding-left:3px;
-	background:url(../images/button-sm-left.png) left top no-repeat;
+	background:url(../../images/button-sm-left.png) left top no-repeat;
 	overflow:hidden;
 	line-height:20px;
 	text-decoration:none;
@@ -2411,7 +2411,7 @@ a.button11{
 		display:block;
 		height:21px;
 		width:94px;
-		background:url(../images/button-sm-right.png) right top no-repeat;
+		background:url(../../images/button-sm-right.png) right top no-repeat;
 		overflow:hidden;
 		}
 		
@@ -2601,7 +2601,7 @@ table.projectStats{
 		color:#FFF;
 		font-size:11px;
 		height:33px;
-		background:transparent url(../images/calendar_header.png) repeat-x;
+		background:transparent url(../../images/calendar_header.png) repeat-x;
 		}
 	
 	table.projectStats th.first{
@@ -2711,11 +2711,11 @@ table.notifications a.subgroup{ /* group name link */
 	}
 
 table.notifications a.expand{
-	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+	background: url(../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 	}
 	
 table.notifications a.collapse{
-	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+	background: url(../../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
 	}
 
 table.notifications .group{
@@ -2726,12 +2726,12 @@ table.notifications .group{
 
 table.notifications .expand{
 	text-decoration: none;
-	background: url(../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+	background: url(../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 	}
 
 table.notifications .collapse{
 	text-decoration: none;
-	background: url(../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+	background: url(../../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
 	}
 
 table.notifications TH.permCol{
@@ -2754,7 +2754,7 @@ table.notifications TH.permCol2{
 	.solveProblem .inner{
 		padding:3px 10px;
 		border:#000000 solid 1px;
-		background:url(../images/problem_bg.png) repeat-x left top #d2d2d2;
+		background:url(../../images/problem_bg.png) repeat-x left top #d2d2d2;
 		}
 		
 	/* corner */
@@ -2763,7 +2763,7 @@ table.notifications TH.permCol2{
 		height:5px;
 		overflow:hidden;
 		position:absolute;
-		background-image:url(../images/problem_corner.png);
+		background-image:url(../../images/problem_corner.png);
 		background-repeat:no-repeat;
 		}
 		
@@ -2797,7 +2797,7 @@ table.notifications TH.permCol2{
 			color:#1a1a1a;
 			line-height:29px;
 			text-indent:4px;
-			background:url(../images/problem_line.png) repeat-x left bottom;
+			background:url(../../images/problem_line.png) repeat-x left bottom;
 			}
 			
 		.solveProblem .inner p{
@@ -2816,11 +2816,11 @@ table.notifications TH.permCol2{
 		
 		.solveProblem a.button2{
 			width:100%;
-			background:url(../images/problem-button.png) no-repeat left top;
+			background:url(../../images/problem-button.png) no-repeat left top;
 			}
 			
 		.solveProblem a.button2:hover{
-			background:url(../images/problem-button.png) no-repeat left -30px;
+			background:url(../../images/problem-button.png) no-repeat left -30px;
 			}
             
 #launchContestOut.noBorder .schedule  {

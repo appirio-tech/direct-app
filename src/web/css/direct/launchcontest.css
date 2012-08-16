@@ -2268,7 +2268,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 }
 
 .launchCopilotContest .addButton {
-    background: url("../images/addButton.gif") no-repeat scroll 0 0 transparent;
+    background: url("../../images/addButton.gif") no-repeat scroll 0 0 transparent;
     display: inline;
     float: left;
     height: 21px;
@@ -2278,11 +2278,11 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 }
 
 .launchCopilotContest .addButton:hover {
-    background: url("../images/addButton_hover.gif") no-repeat scroll 0 0 transparent;
+    background: url("../../images/addButton_hover.gif") no-repeat scroll 0 0 transparent;
 }
 
 .launchCopilotContest .removeButton {
-    background: url("../images/removeButton.gif") no-repeat scroll 0 0 transparent;
+    background: url("../../images/removeButton.gif") no-repeat scroll 0 0 transparent;
     display: inline;
     float: left;
     height: 21px;
@@ -2291,7 +2291,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
     width: 22px;
 }
 .launchCopilotContest .removeButton:hover {
-    background: url("../images/removeButton_hover.gif") no-repeat scroll 0 0 transparent;
+    background: url("../../images/removeButton_hover.gif") no-repeat scroll 0 0 transparent;
 }
 
 .launchCopilotContest .infoPanel{
@@ -2430,7 +2430,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 		height:76px;
 		margin-right:15px;
 		overflow:hidden;
-		background:url(../images/copilot_area1_icon_bg.png) right 20px no-repeat;
+		background:url(../../images/copilot_area1_icon_bg.png) right 20px no-repeat;
 	}
 		#copilotsIntroduction .getCopilots .introductionHeadIcon{
 			float: left;
@@ -2448,20 +2448,20 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	#copilotsIntroduction .getCopilotsStep{
 		height:100px;
 		padding-left:3px;
-		background:url(../images/bg_copilots_title.png) left top no-repeat;
+		background:url(../../images/bg_copilots_title.png) left top no-repeat;
 	}
 		#copilotsIntroduction .getCopilotsStep .getCopilotsStepRight{
 			height:100px;
 			padding-right:3px;
-			background:url(../images/bg_copilots_title.png) right -200px no-repeat;
+			background:url(../../images/bg_copilots_title.png) right -200px no-repeat;
 		}
 		#copilotsIntroduction .getCopilotsStep .getCopilotsStepCenter{
 			height:100px;
-			background:url(../images/bg_copilots_title.png) left -100px repeat-x;
+			background:url(../../images/bg_copilots_title.png) left -100px repeat-x;
 		}
 			#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent{
 				height:92px;
-				background:url(../images/bg_copilots_title_light.png) left top repeat-x;
+				background:url(../../images/bg_copilots_title_light.png) left top repeat-x;
 				padding-top:8px;
 			}
 				#copilotsIntroduction .getCopilotsStep .getCopilotsStepContent li{
@@ -2514,7 +2514,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 				list-style:none;
 				padding-left:15px;
 				line-height:16px;
-				background:url(../images/icon_list_copilots.png) left center no-repeat;
+				background:url(../../images/icon_list_copilots.png) left center no-repeat;
 			}
 		#copilotsIntroduction .copilotsSummery .videoBox{
 			position:absolute;
@@ -2535,7 +2535,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 				height:5px;
 				display:block;
 				position:absolute;
-				background:url(../images/corner_video.png) left top no-repeat;
+				background:url(../../images/corner_video.png) left top no-repeat;
 			}
 			.video .tl{
 				left:0;
@@ -2566,7 +2566,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 				display:inline;
 				margin-left:45px;
 				margin-top:23px;
-				background:url(../images/button_launch.png) left top no-repeat;
+				background:url(../../images/button_launch.png) left top no-repeat;
 				padding-left:4px;
 				text-decoration:none;
 			}
@@ -2578,7 +2578,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 					width:auto;
 					height:64px;
 					display:inline;
-					background:url(../images/button_launch.png) right -128px no-repeat;
+					background:url(../../images/button_launch.png) right -128px no-repeat;
 					padding-right:4px;
 				}
 				#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch .buttonLaunchCenter{
@@ -2589,7 +2589,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 					padding-left:12px;
 					padding-right:10px;
 					display:inline;
-					background:url(../images/button_launch.png) left -64px repeat-x;
+					background:url(../../images/button_launch.png) left -64px repeat-x;
 				}
 				#copilotsIntroduction .copilotsSummery .videoBox .buttonLaunch .buttonLaunchCenter img{
 					float:left;
@@ -2618,16 +2618,16 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 		}
 		#copilotsIntroduction .useCopilot .useCopilotSummery{
 			padding-left:5px;
-			background:url(../images/bg_use_summery.png) left top no-repeat;
+			background:url(../../images/bg_use_summery.png) left top no-repeat;
 			height:180px;
 		}
 			#copilotsIntroduction .useCopilot .useCopilotSummery .useCopilotSummeryRight{
 				padding-right:5px;
-				background:url(../images/bg_use_summery.png) right -360px no-repeat;
+				background:url(../../images/bg_use_summery.png) right -360px no-repeat;
 				height:180px;
 			}
 			#copilotsIntroduction .useCopilot .useCopilotSummery .useCopilotSummeryCenter{
-				background:url(../images/bg_use_summery.png) left -180px repeat-x;
+				background:url(../../images/bg_use_summery.png) left -180px repeat-x;
 				height:165px;
 				padding-top:15px;
 				padding-left:22px;
@@ -2646,18 +2646,18 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 					#copilotsIntroduction .useCopilot .useCopilotSummery .howMuchCosts .howMuchCostsHeader{
 						width:276px;
 						height:5px;
-						background:url(../images/bg_how_costs.png) left top no-repeat;
+						background:url(../../images/bg_how_costs.png) left top no-repeat;
 						overflow:hidden;
 					}
 					#copilotsIntroduction .useCopilot .useCopilotSummery .howMuchCosts .howMuchCostsFooter{
 						width:276px;
 						height:5px;
-						background:url(../images/bg_how_costs.png) right top no-repeat;
+						background:url(../../images/bg_how_costs.png) right top no-repeat;
 						overflow:hidden;
 					}
 					#copilotsIntroduction .useCopilot .useCopilotSummery .howMuchCosts .howMuchCostsContent{
 						width:248px;
-						background:url(../images/bg_how_costs.png) -276px top repeat-y;
+						background:url(../../images/bg_how_costs.png) -276px top repeat-y;
 						padding:10px 10px 8px 18px;
 						overflow:hidden;
 					}
@@ -2667,7 +2667,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 					list-style:none;
 					padding-left:15px;
 					line-height:18px;
-					background:url(../images/icon_list_copilots.png) left center no-repeat;
+					background:url(../../images/icon_list_copilots.png) left center no-repeat;
 				}
 			#copilotsIntroduction .useCopilot .howGetCopilot{
 				padding-top:27px;
@@ -2731,7 +2731,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	width:99px;
 	height:21px;
 	padding-right:23px;
-	background:url(../images/button_profile_member_right.png) right top no-repeat;
+	background:url(../../images/button_profile_member_right.png) right top no-repeat;
 	overflow:hidden;
 	line-height:20px;
 	text-decoration:none;
@@ -2742,7 +2742,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 		display:block;
 		height:21px;
 		width:99px;
-		background:url(../images/button_profile_left.png) left top no-repeat;
+		background:url(../../images/button_profile_left.png) left top no-repeat;
 		overflow:hidden;
 	}
 .memberProfile:hover{
@@ -2758,7 +2758,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	width:99px;
 	height:21px;
 	padding-right:23px;
-	background:url(../images/button_profile_copilot_right.png) right top no-repeat;
+	background:url(../../images/button_profile_copilot_right.png) right top no-repeat;
 	overflow:hidden;
 	line-height:20px;
 	text-decoration:none;
@@ -2769,7 +2769,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 		display:block;
 		height:21px;
 		width:99px;
-		background:url(../images/button_profile_left.png) left top no-repeat;
+		background:url(../../images/button_profile_left.png) left top no-repeat;
 		overflow:hidden;
 	}
 .copilotProfile:hover{
@@ -2785,7 +2785,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	width:94px;
 	height:21px;
 	padding-left:3px;
-	background:url(../images/button-sm-left.png) left top no-repeat;
+	background:url(../../images/button-sm-left.png) left top no-repeat;
 	overflow:hidden;
 	line-height:20px;
 	text-decoration:none;
@@ -2796,7 +2796,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 		display:block;
 		height:21px;
 		width:94px;
-		background:url(../images/button-sm-right.png) right top no-repeat;
+		background:url(../../images/button-sm-right.png) right top no-repeat;
 		overflow:hidden;
 	}
 .downloadProfile:hover{
@@ -2812,7 +2812,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 	width:141px;
 	height:21px;
 	padding-left:3px;
-	background:url(../images/button-sm-red-left.png) left top no-repeat;
+	background:url(../../images/button-sm-red-left.png) left top no-repeat;
 	overflow:hidden;
 	line-height:20px;
 	text-decoration:none;
@@ -2823,7 +2823,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 		display:block;
 		height:21px;
 		width:141px;
-		background:url(../images/button-sm-red-right.png) right top no-repeat;
+		background:url(../../images/button-sm-red-right.png) right top no-repeat;
 		overflow:hidden;
 	}
 .chooseCopilotButton:hover{
@@ -2837,7 +2837,7 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
     color:#333333;
 	font-size:13px;
 	font-weight:bold;
-	background:url(../images/icon_document.png) 4px 2px no-repeat;
+	background:url(../../images/icon_document.png) 4px 2px no-repeat;
 	padding-left:40px;
 	float:left;
 	width:auto;

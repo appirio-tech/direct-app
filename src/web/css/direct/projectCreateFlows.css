@@ -103,7 +103,7 @@
 					color:#ec1c23;
 				 }
                 .stepFirst2 .geryContent .row .errorIcon{
-                    background:url(../images/error-icon2.png) no-repeat left center;
+                    background:url(../../images/error-icon2.png) no-repeat left center;
                     height:10px;
                     width:10px;
                     float:left;
@@ -146,17 +146,17 @@
 
             .stepContainer2 .geryContent .noteMask{ 
 				padding:9px 10px 16px 20px;
-                background:url(../images/note-bg-01.png) #e9e9e9 repeat-x left top; 
+                background:url(../../images/note-bg-01.png) #e9e9e9 repeat-x left top; 
                 font-family:Tahoma, Arial, Helvetica, sans-serif;
                 font-size:11px;
                 border-bottom:1px solid #bdbdbd;
             }
             .stepContainer2 .geryContent .noteMask.collapse{
-                background:url(../images/note-bg-02.png) #e9e9e9 repeat-x left top;
+                background:url(../../images/note-bg-02.png) #e9e9e9 repeat-x left top;
                 padding-bottom:4px;
              }
             .stepFifth2 .geryContent .noteMask{
-                background:url(../images/note-bg-03.png) #e9e9e9 repeat-x left top; 
+                background:url(../../images/note-bg-03.png) #e9e9e9 repeat-x left top; 
              }
                 .stepContainer2 .geryContent .noteMask dt{
                     overflow:hidden;
@@ -164,13 +164,13 @@
                     padding-bottom:6px;
                 }
                     .stepContainer2 .geryContent .noteMask dt strong{
-                        background:url(../images/note-icon.png) no-repeat left center;
+                        background:url(../../images/note-icon.png) no-repeat left center;
                         padding-left:18px;
                         font-size:12px;
                         float:left;
                     }
                     .stepContainer2 .geryContent .noteMask dt a{
-                        background:url(../images/minus.png) no-repeat left center;
+                        background:url(../../images/minus.png) no-repeat left center;
                         padding-left:16px;
                         float:right;
                         width:26px;
@@ -179,10 +179,10 @@
                         text-decoration:none;
                     }
                     .stepContainer2 .geryContent .noteMask.collapse dt a{
-                        background:url(../images/plus.png) no-repeat left center;
+                        background:url(../../images/plus.png) no-repeat left center;
                     }
                 .stepContainer2 .geryContent .noteMask dd{
-                    background:url(../images/bullet.png) no-repeat left top;
+                    background:url(../../images/bullet.png) no-repeat left top;
                     margin-top:6px;
                     padding-left:12px;
                     padding-right:80px;
@@ -227,7 +227,7 @@
 					font-family:Tahoma, Arial, Helvetica, sans-serif;
 					font-size:11px;
 					line-height:12px;
-					background:url(../images/dd-icon.png) no-repeat left 5px;
+					background:url(../../images/dd-icon.png) no-repeat left 5px;
 					}
 					
 					.stepContainer2 .geryContent .noteContainer dd a{
@@ -256,7 +256,7 @@
 		display:block;
 		overflow:hidden;
 		position:absolute;
-		background-image:url(../images/grey_corner.png);
+		background-image:url(../../images/grey_corner.png);
 		background-repeat:no-repeat;
 		}
 		
@@ -323,51 +323,51 @@
 		.stepSecond2 .projectItem .projectContainer .top{
 			width:273px;
 			padding-top:12px;
-			background:url(../images/selectProject_top.png) no-repeat left top;
+			background:url(../../images/selectProject_top.png) no-repeat left top;
 			}
 			
 		.stepSecond2 .projectItem .projectContainer .bottom{
 			width:100%;
 			padding-bottom:12px;
-			background:url(../images/selectProject_bottom.png) no-repeat left bottom;
+			background:url(../../images/selectProject_bottom.png) no-repeat left bottom;
 			}
 			
 		.stepSecond2 .projectItem .projectContainer .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
-			background:url(../images/selectProject_bg.png) repeat-y left top;
+			background:url(../../images/selectProject_bg.png) repeat-y left top;
 			}
 			
 		.stepSecond2 .projectItem .hover .top{
 			width:273px;
 			padding-top:12px;
-			background:url(../images/selectProject_top_hover.png) no-repeat left top;
+			background:url(../../images/selectProject_top_hover.png) no-repeat left top;
 			}
 			
 		.stepSecond2 .projectItem .hover .bottom{
 			width:100%;
 			padding-bottom:12px;
-			background:url(../images/selectProject_bottom_hover.png) no-repeat left bottom;
+			background:url(../../images/selectProject_bottom_hover.png) no-repeat left bottom;
 			}
 			
 		.stepSecond2 .projectItem .hover .bg{
 			width:100%;
 			height:258px;
 			padding-top:3px;
-			background:url(../images/selectProject_bg_hover.png) repeat-y left top;
+			background:url(../../images/selectProject_bg_hover.png) repeat-y left top;
 			}
 			
 		.stepSecond2 .projectItem .projectContainer .custom{
 			width:273px;
 			height:285px;
-			background:url(../images/custom.png) no-repeat center 4px;
+			background:url(../../images/custom.png) no-repeat center 4px;
 			}
 			
 		.stepSecond2 .projectItem .hover .custom{
 			width:273px;
 			height:285px;
-			background:url(../images/custom_hover.png) no-repeat center top;
+			background:url(../../images/custom_hover.png) no-repeat center top;
 			}
 			
 			/* radioBox */
@@ -445,11 +445,11 @@
 					line-height:21px;
 					text-align:center;
 					text-decoration:none;
-					background:url(../images/blackButton.png) no-repeat left top;
+					background:url(../../images/blackButton.png) no-repeat left top;
 					}
 					
 				.stepSecond2 .projectItem .projectContainer .buttonArea .blackButton:hover{
-					background:url(../images/blackButton.png) no-repeat left -21px;
+					background:url(../../images/blackButton.png) no-repeat left -21px;
 					}
 
 				.stepSecond2 .projectItem .projectContainer .buttonArea .detailButton{
@@ -618,14 +618,14 @@ input{
                 float: left;
                 height: 14px;
                 padding-left: 20px;
-                background: url("../images/add-field-icon.png") no-repeat;
+                background: url("../../images/add-field-icon.png") no-repeat;
                 line-height: 14px;
                 display: inline-block;
                 margin-top: 5px;
                 margin-left: 103px;
             }
             .stepFirst2 .geryContent .row .message.padding a:hover.addField{
-                background: url("../images/add-field-icon.png") no-repeat 0 -14px;
+                background: url("../../images/add-field-icon.png") no-repeat 0 -14px;
             }
             .stepFirst2 .geryContent .left .input input{
                 height: 21px;
@@ -677,19 +677,19 @@ input{
 
             .stepFirst2 .geryContent .content .top{
                 padding-left: 7px;
-                background: url("../images/top-active.png") no-repeat;
+                background: url("../../images/top-active.png") no-repeat;
             }
                 .stepFirst2 .geryContent .content .top .r{
                     padding-right: 7px;
-                    background: url("../images/top-active.png") no-repeat 100% -14px;
+                    background: url("../../images/top-active.png") no-repeat 100% -14px;
                 }
                     .stepFirst2 .geryContent .content .top .r .c{
                         height: 7px;
-                        background: url("../images/top-active.png") repeat-x 0 -7px;
+                        background: url("../../images/top-active.png") repeat-x 0 -7px;
                     }
             .stepFirst2 .geryContent .content .bg{
                 padding-right: 4px;
-                background: url("../images/bg-active.png") repeat-y 100% 0;
+                background: url("../../images/bg-active.png") repeat-y 100% 0;
                 min-height: 100px;
                 border-left: 1px solid #bdbdbd;
                 font-size: 12px;
@@ -768,45 +768,45 @@ input{
                                 }
             .stepFirst2 .geryContent .content .bottom{
                 padding-left: 7px;
-                background: url("../images/bottom-active.png") no-repeat;
+                background: url("../../images/bottom-active.png") no-repeat;
             }
                 .stepFirst2 .geryContent .content .bottom .r{
                     padding-right: 7px;
-                    background: url("../images/bottom-active.png") no-repeat 100% -14px;
+                    background: url("../../images/bottom-active.png") no-repeat 100% -14px;
                 }
                     .stepFirst2 .geryContent .content .bottom .r .c{
                         height: 7px;
-                        background: url("../images/bottom-active.png") repeat-x 0 -7px;
+                        background: url("../../images/bottom-active.png") repeat-x 0 -7px;
                     }
             .stepFirst2 .geryContent .content .disable .top{
                 padding-left: 7px;
-                background: url("../images/top-disable.png") no-repeat;
+                background: url("../../images/top-disable.png") no-repeat;
             }
                 .stepFirst2 .geryContent .content .disable .top .r{
                     padding-right: 7px;
-                    background: url("../images/top-disable.png") no-repeat 100% -14px;
+                    background: url("../../images/top-disable.png") no-repeat 100% -14px;
                 }
                     .stepFirst2 .geryContent .content .disable .top .r .c{
                         height: 7px;
-                        background: url("../images/top-disable.png") repeat-x 0 -7px;
+                        background: url("../../images/top-disable.png") repeat-x 0 -7px;
                     }
             .stepFirst2 .geryContent .content .disable .bg{
                 padding-right: 4px;
-                background: url("../images/bg-disable.png") repeat-y 100% 0;
+                background: url("../../images/bg-disable.png") repeat-y 100% 0;
                 min-height: 100px;
                 border-left: 1px solid #bdbdbd;
             }
             .stepFirst2 .geryContent .content .disable .bottom{
                 padding-left: 7px;
-                background: url("../images/bottom-disable.png") no-repeat;
+                background: url("../../images/bottom-disable.png") no-repeat;
             }
                 .stepFirst2 .geryContent .content .disable .bottom .r{
                     padding-right: 7px;
-                    background: url("../images/bottom-disable.png") no-repeat 100% -14px;
+                    background: url("../../images/bottom-disable.png") no-repeat 100% -14px;
                 }
                 .stepFirst2 .geryContent .content .disable .bottom .r .c{
                     height: 7px;
-                    background: url("../images/bottom-disable.png") repeat-x 0 -7px;
+                    background: url("../../images/bottom-disable.png") repeat-x 0 -7px;
                 }
 
 /*ToolTip*/
@@ -875,7 +875,7 @@ input{
         }
         .stepFourth2 .top .row.upload .browserWrapper .btn{
             display: block;
-            background: url("../images/browse-btn.png") no-repeat;
+            background: url("../../images/browse-btn.png") no-repeat;
             width: 90px;
             height: 24px;
             text-align: center;
@@ -885,7 +885,7 @@ input{
             color: #fffffe;
         }
         .stepFourth2 .top .row.upload .browserWrapper .btn.hover{
-            background: url("../images/browse-btn.png") no-repeat 0 -24px;
+            background: url("../../images/browse-btn.png") no-repeat 0 -24px;
         }
             .stepFourth2 .top .row.upload .browserWrapper .btn a{
                 text-decoration: none;
@@ -915,11 +915,11 @@ input{
             font-size: 12px;
             font-weight: bold;
             color: #fffffe;
-            background: url("../images/addNewItem.png") no-repeat;
+            background: url("../../images/addNewItem.png") no-repeat;
             text-decoration: none;
         }
         .stepFourth2 .inputs .button a:hover.addBtn{
-            background: url("../images/addNewItem.png") no-repeat 0 -24px;
+            background: url("../../images/addNewItem.png") no-repeat 0 -24px;
         }
         .stepFourth2 .top .filter .row.first {
             height: 40px;
@@ -960,7 +960,7 @@ input{
                     top: 12px;
                     width: 10px;
                     height: 10px;
-                    background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                    background: url("../../images/error-icon2.png") no-repeat scroll left center transparent;
                     display: none;
                 }
         .stepFourth2 .top .row input.text, .stepFourth2 .top .row textarea {
@@ -991,7 +991,7 @@ input{
         line-height: 34px;
         border-right: 1px solid #48413e;
         border-left: 1px solid #716865;
-        background: url("../images/table-header.png") repeat-x;
+        background: url("../../images/table-header.png") repeat-x;
         color: #cacaca;
         font-size: 13px;
     }
@@ -1023,7 +1023,7 @@ input{
         .stepFourth2 table.addedItem td a.remove{
             padding-left: 15px;
             display: inline-block;
-            background: url("../images/remove-icon2.png") no-repeat 0 6px;
+            background: url("../../images/remove-icon2.png") no-repeat 0 6px;
         }
         .stepFourth2 input[type=text]{
             background-color: #fff;
@@ -1040,13 +1040,13 @@ input{
 .stepFifth2 .title{
     height: 35px;
     line-height: 35px;
-    background: url("../images/title-grey-bg.png") repeat-x;
+    background: url("../../images/title-grey-bg.png") repeat-x;
     font-size: 16px;
     padding-left: 20px;
     color: #1a1a1a;
 }
     .stepFifth2 .title a.makeChanges{
-        background: url("../images/make-changes.png") no-repeat scroll 0 0 transparent;
+        background: url("../../images/make-changes.png") no-repeat scroll 0 0 transparent;
         color: #C0BEBD;
         display: inline-block;
         float: right;
@@ -1061,7 +1061,7 @@ input{
         cursor: pointer;
     }
     .stepFifth2 .title a:hover.makeChanges{
-        background: url("../images/make-changes.png") no-repeat 0 -22px;
+        background: url("../../images/make-changes.png") no-repeat 0 -22px;
     }
 .stepFifth2 .content{
     padding: 18px 20px;
@@ -1081,7 +1081,7 @@ input{
     padding-bottom: 12px;
 }
     .stepFifth2 .confirmButton a{
-        background: url("../images/confirmButton.png") no-repeat;
+        background: url("../../images/confirmButton.png") no-repeat;
         color: #FFFFFe;
         display: block;
         font-size: 12px;
@@ -1095,7 +1095,7 @@ input{
         text-transform: uppercase;
     }
     .stepFifth2 .confirmButton a:hover{
-        background: url("../images/confirmButton.png") no-repeat 0 -24px;
+        background: url("../../images/confirmButton.png") no-repeat 0 -24px;
     }
 /*proceed*/
 .stepFifth2 .proceed{
@@ -1119,25 +1119,25 @@ input{
             color: #fffffe;
             font-size: 11px;
             font-weight: bold;
-            background: url("../images/yes-no-button.png") no-repeat;
+            background: url("../../images/yes-no-button.png") no-repeat;
             line-height: 18px;
             text-align: center;
             margin: 9px 0 0 9px;
         }
         .stepFifth2 .message a:hover{
-            background: url("../images/yes-no-button.png") no-repeat 0 -18px;
+            background: url("../../images/yes-no-button.png") no-repeat 0 -18px;
         }
 
 /*modal*/
 #modalBackground{
-    background: transparent url("../images/modalwindow-bg.png");
+    background: transparent url("../../images/modalwindow-bg.png");
     position: fixed;
 }
 /*preLoader*/
 #preLoader{
     width: 100px;
     height: 80px;
-    background: url("../images/preLoader.gif") no-repeat;
+    background: url("../../images/preLoader.gif") no-repeat;
     position: fixed;
     top: 200px;
     margin-left: -40px;
@@ -1152,17 +1152,17 @@ input{
 }
     #infoModalMobile .modalTop{
         padding-top: 10px;
-        background: url("../images/info-modal-top.png") no-repeat;
+        background: url("../../images/info-modal-top.png") no-repeat;
     }
         #infoModalMobile .modalTop .modalBottom{
             padding-bottom: 10px;
-            background: url("../images/info-modal-bottom.png") no-repeat 0 100%;
+            background: url("../../images/info-modal-bottom.png") no-repeat 0 100%;
         }
             #infoModalMobile .modalTop .modalBottom .modal-content{
                 border-left: 6px solid #000;
                 border-right: 6px solid #000;
                 padding : 25px 29px 15px;
-                background: url("../images/info-modal-bg.png") repeat-x;
+                background: url("../../images/info-modal-bg.png") repeat-x;
             }
                 #infoModalMobile .modalTop .modalBottom .modal-content .title{
                     font-size: 14px;
@@ -1192,18 +1192,18 @@ input{
                     }
                     #infoModalMobile .modalTop .modalBottom .modal-content .button a.projectOverView{
                         width: 133px;
-                        background: url("../images/project-overview-btn.png") no-repeat;
+                        background: url("../../images/project-overview-btn.png") no-repeat;
                         margin-right: 8px;
                     }
                     #infoModalMobile .modalTop .modalBottom .modal-content .button a:hover.projectOverView{
-                        background: url("../images/project-overview-btn.png") no-repeat 0 -24px;
+                        background: url("../../images/project-overview-btn.png") no-repeat 0 -24px;
                     }
                     #infoModalMobile .modalTop .modalBottom .modal-content .button a.dashboard{
                         width: 91px;
-                        background: url("../images/dashboard-btn.png") no-repeat;
+                        background: url("../../images/dashboard-btn.png") no-repeat;
                     }
                     #infoModalMobile .modalTop .modalBottom .modal-content .button a:hover.dashboard{
-                        background: url("../images/dashboard-btn.png") no-repeat 0 -24px;
+                        background: url("../../images/dashboard-btn.png") no-repeat 0 -24px;
                     }
 
 #infoModalPresentation{
@@ -1212,17 +1212,17 @@ input{
 }
     #infoModalPresentation .modalTop{
         padding-top: 10px;
-        background: url("../images/info-modal-top.png") no-repeat;
+        background: url("../../images/info-modal-top.png") no-repeat;
     }
         #infoModalPresentation .modalTop .modalBottom{
             padding-bottom: 10px;
-            background: url("../images/info-modal-bottom.png") no-repeat 0 100%;
+            background: url("../../images/info-modal-bottom.png") no-repeat 0 100%;
         }
             #infoModalPresentation .modalTop .modalBottom .modal-content{
                 border-left: 6px solid #000;
                 border-right: 6px solid #000;
                 padding : 25px 29px 15px;
-                background: url("../images/info-modal-bg.png") repeat-x;
+                background: url("../../images/info-modal-bg.png") repeat-x;
             }
                 #infoModalPresentation .modalTop .modalBottom .modal-content .title{
                     font-size: 14px;
@@ -1252,18 +1252,18 @@ input{
                     }
                     #infoModalPresentation .modalTop .modalBottom .modal-content .button a.projectOverView{
                         width: 133px;
-                        background: url("../images/project-overview-btn.png") no-repeat;
+                        background: url("../../images/project-overview-btn.png") no-repeat;
                         margin-right: 8px;
                     }
                     #infoModalPresentation .modalTop .modalBottom .modal-content .button a:hover.projectOverView{
-                        background: url("../images/project-overview-btn.png") no-repeat 0 -24px;
+                        background: url("../../images/project-overview-btn.png") no-repeat 0 -24px;
                     }
                     #infoModalPresentation .modalTop .modalBottom .modal-content .button a.dashboard{
                         width: 91px;
-                        background: url("../images/dashboard-btn.png") no-repeat;
+                        background: url("../../images/dashboard-btn.png") no-repeat;
                     }
                     #infoModalPresentation .modalTop .modalBottom .modal-content .button a:hover.dashboard{
-                        background: url("../images/dashboard-btn.png") no-repeat 0 -24px;
+                        background: url("../../images/dashboard-btn.png") no-repeat 0 -24px;
                     }
 
 /*style for mobile*/
@@ -1293,13 +1293,13 @@ input{
             color: #999;
         }
     .stepFirst2 .content .platform .row.cross{
-        background: url("../images/cross-icon.png") no-repeat -13px 0;
+        background: url("../../images/cross-icon.png") no-repeat -13px 0;
     }
     .stepFirst2 .content .platform .row.native{
-        background: url("../images/native-icon.png") no-repeat -13px 0;
+        background: url("../../images/native-icon.png") no-repeat -13px 0;
     }
     .stepFirst2 .content .platform .row.web{
-        background: url("../images/web-icon.png") no-repeat -13px 0;
+        background: url("../../images/web-icon.png") no-repeat -13px 0;
     }
 .mobile p .errorText{
     display: none;
@@ -1369,7 +1369,7 @@ input{
                 position: absolute;
                 right: -15px;
                 top: 6px;
-                background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                background: url("../../images/error-icon2.png") no-repeat scroll left center transparent;
                 width: 10px;
                 height: 10px;
                 display: none;
@@ -1383,11 +1383,11 @@ input{
     margin:  15px 20px;
     border-top: 1px solid #a8abad;
     border-left: 1px solid #a8abad;
-    background: url("../images/bg-active.png") repeat-y scroll 100% 0 transparent;
+    background: url("../../images/bg-active.png") repeat-y scroll 100% 0 transparent;
     position: relative;
 }
     .mobile .stepSecond2 .original .content{
-        background: url("../images/original-bottom.png") repeat-x scroll 0 100% transparent;
+        background: url("../../images/original-bottom.png") repeat-x scroll 0 100% transparent;
         padding-bottom: 5px;
         font-size: 12px;
     }
@@ -1449,7 +1449,7 @@ input{
                         padding-left: 0;
                     }
                 .mobile .stepSecond2 .left .errorIcon {
-                    background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                    background: url("../../images/error-icon2.png") no-repeat scroll left center transparent;
                     display: none;
                     height: 10px;
                     margin-left: 4px;
@@ -1459,7 +1459,7 @@ input{
                     top: 6px;
                 }
                 .mobile .stepSecond2 .inputCnt .left .errorIcon {
-                    background: url("../images/error-icon2.png") no-repeat scroll left center transparent;
+                    background: url("../../images/error-icon2.png") no-repeat scroll left center transparent;
                     display: none;
                     height: 10px;
                     position: absolute;
@@ -1488,7 +1488,7 @@ input{
         position: absolute;
         width: 8px;
         height: 8px;
-        background: url("../images/original-corners.jpg") no-repeat;
+        background: url("../../images/original-corners.jpg") no-repeat;
         top: -1px;
         left: -1px;
     }
@@ -1496,7 +1496,7 @@ input{
         position: absolute;
         width: 8px;
         height: 8px;
-        background: url("../images/original-corners.jpg") no-repeat 0 -8px;
+        background: url("../../images/original-corners.jpg") no-repeat 0 -8px;
         top: -1px;
         right: 0;
     }
@@ -1504,7 +1504,7 @@ input{
         position: absolute;
         width: 8px;
         height: 8px;
-        background: url("../images/original-corners.jpg") no-repeat 0 -16px;
+        background: url("../../images/original-corners.jpg") no-repeat 0 -16px;
         bottom: 0;
         right: 0;
     }
@@ -1512,7 +1512,7 @@ input{
         position: absolute;
         width: 8px;
         height: 8px;
-        background: url("../images/original-corners.jpg") no-repeat 0 -24px;
+        background: url("../../images/original-corners.jpg") no-repeat 0 -24px;
         bottom: 0;
         left: -1px;
     }
@@ -1552,13 +1552,13 @@ input{
             margin: 10px 20px;
         }
         .mobile .stepSecond2 .products .left .formFactor{
-            background: url("../images/form-factor.jpg") no-repeat 50% 0;
+            background: url("../../images/form-factor.jpg") no-repeat 50% 0;
         }
         .mobile .stepSecond2 .products .left .screenOrientation{
-            background: url("../images/screen-orientation.jpg") no-repeat 50% 0;
+            background: url("../../images/screen-orientation.jpg") no-repeat 50% 0;
         }
         .mobile .stepSecond2 .products .left .screenResolution{
-            background: url("../images/screen-resolution.jpg") no-repeat 50% 0;
+            background: url("../../images/screen-resolution.jpg") no-repeat 50% 0;
             width: 310px;
         }
         .mobile .stepSecond2 .products .left label.select2{
@@ -1606,16 +1606,16 @@ input{
     margin-left: 15px;
 }
 .mobile .stepThird2 .left .motion{
-    background: url("../images/motion-icon.jpg") no-repeat 50% 50%;
+    background: url("../../images/motion-icon.jpg") no-repeat 50% 50%;
 }
 .mobile .stepThird2 .left .geolocation{
-    background: url("../images/geoLocation-icon.jpg") no-repeat 50% 50%;
+    background: url("../../images/geoLocation-icon.jpg") no-repeat 50% 50%;
 }
 .mobile .stepThird2 .left .camera{
-    background: url("../images/camera-icon.jpg") no-repeat 50% 50%;
+    background: url("../../images/camera-icon.jpg") no-repeat 50% 50%;
 }
 .mobile .stepThird2 .left .additionalFeature{
-    background: url("../images/additional-feature-icon.jpg") no-repeat 50% 50%;
+    background: url("../../images/additional-feature-icon.jpg") no-repeat 50% 50%;
 }
 .mobile .stepThird2 .left span.desk{
     color: #999999;
@@ -1726,11 +1726,11 @@ div.stepSixth table.forums td .deleteIcon {
     height: 23px;
     margin: 0 5px;
     display: inline-block;
-    background: url(../images/deleteIcon.png) no-repeat left top;
+    background: url(../../images/deleteIcon.png) no-repeat left top;
 }
 
 div.stepSixth table.forums td .deleteIcon:hover {
-    background: url(../images/deleteIcon.png) no-repeat left -23px;
+    background: url(../../images/deleteIcon.png) no-repeat left -23px;
 }
 
 div.stepSixth table.forums td .selectUserCheck {
@@ -1879,11 +1879,11 @@ div.stepSixth table.forums td .selectUserCheck {
     margin: 0 auto;
     margin-top: 136px;
     text-indent: -9999px;
-    background: url(../images/add_tech.png) no-repeat left top;
+    background: url(../../images/add_tech.png) no-repeat left top;
 }
 
 #createForumModal .addUserForm .addItem:hover {
-    background: url(../images/add_tech_hover.png) no-repeat left top;
+    background: url(../../images/add_tech_hover.png) no-repeat left top;
 }
 
 #createForumModal .addUserForm .removeItem {
@@ -1893,11 +1893,11 @@ div.stepSixth table.forums td .selectUserCheck {
     margin: 0 auto;
     margin-top: 5px;
     text-indent: -9999px;
-    background: url(../images/remove_tech.png) no-repeat left top;
+    background: url(../../images/remove_tech.png) no-repeat left top;
 }
 
 #createForumModal .addUserForm .removeItem:hover {
-    background: url(../images/remove_tech_hover.png) no-repeat left top;
+    background: url(../../images/remove_tech_hover.png) no-repeat left top;
 }
 
 #createForumModal .buttonArea .button6 {
@@ -1976,7 +1976,7 @@ div.stepSixth table.forums td .selectUserCheck {
 }
 
 .forumModelContent .row .errorIcon {
-    background: url(../images/error-icon.png) no-repeat left center;
+    background: url(../../images/error-icon.png) no-repeat left center;
     height: 10px;
     width: 10px;
     float: left;
@@ -2027,14 +2027,14 @@ div.stepSixth table.forums td .selectUserCheck {
 }
 
 #createForumConfirmModal .modalContainer {
-    background: url(../images/gray-bg.gif) repeat-x scroll left top #ECECEC;
+    background: url(../../images/gray-bg.gif) repeat-x scroll left top #ECECEC;
     font-family: Tahoma, Arial, Helvetica, sans-serif;
     font-size: 12px;
     padding: 10px 0px 10px 24px;
 }
 
 #createForumConfirmModal .modalContainer dl {
-    background: url("../images/selection-bg.png") no-repeat scroll left top transparent;
+    background: url("../../images/selection-bg.png") no-repeat scroll left top transparent;
     min-height: 100px;
     padding-left: 117px;
 }

@@ -162,7 +162,7 @@ position: absolute;
 		width:360px !important;
 		height:211px !important;
 		border: none !important;
-		background: transparent url(../images/specplan_window.gif) no-repeat top left !important;
+		background: transparent url(../../images/specplan_window.gif) no-repeat top left !important;
 		text-align:center !important;
 		position:absolute;
 		overflow:hidden;
@@ -173,8 +173,8 @@ position: absolute;
 		width: 191px;
 		height: 25px;
 	}
-	.specrev-window a.review-now { background: url(../images/specplan_btn_now.gif) no-repeat top left; }
-	.specrev-window a.review-later { background: url(../images/specplan_btn_l8r.gif) no-repeat top left; }
+	.specrev-window a.review-now { background: url(../../images/specplan_btn_now.gif) no-repeat top left; }
+	.specrev-window a.review-later { background: url(../../images/specplan_btn_l8r.gif) no-repeat top left; }
 	.specrev-window a:hover {
 		background-position: 0 -25px;
 	}
@@ -234,7 +234,7 @@ position: absolute;
     top: 0;
     right: 0;
     display: block;
-    background: url(../images/modal-close.png) left top no-repeat;
+    background: url(../../images/modal-close.png) left top no-repeat;
     width: 30px;
     height: 30px;
     text-indent: -999px;
@@ -247,17 +247,17 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalHeader {
-    background: url(../images/modal-header.png) left top no-repeat;
+    background: url(../../images/modal-header.png) left top no-repeat;
     padding-left: 8px;
 }
 
 #new-modal-window .outLay .modalHeader .modalHeaderRight {
-    background: url(../images/modal-header.png) right -80px no-repeat;
+    background: url(../../images/modal-header.png) right -80px no-repeat;
     padding-right: 8px;
 }
 
 #new-modal-window .outLay .modalHeader .modalHeaderCenter {
-    background: url(../images/modal-header.png) left -40px repeat-x;
+    background: url(../../images/modal-header.png) left -40px repeat-x;
     padding: 10px 0 10px 22px;
     color: #000001;
     font-family: Arial, Helvetica, sans-serif;
@@ -273,17 +273,17 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalFooter {
-    background: url(../images/preloader-corner.png) left -24px no-repeat;
+    background: url(../../images/preloader-corner.png) left -24px no-repeat;
     padding-left: 8px;
 }
 
 #new-modal-window .outLay .modalFooter .modalFooterRight {
-    background: url(../images/preloader-corner.png) right -40px no-repeat;
+    background: url(../../images/preloader-corner.png) right -40px no-repeat;
     padding-right: 8px;
 }
 
 #new-modal-window .outLay .modalFooter .modalFooterCenter {
-    background: url(../images/preloader-corner.png) left -32px repeat-x;
+    background: url(../../images/preloader-corner.png) left -32px repeat-x;
     padding-top: 8px;
 }
 
@@ -291,7 +291,7 @@ position: absolute;
     border: 4px solid #000000;
     border-top-width: 0;
     border-bottom-width: 0;
-    background: #e6e6e6 url(../images/modal-body-normal.png) left top repeat-x;
+    background: #e6e6e6 url(../../images/modal-body-normal.png) left top repeat-x;
     min-width: 352px;
     min-height: 10px;
     padding: 33px 0 0 0;
@@ -305,7 +305,7 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalBody .modalContent {
-    background: url(../images/modal-notice.png) left center no-repeat;
+    background: url(../../images/modal-notice.png) left center no-repeat;
     width: 241px;
     margin: 0 0 24px 19px;
     padding: 0 25px 11px 66px;
@@ -318,16 +318,16 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalBody.confirmation .modalContent {
-    background-image: url(../images/modal-confirmation.png);
+    background-image: url(../../images/modal-confirmation.png);
     width: auto;
 }
 
 #new-modal-window .outLay .modalBody.operationSuccess .modalContent {
-    background-image: url(../images/modal-success.png);
+    background-image: url(../../images/modal-success.png);
 }
 
 #new-modal-window .outLay .modalBody.serverError .modalContent {
-    background-image: url(../images/modal-error.png);
+    background-image: url(../../images/modal-error.png);
 }
 
 #new-modal-window .mailTo {
@@ -337,7 +337,7 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalBody.warning .modalContent {
-    background-image: url(../images/modal-warning.png);
+    background-image: url(../../images/modal-warning.png);
 }
 
 #new-modal-window .outLay .modalBody .modalContent li {
@@ -349,7 +349,7 @@ position: absolute;
 }
 
 #new-modal-window .outLay .modalBody .modalContent.multiple li {
-    background: url(../images/modal-arrow.png) left 4px no-repeat;
+    background: url(../../images/modal-arrow.png) left 4px no-repeat;
     padding-left: 15px;
 }
 

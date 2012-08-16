@@ -180,7 +180,7 @@ position: absolute;
     width:360px !important;
     height:211px !important;
     border: none !important;
-    background: transparent url(../images/specplan_window.gif) no-repeat top left !important;
+    background: transparent url(../../images/specplan_window.gif) no-repeat top left !important;
     text-align:center !important;
     position:absolute;
     overflow:hidden;
@@ -191,8 +191,8 @@ position: absolute;
     width: 191px;
     height: 25px;
 }
-.specrev-window a.review-now { background: url(../images/specplan_btn_now.gif) no-repeat top left; }
-.specrev-window a.review-later { background: url(../images/specplan_btn_l8r.gif) no-repeat top left; }
+.specrev-window a.review-now { background: url(../../images/specplan_btn_now.gif) no-repeat top left; }
+.specrev-window a.review-later { background: url(../../images/specplan_btn_l8r.gif) no-repeat top left; }
 .specrev-window a:hover {
     background-position: 0 -25px;
 }

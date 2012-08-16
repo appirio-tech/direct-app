@@ -70,7 +70,7 @@ BODY#page{
 
 #header{
 	height: 120px;
-	background: url(../../images/header_dash_bg.png) repeat-x;
+	background: url(../../../images/header_dash_bg.png) repeat-x;
 	position: relative;
 }
 
@@ -88,7 +88,7 @@ BODY#page{
 	padding-left: 40px;
 	padding-top: 7px;
 	padding-bottom: 3px;
-	background: url(../../images/project_logo.png) no-repeat left;
+	background: url(../../../images/project_logo.png) no-repeat left;
 }
 
 #header .helloUser{ /* this area will contain the logout, help links*/
@@ -182,23 +182,23 @@ BODY#page{
 	
 	#tabs0 UL LI.on A{
 		color: #262626;
-		background: url(../../images/top_nav_button_left.png) left top no-repeat;
+		background: url(../../../images/top_nav_button_left.png) left top no-repeat;
 	}
 	
 	#tabs0 UL LI.on A:hover {
 	}
 
 	#tabs0 UL LI.on A SPAN{
-		background: url(../../images/top_nav_button.png) right top no-repeat;
+		background: url(../../../images/top_nav_button.png) right top no-repeat;
 	}
 
 	#tabs0 UL LI A:hover{
 		color: #262626;
-		background: url(../../images/top_nav_button_left.png) 0 -21px no-repeat;
+		background: url(../../../images/top_nav_button_left.png) 0 -21px no-repeat;
 	}
 	
 	#tabs0 UL LI A:hover SPAN{
-		background: url(../../images/top_nav_button.png) right -21px no-repeat;
+		background: url(../../../images/top_nav_button.png) right -21px no-repeat;
 	}
 	.scorecardLogo{
 		position: absolute;
@@ -216,7 +216,7 @@ BODY#page{
 			width: 4px; 
 			height: 4px;
 			position: absolute;
-			background: url(../../images/borders3.png);
+			background: url(../../../images/borders3.png);
 		}
 		.tl{background-position: 0 0; top: -1px; left: -1px;}
 		.tr{background-position: -4px 0; top: -1px; right: -1px;}
@@ -334,12 +334,12 @@ BODY#page{
 		font-size: 12px;
 		font-weight: bold;
 		text-decoration: none;
-		background: #000 url(../../images/tabs_left.png) no-repeat left top; /* left corner */
+		background: #000 url(../../../images/tabs_left.png) no-repeat left top; /* left corner */
 		float: left;
 	}
 	
 	#tabs1 UL LI A SPAN{
-		background: url(../../images/tabs_right.png) no-repeat right top; /* right corner */
+		background: url(../../../images/tabs_right.png) no-repeat right top; /* right corner */
 		float: left;
 		height: 20px;
 		width: 100px;
@@ -363,11 +363,11 @@ BODY#page{
 	
 	#tabs1 UL LI.on A{
 		color: #ec1c23;
-		background: url(../../images/tabs_left_on.png) no-repeat left; /* left corner */
+		background: url(../../../images/tabs_left_on.png) no-repeat left; /* left corner */
 	}
 	
 	#tabs1 UL LI.on A SPAN{
-		background: url(../../images/tabs_right_on.png) no-repeat right; /* left corner */
+		background: url(../../../images/tabs_right_on.png) no-repeat right; /* left corner */
 	}
 		
 /* tabs2 ( the right side tabs ) */
@@ -398,12 +398,12 @@ BODY#page{
 		font-size: 12px;
 		font-weight: bold;
 		text-decoration: none;
-		background: #000 url(../../images/tabs2_left.png) no-repeat left top; /* left corner */
+		background: #000 url(../../../images/tabs2_left.png) no-repeat left top; /* left corner */
 		float: left;
 	}
 	
 	#tabs2 UL LI A SPAN{
-		background: url(../../images/tabs2_right.png) no-repeat right top; /* right corner */
+		background: url(../../../images/tabs2_right.png) no-repeat right top; /* right corner */
 		float: left;
 		height: 20px;
 		width: 100px;
@@ -448,7 +448,7 @@ BODY#page{
 
 #tabs3 UL{
 	height: 40px;
-	background: url(../../images/tabs3_bg.png) repeat-x top;
+	background: url(../../../images/tabs3_bg.png) repeat-x top;
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -480,7 +480,7 @@ BODY#page{
 		}
 		
 		#tabs3 UL LI A:hover{
-			background: url(../../images/tabs3_bg_hover.png) repeat-x;
+			background: url(../../../images/tabs3_bg_hover.png) repeat-x;
 		}
 			
 			#tabs3 UL LI A SPAN{
@@ -491,11 +491,11 @@ BODY#page{
 			}
 			
 			#tabs3 UL LI A.first SPAN.left{ /* tabs left corner */
-				background: url(../../images/tabs3_left.png) no-repeat left top;
+				background: url(../../../images/tabs3_left.png) no-repeat left top;
 			}
 			
 			#tabs3 UL LI A.last SPAN.left{ /* tabs right corner */
-				background: url(../../images/tabs3_right.png) no-repeat right top;
+				background: url(../../../images/tabs3_right.png) no-repeat right top;
 			}
 			
 			#tabs3 UL LI A.last SPAN.right{
@@ -506,7 +506,7 @@ BODY#page{
 				height: 30px;
 				padding-top: 10px;
 				text-align: center;
-				background: url(../../images/tabs3_border.png) no-repeat top right;
+				background: url(../../../images/tabs3_border.png) no-repeat top right;
 			}
 			
 			#tabs3 UL LI A.first:hover SPAN.left{
@@ -518,7 +518,7 @@ BODY#page{
 			}
 		
 		#tabs3 UL LI.on A{ /* tabs on the active state */
-			background: transparent url(../../images/tabs3_on.png) repeat-x top !important;
+			background: transparent url(../../../images/tabs3_on.png) repeat-x top !important;
 			color: #FFF;
 			/*font-size: 14px;*/
 			font-family: Verdana, Geneva, sans-serif;
@@ -530,15 +530,15 @@ BODY#page{
 			#tabs3 UL LI.on A SPAN.right{
 				height: 32px;
 				padding-top: 8px;
-				background: url(../../images/tabs3_arrow.png) no-repeat center bottom;
+				background: url(../../../images/tabs3_arrow.png) no-repeat center bottom;
 			}
 			
 			#tabs3 UL LI.on A.first SPAN.left{
-				background: url(../../images/tabs3_left_on.png) no-repeat left;
+				background: url(../../../images/tabs3_left_on.png) no-repeat left;
 			}
 			
 			#tabs3 UL LI.on A.last SPAN.left{
-				background: url(../../images/tabs3_right_on.png) no-repeat right;
+				background: url(../../../images/tabs3_right_on.png) no-repeat right;
 			}
 		
 /* tabs4 */
@@ -552,7 +552,7 @@ BODY#page{
 		margin: 0;
 		padding: 0;
 		height: 21px;
-		background: url(../../images/content_border.png) repeat-x bottom;
+		background: url(../../../images/content_border.png) repeat-x bottom;
 	}
 	
 		.tabs4 UL LI{
@@ -563,7 +563,7 @@ BODY#page{
 		
 			.tabs4 UL LI A{
 				float: left;
-				background: url(../../images/tabs4_left.png) no-repeat left;
+				background: url(../../../images/tabs4_left.png) no-repeat left;
 				font-size: 12px;
 				text-decoration: none;
 				cursor: pointer;
@@ -571,18 +571,18 @@ BODY#page{
 			
 			.tabs4 UL LI A SPAN{
 				float: left;
-				background: url(../../images/tabs4_right.png) no-repeat right;
+				background: url(../../../images/tabs4_right.png) no-repeat right;
 				padding: 3px 10px 3px 10px;
 				cursor: pointer;
 			}
 			
 			.tabs4 UL LI.on A{
-				background: url(../../images/tabs4_left_on.png) no-repeat left;
+				background: url(../../../images/tabs4_left_on.png) no-repeat left;
 				font-weight: bold;
 			}
 			
 			.tabs4 UL LI.on A SPAN{
-				background: url(../../images/tabs4_right_on.png) no-repeat right;
+				background: url(../../../images/tabs4_right_on.png) no-repeat right;
 			}
 			
 .tabs4Content{
@@ -661,7 +661,7 @@ BODY#page{
 -----------------*/
 
 #mainContent{
-	background: #FFF url(../../images/area2_bg2.png) repeat-y right;
+	background: #FFF url(../../../images/area2_bg2.png) repeat-y right;
 	width: 100%;
 	overflow: hidden;
 	color: #333;
@@ -686,7 +686,7 @@ BODY#page{
 	}
 	
 	#area1 .currentPage A.home{
-		background: url(../../images/home_ico.png) no-repeat left 2px;
+		background: url(../../../images/home_ico.png) no-repeat left 2px;
 		padding-left: 15px;
 	}
 	
@@ -706,23 +706,23 @@ BODY#page{
 	font-family: Geneva, Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	font-weight: normal;
-	background: url(../../images/area_title.png) no-repeat left center;
+	background: url(../../../images/area_title.png) no-repeat left center;
 	padding-left: 43px;
 	padding-bottom: 10px;
 	padding-top: 5px;
 	font-weight: bold;
 }
-	#area1.scorecard H2.title{ background-image: url(../../images/area_title2.png);}
+	#area1.scorecard H2.title{ background-image: url(../../../images/area_title2.png);}
 	
-	#area1 H2.title.details{background-image: url(../../images/area_title3.png);}
-	#area1 H2.title.edit{background-image: url(../../images/area_title4.png);}
+	#area1 H2.title.details{background-image: url(../../../images/area_title3.png);}
+	#area1 H2.title.edit{background-image: url(../../../images/area_title4.png);}
 
 #area1 H2.contestTitle{
-	background: url(../../images/contest_ico.png) no-repeat left center;
+	background: url(../../../images/contest_ico.png) no-repeat left center;
 }
 
 #area1 H2.notificationTitle{
-	background: url(../../images/notification_ico.png) no-repeat left center;
+	background: url(../../../images/notification_ico.png) no-repeat left center;
 }
 
 
@@ -737,7 +737,7 @@ BODY#page{
 /* the coPilot DIV */
 .copilotArea {
 	
-	background: url(../../images/box_top2.png) no-repeat top;
+	background: url(../../../images/box_top2.png) no-repeat top;
 	padding: 15px 0 15px 9px;
 	position:relative;
 	overflow: hidden;
@@ -745,13 +745,13 @@ BODY#page{
 }
 
 .coPilotTitle {
-	background: url(../../images/title2_left.png) no-repeat left;
+	background: url(../../../images/title2_left.png) no-repeat left;
 	width: 210px;
 	margin: 0 auto;
 }
 
 	.coPilotTitle .titleInner {
-		background: url(../../images/title2_right.png) no-repeat right;
+		background: url(../../../images/title2_right.png) no-repeat right;
 		height: 35px;
 	}
 
@@ -764,7 +764,7 @@ BODY#page{
 		font-family: Verdana, Geneva, sans-serif;
 		font-weight: normal;
 		padding-left: 11px;
-		background: url(../../images/help_ico2.png) no-repeat right;
+		background: url(../../../images/help_ico2.png) no-repeat right;
 		text-decoration: none;
 	}
 
@@ -820,7 +820,7 @@ BODY#page{
 }
 
 .box{
-	background: url(../../images/box_top2.png) no-repeat top;
+	background: url(../../../images/box_top2.png) no-repeat top;
 	padding: 15px 0 15px 9px;
 	position: static;
 }
@@ -828,7 +828,7 @@ BODY#page{
 .box H2{ /*My Projects title*/
 	font-size: 20px;
 	font-family: "Myriad pro", Arial, Helvetica, sans-serif;
-	background: transparent url(../../images/my_project_ico.png) no-repeat left;
+	background: transparent url(../../../images/my_project_ico.png) no-repeat left;
 	margin: 0 0 10px 0;
 	padding-left: 41px;
 	color: #FFF;
@@ -847,7 +847,7 @@ BODY#page{
 }
 
 .box .inputSelect{ /* the input/select container*/
-	background: url(../../images/select_input_bg.png) no-repeat;
+	background: url(../../../images/select_input_bg.png) no-repeat;
 	width: 252px;
 	height: 26px;
 	padding-left: 10px;
@@ -865,7 +865,7 @@ BODY#page{
 .box .inputSelect A.selectIco{ /* the drop down ico */
 	display: block;
 	position: absolute;
-	background: url(../../images/select_input_ico.png) no-repeat;
+	background: url(../../../images/select_input_ico.png) no-repeat;
 	width: 24px;
 	height: 23px;
 	top: 3px;
@@ -912,13 +912,13 @@ BODY#page{
 /*-----------------*/
 
 .box .contestsList{ /* the container of the contests list */
-	background: url(../../images/contest_bottom.png) no-repeat bottom left;
+	background: url(../../../images/contest_bottom.png) no-repeat bottom left;
 	padding-bottom: 4px;
 	width: 253px;
 }
 
 	.box .contestsList .caption{
-		background: url(../../images/contests_caption.png) no-repeat;
+		background: url(../../../images/contests_caption.png) no-repeat;
 		width: 253px;
 		height: 28px;
 		font-size: 12px;
@@ -933,7 +933,7 @@ BODY#page{
 	
 	
 .contestsContent{
-	background: url(../../images/contest_list_bg.png) repeat-y;
+	background: url(../../../images/contest_list_bg.png) repeat-y;
 	padding-left: 1px;
 	padding-right: 1px;
 	width: 250px;
@@ -987,23 +987,23 @@ BODY#page{
 }
 
 .contestsContent .draft{
-	background: url(../../images/draft_ico.png) no-repeat;
+	background: url(../../../images/draft_ico.png) no-repeat;
 }
 
 .contestsContent .running{
-	background: url(../../images/running_ico.png) no-repeat;
+	background: url(../../../images/running_ico.png) no-repeat;
 }
 
 .contestsContent .milstone{
-	background: url(../../images/milestone_ico.png) no-repeat;
+	background: url(../../../images/milestone_ico.png) no-repeat;
 }
 
 .contestsContent .awarding{
-	background: url(../../images/awarding_ico.png) no-repeat;
+	background: url(../../../images/awarding_ico.png) no-repeat;
 }
 
 .contestsContent .failedReview{
-	background: url(../../images/milestone_ico.png) no-repeat;
+	background: url(../../../images/milestone_ico.png) no-repeat;
 }
 
 .contestsContent .highlight TD{
@@ -1030,119 +1030,119 @@ BODY#page{
 }
 
 .contestsContent .wType{
-	background: url(../../images/w_type.png) no-repeat;
+	background: url(../../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .pType{
-	background: url(../../images/p_type.png) no-repeat;
+	background: url(../../../images/p_type.png) no-repeat;
 }
 
 .contestsContent .lType{
-	background: url(../../images/l_type.png) no-repeat;
+	background: url(../../../images/l_type.png) no-repeat;
 }
 
 .contestsContent .sType{
-	background: url(../../images/s_type.png) no-repeat;
+	background: url(../../../images/s_type.png) no-repeat;
 }
 
 .contestsContent .WType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .PType{
-	background: url(../images/p_type.png) no-repeat;
+	background: url(../../images/p_type.png) no-repeat;
 }
 
 .contestsContent .LType{
-	background: url(../images/l_type.png) no-repeat;
+	background: url(../../images/l_type.png) no-repeat;
 }
 
 .contestsContent .SType{
-	background: url(../images/s_type.png) no-repeat;
+	background: url(../../images/s_type.png) no-repeat;
 }
 
 .contestsContent .WdType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .IType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .PrType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .AdType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .FType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .BType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .MdType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .OType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .WdType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .SpType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .ArType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .CdType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .CvType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .AsType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .TType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .TsType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .RbType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .RcType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .AgType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .MType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 .contestsContent .CpType{
-	background: url(../images/w_type.png) no-repeat;
+	background: url(../../images/w_type.png) no-repeat;
 }
 
 P.projectArchive{
@@ -1165,7 +1165,7 @@ P.projectArchive{
 	
 
 .box .title2{ /* links title */
-	background: url(../../images/title2_left.png) no-repeat left;
+	background: url(../../../images/title2_left.png) no-repeat left;
 	width: 210px;
 	margin: 0 auto;
 }
@@ -1174,18 +1174,18 @@ P.projectArchive{
 }
 .project-box .title2{ /* links title */
 
-	background: url(../../images/title2_left.png) no-repeat left;
+	background: url(../../../images/title2_left.png) no-repeat left;
 	width: 210px;
 	margin: 0 auto;
 }
 
 	.box .title2 .titleInner{ /* links title */
-		background: url(../../images/title2_right.png) no-repeat right;
+		background: url(../../../images/title2_right.png) no-repeat right;
 		height: 35px;
 	}
 	
 	.project-box .title2 .titleInner{ /* links title */
-		background: url(../../images/title2_right.png) no-repeat right;
+		background: url(../../../images/title2_right.png) no-repeat right;
 		height: 35px;
 	}
 
@@ -1223,7 +1223,7 @@ P.projectArchive{
 		font-family: Verdana, Geneva, sans-serif;
 		font-size: 13px;
 		text-decoration: none;
-		background: transparent url(../../images/li_arrow.png) no-repeat left;
+		background: transparent url(../../../images/li_arrow.png) no-repeat left;
 		padding-left: 15px;
 	}
 	
@@ -1250,7 +1250,7 @@ P.projectArchive{
 		font-family: Verdana, Geneva, sans-serif;
 		font-size: 13px;
 		text-decoration: none;
-		background: transparent url(../../images/li_arrow.png) no-repeat left;
+		background: transparent url(../../../images/li_arrow.png) no-repeat left;
 		padding-left: 15px;
 	}
 	
@@ -1268,7 +1268,7 @@ P.projectArchive{
 
 table.fc-header { /* calendar header */
 	width: 100%;
-	background: #37302e url(../../images/calendar_header.png) repeat-x left top;
+	background: #37302e url(../../../images/calendar_header.png) repeat-x left top;
 	height: 33px !important;
 	color: #FFF;
 	font-size: 14px !important;
@@ -1290,31 +1290,31 @@ table.fc-header { /* calendar header */
 	}
 
 	.fc-event a.launch{ /* style for contest launch,spec post, review complete and review pending */
-		background-image: url(../../images/event_launch_ico.png);
+		background-image: url(../../../images/event_launch_ico.png);
 		background-color: transparent;
 		color: #ff0000;
 	}
 	
 	.fc-event a.task{ /* style for Task */
-		background-image: url(../../images/event_task_ico.png);
+		background-image: url(../../../images/event_task_ico.png);
 		background-color: transparent;
 		color: #0497ee;
 	}
 	
 	.fc-event a.forum{ /* style for forum post */
-		background-image: url(../../images/event_forum_ico.png);
+		background-image: url(../../../images/event_forum_ico.png);
 		background-color: transparent;
 		color: #17c000;
 	}
 	
 	.fc-event a.milestone{ /* style for milstone feed back */
-		background-image: url(../../images/event_milestone_ico.png);
+		background-image: url(../../../images/event_milestone_ico.png);
 		background-color: transparent;
 		color: #bdbdbd;
 	}
 	
 	.fc-event a.winner{ /* style for winner announcement */
-		background-image: url(../../images/event_winner_ico.png);
+		background-image: url(../../../images/event_winner_ico.png);
 		background-color: transparent;
 		color: #ff6600;
 	}
@@ -1350,97 +1350,97 @@ DIV.notif-div{
 		display: block;
 		width: 5px;
 		height: 7px;
-		background: url(../../images/popup_arrow.png) no-repeat;
+		background: url(../../../images/popup_arrow.png) no-repeat;
 	}
 	
 	.tooltipContainer .tooltipLeft{
 		color: #000;
-		background: #FFF url(../../images/tooltip_border.png) repeat-y left;
+		background: #FFF url(../../../images/tooltip_border.png) repeat-y left;
 	}
 	
 	.tooltipContainer .tooltipRight{
-		background: url(../../images/tooltip_border.png) repeat-y right;
+		background: url(../../../images/tooltip_border.png) repeat-y right;
 	}
 	
 	.tooltipContainer .tooltipBottom{
-		background: url(../../images/tooltip_border.png) repeat-x bottom;
+		background: url(../../../images/tooltip_border.png) repeat-x bottom;
 	}
 	
 	.tooltipContainer .tooltipBottomLeft{
-		background: url(../../images/tooltip_bottom_left.png) no-repeat bottom left;
+		background: url(../../../images/tooltip_bottom_left.png) no-repeat bottom left;
 	}
 	
 	.tooltipContainer .tooltipBottomRight{
-		background: url(../../images/tooltip_bottom_right.png) no-repeat bottom right;
+		background: url(../../../images/tooltip_bottom_right.png) no-repeat bottom right;
 	}
 
 /* red caption*/
 .tooltipCaption{
-	background: url(../../images/tooltip_bg.png) repeat-x;
+	background: url(../../../images/tooltip_bg.png) repeat-x;
 }
 
 .tooltipCaptionLeft{
-	background: url(../../images/tooltip_caption_left.png) no-repeat left;
+	background: url(../../../images/tooltip_caption_left.png) no-repeat left;
 }
 
 .tooltipCaptionRight{
-	background: url(../../images/tooltip_caption_right.png) no-repeat right;
+	background: url(../../../images/tooltip_caption_right.png) no-repeat right;
 }
 
 /* Blue Caption*/
 
 .tooltipTask .tooltipCaption{
-	background: url(../../images/tooltip_bg_task.png) repeat-x;
+	background: url(../../../images/tooltip_bg_task.png) repeat-x;
 }
 
 .tooltipTask .tooltipCaptionLeft{
-	background: url(../../images/tooltip_caption_left_task.png) no-repeat left;
+	background: url(../../../images/tooltip_caption_left_task.png) no-repeat left;
 }
 
 .tooltipTask .tooltipCaptionRight{
-	background: url(../../images/tooltip_caption_right_task.png) no-repeat right;
+	background: url(../../../images/tooltip_caption_right_task.png) no-repeat right;
 }
 
 /* Green Caption */
 
 .tooltipForum .tooltipCaption{
-	background: url(../../images/tooltip_bg_forum.png) repeat-x;
+	background: url(../../../images/tooltip_bg_forum.png) repeat-x;
 }
 
 .tooltipForum .tooltipCaptionLeft{
-	background: url(../../images/tooltip_caption_left_forum.png) no-repeat left;
+	background: url(../../../images/tooltip_caption_left_forum.png) no-repeat left;
 }
 
 .tooltipForum .tooltipCaptionRight{
-	background: url(../../images/tooltip_caption_right_forum.png) no-repeat right;
+	background: url(../../../images/tooltip_caption_right_forum.png) no-repeat right;
 }
 
 /* Orange Caption */
 
 .tooltipWinner .tooltipCaption{
-	background: url(../../images/tooltip_bg_winner.png) repeat-x;
+	background: url(../../../images/tooltip_bg_winner.png) repeat-x;
 }
 
 .tooltipWinner .tooltipCaptionLeft{
-	background: url(../../images/tooltip_caption_left_winner.png) no-repeat left;
+	background: url(../../../images/tooltip_caption_left_winner.png) no-repeat left;
 }
 
 .tooltipWinner .tooltipCaptionRight{
-	background: url(../../images/tooltip_caption_right_winner.png) no-repeat right;
+	background: url(../../../images/tooltip_caption_right_winner.png) no-repeat right;
 }
 
 /* Gray Caption */
 
 .tooltipMilestone .tooltipCaption{
-	background: url(../../images/tooltip_bg_milestone.png) repeat-x;
+	background: url(../../../images/tooltip_bg_milestone.png) repeat-x;
 }
 
 .tooltipMilestone .tooltipCaptionLeft{
-	background: url(../../images/tooltip_caption_left_milestone.png) no-repeat left;
+	background: url(../../../images/tooltip_caption_left_milestone.png) no-repeat left;
 }
 
 .tooltipMilestone .tooltipCaptionRight{
-	background: url(../../images/tooltip_caption_right_milestone.png) no-repeat right;
+	background: url(../../../images/tooltip_caption_right_milestone.png) no-repeat right;
 }
 
 
@@ -1462,7 +1462,7 @@ DIV.notif-div{
 	position: absolute;
 	width: 6px;
 	height: 8px;
-	background: url(../../images/popup_close_ico.png) no-repeat;
+	background: url(../../../images/popup_close_ico.png) no-repeat;
 	right: 5px;
 	top: 5px;
 	display: block;
@@ -1523,19 +1523,19 @@ DIV.notif-div{
 /* it's the container that containt the tabs on the contests page */
 
 .container2{
-	background: url(../../images/content_border.png) repeat-x top;
+	background: url(../../../images/content_border.png) repeat-x top;
 }
 
 	.container2Left{
-		background: url(../../images/content_border.png) repeat-y left;
+		background: url(../../../images/content_border.png) repeat-y left;
 	}
 	
 	.container2Right{
-		background: url(../../images/content_border.png) repeat-y right;
+		background: url(../../../images/content_border.png) repeat-y right;
 	}
 	
 	.container2Bottom{
-		background: url(../../images/container2_bottom.png) repeat-x bottom;
+		background: url(../../../images/container2_bottom.png) repeat-x bottom;
 	}
 	
 	.container2BottomClear{
@@ -1543,11 +1543,11 @@ DIV.notif-div{
 	}
 	
 	.container2BottomLeft{
-		background: url(../../images/container2_bottom_left.png) no-repeat bottom left;
+		background: url(../../../images/container2_bottom_left.png) no-repeat bottom left;
 	}
 	
 	.container2BottomRight{
-		background: url(../../images/container2_bottom_left.png) no-repeat bottom right;
+		background: url(../../../images/container2_bottom_left.png) no-repeat bottom right;
 	}
 	
 	.container2Content{
@@ -1583,16 +1583,16 @@ DIV.notif-div{
 	}
 
 	.panel A.print{
-		background: url(../../images/print_ico.png) no-repeat 5px 0;
+		background: url(../../../images/print_ico.png) no-repeat 5px 0;
 		font-weight: bold;
 	}
 	
 	.panel A.exportExcel{
-		background: url(../../images/export_excel.png) no-repeat 5px 0;
+		background: url(../../../images/export_excel.png) no-repeat 5px 0;
 	}
 	
 	.panel A.exportPdf{
-		background: url(../../images/export_pdf.png) no-repeat 5px 0;
+		background: url(../../../images/export_pdf.png) no-repeat 5px 0;
 	}
 	
 	.panel A:hover{
@@ -1600,15 +1600,15 @@ DIV.notif-div{
 	}
 	
 	.panel A.addUser{ /* add user/group icon */
-		background: url(../../images/add_user_ico.png) no-repeat 5px 0;
+		background: url(../../../images/add_user_ico.png) no-repeat 5px 0;
 	}
 	
 	.panel A.editUser{ /* edit user/group icon */
-		background: url(../../images/edit_user_ico.png) no-repeat 5px 0;
+		background: url(../../../images/edit_user_ico.png) no-repeat 5px 0;
 	}
 	
 	.panel A.deleteUser{ /* delete user/group icon */
-		background: url(../../images/delete_user_ico.png) no-repeat 5px 0;
+		background: url(../../../images/delete_user_ico.png) no-repeat 5px 0;
 	}
 
 .panel2{
@@ -1731,35 +1731,35 @@ DIV.notif-div{
 }
 
 	.message .messageTop{ /* top border */
-		background: url(../../images/message_border.png) repeat-x top;
+		background: url(../../../images/message_border.png) repeat-x top;
 	}
 	
 	.message .messageBottom{ /* bottom border */
-		background: url(../../images/message_border.png) repeat-x bottom;
+		background: url(../../../images/message_border.png) repeat-x bottom;
 	}
 	
 	.message .messageLeft{ /* left border */
-		background: url(../../images/message_border.png) repeat-y left;
+		background: url(../../../images/message_border.png) repeat-y left;
 	}
 	
 	.message .messageRight{ /* right border */
-		background: url(../../images/message_border.png) repeat-y right;
+		background: url(../../../images/message_border.png) repeat-y right;
 	}
 	
 	.message .messageTopLeft{ /* top left corner */
-		background: url(../../images/white_pixel.png) no-repeat top left;
+		background: url(../../../images/white_pixel.png) no-repeat top left;
 	}
 	
 	.message .messageTopRight{ /* top right corner */
-		background: url(../../images/white_pixel.png) no-repeat top right;
+		background: url(../../../images/white_pixel.png) no-repeat top right;
 	}
 	
 	.message .messageBottomLeft{ /* bottom left corner */
-		background: url(../../images/white_pixel.png) no-repeat bottom left;
+		background: url(../../../images/white_pixel.png) no-repeat bottom left;
 	}
 	
 	.message .messageBottomRight{ /* bottom right corner */
-		background: url(../../images/white_pixel.png) no-repeat bottom right;
+		background: url(../../../images/white_pixel.png) no-repeat bottom right;
 	}
 
 	.message .messageInner{
@@ -1834,7 +1834,7 @@ DIV.notif-div{
 #TB_closeWindowButton, #TB_closeWindowButtonSingle{
 	width: 15px;
 	height: 15px;
-	background: url(../../images/close_ico.png) no-repeat;
+	background: url(../../../images/close_ico.png) no-repeat;
 	display: block;
 }
 
@@ -1867,18 +1867,18 @@ TABLE.notif{
 	}
 	
 	TABLE.notif THEAD TR{
-		background: url(../../images/project_th_bg.png) repeat-x top;
+		background: url(../../../images/project_th_bg.png) repeat-x top;
 		height: 25px;
 	}
 
 	TABLE.notif THEAD SPAN.left{
 		display: block;
-		background: url(../../images/th_left_bg.png) no-repeat left top;
+		background: url(../../../images/th_left_bg.png) no-repeat left top;
 	}
 	
 	TABLE.notif THEAD SPAN.right{
 		display: block;
-		background: url(../../images/th_right_bg.png) no-repeat right top;
+		background: url(../../../images/th_right_bg.png) no-repeat right top;
 		height: 22px;
 		padding-top: 3px;
 		padding-left: 16px;
@@ -1916,7 +1916,7 @@ TABLE.project{
 	}
 	
 	TABLE.project THEAD TR{
-		background: url(../../images/project_th_bg.png) repeat-x top;
+		background: url(../../../images/project_th_bg.png) repeat-x top;
 		height: 25px;
 	}
 	
@@ -1926,12 +1926,12 @@ TABLE.project{
 	
 	TABLE.project THEAD SPAN.left{
 		display: block;
-		background: url(../../images/th_left_bg.png) no-repeat left top;
+		background: url(../../../images/th_left_bg.png) no-repeat left top;
 	}
 	
 	TABLE.project THEAD SPAN.right{
 		display: block;
-		background: url(../../images/th_right_bg.png) no-repeat right top;
+		background: url(../../../images/th_right_bg.png) no-repeat right top;
 		height: 22px;
 		padding-top: 3px;
 		padding-left: 16px;
@@ -1964,12 +1964,12 @@ TABLE.project{
 			height: 22px;
 			padding-top: 3px;
 			margin-left: -1px;
-			background: url(../../images/th_left_bg.png) no-repeat left top;
+			background: url(../../../images/th_left_bg.png) no-repeat left top;
 		}
 		table.project.scorecard th.last{
 			border-right: none;
 			display: block;
-			background: url(../../images/th_right_bg.png) no-repeat right top;
+			background: url(../../../images/th_right_bg.png) no-repeat right top;
 			height: 22px;
 			padding-top: 3px;
 		}*/
@@ -2038,32 +2038,32 @@ TABLE.project{
 	
 	TABLE.project SPAN.reviewPending{
 		color: #ff0009;
-		background: url(../../images/review_pending_ico.png) no-repeat left;
+		background: url(../../../images/review_pending_ico.png) no-repeat left;
 	}
 	
 	TABLE.project SPAN.forumPost{
 		color: #17c000;
-		background: transparent url(../../images/forum_post_ico.png) no-repeat left;
+		background: transparent url(../../../images/forum_post_ico.png) no-repeat left;
 	}
 	
 	TABLE.project SPAN.task{
 		color: #0497ee;
-		background: transparent url(../../images/task_ico.png) no-repeat left;
+		background: transparent url(../../../images/task_ico.png) no-repeat left;
 	}
 	
 	TABLE.project SPAN.contestLaunch{
 		color: #ff0009;
-		background: url(../../images/contest_launch_ico.png) no-repeat left;
+		background: url(../../../images/contest_launch_ico.png) no-repeat left;
 	}
 	
 	TABLE.project SPAN.reviewComplete{
 		color: #ff0009;
-		background: url(../../images/review_complete_ico.png) no-repeat left;
+		background: url(../../../images/review_complete_ico.png) no-repeat left;
 	}
 	
 	TABLE.project SPAN.specPosted{
 		color: #ff0009;
-		background: url(../../images/spec_posted_ico.png) no-repeat left;
+		background: url(../../../images/spec_posted_ico.png) no-repeat left;
 	}
 
 .activity{
@@ -2081,15 +2081,15 @@ TABLE.project{
 	}
 	
 .tableFooter{
-	background: url(../../images/table_footer.png) repeat-x;
+	background: url(../../../images/table_footer.png) repeat-x;
 }
 
 .tableFooterLeft{
-	background: url(../../images/table_footer_left.png) no-repeat left;
+	background: url(../../../images/table_footer_left.png) no-repeat left;
 }
 
 .tableFooterRight{
-	background: url(../../images/table_footer_right.png) no-repeat right;
+	background: url(../../../images/table_footer_right.png) no-repeat right;
 }
 
 .tableFooterInner{
@@ -2099,7 +2099,7 @@ TABLE.project{
 
 A.viewMore{
 	float: right;
-	background: url(../../images/view_more_ico.png) no-repeat right top;
+	background: url(../../../images/view_more_ico.png) no-repeat right top;
 	font-size: 10px;
 	text-decoration: none;
 	margin-right: 10px;
@@ -2124,7 +2124,7 @@ TABLE.projectStats{
 		color: #FFF;
 		font-size: 11px;
 		height: 33px;
-		background: #37302e url(../../images/calendar_header.png) repeat-x left top;
+		background: #37302e url(../../../images/calendar_header.png) repeat-x left top;
 	}
 	
 	TABLE.projectStats TH.first{
@@ -2196,22 +2196,22 @@ TABLE.contests TD{
 
 	TABLE.contests TD SPAN.draft{ 
 		color: #00c600;
-		background: url(../../images/draft_ico.png) no-repeat left;
+		background: url(../../../images/draft_ico.png) no-repeat left;
 	}
 	
 	TABLE.contests TD SPAN.running{ 
 		color: #177de3;
-		background: url(../../images/running_ico.png) no-repeat left;
+		background: url(../../../images/running_ico.png) no-repeat left;
 	}
 	
 	TABLE.contests TD SPAN.awarding{ 
 		color: #ffb000;
-		background: url(../../images/awarding_ico.png) no-repeat left;
+		background: url(../../../images/awarding_ico.png) no-repeat left;
 	}
 	
 	TABLE.contests TD SPAN.milestone{ 
 		color: #dc0000;
-		background: url(../../images/milestone_ico.png) no-repeat left;
+		background: url(../../../images/milestone_ico.png) no-repeat left;
 	}
 
 TABLE.contests A.button{
@@ -2230,11 +2230,11 @@ TABLE.contests A.group{ /* group name link */
 }
 
 TABLE.contests A.expand{
-	background: url(../../images/expand_ico.png) no-repeat left; /* the expand icon */
+	background: url(../../../images/expand_ico.png) no-repeat left; /* the expand icon */
 }
 
 TABLE.contests A.collapse{
-	background: url(../../images/collapse_ico.png) no-repeat left; /* the collapse icon */
+	background: url(../../../images/collapse_ico.png) no-repeat left; /* the collapse icon */
 }
 
 TABLE.contests TBODY.checkPermissions LABEL{
@@ -2307,11 +2307,11 @@ TABLE.notifications A.subgroup{ /* group name link */
 }
 
 TABLE.notifications A.expand{
-	background: url(../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+	background: url(../../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 }
 
 TABLE.notifications A.collapse{
-	background: url(../../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+	background: url(../../../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
 }
 
 TABLE.notifications .group{
@@ -2322,12 +2322,12 @@ TABLE.notifications .group{
 
 TABLE.notifications .expand{
 	text-decoration: none;
-	background: url(../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+	background: url(../../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 }
 
 TABLE.notifications .collapse{
 	text-decoration: none;
-	background: url(../../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
+	background: url(../../../images/notification_collapse_ico.png) no-repeat left; /* the collapse icon */
 }
 
 TABLE.notifications TH.permCol{
@@ -2361,21 +2361,21 @@ TABLE.notifications TH.permCol2{
 	}
 	
 	.pagination A.prev{
-		background: url(../../images/page_prev.png) no-repeat left;
+		background: url(../../../images/page_prev.png) no-repeat left;
 		padding-left: 10px;
 	}
 	
 	.pagination A.next{
-		background: url(../../images/page_next.png) no-repeat right;
+		background: url(../../../images/page_next.png) no-repeat right;
 		padding-right: 10px;
 	}
 	
 	.pagination SPAN.prev{
-		background: url(../../images/page_prev_nactive.png) no-repeat left;
+		background: url(../../../images/page_prev_nactive.png) no-repeat left;
 		padding-left: 10px;
 	}
 	.pagination SPAN.next{
-        background: url(../../images/page_next_nactive.png) no-repeat right;
+        background: url(../../../images/page_next_nactive.png) no-repeat right;
         padding-right: 10px;
     }
 	 
@@ -2538,18 +2538,18 @@ A{
 }
 
 .warning-box{display:block; width:100%; margin: 0 0 5px 0;  }  
-					.warning-box-top{ background: url(../../images/warningbox-tl.png) left top no-repeat; }
-						.warning-box-top-outside { background: url(../../images/warningbox-tr.png) right top no-repeat;	 }
+					.warning-box-top{ background: url(../../../images/warningbox-tl.png) left top no-repeat; }
+						.warning-box-top-outside { background: url(../../../images/warningbox-tr.png) right top no-repeat;	 }
 						.warning-box-top-inside {
-							background: url(../../images/warningbox-tc.png) left top repeat-x;
+							background: url(../../../images/warningbox-tc.png) left top repeat-x;
 							height:2px;
 							margin: 0 2px;
 						} 
 						
-					.warning-box-mid{ background: url(../../images/warningbox-ml.png) left top repeat-y; }
-						.warning-box-mid-outside { background: url(../../images/warningbox-mr.png) right top repeat-y; }
+					.warning-box-mid{ background: url(../../../images/warningbox-ml.png) left top repeat-y; }
+						.warning-box-mid-outside { background: url(../../../images/warningbox-mr.png) right top repeat-y; }
 						.warning-box-mid-inside {
-							background: url(../../images/warningbox-mc.png) left top repeat; 
+							background: url(../../../images/warningbox-mc.png) left top repeat; 
 							margin: 0 2px; 
 							color: #000001; 
 							overflow:hidden;
@@ -2557,18 +2557,18 @@ A{
 							font-size: 12px; 
 						}
 						   
-					.warning-box-bottom{  background: url(../../images/warningbox-bl.png) left bottom no-repeat; }
-					 	.warning-box-bottom-outside { background: url(../../images/warningbox-br.png) right bottom no-repeat; }
+					.warning-box-bottom{  background: url(../../../images/warningbox-bl.png) left bottom no-repeat; }
+					 	.warning-box-bottom-outside { background: url(../../../images/warningbox-br.png) right bottom no-repeat; }
 						.warning-box-bottom-inside {
-							background: url(../../images/warningbox-bc.png) left bottom repeat-x;
+							background: url(../../../images/warningbox-bc.png) left bottom repeat-x;
 							height:2px;
 							margin: 0 2px;
 						}
 					
 					.warning-box-content{ padding: 2px 0 0 0; line-height: 17px;  } 
 					.warning-box-content span{ color: #a20000; font-weight: bold; }
-					.error{ padding: 2px 0 0 20px!important; background: url(../../images/ico-error.png) left top no-repeat;  }
-					.success{ padding: 2px 0 0 20px!important; background: url(../../images/ico-success.png) left top no-repeat;  }
+					.error{ padding: 2px 0 0 20px!important; background: url(../../../images/ico-error.png) left top no-repeat;  }
+					.success{ padding: 2px 0 0 20px!important; background: url(../../../images/ico-success.png) left top no-repeat;  }
 			
 			.submission-gallery-row{ width: 100%; margin: 10px 0; border-bottom: 1px solid #ebebeb; height:200px; }
 			.submission-gallery-row.no-border{ border: none;  }
@@ -2581,9 +2581,9 @@ A{
 					.submission-button ul li{ float:left; list-style-type: none; }
 					.submission-button a{ display: block; height: 17px; width: 17px; margin: 0 5px; position:relative; z-index: 4; }
 						.submission-button a:hover{ background-position: left bottom;}
-						.submission-button .zoom{ background: url(../../images/ico-zoom.png) left top no-repeat;   } 
-						.submission-button .flag{ background: url(../../images/ico-flag.png) left top no-repeat;   } 
-						.submission-button .cancel{ background: url(../../images/ico-cancel.png) left top no-repeat;   } 
+						.submission-button .zoom{ background: url(../../../images/ico-zoom.png) left top no-repeat;   } 
+						.submission-button .flag{ background: url(../../../images/ico-flag.png) left top no-repeat;   } 
+						.submission-button .cancel{ background: url(../../../images/ico-cancel.png) left top no-repeat;   } 
 						.pagination-wrapper{ display:block; width: 100%; margin: 20px 0; overflow:hidden; padding: 0 0 10px 0; border-bottom: 1px solid #ebebeb; }
 			.pagination { float: right; margin: 5px 0 0 0; } 
 			.pagination ul li { display: inline; margin: 0; list-style-type: none; float:left;}
@@ -2598,15 +2598,15 @@ A{
 			}
 			.pagination ul li a:hover {	text-decoration: none;} 
 			.pagination ul li.current a { font-weight: bold!important; }
-			.pagination ul li.next a{ padding: 0 10px 0 4px; background: url(../../images/arrow-pagination-next.png) right top no-repeat; }
+			.pagination ul li.next a{ padding: 0 10px 0 4px; background: url(../../../images/arrow-pagination-next.png) right top no-repeat; }
 			.pagination ul li.next a:hover{ background-position: right bottom; } 
-			.pagination ul li.prev a{ padding: 0 4px 0 10px; background: url(../../images/arrow-pagination-prev.png) left top no-repeat; }
+			.pagination ul li.prev a{ padding: 0 4px 0 10px; background: url(../../../images/arrow-pagination-prev.png) left top no-repeat; }
 			.pagination ul li.prev a:hover{ background-position: left bottom; }
 			
 			.dialog-mini-wrapper{ display:none; position:absolute; margin:  -22px -4px; z-index: 0; }
 						.dialog-mini{ position:absolute; z-index: 1; width: 150px; margin: 25px 0 0 0; }
-							.dialog-mini-outside { background: url(../../images/dialog-mini-big-left.png) left top no-repeat;	 }
-							.dialog-mini-inside {  background: url(../../images/dialog-mini-big-right.png) right top no-repeat;
+							.dialog-mini-outside { background: url(../../../images/dialog-mini-big-left.png) left top no-repeat;	 }
+							.dialog-mini-inside {  background: url(../../../images/dialog-mini-big-right.png) right top no-repeat;
 								margin: 0 0 0 2px;
 								line-height:21px;
 								text-align: center;
@@ -2619,10 +2619,10 @@ A{
 							.greenDarktext{ color: #367c59!important; }
 						
 						
-						.dialog-mini-arrow{ margin: 2px 0 0 5px; position:absolute; z-index: 2; height: 25px; width: 25px; background: url(../../images/dialog-mini-arrow.png) no-repeat left top; }
+						.dialog-mini-arrow{ margin: 2px 0 0 5px; position:absolute; z-index: 2; height: 25px; width: 25px; background: url(../../../images/dialog-mini-arrow.png) no-repeat left top; }
 						.dialog-mini-sm{ position:absolute; z-index: 1; width: 120px; margin: 25px 0 0 0;  }
-							.dialog-mini-sm-outside { background: url(../../images/dialog-mini-left.png) left top no-repeat;	 }
-							.dialog-mini-sm-inside {  background: url(../../images/dialog-mini-right.png) right top no-repeat;
+							.dialog-mini-sm-outside { background: url(../../../images/dialog-mini-left.png) left top no-repeat;	 }
+							.dialog-mini-sm-inside {  background: url(../../../images/dialog-mini-right.png) right top no-repeat;
 								height:23px;
 								line-height:23px;
 								margin: 0 0 0 2px;
@@ -2640,17 +2640,17 @@ A{
 					font-weight: bold;
 					color: #f8efe5; }
 			
-			.project-box-top{ height:3px; background: url(../../images/bg-projectbox-tl.png) left top no-repeat; }
-				.project-box-top-outside { height:3px; background: url(../../images/bg-projectbox-tr.png) right top no-repeat; }
+			.project-box-top{ height:3px; background: url(../../../images/bg-projectbox-tl.png) left top no-repeat; }
+				.project-box-top-outside { height:3px; background: url(../../../images/bg-projectbox-tr.png) right top no-repeat; }
 				.project-box-top-inside {
-					background: url(../../images/bg-projectbox-tc.png) left top repeat-x;
+					background: url(../../../images/bg-projectbox-tc.png) left top repeat-x;
 					height:3px;
 					overflow:hidden;
 					margin: 0 4px 0 4px;
 				} 
 				
-			.project-box-mid{ background: url(../../images/bg-projectbox-ml.png) left top repeat-y; }
-				.project-box-mid-outside { background: url(../../images/bg-projectbox-mr.png) right top repeat-y; }
+			.project-box-mid{ background: url(../../../images/bg-projectbox-ml.png) left top repeat-y; }
+				.project-box-mid-outside { background: url(../../../images/bg-projectbox-mr.png) right top repeat-y; }
 				.project-box-mid-inside {
 					background: #fff; 
 					margin: 0 1px 0 1px;
@@ -2660,10 +2660,10 @@ A{
 				} 
 				.white{ background: white!important; }
 			
-			.project-box-bottom{ height:3px; background: url(../../images/bg-projectbox-bl.png) left bottom no-repeat; } 
-				.project-box-bottom-outside { background: url(../../images/bg-projectbox-br.png) right bottom no-repeat; }
+			.project-box-bottom{ height:3px; background: url(../../../images/bg-projectbox-bl.png) left bottom no-repeat; } 
+				.project-box-bottom-outside { background: url(../../../images/bg-projectbox-br.png) right bottom no-repeat; }
 				.project-box-bottom-inside {
-					background: url(../../images/bg-projectbox-bc.png) left bottom repeat-x;
+					background: url(../../../images/bg-projectbox-bc.png) left bottom repeat-x;
 					height:3px; 
 					margin: 0 3px 0 3px;
 				}  
@@ -2671,7 +2671,7 @@ A{
 					float:left; 
 					padding: 0 0 0 40px;
 					margin: 0 0 10px 0; 
-					background: url(../../images/ico-project.png) no-repeat left top ;}
+					background: url(../../../images/ico-project.png) no-repeat left top ;}
 				.projects-box-title h2{ 
 					font-size:20px;
 					font-family: "Myriad Pro", Arial;
@@ -2736,15 +2736,15 @@ A{
 					.table-sidebar a:hover{ color: #ec1c23; }  
 					.table-sidebar tr:hover td, .table-sidebar tr:hover td a{ background: #ffffcc!important; font-weight: bold!important; } 
 					span.dot{ display:block; width: 12px; height:12px; margin: 0 auto; }
-						span.dot.green{background: url(../../images/dot-green.png) left top no-repeat!important;	}
-						span.dot.blue{background: url(../../images/dot-blue.png) left top no-repeat!important;	}
-						span.dot.yellow{background: url(../../images/dot-yellow.png) left top no-repeat!important;	}
-						span.dot.red{background: url(../../images/dot-red.png) left top no-repeat!important;	}
+						span.dot.green{background: url(../../../images/dot-green.png) left top no-repeat!important;	}
+						span.dot.blue{background: url(../../../images/dot-blue.png) left top no-repeat!important;	}
+						span.dot.yellow{background: url(../../../images/dot-yellow.png) left top no-repeat!important;	}
+						span.dot.red{background: url(../../../images/dot-red.png) left top no-repeat!important;	}
 					.rounded{ display:block; height:16px; width:16px; margin:0 auto;}
-						.rounded.p {background: url(../../images/rounded-p.png) left top no-repeat; }
-						.rounded.s {background: url(../../images/rounded-s.png) left top no-repeat; }
-						.rounded.w {background: url(../../images/rounded-w.png) left top no-repeat; }
-						.rounded.l {background: url(../../images/rounded-l.png) left top no-repeat; }
+						.rounded.p {background: url(../../../images/rounded-p.png) left top no-repeat; }
+						.rounded.s {background: url(../../../images/rounded-s.png) left top no-repeat; }
+						.rounded.w {background: url(../../../images/rounded-w.png) left top no-repeat; }
+						.rounded.l {background: url(../../../images/rounded-l.png) left top no-repeat; }
 						.project-box{
 							float:left; 
 							 padding: 0px 12px; 
@@ -2755,7 +2755,7 @@ A{
 					margin: 0 5px 0 0;
 					height:20px;
 					padding-left:22px; 
-					background: url(../../images/button-project-left.png) no-repeat left top!important;					
+					background: url(../../../images/button-project-left.png) no-repeat left top!important;					
 					text-decoration:none !important;
 				}
 				
@@ -2768,7 +2768,7 @@ A{
 						font-family:Arial, Helvetica, sans-serif;
 						color:#FFFFFe;
 						cursor: pointer;
-						background: url(../../images/button-video-right.png) no-repeat right top!important;
+						background: url(../../../images/button-video-right.png) no-repeat right top!important;
 					} 
 			 
 			 /* button hover style */
@@ -2855,29 +2855,29 @@ A{
 			}
 			.scrollbar-custom{background: #f8f8f8; position:relative; z-index: 2; }
 			.scrollbar-custom .jScrollPaneTrack {
-				background: url(../../images/scrollbar-track.png) repeat-y;
+				background: url(../../../images/scrollbar-track.png) repeat-y;
 			}
 			.scrollbar-custom .jScrollPaneDrag {
-				background: url(../../images/scrollbar-drag-middle.png) no-repeat 0 50%;
+				background: url(../../../images/scrollbar-drag-middle.png) no-repeat 0 50%;
 			}
 			.scrollbar-custom .jScrollPaneDragTop {
-				background: url(../../images/scrollbar-drag-top.png) no-repeat;
+				background: url(../../../images/scrollbar-drag-top.png) no-repeat;
 				height: 1px;
 			}
 			.scrollbar-custom .jScrollPaneDragBottom {
-				background: url(../../images/scrollbar-drag-bottom.png) no-repeat;
+				background: url(../../../images/scrollbar-drag-bottom.png) no-repeat;
 				height: 1px;
 			}
 			.scrollbar-custom a.jScrollArrowUp {
 				height: 17px;
-				background: url(../../images/scrollbar-arrow-up.png) no-repeat 0 0;
+				background: url(../../../images/scrollbar-arrow-up.png) no-repeat 0 0;
 			}
 			.scrollbar-custom a.jScrollArrowUp:hover, .scrollbar-custom a.jScrollArrowDown:hover{
 				background-position: 0 -17px;
 			}
 			.scrollbar-custom a.jScrollArrowDown {
 				height: 17px;
-				background: url(../../images/scrollbar-arrow-down.png) no-repeat 0 0;
+				background: url(../../../images/scrollbar-arrow-down.png) no-repeat 0 0;
 			} 
 			.scrollbar-custom a.jScrollActiveArrowButton, .scrollbar-custom a.jScrollActiveArrowButton:hover {
 				background-position: 0 -34px;
@@ -2886,8 +2886,8 @@ A{
 			.dropdown dd, .dropdown dt, .dropdown ul { margin:0px; padding:0px; z-index:100; }
 			.dropdown dd { position:relative; }
 			.dropdown a, .dropdown a:visited {  text-decoration:none; outline:none;} 
-			.dropdown dt a {background: url(../../images/select_left.png) no-repeat left top; display:block; height: 28px; width:244px; color: #333333;}
-			.dropdown dt a span {background: url(../../images/select_right.png) no-repeat right top; height: 28px; cursor:pointer; display:block; line-height: 28px; padding: 0 10px; font-size:12px; font-family:Arial, Helvetica, sans-serif; }
+			.dropdown dt a {background: url(../../../images/select_left.png) no-repeat left top; display:block; height: 28px; width:244px; color: #333333;}
+			.dropdown dt a span {background: url(../../../images/select_right.png) no-repeat right top; height: 28px; cursor:pointer; display:block; line-height: 28px; padding: 0 10px; font-size:12px; font-family:Arial, Helvetica, sans-serif; }
 			.dropdown dd ul {  
 				background:#fff none repeat scroll 0 0; 
 				border:1px solid #d4ca9a; 
@@ -2906,8 +2906,8 @@ A{
 			.dropdown2 dd, .dropdown2 dt, .dropdown2 ul { margin:0px; padding:0px; z-index:10; }
 			.dropdown2 dd { position:relative;  }
 			.dropdown2 a, .dropdown2 a:visited {  text-decoration:none; outline:none;} 
-			.dropdown2 dt a {background: url(../../images/select-sm-left.png) no-repeat left top; display:block; height: 19px; width:110px; color: #333333; font-size:10px; font-family:Arial, Helvetica, sans-serif;}
-			.dropdown2 dt a span {background: url(../../images/select-sm-right.png) no-repeat right top; height: 19px; cursor:pointer; display:block; line-height: 19px; padding: 0 10px;}
+			.dropdown2 dt a {background: url(../../../images/select-sm-left.png) no-repeat left top; display:block; height: 19px; width:110px; color: #333333; font-size:10px; font-family:Arial, Helvetica, sans-serif;}
+			.dropdown2 dt a span {background: url(../../../images/select-sm-right.png) no-repeat right top; height: 19px; cursor:pointer; display:block; line-height: 19px; padding: 0 10px;}
 			.dropdown2 dd ul {  
 				background:#fff none repeat scroll 0 0; 
 
@@ -2929,7 +2929,7 @@ A{
 			.dropdown3 dd{ position:relative; }
 			.dropdown3 a, .dropdown3 a:visited{  text-decoration:none; outline:none;} 
 			.dropdown3 dt a {
-				background: url(../../images/select_alt_left.png) no-repeat left top; 
+				background: url(../../../images/select_alt_left.png) no-repeat left top; 
 				display:block; 
 				height: 25px; 
 				width:200px; 
@@ -2937,7 +2937,7 @@ A{
 				font-size: 12px!important;
 			}
 			.dropdown3 dt a span {
-				background: url(../../images/select_alt_right.png) no-repeat right top; 
+				background: url(../../../images/select_alt_right.png) no-repeat right top; 
 				height: 25px; 
 				cursor:pointer; 
 				display:block; 
@@ -2966,8 +2966,8 @@ A{
 			.dropdown4 dd, .dropdown2 dt, .dropdown2 ul { margin:0px; padding:0px; z-index:10; }
 			.dropdown4 dd { position:relative;  }
 			
-			SELECT.dropdown4{background: url(../../images/select-sm-left.png) no-repeat left top; display:block; height: 19px; width:110px; color: #333333; font-size:10px; font-family:Arial, Helvetica, sans-serif; border-right:1px solid #CCC; border-bottom:0px; border-top:0px; border-left:0px; }
-			.dropdown4 span {background: url(../../images/select-sm-left.png) no-repeat right top; height: 19px; cursor:pointer; display:block; line-height: 19px; padding: 0 10px; }
+			SELECT.dropdown4{background: url(../../../images/select-sm-left.png) no-repeat left top; display:block; height: 19px; width:110px; color: #333333; font-size:10px; font-family:Arial, Helvetica, sans-serif; border-right:1px solid #CCC; border-bottom:0px; border-top:0px; border-left:0px; }
+			.dropdown4 span {background: url(../../../images/select-sm-left.png) no-repeat right top; height: 19px; cursor:pointer; display:block; line-height: 19px; padding: 0 10px; }
 			
 			.dropdown4 span.value2 { display:none;}
 			.dropdown4 option { padding:5px; display:block; color: #333333;  border-bottom:1px solid #d0d2d3; font-size:10px; font-family:Arial, Helvetica, sans-serif;  }
@@ -2975,7 +2975,7 @@ A{
 			
 
 .contestsContent1{
-	background: url(../../images/contest_list_bg.png) repeat-y;
+	background: url(../../../images/contest_list_bg.png) repeat-y;
 	
 	padding-right: 1px;
 	width: 245px;
@@ -3030,19 +3030,19 @@ A{
 }
 
 .contestsContent1 .draft{
-	background: url(../../images/draft_ico.png) no-repeat;
+	background: url(../../../images/draft_ico.png) no-repeat;
 }
 
 .contestsContent1 .running{
-	background: url(../../images/running_ico.png) no-repeat;
+	background: url(../../../images/running_ico.png) no-repeat;
 }
 
 .contestsContent1 .milstone{
-	background: url(../../images/milestone_ico.png) no-repeat;
+	background: url(../../../images/milestone_ico.png) no-repeat;
 }
 
 .contestsContent1 .awarding{
-	background: url(../../images/awarding_ico.png) no-repeat;
+	background: url(../../../images/awarding_ico.png) no-repeat;
 }
 
 .contestsContent1 .highlight TD{
@@ -3069,19 +3069,19 @@ A{
 }
 
 .contestsContent1 .wType{
-	background: url(../../images/w_type.png) no-repeat;
+	background: url(../../../images/w_type.png) no-repeat;
 }
 
 .contestsContent1 .pType{
-	background: url(../../images/p_type.png) no-repeat;
+	background: url(../../../images/p_type.png) no-repeat;
 }
 
 .contestsContent1 .lType{
-	background: url(../../images/l_type.png) no-repeat;
+	background: url(../../../images/l_type.png) no-repeat;
 }
 
 .contestsContent1 .sType{
-	background: url(../../images/s_type.png) no-repeat;
+	background: url(../../../images/s_type.png) no-repeat;
 }
 
 .project-box{
@@ -3105,7 +3105,7 @@ A{
 	width: 28px;
 	height: 28px;
 	margin: auto;
-	background: url(../../images/specrev_go.gif) no-repeat top left;
+	background: url(../../../images/specrev_go.gif) no-repeat top left;
 }
 .bottom-review p {
 	font-size: 12px;
@@ -3151,7 +3151,7 @@ TABLE.softwareStats{
 		color: #cacaca;
 		font-size: 11px;
 		height: 22px;
-		background: #37302e url(../../images/calendar_header.png) repeat-x left top;  
+		background: #37302e url(../../../images/calendar_header.png) repeat-x left top;  
 	}
 	 
 	TABLE.softwareStats TD{
@@ -3209,7 +3209,7 @@ span.icoTHDownload{
 	margin: 0 auto;
 	height: 11px;
 	width: 14px;
-	background:url(../../images/ico_th_download.png) no-repeat left top;
+	background:url(../../../images/ico_th_download.png) no-repeat left top;
 }
 
 .containerNoPadding .pagination{
@@ -3229,22 +3229,22 @@ span.icoTHDownload{
 	width: 22px;
 }
 
-.icoZip.normal{ background:url(../../images/ico_zip_normal.png) no-repeat left top; }
-.icoZip.gold{ background:url(../../images/ico_zip_gold.png) no-repeat left top; }
-.icoZip.silver{ background:url(../../images/ico_zip_silver.png) no-repeat left top; }
+.icoZip.normal{ background:url(../../../images/ico_zip_normal.png) no-repeat left top; }
+.icoZip.gold{ background:url(../../../images/ico_zip_gold.png) no-repeat left top; }
+.icoZip.silver{ background:url(../../../images/ico_zip_silver.png) no-repeat left top; }
 
 .icoTrue{
 	height: 30px;
 	line-height: 14px;
 	padding: 0 22px 0 0;
-	background:url(../../images/ico_true.png) no-repeat right 0;
+	background:url(../../../images/ico_true.png) no-repeat right 0;
 }
 
 .icoFalse{
 	height: 30px;
 	line-height: 14px;
 	padding: 0 22px 0 0;
-	background:url(../../images/ico_false.png) no-repeat right 0;
+	background:url(../../../images/ico_false.png) no-repeat right 0;
 }
 
 .icoTrue, .icoFalse, a.scores{
@@ -3271,11 +3271,11 @@ a.downloadFile{
 	float:left;
 	height: 78px;
 	width: 64px;
-	background:url(../../images/ico_big_download_zip.png) no-repeat left top;
+	background:url(../../../images/ico_big_download_zip.png) no-repeat left top;
 	margin: 0 15px 0 35px;
 }
 
-a.downloadFile:hover{ background:url(../../images/ico_big_download_zip_hover.png) no-repeat left top; }
+a.downloadFile:hover{ background:url(../../../images/ico_big_download_zip_hover.png) no-repeat left top; }
 
 .winnerData{ margin: 10px 0 0 0; }
 .winnerData h3{
@@ -3316,7 +3316,7 @@ a.downloadFile:hover{ background:url(../../images/ico_big_download_zip_hover.png
 		color: #cacaca;
 		font-size: 11px;
 		height: 35px; 
-		background: #37302e url(../../images/calendar_header.png) repeat-x left top;  
+		background: #37302e url(../../../images/calendar_header.png) repeat-x left top;  
 	}
 
 #bankSelectionHead h3{
@@ -3328,7 +3328,7 @@ a.downloadFile:hover{ background:url(../../images/ico_big_download_zip_hover.png
 	line-height: 17px;
 	margin: 10px 0 0 20px;
 	padding: 0 0 0 20px;
-	background: url(../../images/ico_bank_selection_head.png) no-repeat left top;  
+	background: url(../../../images/ico_bank_selection_head.png) no-repeat left top;  
 }
 
 #bankSelectionHead ul{
@@ -3346,14 +3346,14 @@ a.downloadFile:hover{ background:url(../../images/ico_big_download_zip_hover.png
 		line-height: 25px;
 		font-size: 11px; 
 		text-decoration: none;
-		background: url(../../images/bank_selection_tab_left.png) no-repeat left top; /* left corner */
+		background: url(../../../images/bank_selection_tab_left.png) no-repeat left top; /* left corner */
 		float: left;
 		padding: 0 0 0 4px;
 		margin: 10px 3px 0 0;
 	}
 	
 	#bankSelectionTab LI A SPAN, #bankSelectionTab LI div.tabOff SPAN{
-		background: url(../../images/bank_selection_tab_right.png) no-repeat right top; /* right corner */
+		background: url(../../../images/bank_selection_tab_right.png) no-repeat right top; /* right corner */
 		float: left;
 		height: 25px;
 		width: 100px; 
@@ -3378,7 +3378,7 @@ a.downloadFile:hover{ background:url(../../images/ico_big_download_zip_hover.png
 	padding: 10px 20px;
 	margin:0 1px;
 	border-bottom: 1px solid #bdbdbd;
-	background:url(../../images/bank_selection_content.png) repeat-x left bottom;
+	background:url(../../../images/bank_selection_content.png) repeat-x left bottom;
 }
 
 #bankSelectionSlotsContainer{ float:left; width: 100%; overflow:hidden; margin: 15px 0; }
@@ -3395,7 +3395,7 @@ a.downloadFile:hover{ background:url(../../images/ico_big_download_zip_hover.png
 	font-size:11px; 
 	height: 20px; 
 	line-height: 20px; 
-	background:url(../../images/ico_folder.png) no-repeat left top;
+	background:url(../../../images/ico_folder.png) no-repeat left top;
 	text-decoration: none;
 }
 
@@ -3404,7 +3404,7 @@ a.downloadFile:hover{ background:url(../../images/ico_big_download_zip_hover.png
 }
 
 #likeFolder .drophover, #dislikeFolder .drophover{
-	background:url(../../images/ico_folder_hover.png) no-repeat left top;
+	background:url(../../../images/ico_folder_hover.png) no-repeat left top;
 }
 
 /*------------------------
@@ -3419,7 +3419,7 @@ A.buttonBankSelection{
 	color: #dbd9d9;
 	text-decoration: none;
 	margin: 0 3px;
-	background: url(../../images/btn_selection_bg.png) repeat-x top;
+	background: url(../../../images/btn_selection_bg.png) repeat-x top;
 }
 	A.buttonBankSelection SPAN{
 	float:left;
@@ -3427,12 +3427,12 @@ A.buttonBankSelection{
 	}
 
 	A.buttonBankSelection SPAN.left{
-		background: url(../../images/btn_selection_left.png) no-repeat left top;
+		background: url(../../../images/btn_selection_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.buttonBankSelection SPAN.right{
-		background: url(../../images/btn_selection_right.png) no-repeat right top;
+		background: url(../../../images/btn_selection_right.png) no-repeat right top;
 		padding: 4px 17px 0 17px;
 		height: 18px;
 	}
@@ -3475,7 +3475,7 @@ A.buttonBankSelection:hover {
 --------------------------*/
 
 #bankSelectionSlots{ display:block; width: 100%; }
-#bankSelectionItem{ float:left; height: 85px; background:url(../../images/bank_selection_bg.png) no-repeat left top; }
+#bankSelectionItem{ float:left; height: 85px; background:url(../../../images/bank_selection_bg.png) no-repeat left top; }
 #bankSelectionItem li{ 
 	float:left; 
 	width: 66px; 
@@ -3484,7 +3484,7 @@ A.buttonBankSelection:hover {
 	list-style: none; 
 	}
 #bankSelectionItem li.drophover{ 
-	background:url(../../images/prize_drop.png) no-repeat left top;  
+	background:url(../../../images/prize_drop.png) no-repeat left top;  
 }
 .excerpt{
 	float: left; 
@@ -3495,7 +3495,7 @@ A.buttonBankSelection:hover {
 	display:block;
 	height: 15px;
 	width: 15px;
-	background:url(../../images/bank_selection_remove.png) no-repeat left top;
+	background:url(../../../images/bank_selection_remove.png) no-repeat left top;
 	position:absolute;
 	z-index:10;
 	top: 5px;
@@ -3522,10 +3522,10 @@ A.buttonBankSelection:hover {
 	z-index:5;
 	height: 66px;
 	width: 66px;
-	background:url(../../images/bank_selection_slot.png) no-repeat left top;
+	background:url(../../../images/bank_selection_slot.png) no-repeat left top;
 }
 #extraPrize { 
-margin:0 0 0 17px!important;  background:url(../../images/prize_extra.png) no-repeat left top; }
+margin:0 0 0 17px!important;  background:url(../../../images/prize_extra.png) no-repeat left top; }
 
 #extraPrize strong{
 	display:block;
@@ -3540,11 +3540,11 @@ margin:0 0 0 17px!important;  background:url(../../images/prize_extra.png) no-re
 }
 #numExtra{ text-align: center; font-size: 10px; color:#7a7a7a; padding: 42px 0 0 0;  }
 
-/*#firstPrize{ background:url(../../images/prize_1st.png) no-repeat left top; }
-#secondPrize{ background:url(../../images/prize_2nd.png) no-repeat left top; }
-#thirdPrize{ background:url(../../images/prize_3rd.png) no-repeat left top; }
-#fourthPrize{ background:url(../../images/prize_4th.png) no-repeat left top; }
-#fifthPrize{ background:url(../../images/prize_5th.png) no-repeat left top; }*/
+/*#firstPrize{ background:url(../../../images/prize_1st.png) no-repeat left top; }
+#secondPrize{ background:url(../../../images/prize_2nd.png) no-repeat left top; }
+#thirdPrize{ background:url(../../../images/prize_3rd.png) no-repeat left top; }
+#fourthPrize{ background:url(../../../images/prize_4th.png) no-repeat left top; }
+#fifthPrize{ background:url(../../../images/prize_5th.png) no-repeat left top; }*/
 
 /*------------------------
 	SUBMISSION GRID
@@ -3567,7 +3567,7 @@ h3.red{
 a.toggleViewList{
 	font-size: 11px;
 	font-weight: normal;
-	background:url(../../images/ico_list.png) no-repeat left 2px;
+	background:url(../../../images/ico_list.png) no-repeat left 2px;
 	text-decoration: none;
 	padding: 0 0 0 13px;
 }
@@ -3575,7 +3575,7 @@ a.toggleViewList{
 a.toggleViewGrid{
 	font-size: 11px;
 	font-weight: normal;
-	background:url(../../images/ico_grid.png) no-repeat left 2px;
+	background:url(../../../images/ico_grid.png) no-repeat left 2px;
 	text-decoration: none;
 	padding: 0 0 0 13px;
 }
@@ -3583,7 +3583,7 @@ a.toggleViewGrid{
 a.toggleViewPrev{
 	font-size: 11px;
 	font-weight: normal;
-	background:url(../../images/ico_prev.png) no-repeat left 2px;
+	background:url(../../../images/ico_prev.png) no-repeat left 2px;
 	text-decoration: none;
 	padding: 0 0 0 9px;
 }
@@ -3593,7 +3593,7 @@ a.toggleViewMilestone{
 	margin: 3px 0 0 0;
 	font-size: 11px;
 	font-weight: normal;
-	background:url(../../images/ico_milestone.png) no-repeat left 2px;
+	background:url(../../../images/ico_milestone.png) no-repeat left 2px;
 	text-decoration: none;
 	padding: 0 0 0 12px;
 }
@@ -3665,7 +3665,7 @@ a.toggleViewList:hover, a.toggleViewGrid:hover, a.toggleViewPrev:hover, a.toggle
 	z-index:5;
 	height: 206px;
 	width: 206px;
-	background: url(../../images/thumb_big_slot_bg.png) left top;
+	background: url(../../../images/thumb_big_slot_bg.png) left top;
 }
 #submissionGrid  li a.thumbGrid img{ margin: 3px; }
 .statusSubmission{
@@ -3678,14 +3678,14 @@ a.toggleViewList:hover, a.toggleViewGrid:hover, a.toggleViewPrev:hover, a.toggle
 	left: 6px;
 } 
 
-.statusSubmission.firstSlot{ background:url(../../images/btn_legend_1st.png) no-repeat left top; }
-.statusSubmission.secondSlot{ background:url(../../images/btn_legend_2nd.png) no-repeat left top; }
-.statusSubmission.thirdSlot{ background:url(../../images/btn_legend_3rd.png) no-repeat left top; }
-.statusSubmission.fourthSlot{ background:url(../../images/btn_legend_4th.png) no-repeat left top; }
-.statusSubmission.fifthSlot{ background:url(../../images/btn_legend_5th.png) no-repeat left top; }
-.statusSubmission.likeSlot{ background:url(../../images/btn_legend_like.png) no-repeat left top; }
-.statusSubmission.dislikeSlot{ background:url(../../images/btn_legend_dislike.png) no-repeat left top; }
-.statusSubmission.dollarSlot{ background:url(../../images/btn_legend_dollar.png) no-repeat left top; }
+.statusSubmission.firstSlot{ background:url(../../../images/btn_legend_1st.png) no-repeat left top; }
+.statusSubmission.secondSlot{ background:url(../../../images/btn_legend_2nd.png) no-repeat left top; }
+.statusSubmission.thirdSlot{ background:url(../../../images/btn_legend_3rd.png) no-repeat left top; }
+.statusSubmission.fourthSlot{ background:url(../../../images/btn_legend_4th.png) no-repeat left top; }
+.statusSubmission.fifthSlot{ background:url(../../../images/btn_legend_5th.png) no-repeat left top; }
+.statusSubmission.likeSlot{ background:url(../../../images/btn_legend_like.png) no-repeat left top; }
+.statusSubmission.dislikeSlot{ background:url(../../../images/btn_legend_dislike.png) no-repeat left top; }
+.statusSubmission.dollarSlot{ background:url(../../../images/btn_legend_dollar.png) no-repeat left top; }
 
 .submissionAction{
 	display:none;
@@ -3695,38 +3695,38 @@ a.toggleViewList:hover, a.toggleViewGrid:hover, a.toggleViewPrev:hover, a.toggle
 	height: 35px;
 	width: 187px;
 	z-index: 20;
-	background:url(../../images/submission_grid_action_bg.png) no-repeat left top;
+	background:url(../../../images/submission_grid_action_bg.png) no-repeat left top;
 }
 .submissionAction ul{ float:left; margin: 10px 0 0 30px;  }
 .submissionAction li{ float:left; width: 18px!important; list-style: none; margin: 0 10px 0 0!important; }
 a.actButton{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;  }
 
 a.actButtonlike{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtonlike span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../images/btn_legend_sm_like.png) no-repeat left top; }
-a.actButtonlike span.hover{ background:url(../../images/btn_legend_sm_like_hover.png) no-repeat left top; }
+a.actButtonlike span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../../images/btn_legend_sm_like.png) no-repeat left top; }
+a.actButtonlike span.hover{ background:url(../../../images/btn_legend_sm_like_hover.png) no-repeat left top; }
 
 a.actButtondislike{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtondislike span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../images/btn_legend_sm_dislike.png) no-repeat left top; }
-a.actButtondislike span.hover{ background:url(../../images/btn_legend_sm_dislike_hover.png) no-repeat left top; }
+a.actButtondislike span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../../images/btn_legend_sm_dislike.png) no-repeat left top; }
+a.actButtondislike span.hover{ background:url(../../../images/btn_legend_sm_dislike_hover.png) no-repeat left top; }
  
 a.actButtonzoom{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtonzoom span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../images/btn_legend_sm_zoom.png) no-repeat left top; }
-a.actButtonzoom span.hover{ background:url(../../images/btn_legend_sm_zoom_hover.png) no-repeat left top; } 
+a.actButtonzoom span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../../images/btn_legend_sm_zoom.png) no-repeat left top; }
+a.actButtonzoom span.hover{ background:url(../../../images/btn_legend_sm_zoom_hover.png) no-repeat left top; } 
 
 a.actButtondollar{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtondollar span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../images/btn_legend_sm_dollar.png) no-repeat left top; }
-a.actButtondollar span.hover{ background:url(../../images/btn_legend_sm_dollar_hover.png) no-repeat left top; } 
+a.actButtondollar span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../../images/btn_legend_sm_dollar.png) no-repeat left top; }
+a.actButtondollar span.hover{ background:url(../../../images/btn_legend_sm_dollar_hover.png) no-repeat left top; } 
   
 a.actButtonstar{ display:block; height: 17px; width: 18px; position:relative; z-index: 11;    }
-a.actButtonstar span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../images/btn_legend_sm_star.png) no-repeat left top; }
-a.actButtonstar span.hover{ background:url(../../images/btn_legend_sm_star_hover.png) no-repeat left top; } 
+a.actButtonstar span{ cursor:pointer; display:block; height: 17px; width: 18px;  background:url(../../../images/btn_legend_sm_star.png) no-repeat left top; }
+a.actButtonstar span.hover{ background:url(../../../images/btn_legend_sm_star_hover.png) no-repeat left top; } 
    
 
 .submissionAction .dialog-mini-wrapper{ display:none; position:absolute; margin:  -22px -7px; z-index: 10; }
 	.submissionAction .dialog-mini.last{ left: -46px; }
 	.submissionAction .dialog-mini{ position:absolute; z-index: 1; width: 120px; margin: 25px 0 0 0; left: -40px; }
-		.submissionAction .dialog-mini-outside { background: url(../../images/dialog-mini-big-left.png) left top no-repeat;	 }
-		.submissionAction .dialog-mini-inside {  background: url(../../images/dialog-mini-big-right.png) right top no-repeat;
+		.submissionAction .dialog-mini-outside { background: url(../../../images/dialog-mini-big-left.png) left top no-repeat;	 }
+		.submissionAction .dialog-mini-inside {  background: url(../../../images/dialog-mini-big-right.png) right top no-repeat;
 			margin: 0 0 0 2px;
 			line-height:21px;
 			text-align: center;
@@ -3737,11 +3737,11 @@ a.actButtonstar span.hover{ background:url(../../images/btn_legend_sm_star_hover
 		.submissionAction .dialog-mini .question a{  text-align: center; font-size: 11px; text-decoration: none; color: #a8abad; font-weight: bold; }
 		.submissionAction .dialog-mini .question a:hover{ text-decoration: underline; }
 		
-		.submissionAction .dialog-mini-arrow{ margin: 2px 0 0 5px; position:absolute; z-index: 2; height: 25px; width: 25px; background: url(../../images/dialog-mini-arrow-alt.png) no-repeat left top; }
+		.submissionAction .dialog-mini-arrow{ margin: 2px 0 0 5px; position:absolute; z-index: 2; height: 25px; width: 25px; background: url(../../../images/dialog-mini-arrow-alt.png) no-repeat left top; }
 						 
 		.submissionAction .dialog-mini-sm{ position:absolute; z-index: 1; width: 120px; margin: 25px 0 0 0; left: -40px;  }
-		.submissionAction .dialog-mini-sm-outside { background: url(../../images/dialog-mini-left.png) left top no-repeat;	 }
-		.submissionAction .dialog-mini-sm-inside {  background: url(../../images/dialog-mini-right.png) right top no-repeat;
+		.submissionAction .dialog-mini-sm-outside { background: url(../../../images/dialog-mini-left.png) left top no-repeat;	 }
+		.submissionAction .dialog-mini-sm-inside {  background: url(../../../images/dialog-mini-right.png) right top no-repeat;
 								height:23px;
 								line-height:23px;
 								margin: 0 0 0 2px;
@@ -3770,15 +3770,15 @@ a.actButtonstar span.hover{ background:url(../../images/btn_legend_sm_star_hover
 	font-size: 12px;
 	color: #FFFFFE;
 	font-weight: normal;
-	background:url(../../images/submission_list_th.png) repeat-x left -29px;
+	background:url(../../../images/submission_list_th.png) repeat-x left -29px;
 }
 #submissionList table th.first{
 	width: 4px;
-	background: url(../../images/submission_list_th.png) no-repeat left 0!important;
+	background: url(../../../images/submission_list_th.png) no-repeat left 0!important;
 }
 #submissionList table th.last{
 	width: 6px;
-	background: url(../../images/submission_list_th.png) no-repeat right -58px!important;
+	background: url(../../../images/submission_list_th.png) no-repeat right -58px!important;
 }
 #submissionList table .left{ text-align: left; }
 
@@ -3792,7 +3792,7 @@ a.actButtonstar span.hover{ background:url(../../images/btn_legend_sm_star_hover
 }
 span.ascending{
 	padding: 0 10px 0 0;
-	background:url(../../images/submission_list_asc.png) no-repeat right 5px;
+	background:url(../../../images/submission_list_asc.png) no-repeat right 5px;
 }
 span.icoBankLocation{
 	display:block;
@@ -3801,16 +3801,16 @@ span.icoBankLocation{
 	width: 31px;
 	
 }
-#submissionList span.icoBankLocation.firstSlots{background:url(../../images/btn_legend_list_1st.png) no-repeat left top!important;}
-#submissionList span.icoBankLocation.secondSlots{background:url(../../images/btn_legend_list_2nd.png) no-repeat left top!important;}
-#submissionList span.icoBankLocation.thirdSlots{background:url(../../images/btn_legend_list_3rd.png) no-repeat left top!important;}
-#submissionList span.icoBankLocation.fourthSlots{background:url(../../images/btn_legend_list_4th.png) no-repeat left top!important;}
-#submissionList span.icoBankLocation.fifthSlots{background:url(../../images/btn_legend_list_5th.png) no-repeat left top!important;}
-#submissionList span.icoBankLocation.nullSlots{background:url(../../images/btn_legend_list_null.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.firstSlots{background:url(../../../images/btn_legend_list_1st.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.secondSlots{background:url(../../../images/btn_legend_list_2nd.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.thirdSlots{background:url(../../../images/btn_legend_list_3rd.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.fourthSlots{background:url(../../../images/btn_legend_list_4th.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.fifthSlots{background:url(../../../images/btn_legend_list_5th.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.nullSlots{background:url(../../../images/btn_legend_list_null.png) no-repeat left top!important;}
 
-#submissionList span.icoBankLocation.likeSlots{background:url(../../images/btn_legend_list_like.png) no-repeat left top!important;}
-#submissionList span.icoBankLocation.dislikeSlots{background:url(../../images/btn_legend_list_dislike.png) no-repeat left top!important;}
-#submissionList span.icoBankLocation.dollarSlots{background:url(../../images/btn_legend_list_dollar.png) no-repeat left top!important;} 
+#submissionList span.icoBankLocation.likeSlots{background:url(../../../images/btn_legend_list_like.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.dislikeSlots{background:url(../../../images/btn_legend_list_dislike.png) no-repeat left top!important;}
+#submissionList span.icoBankLocation.dollarSlots{background:url(../../../images/btn_legend_list_dollar.png) no-repeat left top!important;} 
 
 a.thumbList{
 	display:block;
@@ -3828,7 +3828,7 @@ a.thumbList span{
 	left:0;
 	height: 137px;
 	width: 136px;
-	background:url(../../images/thumb_list_bg.png) left top;
+	background:url(../../../images/thumb_list_bg.png) left top;
 }
 a.thumbList img{ margin: 3px; }
 
@@ -3844,11 +3844,11 @@ a.thumbList img{ margin: 3px; }
 .submissionListAction .dialog-mini{ position:absolute; z-index: 1; width: 120px; margin: 25px 0 0 0; left: -39px; }
 .submissionListAction .dialog-mini-sm{ position:absolute; z-index: 1; width: 120px; margin: 25px 0 0 0; left: -40px;  }
 
-.submissionListAction li a.actButtonlike span{ background:url(../../images/btn_legend_sm_like_hover.png) no-repeat left top!important; }
-.submissionListAction li a.actButtondislike span{ background:url(../../images/btn_legend_sm_dislike_hover.png) no-repeat left top; }
-.submissionListAction li a.actButtonzoom span{ background:url(../../images/btn_legend_sm_zoom_hover.png) no-repeat left top; }
-.submissionListAction li a.actButtondollar  span{ background:url(../../images/btn_legend_sm_dollar_hover.png) no-repeat left top; }
-.submissionListAction li a.actButtonstar  span{ background:url(../../images/btn_legend_sm_star_hover.png) no-repeat left top; }
+.submissionListAction li a.actButtonlike span{ background:url(../../../images/btn_legend_sm_like_hover.png) no-repeat left top!important; }
+.submissionListAction li a.actButtondislike span{ background:url(../../../images/btn_legend_sm_dislike_hover.png) no-repeat left top; }
+.submissionListAction li a.actButtonzoom span{ background:url(../../../images/btn_legend_sm_zoom_hover.png) no-repeat left top; }
+.submissionListAction li a.actButtondollar  span{ background:url(../../../images/btn_legend_sm_dollar_hover.png) no-repeat left top; }
+.submissionListAction li a.actButtonstar  span{ background:url(../../../images/btn_legend_sm_star_hover.png) no-repeat left top; }
 .submissionListAction .dialog-mini-inside , #submissionList .submissionListAction .dialog-mini-sm-inside {  font-size:11px;  }
 
 
@@ -3885,7 +3885,7 @@ a.thumbList img{ margin: 3px; }
 	display:block;
 	padding: 4px;
 	border: 1px solid  #979797;
-	background: url(../../images/single_submission_textarea.png) repeat-x left top;
+	background: url(../../../images/single_submission_textarea.png) repeat-x left top;
 }
 
 .containerNoPadding .panel{
@@ -3906,7 +3906,7 @@ a.thumbList img{ margin: 3px; }
 	font-size: 11px;
 	color: #333333;
 }
-#navSubmissionSlideshowTop li.dot{ display:block; padding: 10px; background:url(../../images/dot.png) no-repeat center 4px; }
+#navSubmissionSlideshowTop li.dot{ display:block; padding: 10px; background:url(../../../images/dot.png) no-repeat center 4px; }
 #navSubmissionSlideshowTop li a{
 	text-decoration: none;
 }
@@ -3916,12 +3916,12 @@ a.thumbList img{ margin: 3px; }
 }
 
 #navSubmissionSlideshowTopPrev{
-	background:url(../../images/submission_arrow_prev.png) no-repeat left 2px;
+	background:url(../../../images/submission_arrow_prev.png) no-repeat left 2px;
 	padding: 0 0 0 10px;
 }
 
 #navSubmissionSlideshowTopNext{
-	background:url(../../images/submission_arrow_next.png) no-repeat right 2px;
+	background:url(../../../images/submission_arrow_next.png) no-repeat right 2px;
 	padding: 0 10px 0 0;
 }
 
@@ -3950,7 +3950,7 @@ a.thumbSingle span{
 	z-index:5;
 	height: 484px;
 	width: 665px;
-	background:url(../../images/submission_single_bg.png) left top;
+	background:url(../../../images/submission_single_bg.png) left top;
 }
 a.thumbSingle img{ margin: 3px; }
 
@@ -3959,7 +3959,7 @@ a.thumbSingle img{ margin: 3px; }
 	position:absolute;
 	width: 33px;
 	height: 50px;
-	background:url(../../images/single_submission_prev.png) left top;
+	background:url(../../../images/single_submission_prev.png) left top;
 	top: 220px;
 	z-index: 100;
 }
@@ -3969,7 +3969,7 @@ a.thumbSingle img{ margin: 3px; }
 	position:absolute;
 	width: 33px;
 	height: 50px;
-	background:url(../../images/single_submission_next.png) left top;
+	background:url(../../../images/single_submission_next.png) left top;
 	top: 220px;
 	right:0;
 	z-index: 100;
@@ -3983,7 +3983,7 @@ a.thumbSingle img{ margin: 3px; }
 	height: 47px;
 	width: 187px;
 	z-index: 20;
-	background:url(../../images/single_submission_action_bg.png) no-repeat left top;
+	background:url(../../../images/single_submission_action_bg.png) no-repeat left top;
 }
 
 #singleSubmissionSlide  .submissionAction ul{ float:left; margin: 15px 0 0 0; }
@@ -3995,16 +3995,16 @@ span.icoSingleSubmissionBankLocation{
 	width: 31px;
 	margin: 6px 10px 0 10px;
 }
-span.icoSingleSubmissionBankLocation.firstSlots{background:url(../../images/btn_legend_single_1st.png) no-repeat left top!important;}
-span.icoSingleSubmissionBankLocation.secondSlots{background:url(../../images/btn_legend_single_2nd.png) no-repeat left top!important;}
-span.icoSingleSubmissionBankLocation.thirdSlots{background:url(../../images/btn_legend_single_3rd.png) no-repeat left top!important;}
-span.icoSingleSubmissionBankLocation.fourthSlots{background:url(../../images/btn_legend_single_4th.png) no-repeat left top!important;}
-span.icoSingleSubmissionBankLocation.fifthSlots{background:url(../../images/btn_legend_single_5th.png) no-repeat left top!important;}
-span.icoSingleSubmissionBankLocation.nullSlots{background:url(../../images/btn_legend_single_null.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.firstSlots{background:url(../../../images/btn_legend_single_1st.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.secondSlots{background:url(../../../images/btn_legend_single_2nd.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.thirdSlots{background:url(../../../images/btn_legend_single_3rd.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.fourthSlots{background:url(../../../images/btn_legend_single_4th.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.fifthSlots{background:url(../../../images/btn_legend_single_5th.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.nullSlots{background:url(../../../images/btn_legend_single_null.png) no-repeat left top!important;}
 
-span.icoSingleSubmissionBankLocation.likeSlots{background:url(../../images/btn_legend_single_like.png) no-repeat left top!important;}
-span.icoSingleSubmissionBankLocation.dislikeSlots{background:url(../../images/btn_legend_single_dislike.png) no-repeat left top!important;}
-span.icoSingleSubmissionBankLocation.dollarSlots{background:url(../../images/btn_legend_single_dollar.png) no-repeat left top!important;} 
+span.icoSingleSubmissionBankLocation.likeSlots{background:url(../../../images/btn_legend_single_like.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.dislikeSlots{background:url(../../../images/btn_legend_single_dislike.png) no-repeat left top!important;}
+span.icoSingleSubmissionBankLocation.dollarSlots{background:url(../../../images/btn_legend_single_dollar.png) no-repeat left top!important;} 
 
 /*------------------------
 	MILESTONE CHECKOUT
@@ -4020,7 +4020,7 @@ textarea.txtFeedback{
 	display:block;
 	padding: 4px;
 	border: 1px solid  #979797;
-	background: url(../../images/single_submission_textarea.png) repeat-x left top;
+	background: url(../../../images/single_submission_textarea.png) repeat-x left top;
 }
 
 .bankSelectionButtonMilestone{
@@ -4039,7 +4039,7 @@ textarea.txtFeedback{
 	width: 330px;
 	padding: 0 0 0 50px;
 	text-align: left;
-	background: url(../../images/warning_milestone.png) no-repeat left 4px;
+	background: url(../../../images/warning_milestone.png) no-repeat left 4px;
 }
 
 .warningMilestone a{
@@ -4070,7 +4070,7 @@ textarea.txtFeedback{
 	height: 47px;
 	width: 187px;
 	z-index: 20;
-	background: url(../../images/final_grid_action_bg.png) no-repeat left top;
+	background: url(../../../images/final_grid_action_bg.png) no-repeat left top;
 }
 
 .finalGrid .submissionAction ul{ float:left; width: 130px!important; margin:13px 0 0 0; }
@@ -4095,13 +4095,13 @@ textarea.txtFeedback{
 	font-size: 12px;
 	color: #FFF;
 	font-weight: normal;
-	background: #37302e url(../../images/purchase_title.png) repeat-x left top;
+	background: #37302e url(../../../images/purchase_title.png) repeat-x left top;
 }
 
 .additionalPurchaseTitle p{
 	margin: 0 0 0 20px;
 	padding: 0 0 0 20px;
-	background:url(../../images/purchase_dollar.png) no-repeat left 9px;
+	background:url(../../../images/purchase_dollar.png) no-repeat left 9px;
 }
 
 #additionalPurchase p.information{
@@ -4117,7 +4117,7 @@ textarea.txtFeedback{
 	padding: 10px 0;
 	margin:0 1px 15px 1px;
 	border-bottom: 1px solid #bdbdbd;
-	background:url(../../images/bank_selection_content.png) repeat-x left bottom;
+	background:url(../../../images/bank_selection_content.png) repeat-x left bottom;
 }
 .additionalButton { clear:both; margin: 10px 0 0 18px; }
 .additionalButton a{ float:left; }
@@ -4164,7 +4164,7 @@ a.downloadSubmission{
 	color:#FFFFFE;
 	text-decoration: none;
 	padding: 0 0 0 27px;
-	background:url(../../images/checkout_download.png) no-repeat left top;
+	background:url(../../../images/checkout_download.png) no-repeat left top;
 }
 
 a.downloadSubmission span{
@@ -4173,15 +4173,15 @@ a.downloadSubmission span{
 	height: 24px;
 	line-height: 24px;
 	padding: 0 10px;
-	background:url(../../images/checkout_download_right.png) no-repeat right top;
+	background:url(../../../images/checkout_download_right.png) no-repeat right top;
 }
 
 a.downloadSubmission:hover{
-	background:url(../../images/checkout_download.png) no-repeat left -24px;
+	background:url(../../../images/checkout_download.png) no-repeat left -24px;
 }
 
 a.downloadSubmission:hover span{
-	background:url(../../images/checkout_download_right.png) no-repeat right -24px;
+	background:url(../../../images/checkout_download_right.png) no-repeat right -24px;
 }
 
 #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
@@ -4248,7 +4248,7 @@ table.scorecard.view2{
 		font-size: 12px;
 		font-weight: normal;
 		color: #fff;
-		background: transparent url(../../images/calendar_header.png) repeat-x left top;
+		background: transparent url(../../../images/calendar_header.png) repeat-x left top;
 		height: 29px;
 		text-align: left;
 		padding-left: 10px;
@@ -4302,9 +4302,9 @@ table.scorecard.view2{
 	
 	table.scorecard.view2 .expand{
 		text-decoration: none;
-		background: url(../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+		background: url(../../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 	}
-	table.scorecard.view2 .collapse{ background: transparent url("../../images/minimize.png") no-repeat scroll 0% 0%;} /* the collapse icon */
+	table.scorecard.view2 .collapse{ background: transparent url("../../../images/minimize.png") no-repeat scroll 0% 0%;} /* the collapse icon */
 	div.ratings{margin-top:15px;}
 	div.rating{
 		position: relative;
@@ -4317,7 +4317,7 @@ table.scorecard.view2{
 			padding: 0 5px;
 			height: 18px;
 			line-height: 18px;
-			background: transparent url(../../images/rating-bg.png) repeat-x center;
+			background: transparent url(../../../images/rating-bg.png) repeat-x center;
 		}
 		table.scorecard.view2 div.tl,
 		table.scorecard.view2 div.tr,
@@ -4462,14 +4462,14 @@ textarea.guideline{
 		height: 19px;
 		top: 0px;
 		left: -29px;
-		background: transparent url(../../images/move-icon.png) no-repeat;
+		background: transparent url(../../../images/move-icon.png) no-repeat;
 		cursor: pointer;
 	}
 		tr.section .move,
-		tr.section .move:hover{background: transparent url(../../images/move-icon-disabled.png) no-repeat;}
+		tr.section .move:hover{background: transparent url(../../../images/move-icon-disabled.png) no-repeat;}
 		
-		tr.section .move.handle{background: transparent url(../../images/move-icon.png) no-repeat;}
-		tr.section .move.handle:hover{background: transparent url(../../images/move-icon-hover.png) no-repeat;}
+		tr.section .move.handle{background: transparent url(../../../images/move-icon.png) no-repeat;}
+		tr.section .move.handle:hover{background: transparent url(../../../images/move-icon-hover.png) no-repeat;}
 	.checkMatch{
 		position: absolute;
 		display: block;
@@ -4477,11 +4477,11 @@ textarea.guideline{
 		height: 19px;
 		top: -6px;
 		left: -29px;
-		background: transparent url(../../images/check-match.png) no-repeat;
+		background: transparent url(../../../images/check-match.png) no-repeat;
 		cursor: pointer;
 		z-index: 1000;
 	}
-		.checkMatch.hover{background: transparent url(../../images/check-match-hover.png) no-repeat;}
+		.checkMatch.hover{background: transparent url(../../../images/check-match-hover.png) no-repeat;}
 		
 		table.group .checkMatch{
 			top: -8px;
@@ -4513,7 +4513,7 @@ textarea.guideline{
 				background-color: #eff8de;
 			}
 		.move:hover{
-			background: transparent url(../../images/move-icon-hover.png) no-repeat;
+			background: transparent url(../../../images/move-icon-hover.png) no-repeat;
 		}
 	table.scorecard.view2 .relative .move.group{
 		top: -1px;
@@ -4540,16 +4540,16 @@ a.addIcon{
 	display: block;
 	width: 19px;
 	height: 19px;
-	background: transparent url(../../images/add-icon.png) no-repeat;
+	background: transparent url(../../../images/add-icon.png) no-repeat;
 	float: right;
 	margin: 4px 5px 4px 0;
 }
-a.remIcon{background: transparent url(../../images/remove-icon.png) no-repeat;}
+a.remIcon{background: transparent url(../../../images/remove-icon.png) no-repeat;}
 	tr.questionHead a.addIcon.hover,
-	a.addIcon:hover{ background: transparent url(../../images/add-icon-hover.png) no-repeat;}
-	a.remIcon:hover{background: transparent url(../../images/remove-icon-hover.png) no-repeat;}
+	a.addIcon:hover{ background: transparent url(../../../images/add-icon-hover.png) no-repeat;}
+	a.remIcon:hover{background: transparent url(../../../images/remove-icon-hover.png) no-repeat;}
 	a.remIcon.onlyOne,
-	a.remIcon.onlyOne:hover{background: transparent url(../../images/remove-icon-disabled.png) no-repeat;}
+	a.remIcon.onlyOne:hover{background: transparent url(../../../images/remove-icon-disabled.png) no-repeat;}
 /* add menu */
 .addmenu{
 	position: absolute;
@@ -4558,7 +4558,7 @@ a.remIcon{background: transparent url(../../images/remove-icon.png) no-repeat;}
 	z-index: 999;
 	display: none;
 	color: #fff;
-	background: transparent url(../../images/addmenu.png) no-repeat;
+	background: transparent url(../../../images/addmenu.png) no-repeat;
 }
 	.addmenu a{
 		color: #fff;
@@ -4621,7 +4621,7 @@ a.modalTitleBtn {
 /* Add css code for https://apps.topcoder.com/bugs/browse/TCCC-4119 */
 
     .newSidebar .topBtns{
-        background:url(../../images/sidebar-top-bg.gif) no-repeat 0 0;
+        background:url(../../../images/sidebar-top-bg.gif) no-repeat 0 0;
         padding:16px 0 8px 10px;
         overflow:hidden;
     }
@@ -4641,29 +4641,29 @@ a.modalTitleBtn {
             color:#ff0000;
         }
         .newSidebar .topBtns a.copilot{
-            background-image:url(../../images/copilot-icon.png);
+            background-image:url(../../../images/copilot-icon.png);
             width:76px;
         }
         .newSidebar .topBtns a.copilot:hover{
-            background-image:url(../../images/copilot-icon-hover.png); 
+            background-image:url(../../../images/copilot-icon-hover.png); 
         }
         .newSidebar .topBtns a.start{
-            background-image:url(../../images/start-project-icon.png);
+            background-image:url(../../../images/start-project-icon.png);
             width:80px;
         }
         .newSidebar .topBtns a.start:hover{
-            background-image:url(../../images/start-project-icon-hover.png);
+            background-image:url(../../../images/start-project-icon-hover.png);
         }
         .newSidebar .topBtns a.launch{
-            background-image:url(../../images/launch-contest-icon.png);
+            background-image:url(../../../images/launch-contest-icon.png);
             width:78px;
         }
         .newSidebar .topBtns a.launch:hover{
-            background-image:url(../../images/launch-contest-icon-hover.png);
+            background-image:url(../../../images/launch-contest-icon-hover.png);
             color:#ff0000;
         }
     .newSidebar .contestList{
-        background:url(../../images/sidebar-top-bg.gif) no-repeat 0 0;
+        background:url(../../../images/sidebar-top-bg.gif) no-repeat 0 0;
         padding:16px 0 4px;
         position:relative;
     }
@@ -4671,7 +4671,7 @@ a.modalTitleBtn {
             position:absolute;
             right:-1px;
             top:-1px;
-            background:url(../../images/box-corner1.gif) no-repeat -4px 0;
+            background:url(../../../images/box-corner1.gif) no-repeat -4px 0;
             height:4px;
             width:4px;
             overflow:hidden;
@@ -4680,7 +4680,7 @@ a.modalTitleBtn {
             position:absolute;
             left:-1px;
             top:-1px;
-            background:url(../../images/box-corner1.gif) no-repeat 0 0;
+            background:url(../../../images/box-corner1.gif) no-repeat 0 0;
             height:4px;
             width:4px;
             overflow:hidden;
@@ -4689,7 +4689,7 @@ a.modalTitleBtn {
             position:absolute;
             left:-1px;
             bottom:-1px;
-            background:url(../../images/box-corner1.gif) no-repeat 0 -4px;
+            background:url(../../../images/box-corner1.gif) no-repeat 0 -4px;
             height:4px;
             width:4px;
             overflow:hidden;
@@ -4698,14 +4698,14 @@ a.modalTitleBtn {
             position:absolute;
             right:-1px;
             bottom:-1px;
-            background:url(../../images/box-corner1.gif) no-repeat -4px -4px;
+            background:url(../../../images/box-corner1.gif) no-repeat -4px -4px;
             height:4px;
             width:4px;
             overflow:hidden;
         } 
         .newSidebar .contestListMask{
             border:1px solid #000;
-            background:url(../../images/contest--box-bg.gif) repeat-x #e7e7e7 0 0;
+            background:url(../../../images/contest--box-bg.gif) repeat-x #e7e7e7 0 0;
             width:252px;
             margin:0 auto;
             padding-bottom:3px;
@@ -4722,7 +4722,7 @@ a.modalTitleBtn {
                      padding:12px 0 5px;
                  }
                  .newSidebar .contestList .filter .dropdownWidget{
-                     background:url(../../images/dropdown-box.gif) no-repeat 0 0;
+                     background:url(../../../images/dropdown-box.gif) no-repeat 0 0;
                      height:22px;
                      width:220px;
                      position:relative;
@@ -4739,7 +4739,7 @@ a.modalTitleBtn {
 	                    font-family: Arial, Helvetica, sans-serif;
                      }
                      .newSidebar .contestList .filter .dropdownWidget a.arrow{
-                           background:url(../../images/dropdown-box-arrow.gif) no-repeat 0 0;
+                           background:url(../../../images/dropdown-box-arrow.gif) no-repeat 0 0;
                           height:20px;
                          width:20px;
                          position:absolute;
@@ -4775,7 +4775,7 @@ a.modalTitleBtn {
                                 background:#ffffcc;   
                           }
              .newSidebar .contestList .tableHeader{
-                background:url(../../images/thead-bg.gif) repeat-x 0 0;
+                background:url(../../../images/thead-bg.gif) repeat-x 0 0;
                 height:33px;
                  border-top:1px solid #d2d2d2;
                  border-bottom:1px solid #d2d2d2;
@@ -4790,10 +4790,10 @@ a.modalTitleBtn {
                     cursor:pointer
                 }
                 .newSidebar .contestList .tableHeader span.down{
-                    background:url(../../images/arrow-down.png) no-repeat center 23px; 
+                    background:url(../../../images/arrow-down.png) no-repeat center 23px; 
                 }
                 .newSidebar .contestList .tableHeader span.up{
-                    background:url(../../images/arrow-up.png) no-repeat center 23px;
+                    background:url(../../../images/arrow-up.png) no-repeat center 23px;
                 }
                 .newSidebar .contestList .tableHeader span.statusTh{
                      width:42px;
@@ -4838,13 +4838,13 @@ a.modalTitleBtn {
                  color:#ff0000;
              }
             .newSidebar .contestList .tableBody table span.running{
-                background:url("../../images/running_ico.png") no-repeat  0 0;
+                background:url("../../../images/running_ico.png") no-repeat  0 0;
                 display:inline-block;
                 width:11px;
                 height:11px;
             }
             .newSidebar .contestList .tableBody table span.draft{
-                background:url("../../images/draft_ico.png") no-repeat  0 0;
+                background:url("../../../images/draft_ico.png") no-repeat  0 0;
                 display:inline-block;
                 width:11px;
                 height:11px;
@@ -4854,7 +4854,7 @@ a.modalTitleBtn {
             padding:0 11px 12px 0;
         }
             .newSidebar .archiveLink a{
-                background:url(../../images/archive.png) no-repeat 0 center;
+                background:url(../../../images/archive.png) no-repeat 0 center;
                 padding-left:26px;
                 display:inline-block;
                 color:#fcfcfc;
@@ -4867,5 +4867,5 @@ a.modalTitleBtn {
 
 #helpCenterWidget{
     padding-top:9px;
-    background:url(../../images/sidebar-top-bg.gif) no-repeat 0 0;
+    background:url(../../../images/sidebar-top-bg.gif) no-repeat 0 0;
 }

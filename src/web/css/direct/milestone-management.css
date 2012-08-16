@@ -12,12 +12,12 @@
 }
 /* .mmTabs */
 #tcSoftwareMM .mmTabs{
-    background: url("../images/calendar_header.png") repeat-x left top #37302E;
+    background: url("../../images/calendar_header.png") repeat-x left top #37302E;
     height: 35px;
     padding-left:10px;
 }
     #tcSoftwareMM .mmTabs a{
-        background: url("../images/bank_selection_tab_left.png") no-repeat left -25px;
+        background: url("../../images/bank_selection_tab_left.png") no-repeat left -25px;
         color: #000000;
         float: left;
         font-size: 11px;
@@ -32,7 +32,7 @@
         text-shadow:none;
     }
         #tcSoftwareMM .mmTabs a span{
-            background: url("../images/bank_selection_tab_right.png") no-repeat right -25px;
+            background: url("../../images/bank_selection_tab_right.png") no-repeat right -25px;
             cursor: pointer;
             float: left;
             height: 25px;
@@ -45,7 +45,7 @@
         }
 /* .notify */
 #tcSoftwareMM .notify{
-    background:url(../images/note-icon-1.png) no-repeat 0 0;
+    background:url(../../images/note-icon-1.png) no-repeat 0 0;
     padding-left:32px;
     font-size:11px;
     color:#333;
@@ -84,12 +84,12 @@
         padding:0 14px;
     }
         #tcSoftwareMM .slotsMask .slots h3{
-            background:url(../images/red-star.png) no-repeat 0 2px;
+            background:url(../../images/red-star.png) no-repeat 0 2px;
             padding-left:20px;
             text-shadow:0 1px 0 #fafafa;
         }
             #tcSoftwareMM .slotsMask .slots li.slot{
-                background:url(../images/prize-panel-bg.png) no-repeat 0 -26px;
+                background:url(../../images/prize-panel-bg.png) no-repeat 0 -26px;
                 padding-left:6px;
                 display:inline-block;
                 list-style:none;
@@ -99,7 +99,7 @@
                 background-position:0 0;
             }
                 #tcSoftwareMM .slotsMask .slots li.slot .slotR{
-                    background:url(../images/prize-panel-bg.png) no-repeat right -130px;
+                    background:url(../../images/prize-panel-bg.png) no-repeat right -130px;
                     padding-right:6px;
                     display:inline-block;
                 }
@@ -107,7 +107,7 @@
                     background-position: right -104px; 
                 }
                     #tcSoftwareMM .slotsMask .slots li.slot .text{
-                        background:url(../images/prize-panel-bg.png) repeat-x 0 -78px;
+                        background:url(../../images/prize-panel-bg.png) repeat-x 0 -78px;
                         display:inline-block;
                         line-height:26px;
                         height:26px;
@@ -140,7 +140,7 @@
                         line-height:26px;
                     }
                     #tcSoftwareMM .slotsMask .slots li.slot .rm{
-                        background:url(../images/remove-icon-1.png) no-repeat center 0;
+                        background:url(../../images/remove-icon-1.png) no-repeat center 0;
                         display:inline-block;
                         height:13px;
                         width:13px;
@@ -152,7 +152,7 @@
                         background-position:0 -13px;
                     }
     #tcSoftwareMM .slotsMask .borderLine{
-        background:url(../images/box-line.gif) repeat-y 0 0;
+        background:url(../../images/box-line.gif) repeat-y 0 0;
         height:212px;
         width:2px;
         float:left;
@@ -165,7 +165,7 @@
         padding-right:12px;
     }
         #tcSoftwareMM .slotsMask .feedback h3{
-            background:url(../images/feedback-icon.png) no-repeat 0 center;
+            background:url(../../images/feedback-icon.png) no-repeat 0 center;
             padding-left:18px;
         }
         #tcSoftwareMM .slotsMask .feedback .fbArea{
@@ -178,13 +178,13 @@
             text-align:right;
         }
             #tcSoftwareMM .slotsMask .feedback .action a.add{
-                background:url(../images/add-feedback.png) no-repeat 0 3px;
+                background:url(../../images/add-feedback.png) no-repeat 0 3px;
                 line-height:16px;
                 padding-left:20px;
                 display:inline-block;
             }
             #tcSoftwareMM .slotsMask .feedback .action a.edit{
-                background:url(../images/edit-icon.png) no-repeat 0 center;
+                background:url(../../images/edit-icon.png) no-repeat 0 center;
                 line-height:16px;
                 padding-left:18px;
                 display:inline-block; 
@@ -197,7 +197,7 @@
         height:5px;
         width:5px;
         overflow:hidden;
-        background:url(../images/gray-box-corner.gif) no-repeat 0 0; 
+        background:url(../../images/gray-box-corner.gif) no-repeat 0 0; 
     }
     #tcSoftwareMM .slotsMask .tl{
         left:-1px;
@@ -228,7 +228,7 @@
     height:48px;
 }
     #tcSoftwareMM .ops a.saveit{
-        background:url(../images/save-icon.png) no-repeat 0 center;
+        background:url(../../images/save-icon.png) no-repeat 0 center;
         color:#333;
         padding-left:20px;
         font-size:11px;
@@ -250,7 +250,7 @@
             display:inline-block;
             cursor:pointer;
             line-height:24px;
-            background:url(../images/lock-icon.png) no-repeat 0 center;
+            background:url(../../images/lock-icon.png) no-repeat 0 center;
             padding-left:15px;
         }
 /* .mmDataTable */
@@ -295,7 +295,7 @@
         table-layout:fixed;
     }
         #tcSoftwareMM .mmDataTable table th{
-            background:url(../images/th-bg-2.gif) repeat-x 0 0;
+            background:url(../../images/th-bg-2.gif) repeat-x 0 0;
             height:28px;
             color:#333;
             font-weight: bold;
@@ -308,7 +308,7 @@
                 color:#000000;
                 font-size:11px;
                 font-weight:normal;
-                background:url(../images/download-icon.png) no-repeat 8px center;
+                background:url(../../images/download-icon.png) no-repeat 8px center;
                 padding-left:26px;
                 margin-left:4px;
                 display:inline-block;
@@ -327,10 +327,10 @@
             background:#f5f5f5;
         }
         #tcSoftwareMM .mmDataTable table td.pTag0{
-            background:url(../images/prize-1.png) no-repeat 0 0;
+            background:url(../../images/prize-1.png) no-repeat 0 0;
         }
         #tcSoftwareMM .mmDataTable table td.pTag1{
-            background:url(../images/prize-2.png) no-repeat 0 0;
+            background:url(../../images/prize-2.png) no-repeat 0 0;
         }
         #tcSoftwareMM .mmDataTable table .even td.pTag0,
         #tcSoftwareMM .mmDataTable table .even td.pTag1{
@@ -339,7 +339,7 @@
             #tcSoftwareMM .mmDataTable table td a.submission{
                  display:inline-block;
                  line-height:24px;
-                 background:url(../images/submission-icon.png) no-repeat 0 center;
+                 background:url(../../images/submission-icon.png) no-repeat 0 center;
                  padding-left:28px;
                 text-decoration:underline;
             } 
@@ -351,7 +351,7 @@
         display:inline-block;   
     }
         #tcSoftwareMM .mmDataTable .prizes a{
-            background:url(../images/prize-icon.png) no-repeat 0 0;
+            background:url(../../images/prize-icon.png) no-repeat 0 0;
             height:30px;
             width:30px;
             display:inline-block;
@@ -423,7 +423,7 @@
             padding-bottom:4px;
         }
             #tcSoftwareMM .mmDataTable .fbMask .edit a{
-                background:url(../images/edit-icon.png) no-repeat 0 center;
+                background:url(../../images/edit-icon.png) no-repeat 0 center;
                 line-height:16px;
                 padding-left:18px;
                 display:inline-block;
@@ -436,7 +436,7 @@
             background:#f5f5f5;
         }
              #tcSoftwareMM .mmDataTable .fbMask .add a{
-                background:url(../images/add-feedback.png) no-repeat 0 3px;
+                background:url(../../images/add-feedback.png) no-repeat 0 3px;
                 line-height:16px;
                 padding-left:20px;
                 display:inline-block;
@@ -467,7 +467,7 @@ width:572px;
 }
 #addFeedbackModal textarea,
 #editFeedbackModal textarea{
-    background:url(../images/textarea-bg.gif) no-repeat #FFFFFe 0 0;
+    background:url(../../images/textarea-bg.gif) no-repeat #FFFFFe 0 0;
     border:1px solid #a8abad;
     width:510px;
     padding:5px;
@@ -485,7 +485,7 @@ width:410px;
     padding:15px 10px 30px 28px;    
 }
     #lockinSuccessModal .modalBodyContent p, #saveSuccessModal .modalBodyContent p{
-        background:url(../images/modal-success.png) no-repeat 0 8px;
+        background:url(../../images/modal-success.png) no-repeat 0 8px;
         line-height:56px;
         font-size:14px;
         font-weight:bold;
@@ -500,7 +500,7 @@ width:490px;
     padding:24px 10px 20px 28px;
 }
     #lockinConfirmModal .modalBodyContent p{
-        background:url(../images/modal-notice.png) no-repeat 0 0;
+        background:url(../../images/modal-notice.png) no-repeat 0 0;
         line-height:20px;
         font-size:14px; 
         color:#333;
@@ -526,7 +526,7 @@ width:490px;
 }
     #lockinNoWinnerModal .modalBodyContent p,
     #lockinNoFeedbackModal .modalBodyContent p{
-        background:url(../images/modal-notice.png) no-repeat 0 0;
+        background:url(../../images/modal-notice.png) no-repeat 0 0;
         line-height:18px;
         font-size:14px;
         color:#333;
@@ -534,7 +534,7 @@ width:490px;
         padding-bottom:12px;
     }
     #lockinInvalidModal .modalBodyContent p{
-        background:url(../images/modal-notice.png) no-repeat 0 0;
+        background:url(../../images/modal-notice.png) no-repeat 0 0;
         line-height:20px;
         font-size:14px;
         color:#333;

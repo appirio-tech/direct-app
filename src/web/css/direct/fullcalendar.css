@@ -96,7 +96,7 @@
 .fc-header .fc-state-default a {
 	display: block;
 	text-decoration: none;
-	background: url(../images/calendar_left_button.png) no-repeat bottom right;
+	background: url(../../images/calendar_left_button.png) no-repeat bottom right;
 	width: 7px;
 	height: 12px;
 	padding-top: 8px;
@@ -104,7 +104,7 @@
 }
 
 .fc-button-next a{
-	background: url(../images/calendar_right_button.png) no-repeat bottom left !important;
+	background: url(../../images/calendar_right_button.png) no-repeat bottom left !important;
 }
 
 .fc-header .fc-state-default span {

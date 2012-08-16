@@ -48,7 +48,7 @@
 
 /* collapse */
 .chartCollapse a.collapse{
- background:transparent url(../images/icon-collapse.png) no-repeat scroll;
+ background:transparent url(../../images/icon-collapse.png) no-repeat scroll;
  background-position:0px 0px;
 }
 
@@ -128,7 +128,7 @@ td.alignLeft{
 
 /* Icon Graph */
 .btnArea a.btnGraph{
-	background:url(../images/btn-graph.png) top left no-repeat;
+	background:url(../../images/btn-graph.png) top left no-repeat;
 	width:21px;
 	height:21px;
 	display:block;
@@ -137,7 +137,7 @@ td.alignLeft{
 
 /* Icon Table */
 .btnArea a.btnTable{
-	background:url(../images/btn-table.png) top left no-repeat;
+	background:url(../../images/btn-table.png) top left no-repeat;
 	width:21px;
 	height:21px;
 	display:block;
@@ -170,7 +170,7 @@ a.fiterButton{
 	padding-left:15px;
 	font-size:12px;
 	text-decoration:underline;
-	background:url(../images/arrow-2.png) top left no-repeat;
+	background:url(../../images/arrow-2.png) top left no-repeat;
 	padding-right:15px;
 }
 
@@ -347,7 +347,7 @@ a.dp-choose-date { margin-right:0px;}
 
 /* Table Data */
 .tableDataArea .dashboardTable{
-	background:url(../images/dashboard-table-bg-2.png) repeat-x top left;	
+	background:url(../../images/dashboard-table-bg-2.png) repeat-x top left;	
 	border:1px solid #c6c7c8;
 	border-width:0px;
 }
@@ -357,7 +357,7 @@ a.dp-choose-date { margin-right:0px;}
 .tableDataArea .dashboardTableHeader{
 	font-size:12px;
 	border-top:0px;
-	background:url(../images/bg-head-rowspan.gif) top right no-repeat;
+	background:url(../../images/bg-head-rowspan.gif) top right no-repeat;
 }
 
 .tableDataArea  .dashboardTableHeader td.first{
@@ -408,10 +408,10 @@ a.dp-choose-date { margin-right:0px;}
 }
 
 .pagination3 .pages .prevInactive{
-    background-image:url(../images/page_prev_nactive.png);
+    background-image:url(../../images/page_prev_nactive.png);
 }
 .pagination3 .pages .nextInactive{
-    background-image:url(../images/page_next_nactive.png);
+    background-image:url(../../images/page_next_nactive.png);
 }
 
 .dashboardTableFooter .pagination3 .pages{
@@ -527,7 +527,7 @@ td.fontGreen{
     text-align:right;
 }
 .expandViewPopup .close a{
-    background:url("../images/ico-cancel.png") no-repeat left top;
+    background:url("../../images/ico-cancel.png") no-repeat left top;
     height:17px;
     width:17px;
     display:inline-block;
@@ -536,7 +536,7 @@ td.fontGreen{
     background-position:left -17px;
 }
 .expandViewPopup .dashboardTable {
-    background: url("../images/dashboard-table-bg-2.png") repeat-x left top;
+    background: url("../../images/dashboard-table-bg-2.png") repeat-x left top;
     border: 1px solid #A9ACAE;
 }
 .expandViewPopup .nobg {
@@ -566,7 +566,7 @@ td.fontGreen{
     padding-top:15px;
 }
 .expandViewPopup .collapse a{
-    background:url("../images/arrow-2.png") no-repeat left -15px;;
+    background:url("../../images/arrow-2.png") no-repeat left -15px;;
     line-height:14px;
     padding-left:15px;
 }
@@ -633,15 +633,15 @@ td.fontGreen{
 }
 
 .summaryPanel .tabs.customer {
-    background: url(../images/bg-tabs-customer.png) left bottom repeat-x;
+    background: url(../../images/bg-tabs-customer.png) left bottom repeat-x;
 }
 
 .summaryPanel .tabs.market {
-    background: url(../images/bg-tabs-market.png) left bottom repeat-x;
+    background: url(../../images/bg-tabs-market.png) left bottom repeat-x;
 }
 
 .summaryPanel .tabs.compare {
-    background: url(../images/bg-tabs-compare.png) left bottom repeat-x;
+    background: url(../../images/bg-tabs-compare.png) left bottom repeat-x;
 }
 
 .summaryPanel .tabs li {
@@ -827,25 +827,25 @@ td.fontGreen{
     width: 7px;
     height: 5px;
     margin-left: -3px;
-    background: url(../images/popup_new_arrow.png) no-repeat;
+    background: url(../../images/popup_new_arrow.png) no-repeat;
 }
 
 .tooltipHeader {
     height: 26px;
-    background: url(../images/tooltip_new_blue.png) left top no-repeat;
+    background: url(../../images/tooltip_new_blue.png) left top no-repeat;
     padding-left: 3px;
     overflow: hidden;
 }
 
 .tooltipHeader .tooltipHeaderRight {
     height: 26px;
-    background: url(../images/tooltip_new_blue.png) right -52px no-repeat;
+    background: url(../../images/tooltip_new_blue.png) right -52px no-repeat;
     padding-right: 3px;
 }
 
 .tooltipHeader .tooltipHeaderCenter {
     height: 26px;
-    background: url(../images/tooltip_new_blue.png) left -26px repeat-x;
+    background: url(../../images/tooltip_new_blue.png) left -26px repeat-x;
 }
 
 .tooltipHeader h2 {
@@ -882,20 +882,20 @@ td.fontGreen{
 
 .tooltipFooter {
     height: 3px;
-    background: url(../images/tooltip_new_cornner.png) left top no-repeat;
+    background: url(../../images/tooltip_new_cornner.png) left top no-repeat;
     padding-left: 3px;
     overflow: hidden;
 }
 
 .tooltipFooter .tooltipFooterRight {
     height: 3px;
-    background: url(../images/tooltip_new_cornner.png) right -6px no-repeat;
+    background: url(../../images/tooltip_new_cornner.png) right -6px no-repeat;
     padding-right: 3px;
 }
 
 .tooltipFooter .tooltipFooterCenter {
     height: 3px;
-    background: url(../images/tooltip_new_cornner.png) left -3px repeat-x;
+    background: url(../../images/tooltip_new_cornner.png) left -3px repeat-x;
 }
 
 .tooltipBox .tooltipContent a.viewDetailsLink {
@@ -912,18 +912,18 @@ td.fontGreen{
 .greenToolTipBox .tooltipHeader,
 .greenToolTipBox .tooltipHeaderRight,
 .greenToolTipBox .tooltipHeaderCenter {
-    background-image: url(../images/tooltip_new_green.png);
+    background-image: url(../../images/tooltip_new_green.png);
 }
 
 /* Orange Tooltip */
 .orangeToolTipBox .tooltipHeader,
 .orangeToolTipBox .tooltipHeaderRight,
 .orangeToolTipBox .tooltipHeaderCenter {
-    background-image: url(../images/tooltip_new_orange.png);
+    background-image: url(../../images/tooltip_new_orange.png);
 }
 
 .btnArea a.btnView {
-    background: url(../images/btn-view.png) top left no-repeat;
+    background: url(../../images/btn-view.png) top left no-repeat;
     width: 19px;
     height: 21px;
     display: block;
@@ -935,7 +935,7 @@ td.fontGreen{
 }
 
 .btnArea a.btnCompare {
-    background: url(../images/btn-compare.png) top left no-repeat;
+    background: url(../../images/btn-compare.png) top left no-repeat;
     width: 21px;
     height: 21px;
     display: block;
@@ -966,7 +966,7 @@ td.fontGreen{
 		.volumeView .summary .tabs{
 			float:left;
 			width:100%;
-			background:url(../images/bg-tabs-customer.png) left bottom repeat-x;
+			background:url(../../images/bg-tabs-customer.png) left bottom repeat-x;
 			list-style:none;
 			margin:0;
 			padding:0;
@@ -1180,7 +1180,7 @@ td.fontGreen{
 		.comparisonView .summary .tabs{
 			float:left;
 			width:100%;
-			background:url(../images/bg-tabs-customer.png) left bottom repeat-x;
+			background:url(../../images/bg-tabs-customer.png) left bottom repeat-x;
 			list-style:none;
 			margin:0;
 			padding:0;
@@ -1382,7 +1382,7 @@ td.fontGreen{
 }
 
 .tooltipBox2 SPAN.arrow {
-    background: url("../images/popup_new_arrow.png") no-repeat scroll 0 0 transparent;
+    background: url("../../images/popup_new_arrow.png") no-repeat scroll 0 0 transparent;
     bottom: -4px;
     display: block;
     height: 5px;
@@ -1399,7 +1399,7 @@ td.fontGreen{
     font-size: 11px;
     line-height: 25px;
     text-decoration: underline;
-    background: url("../images/beta-icon.gif") no-repeat scroll center right transparent;
+    background: url("../../images/beta-icon.gif") no-repeat scroll center right transparent;
     padding-right:45px;
     display: inline-block;
 }

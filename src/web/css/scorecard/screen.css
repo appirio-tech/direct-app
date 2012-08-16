@@ -359,47 +359,47 @@ A.delete{
 
 /*new updates end*/
 .details .caption{ /* help popup titles */
-		background: url(../../images/title_bg.png) repeat-x;
+		background: url(../../../images/title_bg.png) repeat-x;
 }
 
 
 .no_details .caption_det_type{ /* help popup titles */
-		/*background: url(../../images/title_bg.png) repeat-x;*/
+		/*background: url(../../../images/title_bg.png) repeat-x;*/
 		
 		background-color:#F5F5F5;
 		
 	}
 	
 	.no_details .caption_det_prize{ /* help popup titles */
-		/*background: url(../../images/title_bg.png) repeat-x;*/
+		/*background: url(../../../images/title_bg.png) repeat-x;*/
 		
 		background-color:#F5F5F5;
 		
 	}
 	.no_details .caption_det_files{ /* help popup titles */
-		/*background: url(../../images/title_bg.png) repeat-x;*/
+		/*background: url(../../../images/title_bg.png) repeat-x;*/
 		
 		background-color:#F5F5F5;
 		
 	}
 	
 	.no_details .caption_det_round{ /* help popup titles */
-		/*background: url(../../images/title_bg.png) repeat-x;*/
+		/*background: url(../../../images/title_bg.png) repeat-x;*/
 		
 
 		
 	}
 	.no_details .caption_det_spec{ /* help popup titles */
-		/*background: url(../../images/title_bg.png) repeat-x;*/
+		/*background: url(../../../images/title_bg.png) repeat-x;*/
 		
 	}
 
 		.details .caption .captionLeft{ 
-			background: url(../../images/title_left.png) no-repeat left;
+			background: url(../../../images/title_left.png) no-repeat left;
 		}
 		
 		.details .caption .captionRight{
-			background: url(../../images/title_right.png) no-repeat right;
+			background: url(../../../images/title_right.png) no-repeat right;
 		}
 		.details .caption .captionInner{
 			height: 35px;
@@ -650,7 +650,7 @@ A.delete{
 #TB_closeWindowButton{
 	width: 15px;
 	height: 15px;
-	background: url(../../images/close_ico.png) no-repeat;
+	background: url(../../../images/close_ico.png) no-repeat;
 	display: block;
 }
 
@@ -704,7 +704,7 @@ A.delete{
 
 A.button1{
 	float: left;
-	background: transparent url(../../images/button_left.png) no-repeat left;
+	background: transparent url(../../../images/button_left.png) no-repeat left;
 	font-size: 12px;
 	font-weight: bold;
 	color: #362f2d;
@@ -713,7 +713,7 @@ A.button1{
 
 	A.button1 SPAN{
 		float: left;
-		background: transparent url(../../images/button_right.png) no-repeat right;
+		background: transparent url(../../../images/button_right.png) no-repeat right;
 		padding: 5px 10px 2px 10px;
 		cursor: pointer;
 		height: 20px;
@@ -726,7 +726,7 @@ A.button1{
 	
 A.button2{
 	display: block;
-	background: transparent url(../../images/button.png) no-repeat top;
+	background: transparent url(../../../images/button.png) no-repeat top;
 	width: 253px;
 	height: 24px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -739,7 +739,7 @@ A.button2{
 }
 
 	A.button2:hover{
-		background: transparent url(../../images/button.png) no-repeat bottom;
+		background: transparent url(../../../images/button.png) no-repeat bottom;
 	}
 
 A.button3{
@@ -747,7 +747,7 @@ A.button3{
 	text-align: center;
 	margin: 0 auto;
 	text-decoration: none;
-	background: url(../../images/button2.png) no-repeat top;
+	background: url(../../../images/button2.png) no-repeat top;
 	width: 232px;
 	height: 23px;
 	color: #333333;
@@ -763,7 +763,7 @@ A.button3:hover{
 
 A.button4{
 	display: block;
-	background: transparent url(../../images/button3.png) no-repeat top;
+	background: transparent url(../../../images/button3.png) no-repeat top;
 	width: 144px;
 	height: 18px;
 	padding-top: 3px;
@@ -781,7 +781,7 @@ A.button4:hover{
 
 A.button5{
 	display: block;
-	background: transparent url(../../images/button4.png) no-repeat top;
+	background: transparent url(../../../images/button4.png) no-repeat top;
 	width: 144px;
 	height: 18px;
 	padding-top: 3px;
@@ -794,7 +794,7 @@ A.button5{
 
 	A.button5.back{
 		display: block;
-		background: transparent url(../../images/button4b.png) no-repeat top;
+		background: transparent url(../../../images/button4b.png) no-repeat top;
 		width: 151px;
 		height: 19px;
 		padding-top: 5px;
@@ -817,7 +817,7 @@ A.button7,
 A.button8,
 A.button10{
 	float: right;
-	background: transparent url(../../images/button5_left.png) no-repeat left top;
+	background: transparent url(../../../images/button5_left.png) no-repeat left top;
 	font-weight: bold;
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -826,7 +826,7 @@ A.button10{
 	margin: 0 3px;
 }
 	A.button6.green{ 
-		background-image: url(../../images/button11_left.png);
+		background-image: url(../../../images/button11_left.png);
 	}
 
 	A.button6 SPAN,
@@ -843,74 +843,74 @@ A.button10{
 	}
 
 A.button7{
-	background: url(../../images/button7_bg.png) repeat-x top;
+	background: url(../../../images/button7_bg.png) repeat-x top;
 	color: #333;
 }
 
 	A.button7 SPAN.left{
 		display: block;
-		background: url(../../images/button7_left.png) no-repeat left top;
+		background: url(../../../images/button7_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.button7 SPAN.right{
 		display: block;
-		background: url(../../images/button7_right.png) no-repeat right top;
+		background: url(../../../images/button7_right.png) no-repeat right top;
 	}
 
 A.button8{
-	background: transparent url(../../images/button8_bg.png) repeat-x top;
+	background: transparent url(../../../images/button8_bg.png) repeat-x top;
 	color: #FFF !important;
 }
 
 	A.button8 SPAN.left{
-		background: url(../../images/button8_left.png) no-repeat left top;
+		background: url(../../../images/button8_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.button8 SPAN.right{
-		background: url(../../images/button8_right.png) no-repeat right top;
+		background: url(../../../images/button8_right.png) no-repeat right top;
 		padding: 5px 27px 0 27px;
 		height: 21px;
 	}
 A.button10{
-	background: transparent url(../../images/button10_bg.png) repeat-x top;
+	background: transparent url(../../../images/button10_bg.png) repeat-x top;
 	color: #FFF !important;
 }
 
 	A.button10 SPAN.left{
-		background: url(../../images/button10_left.png) no-repeat left top;
+		background: url(../../../images/button10_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.button10 SPAN.right{
-		background: url(../../images/button10_right.png) no-repeat right top;
+		background: url(../../../images/button10_right.png) no-repeat right top;
 		padding: 5px 27px 0 27px;
 		height: 21px;
 	}
 
 A.button6{
-	background: url(../../images/button5_bg.png) repeat-x top;
+	background: url(../../../images/button5_bg.png) repeat-x top;
 }
 	A.button6.green{ 
-		background-image: url(../../images/button11_bg.png);
+		background-image: url(../../../images/button11_bg.png);
 	}
 
 	A.button6 SPAN.left{
-		background: url(../../images/button5_left.png) no-repeat left top;
+		background: url(../../../images/button5_left.png) no-repeat left top;
 		padding: 0;
 	}
 		A.button6.green SPAN.left{ 
-			background-image: url(../../images/button11_left.png);
+			background-image: url(../../../images/button11_left.png);
 		}
 	
 	A.button6 SPAN.right{
-		background: url(../../images/button5_right.png) no-repeat right top;
+		background: url(../../../images/button5_right.png) no-repeat right top;
 		padding: 4px 27px 0 27px;
 		height: 20px;
 	}
 		A.button6.green SPAN.right{ 
-			background-image: url(../../images/button11_right.png);
+			background-image: url(../../../images/button11_right.png);
 		}
 
 A.button6:hover,
@@ -956,7 +956,7 @@ A.button10:hover{
 	
 A.button9{
 	display: block;
-	background: transparent url(../../images/button9.png) no-repeat top;
+	background: transparent url(../../../images/button9.png) no-repeat top;
 	width: 126px;
 	height: 15px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -968,7 +968,7 @@ A.button9{
 	}
 
 	A.button9:hover{
-		background: transparent url(../../images/button9.png) no-repeat bottom;
+		background: transparent url(../../../images/button9.png) no-repeat bottom;
 	}
 
 /*----------------
@@ -996,7 +996,7 @@ IMG{
 	padding-left: 10px !important;
 }
 #loading {
-    background: url("../../images/loading.gif") no-repeat scroll center center transparent;
+    background: url("../../../images/loading.gif") no-repeat scroll center center transparent;
     border: 0 solid #666666;
     font: 15px Tahoma,Geneva,sans-serif;
     height: 100px;
@@ -1027,7 +1027,7 @@ IMG{
     padding:0 15px;
     }
     #helpCenterWidget h6{
-        background:url(../../images/questionIcon.png) no-repeat 0 center;
+        background:url(../../../images/questionIcon.png) no-repeat 0 center;
         padding-left:32px;
         line-height:22px;
         font-size:17px;
@@ -1054,7 +1054,7 @@ IMG{
             }
             #helpCenterWidget ul.tabList a,
             #helpCenterWidget ul.tabList a:visited{
-                background:url(../../images/tabListBG.png) repeat-x 100% -22px;
+                background:url(../../../images/tabListBG.png) repeat-x 100% -22px;
                 width:auto;
                 display:inline-block;
                 
@@ -1072,13 +1072,13 @@ IMG{
                 }
                 
                 #helpCenterWidget ul.tabList a:hover{
-                    background:url(../../images/tabListBG.png) repeat-x 0 -88px;
+                    background:url(../../../images/tabListBG.png) repeat-x 0 -88px;
                     }
                 
                 #helpCenterWidget ul.tabList a.actived,
                 #helpCenterWidget ul.tabList a.actived:visited,
                 #helpCenterWidget ul.tabList a.actived:hover{
-                    background:url(../../images/tabListBGActived.png) repeat-x 0 -23px;
+                    background:url(../../../images/tabListBGActived.png) repeat-x 0 -23px;
                     position:relative;
                     top:1px;
                     height:23px;
@@ -1133,7 +1133,7 @@ IMG{
                     }
                     .tabContent ul li{
                         padding-bottom:10px;
-                        background:url(../../images/grayArrow.gif) no-repeat 0 3px;
+                        background:url(../../../images/grayArrow.gif) no-repeat 0 3px;
                         }
                         .tabContent ul a,
                         .tabContent ul a:visited{
@@ -1149,7 +1149,7 @@ IMG{
     #helpCenterWidget .contactUs{
         margin:13px -15px 0;
         text-align:center;
-        background:url(../../images/shadow.png) repeat-x 0 0;
+        background:url(../../../images/shadow.png) repeat-x 0 0;
         padding-top:22px;
         padding-bottom:26px;
         }
@@ -1157,7 +1157,7 @@ IMG{
 .darkenBtn,
 .darkenBtn:visited {
     color: #fffffd;
-    background: url(../../images/darkenBtn.png) no-repeat 0 0;
+    background: url(../../../images/darkenBtn.png) no-repeat 0 0;
     width: auto;
     display: inline-block;
     padding-left: 12px;
@@ -1170,7 +1170,7 @@ IMG{
 }
 
 .darkenBtn .right {
-    background: url(../../images/darkenBtn.png) no-repeat 100% -66px;
+    background: url(../../../images/darkenBtn.png) no-repeat 100% -66px;
     width: auto;
     display: inline-block;
     padding-right: 12px;
@@ -1181,7 +1181,7 @@ IMG{
 }
 
 .darkenBtn .middle {
-    background: url(../../images/darkenBtn.png) repeat-x 0 -33px;
+    background: url(../../../images/darkenBtn.png) repeat-x 0 -33px;
     width: auto;
     display: inline-block;
     padding: 0 10px;
@@ -1192,15 +1192,15 @@ IMG{
 }
 
 .darkenBtn:hover {
-    background: url(../../images/darkenBtn.png) no-repeat 0 -99px;
+    background: url(../../../images/darkenBtn.png) no-repeat 0 -99px;
 }
 
 .darkenBtn:hover .right {
-    background: url(../../images/darkenBtn.png) no-repeat 100% -165px;
+    background: url(../../../images/darkenBtn.png) no-repeat 100% -165px;
 }
 
 .darkenBtn:hover .middle {
-    background: url(../../images/darkenBtn.png) repeat-x 0 -132px;
+    background: url(../../../images/darkenBtn.png) repeat-x 0 -132px;
 }       
 
 
@@ -1240,7 +1240,7 @@ IMG{
     width: 30px;
     height: 30px;
     text-indent: -9999px;
-    background: url(../../images/modal-close.png) left top no-repeat;
+    background: url(../../../images/modal-close.png) left top no-repeat;
     z-index: 2;
 }
 
@@ -1250,14 +1250,14 @@ IMG{
 
 #new-modal .outLay .modalHeader {
     height: 40px;
-    background: url(../../images/modal-header.png) left top no-repeat;
+    background: url(../../../images/modal-header.png) left top no-repeat;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalHeader .modalHeaderRight {
     height: 40px;
-    background: url(../../images/modal-header.png) right -80px no-repeat;
+    background: url(../../../images/modal-header.png) right -80px no-repeat;
     padding-right: 8px;
 }
 
@@ -1269,43 +1269,43 @@ IMG{
     font-weight: bold;
     color: #000000;
     padding-left: 22px;
-    background: url(../../images/modal-header.png) left -40px repeat-x;
+    background: url(../../../images/modal-header.png) left -40px repeat-x;
 }
 
 #new-modal .outLay .modalHeaderSmall {
     height: 8px;
-    background: url(../../images/preloader-corner.png) left top no-repeat;
+    background: url(../../../images/preloader-corner.png) left top no-repeat;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallRight {
     height: 8px;
-    background: url(../../images/preloader-corner.png) right -16px no-repeat;
+    background: url(../../../images/preloader-corner.png) right -16px no-repeat;
     padding-right: 8px;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter {
     height: 8px;
-    background: url(../../images/preloader-corner.png) left -8px repeat-x;
+    background: url(../../../images/preloader-corner.png) left -8px repeat-x;
 }
 
 #new-modal .outLay .modalFooter {
     height: 8px;
-    background: url(../../images/preloader-corner.png) left -24px no-repeat;
+    background: url(../../../images/preloader-corner.png) left -24px no-repeat;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalFooter .modalFooterRight {
     height: 8px;
-    background: url(../../images/preloader-corner.png) right -40px no-repeat;
+    background: url(../../../images/preloader-corner.png) right -40px no-repeat;
     padding-right: 8px;
 }
 
 #new-modal .outLay .modalFooter .modalFooterCenter {
     height: 8px;
-    background: url(../../images/preloader-corner.png) left -32px repeat-x;
+    background: url(../../../images/preloader-corner.png) left -32px repeat-x;
 }
 
 
@@ -1313,7 +1313,7 @@ IMG{
     border: 4px solid #000000;
     border-top-width: 0;
     border-bottom-width: 0;
-    background: #e6e6e6 url(../../images/modal-body-normal.png) left top repeat-x;
+    background: #e6e6e6 url(../../../images/modal-body-normal.png) left top repeat-x;
     font-size: 12px;
     color: #333333;
     line-height: 18px;
@@ -1351,7 +1351,7 @@ IMG{
     color: #333333;
     line-height: 18px;
     font-size: 12px;
-    background: #ffffff url(../../images/modal-text-shadow.png) left top repeat-x;
+    background: #ffffff url(../../../images/modal-text-shadow.png) left top repeat-x;
 }
 
 .outLay .textField {
@@ -1379,7 +1379,7 @@ IMG{
     min-height: 10px;
     padding-top: 4px;
     text-align: center;
-    background: url(../../images/preloader-body.png) left -2px repeat-x;
+    background: url(../../../images/preloader-body.png) left -2px repeat-x;
 }
 
 #preloaderModal .modalBody .preloaderTips {

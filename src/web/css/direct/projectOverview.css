@@ -58,7 +58,7 @@
 }
 
 .projectInforDiv .editProject a {
-    background: url("../images/edit-project-icon.png") no-repeat scroll 0 0 transparent;
+    background: url("../../images/edit-project-icon.png") no-repeat scroll 0 0 transparent;
     color: #FFFFFF;
     display: block;
     font-size: 12px;
@@ -786,7 +786,7 @@ td.contestActivities .completed .rightLaunch p a {
 
 .columeThird .projectedCost.red .leftProjected, .columeThird .projectedCost.red .rightProjected, .columeThird .projectedCost.red .midProjected,
 .columeForth .projectedDuration.red .leftProjected, .columeForth .projectedDuration.red .rightProjected, .columeForth .projectedDuration.red .midProjected {
-    background-image: url(../images/actual_red.png);
+    background-image: url(../../images/actual_red.png);
 }
 
 .columeThird .projectBudget dt.noData , .columeForth .totalBudgetInfor dt.noData {

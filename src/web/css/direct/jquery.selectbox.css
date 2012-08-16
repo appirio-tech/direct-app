@@ -64,11 +64,11 @@
  
 #dropdownWrapper .dd{
 	border:none;
-	background:url(../images/dropdown.png) no-repeat left top; 
+	background:url(../../images/dropdown.png) no-repeat left top; 
 	height:26px; 
 }
 #dropdownWrapper .dd .ddTitle{
-	background:url(../images/dropdown.png) repeat-x left -26px;
+	background:url(../../images/dropdown.png) repeat-x left -26px;
 	height:21px;
 	font-family:Tahoma, Geneva, sans-serif;
 	font-size:12px;
@@ -78,7 +78,7 @@
 	overflow:visible;
 }
 #dropdownWrapper .dd .ddTitle span.arrow{
-	background:url(../images/dropdown_select.png) no-repeat 0px 0px;
+	background:url(../../images/dropdown_select.png) no-repeat 0px 0px;
 	width:24px;
 	height:26px;
 	margin-top:-4px; 
@@ -100,11 +100,11 @@
 
 #selectPaymentWrapper .dd{
 	border:none;
-	background:url(../images/checkout_select.png) no-repeat left top; 
+	background:url(../../images/checkout_select.png) no-repeat left top; 
 	height:28px; 
 }
 #selectPaymentWrapper .dd .ddTitle{
-	background:url(../images/checkout_select.png) repeat-x left -28px;
+	background:url(../../images/checkout_select.png) repeat-x left -28px;
 	height:23px;
 	font-family:Tahoma, Geneva, sans-serif;
 	font-size:12px;
@@ -114,7 +114,7 @@
 	overflow:visible;
 }
 #selectPaymentWrapper .dd .ddTitle span.arrow{
-	background:url(../images/checkout_select_arrow.png) no-repeat 0px 0px;
+	background:url(../../images/checkout_select_arrow.png) no-repeat 0px 0px;
 	width:16px;
 	height:28px;
 	margin-top:-4px; 
@@ -137,11 +137,11 @@
 .withBorder{ margin: -76px 0 0 55px!important;  }
 #dropdownCountWrapper .dd{
 	border:none;
-	background:url(../images/select-count-left.png) no-repeat left top; 
+	background:url(../../images/select-count-left.png) no-repeat left top; 
 	height:19px; 
 }
 #dropdownCountWrapper .dd .ddTitle{
-	background:url(../images/select-count-left.png) repeat-x left -19px;
+	background:url(../../images/select-count-left.png) repeat-x left -19px;
 	height:18px;
 	font-family:Tahoma, Geneva, sans-serif;
 	font-size:12px;
@@ -151,7 +151,7 @@
 	overflow:visible;
 }
 #dropdownCountWrapper .dd .ddTitle span.arrow{
-	background:url(../images/select-count-right.png) no-repeat 0px 0px;
+	background:url(../../images/select-count-right.png) no-repeat 0px 0px;
 	width:12px;
 	height:19px;
 	margin-top:0px; 

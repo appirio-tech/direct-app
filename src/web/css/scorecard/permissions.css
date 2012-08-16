@@ -24,7 +24,7 @@
 	border:0px solid #FFFFFF;
 	padding:3px 0px 3px 10px;	
 	font-size: 10px;
-	background: transparent url(../../images/dot.png) repeat-x scroll bottom center;
+	background: transparent url(../../../images/dot.png) repeat-x scroll bottom center;
 }
 .permissions table th.permCol{
 	width:30%;	
@@ -48,18 +48,18 @@
 	margin-right:10px;	
 }	
 .permissions table td a.addUser{
-	background: transparent url(../../images/user.png) no-repeat;
+	background: transparent url(../../../images/user.png) no-repeat;
 	display: block;
 	height:23px;
 	width:23px;
 	margin-left:40%;
 }
 .permissions table td a.addUser:hover{
-	background: transparent url(../../images/user_active.png) no-repeat;
+	background: transparent url(../../../images/user_active.png) no-repeat;
 }
 
 .permissions table td a.addProject{
-	background: transparent url(../../images/folder.png) no-repeat;
+	background: transparent url(../../../images/folder.png) no-repeat;
 	display: block;
 	height:23px;
 	width:23px;
@@ -68,10 +68,10 @@
 	margin-right:10px;
 }
 .permissions table td a.addProject:hover{
-	background: transparent url(../../images/folder_active.png) no-repeat;
+	background: transparent url(../../../images/folder_active.png) no-repeat;
 }
 .permissions table td a.removeProject{
-	background: transparent url(../../images/delete1.png) no-repeat;
+	background: transparent url(../../../images/delete1.png) no-repeat;
 	display: block;
 	height:23px;
 	width:23px; 
@@ -87,7 +87,7 @@
 }
 
 .permissions table.notifications .collapse{
-	background: transparent url(../../images/minimize.png) no-repeat;
+	background: transparent url(../../../images/minimize.png) no-repeat;
 }	
 
 /* customized dialog css */
@@ -175,7 +175,7 @@
 	padding: 3px 0px 3px 10px;
 	margin:1px 0px ;
 	font-size: 11px;
-	background: transparent url(../../images/dot.png) repeat-x scroll bottom center;
+	background: transparent url(../../../images/dot.png) repeat-x scroll bottom center;
 	cursor: pointer;
 }
 
@@ -184,7 +184,7 @@
 }
 
 .ui-dialog .body .subtitle{
-	background: transparent url(../../images/calendar_header.png) repeat-x scroll 0 0;
+	background: transparent url(../../../images/calendar_header.png) repeat-x scroll 0 0;
 	height:33px;
 	font-size: 11px;
 }
@@ -233,7 +233,7 @@
 }	
 
 .ui-dialog a.dialogClose{
-	background: transparent url(../../images/close_ico.png) no-repeat scroll 0 0;
+	background: transparent url(../../../images/close_ico.png) no-repeat scroll 0 0;
 	height:15px;
 	width:15px;
 	display: block;
@@ -271,7 +271,7 @@
 	overflow-y: scroll !important;
 }
 .display-perpage .newListSelected { 
-	background:transparent url(../../images/pagination-select.png) no-repeat scroll 0 0;
+	background:transparent url(../../../images/pagination-select.png) no-repeat scroll 0 0;
 	border:0 none;
 	color:#333333;
 	cursor:pointer;

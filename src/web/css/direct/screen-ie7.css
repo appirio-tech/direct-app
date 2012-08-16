@@ -38,7 +38,7 @@
 
 .tabContent ul li {
     padding-bottom: 5px;
-    background: url(../images/grayArrow.gif) no-repeat 0 7px;
+    background: url(../../images/grayArrow.gif) no-repeat 0 7px;
 }
 
 .tabMore {
@@ -67,7 +67,7 @@
 }
 
 .homePageRSS {
-    background: url("../images/feed-icon.gif") no-repeat scroll center center transparent;
+    background: url("../../images/feed-icon.gif") no-repeat scroll center center transparent;
     display: block;
     padding-left: 13px;
     padding-top: 18px;

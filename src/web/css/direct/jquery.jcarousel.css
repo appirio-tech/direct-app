@@ -91,11 +91,11 @@
     width: 0;
     height: 0;
     cursor: pointer;
-    background: transparent url(../i/carousel_right_button.png) no-repeat 0 0;
+    background: transparent url(../../i/carousel_right_button.png) no-repeat 0 0;
 }
 
 .jcarousel-skin-topCoder .jcarousel-next-horizontal:hover {
-    background: url(../i/carousel_right_button.png) no-repeat 0 0;
+    background: url(../../i/carousel_right_button.png) no-repeat 0 0;
 }
 
 
@@ -107,9 +107,9 @@
     width: 0;
     height: 0;
     cursor: pointer;
-    background: url(../i/carousel_left_button.png) no-repeat;
+    background: url(../../i/carousel_left_button.png) no-repeat;
 }
 
 .jcarousel-skin-topCoder .jcarousel-prev-horizontal:hover {
-    background: transparent url(../i/carousel_left_button.png) no-repeat 0 0;
+    background: transparent url(../../i/carousel_left_button.png) no-repeat 0 0;
 }

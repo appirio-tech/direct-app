@@ -383,47 +383,47 @@ A.delete{
 
 
 .details .caption{ /* help popup titles */
-		background: url(../images/title_bg.png) repeat-x;
+		background: url(../../images/title_bg.png) repeat-x;
 	}
 
 .no_details .caption_det_type{ /* help popup titles */
-		/*background: url(../images/title_bg.png) repeat-x;*/
+		/*background: url(../../images/title_bg.png) repeat-x;*/
 		
 		background-color:#F5F5F5;
 		
 	}
 	
 	.no_details .caption_det_prize{ /* help popup titles */
-		/*background: url(../images/title_bg.png) repeat-x;*/
+		/*background: url(../../images/title_bg.png) repeat-x;*/
 		
 		background-color:#F5F5F5;
 		
 	}
 	.no_details .caption_det_files{ /* help popup titles */
-		/*background: url(../images/title_bg.png) repeat-x;*/
+		/*background: url(../../images/title_bg.png) repeat-x;*/
 		
 		background-color:#F5F5F5;
 		
 	}
 	
 	.no_details .caption_det_round{ /* help popup titles */
-		/*background: url(../images/title_bg.png) repeat-x;*/
+		/*background: url(../../images/title_bg.png) repeat-x;*/
 		
 
 		
 	}
 	.no_details .caption_det_spec{ /* help popup titles */
-		/*background: url(../images/title_bg.png) repeat-x;*/			
+		/*background: url(../../images/title_bg.png) repeat-x;*/			
 	}
 
 
 	
 		.details .caption .captionLeft{ 
-			background: url(../images/title_left.png) no-repeat left;
+			background: url(../../images/title_left.png) no-repeat left;
 		}
 		
 		.details .caption .captionRight{
-			background: url(../images/title_right.png) no-repeat right;
+			background: url(../../images/title_right.png) no-repeat right;
 		}
 		
 		.details .caption .captionInner{
@@ -718,7 +718,7 @@ A.delete{
     color:#333333;
 	font-size:13px;
 	font-weight:bold;
-	background:url(../images/icon_document.png) 4px 2px no-repeat;
+	background:url(../../images/icon_document.png) 4px 2px no-repeat;
 	padding-left:40px;
 	float:left;
 	width:auto;
@@ -776,7 +776,7 @@ A.delete{
 #TB_closeWindowButton{
 	width: 15px;
 	height: 15px;
-	background: url(../images/close_ico.png) no-repeat;
+	background: url(../../images/close_ico.png) no-repeat;
 	display: block;
 }
 
@@ -830,7 +830,7 @@ A.delete{
 
 A.button1{
 	float: left;
-	background: transparent url(../images/button_left.png) no-repeat left;
+	background: transparent url(../../images/button_left.png) no-repeat left;
 	font-size: 12px;
 	font-weight: bold;
 	color: #362f2d;
@@ -839,7 +839,7 @@ A.button1{
 
 A.button1 SPAN {
     float: left;
-    background: transparent url(../images/button_right.png) no-repeat right;
+    background: transparent url(../../images/button_right.png) no-repeat right;
     padding: 5px 10px 2px 10px;
     cursor: pointer;
     height: 20px;
@@ -852,7 +852,7 @@ A.button1:hover {
 
 A.button2 {
     display: block;
-    background: transparent url(../images/button.png) no-repeat top;
+    background: transparent url(../../images/button.png) no-repeat top;
     width: 253px;
     height: 24px;
     font-family: Arial, Helvetica, sans-serif;
@@ -865,7 +865,7 @@ A.button2 {
 }
 
 	A.button2:hover{
-		background: transparent url(../images/button.png) no-repeat bottom;
+		background: transparent url(../../images/button.png) no-repeat bottom;
 	}
 
 A.button3{
@@ -873,7 +873,7 @@ A.button3{
 	text-align: center;
 	margin: 0 auto;
 	text-decoration: none;
-	background: url(../images/button2.png) no-repeat top;
+	background: url(../../images/button2.png) no-repeat top;
 	width: 232px;
 	height: 25px;
 	color: #333333;
@@ -889,7 +889,7 @@ A.button3:hover{
 
 A.button4{
 	display: block;
-	background: transparent url(../images/button3.png) no-repeat top;
+	background: transparent url(../../images/button3.png) no-repeat top;
 	width: 144px;
 	height: 18px;
 	padding-top: 3px;
@@ -926,7 +926,7 @@ A.activateButton:hover{
 
 A.button5{
 	display: block;
-	background: transparent url(../images/button4.png) no-repeat top;
+	background: transparent url(../../images/button4.png) no-repeat top;
 	width: 144px;
 	height: 18px;
 	padding-top: 3px;
@@ -945,7 +945,7 @@ A.button6,
 A.button7,
 A.button8 {
     float: right;
-    background: url(../images/button5_left.png) no-repeat left top;
+    background: url(../../images/button5_left.png) no-repeat left top;
     font-weight: bold;
     font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
@@ -967,48 +967,48 @@ A.button8 {
 	}
 
 A.button7{
-	background: url(../images/button7_bg.png) repeat-x top;
+	background: url(../../images/button7_bg.png) repeat-x top;
 	color: #333;
 }
 
 	A.button7 SPAN.left{
 		display: block;
-		background: url(../images/button7_left.png) no-repeat left top;
+		background: url(../../images/button7_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.button7 SPAN.right{
 		display: block;
-		background: url(../images/button7_right.png) no-repeat right top;
+		background: url(../../images/button7_right.png) no-repeat right top;
 	}
 
 A.button8 {
-    background: url(../images/button8_bg.png) repeat-x top;
+    background: url(../../images/button8_bg.png) repeat-x top;
     color: #FFFFFD !important;
 }
 
 	A.button8 SPAN.left{
-		background: url(../images/button8_left.png) no-repeat left top;
+		background: url(../../images/button8_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.button8 SPAN.right{
-		background: url(../images/button8_right.png) no-repeat right top;
+		background: url(../../images/button8_right.png) no-repeat right top;
 		padding: 5px 27px 0 27px;
 		height: 21px;
 	}
 
 A.button6{
-	background: url(../images/button5_bg.png) repeat-x top;
+	background: url(../../images/button5_bg.png) repeat-x top;
 }
 
 	A.button6 SPAN.left{
-		background: url(../images/button5_left.png) no-repeat left top;
+		background: url(../../images/button5_left.png) no-repeat left top;
 		padding: 0;
 	}
 	
 	A.button6 SPAN.right{
-		background: url(../images/button5_right.png) no-repeat right top;
+		background: url(../../images/button5_right.png) no-repeat right top;
 		padding: 4px 27px 0 27px;
 		height: 20px;
 	}
@@ -1052,7 +1052,7 @@ A.button8:hover{
 
 A.button9 {
     display: block;
-    background: transparent url(../images/button9.png) no-repeat top;
+    background: transparent url(../../images/button9.png) no-repeat top;
     width: 126px;
     height: 15px;
     font-family: Arial, Helvetica, sans-serif;
@@ -1064,12 +1064,12 @@ A.button9 {
 }
 
 	A.button9:hover{
-		background: transparent url(../images/button9.png) no-repeat bottom;
+		background: transparent url(../../images/button9.png) no-repeat bottom;
 	}
 
 A.button10{
 	float: left;
-	background: transparent url(../images/button10.png) no-repeat left top;
+	background: transparent url(../../images/button10.png) no-repeat left top;
 	font-size: 12px;
 	font-weight: bold;
 	text-decoration: none;
@@ -1079,14 +1079,14 @@ A.button10{
 
 	A.button10 SPAN.left{
 		float: left;
-		background: transparent url(../images/button10.png) no-repeat right -48px;
+		background: transparent url(../../images/button10.png) no-repeat right -48px;
 		padding-right:3px;;
 		cursor: pointer;
 		overflow: hidden;
 	}
 	A.button10 SPAN.right{
 		float: left;
-		background: transparent url(../images/button10.png) left -24px repeat-x;
+		background: transparent url(../../images/button10.png) left -24px repeat-x;
 		cursor: pointer;
 		line-height:22px;
 		height: 24px;
@@ -1135,7 +1135,7 @@ height: 100px;
 position: fixed;
 top: 50%;
 left: 50%;
-background:url(../images/loading.gif) no-repeat center;
+background:url(../../images/loading.gif) no-repeat center;
 text-align:center;
 padding:10px;
 font:normal 15px Tahoma, Geneva, sans-serif;
@@ -1160,7 +1160,7 @@ overflow: auto;
 }
 
 .lookCP {
-    background: url(../images/redArrow.gif) no-repeat 0 center;
+    background: url(../../images/redArrow.gif) no-repeat 0 center;
     padding-left: 13px;
     font-size: 11px;
     color: #333;
@@ -1212,7 +1212,7 @@ overflow: auto;
 	padding:0 15px;
 	}
 	#helpCenterWidget h6{
-		background:url(../images/questionIcon.png) no-repeat 0 center;
+		background:url(../../images/questionIcon.png) no-repeat 0 center;
 		padding-left:32px;
 		line-height:22px;
 		font-size:17px;
@@ -1239,7 +1239,7 @@ overflow: auto;
 			}
 			#helpCenterWidget ul.tabList a,
 			#helpCenterWidget ul.tabList a:visited{
-				background:url(../images/tabListBG.png) repeat-x 100% -22px;
+				background:url(../../images/tabListBG.png) repeat-x 100% -22px;
 				width:auto;
 				display:inline-block;
 				
@@ -1257,13 +1257,13 @@ overflow: auto;
 				}
 				
 				#helpCenterWidget ul.tabList a:hover{
-					background:url(../images/tabListBG.png) repeat-x 0 -88px;
+					background:url(../../images/tabListBG.png) repeat-x 0 -88px;
 					}
 				
 				#helpCenterWidget ul.tabList a.actived,
 				#helpCenterWidget ul.tabList a.actived:visited,
 				#helpCenterWidget ul.tabList a.actived:hover{
-					background:url(../images/tabListBGActived.png) repeat-x 0 -23px;
+					background:url(../../images/tabListBGActived.png) repeat-x 0 -23px;
 					position:relative;
 					top:1px;
 					height:23px;
@@ -1318,7 +1318,7 @@ overflow: auto;
 					}
 					.tabContent ul li{
 						padding-bottom:10px;
-						background:url(../images/grayArrow.gif) no-repeat 0 3px;
+						background:url(../../images/grayArrow.gif) no-repeat 0 3px;
 						}
 						.tabContent ul a,
 						.tabContent ul a:visited{
@@ -1334,14 +1334,14 @@ overflow: auto;
 	#helpCenterWidget .contactUs{
 		margin:13px -15px 0;
 		text-align:center;
-		background:url(../images/shadow.png) repeat-x 0 0;
+		background:url(../../images/shadow.png) repeat-x 0 0;
 		padding-top:22px;
 		padding-bottom:26px;
 		}
 .darkenBtn,
 .darkenBtn:visited {
     color: #fffffd;
-    background: url(../images/darkenBtn.png) no-repeat 0 0;
+    background: url(../../images/darkenBtn.png) no-repeat 0 0;
     width: auto;
     display: inline-block;
     padding-left: 12px;
@@ -1354,7 +1354,7 @@ overflow: auto;
 }
 
 .darkenBtn .right {
-    background: url(../images/darkenBtn.png) no-repeat 100% -66px;
+    background: url(../../images/darkenBtn.png) no-repeat 100% -66px;
     width: auto;
     display: inline-block;
     padding-right: 12px;
@@ -1365,7 +1365,7 @@ overflow: auto;
 }
 
 .darkenBtn .middle {
-    background: url(../images/darkenBtn.png) repeat-x 0 -33px;
+    background: url(../../images/darkenBtn.png) repeat-x 0 -33px;
     width: auto;
     display: inline-block;
     padding: 0 10px;
@@ -1376,15 +1376,15 @@ overflow: auto;
 }
 
 .darkenBtn:hover {
-    background: url(../images/darkenBtn.png) no-repeat 0 -99px;
+    background: url(../../images/darkenBtn.png) no-repeat 0 -99px;
 }
 
 .darkenBtn:hover .right {
-    background: url(../images/darkenBtn.png) no-repeat 100% -165px;
+    background: url(../../images/darkenBtn.png) no-repeat 100% -165px;
 }
 
 .darkenBtn:hover .middle {
-    background: url(../images/darkenBtn.png) repeat-x 0 -132px;
+    background: url(../../images/darkenBtn.png) repeat-x 0 -132px;
 }
 
 /** cockpit footer **/
@@ -1406,7 +1406,7 @@ overflow: auto;
 
 #footer .socialNetwork a,
 #footer .socialNetwork a:visited {
-    background-image: url(../images/followIcon.gif);
+    background-image: url(../../images/followIcon.gif);
     background-repeat: no-repeat;
     width: 16px;
     height: 16px;
@@ -1452,7 +1452,7 @@ overflow: auto;
 
 #footer .copyright a,
 #footer .copyright a:visited {
-    background: url(../images/footerSeparator.gif) no-repeat left center;
+    background: url(../../images/footerSeparator.gif) no-repeat left center;
     color: #333;
     text-decoration: none;
     display: inline-block;
@@ -1499,7 +1499,7 @@ overflow: auto;
     width: 30px;
     height: 30px;
     text-indent: -9999px;
-    background: url(../images/modal-close.png) left top no-repeat;
+    background: url(../../images/modal-close.png) left top no-repeat;
     z-index: 2;
 }
 
@@ -1509,14 +1509,14 @@ overflow: auto;
 
 #new-modal .outLay .modalHeader {
     height: 40px;
-    background: url(../images/modal-header.png) left top no-repeat;
+    background: url(../../images/modal-header.png) left top no-repeat;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalHeader .modalHeaderRight {
     height: 40px;
-    background: url(../images/modal-header.png) right -80px no-repeat;
+    background: url(../../images/modal-header.png) right -80px no-repeat;
     padding-right: 8px;
 }
 
@@ -1528,50 +1528,50 @@ overflow: auto;
     font-weight: bold;
     color: #000000;
     padding-left: 22px;
-    background: url(../images/modal-header.png) left -40px repeat-x;
+    background: url(../../images/modal-header.png) left -40px repeat-x;
 }
 
 #new-modal .outLay .modalHeaderSmall {
     height: 8px;
-    background: url(../images/preloader-corner.png) left top no-repeat;
+    background: url(../../images/preloader-corner.png) left top no-repeat;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallRight {
     height: 8px;
-    background: url(../images/preloader-corner.png) right -16px no-repeat;
+    background: url(../../images/preloader-corner.png) right -16px no-repeat;
     padding-right: 8px;
 }
 
 #new-modal .outLay .modalHeaderSmall .modalHeaderSmallCenter {
     height: 8px;
-    background: url(../images/preloader-corner.png) left -8px repeat-x;
+    background: url(../../images/preloader-corner.png) left -8px repeat-x;
 }
 
 #new-modal .outLay .modalFooter {
     height: 8px;
-    background: url(../images/preloader-corner.png) left -24px no-repeat;
+    background: url(../../images/preloader-corner.png) left -24px no-repeat;
     padding-left: 8px;
     overflow: hidden;
 }
 
 #new-modal .outLay .modalFooter .modalFooterRight {
     height: 8px;
-    background: url(../images/preloader-corner.png) right -40px no-repeat;
+    background: url(../../images/preloader-corner.png) right -40px no-repeat;
     padding-right: 8px;
 }
 
 #new-modal .outLay .modalFooter .modalFooterCenter {
     height: 8px;
-    background: url(../images/preloader-corner.png) left -32px repeat-x;
+    background: url(../../images/preloader-corner.png) left -32px repeat-x;
 }
 
 .outLay .modalBody {
     border: 4px solid #000000;
     border-top-width: 0;
     border-bottom-width: 0;
-    background: #e6e6e6 url(../images/modal-body-normal.png) left top repeat-x;
+    background: #e6e6e6 url(../../images/modal-body-normal.png) left top repeat-x;
     font-size: 12px;
     color: #333333;
     line-height: 18px;
@@ -1609,7 +1609,7 @@ overflow: auto;
     color: #333333;
     line-height: 18px;
     font-size: 12px;
-    background: #ffffff url(../images/modal-text-shadow.png) left top repeat-x;
+    background: #ffffff url(../../images/modal-text-shadow.png) left top repeat-x;
 }
 
 .outLay .textField {
@@ -1637,7 +1637,7 @@ overflow: auto;
     min-height: 10px;
     padding-top: 4px;
     text-align: center;
-    background: url(../images/preloader-body.png) left -2px repeat-x;
+    background: url(../../images/preloader-body.png) left -2px repeat-x;
 }
 
 #preloaderModal .modalBody .preloaderTips {
@@ -1694,7 +1694,7 @@ overflow: auto;
 
 .projectTableContainer SPAN.leftCorner{
 	position:absolute;
-	background: url(../images/th_left_bg.png) no-repeat left top;
+	background: url(../../images/th_left_bg.png) no-repeat left top;
 	display: block;
 	height:25px;
 	width:2px;
@@ -1704,7 +1704,7 @@ overflow: auto;
 
 .projectTableContainer SPAN.rightCorner{
 	position:absolute;
-	background: url(../images/th_right_bg.png) no-repeat right top;
+	background: url(../../images/th_right_bg.png) no-repeat right top;
 	display: block;
 	height:25px;
 	width:2px;
@@ -1727,13 +1727,13 @@ overflow: auto;
 }
 
 #area1 .titleProjectCopilots H2.title{
-	background:url(../images/project_copilot_icon.png) left top no-repeat;
+	background:url(../../images/project_copilot_icon.png) left top no-repeat;
 	}
 #area1 .titleProjectStats H2.title{
-	background-image:url(../images/project_stats_icon.png);
+	background-image:url(../../images/project_stats_icon.png);
 	}
 #area1 .titleProjectForum H2.title{
-	background:url(../images/project_forum_icon.png) left top no-repeat;
+	background:url(../../images/project_forum_icon.png) left top no-repeat;
 	}
 
 /* Project Copilots area */
@@ -1784,7 +1784,7 @@ overflow: auto;
 			color:#ff0001;
 			padding-left:8px;
 			line-height:13px;
-			background:url(../images/arrow-link.gif) left center no-repeat;
+			background:url(../../images/arrow-link.gif) left center no-repeat;
 			}
 		.projectCopilotsLeader .projectCopilotsProblem dl a:hover{
 			text-decoration:underline;
@@ -1795,7 +1795,7 @@ overflow: auto;
 	border:1px solid #bdbdbd;
 	min-height:10px;
 	margin-bottom:15px;
-	background:url(../images/img-forum-person.png) 14px 22px no-repeat;
+	background:url(../../images/img-forum-person.png) 14px 22px no-repeat;
 	padding-left:300px;
 	padding-top:14px;
 	padding-right:10px;
@@ -1975,11 +1975,11 @@ overflow: auto;
 					margin:0 auto;
 					margin-top:136px;
 					text-indent:-9999px;
-					background:url(../images/add_tech.png) no-repeat left top;
+					background:url(../../images/add_tech.png) no-repeat left top;
 					}
 
 				#copilotManageModal .addUserForm .addItem:hover{
-					background:url(../images/add_tech_hover.png) no-repeat left top;
+					background:url(../../images/add_tech_hover.png) no-repeat left top;
 					}
 
 				#copilotManageModal .addUserForm .removeItem{
@@ -1989,11 +1989,11 @@ overflow: auto;
 					margin:0 auto;
 					margin-top:5px;
 					text-indent:-9999px;
-					background:url(../images/remove_tech.png) no-repeat left top;
+					background:url(../../images/remove_tech.png) no-repeat left top;
 					}
 
 				#copilotManageModal .addUserForm .removeItem:hover{
-					background:url(../images/remove_tech_hover.png) no-repeat left top;
+					background:url(../../images/remove_tech_hover.png) no-repeat left top;
 					}
 
 				#copilotManageModal .modalBody .buttonArea .button6{
@@ -2022,7 +2022,7 @@ overflow: auto;
 	}
 	.projectCopilotsList .copilotsListHeader{
 		height:24px;
-		background:url(../images/project_th_bg.png) left -1px repeat-x;
+		background:url(../../images/project_th_bg.png) left -1px repeat-x;
 		border-bottom:1px solid #bdbdbd;
 		line-height:24px;
 		}
@@ -2125,7 +2125,7 @@ overflow: auto;
 					}
 				#projectCopilotsCarousel .itemContainer .userInfor .mailTo{
 					clear:both;
-					background:url(../images/icon-email.png) left 4px no-repeat;
+					background:url(../../images/icon-email.png) left 4px no-repeat;
 					padding-left:18px;
 					}
 					#projectCopilotsCarousel .itemContainer .userInfor .mailTo a{
@@ -2187,7 +2187,7 @@ overflow: auto;
 	}
 	#projectForumTable .projectForumTableHeader{
 		height:24px;
-		background:url(../images/project_th_bg.png) left -1px repeat-x;
+		background:url(../../images/project_th_bg.png) left -1px repeat-x;
 		border-bottom:1px solid #bdbdbd;
 		line-height:24px;
 		padding-right:16px;
@@ -2286,7 +2286,7 @@ overflow: auto;
     width: 21px;
     height: 32px;
     cursor: pointer;
-    background: transparent url(../images/next-horizontal.png) no-repeat 0 0;
+    background: transparent url(../../images/next-horizontal.png) no-repeat 0 0;
 }
 
 .jcarousel-skin-tango .jcarousel-next-horizontal:hover {
@@ -2310,7 +2310,7 @@ overflow: auto;
     width: 21px;
     height: 32px;
     cursor: pointer;
-    background: transparent url(../images/prev-horizontal.png) no-repeat 0 0;
+    background: transparent url(../../images/prev-horizontal.png) no-repeat 0 0;
 }
 
 .jcarousel-skin-tango .jcarousel-prev-horizontal:hover {
@@ -2334,7 +2334,7 @@ overflow: auto;
 
 A.buttonRed1{
 	display:block;
-	background: transparent url(../images/button-left.png) left top no-repeat;
+	background: transparent url(../../images/button-left.png) left top no-repeat;
 	font-size: 11px;
 	color: #ffffff;
 	line-height:24px;
@@ -2349,7 +2349,7 @@ A.buttonRed1{
 
 	A.buttonRed1 span{
 		display:block;
-		background: transparent url(../images/button-right.png) right top no-repeat;
+		background: transparent url(../../images/button-right.png) right top no-repeat;
 		cursor: pointer;
 		height:24px;
 		padding-right:4px;
@@ -2373,7 +2373,7 @@ A.buttonRed1{
 	width:auto;
 	min-width:960px;
 	height:51px;
-	background:url(../images/ie6-notification-bg.png) repeat-x left top;
+	background:url(../../images/ie6-notification-bg.png) repeat-x left top;
 	position:absolute;
 	z-index:1000;
 	top:-51px;
@@ -2391,7 +2391,7 @@ A.buttonRed1{
 			margin-left:25px;
 			margin-top:13px;
 			padding-left:42px;
-			background:url(../images/ie6-alert.png) 0 0 no-repeat;
+			background:url(../../images/ie6-alert.png) 0 0 no-repeat;
 			}
 			
 		#ie6-notification .homeContent .alert{
@@ -2401,7 +2401,7 @@ A.buttonRed1{
 			margin-left:2px;
 			margin-top:13px;
 			padding-left:42px;
-			background:url(../images/ie6-alert.png) 0 0 no-repeat;
+			background:url(../../images/ie6-alert.png) 0 0 no-repeat;
 			}	
 
 			#ie6-notification .title{
@@ -2458,7 +2458,7 @@ A.buttonRed1{
 							height:122px;
 							display:block;
 							text-align:center;
-							background:url(../images/tip_Out.png) no-repeat;
+							background:url(../../images/tip_Out.png) no-repeat;
 							}
 							
 							#ie6-notification .tip .pic{
@@ -2518,7 +2518,7 @@ A.buttonRed1{
 		color:#333333;
 		clear:both;
 		text-decoration:underline;
-		background:url(../images/ie6-close-icon.png) 0 center no-repeat;
+		background:url(../../images/ie6-close-icon.png) 0 center no-repeat;
 		}
 	
 	#ie6-notification a.close:hover{
@@ -2533,7 +2533,7 @@ A.buttonRed1{
 		margin-top:10px;
 		margin-left:10px;
 		padding: 0 0 0 27px;
-		background:url(../images/checkout_download.png) no-repeat left top;
+		background:url(../../images/checkout_download.png) no-repeat left top;
 		}
 	
 	#ie6-notification a.downloadSubmission span{
@@ -2545,15 +2545,15 @@ A.buttonRed1{
 		font-weight: bold;
 		color:#FFFFFE;
 		padding: 0 7px;
-		background:url(../images/checkout_download_right.png) no-repeat right top;
+		background:url(../../images/checkout_download_right.png) no-repeat right top;
 		}
 	
 	#ie6-notification a.downloadSubmission:hover{
-		background:url(../images/checkout_download.png) no-repeat left -24px;
+		background:url(../../images/checkout_download.png) no-repeat left -24px;
 		}
 	
 	#ie6-notification a.downloadSubmission:hover span{
-		background:url(../images/checkout_download_right.png) no-repeat right -24px;
+		background:url(../../images/checkout_download_right.png) no-repeat right -24px;
 		}
 
 
@@ -2564,7 +2564,7 @@ A.buttonRed1{
 
 .newButton1 {
     display: inline-block;
-    background: url(../images/button-new-1.png) no-repeat left top;
+    background: url(../../images/button-new-1.png) no-repeat left top;
     height: 24px;
     padding-left: 4px;
     color: #fffffe;
@@ -2578,14 +2578,14 @@ A.buttonRed1{
 
 .newButton1 .btnR {
     display: inline-block;
-    background: url(../images/button-new-1.png) no-repeat right -48px;
+    background: url(../../images/button-new-1.png) no-repeat right -48px;
     padding-right: 4px;
     cursor: pointer;
 }
 
 .newButton1 .btnC {
     display: inline-block;
-    background: url(../images/button-new-1.png) left -24px repeat-x;
+    background: url(../../images/button-new-1.png) left -24px repeat-x;
     height: 24px;
     padding: 0 18px;
     cursor: pointer;
@@ -2766,7 +2766,7 @@ ul.errorMessage {
 	width:auto;
 	min-width:960px;
 	height:89px;
-	background:url(../images/bg-topcoder-maintenance.gif) repeat-x left top;
+	background:url(../../images/bg-topcoder-maintenance.gif) repeat-x left top;
 	position:absolute;
 	z-index:999;
 	top:-89px;
@@ -2786,7 +2786,7 @@ ul.errorMessage {
 			margin-left:25px;
 			margin-top:13px;
 			padding-left:42px;
-			background:url(../images/logo-topcoder-maintenance.gif) 0 0 no-repeat;
+			background:url(../../images/logo-topcoder-maintenance.gif) 0 0 no-repeat;
 			}	
 
 			#topcoder-maintenance-notification .title{
@@ -2826,7 +2826,7 @@ ul.errorMessage {
 		color:#333333;
 		clear:both;
 		text-decoration:underline;
-		background:url(../images/ie6-close-icon.png) 0 center no-repeat;
+		background:url(../../images/ie6-close-icon.png) 0 center no-repeat;
 		}
 	
 	#topcoder-maintenance-notification a.close:hover{

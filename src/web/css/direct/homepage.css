@@ -18,7 +18,7 @@ BODY{
 ----------------*/
 
 #landingPage #header {
-    background: url(../images/header_landing_bg.png) repeat-x top;
+    background: url(../../images/header_landing_bg.png) repeat-x top;
     height: 123px;
 }
 
@@ -56,7 +56,7 @@ BODY{
     font-weight: bold;
     text-decoration: none;
     display: block;
-    background: url(../images/help_ico.png) no-repeat top;
+    background: url(../../images/help_ico.png) no-repeat top;
     padding-top: 30px;
     width: 26px;
     text-align: center;
@@ -78,37 +78,37 @@ BODY{
 
 /* the top border */
 .wrapperTop{ 
-	background: url(../images/content_border.png) repeat-x top;
+	background: url(../../images/content_border.png) repeat-x top;
 }
 
 /* the bottom border */
 .wrapperBottom{ 
-	background: url(../images/content_border.png) repeat-x bottom;
+	background: url(../../images/content_border.png) repeat-x bottom;
 }
 
 /* the left border */
 .wrapperLeft{ 
-	background: url(../images/content_border.png) repeat-y left;
+	background: url(../../images/content_border.png) repeat-y left;
 }
 
 /* the right border */
 .wrapperRight{ 
-	background: url(../images/content_border.png) repeat-y right;
+	background: url(../../images/content_border.png) repeat-y right;
 }
 
 /* the top left corner */
 .wrapperTopLeft{ 
-	background: url(../images/border_top_left.png) no-repeat top left;
+	background: url(../../images/border_top_left.png) no-repeat top left;
 }
 
 /* the top right corner */
 .wrapperTopRight{ 
-	background: url(../images/border_top_right.png) no-repeat top right;
+	background: url(../../images/border_top_right.png) no-repeat top right;
 }
 
 /* the bottom left corner */
 .wrapperBottomLeft{ 
-	background: url(../images/border_bottom_left.png) no-repeat bottom left;
+	background: url(../../images/border_bottom_left.png) no-repeat bottom left;
 }
 
 
@@ -117,11 +117,11 @@ BODY{
 -----------------------*/
 
 .content{
-	background: url(../images/area2_bg.png) repeat-y right;
+	background: url(../../images/area2_bg.png) repeat-y right;
 }
 
 .contentInner{
-	background: url(../images/area2_bottom.png) no-repeat bottom right;
+	background: url(../../images/area2_bottom.png) no-repeat bottom right;
 	height: 100%;
 	overflow: hidden;
 }
@@ -142,7 +142,7 @@ BODY{
 }
 
 .jcarousel-control{ /* bottom area of the carousel */
-	background: url(../images/carousel_control.png) repeat-x;
+	background: url(../../images/carousel_control.png) repeat-x;
 	height: 23px;
 	font-size: 11px;
 	color: #333333;
@@ -261,20 +261,20 @@ BODY{
 }
 
 .statColumn TABLE TR TD.first{
-	background: #e5e5e5 url(../images/stat_table_left1.png) no-repeat left;
+	background: #e5e5e5 url(../../images/stat_table_left1.png) no-repeat left;
 }
 
 .statColumn TABLE TR TD.last{
-	background: #e5e5e5 url(../images/stat_table_right1.png) no-repeat right;
+	background: #e5e5e5 url(../../images/stat_table_right1.png) no-repeat right;
 }
 
 
 .statColumn TABLE TR.even TD.first{
-	background: #f2f2f2 url(../images/stat_table_left2.png) no-repeat left;
+	background: #f2f2f2 url(../../images/stat_table_left2.png) no-repeat left;
 }
 
 .statColumn TABLE TR.even TD.last{
-	background: #f2f2f2 url(../images/stat_table_right2.png) no-repeat right;
+	background: #f2f2f2 url(../../images/stat_table_right2.png) no-repeat right;
 }
 
 
@@ -288,7 +288,7 @@ BODY{
 }
 
 .statColumn A.helpIco{
-	background: url(../images/help_ico2.png) no-repeat center;
+	background: url(../../images/help_ico2.png) no-repeat center;
 	padding-right: 13px;
 	text-decoration: none;
 }
@@ -301,17 +301,17 @@ BODY{
 /*--- title ----*/
 
 .title{ /* title caption */
-	background: url(../images/title_bg.png) repeat-x;
+	background: url(../../images/title_bg.png) repeat-x;
 	height: 100%;
 	overflow: hidden;
 }
 
 .titleLeft{ /* left corner of the title caption */
-	background: url(../images/title_left.png) no-repeat left; 
+	background: url(../../images/title_left.png) no-repeat left; 
 }
 
 .titleRight{  /* right corner of the title caption */
-	background: url(../images/title_right.png) no-repeat right;
+	background: url(../../images/title_right.png) no-repeat right;
 	height: 35px;
 }
 
@@ -332,7 +332,7 @@ BODY{
 .area2{ /* the right column area */
 	float: right;
 	width: 240px;
-	background: url(../images/area2_top.png) no-repeat top;
+	background: url(../../images/area2_top.png) no-repeat top;
 }
 
 .login{ 
@@ -357,7 +357,7 @@ BODY{
 	}
 	
 	.login INPUT.text{ /* forms input */
-		background: url(../images/login_input.png) no-repeat;
+		background: url(../../images/login_input.png) no-repeat;
 		width: 184px;
 		height: 18px;
 		border: none;
@@ -392,7 +392,7 @@ BODY{
 	}
 	
 	.login .register{ /* container of register link and login button*/
-		background: url(../images/login_register.png) repeat-x top;
+		background: url(../../images/login_register.png) repeat-x top;
 		padding: 10px 0 0 0;
 		margin-top: 3px;
 		width: 100%;
@@ -419,14 +419,14 @@ BODY{
 	}
 
 .box{
-	background: url(../images/box_top.png) no-repeat top;
+	background: url(../../images/box_top.png) no-repeat top;
 	padding: 15px;
 	position: relative;
 }
 
 A.allVideos {
 /* all videos link */
-    background: transparent url(../images/all_videos.png) no-repeat;
+    background: transparent url(../../images/all_videos.png) no-repeat;
     width: 59px;
     height: 16px;
     padding-top: 4px;
@@ -440,16 +440,16 @@ A.allVideos {
 }
 
 A.allVideos:hover {
-    background: transparent url(../images/all_videosHover.png) no-repeat;
+    background: transparent url(../../images/all_videosHover.png) no-repeat;
 }
 
 .box .title {
 /* links title */
-    background: url(../images/title2_left.png) no-repeat left;
+    background: url(../../images/title2_left.png) no-repeat left;
 }
 
 	.box .title .titleInner{ /* links title */
-		background: url(../images/title2_right.png) no-repeat right;
+		background: url(../../images/title2_right.png) no-repeat right;
 		height: 35px;
 	}
 
@@ -477,7 +477,7 @@ A.allVideos:hover {
 		font-family: Verdana, Geneva, sans-serif;
 		font-size: 13px;
 		text-decoration: none;
-		background: url(../images/li_arrow.png) no-repeat left;
+		background: url(../../images/li_arrow.png) no-repeat left;
 		padding-left: 15px;
 	}
 	
@@ -489,15 +489,15 @@ A.allVideos:hover {
 /*-- need help box --*/
 
 .needHelpBox{ /* help box container */
-	background: url(../images/need_help.png) repeat-x;
+	background: url(../../images/need_help.png) repeat-x;
 }
 
 	.needHelpLeft{ /* left border */
-		background: url(../images/need_help_left.png) no-repeat left; 
+		background: url(../../images/need_help_left.png) no-repeat left; 
 	}
 	
 	.needHelpRight{ /* right border */
-		background: url(../images/need_help_right.png) no-repeat right;
+		background: url(../../images/need_help_right.png) no-repeat right;
 		height: 138px;
 	}
 	
@@ -529,7 +529,7 @@ A.allVideos:hover {
 	}
 	
 	.needHelpContent .faq{
-		background: url(../images/border.png) repeat-x 0 7px;
+		background: url(../../images/border.png) repeat-x 0 7px;
 		margin-top:10px;
 	}
 	
@@ -538,7 +538,7 @@ A.allVideos:hover {
 			font-size: 11px;
 			color: #333;
 			padding: 15px 0 6px 46px;
-			background: url(../images/help_ico3.png) no-repeat left bottom;
+			background: url(../../images/help_ico3.png) no-repeat left bottom;
 		}
 		
 		.needHelpContent .faq .faqHelp A{

@@ -8,7 +8,7 @@ a.dp-choose-date {
 	margin-left:6px;
 	overflow:hidden;
 	text-indent:-2000px;
-	background:url(../images/calendar.png) no-repeat;
+	background:url(../../images/calendar.png) no-repeat;
 }
 a.dp-choose-date:hover{
 	background-position:left -22px;
@@ -99,22 +99,22 @@ div.dp-popup {
 }
 div.dp-popup .datePickerWrapper{
 	padding-top:4px;
-	background:url(../images/datePicker-bg-top.png) left top no-repeat;
+	background:url(../../images/datePicker-bg-top.png) left top no-repeat;
 }
 div.dp-popup .datePickerWrapper .datePickerBottom{
 	padding-bottom:6px;
-	background:url(../images/datePicker-bg-bottom.png) left bottom no-repeat;
+	background:url(../../images/datePicker-bg-bottom.png) left bottom no-repeat;
 }
 div.dp-popup .datePickerWrapper .datePickerCenter{
 	width:208px;
 	padding:0 2px;
-	background:url(../images/datePicker-bg-center.png) left top repeat-y;
+	background:url(../../images/datePicker-bg-center.png) left top repeat-y;
 }
 div.dp-popup .datePickerWrapper .datePickerCenterInner{
 	position: relative;
 	width:198px;
 	padding:3px 5px;
-	background:#ffffff url(../images/datePicker-bg-center-repeat.png) left top repeat-x;
+	background:#ffffff url(../../images/datePicker-bg-center-repeat.png) left top repeat-x;
 }
 
 div#dp-popup {
@@ -207,16 +207,16 @@ div.dp-popup td.disabled {
 	cursor: default;
 }
 .dp-nav-prev-year{
-	background:url(../images/datePicker-year-prev.png) left top no-repeat;
+	background:url(../../images/datePicker-year-prev.png) left top no-repeat;
 }
 .dp-nav-next-year{
-	background:url(../images/datePicker-year-next.png) left top no-repeat;
+	background:url(../../images/datePicker-year-next.png) left top no-repeat;
 }
 .dp-nav-prev-month{
-	background:url(../images/datePicker-month-prev.png) left top no-repeat;
+	background:url(../../images/datePicker-month-prev.png) left top no-repeat;
 }
 .dp-nav-next-month{
-	background:url(../images/datePicker-month-next.png) left top no-repeat;
+	background:url(../../images/datePicker-month-next.png) left top no-repeat;
 }
 .dp-nav-prev-year:hover,
 .dp-nav-next-year:hover,

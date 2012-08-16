@@ -30,21 +30,21 @@ a.button4 {
 }
 
 a.draft, a.preview{
-	background:url(../images/grey_button_bg.gif) repeat-x left top;
+	background:url(../../images/grey_button_bg.gif) repeat-x left top;
 	}
 a.draft:hover, a.preview:hover{
-	background:url(../images/grey_button_bg.gif) repeat-x left bottom;
+	background:url(../../images/grey_button_bg.gif) repeat-x left bottom;
 	}
 	
 	a.draft span.left, a.preview span.left{
 		width:auto;
 		float:left;
 		display:inline;
-		background:url(../images/grey_button_left.gif) no-repeat left top;
+		background:url(../../images/grey_button_left.gif) no-repeat left top;
 		}
 		
 	a.draft:hover span.left, a.preview:hover span.left{
-		background:url(../images/grey_button_left.gif) no-repeat left bottom;
+		background:url(../../images/grey_button_left.gif) no-repeat left bottom;
 		}
 		
 		.tabHead a.draft span.right, .tabHead a.preview span.right{
@@ -58,13 +58,13 @@ a.draft:hover, a.preview:hover{
 			float:left;
 			display:inline;
 			padding:4px 19px 0 15px;
-			background:url(../images/grey_button_right.gif) no-repeat right top;
+			background:url(../../images/grey_button_right.gif) no-repeat right top;
 			font-family:'Myriad Pro';
 			text-align:center;
 			}
 			
 		a.draft:hover span.right, a.preview:hover span.right{
-			background:url(../images/grey_button_right.gif) no-repeat right bottom;
+			background:url(../../images/grey_button_right.gif) no-repeat right bottom;
 			
 			}
 			
@@ -81,7 +81,7 @@ a.smallRed span.right {
 
 #header{
 	height: 120px;
-	background: url(../images/header_dash_bg.png) repeat-x;
+	background: url(../../images/header_dash_bg.png) repeat-x;
 	position: relative;
 }
 
@@ -107,7 +107,7 @@ a.smallRed span.right {
 	padding-left: 40px;
 	padding-top: 7px;
 	padding-bottom: 3px;
-	background: url(../images/project_logo.png) no-repeat left;
+	background: url(../../images/project_logo.png) no-repeat left;
 }
 
 #header .helloUser{ /* this area will contain the logout, help links*/
@@ -149,7 +149,7 @@ a.smallRed span.right {
 	}
 		
 	#header .helloUser A.help{
-		background: url(../images/help_ico6.png) no-repeat right 0;
+		background: url(../../images/help_ico6.png) no-repeat right 0;
 		padding-right: 20px;
 		padding-top: 2px;
 		font-weight: bold;
@@ -158,7 +158,7 @@ a.smallRed span.right {
 	
 	
 	#header .helloUser A.help:hover{
-		background: url(../images/help_ico6.png) no-repeat right -17px;
+		background: url(../../images/help_ico6.png) no-repeat right -17px;
 	}
 	
 
@@ -168,7 +168,7 @@ a.smallRed span.right {
 	right:23px;
 	}
 .lookCP{
-	background:url(../images/redArrow.gif) no-repeat 0 center;
+	background:url(../../images/redArrow.gif) no-repeat 0 center;
 	padding-left:13px;
 	font-size:11px;
 	color:#333;
@@ -191,17 +191,17 @@ a.smallRed span.right {
 	MAIN
 ---------------*/	
 .stepTitle h3.infoIcon {
-	background:url(../images/i_icon.png) 0 0 no-repeat;
+	background:url(../../images/i_icon.png) 0 0 no-repeat;
 	padding-left:36px;
 }
 
 .stepTitle h3.tickIcon {
-	background:url(../images/tick-icon.png) 0 0 no-repeat;
+	background:url(../../images/tick-icon.png) 0 0 no-repeat;
 	padding-left:36px;
 }
 
 .get-a-copilot h3 span.small{
-	background:url(../images/small-round.png) 0 0 no-repeat;
+	background:url(../../images/small-round.png) 0 0 no-repeat;
 	font-family:Arial, Helvetica, sans-serif;
 	width:26px;
 	height:26px;
@@ -293,17 +293,17 @@ a.smallRed span.right {
 				
 				/*--- title ----*/
 				.title{ /* title caption */
-					background: url(../images/title_bg.png) repeat-x;
+					background: url(../../images/title_bg.png) repeat-x;
 					height: 100%;
 					overflow: hidden;
 				}
 				
 				.titleLeft{ /* left corner of the title caption */
-					background: url(../images/title_left.png) no-repeat left; 
+					background: url(../../images/title_left.png) no-repeat left; 
 				}
 				
 				.titleRight{  /* right corner of the title caption */
-					background: url(../images/title_right.png) no-repeat right;
+					background: url(../../images/title_right.png) no-repeat right;
 					height: 35px;
 				}
 				
@@ -318,7 +318,7 @@ a.smallRed span.right {
 					text-transform:uppercase;
 				}
 					.title a.edit,.title a.edit:visited {
-						background:url(../images/edit-white.png) 0 0 no-repeat;
+						background:url(../../images/edit-white.png) 0 0 no-repeat;
 						width:52px;
 						height:25px;
 						display:inline-block;
@@ -453,11 +453,11 @@ a.smallRed span.right {
 								display:inline;
 								margin-top:2px;
 								margin-left:20px;
-								background:url(../images/addButton.gif) no-repeat;
+								background:url(../../images/addButton.gif) no-repeat;
 								}
 								
 							.uploadContent .addButton:hover{
-								background:url(../images/addButton_hover.gif) no-repeat;
+								background:url(../../images/addButton_hover.gif) no-repeat;
 								}
                                 
 							/** remove button **/	
@@ -468,11 +468,11 @@ a.smallRed span.right {
 								display:inline;
 								margin-top:2px;
 								margin-left:20px;
-								background:url(../images/removeButton.gif) no-repeat;
+								background:url(../../images/removeButton.gif) no-repeat;
 								}
 								
 							.uploadContent .removeButton:hover{
-								background:url(../images/removeButton_hover.gif) no-repeat;
+								background:url(../../images/removeButton_hover.gif) no-repeat;
 								}                                
 							.uploadContent .removeButton.hide {
 								display:none;
@@ -549,7 +549,7 @@ a.smallRed span.right {
 				}
 				.red-button-big {
 					display: inline-block;
-					background: url(../images/red-button-big.png) left top no-repeat;
+					background: url(../../images/red-button-big.png) left top no-repeat;
 					height: 25px;
 					padding-left: 4px;
 					color: #fffffc;
@@ -561,13 +561,13 @@ a.smallRed span.right {
 				}
 					.red-button-big .right {
 						display: inline-block;
-						background: url(../images/red-button-big.png) right -50px no-repeat;
+						background: url(../../images/red-button-big.png) right -50px no-repeat;
 						padding-right: 4px;
 						cursor: pointer;
 					}
 						.red-button-big .right .middle {
 							display: inline-block;
-							background: url(../images/red-button-big.png) left -25px repeat-x;
+							background: url(../../images/red-button-big.png) left -25px repeat-x;
 							padding: 0 16px;
 							cursor: pointer;
 						}
@@ -578,7 +578,7 @@ a.smallRed span.right {
 				.disabled-button,
 				.disabled-button:hover {
 					display: inline-block;
-					background: url(../images/disabled-button.png) left top no-repeat;
+					background: url(../../images/disabled-button.png) left top no-repeat;
 					height: 25px;
 					padding-left: 4px;
 					color: #b8b8b8;
@@ -591,14 +591,14 @@ a.smallRed span.right {
 					.disabled-button .right,
 					.disabled-button:hover .right {
 						display: inline-block;
-						background: url(../images/disabled-button.png) right -50px no-repeat;
+						background: url(../../images/disabled-button.png) right -50px no-repeat;
 						padding-right: 4px;
 						cursor: pointer;
 					}
 						.disabled-button .right .middle,
 						.disabled-button:hover .right .middle {
 							display: inline-block;
-							background: url(../images/disabled-button.png) left -25px repeat-x;
+							background: url(../../images/disabled-button.png) left -25px repeat-x;
 							padding: 0 16px;
 							cursor: pointer;
 						}	
@@ -620,7 +620,7 @@ a.smallRed span.right {
 					color:#333333;
 				}
 					span.grayArrow {
-						background:url(../images/grayArrow.png) 0 0 no-repeat;
+						background:url(../../images/grayArrow.png) 0 0 no-repeat;
 						width:11px;
 						height:7px;
 						display:block;
@@ -711,7 +711,7 @@ a.smallRed span.right {
 				
 			
 			.summary .geryContent  .corner {
-				background:url(../images/white_corner.png) 0 0 no-repeat;
+				background:url(../../images/white_corner.png) 0 0 no-repeat;
 				width:4px;
 				height:4px;
 			}
@@ -779,7 +779,7 @@ a.smallRed span.right {
 					}
 					.get-a-copilot li a.viewContest,
 					.get-a-copilot li a.viewContest:visited {
-						background:url(../images/view_contest.png) 0 0 no-repeat;
+						background:url(../../images/view_contest.png) 0 0 no-repeat;
 						font-size:11px;
 						font-family:Arial, Helvetica, sans-serif;
 						text-decoration:none;
@@ -799,7 +799,7 @@ a.smallRed span.right {
                     }
 					.get-a-copilot li a.viewContest:hover span, .get-a-copilot li a.forumIcon:hover span, .get-a-copilot li a.viewProjectOverview:hover span{ text-decoration:underline;}
 					.get-a-copilot li a.viewProjectOverview,.get-a-copilot li a.viewProjectOverview:visited {
-						background:url(../images/project_overview_icon.png) 0 0 no-repeat;
+						background:url(../../images/project_overview_icon.png) 0 0 no-repeat;
 						font-size:11px;
 						font-family:Arial, Helvetica, sans-serif;
 						text-decoration:none;
@@ -816,7 +816,7 @@ a.smallRed span.right {
 					}
 					.get-a-copilot li a.forumIcon,
 					.get-a-copilot li a.forumIcon:visited {
-						background:url(../images/forum_ico.png) 0 0 no-repeat;
+						background:url(../../images/forum_ico.png) 0 0 no-repeat;
 						font-size:11px;
 						font-family:Arial, Helvetica, sans-serif;
 						text-decoration:none;
@@ -846,7 +846,7 @@ a.smallRed span.right {
 				font-size:14px;
 				color:#333333;
 				line-height:normal;
-				background:url(../images/ico_true.png) left center no-repeat;
+				background:url(../../images/ico_true.png) left center no-repeat;
 				padding-left:25px;
 			}
 				.get-a-copilot .stepSeven .form .textArea {
@@ -875,7 +875,7 @@ a.smallRed span.right {
 					}
 					.get-a-copilot .copilotPool .titleRight li a.grid,
 					.get-a-copilot .copilotPool .titleRight li a.grid:visited {
-						background:url(../images/grid_icon.png) left center no-repeat;
+						background:url(../../images/grid_icon.png) left center no-repeat;
 						padding-left:13px;
 						display:inline-block;
 						color:#333333;
@@ -884,7 +884,7 @@ a.smallRed span.right {
 					}
 					.get-a-copilot .copilotPool .titleRight li a.list,
 					.get-a-copilot .copilotPool .titleRight li a.list:visited {
-						background:url(../images/list_icon.png) left center no-repeat;
+						background:url(../../images/list_icon.png) left center no-repeat;
 						padding-left:13px;
 						display:inline-block;
 						color:#333333;
@@ -925,39 +925,39 @@ a.smallRed span.right {
 				.copilotPool .projectItem .projectContainer .top{
 					width:293px;
 					padding-top:10px;
-					background:url(../images/selectCopilot_top.png) no-repeat left top;
+					background:url(../../images/selectCopilot_top.png) no-repeat left top;
 					}
 					
 				.copilotPool .projectItem .projectContainer .bottom{
 					width:100%;
 					padding-bottom:10px;
-					background:url(../images/selectCopilot_bottom.png) no-repeat left bottom;
+					background:url(../../images/selectCopilot_bottom.png) no-repeat left bottom;
 					}
 					
 				.copilotPool .projectItem .projectContainer .bg{
 					width:100%;
 					height:181px;
 					padding-top:7px;
-					background:url(../images/selectCopilot_bg.png) repeat-y left top;
+					background:url(../../images/selectCopilot_bg.png) repeat-y left top;
 					}
 					
 				.copilotPool .projectItem .hover .top{
 					width:293px;
 					padding-top:10px;
-					background:url(../images/selectCopilot_top_hover.png) no-repeat left top;
+					background:url(../../images/selectCopilot_top_hover.png) no-repeat left top;
 					}
 					
 				.copilotPool .projectItem .hover .bottom{
 					width:100%;
 					padding-bottom:10px;
-					background:url(../images/selectCopilot_bottom_hover.png) no-repeat left bottom;
+					background:url(../../images/selectCopilot_bottom_hover.png) no-repeat left bottom;
 					}
 					
 				.copilotPool .projectItem .hover .bg{
 					width:100%;
 					height:181px;
 					padding-top:7px;
-					background:url(../images/selectCopilot_bg_hover.png) repeat-y left top;
+					background:url(../../images/selectCopilot_bg_hover.png) repeat-y left top;
 					}
 					
 					.copilotInfo {
@@ -982,12 +982,12 @@ a.smallRed span.right {
 								line-height:21px;
 								text-align:center;
 								text-decoration:none;
-								background:url(../images/blackButton2.png) no-repeat left top;
+								background:url(../../images/blackButton2.png) no-repeat left top;
 								margin-top:10px;
 							}
 						
 							.blackButton:hover{
-								background:url(../images/blackButton2.png) no-repeat left -21px;
+								background:url(../../images/blackButton2.png) no-repeat left -21px;
 								text-decoration:none;
 								}
 							.copioltPic .blackButton { margin-top:10px; }
@@ -1048,7 +1048,7 @@ a.smallRed span.right {
 							}
 							
 						a.blue, a.blue:visited {
-							background:url(../images/blue-bullet.png) left center no-repeat;
+							background:url(../../images/blue-bullet.png) left center no-repeat;
 							padding-left:9px;
 							text-decoration:none;
 							color:#0025e4;
@@ -1059,7 +1059,7 @@ a.smallRed span.right {
 						.stepContainer .geryContent .corner.white{
 							width:4px;
 							height:4px;
-							background:url(../images/white_corner.png) 0 0 no-repeat !important;
+							background:url(../../images/white_corner.png) 0 0 no-repeat !important;
 						}
 						.stepContainer .geryContent .corner.white.tr  {
 							background-position: -4px 0 !important;
@@ -1078,9 +1078,9 @@ a.smallRed span.right {
 			}
 			.pagination ul li a:hover {	text-decoration:underline;} 
 			.pagination ul li.current a ,.pagination ul li.current a:hover { font-weight: bold!important; text-decoration:none; }
-			.pagination ul li.next a{ padding: 0 10px 0 4px; background: url(../images/arrow-pagination-next.png) right top no-repeat; }
+			.pagination ul li.next a{ padding: 0 10px 0 4px; background: url(../../images/arrow-pagination-next.png) right top no-repeat; }
 			.pagination ul li.next a:hover{ background-position: right bottom; } 
-			.pagination ul li.prev a{ padding: 0 4px 0 10px; background: url(../images/arrow-pagination-prev.png) left top no-repeat; }
+			.pagination ul li.prev a{ padding: 0 4px 0 10px; background: url(../../images/arrow-pagination-prev.png) left top no-repeat; }
 			.pagination ul li.prev a:hover{ background-position: left bottom; }	
 						
 			
@@ -1118,20 +1118,20 @@ a.smallRed span.right {
 			
 			#copilotPopUp .inner{
 				margin:0 7px;
-				background:url(../images/modalBg.png) repeat-x left bottom #e8e8e8;
+				background:url(../../images/modalBg.png) repeat-x left bottom #e8e8e8;
 			}	
 			#copilotPopUp .modalTop{
 				padding:10px 0 0;
-				background:url(../images/small_modal_top2.png) no-repeat left top;
+				background:url(../../images/small_modal_top2.png) no-repeat left top;
 			}
 			
 			#copilotPopUp .modalBottom{
 				padding:0 0 10px;
-				background:url(../images/small_modal_bottom2.png) no-repeat left bottom;
+				background:url(../../images/small_modal_bottom2.png) no-repeat left bottom;
 				}
 				
 			#copilotPopUp .modalBg{
-				background:url(../images/small_modal_bg2.png) left top repeat-y;
+				background:url(../../images/small_modal_bg2.png) left top repeat-y;
 				position:relative;
 				left:-1px;
 				}
@@ -1164,13 +1164,13 @@ a.smallRed span.right {
 			}
 				.copilotListTable table th {
 					font-weight:normal;
-					background:url(../images/copilot_th_bg.png) 0 0 repeat-x;
+					background:url(../../images/copilot_th_bg.png) 0 0 repeat-x;
 					height:34px;
 					vertical-align:middle;
 					border:1px solid #bdbdbd;
 					cursor:pointer;
 				}
-				.copilotListTable table th.hover { background:url(../images/copilot_th_hover_bg.png) 0 0 repeat-x;}
+				.copilotListTable table th.hover { background:url(../../images/copilot_th_hover_bg.png) 0 0 repeat-x;}
 				.copilotListTable table th.first { border-left:none;}
 				.copilotListTable table th.last { border-right:none;}
 								
@@ -1244,7 +1244,7 @@ a.smallRed span.right {
 				line-height:1.5;
 			}
 				.grayTextArea .corner {
-					background:url(../images/gray-corners.png) 0 0 no-repeat;
+					background:url(../../images/gray-corners.png) 0 0 no-repeat;
 					display:block;
 					position:absolute;
 					width:4px;
@@ -1296,7 +1296,7 @@ a.smallRed span.right {
 			}
 			
 				.grayTextAreaCustom .corner {
-					background:url(../images/gray-corners-custom.png) 0 0 no-repeat;
+					background:url(../../images/gray-corners-custom.png) 0 0 no-repeat;
 					display:block;
 					position:absolute;
 					width:4px;
@@ -1327,7 +1327,7 @@ a.smallRed span.right {
 					text-transform:uppercase;
 					color:#1a1a1a;
 					font-size:14px;
-					background:url(../images/line.gif) left bottom repeat-x;
+					background:url(../../images/line.gif) left bottom repeat-x;
 					padding:7px 10px 8px;
 					font-weight:normal;
 				}
@@ -1357,7 +1357,7 @@ a.smallRed span.right {
 
 .black-button {
 	display: inline-block;
-	background: url(../images/black-button.png) left top no-repeat;
+	background: url(../../images/black-button.png) left top no-repeat;
 	height: 21px;
 	padding-left: 2px;
 	color: #fffffc;
@@ -1368,13 +1368,13 @@ a.smallRed span.right {
 }
 	.black-button .right {
 		display: inline-block;
-		background: url(../images/black-button.png) right -42px no-repeat;
+		background: url(../../images/black-button.png) right -42px no-repeat;
 		padding-right: 2px;
 		cursor: pointer;
 	}
 		.black-button .right .middle {
 			display: inline-block;
-			background: url(../images/black-button.png) left -21px repeat-x;
+			background: url(../../images/black-button.png) left -21px repeat-x;
 			padding: 0 25px;
 			cursor: pointer;
 		}
@@ -1386,7 +1386,7 @@ a.smallRed span.right {
 .copilot-carousel { position: relative; }
 		.copilot-carousel .corner {
 			position: absolute;
-			background-image: url(../images/copilot-carousel-corner.png);
+			background-image: url(../../images/copilot-carousel-corner.png);
 			background-repeat: no-repeat;
 			width: 5px;
 			height: 5px;
@@ -1403,7 +1403,7 @@ a.smallRed span.right {
 			background-position: right top;
 		}
 		.copilot-carousel .carousel-content {
-			background: black url(../images/copilot-carousel.png) left top repeat-x;
+			background: black url(../../images/copilot-carousel.png) left top repeat-x;
 			overflow: hidden;
 			height: 277px;
 		}
@@ -1450,11 +1450,11 @@ a.smallRed span.right {
 			color: #c9c9c9;
 			font-family: Arial, Helvetica, sans-serif;
 			line-height: 20px;	
-			background: url(../images/carousel-row-dashed.png) left bottom repeat-x;
+			background: url(../../images/carousel-row-dashed.png) left bottom repeat-x;
 			height: 20px;
 		}
 			.copilot-carousel .copilot-details .colRight .row {
-				background:#5d5d58 url(../images/carousel-row-dashed.png) left bottom repeat-x;
+				background:#5d5d58 url(../../images/carousel-row-dashed.png) left bottom repeat-x;
 			}
 			.copilot-carousel .copilot-details .row.first{
 				height:1px;
@@ -1484,7 +1484,7 @@ a.smallRed span.right {
 		}
 					
 		.copilot-carousel .foot-bar {
-			background: url('../images/carousel_stats_bg.png') repeat-x left top;
+			background: url('../../images/carousel_stats_bg.png') repeat-x left top;
 			margin-bottom: 2px;
 			line-height: 25px;
 			height: 25px;
@@ -1495,7 +1495,7 @@ a.smallRed span.right {
 		}
 			.copilot-carousel .foot-bar a {
 				display: inline-block;
-				background-image: url(../images/arrow-foot-bar.png);
+				background-image: url(../../images/arrow-foot-bar.png);
 				background-repeat: no-repeat;
 				width: 7px;
 				height: 12px;
@@ -1504,7 +1504,7 @@ a.smallRed span.right {
 				text-decoration:none;
 			}
 			.copilot-carousel .foot-bar a:hover {
-				background:url(../images/arrow-foot-bar-hover.png) 0 0 no-repeat;
+				background:url(../../images/arrow-foot-bar-hover.png) 0 0 no-repeat;
 			}
 			.copilot-carousel .foot-bar a.prev,.copilot-carousel .foot-bar a.prev:hover{
 				float: left;
@@ -1543,7 +1543,7 @@ a.smallRed span.right {
 		width: 950px;	
 	}
 	.carouselNav .navBack{
-		background:url(../images/caro-nav-back.png) right top no-repeat;
+		background:url(../../images/caro-nav-back.png) right top no-repeat;
 		height: 93px;
 		width: 20px;
 		position: absolute;
@@ -1551,7 +1551,7 @@ a.smallRed span.right {
 		top: 0;
 	}
 	.carouselNav .navForward{
-		background:url(../images/caro-nav-forward.png) left top no-repeat;
+		background:url(../../images/caro-nav-forward.png) left top no-repeat;
 		height: 93px;
 		width: 20px;
 		position: absolute;
@@ -1601,7 +1601,7 @@ a.smallRed span.right {
 		}
 		.carouselNav ul.loading a
 		{
-			background: url(../images/preloader-loading.gif) no-repeat center;
+			background: url(../../images/preloader-loading.gif) no-repeat center;
 		}
 		.carouselNav ul.loading img
 		{
@@ -1612,7 +1612,7 @@ a.smallRed span.right {
 			visibility: visible;
 		}
 		.carouselNav ul li.current a{
-			background: url(../images/caro-nav-current.png) center top no-repeat;
+			background: url(../../images/caro-nav-current.png) center top no-repeat;
 		}
 		
 /* copilot-wrapper */
@@ -1629,7 +1629,7 @@ a.smallRed span.right {
 	.copilot-wrapper .photo img { margin-bottom: 2px; }
 	.copilot-wrapper .photo .view-profile {
 		display: inline-block;
-		background: url(../images/arrow-view-profile.png) left 3px no-repeat;
+		background: url(../../images/arrow-view-profile.png) left 3px no-repeat;
 		padding-left: 9px;
 		color: #0025e4;
 		font-size: 11px;
@@ -1756,13 +1756,13 @@ a.smallRed span.right {
 .pageArea .pagination span.prev.current, .pageArea .pagination span.next.current { font-weight:normal!important;}
 .pageArea .pagination span.prev.current:hover, .pageArea .pagination span.next.current:hover { text-decoration:underline; cursor: pointer;}
 
-.pageArea .pagination a.next{ padding: 0 10px 0 4px; background: url(../images/arrow-pagination-next.png) right top no-repeat; }
+.pageArea .pagination a.next{ padding: 0 10px 0 4px; background: url(../../images/arrow-pagination-next.png) right top no-repeat; }
 .pageArea .pagination a.next:hover{ background-position: right bottom; } 
-.pageArea .pagination a.prev{ padding: 0 4px 0 10px; background: url(../images/arrow-pagination-prev.png) left top no-repeat; }
+.pageArea .pagination a.prev{ padding: 0 4px 0 10px; background: url(../../images/arrow-pagination-prev.png) left top no-repeat; }
 .pageArea .pagination a.prev:hover{ background-position: left bottom; }	
-.pageArea .pagination span.next{ padding: 0 10px 0 4px; background: url(../images/arrow-pagination-next.png) right top no-repeat; }
+.pageArea .pagination span.next{ padding: 0 10px 0 4px; background: url(../../images/arrow-pagination-next.png) right top no-repeat; }
 .pageArea .pagination span.next:hover{ background-position: right bottom; } 
-.pageArea .pagination span.prev{ padding: 0 4px 0 10px; background: url(../images/arrow-pagination-prev.png) left top no-repeat; }
+.pageArea .pagination span.prev{ padding: 0 4px 0 10px; background: url(../../images/arrow-pagination-prev.png) left top no-repeat; }
 .pageArea .pagination span.prev:hover{ background-position: left bottom; }	
 
 .copilotListTable  .userLinkTD  a{
@@ -1775,9 +1775,9 @@ a.smallRed span.right {
 
 .copilotList .dataTables_paginate span.paginate_button:hover { text-decoration:underline;} 
 .copilotList .dataTables_paginate span.paginate_active ,.pagination  span.paginate_active:hover { font-weight: bold!important; text-decoration:none; }
-.copilotList .dataTables_paginate span.next{ padding: 0 10px 0 4px; background: url(../images/arrow-pagination-next.png) right top no-repeat; }
+.copilotList .dataTables_paginate span.next{ padding: 0 10px 0 4px; background: url(../../images/arrow-pagination-next.png) right top no-repeat; }
 .copilotList .dataTables_paginate span.next:hover{ background-position: right bottom; } 
-.copilotList .dataTables_paginate span.previous{ padding: 0 4px 0 10px; background: url(../images/arrow-pagination-prev.png) left top no-repeat; }
+.copilotList .dataTables_paginate span.previous{ padding: 0 4px 0 10px; background: url(../../images/arrow-pagination-prev.png) left top no-repeat; }
 .copilotList .dataTables_paginate span.previous:hover{ background-position: left bottom; }
 
 .get-a-copilot .leftColumn .rowItem label {
@@ -1840,7 +1840,7 @@ a.smallRed span.right {
 }
 /* button Red */
 .btnRed{
-	background:url(../images/btn_red.png) left top no-repeat;
+	background:url(../../images/btn_red.png) left top no-repeat;
 	display:inline-block;
 	padding-left:3px;
 	height:30px;
@@ -1849,7 +1849,7 @@ a.smallRed span.right {
 	text-decoration: none;
 }
 	.btnRed .right{
-		background:url(../images/btn_red.png) right bottom no-repeat;
+		background:url(../../images/btn_red.png) right bottom no-repeat;
 		display:inline-block;
 		height:30px;
 		padding-right:3px;	
@@ -1857,7 +1857,7 @@ a.smallRed span.right {
 		cursor:pointer;			
 	}
 		.btnRed .right .middle{
-			background:url(../images/btn_red.png) 0 -30px repeat-x;
+			background:url(../../images/btn_red.png) 0 -30px repeat-x;
 			display:inline-block;
 			height:30px;
 			line-height:30px;
@@ -1871,11 +1871,11 @@ a.smallRed span.right {
 			padding: 0 10px;
 		}
 .btnRed:hover{
-	background:url(../images/btn_red_hover.png) left top no-repeat;
+	background:url(../../images/btn_red_hover.png) left top no-repeat;
 }
 	.btnRed:hover .right{
-		background:url(../images/btn_red_hover.png) right bottom no-repeat;
+		background:url(../../images/btn_red_hover.png) right bottom no-repeat;
 	}
 		.btnRed:hover .right .middle{
-			background:url(../images/btn_red_hover.png) 0 -30px repeat-x;
+			background:url(../../images/btn_red_hover.png) 0 -30px repeat-x;
 		}	

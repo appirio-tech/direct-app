@@ -93,7 +93,7 @@
 					line-height:34px;
 					font-weight:bold;
 					text-decoration:none;
-					background:url(../../images/tabTop.gif) no-repeat;
+					background:url(../../../images/tabTop.gif) no-repeat;
 					}
 					
 				#launchContestOut .tabOut li.bottom a{
@@ -105,7 +105,7 @@
 					line-height:33px;
 					font-weight:bold;
 					text-decoration:none;
-					background:url(../../images/tabBottom.gif) no-repeat;
+					background:url(../../../images/tabBottom.gif) no-repeat;
 					}
 				
 				/** current status **/	
@@ -113,14 +113,14 @@
 					width:111px;
 					font-size:14px;
 					color:#fffffe;
-					background:url(../../images/tabTop_current.gif) no-repeat;
+					background:url(../../../images/tabTop_current.gif) no-repeat;
 					}
 				
 				#launchContestOut .tabOut li.bottom a.current{
 					width:111px;
 					font-size:14px;
 					color:#fffffe;
-					background:url(../../images/tabBottom_current.gif) no-repeat;
+					background:url(../../../images/tabBottom_current.gif) no-repeat;
 					}
 				/** end current status **/	
 				
@@ -152,7 +152,7 @@
 				position:absolute;
 				top:-1px;
 				right:-1px;
-				background:url(../../images/launchContest_corcen_tr.gif) no-repeat;
+				background:url(../../../images/launchContest_corcen_tr.gif) no-repeat;
 				}
 				
 			#launchContestOut .tabContest .br{
@@ -161,7 +161,7 @@
 				position:absolute;
 				bottom:-1px;
 				right:-1px;
-				background:url(../../images/launchContest_corcen_br.gif) no-repeat;
+				background:url(../../../images/launchContest_corcen_br.gif) no-repeat;
 				}
 				
 			#launchContestOut .selectDesign,#launchContestOut .selectSoftware{
@@ -172,7 +172,7 @@
 				padding-left: 29px;
 				position:absolute;
 				overflow: visible;
-				background: url(../../images/launchContest_tabOut_tab.gif) no-repeat 0px 0px;
+				background: url(../../../images/launchContest_tabOut_tab.gif) no-repeat 0px 0px;
 				}
 				
 				#launchContestOut .selectDesign1{
@@ -199,7 +199,7 @@
 					padding-right:10px;
 					font-size:11px;
 					
-					background:url(../../images/iconI.png) no-repeat left center;
+					background:url(../../../images/iconI.png) no-repeat left center;
 					}
 					#launchContestOut .selectDesign .new_style{
 						font-weight:bold;
@@ -214,7 +214,7 @@
 					font-size:11px;
 					line-height:28px;
 					text-decoration:none;
-					background:url(../../images/moreLink_icon.gif) no-repeat left center;
+					background:url(../../../images/moreLink_icon.gif) no-repeat left center;
 					}
 					
 				#launchContestOut .selectDesign .moreLink:hover,#launchContestOut .selectSoftware .moreLink:hover{
@@ -258,7 +258,7 @@
 				padding:0 5px;
 				line-height:25px;
 				border:0;
-				background:url(../../images/addNew_input.gif) no-repeat;
+				background:url(../../../images/addNew_input.gif) no-repeat;
 				}
 				
 			#launchContestOut .addNewContest .projectSelect .text{
@@ -267,7 +267,7 @@
 				padding:0 5px;
 				line-height:25px;
 				border:0;
-				background:url(../../images/tabContest_input.gif) no-repeat;
+				background:url(../../../images/tabContest_input.gif) no-repeat;
 				}
 				
 			#launchContestOut .addNewContest .projectSelect,#launchContestOut .addNewContest .billingSelect{
@@ -320,7 +320,7 @@
 			float: right;
 			width: 200px;
 			height: 60px;
-			background: url(../../images/horizontal_solution_PPeCheck_tc.png) no-repeat left top;
+			background: url(../../../images/horizontal_solution_PPeCheck_tc.png) no-repeat left top;
 			}
 
 		#area1 .paymentMethod .message{
@@ -381,17 +381,17 @@
 			padding:0 0 0 5px;
 			line-height:25px;
 			border:0;
-			background:url(../../images/paymentMethod_input.gif) no-repeat;
+			background:url(../../../images/paymentMethod_input.gif) no-repeat;
 			}
 			
 			#launchContestOut.paymentMethod .text.medium{
 				width:160px;
-				background:url(../../images/paymentMethod_input_medium.gif) no-repeat;
+				background:url(../../../images/paymentMethod_input_medium.gif) no-repeat;
 				}
 			
 			#launchContestOut.paymentMethod .text.small{
 				width:65px;
-				background:url(../../images/paymentMethod_input_small.gif) no-repeat;
+				background:url(../../../images/paymentMethod_input_small.gif) no-repeat;
 				}
 				
 		#launchContestOut.paymentMethod .redTip{
@@ -442,15 +442,15 @@
 			
 		.cardSelect .newListSelected{
 			width:324px;
-			background:url(../../images/cardSelect_select.gif) no-repeat;
+			background:url(../../../images/cardSelect_select.gif) no-repeat;
 			}
 		.selectMonth .newListSelected{
 			width:48px;
-			background:url(../../images/selectMonth_select.gif) no-repeat;
+			background:url(../../../images/selectMonth_select.gif) no-repeat;
 			}
 		.selectYear .newListSelected{
 			width:70px;
-			background:url(../../images/selectYear_select.gif) no-repeat;
+			background:url(../../../images/selectYear_select.gif) no-repeat;
 			}
 	
 	
@@ -561,7 +561,7 @@
 				height: 57px;
 				padding: 0;
 				margin: 0;
-				background: url(../../images/table_last_cell_background.gif) repeat-x;
+				background: url(../../../images/table_last_cell_background.gif) repeat-x;
 				}
 				
 	hr.dualDivider{
@@ -707,7 +707,7 @@
 				line-height:22px;
 				border:0;
 				color:#6c6c6c;
-				background:url(../../images/date_input.gif) no-repeat;
+				background:url(../../../images/date_input.gif) no-repeat;
 				}
 				
 			#launchContestOut .schedule .startEtSelect,#launchContestOut .schedule .milestoneEtSelect,#launchContestOut .schedule .endEtSelect{
@@ -769,32 +769,32 @@
 				float:left;
 				display:inline;
 				margin-right:14px;
-				background: url(../../images/grey_button_bg.gif) repeat-x top;
+				background: url(../../../images/grey_button_bg.gif) repeat-x top;
 				}
 				
 				.upload a.button6 span.left{
 					width:auto;
 					float:left;
 					display:inline;
-					background: url(../../images/grey_button_left.gif) no-repeat left top;
+					background: url(../../../images/grey_button_left.gif) no-repeat left top;
 					padding: 0;
 					}
 					
 				.upload a.button6:hover span.left{
-					background: url(../../images/grey_button_left.gif) no-repeat left bottom;
+					background: url(../../../images/grey_button_left.gif) no-repeat left bottom;
 					}
 					
 				.upload a.button6 span.right{
 					width:auto;
 					float:left;
 					display:inline;
-					background: url(../../images/grey_button_right.gif) no-repeat right top;
+					background: url(../../../images/grey_button_right.gif) no-repeat right top;
 					padding: 4px 13px 0 10px;
 					height: 20px;
 					}
 				
 				.upload a.button6:hover span.right{
-					background: url(../../images/grey_button_right.gif) no-repeat right bottom;
+					background: url(../../../images/grey_button_right.gif) no-repeat right bottom;
 					}
 			
 			/** file input **/	
@@ -816,11 +816,11 @@
 				display:inline;
 				margin-top:2px;
 				margin-left:7px;
-				background:url(../../images/removeButton.gif) no-repeat;
+				background:url(../../../images/removeButton.gif) no-repeat;
 				}
 				
 			.upload .removeButton:hover{
-				background:url(../../images/removeButton_hover.gif) no-repeat;
+				background:url(../../../images/removeButton_hover.gif) no-repeat;
 				}
 			
 			/** add button **/	
@@ -831,11 +831,11 @@
 				display:inline;
 				margin-top:2px;
 				margin-left:7px;
-				background:url(../../images/addButton.gif) no-repeat;
+				background:url(../../../images/addButton.gif) no-repeat;
 				}
 				
 			.upload .addButton:hover{
-				background:url(../../images/addButton_hover.gif) no-repeat;
+				background:url(../../../images/addButton_hover.gif) no-repeat;
 				}
 		
 		
@@ -847,11 +847,11 @@
 				display:inline;
 				margin-top:10px;
 				margin-left:15px;
-				background:url(../../images/removeButton.gif) no-repeat;
+				background:url(../../../images/removeButton.gif) no-repeat;
 				}
 				
 			.removeButton:hover{
-				background:url(../../images/removeButton_hover.gif) no-repeat;
+				background:url(../../../images/removeButton_hover.gif) no-repeat;
 				}
 			
 			/** add button **/	
@@ -862,11 +862,11 @@
 				display:inline;
 				margin-top:10px;
 				margin-left:10px;
-				background:url(../../images/addButton.gif) no-repeat;
+				background:url(../../../images/addButton.gif) no-repeat;
 				}
 				
 			.addButton:hover{
-				background:url(../../images/addButton_hover.gif) no-repeat;
+				background:url(../../../images/addButton_hover.gif) no-repeat;
 				}
 		
 		/** prizesInner **/
@@ -1073,7 +1073,7 @@
 				font-weight:bold;
 				text-align:right;
 				color:#6c6c6c;
-				background:url(../../images/prizesInput.gif) no-repeat;
+				background:url(../../../images/prizesInput.gif) no-repeat;
 				}
 			
 			/** button **/	
@@ -1083,11 +1083,11 @@
 				float:left;
 				display:inline;
 				margin-left:77px;
-				background:url(../../images/addButton.gif) no-repeat;
+				background:url(../../../images/addButton.gif) no-repeat;
 				}
 				
 			.prizesInner .addButton:hover{
-				background:url(../../images/addButton_hover.gif) no-repeat;
+				background:url(../../../images/addButton_hover.gif) no-repeat;
 				}
 				
 			.prizesInner .removeButton{
@@ -1096,11 +1096,11 @@
 				float:left;
 				display:inline;
 				margin-left:77px;
-				background:url(../../images/removeButton.gif) no-repeat;
+				background:url(../../../images/removeButton.gif) no-repeat;
 				}
 				
 			.prizesInner .removeButton:hover{
-				background:url(../../images/removeButton_hover.gif) no-repeat;
+				background:url(../../../images/removeButton_hover.gif) no-repeat;
 				}
 		/** end .prizesInner **/
 		
@@ -1163,7 +1163,7 @@
 				font-weight:bold;
 				text-align:right;
 				color:#6c6c6c;
-				background:url(../../images/prizesInput.gif) no-repeat;
+				background:url(../../../images/prizesInput.gif) no-repeat;
 				}
 				
 			.mPrizesInner strong{
@@ -1221,7 +1221,7 @@
 					font-weight:bold;
 					color:#6c6c6c;
 					margin-right:30px;
-					background:url(../../images/prizesInput.gif) no-repeat;
+					background:url(../../../images/prizesInput.gif) no-repeat;
 					}
 			
 			/** file button **/		
@@ -1236,12 +1236,12 @@
 				color:#ab0000;
 				line-height:22px;
 				text-decoration:underline;
-				background:url(../../images/addButton.gif) no-repeat left center;
+				background:url(../../../images/addButton.gif) no-repeat left center;
 				}
 				
 			.deliverablesInner .fileType:hover{
 				text-decoration:none;
-				background:url(../../images/addButton_hover.gif) no-repeat left center;
+				background:url(../../../images/addButton_hover.gif) no-repeat left center;
 				}
 				
 	
@@ -1270,7 +1270,7 @@
 			
 			a.draft, a.preview{
 				margin-right:24px;
-				background:url(../../images/grey_button_bg.gif) repeat-x left top;
+				background:url(../../../images/grey_button_bg.gif) repeat-x left top;
 				}
 				
 			.tabHead a.draft, .tabHead a.draft{
@@ -1279,18 +1279,18 @@
 				}
 				
 			a.draft:hover, a.preview:hover{
-				background:url(../../images/grey_button_bg.gif) repeat-x left bottom;
+				background:url(../../../images/grey_button_bg.gif) repeat-x left bottom;
 				}
 				
 				a.draft span.left, a.preview span.left{
 					width:auto;
 					float:left;
 					display:inline;
-					background:url(../../images/grey_button_left.gif) no-repeat left top;
+					background:url(../../../images/grey_button_left.gif) no-repeat left top;
 					}
 					
 				a.draft:hover span.left, a.preview:hover span.left{
-					background:url(../../images/grey_button_left.gif) no-repeat left bottom;
+					background:url(../../../images/grey_button_left.gif) no-repeat left bottom;
 					}
 					
 					.tabHead a.draft span.right, .tabHead a.preview span.right{
@@ -1302,11 +1302,11 @@
 						float:left;
 						display:inline;
 						padding:4px 19px 0 15px;
-						background:url(../../images/grey_button_right.gif) no-repeat right top;
+						background:url(../../../images/grey_button_right.gif) no-repeat right top;
 						}
 						
 					a.draft:hover span.right, a.preview:hover span.right{
-						background:url(../../images/grey_button_right.gif) no-repeat right bottom;
+						background:url(../../../images/grey_button_right.gif) no-repeat right bottom;
 						}
 						
 	
@@ -1322,11 +1322,11 @@
 		float:left;
 		display:inline;
 		margin-left:6px;
-		background:url(../../images/help_ico4.gif) no-repeat;
+		background:url(../../../images/help_ico4.gif) no-repeat;
 		}
 		
 	#launchContestOut .helpIcon:hover{
-		background:url(../../images/help_ico4.gif) no-repeat left bottom;
+		background:url(../../../images/help_ico4.gif) no-repeat left bottom;
 		}
 		
 		/** label **/
@@ -1411,7 +1411,7 @@
 		height:22px;
 		border:#dddddd solid 1px;
 		position:relative;
-		background:url(../../images/textarea_bottom_bg.gif) repeat-x;
+		background:url(../../../images/textarea_bottom_bg.gif) repeat-x;
 		}
 		
 		#launchContestOut .contestDetail .bottomTextarea p{
@@ -1428,20 +1428,20 @@
 			right:1px;
 			bottom:1px;
 			overflow:hidden;
-			background:url(../../images/textarea_bottom.gif) no-repeat;
+			background:url(../../../images/textarea_bottom.gif) no-repeat;
 			}
 			
 /*content page styes*/
 .tabHead{
 	height:34px;
 	margin-top:25px;
-	background:url(../../images/tabHead.gif) 0 0 repeat-x;
+	background:url(../../../images/tabHead.gif) 0 0 repeat-x;
 	position:relative;
 	}
 	.tabHead.head{
 		margin-top:10px;
 		height:36px;
-		background:url(../../images/tabHead2.gif) 0 0 repeat-x;
+		background:url(../../../images/tabHead2.gif) 0 0 repeat-x;
 	}
 	
 	/** tab list **/
@@ -1466,7 +1466,7 @@
 			width:111px;
 			font-weight:700;
 			font-size:14px;
-			background:url(../../images/tabTop_current.gif) 0 0 no-repeat;
+			background:url(../../../images/tabTop_current.gif) 0 0 no-repeat;
 			color:#fffffe;
 			}
 	
@@ -1477,7 +1477,7 @@
 		position:absolute;
 		top:0;
 		right:0px;
-		background:url(../../images/tabHead-tr.gif) no-repeat;
+		background:url(../../../images/tabHead-tr.gif) no-repeat;
 		}
 	/** tl **/		
 	.tabHead .tl{
@@ -1486,7 +1486,7 @@
 		position:absolute;
 		top:0;
 		left:0px;
-		background:url(../../images/tabHead-tl.gif) no-repeat;
+		background:url(../../../images/tabHead-tl.gif) no-repeat;
 		}
 	
 	/** tr **/		
@@ -1496,7 +1496,7 @@
 		position:absolute;
 		top:0;
 		right:0px;
-		background:url(../../images/tabHead-tr2.gif) no-repeat;
+		background:url(../../../images/tabHead-tr2.gif) no-repeat;
 		}
 	/** tl **/		
 	.tabHead .tl2{
@@ -1505,7 +1505,7 @@
 		position:absolute;
 		top:0;
 		left:0px;
-		background:url(../../images/tabHead-tl2.gif) no-repeat;
+		background:url(../../../images/tabHead-tl2.gif) no-repeat;
 		}
 	
 	.tabHead a.button6 span.right{
@@ -1531,9 +1531,9 @@
 	
 	.tabHead.head .expand{
 		text-decoration: none;
-		background: url(../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
+		background: url(../../../images/notification_expand_ico.png) no-repeat left; /* the expand icon */
 	}
-	.tabHead.head .collapse{ background: transparent url("../../images/minimize.png") no-repeat scroll 0% 0%;} /* the collapse icon */
+	.tabHead.head .collapse{ background: transparent url("../../../images/minimize.png") no-repeat scroll 0% 0%;} /* the collapse icon */
 		
 	/** edit button **/	
 	.tabHead .editButton{
@@ -1547,11 +1547,11 @@
 		text-decoration:none;
 		color:#fffffe;
 		text-align:center;
-		background:url(../../images/editButton.gif) 0 0 no-repeat;
+		background:url(../../../images/editButton.gif) 0 0 no-repeat;
 		}
 		
 		.tabHead .editButton:hover{
-			background:url(../../images/editButton.gif) 0 -24px no-repeat;
+			background:url(../../../images/editButton.gif) 0 -24px no-repeat;
 		}
 
 /** over view **/	
@@ -1662,11 +1662,11 @@
 	text-decoration:none;
 	color:#fffffe;
 	text-align:center;
-	background:url(../../images/saveButton.gif) 0 0 no-repeat;
+	background:url(../../../images/saveButton.gif) 0 0 no-repeat;
 	margin-right:20px;
 	}
 	.saveButton a:hover{
-		background:url(../../images/saveButton.gif) 0 -24px no-repeat;
+		background:url(../../../images/saveButton.gif) 0 -24px no-repeat;
 		}
 		
 .tipLink{
@@ -1696,7 +1696,7 @@
 	color:#333;
 	line-height:28px;
 	cursor:pointer;
-	background:url(../../images/tabContest_select.gif) no-repeat;
+	background:url(../../../images/tabContest_select.gif) no-repeat;
 	}
 	
 	.tabContest .selectedTxt,.projectSelect .selectedTxt{
@@ -1732,7 +1732,7 @@ div.newListSelected ul.newList a{
 	color:#333;
 	line-height:28px;
 	cursor:pointer;
-	background:url(../../images/billing_select.gif) no-repeat;
+	background:url(../../../images/billing_select.gif) no-repeat;
 	}
 	
 	.roundelect .newListSelected{
@@ -1770,7 +1770,7 @@ div.newListSelected ul.newList a{
 	color:#6c6c6c;
 	line-height:22px;
 	cursor:pointer;
-	background:url(../../images/startSelect.gif) no-repeat;
+	background:url(../../../images/startSelect.gif) no-repeat;
 	}
 	
 	.startSelect .selectedTxt,.milestoneSelect .selectedTxt,.endSelect .selectedTxt{
@@ -1798,7 +1798,7 @@ div.newListSelected ul.newList a{
 	cursor:pointer;
 	position:relative;
 	z-index:100 !important;
-	background:url(../../images/timeSelect.gif) no-repeat;
+	background:url(../../../images/timeSelect.gif) no-repeat;
 	}
 	
 	.startEtSelect .selectedTxt,.milestoneEtSelect .selectedTxt,.endEtSelect .selectedTxt{
@@ -1830,7 +1830,7 @@ div.newListSelected ul.newList a{
 	color:#545b66;
 	line-height:22px;
 	cursor:pointer;
-	background:url(../../images/numSelect.gif) no-repeat;
+	background:url(../../../images/numSelect.gif) no-repeat;
 	}
 	
 	.numSelect .selectedTxt{
@@ -1869,7 +1869,7 @@ div.newListSelected ul.newList a{
 	color:#333;
 	line-height:28px;
 	cursor:pointer;
-	background:url(../../images/tabCatalog_select.gif) no-repeat;
+	background:url(../../../images/tabCatalog_select.gif) no-repeat;
 	}
 	
 	.catalogSelect .selectedTxt{
@@ -1913,7 +1913,7 @@ a.dp-choose-date {
 	margin-right:22px;
 	overflow:hidden;
 	text-indent:-2000px;
-	background:url(../../images/date_icon.gif) no-repeat;
+	background:url(../../../images/date_icon.gif) no-repeat;
 }
 
 .dp-choose-date{
@@ -2102,7 +2102,7 @@ div.dp-popup td.disabled {
 
 /** stylish select additional styles (payment-method.html) **/
 .selectDesign .newList {
-	background: white url(../../images/list_vert_line.gif) no-repeat 184px 0px;
+	background: white url(../../../images/list_vert_line.gif) no-repeat 184px 0px;
 	}
 	
 .selectDesign li.newListOptionTitle {

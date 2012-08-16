@@ -12,14 +12,14 @@
 	right: 0;
 	top: 0;
 	height: 100%;
-	background:  url(../images/scrolltrack.png) repeat-y left;
+	background:  url(../../images/scrolltrack.png) repeat-y left;
 }
 .jScrollPaneDrag {
 	position: absolute;
 	background: #666;
 	cursor: pointer;
 	overflow: hidden;
-	background: #ededed url(../images/panedrag_center.png) no-repeat center;
+	background: #ededed url(../../images/panedrag_center.png) no-repeat center;
 	border-bottom: 1px solid #bdbdbd;
 	border-top: 1px solid #bdbdbd;
 }
@@ -45,11 +45,11 @@ a.jScrollArrowUp {
 	overflow: hidden;
 	/*background-color: #666;*/
 	height: 17px;
-	background: url(../images/scrollbar_up.png) no-repeat top left;
+	background: url(../../images/scrollbar_up.png) no-repeat top left;
 }
 a.jScrollArrowUp:hover {
 	/*background-color: #f60;*/
-	background: url(../images/scrollbar_up.png) no-repeat bottom left;
+	background: url(../../images/scrollbar_up.png) no-repeat bottom left;
 }
 
 a.jScrollArrowDown {
@@ -62,11 +62,11 @@ a.jScrollArrowDown {
 	overflow: hidden;
 	/*background-color: #666;*/
 	height: 17px;
-	background: url(../images/scrollbar_down.png) no-repeat top;
+	background: url(../../images/scrollbar_down.png) no-repeat top;
 }
 a.jScrollArrowDown:hover {
 	/*background-color: #f60;*/
-	background: url(../images/scrollbar_down.png) no-repeat bottom;
+	background: url(../../images/scrollbar_down.png) no-repeat bottom;
 }
 a.jScrollActiveArrowButton, a.jScrollActiveArrowButton:hover {
 	/*background-color: #f00;*/
