@@ -377,7 +377,7 @@
     <target name="package-static" >
         <zip destfile="direct-static.jar">
             <fileset dir="${srcdir}/web">
-                <include name="css/*.css"/>
+                <include name="css/direct/**/*.css"/>
                 <include name="css/scorecard/**/*.css"/>
                 <exclude name="scripts/tiny_mce/**/*.*"/>
                 <include name="scripts/*.*"/>
