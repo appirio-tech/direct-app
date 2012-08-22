@@ -82,6 +82,16 @@ public class RegisterAction extends BaseAjaxAction {
             "UPDATE user SET activation_code = ? WHERE user_id = ?";
 
     /**
+     * Represents the name of the /present registration source.
+     */
+    private static final String PPT_REGISTER_SOURCE_NAME = "present";
+
+    /**
+     * Represents the name of the /mobile registration source.
+     */
+    private static final String MOBILE_REGISTER_SOURCE_NAME = "mobile";
+
+    /**
      * A <code>RegisterForm</code> providing the register data submitted by user.
      */
     private RegisterForm formData;
@@ -182,6 +192,11 @@ public class RegisterAction extends BaseAjaxAction {
         user.setHandle(formData.getHandle());
         user.setPassword(formData.getPassword());
         user.setStatus("U");
+        if (formData.getModuleFrom().equals("ppt")) {
+            user.setRegSource(PPT_REGISTER_SOURCE_NAME);
+        } else if (formData.getModuleFrom().equals("mobile")) {
+            user.setRegSource(MOBILE_REGISTER_SOURCE_NAME);
+        }
         long userId = userService.registerUser(user);
 
         //generate and save activation code

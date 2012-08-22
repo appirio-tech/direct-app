@@ -76,6 +76,11 @@ public class RegisterAction extends BaseAjaxAction {
             "UPDATE user SET activation_code = ? WHERE user_id = ?";
     
     /**
+     * Represents the name of the /analytics registration source.
+     */
+    private static final String ANALYTICS_REGISTER_SOURCE_NAME = "analytics";
+
+    /**
      * A <code>RegisterForm</code> providing the register data submitted by user.
      */
     private RegisterForm formData;
@@ -177,6 +182,7 @@ public class RegisterAction extends BaseAjaxAction {
         user.setHandle(formData.getHandle());
         user.setPassword(formData.getPassword());
         user.setStatus("U");
+        user.setRegSource(ANALYTICS_REGISTER_SOURCE_NAME);
         long userId = userService.registerUser(user);
 
         //generate and save activation code
