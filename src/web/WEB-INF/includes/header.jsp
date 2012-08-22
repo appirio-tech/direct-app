@@ -86,7 +86,7 @@
     </a>
     </s:if>
     <s:else>
-    <a href="<s:url action='currentProjectOverview' namespace='/'><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>" class="logo"
+    <a href="<s:url action='projectOverview' namespace='/'><s:param name="formData.projectId" value="%{#session.currentSelectDirectProjectID}"/></s:url>" class="logo"
        style="float:left; position:relative;">
         <img src="/images/project_logo.png" alt="Projects" class="projectTitle"/>
         <span id="projectTitleSpan"> <s:property value="sessionData.currentProjectContext.name"/></span>
