@@ -103,7 +103,7 @@
                                                 <div class="projectDescDetails">
 
                                                     <s:if test="viewData.projectGeneralInfo.project.description != null">
-                                                        <p>${viewData.projectGeneralInfo.project.description}</p>
+                                                        <p><c:out value="${viewData.projectGeneralInfo.project.description}"></c:out></p>
                                                     </s:if>
                                                     <s:else>
                                                         <p>
