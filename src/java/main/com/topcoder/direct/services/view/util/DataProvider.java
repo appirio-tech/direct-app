@@ -4017,7 +4017,7 @@ public class DataProvider {
 
         request.setContentHandle(queryName);
 
-        if (contestId > 0) {
+        if (contestId > 0 || hasInvoice) {
             request.setProperty("sdt", dateFormatter.format(new GregorianCalendar(1900, 1, 1).getTime()));
             request.setProperty("edt", dateFormatter.format(new GregorianCalendar(9999, 1, 1).getTime()));
         } else {
