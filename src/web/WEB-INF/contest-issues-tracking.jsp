@@ -420,7 +420,7 @@
                                                             <option value="Bug Fix">Bug Fix</option>
                                                             <option value="Studio Bug">Studio Bug</option>
                                                         </select>
-                                                        <p class="projectText">Bug Races in Studio Bug type will show up in <a href="http://studio.topcoder.com/?module=ViewActiveBugRaces">Active Studio Bug Race Competitions</a> list.</p>
+                                                        <p class="projectText">Bug Races in Studio Bug type will show up in <a href="https://studio.topcoder.com/?module=ViewActiveBugRaces">Active Studio Bug Race Competitions</a> list.</p>
                                                     </div>
                                                     <div id="existingAtt">
                                                     <label>Existing Attachments:</label>
