@@ -76,7 +76,7 @@
 
 BODY#page{
 	margin: 0;
-	padding: 0;
+	padding: 0 0 50px;
 	font-family: Arial, Helvetica, sans-serif;
 	background-color: #f6f6f6;
 	color: #333;
