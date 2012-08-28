@@ -26,7 +26,7 @@
         <ul>
             <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/?p=622')">How to monitor
                 Forum Activity?</a></li>
-            <li><a href="javascript:;" onclick="window.open('http://www.topcoder.com/help/p=301/?subject=startproject')">Who are the copilots?</a></li>
+            <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/p=301/?subject=startproject')">Who are the copilots?</a></li>
             <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/?p=618')">How to Extend
                 deadline?</a></li>
             <li><a href="javascript:;" onclick="window.open('https://www.topcoder.com/help/?p=616')">How to increase

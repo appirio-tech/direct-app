@@ -43,15 +43,15 @@
             </div><!-- End .title -->
             
             <!-- video wrapper --> 
-            <object type="application/x-shockwave-flash" data="http://www.youtube.com/v/y4TjXnpgVow" width="327" height="208" style="margin:0 0 9px 0;">
-                <param name="movie"  value="http://www.youtube.com/v/y4TjXnpgVow" />
+            <object type="application/x-shockwave-flash" data="https://www.youtube.com/v/y4TjXnpgVow" width="327" height="208" style="margin:0 0 9px 0;">
+                <param name="movie"  value="https://www.youtube.com/v/y4TjXnpgVow" />
                 <param name="FlashVars" value="playerMode=embedded" />
             </object>
             
             <div class="grayTextArea">
                 <p>
                     Copilot has its own payment rates are adjusted to the type of contest and may change depending on the needs of the contest.
-                    <a href="http://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">view rate</a>
+                    <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">view rate</a>
                 </p>
                 
                 <span class="corner tl"></span>

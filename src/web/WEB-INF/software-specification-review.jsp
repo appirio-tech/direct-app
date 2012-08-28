@@ -268,7 +268,7 @@
                                                         </s:iterator>
                                                         
                                                         <c:if test="${viewData.contestStats.isStudio and viewData.specificationReview ne null}">
-                                                            <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="http://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
+                                                            <p class="specForumInfo">Discuss scorecard with spec reviewer in <a href="https://studio.topcoder.com/forums?module=ThreadList&forumID=${viewData.contestStats.forumId}" target="_blank">forum</a>.</p>
                                                         </c:if>
                                                         
                                                         <c:if test="${viewData.specificationReviewStatus eq 'WAITING_FOR_FIXES' and !viewData.hasActiveSpecSubmission}">

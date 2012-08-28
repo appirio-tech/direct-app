@@ -56,7 +56,7 @@
             </c:forEach>
             <div class="right">
                 <a class="downloadAllbtn"
-                   href="http://${studioServerName}?module=DownloadAllSubmissions&amp;ct=${contestId}&amp;round=final&amp;type=original">
+                   href="https://${studioServerName}?module=DownloadAllSubmissions&amp;ct=${contestId}&amp;round=final&amp;type=original">
                     <span>DOWNLOAD ALL WINNERS</span></a>
             </div>
         </div>

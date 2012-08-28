@@ -685,7 +685,7 @@
                                         <p>Need to discuss this project?</p>
                                         <p> Share information, requirements, comments, etc. with fellow team members, copilots and TopCoder managers.</p>
                                         <div class="projectForumLeaderButton">
-                                            <a href="http://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1"><span>LET'S TALK</span></a>
+                                            <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1"><span>LET'S TALK</span></a>
                                         </div>
                                     </div>
                                 </s:else>

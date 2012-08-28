@@ -77,8 +77,8 @@
                                             
                                             <!-- video wrapper --> 
                                             <div class="videoWrap">
-                                                <object type="application/x-shockwave-flash" data="http://www.youtube.com/v/wUVMK6EhQaU" width="327" height="208">
-                                                    <param name="movie"  value="http://www.youtube.com/v/wUVMK6EhQaU" />
+                                                <object type="application/x-shockwave-flash" data="https://www.youtube.com/v/wUVMK6EhQaU" width="327" height="208">
+                                                    <param name="movie"  value="https://www.youtube.com/v/wUVMK6EhQaU" />
                                                     <param name="FlashVars" value="playerMode=embedded" />
                                                 </object>
                                             </div>
@@ -86,7 +86,7 @@
                                             <div class="grayTextArea">
                                                 <p>
                                                     Copilots are paid per contest based on outcomes, not hours.
-                                                    <a href="http://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">View More</a>
+                                                    <a href="https://apps.topcoder.com/wiki/display/tc/Copilot+Overview" class="blue">View More</a>
                                                 </p>
                                                 
                                                 <span class="corner tl"></span>
@@ -120,7 +120,7 @@
                                                     <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
                                                     <c:forEach var="profile" items="${profiles}" varStatus="varStatus">
                                                         <div class="copilot-details <c:if test="${varStatus.index gt 0}">hide</c:if>" id="copilot-${varStatus.index}">
-                                                        <c:set var="profileLink" value="http://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
+                                                        <c:set var="profileLink" value="https://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
                                                             <img src="${profile.photo.photoPath}" alt="Copilot" />
                                                             <div class="main-content">
                                                                 <h2><tc-webtag:handle coderId="${profile.member.copilotProfile.userId}" link="${profileLink}"/></h2>

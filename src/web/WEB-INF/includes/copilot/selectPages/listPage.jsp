@@ -65,7 +65,7 @@
         <tbody>
             <c:set var="serverName" value="<%=ApplicationServer.SERVER_NAME%>"/>
             <c:forEach var="profile" items="${profiles}">
-                <c:set var="profileLink" value="http://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
+                <c:set var="profileLink" value="https://${serverName}/tc?module=ViewCopilotProfile&pid=${profile.member.copilotProfile.userId}\" target=\"_blank"/>
                 <tr>
                     <td class="userLinkTD">
                         <input type="hidden" value="${profile.member.copilotProfile.handle}"></input>
