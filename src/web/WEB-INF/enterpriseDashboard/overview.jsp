@@ -5,6 +5,9 @@
   - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
   - - Add pipeline widget
   -
+  - Version 1.2 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part) updates:
+  - Add roadmap section in overview.
+
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: The overview page of the new enterprise dashboard
@@ -159,7 +162,7 @@
                                 <div class="roadMapTitle">
                                     <h3>Road Map</h3>
                                     <a href="javascript:;" class="icon" rel="Showing the Overdue, Upcoming, and Completed Releases.">!</a>
-                                    <a href="javascript:;" class="viewAllLink">View All</a>
+                                    <a href="<s:url action='roadmap' namespace='/enterpriseDashboard'/>" class="viewAllLink">View All</a>
                                 </div>
                                 <!-- title -->
 
@@ -189,14 +192,14 @@
                                                     <thead>
                                                     <tr>
                                                         <th>OverDue Releases</th>
-                                                        <th>Date</th>
+                                                        <th>Due Date</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr>
                                                         <td colspan="2" class="alignCenter">
                                                             <div class="ajaxTableLoader">
-                                                                <%--<img src="/images/rss_loading.gif" alt="loading" />--%>
+                                                                <img src="/images/rss_loading.gif" alt="loading" />
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -216,14 +219,14 @@
                                                     <thead>
                                                     <tr>
                                                         <th>Upcoming Releases</th>
-                                                        <th>Date</th>
+                                                        <th>Due Date</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr>
                                                         <td colspan="2" class="alignCenter">
                                                             <div class="ajaxTableLoader">
-                                                                <%--<img src="/images/rss_loading.gif" alt="loading" />--%>
+                                                                <img src="/images/rss_loading.gif" alt="loading" />
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -243,13 +246,15 @@
                                                     <thead>
                                                     <tr>
                                                         <th>Completed Releases</th>
-                                                        <th>Date</th>
+                                                        <th>Completion Date</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr>
                                                         <td colspan="2" class="alignCenter">
-                                                            <%--<div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div>--%>
+                                                            <div class="ajaxTableLoader">
+                                                                <img src="/images/rss_loading.gif" alt="loading" />
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     </tbody>

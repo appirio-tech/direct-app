@@ -35,16 +35,7 @@ import com.topcoder.direct.services.view.dto.dashboard.volumeview.EnterpriseDash
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardMonthPipelineDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardProjectFinancialDTO;
 import com.topcoder.direct.services.view.dto.enterpriseDashboard.EnterpriseDashboardTotalSpendDTO;
-import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectBriefDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectContestsListDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectCopilotDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectForumStatusDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectForumTemplateDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectGeneralInfoDTO;
-import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
+import com.topcoder.direct.services.view.dto.project.*;
 import com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
 import com.topcoder.management.deliverable.Submission;
@@ -551,8 +542,17 @@ import java.util.Map.Entry;
  *     <li>Add method {@link #getProjectsForInvoiceNumberAndBilling(String, long)}</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 4.7 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part)
+ * <ol>
+ *     <li>Updated {@link #getEnterpriseDashboardFilteredProjectIds(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)}</li>
+ *     <li>Added {@link #getEnterpriseDashboardFilteredProjects(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)} method.</li>
+ * </ol>
+ * </p>
+
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin
- * @version 4.6
+ * @version 4.7
  * @since 1.0
  */
 public class DataProvider {
@@ -5260,24 +5260,48 @@ public class DataProvider {
      * @throws Exception if an error occurs.
      * @since 4.3
      */
-    private static long[] getEnterpriseDashboardFilteredProjectIds(EnterpriseDashboardFilterForm filterForm)
+    public static long[] getEnterpriseDashboardFilteredProjectIds(EnterpriseDashboardFilterForm filterForm)
             throws Exception {
 
-        if(filterForm.getDirectProjectId() != 0) {
-            return new long[] {filterForm.getDirectProjectId()};
-        }
+        final Map<Long, String> projects = getEnterpriseDashboardFilteredProjects(filterForm);
 
-        // get the set of the projects for the client
-        Map<Long, String> projects = DirectUtils.getProjectsForClient(DirectUtils.getTCSubjectFromSession(), filterForm.getClientId());
-
-        if (projects == null || projects.size() == 0) {
-            return new long[0];
-        }
-
-        long[] projectIds = new long[projects.size()];
+        long[] result = new long[projects.size()];
         int count = 0;
-        for (Long id : projects.keySet()) {
-            projectIds[count++] = id;
+        for(Long v : projects.keySet()) {
+            result[count++] = v;
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets the direct projects filtered out by the enterprise dashboard filter. The direct projects are stored in a map.
+     * The key is the direct project id, the value is the direct project name.
+     *
+     * @param filterForm the filter form
+     * @return a map of direct projects
+     * @throws Exception if any error occurs
+     * @since 4.7
+     */
+    public static Map<Long, String> getEnterpriseDashboardFilteredProjects(EnterpriseDashboardFilterForm filterForm) throws Exception {
+
+        long[] projectIds;
+
+        if(filterForm.getDirectProjectId() != 0) {
+            projectIds = new long[] {filterForm.getDirectProjectId()};
+        } else {
+            // get the set of the projects for the client
+            Map<Long, String> projects = DirectUtils.getProjectsForClient(DirectUtils.getTCSubjectFromSession(), filterForm.getClientId());
+
+            if (projects == null || projects.size() == 0) {
+                return new HashMap<Long, String>();
+            }
+
+            projectIds = new long[projects.size()];
+            int count = 0;
+            for (Long id : projects.keySet()) {
+                projectIds[count++] = id;
+            }
         }
 
         String tcDirectProjectIds = concatenate(projectIds, ", ");
@@ -5297,10 +5321,11 @@ public class DataProvider {
 
         final ResultSetContainer resultContainer = dataAccessor.getData(request).get(query);
         final int recordNum = resultContainer.size();
-        long[] result = new long[recordNum];
+        Map<Long, String> result = new HashMap<Long, String>();
         for (int i = 0; i < recordNum; i++) {
             long tcDirectProjectId = resultContainer.getLongItem(i, "project_id");
-            result[i] = tcDirectProjectId;
+            String tcDirectProjectname = resultContainer.getStringItem(i, "project_name");
+            result.put(tcDirectProjectId, tcDirectProjectname);
         }
 
         return result;

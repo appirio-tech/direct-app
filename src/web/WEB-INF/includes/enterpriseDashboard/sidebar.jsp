@@ -5,6 +5,9 @@
   - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
   -  - Updated pipeline icon to link to pipeline page.
   -
+  - Version 1.2 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part) changes:
+  - - Add link for the roadmap icon in the sidebar
+  -
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: The side bar of the new enterprise dashboard
@@ -17,7 +20,7 @@
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'overview'}">class="active"</c:if>> <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>" class="overviewIcon" title="Overview" rel="Show the overview statistics of the client">Overview</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'financial'}">class="active"</c:if>><a href='<s:url action="financial" namespace="/enterpriseDashboard"/>' class="financialsIcon" title="Financials" rel="Show the financial statistics of the client">Financials</a></li>
         <li><a href="javascript:;" class="projectHealthIcon" title="Project Health" rel="Showing the overall projects Health of all projects.">Project Health</a></li>
-        <li><a href="javascript:;" class="roadmapIcon" title="Roadmap" rel="Showing the Overdue, Upcoming, and Completed Releases.">Roadmap</a></li>
+        <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'roadmap'}">class="active"</c:if>><a href="<s:url action="roadmap" namespace="/enterpriseDashboard"/>" class="roadmapIcon" title="Roadmap" rel="Showing the Overdue, Upcoming, and Completed Project Milestones.">Roadmap</a></li>
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'pipeline'}">class="active"</c:if>><a href='<s:url action="pipeline" namespace="/enterpriseDashboard"/>' class="pipelineIcon" title="Pipeline" rel="A graph depicting the contests and projects in pipeline is shown here.">Pipeline</a></li>
         <li><a href="javascript:;" class="communityIcon" title="Community" rel="Showing the overall contri-bution for the projects from each country.">Community</a></li>
         <li><a href="javascript:;" class="analyticsIcon" title="Analytics" rel="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a orci sit amet orci">Analytics</a></li>

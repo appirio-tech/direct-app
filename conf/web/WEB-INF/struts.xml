@@ -1504,6 +1504,10 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/pipeline.jsp</result>
         </action>
+	    <action name="roadmap" class="enterpriseDashboardEntryAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success">/WEB-INF/enterpriseDashboard/roadmap.jsp</result>
+        </action>
         <action name="getTotalSpend" method="getTotalSpend" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
@@ -1519,6 +1523,11 @@
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
-    </package>
+        <action name="getProjectsMilestones" method="getProjectsMilestones" class="enterpriseDashboardRoadmapAction">
+            <interceptor-ref name="securedDefaultStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>    
+      </package>
 
 </struts>

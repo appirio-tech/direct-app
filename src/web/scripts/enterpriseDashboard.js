@@ -8,8 +8,11 @@
  * Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
  * - Add js codes for the pipeline page and pipeline widget in the overview page.
  *
+ * Version 1.2 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part)
+ * - Add JS for the road map feature.
+ *
  * @author GreatKevin
- * @version 1.1
+ * @version 1.2
  */
 var chart;
 var financialTable;
@@ -1111,6 +1114,168 @@ function renderPipelinePage(resultJson) {
     }
 }
 
+function renderOverviewRoadmap(resultJson) {
+    var strDataOverDue = '', strDataUpcoming = '', strDataCompleted = '';
+    var pattern = /^\w*/;
+    if (resultJson.overdue.length  && resultJson.overdue.length > 0) {
+        var overdueLength = resultJson.overdue.length > 3 ? 3 : resultJson.overdue.length;
+        for (i = 0; i < overdueLength; i++) {
+            strDataOverDue += '<tr>';
+            strDataOverDue += '<td>';
+            strDataOverDue += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.overdue[i].projectId + '">' + resultJson.overdue[i].projectName + ":" + resultJson.overdue[i].title + '</a></h4>';
+            strDataOverDue += '</td>';
+            strDataOverDue += '<td class="alignCenter">';
+            strDataOverDue += '<span class="date">' + pattern.exec(resultJson.overdue[i].date).toString().substr(0, 3) + resultJson.overdue[i].date.replace(pattern.exec(resultJson.overdue[i].date).toString(), '') + '</span>';
+            strDataOverDue += '</td>';
+            strDataOverDue += '</tr>';
+        }
+
+        $(".overRoadMapSection #overDueData tbody").empty().append(strDataOverDue);
+        $('.overRoadMapSection #overDueData tbody tr:odd').addClass('odd');
+
+    } else {
+        $(".overRoadMapSection #overDueData tbody").empty().append('<tr><td colspan="2" class="alignCenter"><div class="noData">No data available</div></td></tr>');
+    }
+
+    if (resultJson.upcoming.length && resultJson.upcoming.length > 0) {
+        var upcomingLength = resultJson.upcoming.length > 3 ? 3 : resultJson.upcoming.length;
+        for (i = 0; i < upcomingLength; i++) {
+            strDataUpcoming += '<tr>';
+            strDataUpcoming += '<td>';
+            strDataUpcoming += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.upcoming[i].projectId + '">' + resultJson.upcoming[i].projectName + ":" + resultJson.upcoming[i].title  + '</a></h4>';
+            strDataUpcoming += '</td>';
+            strDataUpcoming += '<td class="alignCenter">';
+            strDataUpcoming += '<span class="date">' + pattern.exec(resultJson.upcoming[i].date).toString().substr(0, 3) + resultJson.upcoming[i].date.replace(pattern.exec(resultJson.upcoming[i].date).toString(), '') + '</span>';
+            strDataUpcoming += '</td>';
+            strDataUpcoming += '</tr>';
+        }
+
+        $(".overRoadMapSection #upcomingData tbody").empty().append(strDataUpcoming);
+        $('.overRoadMapSection #upcomingData tbody tr:odd').addClass('odd');
+
+    } else {
+        $(".overRoadMapSection #upcomingData tbody").empty().append('<tr><td colspan="2" class="alignCenter"><div class="noData">No data available</div></td></tr>');
+    }
+
+    if (resultJson.completed.length && resultJson.completed.length > 0) {
+        var completedLength = resultJson.completed.length > 3 ? 3 : resultJson.completed.length;
+
+        for (i = 0; i < completedLength; i++) {
+            strDataCompleted += '<tr>';
+            strDataCompleted += '<td>';
+            strDataCompleted += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + resultJson.completed[i].projectId + '">' + resultJson.completed[i].projectName + ":" + resultJson.completed[i].title  + '</a></h4>';
+            strDataCompleted += '</td>';
+            strDataCompleted += '<td class="alignCenter">';
+            strDataCompleted += '<span class="date">' + pattern.exec(resultJson.completed[i].date).toString().substr(0, 3) + resultJson.completed[i].date.replace(pattern.exec(resultJson.completed[i].date).toString(), '') + '</span>';
+            strDataCompleted += '</td>';
+            strDataCompleted += '</tr>';
+        }
+
+        $(".overRoadMapSection #completedData tbody").empty().append(strDataCompleted);
+        $('.overRoadMapSection #completedData tbody tr:odd').addClass('odd');
+
+    } else {
+        $(".overRoadMapSection #completedData tbody").empty().append('<tr><td colspan="2" class="alignCenter"><div class="noData">No data available</div></td></tr>');
+    }
+}
+
+function generateRoadMapRow(item) {
+    var str = '';
+    str += '<tr>';
+    str += '<td>';
+    str += '<h4><a target="_blank" href="' + '../projectMilestoneView?formData.viewType=list&formData.projectId=' + item.projectId + '">' + item.title + '</a></h4>';
+    str += '<p>' + item.description + '</p>';
+    str += '</td>';
+    str += '<td>';
+    str += '<h4 class="projectLink"><a target="_blank" href="' + 'projectOverview?formData.projectId=' + item.projectId + '">' + item.projectName + '</a></h4>';
+    str += '</td>';
+    str += '<td class="alignCenter">';
+    str += '<span class="date">' + item.date + '</span>';
+    str += '</td>';
+    str += '</tr>';
+    return str;
+}
+
+function setupRoadmapTable(table) {
+    table.dataTable({
+        "iDisplayLength":10,
+        "bFilter":false,
+        "bSort":false,
+        "oLanguage":{
+            "sLengthMenu":sStdMenu,
+            "oPaginate":{
+                "sFirst":"",
+                "sPrevious":"Prev",
+                "sNext":"Next",
+                "sLast":""
+            }
+        },
+        "sPaginationType":"full_numbers",
+        "sDom":'<"pagePanel topPagePanel"i<"showPage"l><"pageNum"p>>t<"pagePanel bottomPagePanel"i<"showPage"l><"pageNum"p>>'
+    });
+}
+
+function renderRoadmapPage(json) {
+    var strDataOverDue = '', strDataUpcoming = '', strDataCompleted = '', strDataTotal = '', strDataTab = '';
+    var totalNumberOverDue = 0, totalNumberUpcoming = 0, totalNumberCompleted = 0;
+    if (json.overdue && json.overdue.length) {
+        $.each(json.overdue, function (idx, item) {
+            strDataOverDue += generateRoadMapRow(item);
+        });
+    }
+    if (json.upcoming && json.upcoming.length) {
+        $.each(json.upcoming, function (idx, item) {
+            strDataUpcoming += generateRoadMapRow(item);
+        });
+    }
+    if (json.completed && json.completed.length) {
+        $.each(json.completed, function (idx, item) {
+            strDataCompleted += generateRoadMapRow(item);
+        });
+    }
+
+    strDataTotal += '<li>Overdue:<strong class="red">' + json.overdue.length + '</strong></li>';
+    strDataTotal += '<li>Upcoming<strong class="yellow">' + json.upcoming.length + '</strong></li>';
+    strDataTotal += '<li class="last">Completed<strong class="green">' + json.completed.length + '</strong></li>';
+
+    totalNumberOverDue = json.overdue.length;
+    totalNumberUpcoming = json.upcoming.length;
+    totalNumberCompleted = json.completed.length;
+
+    $(".roadMapSection .roadMapNum ul").empty().append(strDataTotal);
+    $(".roadMapSection .tabPanel ul li:eq(0) strong").text('(' + totalNumberOverDue + ')');
+    $(".roadMapSection .tabPanel ul li:eq(1) strong").text('(' + totalNumberUpcoming + ')');
+    $(".roadMapSection .tabPanel ul li:eq(2) strong").text('(' + totalNumberCompleted + ')');
+    $(".roadMapSection .overDueTable .topPagePanel .pageTotal span.totalNumber").text(totalNumberOverDue);
+    $(".roadMapSection .upcomingData .topPagePanel .pageTotal span.totalNumber").text(totalNumberUpcoming);
+    $(".roadMapSection .completedData .topPagePanel .pageTotal span.totalNumber").text(totalNumberCompleted);
+    $('.roadMapSection .tabPanel li a').removeClass('current');
+    $('.roadMapSection .tabPanel li a').eq(0).addClass('current');
+    if (json.overdue && json.overdue.length) {
+        $(".roadMapSection #overDueData tbody").empty().append(strDataOverDue);
+        $('.roadMapSection #overDueData tbody tr:odd').addClass('odd');
+        setupRoadmapTable($('.roadMapSection .tabContainer table:eq(0)'));
+    } else {
+        $(".roadMapSection #overDueData tbody").empty().append('<td colspan="3"><div class="noData">No data available</div></td>');
+    }
+    if (json.upcoming && json.upcoming.length) {
+        $(".roadMapSection #upcomingData tbody").empty().append(strDataUpcoming);
+        $('.roadMapSection #upcomingData tbody tr:odd').addClass('odd');
+        setupRoadmapTable($('.roadMapSection .tabContainer table:eq(1)'));
+    } else {
+        $(".roadMapSection #upcomingData tbody").empty().append('<td colspan="3"><div class="noData">No data available</div></td>');
+    }
+    if (json.completed && json.completed.length) {
+        $(".roadMapSection #completedData tbody").empty().append(strDataCompleted);
+        $('.roadMapSection #completedData tbody tr:odd').addClass('odd');
+        setupRoadmapTable($('.roadMapSection .tabContainer table:eq(2)'));
+    } else {
+        $(".roadMapSection #completedData tbody").empty().append('<td colspan="3"><div class="noData">No data available</div></td>');
+    }
+
+    $('.roadMapSection .tabContainer table').width('100%');
+}
+
 
 function loadTotalSpend(resultHandler) {
     if($("#overviewTotalSpend").length > 0) {
@@ -1216,6 +1381,39 @@ function loadFinancial(resultHandler) {
     });
 }
 
+function loadRoadmap(resultHandler) {
+
+    if($(".overRoadMapSection").length > 0) {
+       $(".overRoadMapSection .tabSection tbody").empty().html('<tr><td colspan="2" class="alignCenter"><div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div></td></tr>');
+    } else if($(".roadMapSection").length > 0) {
+        $(".roadMapSection .roadMapNumInner ul").empty().html('<li class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></li>');
+        $(".roadMapSection .tabPanel li strong").empty().text('0');
+        $(".roadMapSection .tabContainer .tabSection").remove();
+        var newTable = $($("#tableTemplate").html());
+        $(".roadMapSection .tabContainer").empty().append(newTable);
+        //append('<tr><td colspan="5"><div class="ajaxTableLoader"><img src="/images/rss_loading.gif" alt="loading" /></div></td></tr>');
+    }
+
+
+    $.ajax({
+        type: 'POST',
+        url:  "getProjectsMilestones",
+        data: {formData:getEnterpriseDashboardRequest(100000, 0, true)},
+        cache: false,
+        timeout:100000,
+        dataType: 'json',
+        success: function(jsonResult) {
+            handleJsonResult2(jsonResult,
+                function(result) {
+                    resultHandler(result);
+                },
+                function(errorMessage) {
+                    showErrors(errorMessage);
+                });
+        }
+    });
+}
+
 function loadCurrentPrevMonthSpend() {
     if(loadCurrentMonth || loadPreviousMonth) {
         var request = getEnterpriseDashboardRequest(100000, 0, true);
@@ -1270,6 +1468,7 @@ function renderOverviewTab() {
     loadFinancial(renderOverviewFinancial);
     loadCurrentPrevMonthSpend();
     loadPipeline(renderPipelineWidget);
+    loadRoadmap(renderOverviewRoadmap);
 }
 
 function renderFinancialTab() {
@@ -1650,8 +1849,15 @@ $(document).ready(function () {
             renderOverviewTab();
         });
 
+        $('.overRoadMapSection .tabPanel li a').live('click',function(){
+            $('.overRoadMapSection .tabPanel li a').removeClass('current');
+            $(this).addClass('current');
+            $('.overRoadMapSection .tabSection').hide();
+            $('.overRoadMapSection .tabSection').eq($('.overRoadMapSection .tabPanel li a').index(this)).show();
+        });
     }
 
+    // financial page
     if ($(".financialsIcon").parents("li").hasClass("active")) {
         renderFinancialTab();
 
@@ -1665,6 +1871,23 @@ $(document).ready(function () {
 
         $("#filterButton").click(function(){
             loadPipeline(renderPipelinePage);
+        });
+    }
+
+
+    // roadmap page
+    if ($(".roadmapIcon").parents("li").hasClass("active")) {
+        loadRoadmap(renderRoadmapPage);
+
+        $("#filterButton").click(function(){
+            loadRoadmap(renderRoadmapPage);
+        });
+
+        $('.roadMapSection .tabPanel li a').live('click',function(){
+            $('.roadMapSection .tabPanel li a').removeClass('current');
+            $(this).addClass('current');
+            $('.roadMapSection .tabSection').hide();
+            $('.roadMapSection .tabSection').eq($('.roadMapSection .tabPanel li a').index(this)).show();
         });
     }
 

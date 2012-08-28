@@ -43,7 +43,6 @@ import java.util.Set;
  * <p>
  * Version 1.1 (TC Accounting Tracking Invoiced Payments) change notes:
  * <ol>
- *   <li>Added {@link #invoiceRecordDAO} and {@link #lookupDAO} fields. Also the setters/getters were added.</li>
  *   <li>Updated {@link #executeAction()} method to pass extra parameters to <code>DataProvider.getDashboardBillingCostReport</code>.</li>
  * </ol>
  * </p>
