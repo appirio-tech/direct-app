@@ -14,7 +14,7 @@
         </Property>
         <!-- Password Hashing related for authenticationModule -->
         <Property name="keystore">
-            <Value>@JBOSS_HOME@/server/default/conf/security.keystore</Value>
+            <Value>@keystore@</Value>
         </Property>
         <Property name="kspassword">
             <Value>@keystore_password@</Value>
