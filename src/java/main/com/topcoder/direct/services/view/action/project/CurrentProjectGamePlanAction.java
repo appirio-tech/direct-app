@@ -281,7 +281,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
         if(contestIds.size() > 0) {
             // if there are contest IDs, search for the bug races
-            bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
+            bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds.size() == 0 ? null : contestIds, null);
         }
 
 

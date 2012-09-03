@@ -138,6 +138,18 @@ public class TcJiraIssue implements Serializable {
     private Long securityLevelId;
 
     /**
+     * The direct project id.
+     */
+    private Long directProjectId;
+
+    /**
+     * The direct project name.
+     */
+    private String directProjectName;
+
+    private long clientId;
+
+    /**
      * The attachments of the issue.
      * 
      * @since 1.4
@@ -675,5 +687,49 @@ public class TcJiraIssue implements Serializable {
 
         // not found, return -1 by default
         return "-1";
+    }
+
+    /**
+     * Gets the direct project id.
+     *
+     * @return the direct project id.
+     */
+    public Long getDirectProjectId() {
+        return directProjectId;
+    }
+
+    /**
+     * Sets the direct project id.
+     *
+     * @param directProjectId the direct project id.
+     */
+    public void setDirectProjectId(Long directProjectId) {
+        this.directProjectId = directProjectId;
+    }
+
+    /**
+     * Gets the direct project name.
+     *
+     * @return the direct project name.
+     */
+    public String getDirectProjectName() {
+        return directProjectName;
+    }
+
+    /**
+     * Sets the direct project name.
+     *
+     * @param directProjectName the direct project name.
+     */
+    public void setDirectProjectName(String directProjectName) {
+        this.directProjectName = directProjectName;
+    }
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
     }
 }

@@ -273,12 +273,12 @@ public class JiraRpcServiceWrapper {
      * @throws Exception if an unexpected error occurs.
      * @since 1.3
      */
-    public static List<TcJiraIssue> getBugRaceForDirectProject(List<? extends ContestBriefDTO> contests) throws Exception {
+    public static List<TcJiraIssue> getBugRaceForDirectProject(List<? extends ContestBriefDTO> contests, String statusFilter) throws Exception {
         Set<Long> contestIds = new HashSet<Long>();
         for(ContestBriefDTO cdto : contests) {
             contestIds.add(cdto.getId());
         }
-        return getBugRaceForDirectProject(contestIds);
+        return getBugRaceForDirectProject(contestIds, statusFilter);
     }
 
     /**
@@ -289,10 +289,10 @@ public class JiraRpcServiceWrapper {
      * @throws Exception if an unexpected error occurs.
      * @since 1.3
      */
-    public static List<TcJiraIssue> getBugRaceForDirectProject(Set<Long> contestIds) throws Exception {
+    public static List<TcJiraIssue> getBugRaceForDirectProject(Set<Long> contestIds, String statusFilter) throws Exception {
 
-        // when the input is null or empty, return an empty result
-        if (contestIds == null || contestIds.size() == 0 ) {
+        // when the input is null
+        if (contestIds == null) {
             return  new ArrayList<TcJiraIssue>();
         }
 
@@ -307,8 +307,10 @@ public class JiraRpcServiceWrapper {
         }
 
         // remove the last " OR " which is not needed
-        String jqlQuery = "(" + jqlQueryBuilder.substring(0, jqlQueryBuilder.length() - 3) +
-                ") AND (project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " OR issuetype='Client Task') order by Created DESC";
+        String jqlQuery = (statusFilter != null ? ("(" + statusFilter + ") AND ") : "") + (jqlQueryBuilder.length() > 0 ? "(" + jqlQueryBuilder.substring(0, jqlQueryBuilder.length() - 3) +
+                ") AND" : "") + " (project=" + ConfigUtils.getIssueTrackingConfig().getBugRaceProjectName() + " OR issuetype='Client Task') order by Created DESC";
+
+        System.out.println("@@@@@@ " + jqlQuery);
 
         List<TcJiraIssue> result = getIssuesFromJQLQuery(jqlQuery);
 

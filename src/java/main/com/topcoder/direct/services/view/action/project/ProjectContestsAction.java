@@ -6,16 +6,27 @@ package com.topcoder.direct.services.view.action.project;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
+import com.topcoder.direct.services.view.action.dashboard.ActiveContestsAction;
+import com.topcoder.direct.services.view.dto.IdNamePair;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
 import com.topcoder.direct.services.view.dto.project.ProjectContestDTO;
 import com.topcoder.direct.services.view.dto.project.ProjectContestsDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DataProvider;
+import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.jira.JiraRpcServiceWrapper;
+import com.topcoder.security.TCSubject;
+import com.topcoder.shared.dataAccess.DataAccess;
+import com.topcoder.shared.dataAccess.Request;
+import com.topcoder.shared.dataAccess.resultSet.ResultSetContainer;
+import com.topcoder.shared.util.DBMS;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -109,22 +120,75 @@ public class ProjectContestsAction extends AbstractAction implements FormAction<
 
         if (SUCCESS.equals(result)) {
             List<ProjectContestDTO> contests = getViewData().getProjectContests().getContests();
-
+            TCSubject currentUser = DirectUtils.getTCSubjectFromSession();
             if (contests.isEmpty()) {
                 getSessionData().setCurrentProjectContext(getViewData().getProjectStats().getProject());
+
             } else {
-                getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
+                if (this instanceof ActiveContestsAction)
+                {
 
-                // add bug races to the contests
-                Set<Long> contestIds = new HashSet<Long>();
+                    DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+                    Request request = new Request();
+                    String queryName = "my_active_projects_contest_ids";
+                    request.setContentHandle(queryName);
+                    request.setProperty("uid", String.valueOf(currentUser.getUserId()));
 
-                for(ProjectContestDTO c : contests) {
-                    contestIds.add(c.getContest().getId());
+                    Map<Long, IdNamePair> contestProjectMapping = new HashMap<Long, IdNamePair>();
+                    final ResultSetContainer resultContainer = dataAccessor.getData(request).get(queryName);
+                    final int recordNum = resultContainer.size();
+                    for (int i = 0; i < recordNum; i++) {
+                        long contestId = resultContainer.getLongItem(i, "project_id");
+                        long projectId = resultContainer.getLongItem(i, "direct_project_id");
+                        String projectName = resultContainer.getStringItem(i, "direct_project_name");
+
+                        IdNamePair project = new IdNamePair();
+                        project.setId(projectId);
+                        project.setName(projectName);
+
+                        contestProjectMapping.put(contestId, project);
+                    }
+
+                    final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(new HashSet<Long>(), "status = Open OR status = \"In Progress\"");
+
+                    List<TcJiraIssue> filteredIssue = new ArrayList<TcJiraIssue>();
+
+                    for(TcJiraIssue issue : bugRaceForDirectProject) {
+
+                        if(contestProjectMapping.containsKey(issue.getProjectID())) {
+                            IdNamePair project = contestProjectMapping.get(issue.getProjectID());
+                            issue.setDirectProjectId(project.getId());
+                            issue.setDirectProjectName(project.getName());
+                            if(DirectUtils.getClientIdForProject(currentUser, project.getId()) != null) {
+                                issue.setClientId(DirectUtils.getClientIdForProject(currentUser, project.getId()));
+                            }
+                            filteredIssue.add(issue);
+
+                        }
+                    }
+
+
+                    getViewData().setProjectBugRaces(filteredIssue);
+
+                }
+                else if (this instanceof ProjectContestsAction)
+                {
+
+                    // add bug races to the contests
+                    Set<Long> contestIds = new HashSet<Long>();
+
+                    for(ProjectContestDTO c : contests) {
+                        contestIds.add(c.getContest().getId());
+                    }
+
+                    final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds, null);
+
+                    getViewData().setProjectBugRaces(bugRaceForDirectProject);
                 }
 
-                final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
+                getSessionData().setCurrentProjectContext(contests.get(0).getContest().getProject());
 
-                getViewData().setProjectBugRaces(bugRaceForDirectProject);
+
 
 
             }

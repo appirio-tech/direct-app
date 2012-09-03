@@ -201,7 +201,7 @@ public class ProjectContestsCalendarViewAction extends BaseDirectStrutsAction im
 
         if(contestIds.size() > 0) {
             // get the bug races of all the contests of project
-            final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds);
+            final List<TcJiraIssue> bugRaceForDirectProject = JiraRpcServiceWrapper.getBugRaceForDirectProject(contestIds.size() == 0 ? null : contestIds, null);
             for(TcJiraIssue bugRace : bugRaceForDirectProject) {
                 Map<String, String> contestJson = new HashMap<String, String>();
 
