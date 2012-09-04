@@ -158,7 +158,7 @@ var projectCategoryArray = [
 {id:25,                                name:'RIACOMPONENT',      label:'RIA Component',              typeId:2, typeName:'Application', hasMulti:true},
 {id:24,                                name:'RIABUILD',          label:'RIA Build',                  typeId:2, typeName:'Application', hasMulti:true},
 {id:19,                                name:'UIPROTOTYPE',       label:'UI Prototype',               typeId:2, typeName:'Application', hasMulti:true},
-{id:SOFTWARE_CATEGORY_ID_ASSEMBLY,     name:'ASSEMBLY',          label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:true},
+{id:SOFTWARE_CATEGORY_ID_ASSEMBLY,     name:'SOFTWARE ASSEMBLY', label:'Software Assembly',          typeId:2, typeName:'Application', hasMulti:true},
 {id:13,                                name:'TESTSUITES',        label:'Test Suites',                typeId:2, typeName:'Application', hasMulti:true},
 {id:26,                                name:'TESTSCENARIOS',     label:'Test Scenarios',             typeId:2, typeName:'Application', hasMulti:true},
 {id:29,                                name:'Copilot Posting',   label:'Copilot Posting',            typeId:2, typeName:'Application', hasMulti:false},

@@ -1,3 +1,4 @@
+switchIE6 = true;
 $(document).ready(function() {
 						   
 	DD_belatedPNG.fix('#navSingleSubmissionSlidePrev,  #navSingleSubmissionSlideNext');
@@ -6,8 +7,10 @@ $(document).ready(function() {
 	// bind hide function
 	$("#ie6-notification A.close,#noAshAgain").click(function(){
 		if($('#noAshAgain').attr('checked')){
-			$.cookie("noIE6Notification", "yes", { expires: 90, path: '/', secure: false });	
+			$.cookie("noIE6Notification", "yes", { expires: 90, path: '/', secure: false });
+            switchIE6 = true;
 		}
+
 		hideIE6Notification();
 	});
 	
@@ -40,12 +43,18 @@ showIE6Notification = function() {
 }
 // hide ie6 banner function 
 hideIE6Notification = function() {
-	$('body').animate({paddingTop:0},slide_during);
+    if($('#topcoder-maintenance-notification').offset().top == 51){
+        $('body').animate({paddingTop:89},slide_during);
+         $('#topcoder-maintenance-notification').animate({top:'0'},slide_during);
+    } else {
+        $('body').animate({paddingTop:0},slide_during);
+    }
 	$('#ie6-notification').animate({top:'-=51'},slide_during);
 }
 
 // check ie6
 if(jQuery.browser.msie && (jQuery.browser.version == 6) && $.cookie("noIE6Notification") != "yes") {
 	// display the ie6 notification
+    switchIE6 = true;
 	setTimeout(showIE6Notification, 1000);
 }

@@ -35,17 +35,18 @@
 			<div class="alert">
 				<span class="title">TopCoder System Maintenance</span>
 				<span class="desc">
-					TopCoder will be performing phase 3 of our network infrastructure upgrade on Wednesday, June 27th between 20:00 EDT (GMT/UTC -4) and 22:00 EDT (GMT/UTC -4). During this time, you may experience some sporadic system outages. We apologize for any inconvenience that this may cause.
-
+					TopCoder will be performing a network security upgrade on Tuesday, September 4th between 20:00 EDT (GMT/UTC -4) and 22:00 EDT (GMT/UTC -4).
+					During these times, you may experience some sporadic system outages.
+					We apologize for any inconvenience that this may cause.
 
 				</span>
 			</div>
 			<div class="noAsk">
-				<a href="javascript:;" class="close">Close</a>
-				<div class="clear"></div>
-				<div class="noAakInner"><input type="checkbox" id="noAskAgain" /><label>Don&acute;t show again</label>
-			  </div>
+            <a class="close" href="javascript:;">Close</a>
+            <div class="clear"></div>
+            <div class="noAakInner"><input type="checkbox" id="noAskMaintenanceAgain"><label for="noAskMaintenanceAgain">Don´t show again</label></div>
 			</div>
+
 		</div>
 	</div>
 <!-- topcoder maintenance module ends -->
