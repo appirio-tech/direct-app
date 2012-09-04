@@ -1635,7 +1635,7 @@ public class DataProvider {
         request.setProperty("uid", String.valueOf(currentUser.getUserId()));
         request.setProperty("sdt", dateFormatter.format(startDate));
         request.setProperty("edt", dateFormatter.format(endDate));
-        request.setProperty("statuses", jiraStatusesList);
+        request.setProperty("jirastatuses", jiraStatusesList);
         request.setContentHandle("dashboard_jira_issues_report");
         final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
 

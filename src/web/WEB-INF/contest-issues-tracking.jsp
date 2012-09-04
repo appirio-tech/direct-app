@@ -125,7 +125,7 @@
                                                         <textarea class="hide description"><s:property value="#attr.bugRace.description"/></textarea>
                                                         <textarea class="hide environment"><s:property value="#attr.bugRace.environment"/></textarea>
                                                         <input type="hidden" class="prize" value="<fmt:formatNumber value="${bugRace.prize}" pattern="#0"/>"/>
-                                                        <input type="hidden" class="paymentStatus" value="${bugRace.paymentStatus}"/>
+                                                        <input type="hidden" class="status" value="${bugRace.status}"/>
                                                         <input type="hidden" class="tcoPoints" value="${bugRace.TCOPoints}"/>
                                                         <input type="hidden" class="issueId" value="${bugRace.issueId}"/>
                                                         <input type="hidden" class="issueCCA" value="${bugRace.cca}"/>
@@ -256,7 +256,7 @@
                                                             <textarea class="hide description"></textarea>
                                                             <textarea class="hide environment"></textarea>
                                                             <input type="hidden" class="prize" value=""/>
-                                                            <input type="hidden" class="paymentStatus" value=""/>
+                                                            <input type="hidden" class="status" value=""/>
                                                             <input type="hidden" class="tcoPoints" value=""/>
                                                             <input type="hidden" class="issueId" value=""/>
                                                             <input type="hidden" class="issueCCA" value="false"/>

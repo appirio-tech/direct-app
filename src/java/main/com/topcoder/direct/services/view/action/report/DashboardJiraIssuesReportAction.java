@@ -3,6 +3,7 @@
  */
 package com.topcoder.direct.services.view.action.report;
 
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuePaymentStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
@@ -29,6 +30,11 @@ public class DashboardJiraIssuesReportAction extends DashboardReportBaseAction<D
      * The map to store the payment status of TopCoder Jira issue. There are two payment status now: "Not Paid" and "Paid"
      */
     private static final Map<Long, String> JIRA_ISSUE_PAYMENT_STATUS;
+	
+	 /**
+     * The map to store the payment status of TopCoder Jira issue. There are two payment status now: "Not Paid" and "Paid"
+     */
+    private static final Map<Long, String> JIRA_ISSUE_STATUS;
 
     /**
      * Static initializer. It adds the two jira payment status into the static final map.
@@ -37,6 +43,32 @@ public class DashboardJiraIssuesReportAction extends DashboardReportBaseAction<D
         JIRA_ISSUE_PAYMENT_STATUS = new LinkedHashMap<Long, String>();
         JIRA_ISSUE_PAYMENT_STATUS.put(JiraIssuePaymentStatus.NOT_PAID.getStatusId(), JiraIssuePaymentStatus.NOT_PAID.getStatusName());
         JIRA_ISSUE_PAYMENT_STATUS.put(JiraIssuePaymentStatus.PAID.getStatusId(), JiraIssuePaymentStatus.PAID.getStatusName());
+		
+		
+		JIRA_ISSUE_STATUS = new LinkedHashMap<Long, String>();
+        JIRA_ISSUE_STATUS.put(JiraIssueStatus.ACCEPTED.getStatusId(), JiraIssueStatus.ACCEPTED.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.APPROVED.getStatusId(), JiraIssueStatus.APPROVED.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.CLOSED.getStatusId(), JiraIssueStatus.CLOSED.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.FORMAL_REVIEW.getStatusId(), JiraIssueStatus.FORMAL_REVIEW.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusId(), JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusId(), JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.HOLD_FOR_IT.getStatusId(), JiraIssueStatus.HOLD_FOR_IT.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.IN_PROGRESS.getStatusId(), JiraIssueStatus.IN_PROGRESS.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.INFORMAL_REVIEW.getStatusId(), JiraIssueStatus.INFORMAL_REVIEW.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusId(), JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.LIVE_DESIGN.getStatusId(), JiraIssueStatus.LIVE_DESIGN.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.LIVE_DEVELOPMENT.getStatusId(), JiraIssueStatus.LIVE_DEVELOPMENT.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.NEW_REQUEST.getStatusId(), JiraIssueStatus.NEW_REQUEST.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.ON_HOLD.getStatusId(), JiraIssueStatus.ON_HOLD.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.OPEN.getStatusId(), JiraIssueStatus.OPEN.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.PREPPING.getStatusId(), JiraIssueStatus.PREPPING.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusId(), JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusId(), JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusId(), JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.REOPENED.getStatusId(), JiraIssueStatus.REOPENED.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.RESOLVED.getStatusId(), JiraIssueStatus.RESOLVED.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.STUCK.getStatusId(), JiraIssueStatus.STUCK.getStatusName());
+		JIRA_ISSUE_STATUS.put(JiraIssueStatus.TESTING.getStatusId(), JiraIssueStatus.TESTING.getStatusName());
     }
 
     /**
@@ -81,15 +113,15 @@ public class DashboardJiraIssuesReportAction extends DashboardReportBaseAction<D
         // if status IDs are not specified then use all status ids
         boolean jiraStatusIdsAreSet = (jiraIssueStatusIds != null) && (jiraIssueStatusIds.length > 0);
         if (isFirstCall && !jiraStatusIdsAreSet) {
-            jiraIssueStatusIds = new long[JIRA_ISSUE_PAYMENT_STATUS.size()];
+            jiraIssueStatusIds = new long[JIRA_ISSUE_STATUS.size()];
             int count = 0;
-            for (Long l : JIRA_ISSUE_PAYMENT_STATUS.keySet()) {
+            for (Long l : JIRA_ISSUE_STATUS.keySet()) {
                 jiraIssueStatusIds[count++] = l;
             }
             getFormData().setProjectStatusIds(jiraIssueStatusIds);
         }
-        // set all the report status to view data to populate jira payment status (2 total: Not Paid, Paid)
-        getViewData().setProjectStatus(JIRA_ISSUE_PAYMENT_STATUS);
+        // set all the report status to view data to populate jira  status 
+        getViewData().setProjectStatus(JIRA_ISSUE_STATUS);
 
         if (hasActionErrors()) {
             return;

@@ -1095,7 +1095,7 @@ $(document).ready(function(){
         row.find(".description").val(bugRace.description);
         row.find(".environment").val(bugRace.environment);
         row.find("input.prize").val(bugRace.prize);
-        row.find("input.paymentStatus").val(bugRace.paymentStatus);
+        row.find("input.status").val(bugRace.status);
         row.find("input.tcoPoints").val(bugRace.tcoPoints);
         row.find("input.issueId").val(bugRace.issueId);
         row.find("input.issueCCA").val($("#cca").is(":checked") ? "true" : "false");
