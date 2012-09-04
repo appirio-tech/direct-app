@@ -392,7 +392,7 @@
     </tr>
 
     <tr class="tableTitleWhite">
-        <th class="tableColumn">Total Contest:</th>
+        <th class="tableColumn">Total Contests:</th>
         <th class="tableColumn">Total Bug Races:</th>
         <th class="tableColumn">Total Amount:</th>
     </tr>
