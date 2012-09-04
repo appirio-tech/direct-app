@@ -26,6 +26,8 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Billing
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuePaymentStatus;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.pipeline.PipelineDraftsRatioDTO;
@@ -550,9 +552,16 @@ import java.util.Map.Entry;
  *     <li>Added {@link #getEnterpriseDashboardFilteredProjects(com.topcoder.direct.services.view.form.enterpriseDashboard.EnterpriseDashboardFilterForm)} method.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 4.8 (Module Assembly - JIRA issues loading update and report creation)
+ * <ol>
+ *     <li>Add method {@link #getDashboardJiraIssuesReport(com.topcoder.security.TCSubject, long, long, long, long[], java.util.Date, java.util.Date)}</li>
+ * </ol>
+ * </p>
 
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin
- * @version 4.7
+ * @version 4.8
  * @since 1.0
  */
 public class DataProvider {
@@ -1574,6 +1583,93 @@ public class DataProvider {
                 stats.setPlannedCost(row.getDoubleItem("planned_cost"));
                 statses.add(stats);
             }        
+    }
+
+    /**
+     * Gets the Jira Issue Report data.
+     *
+     * @param currentUser the current user to retrive the report.
+     * @param projectId the direct project id.
+     * @param clientId the client id.
+     * @param billingAccountId the billing account id.
+     * @param jiraIssuesStatusIds the ids of jira issue status.
+     * @param startDate the start date
+     * @param endDate the end date.
+     * @return the jira issue report data.
+     * @throws Exception if there is any error.
+     * @since 4.8
+     */
+    public static List<JiraIssuesReportEntryDTO> getDashboardJiraIssuesReport(TCSubject currentUser, long projectId,
+                                                        long clientId, long billingAccountId, long[] jiraIssuesStatusIds,
+                                                        Date startDate, Date endDate) throws Exception {
+        List<JiraIssuesReportEntryDTO> result = new ArrayList<JiraIssuesReportEntryDTO>();
+
+        if (jiraIssuesStatusIds == null || (jiraIssuesStatusIds.length == 0)) {
+            // return empty list
+            return result;
+        }
+
+        // build the jira status filter
+        List<String> jiraStatusName = new ArrayList<String>();
+
+        for(long statusId : jiraIssuesStatusIds) {
+            if(statusId == JiraIssuePaymentStatus.NOT_PAID.getStatusId()) {
+                jiraStatusName.add(JiraIssuePaymentStatus.NOT_PAID.getStatusName());
+            } else if(statusId == JiraIssuePaymentStatus.PAID.getStatusId()) {
+                jiraStatusName.add(JiraIssuePaymentStatus.PAID.getStatusName());
+            }
+        }
+
+        // concatenate the filters
+        String jiraStatusesList = concatenate(jiraStatusName.toArray(new String[jiraStatusName.size()]), ", ");
+
+        // date format to prepare date for query input
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+
+        if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
+            return result;
+        }
+
+        request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("statuses", jiraStatusesList);
+        request.setContentHandle("dashboard_jira_issues_report");
+        final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
+
+        final Map properties = request.getProperties();
+
+        // get all jira issues for the report
+        final ResultSetContainer resultContainer = queryData.get("dashboard_jira_issues_report");
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+
+            JiraIssuesReportEntryDTO jiraIssue = new JiraIssuesReportEntryDTO();
+
+            jiraIssue.setCustomer(row.getStringItem("customer"));
+            jiraIssue.setBillingAccount(row.getStringItem("billingaccount"));
+            jiraIssue.setContestName(row.getStringItem("contestname"));
+            jiraIssue.setContestId(row.getLongItem("contestid"));
+            jiraIssue.setTicketId(row.getStringItem("ticketid"));
+            jiraIssue.setTicketTitle(row.getStringItem("tickettitle"));
+            jiraIssue.setTicketDescription(row.getStringItem("ticketdescription"));
+            jiraIssue.setPrize(row.getDoubleItem("prize"));
+            jiraIssue.setStatus(row.getStringItem("status"));
+            jiraIssue.setReporter(row.getStringItem("reporter"));
+            jiraIssue.setAssignee(row.getStringItem("assignee"));
+            jiraIssue.setTcoPoints(row.getIntItem("tcopoints"));
+            jiraIssue.setLaunchDate(row.getTimestampItem("launchdate"));
+            jiraIssue.setResolutionDate(row.getTimestampItem("resolutiondate"));
+            jiraIssue.setVotesNumber(row.getIntItem("votesnumber"));
+            jiraIssue.setWinner(row.getStringItem("winner"));
+            jiraIssue.setProjectId(row.getLongItem("directprojectid"));
+            jiraIssue.setProjectName(row.getStringItem("directprojectname"));
+
+            result.add(jiraIssue);
+        }
+
+        return result;
     }
 
     /**

@@ -70,9 +70,12 @@
  *
  *  Version 2.2 - Release Assembly - TC Direct Cockpit Release Six
  *  - Update the codes to auto adjust width and height of billing cost report.
+ *
+ *  Version 2.3 - Module Assembly - JIRA issues loading update and report creation
+ *  - Add support for jira issues report.
  * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin
- * @version 2.2
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, TCSASSEMBLER
+ * @version 2.3
  */
 
 var mouse_is_inside;
@@ -120,6 +123,8 @@ $(document).ready(function(){
             window.location.href = '/direct/dashboardParticipationReport' + synchronizeFilters();
         } else if (reportType == 'PROJECT_METRICS') {
             window.location.href = '/direct/dashboardProjectMetricsReport' + synchronizeFilters();
+        } else if (reportType == 'JIRA_ISSUES') {
+            window.location.href = '/direct/dashboardJiraIssuesReport' + synchronizeFilters();
         }
     });
 	

@@ -663,6 +663,19 @@
           <property name="viewData.showJustForm" value="true"/>
     </bean>
 
+    <bean id="dashboardJiraIssuesReportAction"
+          class="com.topcoder.direct.services.view.action.report.DashboardJiraIssuesReportAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="viewData.showJustForm" value="false"/>
+    </bean>
+
+
+    <bean id="dashboardShowJiraIssuesReportAction"
+          class="com.topcoder.direct.services.view.action.report.DashboardJiraIssuesReportAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+        <property name="viewData.showJustForm" value="true"/>
+    </bean>
+
     <bean id="dashboardParticipationReportAction"
           class="com.topcoder.direct.services.view.action.report.DashboardParticipationMetricsReportAction"
           scope="prototype" parent="baseDirectStrutsAction">

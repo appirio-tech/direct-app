@@ -54,9 +54,12 @@
  *
  * Version 1.8.4 - (Module Assembly - Add Monthly Platform Fee Feature to Admin Page)
  * - Add support for platform fee table.
+ *
+ * Version 1.8.5 - (Module Assembly - JIRA issues loading update and report creation)
+ * - Add support for jira issues report.
  *  
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu
- * @version 1.8.4
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, TCSASSEMBLER
+ * @version 1.8.5
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -682,6 +685,39 @@ $(document).ready(function() {
                 { "sType": "html" },
                 { "sType": "html" }
             ]
+
+    });
+
+    $.jiraIssuesReportDataTable = $("#jiraIssuesReportsSection .paginatedDataTable").dataTable({
+        "iDisplayLength": 25,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page"
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html-trimmed" },
+            { "sType": "html-trimmed" },
+            { "sType": "html-trimmed" },
+            { "sType": "html-trimmed" },
+            { "sType": "simple-date" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "money" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "simple-date" },
+            { "sType": "html" },
+            { "sType": "html" }
+        ]
 
     });
     
