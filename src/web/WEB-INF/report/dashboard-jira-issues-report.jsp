@@ -160,20 +160,20 @@
                 <tr class="projectAggregationCostReport scData subTheadRow">
                     <th class="tableColumn">Customer</th>
                     <th class="tableColumn">Billing</th>
-                    <th class="tableColumn">Project</th>
-                    <th class="tableColumn">Contest<br />Name</th>
-                    <th class="tableColumn">Contest<br/>ID</th>
+                    <th class="tableColumn">Project</th>                
                     <th class="tableColumn">Bug<br/>ID</th>
+					<th class="tableColumn">Title</th>
                     <th class="tableColumn">Launch<br/>Date</th>
-                    <th class="tableColumn">Title</th>
                     <th class="tableColumn">Description</th>
-                    <th class="tableColumn">Prize</th>
+                    <th class="tableColumn">Amount</th>
+					<th class="tableColumn">Contest<br />Name</th>
+                    <th class="tableColumn">Contest<br/>ID</th>
                     <th class="tableColumn">Status</th>
                     <th class="tableColumn">Reporter</th>
                     <th class="tableColumn">Assignee</th>
                     <th class="tableColumn">TCO<br />Points</th>
                     <th class="tableColumn">Resolution<br />Date</th>
-                    <th class="tableColumn">Votes</th>
+                    <th class="tableColumn">Registrants</th>
                     <th class="tableColumn">winner</th>
                 </tr>
                 </thead>
@@ -191,7 +191,24 @@
                                 <s:property value="projectName"/>
                             </a>
                         </td>
+                       
                         <td>
+                            <a href="https://apps.topcoder.com/bugs/browse/${ticketId}">${ticketId}</a>
+                        </td>
+						 <td>
+                            <a href="https://apps.topcoder.com/bugs/browse/${ticketId}">${ticketTitle}</a>
+                        </td>
+                        <td>
+                            <s:date name="launchDate" format="yyyy-MM-dd" />
+                        </td>
+                       
+                        <td>
+                            <a href="javascript:;" title="<s:property value='ticketDescription'/>">View</a>
+                        </td>
+                        <td>
+                            <fmt:formatNumber value="${prize}" pattern="$###,##0.00"/>
+                        </td>
+						 <td>
                             <a class="longWordsBreak"
                                href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="contestId"/></s:url>">
                                 <s:property value="contestName"/></a>
@@ -200,21 +217,6 @@
                             <a class="longWordsBreak"
                                href="<s:url action="detail" namespace="/contest"><s:param name="projectId" value="contestId"/></s:url>">
                                 <s:property value="contestId"/></a>
-                        </td>
-                        <td>
-                            <a href="https://apps.topcoder.com/bugs/browse/${ticketId}">${ticketId}</a>
-                        </td>
-                        <td>
-                            <s:date name="launchDate" format="yyyy-MM-dd" />
-                        </td>
-                        <td>
-                            <s:property value="ticketTitle"/>
-                        </td>
-                        <td>
-                            <a href="javascript:;" title="<s:property value='ticketDescription'/>">View</a>
-                        </td>
-                        <td>
-                            <fmt:formatNumber value="${prize}" pattern="$###,##0.00"/>
                         </td>
                         <td>
                             <s:property value="status"/>
