@@ -27,6 +27,7 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Invoice
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuePaymentStatus;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationBasicReportDTO;
@@ -1613,11 +1614,53 @@ public class DataProvider {
         List<String> jiraStatusName = new ArrayList<String>();
 
         for(long statusId : jiraIssuesStatusIds) {
-            if(statusId == JiraIssuePaymentStatus.NOT_PAID.getStatusId()) {
-                jiraStatusName.add(JiraIssuePaymentStatus.NOT_PAID.getStatusName());
-            } else if(statusId == JiraIssuePaymentStatus.PAID.getStatusId()) {
-                jiraStatusName.add(JiraIssuePaymentStatus.PAID.getStatusName());
-            }
+            if(statusId == JiraIssueStatus.ACCEPTED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.ACCEPTED.getStatusName());
+            } else if(statusId == JiraIssueStatus.APPROVED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.APPROVED.getStatusName());
+            } else if(statusId == JiraIssueStatus.CLOSED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.CLOSED.getStatusName());
+            } else if(statusId == JiraIssueStatus.FORMAL_REVIEW.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.FORMAL_REVIEW.getStatusName());
+            } else if(statusId == JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_3RD_PARTY.getStatusName());
+            } else if(statusId == JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_CUSTOMER.getStatusName());
+            }else if(statusId == JiraIssueStatus.HOLD_FOR_IT.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.HOLD_FOR_IT.getStatusName());
+            } else if(statusId == JiraIssueStatus.IN_PROGRESS.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.IN_PROGRESS.getStatusName());
+            } else if(statusId == JiraIssueStatus.INFORMAL_REVIEW.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.INFORMAL_REVIEW.getStatusName());
+            } else if(statusId == JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.INFORMAL_REVIEW_PENDING.getStatusName());
+            } else if(statusId == JiraIssueStatus.LIVE_DESIGN.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.LIVE_DESIGN.getStatusName());
+            } else if(statusId == JiraIssueStatus.LIVE_DEVELOPMENT.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.LIVE_DEVELOPMENT.getStatusName());
+            } else if(statusId == JiraIssueStatus.NEW_REQUEST.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.NEW_REQUEST.getStatusName());
+            } else if(statusId == JiraIssueStatus.ON_HOLD.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.ON_HOLD.getStatusName());
+            } else if(statusId == JiraIssueStatus.OPEN.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.OPEN.getStatusName());
+            } else if(statusId == JiraIssueStatus.PREPPING.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.PREPPING.getStatusName());
+            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_DEV.getStatusName());
+            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_PROD.getStatusName());
+            } else if(statusId == JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.READY_TO_DEPLOY_TO_TEST.getStatusName());
+            } else if(statusId == JiraIssueStatus.REOPENED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.REOPENED.getStatusName());
+            } else if(statusId == JiraIssueStatus.RESOLVED.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.RESOLVED.getStatusName());
+            } else if(statusId == JiraIssueStatus.STUCK.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.STUCK.getStatusName());
+            } else if(statusId == JiraIssueStatus.TESTING.getStatusId()) {
+                jiraStatusName.add(JiraIssueStatus.TESTING.getStatusName());
+            }	
         }
 
         // concatenate the filters
@@ -1632,7 +1675,12 @@ public class DataProvider {
             return result;
         }
 
-        request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+
+		if(DirectUtils.isTcStaff(currentUser)) {
+            request.setProperty("uid", String.valueOf(0));
+        } else {
+            request.setProperty("uid", String.valueOf(currentUser.getUserId()));
+        }
         request.setProperty("sdt", dateFormatter.format(startDate));
         request.setProperty("edt", dateFormatter.format(endDate));
         request.setProperty("jirastatuses", jiraStatusesList);
