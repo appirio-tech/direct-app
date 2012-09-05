@@ -358,7 +358,7 @@ public class BillingCostReportDTO extends ReportBaseDTO {
             }
             else
             {
-                row.getCell(8).setStringValue(String.valueOf(costDetail.getReferenceId()));
+                row.getCell(8).setStringValue(String.valueOf(costDetail.getPaymentDesc()));
             }
 
             // set the contest type

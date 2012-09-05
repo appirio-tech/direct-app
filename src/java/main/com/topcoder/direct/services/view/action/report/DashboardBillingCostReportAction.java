@@ -344,7 +344,7 @@ public class DashboardBillingCostReportAction extends DashboardReportBaseAction<
 		            if(entry.getContest() != null) {
 		                uniqueContestSet.add(entry.getContest().getId());
 		            }
-		            if(entry.getPaymentType().equalsIgnoreCase("bugs")) {
+		            if(entry.getPaymentType().trim().equalsIgnoreCase("bugs")) {
 		                uniqueBugRaces.add(entry.getReferenceId());
 		            }
 		        }
