@@ -15,6 +15,9 @@
  *
  * - (Release Assembly - TC Direct Issue Tracking Tab Update Assembly 2) updates:
  * - Add classes for uploading attachments in contest issues tracking page.
+ *
+ * Release Assembly - TC Direct Project Forum Configuration Assembly 2 updates:
+ * - Added styles for new popup modal windows.
  */
 
 html,body{
@@ -1488,6 +1491,18 @@ overflow: auto;
 
 .outLay {
     width: 360px;
+}
+
+#new-modal-new {
+    left: 0;
+    position: fixed;
+    top: 0;
+    z-index: 10002;
+}
+
+#new-modal-new .outLayNew {
+    display: none;
+    position: relative;
 }
 
 #new-modal .outLay .modalHeader .closeModal,

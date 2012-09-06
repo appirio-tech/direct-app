@@ -1,7 +1,7 @@
 <%--
-  - Author: Blues, GreatKevin
-  - Version: 1.3
-  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin, duxiaoyang
+  - Version: 1.4
+  - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: The footer of the topcoder cockpit.
   -
@@ -16,13 +16,16 @@
   -
   - Version 1.3 (Release Assembly - TopCoder Cockpit Start A New Project Revamp R1) changes:
   - 1) Change create a new project button to new one.
+  -
+  - Version 1.4 (Release Assembly - TC Direct Project Forum Configuration Assembly 2) changes:
+  - Added quotes for rightSidebarData to avoid JavaScript error.
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 
 <div id="area2" class="dashboardPage"><!-- the right column -->
 
     <script type="text/javascript">
-         var rightSidebarData = <s:property value="viewData.userProjects.jsonResult" escape="false"/>;
+         var rightSidebarData = '<s:property value="viewData.userProjects.jsonResult" escape="false"/>';
          var currentProjectName = '<s:property value="sessionData.currentProjectContext.name"/>';
          var isInProjectScope = ('project' == $.trim("<s:property value='#request.PAGE_TYPE'/>"));
          var currentProjectContests;

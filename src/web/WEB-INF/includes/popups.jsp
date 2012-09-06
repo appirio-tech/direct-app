@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin, TCSASSEMBLER, TCSASSEMBLY
-  - Version: 2.3
+  - Author: winsty, GreatKevin, TCSASSEMBLER, duxiaoyang
+  - Version: 2.4
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: Contest Detail page
@@ -49,6 +49,9 @@
   -
   - Version 2.3 - Release Assembly - TC Direct Project Forum Configuration Assembly
   - - Added popup for forum configuration
+  -
+  - Version 2.4 - Release Assembly - TC Direct Project Forum Configuration Assembly 2
+  - - Added popup for forum configuration on project overview page
 --%>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
 <div class="popups"><!-- this area will contain the popups of this page -->
@@ -1469,7 +1472,7 @@
         </div>
     </div>
 
-        <div id="createForumModal" class="outLay newModal">
+        <div id="createForumModal" class="outLay minModal">
         <div class="modalTop"><div class="modalBottom"><div class="modalBg">
             <div class="inner">
                 <!-- title -->
@@ -1519,6 +1522,271 @@
             </div>
         </div></div></div>
     </div>
+
+    <div id="viewForumModal" class="outLay">
+        <div class="inner">
+            <div class="modalHeader">
+                <div class="modalHeaderRight">
+                    <div class="modalHeaderCenter">
+                        CONFIGURE PROJECT FORUM
+                        <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                    </div>
+                </div>
+            </div>
+            <!-- end .modalHeader -->
+
+            <!-- content -->
+            <div class="modalBody">
+                <div class="modal-content">
+                    <table class="projectForum" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th class="first">Forum Lists</th>
+                            <th>Description</th>
+                            <th class="last"></th>
+                        </tr>
+                        <tr class="applyForAll">
+                            <td>
+                                <a class="downloadProfile deleteSelect" href="javascript:;">
+                                    <span class="profileLeft">Delete Selected</span>
+                                </a>
+                                <a class="downloadProfile addMoreForum" href="javascript:;">
+                                    <span class="profileLeft">Add More Forums</span>
+                                </a>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <table class="projectForum projectForumBody" border="0" cellpadding="0" cellspacing="0">
+                    </table>
+                </div>
+                <div class="buttonArea">
+                    <a href="javascript:;" title="SAVE" class="button6 saveButton1"><span class="left"><span class="right">OK</span></span></a>
+                </div>
+            </div>
+            <!-- End .content -->
+
+            <div class="modalFooter">
+                <div class="modalFooterRight">
+                    <div class="modalFooterCenter"></div>
+                </div>
+            </div>
+            <!-- end .modalFooter -->
+        </div>
+    </div>
+    </div>
+
+    <div id="modalBackgroundNew"></div>
+    <div id="new-modal-new">
+        <!--create forum-->
+        <div id="createForumModalNew" class="outLayNew">
+            <div class="inner">
+                <div class="modalHeader">
+                    <div class="modalHeaderRight">
+                        <div class="modalHeaderCenter">
+                            INSERT PROJECT FORUM
+                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end .modalHeader -->
+
+                <!-- content -->
+                <div class="modalBody">
+                    <div class="modal-content">
+                        <div class="addUserForm">
+                            <div class="forumModelContent">
+                                <!-- form -->
+                                <div class="form">
+                                    <!-- row -->
+                                    <div class="row projectName">
+                                        <span class="intro">All fields marked with <span class="red">*</span> are mandatory</span>
+                                    </div>
+
+                                    <!-- row -->
+                                    <div class="row projectName">
+                                        <a href="javascript:;" class="toolTip" id="toolTip1" rel='&lt;p&gt;&lt;b&gt;30 characters max.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Examples: "XYZ System Upgrade",&lt;/p&gt; &lt;p&gt;"ABC Refactoring", "XYZ Website" etc.&lt;/p&gt;'></a>
+                                        <label>Forum Name <span class="red">*</span></label>
+                                        <input type="text" class="text" maxlength="30" />
+                                        <div class="clear"></div>
+                                        <p class="errmessage">
+                                        </p>
+                                    </div>
+                                    <!-- End .row -->
+
+                                    <!-- row -->
+                                    <div class="row descProject">
+
+                                        <a href="javascript:;" class="toolTip" id="toolTip2" rel="&lt;p&gt;&lt;b&gt;A short description about the project,&lt;/b&gt; such as:&lt;/p&gt;&lt;p&gt;Is this a new application or an upgrade of an existing application ?&lt;/p&gt; &lt;p&gt;What is the scope of your project ?&lt;/p&gt;&lt;p&gt;What application do you want to build ?&lt;/p&gt;&lt;p&gt;What is your main objective for building the application ?&lt;/p&gt;"></a>
+                                        <label>Description<span class="red">*</span></label>
+                                        <textarea rows="10" cols="10" ></textarea>
+                                        <div class="clear"></div>
+                                        <p class="errmessage">
+                                        </p>
+                                    </div>
+                                    <!-- End .row -->
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="buttonArea">
+                            <a href="javascript:;" title="SAVE" class="button6 saveButton1"><span class="left"><span class="right">INSERT</span></span></a>
+                            <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End .content -->
+
+                <div class="modalFooter">
+                    <div class="modalFooterRight">
+                        <div class="modalFooterCenter"></div>
+                    </div>
+                </div>
+                <!-- end .modalFooter -->
+            </div>
+        </div>
+        <!-- End modal -->
+
+        <!--delete confirm forum-->
+        <div id="deleteConfirmForumModal" class="outLayNew">
+            <div class="inner">
+                <div class="modalHeader">
+                    <div class="modalHeaderRight">
+                        <div class="modalHeaderCenter">
+                            DELETE CONFIRMATION
+                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end .modalHeader -->
+
+                <!-- content -->
+                <div class="modalBody">
+                    <div class="modal-content">
+                        <span class="deleteModal">Are you sure you want to delete the selected <br/>Custom Forum from the List?</span>
+                    </div>
+                    <div class="buttonArea">
+                        <a href="javascript:;" title="YES" class="button6 saveButton1"><span class="left"><span class="right">YES</span></span></a>
+                        <a href="javascript:;" title="NO" class="closebutton button6 cancelButton"><span class="left"><span class="right">NO</span></span></a>
+                    </div>
+                </div>
+                <!-- End .content -->
+
+                <div class="modalFooter">
+                    <div class="modalFooterRight">
+                        <div class="modalFooterCenter"></div>
+                    </div>
+                </div>
+                <!-- end .modalFooter -->
+            </div>
+        </div>
+        <!-- End modal -->
+
+        <!--delete confirm forum-->
+        <div id="noDeleteForumModal" class="outLayNew">
+            <div class="inner">
+                <div class="modalHeader">
+                    <div class="modalHeaderRight">
+                        <div class="modalHeaderCenter">
+                            DELETE CONFIRMATION
+                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end .modalHeader -->
+
+                <!-- content -->
+                <div class="modalBody">
+                    <!-- End .modal-title -->
+                    <!-- content -->
+                    <div class="modal-content">
+                        <span class="deleteModal">You have Successfully Deleted the Custom Forum <br/> from the List.</span>
+                    </div>
+                    <div class="buttonArea">
+                        <a href="javascript:;" title="OK" class="button6 cancelButton"><span class="left"><span class="right">OK</span></span></a>
+                    </div>
+                </div>
+                <!-- End .content -->
+
+                <div class="modalFooter">
+                    <div class="modalFooterRight">
+                        <div class="modalFooterCenter"></div>
+                    </div>
+                </div>
+                <!-- end .modalFooter -->
+            </div>
+        </div>
+        <!-- End modal -->
+
+        <!--delete Error forum-->
+        <div id="deleteErrorForumModal" class="outLayNew">
+            <div class="inner">
+                <div class="modalHeader">
+                    <div class="modalHeaderRight">
+                        <div class="modalHeaderCenter">
+                            ERROR
+                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end .modalHeader -->
+
+                <!-- content -->
+                <div class="modalBody">
+                    <div class="modal-content">
+                        <span class="deleteModal">You should select a forum to delete.</span>
+                   </div>
+                    <div class="buttonArea">
+                        <a href="javascript:;" title="OK" class="button6 cancelButton"><span class="left"><span class="right">OK</span></span></a>
+                    </div>
+                </div>
+                <!-- End .content -->
+
+                <div class="modalFooter">
+                    <div class="modalFooterRight">
+                        <div class="modalFooterCenter"></div>
+                    </div>
+                </div>
+                <!-- end .modalFooter -->
+            </div>
+        </div>
+        <!-- End modal -->
+
+        <!--delete confirm forum-->
+        <div id="forumErrorModal" class="outLayNew">
+            <div class="inner">
+                <div class="modalHeader">
+                    <div class="modalHeaderRight">
+                        <div class="modalHeaderCenter">
+                            ERRORS
+                            <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end .modalHeader -->
+
+                <!-- content -->
+                <div class="modalBody">
+                    <!-- End .modal-title -->
+                    <!-- content -->
+                    <div class="modal-content">
+                        <span class="errorModal"></span>
+                    </div>
+                    <div class="buttonArea">
+                        <a href="javascript:;" title="OK" class="button6 cancelButton"><span class="left"><span class="right">OK</span></span></a>
+                    </div>
+                </div>
+                <!-- End .content -->
+
+                <div class="modalFooter">
+                    <div class="modalFooterRight">
+                        <div class="modalFooterCenter"></div>
+                    </div>
+                </div>
+                <!-- end .modalFooter -->
+            </div>
+        </div>
+        <!-- End modal -->
     </div>
 
     <s:if test='%{#request.CURRENT_TAB == "milestone"}'>

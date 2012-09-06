@@ -1,7 +1,7 @@
 <%--
-  - Author: Veve, isv, BLues, GreatKevin
+  - Author: Veve, isv, BLues, GreatKevin, duxiaoyang
   -
-  - Version: 1.3
+  - Version: 1.5
   - Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the project overview view.
@@ -27,6 +27,8 @@
   - - Add the project permission general info.
   - Version 1.4 - Release Assembly - TopCoder Cockpit Project Overview Performance Improvement
   - - Change project stats and activities and part of project information to be loaded via ajax
+  - Version 1.5 - Release Assembly - TC Direct Project Forum Configuration Assembly 2 
+  - - Add Configure Project Forum button inside the project forum section.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -667,6 +669,18 @@
                                                     <img src="/images/loadingAnimation.gif" alt="loading"/></div>
                                             </div>
                                         </div>
+										<div class="projectForumButton">
+                                            <a href="javascript:;" class="buttonRed1 configreButton buttonToolTip">
+                                                <span>CONFIGURE PROJECT FORUM</span>
+                                                <div class="buttonToolTipContainer hide">
+                                                    <div class="arrow"></div>
+                                                    <p class="textBox">
+                                                        <b>Configure Project Forums</b>
+                                                    </p>
+                                                    <p class="tooltipContent">You can Add/Remove Forums to the <br/> Project from here...</p>
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                     <!-- End #projectForumTable -->
                                 </s:if>
@@ -686,7 +700,17 @@
                                         <p> Share information, requirements, comments, etc. with fellow team members, copilots and TopCoder managers.</p>
                                         <div class="projectForumLeaderButton">
                                             <a href="https://apps.topcoder.com/forums/?module=Category&categoryID=${viewData.projectStats.project.projectForumCategoryId}" class="buttonRed1"><span>LET'S TALK</span></a>
-                                        </div>
+											 <a href="javascript:;" class="buttonRed1 configreButton buttonToolTip">
+												<span>CONFIGURE PROJECT FORUM</span>
+												<div class="buttonToolTipContainer hide">
+													<div class="arrow"></div>
+													<p class="textBox">
+                                                    <b>Configure Project  Forums</b>
+													<p class="tooltipContent">You can Add/Remove Forums to the <br/> Project from here...</p>
+													</p>
+												</div>
+											</a>
+										</div>
                                     </div>
                                 </s:else>
 

@@ -22,8 +22,13 @@
  *  - Change the loading of project stats and project activities to ajax
  * </p>
  *
- * @author Blues, GreatKevin
- * @version 1.3
+ * <p>
+ * Version 1.4 (Release Assembly - TC Direct Project Forum Configuration Assembly 2)
+ *  - Added event listeners for forum configuration popups
+ * </p>
+ *
+ * @author Blues, GreatKevin, duxiaoyang
+ * @version 1.4
  * @since Release Assembly - TopCoder Cockpit Project Overview Update 1
  */
 var iProjectBudget;
@@ -243,7 +248,7 @@ $(document).ready(function() {
     $(window).trigger("resize");
 
 
-    if ($("#projectForumTable").length > 0) {
+    if ($(".configreButton").length > 0) {
 
         var ajaxTableTimer = 2000; // timer for ajax table list
         var ajaxTableLoader, strTableData = '', isReadStatus = '';
@@ -261,45 +266,92 @@ $(document).ready(function() {
                 strTableData = "";
                 strTmp = "";
                 $.each(json.result['return'].projectForumThreads, function(idx, item) {
-                    strTableData += '<tr>';
-                    strTableData += '<td class="colTab1">';
-                    strTableData += '<div>';
+                    var fixedForum = item.threadTitle.indexOf("Project Requirements") >= 0;
+                    var newRow = "";
+                    newRow += '<tr>';
+                    newRow += '<td class="colTab1">';
+                    newRow += '<div>';
 
                     isReadStatus = (item.isRead == false ? "isNew" : " ");
 
-                    strTableData += '<h3 class="' + isReadStatus + '"><a target="_blank" href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
-                    strTableData += '<p>' + item.summary + '</p>';
-                    strTableData += '</div>';
-                    strTableData += '</td>';
-                    strTableData += '<td class="colTab2">';
-                    strTableData += '<div>' + item.threadNumber + '/' + item.messageNumber + '</div>';
-                    strTableData += '</td>';
-                    strTableData += '<td class="colTab3">';
+                    newRow += '<h3 class="' + isReadStatus + '"><a target="_blank" href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=' + item.threadID + '">' + item.threadTitle + '</a></h3>';
+                    newRow += '<p>' + item.summary + '</p>';
+                    newRow += '</div>';
+                    newRow += '</td>';
+                    newRow += '<td class="colTab2">';
+                    newRow += '<div>' + item.threadNumber + '/' + item.messageNumber + '</div>';
+                    newRow += '</td>';
+                    newRow += '<td class="colTab3">';
                     //  strTableData += '<a href="#" class="author">' + item.lastPostHandle + '</a>';
-                    strTableData += item.latestPostAuthorLink;
-                    strTableData += '<p>' + item.lastPostTime + '</p>';
-                    strTableData += '</td>';
-                    strTableData += '</tr>';
+                    newRow += item.latestPostAuthorLink;
+                    newRow += '<p>' + item.lastPostTime + '</p>';
+                    newRow += '</td>';
+                    newRow += '</tr>';
+                    if (fixedForum) {
+                        strTableData = newRow + strTableData;
+                    } else {
+                        strTableData += newRow;
+                    }
                     
                     if(item.watching) {
                     	  isForumWatched = true;
+                    }
+                    
+                    // add a new row into the configure forums popup
+                    var popupRow = "<tr>";
+                    if (fixedForum) {
+                        popupRow += '<td class="first">';
+                        popupRow += '<span class="group predefine">' + item.threadTitle + '</span>';
+                    } else {
+                        popupRow += '<td>';
+                        if (item.threadNumber == 0) {
+                            popupRow += '<input class="selectForumCheck" type="checkbox"/>';
+                        } else {
+                            popupRow += '<input class="selectForumCheck" type="checkbox" disabled="disabled"/>';
+                        }
+                        popupRow += '<span class="group">' + item.threadTitle + '</span>';
+                    }
+                    popupRow += '<span class="threadId hide">' + item.threadID + '</span></td>';
+                    if (fixedForum) {
+                        popupRow += '<td class="middle">';
+                    } else {
+                        popupRow += '<td>';
+                    }
+                    popupRow += '<span class="group">' + item.summary + '</span></td>';
+                    if (fixedForum) {
+                        popupRow += '<td class="checkbox last"></td>';
+                    } else {
+                        popupRow += '<td class="checkbox">';
+                        if (item.threadNumber == 0) {
+                            popupRow += '<a class="deleteIcon" href="javascript:;"></a>';
+                        } else {
+                            popupRow += '<a class="deleteIcon disabledDeleteIcon toolTip" href="javascript:;" rel="You can not delete a forum which is already used"></a>';
+                        }
+                        popupRow += '</td>';
+                    }
+                    popupRow += "</tr>";
+                    if (fixedForum) {
+                        $('.projectForumBody').prepend(popupRow);
+                    } else {
+                        $('.projectForumBody').append(popupRow);
                     }
                 });
                 strTmp += '<table cellpadding="0" cellspacing="0"><tbody>';
                 strTmp += strTableData;
                 strTmp += '</tbody></table>';
-                                                
-                $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
-                $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
-
-                ajaxTableLoader = setTimeout(function() {
-
+                
+                if ($('#projectForumTable').length > 0) {
                     $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
                     $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
-                }, ajaxTableTimer);
-                
-                //initiate the forum watch checkbox            	  
-                initForumWatch(isForumWatched);    
+    
+                    ajaxTableLoader = setTimeout(function() {
+                        $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner").empty().append(strTmp);
+                        $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
+                    }, ajaxTableTimer);
+                    
+                    //initiate the forum watch checkbox               
+                    initForumWatch(isForumWatched);
+                }  
             }
         });
     }
@@ -687,6 +739,236 @@ $(document).ready(function() {
             showErrors("Fail to load the project copilots data");
         }
     });
+    
+    // Added for configuring forum popups
+    $('.buttonToolTip').live('mouseover', function() {
+        $(this).find(".buttonToolTipContainer").removeClass("hide");
+    });
+    $('.buttonToolTip').live('mouseout', function() {
+        $(this).find(".buttonToolTipContainer").addClass("hide");
+    });
+    
+    $('.toolTip').live('mouseover', function() {
+        $(this).append('<div class="toolTipContainer"><div class="arrow"></div><p class="textBox"></p></div>');
+        $(this).find('p').append($(this).attr('rel'));
+    });
+    $('.toolTip').live('mouseout', function() {
+        $(this).empty();
+    });
+    
+    /* close modal */
+    var modalNewClose = function() {
+        $('#modalBackgroundNew').hide();
+        $('.outLayNew').hide();
+    };
 
+    /* load modal (string itemID )*/
+    var modalNewLoad = function(itemID) {
+        modalNewClose();
+        $('#modalBackgroundNew').show();
+        $(itemID).show();
+        modalNewPosition();
+    };
 
+    // close modal
+    $('#new-modal-new .outLayNew .closeModal').live('click', function() {
+        modalNewClose();
+        return false;
+    });
+
+    // close modal
+    $('#new-modal-new .outLayNew .saveButton,#new-modal-new .outLayNew .cancelButton').live('click', function() {
+        modalNewClose();
+        return false;
+    });
+
+    var modalNewPosition = function(){
+        var wWidth  = window.innerWidth;
+        var wHeight = window.innerHeight;
+
+        if (wWidth==undefined) {
+            wWidth  = document.documentElement.clientWidth;
+            wHeight = document.documentElement.clientHeight;
+        }
+
+        var boxLeft = parseInt((wWidth / 2) - ( $("#new-modal-new").width() / 2 ));
+        var boxTop  = parseInt((wHeight / 2) - ( $("#new-modal-new").height() / 2 ));
+
+        // position modal
+        $("#new-modal-new").css({
+            'margin': boxTop + 'px auto 0 ' + boxLeft + 'px'
+        });
+
+        $("#modalBackgroundNew").css("opacity", 0.6);
+
+        if ($("body").height() > $("#modalBackgroundNew").height()){
+            $("#modalBackgroundNew").css("height", $("body").height() + "px");
+        }
+    };
+
+    var showErrorsNew = function(error) {
+        modalNewClose();
+        $('#forumErrorModal .errorModal').html(error);
+        $('#modalBackgroundNew').show();
+        $('#forumErrorModal').show();
+        modalNewPosition();
+    };
+    
+    function validate(box) {
+        var value = $.trim(box.val());
+        var tips = box.data("tips")?box.data("tips"):"";
+        if (value == "" || value == tips){
+            box.parent().find(".errmessage").append('<span class="errorText">This field cannot be left empty.</span>');
+            box.addClass("error").val("");
+            return false;
+        }
+        if (value.indexOf('>') >= 0 || value.indexOf('<') >= 0) {
+            box.parent().find(".errmessage").append('<span class="errorText">This field cannot contain special characters.</span>');
+            box.addClass("error").val("");
+            return false;
+        }
+        return true;
+    }
+    
+    function removeError(box) {
+        box.parent().find(".errorText,.errorIcon").remove();
+        box.removeClass("error");
+    }
+
+    $('.configreButton').live('click', function() {
+        modalLoad('#viewForumModal');
+    });
+    
+    $('#viewForumModal .saveButton1').live('click', function() {
+        modalAllClose();
+    });
+    
+    $('.addMoreForum').live('click', function() {
+        $("#createForumModalNew .descProject textarea").val("");
+        $("#createForumModalNew .projectName input").val("");
+        removeError($("#createForumModalNew .descProject textarea"));
+        removeError($("#createForumModalNew .projectName input"));
+        modalNewLoad('#createForumModalNew');
+    });
+    
+    $('#createForumModalNew .saveButton1').live('click', function() {
+        removeError($("#createForumModalNew .descProject textarea"));
+        var valid1 =  validate($("#createForumModalNew .descProject textarea"));
+
+        removeError($("#createForumModalNew .projectName input"));
+        var valid2 = validate($("#createForumModalNew .projectName input"));
+        
+        if (!valid1 || !valid2) {
+            return;
+        }
+        
+        var forumName = $("#createForumModalNew .projectName input").val();
+        var forumDesc = $("#createForumModalNew .descProject textarea").val();
+        $.ajax({
+            url: 'addProjectForumAJAX',
+            type: 'POST',
+            cache: false,
+            data: {
+                tcDirectProjectId: tcDirectProjectId,
+                forumName: forumName,
+                forumDescription: forumDesc
+            },
+            dataType: 'json',
+            async: false,
+            success: function(result) {
+                if (!result.result) {
+                    showErrorsNew(result.error.errorMessage);
+                    return;
+                } else {
+                    var forumId = result.result["return"].forumId;
+                    var popupRow = "<tr>";
+                    popupRow += '<td><input class="selectForumCheck" type="checkbox"/><span class="group">' + forumName + '</span><span class="threadId hide">' + forumId + '</span></td>';
+                    popupRow += '<td><span class="group">' + forumDesc + '</span></td>';
+                    popupRow += '<td class="checkbox"><a class="deleteIcon" href="javascript:;"></a></td>';
+                    popupRow += "</tr>";
+                    $('.projectForumBody').append(popupRow);
+                    var count = $('.projectForumTableBodyInner table tbody tr').length;
+                    var tableRow = "";
+                    if (count % 2 == 0) {
+                        tableRow += "<tr>";
+                    } else {
+                        tableRow += '<tr class="odd">'
+                    }
+                    tableRow += '<td class="colTab1"><div><h3 class="isNew">';
+                    tableRow += '<a href="https://apps.topcoder.com/forums/?module=ThreadList&forumID=' + forumId + '" target="_blank">' + forumName + '</a>';
+                    tableRow += '</h3><p>' + forumDesc + '</p></div></td>';
+                    tableRow += '<td class="colTab2"><div>0/0</div></td>';
+                    tableRow += '<td class="colTab3"></td>';
+                    $('.projectForumTableBodyInner table tbody').append(tableRow);
+                    modalNewClose();
+                }
+            },
+            error: function(result) {
+                showErrorsNew("Error when adding project forum");
+            }
+        });
+    });
+    
+    var deleteForumId;
+    var deleteForumIdx;
+    
+    $('.deleteIcon').live('click',function() {
+        if ($(this).hasClass('disabledDeleteIcon')) {
+            return;
+        }
+        deleteForumId = $(this).parent().parent().find('.threadId').html();
+        deleteForumIdx = $(this).parent().parent().index();
+        modalNewLoad('#deleteConfirmForumModal');
+    });
+    
+    $('.deleteSelect').live('click',function() {
+        if ($(".selectForumCheck:checked").length > 0) {
+            modalNewLoad('#deleteConfirmForumModal');
+        } else {
+            modalNewLoad('#deleteErrorForumModal');
+        }
+    });
+    
+    $('#deleteConfirmForumModal .saveButton1').live('click',function() {
+        var forumIds = [];
+        var forumIdxes = [];
+        if (deleteForumId != 0) {
+            forumIds.push(deleteForumId);
+            forumIdxes.push(deleteForumIdx);
+            deleteForumId = 0;
+            deleteForumIdx = 0;
+        }
+        $(".selectForumCheck:checked").each(function() {
+            forumIds.push($(this).parent().find('.threadId').html());
+            forumIdxes.push($(this).parent().parent().index());
+        });
+        $.ajax({
+            url: 'deleteProjectForumsAJAX',
+            type: 'POST',
+            cache: false,
+            data: {
+                tcDirectProjectId: tcDirectProjectId,
+                forumIds: forumIds
+            },
+            dataType: 'json',
+            async: false,
+            success: function(result) {
+                if (!result.result) {
+                    showErrorsNew(result.error.errorMessage);
+                    return;
+                } else {
+                    for (var i = forumIdxes.length - 1; i >= 0; --i) {
+                        $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:eq(" + forumIdxes[i] + ")").remove();
+                        $('.projectForumBody tbody tr:eq(' + forumIdxes[i] + ')').remove();
+                    }
+                    $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr").removeClass('odd');
+                    $("#projectForumTable .projectForumTableBody .projectForumTableBodyInner table tr:odd").addClass('odd');
+                    modalNewLoad('#noDeleteForumModal');
+                }
+            },
+            error: function(result) {
+                showErrorsNew("Error when deleting project forum");
+            }
+        });
+    });
 });

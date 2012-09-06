@@ -1142,4 +1142,10 @@
           class="com.topcoder.direct.services.view.action.contest.SubmitApprovalAction"
           scope="prototype" parent="baseDirectStrutsAction">
     </bean>
+	<bean id="addProjectForumAction" class="com.topcoder.direct.services.view.action.project.AddProjectForumAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
+    <bean id="deleteProjectForumsAction" class="com.topcoder.direct.services.view.action.project.DeleteProjectForumsAction"
+          scope="prototype" parent="baseDirectStrutsAction">
+    </bean>
 </beans>
