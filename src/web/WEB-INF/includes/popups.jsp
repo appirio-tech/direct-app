@@ -679,6 +679,123 @@
                     <!-- end .modalFooter -->
                 </div>
             </div>
+
+            <div id="newCopilotFeedbackModal" class="outLay feedbackModal">
+                <div class="inner">
+                    <div class="modalHeader">
+                        <div class="modalHeaderRight">
+                            <div class="modalHeaderCenter">
+                                COPILOT FEEDBACK
+                                <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end .modalHeader -->
+                    <!-- content -->
+                    <div class="modalBody">
+                        <div class="question">
+                            <p>Would you like to work with this copilot <span></span> again?</p>
+                            <input type="radio" name="workAgain" value="yes"><label>Yes</label>
+                            <input type="radio" name="workAgain" value="no"><label>No</label>
+                            <span class="errorMessage"> </span>
+                        </div>
+                        <div class="comment">
+                            <p>Your feedback</p>
+                            <textarea rows="10" cols="74" style="max-width:613px"></textarea>
+                            <p><span class="errorMessage"> </span></p>
+                        </div>
+                        <div class="buttonArea">
+                            <a href="javascript:;" title="SAVE" class="button6 saveButton createNewFeedback"><span class="left"><span class="right">SAVE</span></span></a>
+                            <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                            <div class="clearFix"></div>
+                        </div>
+                    </div>
+                    <!-- End .content -->
+
+                    <div class="modalFooter">
+                        <div class="modalFooterRight">
+                            <div class="modalFooterCenter"></div>
+                        </div>
+                    </div>
+                    <!-- end .modalFooter -->
+                </div>
+            </div>
+
+            <div id="editCopilotFeedbackModal" class="outLay feedbackModal">
+                <div class="inner">
+                    <div class="modalHeader">
+                        <div class="modalHeaderRight">
+                            <div class="modalHeaderCenter">
+                                COPILOT FEEDBACK
+                                <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end .modalHeader -->
+                    <!-- content -->
+                    <div class="modalBody">
+                        <div class="question">
+                            <p>Would you like to work with this copilot <span></span> again?</p>
+                            <input type="radio" name="workAgain" value="yes"><label>Yes</label>
+                            <input type="radio" name="workAgain" value="no"><label>No</label>
+                            <span class="errorMessage"> </span>
+                        </div>
+                        <div class="comment">
+                            <p>Your feedback</p>
+                            <textarea rows="10" cols="74" style="max-width:613px"></textarea>
+                            <p><span class="errorMessage"> </span></p>
+                        </div>
+                        <div class="buttonArea">
+                            <a href="javascript:;" title="SAVE" class="button6 saveButton editNewFeedback"><span class="left"><span class="right">SAVE</span></span></a>
+                            <a href="javascript:;" title="CANCEL" class="closebutton button6 cancelButton"><span class="left"><span class="right">CANCEL</span></span></a>
+                            <div class="clearFix"></div>
+                        </div>
+                    </div>
+                    <!-- End .content -->
+
+                    <div class="modalFooter">
+                        <div class="modalFooterRight">
+                            <div class="modalFooterCenter"></div>
+                        </div>
+                    </div>
+                    <!-- end .modalFooter -->
+                </div>
+            </div>
+
+            <div id="viewCopilotFeedbackModal" class="outLay feedbackModal">
+                <div class="inner">
+                    <div class="modalHeader">
+                        <div class="modalHeaderRight">
+                            <div class="modalHeaderCenter">
+                                COPILOT FEEDBACK
+                                <a href="javascript:;" class="closeModal" title="Close">Close</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end .modalHeader -->
+                    <!-- content -->
+                    <div class="modalBody">
+                        <div class="question">
+                            <b>Would you like to work with this copilot <span class="copilotHandle"></span> again?</b><br/>
+                            <span class="answer"></span>
+                        </div>
+                        <div class="comment">
+                            <b>Your feedback</b><br/>
+                            <span class="text"></span>
+                        </div>
+
+                    </div>
+                    <!-- End .content -->
+
+                    <div class="modalFooter">
+                        <div class="modalFooterRight">
+                            <div class="modalFooterCenter"></div>
+                        </div>
+                    </div>
+                    <!-- end .modalFooter -->
+                </div>
+            </div>
+
         </s:if>
 
         <!-- start modals for create new project -->

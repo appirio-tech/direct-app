@@ -439,7 +439,7 @@ $(document).ready(function() {
 
     })
 
-    var copilotCarouselSetting = {scroll:1,visible:1};
+    var copilotCarouselSetting = {scroll:1,visible:1,itemLoadCallback:onCopilotCarouselChange};
 
     if ($.browser.msie  && parseInt($.browser.version, 10) === 7) {
         copilotCarouselSetting.wrap = 'circular';
@@ -448,7 +448,7 @@ $(document).ready(function() {
     // display the jcarousel for project copilots
     if ($('#projectCopilotsCarousel').length > 0) {
         $('#projectCopilotsCarousel').jcarousel(copilotCarouselSetting);
-
+        setupCopilotFeedbackCurrent($('#projectCopilotsCarousel').data('jcarousel').first);
     }
 
     // scroll
@@ -544,7 +544,7 @@ $(document).ready(function() {
 
 
     // save the project copilots information
-    $('#new-modal .outLay .saveButton').live('click', function() {
+    $('#copilotManageModal .saveButton').live('click', function() {
 
         var request = {
             copilotProjectOperations : getCopilotWidgetOperations()
@@ -579,7 +579,7 @@ $(document).ready(function() {
 
 
     // close button
-    $('#new-modal .outLay .cancelButton').live('click', function() {
+    $('#copilotManageModal .cancelButton').live('click', function() {
         modalAllClose();
         if (widgetResult != null) {
             initializeWidget(widgetResult);
@@ -971,4 +971,223 @@ $(document).ready(function() {
             }
         });
     });
+  // copilot feedback
+
+    // 1) new copilot feedback
+    $("a[name='newCopilotFeedbackModal']").click(function(){
+        // clear inputs
+        $("#newCopilotFeedbackModal textarea").val('');
+        $("#newCopilotFeedbackModal input[type='radio']").each(function(){
+           $(this).attr('checked', false);
+        });
+        $("#newCopilotFeedbackModal .errorMessage").text('');
+        // fill in current copilot handle
+        $("#newCopilotFeedbackModal .question p span").html($("div.copilotsListButtonBox").data('copilot'));
+        // show modal
+        modalLoad('#' + $(this).attr('name'));
+
+        $('#' + $(this).attr('name')).data('copilotProjectId', $("div.copilotsListButtonBox").data('copilotProjectId'));
+    });
+
+    $('.feedbackModal .cancelButton').live('click', function() {
+        modalAllClose();
+        return false;
+    });
+
+    $("a.createNewFeedback").click(function(){
+        if(!validateFeedbackModal('newCopilotFeedbackModal')) {
+            return;
+        }
+
+        var feedbackAnswer = $('input[name=workAgain]:checked', '#newCopilotFeedbackModal').val() == "yes";
+        var feedbackText = $('.comment textarea', '#newCopilotFeedbackModal').val();
+
+        var formData = {};
+        var feedback = {};
+        feedback.answer = feedbackAnswer;
+        feedback.text = feedbackText;
+        formData.copilotProjectId = $('#newCopilotFeedbackModal').data('copilotProjectId');
+        formData.feedback = feedback;
+        formData.projectId = tcDirectProjectId;
+
+        modalAllClose();
+        modalPreloader();
+
+        $.ajax({
+            type : 'post',
+            url : 'createCopilotProjectFeedback',
+            cache : false,
+            data : {formData:formData},
+            dataType : 'json',
+            success : function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        if(result.result == 'success') {
+                            var copilotInfo = getCurrentCopilotContainer().find(".userInfor");
+                            copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackStatus').val('Pending'));
+                            copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackAnswer').val(feedbackAnswer));
+                            copilotInfo.append($("<input type='hidden'/>").attr('name', 'copilotFeedbackText').val(feedbackText));
+                            setupCopilotFeedbackCurrent($('#projectCopilotsCarousel').data('jcarousel').first);
+                            showSuccessfulMessage("Your copilot feedback is added. It will be displayed on the copilot profile when approved.")
+                        } else {
+                            showServerError("Unknown error happened");
+                        }
+
+                    },
+                    function(errorMessage) {
+                        showServerError(errorMessage);
+                    })
+            },
+            error: function(result) {
+                showErrors("Error when adding feedback for the copilot");
+            }
+        });
+
+    });
+
+    // 2) edit feedback modal
+    $("a[name='editCopilotFeedbackModal']").click(function(){
+        // clear inputs
+        $("#editCopilotFeedbackModal textarea").val($("div.copilotsListButtonBox").data('copilotFeedbackText'));
+        var feedbackAnswer = $("div.copilotsListButtonBox").data('copilotFeedbackAnswer') == 'true' ? 'yes' : 'no';
+        $("#editCopilotFeedbackModal input[name=workAgain][value=" + feedbackAnswer + "]").attr('checked', 'checked');
+
+        // fill in current copilot handle
+        $("#editCopilotFeedbackModal .question p span").html($("div.copilotsListButtonBox").data('copilot'));
+        // show modal
+        validateFeedbackModal('editCopilotFeedbackModal');
+        modalLoad('#' + $(this).attr('name'));
+        $('#' + $(this).attr('name')).data('copilotProjectId', $("div.copilotsListButtonBox").data('copilotProjectId'));
+    });
+
+    $("a.editNewFeedback").click(function(){
+        if(!validateFeedbackModal('editCopilotFeedbackModal')) {
+            return;
+        }
+
+        var feedbackAnswer = $('input[name=workAgain]:checked', '#editCopilotFeedbackModal').val() == "yes";
+        var feedbackText = $('.comment textarea', '#editCopilotFeedbackModal').val();
+
+        var formData = {};
+        var feedback = {};
+        feedback.answer = feedbackAnswer;
+        feedback.text = feedbackText;
+        feedback.status = "Pending";
+        formData.copilotProjectId = $('#editCopilotFeedbackModal').data('copilotProjectId');
+        formData.feedback = feedback;
+        formData.projectId = tcDirectProjectId;
+
+        modalAllClose();
+        modalPreloader();
+
+        $.ajax({
+            type : 'post',
+            url : 'updateCopilotProjectFeedback',
+            cache : false,
+            data : {formData:formData},
+            dataType : 'json',
+            success : function(jsonResult) {
+                handleJsonResult(jsonResult,
+                    function(result) {
+                        if(result.result == 'success') {
+                            var copilotInfo = getCurrentCopilotContainer().find(".userInfor");
+                            copilotInfo.find('input[name=copilotFeedbackAnswer]').val(feedbackAnswer);
+                            copilotInfo.find('input[name=copilotFeedbackText]').val(feedbackText);
+                            setupCopilotFeedbackCurrent($('#projectCopilotsCarousel').data('jcarousel').first);
+                        } else {
+                            showServerError("Unknown error happened");
+                        }
+
+                    },
+                    function(errorMessage) {
+                        showServerError(errorMessage);
+                    })
+            },
+            error: function(result) {
+                showErrors("Error when adding feedback for the copilot");
+            }
+        });
+
+    });
+
+    // 3) view feedback modal
+    $("a[name='viewCopilotFeedbackModal']").click(function(){
+        $("#viewCopilotFeedbackModal .comment span.text").text($("div.copilotsListButtonBox").data('copilotFeedbackText'));
+        var feedbackAnswer = $("div.copilotsListButtonBox").data('copilotFeedbackAnswer') == 'true' ? 'YES' : 'NO';
+        $("#viewCopilotFeedbackModal .question span.answer").text(feedbackAnswer);
+
+        // fill in current copilot handle
+        $("#viewCopilotFeedbackModal .question span.copilotHandle").html($("div.copilotsListButtonBox").data('copilot'));
+        // show modal
+        modalLoad('#' + $(this).attr('name'));
+        $('#' + $(this).attr('name')).data('copilotProjectId', $("div.copilotsListButtonBox").data('copilotProjectId'));
+    });
 });
+
+function onCopilotCarouselChange(carousel, state) {
+    setupCopilotFeedbackCurrent(carousel.first);
+}
+
+function getCurrentCopilotContainer() {
+    return $('.itemContainer .userInfor', "li.jcarousel-item-"  + $('#projectCopilotsCarousel').data('jcarousel').first).parent();
+}
+
+function setupCopilotFeedbackCurrent(index) {
+    var container = $('.itemContainer .userInfor', "li.jcarousel-item-" + index);
+
+    // associate current copilot feedback data
+    $("div.copilotsListButtonBox").data('copilotProjectId', container.find("input[name='copilotProjectIdInput']").val());
+    $("div.copilotsListButtonBox").data('copilot', container.parent().find(".handleLink").html());
+
+
+    if (container.find("input[name='copilotFeedbackStatus']").length == 0) {
+        $(".copilotsListButtonBox a[name='newCopilotFeedbackModal']").show();
+        $(".copilotsListButtonBox a[name='viewCopilotFeedbackModal']").hide();
+        $(".copilotsListButtonBox a[name='editCopilotFeedbackModal']").hide();
+        $("div.copilotsListButtonBox").removeData('copilotFeedbackStatus');
+        $("div.copilotsListButtonBox").removeData('copilotFeedbackAnswer');
+        $("div.copilotsListButtonBox").removeData('copilotFeedbackText');
+    } else {
+        $(".copilotsListButtonBox a[name='newCopilotFeedbackModal']").hide();
+        if (container.find("input[name='copilotFeedbackStatus']").val().toLowerCase() != "pending") {
+            $(".copilotsListButtonBox a[name='viewCopilotFeedbackModal']").show();
+            $(".copilotsListButtonBox a[name='editCopilotFeedbackModal']").hide();
+        } else {
+            $(".copilotsListButtonBox a[name='viewCopilotFeedbackModal']").hide();
+            $(".copilotsListButtonBox a[name='editCopilotFeedbackModal']").show();
+        }
+        $("div.copilotsListButtonBox").data('copilotFeedbackStatus', container.find("input[name='copilotFeedbackStatus']").val());
+        $("div.copilotsListButtonBox").data('copilotFeedbackAnswer', container.find("input[name='copilotFeedbackAnswer']").val());
+        $("div.copilotsListButtonBox").data('copilotFeedbackText', container.find("input[name='copilotFeedbackText']").val());
+    }
+}
+
+function validateFeedbackModal(modalId) {
+    var modal = $("#" + modalId);
+    var passValidation = true;
+
+    if(modal.find("input[name=workAgain]:checked").length == 0) {
+        modal.find(".question span.errorMessage").text("Please choose an answer");
+        passValidation = false;
+    } else {
+        modal.find(".question span.errorMessage").text('');
+    }
+
+    if($.trim(modal.find(".comment textarea").val()).length == 0) {
+        modal.find(".comment span.errorMessage").text("Please enter your feedback here");
+        passValidation = false;
+        return false;
+    } else {
+        modal.find(".comment span.errorMessage").text('');
+    }
+
+    if($.trim(modal.find(".comment textarea").val()).length > 800) {
+        modal.find(".comment span.errorMessage").text("Your feedback text cannot exceed 800 chars");
+        passValidation = false;
+    } else {
+        modal.find(".comment span.errorMessage").text('');
+    }
+
+    return passValidation;
+}
+

@@ -3,16 +3,23 @@
  */
 package com.topcoder.direct.services.view.action.project;
 
+import com.topcoder.direct.services.copilot.dao.CopilotProjectDAO;
+import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
 import com.topcoder.direct.services.project.metadata.DirectProjectMetadataService;
 import com.topcoder.direct.services.project.metadata.entities.dao.DirectProjectMetadata;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.action.ViewAction;
-import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.contest.ContestBriefDTO;
 import com.topcoder.direct.services.view.dto.contest.ContestHealthDTO;
+import com.topcoder.direct.services.view.dto.contest.ContestIssuesTrackingDTO;
+import com.topcoder.direct.services.view.dto.contest.TypedContestBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.EnterpriseDashboardProjectStatDTO;
-import com.topcoder.direct.services.view.dto.project.*;
+import com.topcoder.direct.services.view.dto.project.LatestProjectActivitiesDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectCopilotStatDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectOverviewDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectPermissionInfoDTO;
+import com.topcoder.direct.services.view.dto.project.ProjectStatsDTO;
 import com.topcoder.direct.services.view.form.ProjectIdForm;
 import com.topcoder.direct.services.view.util.DashboardHelper;
 import com.topcoder.direct.services.view.util.DataProvider;
@@ -116,9 +123,16 @@ import java.util.Map;
  *     the preprocessor of the action and execute method of the action.
  * </li>
  * </p>
+ *
+ * <p>
+ * Version 2.1 (Module Assembly - TopCoder Copilot Feedback Integration) changes:
+ * <ul>
+ *     <li>Add the logic of getting copilots feedback for the project overview page</li>
+ * </ul>
+ * </p>
  * 
  * @author isv, Veve, Blues, GreatKevin
- * @version 2.0
+ * @version 2.1
  */
 public class ProjectOverviewAction extends AbstractAction implements FormAction<ProjectIdForm>,
                                                                      ViewAction<ProjectOverviewDTO> {
@@ -164,6 +178,13 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
      * The user service.
      */
     private UserService userService;
+
+    /**
+     * The copilot project DAO.
+     *
+     * @since 2.1
+     */
+    private CopilotProjectDAO copilotProjectDAO;
 
     /**
      * The permission service facade.
@@ -257,6 +278,26 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
     }
 
     /**
+     * Gets the copilot project DAO.
+     *
+     * @return the copilot project DAO.
+     * @since 2.1
+     */
+    public CopilotProjectDAO getCopilotProjectDAO() {
+        return copilotProjectDAO;
+    }
+
+    /**
+     * Sets the copilot project DAO.
+     *
+     * @param copilotProjectDAO the copilot project DAO.
+     * @since 2.1
+     */
+    public void setCopilotProjectDAO(CopilotProjectDAO copilotProjectDAO) {
+        this.copilotProjectDAO = copilotProjectDAO;
+    }
+
+    /**
      * <p>Constructs new <code>ProjectOverviewAction</code> instance. This implementation does nothing.</p>
      */
     public ProjectOverviewAction() {
@@ -326,6 +367,9 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
                 // gets and sets the statistics of the project copilots
                 setCopilotStats(DataProvider.getDirectProjectCopilotStats(formData.getProjectId()));
 
+                // set the copilot feedback data
+		setCopilotsFeedback();
+
                 // set all data for project general information table to the view data
                 setProjectGeneralInfo(project);
 
@@ -352,6 +396,28 @@ public class ProjectOverviewAction extends AbstractAction implements FormAction<
             return SUCCESS;
         } else {
             return result;
+        }
+    }
+
+    /**
+     * Sets the feedback of the copilots of the project.
+     *
+     * @throws Exception if there is any error.
+     * @since 2.1
+     */
+    private void setCopilotsFeedback() throws Exception {
+
+        final List<ProjectCopilotStatDTO> copilotProjects = getCopilotStats();
+        long currentUserId = DirectUtils.getTCSubjectFromSession().getUserId();
+
+        // get feedback for each copilot of this project
+        for (ProjectCopilotStatDTO cp : copilotProjects) {
+            final long copilotProjectId = cp.getCopilotInfo().getCopilotProjectId();
+
+            final CopilotProjectFeedback feedback = getCopilotProjectDAO().getCopilotProjectFeedback(copilotProjectId, currentUserId);
+
+            // the feedback can be null if the copilot does not have any feedback for this project
+            cp.setFeedback(feedback);
         }
     }
 

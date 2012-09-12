@@ -6378,6 +6378,60 @@ table#copilotProjectTable td a.addCopilotUsers {
 			.myProjectContests table#ProjectContests td a.button1:hover .btnR .btnC, #activeContests table.projectStats  td a.button1:hover .btnR .btnC, #projectsResult table.projectStats  td a.button1:hover .btnR .btnC{
 				background-position:left -100px;
 			}
+
+#copilotFeedbackAdmin table.projectStats  td a.button1, #projectsResult table.projectStats  td a.button1{
+    background: url("../../images/button1.png") no-repeat scroll left top transparent;
+    color: #313131;
+    display: inline-block;
+    font-size: 11px;
+    padding-left: 2px;
+    text-decoration: none;
+    float: none;
+}
+
+#copilotFeedbackAdmin table.projectStats  td a.button1 span, #projectsResult table.projectStats  td a.button1 span {
+    font-weight: normal;
+    padding-left: 0;
+    width: auto;
+}
+#copilotFeedbackAdmin table.projectStats  td a.button1 .btnR, #projectsResult table.projectStats  td a.button1 .btnR {
+    background: url("../../images/button1.png") no-repeat scroll right -50px transparent;
+    cursor: pointer;
+    float: left;
+    height: 18px;
+    padding-right: 2px;
+}
+#copilotFeedbackAdmin table.projectStats  td a.button1 .btnR .btnC , #projectsResult table.projectStats  td a.button1 .btnR .btnC{
+    background: url("../../images/button1.png") repeat-x scroll left -25px transparent;
+    cursor: pointer;
+    float: left;
+    height: 25px;
+    padding: 0 8px;
+    margin-top: -5px;
+}
+#copilotFeedbackAdmin table.projectStats  td a.button1 .btnR .btnC .btnIcon, #projectsResult table.projectStats  td a.button1 .btnR .btnC .btnIcon {
+    background: url("../../images/button1-icon.gif") no-repeat scroll left center transparent;
+    cursor: pointer;
+    float: left;
+    height: 25px;
+    line-height: 24px;
+    overflow: hidden;
+    padding: 0 2px 0 15px;
+}
+
+#copilotFeedbackAdmin table.projectStats  td a.button1:hover, #projectsResult table.projectStats  td a.button1:hover{
+                                                                                                                           background-position:left -75px;
+                                                                                                                       }
+#copilotFeedbackAdmin table.projectStats  td a.button1:hover .btnR, #projectsResult table.projectStats  td a.button1:hover .btnR{
+                                                                                                                                       background-position:right -125px;
+                                                                                                                                   }
+#copilotFeedbackAdmin table.projectStats  td a.button1:hover .btnR .btnC, #projectsResult table.projectStats  td a.button1:hover .btnR .btnC{
+    background-position:left -100px;
+}
+
+.hideButton {
+    display: none !important;
+}
 	
 /*------------------------
 Contest links
@@ -9709,4 +9763,95 @@ a.addBilling:hover{
     text-decoration: none;
     cursor: pointer;
 }
+
+.resultTableContainer table.resultTable td.copilotFeedback {
+    text-align: left;
+}
+.resultTableContainer table.resultTable td.feedbackRejected {
+    color: red;
+}
+
+a.adminFeedbackEdit {
+    color: red;
+    padding-left: 8px;
+}
+
+TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
+    font-weight: normal;
+}
+
+.feedbackModal {
+    display: none;
+    width: 660px !important;
+}
+.feedbackModal .question {
+    padding: 20px !important;
+}
+.feedbackModal .question input {
+    margin-right: 5px !important;
+}
+.feedbackModal .question label {
+    margin-right: 20px !important;
+}
+.feedbackModal .comment {
+    padding: 0 20px 20px !important;
+}
+.feedbackModal .buttonArea .button6 {
+    display: inline !important;
+    float: left !important;
+    margin-left: 206px !important;
+    margin-right: 40px !important;
+    width: 100px !important;
+}
+.feedbackModal .buttonArea .cancelButton {
+    margin-left: 0 !important;
+}
+.feedbackModal .buttonArea .button6 span.right {
+    padding: 4px 0 0 !important;
+    text-align: center !important;
+}
+
+.feedbackModal {
+    display: none;
+    width: 660px !important;
+}
+.feedbackModal .question {
+    padding: 20px !important;
+}
+.feedbackModal .question input {
+    margin-right: 5px !important;
+}
+.feedbackModal .question label {
+    margin-right: 20px !important;
+}
+.feedbackModal .comment {
+    padding: 0 20px 20px !important;
+}
+.feedbackModal .buttonArea .button6 {
+    display: inline !important;
+    float: left !important;
+    margin-left: 206px !important;
+    margin-right: 40px !important;
+    width: 100px !important;
+}
+.feedbackModal .buttonArea .cancelButton {
+    margin-left: 0 !important;
+}
+.feedbackModal .buttonArea .button6 span.right {
+    padding: 4px 0 0 !important;
+    text-align: center !important;
+}
+
+#new-modal .invalid {
+    background: none repeat scroll 0 0 #FFE1E0;
+    border: 1px solid #FF0000;
+}
+
+#new-modal .errorMessage {
+    color: #FF0000;
+    font-size: 11px;
+    padding-left: 10px;
+}
+
+
 

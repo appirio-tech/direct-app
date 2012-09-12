@@ -575,6 +575,12 @@
                                                                 </div>
                                                             </div>
                                                             <div class="userInfor">
+                                                                <input type="hidden" value="${copilotInfo.copilotProjectId}" name="copilotProjectIdInput"/>
+                                                                <s:if test="feedback != null">
+                                                                    <input type="hidden" name="copilotFeedbackStatus" value="${feedback.status}">
+                                                                    <input type="hidden" name="copilotFeedbackAnswer" value="${feedback.answer}">
+                                                                    <input type="hidden" name="copilotFeedbackText" value="<s:property value='feedback.text'/>">
+                                                                </s:if>
                                                                 <div class="userInforInner">
                                                                     <dl>
                                                                         <dd>
@@ -625,7 +631,10 @@
                     </div>
                   </div>
                   <div class="copilotsListButtonBox">
-                    <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
+                        <a href="javascript:;" class="buttonRed1 triggerModal" name="newCopilotFeedbackModal"><span>GIVE FEEDBACK</span></a>
+                        <a href="javascript:;" class="buttonRed1 triggerModal hide" name="viewCopilotFeedbackModal"><span>VIEW FEEDBACK</span></a>
+                        <a href="javascript:;" class="buttonRed1 triggerModal hide" name="editCopilotFeedbackModal"><span>EDIT FEEDBACK</span></a>
+                        <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>
                   </div>
                 </div>
                             </s:else>

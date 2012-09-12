@@ -7,9 +7,11 @@ import com.topcoder.clients.invoices.dao.InvoiceRecordDAO;
 import com.topcoder.clients.invoices.model.InvoiceType;
 import com.topcoder.direct.services.configs.ConfigUtils;
 import com.topcoder.direct.services.copilot.dto.CopilotPoolMember;
+import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
 import com.topcoder.direct.services.exception.DirectException;
 import com.topcoder.direct.services.view.action.contest.launch.DirectStrutsActionsHelper;
 import com.topcoder.direct.services.view.dto.*;
+import com.topcoder.direct.services.view.dto.admin.CopilotFeedbackAdminDTO;
 import com.topcoder.direct.services.view.dto.contest.*;
 import com.topcoder.direct.services.view.dto.copilot.CopilotBriefDTO;
 import com.topcoder.direct.services.view.dto.copilot.CopilotContestDTO;
@@ -560,9 +562,15 @@ import java.util.Map.Entry;
  *     <li>Add method {@link #getDashboardJiraIssuesReport(com.topcoder.security.TCSubject, long, long, long, long[], java.util.Date, java.util.Date)}</li>
  * </ol>
  * </p>
-
+ *
+ * <p>
+ * Version 4.9 (Module Assembly - TopCoder Copilot Feedback Integration) changes:
+ * <ol>
+ *     <li>Add method {@link #getAllCopilotFeedback()}</li>
+ * </ol>
+ * </p>
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin
- * @version 4.8
+ * @version 4.9
  * @since 1.0
  */
 public class DataProvider {
@@ -683,7 +691,7 @@ public class DataProvider {
             pc.setHandle(copilot.getHandle());
             pc.setHandleLower(copilot.getHandle().toLowerCase());
             pc.setCopilotProfileId(copilot.getCopilotProfileId());
-
+            pc.setCopilotProjectId(copilot.getCopilotProjectId());
             stat.setCopilotInfo(pc);
 
             if(!copilotsSet.contains(Long.valueOf(pc.getUserId()))) {
@@ -756,6 +764,55 @@ public class DataProvider {
                 currentStat.setFailuresContestsNumber(currentStat.getFailuresContestsNumber() + 1);
                 continue;
             }
+        }
+
+        return result;
+    }
+
+    /**
+     * Gets all the copilot feedback.
+     *
+     * @return a list of copilot feedback for admin to manage.
+     * @throws Exception if there is any error
+     * @since 4.7
+     */
+    public static List<CopilotFeedbackAdminDTO> getAllCopilotFeedback() throws Exception {
+        List<CopilotFeedbackAdminDTO> result = new ArrayList<CopilotFeedbackAdminDTO>();
+
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("get_all_copilot_feedback");
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("get_all_copilot_feedback");
+
+        final int recordNum = resultContainer.size();
+
+        for (int i = 0; i < recordNum; i++) {
+            CopilotFeedbackAdminDTO feedbackAdmin = new CopilotFeedbackAdminDTO();
+            CopilotProjectFeedback feedback = new CopilotProjectFeedback();
+
+            long copilotProjectid = resultContainer.getLongItem(i, "copilot_project_id");
+            long feedackAuthorId = Long.parseLong(resultContainer.getStringItem(i, "create_user"));
+            Date submitDate = resultContainer.getTimestampItem(i, "submit_date");
+            String text = resultContainer.getStringItem(i, "text");
+            String answer = resultContainer.getStringItem(i, "answer");
+            String status = resultContainer.getStringItem(i, "status");
+            long copilotUserId = resultContainer.getLongItem(i, "copilot_user_id");
+            long directProjectId = resultContainer.getLongItem(i, "direct_project_id");
+            String directProjectName = resultContainer.getStringItem(i, "direct_project_name");
+
+            feedback.setAuthorId(feedackAuthorId);
+            feedback.setSubmitDate(submitDate);
+            feedback.setText(text);
+            feedback.setAnswer(answer.equalsIgnoreCase("yes"));
+            feedback.setStatus(status);
+            feedbackAdmin.setFeedback(feedback);
+            feedbackAdmin.setCopilotProjectId(copilotProjectid);
+            feedbackAdmin.setCopilotUserId(copilotUserId);
+            feedbackAdmin.setDirectProjectId(directProjectId);
+            feedbackAdmin.setDirectProjectName(directProjectName);
+
+            result.add(feedbackAdmin);
         }
 
         return result;

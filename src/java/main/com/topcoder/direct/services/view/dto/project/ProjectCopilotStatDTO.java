@@ -1,13 +1,22 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.project;
+
+import com.topcoder.direct.services.copilot.model.CopilotProjectFeedback;
 
 import java.io.Serializable;
 
 /**
  * <p>
  *     DTO used to store the data of direct project copilot.
+ * </p>
+ *
+ * <p>
+ * Version 1.1 (Module Assembly - TopCoder Copilot Feedback Integration)
+ * <ul>
+ *     <li>Add property {@link #feedback} to store copilot feedback</li>
+ * </ul>
  * </p>
  *
  * @author TCSASSEMBLER
@@ -39,6 +48,13 @@ public class ProjectCopilotStatDTO implements Serializable {
      * The number of the failure contest number.
      */
     private int failuresContestsNumber;
+
+    /**
+     * The copilot feedback.
+     *
+     * @since 1.1
+     */
+    private CopilotProjectFeedback feedback;
 
     /**
      * Gets the project copilot data.
@@ -137,5 +153,25 @@ public class ProjectCopilotStatDTO implements Serializable {
      */
     public double getFulfillment() {
         return  finishedContestsNumber * 1.0 / (finishedContestsNumber + failuresContestsNumber);
+    }
+
+    /**
+     * Gets the copilot feedback.
+     *
+     * @return the copilot feedback.
+     * @since 1.1
+     */
+    public CopilotProjectFeedback getFeedback() {
+        return feedback;
+    }
+
+    /**
+     * Sets the copilot feedback.
+     *
+     * @param feedback the copilot feedback.
+     * @since 1.1
+     */
+    public void setFeedback(CopilotProjectFeedback feedback) {
+        this.feedback = feedback;
     }
 }

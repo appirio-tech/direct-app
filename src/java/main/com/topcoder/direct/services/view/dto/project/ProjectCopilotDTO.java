@@ -10,8 +10,15 @@ import java.io.Serializable;
  *     DTO used to store the data of direct project copilot.
  * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.0 (Release Assembly - TopCoder Cockpit Project Overview Update 1)
+ * <p>
+ *  Version 1.1 (Module Assembly - TopCoder Copilot Feedback Integration) updates:
+ *  <ul>
+ *      <li>Add property {@link #copilotProjectId}</li>
+ *  </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version 1.1
  */
 public class ProjectCopilotDTO implements Serializable {
 
@@ -49,6 +56,13 @@ public class ProjectCopilotDTO implements Serializable {
      * The copilot profile id of the copilot.
      */
     private long copilotProfileId;
+
+    /**
+     * The copilot project id.
+     *
+     * @since 1.1
+     */
+    private long copilotProjectId;
 
     /**
      * Gets the copilot profile id.
@@ -174,5 +188,25 @@ public class ProjectCopilotDTO implements Serializable {
      */
     public void setHandleLower(String handleLower) {
         this.handleLower = handleLower;
+    }
+
+    /**
+     * Gets the copilot project id.
+     *
+     * @return the copilot project id.
+     * @since 1.1
+     */
+    public long getCopilotProjectId() {
+        return copilotProjectId;
+    }
+
+    /**
+     * Sets the copilot project id.
+     *
+     * @param copilotProjectId the copilot project id.
+     * @since 1.1
+     */
+    public void setCopilotProjectId(long copilotProjectId) {
+        this.copilotProjectId = copilotProjectId;
     }
 }

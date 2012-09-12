@@ -586,6 +586,29 @@ $(document).ready(function() {
 
     });
 
+    $.feedbackAdminTable = $("#copilotFeedbackAdmin .paginatedDataTable").dataTable({
+        "iDisplayLength": -1,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page"
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "simple-date" },
+            { "sType": "html" },
+            null
+        ]
+
+    });
+
     $("#CopilotPostingRegistrants .paginatedDataTable").dataTable({
         "iDisplayLength": 10,
         "bFilter": false,

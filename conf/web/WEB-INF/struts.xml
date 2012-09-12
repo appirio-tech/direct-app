@@ -902,6 +902,18 @@
             <result name="error" type="json" />
         </action>
 
+        <action name="createCopilotProjectFeedback" method="createCopilotProjectFeedback" class="projectCopilotFeedbackAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="updateCopilotProjectFeedback" method="updateCopilotProjectFeedback" class="projectCopilotFeedbackAction">
+            <interceptor-ref name="securedProjectPreProcessorStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
         <action name="customerProjectsAjaxAction" class="com.topcoder.direct.services.view.action.project.CustomerProjectsAjaxAction">
             <interceptor-ref name="baseStack"/>
             <interceptor-ref name="defaultStack"/>
@@ -1009,6 +1021,23 @@
                 <param name="inputName">inputStream</param>
                 <param name="bufferSize">1024</param>
             </result>
+        </action>
+
+        <action name="manageCopilotFeedback" class="manageCopilotFeedbackAction">
+            <interceptor-ref name="securedInternalStatsStack"/>
+            <result name="success">/WEB-INF/admin/copilot-feedback-admin.jsp</result>
+        </action>
+
+        <action name="adminEditCopilotFeedback" method="updateFeedbackAdmin" class="manageCopilotFeedbackAction">
+            <interceptor-ref name="securedInternalStatsStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
+        </action>
+
+        <action name="updateCopilotFeedbackStatus" method="changeFeedbackStatus" class="manageCopilotFeedbackAction">
+            <interceptor-ref name="securedInternalStatsStack"/>
+            <result name="success" type="json" />
+            <result name="error" type="json" />
         </action>
         
     </package>
