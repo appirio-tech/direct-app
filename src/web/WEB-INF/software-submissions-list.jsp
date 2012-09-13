@@ -485,7 +485,7 @@
                                                 </c:when>
                                                 <c:when test="${afterMilestoneReviewPhase || inMilestoneReviewPhase && milestoneReviewCommitted}">                                                
                                                     <div class="notify">
-                                                        To pick milestone winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Milestones. Do not forget to provide milestone general feedback and individual feedback.
+                                                        To pick milestone winners click on the Select Placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the milestones. Do not forget to provide milestone general feedback and individual feedback.
                                                     </div>                        
                                                     <div class="slotsMask">
                                                         <div class="slots">
