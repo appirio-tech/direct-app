@@ -1,5 +1,5 @@
 <%--
-  - Author: GreatKevin
+  - Author: GreatKevin, hanshuai
   - Version: 1.0 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Setup and Financial part)
   -
   - Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part) changes:
@@ -7,6 +7,9 @@
   -
   - Version 1.2 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part) changes:
   - - Add link for the roadmap icon in the sidebar
+  -
+  - Version 1.3 (Module Assembly - TC Cockpit Enterprise Dashboard New Active Contests) changes:
+  - - Add link for the active contests icon in the sidebar
   -
   - Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
   -
@@ -24,7 +27,7 @@
         <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'pipeline'}">class="active"</c:if>><a href='<s:url action="pipeline" namespace="/enterpriseDashboard"/>' class="pipelineIcon" title="Pipeline" rel="A graph depicting the contests and projects in pipeline is shown here.">Pipeline</a></li>
         <li><a href="javascript:;" class="communityIcon" title="Community" rel="Showing the overall contri-bution for the projects from each country.">Community</a></li>
         <li><a href="javascript:;" class="analyticsIcon" title="Analytics" rel="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a orci sit amet orci">Analytics</a></li>
-        <li><a href="javascript:;" class="activeContestIcon" title="Active Contest" rel="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a orci sit amet orci">Active Contest</a></li>
+        <li <c:if test="${requestScope.CURRENT_SIDEBAR eq 'activeContests'}">class="active"</c:if>><a href='<s:url action="activeContests" namespace="/enterpriseDashboard"/>' class="activeContestIcon" title="Active Contest" rel="display the active contests.">Active Contest</a></li>
         <li><a href="javascript:;" class="latestActivityIcon" title="Latest Activity" rel="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam a orci sit amet orci">Latest Activity</a></li>
     </ul>
 </div>

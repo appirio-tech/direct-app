@@ -11,6 +11,9 @@
  * Version 1.2 (Release Assembly - TC Cockpit Enterprise Calendar Revamp)
  * - Add filter panel for the enterprise milestone calendar
  *
+ * Version 1.3 (Module Assembly - TC Cockpit Enterprise Dashboard New Active Contests)
+ * - add filter for enterprise dashboard active contests
+ *
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -103,9 +106,12 @@ var currentProjectFilters = {};
 var currentProjectFilterValuesMap = {};
 
 var setupFilterPanel = function () {
-
     if (handleName == "activeContests") { //active contests table
-        tableHandle = $.activeContestsDataTable;
+        if ($(".dashboardPage #activeContest").length > 0) {
+            tableHandle = $.dashboardActiveContestsDataTable;
+        } else {
+            tableHandle = $.activeContestsDataTable;
+        }
     }
     else if (handleName == "projectsResult") { //all projects table
         tableHandle = $.allProjectTable;
@@ -121,6 +127,13 @@ var setupFilterPanel = function () {
     //common part
     var customerFilter, len;
 
+    //new enterprise dashboard active contest page
+    $('.dashboardPage #activeContest #customerNameFilter').change(function(){
+        var str = $(this).val();
+        if (str.indexOf('All') != -1) str = '';
+
+        tableHandle.fnFilter(str, 10);
+    });
     $('.customerSelectMask .contestsDropDown li a').each(function () {
         var value = $(this).html();
 
@@ -146,7 +159,7 @@ var setupFilterPanel = function () {
     }
 
     //active contests
-    if (handleName == "activeContests") {
+    if (handleName == "activeContests" || handleName == "activeContest") {
         var projectNameFilter = tableHandle.fnGetColumnData(2);
         len = projectNameFilter.length;
         for (var i = 0; i < len; i++) {
@@ -617,6 +630,10 @@ $(function() {
 
     if ($("#ProjectsContestsFilter").length > 0) {
         handleName = "ProjectsContests";
+    }
+
+    if ($(".dashboardPage #activeContest").length > 0) {
+        handleName = "activeContests";
     }
 
     var startDateCol, endDateCol;

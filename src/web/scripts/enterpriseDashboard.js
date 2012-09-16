@@ -11,8 +11,11 @@
  * Version 1.2 (Module Assembly - TopCoder Cockpit New Enterprise Dashboard Roadmap part)
  * - Add JS for the road map feature.
  *
- * @author GreatKevin
- * @version 1.2
+ * Version 1.3 (Module Assembly - TC Cockpit Enterprise Dashboard New Active Contests)
+ * - Add JS for the active contests
+ *
+ * @author GreatKevin, hanshuai
+ * @version 1.3
  */
 var chart;
 var financialTable;
@@ -1948,4 +1951,40 @@ $(document).ready(function () {
         }
     });
 
+    if($('.dashboardPage #activeContest').size() != 0){
+        $.dashboardActiveContestsDataTable = $('#activeContest .paginatedDataTable').dataTable({
+            "iDisplayLength":10,
+            "bStateSave": false,
+            "bFilter":true,
+            "bSort":true,
+            "bAutoWidth": false,
+            "oLanguage":{
+                "sLengthMenu":sStdMenu,
+                "oPaginate":{
+                    "sFirst":"",
+                    "sPrevious":"Prev",
+                    "sNext":"Next",
+                    "sLast":""
+                }
+            },
+            "aaSorting": [
+                [3,'desc']
+            ],
+            "aoColumns": [
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "date-direct" },
+                { "sType": "date-direct" },
+                { "sType": "link-number" },
+                { "sType": "link-number" },
+                { "sType": "link-number" },
+                { "sType": "html" },
+                null,
+                null
+            ],
+            "sPaginationType":"full_numbers",
+            "sDom":'<"pagePanel topPagePanel"i<"showPage"l><"pageNum"p>>t<"pagePanel bottomPagePanel"i<"showPage"l><"pageNum"p>>'
+        });
+    }
 });

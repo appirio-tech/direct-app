@@ -8,8 +8,11 @@
 * Version 1.1 (Module Assembly - TC Cockpit Enterprise Dashboard Pipeline Part)
 * - Updates the colors of pipeline aggregation header
 *
-* Author: GreatKevin
-* Version 1.1
+* Version 1.2 (Module Assembly - TC Cockpit Enterprise Dashboard New Active Contests)
+* - Changed the margin of datepicker in active contests
+*
+* Author: GreatKevin, hanshuai
+* Version 1.2
 */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
     background: none repeat scroll 0 0 transparent;
@@ -4088,6 +4091,9 @@ input{
 	/* filterContainer */
 	#activeContest .filter .filterContainer{
 		width:100%;
+        margin:0;
+        border:0;
+        padding:0;
 		}
 		
 		#activeContest .filter .filterContainer .row{
@@ -4168,6 +4174,10 @@ input{
 				font-size:12px;
 				font-weight:bold;
 				line-height:20px;
+				}
+
+            #activeContest .filter .filterContainer a.dp-choose-date{
+                margin-right:0;
 				}
 				
 /* activeContestContainer */
@@ -4319,6 +4329,8 @@ input{
 			line-height:25px;
 			overflow:hidden;
 			padding:0 2px 0 15px;
+            width:auto;
+            font-weight: normal;
 			}
 	
 		#mainSection .activeContestContainer .tableData table td a.button1:hover{
@@ -7364,3 +7376,43 @@ div.notif-div{
 	height:100%;
 	border:0;
 	}
+
+TABLE#activeContestData TD SPAN{ /* contest status */
+    font-weight: bold;
+    padding-left: 14px;
+}
+
+TABLE#activeContestData TD SPAN.completed {
+    color: #009f00;
+    background: url(/images/completed_status_ico.png) no-repeat left 0px;
+}
+
+TABLE#activeContestData TD SPAN.cancelled {
+    color: #DB4848;
+    background: url(/images/cancelled_status_ico.png) no-repeat left 0px;
+}
+
+TABLE#activeContestData TD SPAN.draft {
+    color: #6f6f71;
+    background: url(/images/draft_status_ico.png) no-repeat left 0px;
+}
+
+TABLE#activeContestData TD SPAN.running {
+    color: #0369cf;
+    background: url(/images/active_status_ico.png) no-repeat left 0px;
+}
+
+TABLE#activeContestData TD SPAN.awarding{ 
+    color: #ffb000;
+    background: url(../../images/awarding_ico.png) no-repeat left 0px;
+}
+
+TABLE#activeContestData TD SPAN.milestone{ 
+    color: #dc0000;
+    background: url(../../images/milestone_ico.png) no-repeat left 0px;
+}
+
+TABLE#activeContestData TD SPAN.failedReview{
+    color: #dc0000;
+    background: url(../../images/milestone_ico.png) no-repeat left 0px;
+}

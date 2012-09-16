@@ -1574,6 +1574,10 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/enterpriseDashboard/roadmap.jsp</result>
         </action>
+        <action name="activeContests" class="com.topcoder.direct.services.view.action.dashboard.ActiveContestsAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/enterpriseDashboard/active-contests.jsp</result>
+        </action>
         <action name="getTotalSpend" method="getTotalSpend" class="enterpriseDashboardFinancialAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
