@@ -1024,18 +1024,18 @@
         </action>
 
         <action name="manageCopilotFeedback" class="manageCopilotFeedbackAction">
-            <interceptor-ref name="securedInternalStatsStack"/>
+            <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/admin/copilot-feedback-admin.jsp</result>
         </action>
 
         <action name="adminEditCopilotFeedback" method="updateFeedbackAdmin" class="manageCopilotFeedbackAction">
-            <interceptor-ref name="securedInternalStatsStack"/>
+            <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
 
         <action name="updateCopilotFeedbackStatus" method="changeFeedbackStatus" class="manageCopilotFeedbackAction">
-            <interceptor-ref name="securedInternalStatsStack"/>
+            <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />
             <result name="error" type="json" />
         </action>
