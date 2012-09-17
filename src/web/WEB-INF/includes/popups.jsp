@@ -628,11 +628,11 @@
 
     <div class="modalBody">
         <div class="modalBodyContent">
-            <p><strong>Neither feedback on milestone winning submissions, nor genaral feedback is provided. </strong>Do you want to continue locking in milestones?<span>You cannot undo or provide feedback after lock in.</span></p>
+            <p><strong>Neither feedback on milestone winning submissions, nor general feedback is provided. </strong>Do you want to continue locking in milestones?<span>You cannot undo or provide feedback after lock in.</span></p>
         </div>
         <div class="modalCommandBox">
         <a href="javascript:;" class="newButton1 closeIt"><span class="btnR"><span class="btnC">GO BACK TO PROVIDE FEEDBACK</span></span></a>
-            <a href="javascript:;" class="newButton1 lockinBtn"><span class="btnR"><span class="btnC">LOCK IN MILESTONS</span></span></a>
+            <a href="javascript:;" class="newButton1 lockinBtn"><span class="btnR"><span class="btnC">LOCK IN MILESTONES</span></span></a>
         </div>
     </div>
     <!-- end .modalBody -->
@@ -726,7 +726,7 @@
                     <div class="modalHeader">
                         <div class="modalHeaderRight">
                             <div class="modalHeaderCenter">
-                                COPILOT FEEDBACK
+                                EDIT COPILOT FEEDBACK
                                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
                             </div>
                         </div>
@@ -735,6 +735,7 @@
                     <!-- content -->
                     <div class="modalBody">
                         <div class="question">
+                            <p class="warningMessage">Edit your feedback below</p>
                             <p>Would you like to work with this copilot <span></span> again?</p>
                             <input type="radio" name="workAgain" value="yes"><label>Yes</label>
                             <input type="radio" name="workAgain" value="no"><label>No</label>

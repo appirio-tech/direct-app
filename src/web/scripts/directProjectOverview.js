@@ -1098,6 +1098,8 @@ $(document).ready(function() {
                             showServerError("Unknown error happened");
                         }
 
+                        showSuccessfulMessage("Your feedback has been edited and is awaiting approval.");
+
                     },
                     function(errorMessage) {
                         showServerError(errorMessage);

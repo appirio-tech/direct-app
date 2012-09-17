@@ -9853,5 +9853,11 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
     padding-left: 10px;
 }
 
+#new-modal .warningMessage {
+    color: #FF0000;
+    font-size: 11px;
+}
+
+
 
 
