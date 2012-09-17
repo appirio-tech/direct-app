@@ -26,6 +26,11 @@ var prevMonthLoaded;
 var currentMonthTotal;
 var prevMonthTotal;
 
+// for filter panel synchronization
+var projectToSync;
+var projectFilterToSync;
+var projectFilterValueToSync;
+
 var sStdMenu =
     '<em>|</em><span>Show: </span><select size="1" name="dataTableLength" id="dataTableLength">' +
         '<option value="10">10</option>' +
@@ -37,6 +42,21 @@ var sStdMenu =
 var countMonth = function(d) {
     return d.getYear() * 12 + d.getMonth();
 };
+
+function getFilterSynParameters() {
+    if($("#filterModal").length > 0) {
+        var customer = $("#clientFilter").val();
+        var project = $("#projectFilter").val();
+        var status = $("#projectStatusFilter").val();
+        var metaFilter = $("#metaFilter").val();
+        var metaValueFilter = $("#metaValueFilter").val();
+        var zoom = $("#zoomSelect").find("a.current").parent().attr('class');
+        var startMonth = $(".timeLine .selectMonth:first span span").text();
+        var endMonth = $(".timeLine .selectMonth:last span span").text();
+
+        return $.param({customer:customer, project:project,status:status,metaFilter:metaFilter,metaValueFilter:metaValueFilter,zoom:zoom,startMonth:startMonth,endMonth:endMonth});
+    }
+}
 
 function formatNum(strNum){
     if (strNum.length <= 3){
@@ -87,6 +107,15 @@ function getEnterpriseDashboardRequest(pageSize, pageNumber, requireDate) {
 
     loadCurrentMonth = currentMonth < startMonth || currentMonth > endMonth;
     loadPreviousMonth = prevMonth < startMonth || prevMonth > endMonth;
+
+    var syncParameters = getFilterSynParameters();
+
+    // update sync
+    $("#silderBar a.filterSynEnabled").each(function(){
+        var url = $(this).attr("href").split("?")[0];
+        url = url + '?' + syncParameters;
+        $(this).attr("href", url);
+    })
 
     return formData;
 }
@@ -1503,6 +1532,7 @@ $(document).ready(function () {
     var currentMonth = 0;
 
     function moveMonth() {
+
         if (step == 0) {
             $('.selectDate .prevYear').addClass('disable');
             $('.selectDate .nextYear').removeClass('disable');
@@ -1682,6 +1712,7 @@ $(document).ready(function () {
             url:  "dashboardGetOptionsForClientAJAX",
             data: {'formData.customerIds':$("#clientFilter").val()},
             cache: false,
+            async: false,
             dataType: 'json',
             success: function(jsonResult) {
                 handleJsonResult2(jsonResult,
@@ -1697,6 +1728,11 @@ $(document).ready(function () {
 
                         $project.val(0);
 
+                        if(projectToSync) {
+                            $project.val(projectToSync);
+                            projectToSync = null;
+                        }
+
                         sortDropDown("#projectFilter");
                     },
                     function(errorMessage) {
@@ -1710,6 +1746,7 @@ $(document).ready(function () {
             url:ctx + "/getGroupByOptionsForCustomer",
             data:{customerId:$("#clientFilter").val()},
             cache:false,
+            async: false,
             dataType:'json',
             success:function (jsonResult) {
                 handleJsonResult2(jsonResult,
@@ -1724,6 +1761,12 @@ $(document).ready(function () {
                         });
 
                         selector.val(0);
+
+                        if(projectFilterToSync) {
+                            selector.val(projectFilterToSync);
+                            projectFilterToSync = null;
+                        }
+
                         selector.trigger('change');
                     },
                     function (errorMessage) {
@@ -1740,6 +1783,7 @@ $(document).ready(function () {
             url:ctx + "/getGroupValuesForGroupBy",
             data:{groupKeyId:$("#metaFilter").val()},
             cache:false,
+            async: false,
             dataType:'json',
             success:function (jsonResult) {
                 handleJsonResult2(jsonResult,
@@ -1754,6 +1798,11 @@ $(document).ready(function () {
                         });
 
                         selector.val('None');
+
+                        if(projectFilterValueToSync) {
+                            selector.val(projectFilterValueToSync);
+                            projectFilterValueToSync = null;
+                        }
 
                     },
                     function (errorMessage) {
@@ -1844,55 +1893,31 @@ $(document).ready(function () {
 
     });
 
-    // overview tab
-    if ($(".overviewIcon").parents("li").hasClass("active")) {
-        renderOverviewTab();
 
-        $("#filterButton").click(function(){
-            renderOverviewTab();
-        });
+    //toggle
+    $('.filter .folder').live('click', function () {
+        if ($(this).hasClass('unfolder')) {
+            $(this).removeClass('unfolder');
+            $(this).parents('.filterTitle').css('border-bottom', '#bdbdbd solid 1px');
+            $('.filter .filterContainer').show();
+        } else {
+            $(this).addClass('unfolder');
+            $(this).parents('.filterTitle').css('border-bottom', 'none');
+            $('.filter .filterContainer').hide();
+        }
+    });
 
-        $('.overRoadMapSection .tabPanel li a').live('click',function(){
-            $('.overRoadMapSection .tabPanel li a').removeClass('current');
-            $(this).addClass('current');
-            $('.overRoadMapSection .tabSection').hide();
-            $('.overRoadMapSection .tabSection').eq($('.overRoadMapSection .tabPanel li a').index(this)).show();
-        });
-    }
-
-    // financial page
-    if ($(".financialsIcon").parents("li").hasClass("active")) {
-        renderFinancialTab();
-
-        $("#filterButton").click(function(){
-            renderFinancialTab();
-        });
-    }
-
-    if ($(".pipelineIcon").parents("li").hasClass("active")) {
-        loadPipeline(renderPipelinePage);
-
-        $("#filterButton").click(function(){
-            loadPipeline(renderPipelinePage);
-        });
-    }
-
-
-    // roadmap page
-    if ($(".roadmapIcon").parents("li").hasClass("active")) {
-        loadRoadmap(renderRoadmapPage);
-
-        $("#filterButton").click(function(){
-            loadRoadmap(renderRoadmapPage);
-        });
-
-        $('.roadMapSection .tabPanel li a').live('click',function(){
-            $('.roadMapSection .tabPanel li a').removeClass('current');
-            $(this).addClass('current');
-            $('.roadMapSection .tabSection').hide();
-            $('.roadMapSection .tabSection').eq($('.roadMapSection .tabPanel li a').index(this)).show();
-        });
-    }
+    $('.filterForAnalytics .folder').live('click', function () {
+        if ($(this).hasClass('unfolder')) {
+            $(this).removeClass('unfolder');
+            $(this).parents('.filterTitle').css('border-bottom', '#bdbdbd solid 1px');
+            $('.filterForAnalytics .filterContainer').show();
+        } else {
+            $(this).addClass('unfolder');
+            $(this).parents('.filterTitle').css('border-bottom', 'none');
+            $('.filterForAnalytics .filterContainer').hide();
+        }
+    });
 
     //tip for header
     $('.icon').hover(function () {
@@ -1926,31 +1951,100 @@ $(document).ready(function () {
         $(".date-pick").datePicker();
     }
 
-    //toggle
-    $('.filter .folder').live('click', function () {
-        if ($(this).hasClass('unfolder')) {
-            $(this).removeClass('unfolder');
-            $(this).parents('.filterTitle').css('border-bottom', '#bdbdbd solid 1px');
-            $('.filter .filterContainer').show();
-        } else {
-            $(this).addClass('unfolder');
-            $(this).parents('.filterTitle').css('border-bottom', 'none');
-            $('.filter .filterContainer').hide();
-        }
-    });
 
-    $('.filterForAnalytics .folder').live('click', function () {
-        if ($(this).hasClass('unfolder')) {
-            $(this).removeClass('unfolder');
-            $(this).parents('.filterTitle').css('border-bottom', '#bdbdbd solid 1px');
-            $('.filterForAnalytics .filterContainer').show();
-        } else {
-            $(this).addClass('unfolder');
-            $(this).parents('.filterTitle').css('border-bottom', 'none');
-            $('.filterForAnalytics .filterContainer').hide();
-        }
-    });
+    // filter sync
+    if($("#silderBar .active a.filterSynEnabled").length > 0 && getUrlPara('customer')) {
+        var customer = getUrlPara('customer');
+        projectToSync = getUrlPara('project');
+        var status = getUrlPara('status');
+        projectFilterToSync = getUrlPara('metaFilter');
+        projectFilterValueToSync = getUrlPara('metaValueFilter');
+        var zoom = getUrlPara('zoom');
+        var startMonth = getUrlPara('startMonth');
+        var endMonth = getUrlPara('endMonth');
+        $("#clientFilter").val(customer).trigger('change');
+        $("#projectStatusFilter").val(status).trigger('change');
 
+        if(zoom && zoom != 'null') {
+            $("#zoomSelect").find("li a").removeClass("current");
+            var zoomButton = $("#zoomSelect").find("li." + zoom).find("a");
+            zoomButton.click();
+        } else {
+            $(".monthList .timeLine li").each(function(){
+                if($(this).find("span span").text() == startMonth.replace('%27', "'").toUpperCase()) {
+                    step = $(this).index();
+                    return false;
+                }
+            });
+
+            moveMonth();
+            $("#zoomSelect").find("li a.current").click();
+
+            $(".monthList .timeLine li").each(function(){
+                if($(this).find("span span").text() == startMonth.replace('%27', "'").toUpperCase()) {
+                    $(this).find("a").click();
+                }
+                if(startMonth != endMonth && $(this).find("span span").text() == endMonth.replace('%27', "'").toUpperCase()) {
+                    $(this).find("a").click();
+                }
+            });
+        }
+
+    }
+
+
+    // overview tab
+    if ($(".overviewIcon").parents("li").hasClass("active")) {
+        renderOverviewTab();
+
+        $("#filterButton").click(function(){
+            renderOverviewTab();
+        });
+
+        $('.overRoadMapSection .tabPanel li a').live('click',function(){
+            $('.overRoadMapSection .tabPanel li a').removeClass('current');
+            $(this).addClass('current');
+            $('.overRoadMapSection .tabSection').hide();
+            $('.overRoadMapSection .tabSection').eq($('.overRoadMapSection .tabPanel li a').index(this)).show();
+        });
+    }
+
+    // financial page
+    if ($(".financialsIcon").parents("li").hasClass("active")) {
+        renderFinancialTab();
+
+        $("#filterButton").click(function(){
+            renderFinancialTab();
+        });
+    }
+
+    // pipeline
+    if ($(".pipelineIcon").parents("li").hasClass("active")) {
+        loadPipeline(renderPipelinePage);
+
+        $("#filterButton").click(function(){
+            loadPipeline(renderPipelinePage);
+        });
+    }
+
+
+    // roadmap page
+    if ($(".roadmapIcon").parents("li").hasClass("active")) {
+        loadRoadmap(renderRoadmapPage);
+
+        $("#filterButton").click(function(){
+            loadRoadmap(renderRoadmapPage);
+        });
+
+        $('.roadMapSection .tabPanel li a').live('click',function(){
+            $('.roadMapSection .tabPanel li a').removeClass('current');
+            $(this).addClass('current');
+            $('.roadMapSection .tabSection').hide();
+            $('.roadMapSection .tabSection').eq($('.roadMapSection .tabPanel li a').index(this)).show();
+        });
+    }
+
+    // active contests
     if($('.dashboardPage #activeContest').size() != 0){
         $.dashboardActiveContestsDataTable = $('#activeContest .paginatedDataTable').dataTable({
             "iDisplayLength":10,
