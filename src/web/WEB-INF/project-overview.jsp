@@ -631,7 +631,7 @@
                     </div>
                   </div>
                   <div class="copilotsListButtonBox">
-                        <a href="javascript:;" class="buttonRed1 triggerModal" name="newCopilotFeedbackModal"><span>GIVE FEEDBACK</span></a>
+                        <a href="javascript:;" class="buttonRed1 triggerModal" name="newCopilotFeedbackModal"><span>LEAVE FEEDBACK</span></a>
                         <a href="javascript:;" class="buttonRed1 triggerModal hide" name="viewCopilotFeedbackModal"><span>VIEW FEEDBACK</span></a>
                         <a href="javascript:;" class="buttonRed1 triggerModal hide" name="editCopilotFeedbackModal"><span>EDIT FEEDBACK</span></a>
                         <a href="javascript:;" class="buttonRed1 triggerModal" name="copilotManageModal"><span>ADD/REMOVE</span></a>

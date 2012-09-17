@@ -9,6 +9,8 @@ import com.topcoder.direct.services.view.action.contest.launch.BaseDirectStrutsA
 import com.topcoder.direct.services.view.dto.admin.CopilotFeedbackAdminDTO;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
+import com.topcoder.service.permission.PermissionServiceException;
+import com.topcoder.web.common.PermissionException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -170,7 +172,16 @@ public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
      */
     @Override
     protected void executeAction() throws Exception {
+
+        checkPermission();
+
         copilotsFeedback = DataProvider.getAllCopilotFeedback();
+    }
+
+    private void checkPermission() throws PermissionServiceException {
+        if(!DirectUtils.isTcStaff(DirectUtils.getTCSubjectFromSession())) {
+            throw new PermissionServiceException("You don't have permission to manage copilot feedback.");
+        }
     }
 
     /**
@@ -180,6 +191,9 @@ public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
      */
     public String changeFeedbackStatus() {
         try {
+
+            checkPermission();
+
             Map<String, String> result = new HashMap<String, String>();
 
             long currentUserId = DirectUtils.getTCSubjectFromSession().getUserId();
@@ -219,6 +233,9 @@ public class ManageCopilotFeedbackAction extends BaseDirectStrutsAction {
      */
     public String updateFeedbackAdmin() {
         try {
+
+            checkPermission();
+
             Map<String, String> result = new HashMap<String, String>();
 
             long currentUserId = DirectUtils.getTCSubjectFromSession().getUserId();

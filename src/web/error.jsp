@@ -61,7 +61,7 @@
                                             <br/>
                                             <br/>
                                             <c:choose>
-                                                <c:when test="${exception.class.simpleName == 'PermissionServiceException'}">
+                                                <c:when test="${exception.class.simpleName == 'PermissionServiceException' || exception.cause.class.simpleName == 'PermissionServiceException'}">
                                                     <b>Sorry, you do not have permission to view the requested page.</b>
                                                 </c:when>
                                                 <c:when test="${not empty errorPageMessage}">
