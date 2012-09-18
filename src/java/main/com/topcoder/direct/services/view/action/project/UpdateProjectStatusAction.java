@@ -78,7 +78,7 @@ public class UpdateProjectStatusAction extends BaseDirectStrutsAction {
             ProjectData projectData = getProjectServiceFacade().getProject(currentUser, directProjectId);
 
             // check if status is deleted
-            if (ProjectStatusType.getProjectStatusType(directProjectStatusId) == ProjectStatusType.DELETED) {
+            if (ProjectStatusType.getProjectStatusType(directProjectStatusId) == ProjectStatusType.CANCELLED) {
                 // yes, check contest status
                 ProjectContestsListDTO projectContests = DataProvider.getProjectContests(currentUser.getUserId(), directProjectId);
                 List<ProjectContestDTO> contests = projectContests.getContests();

@@ -325,7 +325,7 @@ $(document).ready(function() {
                         if (item.threadNumber == 0) {
                             popupRow += '<a class="deleteIcon" href="javascript:;"></a>';
                         } else {
-                            popupRow += '<a class="deleteIcon disabledDeleteIcon toolTip" href="javascript:;" rel="You can not delete a forum which is already used"></a>';
+                            popupRow += '<a class="deleteIcon disabledDeleteIcon toolTip" href="javascript:;" rel="You can not delete a forum that is already used"></a>';
                         }
                         popupRow += '</td>';
                     }

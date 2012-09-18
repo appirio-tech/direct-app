@@ -6800,6 +6800,7 @@ table.resultTable td.last a.long {
         .dashboardModule .heading .stalled span{
             color: #a60000;
         }
+
             
 	.dashboardModule .content{
 		position:relative;
@@ -7282,6 +7283,11 @@ div.rightColumn .activity TABLE {
 }
 
 #projectsResult TABLE.resultTable   TD SPAN.deleted {
+    color: #dc0000;
+    background: url(../../images/status_delete_icon.png) no-repeat left 1px;
+}
+
+#projectsResult TABLE.resultTable   TD SPAN.cancelled {
     color: #dc0000;
     background: url(../../images/status_delete_icon.png) no-repeat left 1px;
 }

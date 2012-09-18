@@ -96,7 +96,7 @@
 
                         <a class="long operation deleteOperation <s:if test='projectStatusType.projectStatusId == 3L || projectStatusType.projectStatusId == 4L'>hide</s:if>"
                            href="javascript:;"  onclick="updateDirectProjectStatus(${projectSummary.projectId}, 3)">
-                            <img src="/images/remove-milestone-icon.png" alt=""/>Delete
+                            <img src="/images/remove-milestone-icon.png" alt=""/>Cancel
                         </a>
 
                         <s:if test='projectStatusType.projectStatusId == 1L || projectStatusType.projectStatusId == 2L'>

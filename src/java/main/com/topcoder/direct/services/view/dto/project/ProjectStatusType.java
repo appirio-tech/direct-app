@@ -24,9 +24,9 @@ public enum ProjectStatusType {
     ARCHIVED(2L, "Archived"),
 
     /**
-     * The deleted project status.
+     * The cancelled project status.
      */
-    DELETED(3L, "Deleted"),
+    CANCELLED(3L, "Cancelled"),
 
     /**
      * The completed project status.
