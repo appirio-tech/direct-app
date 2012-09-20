@@ -418,4 +418,24 @@ public class JSPHelper {
     public static boolean canViewInternalStats() {
         return DirectUtils.canViewInternalStats();
     }
+
+    public static boolean isSuperAdmin() {
+        return DirectUtils.isSuperAdmin(DirectUtils.getTCSubjectFromSession());
+    }
+
+    public static boolean isCockpitAdmin() {
+        return DirectUtils.isCockpitAdmin(DirectUtils.getTCSubjectFromSession());
+    }
+
+    public static boolean isTCOperation() {
+        return DirectUtils.isTcOperations(DirectUtils.getTCSubjectFromSession());
+    }
+
+    public static boolean isTCStaff() {
+        return DirectUtils.isTcStaff(DirectUtils.getTCSubjectFromSession());
+    }
+
+    public static boolean isTCAccounting() {
+        return DirectUtils.isTCAccounting(DirectUtils.getTCSubjectFromSession());
+    }
 }

@@ -105,4 +105,35 @@
         <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
         <function-signature>boolean canViewInternalStats()</function-signature>
     </function>
+
+    <function>
+        <name>isTCStaff</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isTCStaff()</function-signature>
+    </function>
+
+    <function>
+        <name>isSuperAdmin</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isSuperAdmin()</function-signature>
+    </function>
+
+    <function>
+        <name>isCockpitAdmin</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isCockpitAdmin()</function-signature>
+    </function>
+
+    <function>
+        <name>isTCOperation</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isTCOperation()</function-signature>
+    </function>
+
+    <function>
+        <name>isTCAccounting</name>
+        <function-class>com.topcoder.direct.services.view.util.JSPHelper</function-class>
+        <function-signature>boolean isTCAccounting()</function-signature>
+    </function>
+
 </taglib>

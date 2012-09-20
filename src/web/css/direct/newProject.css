@@ -125,68 +125,68 @@ a{
 ------------------*/
 
 /* tabs0 ( the header tabs )*/
-#tabs0{
-	background:#362f2b;
-	position:absolute;
-	top:0px;
-	left:0px;
-	height:33px;
-	width:100%;
-	}
+/*#tabs0{*/
+	/*background:#362f2b;*/
+	/*position:absolute;*/
+	/*top:0px;*/
+	/*left:0px;*/
+	/*height:33px;*/
+	/*width:100%;*/
+	/*}*/
 
-#tabs0 ul{
-	list-style:none;
-	padding:0;
-	margin:6px 0 6px 25px;
-	height:21px;
-	}
+/*#tabs0 ul{*/
+	/*list-style:none;*/
+	/*padding:0;*/
+	/*margin:6px 0 6px 25px;*/
+	/*height:21px;*/
+	/*}*/
 
-#tabs0 ul li{
-	float:left;
-	margin-right:15px;
-	}
+/*#tabs0 ul li{*/
+	/*float:left;*/
+	/*margin-right:15px;*/
+	/*}*/
 
-	#tabs0 ul li a{
-		color:#fffffe;
-		font-size:12px;
-		font-weight:bold;
-		text-decoration:none;
-		height:21px;
-		line-height:21px;
-		float:left;
-		}
-	
-	#tabs0 ul li a span{
-		height:21px;
-		float:left;
-		display:inline-block;
-		padding:0 17px 0 13px;
-		margin-left:4px;
-		text-align:center;
-		cursor:pointer;
-		}
-	
-	
-	#tabs0 ul li.on a{
-		color:#262626;
-		background:url(../../images/top_nav_button_left.png) left top no-repeat;
-		}
-	
-	#tabs0 ul li.on a:hover {
-		}
+	/*#tabs0 ul li a{*/
+		/*color:#fffffe;*/
+		/*font-size:12px;*/
+		/*font-weight:bold;*/
+		/*text-decoration:none;*/
+		/*height:21px;*/
+		/*line-height:21px;*/
+		/*float:left;*/
+		/*}*/
+	/**/
+	/*#tabs0 ul li a span{*/
+		/*height:21px;*/
+		/*float:left;*/
+		/*display:inline-block;*/
+		/*padding:0 17px 0 13px;*/
+		/*margin-left:4px;*/
+		/*text-align:center;*/
+		/*cursor:pointer;*/
+		/*}*/
+	/**/
+	/**/
+	/*#tabs0 ul li.on a{*/
+		/*color:#262626;*/
+		/*background:url(../../images/top_nav_button_left.png) left top no-repeat;*/
+		/*}*/
+	/**/
+	/*#tabs0 ul li.on a:hover {*/
+		/*}*/
 
-	#tabs0 ul li.on a span{
-		background:url(../../images/top_nav_button.png) right top no-repeat;
-		}
+	/*#tabs0 ul li.on a span{*/
+		/*background:url(../../images/top_nav_button.png) right top no-repeat;*/
+		/*}*/
 
-	#tabs0 ul li a:hover{
-		color:#262626;
-		background:url(../../images/top_nav_button_left.png) 0 -21px no-repeat;
-		}
-	
-	#tabs0 ul li a:hover span{
-		background:url(../../images/top_nav_button.png) right -21px no-repeat;
-		}
+	/*#tabs0 ul li a:hover{*/
+		/*color:#262626;*/
+		/*background:url(../../images/top_nav_button_left.png) 0 -21px no-repeat;*/
+		/*}*/
+	/**/
+	/*#tabs0 ul li a:hover span{*/
+		/*background:url(../../images/top_nav_button.png) right -21px no-repeat;*/
+		/*}*/
 /* tabs1 ( the main tabs )*/
 #tabs1{
 	position:absolute;

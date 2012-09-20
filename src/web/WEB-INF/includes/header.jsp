@@ -44,7 +44,7 @@
 			<div class="noAsk">
             <a class="close" href="javascript:;">Close</a>
             <div class="clear"></div>
-            <div class="noAakInner"><input type="checkbox" id="noAskMaintenanceAgain"><label for="noAskMaintenanceAgain">Don´t show again</label></div>
+            <div class="noAakInner"><input type="checkbox" id="noAskMaintenanceAgain"><label for="noAskMaintenanceAgain">Donï¿½t show again</label></div>
 			</div>
 
 		</div>
@@ -105,24 +105,48 @@
             <ul>
                 <li class="on">
                     <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
+
+                    <div class="subNav">
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
+                        <a href="javascript:;">Operation Dashboard</a>
+                    </div>
                 </li>
-				<li>
+                <li>
                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
                 <li>
-                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+
+                    <div class="subNav">
+                        <a href="<s:url action="launchCopilotContest" namespace="/copilot"/>">Get a Copilot</a>
+                        <a href="<s:url action="listCopilotPostings" namespace="/copilot"/>">My Copilot Postings</a>
+                        <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
+                    </div>
                 </li>
 
-		        <c:if test="${tcdirect:isScorecardAdmin()}" >
-		        <li>
-                     <a href="/direct/scorecard/"><span>Scorecards</span></a>
-                </li>
+                <c:if test="${tcdirect:isScorecardAdmin()}">
+                    <li>
+                        <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                    </li>
                 </c:if>
-                <c:if test="${tcdirect:canViewInternalStats()}" >
-		        <li>
-                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
-                </li>
+                <c:if test="${tcdirect:canViewInternalStats()}">
+                    <li>
+                        <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                    </li>
+                </c:if>
+
+                <c:if test="${tcdirect:isTCStaff()}">
+                    <li>
+                        <a href="javascript:;"><span>Admin</span></a>
+                        <div class="subNav">
+                            <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
+                            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
+                                <a href="javascript:">Manage Contest Fee</a>
+                            </c:if>
+                        </div>
+                    </li>
                 </c:if>
             </ul>
         </ui:isDashboardPage>
@@ -130,80 +154,145 @@
             <ul>
                 <li>
                     <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
-                </li>
-
-				<li class="on">
-                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
-                </li>
-
-                <li>
-                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
-                </li>
-
-		<c:if test="${tcdirect:isScorecardAdmin()}" >
-		   <li>
-                      <a href="/direct/scorecard/"><span>Scorecards</span></a>
-                   </li>
-               </c:if>
-                <c:if test="${tcdirect:canViewInternalStats()}" >
-		        <li>
-                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
-                </li>
-                </c:if>
-            </ul>
-        </ui:isProjectPage>
-	<ui:isCopilotPage>
-            <ul>
-                <li>
-                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
-                </li>
-
-                <li>
-                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
+                    <div class="subNav">
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
+                        <a href="javascript:;">Operation Dashboard</a>
+                    </div>
                 </li>
 
                 <li class="on">
-                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                    <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
-		<c:if test="${tcdirect:isScorecardAdmin()}" >
-		   <li>
-                      <a href="/direct/scorecard/"><span>Scorecards</span></a>
-                   </li>
-               </c:if>
-                <c:if test="${tcdirect:canViewInternalStats()}" >
-		        <li>
-                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                <li>
+                    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                    <div class="subNav">
+                        <a href="<s:url action="launchCopilotContest" namespace="/copilot"/>">Get a Copilot</a>
+                        <a href="<s:url action="listCopilotPostings" namespace="/copilot"/>">My Copilot Postings</a>
+                        <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
+                    </div>
                 </li>
+
+                <c:if test="${tcdirect:isScorecardAdmin()}">
+                    <li>
+                        <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                    </li>
+                </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}">
+                    <li>
+                        <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                    </li>
+                </c:if>
+
+                <c:if test="${tcdirect:isTCStaff()}">
+                    <li>
+                        <a href="javascript:;"><span>Admin</span></a>
+                        <div class="subNav">
+                            <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
+                            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
+                                <a href="javascript:">Manage Contest Fee</a>
+                            </c:if>
+                        </div>
+                    </li>
+                </c:if>
+            </ul>
+        </ui:isProjectPage>
+        <ui:isCopilotPage>
+            <ul>
+                <li>
+                    <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
+                    <div class="subNav">
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
+                        <a href="javascript:;">Operation Dashboard</a>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
+                </li>
+
+                <li class="on">
+                    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+
+                    <div class="subNav">
+                        <a href="<s:url action="launchCopilotContest" namespace="/copilot"/>">Get a Copilot</a>
+                        <a href="<s:url action="listCopilotPostings" namespace="/copilot"/>">My Copilot Postings</a>
+                        <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
+                    </div>
+                </li>
+
+                <c:if test="${tcdirect:isScorecardAdmin()}">
+                    <li>
+                        <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                    </li>
+                </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}">
+                    <li>
+                        <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                    </li>
                 </c:if>
                 <!--
                 <li><a href="#"><span>Messages (0)</span></a></li>
                 -->
+                <c:if test="${tcdirect:isTCStaff()}">
+                    <li>
+                        <a href="javascript:;"><span>Admin</span></a>
+                        <div class="subNav">
+                            <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
+                            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
+                                <a href="javascript:">Manage Contest Fee</a>
+                            </c:if>
+                        </div>
+                    </li>
+                </c:if>
             </ul>
         </ui:isCopilotPage>
         <ui:isInternalPage>
             <ul>
                 <li>
                     <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
+                    <div class="subNav">
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
+                        <a href="javascript:;">Operation Dashboard</a>
+                    </div>
                 </li>
 
                 <li>
-                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
+                    <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
                 <li>
-                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                    <div class="subNav">
+                        <a href="<s:url action="launchCopilotContest" namespace="/copilot"/>">Get a Copilot</a>
+                        <a href="<s:url action="listCopilotPostings" namespace="/copilot"/>">My Copilot Postings</a>
+                        <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
+                    </div>
                 </li>
 
-		<c:if test="${tcdirect:isScorecardAdmin()}" >
-		   <li>
-                      <a href="/direct/scorecard/"><span>Scorecards</span></a>
-                   </li>
-               </c:if>
-                <c:if test="${tcdirect:canViewInternalStats()}" >
-		        <li class="on">
-                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
-                </li>
+                <c:if test="${tcdirect:isScorecardAdmin()}">
+                    <li>
+                        <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                    </li>
+                </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}">
+                    <li class="on">
+                        <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                    </li>
+                </c:if>
+                <c:if test="${tcdirect:isTCStaff()}">
+                    <li>
+                        <a href="javascript:;"><span>Admin</span></a>
+                        <div class="subNav">
+                            <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
+                            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
+                                <a href="javascript:">Manage Contest Fee</a>
+                            </c:if>
+                        </div>
+                    </li>
                 </c:if>
             </ul>
         </ui:isInternalPage>
@@ -211,29 +300,51 @@
             <ul>
                 <li class="on">
                     <a href="<s:url action="dashboardActive" namespace="/"/>"><span>Dashboard</span></a>
-                </li>
-
-				<li>
-                     <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
+                    <div class="subNav">
+                        <a href="<s:url action="dashboardActive" namespace="/"/>">Cockpit Dashboard</a>
+                        <a href="<s:url action="overview" namespace="/enterpriseDashboard"/>">Enterprise Dashboard (Beta)</a>
+                        <a href="javascript:;">Operation Dashboard</a>
+                    </div>
                 </li>
 
                 <li>
-                     <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                    <a href="<s:url action="allProjects" namespace="/"/>"><span>Projects</span></a>
                 </li>
 
-		<c:if test="${tcdirect:isScorecardAdmin()}" >
-		   <li>
-                      <a href="/direct/scorecard/"><span>Scorecards</span></a>
-                   </li>
-               </c:if>
-                <c:if test="${tcdirect:canViewInternalStats()}" >
-		        <li>
-                    <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                <li>
+                    <a href="<s:url action='launchCopilotContest' namespace='/copilot'/>"><span>Copilots</span></a>
+                    <div class="subNav">
+                        <a href="<s:url action="launchCopilotContest" namespace="/copilot"/>">Get a Copilot</a>
+                        <a href="<s:url action="listCopilotPostings" namespace="/copilot"/>">My Copilot Postings</a>
+                        <a href="<s:url action="manageCopilots" namespace="/copilot"/>">Manage Copilots</a>
+                    </div>
                 </li>
+
+                <c:if test="${tcdirect:isScorecardAdmin()}">
+                    <li>
+                        <a href="/direct/scorecard/"><span>Scorecards</span></a>
+                    </li>
+                </c:if>
+                <c:if test="${tcdirect:canViewInternalStats()}">
+                    <li>
+                        <a href="<s:url action="internalStats" namespace="/"/>"><span>Internal</span></a>
+                    </li>
+                </c:if>
+                <c:if test="${tcdirect:isTCStaff()}">
+                    <li>
+                        <a href="javascript:;"><span>Admin</span></a>
+                        <div class="subNav">
+                            <a href="<s:url action="manageCopilotFeedback" namespace="/"/>">Manage Copilot Feedback</a>
+                            <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
+                                <a href="javascript:">Manage Contest Fee</a>
+                            </c:if>
+                        </div>
+                    </li>
                 </c:if>
             </ul>
         </c:if>
-    </div><!-- End #tabs0 -->
+    </div>
+    <!-- End #tabs0 -->
 
 	<div class="helloUser">
         <ul>

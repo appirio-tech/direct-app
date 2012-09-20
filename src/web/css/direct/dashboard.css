@@ -188,13 +188,20 @@ BODY#page{
 #tabs0 UL{
 	list-style: none;
 	padding: 0;
-	margin: 6px 0 6px 25px;
-	height: 21px;
+    margin: 0 0 0 25px;
+    height: 33px;
 }
 
 #tabs0 UL LI{
 	float: left;
 	margin-right: 15px;
+    position: relative;
+    height: 33px;
+    line-height: 33px;
+}
+
+#tabs0 UL LI:hover{
+    background: url("/images/menu-bg.png") !important;
 }
 
 	#tabs0 UL LI A{
@@ -205,6 +212,7 @@ BODY#page{
 		height: 21px;
 		line-height: 21px;
 		float: left;
+        margin-top: 6px;
 	}
 	
 	#tabs0 UL LI A SPAN{
@@ -219,25 +227,55 @@ BODY#page{
 	
 	
 	#tabs0 UL LI.on A{
-		color: #262626;
-		background: url(../../images/top_nav_button_left.png) left top no-repeat;
+		color: #262626 !important;
+		background: url(../../images/top_nav_button_left.png) left top no-repeat !important;
 	}
 	
-	#tabs0 UL LI.on A:hover {
-	}
+	/*#tabs0 UL LI.on A:hover {*/
+	/*}*/
 
 	#tabs0 UL LI.on A SPAN{
 		background: url(../../images/top_nav_button.png) right top no-repeat;
 	}
 
-	#tabs0 UL LI A:hover{
-		color: #262626;
-		background: url(../../images/top_nav_button_left.png) 0 -21px no-repeat;
-	}
-	
-	#tabs0 UL LI A:hover SPAN{
-		background: url(../../images/top_nav_button.png) right -21px no-repeat;
-	}
+#tabs0 UL LI:hover A{
+    color: #fff !important;
+    background: none !important;
+}
+/**/
+#tabs0 UL LI:hover A SPAN{
+    background: none !important;
+}
+#tabs0 UL > li .subNav {
+    display: none;
+    min-height: 10px;
+    position: absolute;
+    top: 33px;
+    width: auto;
+    z-index: 999;
+    background: url("/images/mask-bg.png");
+    padding: 0 0 3px 3px;
+}
+#tabs0 UL > li:hover .subNav {
+    display: block;
+}
+#tabs0 UL > li .subNav a {
+    color: #FFFFFF;
+    display: block;
+    line-height: 18px;
+    height: 18px;
+    margin-right: 3px;
+    margin-top: 4px;
+    padding: 2px 5px 2px 10px;
+    min-width: 95px;
+    white-space: nowrap;
+    float: none;
+    background: none;
+}
+#tabs0 UL > li .subNav a:hover {
+    background: red !important;
+}
+
 /* tabs1 ( the main tabs )*/
 #tabs1{
 	position: absolute;
