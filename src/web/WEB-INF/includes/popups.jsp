@@ -768,7 +768,7 @@
                     <div class="modalHeader">
                         <div class="modalHeaderRight">
                             <div class="modalHeaderCenter">
-                                COPILOT FEEDBACK
+                                VIEW COPILOT FEEDBACK
                                 <a href="javascript:;" class="closeModal" title="Close">Close</a>
                             </div>
                         </div>

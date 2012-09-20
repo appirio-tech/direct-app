@@ -74,7 +74,9 @@
 														<select id='customerNameFilter'>
 															<option selected="selected" value="All">All Customers</option>
                                                             <s:iterator value="viewData.userProjects.projectsCustomers" var="customer">
-                                                                <option value="<s:property value='key'/>"><s:property value='value'/></option>
+                                                                <s:if test="key != 0">
+                                                                    <option value="<s:property value='key'/>"><s:property value='value'/></option>
+                                                                </s:if>
                                                             </s:iterator>
 															<option value="none">No Customer</option>
                                                         </select>
