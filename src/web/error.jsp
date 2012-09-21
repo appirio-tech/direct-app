@@ -2,9 +2,12 @@
   - Author: TCSASSEMBLER
   - Version 1.1 (TC Cockpit Permission and Report Update One) change notes: Added logic to display error message.
   -
-  - Copyright (C) 2010 - 2011 TopCoder Inc., All Rights Reserved.
+  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+  - Set CURRENT_PAGE request scope param so it can be used to  conditional rendering
   -
-  - Version 1.1
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.2
   - Description: This page renders the error page.
 --%>
 <%@ page import="java.io.PrintWriter" %>
@@ -23,6 +26,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!-- External CSS -->
+    <link rel="stylesheet" href="/css/direct/dashboard.css?v=215352" media="all" type="text/css" />
+    <link rel="stylesheet" href="/css/direct/modal.css?v=211772" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/screen.css?v=210789" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/homepage.css?v=203310" media="all" type="text/css"/>
     <link rel="stylesheet" href="/css/direct/jquery.jcarousel.css?v=176771" media="all" type="text/css"/>
@@ -32,6 +37,12 @@
     <![endif]-->
 
     <!-- External javascript -->
+    <script type="text/javascript" src="/scripts/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/ajaxupload2.js"></script>
+    <script type="text/javascript" src="/scripts/jquery.scrollfollow.js"></script>
+    <script type="text/javascript" src="/scripts/common.js"></script>
+    <script type="text/javascript" src="/scripts/dashboard.js"></script>
+    <script type="text/javascript" src="/scripts/modalWindows.js"></script>
 </head>
 
 <body id="page" onload="loadHomePageFeeds();">

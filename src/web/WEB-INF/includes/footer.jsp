@@ -1,11 +1,13 @@
 <%--
-  - Author: Blues
-  - Version: 1.1 (Release Assembly - TC Cockpit Sidebar Header and Footer Update)
-  - Copyright (C) 2010-2011 TopCoder Inc., All Rights Reserved.
+  - Author: Blues, GreatKevin
+  - Version: 1.2
+  - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
+  -
+  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+  - - Do not show feedback in the error page
   -
   - Description: The footer of the topcoder cockpit.
   -
-  - Version 1.1 - updated to the new footer.
 --%>
 <%@ include file="taglibs.jsp" %>
 <div id="footer">

@@ -46,8 +46,15 @@ import java.util.List;
  *   </ol>
  * </p>
  *
- * @author isv, TCSASSEMBLER
- * @version 1.0.5
+ * <p>
+ * Version 1.1 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * <ul>
+ *     <li>Add properties {@link #approvalRejected} and {@link #approvalComment}</li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, GreatKevin
+ * @version 1.1
  */
 public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implements ProjectIdForm.Aware, 
                                                                                    ContestStatsDTO.Aware {
@@ -103,6 +110,20 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      * @since 1.0.4
      */
     private boolean approvalCommitted;
+
+    /**
+     * <p>Flag used to represent whether the approval phase is rejected.</p>
+     *
+     * @since 1.1
+     */
+    private boolean approvalRejected;
+
+    /**
+     * Stores the approval phase comment. It is use to store the reject comment.
+     *
+     * @since 1.1
+     */
+    private String approvalComment;
     
     /**
      * <p>The maximum number of milestone prize winners.</p>
@@ -454,5 +475,21 @@ public class SoftwareContestSubmissionsDTO extends BaseContestCommonDTO implemen
      */
     public String getMilestoneSubmissionsGeneralFeedback() {
         return milestoneSubmissionsGeneralFeedback;
+    }
+
+    public boolean isApprovalRejected() {
+        return approvalRejected;
+    }
+
+    public void setApprovalRejected(boolean approvalRejected) {
+        this.approvalRejected = approvalRejected;
+    }
+
+    public String getApprovalComment() {
+        return approvalComment;
+    }
+
+    public void setApprovalComment(String approvalComment) {
+        this.approvalComment = approvalComment;
     }
 }

@@ -1,6 +1,6 @@
 <%--
   - Author: Blues, flexme, GreatKevin
-  - Version: 1.6
+  - Version: 1.7
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 TC Cockpit Cost Report Update Cost Breakdown Assembly Change notes:
@@ -23,6 +23,9 @@
   - -
   - Version 1.6 (TC Cockpit Report Filters Group By Metadata Feature and Coordination Improvement) changes:
   - - Added Group by and group values into the filter panel.
+  -
+  - Version 1.7 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+  - - Added new column launch date in the cost analysis report
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -450,7 +453,7 @@
        cellspacing="0">
     <thead>
     <tr>
-        <th class="tableTitle" colspan="10">
+        <th class="tableTitle" colspan="11">
             <a href="javascript:void(0)" class="expand">&nbsp;</a>
             <span>Cost Details</span>
         </th>
@@ -468,6 +471,7 @@
 		<th class="tableColumn">&nbsp;Contest Id&nbsp;</th>
         <th class="tableColumn">&nbsp;Contest Type&nbsp;</th>
         <th class="tableColumn">&nbsp;Status&nbsp;</th>
+        <th class="tableColumn">&nbsp;Launch Date&nbsp;</th>
         <th class="tableColumn">&nbsp;Completion Date&nbsp;</th>
         <th class="tableColumn">&nbsp;Contest Fee&nbsp;</th>
         <th class="tableColumn">&nbsp;Estimated Member Cost&nbsp;</th>
@@ -509,6 +513,9 @@
             </td>
             <td>
                 <c:out value="${item.status}"/>
+            </td>
+            <td>
+                <fmt:formatDate pattern="yyyy-MM-dd" value="${item.launchDate}"/>
             </td>
             <td>
                 <fmt:formatDate pattern="yyyy-MM-dd" value="${item.completionDate}"/>

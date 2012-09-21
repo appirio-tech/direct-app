@@ -61,9 +61,16 @@ import com.topcoder.excel.output.WorkbookSavingException;
  *   <li>This class has been refactoring. It's extended from <code>ReportAggregationBaseDTO</code>.</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 1.3 (Release Assembly - TC Direct Cockpit Release Seven) change log:
+ * <ul>
+ *     <li>Updates export excel to add launch date column</li>
+ * </ul>
+ * </p>
  * 
- * @author Blues, flexme, TCSDEVELOPER
- * @version  1.2 (TopCoder Cockpit - Cost Report Assembly)
+ * @author Blues, flexme, GreatKevin
+ * @version 1.3 (Release Assembly - TC Direct Cockpit Release Seven)
  *
  */
 public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> {
@@ -197,6 +204,7 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
 		row.getCell(index++).setStringValue("Contest Id");
         row.getCell(index++).setStringValue("Contest Type");
         row.getCell(index++).setStringValue("Status");
+        row.getCell(index++).setStringValue("Launch Date");
         row.getCell(index++).setStringValue("Completion Date");
         row.getCell(index++).setStringValue("Contest Fee");
         row.getCell(index++).setStringValue("Estimated Member Cost");
@@ -255,6 +263,9 @@ public class CostReportDTO extends ReportAggregationBaseDTO<CostAggregationDTO> 
 
             // set the status
             row.getCell(index++).setStringValue(costDetail.getStatus());
+
+            // set the launch date
+            row.getCell(index++).setStringValue(dateFormatter.format(costDetail.getLaunchDate()));
 
             // set the completion date
             row.getCell(index++).setStringValue(dateFormatter.format(costDetail.getCompletionDate()));

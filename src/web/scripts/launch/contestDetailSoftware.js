@@ -56,8 +56,11 @@
  * Version 1.8 (Release Assembly - TC Direct Cockpit Release Five) change notes:
  * - Fix the DR points, milestone prizes, contest fee percentage calculation etc.
  *
+ * Version 1.9 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * - Always use the value stored in project info (49) as the copilot cost of the contest
+ *
  * @author isv, minhu, pvmagacho, GreatKevin
- * @version 1.8
+ * @version 1.9
  */
 // can edit multi round
 var canEditMultiRound = true;
@@ -1332,6 +1335,10 @@ function updateContestCostData() {
     var contestFee = parseFloat(p['Admin Fee']);
     var contestPercentage = parseFloat(p['Contest Fee Percentage']);
     var copilotFee = parseFloat(mainWidget.softwareCompetition.copilotCost);
+
+    // update to use contest data
+    copilotFee = parseFloat(p['Copilot Cost']);
+
     var isMultipleRound = mainWidget.softwareCompetition.multiRound;
     // no prize data filled into mainWidget.softwareCompetition
     var domOnly = mainWidget.softwareCompetition.projectHeader.id < 0;
@@ -1551,8 +1558,15 @@ function validateFieldsPrizeSection() {
 		var billingProjectId = $('select#billingProjects').val();
 		mainWidget.softwareCompetition.projectHeader.setBillingProject(billingProjectId);
 	}
+
+    var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
+
+    if(!copilotCost) {
+        copilotCost = mainWidget.softwareCompetition.copilotCost;
+    }
+
    // add copilot cost into project header
-   mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
+   mainWidget.softwareCompetition.projectHeader.setCopilotCost(copilotCost);
 
 	if (mainWidget.competitionType == "SOFTWARE") {
 		updateSoftwarePrizes();

@@ -74,6 +74,9 @@
  *
  * - (Module Assembly - JIRA issues loading update and report creation)
  * - Add the CSS for the Jira issues report.
+ *
+ * - (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * - Add stalled status styles
  */
 
 
@@ -2343,6 +2346,10 @@ TABLE.contests TD SPAN.draft {
 TABLE.contests TD SPAN.running {
     color: #0369cf;
     background: url(/images/active_status_ico.png) no-repeat left 0px;
+}
+
+TABLE.contests TD SPAN.stalled {
+    color: #dc0000;
 }
 
     TABLE.contests TD SPAN.awarding{ 
@@ -6838,7 +6845,6 @@ table.resultTable td.last a.long {
         .dashboardModule .heading .stalled span{
             color: #a60000;
         }
-
             
 	.dashboardModule .content{
 		position:relative;

@@ -73,9 +73,12 @@
  *
  *  Version 2.3 - Module Assembly - JIRA issues loading update and report creation
  *  - Add support for jira issues report.
+ *
+ *  Version 2.4 - Release Assembly - TC Direct Cockpit Release Seven version 1.0
+ *  - Add support for copilot posting review - no select any copilot feature
  * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin, TCSASSEMBLER
- * @version 2.3
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin
+ * @version 2.4
  */
 
 var mouse_is_inside;
@@ -791,7 +794,7 @@ $(document).ready(function(){
     $(".memberProfile[rel='_blank']").attr("target","_blank");
     $(".copilotProfile[rel='_blank']").attr("target","_blank");
 
-    $('.selectWinnerCopilot').click(function() {
+    $('.selectWinnerCopilot').live('click', function() {
         var data = $(this).data('rel');
         $('#scpPlacement').val('1');
         $('#scpSubmissionId').val($(this).data('sid'));
@@ -801,7 +804,7 @@ $(document).ready(function(){
         return false;
     });
 
-    $('.selectRunnerUpCopilot').click(function() {
+    $('.selectRunnerUpCopilot').live ('click', function() {
         var data = $(this).data('rel');
         $('#scpPlacement').val($(this).data('place'));
         $('#scpSubmissionId').val($(this).data('sid'));
@@ -2372,10 +2375,13 @@ function exportContestRegistrantsToExcel() {
 
 function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
     if (place == 1) {
+        $(".chooseConfirmationButton").removeClass("selectRunnerUpCopilot").addClass("selectWinnerCopilot");
         $('.selectWinnerCopilot').data('sid', sid);
         $('.selectWinnerCopilot').data('pid', pid);
         $('.selectWinnerCopilot').data('prid', prid);
     } else {
+
+        $(".chooseConfirmationButton").removeClass("selectWinnerCopilot").addClass("selectRunnerUpCopilot");
         $('.selectRunnerUpCopilot').data('sid', sid);
         $('.selectRunnerUpCopilot').data('pid', pid);
         $('.selectRunnerUpCopilot').data('prid', prid);
@@ -2392,6 +2398,10 @@ function setCopilotSelection(sid, pid, place, prid, handle, projectName) {
         $('.selectRunnerUpCopilot').data('place', 3);
         $("#removeProjectDialog .header .title").text("Do not select 2nd place");
         $("#removeProjectDialog .body").html("Are you sure you don't want to select 2nd place?");
+    } else {
+        $('.selectRunnerUpCopilot').data('place', 100);
+        $("#removeProjectDialog .header .title").text("Do not select any copilot");
+        $("#removeProjectDialog .body").html("Are you sure you don't want to any copilot?");
     }
     
     $('#removeProjectDialog').dialog("open");

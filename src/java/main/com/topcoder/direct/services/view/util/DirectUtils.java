@@ -365,10 +365,17 @@ import java.util.*;
  *     <li>Add method {@link #createProjectBriefDTOFromProjectData(com.topcoder.service.project.ProjectData)}</li>
  * </ol>
  * </p>
+ * <p>
+ * Version 1.9.0 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * <p>
+ *     <li>Updated method {@link #hasReview(com.topcoder.project.service.ProjectServices, com.topcoder.service.project.SoftwareCompetition, long, long, long)}</li>
+ *     <li>Added method {@link #hasReview(com.topcoder.project.service.ProjectServices, com.topcoder.service.project.SoftwareCompetition, long, long, long, java.util.List)}</li>
+ * </p>
+ * </p>
  *
  *
  * @author BeBetter, isv, flexme, Blues, Veve, GreatKevin, isv, minhu, VeVe, GreatKevin
- * @version 1.8.9
+ * @version 1.9.0
  */
 public final class DirectUtils {
     /**
@@ -1270,7 +1277,6 @@ public final class DirectUtils {
      * @param isStudio
      *            whether is studio contest
      * @return has permission or not
-     * @throws PersistenceException
      * @since 1.6.2
      */
     public static boolean hasWritePermission(BaseDirectStrutsAction action,
@@ -1934,25 +1940,51 @@ public final class DirectUtils {
      */
     public static boolean hasReview(ProjectServices projectServices, SoftwareCompetition contest, long phaseTypeId, 
                                     long scorecardTypeId, long reviewerResourceId) {
+        return hasReview(projectServices, contest, phaseTypeId, scorecardTypeId, reviewerResourceId, null);
+    }
+
+    /**
+     * <p>Checks if there is a review of specified type by specified reviewer for specified project and specified phase
+     * type. This method is intended for phases which require just a single review by single resource (like Approval
+     * or Final Review).</p>
+     *
+     * @param projectServices    a <code>ProjectServices</code> providing interface to project services.
+     * @param contest            a <code>SoftwareCompetition</code> providing the contest details.
+     * @param phaseTypeId        a <code>long</code> providing the ID for phase type.
+     * @param scorecardTypeId    a <code>long</code> providing the ID for scorecard type.
+     * @param reviewerResourceId a <code>long</code> providing the ID for reviewer resource.
+     * @param userReviews the list to store all the user reviews
+     * @return <code>true</code> if ; <code>false</code> otherwise.
+     * @since 1.9.0
+     */
+    public static boolean hasReview(ProjectServices projectServices, SoftwareCompetition contest, long phaseTypeId,
+                                    long scorecardTypeId, long reviewerResourceId, List<Review> userReviews) {
         int phasesCnt = 0;
+
         Set<Phase> phases = contest.getProjectPhases().getPhases();
         for (Phase phase : phases) {
             if (phase.getPhaseType().getId() == phaseTypeId) {
                 phasesCnt++;
             }
         }
-        
+
         int reviewsCnt = 0;
         Review[] reviews = projectServices.getReviews(contest.getId(), scorecardTypeId);
         for (Review review : reviews) {
+
             long reviewResourceId = review.getAuthor();
             if (reviewResourceId == reviewerResourceId) {
                 reviewsCnt++;
+                if(userReviews != null) {
+                    userReviews.add(review);
+                }
             }
         }
-        
+
         return (reviewsCnt == phasesCnt);
     }
+
+
     
     /**
      * <p>Gets the last closed final fix phase of a specified project.</p>

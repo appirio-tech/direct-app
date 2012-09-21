@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.costreport;
 
@@ -11,8 +11,15 @@ import java.util.Date;
 /**
  * The DTO stores the cost details report data.
  *
- * @author TCSDEVELOPER
- * @version  1.0 (TopCoder Cockpit - Cost Report Assembly)
+ * <p>
+ *    Version 1.1 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ *    <ul>
+ *        <li>Add the property {@link #launchDate}</li>
+ *    </ul>
+ * </p>
+ *
+ * @author GreatKevin
+ * @version  1.1
  */
 public class CostDetailsDTO implements Serializable {
 
@@ -45,6 +52,13 @@ public class CostDetailsDTO implements Serializable {
      * The status of the contest, could be 'Active', 'Scheduled' and 'Finished'
      */
     private String status;
+
+    /**
+     * The launch date of the contest.
+     *
+     * @since 1.1
+     */
+    private Date launchDate;
 
     /**
      * The completion date of the contest.
@@ -314,5 +328,25 @@ public class CostDetailsDTO implements Serializable {
      */
     public void setProjectFilterValue(String projectFilterValue) {
         this.projectFilterValue = projectFilterValue;
+    }
+
+    /**
+     * Gets the launch date.
+     *
+     * @return the launch date.
+     * @since 1.1
+     */
+    public Date getLaunchDate() {
+        return launchDate;
+    }
+
+    /**
+     * Sets the launch date.
+     *
+     * @param launchDate the launch date.
+     * @since 1.1
+     */
+    public void setLaunchDate(Date launchDate) {
+        this.launchDate = launchDate;
     }
 }

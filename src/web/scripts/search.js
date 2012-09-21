@@ -57,9 +57,12 @@
  *
  * Version 1.8.5 - (Module Assembly - JIRA issues loading update and report creation)
  * - Add support for jira issues report.
+ *
+ * Version 1.8.6 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * - Add new column configuration for the cost report
  *  
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, TCSASSEMBLER
- * @version 1.8.5
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin
+ * @version 1.8.6
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -629,27 +632,6 @@ $(document).ready(function() {
 
     });
 
-    $("#CopilotPostingSubmissions .paginatedDataTable").dataTable({
-        "iDisplayLength": 10,
-        "bFilter": false,
-        "bSort": true,
-        "bAutoWidth": false,
-              "oLanguage": {
-                   "sLengthMenu": sStdMenu + " per page"
-               },
-        "sPaginationType": "full_numbers",
-        "sDom": 'rti<"bottom1"l><"bottom2"fp',
-        "aaSorting": [[0,'asc']],
-        "aoColumns": [
-                { "sType": "html" },
-                null,
-                { "sType": "date-direct" },
-                null,
-                null
-            ]
-
-    });
-
     $.costReportDataTable = $("#costReportSection .paginatedDataTable").dataTable({
         "iDisplayLength": 25,
         "bFilter": true,
@@ -670,6 +652,7 @@ $(document).ready(function() {
                 { "sType": "html" },
 				{ "sType": "html" },
                 { "sType": "html" },
+                { "sType": "simple-date" },
                 { "sType": "simple-date" },
                 { "sType": "money" },
                 { "sType": "money" },

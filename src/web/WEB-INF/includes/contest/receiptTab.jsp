@@ -1,13 +1,16 @@
 <%--
-  - Author: TCSASSEMBLER
+  - Author: GreatKevin
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
-  - Version 1.1
+  - Version 1.3
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
   - - Add the milestone prize for software contest receipt if exists
   -
   - Version 1.2 (Release Assembly - TC Direct Cockpit Release Five) changes:
   - - Add Launch By information to the JSP page
+  -
+  - Version 1.3 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+  - - Show the receipt details in table
   -
   - Description: This page fragment renders receipt page content for software contest.
 --%>
@@ -18,6 +21,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <div class="receipt" id="launchContestOut">
+
+    <s:if test="contestReceipt.showReceipt">
                                             <div class="orderReview">
                                             <s:set id="firstPrize" name="firstPrize" 
                                                 value="contestReceipt.firstPlacePrize" scope="page"/>
@@ -102,54 +107,161 @@
 
                                             </div>
                                             <!-- end .orderReview -->
-                                                <div class="contestDetails">
+                                                <div class="contestDetails" id="participationMetricsReportsSection">
                                                 
                                                     <h2 class="sectionHead">Contest Details</h2>
-                                                    <h3>Contest Prizes:</h3>
-                                                    <table class="prizesTable">
-                                                        <tbody><tr>
-                                                            <s:if test="contestReceipt.firstPlacePrize > 0"><td>1 : $${firstPrize}<td></s:if>
-                                                            <s:if test="contestReceipt.secondPlacePrize > 0"><td>2 : $${secondPrize}<td></s:if>
-                                                            <s:if test="contestReceipt.thirdPlacePrize > 0"><td>3 : $${thirdPrize}<td></s:if>
-                                                            <s:if test="contestReceipt.fourthPlacePrize > 0"><td>4 : $${fourthPrize}<td></s:if>
-                                                            <s:if test="contestReceipt.fifthPlacePrize > 0"><td>5 : $${fifthPrize}<td></s:if>
-                                                            <td>Studio Cup points : $${drPoints}</td>
-                                                            <s:if test="contestReceipt.milestonePrize > 0">
-                                                            <td>Milestone Prize : $${milestonePrize}</td>
-                                                            </s:if>
-                                                            <td class="last">$<fmt:formatNumber value="${firstPrize + secondPrize + thirdPrize + fourthPrize + fifthPrize + drPoints + milestonePrize}" pattern="0.00"/></td>
+
+                                                    <table class="pipelineStats">
+                                                        <thead>
+                                                        <tr class="subTheadRow">
+                                                            <th class="tableColumn">
+                                                                Payment Type
+                                                            </th>
+                                                            <th class="tableColumn">
+                                                                Amount
+                                                            </th>
                                                         </tr>
-                                                    </tbody></table>
-                                                    
-                                                    <h3>Additional Costs:</h3>
-                                                    <table class="prizesTable">
-                                                        <tbody><tr>
-                                                            <td>Administration Fee : $${contestFee}</td>
-                                                            <td>Specification Review : $${specificationReviewPayment}</td>
-                                                            <td>Review  : $${reviewPayment}</td>
-                                                            <td>Copilot Fee  : $${copilotCost}</td>
-                                                            <td>Bug Race : $${bugRacePayment}</td>
-                                                            <s:if test="contestReceipt.finished == true && #attr['otherPayment'] > 0">
-                                                            <td>Other : $${otherPayment}</td>
+                                                        </thead>
+                                                        <tbody>
+                                                            <s:if test="contestReceipt.firstPlacePrize > 0">
+                                                                    <tr>
+                                                                        <td>
+                                                                            First Place Prize
+                                                                        </td>
+                                                                        <td>
+                                                                            $${firstPrize}
+                                                                        </td>
+                                                                    </tr>
                                                             </s:if>
-                                                            <td class="last">$<fmt:formatNumber value="${contestFee + specificationReviewPayment + reviewPayment + copilotCost + bugRacePayment + otherPayment}" pattern="0.00"/></td>
-                                                        </tr>
-                                                    </tbody></table>
-                                                    
-                                                    <table class="total">
-                                                        <tbody><tr>
-                                                            <td class="toLeft">Total:</td>
-                                                            <td class="toRight">
-                                                            <s:if test="contestReceipt.finished == true">
-                                                            $${contestReceipt.totalCost}
+                                                            <s:if test="contestReceipt.secondPlacePrize > 0">
+                                                                <tr>
+                                                                    <td>
+                                                                        Second Place Prize
+                                                                    </td>
+                                                                    <td>
+                                                                        $${secondPrize}
+                                                                    </td>
+                                                                </tr>
                                                             </s:if>
-                                                            <s:else>
-                                                            $${totalPayment}
-                                                            </s:else>
+                                                            <s:if test="contestReceipt.thirdPlacePrize > 0">
+                                                                <tr>
+                                                                    <td>
+                                                                        Third Place Prize
+                                                                    </td>
+                                                                    <td>
+                                                                        $${thirdPrize}
+                                                                    </td>
+                                                                </tr>
+                                                            </s:if>
+                                                            <s:if test="contestReceipt.fourthPlacePrize > 0">
+                                                                <tr>
+                                                                    <td>
+                                                                        Fourth Place Prize
+                                                                    </td>
+                                                                    <td>
+                                                                        $${fourthPrize}
+                                                                    </td>
+                                                                </tr>
+                                                            </s:if>
+                                                            <s:if test="contestReceipt.fifthPlacePrize > 0">
+                                                                <tr>
+                                                                    <td>
+                                                                        Fifth Place Prize
+                                                                    </td>
+                                                                    <td>
+                                                                        $${fifthPrize}
+                                                                    </td>
+                                                                </tr>
+                                                            </s:if>
+
+                                                            <tr>
+                                                                <td>
+                                                                    Studio Cup points
+                                                                </td>
+                                                                <td>
+                                                                    $${drPoints}
+                                                                </td>
+                                                            </tr>
+                                                        <s:if test="contestReceipt.milestonePrize > 0">
+                                                                    <tr>
+                                                                        <td>
+                                                                            Milestone Prize
+                                                                        </td>
+                                                                        <td>
+                                                                            $${milestonePrize}
+                                                                        </td>
+                                                                    </tr>
+                                                        </s:if>
+                                                        <tr>
+                                                            <td>
+                                                                Administration Fee
+                                                            </td>
+                                                            <td>
+                                                                $${contestFee}
                                                             </td>
                                                         </tr>
-                                                    </tbody></table>
-                                                    
+
+                                                        <tr>
+                                                            <td>
+                                                                Specification Review
+                                                            </td>
+                                                            <td>
+                                                                $${specificationReviewPayment}
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                Review
+                                                            </td>
+                                                            <td>
+                                                                $${reviewPayment}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Copilot Fee
+                                                            </td>
+                                                            <td>
+                                                                $${copilotCost}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Bug Race
+                                                            </td>
+                                                            <td>
+                                                                $${bugRacePayment}
+                                                            </td>
+                                                        </tr>
+                                                        <s:if test="contestReceipt.finished == true && #attr['otherPayment'] > 0">
+                                                            <tr>
+                                                                <td>
+                                                                    Other
+                                                                </td>
+                                                                <td>
+                                                                    $${otherPayment}
+                                                                </td>
+                                                            </tr>
+                                                        </s:if>
+                                                        <tr>
+                                                            <td>
+                                                                <b>Total</b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <s:if test="contestReceipt.finished == true">
+                                                                        $${contestReceipt.totalCost}
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                        $${totalPayment}
+                                                                    </s:else>
+                                                                </b>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                             </s:if>
                                             <s:if test="viewData.contestStats.isStudio == false">
@@ -201,71 +313,211 @@
                                                 
                                             </div>
                                             <!-- end .orderReview -->
-                                                <div class="contestDetails">
-                                                
+                                                <div class="contestDetails" id="participationMetricsReportsSection" cellspacing="0" cellpadding="0">
+
+
                                                     <h2 class="sectionHead">Contest Details</h2>
-                                                    <h3>Contest Prizes:</h3>
-                                                    <table class="prizesTable">
-                                                        <tbody><tr>
-                                                            <td>First Place Cost : $${firstPrize}</td>
-                                                            <td>Second Place Cost : $${secondPrize}</td>
-                                                            <td>DR points : $${drPoints}</td>
-                                                            <td>Reliability Bonus Cost : $${reliabilityBonusCost}</td>
-                                                            <td class="last">$<fmt:formatNumber value="${firstPrize + secondPrize + drPoints + reliabilityBonusCost}" pattern="0.00"/></td>
+                                                    <table class="pipelineStats">
+                                                        <thead>
+                                                        <tr class="subTheadRow">
+                                                            <th class="tableColumn">
+                                                                Payment Type
+                                                            </th>
+                                                            <th class="tableColumn">
+                                                                Amount
+                                                            </th>
                                                         </tr>
-                                                    </tbody></table>
-                                                    <s:if test="contestReceipt.milestonePrize > 0">
-                                                        <h3>Milestone Prizes:</h3>
-                                                        <table class="prizesTable">
-                                                            <tbody>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                First Place Cost
+                                                            </td>
+                                                            <td>
+                                                                $${firstPrize}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Second Place Cost
+                                                            </td>
+                                                            <td>
+                                                                $${secondPrize}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                DR points
+                                                            </td>
+                                                            <td>
+                                                                $${drPoints}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Reliability Bonus Cost
+                                                            </td>
+                                                            <td>
+                                                                $${reliabilityBonusCost}
+                                                            </td>
+                                                        </tr>
+                                                        <s:if test="contestReceipt.milestonePrize > 0">
+
+                                                            <s:set id="milestoneSinglePrize" name="milestoneSinglePrize"
+                                                                   value="(contestReceipt.milestonePrize / contestReceipt.milestonePrizeNumber)"
+                                                                   scope="page"/>
+
+                                                            <c:forEach var="currentIndex" begin="1" end="${contestReceipt.milestonePrizeNumber}">
+
+                                                                <tr>
+                                                                    <td>
+                                                                        Milestone Prize {currentIndex}
+                                                                    </td>
+                                                                    <td>
+                                                                        $${milestonePrize}
+                                                                    </td>
+                                                                </tr>
+
+                                                            </c:forEach>
+
+                                                        </s:if>
+                                                        <tr>
+                                                            <td>
+                                                                Contest Fee
+                                                            </td>
+                                                            <td>
+                                                                $<fmt:formatNumber value="${contestFee}" pattern="0.00"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Specification Review
+                                                            </td>
+                                                            <td>
+                                                                $${specificationReviewPayment}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Review
+                                                            </td>
+                                                            <td>
+                                                                $${reviewPayment}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Copilot Fee
+                                                            </td>
+                                                            <td>
+                                                                $${copilotCost}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Bug Race
+                                                            </td>
+                                                            <td>
+                                                                $${bugRacePayment}
+                                                            </td>
+                                                        </tr>
+                                                        <s:if test="contestReceipt.finished == true && #attr['otherPayment'] > 0">
                                                             <tr>
-                                                                <s:set id="milestoneSinglePrize" name="milestoneSinglePrize"
-                                                                       value="(contestReceipt.milestonePrize / contestReceipt.milestonePrizeNumber)"
-                                                                       scope="page"/>
-
-                                                                <c:forEach var="currentIndex" begin="1" end="${contestReceipt.milestonePrizeNumber}">
-
-                                                                    <td>${currentIndex}:${milestoneSinglePrize}</td>
-
-                                                                </c:forEach>
-
-
-                                                                <td class="last">$${milestonePrize}</td>
+                                                                <td>
+                                                                    Other
+                                                                </td>
+                                                                <td>
+                                                                    $${otherPayment}
+                                                                </td>
                                                             </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </s:if>
-                                                    <h3>Additional Costs:</h3>
-                                                    <table class="prizesTable">
-                                                        <tbody><tr>
-                                                            <td>Contest Fee : $<fmt:formatNumber value="${contestFee}" pattern="0.00"/> </td>
-                                                            <td>Specification Review : $${specificationReviewPayment}</td>
-                                                            <td>Review  : $${reviewPayment}</td>
-                                                            <td>Copilot Fee  : $${copilotCost}</td>
-                                                            <td>Bug Race : $${bugRacePayment}</td>
-                                                            <s:if test="contestReceipt.finished == true && #attr['otherPayment'] > 0">
-                                                            <td>Other : $${otherPayment}</td>
-                                                            </s:if>
-                                                            <td class="last">$  
-                                                            <fmt:formatNumber value="${(contestFee + specificationReviewPayment + reviewPayment + copilotCost + bugRacePayment + otherPayment)}" pattern="0.00"/>
+                                                        </s:if>
+                                                        <tr>
+                                                            <td>
+                                                                <b>Total</b>
+                                                            </td>
+                                                            <td>
+                                                                <b>
+                                                                    <s:if test="contestReceipt.finished == true">
+                                                                        $${contestReceipt.totalCost}
+                                                                    </s:if>
+                                                                    <s:else>
+                                                                        $${totalPayment}
+                                                                    </s:else>
+                                                                </b>
                                                             </td>
                                                         </tr>
-                                                    </tbody></table>
-                                                    <table class="total">
-                                                        <tbody><tr>
-                                                            <td class="toLeft">Total:</td>
-                                                            <td class="toRight">
-                                                            <s:if test="contestReceipt.finished == true">
-                                                            $${contestReceipt.totalCost}
-                                                            </s:if>
-                                                            <s:else>
-                                                            $${totalPayment}
-                                                            </s:else>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody></table>                                                    
+
+                                                        </tbody>
+                                                    </table>
+                                                    <%--<h3>Contest Prizes:</h3>--%>
+                                                    <%--<table class="prizesTable">--%>
+                                                        <%--<tbody><tr>--%>
+                                                            <%--<td>First Place Cost : $${firstPrize}</td>--%>
+                                                            <%--<td>Second Place Cost : $${secondPrize}</td>--%>
+                                                            <%--<td>DR points : $${drPoints}</td>--%>
+                                                            <%--<td>Reliability Bonus Cost : $${reliabilityBonusCost}</td>--%>
+                                                            <%--<td class="last">$<fmt:formatNumber value="${firstPrize + secondPrize + drPoints + reliabilityBonusCost}" pattern="0.00"/></td>--%>
+                                                        <%--</tr>--%>
+                                                    <%--</tbody></table>--%>
+                                                    <%--<s:if test="contestReceipt.milestonePrize > 0">--%>
+                                                        <%--<h3>Milestone Prizes:</h3>--%>
+                                                        <%--<table class="prizesTable">--%>
+                                                            <%--<tbody>--%>
+                                                            <%--<tr>--%>
+                                                                <%--<s:set id="milestoneSinglePrize" name="milestoneSinglePrize"--%>
+                                                                       <%--value="(contestReceipt.milestonePrize / contestReceipt.milestonePrizeNumber)"--%>
+                                                                       <%--scope="page"/>--%>
+
+                                                                <%--<c:forEach var="currentIndex" begin="1" end="${contestReceipt.milestonePrizeNumber}">--%>
+
+                                                                    <%--<td>${currentIndex}:${milestoneSinglePrize}</td>--%>
+
+                                                                <%--</c:forEach>--%>
+
+
+                                                                <%--<td class="last">$${milestonePrize}</td>--%>
+                                                            <%--</tr>--%>
+                                                            <%--</tbody>--%>
+                                                        <%--</table>--%>
+                                                    <%--</s:if>--%>
+                                                    <%--<h3>Additional Costs:</h3>--%>
+                                                    <%--<table class="prizesTable">--%>
+                                                        <%--<tbody><tr>--%>
+                                                            <%--<td>Contest Fee : $<fmt:formatNumber value="${contestFee}" pattern="0.00"/> </td>--%>
+                                                            <%--<td>Specification Review : $${specificationReviewPayment}</td>--%>
+                                                            <%--<td>Review  : $${reviewPayment}</td>--%>
+                                                            <%--<td>Copilot Fee  : $${copilotCost}</td>--%>
+                                                            <%--<td>Bug Race : $${bugRacePayment}</td>--%>
+                                                            <%--<s:if test="contestReceipt.finished == true && #attr['otherPayment'] > 0">--%>
+                                                            <%--<td>Other : $${otherPayment}</td>--%>
+                                                            <%--</s:if>--%>
+                                                            <%--<td class="last">$  --%>
+                                                            <%--<fmt:formatNumber value="${(contestFee + specificationReviewPayment + reviewPayment + copilotCost + bugRacePayment + otherPayment)}" pattern="0.00"/>--%>
+                                                            <%--</td>--%>
+                                                        <%--</tr>--%>
+                                                    <%--</tbody></table>--%>
+                                                    <%--<table class="total">--%>
+                                                        <%--<tbody><tr>--%>
+                                                            <%--<td class="toLeft">Total:</td>--%>
+                                                            <%--<td class="toRight">--%>
+                                                            <%--<s:if test="contestReceipt.finished == true">--%>
+                                                            <%--$${contestReceipt.totalCost}--%>
+                                                            <%--</s:if>--%>
+                                                            <%--<s:else>--%>
+                                                            <%--$${totalPayment}--%>
+                                                            <%--</s:else>--%>
+                                                            <%--</td>--%>
+                                                        <%--</tr>--%>
+                                                    <%--</tbody></table>                                                    --%>
                                                 </div>
                                             </s:if>                                         <!-- end .contestDetails -->
                                             <hr class="dualDivider">
                                             <br><br>
                                         </div>
+    </s:if>
+    <s:else>
+        <div class="noReceipt">
+            <div>
+                The receipt will be available after the contest is finished
+            </div>
+    </s:else>

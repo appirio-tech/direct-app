@@ -18,8 +18,15 @@ import java.io.Serializable;
  * - Add the field <code>contestLauncherId</code> to store the launcher of the contest.
  * </p>
  *
- * @author flexme, TCSASSEMBLER
- * @version 1.2
+ * <p>
+ * Version 1.3 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * <ul>
+ *     <li>Add the property {@link #showReceipt}</li>
+ * </ul>
+ * </p>
+ *
+ * @author flexme, GreatKevin
+ * @version 1.3
  */
 public class ContestReceiptDTO implements Serializable {
     /**
@@ -114,6 +121,13 @@ public class ContestReceiptDTO implements Serializable {
      * @since 1.2
      */
     private long contestLauncherId;
+
+    /**
+     * Whether to show the receipt details to the user.
+     *
+     * @since 1.3
+     */
+    private boolean showReceipt;
 
     /**
      * <p>Constructs new <code>ContestReceiptDTO</code> instance. This implementation does nothing.</p>
@@ -427,5 +441,13 @@ public class ContestReceiptDTO implements Serializable {
      */
     public void setContestLauncherId(long contestLauncherId) {
         this.contestLauncherId = contestLauncherId;
+    }
+	
+    public boolean isShowReceipt() {
+        return showReceipt;
+    }
+
+    public void setShowReceipt(boolean showReceipt) {
+        this.showReceipt = showReceipt;
     }
 }

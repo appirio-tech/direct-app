@@ -1,6 +1,6 @@
 <%--
-  - Author: isv, TCSASSEMBLER
-  - Version 1.4
+  - Author: isv, GreatKevin
+  - Version 1.5
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page renders the submissions for Software contest in a list view.
@@ -16,6 +16,9 @@
   -
   - Version 1.4 (Release Assembly - TopCoder Cockpit Software Milestone Management) change Notes:
   - - updated to support software milestone management
+  -
+  - Version 1.5 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+  - - Updated to show approval phase status correctly
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/WEB-INF/includes/taglibs.jsp" %>
@@ -408,7 +411,15 @@
                                                 <div class="ApprovalSection">
                                                     <c:choose>
                                                         <c:when test="${viewData.approvalCommitted}">
-                                                            <p>The submission has been approved.</p>
+
+                                                            <s:if test="viewData.approvalRejected">
+                                                                <p>The submission has been rejected.</p>
+                                                                <p><b>Reject Reason:</b> ${viewData.approvalComment} </p>
+                                                            </s:if>
+                                                            <s:else>
+                                                                <p>The submission has been approved.</p>
+                                                            </s:else>
+
                                                         </c:when>
                                                         <c:otherwise>
                                                             <p>
@@ -485,7 +496,7 @@
                                                 </c:when>
                                                 <c:when test="${afterMilestoneReviewPhase || inMilestoneReviewPhase && milestoneReviewCommitted}">                                                
                                                     <div class="notify">
-                                                        To pick milestone winners click on the Select Placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the milestones. Do not forget to provide milestone general feedback and individual feedback.
+                                                        To pick milestone winners click on the Select placement icons beside each submission. Selections can be removed and/or replaced any time before you lock in the Milestones. Do not forget to provide milestone general feedback and individual feedback.
                                                     </div>                        
                                                     <div class="slotsMask">
                                                         <div class="slots">

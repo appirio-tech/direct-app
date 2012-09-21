@@ -2833,6 +2833,34 @@ div.ac_results li.ac_over { background-color: yellow; color: black; cursor: poin
 		background-position:right -21px;
 	}
 
+.noCopilotButton{
+    margin:0 auto;
+    display:block;
+    width:180px;
+    height:21px;
+    padding-left:3px;
+    background:url(../../images/button-sm-red-left.png) left top no-repeat;
+    overflow:hidden;
+    line-height:20px;
+    text-decoration:none !important;
+    color:#fffffe;
+    font-weight:bold;
+    margin-top: 10px;
+}
+.noCopilotButton span.profileLeft{
+    display:block;
+    height:21px;
+    width:180px;
+    background:url(../../images/button-sm-red-right.png) right top no-repeat;
+    overflow:hidden;
+}
+.noCopilotButton:hover{
+    background-position:left -21px;
+}
+.noCopilotButton:hover span.profileLeft{
+    background-position:right -21px;
+}
+
 .tabs3Special .launchCopilotContest .fileUploadInfo table td.fileName a{
     color:#333333;
 	font-size:13px;

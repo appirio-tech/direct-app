@@ -569,8 +569,18 @@ import java.util.Map.Entry;
  *     <li>Add method {@link #getAllCopilotFeedback()}</li>
  * </ol>
  * </p>
+ *
+ * <p>
+ * Version 5.0 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * <ul>
+ *     <li>Updated method {@link #getDashboardCostReportDetails(com.topcoder.security.TCSubject, long, long[], long[], long, long, long[], java.util.Date, java.util.Date, java.util.Map)} to store launch date</li>
+ *     <li>Updated method {@link #getActiveContests(long)} to detect contest stalled status</li>
+ *     <li>Updated method {@link #getContestReceipt(long, boolean)} to store showReceipt flag</li>
+ * </ul>
+ * </p>
+ *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin
- * @version 4.9
+ * @version 5.0
  * @since 1.0
  */
 public class DataProvider {
@@ -1981,7 +1991,34 @@ public class DataProvider {
             String tcDirectProjectName = resultContainer.getStringItem(i, "tc_direct_project_name");
             long contestId = resultContainer.getLongItem(i, "contest_id");
             String contestName = resultContainer.getStringItem(i, "contest_name");
-            String statusName = resultContainer.getStringItem(i, "status");
+
+            String activePhaseName = null;
+            if(resultContainer.getItem(i, "active_phase").getResultData() != null) {
+                activePhaseName = resultContainer.getStringItem(i, "active_phase");
+            }
+            String nextScheduledPhaseName = null;
+            if(resultContainer.getItem(i, "next_scheduled_phase").getResultData() != null) {
+                nextScheduledPhaseName = resultContainer.getStringItem(i, "next_scheduled_phase");
+            }
+
+            String statusName;
+
+            if(activePhaseName == null) {
+                // there is no active phase
+                if(nextScheduledPhaseName == null) {
+                    statusName = "Finished";
+                } else if(nextScheduledPhaseName.equalsIgnoreCase("Specification Submission")) {
+                    // next scheduled is specification submission, we use status "Specification Review"
+                    statusName =  "Specification Review";
+                } else if (nextScheduledPhaseName.equalsIgnoreCase("Registration")) {
+                    statusName = "Scheduled";
+                } else {
+                    statusName = "Stalled";
+                }
+            } else {
+                statusName = activePhaseName;
+            }
+
             String typeName = resultContainer.getStringItem(i, "contest_type");
             long contestTypeId = resultContainer.getLongItem(i, "contest_type_id"); // BUGR-3913
             Timestamp startDate = resultContainer.getTimestampItem(i, "start_date");
@@ -4080,6 +4117,9 @@ public class DataProvider {
             if (row.getItem("actual_member_costs").getResultData() != null) {
                 costDTO.setActualCost(row.getDoubleItem("actual_member_costs"));
             }
+            if (row.getItem("launch_date").getResultData() != null) {
+                costDTO.setLaunchDate(row.getTimestampItem("launch_date"));
+            }
             if (row.getItem("completion_date").getResultData() != null) {
                 costDTO.setCompletionDate(row.getTimestampItem("completion_date"));
             }
@@ -4473,6 +4513,7 @@ public class DataProvider {
         contestReceipt.setBugFixCost(result.getDoubleItem(row, "bug_fix_cost"));
         contestReceipt.setTotalCost(result.getDoubleItem(row, "total_cost"));
         contestReceipt.setFinished(result.getStringItem(row, "status").trim().equals("Finished"));
+        contestReceipt.setShowReceipt(result.getIntItem(row, "show_receipt") == 1);
 
         if(result.getItem(row, "contest_launcher_id").getResultData() != null) {
             contestReceipt.setContestLauncherId(Long.parseLong(result.getStringItem(row, "contest_launcher_id")));

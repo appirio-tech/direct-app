@@ -11,8 +11,17 @@ package com.topcoder.direct.services.view.dto.contest;
  * Version 1.1 - Direct Search Assembly - adjust action value to Edit or View
  * </p>
  *
- * @author isv, BeBetter
- * @version 1.1
+ * <p>
+ * Version 1.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * <ul>
+ *     <li>
+ *         Add the new contest status {@link #STALLED}
+ *     </li>
+ * </ul>
+ * </p>
+ *
+ * @author isv, BeBetter, GreatKevin
+ * @version 1.2
  */
 public enum ContestStatus {
 
@@ -72,7 +81,7 @@ public enum ContestStatus {
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Scheduled</code> contest status.</p>
      */
-    SCHEDULED("Scheduled", "scheduled", "View"),
+    SCHEDULED("Scheduled", "running", "View"),
 
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Scheduled</code> contest status.</p>
@@ -247,7 +256,14 @@ public enum ContestStatus {
     /**
      * <p>A <code>ContestStatus</code> corresponding to <code>Failed Review</code> contest status.</p>
      */
-    FAILED_REVIEW("Failed Review", "finished", "View");
+    FAILED_REVIEW("Failed Review", "finished", "View"),
+
+    /**
+     * <p>A <code>ContestStatus</code> corresponding to all the stalled contests</p>
+     *
+     * @since 1.2
+     */
+    STALLED("Stalled", "stalled", "View");
 
     /**
      * <p>A <code>String</code> providing the state name. Such a name serves as a textual presentation of the status.

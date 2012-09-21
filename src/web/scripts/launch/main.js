@@ -54,8 +54,11 @@
  * Version 2.1 (Release Assembly - TopCoder Cockpit Billing Account Project Association) change notes:
  * - Add method getBillingAccountsByDirectProjectId(directProjectId)
  *
+ * Version 2.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ * - Always use the value of project info 49 as the copilot cost of the contest
+ *
  * @author isv, GreatKevin
- * @version 2.1
+ * @version 2.2
  */
 
  /**
@@ -682,8 +685,14 @@ function saveAsDraftRequestSoftware() {
    // the first page also gets some data
    updateSoftwarePrizes();
 
+   var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
+
+   if(!copilotCost) {
+       copilotCost = mainWidget.softwareCompetition.copilotCost;
+   }
+
    // add copilot cost into project header
-   mainWidget.softwareCompetition.projectHeader.setCopilotCost(mainWidget.softwareCompetition.copilotCost);
+   mainWidget.softwareCompetition.projectHeader.setCopilotCost(copilotCost);
    
    //document uploads
    request['docUploadIds'] = getUploadDocumentIds();
@@ -1165,6 +1174,12 @@ function fillPrizes(billingProjectId) {
         return;
     }
 
+    var copilotCost = parseFloat(mainWidget.softwareCompetition.projectHeader.properties['Copilot Cost']);
+
+    if(!copilotCost) {
+        copilotCost = mainWidget.softwareCompetition.copilotCost;
+    }
+
     var firstPlaceAmount = contestCost.firstPlaceCost.formatMoney(2);
 //    originalPrizes = [];
 //    originalPrizes.push(contestCost.firstPlaceCost + '');
@@ -1215,7 +1230,7 @@ function fillPrizes(billingProjectId) {
         contestFeePercentage = billingFeesPercentage[billingProjectId].contestFeePercentage;
 
         if (contestFeePercentage != null) {
-            contestBillingFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * contestFeePercentage;
+            contestBillingFee = (getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + copilotCost) * contestFeePercentage;
         }
     }
     
@@ -1231,20 +1246,19 @@ function fillPrizes(billingProjectId) {
    $('#swContestFee,#rswContestFee').html(feeObject.contestFee.formatMoney(2));
     }
 
-   $('#swCopilotFee,#rswCopilotFee').html(mainWidget.softwareCompetition.copilotCost.formatMoney(2)); 
-
+   $('#swCopilotFee,#rswCopilotFee').html(copilotCost.formatMoney(2));
 
     //totals
     if (contestFeePercentage == null) {
-        $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_low').html((getContestTotal(feeObject, 'low', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_medium').html((getContestTotal(feeObject, 'medium', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
-        $('#swPrize_high').html((getContestTotal(feeObject, 'high', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + mainWidget.softwareCompetition.copilotCost).formatMoney(2));
+        $('#swTotal,#rswTotal').html((getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
+        $('#swPrize_low').html((getContestTotal(feeObject, 'low', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
+        $('#swPrize_medium').html((getContestTotal(feeObject, 'medium', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
+        $('#swPrize_high').html((getContestTotal(feeObject, 'high', domOnly, !isMultipleRound, (contestBillingFee >= 0 ? contestBillingFee : null)) + copilotCost).formatMoney(2));
     } else {
-        $('#swTotal,#rswTotal').html(((getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
-        $('#swPrize_low').html(((getContestTotal(feeObject, 'low', domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
-        $('#swPrize_medium').html(((getContestTotal(feeObject, 'medium', domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
-        $('#swPrize_high').html(((getContestTotal(feeObject, 'high', domOnly, !isMultipleRound, 0) + mainWidget.softwareCompetition.copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+        $('#swTotal,#rswTotal').html(((getContestTotal(feeObject, prizeType, domOnly, !isMultipleRound, 0) + copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+        $('#swPrize_low').html(((getContestTotal(feeObject, 'low', domOnly, !isMultipleRound, 0) + copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+        $('#swPrize_medium').html(((getContestTotal(feeObject, 'medium', domOnly, !isMultipleRound, 0) + copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
+        $('#swPrize_high').html(((getContestTotal(feeObject, 'high', domOnly, !isMultipleRound, 0) + copilotCost) * (1 + contestFeePercentage)).formatMoney(2));
     }
 
     // spec cost
@@ -1333,6 +1347,7 @@ function getCurrentContestTotal(useDomElem) {
  * Billing will only affect if the custom will show or not.
  */
 function updateSoftwarePrizes() {
+
    //update all fees
    var projectHeader = mainWidget.softwareCompetition.projectHeader;
    var prizeType = $('input[name="prizeRadio"]:checked').val();

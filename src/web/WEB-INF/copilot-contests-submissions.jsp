@@ -1,10 +1,13 @@
 <%--
-  - Author: TCSASSEMBLER
-  - Version: 1.1
+  - Author: GreatKevin
+  - Version: 1.2
   - Copyright (C) 2010 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (Release Assembly - TC Direct Cockpit Release Two) changes:
   - Add new button to allow user not choose the 2nd place winner of copilot posting contest when review.
+  -
+  - Version 1.2 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+  - - Add new button "I don't want to choose copilot"
   -
   - Description: This page renders the list of Copilot Posting contests available to current user.
   - Since: TC Direct - Manage Copilot Postings assembly
@@ -25,6 +28,14 @@
     <link rel="stylesheet" href="/css/direct/permissions.css?v=193435" media="all" type="text/css" />
     <script type="text/javascript" src="/scripts/permissions.js?v=210124"></script>
     <jsp:include page="includes/paginationSetup.jsp"/>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           if($(".noCopilotButton").length > 0) {
+               $("#noCopilotButtonArea").append($(".noCopilotButton").get(0));
+               $("#noCopilotButtonArea").find(".noCopilotButton").removeClass("hide");
+           }
+        });
+    </script>
 </head>
 
 <body id="page">
@@ -79,6 +90,13 @@
                                                     <table class="projectStats newContestsStatus paginatedDataTable copilotPostingSubmissions"
                                                            cellpadding="0" cellspacing="0">
                                                         <thead>
+                                                            <colgroup>
+                                                                <col width="12%"/>
+                                                                <col width="20%"/>
+                                                                <col width="12%"/>
+                                                                <col width="20%"/>
+                                                                <col />
+                                                            </colgroup>
                                                             <tr>
                                                                 <th>Copilot</th>
                                                                 <th>Profiles</th>
@@ -123,18 +141,22 @@
 
                                                                 <td>
                                                                         <c:choose>
-                                                                            <c:when test="${firstPlaceWinner eq null}">
+                                                                            <c:when test="${firstPlaceWinner eq null && allSubmissionReviewed eq false}">
                                                                                 <a href="#" 
                                                                                    onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 1, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
                                                                                    class="chooseCopilotButton"><span
                                                                                     class="profileLeft">Choose This Copilot</span></a>
+                                                                                <a href="#"
+                                                                                   onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 100, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
+                                                                                   class="noCopilotButton hide"><span
+                                                                                        class="profileLeft">I don't want to choose a copilot</span></a>
                                                                             </c:when>
                                                                             <c:when test="${submitter.id eq firstPlaceWinner.id}">
                                                                                 The Chosen Copilot
                                                                             </c:when>
                                                                             <c:when test="${secondPlaceWinner eq null && allSubmissionReviewed eq false}">
                                                                                 <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 2, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
-                                                                                   class="chooseCopilotButton"><span
+                                                                                   class="noCopilotButton"><span
                                                                                     class="profileLeft">Choose as 2nd place</span></a>
 
                                                                                 <a href="#" onclick="setCopilotSelection(${submission.submissionId},${copilotProfilesMap[submitter.id].id}, 3, ${tcDirectProjectId}, '${submitter.handle}', '${tcDirectProjectName}');"
@@ -155,7 +177,7 @@
                                                         </tbody>
                                                     </table><!-- End .projectsStats -->
                                                 </div>
-
+                                                <div id="noCopilotButtonArea" style="float: right; margin-right: 15px"></div>
                                                 <div class="panel"></div>
                                             </div></div>
                                             </div></div></div>

@@ -27,6 +27,9 @@ import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.direct.services.view.util.SessionData;
 import com.topcoder.management.resource.Resource;
+import com.topcoder.management.review.data.Comment;
+import com.topcoder.management.review.data.Item;
+import com.topcoder.management.review.data.Review;
 import com.topcoder.project.phases.PhaseType;
 import com.topcoder.security.TCSubject;
 import com.topcoder.service.project.SoftwareCompetition;
@@ -77,9 +80,15 @@ import org.apache.log4j.Logger;
  *   </ol>
  * </p>
  *
+ * <p>
+ * Version 1.4 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
+ *  <ul>
+ *      <li>Updated to show approval phase result and approval phase comment</li>
+ *  </ul>
+ * </p>
  *
- * @author TCSASSEMBLER
- * @version 1.3
+ * @author GreatKevin
+ * @version 1.4
  */
 public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAction {
 
@@ -92,6 +101,13 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      * <p>A <code>long</code> providing the ID for <code>Approval</code> scorecard type.</p>
      */
     private static final long SCORECARD_TYPE_APPROVAL_ID = 3;
+
+    /**
+     * <p>The approval review score which indicated the approval phase is passed.</p>
+     *
+     * @since 1.4
+     */
+    private static final int PASS_APPROVAL_SCORE = 100;
 
     /**
      * <p>Logger for this class.</p>
@@ -267,6 +283,11 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
      *  - adds codes to get milestone submissions data if the round type is milestone round.
      * </p>
      *
+     * <p>
+     *  Updates in version 1.4 (Release Assembly - TC Direct Cockpit Release Seven)
+     *  - Updates the codes to check approval result and set reject reason if the approval is rejected
+     * </p>
+     *
      * @throws Exception if an unexpected error occurs.
      */
     @Override
@@ -404,11 +425,41 @@ public class SoftwareContestSubmissionsAction extends StudioOrSoftwareContestAct
         Resource approverResource = DirectUtils.getUserResourceByRole(currentUser.getUserId(), softwareCompetition,
                                                                       RESOURCE_ROLE_APPROVER_ID);
         boolean isApprovalCommitted = false;
+        boolean isApprovalRejected = false;
+        String approvalComment = null;
+        List<Review> approvalReviews = new ArrayList<Review>();
+
         if (approverResource != null) {
             isApprovalCommitted = DirectUtils.hasReview(getProjectServices(), softwareCompetition,
                                                         PhaseType.APPROVAL_PHASE.getId(),
-                                                        SCORECARD_TYPE_APPROVAL_ID, approverResource.getId());
+                                                        SCORECARD_TYPE_APPROVAL_ID, approverResource.getId(), approvalReviews);
+            // check approval review to see the approval result and comment
+            if(approvalReviews.size() > 0) {
+                for(Review r : approvalReviews) {
+                    if(r != null) {
+                        if(r.getScore() != null && r.getScore() < PASS_APPROVAL_SCORE) {
+                            // there is rejected approval phase
+                            isApprovalRejected = true;
+                            // check review comment
+                            for(Item item : r.getAllItems()) {
+                                if(item.getAllComments() != null) {
+                                    for(Comment comment : item.getAllComments()) {
+                                        if(comment.getAuthor() == approverResource.getId()) {
+                                            approvalComment = comment.getComment();
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
         }
+
+        getViewData().setApprovalRejected(isApprovalRejected);
+        getViewData().setApprovalComment(approvalComment);
+
         if (logger.isDebugEnabled()) {
             logger.debug("Context for approval by user " + currentUser.getUserId() + " for project " + getProjectId() 
                          + ": approvalPhaseIsOpen = " + approvalPhaseIsOpen + ", userHasWriteFullPermission = " 
