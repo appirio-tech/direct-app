@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var switchMaintenance = true;
+var switchMaintenance = false;
 
 $(function(){
 	
