@@ -620,7 +620,7 @@ var allowedTags = [
 /<\/\s*(a|span|annot|abbr|acronym|blockquote|b|br|em|i|li|ol|p|pre|s|strike|sub|sup|strong|table|td|tr|tt|u|ul)\s*>/mg
 ];
 var tagsRegExp = /<(\/)*[^<|^>|^\/]*>/mg;
-var tinyMCEValidElements = "a[href],-span[style],-ul[style],annot,abbr,acronym,-blockquote,br,em/i,-li,-ol[style],#p,-pre,s,strike,-sub,-sup,-strong/b,-table,#td,-tr,tt,u";
+var tinyMCEValidElements = "a[href|target=_blank],-span[style],-ul[style],annot,abbr,acronym,-blockquote,br,em/i,-li,-ol[style],#p,-pre,s,strike,-sub,-sup,-strong/b,-table,#td,-tr,tt,u";
 
  /**
  * Return the event handler used by tinyMCE to restrict the max characters and the allowed tags.
@@ -728,6 +728,18 @@ var setupTinyMCEWithHeight = function(obj, maxChars, height) {
     };
     options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
     options.height=height;
+    tinyMCE.init(options);
+}
+
+var setupTinyMCEWithTemplateAndHeight = function(obj, maxChars, templateListName, height) {
+    var options = jQuery.extend({},cockpitTinyMCEOptions);
+    options.elements = obj;
+    options.setup = function(ed) {
+        setMaxCharsEventHandlerOnSetup(ed, maxChars);
+    };
+    options.height=height;
+    options.handle_event_callback = maxCharsAndAllowedTagsEventHandler(obj, maxChars);
+    options.template_external_list_url = templateListsLocation + templateListName + ".js";
     tinyMCE.init(options);
 }
 

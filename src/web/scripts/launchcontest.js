@@ -459,7 +459,7 @@ $(document).ready(function() {
     setupTinyMCEWithTemplate('contestIntroduction', 2000);
 	setupTinyMCEWithTemplateAndPlaceHoder('round1Info', 2000, 'Only members that register for this contest will see this description.');
 	setupTinyMCEWithTemplateAndPlaceHoder('round2Info', 2000, 'Only members that register for this contest will see this description.');
-	setupTinyMCEWithHeight('swDetailedRequirements', 12000, "240");
+	setupTinyMCEWithTemplateAndHeight('swDetailedRequirements', 12000, "software_templates_list", "240");
 	setupTinyMCEWithHeight('swGuidelines', 2048, "240");
 
     handleProjectDropDownChange();
