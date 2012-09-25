@@ -43,7 +43,7 @@ public class DoubleConverter extends StrutsTypeConverter {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return doubleStr;
+            return 0;
         }
         return 0;
     }
