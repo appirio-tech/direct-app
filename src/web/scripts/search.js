@@ -61,8 +61,11 @@
  * Version 1.8.6 (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
  * - Add new column configuration for the cost report
  *  
- * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin
- * @version 1.8.6
+ * Version 1.8.7 - (TC Cockpit - Member Participation Metrics Report Upgrade)
+ * - Add support for participation metrics report.
+ * 
+ * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka
+ * @version 1.8.7
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -658,6 +661,36 @@ $(document).ready(function() {
                 { "sType": "money" },
                 { "sType": "money" },
                 { "sType": "money" }
+            ]
+
+    });
+    
+    $.participationMetricsReportDataTable = $("#participationMetricsReportsSection .paginatedDataTable").dataTable({
+        "iDisplayLength": 25,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+              "oLanguage": {
+                   "sLengthMenu": sStdMenu + " per page"
+               },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [[0,'asc']],
+        "aoColumns": [
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" },
+                { "sType": "html" }
             ]
 
     });

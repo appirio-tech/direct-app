@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto;
 
@@ -9,8 +9,15 @@ import java.util.List;
  * <p>A <code>DTO</code> class providing the basic report data and aggregation data for
  * aggregation report.</p>
  * 
+ * <p>Version 1.1: (TC Cockpit - Member Participation Metrics Report Upgrade) change notes:
+ * <ol>
+ *   <li>Added {@link #contestAggregation} and it's getter and setter.</li>
+ *   <li>Added {@link #excelAggregation} and it's getter and setter.</li>
+ * </ol>
+ * </p>
+ * 
  * @author TCSASSEMBER
- * @version 1.0 (TC Cockpit Permission and Report Update One)
+ * @version 1.1 (TC Cockpit - Member Participation Metrics Report Upgrade)
  * @param T the type of the aggregation data
  */
 public class ReportAggregationBaseDTO<T> extends ReportBaseDTO {
@@ -38,6 +45,18 @@ public class ReportAggregationBaseDTO<T> extends ReportBaseDTO {
      * The billing account report data.
      */
     private List<T> billingAggregation;
+    
+    /**
+     * The contest aggregation report data.
+     * @since 1.1
+     */
+    private List<T> contestAggregation;
+    
+    /**
+     * The report data for excel exporting.
+     * @since 1.1
+     */
+    private List<T> excelAggregation;
 
     /**
      * Construct a new <code>ReportAggregationBaseDTO</code> instance.
@@ -117,4 +136,45 @@ public class ReportAggregationBaseDTO<T> extends ReportBaseDTO {
     public void setBillingAggregation(List<T> billingAggregation) {
         this.billingAggregation = billingAggregation;
     }
+
+    /**
+     * Gets the contest aggregation report data.
+     * 
+     * @return the contest aggregation report data.
+     * @since 1.1
+     */
+    public List<T> getContestAggregation() {
+        return contestAggregation;
+    }
+
+    /**
+     * Sets the contest aggregation report data.
+     * 
+     * @param contestAggregation the contest aggregation report data.
+     * @since 1.1
+     */
+    public void setContestAggregation(List<T> contestAggregation) {
+        this.contestAggregation = contestAggregation;
+    }
+    
+    /**
+     * Gets the excel aggregation report data.
+     * 
+     * @return the excel aggregation report data.
+     * @since 1.1
+     */
+    public List<T> getExcelAggregation() {
+        return excelAggregation;
+    }
+
+    /**
+     * Sets the excel aggregation report data.
+     * 
+     * @param excelAggregation the excel aggregation report data.
+     * @since 1.1
+     */
+    public void setExcelAggregation(List<T> excelAggregation) {
+        this.excelAggregation = excelAggregation;
+    }
+
 }

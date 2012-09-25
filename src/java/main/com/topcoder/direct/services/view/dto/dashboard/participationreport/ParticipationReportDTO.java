@@ -1,21 +1,15 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.participationreport;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.topcoder.direct.services.view.dto.ReportAggregationBaseDTO;
 import com.topcoder.direct.services.view.dto.ReportType;
-import com.topcoder.direct.services.view.dto.dashboard.DashboardCostBreakDownDTO;
 import com.topcoder.excel.Row;
 import com.topcoder.excel.Sheet;
 import com.topcoder.excel.Workbook;
@@ -23,7 +17,6 @@ import com.topcoder.excel.impl.ExcelSheet;
 import com.topcoder.excel.impl.ExcelWorkbook;
 import com.topcoder.excel.output.Biff8WorkbookSaver;
 import com.topcoder.excel.output.WorkbookSaver;
-import com.topcoder.excel.output.WorkbookSavingException;
 
 /**
  * <p>
@@ -44,8 +37,21 @@ import com.topcoder.excel.output.WorkbookSavingException;
  * </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.2 (TC Cockpit - Member Participation Metrics Report Upgrade ) change log:
+ * <ol>
+ *    <li>Added {@link #participationViewType} field and getter/setter for it.</li>
+ *    <li>Added method {@link #getExcelFileName()} to get the excel file name when exporting the report.</li>
+ *    <li>Updated method {@link #getInputStream()}, remove the catch Throwable block.</li>
+ *    <li>Updated method {@link #insertSheetData(Sheet)} to insert the table that is being viewed</li>
+ *    <li>Updated method {@link #generateParticipationReportHeader(Sheet, String, int)} and 
+ *    method {@link #generateParticipationReport(Sheet, List, int)} to add column "Milestone Submissions" and "Final Submissions"
+ *    </li>
+ * </ol>
+ * </p>
+ * 
  * @author TCSASSEMBER
- * @version  1.1 (TC Cockpit Participation Metrics Report Part One Assembly 1)
+ * @version  1.2 (TC Cockpit - Member Participation Metrics Report Upgrade )
  */
 public class ParticipationReportDTO extends ReportAggregationBaseDTO<ParticipationAggregationReportDTO> {
 
@@ -58,6 +64,12 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
      * The basic participation metrics report.
      */
     private ParticipationBasicReportDTO participationBasicReport;
+    
+    /**
+     * The participation view type. 
+     * @since 1.2
+     */
+    private ParticipationViewType participationViewType;
     
     /**
      * Empty constructor.
@@ -75,6 +87,26 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
         return ReportType.PARTICIPATION;
     }
 
+    /**
+     * Gets the participation view type.
+     *
+     * @return the participation view type
+     * @since 1.2
+     */
+    public ParticipationViewType getParticipationViewType() {
+        return participationViewType;
+    }
+
+    /**
+     * Sets the participation view type.
+     *
+     * @param participationViewType the new participation view type
+     * @since 1.2
+     */
+    public void setParticipationViewType(ParticipationViewType participationViewType) {
+        this.participationViewType = participationViewType;
+    }
+    
     /**
      * Gets the basic participation metrics report.
      * 
@@ -94,72 +126,55 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
     }
     
     /**
+     * Return the excel file name when exporting the report.
+     *
+     * @return the excel file name
+     * @since 1.2
+     */
+    public String getExcelFileName() {
+        return "participation_report_"+participationViewType.getKey()+".xls";
+    }
+    
+    /**
      * <p>Gets the excel file download stream for participation metrics report.</p>
      *
      * @return the download stream.
-     * @throws WorkbookSavingException if any error occurs when generating participation metrics report excel file.
-     * @throws IOException if an I/O error occurs.
+     * @throws Exception if any error occurs.
      */
-    public InputStream getInputStream() throws WorkbookSavingException, IOException {
-        try {
-
-            Workbook workbook = new ExcelWorkbook();
-            Sheet sheet = new ExcelSheet("Project Details", (ExcelWorkbook) workbook);
-            insertSheetData(sheet);
-            workbook.addSheet(sheet);
-
-            // Create a new WorkBookSaver
-            WorkbookSaver saver = new Biff8WorkbookSaver();
-            ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
-            saver.save(workbook, saveTo);
-            return new ByteArrayInputStream(saveTo.toByteArray());
-
-        } catch (Throwable e) {
-            e.printStackTrace();
-            throw new IllegalStateException(e);
-        }
+    public InputStream getInputStream() throws Exception {
+        Workbook workbook = new ExcelWorkbook();
+        Sheet sheet = new ExcelSheet("Project Details", (ExcelWorkbook) workbook);
+        insertSheetData(sheet);
+        workbook.addSheet(sheet);
+        
+        // Create a new WorkBookSaver
+        WorkbookSaver saver = new Biff8WorkbookSaver();
+        ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+        saver.save(workbook, saveTo);
+        return new ByteArrayInputStream(saveTo.toByteArray());
     }
     
     /**
      * <p>Inserts the sheet data.</p>
      *
      * @param sheet the sheet.
+     * @throws Exception if any error occurs.
      */
     private void insertSheetData(Sheet sheet) throws Exception {
         int rowIndex = 1;
-        
-        int index = 1;
-        Row row = sheet.getRow(rowIndex);
-        row.getCell(index++).setStringValue("Basic Metrics");
-        rowIndex++;
-        
-        index = 1;
-        row = sheet.getRow(rowIndex);
-        row.getCell(index++).setStringValue("Projects");
-        row.getCell(index++).setStringValue("Contests");
-        row.getCell(index++).setStringValue("Copilots");
-        rowIndex++;
-        
-        index = 1;
-        row = sheet.getRow(rowIndex);
-        row.getCell(index++).setNumberValue(this.getParticipationBasicReport().getTotalProjects());
-        row.getCell(index++).setNumberValue(this.getParticipationBasicReport().getTotalContests());
-        row.getCell(index++).setNumberValue(this.getParticipationBasicReport().getTotalCopilots());
-        rowIndex++;
-        
-        
-        rowIndex = generateParticipationReportHeader(sheet, "Project", rowIndex);
-        rowIndex = generateParticipationReport(sheet, this.getProjectAggregation(), rowIndex);
-        rowIndex = generateParticipationReportHeader(sheet, "Billing Account", rowIndex);
-        rowIndex = generateParticipationReport(sheet, this.getBillingAggregation(), rowIndex);
-        rowIndex = generateParticipationReportHeader(sheet, "Contest Type", rowIndex);
-        rowIndex = generateParticipationReport(sheet, this.getContestTypeAggregation(), rowIndex);
-        rowIndex = generateParticipationReportHeader(sheet, "Contest Status", rowIndex);
-        rowIndex = generateParticipationReport(sheet, this.getStatusAggregation(), rowIndex);
-        
+        rowIndex = generateParticipationReportHeader(sheet, this.getParticipationViewType().getText(), rowIndex);
+        rowIndex = generateParticipationReport(sheet, this.getExcelAggregation(), rowIndex);
     }
 
-	private int generateParticipationReportHeader(Sheet sheet, String viewBy, int rowIndex) {
+    	/**
+    	 * Generate participation report header.
+    	 *
+    	 * @param sheet the sheet
+    	 * @param viewBy the view by
+    	 * @param rowIndex the row index
+    	 * @return the int
+    	 */
+    private int generateParticipationReportHeader(Sheet sheet, String viewBy, int rowIndex) {
         Row row = sheet.getRow(rowIndex);
         int index = 1;
         row.getCell(index++).setStringValue(viewBy);
@@ -167,20 +182,30 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
         row.getCell(index++).setStringValue("Unique Registrants");
         row.getCell(index++).setStringValue("Registrant Countries");
         row.getCell(index++).setStringValue("Total Submissions");
-		row.getCell(index++).setStringValue("Unique Submitters");
+        row.getCell(index++).setStringValue("Milestone Submissions");
+        row.getCell(index++).setStringValue("Final Submissions");
+        row.getCell(index++).setStringValue("Unique Submitters");
         row.getCell(index++).setStringValue("Submitter Countries");
         row.getCell(index++).setStringValue("Milestone Winners");
         row.getCell(index++).setStringValue("Final Winners");
         row.getCell(index++).setStringValue("Total Winners");
         row.getCell(index++).setStringValue("Total Unique Winners");
         row.getCell(index++).setStringValue("Winner Countries");
-		return ++rowIndex;
-	}
+        return ++rowIndex;
+    }
 
-	private int generateParticipationReport(Sheet sheet, List<ParticipationAggregationReportDTO> dtos, int rowIndex) {
-		Row row;
-		int index;
-        
+    	/**
+    	 * Generate participation report.
+    	 *
+    	 * @param sheet the sheet
+    	 * @param dtos the dtos
+    	 * @param rowIndex the row index
+    	 * @return the int
+    	 */
+    private int generateParticipationReport(Sheet sheet, List<ParticipationAggregationReportDTO> dtos, int rowIndex) {
+        Row row;
+        int index;
+
         for (ParticipationAggregationReportDTO dto : dtos) {
             row = sheet.getRow(rowIndex++);
 
@@ -190,7 +215,9 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
             row.getCell(index++).setNumberValue(dto.getTotalRegistrants());
             row.getCell(index++).setNumberValue(dto.getUniqueRegistrants());
             row.getCell(index++).setNumberValue(dto.getRegistrantCountries());
-            row.getCell(index++).setNumberValue(dto.getTotalSubmitters());
+            row.getCell(index++).setNumberValue(dto.getTotalSubmissions());
+            row.getCell(index++).setNumberValue(dto.getMilestoneSubmissions());
+            row.getCell(index++).setNumberValue(dto.getFinalSubmissions());
             row.getCell(index++).setNumberValue(dto.getUniqueSubmitters());
             row.getCell(index++).setNumberValue(dto.getSubmitterContries());
             row.getCell(index++).setNumberValue(dto.getMilestoneWinners());
@@ -200,5 +227,5 @@ public class ParticipationReportDTO extends ReportAggregationBaseDTO<Participati
             row.getCell(index++).setNumberValue(dto.getWinnerCountries());
         }
         return ++rowIndex;
-	}
+    }
 }

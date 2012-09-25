@@ -750,7 +750,7 @@
             <interceptor-ref name="authnInterceptor"/>
             <result name="success">/WEB-INF/report/dashboard-participation-report.jsp</result>
             <result name="download" type="stream">
-                <param name="contentDisposition">attachment;filename=participation_report.xls</param>
+                <param name="contentDisposition">attachment;filename=${viewData.excelFileName}</param>
                 <param name="contentType">application/vnd.ms-excel</param>
                 <param name="inputName">viewData.inputStream</param>
                 <param name="bufferSize">1024</param>

@@ -28,7 +28,6 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Billing
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
-import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuePaymentStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
@@ -578,9 +577,21 @@ import java.util.Map.Entry;
  *     <li>Updated method {@link #getContestReceipt(long, boolean)} to store showReceipt flag</li>
  * </ul>
  * </p>
+ * 
+ * <p>
+ * Version 5.1 (TC Cockpit - Member Participation Metrics Report Upgrade)
+ * <ol>
+ *     <li>Updated method{@link #getDashboardParticipationReport(TCSubject, long, long[], long, long, String[], 
+ *     java.util.Date, java.util.Date, ParticipationBasicReportDTO, List, List, List, List)} to fetch the
+ *     member participation contest report </li>
+ *     <li>Added method {@link #getDashboardParticipationExcelData(TCSubject, long, long[], long, 
+ *     long, String[], java.util.Date, java.util.Date,String)} to get the contest participation metrics excel data with 
+ *     the given parameters. </li>
+ * </ol>
+ * </p>
  *
- * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin
- * @version 5.0
+ * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka
+ * @version 5.1
  * @since 1.0
  */
 public class DataProvider {
@@ -5790,15 +5801,20 @@ public class DataProvider {
      * copilots data into parameter <code>contestCopilots</code>, and retrieve the contest participation details data
      * into parameter contestDetails.
      *
-     * @param currentUser        the current user.
-     * @param projectId          the direct project id.
-     * @param projectCategoryIds the project category ids.
-     * @param clientId           the client id.
-     * @param billingAccountId   the billing accounts id.
-     * @param projectStatus      the allowed project status.
-     * @param startDate          the start date.
-     * @param endDate            the end date.
-     * @throws Exception if any error occurs.
+     * @param currentUser            the current user.
+     * @param projectId              the direct project id.
+     * @param projectCategoryIds     the project category ids.
+     * @param clientId               the client id.
+     * @param billingAccountId       the billing accounts id.
+     * @param projectStatus          the allowed project status.
+     * @param startDate              the start date.
+     * @param endDate                the end date.
+     * @param basicMetrics           the basic metrics.
+     * @param billingAggregation     the billing aggregation.
+     * @param projectAggregation     the project aggregation.
+     * @param contestTypeAggregation the contest type aggregation.
+     * @param statusAggregation      the status aggregation.
+     * @param contestAggregation     the contest aggregation.
      * @since 2.8.0
      */
     public static void getDashboardParticipationReport(TCSubject currentUser, long projectId, long[] projectCategoryIds,
@@ -5808,7 +5824,8 @@ public class DataProvider {
                                                        List<ParticipationAggregationReportDTO> billingAggregation,
                                                        List<ParticipationAggregationReportDTO> projectAggregation,
                                                        List<ParticipationAggregationReportDTO> contestTypeAggregation,
-                                                       List<ParticipationAggregationReportDTO> statusAggregation)
+                                                       List<ParticipationAggregationReportDTO> statusAggregation,
+                                                       List<ParticipationAggregationReportDTO> contestAggregation)
         throws Exception {
 
         if (projectCategoryIds == null || projectCategoryIds.length == 0) {
@@ -5860,8 +5877,76 @@ public class DataProvider {
         // Aggregation by statuses 
         getParticipationReportAggregatedData(statusAggregation, queryData,
                                              "dashboard_participation_stats_aggregation_status");
+        
+        // Aggregation by contest 
+        getParticipationReportAggregatedData(contestAggregation, queryData,
+                                             "dashboard_participation_stats_aggregation_contest");
     }
 
+    
+    
+    /**
+     * Gets the contest participation metrics excel data with the given parameters. 
+     * 
+     * @param currentUser        the current user.
+     * @param projectId          the direct project id.
+     * @param projectCategoryIds project category ids.
+     * @param clientId           the client id.
+     * @param billingAccountId   the billing accounts id.
+     * @param projectStatus      the allowed project status.
+     * @param startDate          the start date.
+     * @param endDate            the end date.
+     * @param viewType           the view type
+     * @return the excel data
+     * @throws Exception if any error occurs.
+     * @since 5.1
+     */
+    public static List<ParticipationAggregationReportDTO> getDashboardParticipationExcelData(
+        TCSubject currentUser, long projectId, long[] projectCategoryIds, long clientId, long billingAccountId, 
+        String[] projectStatus, Date startDate, Date endDate,String viewType) throws Exception {
+        
+        if (viewType == null || viewType.length() == 0) {
+            throw new IllegalArgumentException("The parameter [viewType] is NULL or empty");
+        }
+        
+        if (projectCategoryIds == null || projectCategoryIds.length == 0) {
+            throw new IllegalArgumentException("The parameter [projectCategoryIds] is NULL or empty");
+        }
+        if (projectStatus == null || (projectStatus.length == 0)) {
+            throw new IllegalArgumentException("The parameter [projectStatus] is NULL or empty");
+        }
+        
+        String queryName = "dashboard_participation_stats_aggregation_" + viewType.toString().toLowerCase();
+        
+        // concatenate the filters
+        String projectCategoryIDsList = concatenate(projectCategoryIds, ", ");
+        String projectStatusesList = concatenate(projectStatus, ", ");
+
+        // date format to prepare date for query input
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_DW_DATASOURCE_NAME);
+        Request request = new Request();
+
+        if (!setReportQueryParameters(request, currentUser, clientId, billingAccountId, projectId)) {
+            throw new IllegalArgumentException("Query parameter missing");
+        }
+
+        request.setProperty("sdt", dateFormatter.format(startDate));
+        request.setProperty("edt", dateFormatter.format(endDate));
+        request.setProperty("pcids", projectCategoryIDsList);
+        request.setProperty("statuses", projectStatusesList);
+        request.setContentHandle("dashboard_participation_metrics_report");
+        final Map<String, ResultSetContainer> queryData = dataAccessor.getData(request);
+        
+        List<ParticipationAggregationReportDTO> returnValue = new ArrayList<ParticipationAggregationReportDTO>();
+        
+        getParticipationReportAggregatedData(returnValue, queryData, queryName);
+        
+        return returnValue;
+    }
+    
+    
+    
     /**
      * <p>Reads the data for <code>Participation Metrics</code> report from the specified queries and puts it to 
      * specified list.</p>
@@ -5881,7 +5966,9 @@ public class DataProvider {
             dto.setGroupName(row.getStringItem("group_name"));
             dto.setTotalRegistrants(row.getIntItem("total_registrants_count"));
             dto.setUniqueRegistrants(row.getIntItem("unique_registrants_count"));
-            dto.setTotalSubmitters(row.getIntItem("total_submissions_count"));
+            dto.setTotalSubmissions(row.getIntItem("total_submissions_count"));
+            dto.setMilestoneSubmissions(row.getIntItem("milestone_submissions_count"));
+            dto.setFinalSubmissions(row.getIntItem("final_submissions_count"));
             dto.setMilestoneWinners(row.getIntItem("milestone_winners_count"));
             dto.setFinalWinners(row.getIntItem("final_winners_count"));
             dto.setTotalWinners(dto.getMilestoneWinners() + dto.getFinalWinners());

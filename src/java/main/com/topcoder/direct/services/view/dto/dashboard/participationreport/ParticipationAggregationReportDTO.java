@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.dto.dashboard.participationreport;
 
@@ -19,8 +19,18 @@ import java.io.Serializable;
  * </ol>
  * </p>
  * 
+ * <p>
+ * Version 1.2 (TC Cockpit - Member Participation Metrics Report Upgrade) change log:
+ * <ol> 
+ *   <li>Removed {@link #totalSubmitters} field and getter/setter for it.</li>
+ *   <li>Added {@link #totalSubmissions} field and getter/setter for it.</li>
+ *   <li>Added {@link #milestoneSubmissions} field and getter/setter for it.</li>
+ *   <li>Added {@link #finalSubmissions} field and getter/setter for it.</li>
+ * </ol>
+ * </p>
+ * 
  * @author TCSASSEMBER
- * @version  1.1 (TC Cockpit Participation Metrics Report Part One Assembly 1)
+ * @version  1.2 (TC Cockpit - Member Participation Metrics Report Upgrade)
  */
 public class ParticipationAggregationReportDTO implements Serializable {
 
@@ -50,9 +60,25 @@ public class ParticipationAggregationReportDTO implements Serializable {
     private int registrantCountries;
     
     /**
-     * Represents the number of total submitters of the aggregation group.
+     * Represents the number of total submissions of the aggregation group.
+     * 
+     * @since 1.2
      */
-    private int totalSubmitters;
+    private int totalSubmissions;
+    
+    /**
+     * Represents the number of milestone submissions of the aggregation group.
+     * 
+     * @since 1.2
+     */
+    private int milestoneSubmissions;
+    
+    /**
+     * Represents the number of final submissions of the aggregation group.
+     * 
+     * @since 1.2
+     */
+    private int finalSubmissions;
     
     /**
      * Represents the number of unique submitters of the aggregation group.
@@ -174,21 +200,63 @@ public class ParticipationAggregationReportDTO implements Serializable {
     }
 
     /**
-     * Gets the number of total submitters of the aggregation group.
+     * Gets the number of total submissions of the aggregation group.
      * 
-     * @return the number of total submitters of the aggregation group.
-     */
-    public int getTotalSubmitters() {
-        return totalSubmitters;
+     * @return the number of total submissions of the aggregation group.
+     * @since 1.2
+     */    
+    public int getTotalSubmissions() {
+        return totalSubmissions;
     }
 
     /**
-     * Sets the number of total submitters of the aggregation group.
+     * Sets the number of total submissions of the aggregation group.
      * 
-     * @param totalSubmitters the number of total submitters of the aggregation group.
+     * @param totalSubmissions the number of total submissions of the aggregation group.
+     * @since 1.2
      */
-    public void setTotalSubmitters(int totalSubmitters) {
-        this.totalSubmitters = totalSubmitters;
+    public void setTotalSubmissions(int totalSubmissions) {
+        this.totalSubmissions = totalSubmissions;
+    }
+
+    /**
+     * Gets the number of milestone submissions of the aggregation group.
+     * 
+     * @return the number of milestone submissions of the aggregation group.
+     * @since 1.2
+     */ 
+    public int getMilestoneSubmissions() {
+        return milestoneSubmissions;
+    }
+
+    /**
+     * Sets the number of milestone submissions of the aggregation group.
+     * 
+     * @param milestoneSubmissions the number of milestone submissions of the aggregation group.
+     * @since 1.2
+     */
+    public void setMilestoneSubmissions(int milestoneSubmissions) {
+        this.milestoneSubmissions = milestoneSubmissions;
+    }
+
+    /**
+     * Gets the number of final submissions of the aggregation group.
+     * 
+     * @return the number of final submissions of the aggregation group.
+     * @since 1.2
+     */ 
+    public int getFinalSubmissions() {
+        return finalSubmissions;
+    }
+
+    /**
+     * Sets the number of final submissions of the aggregation group.
+     * 
+     * @param finalSubmissions the number of final submissions of the aggregation group.
+     * @since 1.2
+     */
+    public void setFinalSubmissions(int finalSubmissions) {
+        this.finalSubmissions = finalSubmissions;
     }
 
     /**

@@ -1,11 +1,17 @@
 /**
  * The JS script is for Participation Metrics report.
  * 
- * AUTHOR: TCSASSEMBER
- * VERSION: 1.0 (TC Cockpit Participation Metrics Report Part One Assembly 1 )
+ * Version 1.1 (TC Cockpit - Member Participation Metrics Report Upgrade) changes:
+ * - Make the filter part collapsable.
+ * - Show indicator when ÒCustomer NameÓ or ÒBilling AccountÓ has been changed.
+ * - Split the "Aggregation Participation Metrics Report" table into multiple tables to support sorting and pagination.
+ * 
+ * AUTHOR: bugbuka
+ * VERSION: 1.1 (TC Cockpit - Member Participation Metrics Report Upgrade)
  */
 function getParticipationReportAsExcel() {
     $('#formDataExcel').val("true");
+    $('#formDataViewType').val($('#aggregationParticipationReportType').val());
     document.dashboardParticipationReportForm.submit();
 }
 
@@ -67,20 +73,9 @@ $(document).ready(function() {
             updateCheckboxs($(this), box);
         });
         updateCheckboxs(null, box);
-    });
-
-    $('.filterTitle .expanded').click(function(){
-        $(this).blur();
-        var filterTitle = $(this).closest('.filterTitle');
-        if(!$(this).hasClass('collapsed')){
-            filterTitle.addClass('filterTitleCollapsed');
-            $(this).addClass('collapsed');
-            $('.filterContainer').hide();
-        }else{
-            filterTitle.removeClass('filterTitleCollapsed');
-            $(this).removeClass('collapsed');
-            $('.filterContainer').show();
-        }
+        
+        $("#startDateParticipationReport").datePicker().val($("#startDateParticipationReport").val()).trigger('change');
+        //console.log($("#startDateParticipationReport").val());
     });
 
     //Multi Select Area width
@@ -110,12 +105,18 @@ $(document).ready(function() {
         if(!$me.hasClass('collapse')){
             $me.addClass('collapse');
             $meTable = $me.closest('table');
+            if($meTable.attr("id") == "participationMetricsReportAggregationArea"){
+            	$meTable = $meTable.parent().find('div.resultTableContainer table');
+            }
             $meTable.find('.subTheadRow').hide();
             $meTable.find('.viewType div').hide();
             $meTable.find('tbody').hide();
         }else{
             $me.removeClass('collapse');
             $meTable = $me.closest('table');
+            if($meTable.attr("id") == "participationMetricsReportAggregationArea"){
+            	$meTable = $meTable.parent().find('div.resultTableContainer table');
+            }
             $meTable.find('.subTheadRow').show();
             $meTable.find('.viewType div').show();
             $meTable.find('tbody').show();
@@ -125,59 +126,35 @@ $(document).ready(function() {
 
     $("#participationReportSubmit").click(function() {
         $('#formDataExcel').val("false");
+        
+        var checked = false;
+
+        $(".statusFilter .multiSelectBox input").each(function(){
+            if($(this).is(":checked")) {
+                checked = true;
+            }
+        })
+
+        if(!checked) {
+            showErrors("Please choose at least one status");
+            return;
+        }
+        
+        checked = false;
+        $(".contestTypeFilter .multiSelectBox input").each(function(){
+            if($(this).is(":checked")) {
+                checked = true;
+            }
+        })
+
+        if(!checked) {
+            showErrors("Please choose at least one contest type");
+            return;
+        }
+        
         $("#dashboardParticipationReportForm").submit();
         modalPreloader();
     });
-
-    function sortDropDown(dropDownId) {
-        // alert('sort ' + dropDownId);
-        // get the select
-        var $dd = $(dropDownId);
-        if ($dd.length > 0) { // make sure we found the select we were looking for
-
-            // save the selected value
-            var selectedVal = $dd.val();
-
-            // get the options and loop through them
-            var $options = $('option', $dd);
-            var arrVals = [];
-            $options.each(function() {
-                // push each option value and text into an array
-                arrVals.push({
-                    val: $(this).val(),
-                    text: $(this).text()
-                });
-            });
-
-            // sort the array by the value (change val to text to sort by text instead)
-            arrVals.sort(function(a, b) {
-                if (a.val == 0) {
-                    return -1;
-                }
-                if (b.val == 0) {
-                    return 1;
-                }
-
-                if (a.text > b.text) {
-                    return 1;
-                }
-                else if (a.text == b.text) {
-                    return 0;
-                }
-                else {
-                    return -1;
-                }
-            });
-
-            // loop through the sorted array and set the text/values to the options
-            for (var i = 0, l = arrVals.length; i < l; i++) {
-                $($options[i]).val(arrVals[i].val).text(arrVals[i].text);
-            }
-
-            // set the selected value back
-            $dd.val(selectedVal);
-        }
-    }
 
     // sort the project names
     sortDropDown("#formData\\.projectId");
@@ -186,6 +163,9 @@ $(document).ready(function() {
 
     // Load the billing projects and projects options when customer option is changed
     function loadOptionsByClientId(clientId) {
+    	
+        showIndicator($("#formData\\.billingAccountId"));
+        showIndicator($("#formData\\.projectId"));
         $.ajax({
             type: 'POST',
             url:  "dashboardGetOptionsForClientAJAX",
@@ -221,6 +201,9 @@ $(document).ready(function() {
                             sortDropDown("#formData\\.projectId");
                             sortDropDown("#formData\\.billingAccountId");
 
+                            hideIndicator($("#formData\\.billingAccountId"));
+                            hideIndicator($("#formData\\.projectId"));
+
                         },
                         function(errorMessage) {
                             $('#validationErrors').html(errorMessage);
@@ -245,6 +228,8 @@ $(document).ready(function() {
             return;
         }
 
+        showIndicator($("#formData\\.projectId"));
+        
         $.ajax({
             type: 'POST',
             url:  "dashboardGetOptionsForBillingAJAX",
@@ -266,6 +251,8 @@ $(document).ready(function() {
                             $project.append($('<option></option>').val(0).html("All Projects"));
                             $project.val(0);
                             sortDropDown("#formData\\.projectId");
+                            
+                            hideIndicator($("#formData\\.projectId"));
                         },
                         function(errorMessage) {
                             $('#validationErrors').html(errorMessage);
@@ -275,15 +262,8 @@ $(document).ready(function() {
     });
 
     // Update the Aggregation Type
-    $("#aggregationParticipationReportType").change(function() {
-        var aggreType = $(this).val();
-        var typeNamesMap = {"project" : "Project",
-                            "billing" : "Billing Account",
-                            "contestType" : "Contest Type",
-                            "status" : "Contest Status"};
-        $("tr.projectAggregationCostReport th:first").html(typeNamesMap[aggreType]);
-
-        $("#participationMetricsReportAggregationArea tbody tr").hide();
-        $("tr." + aggreType + "AggregationReport").show();
+    $(".aggregationParticipationReportType").change(function() {
+        $("div.resultTableContainer").hide();
+        $("div." + $(this).val() + "AggregationReport").show();
     });
 });

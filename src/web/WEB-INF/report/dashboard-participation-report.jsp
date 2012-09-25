@@ -1,10 +1,16 @@
 <%--
-  - Author: TCSASSEMBER
-  - Version: 1.1 (TC Cockpit Participation Metrics Report Part One Assembly 1 )
+  - Author: bugbuka
+  - Version: 1.2 (TC Cockpit - Member Participation Metrics Report Upgrade)
   - Copyright (C) 2011 TopCoder Inc., All Rights Reserved.
   -
   - Version 1.1 (TC Cockpit Permission and Report Update One) change log:
   - - Add logics to display Milestone Winners, Final Winners, Total Unique Winners in Aggregation Participation Metrics Report section.
+  -
+  - Version 1.2 (TC Cockpit - Member Participation Metrics Report Upgrade) change log:
+  - - Added a new option "Contest" to the "View By" dropdown list.
+  - - Added two new columns "Milestone Submissions" and "Final Submissions" to the table for all view type.
+  - - Split the "Aggregation Participation Metrics Report" table into multiple tables to support sorting and pagination.
+  - - Show indicator when “Customer Name” or “Billing Account” has been changed.
   -
   - Description: This page renders the view for participation metrics report including form and report data.
   -
@@ -62,12 +68,15 @@
     <s:form method="get" action="dashboardGetParticipationReport" namespace="/"
             id="dashboardParticipationReportForm">
     <s:hidden name="formData.excel" id="formDataExcel" value="false"/>
+    <s:hidden name="formData.viewType" id="formDataViewType" value="project"/>
     <div class="filterContainer">
         <div class="filterLeftTwoParts">
             <div class="filterColumnPart">
                 <!-- .filterCustomerName -->
                 <div class="filterCustomerName">
-                    <label for="formData.customerId">Customer Name:</label>
+                	<div class="filterRowLeft">
+                    	<label for="formData.customerId">Customer Name:</label>
+                    </div>
                     <s:select list="viewData.clientAccounts" id="formData.customerId"
                         name="formData.customerId"/>
                 </div>
@@ -102,7 +111,10 @@
             <div class="filterColumnPart">
                 <!-- .filterBillingAccount -->
                 <div class="filterBillingAccount">
-                    <label for="formData.billingAccountId">Billing Account:</label>
+                	<div class="filterRowLeft">
+                    	<label for="formData.billingAccountId">Billing Account:</label>
+                    	<img src="/images/dots-white.gif" class="indicator" alt/>
+                    </div>
                     <s:select list="viewData.clientBillingProjects"
                                       id="formData.billingAccountId"
                                       name="formData.billingAccountId"/>
@@ -110,7 +122,7 @@
                 </div>
                 <!-- end .filterBillingAccount -->
                 <div class="multiSelectArea">
-                    <div class="multiSelectAreaInner">
+                    <div class="multiSelectAreaInner statusFilter">
                         <label class="multiSelectAreaTitle">Status:</label>
                         <s:select list="viewData.contestStatus" multiple="true"
                                       cssClass="multiselect"
@@ -126,14 +138,17 @@
         <div class="filterColumnThird">
             <!-- .filterProject -->
             <div class="filterProject2">
-                <label>Project Name:</label>
+            	<div class="filterRowLeft">
+                	<label for="formData.projectId">Project Name:</label>
+                	<img src="/images/dots-white.gif" class="indicator" alt/>
+                </div>
                 <s:select list="viewData.projectsLookupMap" name="formData.projectId"
                               id="formData.projectId"/>
             </div>
             <!-- end .filterProject -->
 
             <div class="multiSelectArea">
-                <div class="multiSelectAreaInner">
+                <div class="multiSelectAreaInner contestTypeFilter">
                     <label class="multiSelectAreaTitle">Contest Type:</label>
                     <s:select list="viewData.projectCategories" multiple="true"
                                       cssClass="multiselect"
@@ -189,17 +204,6 @@
 </table>
 
 <table id="participationMetricsReportAggregationArea" class="pipelineStats" cellpadding="0" cellspacing="0">
-    <colgroup>
-        <col width="21%" />
-        <col width="9%" />
-        <col width="9%" />
-        <col width="9%" />
-        <col width="9%" />
-        <col width="9%" />
-        <col width="9%" />
-        <col width="9%" />
-        <col width="12%" />
-    </colgroup>
     <thead>
         <tr>
             <th class="tableTitle" colspan="8">
@@ -209,29 +213,54 @@
             <th class="tableTitle viewType" colspan="4">
                 <div>
                 <label for="aggregationParticipationReportType">View By:</label>
-                <select id="aggregationParticipationReportType">
+                <select id="aggregationParticipationReportType" class="aggregationParticipationReportType">
                     <option value="project" selected="selected">Project</option>
                     <option value="billing">Billing Account</option>
-                    <option value="contestType">Contest Type</option>
+                    <option value="type">Contest Type</option>
                     <option value="status">Contest Status</option>
+                    <option value="contest">Contest</option>
                 </select>
                 </div>
             </th>
         </tr>
+    </thead>
+</table>
 
+
+<div class="resultTableContainer projectAggregationReport">
+<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+    <colgroup>
+        <col width="14%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="10%" />
+    </colgroup>
+    <thead>
         <tr class="projectAggregationCostReport scData subTheadRow">
-            <th class="tableColumn">Project</th>
+            <th class="tableColumn first">Project</th>
             <th class="tableColumn">Total<br />Registrations</th>
             <th class="tableColumn">Unique<br />Registrants</th>
             <th class="tableColumn">Registrant<br />Countries</th>
             <th class="tableColumn">Total<br />Submissions</th>
+            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Final<br />Submissions</th>
             <th class="tableColumn">Unique<br />Submitters</th>
             <th class="tableColumn">Submitter<br />Countries</th>
             <th class="tableColumn">Milestone<br />Wins</th>
             <th class="tableColumn">Final<br />Wins</th>
             <th class="tableColumn">Total<br />Wins</th>
             <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
-            <th class="tableColumn">Winner<br />Countries</th>
+            <th class="tableColumn last">Winner<br />Countries</th>
         </tr>
     </thead>
     <tbody>
@@ -244,67 +273,9 @@
             <td>${item.totalRegistrants}</td>
             <td>${item.uniqueRegistrants}</td>
             <td>${item.registrantCountries}</td>
-            <td>${item.totalSubmitters}</td>
-            <td>${item.uniqueSubmitters}</td>
-            <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
-            <td>${item.finalWinners}</td>
-            <td>${item.totalWinners}</td>
-            <td>${item.totalUniqueWinners}</td>
-            <td>${item.winnerCountries}</td>
-        </tr>
-        </c:forEach>
-
-        <%-- billing account aggregation report --%>
-        <c:forEach items="${viewData.billingAggregation}" var="item"
-               varStatus="loop">
-        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
-        <tr class="billingAggregationReport ${rowStyle} hide">
-            <td>${item.groupName}</td>
-            <td>${item.totalRegistrants}</td>
-            <td>${item.uniqueRegistrants}</td>
-            <td>${item.registrantCountries}</td>
-            <td>${item.totalSubmitters}</td>
-            <td>${item.uniqueSubmitters}</td>
-            <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
-            <td>${item.finalWinners}</td>
-            <td>${item.totalWinners}</td>
-            <td>${item.totalUniqueWinners}</td>
-            <td>${item.winnerCountries}</td>
-        </tr>
-        </c:forEach>
-
-        <%-- contest type aggregation report --%>
-        <c:forEach items="${viewData.contestTypeAggregation}" var="item"
-               varStatus="loop">
-        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
-        <tr class="contestTypeAggregationReport ${rowStyle} hide">
-            <td>${item.groupName}</td>
-            <td>${item.totalRegistrants}</td>
-            <td>${item.uniqueRegistrants}</td>
-            <td>${item.registrantCountries}</td>
-            <td>${item.totalSubmitters}</td>
-            <td>${item.uniqueSubmitters}</td>
-            <td>${item.submitterContries}</td>
-            <td>${item.milestoneWinners}</td>
-            <td>${item.finalWinners}</td>
-            <td>${item.totalWinners}</td>
-            <td>${item.totalUniqueWinners}</td>
-            <td>${item.winnerCountries}</td>
-        </tr>
-        </c:forEach>
-
-        <%-- status aggregation cost report --%>
-        <c:forEach items="${viewData.statusAggregation}" var="item"
-               varStatus="loop">
-        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
-        <tr class="statusAggregationReport ${rowStyle} hide">
-            <td>${item.groupName}</td>
-            <td>${item.totalRegistrants}</td>
-            <td>${item.uniqueRegistrants}</td>
-            <td>${item.registrantCountries}</td>
-            <td>${item.totalSubmitters}</td>
+            <td>${item.totalSubmissions}</td>
+            <td>${item.milestoneSubmissions}</td>
+            <td>${item.finalSubmissions}</td>
             <td>${item.uniqueSubmitters}</td>
             <td>${item.submitterContries}</td>
             <td>${item.milestoneWinners}</td>
@@ -335,6 +306,338 @@
                 </div>
             </div>
         </div>
+</div>
+
+
+
+<div class="resultTableContainer billingAggregationReport hide">
+<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+    <colgroup>
+        <col width="14%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="10%" />
+    </colgroup>
+    <thead>
+        <tr class="projectAggregationCostReport scData subTheadRow">
+            <th class="tableColumn first">Billing Account</th>
+            <th class="tableColumn">Total<br />Registrations</th>
+            <th class="tableColumn">Unique<br />Registrants</th>
+            <th class="tableColumn">Registrant<br />Countries</th>
+            <th class="tableColumn">Total<br />Submissions</th>
+            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Final<br />Submissions</th>
+            <th class="tableColumn">Unique<br />Submitters</th>
+            <th class="tableColumn">Submitter<br />Countries</th>
+            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Final<br />Wins</th>
+            <th class="tableColumn">Total<br />Wins</th>
+            <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
+            <th class="tableColumn last">Winner<br />Countries</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%-- billing account aggregation report --%>
+        <c:forEach items="${viewData.billingAggregation}" var="item"
+               varStatus="loop">
+        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
+        <tr class="billingAggregationReport ${rowStyle}">
+            <td>${item.groupName}</td>
+            <td>${item.totalRegistrants}</td>
+            <td>${item.uniqueRegistrants}</td>
+            <td>${item.registrantCountries}</td>
+            <td>${item.totalSubmissions}</td>
+            <td>${item.milestoneSubmissions}</td>
+            <td>${item.finalSubmissions}</td>
+            <td>${item.uniqueSubmitters}</td>
+            <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
+            <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
+            <td>${item.winnerCountries}</td>
+        </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getParticipationReportAsExcel();" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="resultTableContainer typeAggregationReport hide">
+<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+    <colgroup>
+        <col width="14%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="10%" />
+    </colgroup>
+    <thead>
+        <tr class="projectAggregationCostReport scData subTheadRow">
+            <th class="tableColumn first">Contest Type</th>
+            <th class="tableColumn">Total<br />Registrations</th>
+            <th class="tableColumn">Unique<br />Registrants</th>
+            <th class="tableColumn">Registrant<br />Countries</th>
+            <th class="tableColumn">Total<br />Submissions</th>
+            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Final<br />Submissions</th>
+            <th class="tableColumn">Unique<br />Submitters</th>
+            <th class="tableColumn">Submitter<br />Countries</th>
+            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Final<br />Wins</th>
+            <th class="tableColumn">Total<br />Wins</th>
+            <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
+            <th class="tableColumn last">Winner<br />Countries</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%-- contest type aggregation report --%>
+        <c:forEach items="${viewData.contestTypeAggregation}" var="item"
+               varStatus="loop">
+        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
+        <tr class="typeAggregationReport ${rowStyle}">
+            <td>${item.groupName}</td>
+            <td>${item.totalRegistrants}</td>
+            <td>${item.uniqueRegistrants}</td>
+            <td>${item.registrantCountries}</td>
+            <td>${item.totalSubmissions}</td>
+            <td>${item.milestoneSubmissions}</td>
+            <td>${item.finalSubmissions}</td>
+            <td>${item.uniqueSubmitters}</td>
+            <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
+            <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
+            <td>${item.winnerCountries}</td>
+        </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getParticipationReportAsExcel();" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<div class="resultTableContainer statusAggregationReport hide">
+<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+    <colgroup>
+        <col width="14%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="10%" />
+    </colgroup>
+    <thead>
+        <tr class="projectAggregationCostReport scData subTheadRow">
+            <th class="tableColumn first">Contest Status</th>
+            <th class="tableColumn">Total<br />Registrations</th>
+            <th class="tableColumn">Unique<br />Registrants</th>
+            <th class="tableColumn">Registrant<br />Countries</th>
+            <th class="tableColumn">Total<br />Submissions</th>
+            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Final<br />Submissions</th>
+            <th class="tableColumn">Unique<br />Submitters</th>
+            <th class="tableColumn">Submitter<br />Countries</th>
+            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Final<br />Wins</th>
+            <th class="tableColumn">Total<br />Wins</th>
+            <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
+            <th class="tableColumn last">Winner<br />Countries</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%-- status aggregation cost report --%>
+        <c:forEach items="${viewData.statusAggregation}" var="item"
+               varStatus="loop">
+        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
+        <tr class="statusAggregationReport ${rowStyle}">
+            <td>${item.groupName}</td>
+            <td>${item.totalRegistrants}</td>
+            <td>${item.uniqueRegistrants}</td>
+            <td>${item.registrantCountries}</td>
+            <td>${item.totalSubmissions}</td>
+            <td>${item.milestoneSubmissions}</td>
+            <td>${item.finalSubmissions}</td>
+            <td>${item.uniqueSubmitters}</td>
+            <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
+            <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
+            <td>${item.winnerCountries}</td>
+        </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getParticipationReportAsExcel();" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+<div class="resultTableContainer contestAggregationReport hide">
+<table class="pipelineStats paginatedDataTable resultTable" cellpadding="0" cellspacing="0">
+    <colgroup>
+        <col width="14%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="6%" />
+        <col width="10%" />
+    </colgroup>
+    <thead>
+        <tr class="projectAggregationCostReport scData subTheadRow">
+            <th class="tableColumn first">Contest Name</th>
+            <th class="tableColumn">Total<br />Registrations</th>
+            <th class="tableColumn">Unique<br />Registrants</th>
+            <th class="tableColumn">Registrant<br />Countries</th>
+            <th class="tableColumn">Total<br />Submissions</th>
+            <th class="tableColumn">Milestone<br />Submissions</th>
+            <th class="tableColumn">Final<br />Submissions</th>
+            <th class="tableColumn">Unique<br />Submitters</th>
+            <th class="tableColumn">Submitter<br />Countries</th>
+            <th class="tableColumn">Milestone<br />Wins</th>
+            <th class="tableColumn">Final<br />Wins</th>
+            <th class="tableColumn">Total<br />Wins</th>
+            <th class="tableColumn">Total<br /><nobr>Unique Winners</nobr></th>
+            <th class="tableColumn">Winner<br />Countries</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%-- contest aggregation report --%>
+        <c:forEach items="${viewData.contestAggregation}" var="item"
+               varStatus="loop">
+        <c:set var="rowStyle" value="${loop.index mod 2 eq 1 ? 'even' : ''}"/>
+        <tr class="contestAggregationReport ${rowStyle}">
+            <td>${item.groupName}</td>
+            <td>${item.totalRegistrants}</td>
+            <td>${item.uniqueRegistrants}</td>
+            <td>${item.registrantCountries}</td>
+            <td>${item.totalSubmissions}</td>
+            <td>${item.milestoneSubmissions}</td>
+            <td>${item.finalSubmissions}</td>
+            <td>${item.uniqueSubmitters}</td>
+            <td>${item.submitterContries}</td>
+            <td>${item.milestoneWinners}</td>
+            <td>${item.finalWinners}</td>
+            <td>${item.totalWinners}</td>
+            <td>${item.totalUniqueWinners}</td>
+            <td>${item.winnerCountries}</td>
+        </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+        <div class="container2Left">
+            <div class="container2Right">
+                <div class="container2Bottom">
+                    <div class="container2BottomLeft">
+                        <div class="container2BottomRight">
+
+                            <div class="panel tableControlPanel">
+                                <div class="exportControl">
+                                    <a href="javascript:getParticipationReportAsExcel();" class="exportExcel">Export to
+                                        <strong>Excel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
 
 </div>
 </s:if>

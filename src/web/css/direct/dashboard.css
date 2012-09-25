@@ -77,6 +77,9 @@
  *
  * - (Release Assembly - TC Direct Cockpit Release Seven version 1.0)
  * - Add stalled status styles
+ *
+ * - (TC Cockpit - Member Participation Metrics Report Upgrade)
+ * - Update the CSS for the participation metrics report.
  */
 
 
@@ -7586,8 +7589,8 @@ div.rightColumn .activity TABLE {
         #participationMetricsReports .filterContainer .filterBillingAccount label{
             line-height:22px;
             font-weight:bold;
-            padding-bottom:8px;
-            display:block;
+            padding-bottom:10px;
+            display:inline;
         }
         #participationMetricsReports .filterContainer .filterProject2 select{
             width:380px;
@@ -7595,6 +7598,16 @@ div.rightColumn .activity TABLE {
         #participationMetricsReports .filterContainer .filterCustomerName select,
         #participationMetricsReports .filterContainer .filterBillingAccount select{
             width:170px;
+            display:block;
+        }
+        
+        #participationMetricsReports .filterContainer .filterCustomerName .filterRowLeft,
+        #participationMetricsReports .filterContainer .filterBillingAccount .filterRowLeft,
+        #participationMetricsReports .filterContainer .filterProject2 .filterRowLeft {
+            line-height: 22px;
+            font-weight: bold;
+            padding-bottom: 8px;
+            display: block;
         }
         
         #participationMetricsReports .filterContainer #datefilter .filterRow{
@@ -7677,6 +7690,9 @@ div.rightColumn .activity TABLE {
 #participationMetricsReportsSection table.pipelineStats{
     margin-bottom:20px;
     }
+#participationMetricsReportsSection div.resultTableContainer table.pipelineStats{
+    margin-bottom:0px;
+    }
 #participationMetricsReportsSection th.tableTitle a.expand{
     background: url(../../images/icon-expand.png) no-repeat left center;
     text-decoration:none;
@@ -7739,6 +7755,13 @@ div.rightColumn .activity TABLE {
     vertical-align:middle;
     border:1px solid #ced0d1;
 	border-bottom:none;
+}
+#participationMetricsReportsSection .pipelineStats thead tr.scData th.first{
+    border-left:1px solid #ced0d1;
+}
+
+#participationMetricsReportsSection .resultTableContainer{
+    border: 0px;
 }
 #participationMetricsReportDetails tbody td.alignLeft{
     text-align:left;
