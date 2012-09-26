@@ -4,6 +4,7 @@
 package com.topcoder.direct.services.view.dto.contest;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>A DTO providing the complete details on a contest receipt.</p>
@@ -128,6 +129,13 @@ public class ContestReceiptDTO implements Serializable {
      * @since 1.3
      */
     private boolean showReceipt;
+
+    /**
+     * The receipt payment entries.
+     *
+     * @since BUGR-7169
+     */
+    private List<ContestReceiptEntry> entries;
 
     /**
      * <p>Constructs new <code>ContestReceiptDTO</code> instance. This implementation does nothing.</p>
@@ -393,16 +401,13 @@ public class ContestReceiptDTO implements Serializable {
      * @return the total cost.
      */
     public double getTotalCost() {
-        return totalCost;
-    }
+        double total = 0;
 
-    /**
-     * Sets the total cost.
-     * 
-     * @param totalCost the total cost.
-     */
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
+        for(ContestReceiptEntry entry : getEntries()) {
+            total += entry.getPaymentAmount();
+        }
+
+        return total;
     }
 
     /**
@@ -442,12 +447,40 @@ public class ContestReceiptDTO implements Serializable {
     public void setContestLauncherId(long contestLauncherId) {
         this.contestLauncherId = contestLauncherId;
     }
-	
+
+    /**
+     * Gets whether to show the receipt.
+     *
+     * @return whether to show the receipt.
+     */
     public boolean isShowReceipt() {
         return showReceipt;
     }
 
+    /**
+     * Sets whether to show the receipt.
+     *
+     * @param showReceipt whether to show the receipt.
+     */
     public void setShowReceipt(boolean showReceipt) {
         this.showReceipt = showReceipt;
+    }
+
+    /**
+     * Gets the contest receipt entries.
+     *
+     * @return the contest receipt entries.
+     */
+    public List<ContestReceiptEntry> getEntries() {
+        return entries;
+    }
+
+    /**
+     * Sets the contest receipt entries.
+     *
+     * @param entries
+     */
+    public void setEntries(List<ContestReceiptEntry> entries) {
+        this.entries = entries;
     }
 }

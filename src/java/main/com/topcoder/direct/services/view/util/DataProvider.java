@@ -28,6 +28,7 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Billing
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
+import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuePaymentStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
@@ -4501,36 +4502,32 @@ public class DataProvider {
         request.setContentHandle("direct_contest_receipt_replatforming");
         request.setProperty("pj", String.valueOf(contestId));
 
-        ResultSetContainer result = dataAccess.getData(request).get("direct_contest_receipt_replatforming");
+        ResultSetContainer result = dataAccess.getData(request).get("direct_contest_receipt_replatforming_v2");
         if (result.size() == 0) {
             return null;
         }
-        int row = 0;
 
         ContestReceiptDTO contestReceipt = new ContestReceiptDTO();
-        contestReceipt.setFirstPlacePrize(result.getDoubleItem(row, "first_place_prize"));
-        contestReceipt.setSecondPlacePrize(result.getDoubleItem(row, "second_place_prize"));
-        contestReceipt.setThirdPlacePrize(result.getDoubleItem(row, "third_place_prize"));
-        contestReceipt.setFourthPlacePrize(result.getDoubleItem(row, "fourth_place_prize"));
-        contestReceipt.setFifthPlacePrize(result.getDoubleItem(row, "fifth_place_prize"));
-        contestReceipt.setMilestonePrize(result.getDoubleItem(row, "milestone_prize"));
-        contestReceipt.setDrPoints(result.getDoubleItem(row, "dr_points"));
-        contestReceipt.setContestFee(result.getDoubleItem(row, "contest_fee"));
-        contestReceipt.setMilestonePrizeNumber(result.getIntItem(row, "milestone_prize_number"));
-        contestReceipt.setReliabilityBonus(result.getDoubleItem(row, "reliability_bonus"));
-        contestReceipt.setSpecReviewCost(result.getDoubleItem(row, "spec_review_cost"));
-        contestReceipt.setReviewCost(result.getDoubleItem(row, "review_cost"));
-        contestReceipt.setCopilotCost(result.getDoubleItem(row, "copilot_cost"));
-        contestReceipt.setBugFixCost(result.getDoubleItem(row, "bug_fix_cost"));
-        contestReceipt.setTotalCost(result.getDoubleItem(row, "total_cost"));
-        contestReceipt.setFinished(result.getStringItem(row, "status").trim().equals("Finished"));
-        contestReceipt.setShowReceipt(result.getIntItem(row, "show_receipt") == 1);
+        List<ContestReceiptEntry> entries = new ArrayList<ContestReceiptEntry>();
+        boolean intializeCommon = false;
+        for (ResultSetContainer.ResultSetRow row : result) {
+            if(!intializeCommon) {
+                contestReceipt.setShowReceipt(row.getIntItem("show_receipt") == 1);
+                contestReceipt.setFinished(contestReceipt.isShowReceipt());
+                if(row.getItem("contest_launcher_id").getResultData() != null) {
+                    contestReceipt.setContestLauncherId(Long.parseLong(row.getStringItem("contest_launcher_id")));
+                } else {
+                    contestReceipt.setContestLauncherId(0);
+                }
+            }
 
-        if(result.getItem(row, "contest_launcher_id").getResultData() != null) {
-            contestReceipt.setContestLauncherId(Long.parseLong(result.getStringItem(row, "contest_launcher_id")));
-        } else {
-            contestReceipt.setContestLauncherId(0);
+            ContestReceiptEntry entry = new ContestReceiptEntry();
+            entry.setPaymentType(row.getStringItem("payment_type"));
+            entry.setPaymentAmount(row.getDoubleItem("payment_amount"));
+
+            entries.add(entry);
         }
+        contestReceipt.setEntries(entries);
 
         return contestReceipt;
     }

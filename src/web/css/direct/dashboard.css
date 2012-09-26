@@ -9931,6 +9931,13 @@ TABLE.contests TD SPAN.feedbackAnswer, TABLE.contests TD SPAN.feedbackText  {
     font-size: 11px;
 }
 
+.noReceipt {
+    height:300px;
+    text-align:center;
+}
+.noReceipt div {
+    margin-top: 100px;
+}
 
 
 
