@@ -1318,7 +1318,9 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
 
                var dateStr = JSGantt.formatDateStr(vTmpDate,'mm/dd/yyyy');
 
+
                if(vTmpDate.getDay() % 6 == 0) {
+
                    if(highlightCache[dateStr]){
                        var headerClass = highlightCache[dateStr].toLowerCase()  + "Header";
                        vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + vTmpDate.getDate() + '</div></td>';
@@ -1439,7 +1441,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
 
                     if(vNxtDate <= vMaxDate) {
                    if(headerClass){
-                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + (vTmpDate.getMonth()+1) + '/' + vTmpDate.getDate() + '</div></td>';
+                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + vMonthArr[vTmpDate.getMonth()].substr(0,3) + '</div></td>';
                        vItemRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid;" align=center><div style="width: '+vColWidth+'px">&nbsp&nbsp</div></td>';
                    } else{
 					vDateRowStr += '<td class="ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + vMonthArr[vTmpDate.getMonth()].substr(0,3) + '</div></td>';
@@ -1450,7 +1452,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
 				    }
                } else {
                    if(headerClass){
-                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + (vTmpDate.getMonth()+1) + '/' + vTmpDate.getDate() + '</div></td>';
+                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + vMonthArr[vTmpDate.getMonth()].substr(0,3) + '</div></td>';
                        vItemRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid;" align=center><div style="width: '+vColWidth+'px">&nbsp&nbsp</div></td>';
                    } else{
 					vDateRowStr += '<td class="ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid; BORDER-RIGHT: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + vMonthArr[vTmpDate.getMonth()].substr(0,3) + '</div></td>';
@@ -1510,7 +1512,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
 
                if(vNxtDate <= vMaxDate) {
                    if(headerClass){
-                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + (vTmpDate.getMonth()+1) + '/' + vTmpDate.getDate() + '</div></td>';
+                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + vQuarterArr[vTmpDate.getMonth()]  + '</div></td>';
                        vItemRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid;" align=center><div style="width: '+vColWidth+'px">&nbsp&nbsp</div></td>';
                    } else{
 					  vDateRowStr += '<td class="ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">Qtr. ' + vQuarterArr[vTmpDate.getMonth()] + '</div></td>';
@@ -1521,7 +1523,7 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
 				  }
                } else {
                    if(headerClass){
-                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + (vTmpDate.getMonth()+1) + '/' + vTmpDate.getDate() + '</div></td>';
+                       vDateRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid;" align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">' + vQuarterArr[vTmpDate.getMonth()]  + '</div></td>';
                        vItemRowStr += '<td class="' + headerClass + ' ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #efefef 1px solid;" align=center><div style="width: '+vColWidth+'px">&nbsp&nbsp</div></td>';
                    }else{
 					  vDateRowStr += '<td class="ghead" style="BORDER-TOP: #efefef 1px solid; FONT-SIZE: 11px; HEIGHT: 19px; BORDER-LEFT: #efefef 1px solid; BORDER-RIGHT: #efefef 1px solid;" bgcolor=#' + vWeekdayColor + ' align=center width:'+vColWidth+'px><div style="width: '+vColWidth+'px">Qtr. ' + vQuarterArr[vTmpDate.getMonth()] + '</div></td>';
@@ -1583,32 +1585,53 @@ JSGantt.GanttChart =  function(pGanttVar, pDiv, pFormat)
                     // Build date string for Title
                     vDateRowStr = JSGantt.formatDateStr(vTaskStart,vDateDisplayFormat);
 
-                    vTaskLeft = (Date.parse(vTaskList[i].getStart()) - Date.parse(vMinDate)) / (24 * 60 * 60 * 1000);
+                    vTaskLeft = (Date.parse(vTaskList[i].getStart()) - Date.parse(vMinDate)) / (24 * 60 * 60 * 1000); // calculate the days
                     vTaskRight = 1;
-                     var leftOffset = Math.ceil((vTaskLeft * (vDayWidth) + 1));
+                    var temp;
+                    if(vDayWidth < 0.7) {
+                        temp = 0.6521;
+                    } else {
+                        temp = vDayWidth;
+                    }
+                    var leftOffset = Math.ceil((vTaskLeft * (temp) + 1));
+                    if(vDayWidth > 15) {
+                        leftOffset += 15;
+                    }
+
                     vRightTable +=
                         '<div id=bardiv_' + vID + ' style="position:absolute; top:0px; left:' + leftOffset + 'px; height: 18px; width:230px; overflow:hidden;">' +
                             '  <div id=taskbar_' + vID + ' title="' + vTaskList[i].getName() + ': ' + vDateRowStr + '" style="height: 16px; font-size:16px; width:11px; overflow:hidden; cursor: pointer;" onclick=JSGantt.taskLink("' + vTaskList[i].getLink() + '",1024,768);>';
 
-			/* Modification for BUG BUGR-7106.1 -- START*/
-               if(vTaskList[i].getCompVal() < 100)
- 		            {vRightTable += '<span class="MilestoneRow"/>&loz;</span></div>' ;}
-               else
- 		           { vRightTable += '<span class="MilestoneRow"/>&diams;</span></div>' ;}
-			/* Modification for BUG BUGR-7106.1 -- END*/
-			
-                        if( g.getCaptionType() ) {
-                           vCaptionStr = '';
-                           switch( g.getCaptionType() ) { 
-                              case 'topcoder':   vCaptionStr = vTaskList[i].getName() + " (" + vTaskList[i].getResource() + ")";  break;          
-                              case 'Caption':    vCaptionStr = vTaskList[i].getCaption();  break;
-                              case 'Resource':   vCaptionStr = vTaskList[i].getResource();  break;
-                              case 'Duration':   vCaptionStr = vTaskList[i].getDuration(vFormat);  break;
-                              case 'Complete':   vCaptionStr = vTaskList[i].getCompStr();  break;
-		                     }
-                           //vRightTable += '<div style="FONT-SIZE:11px; position:absolute; left: 6px; top:1px;">' + vCaptionStr + '</div>';
-                           vRightTable += '<div style="FONT-SIZE:10px; position:absolute; top:2px; width:650px; left:11px">' + vCaptionStr + '</div>';
-	                  };
+                    if (vTaskList[i].getCompVal() < 100) {
+                        vRightTable += '<span class="MilestoneRow"/>&loz;</span></div>';
+                    }
+                    else {
+                        vRightTable += '<span class="MilestoneRow"/>&diams;</span></div>';
+                    }
+
+                    if (g.getCaptionType()) {
+                        vCaptionStr = '';
+                        switch (g.getCaptionType()) {
+                            case 'topcoder':
+                                vCaptionStr = vTaskList[i].getName() + " (" + vTaskList[i].getResource() + ")";
+                                break;
+                            case 'Caption':
+                                vCaptionStr = vTaskList[i].getCaption();
+                                break;
+                            case 'Resource':
+                                vCaptionStr = vTaskList[i].getResource();
+                                break;
+                            case 'Duration':
+                                vCaptionStr = vTaskList[i].getDuration(vFormat);
+                                break;
+                            case 'Complete':
+                                vCaptionStr = vTaskList[i].getCompStr();
+                                break;
+                        }
+                        //vRightTable += '<div style="FONT-SIZE:11px; position:absolute; left: 6px; top:1px;">' + vCaptionStr + '</div>';
+                        vRightTable += '<div style="FONT-SIZE:10px; position:absolute; top:2px; width:650px; left:11px">' + vCaptionStr + '</div>';
+                    }
+                    ;
 
                     vRightTable += '</div>';
 
