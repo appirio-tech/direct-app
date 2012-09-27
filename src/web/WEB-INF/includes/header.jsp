@@ -145,6 +145,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
+                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -193,6 +194,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
+                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -244,6 +246,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
+                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -291,6 +294,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
+                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
@@ -338,6 +342,7 @@
                             <c:if test="${tcdirect:isSuperAdmin() || tcdirect:isTCAccounting()}">
                                 <a href="javascript:">Manage Contest Fee</a>
                             </c:if>
+                            <a href="http://community.topcoder.com/tc?module=BadgeAdminHome">Manage Member Badges</a>
                         </div>
                     </li>
                 </c:if>
