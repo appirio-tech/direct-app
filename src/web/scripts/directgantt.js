@@ -189,6 +189,84 @@ $(document).ready(function () {
             }
         });
 
+        $("#showMilestonesControl").live('click', function(){
+            var count=0;
+            if($(this).is(":checked")){
+                $("#leftside tbody tr").each(function() {
+                    if($(this).find("td:eq(2) nobr").html()=="Milestone"){
+                        $(this).find("td:eq(2) nobr").parent().parent().show();
+                    }
+                    count++;
+                    if(count%2==0){
+                        $(this).css("background","#FFFFFF");
+                    }else{
+                        $(this).css("background","#F5F3F3");
+                    }
+                });
+                $("#rightside div div [id^='taskbar_']").each(function() {
+                    if($(this).find(".MilestoneRow").html()!=null){
+                        $(this).parent().parent().show();
+                    }
+                    count++;
+                    if(count%2==0){
+                        $(this).parent().parent().find("tbody tr").css("background","#F5F3F3");
+                    }else{
+                        $(this).parent().parent().find("tbody tr").css("background","#FFFFFF");
+                    }
+                });
+                $(".upcomingDummy").each(function() {
+                    $(this).removeClass("upcomingDummy");
+                    $(this).addClass("upcomingHeader");
+                });
+                $(".overdueDummy").each(function() {
+                    $(this).removeClass("overdueDummy");
+                    $(this).addClass("overdueHeader");
+                });
+                $(".completedDummy").each(function() {
+                    $(this).removeClass("completedDummy");
+                    $(this).addClass("completedHeader");
+                });
+            }else{
+                $("#leftside tbody tr").each(function() {
+                    if($(this).find("td:eq(2) nobr").html()=="Milestone"){
+                        $(this).find("td:eq(2) nobr").parent().parent().hide();
+                    }else{
+                        count++;
+                    }
+                    if(count%2==0){
+                        $(this).css("background","#FFFFFF");
+                    }else{
+                        $(this).css("background","#F5F3F3");
+                    }
+                });
+                count=0;
+                $("#rightside div div [id^='taskbar_']").each(function() {
+                    if($(this).find(".MilestoneRow").html()!=null){
+                        $(this).parent().parent().hide();
+                    }else{
+                        count++;
+                    }
+                    if(count%2==0){
+                        $(this).parent().parent().find("tbody tr").css("background","#FFFFFF");
+                    }else{
+                        $(this).parent().parent().find("tbody tr").css("background","#F5F3F3");
+                    }
+                });
+                $(".upcomingHeader").each(function() {
+                    $(this).removeClass("upcomingHeader");
+                    $(this).addClass("upcomingDummy");
+                });
+                $(".overdueHeader").each(function() {
+                    $(this).removeClass("overdueHeader");
+                    $(this).addClass("overdueDummy");
+                });
+                $(".completedHeader").each(function() {
+                    $(this).removeClass("completedHeader");
+                    $(this).addClass("completedDummy");
+                });
+            }
+        });
+
         extendStyle();
 
         if($(window).width() < 1280) {

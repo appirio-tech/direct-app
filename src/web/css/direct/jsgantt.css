@@ -187,4 +187,13 @@ body {
     color: #333;
 }
 
+.completedHeader{ BACKGROUND-COLOR: #4ac485}
+.completedHeader{ BACKGROUND-COLOR: None}
+
+.upcomingHeader{ BACKGROUND-COLOR: #edc54e}
+.upcomingHeader{ BACKGROUND-COLOR: None}
+
+.overdueHeader{ BACKGROUND-COLOR: #f2635e}
+.overdueHeader{ BACKGROUND-COLOR: None}
+
 

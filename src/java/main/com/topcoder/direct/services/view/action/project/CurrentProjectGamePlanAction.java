@@ -3,6 +3,10 @@
  */
 package com.topcoder.direct.services.view.action.project;
 
+import com.topcoder.direct.services.project.milestone.MilestoneService;
+import com.topcoder.direct.services.project.milestone.model.Milestone;
+import com.topcoder.direct.services.project.milestone.model.MilestoneStatus;
+import com.topcoder.direct.services.project.milestone.model.SortOrder;
 import com.topcoder.direct.services.view.action.AbstractAction;
 import com.topcoder.direct.services.view.action.FormAction;
 import com.topcoder.direct.services.view.dto.TcJiraIssue;
@@ -40,8 +44,13 @@ import java.util.*;
  * - Add data generation for the  game plan jsgantt version.
  * </p>
  *
+ * <p>
+ * Version 1.3 (Module Assembly - TC Cockpit Operations Dashboard)
+ * - Add project milestones data to game plan jsgantt version
+ * </p>
+ *
  * @author GreatKevin
- * @version 1.1 (TopCoder Cockpit - Bug Race Project Contests View)
+ * @version 1.3
  */
 public class CurrentProjectGamePlanAction extends AbstractAction implements FormAction<ProjectIdForm> {
 
@@ -107,9 +116,28 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
     private static final String JIRA_LINK = "https://apps.topcoder.com/bugs/browse/";
 
     /**
+     * The project milestone link.
+     *
+     * @since 1.3
+     */
+    private static final String MILESTONE_LINK = "projectMilestoneView.action?formData.viewType=list&formData.projectId=";
+
+    /**
+     * List of all the available milestone status.
+     */
+    private static final List ALL_MILESTONE_STATUS = Arrays.asList(MilestoneStatus.values());
+
+    /**
      * The game plan service which is used to retrieve project game plan data.
      */
     private GamePlanService gamePlanService;
+
+    /**
+     * The project milestone service.
+     *
+     * @since 1.3
+     */
+    private MilestoneService milestoneService;
 
     /**
      * The input stream which is used to stream returned data.
@@ -132,6 +160,26 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      */
     public void setGamePlanService(GamePlanService gamePlanService) {
         this.gamePlanService = gamePlanService;
+    }
+
+    /**
+     * Gets the project milestone service.
+     *
+     * @return the project milestone service.
+     * @since 1.3
+     */
+    public MilestoneService getMilestoneService() {
+        return milestoneService;
+    }
+
+    /**
+     * Sets the project milestone service.
+     *
+     * @param milestoneService the project milestone service.
+     * @since 1.3
+     */
+    public void setMilestoneService(MilestoneService milestoneService) {
+        this.milestoneService = milestoneService;
     }
 
     /**
@@ -234,7 +282,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                 responseData = ERROR_HEADER + DATA_RETRIEVAL_ERROR_MSG;
             } else {
                 // generate the response data
-                responseData = generateProjectGamePlanData(data, isJsGantt);
+                responseData = generateProjectGamePlanData(data, isJsGantt, getMilestoneService());
             }
 
 
@@ -261,11 +309,17 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * - Add generation codes for the jsgantt chart game plan data.
      * </p>
      *
+     * <p>
+     * Update in version 1.3 (Module Assembly - TC Cockpit Operations Dashboard):
+     * - Add project milestone data to jsgantt game plan.
+     * </p>
+     *
      * @param gamePlan the TCDirectProjectGamePlanData which stores the data.
      * @param isJSGantt whether generates for the jsgantt
+     * @param milestoneService the project milestone service
      * @return the generated data response.
      */
-    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan, boolean isJSGantt) throws Exception {
+    private static String generateProjectGamePlanData(TCDirectProjectGamePlanData gamePlan, boolean isJSGantt, MilestoneService milestoneService) throws Exception {
         // create a string builder to store the XML result
         StringBuilder result = new StringBuilder();
 
@@ -370,7 +424,7 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
 
                 if (isJSGantt) {
                     jsGanttDataBuffer.add(new JsGanttDataBuffer(swc.getStartDate(), swc.getEndDate(), generateContestGamePlanDataJsGantt(id, directProjectId, name, type, startTime,
-                            endTime, percentage, predecessorId, contestStatus, null)));
+                            endTime, percentage, predecessorId, contestStatus, null, false)));
                 } else {
                     result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, predecessorId, contestStatus));
                 }
@@ -407,10 +461,22 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
                     if (isJSGantt) {
 
                         jsGanttDataBuffer.add(new JsGanttDataBuffer(bugRace.getCreationDate(), bugRace.getEndDate(), generateContestGamePlanDataJsGantt(uniqueId, directProjectId, name, type, startTime,
-                                endTime, percentage, -1, contestLikeStatus, id) ));
+                                endTime, percentage, -1, contestLikeStatus, id, false) ));
                     } else {
                         result.append(generateContestGamePlanData(id, name, startTime, duration, percentage, -1, contestLikeStatus));
                     }
+                }
+            }
+
+            // generate project milestone data
+            if(isJSGantt) {
+                final List<Milestone> milestones = milestoneService.getAll(directProjectId, ALL_MILESTONE_STATUS, SortOrder.ASCENDING);
+
+                for(Milestone milestone : milestones) {
+                    Date milestoneDate = milestone.isCompleted() ? milestone.getCompletionDate() : milestone.getDueDate();
+                    String MilestoneDateStr = JSGANTT_GAME_PLAN_DATE_FORMAT.format(milestoneDate);
+                    jsGanttDataBuffer.add(new JsGanttDataBuffer(milestoneDate, milestoneDate, generateContestGamePlanDataJsGantt(String.valueOf(milestone.getId()), directProjectId, milestone.getName(), "Milestone", MilestoneDateStr,
+                            MilestoneDateStr, milestone.isCompleted() ? 100 : 0, -1, milestone.getStatus().name(), null, true) ));
                 }
             }
         }
@@ -530,16 +596,27 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
      * @param percentage the completion percentage
      * @param predecessorId the id of the predecessor
      * @param status the status
+     * @param isMilestone whether is a milestone
      * @return generated data
      * @since 1.2
      */
     private static String generateContestGamePlanDataJsGantt(String id, long directProjectId, String name,
                                                              String contestType, String startTime,
                                                              String endTime, long percentage,
-                                                             long predecessorId, String status, String key) {
+                                                             long predecessorId, String status, String key, boolean isMilestone) {
         StringBuilder contestData = new StringBuilder();
 
         boolean isBugRace = contestType.equalsIgnoreCase("bug race");
+
+        String link = "";
+
+       if(isBugRace) {
+           link = JIRA_LINK + key;
+       } else if(isMilestone) {
+           link = MILESTONE_LINK + directProjectId;
+       } else {
+           link = CONTEST_DETAIL_LINK + id;
+       }
 
         contestData.append("<task>");
         contestData.append("<pID>" + id + "</pID>");
@@ -547,8 +624,8 @@ public class CurrentProjectGamePlanAction extends AbstractAction implements Form
         contestData.append("<pStart>" + startTime + "</pStart>");
         contestData.append("<pEnd>" + endTime + "</pEnd>");
         contestData.append("<pColor>" + status + "</pColor>");
-        contestData.append("<pLink>" + (isBugRace ? JIRA_LINK : CONTEST_DETAIL_LINK) + (isBugRace ? key : id) + "</pLink>");
-        contestData.append("<pMile>0</pMile>");
+        contestData.append("<pLink><![CDATA[" + link + "]]></pLink>");
+        contestData.append("<pMile>" + (isMilestone ? 1 : 0) + "</pMile>");
         contestData.append("<pRes>" + contestType + "</pRes>");
         contestData.append("<pComp>" + percentage + "</pComp>");
         contestData.append("<pGroup>0</pGroup>");

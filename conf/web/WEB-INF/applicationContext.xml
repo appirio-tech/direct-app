@@ -485,6 +485,7 @@
           class="com.topcoder.direct.services.view.action.project.CurrentProjectGamePlanAction"
           scope="prototype">
         <property name="gamePlanService" ref="gamePlanService"/>
+        <property name="milestoneService" ref="milestoneService"/>
     </bean>
 
     <bean id="contestSubmissionsAction"
