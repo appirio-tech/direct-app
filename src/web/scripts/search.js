@@ -64,8 +64,11 @@
  * Version 1.8.7 - (TC Cockpit - Member Participation Metrics Report Upgrade)
  * - Add support for participation metrics report.
  * 
+ * Version 1.8.8 - (Module Assembly - TC Cockpit Operations Dashboard For PMs)
+ * - Add support for operations dashboard.
+ * 
  * @author BeBetter, isv, Blues, tangzx, GreatKevin, minhu, GreatKevin, bugbuka
- * @version 1.8.7
+ * @version 1.8.8
  */
 var cookieOptions = { path: '/', expires: 1 };
 var COOKIE_NAME = "pagination";
@@ -330,6 +333,43 @@ $(document).ready(function() {
             { "sType": "direct-projectNumber" },
             { "sType": "project-status" },
             null,
+            null,
+            null
+        ]
+
+    });
+    
+    $.pmProjectTable = $("#pmProjectsResult .paginatedDataTable").dataTable({
+        "iDisplayLength": 10,
+        "bStateSave": false,
+        "bFilter": true,
+        "bSort": true,
+        "bAutoWidth": false,
+        "oLanguage": {
+            "sLengthMenu": sStdMenu + " per page"
+        },
+        "sPaginationType": "full_numbers",
+        "sDom": 'rti<"bottom2"p><"bottom1"l',
+        "aaSorting": [
+            [0,'asc']
+        ],
+        "aoColumns": [
+            { "sType": "html-trimmed" },
+            { "sType": "date-direct" },
+            { "sType": "date-direct" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "money" },
+            { "sType": "money" },
+            { "sType": "money" },
+            { "sType": "html" },            
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
+            { "sType": "html" },
             null,
             null
         ]

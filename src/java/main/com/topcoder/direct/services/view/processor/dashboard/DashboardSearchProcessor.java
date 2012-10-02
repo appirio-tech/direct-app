@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 TopCoder Inc., All Rights Reserved.
+ * Copyright (C) 2010-2012 TopCoder Inc., All Rights Reserved.
  */
 package com.topcoder.direct.services.view.processor.dashboard;
 
@@ -13,6 +13,7 @@ import com.topcoder.direct.services.view.processor.RequestProcessor;
 import com.topcoder.direct.services.view.util.DataProvider;
 import com.topcoder.direct.services.view.util.DirectUtils;
 import com.topcoder.security.TCSubject;
+import com.topcoder.service.permission.PermissionServiceException;
 import com.topcoder.shared.util.logging.Logger;
 
 /**
@@ -24,9 +25,14 @@ import com.topcoder.shared.util.logging.Logger;
  * Version 1.1 - Direct Search Assembly
  * - add search functions for project/contest type
  * </p>
+ * 
+ * <p>
+ * Version 1.2 - Module Assembly - TC Cockpit Operations Dashboard For PMs
+ * - add search functions for Platform Managers' projects type
+ * </p>
  *
- * @author isv, BeBetter
- * @version 1.1
+ * @author isv, BeBetter, bugbuka
+ * @version 1.2
  */
 public class DashboardSearchProcessor implements RequestProcessor<DashboardSearchAction> {
 
@@ -80,21 +86,30 @@ public class DashboardSearchProcessor implements RequestProcessor<DashboardSearc
             if (DashboardSearchCriteriaType.PROJECTS == criteriaType) {
                 viewData.setProjects(DataProvider.searchUserProjects(tcSubject, searchFor));
                 viewData.setResultType(DashboardSearchCriteriaType.PROJECTS);
-				viewData.setIsAllProjectsPage(false);
+                viewData.setIsAllProjectsPage(false);
             } else if (DashboardSearchCriteriaType.CONTESTS == criteriaType) {
                 viewData.setContests(DataProvider.searchUserContests(tcSubject, searchFor, start, end));
                 viewData.setResultType(DashboardSearchCriteriaType.CONTESTS);
-				viewData.setIsAllProjectsPage(false);
+                viewData.setIsAllProjectsPage(false);
             } else if (DashboardSearchCriteriaType.MEMBERS == criteriaType) {
                 viewData.setMembers(DataProvider.searchUserProjectMembers(currentUserId, searchFor));
                 viewData.setResultType(DashboardSearchCriteriaType.MEMBERS);
-				viewData.setIsAllProjectsPage(false);
-            } else if(action.getRequestData().getRequest().getRequestURI().endsWith("allProjects") 
-			|| action.getRequestData().getRequest().getRequestURI().endsWith("allProjects.action")) {
-				viewData.setProjects(DataProvider.searchUserProjects(tcSubject, ""));
+                viewData.setIsAllProjectsPage(false);
+            } else if (DashboardSearchCriteriaType.PM_PROJECTS == criteriaType
+                || action.getRequestData().getRequest().getRequestURI().endsWith("operationsDashboardEnterprise")
+                || action.getRequestData().getRequest().getRequestURI().endsWith("operationsDashboardEnterprise.action")) {
+                if(!DirectUtils.isTcStaff(DirectUtils.getTCSubjectFromSession())) {
+                    throw new PermissionServiceException("You don't have permission to manage copilot feedback.");
+                }
+                viewData.setProjects(DataProvider.searchPMUserProjects(tcSubject, ""));
+                viewData.setResultType(DashboardSearchCriteriaType.PM_PROJECTS);
+                viewData.setIsAllProjectsPage(false);
+            } else if (action.getRequestData().getRequest().getRequestURI().endsWith("allProjects")
+                || action.getRequestData().getRequest().getRequestURI().endsWith("allProjects.action")) {
+                viewData.setProjects(DataProvider.searchUserProjects(tcSubject, ""));
                 viewData.setResultType(DashboardSearchCriteriaType.PROJECTS);
-				viewData.setIsAllProjectsPage(true);
-			}
+                viewData.setIsAllProjectsPage(true);
+            }
         } catch (Exception e) {
             log.error("Failed to perform dashboard search due to unexpected error", e);
             action.setResultCode(DashboardSearchAction.RC_UNEXPECTED_ERROR);

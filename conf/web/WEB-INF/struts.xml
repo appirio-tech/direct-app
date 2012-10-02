@@ -191,6 +191,10 @@
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success">/WEB-INF/dashboard-enterprise.jsp</result>
         </action>
+        <action name="operationsDashboardEnterprise" class="dashboardSearchAction">
+            <interceptor-ref name="securedPreProcessorStack"/>
+            <result name="success">/WEB-INF/dashboard-search.jsp</result>
+        </action>
         <action name="dashboardEnterpriseZoom" class="zoomEnterpriseDashboardAction">
             <interceptor-ref name="securedDefaultStack"/>
             <result name="success" type="json" />

@@ -7,6 +7,12 @@
  *
  * Version 1.1 (Release Assembly - TC Cockpit All Projects Management Page Update) changes
  * - Update to use the new icons for status change operations.
+ * 
+ * Version 1.2 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes
+ * - Add support for operations dashboard.
+ * 
+ * @author TCSASSEMBLER
+ * @version 1.2
  */
 
 
@@ -52,7 +58,7 @@ function updateDirectProjectStatus(directProjectId, statusId) {
                             row.find("a.operation, .secondRowSeparator").hide();
                         }
 
-                        if ($("#projectsResult").length > 0) {
+                        if ($("#projectsResult").length > 0 || $("#pmProjectsResult").length ) {
                             // get status td row and column number
                             var statusTD = $("#projectStatus" + result.directProjectId).parent();
                             var index = $.allProjectTable.fnGetPosition(statusTD.get(0));

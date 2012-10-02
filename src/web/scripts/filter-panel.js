@@ -14,6 +14,11 @@
  * Version 1.3 (Module Assembly - TC Cockpit Enterprise Dashboard New Active Contests)
  * - add filter for enterprise dashboard active contests
  *
+ * Version 1.4 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes:
+ * - add filter for operations dashboard, filter projects in "Active" status by default.
+ *
+ * @author TCSASSEMBLER
+ * @version 1.4
  * @since Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar
  */
 (function($) {
@@ -77,6 +82,9 @@ function filterbyCustomer(id, filterStr) {
     if (handleName == "projectsResult") {
         tableHandle.fnFilter(searchPattern, 10);
     }
+    else if (handleName == "pmProjectsResult") {
+        tableHandle.fnFilter(searchPattern, 16);
+    }
     else if (handleName == "activeContests") {
         tableHandle.fnFilter(searchPattern, 10);
     }
@@ -116,6 +124,9 @@ var setupFilterPanel = function () {
     else if (handleName == "projectsResult") { //all projects table
         tableHandle = $.allProjectTable;
     }
+    else if (handleName == "pmProjectsResult") { //Platform Managers' projects table
+        tableHandle = $.pmProjectTable;
+    }
     else if (handleName == "MyCopilotPostings") {//my copilot postings
         tableHandle = $.myCopilotPostings;
     }
@@ -140,8 +151,8 @@ var setupFilterPanel = function () {
         if (value != 'All Customers')
             $('#customerFilter').append("<option value='" + value + "'>" + value + "</option>");
     })
-    //all projects
-    if (handleName == "projectsResult") {
+    //all projects or Platform Managers's projects
+    if (handleName == "projectsResult" || handleName == "pmProjectsResult") {
         var projectStatusFilter = tableHandle.fnGetColumnData(8);
         var len = projectStatusFilter.length;
         var statusMap = {};
@@ -307,7 +318,7 @@ var setupFilterPanel = function () {
                 $("#groupValue option:gt(0)").remove();
 
                 // load project filters options
-                $("#projectsResult table.projectStats tr").each(function(){
+                $("#projectsResult table.projectStats tr, #pmProjectsResult table.projectStats tr,").each(function(){
                     var metadataTD = $(this).find("td.metadataTD");
                     metadataTD.find(".metadataGroup").each(function(){
                         var keyId = $(this).find(".metadataKeyId").text();
@@ -645,7 +656,7 @@ $(function() {
         startDateCol = 2;
         endDateCol = 3;
     }
-    else if (handleName == 'projectsResult') {
+    else if (handleName == 'projectsResult' || handleName == 'pmProjectsResult') {
         startDateCol = 1;
         endDateCol = 2;
     } else if (handleName == 'vmFilter') {
@@ -771,5 +782,9 @@ $(function() {
         document.getElementById("filterPanelForm").reset();
     }
 
+    if(handleName == "pmProjectsResult" && $("#projectStatusFilter option:contains('Active')").length > 0){
+        $("#projectStatusFilter").val("Active");
+        $("#projectStatusFilter").trigger('change'); 
+    }
 
 })

@@ -1,6 +1,6 @@
 <%--
-  - Author: winsty, GreatKevin
-  - Version: 1.4
+  - Author: winsty, GreatKevin, bugbuka
+  - Version: 1.5
   - Copyright (C) 2011 - 2012 TopCoder Inc., All Rights Reserved.
   -
   - Description: This page provides function of search projects and contests.
@@ -11,6 +11,8 @@
   - Version 1.3 (Release Assembly - TopCoder Cockpit DataTables Filter Panel and Search Bar) changes:
   - Add the filter panel for the all projects and project search reuslt page
   - Version 1.4 (Release Assembly - TC Cockpit All Projects Management Page Update)
+  - Version 1.5 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes:
+  -     Add the filter panel and projects search result for the Operations Dashboard page 
   - Add project filters and project filter values to filter panel
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -21,8 +23,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <jsp:include page="includes/htmlhead.jsp"/>
-     <s:if test="viewData.isAllProjectsPage == false">
-        <ui:dashboardPageType tab="search"/>
+    <s:if test="viewData.isAllProjectsPage == false">
+        <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+            <ui:dashboardPageType tab="enterprise"/>
+        </s:if>
+        <s:else>
+            <ui:dashboardPageType tab="search"/>
+        </s:else>
     </s:if>
     <s:if test="viewData.isAllProjectsPage == true">
         <ui:projectPageType tab="allProjects"/>
@@ -47,16 +54,16 @@
                     <div id="area1"><!-- the main area -->
 
                     <div class="area1Content">
-					<div class="areaHeader">
-                    <s:if test="viewData.isAllProjectsPage != true">
+                    <div class="areaHeader">
+                    <s:if test="viewData.isAllProjectsPage == false && viewData.resultType.name() != 'PM_PROJECTS'">
                         <h2 class="title">
-						<s:if test="viewData.isAllProjectsPage == false">Search</s:if>
-						<s:if test="viewData.isAllProjectsPage == true">Projects</s:if>
-						</h2>
+                        <s:if test="viewData.isAllProjectsPage == false">Search</s:if>
+                        <s:if test="viewData.isAllProjectsPage == true">Projects</s:if>
+                        </h2>
                     </s:if>
                     </div><!-- End .areaHeader -->
 
-					<s:if test="viewData.isAllProjectsPage == false">
+                    <s:if test="viewData.isAllProjectsPage == false && viewData.resultType.name() != 'PM_PROJECTS'">
                     <div class="search" style="height:auto;overflow:hidden">
                         <s:form method="get" action="dashboardSearch" namespace="/" id="DashboardSearchForm">
                             <label class="fLeft" for="searchFor">Search For:</label>
@@ -72,11 +79,11 @@
                                 <span>Search</span></a>
                         </s:form>
                     </div>
-					</s:if>
+                    </s:if>
 
                     <s:if test="viewData.resultType != null">
 
-                        <s:if test="viewData.resultType.name() == 'PROJECTS'">
+                        <s:if test="viewData.resultType.name() == 'PROJECTS' || viewData.resultType.name() == 'PM_PROJECTS'">
 
                             <form id="filterPanelForm" autocompleted="off">
                                <div class='filterPanel' id='allProjectsFilter'>
@@ -109,7 +116,7 @@
                                                         <option value='All Customers'>All Customers</option>
                                                     </select>
                                                 </div>
-                                                <div class='row'>
+                                                <div class='row <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">hide</s:if>'>
                                                     <span class='title'>Project Status</span>
                                                     <select id='projectStatusFilter'>
                                                         <option value='All'>All Project Status</option>
@@ -171,6 +178,9 @@
 
                                                     <s:if test="viewData.resultType.name() == 'PROJECTS'">
                                                         <s:include value="includes/dashboard/projectsSearchResults.jsp"/>
+                                                    </s:if>
+                                                    <s:if test="viewData.resultType.name() == 'PM_PROJECTS'">
+                                                        <s:include value="includes/dashboard/pmProjectsSearchResults.jsp"/>
                                                     </s:if>
                                                     <s:if test="viewData.resultType.name() == 'CONTESTS'">
                                                         <s:include value="includes/dashboard/contestsSearchResults.jsp"/>

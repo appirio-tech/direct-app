@@ -28,7 +28,6 @@ import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.Billing
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.InvoiceRecordBriefDTO;
 import com.topcoder.direct.services.view.dto.dashboard.billingcostreport.PaymentType;
 import com.topcoder.direct.services.view.dto.dashboard.costreport.CostDetailsDTO;
-import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuePaymentStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssueStatus;
 import com.topcoder.direct.services.view.dto.dashboard.jirareport.JiraIssuesReportEntryDTO;
 import com.topcoder.direct.services.view.dto.dashboard.participationreport.ParticipationAggregationReportDTO;
@@ -590,9 +589,23 @@ import java.util.Map.Entry;
  *     the given parameters. </li>
  * </ol>
  * </p>
+ * 
+ * <p>
+ * Version 5.2 (Module Assembly - TC Cockpit Operations Dashboard For PMs) changes:
+ * <ol>
+ *     <li>Refactor method {@link #searchUserProjects(TCSubject, String)}, decompose a new method method 
+ *     {@link #getFilteredProjects(String, List<ProjectSummaryData>)} that can be reused.</li>
+ *     <li>Added method {@link #getFilteredProjects(String, List)} to Search the project by 
+ *     searchFor criteria, and set the customer id to the project dto.</li>
+ *     <li>Added method {@link #searchPMUserProjects(TCSubject, String)} to get the details on Platform Managers' 
+ *     projects associated with specified user and matching the specified criteria for operations dashboard page</li>
+ *     <li>Added method {@link #getPMProjectData(TCSubject)} to get the list of Platform Managers' project summary data 
+ *     associated with specified user.</li>
+ * </ol>
+ * </p>
  *
  * @author isv, BeBetter, tangzx, xjtufreeman, Blues, flexme, Veve, GreatKevin, duxiaoyang, minhu, GreatKevin, jpy, GreatKevin, bugbuka
- * @version 5.1
+ * @version 5.2
  * @since 1.0
  */
 public class DataProvider {
@@ -1249,6 +1262,20 @@ public class DataProvider {
     public static List<DashboardProjectSearchResultDTO> searchUserProjects(TCSubject tcSubject, String searchFor)
         throws Exception {
         List<ProjectSummaryData> projects = getProjectData(tcSubject);
+        return getFilteredProjects(searchFor, projects);
+    }
+
+    /**
+     * Search the project by searchFor criteria, and set the customer id to the project dto.
+     * 
+     * @param searchFor the search criteria
+     * @param projects the project list to be searched
+     * @return the search result
+     * @throws Exception if any error occurs
+     * @since 5.2
+     */
+    private static List<DashboardProjectSearchResultDTO> getFilteredProjects(String searchFor,
+        List<ProjectSummaryData> projects) throws Exception {
         List<ProjectSummaryData> filteredProjects;
 
         if (StringUtils.isBlank(searchFor)) {
@@ -1293,7 +1320,87 @@ public class DataProvider {
             }
         });
     }
+    
+    /**
+     * <p>
+     * Gets the details on Platform Managers' projects associated with specified user and matching the specified 
+     * criteria.
+     * </p>
+     *
+     * @param tcSubject the <code>TCSubject</code> entity
+     * @param searchFor the value which will be searched against
+     * @return a <code>List</code> providing the details on Platform Managers' projects associated with the specified user.
+     *
+     * @throws Exception if any error occurs
+     * @since 5.2
+     */
+    public static List<DashboardProjectSearchResultDTO> searchPMUserProjects(TCSubject tcSubject, String searchFor)
+        throws Exception {
+        List<ProjectSummaryData> projects = getPMProjectData(tcSubject);
+        return getFilteredProjects(searchFor, projects);
+    }
+    
+    /**
+     * <p>Gets the list of Platform Managers' project summary data associated with specified user.</p>
+     *
+     * @param tcSubject a <code>TCSubject</code> referencing the user.
+     * @return a <code>List</code> listing the details for project summary data.
+     * @throws Exception if an unexpected error occurs.
+     * @since 5.2
+     */
+    public static List<ProjectSummaryData> getPMProjectData(TCSubject tcSubject) throws Exception {
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("direct_my_projects_contests");
 
+        if (DirectUtils.isCockpitAdmin(tcSubject)) {
+            request.setProperty("uid", String.valueOf(0));
+        } else {
+            request.setProperty("uid", String.valueOf(tcSubject.getUserId()));
+        }
+
+        List<ProjectSummaryData> projectData = new ArrayList<ProjectSummaryData>();
+
+        final ResultSetContainer resultContainer = dataAccessor.getData(request).get("direct_my_pm_projects_contests");
+
+        for (ResultSetContainer.ResultSetRow row : resultContainer) {
+            ProjectSummaryData data = new ProjectSummaryData();
+            data.setProjectId(row.getLongItem("tc_direct_project_id"));
+            data.setProjectName(row.getStringItem("tc_direct_project_name"));
+            data.setCustomerName(row.getStringItem("customer_name"));
+            data.setDirectProjectStatusId(row.getLongItem("project_status_id"));
+            data.setProjectCreationDate(getDate(row, "start_date"));
+            data.setProjectCompletionDate(getDate(row,"end_date"));
+            if (row.getItem("project_forum_id").getResultData() != null) {
+                data.setProjectForumCategoryId(Long.parseLong(row.getStringItem("project_forum_id")));
+            }
+
+            data.setProjectFulfillment(row.getDoubleItem("project_fulfillment"));
+            data.setTotalBudget(row.getStringItem("total_budget"));
+            data.setActualCost(row.getDoubleItem("actual_cost"));
+
+            double cost_draft = row.getDoubleItem("cost_draft");
+            double cost_scheduled = row.getDoubleItem("cost_scheduled");
+            double cost_active = row.getDoubleItem("cost_active");
+            double cost_finished = row.getDoubleItem("cost_finished");
+            double cost_cancelled = row.getDoubleItem("cost_cancelled");
+            data.setProjectedCost(cost_draft + cost_scheduled + cost_active + cost_finished + cost_cancelled);
+
+            data.setPlannedDuration(row.getStringItem("planned_duration"));
+            data.setActualDuration(row.getStringItem("actual_duration"));
+            data.setProjectedDuration(row.getStringItem("projected_duration"));
+
+            data.setMessageNumber(row.getIntItem("message_number"));
+            data.setDaysSinceLastPost(row.getStringItem("days_since_last_post"));
+            data.setLastPostHandle(row.getStringItem("last_post_handle"));
+            data.setLastPostHandleId(row.getStringItem("last_post_handle_id"));
+            data.setHasStalledContests(row.getBooleanItem("has_stalled_contests"));
+            projectData.add(data);
+        }
+
+        return projectData;
+    }
+    
     /**
      * <p>Gets the details on contests associated with specified user and matching the specified criteria.</p>
      *

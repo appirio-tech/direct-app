@@ -45,9 +45,19 @@ import java.util.Map;
  *  </li>
  *  </ol>
  * </p>
+ * 
+ * <p>
+ *  Version 2.2 (Module Assembly - TC Cockpit Operations Dashboard For PMs) change notes:
+ *   <ol>
+ *     <li>
+ *         Updated method {@link #executeAction} to get the project metadata of which group flag is true for 
+ *         operationsDashboardEnterprise page.
+ *     </li>
+ *   </ol>
+ * </p>
  *
- * @author isv, BeBetter, TCSASSEMBLER
- * @version 2.1
+ * @author isv, BeBetter, bugbuka
+ * @version 2.2
  */
 public class DashboardSearchAction extends BaseDirectStrutsAction implements ViewAction<DashboardSearchResultsDTO>,
         FormAction<DashboardSearchForm> {
@@ -130,7 +140,8 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
     }
 
     /**
-     * Gets the project metadata of which group flag is true for search projects and all projects page.
+     * Gets the project metadata of which group flag is true for search projects, all projects page, and 
+     * operationsDashboardEnterprise page.
      *
      * @throws Exception if error.
      * @since 2.1
@@ -140,7 +151,9 @@ public class DashboardSearchAction extends BaseDirectStrutsAction implements Vie
         // get the metadata for the projects if is the request is project search or all projects page
         if (DashboardSearchCriteriaType.PROJECTS == getFormData().getSearchIn()
                 || getRequestData().getRequest().getRequestURI().endsWith("allProjects")
-                || getRequestData().getRequest().getRequestURI().endsWith("allProjects.action")) {
+                || getRequestData().getRequest().getRequestURI().endsWith("allProjects.action")
+                || getRequestData().getRequest().getRequestURI().endsWith("operationsDashboardEnterprise")
+                || getRequestData().getRequest().getRequestURI().endsWith("operationsDashboardEnterprise.action")) {
 
             // projects should be in view data now (set by the action pre processor)
             final List<DashboardProjectSearchResultDTO> projects = viewData.getProjects();

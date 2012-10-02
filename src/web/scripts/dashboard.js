@@ -72,13 +72,17 @@
  *  - Update the codes to auto adjust width and height of billing cost report.
  *
  *  Version 2.3 - Module Assembly - JIRA issues loading update and report creation
+
  *  - Add support for jira issues report.
  *
  *  Version 2.4 - Release Assembly - TC Direct Cockpit Release Seven version 1.0
  *  - Add support for copilot posting review - no select any copilot feature
  * 
- * @author tangzx, Blues, GreatKevin, isv, GreatKevin
- * @version 2.4
+ *  Version 2.5 - Module Assembly - TC Cockpit Operations Dashboard For PMs
+ *  - Add support for operations dashboard.
+ * 
+ * @author tangzx, Blues, GreatKevin, isv, GreatKevin, bugbuka
+ * @version 2.5
  */
 
 var mouse_is_inside;
@@ -528,7 +532,7 @@ $(document).ready(function(){
             mask.find(".contestsDropDown .dropList").hide();
         }
         updateProjectDropDown($(".projectSelectMask"), getProjects($(this).data("id")));
-        if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
+        if ($("#activeContests").length > 0 || $("#projectsResult").length > 0 || $("#pmProjectsResult").length > 0 || $("#MyCopilotPostings").length > 0) {
             // call method defined by filter panel
             filterbyCustomer($(this).data("id"),$(this).find('a').html());
             var customer = "";
