@@ -6203,7 +6203,7 @@ public class DataProvider {
      * @throws Exception if an unexpected error occurs.
      * @since 3.11
      */
-    public static InputStream generateSubmissionSheet(long tcDirectProjectId, Date startDate, Date endDate) throws Exception {
+    public static InputStream generateSubmissionSheet(long tcDirectProjectId, Date startDate, Date endDate, long userId) throws Exception {
         NumberFormat format = NumberFormat.getPercentInstance();
         format.setMinimumFractionDigits(2);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -6215,6 +6215,7 @@ public class DataProvider {
         request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
         request.setProperty("sdt", dateFormat.format(startDate));
         request.setProperty("edt", dateFormat.format(endDate));
+		request.setProperty("uid", String.valueOf(userId));
 
         ResultSetContainer projectContestResults = dataAccessor.getData(request).get("project_contest_submissions");
 

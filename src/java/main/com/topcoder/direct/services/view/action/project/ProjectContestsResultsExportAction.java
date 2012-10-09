@@ -341,6 +341,8 @@ public class ProjectContestsResultsExportAction extends ContestAction {
         ZipEntry outputEntry = new ZipEntry(CONTESTS + "/");
         zos.putNextEntry(outputEntry);
         zos.closeEntry();
+		
+		final long userId = getCurrentUser().getUserId();
 
         new Thread(new Runnable() {
             public void run() {
@@ -361,7 +363,7 @@ public class ProjectContestsResultsExportAction extends ContestAction {
                     // get Submissions
                     outputEntry = new ZipEntry(CONTESTS + File.separator + "Results." + new SimpleDateFormat("MM-dd-yy").format(new Date()) + ".xls");
                     zos.putNextEntry(outputEntry);
-                    is = DataProvider.generateSubmissionSheet(getProjectId(), startDate, endDate);
+                    is = DataProvider.generateSubmissionSheet(getProjectId(), startDate, endDate, userId);
                     while ((read = is.read(buffer)) != -1) {
                         zos.write(buffer, 0, read);
                     }
