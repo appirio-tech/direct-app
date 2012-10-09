@@ -1376,16 +1376,11 @@ public class DataProvider {
             }
 
             data.setProjectFulfillment(row.getDoubleItem("project_fulfillment"));
+            
             data.setTotalBudget(row.getStringItem("total_budget"));
             data.setActualCost(row.getDoubleItem("actual_cost"));
-
-            double cost_draft = row.getDoubleItem("cost_draft");
-            double cost_scheduled = row.getDoubleItem("cost_scheduled");
-            double cost_active = row.getDoubleItem("cost_active");
-            double cost_finished = row.getDoubleItem("cost_finished");
-            double cost_cancelled = row.getDoubleItem("cost_cancelled");
-            data.setProjectedCost(cost_draft + cost_scheduled + cost_active + cost_finished + cost_cancelled);
-
+            data.setProjectedCost(row.getDoubleItem("cost_projected"));
+            
             data.setPlannedDuration(row.getStringItem("planned_duration"));
             data.setActualDuration(row.getStringItem("actual_duration"));
             data.setProjectedDuration(row.getStringItem("projected_duration"));
