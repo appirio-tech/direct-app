@@ -93,6 +93,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -6185,6 +6186,69 @@ public class DataProvider {
         }
 
         // Get the input stream with workbook content 
+        ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
+        wb.write(saveTo);
+        return new ByteArrayInputStream(saveTo.toByteArray());
+    }
+
+    /**
+     * <p>Generates  the <code>Excel</code> worksheet with results for contests for specified <code>TC Direct</code>
+     * project.</p>
+     *
+     * @param tcDirectProjectId a <code>long</code> providing the ID of <code>TC Direct</code> project to generate
+     *                          winner sheet for.
+     * @param startDate the start date
+     * @param endDate the end date
+     * @return an <code>InputStream</code> with content of generated worksheet.
+     * @throws Exception if an unexpected error occurs.
+     * @since 3.11
+     */
+    public static InputStream generateSubmissionSheet(long tcDirectProjectId, Date startDate, Date endDate) throws Exception {
+        NumberFormat format = NumberFormat.getPercentInstance();
+        format.setMinimumFractionDigits(2);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Get project contest results from DB
+        DataAccess dataAccessor = new DataAccess(DBMS.TCS_OLTP_DATASOURCE_NAME);
+        Request request = new Request();
+        request.setContentHandle("project_contest_submissions");
+        request.setProperty("tcdirectid", String.valueOf(tcDirectProjectId));
+        request.setProperty("sdt", dateFormat.format(startDate));
+        request.setProperty("edt", dateFormat.format(endDate));
+
+        ResultSetContainer projectContestResults = dataAccessor.getData(request).get("project_contest_submissions");
+
+        // Convert results to Excel worksheet
+        String sheetName = WorkbookUtil.createSafeSheetName("Contest Submissions for " + tcDirectProjectId);
+        Workbook wb = new HSSFWorkbook();
+        CreationHelper createHelper = wb.getCreationHelper();
+        Sheet sheet1 = wb.createSheet(sheetName);
+        sheet1.setColumnWidth(0, 12 * 256);
+        sheet1.setColumnWidth(1, 100 * 256);
+        sheet1.setColumnWidth(2, 30 * 256);
+        sheet1.setColumnWidth(3, 20 * 256);
+        sheet1.setColumnWidth(4, 20 * 256);
+
+        // Header
+        Row row = sheet1.createRow(0);
+        createExcelHeaderCell(0, "Contest ID", row);
+        createExcelHeaderCell(1, "Contest Name", row);
+        createExcelHeaderCell(2, "Submission ID", row);
+        createExcelHeaderCell(3, "Score", row);
+        createExcelHeaderCell(4, "Rank", row);
+
+        // Data
+        int rowIndex = 1;
+        for (ResultSetContainer.ResultSetRow data : projectContestResults) {
+            row = sheet1.createRow(rowIndex++);
+            row.createCell(0).setCellValue(data.getLongItem("contest_id"));
+            row.createCell(1).setCellValue(data.getStringItem("contest_name"));
+            row.createCell(2).setCellValue(data.getLongItem("submission_id"));
+            row.createCell(3).setCellValue(format.format(data.getDoubleItem("final_score") / 100.0));
+            row.createCell(4).setCellValue(data.getLongItem("placement"));
+        }
+
+        // Get the input stream with workbook content
         ByteArrayOutputStream saveTo = new ByteArrayOutputStream();
         wb.write(saveTo);
         return new ByteArrayInputStream(saveTo.toByteArray());

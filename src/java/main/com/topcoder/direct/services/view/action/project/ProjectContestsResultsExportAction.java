@@ -357,7 +357,16 @@ public class ProjectContestsResultsExportAction extends ContestAction {
                         zos.write(buffer, 0, read);
                     }
                     zos.closeEntry();
-                    
+
+                    // get Submissions
+                    outputEntry = new ZipEntry(CONTESTS + File.separator + "Results." + new SimpleDateFormat("MM-dd-yy").format(new Date()) + ".xls");
+                    zos.putNextEntry(outputEntry);
+                    is = DataProvider.generateSubmissionSheet(getProjectId(), startDate, endDate);
+                    while ((read = is.read(buffer)) != -1) {
+                        zos.write(buffer, 0, read);
+                    }
+                    zos.closeEntry();
+
                     for (Map.Entry<Long, Boolean> entry : contestIds.entrySet()) {
                         long contestId = entry.getKey();
                         boolean isStudio = entry.getValue();
